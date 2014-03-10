@@ -39,13 +39,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\describe_Tests.cs" />
+    <Compile Include="Tests\describe_Entity.cs" />
+    <Compile Include="Tests\Fixtures\ComponentA.cs" />
+    <Compile Include="Tests\Fixtures\ComponentB.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Tests\" />
     <Folder Include="Libraries\" />
     <Folder Include="Libraries\NSpec\" />
+    <Folder Include="Tests\Fixtures\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />
@@ -55,5 +58,11 @@
     <None Include="Libraries\NSpec\NSpecRunner.exe.config" />
     <None Include="Libraries\NSpec\NSpecRunner.exe.mdb" />
     <None Include="Libraries\NSpec\Domain\Formatters\Templates\TiddlyWiki_Template.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
