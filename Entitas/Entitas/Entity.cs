@@ -13,6 +13,8 @@ namespace Entitas {
 
         readonly Dictionary<Type, IComponent> _components = new Dictionary<Type, IComponent>();
         readonly ulong _creationIndex;
+        HashSet<IComponent> _componentsCache;
+        HashSet<Type> _componentTypesCache;
 
         public Entity() {
             _creationIndex = 0;
@@ -28,6 +30,8 @@ namespace Entitas {
                 throw new EntityAlreadyHasComponentException(string.Format("Cannot add {0} to {1}.", type, this), type);
 
             _components.Add(type, component);
+            _componentsCache = null;
+            _componentTypesCache = null;
             if (OnComponentAdded != null)
                 OnComponentAdded(this, component);
         }
@@ -38,17 +42,27 @@ namespace Entitas {
 
             var component = _components[type];
             _components.Remove(type);
+            _componentsCache = null;
+            _componentTypesCache = null;
             if (OnComponentRemoved != null)
                 OnComponentRemoved(this, component);
         }
 
         public void ReplaceComponent(IComponent component) {
             var type = component.GetType();
-            if (HasComponent(type))
+            if (HasComponent(type)) {
                 _components.Remove(type);
-            _components.Add(type, component);
-            if (OnComponentReplaced != null)
-                OnComponentReplaced(this, component);
+                _components.Add(type, component);
+                _componentsCache = null;
+                if (OnComponentReplaced != null)
+                    OnComponentReplaced(this, component);
+            } else {
+                _components.Add(type, component);
+                _componentsCache = null;
+                _componentTypesCache = null;
+                if (OnComponentAdded != null)
+                    OnComponentAdded(this, component);
+            }
         }
 
         public IComponent GetComponent(Type type) {
@@ -83,11 +97,17 @@ namespace Entitas {
         }
 
         public HashSet<IComponent> GetComponents() {
-            return new HashSet<IComponent>(_components.Values);
+            if (_componentsCache == null)
+                _componentsCache = new HashSet<IComponent>(_components.Values);
+
+            return _componentsCache;
         }
 
         public HashSet<Type> GetComponentTypes() {
-            return new HashSet<Type>(_components.Keys);
+            if (_componentTypesCache == null)
+                _componentTypesCache = new HashSet<Type>(_components.Keys);
+
+            return _componentTypesCache;
         }
 
         public void RemoveAllComponents() {
@@ -106,7 +126,7 @@ namespace Entitas {
             if (componentsStr != string.Empty)
                 componentsStr = componentsStr.Substring(0, componentsStr.Length - seperator.Length);
 
-            return string.Format("Entity(" + componentsStr + ")");
+            return string.Format("Entity({0})", componentsStr);
         }
     }
 

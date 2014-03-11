@@ -65,7 +65,10 @@ class describe_Entity : nspec {
 
         it["has any components of types when any component of these types was added"] = () => {
             _e.AddComponent(_componentA);
-            _e.HasAnyComponent(new [] { typeof(ComponentA), typeof(ComponentB) }).should_be_true();
+            _e.HasAnyComponent(new [] {
+                typeof(ComponentA),
+                typeof(ComponentB)
+            }).should_be_true();
         };
 
         it["removes a component of type"] = () => {
@@ -172,15 +175,30 @@ class describe_Entity : nspec {
                 eventComponent.should_be_same(newComponentA);
             };
 
+            it["dispatches OnComponentAdded when attempting to replace a component which hasn't been added"] = () => {
+                Entity eventEntity = null;
+                IComponent eventComponent = null;
+                _e.OnComponentReplaced += (entity, component) => fail();
+                _e.OnComponentAdded += (entity, component) => {
+                    eventEntity = entity;
+                    eventComponent = component;
+                };
+                var newComponentA = new ComponentA();
+                _e.ReplaceComponent(newComponentA);
+                eventEntity.should_be_same(_e);
+                eventComponent.should_be_same(newComponentA);
+            };
+
             it["doesn't dispatch OnComponentAdded when replacing a component"] = () => {
+                _e.AddComponent(_componentA);
                 _e.OnComponentAdded += (entity, component) => fail();
-                _e.ReplaceComponent(_componentA);
+                _e.ReplaceComponent(new ComponentA());
             };
 
             it["doesn't dispatch OnComponentRemoved when replacing a component"] = () => {
                 _e.AddComponent(_componentA);
                 _e.OnComponentRemoved += (entity, component) => fail();
-                _e.ReplaceComponent(_componentA);
+                _e.ReplaceComponent(new ComponentA());
             };
 
             it["dispatches OnComponentRemoved when removing all components"] = () => {
@@ -206,6 +224,94 @@ class describe_Entity : nspec {
             it["throws when attempting to get component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
                 _e.GetComponent(typeof(ComponentA));
             });
+        };
+
+        context["internal caching"] = () => {
+            context["components"] = () => {
+                it["caches components"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    var c = _e.GetComponents();
+                    _e.GetComponents().should_be_same(c);
+                };
+
+                it["updates cache when a new component was added"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    var c = _e.GetComponents();
+                    _e.AddComponent(new ComponentB());
+                    _e.GetComponents().should_not_be(c);
+                };
+
+                it["updates cache when a component was removed"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    _e.AddComponent(new ComponentB());
+                    var c = _e.GetComponents();
+                    _e.RemoveComponent(typeof(ComponentA));
+                    _e.GetComponents().should_not_be(c);
+                };
+
+                it["updates cache when a component was replaced"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    _e.AddComponent(new ComponentB());
+                    var c = _e.GetComponents();
+                    _e.ReplaceComponent(new ComponentA());
+                    _e.GetComponents().should_not_be(c);
+                };
+
+                it["updates cache when all components were removed"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    _e.AddComponent(new ComponentB());
+                    var c = _e.GetComponents();
+                    _e.RemoveAllComponents();
+                    _e.GetComponents().should_not_be(c);
+                };
+            };
+
+            context["component types"] = () => {
+                it["caches component types"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    var c = _e.GetComponentTypes();
+                    _e.GetComponentTypes().should_be_same(c);
+                };
+
+                it["updates cache when a new component was added"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    var c = _e.GetComponentTypes();
+                    _e.AddComponent(new ComponentB());
+                    _e.GetComponentTypes().should_not_be(c);
+                };
+
+                it["updates cache when a component was removed"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    _e.AddComponent(new ComponentB());
+                    var c = _e.GetComponentTypes();
+                    _e.RemoveComponent(typeof(ComponentA));
+                    _e.GetComponentTypes().should_not_be(c);
+                };
+
+                it["doesn't update cache when a component was replaced"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    _e.AddComponent(new ComponentB());
+                    var c = _e.GetComponentTypes();
+                    _e.ReplaceComponent(new ComponentA());
+                    _e.GetComponentTypes().should_be(c);
+                };
+
+                it["updates cache when adding a new component with ReplaceComponent"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    _e.AddComponent(new ComponentB());
+                    var c = _e.GetComponentTypes();
+                    _e.ReplaceComponent(new ComponentC());
+                    _e.GetComponentTypes().should_not_be(c);
+                };
+
+                it["updates cache when all components were removed"] = () => {
+                    _e.AddComponent(new ComponentA());
+                    _e.AddComponent(new ComponentB());
+                    var c = _e.GetComponentTypes();
+                    _e.RemoveAllComponents();
+                    _e.GetComponentTypes().should_not_be(c);
+                };
+            };
         };
     }
 }
