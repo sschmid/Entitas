@@ -80,43 +80,69 @@ class describe_EntityRepository : nspec {
         };
 
         context["get entities"] = () => {
-            it["doesn't get entities when no entities were created"] = () => {
-                _repo.GetEntities(EntityMatcher.AllOf(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                })).should_be_empty();
+
+            it["gets empty collection for matcher when no entities were created"] = () => {
+                var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { typeof(ComponentA) }));
+                c.should_not_be_null();
+                c.GetEntities().should_be_empty();
             };
 
-            it["gets created entities matching allOf matcher"] = () => {
-                var e1 = _repo.CreateEntity();
-                e1.AddComponent(new ComponentA());
-                e1.AddComponent(new ComponentB());
-                var e2 = _repo.CreateEntity();
-                e2.AddComponent(new ComponentA());
-                var entities = _repo.GetEntities(EntityMatcher.AllOf(new[] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                }));
+            Entity e1 = null;
+            Entity e2 = null;
+            Entity e3 = null;
+            IEntityMatcher matcher = EntityMatcher.AllOf(new [] {
+                typeof(ComponentA),
+                typeof(ComponentB)
+            });
+            context["when entities created"] = () => {
+                before = () => {
+                    e1 = _repo.CreateEntity();
+                    e1.AddComponent(new ComponentA());
+                    e1.AddComponent(new ComponentB());
+                    e2 = _repo.CreateEntity();
+                    e2.AddComponent(new ComponentA());
+                    e2.AddComponent(new ComponentB());
+                    e3 = _repo.CreateEntity();
+                    e3.AddComponent(new ComponentA());
+                };
 
-                entities.should_contain(e1);
-                entities.should_not_contain(e2);
-                entities.Length.should_be(1);
-            };
+                it["gets collection with matching entities"] = () => {
+                    var c = _repo.GetCollection(matcher).GetEntities();
+                    c.should_not_be_empty();
+                    c.Length.should_be(2);
+                    c.should_contain(e1);
+                    c.should_contain(e2);
+                };
 
-            it["gets created entities matching anyOf matcher"] = () => {
-                var e1 = _repo.CreateEntity();
-                e1.AddComponent(new ComponentA());
-                e1.AddComponent(new ComponentB());
-                var e2 = _repo.CreateEntity();
-                e2.AddComponent(new ComponentA());
-                var entities = _repo.GetEntities(EntityMatcher.AnyOf(new[] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                }));
+                it["gets cached collection"] = () => {
+                    _repo.GetCollection(matcher).should_be_same(_repo.GetCollection(matcher));
+                };
 
-                entities.should_contain(e1);
-                entities.should_contain(e2);
-                entities.Length.should_be(2);
+                it["cached collection contains newly created matching entity"] = () => {
+                    var c = _repo.GetCollection(matcher);
+                    e3.AddComponent(new ComponentB());
+                    c.GetEntities().should_contain(e3);
+                };
+
+                it["cached collection doesn't contain entity which are not matching anymore"] = () => {
+                    var c = _repo.GetCollection(matcher);
+                    e1.RemoveComponent(typeof(ComponentA));
+                    c.GetEntities().should_not_contain(e1);
+                };
+
+                it["removed destroyed entity"] = () => {
+                    var c = _repo.GetCollection(matcher);
+                    _repo.DestroyEntity(e1);
+                    c.GetEntities().should_not_contain(e1);
+                };
+
+                it["ignores adding components to destroyed entity"] = () => {
+                    var c = _repo.GetCollection(matcher);
+                    _repo.DestroyEntity(e3);
+                    e3.AddComponent(new ComponentA());
+                    e3.AddComponent(new ComponentB());
+                    c.GetEntities().should_not_contain(e3);
+                };
             };
         };
     }

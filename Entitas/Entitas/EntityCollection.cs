@@ -30,6 +30,11 @@ namespace Entitas {
             }
         }
 
+        public void RemoveEntityIfNotMatching(Entity entity) {
+            if (!_matcher.Matches(entity))
+                RemoveEntity(entity);
+        }
+
         public void RemoveEntity(Entity entity) {
             var removed = _entities.Remove(entity);
             if (removed) {

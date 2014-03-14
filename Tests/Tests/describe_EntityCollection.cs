@@ -44,6 +44,19 @@ class describe_EntityCollection : nspec {
             _collection.GetEntities().should_be_empty();
         };
 
+        it["removed entity when not matching"] = () => {
+            _collection.AddEntityIfMatching(_e1);
+            _e1.RemoveComponent(typeof(ComponentA));
+            _collection.RemoveEntityIfNotMatching(_e1);
+            _collection.GetEntities().should_not_contain(_e1);
+        };
+
+        it["doesn't remove entity when matching"] = () => {
+            _collection.AddEntityIfMatching(_e1);
+            _collection.RemoveEntityIfNotMatching(_e1);
+            _collection.GetEntities().should_contain(_e1);
+        };
+
         it["gets null when single entity does not exist"] = () => {
             _collection.GetSingleEntity().should_be_null();
         };
