@@ -42,6 +42,10 @@
     <Compile Include="Tests\describe_Entity.cs" />
     <Compile Include="Tests\Fixtures\ComponentA.cs" />
     <Compile Include="Tests\Fixtures\ComponentB.cs" />
+    <Compile Include="Tests\describe_EntityRepository.cs" />
+    <Compile Include="Tests\Fixtures\ComponentC.cs" />
+    <Compile Include="Tests\describe_EntityMatcher.cs" />
+    <Compile Include="Tests\describe_EntityCollection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

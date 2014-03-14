@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3F97DA95-DF04-49BF-BB3C-961A516680F3}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>PerformanceTests</RootNamespace>
+    <AssemblyName>PerformanceTests</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PerformanceTests\IPerformanceTest.cs" />
+    <Compile Include="PerformanceTestRunner.cs" />
+    <Compile Include="PerformanceTests\EmptyTest.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryCreateEntity.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryDestroyAllEntites.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryGetEntities.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryHasComponent.cs" />
+    <Compile Include="PerformanceTests\Entity\EntityGetComponents.cs" />
+    <Compile Include="PerformanceTests\Fixtures\Components.cs" />
+    <Compile Include="PerformanceTests\EntityMatcher\EntityMatcherGetHashCode.cs" />
+    <Compile Include="PerformanceTests\EntityMatcher\EntityMatcherEquals.cs" />
+    <Compile Include="PerformanceTests\Entity\EntityHasComponent.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="PerformanceTests\" />
+    <Folder Include="PerformanceTests\EntityRepository\" />
+    <Folder Include="PerformanceTests\Entity\" />
+    <Folder Include="PerformanceTests\Fixtures\" />
+    <Folder Include="PerformanceTests\EntityMatcher\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

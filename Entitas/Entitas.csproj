@@ -35,9 +35,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entitas\Entity.cs" />
     <Compile Include="Entitas\IComponent.cs" />
+    <Compile Include="Entitas\EntityRepository.cs" />
+    <Compile Include="Entitas\EntityMatcher.cs" />
+    <Compile Include="Entitas\EntityCollection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Entitas\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ToolKit\ToolKit\ToolKit.csproj">
+      <Project>{F94D868E-0144-45AB-B580-2829201F371C}</Project>
+      <Name>ToolKit</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
