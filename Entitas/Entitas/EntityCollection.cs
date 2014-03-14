@@ -11,6 +11,8 @@ namespace Entitas {
 
         readonly IEntityMatcher _matcher;
         readonly OrderedSet<Entity> _entities = new OrderedSet<Entity>();
+        Entity[] _entitiesCache;
+        Entity _singleEntityCache;
 
         public EntityCollection(IEntityMatcher matcher) {
             _matcher = matcher;
@@ -19,36 +21,51 @@ namespace Entitas {
         public void AddEntityIfMatching(Entity entity) {
             if (_matcher.Matches(entity)) {
                 var added = _entities.Add(entity);
-                if (added && OnEntityAdded != null)
-                    OnEntityAdded(this, entity);
+                if (added) {
+                    _entitiesCache = null;
+                    _singleEntityCache = null;
+                    if (OnEntityAdded != null)
+                        OnEntityAdded(this, entity);
+                }
             }
         }
 
         public void RemoveEntity(Entity entity) {
             var removed = _entities.Remove(entity);
-            if (removed && OnEntityRemoved != null)
-                OnEntityRemoved(this, entity);
+            if (removed) {
+                _entitiesCache = null;
+                _singleEntityCache = null;
+                if (OnEntityRemoved != null)
+                    OnEntityRemoved(this, entity);
+            }
         }
 
         public Entity[] GetEntities() {
-            return _entities.ToArray();
+            if (_entitiesCache == null)
+                _entitiesCache = _entities.ToArray();
+
+            return _entitiesCache;
         }
 
         public Entity GetSingleEntity() {
-            var count = _entities.Count;
-            if (count == 0)
-                return null;
+            if (_singleEntityCache == null) {
+                var count = _entities.Count;
+                if (count == 0)
+                    return null;
 
-            if (count > 1)
-                throw new SingleEntityException(_matcher);
+                if (count > 1)
+                    throw new SingleEntityException(_matcher);
 
-            return _entities.First();
+                _singleEntityCache = _entities.First();
+            }
+
+            return _singleEntityCache;
         }
     }
 
     public class SingleEntityException : Exception {
         public SingleEntityException(IEntityMatcher matcher) :
-        base("Multiple entites exist matching " + matcher) {
+            base("Multiple entites exist matching " + matcher) {
         }
 
         static string getTypesString(IEnumerable<Type> types) {
