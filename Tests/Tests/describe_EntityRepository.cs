@@ -143,6 +143,35 @@ class describe_EntityRepository : nspec {
                     e3.AddComponent(new ComponentB());
                     c.GetEntities().should_not_contain(e3);
                 };
+
+                it["collections dispatches OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
+                    var c = _repo.GetCollection(matcher);
+                    var didDispachRemoved = 0;
+                    EntityCollection eventCollectionRemoved = null;
+                    Entity eventEntityRemoved = null;
+                    EntityCollection eventCollectionAdded = null;
+                    Entity eventEntityAdded = null;
+                    var didDispachAdded = 0;
+                    c.OnEntityRemoved += (collection, entity) => {
+                        eventCollectionRemoved = collection;
+                        eventEntityRemoved = entity;
+                        didDispachRemoved++;
+                    };
+                    c.OnEntityAdded += (collection, entity) => {
+                        eventCollectionAdded = collection;
+                        eventEntityAdded = entity;
+                        didDispachAdded++;
+                    };
+                    e1.ReplaceComponent(new ComponentA());
+
+                    eventCollectionRemoved.should_be_same(c);
+                    eventCollectionAdded.should_be_same(c);
+                    eventEntityRemoved.should_be_same(e1);
+                    eventEntityAdded.should_be_same(e1);
+                    didDispachRemoved.should_be(1);
+                    didDispachAdded.should_be(1);
+                    didDispachAdded.should_be(1);
+                };
             };
         };
     }

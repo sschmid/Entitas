@@ -20,6 +20,7 @@ namespace Entitas {
             var entity = new Entity(_creationIndex++);
             entity.OnComponentAdded += onComponentAdded;
             entity.OnComponentRemoved += onComponentRemoved;
+            entity.OnComponentReplaced += onComponentReplaced;
             _entities.Add(entity);
             _entitiesCache = null;
             return entity;
@@ -72,6 +73,12 @@ namespace Entitas {
             var collections = _collections.Values;
             foreach (var collection in collections)
                 collection.RemoveEntityIfNotMatching(entity);
+        }
+
+        void onComponentReplaced(Entity entity, IComponent component) {
+            var collections = _collections.Values;
+            foreach (var collection in collections)
+                collection.ReplaceEntity(entity);
         }
 
         void removeFromAllCollections(Entity entity) {

@@ -72,6 +72,12 @@ class describe_EntityCollection : nspec {
             _collection.GetEntities().should_contain(_e1);
         };
 
+        it["doesn't add entity when calling ReplaceEntity() with an entity that hasn't been added before when not matching"] = () => {
+            var entity = new Entity();
+            _collection.ReplaceEntity(entity);
+            _collection.GetEntities().should_be_empty();
+        };
+
         it["gets null when single entity does not exist"] = () => {
             _collection.GetSingleEntity().should_be_null();
         };

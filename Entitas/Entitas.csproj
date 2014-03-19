@@ -38,6 +38,9 @@
     <Compile Include="Entitas\EntityRepository.cs" />
     <Compile Include="Entitas\EntityMatcher.cs" />
     <Compile Include="Entitas\EntityCollection.cs" />
+    <Compile Include="Entitas\ReactiveEntitySystem.cs" />
+    <Compile Include="Entitas\IEntitySystem.cs" />
+    <Compile Include="Entitas\IReactiveSubEntitySystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
