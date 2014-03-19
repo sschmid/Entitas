@@ -41,10 +41,14 @@
     <Compile Include="Entitas\ReactiveEntitySystem.cs" />
     <Compile Include="Entitas\IEntitySystem.cs" />
     <Compile Include="Entitas\IReactiveSubEntitySystem.cs" />
+    <Compile Include="Entitas\Extensions\ES.cs" />
+    <Compile Include="Entitas\Extensions\EntityRepositoryExtension.cs" />
+    <Compile Include="Entitas\Extensions\EntityExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Entitas\" />
+    <Folder Include="Entitas\Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ToolKit\ToolKit\ToolKit.csproj">
