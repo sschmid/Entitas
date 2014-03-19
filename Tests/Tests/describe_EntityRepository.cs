@@ -13,7 +13,7 @@ class describe_EntityRepository : nspec {
         new EntityRepository(i).CreateEntity().creationIndex.should_be(i);
     }
 
-    void when_repo_created() {
+    void when_created() {
 
         it["has no entities when no entities were created"] = () => {
             _repo.GetEntities().should_be_empty();
@@ -130,7 +130,7 @@ class describe_EntityRepository : nspec {
                     c.GetEntities().should_not_contain(e1);
                 };
 
-                it["removed destroyed entity"] = () => {
+                it["removes destroyed entity"] = () => {
                     var c = _repo.GetCollection(matcher);
                     _repo.DestroyEntity(e1);
                     c.GetEntities().should_not_contain(e1);

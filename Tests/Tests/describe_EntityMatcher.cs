@@ -1,7 +1,7 @@
 ﻿using NSpec;
 using Entitas;
 
-class describe_EntityMatcher :nspec {
+class describe_EntityMatcher : nspec {
     void when_creating_matcher() {
         Entity eA = null;
         Entity eC = null;

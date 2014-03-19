@@ -21,7 +21,7 @@ class describe_Entity : nspec {
         new Entity(i).creationIndex.should_be(i);
     }
 
-    void when_entity_created() {
+    void when_created() {
         it["has default creation index"] = () => {
             _e.creationIndex.should_be(0);
         };

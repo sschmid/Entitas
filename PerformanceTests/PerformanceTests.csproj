@@ -42,10 +42,14 @@
     <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryGetEntities.cs" />
     <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryHasComponent.cs" />
     <Compile Include="PerformanceTests\Entity\EntityGetComponents.cs" />
-    <Compile Include="PerformanceTests\Fixtures\Components.cs" />
     <Compile Include="PerformanceTests\EntityMatcher\EntityMatcherGetHashCode.cs" />
     <Compile Include="PerformanceTests\EntityMatcher\EntityMatcherEquals.cs" />
     <Compile Include="PerformanceTests\Entity\EntityHasComponent.cs" />
+    <Compile Include="PerformanceTests\Fixtures\ComponentA.cs" />
+    <Compile Include="PerformanceTests\Fixtures\ComponentB.cs" />
+    <Compile Include="PerformanceTests\Fixtures\ComponentC.cs" />
+    <Compile Include="PerformanceTests\Entity\EntityRemoveAddComponent.cs" />
+    <Compile Include="PerformanceTests\Entity\EntityReplaceComponet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

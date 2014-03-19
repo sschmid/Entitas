@@ -45,6 +45,17 @@ namespace Entitas {
             }
         }
 
+        public void ReplaceEntity(Entity entity) {
+            if (_entities.Contains(entity)) {
+                if (OnEntityRemoved != null)
+                    OnEntityRemoved(this, entity);
+                if (OnEntityAdded != null)
+                    OnEntityAdded(this, entity);
+            } else {
+                AddEntityIfMatching(entity);
+            }
+        }
+
         public Entity[] GetEntities() {
             if (_entitiesCache == null)
                 _entitiesCache = _entities.ToArray();

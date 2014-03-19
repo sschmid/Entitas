@@ -6,6 +6,10 @@ class describe_EntityCollection : nspec {
     Entity _e1;
     Entity _e2;
 
+    void fail() {
+        true.should_be_false();
+    }
+
     void before_each() {
         _collection = new EntityCollection(EntityMatcher.AllOf(new [] { typeof(ComponentA) }));
         _e1 = new Entity();
@@ -14,7 +18,7 @@ class describe_EntityCollection : nspec {
         _e2.AddComponent(new ComponentA());
     }
 
-    void when_collection_created() {
+    void when_created() {
         it["doesn't have entites which haven't been added"] = () => {
             _collection.GetEntities().should_be_empty();
         };
@@ -54,6 +58,17 @@ class describe_EntityCollection : nspec {
         it["doesn't remove entity when matching"] = () => {
             _collection.AddEntityIfMatching(_e1);
             _collection.RemoveEntityIfNotMatching(_e1);
+            _collection.GetEntities().should_contain(_e1);
+        };
+
+        it["replaces existing entity"] = () => {
+            _collection.AddEntityIfMatching(_e1);
+            _collection.ReplaceEntity(_e1);
+            _collection.GetEntities().should_contain(_e1);
+        };
+
+        it["adds entity when calling ReplaceEntity() with an entity that hasn't been added before"] = () => {
+            _collection.ReplaceEntity(_e1);
             _collection.GetEntities().should_contain(_e1);
         };
 
@@ -120,6 +135,51 @@ class describe_EntityCollection : nspec {
                 _collection.RemoveEntity(_e1);
                 didDispatch.should_be(0);
             };
+
+            it["dispatches OnEntityRemoved and OnEntityAdded when entity got replaced"] = () => {
+                _collection.AddEntityIfMatching(_e1);
+                var didDispatchAdded = 0;
+                EntityCollection eventCollectionAdded = null;
+                Entity eventEntityAdded = null;
+                var didDispatchRemoved = 0;
+                EntityCollection eventCollectionRemoved = null;
+                Entity eventEntityRemoved = null;
+                _collection.OnEntityAdded += (collection, entity) => {
+                    eventCollectionAdded = collection;
+                    eventEntityAdded = entity;
+                    didDispatchAdded++;
+                };
+                _collection.OnEntityRemoved += (collection, entity) => {
+                    eventCollectionRemoved = collection;
+                    eventEntityRemoved = entity;
+                    didDispatchRemoved++;
+                };
+                _collection.ReplaceEntity(_e1);
+
+                didDispatchAdded.should_be(1);
+                eventCollectionAdded.should_be_same(_collection);
+                eventEntityAdded.should_be_same(_e1);
+                didDispatchRemoved.should_be(1);
+                eventCollectionRemoved.should_be_same(_collection);
+                eventEntityRemoved.should_be_same(_e1);
+            };
+
+            it["dispatches OnEntityAdded when entity added by calling ReplaceEntity()"] = () => {
+                var didDispatch = 0;
+                EntityCollection eventCollection = null;
+                Entity eventEntity = null;
+                _collection.OnEntityAdded += (collection, entity) => {
+                    eventCollection = collection;
+                    eventEntity = entity;
+                    didDispatch++;
+                };
+                _collection.OnEntityRemoved += (collection, entity) => fail();
+                _collection.ReplaceEntity(_e1);
+
+                didDispatch.should_be(1);
+                eventCollection.should_be_same(_collection);
+                eventEntity.should_be_same(_e1);
+            };
         };
 
         context["internal caching"] = () => {
@@ -174,6 +234,23 @@ class describe_EntityCollection : nspec {
                 var s = _collection.GetSingleEntity();
                 _collection.RemoveEntity(_e1);
                 s.should_not_be_same(_collection.GetSingleEntity());
+            };
+
+            it["doesn't update cache when replacing an entity"] = () => {
+                _collection.AddEntityIfMatching(_e1);
+                var s = _collection.GetSingleEntity();
+                var e = _collection.GetEntities();
+                _collection.ReplaceEntity(_e1);
+                s.should_be_same(_collection.GetSingleEntity());
+                e.should_be_same(_collection.GetEntities());
+            };
+
+            it["updates cache when replacing an entity that hasn't been added before"] = () => {
+                var s = _collection.GetSingleEntity();
+                var e = _collection.GetEntities();
+                _collection.ReplaceEntity(_e1);
+                s.should_not_be_same(_collection.GetSingleEntity());
+                e.should_not_be_same(_collection.GetEntities());
             };
         };
     }
