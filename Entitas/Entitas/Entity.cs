@@ -26,8 +26,11 @@ namespace Entitas {
 
         public void AddComponent(IComponent component) {
             var type = component.GetType();
+
+            #if DEBUG
             if (HasComponent(type))
                 throw new EntityAlreadyHasComponentException(string.Format("Cannot add {0} to {1}.", type, this), type);
+            #endif
 
             _components.Add(type, component);
             _componentsCache = null;
@@ -37,8 +40,10 @@ namespace Entitas {
         }
 
         public void RemoveComponent(Type type) {
+            #if DEBUG
             if (!HasComponent(type))
                 throw new EntityDoesNotHaveComponentException(string.Format("Cannot remove {0} from {1}.", type, this), type);
+            #endif
 
             var component = _components[type];
             _components.Remove(type);
@@ -66,8 +71,10 @@ namespace Entitas {
         }
 
         public IComponent GetComponent(Type type) {
+            #if DEBUG
             if (!HasComponent(type))
                 throw new EntityDoesNotHaveComponentException(string.Format("Cannot get {0} from {1}.", type, this), type);
+            #endif
 
             return _components[type];
         }
