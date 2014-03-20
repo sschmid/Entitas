@@ -78,7 +78,8 @@ namespace Entitas {
         void onComponentReplaced(Entity entity, IComponent component) {
             var collections = _collections.Values;
             foreach (var collection in collections)
-                collection.ReplaceEntity(entity);
+                if (collection.matcher.HasType(component.GetType()))
+                    collection.ReplaceEntity(entity);
         }
 
         void removeFromAllCollections(Entity entity) {

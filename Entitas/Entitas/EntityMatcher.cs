@@ -16,6 +16,8 @@ namespace Entitas {
         HashSet<Type> types { get; }
 
         bool Matches(Entity entity);
+
+        bool HasType(Type type);
     }
 
     public abstract class AbstractEntityMatcher : IEntityMatcher {
@@ -33,6 +35,10 @@ namespace Entitas {
         }
 
         public abstract bool Matches(Entity entity);
+
+        public bool HasType(Type type) {
+            return _types.Contains(type);
+        }
 
         public override bool Equals(object obj) {
             if (obj == this)

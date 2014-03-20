@@ -146,6 +146,20 @@ class describe_ReactiveEntitySystem : nspec {
                 subSystem.didExecute.should_be(0);
                 subSystem.entites.should_be_null();
             };
+
+            it["doesn't execute when replaced component is not in triggering matcher"] = () => {
+                var e = _repo.CreateEntity();
+                e.AddComponent(new ComponentA());
+                e.AddComponent(new ComponentB());
+                e.AddComponent(new ComponentC());
+                res.Execute();
+                e.ReplaceComponent(new ComponentC());
+                res.Execute();
+
+                subSystem.didExecute.should_be(1);
+                subSystem.entites.Length.should_be(1);
+                subSystem.entites.should_contain(e);
+            };
         };
     }
 }

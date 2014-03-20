@@ -9,6 +9,8 @@ namespace Entitas {
 
         public delegate void EntityCollectionChange(EntityCollection collection, Entity entity);
 
+        public IEntityMatcher matcher { get { return _matcher; } }
+
         readonly IEntityMatcher _matcher;
         readonly OrderedSet<Entity> _entities = new OrderedSet<Entity>();
         Entity[] _entitiesCache;

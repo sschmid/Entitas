@@ -36,6 +36,14 @@ class describe_EntityMatcher : nspec {
                 m.Matches(eAB).should_be_true();
                 m.Matches(eABC).should_be_true();
             };
+
+            it["has type"] = () => {
+                m.HasType(typeof(ComponentA)).should_be_true();
+            };
+
+            it["doesn't have type"] = () => {
+                m.HasType(typeof(ComponentC)).should_be_false();
+            };
         };
 
         context["anyOf"] = () => {
