@@ -1,5 +1,6 @@
 ﻿using ToolKit;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Entitas {
     public class EntityRepository {
@@ -7,6 +8,7 @@ namespace Entitas {
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
         ulong _creationIndex;
         Entity[] _entitiesCache;
+        EntityCollection[] _collectionCache = new EntityCollection[0];
 
         public EntityRepository() {
             _creationIndex = 0;
@@ -58,33 +60,30 @@ namespace Entitas {
                 foreach (var e in GetEntities())
                     collection.AddEntityIfMatching(e);
                 _collections.Add(matcher, collection);
+                _collectionCache = _collections.Values.ToArray();
             }
 
             return _collections[matcher];
         }
 
         void onComponentAdded(Entity entity, IComponent component) {
-            var collections = _collections.Values;
-            foreach (var collection in collections)
+            foreach (var collection in _collectionCache)
                 collection.AddEntityIfMatching(entity);
         }
 
         void onComponentRemoved(Entity entity, IComponent component) {
-            var collections = _collections.Values;
-            foreach (var collection in collections)
+            foreach (var collection in _collectionCache)
                 collection.RemoveEntityIfNotMatching(entity);
         }
 
         void onComponentReplaced(Entity entity, IComponent component) {
-            var collections = _collections.Values;
-            foreach (var collection in collections)
+            foreach (var collection in _collectionCache)
                 if (collection.matcher.HasType(component.GetType()))
                     collection.ReplaceEntity(entity);
         }
 
         void removeFromAllCollections(Entity entity) {
-            var collections = _collections.Values;
-            foreach (var collection in collections)
+            foreach (var collection in _collectionCache)
                 collection.RemoveEntity(entity);
         }
     }

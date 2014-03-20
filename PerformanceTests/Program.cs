@@ -6,16 +6,17 @@ namespace PerformanceTests {
         public static void Main(string[] args) {
             Console.WriteLine("Running performance tests...");
             Thread.Sleep(500);
-            run<EntityRepositoryCreateEntity>();
-            run<EntityRepositoryDestroyAllEntites>();
-            run<EntityRepositoryHasComponent>();
-            run<EntityRepositoryGetEntities>();
-            run<EntityGetComponents>();
-            run<EntityHasComponent>();
-            run<EntityMatcherGetHashCode>();
-            run<EntityMatcherEquals>();
-            run<EntityRemoveAddComponent>();
-            run<EntityReplaceComponet>();
+//            run<EntityRepositoryCreateEntity>();
+//            run<EntityRepositoryDestroyAllEntites>();
+//            run<EntityRepositoryHasComponent>();
+//            run<EntityRepositoryGetEntities>();
+//            run<EntityGetComponents>();
+//            run<EntityHasComponent>();
+//            run<EntityMatcherGetHashCode>();
+//            run<EntityMatcherEquals>();
+//            run<EntityRemoveAddComponent>();
+//            run<EntityReplaceComponet>();
+            run<EntityRepositoryOnEntityReplaced>();
             Console.Read();
         }
 

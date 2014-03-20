@@ -50,6 +50,7 @@
     <Compile Include="PerformanceTests\Fixtures\ComponentC.cs" />
     <Compile Include="PerformanceTests\Entity\EntityRemoveAddComponent.cs" />
     <Compile Include="PerformanceTests\Entity\EntityReplaceComponet.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryOnEntityReplaced.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
