@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>12.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</ProjectGuid>
+    <ProjectGuid>{A65102DB-7A15-4F25-A318-79FE0A9545BB}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Entitas</RootNamespace>
-    <AssemblyName>Entitas</AssemblyName>
+    <RootNamespace>Dependencies</RootNamespace>
+    <AssemblyName>Dependencies</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,27 +33,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entitas\Entity.cs" />
-    <Compile Include="Entitas\IComponent.cs" />
-    <Compile Include="Entitas\EntityRepository.cs" />
-    <Compile Include="Entitas\EntityMatcher.cs" />
-    <Compile Include="Entitas\EntityCollection.cs" />
-    <Compile Include="Entitas\ReactiveEntitySystem.cs" />
-    <Compile Include="Entitas\IEntitySystem.cs" />
-    <Compile Include="Entitas\IReactiveSubEntitySystem.cs" />
-    <Compile Include="Entitas\Extensions\ES.cs" />
-    <Compile Include="Entitas\Extensions\EntityRepositoryExtension.cs" />
-    <Compile Include="Entitas\Extensions\EntityExtension.cs" />
+    <Compile Include="ToolKit\Collections\OrderedSet.cs" />
+    <Compile Include="ToolKit\Misc\DelayedCall.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="Entitas\" />
-    <Folder Include="Entitas\Extensions\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Dependencies\Dependencies.csproj">
-      <Project>{A65102DB-7A15-4F25-A318-79FE0A9545BB}</Project>
-      <Name>Dependencies</Name>
-    </ProjectReference>
+    <Folder Include="ToolKit\" />
   </ItemGroup>
 </Project>
