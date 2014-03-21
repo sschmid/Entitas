@@ -16,7 +16,8 @@ namespace PerformanceTests {
 //            run<EntityMatcherEquals>();
 //            run<EntityRemoveAddComponent>();
 //            run<EntityReplaceComponet>();
-            run<EntityRepositoryOnEntityReplaced>();
+//            run<EntityRepositoryOnEntityReplaced>();
+            run<EntityGetComponent>();
             Console.Read();
         }
 
