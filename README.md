@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.org/sschmid/Travis-CI-nspec.svg?branch=master)](https://travis-ci.org/sschmid/Travis-CI-nspec)
