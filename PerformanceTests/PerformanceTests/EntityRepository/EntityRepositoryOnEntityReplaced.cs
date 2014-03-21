@@ -6,7 +6,7 @@ public class EntityRepositoryOnEntityReplaced : IPerformanceTest {
 
     public void Before() {
         _repo = new EntityRepository();
-        var c = _repo.GetCollection<ComponentA>();
+        _repo.GetCollection<ComponentA>();
         _e = _repo.CreateEntity();
         _e.AddComponent(new ComponentA());
     }

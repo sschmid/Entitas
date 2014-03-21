@@ -2,6 +2,8 @@
 
 namespace Entitas {
     public class ReactiveEntitySystem : IEntitySystem {
+        public IReactiveSubEntitySystem subsystem { get { return _subsystem; } }
+
         readonly IReactiveSubEntitySystem _subsystem;
         readonly OrderedSet<Entity> _collectedEntites;
 
