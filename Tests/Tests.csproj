@@ -48,6 +48,7 @@
     <Compile Include="Tests\describe_EntityCollection.cs" />
     <Compile Include="Tests\describe_ReactiveEntitySystem.cs" />
     <Compile Include="Tests\Fixtures\ReactiveSubSystemSpy.cs" />
+    <Compile Include="Tests\describe_EntityArrayExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
