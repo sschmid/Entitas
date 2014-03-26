@@ -15,6 +15,12 @@ class integration : nspec {
 
             e.ReplaceComponent<ComponentC>();
             c.GetEntities().should_be_empty();
+
+            e.RemoveComponent<ComponentC>();
+            c.GetEntities().should_contain(e);
+
+            var c2 = repo.GetCollection(EntityMatcher.AllOfExcept(ES.Types<ComponentB, ComponentA>(), ES.Types<ComponentC>()));
+            c.GetEntities().should_be_same(c2.GetEntities());
         };
     }
 }

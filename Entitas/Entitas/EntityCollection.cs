@@ -47,14 +47,16 @@ namespace Entitas {
             }
         }
 
-        public void ReplaceEntity(Entity entity) {
-            if (_entities.Contains(entity)) {
-                if (OnEntityRemoved != null)
-                    OnEntityRemoved(this, entity);
-                if (OnEntityAdded != null)
-                    OnEntityAdded(this, entity);
-            } else {
-                HandleEntity(entity);
+        public void ReplaceEntity(Entity entity, IComponent component) {
+            if (_matcher.HasType(component.GetType())) {
+                if (_entities.Contains(entity)) {
+                    if (OnEntityRemoved != null)
+                        OnEntityRemoved(this, entity);
+                    if (OnEntityAdded != null)
+                        OnEntityAdded(this, entity);
+                } else {
+                    HandleEntity(entity);
+                }
             }
         }
 

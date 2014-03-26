@@ -5,6 +5,7 @@ class describe_EntityCollection : nspec {
     EntityCollection _collection;
     Entity _e1;
     Entity _e2;
+    ComponentA _componentA;
 
     void fail() {
         true.should_be_false();
@@ -13,9 +14,10 @@ class describe_EntityCollection : nspec {
     void before_each() {
         _collection = new EntityCollection(EntityMatcher.AllOf(new [] { typeof(ComponentA) }));
         _e1 = new Entity();
-        _e1.AddComponent(new ComponentA());
+        _componentA = new ComponentA();
+        _e1.AddComponent(_componentA);
         _e2 = new Entity();
-        _e2.AddComponent(new ComponentA());
+        _e2.AddComponent(_componentA);
     }
 
     void when_created() {
@@ -63,18 +65,18 @@ class describe_EntityCollection : nspec {
 
         it["replaces existing entity"] = () => {
             _collection.HandleEntity(_e1);
-            _collection.ReplaceEntity(_e1);
+            _collection.ReplaceEntity(_e1, _componentA);
             _collection.GetEntities().should_contain(_e1);
         };
 
         it["adds entity when calling ReplaceEntity() with an entity that hasn't been added before"] = () => {
-            _collection.ReplaceEntity(_e1);
+            _collection.ReplaceEntity(_e1, _componentA);
             _collection.GetEntities().should_contain(_e1);
         };
 
         it["doesn't add entity when calling ReplaceEntity() with an entity that hasn't been added before when not matching"] = () => {
             var entity = new Entity();
-            _collection.ReplaceEntity(entity);
+            _collection.ReplaceEntity(entity, new ComponentB());
             _collection.GetEntities().should_be_empty();
         };
 
@@ -160,7 +162,7 @@ class describe_EntityCollection : nspec {
                     eventEntityRemoved = entity;
                     didDispatchRemoved++;
                 };
-                _collection.ReplaceEntity(_e1);
+                _collection.ReplaceEntity(_e1, _componentA);
 
                 didDispatchAdded.should_be(1);
                 eventCollectionAdded.should_be_same(_collection);
@@ -180,7 +182,7 @@ class describe_EntityCollection : nspec {
                     didDispatch++;
                 };
                 _collection.OnEntityRemoved += (collection, entity) => fail();
-                _collection.ReplaceEntity(_e1);
+                _collection.ReplaceEntity(_e1, _componentA);
 
                 didDispatch.should_be(1);
                 eventCollection.should_be_same(_collection);
@@ -246,7 +248,7 @@ class describe_EntityCollection : nspec {
                 _collection.HandleEntity(_e1);
                 var s = _collection.GetSingleEntity();
                 var e = _collection.GetEntities();
-                _collection.ReplaceEntity(_e1);
+                _collection.ReplaceEntity(_e1, _componentA);
                 s.should_be_same(_collection.GetSingleEntity());
                 e.should_be_same(_collection.GetEntities());
             };
@@ -254,10 +256,16 @@ class describe_EntityCollection : nspec {
             it["updates cache when replacing an entity that hasn't been added before"] = () => {
                 var s = _collection.GetSingleEntity();
                 var e = _collection.GetEntities();
-                _collection.ReplaceEntity(_e1);
+                _collection.ReplaceEntity(_e1, _componentA);
                 s.should_not_be_same(_collection.GetSingleEntity());
                 e.should_not_be_same(_collection.GetEntities());
             };
+        };
+
+        it["doesn't replace existing entity when component is not matching"] = () => {
+            _collection.HandleEntity(_e1);
+            _collection.OnEntityAdded += (collection, entity) => fail();
+            _collection.ReplaceEntity(_e1, new ComponentB());
         };
     }
 }

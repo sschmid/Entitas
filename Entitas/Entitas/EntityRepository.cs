@@ -20,8 +20,8 @@ namespace Entitas {
 
         public Entity CreateEntity() {
             var entity = new Entity(_creationIndex++);
-            entity.OnComponentAdded += onComponentAdded;
-            entity.OnComponentRemoved += onComponentRemoved;
+            entity.OnComponentAdded += handleEntity;
+            entity.OnComponentRemoved += handleEntity;
             entity.OnComponentReplaced += onComponentReplaced;
             _entities.Add(entity);
             _entitiesCache = null;
@@ -29,8 +29,8 @@ namespace Entitas {
         }
 
         public void DestroyEntity(Entity entity) {
-            entity.OnComponentAdded -= onComponentAdded;
-            entity.OnComponentRemoved -= onComponentRemoved;
+            entity.OnComponentAdded -= handleEntity;
+            entity.OnComponentRemoved -= handleEntity;
             entity.RemoveAllComponents();
             removeFromAllCollections(entity);
             _entities.Remove(entity);
@@ -66,20 +66,14 @@ namespace Entitas {
             return _collections[matcher];
         }
 
-        void onComponentAdded(Entity entity, IComponent component) {
-            foreach (var collection in _collectionCache)
-                collection.HandleEntity(entity);
-        }
-
-        void onComponentRemoved(Entity entity, IComponent component) {
+        void handleEntity(Entity entity, IComponent component) {
             foreach (var collection in _collectionCache)
                 collection.HandleEntity(entity);
         }
 
         void onComponentReplaced(Entity entity, IComponent component) {
             foreach (var collection in _collectionCache)
-                if (collection.matcher.HasType(component.GetType()))
-                    collection.ReplaceEntity(entity);
+                collection.ReplaceEntity(entity, component);
         }
 
         void removeFromAllCollections(Entity entity) {
