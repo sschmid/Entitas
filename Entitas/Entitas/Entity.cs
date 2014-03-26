@@ -56,8 +56,7 @@ namespace Entitas {
         public void ReplaceComponent(IComponent component) {
             var type = component.GetType();
             if (HasComponent(type)) {
-                _components.Remove(type);
-                _components.Add(type, component);
+                _components[type] = component;
                 _componentsCache = null;
                 if (OnComponentReplaced != null)
                     OnComponentReplaced(this, component);

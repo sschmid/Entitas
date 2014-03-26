@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace ToolKit {
-    public class OrderedSet<T> : ISet<T>, ICollection<T>, IEnumerable<T> {
+    public class OrderedSet<T> : ICollection<T>, IEnumerable<T> 
+    #if NET_4_0
+    , ISet<T>
+    #endif
+    {
         readonly HashSet<T> _hashSet;
         LinkedList<T> _list;
 

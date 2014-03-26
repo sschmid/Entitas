@@ -35,7 +35,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entitas\Entity.cs" />
     <Compile Include="Entitas\EntityRepository.cs" />
-    <Compile Include="Entitas\EntityMatcher.cs" />
     <Compile Include="Entitas\EntityCollection.cs" />
     <Compile Include="Entitas\ReactiveEntitySystem.cs" />
     <Compile Include="Entitas\Extensions\ES.cs" />
@@ -45,12 +44,19 @@
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
     <Compile Include="Entitas\Interfaces\IEntitySystem.cs" />
     <Compile Include="Entitas\Interfaces\IReactiveSubEntitySystem.cs" />
+    <Compile Include="Entitas\EntityMatcher\EntityMatcher.cs" />
+    <Compile Include="Entitas\EntityMatcher\AbstractEntityMatcher.cs" />
+    <Compile Include="Entitas\EntityMatcher\AllOfEntityMatcher.cs" />
+    <Compile Include="Entitas\EntityMatcher\AnyOfEntityMatcher.cs" />
+    <Compile Include="Entitas\EntityMatcher\AllOfExceptEntityMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\IEntityMatcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Entitas\" />
     <Folder Include="Entitas\Extensions\" />
     <Folder Include="Entitas\Interfaces\" />
+    <Folder Include="Entitas\EntityMatcher\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dependencies\Dependencies.csproj">
