@@ -20,21 +20,21 @@ namespace Entitas {
             _matcher = matcher;
         }
 
-        public void AddEntityIfMatching(Entity entity) {
-            if (_matcher.Matches(entity)) {
-                var added = _entities.Add(entity);
-                if (added) {
-                    _entitiesCache = null;
-                    _singleEntityCache = null;
-                    if (OnEntityAdded != null)
-                        OnEntityAdded(this, entity);
-                }
-            }
+        public void HandleEntity(Entity entity) {
+            if (_matcher.Matches(entity))
+                addEntity(entity);
+            else
+                RemoveEntity(entity);
         }
 
-        public void RemoveEntityIfNotMatching(Entity entity) {
-            if (!_matcher.Matches(entity))
-                RemoveEntity(entity);
+        void addEntity(Entity entity) {
+            var added = _entities.Add(entity);
+            if (added) {
+                _entitiesCache = null;
+                _singleEntityCache = null;
+                if (OnEntityAdded != null)
+                    OnEntityAdded(this, entity);
+            }
         }
 
         public void RemoveEntity(Entity entity) {
@@ -54,7 +54,7 @@ namespace Entitas {
                 if (OnEntityAdded != null)
                     OnEntityAdded(this, entity);
             } else {
-                AddEntityIfMatching(entity);
+                HandleEntity(entity);
             }
         }
 
@@ -85,18 +85,5 @@ namespace Entitas {
         public SingleEntityException(IEntityMatcher matcher) :
             base("Multiple entites exist matching " + matcher) {
         }
-
-        static string getTypesString(IEnumerable<Type> types) {
-            const string seperator = ", ";
-            var str = string.Empty;
-            foreach (var type in types)
-                str += type + ", ";
-
-            if (str != string.Empty)
-                str = str.Substring(0, str.Length - seperator.Length);
-
-            return str;
-        }
     }
 }
-

@@ -58,7 +58,7 @@ namespace Entitas {
             if (!_collections.ContainsKey(matcher)) {
                 var collection = new EntityCollection(matcher);
                 foreach (var e in GetEntities())
-                    collection.AddEntityIfMatching(e);
+                    collection.HandleEntity(e);
                 _collections.Add(matcher, collection);
                 _collectionCache = _collections.Values.ToArray();
             }
@@ -68,12 +68,12 @@ namespace Entitas {
 
         void onComponentAdded(Entity entity, IComponent component) {
             foreach (var collection in _collectionCache)
-                collection.AddEntityIfMatching(entity);
+                collection.HandleEntity(entity);
         }
 
         void onComponentRemoved(Entity entity, IComponent component) {
             foreach (var collection in _collectionCache)
-                collection.RemoveEntityIfNotMatching(entity);
+                collection.HandleEntity(entity);
         }
 
         void onComponentReplaced(Entity entity, IComponent component) {
