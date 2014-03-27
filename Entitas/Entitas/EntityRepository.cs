@@ -31,6 +31,7 @@ namespace Entitas {
         public void DestroyEntity(Entity entity) {
             entity.OnComponentAdded -= handleEntity;
             entity.OnComponentRemoved -= handleEntity;
+            entity.OnComponentReplaced -= onComponentReplaced;
             entity.RemoveAllComponents();
             removeFromAllCollections(entity);
             _entities.Remove(entity);
@@ -73,7 +74,7 @@ namespace Entitas {
 
         void onComponentReplaced(Entity entity, IComponent component) {
             foreach (var collection in _collectionCache)
-                collection.ReplaceEntity(entity, component);
+                collection.HandleEntity(entity, component);
         }
 
         void removeFromAllCollections(Entity entity) {

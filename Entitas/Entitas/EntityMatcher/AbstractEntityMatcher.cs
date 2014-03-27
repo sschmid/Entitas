@@ -38,8 +38,8 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            var typesStr = string.Empty;
             const string seperator = ", ";
+            var typesStr = string.Empty;
             foreach (var type in _types)
                 typesStr += type + seperator;
 

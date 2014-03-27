@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using ToolKit;
 
 namespace Entitas {
@@ -8,8 +7,6 @@ namespace Entitas {
         public event EntityCollectionChange OnEntityRemoved;
 
         public delegate void EntityCollectionChange(EntityCollection collection, Entity entity);
-
-        public IEntityMatcher matcher { get { return _matcher; } }
 
         readonly IEntityMatcher _matcher;
         readonly OrderedSet<Entity> _entities = new OrderedSet<Entity>();
@@ -20,7 +17,25 @@ namespace Entitas {
             _matcher = matcher;
         }
 
-        public void HandleEntity(Entity entity) {
+        public void HandleEntity(Entity entity, IComponent component = null) {
+            if (shouldReplaceExistingEntity(entity, component))
+                dispatchReplace(entity);
+            else
+                handleEntity(entity);
+        }
+
+        bool shouldReplaceExistingEntity(Entity entity, IComponent component = null) {
+            return component != null && _matcher.HasType(component.GetType()) && _entities.Contains(entity);
+        }
+
+        void dispatchReplace(Entity entity) {
+            if (OnEntityRemoved != null)
+                OnEntityRemoved(this, entity);
+            if (OnEntityAdded != null)
+                OnEntityAdded(this, entity);
+        }
+
+        void handleEntity(Entity entity) {
             if (_matcher.Matches(entity))
                 addEntity(entity);
             else
@@ -44,19 +59,6 @@ namespace Entitas {
                 _singleEntityCache = null;
                 if (OnEntityRemoved != null)
                     OnEntityRemoved(this, entity);
-            }
-        }
-
-        public void ReplaceEntity(Entity entity, IComponent component) {
-            if (_matcher.HasType(component.GetType())) {
-                if (_entities.Contains(entity)) {
-                    if (OnEntityRemoved != null)
-                        OnEntityRemoved(this, entity);
-                    if (OnEntityAdded != null)
-                        OnEntityAdded(this, entity);
-                } else {
-                    HandleEntity(entity);
-                }
             }
         }
 

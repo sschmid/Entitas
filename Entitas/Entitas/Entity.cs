@@ -61,11 +61,7 @@ namespace Entitas {
                 if (OnComponentReplaced != null)
                     OnComponentReplaced(this, component);
             } else {
-                _components.Add(type, component);
-                _componentsCache = null;
-                _componentTypesCache = null;
-                if (OnComponentAdded != null)
-                    OnComponentAdded(this, component);
+                AddComponent(component);
             }
         }
 
@@ -123,9 +119,9 @@ namespace Entitas {
         }
 
         public override string ToString() {
+            const string seperator = ", ";
             var componentsStr = string.Empty;
             var components = GetComponents();
-            const string seperator = ", ";
             foreach (var component in components)
                 componentsStr += component + seperator;
 
