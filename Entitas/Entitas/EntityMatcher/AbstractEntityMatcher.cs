@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Entitas {
     public abstract class AbstractEntityMatcher : IEntityMatcher {
-        protected HashSet<Type> _types;
-        protected int _hash;
+        public Type[] types { get { return _types; } }
+
+        readonly Type[] _types;
+        readonly int _hash;
 
         protected AbstractEntityMatcher() {
         }
 
-        protected AbstractEntityMatcher(IEnumerable<Type> types) {
-            _types = new HashSet<Type>(types);
+        protected AbstractEntityMatcher(Type[] types) {
+            _types = new HashSet<Type>(types).ToArray();
             int hash = GetType().GetHashCode();
             foreach (var type in _types)
                 hash ^= type.GetHashCode();
@@ -18,10 +21,6 @@ namespace Entitas {
         }
 
         public abstract bool Matches(Entity entity);
-
-        public bool HasType(Type type) {
-            return _types.Contains(type);
-        }
 
         public override bool Equals(object obj) {
             if (obj == this)

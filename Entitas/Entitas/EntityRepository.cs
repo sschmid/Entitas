@@ -1,14 +1,14 @@
 ﻿using ToolKit;
 using System.Collections.Generic;
-using System.Linq;
+using System;
 
 namespace Entitas {
     public class EntityRepository {
         readonly OrderedSet<Entity> _entities = new OrderedSet<Entity>();
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
+        readonly Dictionary<Type, List<EntityCollection>> _collectionsForType = new Dictionary<Type, List<EntityCollection>>();
         ulong _creationIndex;
         Entity[] _entitiesCache;
-        EntityCollection[] _collectionCache = new EntityCollection[0];
 
         public EntityRepository() {
             _creationIndex = 0;
@@ -20,8 +20,8 @@ namespace Entitas {
 
         public Entity CreateEntity() {
             var entity = new Entity(_creationIndex++);
-            entity.OnComponentAdded += handleEntity;
-            entity.OnComponentRemoved += handleEntity;
+            entity.OnComponentAdded += onComponentAdded;
+            entity.OnComponentRemoved += onComponentRemoved;
             entity.OnComponentReplaced += onComponentReplaced;
             _entities.Add(entity);
             _entitiesCache = null;
@@ -29,8 +29,8 @@ namespace Entitas {
         }
 
         public void DestroyEntity(Entity entity) {
-            entity.OnComponentAdded -= handleEntity;
-            entity.OnComponentRemoved -= handleEntity;
+            entity.OnComponentAdded -= onComponentAdded;
+            entity.OnComponentRemoved -= onComponentRemoved;
             entity.OnComponentReplaced -= onComponentReplaced;
             entity.RemoveAllComponents();
             removeFromAllCollections(entity);
@@ -59,26 +59,50 @@ namespace Entitas {
             if (!_collections.ContainsKey(matcher)) {
                 var collection = new EntityCollection(matcher);
                 foreach (var e in GetEntities())
-                    collection.HandleEntity(e);
+                    collection.AddEntityIfMatching(e);
                 _collections.Add(matcher, collection);
-                _collectionCache = _collections.Values.ToArray();
+
+                foreach (var type in matcher.types) {
+                    if (!_collectionsForType.ContainsKey(type))
+                        _collectionsForType.Add(type, new List<EntityCollection>());
+
+                    _collectionsForType[type].Add(collection);
+                }
             }
 
             return _collections[matcher];
         }
 
-        void handleEntity(Entity entity, IComponent component) {
-            foreach (var collection in _collectionCache)
-                collection.HandleEntity(entity);
+        void onComponentAdded(Entity entity, IComponent component) {
+            var type = component.GetType();
+            if (_collectionsForType.ContainsKey(type)) {
+                var collections = _collectionsForType[type];
+                foreach (var collection in collections)
+                    collection.AddEntityIfMatching(entity);
+            }
+        }
+
+        void onComponentRemoved(Entity entity, IComponent component) {
+            var type = component.GetType();
+            if (_collectionsForType.ContainsKey(type)) {
+                var collections = _collectionsForType[type];
+                foreach (var collection in collections)
+                    collection.RemoveEntity(entity);
+            }
         }
 
         void onComponentReplaced(Entity entity, IComponent component) {
-            foreach (var collection in _collectionCache)
-                collection.HandleEntity(entity, component);
+            var type = component.GetType();
+            if (_collectionsForType.ContainsKey(type)) {
+                var collections = _collectionsForType[type];
+                foreach (var collection in collections)
+                    collection.ReplaceEntity(entity);
+            }
         }
 
         void removeFromAllCollections(Entity entity) {
-            foreach (var collection in _collectionCache)
+            var collections = _collections.Values;
+            foreach (var collection in collections)
                 collection.RemoveEntity(entity);
         }
     }

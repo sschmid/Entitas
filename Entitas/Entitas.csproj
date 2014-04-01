@@ -30,6 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -47,8 +48,6 @@
     <Compile Include="Entitas\EntityMatcher\EntityMatcher.cs" />
     <Compile Include="Entitas\EntityMatcher\AbstractEntityMatcher.cs" />
     <Compile Include="Entitas\EntityMatcher\AllOfEntityMatcher.cs" />
-    <Compile Include="Entitas\EntityMatcher\AnyOfEntityMatcher.cs" />
-    <Compile Include="Entitas\EntityMatcher\AllOfExceptEntityMatcher.cs" />
     <Compile Include="Entitas\Interfaces\IEntityMatcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

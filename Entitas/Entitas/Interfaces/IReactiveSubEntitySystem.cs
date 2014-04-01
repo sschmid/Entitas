@@ -1,5 +1,6 @@
 ﻿namespace Entitas {
-    public enum EntityCollectionEventType {
+    public enum EntityCollectionEventType : byte {
+        None,
         OnEntityAdded,
         OnEntityRemoved,
         OnEntityAddedSafe

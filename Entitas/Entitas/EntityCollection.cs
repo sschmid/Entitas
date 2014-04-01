@@ -17,38 +17,30 @@ namespace Entitas {
             _matcher = matcher;
         }
 
-        public void HandleEntity(Entity entity, IComponent component = null) {
-            if (shouldReplaceExistingEntity(entity, component))
-                dispatchReplace(entity);
-            else
-                handleEntity(entity);
+        public void AddEntityIfMatching(Entity entity) {
+            addEntityIfMatching(entity);
         }
 
-        bool shouldReplaceExistingEntity(Entity entity, IComponent component = null) {
-            return component != null && _matcher.HasType(component.GetType()) && _entities.Contains(entity);
+        void addEntityIfMatching(Entity entity) {
+            if (_matcher.Matches(entity)) {
+                var added = _entities.Add(entity);
+                if (added) {
+                    _entitiesCache = null;
+                    _singleEntityCache = null;
+                    if (OnEntityAdded != null)
+                        OnEntityAdded(this, entity);
+                }
+            }
         }
 
-        void dispatchReplace(Entity entity) {
-            if (OnEntityRemoved != null)
-                OnEntityRemoved(this, entity);
-            if (OnEntityAdded != null)
-                OnEntityAdded(this, entity);
-        }
-
-        void handleEntity(Entity entity) {
-            if (_matcher.Matches(entity))
-                addEntity(entity);
-            else
-                RemoveEntity(entity);
-        }
-
-        void addEntity(Entity entity) {
-            var added = _entities.Add(entity);
-            if (added) {
-                _entitiesCache = null;
-                _singleEntityCache = null;
+        public void ReplaceEntity(Entity entity) {
+            if (_entities.Contains(entity)) {
+                if (OnEntityRemoved != null)
+                    OnEntityRemoved(this, entity);
                 if (OnEntityAdded != null)
                     OnEntityAdded(this, entity);
+            } else {
+                addEntityIfMatching(entity);
             }
         }
 

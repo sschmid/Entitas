@@ -25,22 +25,14 @@ class describe_EntityArrayExtension : nspec {
 
         it["removes entities which have not specific components"] = () => {
             var entities = allEntities.With(new [] { typeof(ComponentC) });
-            entities.Length.should_be(1);
+            entities.Count.should_be(1);
             entities.should_contain(eABC);
         };
 
         it["removes entities which have specific components"] = () => {
             var entities = allEntities.Without(new [] { typeof(ComponentC) });
-            entities.Length.should_be(2);
+            entities.Count.should_be(2);
             entities.should_not_contain(eABC);
-        };
-
-        it["works great together"] = () => {
-            var entities = allEntities
-                .Without(new [] { typeof(ComponentC) })
-                .With(new [] { typeof(ComponentB) });
-            entities.Length.should_be(1);
-            entities.should_contain(eAB);
         };
     }
 }

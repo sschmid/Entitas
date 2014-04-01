@@ -1,6 +1,5 @@
 ﻿using NSpec;
 using Entitas;
-using System;
 
 class describe_EntityMatcher : nspec {
     void when_creating_matcher() {
@@ -22,9 +21,12 @@ class describe_EntityMatcher : nspec {
             eABC.AddComponent(new ComponentC());
         };
 
+
+
         context["allOf"] = () => {
             IEntityMatcher m = null;
             before = () => m = EntityMatcher.AllOf(new [] {
+                typeof(ComponentA),
                 typeof(ComponentA),
                 typeof(ComponentB)
             });
@@ -38,47 +40,10 @@ class describe_EntityMatcher : nspec {
                 m.Matches(eABC).should_be_true();
             };
 
-            it["has type"] = () => {
-                m.HasType(typeof(ComponentA)).should_be_true();
-            };
-
-            it["doesn't have type"] = () => {
-                m.HasType(typeof(ComponentC)).should_be_false();
-            };
-        };
-
-        context["anyOf"] = () => {
-            IEntityMatcher m = null;
-            before = () => m = EntityMatcher.AnyOf(new [] {
-                typeof(ComponentA),
-                typeof(ComponentB)
-            });
-
-            it["doesn't match"] = () => {
-                m.Matches(eC).should_be_false();
-            };
-
-            it["matches"] = () => {
-                m.Matches(eA).should_be_true();
-            };
-        };
-
-        context["AllOfExcept"] = () => {
-            IEntityMatcher m = null;
-            before = () => m = EntityMatcher.AllOfExcept(new [] {
-                typeof(ComponentA),
-                typeof(ComponentB)
-            }, new [] {
-                typeof(ComponentC),
-            });
-
-            it["doesn't match"] = () => {
-                m.Matches(eA).should_be_false();
-                m.Matches(eABC).should_be_false();
-            };
-
-            it["matches"] = () => {
-                m.Matches(eAB).should_be_true();
+            it["gets triggering types without duplicates"] = () => {
+                m.types.Length.should_be(2);
+                m.types.should_contain(typeof(ComponentA));
+                m.types.should_contain(typeof(ComponentB));
             };
         };
 
@@ -120,126 +85,6 @@ class describe_EntityMatcher : nspec {
                 });
 
                 m1.GetHashCode().should_be(m2.GetHashCode());
-            };
-                
-            it["equals equal AnyOfEntityMatcher"] = () => {
-                var m1 = EntityMatcher.AnyOf(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                });
-                var m2 = EntityMatcher.AnyOf(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                });
-
-                m1.should_not_be_same(m2);
-                m1.Equals(m2).should_be_true();
-            };
-
-            it["doesn't equal different AnyOfEntityMatcher"] = () => {
-                var m1 = EntityMatcher.AnyOf(new [] {
-                    typeof(ComponentA)
-                });
-                var m2 = EntityMatcher.AnyOf(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                });
-
-                m1.Equals(m2).should_be_false();
-            };
-
-            it["equals equal AllOfExceptMatcher"] = () => {
-                var m1 = EntityMatcher.AllOfExcept(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                }, new [] { typeof(ComponentC) });
-                var m2 = EntityMatcher.AllOfExcept(new [] {
-                    typeof(ComponentB),
-                    typeof(ComponentA)
-                }, new [] { typeof(ComponentC) });
-
-                m1.should_not_be_same(m2);
-                m1.Equals(m2).should_be_true();
-            };
-
-            it["doesn't equal different AllOfExceptMatcher"] = () => {
-                var m1 = EntityMatcher.AllOfExcept(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                }, new [] { typeof(ComponentC) });
-                var m2 = EntityMatcher.AllOfExcept(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                }, new Type[0]);
-
-                m1.Equals(m2).should_be_false();
-            };
-
-            it["doesn't equal different AllOfExceptMatcher"] = () => {
-                var m1 = EntityMatcher.AllOfExcept(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                }, new [] { typeof(ComponentC) });
-                var m2 = EntityMatcher.AllOfExcept(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentC)
-                }, new [] { typeof(ComponentB) });
-
-                m1.Equals(m2).should_be_false();
-            };
-
-
-            it["generates same hash for equal AllOfOfEntityMatcher"] = () => {
-                var m1 = EntityMatcher.AllOf(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                });
-                var m2 = EntityMatcher.AllOf(new [] {
-                    typeof(ComponentB),
-                    typeof(ComponentA)
-                });
-
-                m1.GetHashCode().should_be(m2.GetHashCode());
-            };
-
-            it["generates different hash for different IEntityMatcher with equal sets"] = () => {
-                var m1 = EntityMatcher.AllOf(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                });
-                var m2 = EntityMatcher.AnyOf(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                });
-
-                m1.GetHashCode().should_not_be(m2.GetHashCode());
-            };
-
-            it["allOf can ToString"] = () => {
-                var m = EntityMatcher.AllOf(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                });
-
-                m.ToString().should_be("AllOfEntityMatcher(ComponentA, ComponentB)");
-            };
-
-            it["anyOf can ToString"] = () => {
-                var m = EntityMatcher.AnyOf(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                });
-
-                m.ToString().should_be("AnyOfEntityMatcher(ComponentA, ComponentB)");
-            };
-
-            it["allOfExcept can ToString"] = () => {
-                var m = EntityMatcher.AllOfExcept(new [] {
-                    typeof(ComponentA),
-                    typeof(ComponentB)
-                }, new [] { typeof(ComponentC), typeof(ComponentA) });
-
-                m.ToString().should_be("AllOfExceptEntityMatcher(ComponentA, ComponentB)(ComponentC, ComponentA)");
             };
         };
     }

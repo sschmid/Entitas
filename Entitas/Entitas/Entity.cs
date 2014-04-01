@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Entitas {
     public class Entity {
@@ -13,8 +14,8 @@ namespace Entitas {
 
         readonly Dictionary<Type, IComponent> _components = new Dictionary<Type, IComponent>();
         readonly ulong _creationIndex;
-        HashSet<IComponent> _componentsCache;
-        HashSet<Type> _componentTypesCache;
+        IComponent[] _componentsCache;
+        Type[] _componentTypesCache;
 
         public Entity() {
             _creationIndex = 0;
@@ -82,7 +83,7 @@ namespace Entitas {
             return _components.ContainsKey(type);
         }
 
-        public bool HasComponents(IEnumerable<Type> types) {
+        public bool HasComponents(Type[] types) {
             foreach (var type in types)
                 if (!_components.ContainsKey(type))
                     return false;
@@ -90,7 +91,7 @@ namespace Entitas {
             return true;
         }
 
-        public bool HasAnyComponent(IEnumerable<Type> types) {
+        public bool HasAnyComponent(Type[] types) {
             foreach (var type in types)
                 if (_components.ContainsKey(type))
                     return true;
@@ -98,16 +99,16 @@ namespace Entitas {
             return false;
         }
 
-        public HashSet<IComponent> GetComponents() {
+        public IComponent[] GetComponents() {
             if (_componentsCache == null)
-                _componentsCache = new HashSet<IComponent>(_components.Values);
+                _componentsCache = _components.Values.ToArray();
 
             return _componentsCache;
         }
 
-        public HashSet<Type> GetComponentTypes() {
+        public Type[] GetComponentTypes() {
             if (_componentTypesCache == null)
-                _componentTypesCache = new HashSet<Type>(_components.Keys);
+                _componentTypesCache = _components.Keys.ToArray();
 
             return _componentTypesCache;
         }

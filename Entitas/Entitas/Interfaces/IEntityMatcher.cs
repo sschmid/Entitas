@@ -2,8 +2,8 @@ using System;
 
 namespace Entitas {
     public interface IEntityMatcher {
-        bool Matches(Entity entity);
+        Type[] types { get; }
 
-        bool HasType(Type type);
+        bool Matches(Entity entity);
     }
 }
