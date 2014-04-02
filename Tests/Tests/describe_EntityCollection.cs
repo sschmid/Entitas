@@ -56,9 +56,9 @@ class describe_EntityCollection : nspec {
             _collection.GetEntities().should_contain(_e1);
         };
 
-        it["adds entity when replacing with an entity that hasn't been added before"] = () => {
+        it["doesn't add entity when replacing with an entity that hasn't been added before"] = () => {
             _collection.ReplaceEntity(_e1);
-            _collection.GetEntities().should_contain(_e1);
+            _collection.GetEntities().should_not_contain(_e1);
         };
 
         it["doesn't add entity when replacing with an entity that hasn't been added before when not matching"] = () => {
@@ -158,23 +158,6 @@ class describe_EntityCollection : nspec {
                 eventCollectionRemoved.should_be_same(_collection);
                 eventEntityRemoved.should_be_same(_e1);
             };
-
-            it["dispatches OnEntityAdded when entity added by replacing"] = () => {
-                var didDispatch = 0;
-                EntityCollection eventCollection = null;
-                Entity eventEntity = null;
-                _collection.OnEntityAdded += (collection, entity) => {
-                    eventCollection = collection;
-                    eventEntity = entity;
-                    didDispatch++;
-                };
-                _collection.OnEntityRemoved += (collection, entity) => fail();
-                _collection.ReplaceEntity(_e1);
-
-                didDispatch.should_be(1);
-                eventCollection.should_be_same(_collection);
-                eventEntity.should_be_same(_e1);
-            };
         };
 
         context["internal caching"] = () => {
@@ -238,14 +221,6 @@ class describe_EntityCollection : nspec {
                 _collection.ReplaceEntity(_e1);
                 s.should_be_same(_collection.GetSingleEntity());
                 e.should_be_same(_collection.GetEntities());
-            };
-
-            it["updates cache when replacing an entity that hasn't been added before"] = () => {
-                var s = _collection.GetSingleEntity();
-                var e = _collection.GetEntities();
-                _collection.ReplaceEntity(_e1);
-                s.should_not_be_same(_collection.GetSingleEntity());
-                e.should_not_be_same(_collection.GetEntities());
             };
         };
     }

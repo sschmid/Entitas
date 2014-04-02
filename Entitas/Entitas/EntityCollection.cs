@@ -39,8 +39,6 @@ namespace Entitas {
                     OnEntityRemoved(this, entity);
                 if (OnEntityAdded != null)
                     OnEntityAdded(this, entity);
-            } else {
-                addEntityIfMatching(entity);
             }
         }
 
