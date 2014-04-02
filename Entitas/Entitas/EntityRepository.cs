@@ -7,6 +7,7 @@ namespace Entitas {
         readonly OrderedSet<Entity> _entities = new OrderedSet<Entity>();
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
         readonly Dictionary<Type, List<EntityCollection>> _collectionsForType = new Dictionary<Type, List<EntityCollection>>();
+        readonly List<EntityCollection> _collectionList = new List<EntityCollection>();
         ulong _creationIndex;
         Entity[] _entitiesCache;
 
@@ -19,12 +20,26 @@ namespace Entitas {
         }
 
         public Entity CreateEntity() {
+            return CreateEntity(null);
+        }
+
+        public Entity CreateEntity(IComponent[] components) {
             var entity = new Entity(_creationIndex++);
+            _entities.Add(entity);
+            _entitiesCache = null;
+
+            if (components != null) {
+                foreach (var component in components)
+                    entity.AddComponent(component);
+
+                foreach (var collection in _collectionList)
+                    collection.AddEntityIfMatching(entity);
+            }
+
             entity.OnComponentAdded += onComponentAdded;
             entity.OnComponentRemoved += onComponentRemoved;
             entity.OnComponentReplaced += onComponentReplaced;
-            _entities.Add(entity);
-            _entitiesCache = null;
+
             return entity;
         }
 
@@ -61,6 +76,7 @@ namespace Entitas {
                 foreach (var e in GetEntities())
                     collection.AddEntityIfMatching(e);
                 _collections.Add(matcher, collection);
+                _collectionList.Add(collection);
 
                 foreach (var type in matcher.types) {
                     if (!_collectionsForType.ContainsKey(type))
@@ -101,8 +117,7 @@ namespace Entitas {
         }
 
         void removeFromAllCollections(Entity entity) {
-            var collections = _collections.Values;
-            foreach (var collection in collections)
+            foreach (var collection in _collectionList)
                 collection.RemoveEntity(entity);
         }
     }

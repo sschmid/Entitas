@@ -25,6 +25,34 @@ class describe_EntityRepository : nspec {
             e.GetType().should_be(typeof(Entity));
         };
 
+        it["creates entity with components"] = () => {
+            var components = new IComponent[] {
+                new ComponentA(),
+                new ComponentB(),
+                new ComponentC()
+            };
+            var e = _repo.CreateEntity(components);
+            e.HasComponent(typeof(ComponentA)).should_be_true();
+            e.HasComponent(typeof(ComponentB)).should_be_true();
+            e.HasComponent(typeof(ComponentC)).should_be_true();
+        };
+
+        it["adds created entity with components to collection"] = () => {
+            var c = _repo.GetCollection(EntityMatcher.AllOf(new [] {
+                typeof(ComponentA),
+                typeof(ComponentB),
+                typeof(ComponentC)
+            }));
+            var components = new IComponent[] {
+                new ComponentA(),
+                new ComponentB(),
+                new ComponentC()
+            };
+            var e = _repo.CreateEntity(components);
+            c.GetEntities().should_contain(e);
+        };
+
+
         it["increments creation index when creating entities"] = () => {
             _repo.CreateEntity().creationIndex.should_be(0);
             _repo.CreateEntity().creationIndex.should_be(1);
