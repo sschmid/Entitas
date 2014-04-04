@@ -15,8 +15,8 @@ namespace Entitas {
         protected AbstractEntityMatcher(int[] indices) {
             _indices = new HashSet<int>(indices).ToArray();
             int hash = GetType().GetHashCode();
-            foreach (var type in _indices)
-                hash ^= type.GetHashCode();
+            for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++)
+                hash ^= _indices[i];
             _hash = hash;
         }
 
@@ -39,8 +39,8 @@ namespace Entitas {
         public override string ToString() {
             const string seperator = ", ";
             var indexStr = string.Empty;
-            foreach (var index in _indices)
-                indexStr += index + seperator;
+            for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++)
+                indexStr += _indices[i] + seperator;
 
             if (indexStr != string.Empty)
                 indexStr = indexStr.Substring(0, indexStr.Length - seperator.Length);

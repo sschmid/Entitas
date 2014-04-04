@@ -47,8 +47,8 @@ namespace Entitas {
 
         public void DestroyAllEntities() {
             var entities = GetEntities();
-            foreach (var e in entities)
-                DestroyEntity(e);
+            for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++)
+                DestroyEntity(entities[i]);
         }
 
         public bool HasEntity(Entity entity) {
@@ -65,15 +65,16 @@ namespace Entitas {
         public EntityCollection GetCollection(IEntityMatcher matcher) {
             if (!_collections.ContainsKey(matcher)) {
                 var collection = new EntityCollection(matcher);
-                foreach (var e in GetEntities())
-                    collection.AddEntityIfMatching(e);
+                var entities = GetEntities();
+                for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++)
+                    collection.AddEntityIfMatching(entities[i]);
                 _collections.Add(matcher, collection);
                 _collectionList.Add(collection);
 
-                foreach (var index in matcher.indices) {
+                for (int i = 0, indicesLength = matcher.indices.Length; i < indicesLength; i++) {
+                    var index = matcher.indices[i];
                     if (_collectionsForIndex[index] == null)
                         _collectionsForIndex[index] = new List<EntityCollection>();
-
                     _collectionsForIndex[index].Add(collection);
                 }
             }
@@ -84,30 +85,30 @@ namespace Entitas {
         void onComponentAdded(Entity entity, int index, IComponent component) {
             if (_collectionsForIndex[index] != null) {
                 var collections = _collectionsForIndex[index];
-                foreach (var collection in collections)
-                    collection.AddEntityIfMatching(entity);
+                for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++)
+                    collections[i].AddEntityIfMatching(entity);
             }
         }
 
         void onComponentRemoved(Entity entity, int index, IComponent component) {
             if (_collectionsForIndex[index] != null) {
                 var collections = _collectionsForIndex[index];
-                foreach (var collection in collections)
-                    collection.RemoveEntity(entity);
+                for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++)
+                    collections[i].RemoveEntity(entity);
             }
         }
 
         void onComponentReplaced(Entity entity, int index, IComponent component) {
             if (_collectionsForIndex[index] != null) {
                 var collections = _collectionsForIndex[index];
-                foreach (var collection in collections)
-                    collection.ReplaceEntity(entity);
+                for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++)
+                    collections[i].ReplaceEntity(entity);
             }
         }
 
         void removeFromAllCollections(Entity entity) {
-            foreach (var collection in _collectionList)
-                collection.RemoveEntity(entity);
+            for (int i = 0, _collectionListCount = _collectionList.Count; i < _collectionListCount; i++)
+                _collectionList[i].RemoveEntity(entity);
         }
     }
 }

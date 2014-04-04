@@ -80,16 +80,16 @@ namespace Entitas {
         }
 
         public bool HasComponents(int[] indices) {
-            foreach (var index in indices)
-                if (_components[index] == null)
+            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++)
+                if (_components[indices[i]] == null)
                     return false;
 
             return true;
         }
 
         public bool HasAnyComponent(int[] indices) {
-            foreach (var index in indices)
-                if (_components[index] != null)
+            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++)
+                if (_components[indices[i]] != null)
                     return true;
 
             return false;
@@ -98,9 +98,11 @@ namespace Entitas {
         public IComponent[] GetComponents() {
             if (_componentsCache == null) {
                 var components = new List<IComponent>();
-                foreach (var component in _components)
+                for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
+                    var component = _components[i];
                     if (component != null)
                         components.Add(component);
+                }
 
                 _componentsCache = components.ToArray();
             }
@@ -123,21 +125,21 @@ namespace Entitas {
 
         public void RemoveAllComponents() {
             var indices = GetComponentIndices();
-            foreach (var index in indices)
-                RemoveComponent(index);
+            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++)
+                RemoveComponent(indices[i]);
         }
 
         public override string ToString() {
             const string seperator = ", ";
-            var indicesStr = string.Empty;
-            var indices = GetComponents();
-            foreach (var index in indices)
-                indicesStr += index + seperator;
+            var componentsStr = string.Empty;
+            var components = GetComponents();
+            for (int i = 0, componentsLength = components.Length; i < componentsLength; i++)
+                componentsStr += components[i] + seperator;
 
-            if (indicesStr != string.Empty)
-                indicesStr = indicesStr.Substring(0, indicesStr.Length - seperator.Length);
+            if (componentsStr != string.Empty)
+                componentsStr = componentsStr.Substring(0, componentsStr.Length - seperator.Length);
 
-            return string.Format("Entity({0})", indicesStr);
+            return string.Format("Entity({0})", componentsStr);
         }
     }
 
