@@ -49,7 +49,6 @@
     <Compile Include="PerformanceTests\Fixtures\ComponentB.cs" />
     <Compile Include="PerformanceTests\Fixtures\ComponentC.cs" />
     <Compile Include="PerformanceTests\Entity\EntityRemoveAddComponent.cs" />
-    <Compile Include="PerformanceTests\Entity\EntityReplaceComponet.cs" />
     <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryOnEntityReplaced.cs" />
     <Compile Include="PerformanceTests\Entity\EntityGetComponent.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListAdd.cs" />
@@ -65,6 +64,8 @@
     <Compile Include="PerformanceTests\DataStructures\OrderedDictionaryGetItemByKey.cs" />
     <Compile Include="PerformanceTests\DataStructures\OrderedDictionaryGetItemByIndex.cs" />
     <Compile Include="PerformanceTests\DataStructures\ArrayGetItem.cs" />
+    <Compile Include="PerformanceTests\Entity\EntityReplaceComponent.cs" />
+    <Compile Include="PerformanceTests\Fixtures\CP.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

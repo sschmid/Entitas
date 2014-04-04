@@ -8,32 +8,48 @@ class describe_EntityArrayExtension : nspec {
         Entity eABC = null;
         Entity[] allEntities = null;
         before = () => {
-            eA = new Entity();
-            eA.AddComponent(new ComponentA());
+            eA = createEntity();
+            addComponentA(eA);
 
-            eAB = new Entity();
-            eAB.AddComponent(new ComponentA());
-            eAB.AddComponent(new ComponentB());
+            eAB = createEntity();
+            addComponentA(eAB);
+            addComponentB(eAB);
 
-            eABC = new Entity();
-            eABC.AddComponent(new ComponentA());
-            eABC.AddComponent(new ComponentB());
-            eABC.AddComponent(new ComponentC());
+            eABC = createEntity();
+            addComponentA(eABC);
+            addComponentB(eABC);
+            addComponentC(eABC);
 
             allEntities = new[] { eA, eAB, eABC };
         };
 
         it["removes entities which have not specific components"] = () => {
-            var entities = allEntities.With(new [] { typeof(ComponentC) });
+            var entities = allEntities.With(new [] { CP.ComponentC });
             entities.Count.should_be(1);
             entities.should_contain(eABC);
         };
 
         it["removes entities which have specific components"] = () => {
-            var entities = allEntities.Without(new [] { typeof(ComponentC) });
+            var entities = allEntities.Without(new [] { CP.ComponentC });
             entities.Count.should_be(2);
             entities.should_not_contain(eABC);
         };
+    }
+
+    Entity createEntity() {
+        return new Entity(CP.NumComponents);
+    }
+
+    void addComponentA(Entity entity) {
+        entity.AddComponent(CP.ComponentA, new ComponentA());
+    }
+
+    void addComponentB(Entity entity) {
+        entity.AddComponent(CP.ComponentB, new ComponentB());
+    }
+
+    void addComponentC(Entity entity) {
+        entity.AddComponent(CP.ComponentC, new ComponentC());
     }
 }
 

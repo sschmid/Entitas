@@ -2,19 +2,17 @@
 
 public class EntityHasComponent : IPerformanceTest {
     Entity _e;
-    ComponentA _componentA;
 
     public void Before() {
-        _e = new Entity();
-        _componentA = new ComponentA();
-        _e.AddComponent(_componentA);
-        _e.AddComponent(new ComponentB());
-        _e.AddComponent(new ComponentC());
+        _e = new Entity(CP.NumComponents);
+        _e.AddComponent(CP.ComponentA, new ComponentA());
+        _e.AddComponent(CP.ComponentB, new ComponentB());
+        _e.AddComponent(CP.ComponentC, new ComponentC());
     }
 
     public void Run() {
         for (int i = 0; i < 100000; i++)
-            _e.HasComponent(_componentA);
+            _e.HasComponent(CP.ComponentA);
     }
 }
 

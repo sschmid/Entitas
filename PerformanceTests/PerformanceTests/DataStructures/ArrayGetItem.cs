@@ -9,7 +9,7 @@ public class ArrayGetItem : IPerformanceTest {
         _r = new Random();
         _a = new Entity[100000];
         for (int i = 0; i < 100000; i++) {
-            _a[i] = new Entity();
+            _a[i] = new Entity(CP.NumComponents);
         }
     }
 

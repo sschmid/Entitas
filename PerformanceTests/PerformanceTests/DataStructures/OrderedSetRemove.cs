@@ -9,7 +9,7 @@ public class OrderedSetRemove : IPerformanceTest {
         _s = new OrderedSet<Entity>();
         _lookup = new Entity[100000];
         for (int i = 0; i < 100000; i++) {
-            var e = new Entity();
+            var e = new Entity(CP.NumComponents);
             _s.Add(e);
             _lookup[i] = e;
         }

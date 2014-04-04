@@ -4,18 +4,18 @@ using System.Linq;
 
 namespace Entitas {
     public abstract class AbstractEntityMatcher : IEntityMatcher {
-        public Type[] types { get { return _types; } }
+        public int[] indices { get { return _indices; } }
 
-        readonly Type[] _types;
+        readonly int[] _indices;
         readonly int _hash;
 
         protected AbstractEntityMatcher() {
         }
 
-        protected AbstractEntityMatcher(Type[] types) {
-            _types = new HashSet<Type>(types).ToArray();
+        protected AbstractEntityMatcher(int[] indices) {
+            _indices = new HashSet<int>(indices).ToArray();
             int hash = GetType().GetHashCode();
-            foreach (var type in _types)
+            foreach (var type in _indices)
                 hash ^= type.GetHashCode();
             _hash = hash;
         }
@@ -38,14 +38,14 @@ namespace Entitas {
 
         public override string ToString() {
             const string seperator = ", ";
-            var typesStr = string.Empty;
-            foreach (var type in _types)
-                typesStr += type + seperator;
+            var indexStr = string.Empty;
+            foreach (var index in _indices)
+                indexStr += index + seperator;
 
-            if (typesStr != string.Empty)
-                typesStr = typesStr.Substring(0, typesStr.Length - seperator.Length);
+            if (indexStr != string.Empty)
+                indexStr = indexStr.Substring(0, indexStr.Length - seperator.Length);
 
-            return string.Format("{0}({1})", GetType().Name, typesStr);
+            return string.Format("{0}({1})", GetType().Name, indexStr);
         }
     }
 }

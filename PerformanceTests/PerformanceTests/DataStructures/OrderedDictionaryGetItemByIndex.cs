@@ -10,7 +10,7 @@ public class OrderedDictionaryGetItemByIndex : IPerformanceTest {
         _r = new Random();
         _d = new OrderedDictionary();
         for (int i = 0; i < 100000; i++) {
-            _d.Add(i, new Entity());
+            _d.Add(i, new Entity(CP.NumComponents));
         }
     }
 

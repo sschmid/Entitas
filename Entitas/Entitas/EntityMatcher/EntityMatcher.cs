@@ -1,9 +1,7 @@
-﻿using System;
-
-namespace Entitas {
+﻿namespace Entitas {
     public static class EntityMatcher {
-        public static IEntityMatcher AllOf(Type[] types) {
-            return new AllOfEntityMatcher(types);
+        public static IEntityMatcher AllOf(int[] indices) {
+            return new AllOfEntityMatcher(indices);
         }
     }
 }

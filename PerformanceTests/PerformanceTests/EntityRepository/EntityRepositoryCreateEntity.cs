@@ -4,7 +4,7 @@ public class EntityRepositoryCreateEntity : IPerformanceTest {
     EntityRepository _repo;
 
     public void Before() {
-        _repo = new EntityRepository();
+        _repo = new EntityRepository(CP.NumComponents);
     }
 
     public void Run() {

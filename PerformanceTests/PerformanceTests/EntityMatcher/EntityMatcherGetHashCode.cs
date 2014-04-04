@@ -5,9 +5,9 @@ public class EntityMatcherGetHashCode : IPerformanceTest {
 
     public void Before() {
         _m = EntityMatcher.AllOf(new [] {
-            typeof(ComponentA),
-            typeof(ComponentB),
-            typeof(ComponentC)
+            CP.ComponentA,
+            CP.ComponentB,
+            CP.ComponentC
         });
     }
 

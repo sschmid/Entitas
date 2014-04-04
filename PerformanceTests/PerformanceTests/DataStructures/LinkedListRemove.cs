@@ -9,7 +9,7 @@ public class LinkedListRemove : IPerformanceTest {
         _ll = new LinkedList<Entity>();
         _lookup = new Entity[100000];
         for (int i = 0; i < 100000; i++) {
-            var e = new Entity();
+            var e = new Entity(CP.NumComponents);
             _ll.AddLast(e);
             _lookup[i] = e;
         }

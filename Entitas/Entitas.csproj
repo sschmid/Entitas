@@ -38,9 +38,6 @@
     <Compile Include="Entitas\EntityRepository.cs" />
     <Compile Include="Entitas\EntityCollection.cs" />
     <Compile Include="Entitas\ReactiveEntitySystem.cs" />
-    <Compile Include="Entitas\Extensions\ES.cs" />
-    <Compile Include="Entitas\Extensions\EntityRepositoryExtension.cs" />
-    <Compile Include="Entitas\Extensions\EntityExtension.cs" />
     <Compile Include="Entitas\Extensions\EntityArrayExtension.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
     <Compile Include="Entitas\Interfaces\IEntitySystem.cs" />

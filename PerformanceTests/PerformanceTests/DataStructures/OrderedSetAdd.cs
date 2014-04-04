@@ -10,7 +10,7 @@ public class OrderedSetAdd : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < 100000; i++)
-            _s.Add(new Entity());
+            _s.Add(new Entity(CP.NumComponents));
     }
 }
 

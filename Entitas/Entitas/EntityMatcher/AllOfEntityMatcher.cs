@@ -1,12 +1,10 @@
-using System;
-
 namespace Entitas {
     public class AllOfEntityMatcher : AbstractEntityMatcher {
-        public AllOfEntityMatcher(Type[] types) : base(types) {
+        public AllOfEntityMatcher(int[] indices) : base(indices) {
         }
 
         public override bool Matches(Entity entity) {
-            return entity.HasComponents(types);
+            return entity.HasComponents(indices);
         }
     }
 }

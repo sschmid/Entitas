@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-public class EntityRemoveAddComponent : IPerformanceTest {
+public class EntityReplaceComponent : IPerformanceTest {
     EntityRepository _repo;
     Entity _e;
 
@@ -26,15 +26,15 @@ public class EntityRemoveAddComponent : IPerformanceTest {
             CP.ComponentB,
             CP.ComponentC
         }));
-        _e = _repo.CreateEntity();
+        _e = new Entity(CP.NumComponents);
         _e.AddComponent(CP.ComponentA, new ComponentA());
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++) {
-            _e.RemoveComponent(CP.ComponentA);
-            _e.AddComponent(CP.ComponentA, new ComponentA());
-        }    
+        var componentA = new ComponentA();
+        var type = CP.ComponentA;
+        for (int i = 0; i < 100000; i++)
+            _e.ReplaceComponent(type, componentA);
     }
 }
 

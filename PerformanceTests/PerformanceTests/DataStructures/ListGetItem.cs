@@ -10,7 +10,7 @@ public class ListGetItem : IPerformanceTest {
         _r = new Random();
         _l = new List<Entity>();
         for (int i = 0; i < 100000; i++) {
-            _l.Add(new Entity());
+            _l.Add(new Entity(CP.NumComponents));
         }
     }
 

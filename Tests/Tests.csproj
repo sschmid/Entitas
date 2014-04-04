@@ -49,6 +49,8 @@
     <Compile Include="Tests\describe_ReactiveEntitySystem.cs" />
     <Compile Include="Tests\Fixtures\ReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\describe_EntityArrayExtension.cs" />
+    <Compile Include="Tests\Helpers\TestHelper.cs" />
+    <Compile Include="Tests\Fixtures\CP.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -56,6 +58,7 @@
     <Folder Include="Libraries\" />
     <Folder Include="Libraries\NSpec\" />
     <Folder Include="Tests\Fixtures\" />
+    <Folder Include="Tests\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

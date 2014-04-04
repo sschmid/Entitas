@@ -6,36 +6,28 @@ namespace Entitas {
     public class EntityRepository {
         readonly OrderedSet<Entity> _entities = new OrderedSet<Entity>();
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
-        readonly Dictionary<Type, List<EntityCollection>> _collectionsForType = new Dictionary<Type, List<EntityCollection>>();
+        readonly List<EntityCollection>[] _collectionsForIndex;
         readonly List<EntityCollection> _collectionList = new List<EntityCollection>();
+        readonly int _numComponents;
         ulong _creationIndex;
         Entity[] _entitiesCache;
 
-        public EntityRepository() {
+        public EntityRepository(int numComponents) {
+            _numComponents = numComponents;
             _creationIndex = 0;
+            _collectionsForIndex = new List<EntityCollection>[numComponents];
         }
 
-        public EntityRepository(ulong startCreationIndex) {
+        public EntityRepository(int numComponents, ulong startCreationIndex) {
+            _numComponents = numComponents;
             _creationIndex = startCreationIndex;
+            _collectionsForIndex = new List<EntityCollection>[numComponents];
         }
 
         public Entity CreateEntity() {
-            return CreateEntity(null);
-        }
-
-        public Entity CreateEntity(IComponent[] components) {
-            var entity = new Entity(_creationIndex++);
+            var entity = new Entity(_numComponents, _creationIndex++);
             _entities.Add(entity);
             _entitiesCache = null;
-
-            if (components != null) {
-                foreach (var component in components)
-                    entity.AddComponent(component);
-
-                foreach (var collection in _collectionList)
-                    collection.AddEntityIfMatching(entity);
-            }
-
             entity.OnComponentAdded += onComponentAdded;
             entity.OnComponentRemoved += onComponentRemoved;
             entity.OnComponentReplaced += onComponentReplaced;
@@ -78,39 +70,36 @@ namespace Entitas {
                 _collections.Add(matcher, collection);
                 _collectionList.Add(collection);
 
-                foreach (var type in matcher.types) {
-                    if (!_collectionsForType.ContainsKey(type))
-                        _collectionsForType.Add(type, new List<EntityCollection>());
+                foreach (var index in matcher.indices) {
+                    if (_collectionsForIndex[index] == null)
+                        _collectionsForIndex[index] = new List<EntityCollection>();
 
-                    _collectionsForType[type].Add(collection);
+                    _collectionsForIndex[index].Add(collection);
                 }
             }
 
             return _collections[matcher];
         }
 
-        void onComponentAdded(Entity entity, IComponent component) {
-            var type = component.GetType();
-            if (_collectionsForType.ContainsKey(type)) {
-                var collections = _collectionsForType[type];
+        void onComponentAdded(Entity entity, int index, IComponent component) {
+            if (_collectionsForIndex[index] != null) {
+                var collections = _collectionsForIndex[index];
                 foreach (var collection in collections)
                     collection.AddEntityIfMatching(entity);
             }
         }
 
-        void onComponentRemoved(Entity entity, IComponent component) {
-            var type = component.GetType();
-            if (_collectionsForType.ContainsKey(type)) {
-                var collections = _collectionsForType[type];
+        void onComponentRemoved(Entity entity, int index, IComponent component) {
+            if (_collectionsForIndex[index] != null) {
+                var collections = _collectionsForIndex[index];
                 foreach (var collection in collections)
                     collection.RemoveEntity(entity);
             }
         }
 
-        void onComponentReplaced(Entity entity, IComponent component) {
-            var type = component.GetType();
-            if (_collectionsForType.ContainsKey(type)) {
-                var collections = _collectionsForType[type];
+        void onComponentReplaced(Entity entity, int index, IComponent component) {
+            if (_collectionsForIndex[index] != null) {
+                var collections = _collectionsForIndex[index];
                 foreach (var collection in collections)
                     collection.ReplaceEntity(entity);
             }

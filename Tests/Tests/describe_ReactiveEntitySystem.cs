@@ -5,28 +5,7 @@ class describe_ReactiveEntitySystem : nspec {
     EntityRepository _repo;
 
     void before_each() {
-        _repo = new EntityRepository();
-    }
-
-    ReactiveSubSystemSpy getSubSystemSypWithOnEntityAdded() {
-        return new ReactiveSubSystemSpy(EntityMatcher.AllOf(new [] {
-            typeof(ComponentA),
-            typeof(ComponentB)
-        }), EntityCollectionEventType.OnEntityAdded);
-    }
-
-    ReactiveSubSystemSpy getSubSystemSypWithOnEntityRemoved() {
-        return new ReactiveSubSystemSpy(EntityMatcher.AllOf(new [] {
-            typeof(ComponentA),
-            typeof(ComponentB)
-        }), EntityCollectionEventType.OnEntityRemoved);
-    }
-
-    ReactiveSubSystemSpy getSubSystemSypWithOnEntityAddedSafe() {
-        return new ReactiveSubSystemSpy(EntityMatcher.AllOf(new [] {
-            typeof(ComponentA),
-            typeof(ComponentB)
-        }), EntityCollectionEventType.OnEntityAddedSafe);
+        _repo = new EntityRepository(CP.NumComponents);
     }
 
     void when_created() {
@@ -45,9 +24,7 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["executes when triggeringMatcher matches"] = () => {
-                var e = _repo.CreateEntity();
-                e.AddComponent(new ComponentA());
-                e.AddComponent(new ComponentB());
+                var e = createEAB();
                 res.Execute();
 
                 subSystem.didExecute.should_be(1);
@@ -56,9 +33,7 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["executes only once when triggeringMatcher matches"] = () => {
-                var e = _repo.CreateEntity();
-                e.AddComponent(new ComponentA());
-                e.AddComponent(new ComponentB());
+                var e = createEAB();
                 res.Execute();
                 res.Execute();
 
@@ -68,8 +43,8 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["doesn't execute when triggeringMatcher doesn't match"] = () => {
-                var e = _repo.CreateEntity();
-                e.AddComponent(new ComponentA());
+                var e = createEntity();
+                addComponentA(e);
                 res.Execute();
                 subSystem.didExecute.should_be(0);
                 subSystem.entites.should_be_null();
@@ -83,10 +58,8 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["executes when triggeringMatcher matches"] = () => {
-                var e = _repo.CreateEntity();
-                e.AddComponent(new ComponentA());
-                e.AddComponent(new ComponentB());
-                e.RemoveComponent(typeof(ComponentA));
+                var e = createEAB();
+                removeComponentA(e);
                 res.Execute();
 
                 subSystem.didExecute.should_be(1);
@@ -95,10 +68,8 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["executes only once when triggeringMatcher matches"] = () => {
-                var e = _repo.CreateEntity();
-                e.AddComponent(new ComponentA());
-                e.AddComponent(new ComponentB());
-                e.RemoveComponent(typeof(ComponentA));
+                var e = createEAB();
+                removeComponentA(e);
                 res.Execute();
                 res.Execute();
 
@@ -108,11 +79,11 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["doesn't execute when triggeringMatcher doesn't match"] = () => {
-                var e = _repo.CreateEntity();
-                e.AddComponent(new ComponentA());
-                e.AddComponent(new ComponentB());
-                e.AddComponent(new ComponentC());
-                e.RemoveComponent(typeof(ComponentC));
+                var e = createEntity();
+                addComponentA(e);
+                addComponentB(e);
+                addComponentC(e);
+                removeComponentC(e);
                 res.Execute();
                 subSystem.didExecute.should_be(0);
                 subSystem.entites.should_be_null();
@@ -126,9 +97,7 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["executes when triggeringMatcher matches"] = () => {
-                var e = _repo.CreateEntity();
-                e.AddComponent(new ComponentA());
-                e.AddComponent(new ComponentB());
+                var e = createEAB();
                 res.Execute();
 
                 subSystem.didExecute.should_be(1);
@@ -137,10 +106,8 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["doesn't execute when entity doesn't match anymore"] = () => {
-                var e = _repo.CreateEntity();
-                e.AddComponent(new ComponentA());
-                e.AddComponent(new ComponentB());
-                e.RemoveComponent(typeof(ComponentA));
+                var e = createEAB();
+                removeComponentA(e);
                 res.Execute();
 
                 subSystem.didExecute.should_be(0);
@@ -148,12 +115,12 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["doesn't execute when replaced component is not in triggering matcher"] = () => {
-                var e = _repo.CreateEntity();
-                e.AddComponent(new ComponentA());
-                e.AddComponent(new ComponentB());
-                e.AddComponent(new ComponentC());
+                var e = createEntity();
+                addComponentA(e);
+                addComponentB(e);
+                addComponentC(e);
                 res.Execute();
-                e.ReplaceComponent(new ComponentC());
+                e.ReplaceComponent(CP.ComponentC, new ComponentC());
                 res.Execute();
 
                 subSystem.didExecute.should_be(1);
@@ -161,6 +128,56 @@ class describe_ReactiveEntitySystem : nspec {
                 subSystem.entites.should_contain(e);
             };
         };
+    }
+
+    ReactiveSubSystemSpy getSubSystemSypWithOnEntityAdded() {
+        return new ReactiveSubSystemSpy(allOfAB(), EntityCollectionEventType.OnEntityAdded);
+    }
+
+    ReactiveSubSystemSpy getSubSystemSypWithOnEntityRemoved() {
+        return new ReactiveSubSystemSpy(allOfAB(), EntityCollectionEventType.OnEntityRemoved);
+    }
+
+    ReactiveSubSystemSpy getSubSystemSypWithOnEntityAddedSafe() {
+        return new ReactiveSubSystemSpy(allOfAB(), EntityCollectionEventType.OnEntityAddedSafe);
+    }
+
+    IEntityMatcher allOfAB() {
+        return EntityMatcher.AllOf(new [] {
+            CP.ComponentA,
+            CP.ComponentB
+        });
+    }
+
+    Entity createEntity() {
+        return _repo.CreateEntity();
+    }
+
+    void addComponentA(Entity entity) {
+        entity.AddComponent(CP.ComponentA, new ComponentA());
+    }
+
+    void addComponentB(Entity entity) {
+        entity.AddComponent(CP.ComponentB, new ComponentB());
+    }
+
+    void addComponentC(Entity entity) {
+        entity.AddComponent(CP.ComponentC, new ComponentC());
+    }
+
+    Entity createEAB() {
+        var e = createEntity();
+        addComponentA(e);
+        addComponentB(e);
+        return e;
+    }
+
+    void removeComponentA(Entity entity) {
+        entity.RemoveComponent(CP.ComponentA);
+    }
+
+    void removeComponentC(Entity entity) {
+        entity.RemoveComponent(CP.ComponentC);
     }
 }
 

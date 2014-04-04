@@ -10,7 +10,7 @@ public class ListAdd : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < 100000; i++)
-            _l.Add(new Entity());
+            _l.Add(new Entity(CP.NumComponents));
     }
 }
 
