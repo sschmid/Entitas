@@ -9,7 +9,7 @@ class describe_EntityRepository : nspec {
     }
 
     void it_creates_entities_starting_with_specified_creation_index() {
-        new EntityRepository(1).CreateEntity().creationIndex.should_be(1);
+        new EntityRepository(0, 1).CreateEntity().creationIndex.should_be(1);
     }
 
     void when_created() {

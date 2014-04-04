@@ -14,7 +14,7 @@ class describe_Entity : nspec {
 
     void it_has_specified_creation_index() {
         const int i = 1;
-        new Entity(i).creationIndex.should_be(i);
+        new Entity(0, i).creationIndex.should_be(i);
     }
 
     void when_created() {
@@ -96,6 +96,7 @@ class describe_Entity : nspec {
             var allComponents = _entity.GetComponents();
             allComponents.should_contain(_componentA);
             allComponents.should_contain(_componentB);
+            allComponents.Length.should_be(2);
         };
 
         it["gets all component types"] = () => {
@@ -104,6 +105,7 @@ class describe_Entity : nspec {
             var allComponentTypes = _entity.GetComponentIndices();
             allComponentTypes.should_contain(CP.ComponentA);
             allComponentTypes.should_contain(CP.ComponentB);
+            allComponentTypes.Length.should_be(2);
         };
 
         it["removes all components"] = () => {
