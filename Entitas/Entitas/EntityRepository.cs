@@ -4,7 +4,7 @@ using System;
 
 namespace Entitas {
     public class EntityRepository {
-        readonly OrderedSet<Entity> _entities = new OrderedSet<Entity>();
+        readonly LinkedListSet<Entity> _entities = new LinkedListSet<Entity>();
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
         readonly List<EntityCollection>[] _collectionsForIndex;
         readonly List<EntityCollection> _collectionList = new List<EntityCollection>();

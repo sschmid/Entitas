@@ -33,8 +33,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ToolKit\Collections\OrderedSet.cs" />
+    <Compile Include="ToolKit\Collections\LinkedListSet.cs" />
+    <Compile Include="ToolKit\Collections\ListSet.cs" />
     <Compile Include="ToolKit\Misc\DelayedCall.cs" />
+    <Compile Include="ToolKit\Misc\ObjectPool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

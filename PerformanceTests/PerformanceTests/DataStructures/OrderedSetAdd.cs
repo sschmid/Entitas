@@ -2,10 +2,10 @@
 using ToolKit;
 
 public class OrderedSetAdd : IPerformanceTest {
-    OrderedSet<Entity> _s;
+    LinkedListSet<Entity> _s;
 
     public void Before() {
-        _s = new OrderedSet<Entity>();
+        _s = new LinkedListSet<Entity>();
     }
 
     public void Run() {

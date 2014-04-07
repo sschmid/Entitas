@@ -9,7 +9,7 @@ namespace Entitas {
         public delegate void EntityCollectionChange(EntityCollection collection, Entity entity);
 
         readonly IEntityMatcher _matcher;
-        readonly OrderedSet<Entity> _entities = new OrderedSet<Entity>();
+        readonly LinkedListSet<Entity> _entities = new LinkedListSet<Entity>();
         Entity[] _entitiesCache;
         Entity _singleEntityCache;
 

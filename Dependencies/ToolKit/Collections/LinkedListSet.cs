@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace ToolKit {
-    public class OrderedSet<T> : ICollection<T>, IEnumerable<T> 
+    public class LinkedListSet<T> : ICollection<T>, IEnumerable<T> 
     #if NET_4_0
     , ISet<T>
     #endif
@@ -10,12 +10,12 @@ namespace ToolKit {
         readonly HashSet<T> _hashSet;
         LinkedList<T> _list;
 
-        public OrderedSet() {
+        public LinkedListSet() {
             _hashSet = new HashSet<T>();
             _list = new LinkedList<T>();
         }
 
-        public OrderedSet(IEnumerable<T> collection) {
+        public LinkedListSet(IEnumerable<T> collection) {
             _hashSet = new HashSet<T>(collection);
             _list = new LinkedList<T>(_hashSet);
         }

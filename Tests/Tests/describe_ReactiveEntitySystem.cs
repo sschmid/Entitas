@@ -89,45 +89,6 @@ class describe_ReactiveEntitySystem : nspec {
                 subSystem.entites.should_be_null();
             };
         };
-
-        context["OnEntityAddedSafe"] = () => {
-            before = () => {
-                subSystem = getSubSystemSypWithOnEntityAddedSafe();
-                res = new ReactiveEntitySystem(_repo, subSystem);
-            };
-
-            it["executes when triggeringMatcher matches"] = () => {
-                var e = createEAB();
-                res.Execute();
-
-                subSystem.didExecute.should_be(1);
-                subSystem.entites.Length.should_be(1);
-                subSystem.entites.should_contain(e);
-            };
-
-            it["doesn't execute when entity doesn't match anymore"] = () => {
-                var e = createEAB();
-                removeComponentA(e);
-                res.Execute();
-
-                subSystem.didExecute.should_be(0);
-                subSystem.entites.should_be_null();
-            };
-
-            it["doesn't execute when replaced component is not in triggering matcher"] = () => {
-                var e = createEntity();
-                addComponentA(e);
-                addComponentB(e);
-                addComponentC(e);
-                res.Execute();
-                e.ReplaceComponent(CP.ComponentC, new ComponentC());
-                res.Execute();
-
-                subSystem.didExecute.should_be(1);
-                subSystem.entites.Length.should_be(1);
-                subSystem.entites.should_contain(e);
-            };
-        };
     }
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityAdded() {
@@ -136,10 +97,6 @@ class describe_ReactiveEntitySystem : nspec {
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityRemoved() {
         return new ReactiveSubSystemSpy(allOfAB(), EntityCollectionEventType.OnEntityRemoved);
-    }
-
-    ReactiveSubSystemSpy getSubSystemSypWithOnEntityAddedSafe() {
-        return new ReactiveSubSystemSpy(allOfAB(), EntityCollectionEventType.OnEntityAddedSafe);
     }
 
     IEntityMatcher allOfAB() {

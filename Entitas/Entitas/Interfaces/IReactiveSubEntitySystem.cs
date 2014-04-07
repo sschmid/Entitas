@@ -1,9 +1,10 @@
-﻿namespace Entitas {
+﻿using System.Collections.Generic;
+
+namespace Entitas {
     public enum EntityCollectionEventType : byte {
         None,
         OnEntityAdded,
-        OnEntityRemoved,
-        OnEntityAddedSafe
+        OnEntityRemoved
     }
 
     public interface IReactiveSubEntitySystem {
@@ -11,7 +12,7 @@
 
         EntityCollectionEventType GetEventType();
 
-        void Execute(Entity[] entities);
+        void Execute(List<Entity> entities);
     }
 }
 

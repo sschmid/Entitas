@@ -2,11 +2,11 @@
 using ToolKit;
 
 public class OrderedSetRemove : IPerformanceTest {
-    OrderedSet<Entity> _s;
+    LinkedListSet<Entity> _s;
     Entity[] _lookup;
 
     public void Before() {
-        _s = new OrderedSet<Entity>();
+        _s = new LinkedListSet<Entity>();
         _lookup = new Entity[100000];
         for (int i = 0; i < 100000; i++) {
             var e = new Entity(CP.NumComponents);
