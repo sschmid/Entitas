@@ -17,6 +17,8 @@ namespace Entitas {
             int hash = GetType().GetHashCode();
             for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++)
                 hash ^= _indices[i];
+
+            hash ^= _indices.Length;
             _hash = hash;
         }
 
