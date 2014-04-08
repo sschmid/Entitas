@@ -8,24 +8,24 @@ namespace Entitas {
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
         readonly List<EntityCollection>[] _collectionsForIndex;
         readonly List<EntityCollection> _collectionList = new List<EntityCollection>();
-        readonly int _numComponents;
+        readonly int _totalComponents;
         ulong _creationIndex;
         Entity[] _entitiesCache;
 
-        public EntityRepository(int numComponents) {
-            _numComponents = numComponents;
+        public EntityRepository(int totalComponents) {
+            _totalComponents = totalComponents;
             _creationIndex = 0;
-            _collectionsForIndex = new List<EntityCollection>[numComponents];
+            _collectionsForIndex = new List<EntityCollection>[totalComponents];
         }
 
-        public EntityRepository(int numComponents, ulong startCreationIndex) {
-            _numComponents = numComponents;
+        public EntityRepository(int totalComponents, ulong startCreationIndex) {
+            _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
-            _collectionsForIndex = new List<EntityCollection>[numComponents];
+            _collectionsForIndex = new List<EntityCollection>[totalComponents];
         }
 
         public Entity CreateEntity() {
-            var entity = new Entity(_numComponents, _creationIndex++);
+            var entity = new Entity(_totalComponents, _creationIndex++);
             _entities.Add(entity);
             _entitiesCache = null;
             entity.OnComponentAdded += onComponentAdded;

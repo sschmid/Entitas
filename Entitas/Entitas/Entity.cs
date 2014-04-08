@@ -16,14 +16,14 @@ namespace Entitas {
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
 
-        public Entity(int numComponents) {
+        public Entity(int totalComponents) {
             _creationIndex = 0;
-            _components = new IComponent[numComponents];
+            _components = new IComponent[totalComponents];
         }
 
-        public Entity(int numComponents, ulong creationIndex) {
+        public Entity(int totalComponents, ulong creationIndex) {
             _creationIndex = creationIndex;
-            _components = new IComponent[numComponents];
+            _components = new IComponent[totalComponents];
         }
 
         public void AddComponent(int index, IComponent component) {
