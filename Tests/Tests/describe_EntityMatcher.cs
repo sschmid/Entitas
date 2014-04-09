@@ -83,6 +83,12 @@ class describe_EntityMatcher : nspec {
                 var m2 = EntityMatcher.AllOf(new [] { 3 });
                 m1.GetHashCode().should_not_be(m2.GetHashCode());
             };
+
+            it["generates different hash for this example"] = () => {
+                var m1 = EntityMatcher.AllOf(new [] { 6, 2 });
+                var m2 = EntityMatcher.AllOf(new [] { 7 });
+                m1.GetHashCode().should_not_be(m2.GetHashCode());
+            };
         };
     }
 

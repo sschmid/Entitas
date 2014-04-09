@@ -16,9 +16,9 @@ namespace Entitas {
             _indices = new HashSet<int>(indices).ToArray();
             int hash = GetType().GetHashCode();
             for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++)
-                hash ^= _indices[i];
+                hash ^= _indices[i] * 977;
 
-            hash ^= _indices.Length;
+            hash ^= _indices.Length * 997;
             _hash = hash;
         }
 
