@@ -89,6 +89,32 @@ class describe_ReactiveEntitySystem : nspec {
                 subSystem.entites.should_be_null();
             };
         };
+
+        context["OnEntityAddedOrRemoved"] = () => {
+            it["executes when added"] = () => {
+                subSystem = getSubSystemSypWithOnEntityAddedOrRemoved();
+                res = new ReactiveEntitySystem(_repo, subSystem);
+                var e = createEAB();
+                res.Execute();
+
+                subSystem.didExecute.should_be(1);
+                subSystem.entites.Length.should_be(1);
+                subSystem.entites.should_contain(e);
+            };
+
+            it["executes when removed"] = () => {
+                var e = createEAB();
+                subSystem = getSubSystemSypWithOnEntityAddedOrRemoved();
+                res = new ReactiveEntitySystem(_repo, subSystem);
+                removeComponentA(e);
+                res.Execute();
+
+                subSystem.didExecute.should_be(1);
+                subSystem.entites.Length.should_be(1);
+                subSystem.entites.should_contain(e);
+            };
+        };
+
     }
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityAdded() {
@@ -97,6 +123,10 @@ class describe_ReactiveEntitySystem : nspec {
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityRemoved() {
         return new ReactiveSubSystemSpy(allOfAB(), EntityCollectionEventType.OnEntityRemoved);
+    }
+
+    ReactiveSubSystemSpy getSubSystemSypWithOnEntityAddedOrRemoved() {
+        return new ReactiveSubSystemSpy(allOfAB(), EntityCollectionEventType.OnEntityAddedOrRemoved);
     }
 
     IEntityMatcher allOfAB() {

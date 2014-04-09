@@ -17,14 +17,14 @@ namespace Entitas {
                 collection.OnEntityAdded += addEntity;
             else if (eventType == EntityCollectionEventType.OnEntityRemoved)
                 collection.OnEntityRemoved += addEntity;
+            else if (eventType == EntityCollectionEventType.OnEntityAddedOrRemoved) {
+                collection.OnEntityAdded += addEntity;
+                collection.OnEntityRemoved += addEntity;
+            }
         }
 
         void addEntity(EntityCollection collection, Entity entity) {
             _collectedEntites.Add(entity);
-        }
-
-        void removeEntity(EntityCollection collection, Entity entity) {
-            _collectedEntites.Remove(entity);
         }
 
         public void Execute() {

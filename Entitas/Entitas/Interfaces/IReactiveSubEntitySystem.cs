@@ -4,7 +4,8 @@ namespace Entitas {
     public enum EntityCollectionEventType : byte {
         None,
         OnEntityAdded,
-        OnEntityRemoved
+        OnEntityRemoved,
+        OnEntityAddedOrRemoved
     }
 
     public interface IReactiveSubEntitySystem {
