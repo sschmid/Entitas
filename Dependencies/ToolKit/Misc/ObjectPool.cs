@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 
 namespace ToolKit {
-    public class ObjectPool<T> where T : new() {
+    public class ObjectPool<T> {
+        public int Count { get { return _pool.Count; } }
+
         readonly Func<T> _factoryMethod;
         readonly Stack<T> _pool = new Stack<T>();
-
-        public ObjectPool() {
-            _factoryMethod = () => new T();
-        }
 
         public ObjectPool(Func<T> factoryMethod) {
             _factoryMethod = factoryMethod;

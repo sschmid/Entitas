@@ -16,9 +16,7 @@ namespace Entitas {
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
 
-        public Entity(int totalComponents) {
-            _creationIndex = 0;
-            _components = new IComponent[totalComponents];
+        public Entity(int totalComponents) : this(totalComponents, 0) {
         }
 
         public Entity(int totalComponents, ulong creationIndex) {

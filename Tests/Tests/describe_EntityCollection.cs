@@ -19,9 +19,18 @@ class describe_EntityCollection : nspec {
             _collection.GetEntities().should_be_empty();
         };
 
+        it["is empty"] = () => {
+            _collection.isEmpty.should_be_true();
+        };
+
         it["adds matching entity"] = () => {
             addEA1();
             _collection.GetEntities().should_contain(_eA1);
+        };
+
+        it["isn't empty"] = () => {
+            addEA1();
+            _collection.isEmpty.should_be_false();
         };
 
         it["doesn't add same entity twice"] = () => {

@@ -4,35 +4,47 @@ using System;
 
 namespace Entitas {
     public class EntityRepository {
+        public int poolItemCount { get { return _entityPool.Count; } }
+
         readonly LinkedListSet<Entity> _entities = new LinkedListSet<Entity>();
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
         readonly List<EntityCollection>[] _collectionsForIndex;
         readonly List<EntityCollection> _collectionList = new List<EntityCollection>();
+        readonly ObjectPool<Entity> _entityPool;
         readonly int _totalComponents;
         ulong _creationIndex;
         Entity[] _entitiesCache;
 
-        public EntityRepository(int totalComponents) {
-            _totalComponents = totalComponents;
-            _creationIndex = 0;
-            _collectionsForIndex = new List<EntityCollection>[totalComponents];
+        public EntityRepository(int totalComponents) : this(totalComponents, 0) {
         }
 
         public EntityRepository(int totalComponents, ulong startCreationIndex) {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
             _collectionsForIndex = new List<EntityCollection>[totalComponents];
+            _entityPool = new ObjectPool<Entity>(CreateEntity);
         }
 
         public Entity CreateEntity() {
-            var entity = new Entity(_totalComponents, _creationIndex++);
+            return setupEntity(new Entity(_totalComponents, _creationIndex++));
+        }
+
+        public Entity GetEntityFromPool() {
+            return setupEntity(_entityPool.Get());
+        }
+
+        Entity setupEntity(Entity entity) {
             _entities.Add(entity);
             _entitiesCache = null;
             entity.OnComponentAdded += onComponentAdded;
             entity.OnComponentRemoved += onComponentRemoved;
             entity.OnComponentReplaced += onComponentReplaced;
-
             return entity;
+        }
+
+        public void PushToPool(Entity entity) {
+            DestroyEntity(entity);
+            _entityPool.Push(entity);
         }
 
         public void DestroyEntity(Entity entity) {
