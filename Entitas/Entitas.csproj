@@ -46,6 +46,8 @@
     <Compile Include="Entitas\EntityMatcher\AbstractEntityMatcher.cs" />
     <Compile Include="Entitas\EntityMatcher\AllOfEntityMatcher.cs" />
     <Compile Include="Entitas\Interfaces\IEntityMatcher.cs" />
+    <Compile Include="Entitas\Extensions\EntityExtension.cs" />
+    <Compile Include="Entitas\Extensions\EntityRepositoryExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
