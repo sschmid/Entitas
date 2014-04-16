@@ -20,7 +20,7 @@ class describe_EntityCollection : nspec {
         };
 
         it["is empty"] = () => {
-            _collection.isEmpty.should_be_true();
+            _collection.Count.should_be(0);
         };
 
         it["adds matching entity"] = () => {
@@ -30,7 +30,7 @@ class describe_EntityCollection : nspec {
 
         it["isn't empty"] = () => {
             addEA1();
-            _collection.isEmpty.should_be_false();
+            _collection.Count.should_be(1);
         };
 
         it["doesn't add same entity twice"] = () => {

@@ -8,7 +8,7 @@ namespace Entitas {
 
         public delegate void EntityCollectionChange(EntityCollection collection, Entity entity);
 
-        public bool isEmpty { get { return _entities.Count == 0; } }
+        public int Count { get { return _entities.Count; } }
 
         readonly IEntityMatcher _matcher;
         readonly LinkedListSet<Entity> _entities = new LinkedListSet<Entity>();
