@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{E2247925-03D6-40FC-AFA4-D7DA01FA6F4E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Tests</RootNamespace>
@@ -51,6 +49,7 @@
     <Compile Include="Tests\describe_EntityArrayExtension.cs" />
     <Compile Include="Tests\Helpers\TestHelper.cs" />
     <Compile Include="Tests\Fixtures\CP.cs" />
+    <Compile Include="Tests\describe_EntityRepositoryObserver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -5,32 +5,32 @@ namespace PerformanceTests {
     class MainClass {
         public static void Main(string[] args) {
             Console.WriteLine("Running performance tests...");
-            Thread.Sleep(500);
-            run<EntityRepositoryCreateEntity>();
-            run<EntityRepositoryDestroyAllEntites>();
-            run<EntityRepositoryHasComponent>();
-            run<EntityRepositoryGetEntities>();
-            run<EntityGetComponents>();
-            run<EntityHasComponent>();
-            run<EntityMatcherGetHashCode>();
-            run<EntityMatcherEquals>();
-            run<EntityRemoveAddComponent>();
+            Thread.Sleep(1500);
+//            run<EntityRepositoryCreateEntity>();
+//            run<EntityRepositoryDestroyAllEntites>();
+//            run<EntityRepositoryHasComponent>();
+//            run<EntityRepositoryGetEntities>();
+//            run<EntityGetComponents>();
+//            run<EntityHasComponent>();
+//            run<EntityMatcherGetHashCode>();
+//            run<EntityMatcherEquals>();
+//            run<EntityRemoveAddComponent>();
             run<EntityReplaceComponent>();
-            run<EntityRepositoryOnEntityReplaced>();
-            run<EntityGetComponent>();
-            run<ListAdd>();
-            run<OrderedSetAdd>();
-            run<LinkedListAdd>();
-            run<OrderedDictionaryAdd>();
-            //run<ListRemove>();
-            run<LinkedListRemove>();
-            run<OrderedSetRemove>();
-            run<OrderedDictionaryRemove>();
-            run<ListGetItem>();
-            run<DictionaryGetItem>();
-            run<OrderedDictionaryGetItemByKey>();
-            run<OrderedDictionaryGetItemByIndex>();
-            run<ArrayGetItem>();
+//            run<EntityRepositoryOnEntityReplaced>();
+//            run<EntityGetComponent>();
+//            run<ListAdd>();
+//            run<OrderedSetAdd>();
+//            run<LinkedListAdd>();
+//            run<OrderedDictionaryAdd>();
+//            //run<ListRemove>();
+//            run<LinkedListRemove>();
+//            run<OrderedSetRemove>();
+//            run<OrderedDictionaryRemove>();
+//            run<ListGetItem>();
+//            run<DictionaryGetItem>();
+//            run<OrderedDictionaryGetItemByKey>();
+//            run<OrderedDictionaryGetItemByIndex>();
+//            run<ArrayGetItem>();
             Console.Read();
         }
         // Add: List (103), LinkedList (107), OrderedDictionary (122), OrderedSet (141)
