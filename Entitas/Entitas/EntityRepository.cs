@@ -22,7 +22,7 @@ namespace Entitas {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
             _collectionsForIndex = new List<EntityCollection>[totalComponents];
-            _entityPool = new ObjectPool<Entity>(CreateEntity);
+            _entityPool = new ObjectPool<Entity>(() => new Entity(_totalComponents, _creationIndex++));
         }
 
         public Entity CreateEntity() {

@@ -127,6 +127,16 @@ class describe_EntityRepository : nspec {
                 addComponentA(e);
                 c.GetEntities().should_contain(e);
             };
+
+            it["sets up new entity when pool was empty"] = () => {
+                var e = _repo.GetEntityFromPool();
+                addComponentA(e);
+                var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CP.ComponentA }));
+                var didExecute = 0;
+                c.OnEntityAdded += (collection, entity) => didExecute++;
+                e.ReplaceComponent(CP.ComponentA, new ComponentA());
+                didExecute.should_be(1);
+            };
         };
 
         context["get entities"] = () => {
