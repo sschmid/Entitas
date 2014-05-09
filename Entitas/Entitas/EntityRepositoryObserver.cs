@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 
 namespace Entitas {
+    public enum EntityCollectionEventType : byte {
+        None,
+        OnEntityAdded,
+        OnEntityRemoved,
+        OnEntityAddedOrRemoved
+    }
+
     public class EntityRepositoryObserver {
         public List<Entity> collectedEntites { get { return _collectedEntites.list; } }
 

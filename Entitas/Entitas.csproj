@@ -35,11 +35,9 @@
     <Compile Include="Entitas\Entity.cs" />
     <Compile Include="Entitas\EntityRepository.cs" />
     <Compile Include="Entitas\EntityCollection.cs" />
-    <Compile Include="Entitas\ReactiveEntitySystem.cs" />
     <Compile Include="Entitas\Extensions\EntityArrayExtension.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
     <Compile Include="Entitas\Interfaces\IEntitySystem.cs" />
-    <Compile Include="Entitas\Interfaces\IReactiveSubEntitySystem.cs" />
     <Compile Include="Entitas\EntityMatcher\EntityMatcher.cs" />
     <Compile Include="Entitas\EntityMatcher\AbstractEntityMatcher.cs" />
     <Compile Include="Entitas\EntityMatcher\AllOfEntityMatcher.cs" />
@@ -47,7 +45,8 @@
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
     <Compile Include="Entitas\Extensions\EntityRepositoryExtension.cs" />
     <Compile Include="Entitas\EntityRepositoryObserver.cs" />
-    <Compile Include="Entitas\EntityCollectionEventType.cs" />
+    <Compile Include="Entitas\Extensions\ReactiveEntitySystem\ReactiveEntitySystem.cs" />
+    <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntitySystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -55,6 +54,7 @@
     <Folder Include="Entitas\Extensions\" />
     <Folder Include="Entitas\Interfaces\" />
     <Folder Include="Entitas\EntityMatcher\" />
+    <Folder Include="Entitas\Extensions\ReactiveEntitySystem\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dependencies\Dependencies.csproj">
