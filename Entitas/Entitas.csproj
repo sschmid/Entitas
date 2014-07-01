@@ -47,6 +47,7 @@
     <Compile Include="Entitas\EntityRepositoryObserver.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\ReactiveEntitySystem.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntitySystem.cs" />
+    <Compile Include="Entitas\Extensions\EntityCollectionExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
