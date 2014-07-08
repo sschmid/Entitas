@@ -113,6 +113,17 @@ class describe_ReactiveEntitySystem : nspec {
                 subSystem.entites.Length.should_be(1);
                 subSystem.entites.should_contain(e);
             };
+
+            it["collects matching entities created or modified in the subsystem"] = () => {
+                var sys = new EntityEmittingSubSystem(_repo);
+                res = new ReactiveEntitySystem(_repo, sys);
+                var e = createEntity();
+                addComponentA(e);
+                res.Execute();
+                sys.entites.Length.should_be(1);
+                res.Execute();
+                sys.entites.Length.should_be(1);
+            };
         };
 
     }

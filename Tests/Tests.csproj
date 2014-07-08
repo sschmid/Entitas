@@ -50,6 +50,7 @@
     <Compile Include="Tests\Helpers\TestHelper.cs" />
     <Compile Include="Tests\Fixtures\CP.cs" />
     <Compile Include="Tests\describe_EntityRepositoryObserver.cs" />
+    <Compile Include="Tests\Fixtures\EntityEmittingSubSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
