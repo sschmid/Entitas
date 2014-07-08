@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Entitas {
     public abstract class AbstractEntityMatcher : IEntityMatcher {
@@ -13,11 +12,13 @@ namespace Entitas {
         }
 
         protected AbstractEntityMatcher(int[] indices) {
-            _indices = new HashSet<int>(indices).ToArray();
+            Array.Sort(indices);
+            var sortedIndices = new HashSet<int>(indices);
+            _indices = new int[sortedIndices.Count];
+            sortedIndices.CopyTo(_indices);
             int hash = GetType().GetHashCode();
             for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++)
-                hash ^= _indices[i] * 977;
-
+                hash ^= _indices[i] * 647;
             hash ^= _indices.Length * 997;
             _hash = hash;
         }
@@ -25,13 +26,18 @@ namespace Entitas {
         public abstract bool Matches(Entity entity);
 
         public override bool Equals(object obj) {
-            if (obj == this)
-                return true;
-
-            if (obj == null || obj.GetType() != GetType())
+            if (obj == null || obj.GetType() != GetType() || obj.GetHashCode() != GetHashCode())
                 return false;
 
-            return obj.GetHashCode() == GetHashCode();
+            var matcher = (IEntityMatcher)obj;
+            if (matcher.indices.Length != _indices.Length)
+                return false;
+
+            for (int i = 0, _indicesLength = _indices.Length; i < _indicesLength; i++)
+                if (matcher.indices[i] != _indices[i])
+                    return false;
+
+            return true;
         }
 
         public override int GetHashCode() {

@@ -53,12 +53,13 @@ class describe_EntityMatcher : nspec {
                 m1.Equals(m2).should_be_true();
             };
 
-            it["equals equal AllOfEntityMatcher no matter what order"] = () => {
+            it["equals equal AllOfEntityMatcher independent from the order of indices"] = () => {
                 var m1 = allOfAB();
                 var m2 = EntityMatcher.AllOf(new [] {
                     CP.ComponentB,
                     CP.ComponentA
                 });
+
                 m1.should_not_be_same(m2);
                 m1.Equals(m2).should_be_true();
             };
@@ -78,16 +79,16 @@ class describe_EntityMatcher : nspec {
                 m1.GetHashCode().should_be(m2.GetHashCode());
             };
 
-            it["generates different hash for same sum of component indices"] = () => {
-                var m1 = EntityMatcher.AllOf(new [] { 1, 2 });
-                var m2 = EntityMatcher.AllOf(new [] { 3 });
-                m1.GetHashCode().should_not_be(m2.GetHashCode());
-            };
-
-            it["generates different hash for this example"] = () => {
-                var m1 = EntityMatcher.AllOf(new [] { 6, 2 });
-                var m2 = EntityMatcher.AllOf(new [] { 7 });
-                m1.GetHashCode().should_not_be(m2.GetHashCode());
+            it["generates same hash independent from the order of indices"] = () => {
+                var m1 = EntityMatcher.AllOf(new [] {
+                    CP.ComponentA,
+                    CP.ComponentB
+                });
+                var m2 = EntityMatcher.AllOf(new [] {
+                    CP.ComponentB,
+                    CP.ComponentA
+                });
+                m1.GetHashCode().should_be(m2.GetHashCode());
             };
         };
     }

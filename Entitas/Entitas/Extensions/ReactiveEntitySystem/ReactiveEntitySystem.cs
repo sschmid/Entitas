@@ -14,10 +14,8 @@ namespace Entitas {
         }
 
         public void Execute() {
-            for (int i = 0, entitesCount = _observer.collectedEntites.Count; i < entitesCount; i++)
-                _buffer.Add(_observer.collectedEntites[i]);
+            _buffer.AddRange(_observer.collectedEntites);
             _observer.ClearCollectedEntites();
-
             if (_buffer.Count > 0)
                 _subsystem.Execute(_buffer);
             _buffer.Clear();
