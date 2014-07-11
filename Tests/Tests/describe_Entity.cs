@@ -166,7 +166,6 @@ class describe_Entity : nspec {
             
             it["dispatches OnComponentWillBeRemoved when replacing a component"] = () => {
                 _entity.AddComponent(CP.ComponentA, _componentA);
-                _entity.OnComponentAdded += (entity, type, component) => TestHelper.Fail();
                 _entity.OnComponentWillBeRemoved += (entity, type, component) => {
                     eventEntity = entity;
                     eventType = type;
@@ -177,12 +176,11 @@ class describe_Entity : nspec {
                 
                 eventEntity.should_be_same(_entity);
                 eventType.should_be(CP.ComponentA);
-                eventComponent.should_be_same(newComponentA);
+                eventComponent.should_be_same(_componentA);
             };
 
             it["dispatches OnComponentRemoved when replacing a component"] = () => {
                 _entity.AddComponent(CP.ComponentA, _componentA);
-                _entity.OnComponentAdded += (entity, type, component) => TestHelper.Fail();
                 _entity.OnComponentRemoved += (entity, type, component) => {
                     eventEntity = entity;
                     eventType = type;
@@ -191,6 +189,21 @@ class describe_Entity : nspec {
                 var newComponentA = new ComponentA();
                 replaceComponentA(_entity, newComponentA);
 
+                eventEntity.should_be_same(_entity);
+                eventType.should_be(CP.ComponentA);
+                eventComponent.should_be_same(_componentA);
+            };
+            
+            it["dispatches OnComponentAdded when attempting to replace a component"] = () => {
+                _entity.AddComponent(CP.ComponentA, _componentA);
+                _entity.OnComponentAdded += (entity, type, component) => {
+                    eventEntity = entity;
+                    eventType = type;
+                    eventComponent = component;
+                };
+                var newComponentA = new ComponentA();
+                replaceComponentA(_entity, newComponentA);
+                
                 eventEntity.should_be_same(_entity);
                 eventType.should_be(CP.ComponentA);
                 eventComponent.should_be_same(newComponentA);

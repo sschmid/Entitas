@@ -51,6 +51,8 @@ namespace Entitas {
 				_componentIndicesCache = null;
 			if (OnComponentRemoved != null)
 				OnComponentRemoved(this, index, component);
+            if (replacement != null && OnComponentAdded != null)
+                OnComponentAdded(this, index, replacement);
 		}
 
         public void RemoveComponent(int index) {
@@ -65,8 +67,9 @@ namespace Entitas {
         public void ReplaceComponent(int index, IComponent component) {
             if (HasComponent(index)) {
 				replaceComponent(index, component);
-            } 
-			AddComponent(index, component);
+            }else{
+			    AddComponent(index, component);
+            }
         }
 
         public IComponent GetComponent(int index) {
