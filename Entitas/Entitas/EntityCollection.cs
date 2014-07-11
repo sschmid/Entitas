@@ -3,8 +3,9 @@ using ToolKit;
 
 namespace Entitas {
     public class EntityCollection {
-        public event EntityCollectionChange OnEntityAdded;
-        public event EntityCollectionChange OnEntityRemoved;
+		public event EntityCollectionChange OnEntityAdded;
+		public event EntityCollectionChange OnEntityRemoved;
+        public event EntityCollectionChange OnEntityWillBeRemoved;
 
         public delegate void EntityCollectionChange(EntityCollection collection, Entity entity);
 
@@ -35,15 +36,6 @@ namespace Entitas {
             }
         }
 
-        public void ReplaceEntity(Entity entity) {
-            if (_entities.Contains(entity)) {
-                if (OnEntityRemoved != null)
-                    OnEntityRemoved(this, entity);
-                if (OnEntityAdded != null)
-                    OnEntityAdded(this, entity);
-            }
-        }
-
         public void RemoveEntity(Entity entity) {
             var removed = _entities.Remove(entity);
             if (removed) {
@@ -53,6 +45,13 @@ namespace Entitas {
                     OnEntityRemoved(this, entity);
             }
         }
+
+		public void EntityWillBeRemoved(Entity entity)
+		{
+			if(_entities.Contains(entity) && OnEntityWillBeRemoved != null){
+				OnEntityWillBeRemoved(this, entity);
+			}
+		}
 
         public Entity[] GetEntities() {
             if (_entitiesCache == null)

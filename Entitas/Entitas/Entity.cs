@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Entitas {
     public class Entity {
-        public event EntityChange OnComponentAdded;
+		public event EntityChange OnComponentAdded;
+		public event EntityChange OnComponentWillBeRemoved;
         public event EntityChange OnComponentRemoved;
-        public event EntityChange OnComponentReplaced;
 
         public delegate void EntityChange(Entity entity, int index, IComponent component);
 
@@ -37,31 +37,36 @@ namespace Entitas {
                 OnComponentAdded(this, index, component);
         }
 
+		void replaceComponent(int index, IComponent replacement)
+		{			
+			var component = _components[index];
+			
+			if(OnComponentWillBeRemoved != null)
+				OnComponentWillBeRemoved(this, index, component);
+			if(component != replacement){
+				_components[index] = replacement;
+				_componentsCache = null;
+			}
+			if(replacement == null)
+				_componentIndicesCache = null;
+			if (OnComponentRemoved != null)
+				OnComponentRemoved(this, index, component);
+		}
+
         public void RemoveComponent(int index) {
             #if (DEBUG)
             if (!HasComponent(index))
                 throw new EntityDoesNotHaveComponentException(string.Format("Cannot remove component at index {0} from {1}.", index, this), index);
             #endif
-
-            var component = _components[index];
-            _components[index] = null;
-            _componentsCache = null;
-            _componentIndicesCache = null;
-            if (OnComponentRemoved != null)
-                OnComponentRemoved(this, index, component);
+			
+			replaceComponent(index, null);
         }
 
         public void ReplaceComponent(int index, IComponent component) {
             if (HasComponent(index)) {
-                if (_components[index] != component) {
-                    _components[index] = component;
-                    _componentsCache = null;
-                }
-                if (OnComponentReplaced != null)
-                    OnComponentReplaced(this, index, component);
-            } else {
-                AddComponent(index, component);
-            }
+				replaceComponent(index, component);
+            } 
+			AddComponent(index, component);
         }
 
         public IComponent GetComponent(int index) {
