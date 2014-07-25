@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4D7C8232-6930-4F13-9D9A-3C32A340BB62}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Entitas.CodeGenerator</RootNamespace>
+    <AssemblyName>CodeGenerator</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EntitasCodeGenerator\CodeGenerator.cs" />
+    <Compile Include="EntitasCodeGenerator\EntitasCodeGenerator.cs" />
+    <Compile Include="EntitasCodeGenerator\IndicesLookupGenerator.cs" />
+    <Compile Include="EntitasCodeGenerator\Extensions.cs" />
+    <Compile Include="Components\FlagComponent.cs" />
+    <Compile Include="Components\SingleFieldComponent.cs" />
+    <Compile Include="Components\NoFieldComponent.cs" />
+    <Compile Include="Components\MultiFieldComponent.cs" />
+    <Compile Include="EntitasCodeGenerator\EntitasCodeGeneratorAttributes.cs" />
+    <Compile Include="Components\IgnoreComponent.cs" />
+    <Compile Include="Components\FakeComponent.cs" />
+    <Compile Include="EntitasCodeGenerator\ComponentExtensionsGenerator.cs" />
+    <Compile Include="Components\CoinsComponent.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="EntitasCodeGenerator\" />
+    <Folder Include="Components\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceTests", "Perform
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dependencies", "Dependencies\Dependencies.csproj", "{A65102DB-7A15-4F25-A318-79FE0A9545BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator", "CodeGenerator\CodeGenerator.csproj", "{4D7C8232-6930-4F13-9D9A-3C32A340BB62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
