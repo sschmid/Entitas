@@ -54,6 +54,10 @@ namespace Entitas {
             return list[0];
         }
 
+        public static Entity Last(this Entity[] list) {
+            return list[list.Length - 1];
+        }
+
         public static Entity Last(this List<Entity> list) {
             return list[list.Count - 1];
         }

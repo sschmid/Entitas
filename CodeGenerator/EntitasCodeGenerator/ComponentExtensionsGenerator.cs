@@ -233,7 +233,7 @@ public static class {0} {{
     }}
 ";
             const string singleEntityMultipleField = @"
-    public static {3} GetSingle{2}{5}(this Entity entity) {{
+    public static {3} GetSingle{2}{5}(this EntityRepository repo) {{
         var entity = repo.GetSingleEntity({1}.{2});
         return (({0})entity.GetComponent({1}.{2})).{4};
     }}
@@ -253,11 +253,13 @@ public static class {0} {{
         return (({0})entity.GetComponent({1}.{2})).{4};
     }}
  ";
-            string format = fieldInfos.Length == 1 ? oneFieldFormat : multipleFieldFormat;
-            if (isOnSingleEntity(type))
-                format += singleEntityFieldFormat + (fieldInfos.Length == 1 ? singleEntityOneField : singleEntityMultipleField);
-
             var getters = string.Format(fieldFormat, a0_type, a1_tag, a2_name);
+            string format = fieldInfos.Length == 1 ? oneFieldFormat : multipleFieldFormat;
+            if (isOnSingleEntity(type)) {
+                getters += string.Format(singleEntityFieldFormat, a0_type, a1_tag, a2_name);
+                format += fieldInfos.Length == 1 ? singleEntityOneField : singleEntityMultipleField;
+            }
+
             for (int i = 0; i < fieldInfos.Length; i++) {
                 var a3_fieldType = getTypeName(fieldInfos[i].FieldType);
                 var a4_fieldName = fieldInfos[i].Name;
