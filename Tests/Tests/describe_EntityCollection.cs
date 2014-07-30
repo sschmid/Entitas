@@ -53,17 +53,6 @@ class describe_EntityCollection : nspec {
             _collection.GetEntities().should_be_empty();
         };
 
-        it["replaces existing entity"] = () => {
-            addEA1();
-            replaceEA1();
-            _collection.GetEntities().should_contain(_eA1);
-        };
-
-        it["doesn't add entity when replacing with an entity that hasn't been added before"] = () => {
-            replaceEA1();
-            _collection.GetEntities().should_not_contain(_eA1);
-        };
-
         it["gets null when single entity does not exist"] = () => {
             _collection.GetSingleEntity().should_be_null();
         };
@@ -129,34 +118,6 @@ class describe_EntityCollection : nspec {
                 removeEA1();
                 didDispatch.should_be(0);
             };
-
-            it["dispatches OnEntityRemoved and OnEntityAdded when entity got replaced"] = () => {
-                addEA1();
-                var didDispatchAdded = 0;
-                var didDispatchRemoved = 0;
-                EntityCollection eventCollectionAdded = null;
-                EntityCollection eventCollectionRemoved = null;
-                Entity eventEntityAdded = null;
-                Entity eventEntityRemoved = null;
-                _collection.OnEntityAdded += (collection, entity) => {
-                    eventCollectionAdded = collection;
-                    eventEntityAdded = entity;
-                    didDispatchAdded++;
-                };
-                _collection.OnEntityRemoved += (collection, entity) => {
-                    eventCollectionRemoved = collection;
-                    eventEntityRemoved = entity;
-                    didDispatchRemoved++;
-                };
-                _collection.ReplaceEntity(_eA1);
-
-                didDispatchAdded.should_be(1);
-                didDispatchRemoved.should_be(1);
-                eventCollectionAdded.should_be_same(_collection);
-                eventCollectionRemoved.should_be_same(_collection);
-                eventEntityAdded.should_be_same(_eA1);
-                eventEntityRemoved.should_be_same(_eA1);
-            };
         };
 
         context["internal caching"] = () => {
@@ -212,15 +173,6 @@ class describe_EntityCollection : nspec {
                 removeEA1();
                 s.should_not_be_same(_collection.GetSingleEntity());
             };
-
-            it["doesn't update cache when replacing an entity"] = () => {
-                addEA1();
-                var s = _collection.GetSingleEntity();
-                var e = _collection.GetEntities();
-                replaceEA1();
-                s.should_be_same(_collection.GetSingleEntity());
-                e.should_be_same(_collection.GetEntities());
-            };
         };
     }
 
@@ -246,10 +198,6 @@ class describe_EntityCollection : nspec {
 
     void removeEA1() {
         _collection.RemoveEntity(_eA1);
-    }
-
-    void replaceEA1() {
-        _collection.ReplaceEntity(_eA1);
     }
 }
 

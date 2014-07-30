@@ -31,7 +31,7 @@ namespace Entitas {
             else if (_eventType == EntityCollectionEventType.OnEntityAddedOrRemoved) {
                 _collection.OnEntityAdded += addEntity;
                 _collection.OnEntityRemoved += addEntity;
-            }
+			}
         }
 
         public void Deactivate() {

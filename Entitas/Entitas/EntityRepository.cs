@@ -36,9 +36,9 @@ namespace Entitas {
         Entity setupEntity(Entity entity) {
             _entities.Add(entity);
             _entitiesCache = null;
-            entity.OnComponentAdded += onComponentAdded;
+			entity.OnComponentAdded += onComponentAdded;
+			entity.OnComponentWillBeRemoved += onComponentWillBeRemoved;
             entity.OnComponentRemoved += onComponentRemoved;
-            entity.OnComponentReplaced += onComponentReplaced;
             return entity;
         }
 
@@ -48,9 +48,9 @@ namespace Entitas {
         }
 
         public void DestroyEntity(Entity entity) {
-            entity.OnComponentAdded -= onComponentAdded;
+			entity.OnComponentAdded -= onComponentAdded;
+			entity.OnComponentWillBeRemoved -= onComponentWillBeRemoved;
             entity.OnComponentRemoved -= onComponentRemoved;
-            entity.OnComponentReplaced -= onComponentReplaced;
             entity.RemoveAllComponents();
             removeFromAllCollections(entity);
             _entities.Remove(entity);
@@ -102,19 +102,20 @@ namespace Entitas {
             }
         }
 
+		void onComponentWillBeRemoved(Entity entity, int index, IComponent component) {
+			if (_collectionsForIndex[index] != null) {
+				var collections = _collectionsForIndex[index];
+				for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++){
+					collections[i].EntityWillBeRemoved(entity);
+				}
+			}
+		}
+
         void onComponentRemoved(Entity entity, int index, IComponent component) {
             if (_collectionsForIndex[index] != null) {
                 var collections = _collectionsForIndex[index];
                 for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++)
                     collections[i].RemoveEntity(entity);
-            }
-        }
-
-        void onComponentReplaced(Entity entity, int index, IComponent component) {
-            if (_collectionsForIndex[index] != null) {
-                var collections = _collectionsForIndex[index];
-                for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++)
-                    collections[i].ReplaceEntity(entity);
             }
         }
 
