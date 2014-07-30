@@ -37,6 +37,7 @@ namespace Entitas {
             _entities.Add(entity);
             _entitiesCache = null;
             entity.OnComponentAdded += onComponentAdded;
+            entity.OnComponentWillBeRemoved += onComponentWillBeRemoved;
             entity.OnComponentRemoved += onComponentRemoved;
             return entity;
         }
@@ -48,6 +49,7 @@ namespace Entitas {
 
         public void DestroyEntity(Entity entity) {
             entity.OnComponentAdded -= onComponentAdded;
+            entity.OnComponentWillBeRemoved -= onComponentWillBeRemoved;
             entity.OnComponentRemoved -= onComponentRemoved;
             entity.RemoveAllComponents();
             removeFromAllCollections(entity);
@@ -100,6 +102,14 @@ namespace Entitas {
             }
         }
 
+        void onComponentWillBeRemoved(Entity entity, int index, IComponent component) {
+            if (_collectionsForIndex[index] != null) {
+                var collections = _collectionsForIndex[index];
+                for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++)
+                    collections[i].WillRemoveEntity(entity);
+            }
+        }
+
         void onComponentRemoved(Entity entity, int index, IComponent component) {
             if (_collectionsForIndex[index] != null) {
                 var collections = _collectionsForIndex[index];
@@ -109,8 +119,11 @@ namespace Entitas {
         }
 
         void removeFromAllCollections(Entity entity) {
-            for (int i = 0, _collectionListCount = _collectionList.Count; i < _collectionListCount; i++)
-                _collectionList[i].RemoveEntity(entity);
+            for (int i = 0, _collectionListCount = _collectionList.Count; i < _collectionListCount; i++) {
+                var collection = _collectionList[i];
+                collection.WillRemoveEntity(entity);
+                collection.RemoveEntity(entity);
+            }
         }
     }
 }

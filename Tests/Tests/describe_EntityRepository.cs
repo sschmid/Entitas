@@ -206,33 +206,43 @@ class describe_EntityRepository : nspec {
                     c.GetEntities().should_not_contain(eA);
                 };
 
-                it["collections dispatches OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
+                it["collections dispatches OnEntityWillBeRemoved, OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
                     var c = _repo.GetCollection(matcher);
-                    var didDispachRemoved = 0;
-                    var didDispachAdded = 0;
+                    var didDispatchWillBeRemoved = 0;
+                    var didDispatchRemoved = 0;
+                    var didDispatchAdded = 0;
+                    EntityCollection eventCollectionWillBeRemoved = null;
                     EntityCollection eventCollectionRemoved = null;
                     EntityCollection eventCollectionAdded = null;
+                    Entity eventEntityWillBeRemoved = null;
                     Entity eventEntityRemoved = null;
                     Entity eventEntityAdded = null;
+                    c.OnEntityWillBeRemoved += (collection, entity) => {
+                        eventCollectionWillBeRemoved = collection;
+                        eventEntityWillBeRemoved = entity;
+                        didDispatchWillBeRemoved++;
+                    };
                     c.OnEntityRemoved += (collection, entity) => {
                         eventCollectionRemoved = collection;
                         eventEntityRemoved = entity;
-                        didDispachRemoved++;
+                        didDispatchRemoved++;
                     };
                     c.OnEntityAdded += (collection, entity) => {
                         eventCollectionAdded = collection;
                         eventEntityAdded = entity;
-                        didDispachAdded++;
+                        didDispatchAdded++;
                     };
                     eAB1.ReplaceComponent(CP.ComponentA, new ComponentA());
 
+                    eventCollectionWillBeRemoved.should_be_same(c);
                     eventCollectionRemoved.should_be_same(c);
                     eventCollectionAdded.should_be_same(c);
+                    eventEntityWillBeRemoved.should_be_same(eAB1);
                     eventEntityRemoved.should_be_same(eAB1);
                     eventEntityAdded.should_be_same(eAB1);
-                    didDispachRemoved.should_be(1);
-                    didDispachAdded.should_be(1);
-                    didDispachAdded.should_be(1);
+                    didDispatchWillBeRemoved.should_be(1);
+                    didDispatchRemoved.should_be(1);
+                    didDispatchAdded.should_be(1);
                 };
             };
         };

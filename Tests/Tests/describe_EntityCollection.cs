@@ -53,17 +53,6 @@ class describe_EntityCollection : nspec {
             _collection.GetEntities().should_be_empty();
         };
 
-        it["replaces existing entity"] = () => {
-            addEA1();
-            replaceEA1();
-            _collection.GetEntities().should_contain(_eA1);
-        };
-
-        it["doesn't add entity when replacing with an entity that hasn't been added before"] = () => {
-            replaceEA1();
-            _collection.GetEntities().should_not_contain(_eA1);
-        };
-
         it["gets null when single entity does not exist"] = () => {
             _collection.GetSingleEntity().should_be_null();
         };
@@ -121,6 +110,25 @@ class describe_EntityCollection : nspec {
                 didDispatch.should_be(1);
             };
 
+            it["dispatches OnEntityWillBeRemove when entity will be removed"] = () => {
+                _collection.OnEntityWillBeRemoved += (collection, entity) => {
+                    didDispatch++;
+                    collection.should_be_same(_collection);
+                    entity.should_be_same(_eA1);
+                    entity.HasComponent(CP.ComponentA).should_be_true();
+                };
+
+                addEA1();
+                willRemoveEA1();
+                didDispatch.should_be(1);
+            };
+
+            it["doesn't dispatch OnEntityWillBeRemove when collection doesn't contain entity"] = () => {
+                _collection.OnEntityWillBeRemoved += (collection, entity) => TestHelper.Fail();
+                addEA1();
+                _collection.WillRemoveEntity(new Entity(0));
+            };
+
             it["doesn't dispatch OnEntityRemove when entity didn't get removed"] = () => {
                 _collection.OnEntityRemoved += (collection, entity) => {
                     didDispatch++;
@@ -128,34 +136,6 @@ class describe_EntityCollection : nspec {
 
                 removeEA1();
                 didDispatch.should_be(0);
-            };
-
-            it["dispatches OnEntityRemoved and OnEntityAdded when entity got replaced"] = () => {
-                addEA1();
-                var didDispatchAdded = 0;
-                var didDispatchRemoved = 0;
-                EntityCollection eventCollectionAdded = null;
-                EntityCollection eventCollectionRemoved = null;
-                Entity eventEntityAdded = null;
-                Entity eventEntityRemoved = null;
-                _collection.OnEntityAdded += (collection, entity) => {
-                    eventCollectionAdded = collection;
-                    eventEntityAdded = entity;
-                    didDispatchAdded++;
-                };
-                _collection.OnEntityRemoved += (collection, entity) => {
-                    eventCollectionRemoved = collection;
-                    eventEntityRemoved = entity;
-                    didDispatchRemoved++;
-                };
-                _collection.ReplaceEntity(_eA1);
-
-                didDispatchAdded.should_be(1);
-                didDispatchRemoved.should_be(1);
-                eventCollectionAdded.should_be_same(_collection);
-                eventCollectionRemoved.should_be_same(_collection);
-                eventEntityAdded.should_be_same(_eA1);
-                eventEntityRemoved.should_be_same(_eA1);
             };
         };
 
@@ -212,15 +192,6 @@ class describe_EntityCollection : nspec {
                 removeEA1();
                 s.should_not_be_same(_collection.GetSingleEntity());
             };
-
-            it["doesn't update cache when replacing an entity"] = () => {
-                addEA1();
-                var s = _collection.GetSingleEntity();
-                var e = _collection.GetEntities();
-                replaceEA1();
-                s.should_be_same(_collection.GetSingleEntity());
-                e.should_be_same(_collection.GetEntities());
-            };
         };
     }
 
@@ -248,8 +219,8 @@ class describe_EntityCollection : nspec {
         _collection.RemoveEntity(_eA1);
     }
 
-    void replaceEA1() {
-        _collection.ReplaceEntity(_eA1);
+    void willRemoveEA1() {
+        _collection.WillRemoveEntity(_eA1);
     }
 }
 

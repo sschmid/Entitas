@@ -4,6 +4,7 @@ using ToolKit;
 namespace Entitas {
     public class EntityCollection {
         public event EntityCollectionChange OnEntityAdded;
+        public event EntityCollectionChange OnEntityWillBeRemoved;
         public event EntityCollectionChange OnEntityRemoved;
 
         public delegate void EntityCollectionChange(EntityCollection collection, Entity entity);
@@ -35,13 +36,9 @@ namespace Entitas {
             }
         }
 
-        public void ReplaceEntity(Entity entity) {
-            if (_entities.Contains(entity)) {
-                if (OnEntityRemoved != null)
-                    OnEntityRemoved(this, entity);
-                if (OnEntityAdded != null)
-                    OnEntityAdded(this, entity);
-            }
+        public void WillRemoveEntity(Entity entity) {
+            if (_entities.Contains(entity) && OnEntityWillBeRemoved != null)
+                OnEntityWillBeRemoved(this, entity);
         }
 
         public void RemoveEntity(Entity entity) {
