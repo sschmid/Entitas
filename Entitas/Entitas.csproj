@@ -49,6 +49,8 @@
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntitySystem.cs" />
     <Compile Include="Entitas\Extensions\EntityCollectionExtension.cs" />
     <Compile Include="Entitas\EntityWillBeRemovedEntityRepositoryObserver.cs" />
+    <Compile Include="Entitas\Extensions\ReactiveEntitySystem\ReactiveEntityWillBeRemovedSystem.cs" />
+    <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntityWillBeRemovedSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

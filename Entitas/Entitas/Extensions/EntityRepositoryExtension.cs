@@ -23,6 +23,10 @@
         public static EntityRepositoryObserver AddObserver(this EntityRepository repo, EntityCollectionEventType eventType, params int[] indices) {
             return new EntityRepositoryObserver(repo, eventType, EntityMatcher.AllOf(indices));
         }
+
+        public static EntityWillBeRemovedEntityRepositoryObserver AddWillBeRemovedObserver(this EntityRepository repo, int index) {
+            return new EntityWillBeRemovedEntityRepositoryObserver(repo, index);
+        }   
     }
 }
 
