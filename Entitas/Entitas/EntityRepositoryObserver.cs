@@ -10,14 +10,14 @@ namespace Entitas {
     }
 
     public class EntityRepositoryObserver {
-        public List<Entity> collectedEntites { get { return _collectedEntites.list; } }
+        public List<Entity> collectedEntities { get { return _collectedEntities.list; } }
 
-        readonly ListSet<Entity> _collectedEntites;
+        readonly ListSet<Entity> _collectedEntities;
         readonly EntityCollection _collection;
         readonly EntityCollectionEventType _eventType;
 
         public EntityRepositoryObserver(EntityRepository repo, EntityCollectionEventType eventType, IEntityMatcher matcher) {
-            _collectedEntites = new ListSet<Entity>();
+            _collectedEntities = new ListSet<Entity>();
             _collection = repo.GetCollection(matcher);
             _eventType = eventType;
             Activate();
@@ -35,17 +35,17 @@ namespace Entitas {
         }
 
         public void Deactivate() {
-            _collectedEntites.Clear();
+            _collectedEntities.Clear();
             _collection.OnEntityAdded -= addEntity;
             _collection.OnEntityRemoved -= addEntity;
         }
 
         public void ClearCollectedEntites() {
-            _collectedEntites.Clear();
+            _collectedEntities.Clear();
         }
 
         void addEntity(EntityCollection collection, Entity entity) {
-            _collectedEntites.Add(entity);
+            _collectedEntities.Add(entity);
         }
     }
 }

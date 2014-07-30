@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Entitas {
     public static class EntityArrayExtension {
-        public static List<Entity> With(this Entity[] entities, int[] indices) {
+        public static List<Entity> With(this Entity[] entities, params int[] indices) {
             var with = new List<Entity>();
             for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
                 var e = entities[i];
@@ -14,7 +14,7 @@ namespace Entitas {
             return with;
         }
 
-        public static List<Entity> Without(this Entity[] entities, int[] indices) {
+        public static List<Entity> Without(this Entity[] entities, params int[] indices) {
             var without = new List<Entity>();
             for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
                 var e = entities[i];
@@ -25,7 +25,7 @@ namespace Entitas {
             return without;
         }
 
-        public static List<Entity> With(this List<Entity> entities, int[] indices) {
+        public static List<Entity> With(this List<Entity> entities, params int[] indices) {
             var with = new List<Entity>();
             for (int i = 0, entitiesLength = entities.Count; i < entitiesLength; i++) {
                 var e = entities[i];
@@ -36,7 +36,7 @@ namespace Entitas {
             return with;
         }
 
-        public static List<Entity> Without(this List<Entity> entities, int[] indices) {
+        public static List<Entity> Without(this List<Entity> entities, params int[] indices) {
             var without = new List<Entity>();
             for (int i = 0, entitiesLength = entities.Count; i < entitiesLength; i++) {
                 var e = entities[i];
