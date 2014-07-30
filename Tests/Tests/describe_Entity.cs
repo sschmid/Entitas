@@ -136,7 +136,6 @@ class describe_Entity : nspec {
             };
 
             it["dispatches OnComponentAdded when adding a component"] = () => {
-                _entity.OnComponentReplaced += (entity, type, component) => TestHelper.Fail();
                 _entity.OnComponentRemoved += (entity, type, component) => TestHelper.Fail();
                 _entity.OnComponentAdded += (entity, type, component) => {
                     eventEntity = entity;
@@ -153,7 +152,6 @@ class describe_Entity : nspec {
             it["dispatches OnComponentRemoved when removing a component"] = () => {
                 addComponentA(_entity);
                 _entity.OnComponentAdded += (entity, type, component) => TestHelper.Fail();
-                _entity.OnComponentReplaced += (entity, type, component) => TestHelper.Fail();
                 _entity.OnComponentRemoved += (entity, type, component) => {
                     eventEntity = entity;
                     eventType = type;
@@ -166,26 +164,56 @@ class describe_Entity : nspec {
                 eventComponent.should_be_same(_componentA);
             };
 
-            it["dispatches OnComponentReplaced when replacing a component"] = () => {
-                _entity.AddComponent(CP.ComponentA, _componentA);
-                _entity.OnComponentAdded += (entity, type, component) => TestHelper.Fail();
-                _entity.OnComponentRemoved += (entity, type, component) => TestHelper.Fail();
-                _entity.OnComponentReplaced += (entity, type, component) => {
+            it["dispatches OnComponentWillBeRemoved when removing a component"] = () => {
+                addComponentA(_entity);
+                _entity.OnComponentWillBeRemoved += (entity, type, component) => {
                     eventEntity = entity;
                     eventType = type;
                     eventComponent = component;
                 };
-                var newComponentA = new ComponentA();
-                replaceComponentA(_entity, newComponentA);
+                removeComponentA(_entity);
 
                 eventEntity.should_be_same(_entity);
                 eventType.should_be(CP.ComponentA);
-                eventComponent.should_be_same(newComponentA);
+                eventComponent.should_be_same(_componentA);
+            };
+
+            it["dispatches OnComponentAdded, OnComponentWillBeRemoved and OnComponentRemoved when replacing a component"] = () => {
+                addComponentA(_entity);
+                var newComponentA = new ComponentA();
+                var didAdd = 0;
+                _entity.OnComponentAdded += (entity, type, component) => {
+                    entity.should_be_same(_entity);
+                    type.should_be(CP.ComponentA);
+                    component.should_be_same(newComponentA);
+                    didAdd++;
+
+                };
+
+                var didWillBeRemoved = 0;
+                _entity.OnComponentWillBeRemoved += (entity, type, component) => {
+                    entity.should_be_same(_entity);
+                    type.should_be(CP.ComponentA);
+                    component.should_be_same(_componentA);
+                    didWillBeRemoved++;
+                };
+
+                var didRemove = 0;
+                _entity.OnComponentRemoved += (entity, type, component) => {
+                    entity.should_be_same(_entity);
+                    type.should_be(CP.ComponentA);
+                    component.should_be_same(_componentA);
+                    didRemove++;
+                };
+                replaceComponentA(_entity, newComponentA);
+                didAdd.should_be(1);
+                didWillBeRemoved.should_be(1);
+                didRemove.should_be(1);
             };
 
             it["dispatches OnComponentAdded when attempting to replace a component which hasn't been added"] = () => {
+                _entity.OnComponentWillBeRemoved += (entity, type, component) => TestHelper.Fail();
                 _entity.OnComponentRemoved += (entity, type, component) => TestHelper.Fail();
-                _entity.OnComponentReplaced += (entity, type, component) => TestHelper.Fail();
                 _entity.OnComponentAdded += (entity, type, component) => {
                     eventEntity = entity;
                     eventType = type;
