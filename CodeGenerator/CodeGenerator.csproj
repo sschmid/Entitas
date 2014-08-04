@@ -36,15 +36,9 @@
     <Compile Include="EntitasCodeGenerator\EntitasCodeGenerator.cs" />
     <Compile Include="EntitasCodeGenerator\IndicesLookupGenerator.cs" />
     <Compile Include="EntitasCodeGenerator\Extensions.cs" />
-    <Compile Include="Components\FlagComponent.cs" />
-    <Compile Include="Components\SingleFieldComponent.cs" />
-    <Compile Include="Components\NoFieldComponent.cs" />
-    <Compile Include="Components\MultiFieldComponent.cs" />
     <Compile Include="EntitasCodeGenerator\EntitasCodeGeneratorAttributes.cs" />
-    <Compile Include="Components\IgnoreComponent.cs" />
-    <Compile Include="Components\FakeComponent.cs" />
     <Compile Include="EntitasCodeGenerator\ComponentExtensionsGenerator.cs" />
-    <Compile Include="Components\CoinsComponent.cs" />
+    <Compile Include="Components\Component.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

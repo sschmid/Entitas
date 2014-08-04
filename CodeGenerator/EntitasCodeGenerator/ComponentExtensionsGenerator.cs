@@ -49,26 +49,32 @@ public static class {0} {{
             var a1_tag = indicesLookupTag(type);
             var a2_name = type.RemoveComponentSuffix();
             var a3_fieldNames = fieldNamesWithType(fieldInfos);
-            var a4_fieldAssigns = fieldAsignments(fieldInfos);
+            var a4_fieldAssigns = fieldAssignments(fieldInfos);
 
             const string defaultFormat = @"
     public static void AddComponent(this Entity entity, {0} component) {{
         entity.AddComponent({1}.{2}, component);
     }}
+
+    public static void Add{2}(this Entity entity, {0} component) {{
+        entity.AddComponent({1}.{2}, component);
+    }}
 ";
-            const string fieldFormat = @"
+            const string defaultWithFieldsFormat = @"
     public static void Add{2}(this Entity entity, {3}) {{
         var component = new {0}();
 {4}
         entity.AddComponent({1}.{2}, component);
     }}
 ";
-            const string singletonFormat = @"
-    public static void FlagAs{2}(this Entity entity) {{
-        entity.AddComponent({1}.{2}, {0}.singleton);
+            const string singleEntityFormat = @"
+    public static Entity AddSingle{2}(this EntityRepository repo) {{
+        var entity = repo.GetEntityFromPool();
+        entity.AddComponent({1}.{2}, new {0}());
+        return entity;
     }}
 ";
-            const string singleEntityWithFields = @"
+            const string singleEntityWithFieldsFormat = @"
     public static Entity AddSingle{2}(this EntityRepository repo, {3}) {{
         var entity = repo.GetEntityFromPool();
         var component = new {0}();
@@ -77,21 +83,27 @@ public static class {0} {{
         return entity;
     }}
 ";
-            const string singleEntityWithoutFields = @"
+            const string singletonFormat = @"
+    public static void FlagAs{2}(this Entity entity) {{
+        entity.AddComponent({1}.{2}, {0}.singleton);
+    }}
+";
+            const string singleEntitySingletonFormat = @"
     public static Entity AddSingle{2}(this EntityRepository repo) {{
         var entity = repo.GetEntityFromPool();
-        entity.AddComponent({1}.{2}, new {0}());
+        entity.AddComponent({1}.{2}, {0}.singleton);
         return entity;
     }}
 ";
+
             string format;
             if (isSingletonComponent(type)) {
-                format = singletonFormat;
+                format = isOnSingleEntity(type) ? singletonFormat + singleEntitySingletonFormat : singletonFormat;
             } else {
                 if (a3_fieldNames.Length == 0)
-                    format = isOnSingleEntity(type) ? singleEntityWithoutFields : defaultFormat;
+                    format = isOnSingleEntity(type) ? singleEntityFormat : defaultFormat;
                 else
-                    format = isOnSingleEntity(type) ? singleEntityWithFields : defaultFormat + fieldFormat;
+                    format = isOnSingleEntity(type) ? singleEntityWithFieldsFormat : defaultFormat + defaultWithFieldsFormat;
             }
 
             return str + string.Format(format, a0_type, a1_tag, a2_name, a3_fieldNames, a4_fieldAssigns);
@@ -103,14 +115,13 @@ public static class {0} {{
             var a1_tag = indicesLookupTag(type);
             var a2_name = type.RemoveComponentSuffix();
             var a3_fieldNames = fieldNamesWithType(fieldInfos);
-            var a4_fieldAssigns = fieldAsignments(fieldInfos);
+            var a4_fieldAssigns = fieldAssignments(fieldInfos);
 
-            const string singletonFormat = "";
             const string defaultFormat = @"
     public static void ReplaceComponent(this Entity entity, {0} component) {{
         entity.ReplaceComponent({1}.{2}, component);
     }}
-    
+
     public static void Replace{2}(this Entity entity, {0} component) {{
         entity.ReplaceComponent({1}.{2}, component);
     }}
@@ -127,7 +138,14 @@ public static class {0} {{
         entity.ReplaceComponent({1}.{2}, component);
     }}
 ";
-            const string singleEntityWithFields = @"
+            const string singleEntityFormat = @"
+    public static void ReplaceSingle{2}(this EntityRepository repo) {{
+        var entity = repo.GetSingleEntity({1}.{2});
+        var component = ({0})entity.GetComponent({1}.{2});
+        entity.ReplaceComponent({1}.{2}, component);
+    }}
+";
+            const string singleEntityWithFieldsFormat = @"
     public static void ReplaceSingle{2}(this EntityRepository repo, {3}) {{
         var entity = repo.GetSingleEntity({1}.{2});
         var component = ({0})entity.GetComponent({1}.{2});
@@ -135,15 +153,13 @@ public static class {0} {{
         entity.ReplaceComponent({1}.{2}, component);
     }}
 ";
-            const string singleEntityWithoutFields = "";
-            string format;
+            string format = string.Empty;
             if (isSingletonComponent(type)) {
-                format = singletonFormat;
             } else {
                 if (a3_fieldNames.Length == 0)
-                    format = isOnSingleEntity(type) ? singleEntityWithoutFields : defaultFormat;
+                    format = isOnSingleEntity(type) ? singleEntityFormat : defaultFormat;
                 else
-                    format = isOnSingleEntity(type) ? singleEntityWithFields : defaultFormat + fieldFormat;
+                    format = isOnSingleEntity(type) ? singleEntityWithFieldsFormat : defaultFormat + fieldFormat;
             }
 
 
@@ -156,13 +172,8 @@ public static class {0} {{
             var a1_tag = indicesLookupTag(type);
             var a2_name = type.RemoveComponentSuffix();
             var a3_fieldNames = fieldNamesWithType(fieldInfos);
-            var a4_fieldAssigns = fieldAsignments(fieldInfos);
+            var a4_fieldAssigns = fieldAssignments(fieldInfos);
 
-            const string singletonFormat = @"
-    public static bool Is{2}(this Entity entity) {{
-        return entity.HasComponent({1}.{2});
-    }}
-";
             const string defaultFormat = @"
     public static bool Has{2}(this Entity entity) {{
         return entity.HasComponent({1}.{2});
@@ -173,9 +184,14 @@ public static class {0} {{
         return repo.GetSingleEntity({1}.{2}) != null;
     }}
 ";
+            const string singletonFormat = @"
+    public static bool Is{2}(this Entity entity) {{
+        return entity.HasComponent({1}.{2});
+    }}
+";
             string format;
             if (isSingletonComponent(type))
-                format = singletonFormat;
+                format = isOnSingleEntity(type) ? singletonFormat + singleEntity : singletonFormat;
             else
                 format = isOnSingleEntity(type) ? singleEntity : defaultFormat;
 
@@ -188,13 +204,8 @@ public static class {0} {{
             var a1_tag = indicesLookupTag(type);
             var a2_name = type.RemoveComponentSuffix();
             var a3_fieldNames = fieldNamesWithType(fieldInfos);
-            var a4_fieldAssigns = fieldAsignments(fieldInfos);
+            var a4_fieldAssigns = fieldAssignments(fieldInfos);
 
-            const string singletonFormat = @"
-    public static void Unflag{2}(this Entity entity) {{
-        entity.RemoveComponent({1}.{2});
-    }}
-";
             const string defaultFormat = @"
     public static void Remove{2}(this Entity entity) {{
         entity.RemoveComponent({1}.{2});
@@ -203,6 +214,11 @@ public static class {0} {{
             const string singleEntity = @"
     public static void RemoveSingle{2}(this EntityRepository repo) {{
         repo.PushToPool(repo.GetSingleEntity({1}.{2}));
+    }}
+";
+            const string singletonFormat = @"
+    public static void Unflag{2}(this Entity entity) {{
+        entity.RemoveComponent({1}.{2});
     }}
 ";
             string format;
@@ -220,6 +236,21 @@ public static class {0} {{
             var a1_tag = indicesLookupTag(type);
             var a2_name = type.RemoveComponentSuffix();
 
+            const string fieldFormat = @"
+    public static {0} Get{2}(this Entity entity) {{
+        return ({0})entity.GetComponent({1}.{2});
+    }}
+";
+            const string oneFieldFormat = @"
+    public static {3} Get{2}Value(this Entity entity) {{
+        return (({0})entity.GetComponent({1}.{2})).{4};
+    }}
+";
+            const string multipleFieldFormat = @"
+    public static {3} Get{2}{5}(this Entity entity) {{
+        return (({0})entity.GetComponent({1}.{2})).{4};
+    }}
+ ";
             const string singleEntityFieldFormat = @"
     public static {0} GetSingle{2}(this EntityRepository repo) {{
         var entity = repo.GetSingleEntity({1}.{2});
@@ -238,21 +269,6 @@ public static class {0} {{
         return (({0})entity.GetComponent({1}.{2})).{4};
     }}
 ";
-            const string fieldFormat = @"
-    public static {0} Get{2}(this Entity entity) {{
-        return ({0})entity.GetComponent({1}.{2});
-    }}
-";
-            const string oneFieldFormat = @"
-    public static {3} Get{2}Value(this Entity entity) {{
-        return (({0})entity.GetComponent({1}.{2})).{4};
-    }}
-";
-            const string multipleFieldFormat = @"
-    public static {3} Get{2}{5}(this Entity entity) {{
-        return (({0})entity.GetComponent({1}.{2})).{4};
-    }}
- ";
             var getters = string.Format(fieldFormat, a0_type, a1_tag, a2_name);
             string format = fieldInfos.Length == 1 ? oneFieldFormat : multipleFieldFormat;
             if (isOnSingleEntity(type)) {
@@ -315,10 +331,26 @@ public static class {0} {{
             if (typeShortcuts.ContainsKey(type.Name))
                 return typeShortcuts[type.Name];
 
-            return type.FullName;
+            return simpleTypeString(type);
         }
 
-        static string fieldAsignments(FieldInfo[] fieldInfos) {
+        static string simpleTypeString(Type type) {
+            Type[] typeStr = type.GetGenericArguments();
+            var simplified = type.FullName.Split('`')[0];
+            if (typeStr.Length > 0) {
+                simplified += "<";
+                for (int i = 0; i < typeStr.Length; ++i) {
+                    simplified += simpleTypeString(typeStr[i]);
+                    if (i < typeStr.Length - 1)
+                        simplified += ", ";
+                }
+                simplified += ">";
+            }
+
+            return simplified;
+        }
+
+        static string fieldAssignments(FieldInfo[] fieldInfos) {
             var assignments = string.Empty;
             const string format = "        component.{0} = {0};";
             for (int i = 0; i < fieldInfos.Length; i++) {
