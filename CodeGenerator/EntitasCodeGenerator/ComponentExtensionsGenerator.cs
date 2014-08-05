@@ -157,9 +157,9 @@ public static class {0} {{
             if (isSingletonComponent(type)) {
             } else {
                 if (a3_fieldNames.Length == 0)
-                    format = isOnSingleEntity(type) ? singleEntityFormat : defaultFormat;
+                    format = isOnSingleEntity(type) ? defaultFormat + singleEntityFormat : defaultFormat;
                 else
-                    format = isOnSingleEntity(type) ? singleEntityWithFieldsFormat : defaultFormat + fieldFormat;
+                    format = isOnSingleEntity(type) ? defaultFormat + fieldFormat + singleEntityWithFieldsFormat : defaultFormat + fieldFormat;
             }
 
 
@@ -223,7 +223,7 @@ public static class {0} {{
 ";
             string format;
             if (isSingletonComponent(type))
-                format = singletonFormat;
+                format = isOnSingleEntity(type) ? singletonFormat + singleEntity : singletonFormat;
             else
                 format = isOnSingleEntity(type) ? singleEntity : defaultFormat;
 
