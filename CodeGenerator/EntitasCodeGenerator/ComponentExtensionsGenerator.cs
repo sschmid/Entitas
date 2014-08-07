@@ -252,6 +252,10 @@ public static class {0} {{
     }}
  ";
             const string singleEntityFieldFormat = @"
+    public static Entity GetSingle{2}Entity(this EntityRepository repo) {{
+        return repo.GetSingleEntity({1}.{2});
+    }}
+    
     public static {0} GetSingle{2}(this EntityRepository repo) {{
         var entity = repo.GetSingleEntity({1}.{2});
         return ({0})entity.GetComponent({1}.{2});
