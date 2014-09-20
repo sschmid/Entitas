@@ -52,6 +52,18 @@
     <Compile Include="Tests\describe_EntityRepositoryObserver.cs" />
     <Compile Include="Tests\Fixtures\EntityEmittingSubSystem.cs" />
     <Compile Include="Tests\describe_EntityWillBeRemovedEntityRepositoryObserver.cs" />
+    <Compile Include="Tests\describe_EntitasCodeGenerator.cs" />
+    <Compile Include="Tests\describe_ComponentExtensionsGenerator.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\ArgsComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\EmptyComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\FakeComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\SingleArgsComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\SomeClass.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\SomeComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\View.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\SingleEmptyComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\DontGenerateComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\DictionaryComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -60,6 +72,7 @@
     <Folder Include="Libraries\NSpec\" />
     <Folder Include="Tests\Fixtures\" />
     <Folder Include="Tests\Helpers\" />
+    <Folder Include="Tests\Fixtures\CodeGenerator\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />
@@ -74,6 +87,10 @@
     <ProjectReference Include="..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CodeGenerator\CodeGenerator.csproj">
+      <Project>{4D7C8232-6930-4F13-9D9A-3C32A340BB62}</Project>
+      <Name>CodeGenerator</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

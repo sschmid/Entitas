@@ -1,0 +1,2 @@
+public class SomeClass {
+}

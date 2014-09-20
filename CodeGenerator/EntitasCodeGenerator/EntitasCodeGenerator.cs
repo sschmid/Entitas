@@ -15,7 +15,7 @@ namespace Entitas.CodeGenerator {
 
             CleanGeneratedFolder();
             var assembly = Assembly.GetAssembly(typeof(EntitasCodeGenerator));
-            var components = getComponentsInAssembly(assembly);
+            var components = GetComponents(assembly.GetTypes());
             generateIndicesLookup(components);
             generateComponentExtensions(components);
         }
@@ -33,12 +33,10 @@ namespace Entitas.CodeGenerator {
             }
         }
 
-        static Type[]getComponentsInAssembly(Assembly assembly) {
+        public static Type[]GetComponents(Type[] types) {
             List<Type> components = new List<Type>();
-            foreach (var type in assembly.GetTypes()) {
-                if (type.Name.EndsWith(componentSuffix) &&
-                    !type.FullName.Contains(".")
-                    && type.GetInterfaces().Contains(typeof(IComponent))) {
+            foreach (var type in types) {
+                if (type.GetInterfaces().Contains(typeof(IComponent))) {
                     components.Add(type);
                 }
             }
@@ -48,12 +46,42 @@ namespace Entitas.CodeGenerator {
 
         static void generateIndicesLookup(Type[] components) {
             var generator = new IndicesLookupGenerator();
-            generator.GenerateIndicesLookup(components, generatedFolder);
+            var lookups = generator.GenerateIndicesLookup(components);
+            writeFiles(lookups);
         }
 
         static void generateComponentExtensions(Type[] components) {
             var generator = new ComponentExtensionsGenerator();
-            generator.GenerateComponentExtensions(components, generatedFolder);
+            var extensions = generator.GenerateComponentExtensions(components);
+            writeFiles(extensions);
+        }
+
+        static void writeFiles(Dictionary<string, string> files) {
+            foreach (var entry in files) {
+                var filePath = generatedFolder + entry.Key + ".cs";
+                var code = entry.Value;
+                write(filePath, code);
+            }
+        }
+
+        readonly static object _writeLock = new object();
+
+        static void write(string path, string text) {
+            lock (_writeLock) {
+                using (StreamWriter writer = new StreamWriter(path, false)) {
+                    writer.WriteLine(text);
+                }
+            }
+        }
+    }
+
+    public static class EntitasCodeGeneratorExtensions {
+        public static string RemoveComponentSuffix(this Type type) {
+            const string componentSuffix = EntitasCodeGenerator.componentSuffix;
+            if (type.Name.EndsWith(componentSuffix))
+                return type.Name.Substring(0, type.Name.Length - componentSuffix.Length);
+
+            return type.Name;
         }
     }
 }
