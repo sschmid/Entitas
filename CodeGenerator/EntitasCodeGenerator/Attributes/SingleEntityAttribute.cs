@@ -2,6 +2,6 @@
 
 namespace Entitas.CodeGenerator {
     [AttributeUsage(AttributeTargets.Class)]
-    public class SingleEntity : Attribute {
+    public class SingleEntityAttribute : Attribute {
     }
 }

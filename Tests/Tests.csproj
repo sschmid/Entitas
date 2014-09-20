@@ -64,6 +64,8 @@
     <Compile Include="Tests\Fixtures\CodeGenerator\SingleEmptyComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\DontGenerateComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\DictionaryComponent.cs" />
+    <Compile Include="Tests\describe_IndicesLookupGenerator.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\OtherRepoComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

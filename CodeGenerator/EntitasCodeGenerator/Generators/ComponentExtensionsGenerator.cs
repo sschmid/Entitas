@@ -21,7 +21,7 @@ namespace Entitas.CodeGenerator {
         static bool shouldGenerate(Type type) {
             Attribute[] attrs = Attribute.GetCustomAttributes(type);
             foreach (Attribute attr in attrs) {
-                if (attr is DontGenerate) {
+                if (attr is DontGenerateAttribute) {
                     return false;
                 }
             }
@@ -318,7 +318,7 @@ namespace Entitas.CodeGenerator {
         static bool isOnSingleEntity(Type type) {
             Attribute[] attrs = Attribute.GetCustomAttributes(type);
             foreach (Attribute attr in attrs) {
-                if (attr is SingleEntity) {
+                if (attr is SingleEntityAttribute) {
                     return true;
                 }
             }

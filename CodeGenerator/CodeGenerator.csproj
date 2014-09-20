@@ -36,10 +36,8 @@
     <Compile Include="EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
     <Compile Include="EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs" />
     <Compile Include="EntitasCodeGenerator\Attributes\EntityRepositoryAttribute.cs" />
-    <Compile Include="EntitasCodeGenerator\Attributes\MetaGameRepository.cs" />
-    <Compile Include="EntitasCodeGenerator\Attributes\CoreGameRepository.cs" />
-    <Compile Include="EntitasCodeGenerator\Attributes\DontGenerate.cs" />
-    <Compile Include="EntitasCodeGenerator\Attributes\SingleEntity.cs" />
+    <Compile Include="EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs" />
+    <Compile Include="EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
