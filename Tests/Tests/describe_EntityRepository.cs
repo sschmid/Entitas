@@ -80,7 +80,7 @@ class describe_EntityRepository : nspec {
         context["entity pool"] = () => {
 
             it["gets entity from object pool"] = () => {
-                var e = _repo.GetEntityFromPool();
+                var e = _repo.CreateEntity();
                 e.should_not_be_null();
                 e.GetType().should_be(typeof(Entity));
             };
@@ -88,26 +88,26 @@ class describe_EntityRepository : nspec {
             it["destroys entity when pushing back to object pool"] = () => {
                 var e = new Entity(1);
                 addComponentA(e);
-                _repo.PushToPool(e);
+                _repo.DestroyEntity(e);
                 e.HasComponent(CP.ComponentA).should_be_false();
             };
 
             it["returns pushed entity"] = () => {
                 var e = new Entity(1, 42);
                 addComponentA(e);
-                _repo.PushToPool(e);
-                var entityFromPool = _repo.GetEntityFromPool();
-                entityFromPool.HasComponent(CP.ComponentA).should_be_false();
-                entityFromPool.should_be_same(e);
-                entityFromPool.creationIndex.should_be(42);
+                _repo.DestroyEntity(e);
+                var entity = _repo.CreateEntity();
+                entity.HasComponent(CP.ComponentA).should_be_false();
+                entity.should_be_same(e);
+                entity.creationIndex.should_be(42);
             };
 
             it["returns new entity"] = () => {
                 var e = new Entity(1, 42);
                 addComponentA(e);
-                _repo.PushToPool(e);
-                _repo.GetEntityFromPool();
-                var entityFromPool = _repo.GetEntityFromPool();
+                _repo.DestroyEntity(e);
+                _repo.CreateEntity();
+                var entityFromPool = _repo.CreateEntity();
                 entityFromPool.HasComponent(CP.ComponentA).should_be_false();
                 entityFromPool.should_not_be_same(e);
                 entityFromPool.creationIndex.should_be(0);
@@ -115,21 +115,21 @@ class describe_EntityRepository : nspec {
 
             it["gets number of items in pool"] = () => {
                 _repo.poolItemCount.should_be(0);
-                _repo.PushToPool(new Entity(0));
+                _repo.DestroyEntity(new Entity(0));
                 _repo.poolItemCount.should_be(1);
-                _repo.GetEntityFromPool();
+                _repo.CreateEntity();
             };
 
             it["sets up entity from pool"] = () => {
-                _repo.PushToPool(_repo.GetEntityFromPool());                
+                _repo.DestroyEntity(_repo.CreateEntity());                
                 var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CP.ComponentA }));
-                var e = _repo.GetEntityFromPool();
+                var e = _repo.CreateEntity();
                 addComponentA(e);
                 c.GetEntities().should_contain(e);
             };
 
             it["sets up new entity when pool was empty"] = () => {
-                var e = _repo.GetEntityFromPool();
+                var e = _repo.CreateEntity();
                 addComponentA(e);
                 var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CP.ComponentA }));
                 var didExecute = 0;

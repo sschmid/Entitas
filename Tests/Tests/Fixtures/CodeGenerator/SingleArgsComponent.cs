@@ -23,7 +23,7 @@ public static class SingleArgsComponentGeneratedExtension {
             throw new SingleEntityException(EntityMatcher.AllOf(new [] { ComponentIds.SingleArgs }));
         }
 
-        var entity = repo.GetEntityFromPool();
+        var entity = repo.CreateEntity();
         var component = new SingleArgsComponent();
         component.arg1 = arg1;
         component.arg2 = arg2;
@@ -52,7 +52,7 @@ public static class SingleArgsComponentGeneratedExtension {
         const int componentId = ComponentIds.SingleArgs;
         Entity entity = repo.GetSingleEntity(componentId);
         if (entity == null) {
-            entity = repo.GetEntityFromPool();
+            entity = repo.CreateEntity();
             entity.AddComponent(componentId, component);
         } else {
             entity.ReplaceComponent(componentId, component);
@@ -65,7 +65,7 @@ public static class SingleArgsComponentGeneratedExtension {
         Entity entity = repo.GetSingleEntity(componentId);
         SingleArgsComponent component;
         if (entity == null) {
-            entity = repo.GetEntityFromPool();
+            entity = repo.CreateEntity();
             component = new SingleArgsComponent();
         } else {
             component = (SingleArgsComponent)entity.GetComponent(componentId);
@@ -90,7 +90,7 @@ public static class SingleArgsComponentGeneratedExtension {
 
     public static void RemoveSingleSingleArgs(this EntityRepository repo) {
         var entity = repo.GetSingleEntity(ComponentIds.SingleArgs);
-        repo.PushToPool(entity);
+        repo.DestroyEntity(entity);
     }
 
     public static SingleArgsComponent GetSingleArgs(this Entity entity) {

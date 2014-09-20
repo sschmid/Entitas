@@ -19,7 +19,7 @@ public static class SingleEmptyComponentGeneratedExtension {
             throw new SingleEntityException(EntityMatcher.AllOf(new [] { ComponentIds.SingleEmpty }));
         }
 
-        var entity = repo.GetEntityFromPool();
+        var entity = repo.CreateEntity();
         entity.AddComponent(ComponentIds.SingleEmpty, instance);
         return entity;
     }
@@ -38,7 +38,7 @@ public static class SingleEmptyComponentGeneratedExtension {
 
     public static void RemoveSingleSingleEmpty(this EntityRepository repo) {
         var entity = repo.GetSingleEntity(ComponentIds.SingleEmpty);
-        repo.PushToPool(entity);
+        repo.DestroyEntity(entity);
     }
 
     public static Entity GetSingleSingleEmptyEntity(this EntityRepository repo) {

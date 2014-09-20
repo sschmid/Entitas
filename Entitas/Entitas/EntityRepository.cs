@@ -26,10 +26,6 @@ namespace Entitas {
         }
 
         public Entity CreateEntity() {
-            return setupEntity(new Entity(_totalComponents, _creationIndex++));
-        }
-
-        public Entity GetEntityFromPool() {
             return setupEntity(_entityPool.Get());
         }
 
@@ -42,11 +38,6 @@ namespace Entitas {
             return entity;
         }
 
-        public void PushToPool(Entity entity) {
-            DestroyEntity(entity);
-            _entityPool.Push(entity);
-        }
-
         public void DestroyEntity(Entity entity) {
             entity.OnComponentAdded -= onComponentAdded;
             entity.OnComponentWillBeRemoved -= onComponentWillBeRemoved;
@@ -55,6 +46,7 @@ namespace Entitas {
             removeFromAllCollections(entity);
             _entities.Remove(entity);
             _entitiesCache = null;
+            _entityPool.Push(entity);
         }
 
         public void DestroyAllEntities() {

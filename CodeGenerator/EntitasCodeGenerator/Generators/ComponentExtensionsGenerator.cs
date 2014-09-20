@@ -60,7 +60,7 @@ namespace Entitas.CodeGenerator {
             throw new SingleEntityException(EntityMatcher.AllOf(new [] {{ {2}.{1} }}));
         }}
 
-        var entity = repo.GetEntityFromPool();
+        var entity = repo.CreateEntity();
         entity.AddComponent({2}.{1}, instance);
         return entity;
     }}
@@ -78,7 +78,7 @@ namespace Entitas.CodeGenerator {
             throw new SingleEntityException(EntityMatcher.AllOf(new [] {{ {2}.{1} }}));
         }}
 
-        var entity = repo.GetEntityFromPool();
+        var entity = repo.CreateEntity();
         var component = new {0}();
 {4}
         entity.AddComponent({2}.{1}, component);
@@ -118,7 +118,7 @@ namespace Entitas.CodeGenerator {
         const int componentId = {2}.{1};
         Entity entity = repo.GetSingleEntity(componentId);
         if (entity == null) {{
-            entity = repo.GetEntityFromPool();
+            entity = repo.CreateEntity();
             entity.AddComponent(componentId, component);
         }} else {{
             entity.ReplaceComponent(componentId, component);
@@ -131,7 +131,7 @@ namespace Entitas.CodeGenerator {
         Entity entity = repo.GetSingleEntity(componentId);
         {0} component;
         if (entity == null) {{
-            entity = repo.GetEntityFromPool();
+            entity = repo.CreateEntity();
             component = new {0}();
         }} else {{
             component = ({0})entity.GetComponent(componentId);
@@ -189,7 +189,7 @@ namespace Entitas.CodeGenerator {
             const string single = @"
     public static void RemoveSingle{1}(this EntityRepository repo) {{
         var entity = repo.GetSingleEntity({2}.{1});
-        repo.PushToPool(entity);
+        repo.DestroyEntity(entity);
     }}
 ";
             string format;
