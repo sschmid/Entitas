@@ -21,24 +21,22 @@ namespace Entitas {
         }
 
         public void AddEntityIfMatching(Entity entity) {
-            addEntityIfMatching(entity);
-        }
-
-        void addEntityIfMatching(Entity entity) {
             if (_matcher.Matches(entity)) {
                 var added = _entities.Add(entity);
                 if (added) {
                     _entitiesCache = null;
                     _singleEntityCache = null;
-                    if (OnEntityAdded != null)
+                    if (OnEntityAdded != null) {
                         OnEntityAdded(this, entity);
+                    }
                 }
             }
         }
 
         public void WillRemoveEntity(Entity entity) {
-            if (_entities.Contains(entity) && OnEntityWillBeRemoved != null)
+            if (_entities.Contains(entity) && OnEntityWillBeRemoved != null) {
                 OnEntityWillBeRemoved(this, entity);
+            }
         }
 
         public void RemoveEntity(Entity entity) {
@@ -46,14 +44,16 @@ namespace Entitas {
             if (removed) {
                 _entitiesCache = null;
                 _singleEntityCache = null;
-                if (OnEntityRemoved != null)
+                if (OnEntityRemoved != null) {
                     OnEntityRemoved(this, entity);
+                }
             }
         }
 
         public Entity[] GetEntities() {
-            if (_entitiesCache == null)
+            if (_entitiesCache == null) {
                 _entitiesCache = _entities.ToArray();
+            }
 
             return _entitiesCache;
         }
@@ -61,11 +61,13 @@ namespace Entitas {
         public Entity GetSingleEntity() {
             if (_singleEntityCache == null) {
                 var count = _entities.Count;
-                if (count == 0)
+                if (count == 0) {
                     return null;
+                }
 
-                if (count > 1)
+                if (count > 1) {
                     throw new SingleEntityException(_matcher);
+                }
 
                 _singleEntityCache = _entities.First();
             }

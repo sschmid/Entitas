@@ -24,11 +24,11 @@ namespace Entitas {
         }
 
         public void Activate() {
-            if (_eventType == EntityCollectionEventType.OnEntityAdded)
+            if (_eventType == EntityCollectionEventType.OnEntityAdded) {
                 _collection.OnEntityAdded += addEntity;
-            else if (_eventType == EntityCollectionEventType.OnEntityRemoved)
+            } else if (_eventType == EntityCollectionEventType.OnEntityRemoved) {
                 _collection.OnEntityRemoved += addEntity;
-            else if (_eventType == EntityCollectionEventType.OnEntityAddedOrRemoved) {
+            } else if (_eventType == EntityCollectionEventType.OnEntityAddedOrRemoved) {
                 _collection.OnEntityAdded += addEntity;
                 _collection.OnEntityRemoved += addEntity;
             }

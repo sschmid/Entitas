@@ -8,10 +8,6 @@ class describe_EntityRepository : nspec {
         _repo = new EntityRepository(CP.NumComponents);
     }
 
-    void it_creates_entities_starting_with_specified_creation_index() {
-        new EntityRepository(0, 1).CreateEntity().creationIndex.should_be(1);
-    }
-
     void when_created() {
 
         it["has no entities when no entities were created"] = () => {
@@ -22,11 +18,6 @@ class describe_EntityRepository : nspec {
             var e = _repo.CreateEntity();
             e.should_not_be_null();
             e.GetType().should_be(typeof(Entity));
-        };
-            
-        it["increments creation index when creating entities"] = () => {
-            _repo.CreateEntity().creationIndex.should_be(0);
-            _repo.CreateEntity().creationIndex.should_be(1);
         };
             
         it["doesn't have entites that were not created with CreateEntity()"] = () => {
@@ -93,31 +84,22 @@ class describe_EntityRepository : nspec {
             };
 
             it["returns pushed entity"] = () => {
-                var e = new Entity(1, 42);
+                var e = new Entity(1);
                 addComponentA(e);
                 _repo.DestroyEntity(e);
                 var entity = _repo.CreateEntity();
                 entity.HasComponent(CP.ComponentA).should_be_false();
                 entity.should_be_same(e);
-                entity.creationIndex.should_be(42);
             };
 
             it["returns new entity"] = () => {
-                var e = new Entity(1, 42);
+                var e = new Entity(1);
                 addComponentA(e);
                 _repo.DestroyEntity(e);
                 _repo.CreateEntity();
                 var entityFromPool = _repo.CreateEntity();
                 entityFromPool.HasComponent(CP.ComponentA).should_be_false();
                 entityFromPool.should_not_be_same(e);
-                entityFromPool.creationIndex.should_be(0);
-            };
-
-            it["gets number of items in pool"] = () => {
-                _repo.poolItemCount.should_be(0);
-                _repo.DestroyEntity(new Entity(0));
-                _repo.poolItemCount.should_be(1);
-                _repo.CreateEntity();
             };
 
             it["sets up entity from pool"] = () => {
@@ -232,6 +214,7 @@ class describe_EntityRepository : nspec {
                         eventEntityAdded = entity;
                         didDispatchAdded++;
                     };
+                    eAB1.WillRemoveComponent(CP.ComponentA);
                     eAB1.ReplaceComponent(CP.ComponentA, new ComponentA());
 
                     eventCollectionWillBeRemoved.should_be_same(c);

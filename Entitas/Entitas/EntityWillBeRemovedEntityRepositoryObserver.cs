@@ -51,8 +51,9 @@ namespace Entitas {
 
         void addEntity(EntityCollection collection, Entity entity) {
             var added = _collectedEntities.Add(entity);
-            if (added)
+            if (added) {
                 _collectedEntityComponentPairs.Add(new EntityComponentPair(entity, entity.GetComponent(_index)));
+            }
         }
     }
 }

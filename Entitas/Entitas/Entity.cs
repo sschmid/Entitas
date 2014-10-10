@@ -9,71 +9,74 @@ namespace Entitas {
 
         public delegate void EntityChange(Entity entity, int index, IComponent component);
 
-        public ulong creationIndex { get { return _creationIndex; } }
-
         readonly IComponent[] _components;
-        readonly ulong _creationIndex;
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
 
-        public Entity(int totalComponents) : this(totalComponents, 0) {
-        }
-
-        public Entity(int totalComponents, ulong creationIndex) {
-            _creationIndex = creationIndex;
+        public Entity(int totalComponents) {
             _components = new IComponent[totalComponents];
         }
 
         public void AddComponent(int index, IComponent component) {
-            #if (DEBUG)
-            if (HasComponent(index))
+            if (HasComponent(index)) {
                 throw new EntityAlreadyHasComponentException(string.Format("Cannot add component at index {0} to {1}.", index, this), index);
-            #endif
+            }
 
             _components[index] = component;
             _componentsCache = null;
             _componentIndicesCache = null;
-            if (OnComponentAdded != null)
+            if (OnComponentAdded != null) {
                 OnComponentAdded(this, index, component);
+            }
+        }
+
+        public void WillRemoveComponent(int index) {           
+            if (HasComponent(index) && OnComponentWillBeRemoved != null) {
+                OnComponentWillBeRemoved(this, index, _components[index]);
+            }
         }
 
         public void RemoveComponent(int index) {
-            #if (DEBUG)
-            if (!HasComponent(index))
+            if (!HasComponent(index)) {
                 throw new EntityDoesNotHaveComponentException(string.Format("Cannot remove component at index {0} from {1}.", index, this), index);
-            #endif
+            }
+
+            if (OnComponentWillBeRemoved != null) {
+                OnComponentWillBeRemoved(this, index, _components[index]);
+            }
 
             replaceComponent(index, null);
         }
 
         public void ReplaceComponent(int index, IComponent component) {
-            if (HasComponent(index))
+            if (HasComponent(index)) {
                 replaceComponent(index, component);
-            else
+            } else {
                 AddComponent(index, component);
+            }
         }
 
         void replaceComponent(int index, IComponent replacement) {
             var component = _components[index];
-            if (OnComponentWillBeRemoved != null)
-                OnComponentWillBeRemoved(this, index, component);
             if (component != replacement) {
                 _components[index] = replacement;
                 _componentsCache = null;
             }
-            if (replacement == null)
+            if (replacement == null) {
                 _componentIndicesCache = null;
-            if (OnComponentRemoved != null)
+            }
+            if (OnComponentRemoved != null) {
                 OnComponentRemoved(this, index, component);
-            if (replacement != null && OnComponentAdded != null)
+            }
+            if (replacement != null && OnComponentAdded != null) {
                 OnComponentAdded(this, index, replacement);
+            }
         }
 
         public IComponent GetComponent(int index) {
-            #if (DEBUG)
-            if (!HasComponent(index))
+            if (!HasComponent(index)) {
                 throw new EntityDoesNotHaveComponentException(string.Format("Cannot get component at index {0} from {1}.", index, this), index);
-            #endif
+            }
 
             return _components[index];
         }
@@ -83,17 +86,21 @@ namespace Entitas {
         }
 
         public bool HasComponents(int[] indices) {
-            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++)
-                if (_components[indices[i]] == null)
+            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
+                if (_components[indices[i]] == null) {
                     return false;
+                }
+            }
 
             return true;
         }
 
         public bool HasAnyComponent(int[] indices) {
-            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++)
-                if (_components[indices[i]] != null)
+            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
+                if (_components[indices[i]] != null) {
                     return true;
+                }
+            }
 
             return false;
         }
@@ -103,8 +110,9 @@ namespace Entitas {
                 var components = new List<IComponent>();
                 for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
                     var component = _components[i];
-                    if (component != null)
+                    if (component != null) {
                         components.Add(component);
+                    }
                 }
 
                 _componentsCache = components.ToArray();
@@ -116,9 +124,11 @@ namespace Entitas {
         public int[] GetComponentIndices() {
             if (_componentIndicesCache == null) {
                 var indices = new List<int>();
-                for (int i = 0; i < _components.Length; i++)
-                    if (_components[i] != null)
+                for (int i = 0; i < _components.Length; i++) {
+                    if (_components[i] != null) {
                         indices.Add(i);
+                    }
+                }
 
                 _componentIndicesCache = indices.ToArray();
             }
@@ -128,19 +138,22 @@ namespace Entitas {
 
         public void RemoveAllComponents() {
             var indices = GetComponentIndices();
-            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++)
+            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
                 RemoveComponent(indices[i]);
+            }
         }
 
         public override string ToString() {
             const string seperator = ", ";
             var componentsStr = string.Empty;
             var components = GetComponents();
-            for (int i = 0, componentsLength = components.Length; i < componentsLength; i++)
+            for (int i = 0, componentsLength = components.Length; i < componentsLength; i++) {
                 componentsStr += components[i] + seperator;
+            }
 
-            if (componentsStr != string.Empty)
+            if (componentsStr != string.Empty) {
                 componentsStr = componentsStr.Substring(0, componentsStr.Length - seperator.Length);
+            }
 
             return string.Format("Entity({0})", componentsStr);
         }
