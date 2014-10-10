@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 
 public class DictionaryComponent : IComponent {
-    public Dictionary<string, int> arg;
+    public Dictionary<string, int> dict;
     public static string extensions =
         @"using Entitas;
 
 public static class DictionaryComponentGeneratedExtension {
 
-    public static void AddDictionary(this Entity entity, System.Collections.Generic.Dictionary<string, int> arg) {
+    public static void AddDictionary(this Entity entity, System.Collections.Generic.Dictionary<string, int> dict) {
         var component = new DictionaryComponent();
-        component.arg = arg;
+        component.dict = dict;
         entity.AddComponent(ComponentIds.Dictionary, component);
     }
 
@@ -18,7 +18,7 @@ public static class DictionaryComponentGeneratedExtension {
         entity.ReplaceComponent(ComponentIds.Dictionary, component);
     }
 
-    public static void ReplaceDictionary(this Entity entity, System.Collections.Generic.Dictionary<string, int> arg) {
+    public static void ReplaceDictionary(this Entity entity, System.Collections.Generic.Dictionary<string, int> dict) {
         const int componentId = ComponentIds.Dictionary;
         DictionaryComponent component;
         if (entity.HasComponent(componentId)) {
@@ -27,7 +27,7 @@ public static class DictionaryComponentGeneratedExtension {
         } else {
             component = new DictionaryComponent();
         }
-        component.arg = arg;
+        component.dict = dict;
         entity.ReplaceComponent(componentId, component);
     }
 

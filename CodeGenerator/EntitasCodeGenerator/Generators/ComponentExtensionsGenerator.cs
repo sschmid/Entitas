@@ -50,12 +50,12 @@ namespace Entitas.CodeGenerator {
             const string noFields = @"
     public static {0} instance = new {0}();
 
-    public static void FlagAs{1}(this Entity entity) {{
+    public static void Flag{1}(this Entity entity) {{
         entity.AddComponent({2}.{1}, instance);
     }}
 ";
             const string singleNoFields = @"
-    public static Entity AddSingle{1}(this EntityRepository repo) {{
+    public static Entity Flag{1}(this EntityRepository repo) {{
         if (repo.GetSingleEntity({2}.{1}) != null) {{
             throw new SingleEntityException(EntityMatcher.AllOf(new [] {{ {2}.{1} }}));
         }}
@@ -73,7 +73,7 @@ namespace Entitas.CodeGenerator {
     }}
 ";
             const string singleWithFields = @"
-    public static Entity AddSingle{1}(this EntityRepository repo, {3}) {{
+    public static Entity Set{1}(this EntityRepository repo, {3}) {{
         if (repo.GetSingleEntity({2}.{1}) != null) {{
             throw new SingleEntityException(EntityMatcher.AllOf(new [] {{ {2}.{1} }}));
         }}
@@ -115,7 +115,7 @@ namespace Entitas.CodeGenerator {
     }}
 ";
             const string singleWithFields = @"
-    public static Entity ReplaceSingle{1}(this EntityRepository repo, {0} component) {{
+    public static Entity Replace{1}(this EntityRepository repo, {0} component) {{
         const int componentId = {2}.{1};
         Entity entity = repo.GetSingleEntity(componentId);
         if (entity == null) {{
@@ -127,7 +127,7 @@ namespace Entitas.CodeGenerator {
         return entity;
     }}
 
-    public static Entity ReplaceSingle{1}(this EntityRepository repo, {3}) {{
+    public static Entity Replace{1}(this EntityRepository repo, {3}) {{
         const int componentId = {2}.{1};
         Entity entity = repo.GetSingleEntity(componentId);
         {0} component;
@@ -157,21 +157,26 @@ namespace Entitas.CodeGenerator {
         return entity.HasComponent({2}.{1});
     }}
 ";
+            const string singleNoFields = @"
+    public static bool Is{1}(this EntityRepository repo) {{
+        return repo.GetSingleEntity({2}.{1}) != null;
+    }}
+";
             const string withFields = @"
     public static bool Has{1}(this Entity entity) {{
         return entity.HasComponent({2}.{1});
     }}
 ";
-            const string single = @"
-    public static bool HasSingle{1}(this EntityRepository repo) {{
+            const string singleWithFields = @"
+    public static bool Has{1}(this EntityRepository repo) {{
         return repo.GetSingleEntity({2}.{1}) != null;
     }}
 ";
             string format;
             if (isSingletonComponent(type)) {
-                format = isOnSingleEntity(type) ? noFields + single : noFields;
+                format = isOnSingleEntity(type) ? noFields + singleNoFields : noFields;
             } else {
-                format = isOnSingleEntity(type) ? withFields + single : withFields;
+                format = isOnSingleEntity(type) ? withFields + singleWithFields : withFields;
             }
 
             return buildString(type, format);
@@ -183,22 +188,28 @@ namespace Entitas.CodeGenerator {
         entity.RemoveComponent({2}.{1});
     }}
 ";
+            const string singleNoFields = @"
+    public static void Unflag{1}(this EntityRepository repo) {{
+        var entity = repo.GetSingleEntity({2}.{1});
+        repo.DestroyEntity(entity);
+    }}
+";
             const string withFields = @"
     public static void Remove{1}(this Entity entity) {{
         entity.RemoveComponent({2}.{1});
     }}
 ";
-            const string single = @"
-    public static void RemoveSingle{1}(this EntityRepository repo) {{
+            const string singleWithFields = @"
+    public static void Remove{1}(this EntityRepository repo) {{
         var entity = repo.GetSingleEntity({2}.{1});
         repo.DestroyEntity(entity);
     }}
 ";
             string format;
             if (isSingletonComponent(type)) {
-                format = isOnSingleEntity(type) ? noFields + single : noFields;
+                format = isOnSingleEntity(type) ? noFields + singleNoFields : noFields;
             } else {
-                format = isOnSingleEntity(type) ? withFields + single : withFields;
+                format = isOnSingleEntity(type) ? withFields + singleWithFields : withFields;
             }
 
             return buildString(type, format);
@@ -206,7 +217,7 @@ namespace Entitas.CodeGenerator {
 
         static string addGetMethods(Type type) {
             const string singleNoFields = @"
-    public static Entity GetSingle{1}Entity(this EntityRepository repo) {{
+    public static Entity Get{1}Entity(this EntityRepository repo) {{
         return repo.GetSingleEntity({2}.{1});
     }}
 ";
@@ -216,13 +227,13 @@ namespace Entitas.CodeGenerator {
     }}
 ";
             const string singleWithFields = @"
-    public static {0} GetSingle{1}(this EntityRepository repo) {{
+    public static {0} Get{1}(this EntityRepository repo) {{
         const int componentId = {2}.{1};
         var entity = repo.GetSingleEntity(componentId);
         return ({0})entity.GetComponent(componentId);
     }}
 
-    public static Entity GetSingle{1}Entity(this EntityRepository repo) {{
+    public static Entity Get{1}Entity(this EntityRepository repo) {{
         return repo.GetSingleEntity({2}.{1});
     }}
 ";

@@ -21,10 +21,10 @@ class describe_ComponentExtensionsGenerator : nspec {
     }
 
     void when_generating() {
-        it["component without fields"] = () => generates(typeof(EmptyComponent), EmptyComponent.extensions);
-        it["component with fields"] = () => generates(typeof(ArgsComponent), ArgsComponent.extensions);
-        it["single singleton component"] = () => generates(typeof(SingleEmptyComponent), SingleEmptyComponent.extensions);
-        it["single component with fields"] = () => generates(typeof(SingleArgsComponent), SingleArgsComponent.extensions);
+        it["component without fields"] = () => generates(typeof(MovableComponent), MovableComponent.extensions);
+        it["component with fields"] = () => generates(typeof(PersonComponent), PersonComponent.extensions);
+        it["single singleton component"] = () => generates(typeof(AnimatingComponent), AnimatingComponent.extensions);
+        it["single component with fields"] = () => generates(typeof(UserComponent), UserComponent.extensions);
         it["can handle dictionary"] = () => generates(typeof(DictionaryComponent), DictionaryComponent.extensions);
         it["ignores [DontGenerate]"] = () => {
             var type = typeof(DontGenerateComponent);
