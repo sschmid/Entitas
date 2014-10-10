@@ -28,11 +28,10 @@ namespace Entitas {
         }
 
         public void DestroyEntity(Entity entity) {
+            entity.RemoveAllComponents();
             entity.OnComponentAdded -= onComponentAdded;
             entity.OnComponentWillBeRemoved -= onComponentWillBeRemoved;
             entity.OnComponentRemoved -= onComponentRemoved;
-            entity.RemoveAllComponents();
-            removeFromAllCollections(entity);
             _entities.Remove(entity);
             _entitiesCache = null;
             _entityPool.Push(entity);
@@ -102,14 +101,6 @@ namespace Entitas {
                 for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++) {
                     collections[i].RemoveEntity(entity);
                 }
-            }
-        }
-
-        void removeFromAllCollections(Entity entity) {
-            var collections = _collections.Values;
-            foreach (var collection in collections) {
-                collection.WillRemoveEntity(entity);
-                collection.RemoveEntity(entity);
             }
         }
     }

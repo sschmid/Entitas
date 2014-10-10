@@ -105,6 +105,7 @@ namespace Entitas.CodeGenerator {
         const int componentId = {2}.{1};
         {0} component;
         if (entity.HasComponent(componentId)) {{
+            entity.WillRemoveComponent(componentId);
             component = ({0})entity.GetComponent(componentId);
         }} else {{
             component = new {0}();
@@ -134,6 +135,7 @@ namespace Entitas.CodeGenerator {
             entity = repo.CreateEntity();
             component = new {0}();
         }} else {{
+            entity.WillRemoveComponent(componentId);
             component = ({0})entity.GetComponent(componentId);
         }}
 {4}

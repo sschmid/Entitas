@@ -23,6 +23,7 @@ public static class ArgsComponentGeneratedExtension {
         const int componentId = ComponentIds.Args;
         ArgsComponent component;
         if (entity.HasComponent(componentId)) {
+            entity.WillRemoveComponent(componentId);
             component = (ArgsComponent)entity.GetComponent(componentId);
         } else {
             component = new ArgsComponent();

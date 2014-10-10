@@ -39,6 +39,7 @@ public static class SingleArgsComponentGeneratedExtension {
         const int componentId = ComponentIds.SingleArgs;
         SingleArgsComponent component;
         if (entity.HasComponent(componentId)) {
+            entity.WillRemoveComponent(componentId);
             component = (SingleArgsComponent)entity.GetComponent(componentId);
         } else {
             component = new SingleArgsComponent();
@@ -68,6 +69,7 @@ public static class SingleArgsComponentGeneratedExtension {
             entity = repo.CreateEntity();
             component = new SingleArgsComponent();
         } else {
+            entity.WillRemoveComponent(componentId);
             component = (SingleArgsComponent)entity.GetComponent(componentId);
         }
         component.arg1 = arg1;

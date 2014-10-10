@@ -22,6 +22,7 @@ public static class DictionaryComponentGeneratedExtension {
         const int componentId = ComponentIds.Dictionary;
         DictionaryComponent component;
         if (entity.HasComponent(componentId)) {
+            entity.WillRemoveComponent(componentId);
             component = (DictionaryComponent)entity.GetComponent(componentId);
         } else {
             component = new DictionaryComponent();
