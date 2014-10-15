@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace Entitas {
-    public class Entity {
+    public partial class Entity {
         public event EntityChange OnComponentAdded;
         public event EntityChange OnComponentWillBeRemoved;
         public event EntityChange OnComponentRemoved;
@@ -30,7 +30,7 @@ namespace Entitas {
             }
         }
 
-        public void WillRemoveComponent(int index) {           
+        public void WillRemoveComponent(int index) {
             if (HasComponent(index) && OnComponentWillBeRemoved != null) {
                 OnComponentWillBeRemoved(this, index, _components[index]);
             }

@@ -7,8 +7,9 @@ namespace Entitas {
             var with = new List<Entity>();
             for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
                 var e = entities[i];
-                if (e.HasComponents(indices))
+                if (e.HasComponents(indices)) {
                     with.Add(e);
+                }
             }
 
             return with;
@@ -18,8 +19,9 @@ namespace Entitas {
             var without = new List<Entity>();
             for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
                 var e = entities[i];
-                if (!e.HasAnyComponent(indices))
+                if (!e.HasAnyComponent(indices)) {
                     without.Add(e);
+                }
             }
 
             return without;
@@ -29,8 +31,9 @@ namespace Entitas {
             var with = new List<Entity>();
             for (int i = 0, entitiesLength = entities.Count; i < entitiesLength; i++) {
                 var e = entities[i];
-                if (e.HasComponents(indices))
+                if (e.HasComponents(indices)) {
                     with.Add(e);
+                }
             }
 
             return with;
@@ -40,16 +43,18 @@ namespace Entitas {
             var without = new List<Entity>();
             for (int i = 0, entitiesLength = entities.Count; i < entitiesLength; i++) {
                 var e = entities[i];
-                if (!e.HasAnyComponent(indices))
+                if (!e.HasAnyComponent(indices)) {
                     without.Add(e);
+                }
             }
 
             return without;
         }
 
         public static Entity SingleEntity(this List<Entity> list) {
-            if (list.Count != 1)
+            if (list.Count != 1) {
                 throw new Exception("Expected exactly one entity!");
+            }
 
             return list[0];
         }

@@ -28,7 +28,7 @@ namespace Entitas {
         public EntityWillBeRemovedEntityRepositoryObserver(EntityRepository repo, int index) {
             _collectedEntities = new ListSet<Entity>();
             _collectedEntityComponentPairs = new ListSet<EntityComponentPair>();
-            _collection = repo.GetCollection(index);
+            _collection = repo.GetCollection(EntityMatcher.AllOf(new [] { index }));
             _index = index;
 
             Activate();

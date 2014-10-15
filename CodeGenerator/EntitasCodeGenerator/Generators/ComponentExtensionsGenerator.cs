@@ -30,221 +30,337 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateComponentExtension(Type type) {
-            var code = addClassHeader(type);
+            var code = addNamespace();
+            code += addEntityMethods(type);
+            if (isSingleEntity(type)) {
+                code += addEntityRepositoryMethods(type);
+            }
+            code += addMatcher(type);
+            code += closeNamespace();
+            return code;
+        }
+
+        static string addNamespace() {
+            return @"namespace Entitas {";
+        }
+
+        static string closeNamespace() {
+            return "}";
+        }
+
+        /*
+         *
+         * ENTITY METHODS
+         *
+         */
+
+        static string addEntityMethods(Type type) {
+            var code = addEntityClassHeader();
+            code += addGetMethods(type);
+            code += addHasMethods(type);
             code += addAddMethods(type);
             code += addReplaceMethods(type);
-            code += addHasMethods(type);
             code += addRemoveMethods(type);
-            code += addGetMethods(type);
             code += addCloseClass();
             return code;
         }
 
-        static string addClassHeader(Type type) {
-            var format = "using Entitas;\n\npublic static class {0} {{\n";
-            var className = type + classSuffix;
-            return string.Format(format, className);
-        }
-
-        static string addAddMethods(Type type) {
-            const string noFields = @"
-    public static {0} instance = new {0}();
-
-    public static void Flag{1}(this Entity entity) {{
-        entity.AddComponent({2}.{1}, instance);
-    }}
-";
-            const string singleNoFields = @"
-    public static Entity Flag{1}(this EntityRepository repo) {{
-        if (repo.GetSingleEntity({2}.{1}) != null) {{
-            throw new SingleEntityException(EntityMatcher.AllOf(new [] {{ {2}.{1} }}));
-        }}
-
-        var entity = repo.CreateEntity();
-        entity.AddComponent({2}.{1}, instance);
-        return entity;
-    }}
-";
-            const string withFields = @"
-    public static void Add{1}(this Entity entity, {3}) {{
-        var component = new {0}();
-{4}
-        entity.AddComponent({2}.{1}, component);
-    }}
-";
-            const string singleWithFields = @"
-    public static Entity Set{1}(this EntityRepository repo, {3}) {{
-        if (repo.GetSingleEntity({2}.{1}) != null) {{
-            throw new SingleEntityException(EntityMatcher.AllOf(new [] {{ {2}.{1} }}));
-        }}
-
-        var entity = repo.CreateEntity();
-        var component = new {0}();
-{4}
-        entity.AddComponent({2}.{1}, component);
-        return entity;
-    }}
-";
-            string format;
-            if (isSingletonComponent(type)) {
-                format = isOnSingleEntity(type) ? noFields + singleNoFields : noFields;
-            } else {
-                format = isOnSingleEntity(type) ? withFields + singleWithFields : withFields;
-            }
-
-            return buildString(type, format);
-        }
-
-        static string addReplaceMethods(Type type) {
-            const string withFields = @"
-    public static void Replace{1}(this Entity entity, {0} component) {{
-        entity.ReplaceComponent({2}.{1}, component);
-    }}
-
-    public static void Replace{1}(this Entity entity, {3}) {{
-        const int componentId = {2}.{1};
-        {0} component;
-        if (entity.HasComponent(componentId)) {{
-            entity.WillRemoveComponent(componentId);
-            component = ({0})entity.GetComponent(componentId);
-        }} else {{
-            component = new {0}();
-        }}
-{4}
-        entity.ReplaceComponent(componentId, component);
-    }}
-";
-            const string singleWithFields = @"
-    public static Entity Replace{1}(this EntityRepository repo, {0} component) {{
-        const int componentId = {2}.{1};
-        Entity entity = repo.GetSingleEntity(componentId);
-        if (entity == null) {{
-            entity = repo.CreateEntity();
-            entity.AddComponent(componentId, component);
-        }} else {{
-            entity.ReplaceComponent(componentId, component);
-        }}
-        return entity;
-    }}
-
-    public static Entity Replace{1}(this EntityRepository repo, {3}) {{
-        const int componentId = {2}.{1};
-        Entity entity = repo.GetSingleEntity(componentId);
-        {0} component;
-        if (entity == null) {{
-            entity = repo.CreateEntity();
-            component = new {0}();
-        }} else {{
-            entity.WillRemoveComponent(componentId);
-            component = ({0})entity.GetComponent(componentId);
-        }}
-{4}
-        entity.ReplaceComponent(componentId, component);
-        return entity;
-    }}
-";
-            string format = string.Empty;
-            if (!isSingletonComponent(type)) {
-                format = isOnSingleEntity(type) ? withFields + singleWithFields : withFields;
-            }
-
-            return buildString(type, format);
-        }
-
-        static string addHasMethods(Type type) {
-            const string noFields = @"
-    public static bool Is{1}(this Entity entity) {{
-        return entity.HasComponent({2}.{1});
-    }}
-";
-            const string singleNoFields = @"
-    public static bool Is{1}(this EntityRepository repo) {{
-        return repo.GetSingleEntity({2}.{1}) != null;
-    }}
-";
-            const string withFields = @"
-    public static bool Has{1}(this Entity entity) {{
-        return entity.HasComponent({2}.{1});
-    }}
-";
-            const string singleWithFields = @"
-    public static bool Has{1}(this EntityRepository repo) {{
-        return repo.GetSingleEntity({2}.{1}) != null;
-    }}
-";
-            string format;
-            if (isSingletonComponent(type)) {
-                format = isOnSingleEntity(type) ? noFields + singleNoFields : noFields;
-            } else {
-                format = isOnSingleEntity(type) ? withFields + singleWithFields : withFields;
-            }
-
-            return buildString(type, format);
-        }
-
-        static string addRemoveMethods(Type type) {
-            const string noFields = @"
-    public static void Unflag{1}(this Entity entity) {{
-        entity.RemoveComponent({2}.{1});
-    }}
-";
-            const string singleNoFields = @"
-    public static void Unflag{1}(this EntityRepository repo) {{
-        var entity = repo.GetSingleEntity({2}.{1});
-        repo.DestroyEntity(entity);
-    }}
-";
-            const string withFields = @"
-    public static void Remove{1}(this Entity entity) {{
-        entity.RemoveComponent({2}.{1});
-    }}
-";
-            const string singleWithFields = @"
-    public static void Remove{1}(this EntityRepository repo) {{
-        var entity = repo.GetSingleEntity({2}.{1});
-        repo.DestroyEntity(entity);
-    }}
-";
-            string format;
-            if (isSingletonComponent(type)) {
-                format = isOnSingleEntity(type) ? noFields + singleNoFields : noFields;
-            } else {
-                format = isOnSingleEntity(type) ? withFields + singleWithFields : withFields;
-            }
-
-            return buildString(type, format);
+        static string addEntityClassHeader() {
+            return @"
+    public partial class Entity {";
         }
 
         static string addGetMethods(Type type) {
-            const string singleNoFields = @"
-    public static Entity Get{1}Entity(this EntityRepository repo) {{
-        return repo.GetSingleEntity({2}.{1});
-    }}
+            string getMethod;
+            if (!isSingletonComponent(type)) {
+                getMethod = @"
+        public {0} {2} {{ get {{ return ({0})GetComponent({3}.{1}); }} }}
 ";
-            const string withFields = @"
-    public static {0} Get{1}(this Entity entity) {{
-        return ({0})entity.GetComponent({2}.{1});
-    }}
-";
-            const string singleWithFields = @"
-    public static {0} Get{1}(this EntityRepository repo) {{
-        const int componentId = {2}.{1};
-        var entity = repo.GetSingleEntity(componentId);
-        return ({0})entity.GetComponent(componentId);
-    }}
-
-    public static Entity Get{1}Entity(this EntityRepository repo) {{
-        return repo.GetSingleEntity({2}.{1});
-    }}
-";
-            string format;
-            if (isSingletonComponent(type)) {
-                format = isOnSingleEntity(type) ? singleNoFields : "";
             } else {
-                format = isOnSingleEntity(type) ? withFields + singleWithFields : withFields;
+                getMethod = @"
+        static readonly {0} {2}Component = new {0}();
+";
+            }
+            return buildString(type, getMethod);
+        }
+
+        static string addHasMethods(Type type) {
+            string hasMethod;
+            if (!isSingletonComponent(type)) {
+                hasMethod = @"
+        public bool has{1} {{ get {{ return HasComponent({3}.{1}); }} }}
+";
+            } else {
+                hasMethod = @"
+        public bool is{1} {{ get {{ return HasComponent({3}.{1}); }} }}
+";
+            }
+            return buildString(type, hasMethod);
+        }
+
+        static string addAddMethods(Type type) {
+            string addMethod;
+            if (!isSingletonComponent(type)) {
+                addMethod = @"
+        public void Add{1}({0} component) {{
+            AddComponent({3}.{1}, component);
+        }}
+
+        public void Add{1}({4}) {{
+            var component = new {0}();
+{5}
+            Add{1}(component);
+        }}
+";
+            } else {
+                addMethod = @"
+        public void Flag{1}() {{
+            AddComponent({3}.{1}, {2}Component);
+        }}
+";
+            }
+            return buildString(type, addMethod);
+        }
+
+        static string addReplaceMethods(Type type) {
+            if (!isSingletonComponent(type)) {
+                const string replaceMethod = @"
+        public void Replace{1}({0} component) {{
+            ReplaceComponent({3}.{1}, component);
+        }}
+
+        public void Replace{1}({4}) {{
+            {0} component;
+            if (has{1}) {{
+                WillRemoveComponent({3}.{1});
+                component = {2};
+            }} else {{
+                component = new {0}();
+            }}
+{5}
+            Replace{1}(component);
+        }}
+";
+                return buildString(type, replaceMethod);
+            } else {
+                return string.Empty;
+            }
+        }
+
+        static string addRemoveMethods(Type type) {
+            string removeMethod;
+            if (!isSingletonComponent(type)) {
+                removeMethod = @"
+        public void Remove{1}() {{
+            RemoveComponent({3}.{1});
+        }}
+";
+            } else {
+                removeMethod = @"
+        public void Unflag{1}() {{
+            RemoveComponent({3}.{1});
+        }}
+";
+            }
+            return buildString(type, removeMethod);
+        }
+
+        /*
+         *
+         * ENTITY REPOSITORY METHODS
+         *
+         */
+
+        static string addEntityRepositoryMethods(Type type) {
+            var code = addEntityRepositoryClassHeader();
+            code += addRepoGetMethods(type);
+            code += addRepoHasMethods(type);
+            code += addRepoAddMethods(type);
+            code += addRepoReplaceMethods(type);
+            code += addRepoRemoveMethods(type);
+            code += addCloseClass();
+            return code;
+        }
+
+        static string addEntityRepositoryClassHeader() {
+            return @"
+    public partial class EntityRepository {";
+        }
+
+        static string addRepoGetMethods(Type type) {
+            string getMehod;
+            if (!isSingletonComponent(type)) {
+                getMehod = @"
+        public Entity {2}Entity {{ get {{ return GetCollection(Matcher.{1}).GetSingleEntity(); }} }}
+
+        public {0} {2} {{ get {{ return {2}Entity.{2}; }} }}
+";
+            } else {
+                getMehod = @"
+        public Entity {2}Entity {{ get {{ return GetCollection(Matcher.{1}).GetSingleEntity(); }} }}
+";
+            }
+            return buildString(type, getMehod);
+        }
+
+        static string addRepoHasMethods(Type type) {
+            string hasMethod;
+            if (!isSingletonComponent(type)) {
+                hasMethod = @"
+        public bool has{1} {{ get {{ return {2}Entity != null; }} }}
+";
+            } else {
+                hasMethod = @"
+        public bool is{1} {{ get {{ return {2}Entity != null; }} }}
+";
+            }
+            return buildString(type, hasMethod);
+        }
+
+        static object addRepoAddMethods(Type type) {
+            string addMethod;
+            if (!isSingletonComponent(type)) {
+                addMethod = @"
+        public Entity Set{1}({0} component) {{
+            if (has{1}) {{
+                throw new SingleEntityException(Matcher.{1});
+            }}
+            var entity = CreateEntity();
+            entity.Add{1}(component);
+            return entity;
+        }}
+
+        public Entity Set{1}({4}) {{
+            if (has{1}) {{
+                throw new SingleEntityException(Matcher.{1});
+            }}
+            var entity = CreateEntity();
+            entity.Add{1}({6});
+            return entity;
+        }}
+";
+            } else {
+                addMethod = @"
+        public Entity Flag{1}() {{
+            if (is{1}) {{
+                throw new SingleEntityException(Matcher.{1});
+            }}
+            var entity = CreateEntity();
+            entity.Flag{1}();
+            return entity;
+        }}
+";
+            }
+            return buildString(type, addMethod);
+        }
+
+        static string addRepoReplaceMethods(Type type) {
+            if (!isSingletonComponent(type)) {
+                const string replaceMethod = @"
+        public Entity Replace{1}({0} component) {{
+            var entity = {2}Entity;
+            if (entity == null) {{
+                entity = Set{1}(component);
+            }} else {{
+                entity.Replace{1}(component);
+            }}
+
+            return entity;
+        }}
+
+        public Entity Replace{1}({4}) {{
+            var entity = {2}Entity;
+            if (entity == null) {{
+                entity = Set{1}({6});
+            }} else {{
+                entity.Replace{1}({6});
+            }}
+
+            return entity;
+        }}
+";
+                return buildString(type, replaceMethod);
+            } else {
+                return string.Empty;
+            }
+        }
+
+        static string addRepoRemoveMethods(Type type) {
+            string removeMethod;
+            if (!isSingletonComponent(type)) {
+                removeMethod = @"
+        public void Remove{1}() {{
+            DestroyEntity({2}Entity);
+        }}
+";
+            } else {
+                removeMethod = @"
+        public void Unflag{1}() {{
+            DestroyEntity({2}Entity);
+        }}
+";
+            }
+            return buildString(type, removeMethod);
+        }
+
+        /*
+        *
+        * MATCHER
+        *
+        */
+
+        static string addMatcher(Type type) {
+            const string matcher = @"
+    public static partial class Matcher {{
+        static AllOfEntityMatcher _matcher{1};
+
+        public static AllOfEntityMatcher {1} {{
+            get {{
+                if (_matcher{1} == null) {{
+                    _matcher{1} = EntityMatcher.AllOf(new [] {{ {3}.{1} }});
+                }}
+
+                return _matcher{1};
+            }}
+        }}
+    }}
+";
+            return buildString(type, matcher);
+        }
+
+        /*
+         *
+         * HELPERS
+         *
+         */
+
+        static bool isSingleEntity(Type type) {
+            Attribute[] attrs = Attribute.GetCustomAttributes(type);
+            foreach (Attribute attr in attrs) {
+                if (attr is SingleEntityAttribute) {
+                    return true;
+                }
             }
 
-            return buildString(type, format);
+            return false;
+        }
+
+        static bool isSingletonComponent(Type type) {
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            return fields.Length == 0;
+        }
+
+        static string buildString(Type type, string format) {
+            var a0_type = type;
+            var a1_name = type.RemoveComponentSuffix();
+            var a2_lowercaseName = char.ToLower(a1_name[0]) + a1_name.Substring(1);
+            var a3_tag = indicesLookupTag(type);
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            var a4_fieldNamesWithType = fieldNamesWithType(fields);
+            var a5_fieldAssigns = fieldAssignments(fields);
+            var a6_fieldNames = fieldNames(fields);
+
+            return string.Format(format, a0_type, a1_name, a2_lowercaseName, a3_tag, a4_fieldNamesWithType, a5_fieldAssigns, a6_fieldNames);
         }
 
         static string indicesLookupTag(Type type) {
@@ -262,9 +378,38 @@ namespace Entitas.CodeGenerator {
         static string fieldNamesWithType(FieldInfo[] fields) {
             var namesWithType = string.Empty;
             for (int i = 0; i < fields.Length; i++) {
-                var name = fields[i].Name;
+                var arg = fields[i].Name;
+                var newArg = "new" + char.ToUpper(arg[0]) + arg.Substring(1);
                 var type = getTypeName(fields[i].FieldType);
-                namesWithType += type + " " + name;
+                namesWithType += type + " " + newArg;
+                if (i < fields.Length - 1) {
+                    namesWithType += ", ";
+                }
+            }
+            return namesWithType;
+        }
+
+        static string fieldAssignments(FieldInfo[] fieldInfos) {
+            var assignments = string.Empty;
+            const string format = "            component.{0} = {1};";
+            for (int i = 0; i < fieldInfos.Length; i++) {
+                var arg = fieldInfos[i].Name;
+                var newArg = "new" + char.ToUpper(arg[0]) + arg.Substring(1);
+                assignments += string.Format(format, arg, newArg);
+                if (i < fieldInfos.Length - 1) {
+                    assignments += "\n";
+                }
+            }
+
+            return assignments;
+        }
+
+        static string fieldNames(FieldInfo[] fields) {
+            var namesWithType = string.Empty;
+            for (int i = 0; i < fields.Length; i++) {
+                var arg = fields[i].Name;
+                var newArg = "new" + char.ToUpper(arg[0]) + arg.Substring(1);
+                namesWithType += newArg;
                 if (i < fields.Length - 1) {
                     namesWithType += ", ";
                 }
@@ -315,48 +460,9 @@ namespace Entitas.CodeGenerator {
             return simplified;
         }
 
-        static string fieldAssignments(FieldInfo[] fieldInfos) {
-            var assignments = string.Empty;
-            const string format = "        component.{0} = {0};";
-            for (int i = 0; i < fieldInfos.Length; i++) {
-                assignments += string.Format(format, fieldInfos[i].Name);
-                if (i < fieldInfos.Length - 1) {
-                    assignments += "\n";
-                }
-            }
-
-            return assignments;
-        }
-
-        static bool isOnSingleEntity(Type type) {
-            Attribute[] attrs = Attribute.GetCustomAttributes(type);
-            foreach (Attribute attr in attrs) {
-                if (attr is SingleEntityAttribute) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         static string addCloseClass() {
-            return "\n}";
-        }
-
-        static string buildString(Type type, string format) {
-            var a0_type = type;
-            var a1_name = type.RemoveComponentSuffix();
-            var a2_tag = indicesLookupTag(type);
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            var a3_fieldNames = fieldNamesWithType(fields);
-            var a4_fieldAssigns = fieldAssignments(fields);
-
-            return string.Format(format, a0_type, a1_name, a2_tag, a3_fieldNames, a4_fieldAssigns);
-        }
-
-        static bool isSingletonComponent(Type type) {
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            return fields.Length == 0;
+            return @"    }
+";
         }
     }
 }

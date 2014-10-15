@@ -16,8 +16,9 @@ namespace Entitas {
         public void Execute() {
             _buffer.AddRange(_observer.collectedEntityComponentPairs);
             _observer.ClearCollectedEntites();
-            if (_buffer.Count > 0)
+            if (_buffer.Count > 0) {
                 _subsystem.Execute(_buffer);
+            }
             _buffer.Clear();
         }
     }

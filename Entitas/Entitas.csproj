@@ -47,7 +47,6 @@
     <Compile Include="Entitas\EntityRepositoryObserver.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\ReactiveEntitySystem.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntitySystem.cs" />
-    <Compile Include="Entitas\Extensions\EntityCollectionExtension.cs" />
     <Compile Include="Entitas\EntityWillBeRemovedEntityRepositoryObserver.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\ReactiveEntityWillBeRemovedSystem.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntityWillBeRemovedSystem.cs" />

@@ -26,7 +26,7 @@
 
         public static EntityWillBeRemovedEntityRepositoryObserver AddWillBeRemovedObserver(this EntityRepository repo, int index) {
             return new EntityWillBeRemovedEntityRepositoryObserver(repo, index);
-        }   
+        }
     }
 }
 

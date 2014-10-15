@@ -4,46 +4,52 @@ using Entitas;
 [SingleEntity]
 public class AnimatingComponent : IComponent {
     public static string extensions =
-        @"using Entitas;
+        @"namespace Entitas {
+    public partial class Entity {
+        static readonly AnimatingComponent animatingComponent = new AnimatingComponent();
 
-public static class AnimatingComponentGeneratedExtension {
+        public bool isAnimating { get { return HasComponent(ComponentIds.Animating); } }
 
-    public static AnimatingComponent instance = new AnimatingComponent();
-
-    public static void FlagAnimating(this Entity entity) {
-        entity.AddComponent(ComponentIds.Animating, instance);
-    }
-
-    public static Entity FlagAnimating(this EntityRepository repo) {
-        if (repo.GetSingleEntity(ComponentIds.Animating) != null) {
-            throw new SingleEntityException(EntityMatcher.AllOf(new [] { ComponentIds.Animating }));
+        public void FlagAnimating() {
+            AddComponent(ComponentIds.Animating, animatingComponent);
         }
 
-        var entity = repo.CreateEntity();
-        entity.AddComponent(ComponentIds.Animating, instance);
-        return entity;
+        public void UnflagAnimating() {
+            RemoveComponent(ComponentIds.Animating);
+        }
     }
 
-    public static bool IsAnimating(this Entity entity) {
-        return entity.HasComponent(ComponentIds.Animating);
+    public partial class EntityRepository {
+        public Entity animatingEntity { get { return GetCollection(Matcher.Animating).GetSingleEntity(); } }
+
+        public bool isAnimating { get { return animatingEntity != null; } }
+
+        public Entity FlagAnimating() {
+            if (isAnimating) {
+                throw new SingleEntityException(Matcher.Animating);
+            }
+            var entity = CreateEntity();
+            entity.FlagAnimating();
+            return entity;
+        }
+
+        public void UnflagAnimating() {
+            DestroyEntity(animatingEntity);
+        }
     }
 
-    public static bool IsAnimating(this EntityRepository repo) {
-        return repo.GetSingleEntity(ComponentIds.Animating) != null;
-    }
+    public static partial class Matcher {
+        static AllOfEntityMatcher _matcherAnimating;
 
-    public static void UnflagAnimating(this Entity entity) {
-        entity.RemoveComponent(ComponentIds.Animating);
-    }
+        public static AllOfEntityMatcher Animating {
+            get {
+                if (_matcherAnimating == null) {
+                    _matcherAnimating = EntityMatcher.AllOf(new [] { ComponentIds.Animating });
+                }
 
-    public static void UnflagAnimating(this EntityRepository repo) {
-        var entity = repo.GetSingleEntity(ComponentIds.Animating);
-        repo.DestroyEntity(entity);
+                return _matcherAnimating;
+            }
+        }
     }
-
-    public static Entity GetAnimatingEntity(this EntityRepository repo) {
-        return repo.GetSingleEntity(ComponentIds.Animating);
-    }
-
 }";
-}
+    }

@@ -2,23 +2,33 @@ using Entitas;
 
 public class MovableComponent : IComponent {
     public static string extensions =
-        @"using Entitas;
+        @"namespace Entitas {
+    public partial class Entity {
+        static readonly MovableComponent movableComponent = new MovableComponent();
 
-public static class MovableComponentGeneratedExtension {
+        public bool isMovable { get { return HasComponent(ComponentIds.Movable); } }
 
-    public static MovableComponent instance = new MovableComponent();
+        public void FlagMovable() {
+            AddComponent(ComponentIds.Movable, movableComponent);
+        }
 
-    public static void FlagMovable(this Entity entity) {
-        entity.AddComponent(ComponentIds.Movable, instance);
+        public void UnflagMovable() {
+            RemoveComponent(ComponentIds.Movable);
+        }
     }
 
-    public static bool IsMovable(this Entity entity) {
-        return entity.HasComponent(ComponentIds.Movable);
-    }
+    public static partial class Matcher {
+        static AllOfEntityMatcher _matcherMovable;
 
-    public static void UnflagMovable(this Entity entity) {
-        entity.RemoveComponent(ComponentIds.Movable);
-    }
+        public static AllOfEntityMatcher Movable {
+            get {
+                if (_matcherMovable == null) {
+                    _matcherMovable = EntityMatcher.AllOf(new [] { ComponentIds.Movable });
+                }
 
+                return _matcherMovable;
+            }
+        }
+    }
 }";
 }

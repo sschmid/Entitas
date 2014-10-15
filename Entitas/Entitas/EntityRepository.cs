@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 
 namespace Entitas {
-    public class EntityRepository {
+    public partial class EntityRepository {
         readonly LinkedListSet<Entity> _entities = new LinkedListSet<Entity>();
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
         readonly List<EntityCollection>[] _collectionsForIndex;
@@ -78,8 +78,8 @@ namespace Entitas {
         }
 
         void onComponentAdded(Entity entity, int index, IComponent component) {
-            if (_collectionsForIndex[index] != null) {
-                var collections = _collectionsForIndex[index];
+            var collections = _collectionsForIndex[index];
+            if (collections != null) {
                 for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++) {
                     collections[i].AddEntityIfMatching(entity);
                 }
@@ -87,8 +87,8 @@ namespace Entitas {
         }
 
         void onComponentWillBeRemoved(Entity entity, int index, IComponent component) {
-            if (_collectionsForIndex[index] != null) {
-                var collections = _collectionsForIndex[index];
+            var collections = _collectionsForIndex[index];
+            if (collections != null) {
                 for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++) {
                     collections[i].WillRemoveEntity(entity);
                 }
@@ -96,8 +96,8 @@ namespace Entitas {
         }
 
         void onComponentRemoved(Entity entity, int index, IComponent component) {
-            if (_collectionsForIndex[index] != null) {
-                var collections = _collectionsForIndex[index];
+            var collections = _collectionsForIndex[index];
+            if (collections != null) {
                 for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++) {
                     collections[i].RemoveEntity(entity);
                 }
