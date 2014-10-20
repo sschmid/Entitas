@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
     public static class EntitasCodeGenerator {
+        public static string generatedFolder = "Generated/";
         public const string componentSuffix = "Component";
-        const string generatedFolder = "Assets/Sources/Generated/";
 
-        public static void GenerateComponentExtensions() {
+        public static void Generate() {
             if (!Directory.Exists(generatedFolder))
                 Directory.CreateDirectory(generatedFolder);
 
