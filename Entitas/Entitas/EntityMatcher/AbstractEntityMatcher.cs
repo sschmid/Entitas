@@ -8,9 +8,6 @@ namespace Entitas {
         readonly int[] _indices;
         readonly int _hash;
 
-        protected AbstractEntityMatcher() {
-        }
-
         protected AbstractEntityMatcher(int[] indices) {
             Array.Sort(indices);
             var sortedIndices = new HashSet<int>(indices);

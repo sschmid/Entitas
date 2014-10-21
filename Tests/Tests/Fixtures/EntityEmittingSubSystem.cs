@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using System.Collections.Generic;
+using System.Linq;
 
 public class EntityEmittingSubSystem : IReactiveSubEntitySystem {
     public int didExecute { get { return _didExecute; } }
@@ -22,7 +23,7 @@ public class EntityEmittingSubSystem : IReactiveSubEntitySystem {
         return EntityCollectionEventType.OnEntityAdded;
     }
 
-    public void Execute(List<Entity> entities) {
+    public void Execute(IEnumerable<Entity> entities) {
         _repo.CreateEntity().AddComponent(CP.ComponentA, new ComponentA());
         _entites = entities.ToArray();
         _didExecute++;

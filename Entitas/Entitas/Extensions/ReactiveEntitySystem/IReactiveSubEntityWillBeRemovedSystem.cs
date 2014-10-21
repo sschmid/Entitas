@@ -4,7 +4,7 @@ namespace Entitas {
     public interface IReactiveSubEntityWillBeRemovedSystem {
         int GetTriggeringIndex();
 
-        void Execute(List<EntityComponentPair> pairs);
+        void Execute(IEnumerable<EntityComponentPair> pairs);
     }
 }
 

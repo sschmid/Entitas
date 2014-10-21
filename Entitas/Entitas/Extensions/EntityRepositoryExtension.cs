@@ -4,16 +4,12 @@
             return repo.GetCollection(EntityMatcher.AllOf(indices));
         }
 
+        public static Entity[] GetEntities(this EntityRepository repo, IEntityMatcher matcher) {
+            return repo.GetCollection(matcher).GetEntities();
+        }
+
         public static Entity[] GetEntities(this EntityRepository repo, params int[] indices) {
             return repo.GetCollection(indices).GetEntities();
-        }
-
-        public static Entity GetSingleEntity(this EntityRepository repo, params int[] indices) {
-            return repo.GetCollection(indices).GetSingleEntity();
-        }
-
-        public static T GetSingleComponent<T>(this EntityRepository repo, int index) {
-            return (T)repo.GetCollection(index).GetSingleEntity().GetComponent(index);
         }
 
         public static EntityRepositoryObserver AddObserver(this EntityRepository repo, EntityCollectionEventType eventType, IEntityMatcher matcher) {

@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ReactiveSubSystemSpy : IReactiveSubEntitySystem {
     public int didExecute { get { return _didExecute; } }
@@ -24,7 +25,7 @@ public class ReactiveSubSystemSpy : IReactiveSubEntitySystem {
         return _eventType;
     }
 
-    public void Execute(List<Entity> entities) {
+    public void Execute(IEnumerable<Entity> entities) {
         _didExecute++;
         _entites = entities.ToArray();
     }
