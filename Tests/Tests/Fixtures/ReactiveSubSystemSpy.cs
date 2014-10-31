@@ -25,7 +25,7 @@ public class ReactiveSubSystemSpy : IReactiveSubEntitySystem {
         return _eventType;
     }
 
-    public void Execute(IEnumerable<Entity> entities) {
+    public void Execute(IList<Entity> entities) {
         _didExecute++;
         _entites = entities.ToArray();
     }

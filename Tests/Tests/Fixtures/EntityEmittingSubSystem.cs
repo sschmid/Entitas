@@ -23,7 +23,7 @@ public class EntityEmittingSubSystem : IReactiveSubEntitySystem {
         return EntityCollectionEventType.OnEntityAdded;
     }
 
-    public void Execute(IEnumerable<Entity> entities) {
+    public void Execute(IList<Entity> entities) {
         _repo.CreateEntity().AddComponent(CP.ComponentA, new ComponentA());
         _entites = entities.ToArray();
         _didExecute++;

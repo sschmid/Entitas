@@ -6,7 +6,7 @@ namespace Entitas {
 
         EntityCollectionEventType GetEventType();
 
-        void Execute(IEnumerable<Entity> entities);
+        void Execute(IList<Entity> entities);
     }
 }
 
