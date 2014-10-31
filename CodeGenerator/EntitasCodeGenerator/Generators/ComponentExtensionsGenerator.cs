@@ -115,7 +115,9 @@ namespace Entitas.CodeGenerator {
             } else {
                 addMethod = @"
         public void Flag{1}() {{
-            AddComponent({3}.{1}, {2}Component);
+            if (!is{1}) {{
+                AddComponent({3}.{1}, {2}Component);
+            }}
         }}
 ";
             }
@@ -158,7 +160,9 @@ namespace Entitas.CodeGenerator {
             } else {
                 removeMethod = @"
         public void Unflag{1}() {{
-            RemoveComponent({3}.{1});
+            if (is{1}) {{
+                RemoveComponent({3}.{1});
+            }}
         }}
 ";
             }
@@ -242,12 +246,11 @@ namespace Entitas.CodeGenerator {
             } else {
                 addMethod = @"
         public Entity Flag{1}() {{
-            if (is{1}) {{
-                throw new SingleEntityException(Matcher.{1});
+            if (!is{1}) {{
+                var entity = CreateEntity();
+                entity.Flag{1}();
+                return entity;
             }}
-            var entity = CreateEntity();
-            entity.Flag{1}();
-            return entity;
         }}
 ";
             }
@@ -296,7 +299,9 @@ namespace Entitas.CodeGenerator {
             } else {
                 removeMethod = @"
         public void Unflag{1}() {{
-            DestroyEntity({2}Entity);
+            if (is{1}) {{
+                DestroyEntity({2}Entity);
+            }}
         }}
 ";
             }

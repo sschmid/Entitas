@@ -9,11 +9,15 @@ public class MovableComponent : IComponent {
         public bool isMovable { get { return HasComponent(ComponentIds.Movable); } }
 
         public void FlagMovable() {
-            AddComponent(ComponentIds.Movable, movableComponent);
+            if (!isMovable) {
+                AddComponent(ComponentIds.Movable, movableComponent);
+            }
         }
 
         public void UnflagMovable() {
-            RemoveComponent(ComponentIds.Movable);
+            if (isMovable) {
+                RemoveComponent(ComponentIds.Movable);
+            }
         }
     }
 

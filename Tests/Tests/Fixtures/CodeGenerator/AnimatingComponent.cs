@@ -11,11 +11,15 @@ public class AnimatingComponent : IComponent {
         public bool isAnimating { get { return HasComponent(ComponentIds.Animating); } }
 
         public void FlagAnimating() {
-            AddComponent(ComponentIds.Animating, animatingComponent);
+            if (!isAnimating) {
+                AddComponent(ComponentIds.Animating, animatingComponent);
+            }
         }
 
         public void UnflagAnimating() {
-            RemoveComponent(ComponentIds.Animating);
+            if (isAnimating) {
+                RemoveComponent(ComponentIds.Animating);
+            }
         }
     }
 
@@ -25,16 +29,17 @@ public class AnimatingComponent : IComponent {
         public bool isAnimating { get { return animatingEntity != null; } }
 
         public Entity FlagAnimating() {
-            if (isAnimating) {
-                throw new SingleEntityException(Matcher.Animating);
+            if (!isAnimating) {
+                var entity = CreateEntity();
+                entity.FlagAnimating();
+                return entity;
             }
-            var entity = CreateEntity();
-            entity.FlagAnimating();
-            return entity;
         }
 
         public void UnflagAnimating() {
-            DestroyEntity(animatingEntity);
+            if (isAnimating) {
+                DestroyEntity(animatingEntity);
+            }
         }
     }
 
