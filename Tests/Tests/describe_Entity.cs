@@ -169,29 +169,23 @@ class describe_Entity : nspec {
                 eventComponent.should_be_same(_componentA);
             };
 
-            it["dispatches OnComponentAdded and OnComponentRemoved when replacing a component"] = () => {
+            it["dispatches OnComponentReplaced when replacing a component"] = () => {
                 addComponentA(e);
                 var newComponentA = new ComponentA();
-                var didAdd = 0;
-                e.OnComponentAdded += (entity, type, component) => {
+                var didReplace = 0;
+                e.OnComponentReplaced += (entity, type, component) => {
                     entity.should_be_same(entity);
                     type.should_be(CP.ComponentA);
                     component.should_be_same(newComponentA);
-                    didAdd++;
+                    didReplace++;
                 };
 
+                e.OnComponentAdded += (entity, type, component) => TestHelper.Fail();
                 e.OnComponentWillBeRemoved += (entity, type, component) => TestHelper.Fail();
+                e.OnComponentRemoved += (entity, type, component) => TestHelper.Fail();
 
-                var didRemove = 0;
-                e.OnComponentRemoved += (entity, type, component) => {
-                    entity.should_be_same(entity);
-                    type.should_be(CP.ComponentA);
-                    component.should_be_same(_componentA);
-                    didRemove++;
-                };
                 replaceComponentA(e, newComponentA);
-                didAdd.should_be(1);
-                didRemove.should_be(1);
+                didReplace.should_be(1);
             };
 
             it["dispatches OnComponentWillBeRemoved when called manually and component exists"] = () => {

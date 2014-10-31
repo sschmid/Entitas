@@ -8,6 +8,10 @@ class describe_EntityRepository : nspec {
         _repo = new EntityRepository(CP.NumComponents);
     }
 
+    void it_creates_entities_starting_with_specified_creation_index() {
+        new EntityRepository(0, 1).CreateEntity().creationIndex.should_be(1);
+    }
+
     void when_created() {
 
         it["has no entities when no entities were created"] = () => {
@@ -19,7 +23,12 @@ class describe_EntityRepository : nspec {
             e.should_not_be_null();
             e.GetType().should_be(typeof(Entity));
         };
-            
+
+        it["increments creation index when creating entities"] = () => {
+            _repo.CreateEntity().creationIndex.should_be(0);
+            _repo.CreateEntity().creationIndex.should_be(1);
+        };
+
         it["doesn't have entites that were not created with CreateEntity()"] = () => {
             _repo.HasEntity(new Entity(CP.NumComponents)).should_be_false();
         };
@@ -108,16 +117,6 @@ class describe_EntityRepository : nspec {
                 var e = _repo.CreateEntity();
                 addComponentA(e);
                 c.GetEntities().should_contain(e);
-            };
-
-            it["sets up new entity when pool was empty"] = () => {
-                var e = _repo.CreateEntity();
-                addComponentA(e);
-                var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CP.ComponentA }));
-                var didExecute = 0;
-                c.OnEntityAdded += (collection, entity) => didExecute++;
-                e.ReplaceComponent(CP.ComponentA, new ComponentA());
-                didExecute.should_be(1);
             };
         };
 

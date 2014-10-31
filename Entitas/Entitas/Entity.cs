@@ -4,10 +4,13 @@ using System.Collections.Generic;
 namespace Entitas {
     public partial class Entity {
         public event EntityChange OnComponentAdded;
+        public event EntityChange OnComponentReplaced;
         public event EntityChange OnComponentWillBeRemoved;
         public event EntityChange OnComponentRemoved;
 
         public delegate void EntityChange(Entity entity, int index, IComponent component);
+
+        public int creationIndex;
 
         readonly IComponent[] _components;
         IComponent[] _componentsCache;
@@ -61,15 +64,18 @@ namespace Entitas {
             if (component != replacement) {
                 _components[index] = replacement;
                 _componentsCache = null;
-            }
-            if (replacement == null) {
-                _componentIndicesCache = null;
-            }
-            if (OnComponentRemoved != null) {
-                OnComponentRemoved(this, index, component);
-            }
-            if (replacement != null && OnComponentAdded != null) {
-                OnComponentAdded(this, index, replacement);
+                if (replacement == null) {
+                    _componentIndicesCache = null;
+                    if (OnComponentRemoved != null) {
+                        OnComponentRemoved(this, index, component);
+                    }
+                } else if (OnComponentReplaced != null) {
+                    OnComponentReplaced(this, index, replacement);
+                }
+            } else {
+                if (OnComponentReplaced != null) {
+                    OnComponentReplaced(this, index, replacement);
+                }
             }
         }
 

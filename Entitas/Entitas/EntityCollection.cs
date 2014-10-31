@@ -1,5 +1,6 @@
 ﻿using System;
-using ToolKit;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Entitas {
     public class EntityCollection {
@@ -12,7 +13,7 @@ namespace Entitas {
         public int Count { get { return _entities.Count; } }
 
         readonly IEntityMatcher _matcher;
-        readonly LinkedListSet<Entity> _entities = new LinkedListSet<Entity>();
+        readonly HashSet<Entity> _entities = new HashSet<Entity>(new EntityEqualityComparer());
         Entity[] _entitiesCache;
         Entity _singleEntityCache;
 
@@ -29,6 +30,17 @@ namespace Entitas {
                     if (OnEntityAdded != null) {
                         OnEntityAdded(this, entity);
                     }
+                }
+            }
+        }
+
+        public void UpdateEntity(Entity entity) {
+            if (_entities.Contains(entity)) {
+                if (OnEntityRemoved != null) {
+                    OnEntityRemoved(this, entity);
+                }
+                if (OnEntityAdded != null) {
+                    OnEntityAdded(this, entity);
                 }
             }
         }
@@ -52,7 +64,8 @@ namespace Entitas {
 
         public Entity[] GetEntities() {
             if (_entitiesCache == null) {
-                _entitiesCache = _entities.ToArray();
+                _entitiesCache = new Entity[_entities.Count];
+                _entities.CopyTo(_entitiesCache);
             }
 
             return _entitiesCache;

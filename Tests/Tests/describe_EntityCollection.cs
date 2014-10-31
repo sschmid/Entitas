@@ -137,6 +137,28 @@ class describe_EntityCollection : nspec {
                 removeEA1();
                 didDispatch.should_be(0);
             };
+
+            it["dispatches OnEntityBeRemove and OnEntityAdded when updating"] = () => {
+                addEA1();
+                var removed = 0;
+                var added = 0;
+                _collection.OnEntityRemoved += (collection, entity) => removed++;
+                _collection.OnEntityWillBeRemoved += (collection, entity) => TestHelper.Fail();
+                _collection.OnEntityAdded += (collection, entity) => added++;
+
+                _collection.UpdateEntity(_eA1);
+
+                removed.should_be(1);
+                added.should_be(1);
+            };
+
+            it["doesn't dispatch OnEntityBeRemove and OnEntityAdded when updating when exists in collection"] = () => {
+                _collection.OnEntityRemoved += (collection, entity) => TestHelper.Fail();
+                _collection.OnEntityWillBeRemoved += (collection, entity) => TestHelper.Fail();
+                _collection.OnEntityAdded += (collection, entity) => TestHelper.Fail();
+
+                _collection.UpdateEntity(_eA1);
+            };
         };
 
         context["internal caching"] = () => {
@@ -159,7 +181,7 @@ class describe_EntityCollection : nspec {
                 add(e);
                 c.should_be_same(_collection.GetEntities());
             };
-        
+
             it["updates cache when removing an entity"] = () => {
                 addEA1();
                 var c = _collection.GetEntities();

@@ -1,5 +1,6 @@
 ﻿using NSpec;
 using Entitas;
+using System.Linq;
 
 class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
     EntityRepository _repo;
@@ -23,14 +24,11 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
                 e.AddComponent(CP.ComponentA, componentA);
                 removeComponentA(e);
 
-                var es = observer.collectedEntities;
-                es.Count.should_be(1);
-                es[0].should_be_same(e);
-
                 var ecp = observer.collectedEntityComponentPairs;
                 ecp.Count.should_be(1);
-                ecp[0].entity.should_be_same(e);
-                ecp[0].component.should_be_same(componentA);
+                var pair = ecp.First();
+                pair.entity.should_be_same(e);
+                pair.component.should_be_same(componentA);
             };
 
             it["only returns matching collected entities"] = () => {
@@ -41,13 +39,10 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
                 removeComponentA(e);
                 removeComponentB(e2);
 
-                var es = observer.collectedEntities;
-                es.Count.should_be(1);
-                es[0].should_be_same(e);
-
                 var ecp = observer.collectedEntityComponentPairs;
                 ecp.Count.should_be(1);
-                ecp[0].entity.should_be_same(e);
+                var pair = ecp.First();
+                pair.entity.should_be_same(e);
             };
 
             it["collects entites only once"] = () => {
@@ -57,16 +52,11 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
                 addComponentA(e);
                 removeComponentA(e);
 
-                var es = observer.collectedEntities;
-                es.Count.should_be(1);
-                es[0].should_be_same(e);
-
                 var ecp = observer.collectedEntityComponentPairs;
                 ecp.Count.should_be(1);
             };
 
             it["returns empty list when no entities were collected"] = () => {
-                observer.collectedEntities.should_be_empty();
                 observer.collectedEntityComponentPairs.should_be_empty();
             };
 
@@ -76,7 +66,6 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
                 removeComponentA(e);
 
                 observer.Deactivate();
-                observer.collectedEntities.should_be_empty();
                 observer.collectedEntityComponentPairs.should_be_empty();
             };
 
@@ -85,7 +74,6 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
                 var e = createEntity();
                 addComponentA(e);
                 removeComponentA(e);
-                observer.collectedEntities.should_be_empty();
                 observer.collectedEntityComponentPairs.should_be_empty();
             };
 
@@ -101,12 +89,9 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
                 addComponentA(e2);
                 removeComponentA(e2);
 
-                var es = observer.collectedEntities;
-                es.Count.should_be(1);
-                es.should_contain(e2);
-
                 var ecp = observer.collectedEntityComponentPairs;
-                ecp[0].entity.should_be_same(e2);
+                var pair = ecp.First();
+                pair.entity.should_be_same(e2);
             };
 
             it["clears collected entites"] = () => {
@@ -115,7 +100,6 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
                 removeComponentA(e);
 
                 observer.ClearCollectedEntites();
-                observer.collectedEntities.should_be_empty();
                 observer.collectedEntityComponentPairs.should_be_empty();
             };
         };

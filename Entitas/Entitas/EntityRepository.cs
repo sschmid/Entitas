@@ -4,24 +4,31 @@ using System;
 
 namespace Entitas {
     public partial class EntityRepository {
-        readonly LinkedListSet<Entity> _entities = new LinkedListSet<Entity>();
+        readonly HashSet<Entity> _entities = new HashSet<Entity>();
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
         readonly List<EntityCollection>[] _collectionsForIndex;
         readonly ObjectPool<Entity> _entityPool;
         readonly int _totalComponents;
+        int _creationIndex;
         Entity[] _entitiesCache;
 
-        public EntityRepository(int totalComponents) {
+        public EntityRepository(int totalComponents) : this(totalComponents, 0) {
+        }
+
+        public EntityRepository(int totalComponents, int startCreationIndex) {
             _totalComponents = totalComponents;
+            _creationIndex = startCreationIndex;
             _collectionsForIndex = new List<EntityCollection>[totalComponents];
             _entityPool = new ObjectPool<Entity>(() => new Entity(_totalComponents));
         }
 
         public Entity CreateEntity() {
             var entity = _entityPool.Get();
+            entity.creationIndex = _creationIndex++;
             _entities.Add(entity);
             _entitiesCache = null;
             entity.OnComponentAdded += onComponentAdded;
+            entity.OnComponentReplaced += onComponentReplaced;
             entity.OnComponentWillBeRemoved += onComponentWillBeRemoved;
             entity.OnComponentRemoved += onComponentRemoved;
             return entity;
@@ -30,6 +37,7 @@ namespace Entitas {
         public void DestroyEntity(Entity entity) {
             entity.RemoveAllComponents();
             entity.OnComponentAdded -= onComponentAdded;
+            entity.OnComponentReplaced -= onComponentReplaced;
             entity.OnComponentWillBeRemoved -= onComponentWillBeRemoved;
             entity.OnComponentRemoved -= onComponentRemoved;
             _entities.Remove(entity);
@@ -50,7 +58,8 @@ namespace Entitas {
 
         public Entity[] GetEntities() {
             if (_entitiesCache == null) {
-                _entitiesCache = _entities.ToArray();
+                _entitiesCache = new Entity[_entities.Count];;
+                _entities.CopyTo(_entitiesCache);
             }
 
             return _entitiesCache;
@@ -82,6 +91,15 @@ namespace Entitas {
             if (collections != null) {
                 for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++) {
                     collections[i].AddEntityIfMatching(entity);
+                }
+            }
+        }
+
+        void onComponentReplaced(Entity entity, int index, IComponent component) {
+            var collections = _collectionsForIndex[index];
+            if (collections != null) {
+                for (int i = 0, collectionsCount = collections.Count; i < collectionsCount; i++) {
+                    collections[i].UpdateEntity(entity);
                 }
             }
         }

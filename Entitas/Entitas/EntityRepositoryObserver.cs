@@ -10,14 +10,14 @@ namespace Entitas {
     }
 
     public class EntityRepositoryObserver {
-        public List<Entity> collectedEntities { get { return _collectedEntities.list; } }
+        public HashSet<Entity> collectedEntities { get { return _collectedEntities; } }
 
-        readonly ListSet<Entity> _collectedEntities;
+        readonly HashSet<Entity> _collectedEntities;
         readonly EntityCollection _collection;
         readonly EntityCollectionEventType _eventType;
 
         public EntityRepositoryObserver(EntityRepository repo, EntityCollectionEventType eventType, IEntityMatcher matcher) {
-            _collectedEntities = new ListSet<Entity>();
+            _collectedEntities = new HashSet<Entity>();
             _collection = repo.GetCollection(matcher);
             _eventType = eventType;
             Activate();

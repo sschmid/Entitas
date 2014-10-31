@@ -17,17 +17,16 @@ namespace Entitas {
     }
 
     public class EntityWillBeRemovedEntityRepositoryObserver {
-        public List<Entity> collectedEntities { get { return _collectedEntities.list; } }
-        public List<EntityComponentPair> collectedEntityComponentPairs { get { return _collectedEntityComponentPairs.list; } }
+        public HashSet<EntityComponentPair> collectedEntityComponentPairs { get { return _collectedEntityComponentPairs; } }
 
-        readonly ListSet<Entity> _collectedEntities;
-        readonly ListSet<EntityComponentPair> _collectedEntityComponentPairs;
+        readonly HashSet<Entity> _collectedEntities;
+        readonly HashSet<EntityComponentPair> _collectedEntityComponentPairs;
         readonly EntityCollection _collection;
         readonly int _index;
 
         public EntityWillBeRemovedEntityRepositoryObserver(EntityRepository repo, int index) {
-            _collectedEntities = new ListSet<Entity>();
-            _collectedEntityComponentPairs = new ListSet<EntityComponentPair>();
+            _collectedEntities = new HashSet<Entity>();
+            _collectedEntityComponentPairs = new HashSet<EntityComponentPair>();
             _collection = repo.GetCollection(EntityMatcher.AllOf(new [] { index }));
             _index = index;
 
