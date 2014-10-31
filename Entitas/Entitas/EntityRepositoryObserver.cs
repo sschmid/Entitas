@@ -17,7 +17,7 @@ namespace Entitas {
         readonly EntityCollectionEventType _eventType;
 
         public EntityRepositoryObserver(EntityRepository repo, EntityCollectionEventType eventType, IEntityMatcher matcher) {
-            _collectedEntities = new HashSet<Entity>();
+            _collectedEntities = new HashSet<Entity>(new EntityEqualityComparer());
             _collection = repo.GetCollection(matcher);
             _eventType = eventType;
             Activate();

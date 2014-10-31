@@ -4,7 +4,7 @@ using System;
 
 namespace Entitas {
     public partial class EntityRepository {
-        readonly HashSet<Entity> _entities = new HashSet<Entity>();
+        readonly HashSet<Entity> _entities = new HashSet<Entity>(new EntityEqualityComparer());
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
         readonly List<EntityCollection>[] _collectionsForIndex;
         readonly ObjectPool<Entity> _entityPool;

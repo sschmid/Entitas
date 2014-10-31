@@ -25,7 +25,7 @@ namespace Entitas {
         readonly int _index;
 
         public EntityWillBeRemovedEntityRepositoryObserver(EntityRepository repo, int index) {
-            _collectedEntities = new HashSet<Entity>();
+            _collectedEntities = new HashSet<Entity>(new EntityEqualityComparer());
             _collectedEntityComponentPairs = new HashSet<EntityComponentPair>();
             _collection = repo.GetCollection(EntityMatcher.AllOf(new [] { index }));
             _index = index;
