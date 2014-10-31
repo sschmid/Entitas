@@ -34,6 +34,8 @@ public class AnimatingComponent : IComponent {
                 entity.FlagAnimating();
                 return entity;
             }
+
+            return animatingEntity;
         }
 
         public void UnflagAnimating() {

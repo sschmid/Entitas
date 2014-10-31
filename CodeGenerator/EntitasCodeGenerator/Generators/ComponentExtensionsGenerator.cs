@@ -251,6 +251,8 @@ namespace Entitas.CodeGenerator {
                 entity.Flag{1}();
                 return entity;
             }}
+
+            return {2}Entity;
         }}
 ";
             }
