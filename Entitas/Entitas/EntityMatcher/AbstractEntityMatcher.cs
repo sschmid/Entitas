@@ -9,10 +9,11 @@ namespace Entitas {
         readonly int _hash;
 
         protected AbstractEntityMatcher(int[] indices) {
-            Array.Sort(indices);
-            var sortedIndices = new HashSet<int>(indices);
-            _indices = new int[sortedIndices.Count];
-            sortedIndices.CopyTo(_indices);
+            var indicesSet = new HashSet<int>(indices);
+            _indices = new int[indicesSet.Count];
+            indicesSet.CopyTo(_indices);
+            Array.Sort(_indices);
+
             int hash = GetType().GetHashCode();
             for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++) {
                 hash ^= _indices[i] * 647;

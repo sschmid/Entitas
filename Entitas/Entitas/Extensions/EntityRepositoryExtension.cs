@@ -1,15 +1,15 @@
 ﻿namespace Entitas {
     public static class EntityRepositoryExtension {
-        public static EntityCollection GetCollection(this EntityRepository repo, params int[] indices) {
-            return repo.GetCollection(EntityMatcher.AllOf(indices));
+        public static EntityCollection GetCollection(this EntityRepository repo, params AllOfEntityMatcher[] matchers) {
+            return repo.GetCollection(Matcher.AllOf(matchers));
         }
 
         public static Entity[] GetEntities(this EntityRepository repo, IEntityMatcher matcher) {
             return repo.GetCollection(matcher).GetEntities();
         }
 
-        public static Entity[] GetEntities(this EntityRepository repo, params int[] indices) {
-            return repo.GetCollection(indices).GetEntities();
+        public static Entity[] GetEntities(this EntityRepository repo, params AllOfEntityMatcher[] matchers) {
+            return repo.GetCollection(Matcher.AllOf(matchers)).GetEntities();
         }
 
         public static EntityRepositoryObserver AddObserver(this EntityRepository repo, EntityCollectionEventType eventType, IEntityMatcher matcher) {
