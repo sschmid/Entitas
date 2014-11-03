@@ -81,7 +81,7 @@ namespace Entitas {
                     throw new SingleEntityException(_matcher);
                 }
 
-                _singleEntityCache = _entities.First();
+                _singleEntityCache = System.Linq.Enumerable.First(_entities);
             }
 
             return _singleEntityCache;

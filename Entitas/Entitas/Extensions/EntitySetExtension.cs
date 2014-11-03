@@ -8,10 +8,6 @@ namespace Entitas {
                 throw new Exception("Expected exactly one entity but found " + collection.Count);
             }
 
-            return collection.First();
-        }
-
-        public static Entity First(this ICollection<Entity> collection) {
             return System.Linq.Enumerable.First(collection);
         }
     }
