@@ -47,7 +47,7 @@ namespace Entitas.CodeGenerator {
         }
 
         string addClassHeader(string className) {
-            return string.Format("public static class {0} {{\n", className);;
+            return string.Format("public static class {0} {{\n", className);
         }
 
         string addIndices(Type[] components) {

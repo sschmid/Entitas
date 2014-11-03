@@ -7,11 +7,11 @@ class describe_EntityCollection : nspec {
     Entity _eA2;
 
     void before_each() {
-        _collection = new EntityCollection(EntityMatcher.AllOf(new [] { CP.ComponentA }));
-        _eA1 = createEntity();
-        addComponentA(_eA1);
-        _eA2 = createEntity();
-        addComponentA(_eA2);
+        _collection = new EntityCollection(EntityMatcher.AllOf(new [] { CID.ComponentA }));
+        _eA1 = this.CreateEntity();
+        _eA1.AddComponentA();
+        _eA2 = this.CreateEntity();
+        _eA2.AddComponentA();
     }
 
     void when_created() {
@@ -24,31 +24,31 @@ class describe_EntityCollection : nspec {
         };
 
         it["adds matching entity"] = () => {
-            addEA1();
+            add(_eA1);
             _collection.GetEntities().should_contain(_eA1);
         };
 
         it["isn't empty"] = () => {
-            addEA1();
+            add(_eA1);
             _collection.Count.should_be(1);
         };
 
         it["doesn't add same entity twice"] = () => {
-            addEA1();
-            addEA1();
+            add(_eA1);
+            add(_eA1);
             _collection.GetEntities().should_contain(_eA1);
             _collection.GetEntities().Length.should_be(1);
         };
 
         it["doesn't add entity when not matching"] = () => {
-            var e = createEntity();
-            addComponentB(e);
+            var e = this.CreateEntity();
+            e.AddComponentB();
             add(e);
             _collection.GetEntities().should_be_empty();
         };
 
         it["removes entity"] = () => {
-            addEA1();
+            add(_eA1);
             removeEA1();
             _collection.GetEntities().should_be_empty();
         };
@@ -58,12 +58,12 @@ class describe_EntityCollection : nspec {
         };
 
         it["gets single entity"] = () => {
-            addEA1();
+            add(_eA1);
             _collection.GetSingleEntity().should_be_same(_eA1);
         };
 
         it["throws when attempting to get single entity and multiple matching entites exist"] = expect<SingleEntityException>(() => {
-            addEA1();
+            add(_eA1);
             add(_eA2);
             _collection.GetSingleEntity();
         });
@@ -82,7 +82,7 @@ class describe_EntityCollection : nspec {
                     entity.should_be_same(_eA1);
                 };
 
-                addEA1();
+                add(_eA1);
                 didDispatch.should_be(1);
             };
 
@@ -93,57 +93,52 @@ class describe_EntityCollection : nspec {
                     entity.should_be_same(_eA1);
                 };
 
-                addEA1();
-                addEA1();
+                add(_eA1);
+                add(_eA1);
                 didDispatch.should_be(1);
             };
 
-            it["dispatches OnEntityRemove when entity got removed"] = () => {
+            it["dispatches OnEntityRemoved when entity got removed"] = () => {
                 _collection.OnEntityRemoved += (collection, entity) => {
                     didDispatch++;
                     collection.should_be_same(_collection);
                     entity.should_be_same(_eA1);
                 };
 
-                addEA1();
+                add(_eA1);
                 removeEA1();
                 didDispatch.should_be(1);
             };
 
-            it["dispatches OnEntityWillBeRemove when entity will be removed"] = () => {
+            it["doesn't dispatch OnEntityRemoved when entity didn't get removed"] = () => {
+                _collection.OnEntityRemoved += (collection, entity) => this.Fail();
+                removeEA1();
+            };
+            
+            it["dispatches OnEntityWillBeRemoved when entity will be removed"] = () => {
                 _collection.OnEntityWillBeRemoved += (collection, entity) => {
                     didDispatch++;
                     collection.should_be_same(_collection);
                     entity.should_be_same(_eA1);
-                    entity.HasComponent(CP.ComponentA).should_be_true();
                 };
 
-                addEA1();
+                add(_eA1);
                 willRemoveEA1();
                 didDispatch.should_be(1);
             };
 
-            it["doesn't dispatch OnEntityWillBeRemove when collection doesn't contain entity"] = () => {
-                _collection.OnEntityWillBeRemoved += (collection, entity) => TestHelper.Fail();
-                addEA1();
+            it["doesn't dispatch OnEntityWillBeRemoved when collection doesn't contain entity"] = () => {
+                _collection.OnEntityWillBeRemoved += (collection, entity) => this.Fail();
+                add(_eA1);
                 _collection.WillRemoveEntity(new Entity(0));
             };
 
-            it["doesn't dispatch OnEntityRemove when entity didn't get removed"] = () => {
-                _collection.OnEntityRemoved += (collection, entity) => {
-                    didDispatch++;
-                };
-
-                removeEA1();
-                didDispatch.should_be(0);
-            };
-
-            it["dispatches OnEntityBeRemove and OnEntityAdded when updating"] = () => {
-                addEA1();
+            it["dispatches OnEntityRemoved and OnEntityAdded when updating"] = () => {
+                add(_eA1);
                 var removed = 0;
                 var added = 0;
                 _collection.OnEntityRemoved += (collection, entity) => removed++;
-                _collection.OnEntityWillBeRemoved += (collection, entity) => TestHelper.Fail();
+                _collection.OnEntityWillBeRemoved += (collection, entity) => this.Fail();
                 _collection.OnEntityAdded += (collection, entity) => added++;
 
                 _collection.UpdateEntity(_eA1);
@@ -152,38 +147,37 @@ class describe_EntityCollection : nspec {
                 added.should_be(1);
             };
 
-            it["doesn't dispatch OnEntityBeRemove and OnEntityAdded when updating when exists in collection"] = () => {
-                _collection.OnEntityRemoved += (collection, entity) => TestHelper.Fail();
-                _collection.OnEntityWillBeRemoved += (collection, entity) => TestHelper.Fail();
-                _collection.OnEntityAdded += (collection, entity) => TestHelper.Fail();
-
+            it["doesn't dispatch OnEntityRemoved and OnEntityAdded when updating when collection doesn't contain entity"] = () => {
+                _collection.OnEntityRemoved += (collection, entity) => this.Fail();
+                _collection.OnEntityWillBeRemoved += (collection, entity) => this.Fail();
+                _collection.OnEntityAdded += (collection, entity) => this.Fail();
                 _collection.UpdateEntity(_eA1);
             };
         };
 
         context["internal caching"] = () => {
             it["gets cached entities"] = () => {
-                addEA1();
+                add(_eA1);
                 _collection.GetEntities().should_be_same(_collection.GetEntities());
             };
 
             it["updates cache when adding a new matching entity"] = () => {
-                addEA1();
+                add(_eA1);
                 var c = _collection.GetEntities();
                 add(_eA2);
                 c.should_not_be_same(_collection.GetEntities());
             };
 
             it["doesn't update cache when attempting to add a not matching entity"] = () => {
-                addEA1();
+                add(_eA1);
                 var c = _collection.GetEntities();
-                var e = createEntity();
+                var e = this.CreateEntity();
                 add(e);
                 c.should_be_same(_collection.GetEntities());
             };
 
             it["updates cache when removing an entity"] = () => {
-                addEA1();
+                add(_eA1);
                 var c = _collection.GetEntities();
                 removeEA1();
                 c.should_not_be_same(_collection.GetEntities());
@@ -196,12 +190,12 @@ class describe_EntityCollection : nspec {
             };
 
             it["gets cached singleEntities"] = () => {
-                addEA1();
+                add(_eA1);
                 _collection.GetSingleEntity().should_be_same(_collection.GetSingleEntity());
             };
 
             it["updates cache when new single entity was added"] = () => {
-                addEA1();
+                add(_eA1);
                 var s = _collection.GetSingleEntity();
                 removeEA1();
                 add(_eA2);
@@ -209,7 +203,7 @@ class describe_EntityCollection : nspec {
             };
 
             it["updates cache when single entity is removed"] = () => {
-                addEA1();
+                add(_eA1);
                 var s = _collection.GetSingleEntity();
                 removeEA1();
                 s.should_not_be_same(_collection.GetSingleEntity());
@@ -217,32 +211,16 @@ class describe_EntityCollection : nspec {
         };
     }
 
-    Entity createEntity() {
-        return new Entity(CP.NumComponents);
-    }
-
-    void addComponentA(Entity entity) {
-        entity.AddComponent(CP.ComponentA, new ComponentA());
-    }
-
-    void addComponentB(Entity entity) {
-        entity.AddComponent(CP.ComponentB, new ComponentB());
-    }
-
-    void addEA1() {
-        _collection.AddEntityIfMatching(_eA1);
-    }
-
     void add(Entity entity) {
         _collection.AddEntityIfMatching(entity);
     }
 
-    void removeEA1() {
-        _collection.RemoveEntity(_eA1);
-    }
-
     void willRemoveEA1() {
         _collection.WillRemoveEntity(_eA1);
+    }
+
+    void removeEA1() {
+        _collection.RemoveEntity(_eA1);
     }
 }
 

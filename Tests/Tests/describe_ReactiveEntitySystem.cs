@@ -2,20 +2,19 @@
 using Entitas;
 
 class describe_ReactiveEntitySystem : nspec {
-    EntityRepository _repo;
-
-    void before_each() {
-        _repo = new EntityRepository(CP.NumComponents);
-    }
 
     void when_created() {
+        EntityRepository repo = null;
         ReactiveEntitySystem res = null;
         ReactiveSubSystemSpy subSystem = null;
+        before = () => {
+            repo = new EntityRepository(CID.NumComponents);
+        };
 
         context["OnEntityAdded"] = () => {
             before = () => {
                 subSystem = getSubSystemSypWithOnEntityAdded();
-                res = new ReactiveEntitySystem(_repo, subSystem);
+                res = new ReactiveEntitySystem(repo, subSystem);
             };
 
             it["does not execute its subsystem when no entities were collected"] = () => {
@@ -24,7 +23,9 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["executes when triggeringMatcher matches"] = () => {
-                var e = createEAB();
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
                 res.Execute();
 
                 subSystem.didExecute.should_be(1);
@@ -33,7 +34,9 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["executes only once when triggeringMatcher matches"] = () => {
-                var e = createEAB();
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
                 res.Execute();
                 res.Execute();
 
@@ -43,8 +46,8 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["doesn't execute when triggeringMatcher doesn't match"] = () => {
-                var e = createEntity();
-                addComponentA(e);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
                 res.Execute();
                 subSystem.didExecute.should_be(0);
                 subSystem.entites.should_be_null();
@@ -54,12 +57,14 @@ class describe_ReactiveEntitySystem : nspec {
         context["OnEntityRemoved"] = () => {
             before = () => {
                 subSystem = getSubSystemSypWithOnEntityRemoved();
-                res = new ReactiveEntitySystem(_repo, subSystem);
+                res = new ReactiveEntitySystem(repo, subSystem);
             };
 
             it["executes when triggeringMatcher matches"] = () => {
-                var e = createEAB();
-                removeComponentA(e);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                e.RemoveComponentA();
                 res.Execute();
 
                 subSystem.didExecute.should_be(1);
@@ -68,8 +73,10 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["executes only once when triggeringMatcher matches"] = () => {
-                var e = createEAB();
-                removeComponentA(e);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                e.RemoveComponentA();
                 res.Execute();
                 res.Execute();
 
@@ -79,11 +86,11 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["doesn't execute when triggeringMatcher doesn't match"] = () => {
-                var e = createEntity();
-                addComponentA(e);
-                addComponentB(e);
-                addComponentC(e);
-                removeComponentC(e);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                e.AddComponentC();
+                e.RemoveComponentC();
                 res.Execute();
                 subSystem.didExecute.should_be(0);
                 subSystem.entites.should_be_null();
@@ -93,8 +100,10 @@ class describe_ReactiveEntitySystem : nspec {
         context["OnEntityAddedOrRemoved"] = () => {
             it["executes when added"] = () => {
                 subSystem = getSubSystemSypWithOnEntityAddedOrRemoved();
-                res = new ReactiveEntitySystem(_repo, subSystem);
-                var e = createEAB();
+                res = new ReactiveEntitySystem(repo, subSystem);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
                 res.Execute();
 
                 subSystem.didExecute.should_be(1);
@@ -103,10 +112,12 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["executes when removed"] = () => {
-                var e = createEAB();
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
                 subSystem = getSubSystemSypWithOnEntityAddedOrRemoved();
-                res = new ReactiveEntitySystem(_repo, subSystem);
-                removeComponentA(e);
+                res = new ReactiveEntitySystem(repo, subSystem);
+                e.RemoveComponentA();
                 res.Execute();
 
                 subSystem.didExecute.should_be(1);
@@ -115,17 +126,17 @@ class describe_ReactiveEntitySystem : nspec {
             };
 
             it["collects matching entities created or modified in the subsystem"] = () => {
-                var sys = new EntityEmittingSubSystem(_repo);
-                res = new ReactiveEntitySystem(_repo, sys);
-                var e = createEntity();
-                addComponentA(e);
+                var sys = new EntityEmittingSubSystem(repo);
+                res = new ReactiveEntitySystem(repo, sys);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
                 res.Execute();
                 sys.entites.Length.should_be(1);
                 res.Execute();
                 sys.entites.Length.should_be(1);
             };
         };
-
     }
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityAdded() {
@@ -142,40 +153,9 @@ class describe_ReactiveEntitySystem : nspec {
 
     IEntityMatcher allOfAB() {
         return EntityMatcher.AllOf(new [] {
-            CP.ComponentA,
-            CP.ComponentB
+            CID.ComponentA,
+            CID.ComponentB
         });
-    }
-
-    Entity createEntity() {
-        return _repo.CreateEntity();
-    }
-
-    void addComponentA(Entity entity) {
-        entity.AddComponent(CP.ComponentA, new ComponentA());
-    }
-
-    void addComponentB(Entity entity) {
-        entity.AddComponent(CP.ComponentB, new ComponentB());
-    }
-
-    void addComponentC(Entity entity) {
-        entity.AddComponent(CP.ComponentC, new ComponentC());
-    }
-
-    Entity createEAB() {
-        var e = createEntity();
-        addComponentA(e);
-        addComponentB(e);
-        return e;
-    }
-
-    void removeComponentA(Entity entity) {
-        entity.RemoveComponent(CP.ComponentA);
-    }
-
-    void removeComponentC(Entity entity) {
-        entity.RemoveComponent(CP.ComponentC);
     }
 }
 

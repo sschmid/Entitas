@@ -2,74 +2,72 @@
 using NSpec;
 
 class describe_Entity : nspec {
-    readonly ComponentA _componentA = new ComponentA();
-    readonly ComponentB _componentB = new ComponentB();
 
     void when_created() {
 
         Entity e = null;
         before = () => {
-            e = new Entity(CP.NumComponents);
+            e = this.CreateEntity();
         };
 
         it["has component of type when component of that type was added"] = () => {
-            addComponentA(e);
-            hasComponentA(e).should_be_true();
+            e.AddComponentA();
+            e.HasComponentA().should_be_true();
         };
 
         it["doesn't have component of type when no component of that type was added"] = () => {
-            hasComponentA(e).should_be_false();
+            e.HasComponentA().should_be_false();
         };
 
         it["doesn't have components of types when no components of these types were added"] = () => {
-            e.HasComponents(new [] { CP.ComponentA }).should_be_false();
+            e.HasComponents(new [] { CID.ComponentA }).should_be_false();
         };
 
         it["doesn't have components of types when not all components of these types were added"] = () => {
-            addComponentA(e);
-            hasComponentsAB(e).should_be_false();
+            e.AddComponentA();
+            e.HasComponents(new [] { CID.ComponentA, CID.ComponentB }).should_be_false();
         };
 
         it["has components of types when all components of these types were added"] = () => {
-            addComponentA(e);
-            addComponentB(e);
-            hasComponentsAB(e).should_be_true();
+            e.AddComponentA();
+            e.AddComponentB();
+            e.HasComponents(new [] { CID.ComponentA, CID.ComponentB }).should_be_true();
         };
 
         it["doesn't have any components of types when no components of these types were added"] = () => {
-            e.HasAnyComponent(new [] { CP.ComponentA }).should_be_false();
+            e.HasAnyComponent(new [] { CID.ComponentA }).should_be_false();
         };
 
         it["has any components of types when any component of these types was added"] = () => {
-            addComponentA(e);
+            e.AddComponentA();
             e.HasAnyComponent(new [] {
-                CP.ComponentA,
-                CP.ComponentB
+                CID.ComponentA,
+                CID.ComponentB
             }).should_be_true();
         };
 
         it["removes a component of type"] = () => {
-            addComponentA(e);
-            removeComponentA(e);
-            hasComponentA(e).should_be_false();
+            e.AddComponentA();
+            e.RemoveComponentA();
+            e.HasComponentA().should_be_false();
         };
 
         it["gets a component of type"] = () => {
-            addComponentA(e);
-            getComponentA(e).should_be_same(_componentA);
+            e.AddComponentA();
+            e.GetComponentA().should_be_same(Component.A);
         };
     
         it["replaces existing component"] = () => {
-            addComponentA(e);
+            e.AddComponentA();
             var newComponentA = new ComponentA();
-            replaceComponentA(e, newComponentA);
-            getComponentA(e).should_be_same(newComponentA);
+            e.ReplaceComponentA(newComponentA);
+            e.GetComponentA().should_be_same(newComponentA);
         };
 
         it["replacing a non existing component adds component"] = () => {
             var newComponentA = new ComponentA();
-            replaceComponentA(e, newComponentA);
-            getComponentA(e).should_be_same(newComponentA);
+            e.ReplaceComponentA(newComponentA);
+            e.GetComponentA().should_be_same(newComponentA);
         };
 
         it["gets empty array of components when no components were added"] = () => {
@@ -81,163 +79,163 @@ class describe_Entity : nspec {
         };
 
         it["gets all components"] = () => {
-            addComponentA(e);
-            addComponentB(e);
+            e.AddComponentA();
+            e.AddComponentB();
             var allComponents = e.GetComponents();
-            allComponents.should_contain(_componentA);
-            allComponents.should_contain(_componentB);
+            allComponents.should_contain(Component.A);
+            allComponents.should_contain(Component.B);
             allComponents.Length.should_be(2);
         };
 
         it["gets all component indices"] = () => {
-            addComponentA(e);
-            addComponentB(e);
-            var allComponentTypes = e.GetComponentIndices();
-            allComponentTypes.should_contain(CP.ComponentA);
-            allComponentTypes.should_contain(CP.ComponentB);
-            allComponentTypes.Length.should_be(2);
+            e.AddComponentA();
+            e.AddComponentB();
+            var allComponentIndices = e.GetComponentIndices();
+            allComponentIndices.should_contain(CID.ComponentA);
+            allComponentIndices.should_contain(CID.ComponentB);
+            allComponentIndices.Length.should_be(2);
         };
 
         it["removes all components"] = () => {
-            addComponentA(e);
-            addComponentB(e);
+            e.AddComponentA();
+            e.AddComponentB();
             e.RemoveAllComponents();
-            hasComponentA(e).should_be_false();
-            hasComponentB(e).should_be_false();
+            e.HasComponentA().should_be_false();
+            e.HasComponentB().should_be_false();
             e.GetComponents().should_be_empty();
             e.GetComponentIndices().should_be_empty();
         };
 
         it["can ToString"] = () => {
-            addComponentA(e);
-            addComponentB(e);
+            e.AddComponentA();
+            e.AddComponentB();
             e.ToString().should_be("Entity(ComponentA, ComponentB)");
         };
 
         context["events"] = () => {
             Entity eventEntity = null;
-            int eventType = CP.ComponentC;
+            int eventIndex = CID.None;
             IComponent eventComponent = null;
 
             before = () => {
                 eventEntity = null;
-                eventType = CP.ComponentC;
+                eventIndex = CID.None;
                 eventComponent = null;
             };
 
             it["dispatches OnComponentAdded when adding a component"] = () => {
-                e.OnComponentWillBeRemoved += (entity, type, component) => TestHelper.Fail();
-                e.OnComponentRemoved += (entity, type, component) => TestHelper.Fail();
-                e.OnComponentAdded += (entity, type, component) => {
+                e.OnComponentAdded += (entity, index, component) => {
                     eventEntity = entity;
-                    eventType = type;
+                    eventIndex = index;
                     eventComponent = component;
                 };
-                addComponentA(e);
+                e.OnComponentReplaced += (entity, index, component) => this.Fail();
+                e.OnComponentWillBeRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentRemoved += (entity, index, component) => this.Fail();
 
+                e.AddComponentA();
                 eventEntity.should_be_same(e);
-                eventType.should_be(CP.ComponentA);
-                eventComponent.should_be_same(_componentA);
+                eventIndex.should_be(CID.ComponentA);
+                eventComponent.should_be_same(Component.A);
             };
 
             it["dispatches OnComponentRemoved when removing a component"] = () => {
-                addComponentA(e);
-                e.OnComponentAdded += (entity, type, component) => TestHelper.Fail();
-                e.OnComponentRemoved += (entity, type, component) => {
+                e.AddComponentA();
+                e.OnComponentAdded += (entity, index, component) => this.Fail();
+                e.OnComponentReplaced += (entity, index, component) => this.Fail();
+                e.OnComponentRemoved += (entity, index, component) => {
                     eventEntity = entity;
-                    eventType = type;
+                    eventIndex = index;
                     eventComponent = component;
                 };
-                removeComponentA(e);
 
+                e.RemoveComponentA();
                 eventEntity.should_be_same(e);
-                eventType.should_be(CP.ComponentA);
-                eventComponent.should_be_same(_componentA);
+                eventIndex.should_be(CID.ComponentA);
+                eventComponent.should_be_same(Component.A);
             };
 
             it["dispatches OnComponentWillBeRemoved when removing a component"] = () => {
-                addComponentA(e);
-                e.OnComponentWillBeRemoved += (entity, type, component) => {
+                e.AddComponentA();
+                e.OnComponentWillBeRemoved += (entity, index, component) => {
                     eventEntity = entity;
-                    eventType = type;
+                    eventIndex = index;
                     eventComponent = component;
                 };
-                removeComponentA(e);
 
+                e.RemoveComponentA();
                 eventEntity.should_be_same(e);
-                eventType.should_be(CP.ComponentA);
-                eventComponent.should_be_same(_componentA);
+                eventIndex.should_be(CID.ComponentA);
+                eventComponent.should_be_same(Component.A);
             };
 
             it["dispatches OnComponentReplaced when replacing a component"] = () => {
-                addComponentA(e);
+                e.AddComponentA();
                 var newComponentA = new ComponentA();
                 var didReplace = 0;
-                e.OnComponentReplaced += (entity, type, component) => {
+                e.OnComponentAdded += (entity, index, component) => this.Fail();
+                e.OnComponentReplaced += (entity, index, component) => {
                     entity.should_be_same(entity);
-                    type.should_be(CP.ComponentA);
+                    index.should_be(CID.ComponentA);
                     component.should_be_same(newComponentA);
                     didReplace++;
                 };
-
-                e.OnComponentAdded += (entity, type, component) => TestHelper.Fail();
-                e.OnComponentWillBeRemoved += (entity, type, component) => TestHelper.Fail();
-                e.OnComponentRemoved += (entity, type, component) => TestHelper.Fail();
-
-                replaceComponentA(e, newComponentA);
+                e.OnComponentWillBeRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentRemoved += (entity, index, component) => this.Fail();
+                
+                e.ReplaceComponentA(newComponentA);
                 didReplace.should_be(1);
             };
 
             it["dispatches OnComponentWillBeRemoved when called manually and component exists"] = () => {
-                addComponentA(e);
-                e.OnComponentWillBeRemoved += (entity, type, component) => {
+                e.AddComponentA();
+                e.OnComponentWillBeRemoved += (entity, index, component) => {
                     eventEntity = entity;
-                    eventType = type;
+                    eventIndex = index;
                     eventComponent = component;
                 };
 
-                e.WillRemoveComponent(CP.ComponentA);
-
+                e.WillRemoveComponent(CID.ComponentA);
                 eventEntity.should_be_same(e);
-                eventType.should_be(CP.ComponentA);
-                eventComponent.should_be_same(_componentA);
+                eventIndex.should_be(CID.ComponentA);
+                eventComponent.should_be_same(Component.A);
             };
 
-            it["doesn't dispatch OnComponentWillBeRemoved when called manually and component is null"] = () => {
-                e.OnComponentWillBeRemoved += (entity, type, component) => {
+            it["doesn't dispatch OnComponentWillBeRemoved when called manually and entity doesn't have"] = () => {
+                e.OnComponentWillBeRemoved += (entity, index, component) => {
                     eventEntity = entity;
-                    eventType = type;
+                    eventIndex = index;
                     eventComponent = component;
                 };
 
-                e.WillRemoveComponent(CP.ComponentA);
-
+                e.WillRemoveComponent(CID.ComponentA);
                 eventEntity.should_be_null();
-                eventType.should_be(CP.ComponentC);
+                eventIndex.should_be(CID.None);
                 eventComponent.should_be_null();
             };
 
             it["dispatches OnComponentAdded when attempting to replace a component which hasn't been added"] = () => {
-                e.OnComponentWillBeRemoved += (entity, type, component) => TestHelper.Fail();
-                e.OnComponentRemoved += (entity, type, component) => TestHelper.Fail();
-                e.OnComponentAdded += (entity, type, component) => {
+                e.OnComponentAdded += (entity, index, component) => {
                     eventEntity = entity;
-                    eventType = type;
+                    eventIndex = index;
                     eventComponent = component;
                 };
-                var newComponentA = new ComponentA();
-                replaceComponentA(e, newComponentA);
+                e.OnComponentReplaced += (entity, index, component) => this.Fail();
+                e.OnComponentWillBeRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentRemoved += (entity, index, component) => this.Fail();
 
+                var newComponentA = new ComponentA();
+                e.ReplaceComponentA(newComponentA);
                 eventEntity.should_be_same(e);
-                eventType.should_be(CP.ComponentA);
+                eventIndex.should_be(CID.ComponentA);
                 eventComponent.should_be_same(newComponentA);
             };
 
             it["dispatches OnComponentRemoved when removing all components"] = () => {
                 var removed = 0;
-                addComponentA(e);
-                addComponentB(e);
-                e.OnComponentRemoved += (entity, type, component) => removed++;
+                e.AddComponentA();
+                e.AddComponentB();
+                e.OnComponentRemoved += (entity, index, component) => removed++;
                 e.RemoveAllComponents();
                 removed.should_be(2);
             };
@@ -245,146 +243,114 @@ class describe_Entity : nspec {
 
         context["invalid operations"] = () => {
             it["throws when adding a component of the same type twice"] = expect<EntityAlreadyHasComponentException>(() => {
-                addComponentA(e);
-                addComponentA(e);
+                e.AddComponentA();
+                e.AddComponentA();
             });
 
             it["throws when attempting to remove a component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
-                removeComponentA(e);
+                e.RemoveComponentA();
             });
 
             it["throws when attempting to get component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
-                getComponentA(e);
+                e.GetComponentA();
             });
         };
 
         context["internal caching"] = () => {
             context["components"] = () => {
                 it["caches components"] = () => {
-                    addComponentA(e);
+                    e.AddComponentA();
                     var c = e.GetComponents();
                     e.GetComponents().should_be_same(c);
                 };
 
                 it["updates cache when a new component was added"] = () => {
-                    addComponentA(e);
+                    e.AddComponentA();
                     var c = e.GetComponents();
-                    addComponentB(e);
+                    e.AddComponentB();
                     e.GetComponents().should_not_be_same(c);
                 };
 
                 it["updates cache when a component was removed"] = () => {
-                    addComponentA(e);
-                    addComponentB(e);
+                    e.AddComponentA();
+                    e.AddComponentB();
                     var c = e.GetComponents();
-                    removeComponentA(e);
+                    e.RemoveComponentA();
                     e.GetComponents().should_not_be_same(c);
                 };
 
                 it["updates cache when a component was replaced"] = () => {
-                    addComponentA(e);
-                    addComponentB(e);
+                    e.AddComponentA();
+                    e.AddComponentB();
                     var c = e.GetComponents();
-                    replaceComponentA(e, new ComponentA());
+                    e.ReplaceComponentA(new ComponentA());
                     e.GetComponents().should_not_be_same(c);
                 };
 
                 it["doesn't update cache when a component was replaced with same component"] = () => {
-                    addComponentA(e);
-                    addComponentB(e);
+                    e.AddComponentA();
+                    e.AddComponentB();
                     var c = e.GetComponents();
-                    replaceComponentA(e, _componentA);
+                    e.ReplaceComponentA(Component.A);
                     e.GetComponents().should_be_same(c);
                 };
 
                 it["updates cache when all components were removed"] = () => {
-                    addComponentA(e);
-                    addComponentB(e);
+                    e.AddComponentA();
+                    e.AddComponentB();
                     var c = e.GetComponents();
                     e.RemoveAllComponents();
                     e.GetComponents().should_not_be_same(c);
                 };
             };
 
-            context["component types"] = () => {
-                it["caches component types"] = () => {
-                    addComponentA(e);
+            context["component indices"] = () => {
+                it["caches component indices"] = () => {
+                    e.AddComponentA();
                     var c = e.GetComponentIndices();
                     e.GetComponentIndices().should_be_same(c);
                 };
 
                 it["updates cache when a new component was added"] = () => {
-                    addComponentA(e);
+                    e.AddComponentA();
                     var c = e.GetComponentIndices();
-                    addComponentB(e);
+                    e.AddComponentB();
                     e.GetComponentIndices().should_not_be_same(c);
                 };
 
                 it["updates cache when a component was removed"] = () => {
-                    addComponentA(e);
-                    addComponentB(e);
+                    e.AddComponentA();
+                    e.AddComponentB();
                     var c = e.GetComponentIndices();
-                    removeComponentA(e);
+                    e.RemoveComponentA();
                     e.GetComponentIndices().should_not_be_same(c);
                 };
 
                 it["doesn't update cache when a component was replaced"] = () => {
-                    addComponentA(e);
-                    addComponentB(e);
+                    e.AddComponentA();
+                    e.AddComponentB();
                     var c = e.GetComponentIndices();
-                    replaceComponentA(e, new ComponentA());
+                    e.ReplaceComponentA(new ComponentA());
                     e.GetComponentIndices().should_be_same(c);
                 };
 
                 it["updates cache when adding a new component with ReplaceComponent"] = () => {
-                    addComponentA(e);
-                    addComponentB(e);
+                    e.AddComponentA();
+                    e.AddComponentB();
                     var c = e.GetComponentIndices();
-                    e.ReplaceComponent(CP.ComponentC, new ComponentC());
+                    e.ReplaceComponentC(Component.C);
                     e.GetComponentIndices().should_not_be_same(c);
                 };
 
                 it["updates cache when all components were removed"] = () => {
-                    addComponentA(e);
-                    addComponentB(e);
+                    e.AddComponentA();
+                    e.AddComponentB();
                     var c = e.GetComponentIndices();
                     e.RemoveAllComponents();
                     e.GetComponentIndices().should_not_be_same(c);
                 };
             };
         };
-    }
-
-    void addComponentA(Entity entity) {
-        entity.AddComponent(CP.ComponentA, _componentA);
-    }
-
-    void addComponentB(Entity entity) {
-        entity.AddComponent(CP.ComponentB, _componentB);
-    }
-
-    bool hasComponentA(Entity entity) {
-        return entity.HasComponent(CP.ComponentA);
-    }
-
-    bool hasComponentB(Entity entity) {
-        return entity.HasComponent(CP.ComponentB);
-    }
-
-    bool hasComponentsAB(Entity entity) {
-        return entity.HasComponents(new [] { CP.ComponentA, CP.ComponentB });
-    }
-
-    void removeComponentA(Entity entity) {
-        entity.RemoveComponent(CP.ComponentA);
-    }
-
-    IComponent getComponentA(Entity entity) {
-        return entity.GetComponent(CP.ComponentA);
-    }
-
-    void replaceComponentA(Entity entity, ComponentA component) {
-        entity.ReplaceComponent(CP.ComponentA, component);
     }
 }
 

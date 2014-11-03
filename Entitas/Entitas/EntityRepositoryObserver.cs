@@ -1,5 +1,4 @@
-﻿using ToolKit;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
     public enum EntityCollectionEventType : byte {
@@ -17,7 +16,7 @@ namespace Entitas {
         readonly EntityCollectionEventType _eventType;
 
         public EntityRepositoryObserver(EntityRepository repo, EntityCollectionEventType eventType, IEntityMatcher matcher) {
-            _collectedEntities = new HashSet<Entity>(new EntityEqualityComparer());
+            _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
             _collection = repo.GetCollection(matcher);
             _eventType = eventType;
             Activate();
@@ -35,9 +34,9 @@ namespace Entitas {
         }
 
         public void Deactivate() {
-            _collectedEntities.Clear();
             _collection.OnEntityAdded -= addEntity;
             _collection.OnEntityRemoved -= addEntity;
+            _collectedEntities.Clear();
         }
 
         public void ClearCollectedEntites() {

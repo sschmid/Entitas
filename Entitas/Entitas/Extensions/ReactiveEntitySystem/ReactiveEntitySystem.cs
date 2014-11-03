@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace Entitas {
+﻿namespace Entitas {
     public class ReactiveEntitySystem : IEntitySystem {
         public IReactiveSubEntitySystem subsystem { get { return _subsystem; } }
 
         readonly IReactiveSubEntitySystem _subsystem;
         readonly EntityRepositoryObserver _observer;
-        readonly List<Entity> _buffer = new List<Entity>();
 
         public ReactiveEntitySystem(EntityRepository repo, IReactiveSubEntitySystem subSystem) {
             _subsystem = subSystem;
@@ -14,12 +11,12 @@ namespace Entitas {
         }
 
         public void Execute() {
-            _buffer.AddRange(_observer.collectedEntities);
+            var buffer = new Entity[_observer.collectedEntities.Count];
+            _observer.collectedEntities.CopyTo(buffer, 0);
             _observer.ClearCollectedEntites();
-            if (_buffer.Count > 0) {
-                _subsystem.Execute(_buffer);
+            if (buffer.Length > 0) {
+                _subsystem.Execute(buffer);
             }
-            _buffer.Clear();
         }
     }
 }

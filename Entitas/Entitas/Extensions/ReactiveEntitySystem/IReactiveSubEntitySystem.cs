@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace Entitas {
+﻿namespace Entitas {
     public interface IReactiveSubEntitySystem {
         IEntityMatcher GetTriggeringMatcher();
 
         EntityCollectionEventType GetEventType();
 
-        void Execute(IList<Entity> entities);
+        void Execute(Entity[] entities);
     }
 }
 

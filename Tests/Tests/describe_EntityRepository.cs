@@ -5,11 +5,7 @@ class describe_EntityRepository : nspec {
     EntityRepository _repo;
 
     void before_each() {
-        _repo = new EntityRepository(CP.NumComponents);
-    }
-
-    void it_creates_entities_starting_with_specified_creation_index() {
-        new EntityRepository(0, 1).CreateEntity().creationIndex.should_be(1);
+        _repo = new EntityRepository(CID.NumComponents);
     }
 
     void when_created() {
@@ -24,13 +20,8 @@ class describe_EntityRepository : nspec {
             e.GetType().should_be(typeof(Entity));
         };
 
-        it["increments creation index when creating entities"] = () => {
-            _repo.CreateEntity().creationIndex.should_be(0);
-            _repo.CreateEntity().creationIndex.should_be(1);
-        };
-
         it["doesn't have entites that were not created with CreateEntity()"] = () => {
-            _repo.HasEntity(new Entity(CP.NumComponents)).should_be_false();
+            _repo.HasEntity(this.CreateEntity()).should_be_false();
         };
 
         it["has entites that were created with CreateEntity()"] = () => {
@@ -54,14 +45,14 @@ class describe_EntityRepository : nspec {
 
         it["destroys an entity and removes all its components"] = () => {
             var e = _repo.CreateEntity();
-            addComponentA(e);
+            e.AddComponentA();
             _repo.DestroyEntity(e);
             e.GetComponents().should_be_empty();
         };
 
         it["destroys all entites"] = () => {
             var e = _repo.CreateEntity();
-            addComponentA(e);
+            e.AddComponentA();
             _repo.CreateEntity();
             _repo.DestroyAllEntities();
             _repo.GetEntities().should_be_empty();
@@ -86,36 +77,36 @@ class describe_EntityRepository : nspec {
             };
 
             it["destroys entity when pushing back to object pool"] = () => {
-                var e = new Entity(1);
-                addComponentA(e);
+                var e = this.CreateEntity();
+                e.AddComponentA();
                 _repo.DestroyEntity(e);
-                e.HasComponent(CP.ComponentA).should_be_false();
+                e.HasComponent(CID.ComponentA).should_be_false();
             };
 
             it["returns pushed entity"] = () => {
-                var e = new Entity(1);
-                addComponentA(e);
+                var e = this.CreateEntity();
+                e.AddComponentA();
                 _repo.DestroyEntity(e);
                 var entity = _repo.CreateEntity();
-                entity.HasComponent(CP.ComponentA).should_be_false();
+                entity.HasComponent(CID.ComponentA).should_be_false();
                 entity.should_be_same(e);
             };
 
             it["returns new entity"] = () => {
-                var e = new Entity(1);
-                addComponentA(e);
+                var e = this.CreateEntity();
+                e.AddComponentA();
                 _repo.DestroyEntity(e);
                 _repo.CreateEntity();
                 var entityFromPool = _repo.CreateEntity();
-                entityFromPool.HasComponent(CP.ComponentA).should_be_false();
+                entityFromPool.HasComponent(CID.ComponentA).should_be_false();
                 entityFromPool.should_not_be_same(e);
             };
 
             it["sets up entity from pool"] = () => {
                 _repo.DestroyEntity(_repo.CreateEntity());                
-                var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CP.ComponentA }));
+                var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CID.ComponentA }));
                 var e = _repo.CreateEntity();
-                addComponentA(e);
+                e.AddComponentA();
                 c.GetEntities().should_contain(e);
             };
         };
@@ -123,7 +114,7 @@ class describe_EntityRepository : nspec {
         context["get entities"] = () => {
 
             it["gets empty collection for matcher when no entities were created"] = () => {
-                var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CP.ComponentA }));
+                var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CID.ComponentA }));
                 c.should_not_be_null();
                 c.GetEntities().should_be_empty();
             };
@@ -134,24 +125,23 @@ class describe_EntityRepository : nspec {
                 Entity eA = null;
 
                 IEntityMatcher matcher = EntityMatcher.AllOf(new [] {
-                    CP.ComponentA,
-                    CP.ComponentB
+                    CID.ComponentA,
+                    CID.ComponentB
                 });
 
                 before = () => {
                     eAB1 = _repo.CreateEntity();
-                    addComponentA(eAB1);
-                    addComponentB(eAB1);
+                    eAB1.AddComponentA();
+                    eAB1.AddComponentB();
                     eAB2 = _repo.CreateEntity();
-                    addComponentA(eAB2);
-                    addComponentB(eAB2);
+                    eAB2.AddComponentA();
+                    eAB2.AddComponentB();
                     eA = _repo.CreateEntity();
-                    addComponentA(eA);
+                    eA.AddComponentA();
                 };
 
                 it["gets collection with matching entities"] = () => {
                     var c = _repo.GetCollection(matcher).GetEntities();
-                    c.should_not_be_empty();
                     c.Length.should_be(2);
                     c.should_contain(eAB1);
                     c.should_contain(eAB2);
@@ -163,13 +153,13 @@ class describe_EntityRepository : nspec {
 
                 it["cached collection contains newly created matching entity"] = () => {
                     var c = _repo.GetCollection(matcher);
-                    addComponentB(eA);
+                    eA.AddComponentB();
                     c.GetEntities().should_contain(eA);
                 };
 
                 it["cached collection doesn't contain entity which are not matching anymore"] = () => {
                     var c = _repo.GetCollection(matcher);
-                    removeComponentA(eAB1);
+                    eAB1.RemoveComponentA();
                     c.GetEntities().should_not_contain(eAB1);
                 };
 
@@ -182,8 +172,8 @@ class describe_EntityRepository : nspec {
                 it["ignores adding components to destroyed entity"] = () => {
                     var c = _repo.GetCollection(matcher);
                     _repo.DestroyEntity(eA);
-                    addComponentA(eA);
-                    addComponentB(eA);
+                    eA.AddComponentA();
+                    eA.AddComponentB();
                     c.GetEntities().should_not_contain(eA);
                 };
 
@@ -213,8 +203,8 @@ class describe_EntityRepository : nspec {
                         eventEntityAdded = entity;
                         didDispatchAdded++;
                     };
-                    eAB1.WillRemoveComponent(CP.ComponentA);
-                    eAB1.ReplaceComponent(CP.ComponentA, new ComponentA());
+                    eAB1.WillRemoveComponent(CID.ComponentA);
+                    eAB1.ReplaceComponentA(new ComponentA());
 
                     eventCollectionWillBeRemoved.should_be_same(c);
                     eventCollectionRemoved.should_be_same(c);
@@ -228,18 +218,6 @@ class describe_EntityRepository : nspec {
                 };
             };
         };
-    }
-
-    void addComponentA(Entity entity) {
-        entity.AddComponent(CP.ComponentA, new ComponentA());
-    }
-
-    void addComponentB(Entity entity) {
-        entity.AddComponent(CP.ComponentB, new ComponentB());
-    }
-
-    void removeComponentA(Entity entity) {
-        entity.RemoveComponent(CP.ComponentA);
     }
 }
 

@@ -3,41 +3,39 @@ using Entitas;
 using System.Linq;
 
 class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
-    EntityRepository _repo;
-
-    void before_each() {
-        _repo = new EntityRepository(CP.NumComponents);
-    }
 
     void when_created() {
 
+        EntityRepository repo = null;
         EntityWillBeRemovedEntityRepositoryObserver observer = null;
+        before = () => {
+            repo = new EntityRepository(CID.NumComponents);
+        };
 
         context["when observing"] = () => {
             before = () => {
-                observer = new EntityWillBeRemovedEntityRepositoryObserver(_repo, CP.ComponentA);
+                observer = new EntityWillBeRemovedEntityRepositoryObserver(repo, CID.ComponentA);
             };
 
             it["returns collected entities"] = () => {
-                var e = createEntity();
-                var componentA = new ComponentA();
-                e.AddComponent(CP.ComponentA, componentA);
-                removeComponentA(e);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.RemoveComponentA();
 
                 var ecp = observer.collectedEntityComponentPairs;
                 ecp.Count.should_be(1);
                 var pair = ecp.First();
                 pair.entity.should_be_same(e);
-                pair.component.should_be_same(componentA);
+                pair.component.should_be_same(Component.A);
             };
 
             it["only returns matching collected entities"] = () => {
-                var e = createEntity();
-                addComponentA(e);
-                var e2 = createEntity();
-                addComponentB(e2);
-                removeComponentA(e);
-                removeComponentB(e2);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                var e2 = repo.CreateEntity();
+                e2.AddComponentB();
+                e.RemoveComponentA();
+                e2.RemoveComponentB();
 
                 var ecp = observer.collectedEntityComponentPairs;
                 ecp.Count.should_be(1);
@@ -46,11 +44,11 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
             };
 
             it["collects entites only once"] = () => {
-                var e = createEntity();
-                addComponentA(e);
-                removeComponentA(e);
-                addComponentA(e);
-                removeComponentA(e);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.RemoveComponentA();
+                e.AddComponentA();
+                e.RemoveComponentA();
 
                 var ecp = observer.collectedEntityComponentPairs;
                 ecp.Count.should_be(1);
@@ -61,9 +59,9 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
             };
 
             it["clears collected entities on deactivation"] = () => {
-                var e = createEntity();
-                addComponentA(e);
-                removeComponentA(e);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.RemoveComponentA();
 
                 observer.Deactivate();
                 observer.collectedEntityComponentPairs.should_be_empty();
@@ -71,23 +69,23 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
 
             it["doesn't collect entities when deactivated"] = () => {
                 observer.Deactivate();
-                var e = createEntity();
-                addComponentA(e);
-                removeComponentA(e);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.RemoveComponentA();
                 observer.collectedEntityComponentPairs.should_be_empty();
             };
 
             it["continues collecting when activated"] = () => {
                 observer.Deactivate();
-                var e1 = createEntity();
-                addComponentA(e1);
-                removeComponentA(e1);
+                var e1 = repo.CreateEntity();
+                e1.AddComponentA();
+                e1.RemoveComponentA();
 
                 observer.Activate();
 
-                var e2 = createEntity();
-                addComponentA(e2);
-                removeComponentA(e2);
+                var e2 = repo.CreateEntity();
+                e2.AddComponentA();
+                e2.RemoveComponentA();
 
                 var ecp = observer.collectedEntityComponentPairs;
                 var pair = ecp.First();
@@ -95,34 +93,14 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
             };
 
             it["clears collected entites"] = () => {
-                var e = createEntity();
-                addComponentA(e);
-                removeComponentA(e);
+                var e = repo.CreateEntity();
+                e.AddComponentA();
+                e.RemoveComponentA();
 
                 observer.ClearCollectedEntites();
                 observer.collectedEntityComponentPairs.should_be_empty();
             };
         };
-    }
-
-    Entity createEntity() {
-        return _repo.CreateEntity();
-    }
-
-    void addComponentA(Entity entity) {
-        entity.AddComponent(CP.ComponentA, new ComponentA());
-    }
-
-    void addComponentB(Entity entity) {
-        entity.AddComponent(CP.ComponentB, new ComponentB());
-    }
-
-    void removeComponentA(Entity entity) {
-        entity.RemoveComponent(CP.ComponentA);
-    }
-
-    void removeComponentB(Entity entity) {
-        entity.RemoveComponent(CP.ComponentB);
     }
 }
 

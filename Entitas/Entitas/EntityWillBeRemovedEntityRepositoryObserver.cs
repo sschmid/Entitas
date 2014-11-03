@@ -1,5 +1,4 @@
-﻿using ToolKit;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
     public class EntityComponentPair {
@@ -25,11 +24,10 @@ namespace Entitas {
         readonly int _index;
 
         public EntityWillBeRemovedEntityRepositoryObserver(EntityRepository repo, int index) {
-            _collectedEntities = new HashSet<Entity>(new EntityEqualityComparer());
-            _collectedEntityComponentPairs = new HashSet<EntityComponentPair>();
+            _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
+            _collectedEntityComponentPairs = new HashSet<EntityComponentPair>(EntityComponentPairEqualityComparer.comparer);
             _collection = repo.GetCollection(EntityMatcher.AllOf(new [] { index }));
             _index = index;
-
             Activate();
         }
 
@@ -38,9 +36,9 @@ namespace Entitas {
         }
 
         public void Deactivate() {
+            _collection.OnEntityWillBeRemoved -= addEntity;
             _collectedEntities.Clear();
             _collectedEntityComponentPairs.Clear();
-            _collection.OnEntityWillBeRemoved -= addEntity;
         }
 
         public void ClearCollectedEntites() {

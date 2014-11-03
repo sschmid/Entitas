@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Entitas {
     public class EntityCollection {
@@ -13,7 +12,7 @@ namespace Entitas {
         public int Count { get { return _entities.Count; } }
 
         readonly IEntityMatcher _matcher;
-        readonly HashSet<Entity> _entities = new HashSet<Entity>(new EntityEqualityComparer());
+        readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         Entity[] _entitiesCache;
         Entity _singleEntityCache;
 

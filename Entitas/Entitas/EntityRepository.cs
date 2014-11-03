@@ -4,7 +4,7 @@ using System;
 
 namespace Entitas {
     public partial class EntityRepository {
-        readonly HashSet<Entity> _entities = new HashSet<Entity>(new EntityEqualityComparer());
+        readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         readonly Dictionary<IEntityMatcher, EntityCollection> _collections = new Dictionary<IEntityMatcher, EntityCollection>();
         readonly List<EntityCollection>[] _collectionsForIndex;
         readonly ObjectPool<Entity> _entityPool;
@@ -47,8 +47,8 @@ namespace Entitas {
 
         public void DestroyAllEntities() {
             var entities = GetEntities();
-            for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
-                DestroyEntity(entities[i]);
+            foreach (var entity in entities) {
+                DestroyEntity(entity);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Entitas {
 
         public Entity[] GetEntities() {
             if (_entitiesCache == null) {
-                _entitiesCache = new Entity[_entities.Count];;
+                _entitiesCache = new Entity[_entities.Count];
                 _entities.CopyTo(_entitiesCache);
             }
 
@@ -68,9 +68,8 @@ namespace Entitas {
         public EntityCollection GetCollection(IEntityMatcher matcher) {
             if (!_collections.ContainsKey(matcher)) {
                 var collection = new EntityCollection(matcher);
-                var entities = GetEntities();
-                for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
-                    collection.AddEntityIfMatching(entities[i]);
+                foreach (var entity in _entities) {
+                    collection.AddEntityIfMatching(entity);
                 }
                 _collections.Add(matcher, collection);
 

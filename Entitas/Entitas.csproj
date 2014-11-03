@@ -35,7 +35,6 @@
     <Compile Include="Entitas\Entity.cs" />
     <Compile Include="Entitas\EntityRepository.cs" />
     <Compile Include="Entitas\EntityCollection.cs" />
-    <Compile Include="Entitas\Extensions\EntityArrayExtension.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
     <Compile Include="Entitas\Interfaces\IEntitySystem.cs" />
     <Compile Include="Entitas\EntityMatcher\EntityMatcher.cs" />
@@ -49,7 +48,8 @@
     <Compile Include="Entitas\EntityWillBeRemovedEntityRepositoryObserver.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\ReactiveEntityWillBeRemovedSystem.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntityWillBeRemovedSystem.cs" />
-    <Compile Include="Entitas\EntityEqualityComparer.cs" />
+    <Compile Include="Entitas\Extensions\EntitySetExtension.cs" />
+    <Compile Include="Entitas\Comparer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Entitas {
+﻿namespace Entitas {
     public interface IReactiveSubEntityWillBeRemovedSystem {
         int GetTriggeringIndex();
 
-        void Execute(IList<EntityComponentPair> pairs);
+        void Execute(EntityComponentPair[] pairs);
     }
 }
 

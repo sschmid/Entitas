@@ -10,7 +10,7 @@ namespace Entitas {
 
         public delegate void EntityChange(Entity entity, int index, IComponent component);
 
-        public int creationIndex;
+        internal int creationIndex;
 
         readonly IComponent[] _components;
         IComponent[] _componentsCache;
@@ -61,7 +61,11 @@ namespace Entitas {
 
         void replaceComponent(int index, IComponent replacement) {
             var component = _components[index];
-            if (component != replacement) {
+            if (component == replacement) {
+                if (OnComponentReplaced != null) {
+                    OnComponentReplaced(this, index, replacement);
+                }
+            } else {
                 _components[index] = replacement;
                 _componentsCache = null;
                 if (replacement == null) {
@@ -70,10 +74,6 @@ namespace Entitas {
                         OnComponentRemoved(this, index, component);
                     }
                 } else if (OnComponentReplaced != null) {
-                    OnComponentReplaced(this, index, replacement);
-                }
-            } else {
-                if (OnComponentReplaced != null) {
                     OnComponentReplaced(this, index, replacement);
                 }
             }
