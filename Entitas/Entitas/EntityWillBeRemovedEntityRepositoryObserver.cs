@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 namespace Entitas {
-    public class EntityComponentPair {
+    public struct EntityComponentPair {
         public Entity entity { get { return _entity; } }
 
         public IComponent component { get { return _component; } }
@@ -16,16 +16,16 @@ namespace Entitas {
     }
 
     public class EntityWillBeRemovedEntityRepositoryObserver {
-        public HashSet<EntityComponentPair> collectedEntityComponentPairs { get { return _collectedEntityComponentPairs; } }
+        public List<EntityComponentPair> collectedEntityComponentPairs { get { return _collectedEntityComponentPairs; } }
 
         readonly HashSet<Entity> _collectedEntities;
-        readonly HashSet<EntityComponentPair> _collectedEntityComponentPairs;
+        readonly List<EntityComponentPair> _collectedEntityComponentPairs;
         readonly EntityCollection _collection;
         readonly int _index;
 
         public EntityWillBeRemovedEntityRepositoryObserver(EntityRepository repo, int index) {
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
-            _collectedEntityComponentPairs = new HashSet<EntityComponentPair>(EntityComponentPairEqualityComparer.comparer);
+            _collectedEntityComponentPairs = new List<EntityComponentPair>();
             _collection = repo.GetCollection(EntityMatcher.AllOf(new [] { index }));
             _index = index;
             Activate();

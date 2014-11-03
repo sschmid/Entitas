@@ -11,8 +11,7 @@
         }
 
         public void Execute() {
-            var buffer = new EntityComponentPair[_observer.collectedEntityComponentPairs.Count];
-            _observer.collectedEntityComponentPairs.CopyTo(buffer, 0);
+            var buffer = _observer.collectedEntityComponentPairs.ToArray();
             _observer.ClearCollectedEntites();
             if (buffer.Length > 0) {
                 _subsystem.Execute(buffer);
