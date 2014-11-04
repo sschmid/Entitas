@@ -13,7 +13,7 @@ public static class PerformanceTestRunner {
         _stopwatch.Start();
         test.Run();
         _stopwatch.Stop();
-        return _stopwatch.ElapsedTicks;
+        return _stopwatch.ElapsedMilliseconds;
     }
 }
 

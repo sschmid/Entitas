@@ -2,6 +2,7 @@
 using ToolKit;
 
 public class OrderedSetAdd : IPerformanceTest {
+    const int n = 100000;
     LinkedListSet<Entity> _s;
 
     public void Before() {
@@ -9,8 +10,9 @@ public class OrderedSetAdd : IPerformanceTest {
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < n; i++) {
             _s.Add(new Entity(CP.NumComponents));
+        }
     }
 }
 

@@ -2,20 +2,21 @@
 using System;
 
 public class ArrayGetItem : IPerformanceTest {
-    Random _r;
-    Entity[] _a;
+    const int n = 100000;
+    Random random;
+    Entity[] _array;
 
     public void Before() {
-        _r = new Random();
-        _a = new Entity[100000];
-        for (int i = 0; i < 100000; i++) {
-            _a[i] = new Entity(CP.NumComponents);
+        random = new Random();
+        _array = new Entity[n];
+        for (int i = 0; i < n; i++) {
+            _array[i] = new Entity(CP.NumComponents);
         }
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++) {
-            var e = _a[_r.Next(0, 100000)];
+        for (int i = 0; i < n; i++) {
+            var e = _array[random.Next(0, n)];
         }
     }
 }

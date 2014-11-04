@@ -3,20 +3,21 @@ using Entitas;
 using System;
 
 public class DictionaryGetItem : IPerformanceTest {
-    Random _r;
-    Dictionary<int, Entity> _d;
+    const int n = 100000;
+    Random _random;
+    Dictionary<int, Entity> _dict;
 
     public void Before() {
-        _r = new Random();
-        _d = new Dictionary<int, Entity>();
-        for (int i = 0; i < 100000; i++) {
-            _d.Add(i, new Entity(CP.NumComponents));
+        _random = new Random();
+        _dict = new Dictionary<int, Entity>();
+        for (int i = 0; i < n; i++) {
+            _dict.Add(i, new Entity(CP.NumComponents));
         }
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++) {
-            var e = _d[_r.Next(0, 100000)];
+        for (int i = 0; i < n; i++) {
+            var e = _dict[_random.Next(0, n)];
         }
     }
 }

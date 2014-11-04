@@ -1,6 +1,7 @@
 ﻿using Entitas;
 
 public class EntityGetComponent : IPerformanceTest {
+    const int n = 10000000;
     Entity _e;
 
     public void Before() {
@@ -11,8 +12,9 @@ public class EntityGetComponent : IPerformanceTest {
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < n; i++) {
             _e.GetComponent(CP.ComponentA);
+        }
     }
 }
 

@@ -2,13 +2,14 @@
 using Entitas;
 
 public class ListRemove : IPerformanceTest {
+    const int n = 100000;
     List<Entity> _l;
     Entity[] _lookup;
 
     public void Before() {
         _l = new List<Entity>();
-        _lookup = new Entity[100000];
-        for (int i = 0; i < 100000; i++) {
+        _lookup = new Entity[n];
+        for (int i = 0; i < n; i++) {
             var e = new Entity(CP.NumComponents);
             _l.Add(e);
             _lookup[i] = e;
@@ -16,7 +17,7 @@ public class ListRemove : IPerformanceTest {
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < n; i++) {
             _l.Remove(_lookup[i]);
         }
     }

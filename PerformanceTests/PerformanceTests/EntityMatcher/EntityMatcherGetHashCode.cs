@@ -1,6 +1,7 @@
 ﻿using Entitas;
 
 public class EntityMatcherGetHashCode : IPerformanceTest {
+    const int n = 10000000;
     IEntityMatcher _m;
 
     public void Before() {
@@ -12,8 +13,9 @@ public class EntityMatcherGetHashCode : IPerformanceTest {
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < n; i++) {
             _m.GetHashCode();
+        }
     }
 }
 

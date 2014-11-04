@@ -2,15 +2,17 @@
 using System.Collections.Specialized;
 
 public class OrderedDictionaryAdd : IPerformanceTest {
-    OrderedDictionary _d;
+    const int n = 100000;
+    OrderedDictionary _dict;
 
     public void Before() {
-        _d = new OrderedDictionary();
+        _dict = new OrderedDictionary();
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++)
-            _d.Add(i, new Entity(CP.NumComponents));
+        for (int i = 0; i < n; i++) {
+            _dict.Add(i, new Entity(CP.NumComponents));
+        }
     }
 }
 

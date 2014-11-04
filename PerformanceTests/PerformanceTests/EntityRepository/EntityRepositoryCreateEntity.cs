@@ -1,6 +1,7 @@
 ﻿using Entitas;
 
 public class EntityRepositoryCreateEntity : IPerformanceTest {
+    const int n = 100000;
     EntityRepository _repo;
 
     public void Before() {
@@ -8,8 +9,9 @@ public class EntityRepositoryCreateEntity : IPerformanceTest {
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < n; i++) {
             _repo.CreateEntity();
+        }
     }
 }
 

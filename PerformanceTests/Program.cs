@@ -6,43 +6,84 @@ namespace PerformanceTests {
         public static void Main(string[] args) {
             Console.WriteLine("Running performance tests...");
             Thread.Sleep(1500);
-//            run<EntityRepositoryCreateEntity>();
-//            run<EntityRepositoryDestroyAllEntites>();
-//            run<EntityRepositoryHasComponent>();
-//            run<EntityRepositoryGetEntities>();
-//            run<EntityGetComponents>();
-//            run<EntityHasComponent>();
-//            run<EntityMatcherGetHashCode>();
-//            run<EntityMatcherEquals>();
-//            run<EntityRemoveAddComponent>();
+
+            run<EntityRepositoryCreateEntity>();
+            run<EntityRepositoryDestroyAllEntites>();
+            run<EntityRepositoryGetEntities>();
+            run<EntityRepositoryHasComponent>();
+            run<EntityRepositoryOnEntityReplaced>();
+            run<EmptyTest>();
+
+            run<EntityGetComponent>();
+            run<EntityGetComponents>();
+            run<EntityHasComponent>();
+            run<EntityRemoveAddComponent>();
             run<EntityReplaceComponent>();
-//            run<EntityRepositoryOnEntityReplaced>();
-//            run<EntityGetComponent>();
-//            run<ListAdd>();
-//            run<OrderedSetAdd>();
-//            run<LinkedListAdd>();
-//            run<OrderedDictionaryAdd>();
-//            //run<ListRemove>();
-//            run<LinkedListRemove>();
-//            run<OrderedSetRemove>();
-//            run<OrderedDictionaryRemove>();
-//            run<ListGetItem>();
-//            run<DictionaryGetItem>();
-//            run<OrderedDictionaryGetItemByKey>();
-//            run<OrderedDictionaryGetItemByIndex>();
+            run<EmptyTest>();
+
+            run<EntityMatcherEquals>();
+            run<EntityMatcherGetHashCode>();
+            run<EmptyTest>();
+
 //            run<ArrayGetItem>();
+//            run<DictionaryGetItem>();
+//            run<LinkedListAdd>();
+//            run<LinkedListRemove>();
+//            run<ListAdd>();
+//            run<ListGetItem>();
+//            run<ListRemove>();
+//            run<OrderedDictionaryAdd>();
+//            run<OrderedDictionaryGetItemByIndex>();
+//            run<OrderedDictionaryGetItemByKey>();
+//            run<OrderedDictionaryRemove>();
+//            run<OrderedSetAdd>();
+//            run<OrderedSetRemove>();
+
+            Console.WriteLine("\nPress any key...");
             Console.Read();
         }
-        // Add: List (103), LinkedList (107), OrderedDictionary (122), OrderedSet (141)
-        // Remove: LinkedList (3), OrderedDictionary (7), OrderdSet (12)
-        // GetItem: Array (3.2), List (3.7), OrderedDictionaryByIndex (6.4), OrderedDictionaryByKey (6.5), Dictionary (7.5)
+
+        //        Running performance tests...
+        //        EntityRepositoryCreateEntity:           109 ms
+        //        EntityRepositoryDestroyAllEntites:      49 ms
+        //        EntityRepositoryGetEntities:            3 ms
+        //        EntityRepositoryHasComponent:           8 ms
+        //        EntityRepositoryOnEntityReplaced:       8 ms
+        //
+        //        EntityGetComponent:                     43 ms
+        //        EntityGetComponents:                    3 ms
+        //        EntityHasComponent:                     1 ms
+        //        EntityRemoveAddComponent:               396 ms
+        //        EntityReplaceComponent:                 22 ms
+        //
+        //        EntityMatcherEquals:                    242 ms
+        //        EntityMatcherGetHashCode:               21 ms
+        //
+        //        ArrayGetItem:                           2 ms
+        //        DictionaryGetItem:                      7 ms
+        //        LinkedListAdd:                          17 ms
+        //        LinkedListRemove:                       4 ms
+        //        ListAdd:                                14 ms
+        //        ListGetItem:                            2 ms
+        //        ListRemove:                             8647 ms
+        //        OrderedDictionaryAdd:                   30 ms
+        //        OrderedDictionaryGetItemByIndex:        4 ms
+        //        OrderedDictionaryGetItemByKey:          4 ms
+        //        OrderedDictionaryRemove:                7 ms
+        //        OrderedSetAdd:                          44 ms
+        //        OrderedSetRemove:                       13 ms
+
         static void run<T>() where T : IPerformanceTest, new() {
-//            Console.Write(typeof(T) + ": ");
+            Thread.Sleep(100);
+            if (typeof(T) == typeof(EmptyTest)) {
+                Console.WriteLine(string.Empty);
+                return;
+            }
+            Console.Write((typeof(T) + ": ").PadRight(40));
+            // For more reliable results, run before
             PerformanceTestRunner.Run(new T());
-            var ticks = PerformanceTestRunner.Run(new T());
-            var ms = ticks * 0.0001;
-            Console.WriteLine(ms);
-//            Console.WriteLine(ms + " ms");
+            var ms = PerformanceTestRunner.Run(new T());
+            Console.WriteLine(ms + " ms");
         }
     }
 }

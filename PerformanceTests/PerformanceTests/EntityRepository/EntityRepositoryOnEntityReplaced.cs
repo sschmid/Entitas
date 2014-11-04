@@ -1,6 +1,7 @@
 ﻿using Entitas;
 
 public class EntityRepositoryOnEntityReplaced : IPerformanceTest {
+    const int n = 100000;
     EntityRepository _repo;
     Entity _e;
 
@@ -12,8 +13,9 @@ public class EntityRepositoryOnEntityReplaced : IPerformanceTest {
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < n; i++) {
             _e.ReplaceComponent(CP.ComponentA, new ComponentA());
+        }
     }
 }
 

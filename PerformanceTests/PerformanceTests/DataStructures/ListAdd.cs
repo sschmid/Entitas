@@ -2,6 +2,7 @@
 using Entitas;
 
 public class ListAdd : IPerformanceTest {
+    const int n = 100000;
     List<Entity> _l;
 
     public void Before() {
@@ -9,8 +10,9 @@ public class ListAdd : IPerformanceTest {
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++)
+        for (int i = 0; i < n; i++) {
             _l.Add(new Entity(CP.NumComponents));
+        }
     }
 }
 

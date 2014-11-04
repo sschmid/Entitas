@@ -3,20 +3,21 @@ using Entitas;
 using System;
 
 public class ListGetItem : IPerformanceTest {
-    Random _r;
+    const int n = 100000;
+    Random _random;
     List<Entity> _l;
 
     public void Before() {
-        _r = new Random();
+        _random = new Random();
         _l = new List<Entity>();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < n; i++) {
             _l.Add(new Entity(CP.NumComponents));
         }
     }
 
     public void Run() {
-        for (int i = 0; i < 100000; i++) {
-            var e = _l[_r.Next(0, 100000)];
+        for (int i = 0; i < n; i++) {
+            var e = _l[_random.Next(0, n)];
         }
     }
 }
