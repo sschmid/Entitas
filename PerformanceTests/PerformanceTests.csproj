@@ -38,7 +38,6 @@
     <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryCreateEntity.cs" />
     <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryDestroyAllEntites.cs" />
     <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryGetEntities.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryHasComponent.cs" />
     <Compile Include="PerformanceTests\Entity\EntityGetComponents.cs" />
     <Compile Include="PerformanceTests\EntityMatcher\EntityMatcherGetHashCode.cs" />
     <Compile Include="PerformanceTests\EntityMatcher\EntityMatcherEquals.cs" />
@@ -64,6 +63,7 @@
     <Compile Include="PerformanceTests\DataStructures\ArrayGetItem.cs" />
     <Compile Include="PerformanceTests\Entity\EntityReplaceComponent.cs" />
     <Compile Include="PerformanceTests\Fixtures\CP.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryHasEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

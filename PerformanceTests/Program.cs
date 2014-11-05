@@ -10,7 +10,7 @@ namespace PerformanceTests {
             run<EntityRepositoryCreateEntity>();
             run<EntityRepositoryDestroyAllEntites>();
             run<EntityRepositoryGetEntities>();
-            run<EntityRepositoryHasComponent>();
+            run<EntityRepositoryHasEntity>();
             run<EntityRepositoryOnEntityReplaced>();
             run<EmptyTest>();
 
@@ -47,7 +47,7 @@ namespace PerformanceTests {
         //        EntityRepositoryCreateEntity:           109 ms
         //        EntityRepositoryDestroyAllEntites:      49 ms
         //        EntityRepositoryGetEntities:            3 ms
-        //        EntityRepositoryHasComponent:           8 ms
+        //        EntityRepositoryHasEntity:              8 ms
         //        EntityRepositoryOnEntityReplaced:       8 ms
         //
         //        EntityGetComponent:                     43 ms

@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-public class EntityRepositoryHasComponent : IPerformanceTest {
+public class EntityRepositoryHasEntity : IPerformanceTest {
     const int n = 100000;
     EntityRepository _repo;
 
