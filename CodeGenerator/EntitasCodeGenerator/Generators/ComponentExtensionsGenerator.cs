@@ -92,16 +92,26 @@ namespace Entitas.CodeGenerator {
 ";
             } else {
                 hasMethod = @"
-        public bool is{1} {{ get {{ return HasComponent({3}.{1}); }} }}
+        public bool is{1} {{
+            get {{ return HasComponent({3}.{1}); }}
+            set {{
+                if (value != is{1}) {{
+                    if (value) {{
+                        AddComponent({3}.{1}, {2}Component);
+                    }} else {{
+                        RemoveComponent({3}.{1});
+                    }}
+                }}
+            }}
+        }}
 ";
             }
             return buildString(type, hasMethod);
         }
 
         static string addAddMethods(Type type) {
-            string addMethod;
             if (!isSingletonComponent(type)) {
-                addMethod = @"
+                const string addMethod = @"
         public void Add{1}({0} component) {{
             AddComponent({3}.{1}, component);
         }}
@@ -112,16 +122,10 @@ namespace Entitas.CodeGenerator {
             Add{1}(component);
         }}
 ";
-            } else {
-                addMethod = @"
-        public void Flag{1}() {{
-            if (!is{1}) {{
-                AddComponent({3}.{1}, {2}Component);
-            }}
-        }}
-";
+                return buildString(type, addMethod);
             }
-            return buildString(type, addMethod);
+
+            return string.Empty;
         }
 
         static string addReplaceMethods(Type type) {
@@ -150,23 +154,16 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addRemoveMethods(Type type) {
-            string removeMethod;
             if (!isSingletonComponent(type)) {
-                removeMethod = @"
+                const string removeMethod = @"
         public void Remove{1}() {{
             RemoveComponent({3}.{1});
         }}
 ";
-            } else {
-                removeMethod = @"
-        public void Unflag{1}() {{
-            if (is{1}) {{
-                RemoveComponent({3}.{1});
-            }}
-        }}
-";
+                return buildString(type, removeMethod);
             }
-            return buildString(type, removeMethod);
+
+            return string.Empty;
         }
 
         /*
@@ -215,16 +212,27 @@ namespace Entitas.CodeGenerator {
 ";
             } else {
                 hasMethod = @"
-        public bool is{1} {{ get {{ return {2}Entity != null; }} }}
+        public bool is{1} {{
+            get {{ return {2}Entity != null; }}
+            set {{
+                var entity = {2}Entity;
+                if (value != (entity != null)) {{
+                    if (value) {{
+                        CreateEntity().is{1} = true;
+                    }} else {{
+                        DestroyEntity(entity);
+                    }}
+                }}
+            }}
+        }}
 ";
             }
             return buildString(type, hasMethod);
         }
 
         static object addRepoAddMethods(Type type) {
-            string addMethod;
             if (!isSingletonComponent(type)) {
-                addMethod = @"
+                const string addMethod = @"
         public Entity Set{1}({0} component) {{
             if (has{1}) {{
                 throw new SingleEntityException(Matcher.{1});
@@ -243,20 +251,10 @@ namespace Entitas.CodeGenerator {
             return entity;
         }}
 ";
-            } else {
-                addMethod = @"
-        public Entity Flag{1}() {{
-            if (!is{1}) {{
-                var entity = CreateEntity();
-                entity.Flag{1}();
-                return entity;
-            }}
-
-            return {2}Entity;
-        }}
-";
+                return buildString(type, addMethod);
             }
-            return buildString(type, addMethod);
+
+            return string.Empty;
         }
 
         static string addRepoReplaceMethods(Type type) {
@@ -291,23 +289,16 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addRepoRemoveMethods(Type type) {
-            string removeMethod;
             if (!isSingletonComponent(type)) {
-                removeMethod = @"
+                const string removeMethod = @"
         public void Remove{1}() {{
             DestroyEntity({2}Entity);
         }}
 ";
-            } else {
-                removeMethod = @"
-        public void Unflag{1}() {{
-            if (is{1}) {{
-                DestroyEntity({2}Entity);
-            }}
-        }}
-";
+                return buildString(type, removeMethod);
             }
-            return buildString(type, removeMethod);
+
+            return string.Empty;
         }
 
         /*

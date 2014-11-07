@@ -8,17 +8,16 @@ public class AnimatingComponent : IComponent {
     public partial class Entity {
         static readonly AnimatingComponent animatingComponent = new AnimatingComponent();
 
-        public bool isAnimating { get { return HasComponent(ComponentIds.Animating); } }
-
-        public void FlagAnimating() {
-            if (!isAnimating) {
-                AddComponent(ComponentIds.Animating, animatingComponent);
-            }
-        }
-
-        public void UnflagAnimating() {
-            if (isAnimating) {
-                RemoveComponent(ComponentIds.Animating);
+        public bool isAnimating {
+            get { return HasComponent(ComponentIds.Animating); }
+            set {
+                if (value != isAnimating) {
+                    if (value) {
+                        AddComponent(ComponentIds.Animating, animatingComponent);
+                    } else {
+                        RemoveComponent(ComponentIds.Animating);
+                    }
+                }
             }
         }
     }
@@ -26,21 +25,17 @@ public class AnimatingComponent : IComponent {
     public partial class EntityRepository {
         public Entity animatingEntity { get { return GetCollection(Matcher.Animating).GetSingleEntity(); } }
 
-        public bool isAnimating { get { return animatingEntity != null; } }
-
-        public Entity FlagAnimating() {
-            if (!isAnimating) {
-                var entity = CreateEntity();
-                entity.FlagAnimating();
-                return entity;
-            }
-
-            return animatingEntity;
-        }
-
-        public void UnflagAnimating() {
-            if (isAnimating) {
-                DestroyEntity(animatingEntity);
+        public bool isAnimating {
+            get { return animatingEntity != null; }
+            set {
+                var entity = animatingEntity;
+                if (value != (entity != null)) {
+                    if (value) {
+                        CreateEntity().isAnimating = true;
+                    } else {
+                        DestroyEntity(entity);
+                    }
+                }
             }
         }
     }
@@ -59,4 +54,4 @@ public class AnimatingComponent : IComponent {
         }
     }
 }";
-    }
+}

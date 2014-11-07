@@ -6,17 +6,16 @@ public class MovableComponent : IComponent {
     public partial class Entity {
         static readonly MovableComponent movableComponent = new MovableComponent();
 
-        public bool isMovable { get { return HasComponent(ComponentIds.Movable); } }
-
-        public void FlagMovable() {
-            if (!isMovable) {
-                AddComponent(ComponentIds.Movable, movableComponent);
-            }
-        }
-
-        public void UnflagMovable() {
-            if (isMovable) {
-                RemoveComponent(ComponentIds.Movable);
+        public bool isMovable {
+            get { return HasComponent(ComponentIds.Movable); }
+            set {
+                if (value != isMovable) {
+                    if (value) {
+                        AddComponent(ComponentIds.Movable, movableComponent);
+                    } else {
+                        RemoveComponent(ComponentIds.Movable);
+                    }
+                }
             }
         }
     }
