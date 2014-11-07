@@ -2,7 +2,6 @@
 
 namespace Entitas {
     public enum EntityCollectionEventType : byte {
-        None,
         OnEntityAdded,
         OnEntityRemoved,
         OnEntityAddedOrRemoved
@@ -15,7 +14,7 @@ namespace Entitas {
         readonly EntityCollection _collection;
         readonly EntityCollectionEventType _eventType;
 
-        public EntityRepositoryObserver(EntityRepository repo, EntityCollectionEventType eventType, IEntityMatcher matcher) {
+        public EntityRepositoryObserver(EntityRepository repo, IEntityMatcher matcher, EntityCollectionEventType eventType) {
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
             _collection = repo.GetCollection(matcher);
             _eventType = eventType;

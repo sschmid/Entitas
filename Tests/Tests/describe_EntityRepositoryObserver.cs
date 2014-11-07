@@ -13,7 +13,7 @@ class describe_EntityRepositoryObserver : nspec {
 
         context["when observing with eventType OnEntityAdded"] = () => {
             before = () => {
-                observer = new EntityRepositoryObserver(repo, EntityCollectionEventType.OnEntityAdded, EntityMatcher.AllOf(new [] { CID.ComponentA }));
+                observer = new EntityRepositoryObserver(repo, EntityMatcher.AllOf(new [] { CID.ComponentA }), EntityCollectionEventType.OnEntityAdded);
             };
 
             it["returns collected entities"] = () => {
@@ -92,7 +92,7 @@ class describe_EntityRepositoryObserver : nspec {
 
         context["when observing with eventType OnEntityRemoved"] = () => {
             before = () => {
-                observer = new EntityRepositoryObserver(repo, EntityCollectionEventType.OnEntityRemoved, EntityMatcher.AllOf(new [] { CID.ComponentA }));
+                observer = new EntityRepositoryObserver(repo, EntityMatcher.AllOf(new [] { CID.ComponentA }), EntityCollectionEventType.OnEntityRemoved);
             };
 
             it["returns collected entities"] = () => {
@@ -109,7 +109,7 @@ class describe_EntityRepositoryObserver : nspec {
 
         context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
             before = () => {
-                observer = new EntityRepositoryObserver(repo, EntityCollectionEventType.OnEntityAddedOrRemoved, EntityMatcher.AllOf(new [] { CID.ComponentA }));
+                observer = new EntityRepositoryObserver(repo, EntityMatcher.AllOf(new [] { CID.ComponentA }), EntityCollectionEventType.OnEntityAddedOrRemoved);
             };
 
             it["returns collected entities"] = () => {

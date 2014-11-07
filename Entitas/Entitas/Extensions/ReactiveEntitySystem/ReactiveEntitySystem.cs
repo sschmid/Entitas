@@ -7,7 +7,7 @@
 
         public ReactiveEntitySystem(EntityRepository repo, IReactiveSubEntitySystem subSystem) {
             _subsystem = subSystem;
-            _observer = new EntityRepositoryObserver(repo, subSystem.GetEventType(), subSystem.GetTriggeringMatcher());
+            _observer = new EntityRepositoryObserver(repo, subSystem.GetTriggeringMatcher(), subSystem.GetEventType());
         }
 
         public void Execute() {

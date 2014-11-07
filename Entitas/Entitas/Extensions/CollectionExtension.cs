@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace Entitas {
-    public static class EntitySetExtension {
+    public static class CollectionExtension {
         public static Entity SingleEntity(this ICollection<Entity> collection) {
             if (collection.Count != 1) {
                 throw new Exception("Expected exactly one entity but found " + collection.Count);

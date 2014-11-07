@@ -48,9 +48,9 @@
     <Compile Include="Entitas\EntityWillBeRemovedEntityRepositoryObserver.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\ReactiveEntityWillBeRemovedSystem.cs" />
     <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntityWillBeRemovedSystem.cs" />
-    <Compile Include="Entitas\Extensions\EntitySetExtension.cs" />
     <Compile Include="Entitas\EntityMatcher\Matcher.cs" />
     <Compile Include="Entitas\EntityEqualityComparer.cs" />
+    <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
