@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Readme</RootNamespace>
+    <AssemblyName>Readme</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadmeSnippets.cs" />
+    <Compile Include="Components\PositionComponent.cs" />
+    <Compile Include="Components\HealthComponent.cs" />
+    <Compile Include="Components\MovableComponent.cs" />
+    <Compile Include="Components\UserComponent.cs" />
+    <Compile Include="..\Entitas\Entitas\Entity.cs">
+      <Link>Libraries\Entitas\Entity.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityCollection.cs">
+      <Link>Libraries\Entitas\EntityCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityEqualityComparer.cs">
+      <Link>Libraries\Entitas\EntityEqualityComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityRepository.cs">
+      <Link>Libraries\Entitas\EntityRepository.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityRepositoryObserver.cs">
+      <Link>Libraries\Entitas\EntityRepositoryObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityWillBeRemovedEntityRepositoryObserver.cs">
+      <Link>Libraries\Entitas\EntityWillBeRemovedEntityRepositoryObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityMatcher\AbstractEntityMatcher.cs">
+      <Link>Libraries\Entitas\EntityMatcher\AbstractEntityMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityMatcher\AllOfEntityMatcher.cs">
+      <Link>Libraries\Entitas\EntityMatcher\AllOfEntityMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityMatcher\EntityMatcher.cs">
+      <Link>Libraries\Entitas\EntityMatcher\EntityMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityMatcher\Matcher.cs">
+      <Link>Libraries\Entitas\EntityMatcher\Matcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\CollectionExtension.cs">
+      <Link>Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\EntityRepositoryExtension.cs">
+      <Link>Libraries\Entitas\Extensions\EntityRepositoryExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntitySystem.cs">
+      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntitySystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntityWillBeRemovedSystem.cs">
+      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntityWillBeRemovedSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveEntitySystem\ReactiveEntitySystem.cs">
+      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveEntitySystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveEntitySystem\ReactiveEntityWillBeRemovedSystem.cs">
+      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveEntityWillBeRemovedSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
+      <Link>Libraries\Entitas\Interfaces\IComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IEntityMatcher.cs">
+      <Link>Libraries\Entitas\Interfaces\IEntityMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IEntitySystem.cs">
+      <Link>Libraries\Entitas\Interfaces\IEntitySystem.cs</Link>
+    </Compile>
+    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\EntitasCodeGenerator.cs">
+      <Link>Libraries\EntitasCodeGenerator\EntitasCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs">
+      <Link>Libraries\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\EntityRepositoryAttribute.cs">
+      <Link>Libraries\EntitasCodeGenerator\Attributes\EntityRepositoryAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs">
+      <Link>Libraries\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs">
+      <Link>Libraries\EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs">
+      <Link>Libraries\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs</Link>
+    </Compile>
+    <Compile Include="Components\Generated\ComponentIds.cs" />
+    <Compile Include="Components\Generated\HealthComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\MovableComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\PositionComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\UserComponentGeneratedExtension.cs" />
+    <Compile Include="Components\AnimatingComponent.cs" />
+    <Compile Include="Components\Generated\AnimatingComponentGeneratedExtension.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Components\" />
+    <Folder Include="Components\Generated\" />
+    <Folder Include="Libraries\" />
+    <Folder Include="Libraries\Entitas\" />
+    <Folder Include="Libraries\EntitasCodeGenerator\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dependencies\Dependencies.csproj">
+      <Project>{A65102DB-7A15-4F25-A318-79FE0A9545BB}</Project>
+      <Name>Dependencies</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

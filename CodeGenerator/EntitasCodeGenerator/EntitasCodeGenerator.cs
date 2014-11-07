@@ -9,12 +9,12 @@ namespace Entitas.CodeGenerator {
         public static string generatedFolder = "Generated/";
         public const string componentSuffix = "Component";
 
-        public static void Generate() {
-            if (!Directory.Exists(generatedFolder))
+        public static void Generate(Assembly assembly) {
+            if (!Directory.Exists(generatedFolder)) {
                 Directory.CreateDirectory(generatedFolder);
+            }
 
             CleanGeneratedFolder();
-            var assembly = Assembly.GetAssembly(typeof(EntitasCodeGenerator));
             var components = GetComponents(assembly.GetTypes());
             generateIndicesLookup(components);
             generateComponentExtensions(components);
@@ -78,8 +78,9 @@ namespace Entitas.CodeGenerator {
     public static class EntitasCodeGeneratorExtensions {
         public static string RemoveComponentSuffix(this Type type) {
             const string componentSuffix = EntitasCodeGenerator.componentSuffix;
-            if (type.Name.EndsWith(componentSuffix))
+            if (type.Name.EndsWith(componentSuffix)) {
                 return type.Name.Substring(0, type.Name.Length - componentSuffix.Length);
+            }
 
             return type.Name;
         }
