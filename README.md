@@ -17,6 +17,9 @@ Entitas is fast, light and gets rid of unnecessary complexity. There are less th
 - Entity Collection
 - Entity Repository Observer
 
+After you read the readme, you can take a look at the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git) to see Entitas in action. The project illustrates how systems, collections, observers and entities play seamlessly together.
+
+
 ### Entity
 You can imagine an entity as a container holding data to represent certain objects in your application. You can add, replace or remove data from entites in form of `IComponent`. Entities have corresponding events to let you know if components where added or removed.
 
@@ -24,11 +27,11 @@ This example shows how you can interact with an entity. Entitas comes with a cod
 ```
 entity.AddPosition(0, 0, 0);
 entity.AddHealth(100);
-entity.FlagMovable();
+entity.isMovable = true;
 
 entity.ReplacePosition(10, 100, -30);
-entity.ReplaceHealth(entity.health - 1);
-entity.UnflagMovable();
+entity.ReplaceHealth(entity.health.health - 1);
+entity.isMovable = false;
 
 entity.RemovePosition();
 
@@ -42,7 +45,7 @@ The Entity Repository is the factory where you create and destroy entities. Use 
 // Total components is kindly generated for you by the code generator
 var repo = new EntityRepository(ComponentIds.TotalComponents);
 var entity = repo.CreateEntity();
-entity.FlagMovable();
+entity.isMovable = true;
 
 // Returns all entities having MoveComponent. Matcher.Movable is also generated for you.
 var entities = repo.GetEntities(Matcher.Movable);
@@ -61,9 +64,9 @@ Both the collection and getting the entities is cached, so even calling this met
 ### Entity Repository Observer
 Entity Repository Observer provides an easy way to react to changes made in the repository. Let's say you want to collect and process all the entities where a `PositionComponent` was added or replaced.
 ```
-var observer = repo.AddObserver(
-                   EntityCollectionEventType.OnEntityAdded,
-                   Matcher.Position
+var observer = repo.CreateObserver(
+                   Matcher.Position,
+                   EntityCollectionEventType.OnEntityAdded
                );
 
 var entities = observer.collectedEntities;
@@ -80,7 +83,7 @@ observer.Deactivate();
 
 ## Processing entities with Systems
 
-Implement `ISystem` to process your entities. I recommend you create systems for each single task or behaviour in your application and execute them in a defined order. This helps to keep your app deterministic. Entitas also provides a special system called `ReactiveEntitySystem`, which is using an Entity Repository Observer under the hood. It holds changed entities of interest at your fingertips. Check the wiki for examples (coming soon).
+Implement `ISystem` to process your entities. I recommend you create systems for each single task or behaviour in your application and execute them in a defined order. This helps to keep your app deterministic. Entitas also provides a special system called `ReactiveEntitySystem`, which is using an Entity Repository Observer under the hood. It holds changed entities of interest at your fingertips.
 
 
 ## Code Generator
@@ -97,9 +100,9 @@ The generated code can be different based on the content of the component. The C
 #### Standard component (e.g. PositionComponent)
 ```
 public class PositionComponent : IComponent {
-    public float x;
-    public float y;
-    public float z;
+    public int x;
+    public int y;
+    public int z;
 }
 ```
 You get
@@ -107,11 +110,11 @@ You get
 var pos = e.position;
 var has = e.hasPosition;
 
-e.AddPosition(component);
 e.AddPosition(x, y, z);
+e.AddPosition(component);
 
-e.ReplacePosition(component);
 e.ReplacePosition(x, y, z);
+e.ReplacePosition(component);
 
 e.RemovePosition();
 ```
@@ -132,11 +135,11 @@ var e = repo.userEntity;
 var name = repo.user.name;
 var has = repo.hasUser;
 
+repo.SetUser("John", 42);
 repo.SetUser(component);
-repo.SetUser("John", "42");
 
-repo.ReplaceUser(component);
 repo.ReplaceUser("Max", 24);
+repo.ReplaceUser(component);
 
 repo.RemoveUser();
 ```
@@ -148,8 +151,8 @@ public class MovableComponent : IComponent {}
 You get
 ```
 var movable = e.isMovable;
-e.FlagMovable();
-e.UnflagMovable();
+e.isMovable = true;
+e.isMovable = false;
 ```
 
 #### Single flag component (e.g. AnimatingComponent)
@@ -163,8 +166,8 @@ You get
 
 var e = repo.animatingEntity;
 var isAnimating = repo.isAnimating;
-repo.FlagAnimating();
-repo.UnflagAnimating();
+repo.isAnimating = true;
+repo.isAnimating = false;
 ```
 
 ### Unity tip
@@ -177,6 +180,7 @@ The following code extends Unity with a menu item that opens a new window that l
 using UnityEngine;
 using UnityEditor;
 using Entitas.CodeGenerator;
+using System.Reflection;
 
 public class EntitasEditorWindow : EditorWindow {
     [MenuItem("Game/Entitas/Entitas Manager")]
@@ -184,13 +188,15 @@ public class EntitasEditorWindow : EditorWindow {
         var window = (EntitasEditorWindow)EditorWindow.GetWindow(typeof(EntitasEditorWindow));
         window.title = "Entitas Manger";
         window.minSize = new Vector2(135, 45);
-
-        EntitasCodeGenerator.generatedFolder = "Generated/";
     }
 
     void OnGUI() {
-        if (GUILayout.Button("Generate extensions")) {
-            EntitasCodeGenerator.Generate();
+
+        EntitasCodeGenerator.generatedFolder = "Assets/Sources/Generated/";
+
+        if (GUILayout.Button("Generate")) {
+            var assembly = Assembly.GetAssembly(typeof(EntitasCodeGenerator));
+            EntitasCodeGenerator.Generate(assembly);
         }
         if (GUILayout.Button("Clean")) {
             EntitasCodeGenerator.CleanGeneratedFolder();
@@ -198,5 +204,4 @@ public class EntitasEditorWindow : EditorWindow {
         AssetDatabase.Refresh();
     }
 }
-
 ```
