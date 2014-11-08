@@ -21,10 +21,6 @@ public class PersonComponent : IComponent {
             AddPerson(component);
         }
 
-        public void ReplacePerson(PersonComponent component) {
-            ReplaceComponent(ComponentIds.Person, component);
-        }
-
         public void ReplacePerson(int newAge, string newName) {
             PersonComponent component;
             if (hasPerson) {
@@ -35,7 +31,7 @@ public class PersonComponent : IComponent {
             }
             component.age = newAge;
             component.name = newName;
-            ReplacePerson(component);
+            ReplaceComponent(ComponentIds.Person, component);
         }
 
         public void RemovePerson() {

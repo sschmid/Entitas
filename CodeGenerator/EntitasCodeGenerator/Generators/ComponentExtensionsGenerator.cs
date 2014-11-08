@@ -131,10 +131,6 @@ namespace Entitas.CodeGenerator {
         static string addReplaceMethods(Type type) {
             if (!isSingletonComponent(type)) {
                 const string replaceMethod = @"
-        public void Replace{1}({0} component) {{
-            ReplaceComponent({3}.{1}, component);
-        }}
-
         public void Replace{1}({4}) {{
             {0} component;
             if (has{1}) {{
@@ -144,7 +140,7 @@ namespace Entitas.CodeGenerator {
                 component = new {0}();
             }}
 {5}
-            Replace{1}(component);
+            ReplaceComponent({3}.{1}, component);
         }}
 ";
                 return buildString(type, replaceMethod);
@@ -260,17 +256,6 @@ namespace Entitas.CodeGenerator {
         static string addRepoReplaceMethods(Type type) {
             if (!isSingletonComponent(type)) {
                 const string replaceMethod = @"
-        public Entity Replace{1}({0} component) {{
-            var entity = {2}Entity;
-            if (entity == null) {{
-                entity = Set{1}(component);
-            }} else {{
-                entity.Replace{1}(component);
-            }}
-
-            return entity;
-        }}
-
         public Entity Replace{1}({4}) {{
             var entity = {2}Entity;
             if (entity == null) {{

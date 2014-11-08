@@ -14,10 +14,6 @@ namespace Entitas {
             AddHealth(component);
         }
 
-        public void ReplaceHealth(HealthComponent component) {
-            ReplaceComponent(ComponentIds.Health, component);
-        }
-
         public void ReplaceHealth(int newHealth) {
             HealthComponent component;
             if (hasHealth) {
@@ -27,7 +23,7 @@ namespace Entitas {
                 component = new HealthComponent();
             }
             component.health = newHealth;
-            ReplaceHealth(component);
+            ReplaceComponent(ComponentIds.Health, component);
         }
 
         public void RemoveHealth() {

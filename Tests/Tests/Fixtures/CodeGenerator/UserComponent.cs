@@ -24,10 +24,6 @@ public class UserComponent : IComponent {
             AddUser(component);
         }
 
-        public void ReplaceUser(UserComponent component) {
-            ReplaceComponent(ComponentIds.User, component);
-        }
-
         public void ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
             UserComponent component;
             if (hasUser) {
@@ -38,7 +34,7 @@ public class UserComponent : IComponent {
             }
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
-            ReplaceUser(component);
+            ReplaceComponent(ComponentIds.User, component);
         }
 
         public void RemoveUser() {
@@ -68,17 +64,6 @@ public class UserComponent : IComponent {
             }
             var entity = CreateEntity();
             entity.AddUser(newTimestamp, newIsLoggedIn);
-            return entity;
-        }
-
-        public Entity ReplaceUser(UserComponent component) {
-            var entity = userEntity;
-            if (entity == null) {
-                entity = SetUser(component);
-            } else {
-                entity.ReplaceUser(component);
-            }
-
             return entity;
         }
 

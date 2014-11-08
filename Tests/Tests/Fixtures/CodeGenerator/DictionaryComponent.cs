@@ -20,10 +20,6 @@ public class DictionaryComponent : IComponent {
             AddDictionary(component);
         }
 
-        public void ReplaceDictionary(DictionaryComponent component) {
-            ReplaceComponent(ComponentIds.Dictionary, component);
-        }
-
         public void ReplaceDictionary(System.Collections.Generic.Dictionary<string, int> newDict) {
             DictionaryComponent component;
             if (hasDictionary) {
@@ -33,7 +29,7 @@ public class DictionaryComponent : IComponent {
                 component = new DictionaryComponent();
             }
             component.dict = newDict;
-            ReplaceDictionary(component);
+            ReplaceComponent(ComponentIds.Dictionary, component);
         }
 
         public void RemoveDictionary() {

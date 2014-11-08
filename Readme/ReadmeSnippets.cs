@@ -66,7 +66,6 @@ namespace Readme {
             e.AddPosition(component);
 
             e.ReplacePosition(x, y, z);
-            e.ReplacePosition(component);
 
             e.RemovePosition();
         }
@@ -80,7 +79,6 @@ namespace Readme {
             repo.SetUser(component);
 
             repo.ReplaceUser("Max", 24);
-            repo.ReplaceUser(component);
 
             repo.RemoveUser();
         }

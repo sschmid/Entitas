@@ -15,10 +15,6 @@ namespace Entitas {
             AddUser(component);
         }
 
-        public void ReplaceUser(UserComponent component) {
-            ReplaceComponent(ComponentIds.User, component);
-        }
-
         public void ReplaceUser(string newName, int newAge) {
             UserComponent component;
             if (hasUser) {
@@ -29,7 +25,7 @@ namespace Entitas {
             }
             component.name = newName;
             component.age = newAge;
-            ReplaceUser(component);
+            ReplaceComponent(ComponentIds.User, component);
         }
 
         public void RemoveUser() {
@@ -59,17 +55,6 @@ namespace Entitas {
             }
             var entity = CreateEntity();
             entity.AddUser(newName, newAge);
-            return entity;
-        }
-
-        public Entity ReplaceUser(UserComponent component) {
-            var entity = userEntity;
-            if (entity == null) {
-                entity = SetUser(component);
-            } else {
-                entity.ReplaceUser(component);
-            }
-
             return entity;
         }
 

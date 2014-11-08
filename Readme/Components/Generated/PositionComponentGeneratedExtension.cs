@@ -16,10 +16,6 @@ namespace Entitas {
             AddPosition(component);
         }
 
-        public void ReplacePosition(PositionComponent component) {
-            ReplaceComponent(ComponentIds.Position, component);
-        }
-
         public void ReplacePosition(int newX, int newY, int newZ) {
             PositionComponent component;
             if (hasPosition) {
@@ -31,7 +27,7 @@ namespace Entitas {
             component.x = newX;
             component.y = newY;
             component.z = newZ;
-            ReplacePosition(component);
+            ReplaceComponent(ComponentIds.Position, component);
         }
 
         public void RemovePosition() {
