@@ -2,7 +2,7 @@
 
 # Entitas - The Entity Component System for C# and Unity
 
-Entitas is a super fast Entity Component System specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions were made to work optimal in a garbage collected environment and go easy on the garbage collector.
+Entitas is a super fast Entity Component System specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions were made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.](https://cleancoders.com)
 
 branch  | tests
 :------:|------
@@ -12,14 +12,14 @@ develop | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?bran
 
 ## Getting started
 
-Entitas is fast, light and gets rid of unnecessary complexity. There are less than a handful classes you have to know to rocket start your application:
+Entitas is fast, light and gets rid of unnecessary complexity. There are less than a handful classes you have to know to rocket start your game or application:
 
 - Entity
 - Entity Repository
 - Entity Collection
 - Entity Repository Observer
 
-After you read the readme, you can take a look at the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git) to see Entitas in action. The project illustrates how systems, collections, observers and entities play seamlessly together.
+After you've read the readme, take a look at the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git) to see Entitas in action. The project illustrates how systems, collections, observers and entities all play together seamlessly.
 
 
 ### Entity
@@ -85,7 +85,7 @@ observer.Deactivate();
 
 ## Processing entities with Systems
 
-Implement `ISystem` to process your entities. I recommend you create systems for each single task or behaviour in your application and execute them in a defined order. This helps to keep your app deterministic. Entitas also provides a special system called `ReactiveEntitySystem`, which is using an Entity Repository Observer under the hood. It holds changed entities of interest at your fingertips.
+Implement `ISystem` to process your entities. I recommend you create systems for each single task or behaviour in your application and execute them in a defined order. This helps to keep your app deterministic. Entitas also provides a special system called `ReactiveEntitySystem`, which is using an Entity Repository Observer under the hood. It holds changed entities of interest at your fingertips. Be sure to check out the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git).
 
 
 ## Code Generator
