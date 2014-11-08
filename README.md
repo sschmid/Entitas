@@ -1,3 +1,5 @@
+![Entitas Header](http://sschmid.com/Libs/Entitas-CSharp/Header.png)
+
 # Entitas - The Entity Component System for C# and Unity
 
 Entitas is a super fast Entity Component System specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions were made to work optimal in a garbage collected environment and go easy on the garbage collector.
