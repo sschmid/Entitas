@@ -8,7 +8,7 @@
             return new EntityRepositoryObserver(repo, matcher, eventType);
         }
 
-        public static EntityWillBeRemovedEntityRepositoryObserver AddWillBeRemovedObserver(this EntityRepository repo, int index) {
+        public static EntityWillBeRemovedEntityRepositoryObserver CreateWillBeRemovedObserver(this EntityRepository repo, int index) {
             return new EntityWillBeRemovedEntityRepositoryObserver(repo, index);
         }
     }
