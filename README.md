@@ -23,9 +23,9 @@ After you've read the readme, take a look at the [example project](https://githu
 
 
 ### Entity
-You can imagine an entity as a container holding data to represent certain objects in your application. You can add, replace or remove data from entites in form of `IComponent`. Entities have corresponding events to let you know if components where added or removed.
+You can imagine an entity as a container holding data to represent certain objects in your application. You can add, replace or remove data from entities in form of `IComponent`. Entities have corresponding events to let you know if components where added or removed.
 
-This example shows how you can interact with an entity. Entitas comes with a code generator that optionally can generate code for you to have a more natural and readable api (see **Code Generator** further down). In this example you can see some generated methods for `PositionComponent`, `HealthComponent`, `MovableComponent`.
+This example shows how you can interact with an entity. Entitas comes with a code generator that optionally can generate code for you to have a more natural and readable API (see **Code Generator** further down). In this example you can see some generated methods for `PositionComponent`, `HealthComponent`, `MovableComponent`.
 ````cs
 entity.AddPosition(0, 0, 0);
 entity.AddHealth(100);
@@ -77,7 +77,7 @@ foreach (var e in entities) {
 }
 observer.ClearCollectedEntites();
 ```
-To stop observing, simply deactive the observer.
+To stop observing, simply deactivate the observer.
 ```cs
 observer.Deactivate();
 ```
@@ -89,7 +89,7 @@ Implement `ISystem` to process your entities. I recommend you create systems for
 
 
 ## Code Generator
-The Code Generator can generate classes and methods for you, so you can focus on getting the job done. It radically reduces the amount of code you have to write and improves readability by a huge magnitude. It makes your code less error-prone while ensuring best performance. I strongly recommend using it!
+The Code Generator generates classes and methods for you, so you can focus on getting the job done. It radically reduces the amount of code you have to write and improves readability by a huge magnitude. It makes your code less error-prone while ensuring best performance. I strongly recommend using it!
 
 The generated code can be different based on the content of the component. The Code Generator differentiates between four types:
 - standard component with public fields (e.g. PositionComponent)
