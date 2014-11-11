@@ -64,6 +64,7 @@
     <Compile Include="PerformanceTests\Entity\EntityReplaceComponent.cs" />
     <Compile Include="PerformanceTests\Fixtures\CP.cs" />
     <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryHasEntity.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryGetCollection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

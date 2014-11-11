@@ -66,8 +66,9 @@ namespace Entitas {
         }
 
         public EntityCollection GetCollection(IEntityMatcher matcher) {
-            if (!_collections.ContainsKey(matcher)) {
-                var collection = new EntityCollection(matcher);
+            EntityCollection collection;
+            if (!_collections.TryGetValue(matcher, out collection)) {
+                collection = new EntityCollection(matcher);
                 foreach (var entity in _entities) {
                     collection.AddEntityIfMatching(entity);
                 }
@@ -82,7 +83,7 @@ namespace Entitas {
                 }
             }
 
-            return _collections[matcher];
+            return collection;
         }
 
         void onComponentAdded(Entity entity, int index, IComponent component) {

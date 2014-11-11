@@ -9,6 +9,7 @@ namespace PerformanceTests {
 
             run<EntityRepositoryCreateEntity>();
             run<EntityRepositoryDestroyAllEntites>();
+            run<EntityRepositoryGetCollection>();
             run<EntityRepositoryGetEntities>();
             run<EntityRepositoryHasEntity>();
             run<EntityRepositoryOnEntityReplaced>();
