@@ -6,12 +6,12 @@ public class EntityMatcherEquals : IPerformanceTest {
     IEntityMatcher _m2;
 
     public void Before() {
-        _m1 = EntityMatcher.AllOf(new [] {
+        _m1 = Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB,
             CP.ComponentC
         });
-        _m2 = EntityMatcher.AllOf(new [] {
+        _m2 = Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB,
             CP.ComponentC

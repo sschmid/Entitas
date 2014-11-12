@@ -80,7 +80,7 @@ namespace Entitas {
         public static AllOfEntityMatcher User {
             get {
                 if (_matcherUser == null) {
-                    _matcherUser = EntityMatcher.AllOf(new [] { ComponentIds.User });
+                    _matcherUser = Matcher.AllOf(new [] { ComponentIds.User });
                 }
 
                 return _matcherUser;

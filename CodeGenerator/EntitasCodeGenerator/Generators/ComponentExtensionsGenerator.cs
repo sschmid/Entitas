@@ -300,7 +300,7 @@ namespace Entitas.CodeGenerator {
         public static AllOfEntityMatcher {1} {{
             get {{
                 if (_matcher{1} == null) {{
-                    _matcher{1} = EntityMatcher.AllOf(new [] {{ {3}.{1} }});
+                    _matcher{1} = Matcher.AllOf(new [] {{ {3}.{1} }});
                 }}
 
                 return _matcher{1};

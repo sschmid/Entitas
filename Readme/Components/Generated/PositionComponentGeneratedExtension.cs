@@ -41,7 +41,7 @@ namespace Entitas {
         public static AllOfEntityMatcher Position {
             get {
                 if (_matcherPosition == null) {
-                    _matcherPosition = EntityMatcher.AllOf(new [] { ComponentIds.Position });
+                    _matcherPosition = Matcher.AllOf(new [] { ComponentIds.Position });
                 }
 
                 return _matcherPosition;

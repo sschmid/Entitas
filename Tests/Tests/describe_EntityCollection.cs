@@ -7,7 +7,7 @@ class describe_EntityCollection : nspec {
     Entity _eA2;
 
     void before_each() {
-        _collection = new EntityCollection(EntityMatcher.AllOf(new [] { CID.ComponentA }));
+        _collection = new EntityCollection(Matcher.AllOf(new [] { CID.ComponentA }));
         _eA1 = this.CreateEntity();
         _eA1.AddComponentA();
         _eA2 = this.CreateEntity();

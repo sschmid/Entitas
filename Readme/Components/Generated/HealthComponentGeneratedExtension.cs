@@ -37,7 +37,7 @@ namespace Entitas {
         public static AllOfEntityMatcher Health {
             get {
                 if (_matcherHealth == null) {
-                    _matcherHealth = EntityMatcher.AllOf(new [] { ComponentIds.Health });
+                    _matcherHealth = Matcher.AllOf(new [] { ComponentIds.Health });
                 }
 
                 return _matcherHealth;

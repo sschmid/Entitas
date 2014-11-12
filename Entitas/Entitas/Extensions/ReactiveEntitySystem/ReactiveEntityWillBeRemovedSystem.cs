@@ -7,7 +7,7 @@
 
         public ReactiveEntityWillBeRemovedSystem(EntityRepository repo, IReactiveSubEntityWillBeRemovedSystem subSystem) {
             _subsystem = subSystem;
-            _observer = new EntityWillBeRemovedEntityRepositoryObserver(repo, subSystem.GetTriggeringIndex());
+            _observer = new EntityWillBeRemovedEntityRepositoryObserver(repo, subSystem.GetTriggeringMatcher());
         }
 
         public void Execute() {

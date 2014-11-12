@@ -43,7 +43,7 @@ public class DictionaryComponent : IComponent {
         public static AllOfEntityMatcher Dictionary {
             get {
                 if (_matcherDictionary == null) {
-                    _matcherDictionary = EntityMatcher.AllOf(new [] { ComponentIds.Dictionary });
+                    _matcherDictionary = Matcher.AllOf(new [] { ComponentIds.Dictionary });
                 }
 
                 return _matcherDictionary;

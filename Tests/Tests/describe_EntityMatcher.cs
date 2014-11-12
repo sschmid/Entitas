@@ -23,7 +23,7 @@ class describe_EntityMatcher : nspec {
 
         context["allOf"] = () => {
             IEntityMatcher m = null;
-            before = () => m = EntityMatcher.AllOf(new [] {
+            before = () => m = Matcher.AllOf(new [] {
                 CID.ComponentA,
                 CID.ComponentA,
                 CID.ComponentB
@@ -55,7 +55,7 @@ class describe_EntityMatcher : nspec {
 
             it["equals equal AllOfEntityMatcher independent from the order of indices"] = () => {
                 var m1 = allOfAB();
-                var m2 = EntityMatcher.AllOf(new [] {
+                var m2 = Matcher.AllOf(new [] {
                     CID.ComponentB,
                     CID.ComponentA
                 });
@@ -65,7 +65,7 @@ class describe_EntityMatcher : nspec {
             };
 
             it["doesn't equal different AllOfEntityMatcher"] = () => {
-                var m1 = EntityMatcher.AllOf(new [] {
+                var m1 = Matcher.AllOf(new [] {
                     CID.ComponentA
                 });
                 var m2 = allOfAB();
@@ -80,11 +80,11 @@ class describe_EntityMatcher : nspec {
             };
 
             it["generates same hash independent from the order of indices"] = () => {
-                var m1 = EntityMatcher.AllOf(new [] {
+                var m1 = Matcher.AllOf(new [] {
                     CID.ComponentA,
                     CID.ComponentB
                 });
-                var m2 = EntityMatcher.AllOf(new [] {
+                var m2 = Matcher.AllOf(new [] {
                     CID.ComponentB,
                     CID.ComponentA
                 });
@@ -94,7 +94,7 @@ class describe_EntityMatcher : nspec {
     }
 
     IEntityMatcher allOfAB() {
-        return EntityMatcher.AllOf(new [] {
+        return Matcher.AllOf(new [] {
             CID.ComponentA,
             CID.ComponentB
         });

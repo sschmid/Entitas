@@ -152,7 +152,7 @@ class describe_ReactiveEntitySystem : nspec {
     }
 
     IEntityMatcher allOfAB() {
-        return EntityMatcher.AllOf(new [] {
+        return Matcher.AllOf(new [] {
             CID.ComponentA,
             CID.ComponentB
         });

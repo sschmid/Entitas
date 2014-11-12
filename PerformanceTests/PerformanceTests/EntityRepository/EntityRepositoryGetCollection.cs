@@ -9,7 +9,7 @@ public class EntityRepositoryGetCollection : IPerformanceTest {
     }
 
     public void Run() {
-        var m = EntityMatcher.AllOf(new [] { CP.ComponentA });
+        var m = Matcher.AllOf(new [] { CP.ComponentA });
         for (int i = 0; i < n; i++) {
             _repo.GetCollection(m);
         }

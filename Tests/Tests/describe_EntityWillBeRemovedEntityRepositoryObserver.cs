@@ -12,9 +12,13 @@ class describe_EntityWillBeRemovedEntityRepositoryObserver : nspec {
             repo = new EntityRepository(CID.NumComponents);
         };
 
+        it["throws when matcher has not exactely one index"] = expect<MatcherException>(() => {
+            new EntityWillBeRemovedEntityRepositoryObserver(repo, Matcher.AllOf(CID.ComponentA, CID.ComponentB));
+        });
+
         context["when observing"] = () => {
             before = () => {
-                observer = new EntityWillBeRemovedEntityRepositoryObserver(repo, CID.ComponentA);
+                observer = new EntityWillBeRemovedEntityRepositoryObserver(repo, Matcher.AllOf(CID.ComponentA));
             };
 
             it["returns collected entities"] = () => {

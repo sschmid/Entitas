@@ -8,8 +8,8 @@
             return new EntityRepositoryObserver(repo, matcher, eventType);
         }
 
-        public static EntityWillBeRemovedEntityRepositoryObserver CreateWillBeRemovedObserver(this EntityRepository repo, int index) {
-            return new EntityWillBeRemovedEntityRepositoryObserver(repo, index);
+        public static EntityWillBeRemovedEntityRepositoryObserver CreateWillBeRemovedObserver(this EntityRepository repo, AllOfEntityMatcher matcher) {
+            return new EntityWillBeRemovedEntityRepositoryObserver(repo, matcher);
         }
     }
 }

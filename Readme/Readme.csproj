@@ -60,9 +60,6 @@
     <Compile Include="..\Entitas\Entitas\EntityMatcher\AllOfEntityMatcher.cs">
       <Link>Libraries\Entitas\EntityMatcher\AllOfEntityMatcher.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityMatcher\EntityMatcher.cs">
-      <Link>Libraries\Entitas\EntityMatcher\EntityMatcher.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\EntityMatcher\Matcher.cs">
       <Link>Libraries\Entitas\EntityMatcher\Matcher.cs</Link>
     </Compile>

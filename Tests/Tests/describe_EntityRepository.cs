@@ -104,7 +104,7 @@ class describe_EntityRepository : nspec {
 
             it["sets up entity from pool"] = () => {
                 _repo.DestroyEntity(_repo.CreateEntity());                
-                var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CID.ComponentA }));
+                var c = _repo.GetCollection(Matcher.AllOf(new [] { CID.ComponentA }));
                 var e = _repo.CreateEntity();
                 e.AddComponentA();
                 c.GetEntities().should_contain(e);
@@ -114,7 +114,7 @@ class describe_EntityRepository : nspec {
         context["get entities"] = () => {
 
             it["gets empty collection for matcher when no entities were created"] = () => {
-                var c = _repo.GetCollection(EntityMatcher.AllOf(new [] { CID.ComponentA }));
+                var c = _repo.GetCollection(Matcher.AllOf(new [] { CID.ComponentA }));
                 c.should_not_be_null();
                 c.GetEntities().should_be_empty();
             };
@@ -124,7 +124,7 @@ class describe_EntityRepository : nspec {
                 Entity eAB2 = null;
                 Entity eA = null;
 
-                IEntityMatcher matcher = EntityMatcher.AllOf(new [] {
+                IEntityMatcher matcher = Matcher.AllOf(new [] {
                     CID.ComponentA,
                     CID.ComponentB
                 });

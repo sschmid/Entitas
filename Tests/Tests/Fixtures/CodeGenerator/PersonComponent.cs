@@ -45,7 +45,7 @@ public class PersonComponent : IComponent {
         public static AllOfEntityMatcher Person {
             get {
                 if (_matcherPerson == null) {
-                    _matcherPerson = EntityMatcher.AllOf(new [] { ComponentIds.Person });
+                    _matcherPerson = Matcher.AllOf(new [] { ComponentIds.Person });
                 }
 
                 return _matcherPerson;

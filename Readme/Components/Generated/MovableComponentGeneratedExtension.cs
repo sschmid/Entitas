@@ -22,7 +22,7 @@ namespace Entitas {
         public static AllOfEntityMatcher Movable {
             get {
                 if (_matcherMovable == null) {
-                    _matcherMovable = EntityMatcher.AllOf(new [] { ComponentIds.Movable });
+                    _matcherMovable = Matcher.AllOf(new [] { ComponentIds.Movable });
                 }
 
                 return _matcherMovable;

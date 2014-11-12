@@ -40,7 +40,7 @@ namespace Entitas {
         public static AllOfEntityMatcher Animating {
             get {
                 if (_matcherAnimating == null) {
-                    _matcherAnimating = EntityMatcher.AllOf(new [] { ComponentIds.Animating });
+                    _matcherAnimating = Matcher.AllOf(new [] { ComponentIds.Animating });
                 }
 
                 return _matcherAnimating;

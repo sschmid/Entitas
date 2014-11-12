@@ -1,6 +1,6 @@
 ﻿namespace Entitas {
     public interface IReactiveSubEntityWillBeRemovedSystem {
-        int GetTriggeringIndex();
+        AllOfEntityMatcher GetTriggeringMatcher();
 
         void Execute(EntityComponentPair[] pairs);
     }

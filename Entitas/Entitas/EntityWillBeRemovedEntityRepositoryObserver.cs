@@ -23,11 +23,15 @@ namespace Entitas {
         readonly EntityCollection _collection;
         readonly int _index;
 
-        public EntityWillBeRemovedEntityRepositoryObserver(EntityRepository repo, int index) {
+        public EntityWillBeRemovedEntityRepositoryObserver(EntityRepository repo, AllOfEntityMatcher matcher) {
+            if (matcher.indices.Length != 1) {
+                throw new MatcherException(matcher);
+            }
+
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
             _collectedEntityComponentPairs = new List<EntityComponentPair>();
-            _collection = repo.GetCollection(EntityMatcher.AllOf(new [] { index }));
-            _index = index;
+            _collection = repo.GetCollection(matcher);
+            _index = matcher.indices[0];
             Activate();
         }
 

@@ -15,7 +15,7 @@ public class EntityEmittingSubSystem : IReactiveSubEntitySystem {
     }
 
     public IEntityMatcher GetTriggeringMatcher() {
-        return EntityMatcher.AllOf(new [] { CID.ComponentA });
+        return Matcher.AllOf(new [] { CID.ComponentA });
     }
 
     public EntityCollectionEventType GetEventType() {

@@ -37,7 +37,6 @@
     <Compile Include="Entitas\EntityCollection.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
     <Compile Include="Entitas\Interfaces\IEntitySystem.cs" />
-    <Compile Include="Entitas\EntityMatcher\EntityMatcher.cs" />
     <Compile Include="Entitas\EntityMatcher\AbstractEntityMatcher.cs" />
     <Compile Include="Entitas\EntityMatcher\AllOfEntityMatcher.cs" />
     <Compile Include="Entitas\Interfaces\IEntityMatcher.cs" />
