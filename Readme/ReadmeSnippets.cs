@@ -30,8 +30,8 @@ namespace Readme {
             var entity = repo.CreateEntity();
             entity.isMovable = true;
 
-            // Returns all entities having MoveComponent. Matcher.Movable is also generated for you.
-            var entities = repo.GetEntities(Matcher.Movable);
+            // Returns all entities having MoveComponent and PositionComponent. Matchers are also generated for you.
+            var entities = repo.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
             foreach (var e in entities) {
                 // do something
             }
