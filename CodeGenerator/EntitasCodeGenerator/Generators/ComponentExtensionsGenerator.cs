@@ -66,100 +66,72 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addEntityClassHeader() {
-            return @"
-    public partial class Entity {";
+            return "\n    public partial class Entity {";
         }
 
         static string addGetMethods(Type type) {
-            string getMethod;
-            if (!isSingletonComponent(type)) {
-                getMethod = @"
-        public {0} {2} {{ get {{ return ({0})GetComponent({3}.{1}); }} }}
-";
-            } else {
-                getMethod = @"
-        static readonly {0} {2}Component = new {0}();
-";
-            }
+            string getMethod = isSingletonComponent(type) ?
+                "\n        static readonly $Type $nameComponent = new $Type();\n" :
+                "\n        public $Type $name { get { return ($Type)GetComponent($Ids.$Name); } }\n";
             return buildString(type, getMethod);
         }
 
         static string addHasMethods(Type type) {
-            string hasMethod;
-            if (!isSingletonComponent(type)) {
-                hasMethod = @"
-        public bool has{1} {{ get {{ return HasComponent({3}.{1}); }} }}
-";
-            } else {
-                hasMethod = @"
-        public bool is{1} {{
-            get {{ return HasComponent({3}.{1}); }}
-            set {{
-                if (value != is{1}) {{
-                    if (value) {{
-                        AddComponent({3}.{1}, {2}Component);
-                    }} else {{
-                        RemoveComponent({3}.{1});
-                    }}
-                }}
-            }}
-        }}
-";
+            string hasMethod = isSingletonComponent(type) ? @"
+        public bool is$Name {
+            get { return HasComponent($Ids.$Name); }
+            set {
+                if (value != is$Name) {
+                    if (value) {
+                        AddComponent($Ids.$Name, $nameComponent);
+                    } else {
+                        RemoveComponent($Ids.$Name);
+                    }
+                }
             }
+        }
+" : @"
+        public bool has$Name { get { return HasComponent($Ids.$Name); } }
+";
             return buildString(type, hasMethod);
         }
 
         static string addAddMethods(Type type) {
-            if (!isSingletonComponent(type)) {
-                const string addMethod = @"
-        public void Add{1}({0} component) {{
-            AddComponent({3}.{1}, component);
-        }}
+            return isSingletonComponent(type) ? string.Empty : buildString(type, @"
+        public void Add$Name($Type component) {
+            AddComponent($Ids.$Name, component);
+        }
 
-        public void Add{1}({4}) {{
-            var component = new {0}();
-{5}
-            Add{1}(component);
-        }}
-";
-                return buildString(type, addMethod);
-            }
-
-            return string.Empty;
+        public void Add$Name($typedArgs) {
+            var component = new $Type();
+$assign
+            Add$Name(component);
+        }
+");
         }
 
         static string addReplaceMethods(Type type) {
-            if (!isSingletonComponent(type)) {
-                const string replaceMethod = @"
-        public void Replace{1}({4}) {{
-            {0} component;
-            if (has{1}) {{
-                WillRemoveComponent({3}.{1});
-                component = {2};
-            }} else {{
-                component = new {0}();
-            }}
-{5}
-            ReplaceComponent({3}.{1}, component);
-        }}
-";
-                return buildString(type, replaceMethod);
+            return isSingletonComponent(type) ? string.Empty : buildString(type, @"
+        public void Replace$Name($typedArgs) {
+            $Type component;
+            if (has$Name) {
+                WillRemoveComponent($Ids.$Name);
+                component = $name;
             } else {
-                return string.Empty;
+                component = new $Type();
             }
+$assign
+            ReplaceComponent($Ids.$Name, component);
+        }
+");
         }
 
         static string addRemoveMethods(Type type) {
-            if (!isSingletonComponent(type)) {
-                const string removeMethod = @"
-        public void Remove{1}() {{
-            RemoveComponent({3}.{1});
-        }}
-";
-                return buildString(type, removeMethod);
-            }
-
-            return string.Empty;
+            return isSingletonComponent(type) ? string.Empty : buildString(type, @"
+        public void Remove$Name() {
+            RemoveComponent($Ids.$Name);
+        }
+");
         }
 
         /*
@@ -180,110 +152,84 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addEntityRepositoryClassHeader() {
-            return @"
-    public partial class EntityRepository {";
+            return "\n    public partial class EntityRepository {";
         }
 
         static string addRepoGetMethods(Type type) {
-            string getMehod;
-            if (!isSingletonComponent(type)) {
-                getMehod = @"
-        public Entity {2}Entity {{ get {{ return GetCollection(Matcher.{1}).GetSingleEntity(); }} }}
+            string getMehod = isSingletonComponent(type) ? @"
+        public Entity $nameEntity { get { return GetCollection(Matcher.$Name).GetSingleEntity(); } }
+" : @"
+        public Entity $nameEntity { get { return GetCollection(Matcher.$Name).GetSingleEntity(); } }
 
-        public {0} {2} {{ get {{ return {2}Entity.{2}; }} }}
+        public $Type $name { get { return $nameEntity.$name; } }
 ";
-            } else {
-                getMehod = @"
-        public Entity {2}Entity {{ get {{ return GetCollection(Matcher.{1}).GetSingleEntity(); }} }}
-";
-            }
             return buildString(type, getMehod);
         }
 
         static string addRepoHasMethods(Type type) {
-            string hasMethod;
-            if (!isSingletonComponent(type)) {
-                hasMethod = @"
-        public bool has{1} {{ get {{ return {2}Entity != null; }} }}
-";
-            } else {
-                hasMethod = @"
-        public bool is{1} {{
-            get {{ return {2}Entity != null; }}
-            set {{
-                var entity = {2}Entity;
-                if (value != (entity != null)) {{
-                    if (value) {{
-                        CreateEntity().is{1} = true;
-                    }} else {{
+            string hasMethod = isSingletonComponent(type) ? @"
+        public bool is$Name {
+            get { return $nameEntity != null; }
+            set {
+                var entity = $nameEntity;
+                if (value != (entity != null)) {
+                    if (value) {
+                        CreateEntity().is$Name = true;
+                    } else {
                         DestroyEntity(entity);
-                    }}
-                }}
-            }}
-        }}
-";
+                    }
+                }
             }
+        }
+" : @"
+        public bool has$Name { get { return $nameEntity != null; } }
+";
             return buildString(type, hasMethod);
         }
 
         static object addRepoAddMethods(Type type) {
-            if (!isSingletonComponent(type)) {
-                const string addMethod = @"
-        public Entity Set{1}({0} component) {{
-            if (has{1}) {{
-                throw new SingleEntityException(Matcher.{1});
-            }}
-            var entity = CreateEntity();
-            entity.Add{1}(component);
-            return entity;
-        }}
-
-        public Entity Set{1}({4}) {{
-            if (has{1}) {{
-                throw new SingleEntityException(Matcher.{1});
-            }}
-            var entity = CreateEntity();
-            entity.Add{1}({6});
-            return entity;
-        }}
-";
-                return buildString(type, addMethod);
+            return isSingletonComponent(type) ? string.Empty : buildString(type, @"
+        public Entity Set$Name($Type component) {
+            if (has$Name) {
+                throw new SingleEntityException(Matcher.$Name);
             }
+            var entity = CreateEntity();
+            entity.Add$Name(component);
+            return entity;
+        }
 
-            return string.Empty;
+        public Entity Set$Name($typedArgs) {
+            if (has$Name) {
+                throw new SingleEntityException(Matcher.$Name);
+            }
+            var entity = CreateEntity();
+            entity.Add$Name($args);
+            return entity;
+        }
+");
         }
 
         static string addRepoReplaceMethods(Type type) {
-            if (!isSingletonComponent(type)) {
-                const string replaceMethod = @"
-        public Entity Replace{1}({4}) {{
-            var entity = {2}Entity;
-            if (entity == null) {{
-                entity = Set{1}({6});
-            }} else {{
-                entity.Replace{1}({6});
-            }}
+            return isSingletonComponent(type) ? string.Empty : buildString(type, @"
+        public Entity Replace$Name($typedArgs) {
+            var entity = $nameEntity;
+            if (entity == null) {
+                entity = Set$Name($args);
+            } else {
+                entity.Replace$Name($args);
+            }
 
             return entity;
-        }}
-";
-                return buildString(type, replaceMethod);
-            } else {
-                return string.Empty;
-            }
+        }
+");
         }
 
         static string addRepoRemoveMethods(Type type) {
-            if (!isSingletonComponent(type)) {
-                const string removeMethod = @"
-        public void Remove{1}() {{
-            DestroyEntity({2}Entity);
-        }}
-";
-                return buildString(type, removeMethod);
-            }
-
-            return string.Empty;
+            return isSingletonComponent(type) ? string.Empty : buildString(type, @"
+        public void Remove$Name() {
+            DestroyEntity($nameEntity);
+        }
+");
         }
 
         /*
@@ -293,22 +239,21 @@ namespace Entitas.CodeGenerator {
         */
 
         static string addMatcher(Type type) {
-            const string matcher = @"
-    public static partial class Matcher {{
-        static AllOfEntityMatcher _matcher{1};
+            return buildString(type, @"
+    public static partial class Matcher {
+        static AllOfEntityMatcher _matcher$Name;
 
-        public static AllOfEntityMatcher {1} {{
-            get {{
-                if (_matcher{1} == null) {{
-                    _matcher{1} = Matcher.AllOf(new [] {{ {3}.{1} }});
-                }}
+        public static AllOfEntityMatcher $Name {
+            get {
+                if (_matcher$Name == null) {
+                    _matcher$Name = Matcher.AllOf(new [] { $Ids.$Name });
+                }
 
-                return _matcher{1};
-            }}
-        }}
-    }}
-";
-            return buildString(type, matcher);
+                return _matcher$Name;
+            }
+        }
+    }
+");
         }
 
         /*
@@ -334,6 +279,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string buildString(Type type, string format) {
+            format = createFormatString(format);
             var a0_type = type;
             var a1_name = type.RemoveComponentSuffix();
             var a2_lowercaseName = char.ToLower(a1_name[0]) + a1_name.Substring(1);
@@ -344,6 +290,19 @@ namespace Entitas.CodeGenerator {
             var a6_fieldNames = fieldNames(fields);
 
             return string.Format(format, a0_type, a1_name, a2_lowercaseName, a3_tag, a4_fieldNamesWithType, a5_fieldAssigns, a6_fieldNames);
+        }
+
+        static string createFormatString(string format) {
+            format = format.Replace("{", "{{");
+            format = format.Replace("}", "}}");
+            format = format.Replace("$Type", "{0}");
+            format = format.Replace("$Name", "{1}");
+            format = format.Replace("$name", "{2}");
+            format = format.Replace("$Ids", "{3}");
+            format = format.Replace("$typedArgs", "{4}");
+            format = format.Replace("$assign", "{5}");
+            format = format.Replace("$args", "{6}");
+            return format;
         }
 
         static string indicesLookupTag(Type type) {
@@ -419,11 +378,8 @@ namespace Entitas.CodeGenerator {
         };
 
         static string getTypeName(Type type) {
-            if (typeShortcuts.ContainsKey(type.Name)) {
-                return typeShortcuts[type.Name];
-            }
-
-            return simpleTypeString(type);
+            return typeShortcuts.ContainsKey(type.Name) ?
+                typeShortcuts[type.Name] : simpleTypeString(type);
         }
 
         static string simpleTypeString(Type type) {
@@ -444,8 +400,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addCloseClass() {
-            return @"    }
-";
+            return "    }\n";
         }
     }
 }
