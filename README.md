@@ -1,7 +1,6 @@
 ![Entitas Header](http://sschmid.com/Libs/Entitas-CSharp/Header.png)
 
 # Entitas - The Entity Component System for C# and Unity
-
 Entitas is a super fast Entity Component System specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions were made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.](https://cleancoders.com)
 
 branch  | tests
@@ -11,7 +10,6 @@ develop | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?bran
 
 
 ## Getting started
-
 Entitas is fast, light and gets rid of unnecessary complexity. There are less than a handful classes you have to know to rocket start your game or application:
 
 - Entity
@@ -84,9 +82,7 @@ observer.Deactivate();
 
 
 ## Processing entities with Systems
-
 Implement `ISystem` to process your entities. I recommend you create systems for each single task or behaviour in your application and execute them in a defined order. This helps to keep your app deterministic. Entitas also provides a special system called `ReactiveEntitySystem`, which is using an Entity Repository Observer under the hood. It holds changed entities of interest at your fingertips. Be sure to check out the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git).
-
 
 ## Code Generator
 The Code Generator generates classes and methods for you, so you can focus on getting the job done. It radically reduces the amount of code you have to write and improves readability by a huge magnitude. It makes your code less error-prone while ensuring best performance. I strongly recommend using it!
@@ -205,3 +201,12 @@ public class EntitasEditorWindow : EditorWindow {
     }
 }
 ```
+
+# Thanks to
+Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://github.com/cloudjubei) and [@devboy](https://github.com/devboy) for endless hours of discussion and helping making Entitas awesome!
+
+# Different language?
+Entitas is also available in
+- [Swift](https://github.com/arne-schroppe/Entitas-Swift)
+- [Objective-C](https://github.com/wooga/entitas)
+- [Clojure](https://github.com/mhaemmerle/entitas-clj)
