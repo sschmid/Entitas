@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 
@@ -7,15 +8,12 @@ namespace Entitas.CodeGenerator {
         public const string classSuffix = "GeneratedExtension";
 
         public Dictionary<string, string> GenerateComponentExtensions(Type[] components) {
-            var extensions = new Dictionary<string, string>();
-            foreach (var type in components) {
-                if (shouldGenerate(type)) {
-                    var code = generateComponentExtension(type);
-                    extensions.Add(type + classSuffix, code);
-                }
-            }
-
-            return extensions;
+            return components
+                .Where(shouldGenerate)
+                .ToDictionary(
+                type => type + classSuffix,
+                generateComponentExtension
+            );
         }
 
         static bool shouldGenerate(Type type) {
@@ -55,14 +53,13 @@ namespace Entitas.CodeGenerator {
          */
 
         static string addEntityMethods(Type type) {
-            var code = addEntityClassHeader();
-            code += addGetMethods(type);
-            code += addHasMethods(type);
-            code += addAddMethods(type);
-            code += addReplaceMethods(type);
-            code += addRemoveMethods(type);
-            code += addCloseClass();
-            return code;
+            return addEntityClassHeader()
+            + addGetMethods(type)
+            + addHasMethods(type)
+            + addAddMethods(type)
+            + addReplaceMethods(type)
+            + addRemoveMethods(type)
+            + addCloseClass();
         }
 
         static string addEntityClassHeader() {
@@ -71,8 +68,8 @@ namespace Entitas.CodeGenerator {
 
         static string addGetMethods(Type type) {
             string getMethod = isSingletonComponent(type) ?
-                "\n        static readonly $Type $nameComponent = new $Type();\n" :
-                "\n        public $Type $name { get { return ($Type)GetComponent($Ids.$Name); } }\n";
+            "\n        static readonly $Type $nameComponent = new $Type();\n" :
+            "\n        public $Type $name { get { return ($Type)GetComponent($Ids.$Name); } }\n";
             return buildString(type, getMethod);
         }
 
@@ -141,14 +138,13 @@ $assign
          */
 
         static string addEntityRepositoryMethods(Type type) {
-            var code = addEntityRepositoryClassHeader();
-            code += addRepoGetMethods(type);
-            code += addRepoHasMethods(type);
-            code += addRepoAddMethods(type);
-            code += addRepoReplaceMethods(type);
-            code += addRepoRemoveMethods(type);
-            code += addCloseClass();
-            return code;
+            return addEntityRepositoryClassHeader()
+            + addRepoGetMethods(type)
+            + addRepoHasMethods(type)
+            + addRepoAddMethods(type)
+            + addRepoReplaceMethods(type)
+            + addRepoRemoveMethods(type)
+            + addCloseClass();
         }
 
         static string addEntityRepositoryClassHeader() {
@@ -282,27 +278,27 @@ $assign
             format = createFormatString(format);
             var a0_type = type;
             var a1_name = type.RemoveComponentSuffix();
-            var a2_lowercaseName = char.ToLower(a1_name[0]) + a1_name.Substring(1);
+            var a2_lowercaseName = a1_name.LowercaseFirst();
             var a3_tag = indicesLookupTag(type);
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
             var a4_fieldNamesWithType = fieldNamesWithType(fields);
             var a5_fieldAssigns = fieldAssignments(fields);
             var a6_fieldNames = fieldNames(fields);
 
-            return string.Format(format, a0_type, a1_name, a2_lowercaseName, a3_tag, a4_fieldNamesWithType, a5_fieldAssigns, a6_fieldNames);
+            return string.Format(format, a0_type, a1_name, a2_lowercaseName,
+                a3_tag, a4_fieldNamesWithType, a5_fieldAssigns, a6_fieldNames);
         }
 
         static string createFormatString(string format) {
-            format = format.Replace("{", "{{");
-            format = format.Replace("}", "}}");
-            format = format.Replace("$Type", "{0}");
-            format = format.Replace("$Name", "{1}");
-            format = format.Replace("$name", "{2}");
-            format = format.Replace("$Ids", "{3}");
-            format = format.Replace("$typedArgs", "{4}");
-            format = format.Replace("$assign", "{5}");
-            format = format.Replace("$args", "{6}");
-            return format;
+            return format.Replace("{", "{{")
+                .Replace("}", "}}")
+                .Replace("$Type", "{0}")
+                .Replace("$Name", "{1}")
+                .Replace("$name", "{2}")
+                .Replace("$Ids", "{3}")
+                .Replace("$typedArgs", "{4}")
+                .Replace("$assign", "{5}")
+                .Replace("$args", "{6}");
         }
 
         static string indicesLookupTag(Type type) {
@@ -318,45 +314,28 @@ $assign
         }
 
         static string fieldNamesWithType(FieldInfo[] fields) {
-            var namesWithType = string.Empty;
-            for (int i = 0; i < fields.Length; i++) {
-                var arg = fields[i].Name;
-                var newArg = "new" + char.ToUpper(arg[0]) + arg.Substring(1);
-                var type = getTypeName(fields[i].FieldType);
-                namesWithType += type + " " + newArg;
-                if (i < fields.Length - 1) {
-                    namesWithType += ", ";
-                }
-            }
-            return namesWithType;
+            var typedArgs = fields.Select(arg => {
+                var newArg = "new" + arg.Name.UppercaseFirst();
+                var type = getTypeName(arg.FieldType);
+                return type + " " + newArg;
+            });
+
+            return string.Join(", ", typedArgs);
         }
 
-        static string fieldAssignments(FieldInfo[] fieldInfos) {
-            var assignments = string.Empty;
+        static string fieldAssignments(FieldInfo[] fields) {
             const string format = "            component.{0} = {1};";
-            for (int i = 0; i < fieldInfos.Length; i++) {
-                var arg = fieldInfos[i].Name;
-                var newArg = "new" + char.ToUpper(arg[0]) + arg.Substring(1);
-                assignments += string.Format(format, arg, newArg);
-                if (i < fieldInfos.Length - 1) {
-                    assignments += "\n";
-                }
-            }
+            var assignments = fields.Select(arg => {
+                var newArg = "new" + arg.Name.UppercaseFirst();
+                return string.Format(format, arg.Name, newArg);
+            });
 
-            return assignments;
+            return string.Join("\n", assignments);
         }
 
         static string fieldNames(FieldInfo[] fields) {
-            var namesWithType = string.Empty;
-            for (int i = 0; i < fields.Length; i++) {
-                var arg = fields[i].Name;
-                var newArg = "new" + char.ToUpper(arg[0]) + arg.Substring(1);
-                namesWithType += newArg;
-                if (i < fields.Length - 1) {
-                    namesWithType += ", ";
-                }
-            }
-            return namesWithType;
+            var args = fields.Select(arg => "new" + arg.Name.UppercaseFirst());
+            return string.Join(", ", args);
         }
 
         static Dictionary<string, string> typeShortcuts = new Dictionary<string, string>() {
@@ -378,25 +357,15 @@ $assign
         };
 
         static string getTypeName(Type type) {
-            return typeShortcuts.ContainsKey(type.Name) ?
-                typeShortcuts[type.Name] : simpleTypeString(type);
+            string typeStr;
+            return typeShortcuts.TryGetValue(type.Name, out typeStr) ?
+                typeStr : simpleTypeString(type);
         }
 
         static string simpleTypeString(Type type) {
-            Type[] types = type.GetGenericArguments();
-            var simplified = type.FullName.Split('`')[0];
-            if (types.Length > 0) {
-                simplified += "<";
-                for (int i = 0; i < types.Length; i++) {
-                    simplified += getTypeName(types[i]);
-                    if (i < types.Length - 1) {
-                        simplified += ", ";
-                    }
-                }
-                simplified += ">";
-            }
-
-            return simplified;
+            var typeString = type.FullName.Split('`')[0];
+            return type.GetGenericArguments().Length == 0 ? typeString :
+                typeString + "<" + string.Join(", ", type.GetGenericArguments().Select(getTypeName)) + ">";
         }
 
         static string addCloseClass() {

@@ -1,16 +1,14 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Entitas.CodeGenerator {
     public class IndicesLookupGenerator {
         public Dictionary<string, string> GenerateIndicesLookup(Type[] components) {
-            var lookups = new Dictionary<string, string>();
-            var lookupsWithTypes = getLookups(components);
-            foreach (var lookup in lookupsWithTypes) {
-                lookups.Add(lookup.Key, generateIndicesLookup(lookup.Key, lookup.Value.ToArray()));
-            }
-
-            return lookups;
+            return getLookups(components).ToDictionary(
+                lookup => lookup.Key,
+                lookup => generateIndicesLookup(lookup.Key, lookup.Value.ToArray())
+            );
         }
 
         Dictionary<string, List<Type>> getLookups(Type[] components) {
@@ -40,10 +38,7 @@ namespace Entitas.CodeGenerator {
         }
 
         string generateIndicesLookup(string tag, Type[] components) {
-            var code = addClassHeader(tag);
-            code += addIndices(components);
-            code += addCloseClass();
-            return code;
+            return addClassHeader(tag) + addIndices(components) + addCloseClass();
         }
 
         string addClassHeader(string className) {
@@ -58,9 +53,7 @@ namespace Entitas.CodeGenerator {
                 code += string.Format(fieldFormat, components[i].RemoveComponentSuffix(), i);
             }
 
-            code += "\n";
-            code += string.Format(totalFormat, components.Length);
-            return code;        
+            return code + "\n" + string.Format(totalFormat, components.Length);
         }
 
         string addCloseClass() {

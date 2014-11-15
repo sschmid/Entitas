@@ -34,14 +34,9 @@ namespace Entitas.CodeGenerator {
         }
 
         public static Type[]GetComponents(Type[] types) {
-            List<Type> components = new List<Type>();
-            foreach (var type in types) {
-                if (type.GetInterfaces().Contains(typeof(IComponent))) {
-                    components.Add(type);
-                }
-            }
-
-            return components.ToArray();
+            return types
+                .Where(type => type.GetInterfaces().Contains(typeof(IComponent)))
+                .ToArray();
         }
 
         static void generateIndicesLookup(Type[] components) {
@@ -83,6 +78,14 @@ namespace Entitas.CodeGenerator {
             }
 
             return type.Name;
+        }
+
+        public static string UppercaseFirst(this string str) {
+            return char.ToUpper(str[0]) + str.Substring(1);
+        }
+
+        public static string LowercaseFirst(this string str) {
+            return char.ToLower(str[0]) + str.Substring(1);
         }
     }
 }
