@@ -5,7 +5,7 @@ class describe_EntityRepositoryObserver : nspec {
 
     void when_created() {
 
-        EntityRepository repo = null;;
+        EntityRepository repo = null;
         EntityRepositoryObserver observer = null;
         before = () => {
             repo = new EntityRepository(CID.NumComponents);

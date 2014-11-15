@@ -48,17 +48,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            const string seperator = ", ";
-            var indexStr = string.Empty;
-            for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++) {
-                indexStr += _indices[i] + seperator;
-            }
-
-            if (indexStr != string.Empty) {
-                indexStr = indexStr.Substring(0, indexStr.Length - seperator.Length);
-            }
-
-            return string.Format("{0}({1})", GetType().Name, indexStr);
+            return GetType().Name + "(" + string.Join(", ", _indices) + ")";
         }
     }
 }

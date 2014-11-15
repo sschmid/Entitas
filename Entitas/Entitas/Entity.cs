@@ -150,18 +150,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            const string seperator = ", ";
-            var componentsStr = string.Empty;
-            var components = GetComponents();
-            for (int i = 0, componentsLength = components.Length; i < componentsLength; i++) {
-                componentsStr += components[i] + seperator;
-            }
-
-            if (componentsStr != string.Empty) {
-                componentsStr = componentsStr.Substring(0, componentsStr.Length - seperator.Length);
-            }
-
-            return string.Format("Entity({0})", componentsStr);
+            return "Entity(" + string.Join<IComponent>(", ", GetComponents()) + ")";
         }
     }
 

@@ -1,5 +1,4 @@
 ﻿using Entitas.CodeGenerator;
-using System;
 using System.IO;
 using System.Reflection;
 
