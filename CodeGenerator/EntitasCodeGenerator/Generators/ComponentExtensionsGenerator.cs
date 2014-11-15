@@ -12,7 +12,7 @@ namespace Entitas.CodeGenerator {
                 .Where(shouldGenerate)
                 .ToDictionary(
                 type => type + classSuffix,
-                generateComponentExtension
+                type => generateComponentExtension(type)
             );
         }
 
@@ -68,8 +68,8 @@ namespace Entitas.CodeGenerator {
 
         static string addGetMethods(Type type) {
             string getMethod = isSingletonComponent(type) ?
-            "\n        static readonly $Type $nameComponent = new $Type();\n" :
-            "\n        public $Type $name { get { return ($Type)GetComponent($Ids.$Name); } }\n";
+                "\n        static readonly $Type $nameComponent = new $Type();\n" :
+                "\n        public $Type $name { get { return ($Type)GetComponent($Ids.$Name); } }\n";
             return buildString(type, getMethod);
         }
 
@@ -318,7 +318,7 @@ $assign
                 var newArg = "new" + arg.Name.UppercaseFirst();
                 var type = getTypeName(arg.FieldType);
                 return type + " " + newArg;
-            });
+            }).ToArray();
 
             return string.Join(", ", typedArgs);
         }
@@ -328,13 +328,13 @@ $assign
             var assignments = fields.Select(arg => {
                 var newArg = "new" + arg.Name.UppercaseFirst();
                 return string.Format(format, arg.Name, newArg);
-            });
+            }).ToArray();
 
             return string.Join("\n", assignments);
         }
 
         static string fieldNames(FieldInfo[] fields) {
-            var args = fields.Select(arg => "new" + arg.Name.UppercaseFirst());
+            var args = fields.Select(arg => "new" + arg.Name.UppercaseFirst()).ToArray();
             return string.Join(", ", args);
         }
 
@@ -364,8 +364,9 @@ $assign
 
         static string simpleTypeString(Type type) {
             var typeString = type.FullName.Split('`')[0];
+            var genericTypes = type.GetGenericArguments().Select<Type, string>(getTypeName).ToArray();
             return type.GetGenericArguments().Length == 0 ? typeString :
-                typeString + "<" + string.Join(", ", type.GetGenericArguments().Select(getTypeName)) + ">";
+                typeString + "<" + string.Join(", ", genericTypes) + ">";
         }
 
         static string addCloseClass() {
