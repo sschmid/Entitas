@@ -5,10 +5,9 @@ using System.Reflection;
 namespace Readme {
     class MainClass {
         public static void Main(string[] args) {
-            EntitasCodeGenerator.generatedFolder = getProjectDir() + "/Components/Generated/";
-            EntitasCodeGenerator.CleanGeneratedFolder();
             var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
-            EntitasCodeGenerator.Generate(assembly);
+            var generatedFolder = getProjectDir() + "/Components/Generated/";
+            EntitasCodeGenerator.Generate(assembly, generatedFolder);
         }
 
         static string getProjectDir() {
