@@ -1,4 +1,4 @@
-![Entitas Header](http://sschmid.com/Libs/Entitas-CSharp/Header.png)
+![Entitas Header](Readme/Header.png)
 
 # Entitas - The Entity Component System for C# and Unity
 Entitas is a super fast Entity Component System specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions were made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.](https://cleancoders.com)
@@ -169,8 +169,8 @@ repo.isAnimating = false;
 ### Unity tip
 The following code extends Unity with a menu item that opens a new window that lets you generate code with a single click.
 
-![Unity Entitas Menu](http://sschmid.com/Libs/Entitas-CSharp/Unity-Entitas-Menu.png "Unity Entitas Menu")
-![Unity Entitas Window](http://sschmid.com/Libs/Entitas-CSharp/Unity-Entitas-Window.png "Unity Entitas Window")
+![Unity Entitas Menu](Readme/Unity-Entitas-Menu.png "Unity Entitas Menu")
+![Unity Entitas Window](Readme/Unity-Entitas-Window.png "Unity Entitas Window")
 
 ```cs
 using System.Reflection;
