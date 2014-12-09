@@ -173,30 +173,31 @@ The following code extends Unity with a menu item that opens a new window that l
 ![Unity Entitas Window](http://sschmid.com/Libs/Entitas-CSharp/Unity-Entitas-Window.png "Unity Entitas Window")
 
 ```cs
-using UnityEngine;
-using UnityEditor;
-using Entitas.CodeGenerator;
 using System.Reflection;
+using Entitas.CodeGenerator;
+using UnityEditor;
+using UnityEngine;
 
 public class EntitasEditorWindow : EditorWindow {
-    [MenuItem("Game/Entitas/Entitas Manager")]
-    public static void ShowEntitasManagerWindow() {
+    [MenuItem("Game/Entitas/Code Generator")]
+    public static void ShowEntitasCodeGeneratorWindow() {
         var window = (EntitasEditorWindow)EditorWindow.GetWindow(typeof(EntitasEditorWindow));
-        window.title = "Entitas Manger";
-        window.minSize = new Vector2(135, 45);
+        window.title = "Code Generator";
+        window.minSize = new Vector2(135, 30);
     }
 
-    void OnGUI() {
+    const string generatedFolder = "Assets/Sources/Generated/";
 
-        EntitasCodeGenerator.generatedFolder = "Assets/Sources/Generated/";
+    void OnGUI() {
+        GUI.enabled = !EditorApplication.isCompiling;
 
         if (GUILayout.Button("Generate")) {
             var assembly = Assembly.GetAssembly(typeof(EntitasCodeGenerator));
-            EntitasCodeGenerator.Generate(assembly);
+            EntitasCodeGenerator.Generate(assembly, generatedFolder);
         }
-        if (GUILayout.Button("Clean")) {
-            EntitasCodeGenerator.CleanGeneratedFolder();
-        }
+
+        GUI.enabled = true;
+
         AssetDatabase.Refresh();
     }
 }
