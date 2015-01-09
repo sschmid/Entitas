@@ -17,9 +17,9 @@ namespace Entitas {
     }
 
     public static partial class Matcher {
-        static AllOfEntityMatcher _matcherMovable;
+        static AllOfMatcher _matcherMovable;
 
-        public static AllOfEntityMatcher Movable {
+        public static AllOfMatcher Movable {
             get {
                 if (_matcherMovable == null) {
                     _matcherMovable = Matcher.AllOf(new [] { ComponentIds.Movable });

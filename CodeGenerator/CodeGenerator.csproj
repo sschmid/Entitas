@@ -35,9 +35,9 @@
     <Compile Include="EntitasCodeGenerator\EntitasCodeGenerator.cs" />
     <Compile Include="EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
     <Compile Include="EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs" />
-    <Compile Include="EntitasCodeGenerator\Attributes\EntityRepositoryAttribute.cs" />
     <Compile Include="EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs" />
     <Compile Include="EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs" />
+    <Compile Include="EntitasCodeGenerator\Attributes\ContextAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -42,8 +42,8 @@ public class UserComponent : IComponent {
         }
     }
 
-    public partial class EntityRepository {
-        public Entity userEntity { get { return GetCollection(Matcher.User).GetSingleEntity(); } }
+    public partial class Context {
+        public Entity userEntity { get { return GetGroup(Matcher.User).GetSingleEntity(); } }
 
         public UserComponent user { get { return userEntity.user; } }
 
@@ -84,9 +84,9 @@ public class UserComponent : IComponent {
     }
 
     public static partial class Matcher {
-        static AllOfEntityMatcher _matcherUser;
+        static AllOfMatcher _matcherUser;
 
-        public static AllOfEntityMatcher User {
+        public static AllOfMatcher User {
             get {
                 if (_matcherUser == null) {
                     _matcherUser = Matcher.AllOf(new [] { ComponentIds.User });

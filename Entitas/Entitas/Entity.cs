@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Entitas {
     public partial class Entity {
-        public event EntityChange OnComponentAdded;
-        public event EntityChange OnComponentReplaced;
-        public event EntityChange OnComponentWillBeRemoved;
-        public event EntityChange OnComponentRemoved;
+        public event EntityChanged OnComponentAdded;
+        public event EntityChanged OnComponentReplaced;
+        public event EntityChanged OnComponentWillBeRemoved;
+        public event EntityChanged OnComponentRemoved;
 
-        public delegate void EntityChange(Entity entity, int index, IComponent component);
+        public delegate void EntityChanged(Entity entity, int index, IComponent component);
 
         internal int creationIndex;
 
@@ -22,7 +22,8 @@ namespace Entitas {
 
         public void AddComponent(int index, IComponent component) {
             if (HasComponent(index)) {
-                throw new EntityAlreadyHasComponentException(string.Format("Cannot add component at index {0} to {1}.", index, this), index);
+                var errorMsg = "Cannot add component at index " + index + " to " + this;
+                throw new EntityAlreadyHasComponentException(errorMsg, index);
             }
 
             _components[index] = component;
@@ -41,7 +42,8 @@ namespace Entitas {
 
         public void RemoveComponent(int index) {
             if (!HasComponent(index)) {
-                throw new EntityDoesNotHaveComponentException(string.Format("Cannot remove component at index {0} from {1}.", index, this), index);
+                var errorMsg = "Cannot remove component at index " + index + " from " + this;
+                throw new EntityDoesNotHaveComponentException(errorMsg, index);
             }
 
             if (OnComponentWillBeRemoved != null) {
@@ -81,7 +83,8 @@ namespace Entitas {
 
         public IComponent GetComponent(int index) {
             if (!HasComponent(index)) {
-                throw new EntityDoesNotHaveComponentException(string.Format("Cannot get component at index {0} from {1}.", index, this), index);
+                var errorMsg = "Cannot get component at index " + index + " from " + this;
+                throw new EntityDoesNotHaveComponentException(errorMsg, index);
             }
 
             return _components[index];
@@ -174,6 +177,19 @@ namespace Entitas {
     public class EntityDoesNotHaveComponentException : Exception {
         public EntityDoesNotHaveComponentException(string message, int index) :
             base(message + "\nEntity does not have a component at index " + index) {
+        }
+    }
+
+    public class EntityEqualityComparer : IEqualityComparer<Entity> {
+
+        public static readonly EntityEqualityComparer comparer = new EntityEqualityComparer();
+
+        public bool Equals(Entity x, Entity y) {
+            return x == y;
+        }
+
+        public int GetHashCode(Entity obj) {
+            return obj.creationIndex;
         }
     }
 }

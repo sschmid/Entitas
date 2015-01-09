@@ -33,31 +33,30 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entitas\Entity.cs" />
-    <Compile Include="Entitas\EntityRepository.cs" />
-    <Compile Include="Entitas\EntityCollection.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
-    <Compile Include="Entitas\Interfaces\IEntitySystem.cs" />
-    <Compile Include="Entitas\EntityMatcher\AbstractEntityMatcher.cs" />
-    <Compile Include="Entitas\EntityMatcher\AllOfEntityMatcher.cs" />
-    <Compile Include="Entitas\Interfaces\IEntityMatcher.cs" />
-    <Compile Include="Entitas\Extensions\EntityRepositoryExtension.cs" />
-    <Compile Include="Entitas\EntityRepositoryObserver.cs" />
-    <Compile Include="Entitas\Extensions\ReactiveEntitySystem\ReactiveEntitySystem.cs" />
-    <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntitySystem.cs" />
-    <Compile Include="Entitas\EntityWillBeRemovedEntityRepositoryObserver.cs" />
-    <Compile Include="Entitas\Extensions\ReactiveEntitySystem\ReactiveEntityWillBeRemovedSystem.cs" />
-    <Compile Include="Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntityWillBeRemovedSystem.cs" />
-    <Compile Include="Entitas\EntityMatcher\Matcher.cs" />
-    <Compile Include="Entitas\EntityEqualityComparer.cs" />
+    <Compile Include="Entitas\Group.cs" />
+    <Compile Include="Entitas\Context.cs" />
+    <Compile Include="Entitas\ContextObserver.cs" />
+    <Compile Include="Entitas\Interfaces\IMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\ISystem.cs" />
+    <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
+    <Compile Include="Entitas\Extensions\ContextExtension.cs" />
+    <Compile Include="Entitas\Extensions\ReactiveSystem\IReactiveSystem.cs" />
+    <Compile Include="Entitas\Extensions\ReactiveSystem\IReactiveWillBeRemovedSystem.cs" />
+    <Compile Include="Entitas\Matcher\AbstractMatcher.cs" />
+    <Compile Include="Entitas\Matcher\AllOfMatcher.cs" />
+    <Compile Include="Entitas\WillBeRemovedContextObserver.cs" />
+    <Compile Include="Entitas\Extensions\ReactiveSystem\ReactiveSystem.cs" />
+    <Compile Include="Entitas\Extensions\ReactiveSystem\ReactiveWillBeRemovedSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Entitas\" />
     <Folder Include="Entitas\Extensions\" />
     <Folder Include="Entitas\Interfaces\" />
-    <Folder Include="Entitas\EntityMatcher\" />
-    <Folder Include="Entitas\Extensions\ReactiveEntitySystem\" />
+    <Folder Include="Entitas\Matcher\" />
+    <Folder Include="Entitas\Extensions\ReactiveSystem\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dependencies\Dependencies.csproj">

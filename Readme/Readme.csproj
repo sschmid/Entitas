@@ -39,65 +39,14 @@
     <Compile Include="..\Entitas\Entitas\Entity.cs">
       <Link>Libraries\Entitas\Entity.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityCollection.cs">
-      <Link>Libraries\Entitas\EntityCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityEqualityComparer.cs">
-      <Link>Libraries\Entitas\EntityEqualityComparer.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityRepository.cs">
-      <Link>Libraries\Entitas\EntityRepository.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityRepositoryObserver.cs">
-      <Link>Libraries\Entitas\EntityRepositoryObserver.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityWillBeRemovedEntityRepositoryObserver.cs">
-      <Link>Libraries\Entitas\EntityWillBeRemovedEntityRepositoryObserver.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityMatcher\AbstractEntityMatcher.cs">
-      <Link>Libraries\Entitas\EntityMatcher\AbstractEntityMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityMatcher\AllOfEntityMatcher.cs">
-      <Link>Libraries\Entitas\EntityMatcher\AllOfEntityMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityMatcher\Matcher.cs">
-      <Link>Libraries\Entitas\EntityMatcher\Matcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\CollectionExtension.cs">
-      <Link>Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\EntityRepositoryExtension.cs">
-      <Link>Libraries\Entitas\Extensions\EntityRepositoryExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntitySystem.cs">
-      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntitySystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntityWillBeRemovedSystem.cs">
-      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\IReactiveSubEntityWillBeRemovedSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveEntitySystem\ReactiveEntitySystem.cs">
-      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveEntitySystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveEntitySystem\ReactiveEntityWillBeRemovedSystem.cs">
-      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveEntityWillBeRemovedSystem.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
       <Link>Libraries\Entitas\Interfaces\IComponent.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IEntityMatcher.cs">
-      <Link>Libraries\Entitas\Interfaces\IEntityMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IEntitySystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IEntitySystem.cs</Link>
     </Compile>
     <Compile Include="..\CodeGenerator\EntitasCodeGenerator\EntitasCodeGenerator.cs">
       <Link>Libraries\EntitasCodeGenerator\EntitasCodeGenerator.cs</Link>
     </Compile>
     <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs">
       <Link>Libraries\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\EntityRepositoryAttribute.cs">
-      <Link>Libraries\EntitasCodeGenerator\Attributes\EntityRepositoryAttribute.cs</Link>
     </Compile>
     <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs">
       <Link>Libraries\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
@@ -115,6 +64,54 @@
     <Compile Include="Components\Generated\UserComponentGeneratedExtension.cs" />
     <Compile Include="Components\AnimatingComponent.cs" />
     <Compile Include="Components\Generated\AnimatingComponentGeneratedExtension.cs" />
+    <Compile Include="..\Entitas\Entitas\Group.cs">
+      <Link>Libraries\Entitas\Group.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Context.cs">
+      <Link>Libraries\Entitas\Context.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\ContextObserver.cs">
+      <Link>Libraries\Entitas\ContextObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
+      <Link>Libraries\Entitas\Interfaces\IMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
+      <Link>Libraries\Entitas\Interfaces\ISystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
+      <Link>Libraries\Entitas\EntityMatcher\Matcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\CollectionExtension.cs">
+      <Link>Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\ContextExtension.cs">
+      <Link>Libraries\Entitas\Extensions\ContextExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\IReactiveSystem.cs">
+      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\IReactiveSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\IReactiveWillBeRemovedSystem.cs">
+      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\IReactiveWillBeRemovedSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\AbstractMatcher.cs">
+      <Link>Libraries\Entitas\EntityMatcher\AbstractMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\AllOfMatcher.cs">
+      <Link>Libraries\Entitas\EntityMatcher\AllOfMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\ContextAttribute.cs">
+      <Link>Libraries\EntitasCodeGenerator\Attributes\ContextAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\WillBeRemovedContextObserver.cs">
+      <Link>Libraries\Entitas\WillBeRemovedContextObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\ReactiveSystem.cs">
+      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\ReactiveWillBeRemovedSystem.cs">
+      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveWillBeRemovedSystem.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -38,9 +38,9 @@ public class DictionaryComponent : IComponent {
     }
 
     public static partial class Matcher {
-        static AllOfEntityMatcher _matcherDictionary;
+        static AllOfMatcher _matcherDictionary;
 
-        public static AllOfEntityMatcher Dictionary {
+        public static AllOfMatcher Dictionary {
             get {
                 if (_matcherDictionary == null) {
                     _matcherDictionary = Matcher.AllOf(new [] { ComponentIds.Dictionary });

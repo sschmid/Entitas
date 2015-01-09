@@ -40,9 +40,9 @@ public class PersonComponent : IComponent {
     }
 
     public static partial class Matcher {
-        static AllOfEntityMatcher _matcherPerson;
+        static AllOfMatcher _matcherPerson;
 
-        public static AllOfEntityMatcher Person {
+        public static AllOfMatcher Person {
             get {
                 if (_matcherPerson == null) {
                     _matcherPerson = Matcher.AllOf(new [] { ComponentIds.Person });

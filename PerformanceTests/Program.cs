@@ -7,12 +7,12 @@ namespace PerformanceTests {
             Console.WriteLine("Running performance tests...");
             Thread.Sleep(1500);
 
-            run<EntityRepositoryCreateEntity>();
-            run<EntityRepositoryDestroyAllEntites>();
-            run<EntityRepositoryGetCollection>();
-            run<EntityRepositoryGetEntities>();
-            run<EntityRepositoryHasEntity>();
-            run<EntityRepositoryOnEntityReplaced>();
+            run<ContextCreateEntity>();
+            run<ContextDestroyAllEntites>();
+            run<ContextGetGroup>();
+            run<ContextGetEntities>();
+            run<ContextHasEntity>();
+            run<ContextOnEntityReplaced>();
             run<EmptyTest>();
 
             run<EntityGetComponent>();
@@ -22,8 +22,8 @@ namespace PerformanceTests {
             run<EntityReplaceComponent>();
             run<EmptyTest>();
 
-            run<EntityMatcherEquals>();
-            run<EntityMatcherGetHashCode>();
+            run<MatcherEquals>();
+            run<MatcherGetHashCode>();
             run<EmptyTest>();
 
 //            run<ArrayGetItem>();
@@ -45,11 +45,11 @@ namespace PerformanceTests {
         }
 
         //        Running performance tests...
-        //        EntityRepositoryCreateEntity:           109 ms
-        //        EntityRepositoryDestroyAllEntites:      49 ms
-        //        EntityRepositoryGetEntities:            3 ms
-        //        EntityRepositoryHasEntity:              8 ms
-        //        EntityRepositoryOnEntityReplaced:       8 ms
+        //        ContextCreateEntity:                    109 ms
+        //        ContextDestroyAllEntites:               49 ms
+        //        ContextGetEntities:                     3 ms
+        //        ContextHasEntity:                       8 ms
+        //        ContextOnEntityReplaced:                8 ms
         //
         //        EntityGetComponent:                     43 ms
         //        EntityGetComponents:                    3 ms
@@ -57,8 +57,8 @@ namespace PerformanceTests {
         //        EntityRemoveAddComponent:               396 ms
         //        EntityReplaceComponent:                 22 ms
         //
-        //        EntityMatcherEquals:                    242 ms
-        //        EntityMatcherGetHashCode:               21 ms
+        //        MatcherEquals:                          242 ms
+        //        MatcherGetHashCode:                     21 ms
         //
         //        ArrayGetItem:                           2 ms
         //        DictionaryGetItem:                      7 ms

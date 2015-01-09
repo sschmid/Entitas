@@ -2,27 +2,27 @@
 
 public class EntityReplaceComponent : IPerformanceTest {
     const int n = 1000000;
-    EntityRepository _repo;
+    Context _context;
     Entity _e;
 
     public void Before() {
-        _repo = new EntityRepository(CP.NumComponents);
-        _repo.GetCollection(Matcher.AllOf(new [] { CP.ComponentA }));
-        _repo.GetCollection(Matcher.AllOf(new [] { CP.ComponentB }));
-        _repo.GetCollection(Matcher.AllOf(new [] { CP.ComponentC }));
-        _repo.GetCollection(Matcher.AllOf(new [] {
+        _context = new Context(CP.NumComponents);
+        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
+        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentB }));
+        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentC }));
+        _context.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB
         }));
-        _repo.GetCollection(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentC
         }));
-        _repo.GetCollection(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentB,
             CP.ComponentC
         }));
-        _repo.GetCollection(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB,
             CP.ComponentC

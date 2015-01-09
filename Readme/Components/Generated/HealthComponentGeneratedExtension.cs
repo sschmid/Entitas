@@ -32,9 +32,9 @@ namespace Entitas {
     }
 
     public static partial class Matcher {
-        static AllOfEntityMatcher _matcherHealth;
+        static AllOfMatcher _matcherHealth;
 
-        public static AllOfEntityMatcher Health {
+        public static AllOfMatcher Health {
             get {
                 if (_matcherHealth == null) {
                     _matcherHealth = Matcher.AllOf(new [] { ComponentIds.Health });

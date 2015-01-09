@@ -9,7 +9,7 @@ namespace Readme {
             new UserComponent();
         }
 
-        void entity(Entity entity) {
+        void entityExample(Entity entity) {
             entity.AddPosition(0, 0, 0);
             entity.AddHealth(100);
             entity.isMovable = true;
@@ -24,27 +24,27 @@ namespace Readme {
             var movable = entity.isMovable;
         }
 
-        void entityRepository() {
+        void contextExample() {
             // Total components is kindly generated for you by the code generator
-            var repo = new EntityRepository(ComponentIds.TotalComponents);
-            var entity = repo.CreateEntity();
+            var context = new Context(ComponentIds.TotalComponents);
+            var entity = context.CreateEntity();
             entity.isMovable = true;
 
             // Returns all entities having MoveComponent and PositionComponent. Matchers are also generated for you.
-            var entities = repo.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
+            var entities = context.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
             foreach (var e in entities) {
                 // do something
             }
         }
 
-        void entityCollection(EntityRepository repo) {
-            repo.GetCollection(Matcher.Position).GetEntities();
+        void groupExample(Context context) {
+            context.GetGroup(Matcher.Position).GetEntities();
         }
 
-        void entityRepositoryObserver(EntityRepository repo) {
-            var observer = repo.CreateObserver(
+        void contextObserverExample(Context context) {
+            var observer = context.CreateObserver(
                                Matcher.Position,
-                               EntityCollectionEventType.OnEntityAdded
+                               GroupEventType.OnEntityAdded
                            );
 
             var entities = observer.collectedEntities;
@@ -70,17 +70,17 @@ namespace Readme {
             e.RemovePosition();
         }
 
-        void userComponent(EntityRepository repo, UserComponent component) {
-            var e = repo.userEntity;
-            var name = repo.user.name;
-            var has = repo.hasUser;
+        void userComponent(Context context, UserComponent component) {
+            var e = context.userEntity;
+            var name = context.user.name;
+            var has = context.hasUser;
 
-            repo.SetUser("John", 42);
-            repo.SetUser(component);
+            context.SetUser("John", 42);
+            context.SetUser(component);
 
-            repo.ReplaceUser("Max", 24);
+            context.ReplaceUser("Max", 24);
 
-            repo.RemoveUser();
+            context.RemoveUser();
         }
 
         void movableComponent(Entity e) {
@@ -89,11 +89,11 @@ namespace Readme {
             e.isMovable = false;
         }
 
-        void animatingComponent(EntityRepository repo) {
-            var e = repo.animatingEntity;
-            var isAnimating = repo.isAnimating;
-            repo.isAnimating = true;
-            repo.isAnimating = false;
+        void animatingComponent(Context context) {
+            var e = context.animatingEntity;
+            var isAnimating = context.isAnimating;
+            context.isAnimating = true;
+            context.isAnimating = false;
         }
     }
 }

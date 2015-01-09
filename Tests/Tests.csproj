@@ -38,14 +38,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\describe_Entity.cs" />
-    <Compile Include="Tests\describe_EntityRepository.cs" />
-    <Compile Include="Tests\describe_EntityMatcher.cs" />
-    <Compile Include="Tests\describe_EntityCollection.cs" />
-    <Compile Include="Tests\describe_ReactiveEntitySystem.cs" />
     <Compile Include="Tests\Fixtures\ReactiveSubSystemSpy.cs" />
-    <Compile Include="Tests\describe_EntityRepositoryObserver.cs" />
     <Compile Include="Tests\Fixtures\EntityEmittingSubSystem.cs" />
-    <Compile Include="Tests\describe_EntityWillBeRemovedEntityRepositoryObserver.cs" />
     <Compile Include="Tests\describe_EntitasCodeGenerator.cs" />
     <Compile Include="Tests\describe_ComponentExtensionsGenerator.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\FakeComponent.cs" />
@@ -55,14 +49,19 @@
     <Compile Include="Tests\Fixtures\CodeGenerator\DontGenerateComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\DictionaryComponent.cs" />
     <Compile Include="Tests\describe_IndicesLookupGenerator.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\OtherRepoComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\PersonComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\MovableComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\UserComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\AnimatingComponent.cs" />
     <Compile Include="Tests\Fixtures\Component.cs" />
     <Compile Include="Tests\Test Extensions\TestHelper.cs" />
+    <Compile Include="Tests\describe_Context.cs" />
+    <Compile Include="Tests\describe_ContextObserver.cs" />
+    <Compile Include="Tests\describe_EntityWillBeRemovedContextObserver.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\OtherContextComponent.cs" />
+    <Compile Include="Tests\describe_Group.cs" />
     <Compile Include="Tests\describe_Matcher.cs" />
+    <Compile Include="Tests\describe_ReactiveSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

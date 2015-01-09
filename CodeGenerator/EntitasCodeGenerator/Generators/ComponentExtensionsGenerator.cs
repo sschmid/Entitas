@@ -31,7 +31,7 @@ namespace Entitas.CodeGenerator {
             var code = addNamespace();
             code += addEntityMethods(type);
             if (isSingleEntity(type)) {
-                code += addEntityRepositoryMethods(type);
+                code += addContextMethods(type);
             }
             code += addMatcher(type);
             code += closeNamespace();
@@ -133,36 +133,36 @@ $assign
 
         /*
          *
-         * ENTITY REPOSITORY METHODS
+         * CONTEXT METHODS
          *
          */
 
-        static string addEntityRepositoryMethods(Type type) {
-            return addEntityRepositoryClassHeader()
-            + addRepoGetMethods(type)
-            + addRepoHasMethods(type)
-            + addRepoAddMethods(type)
-            + addRepoReplaceMethods(type)
-            + addRepoRemoveMethods(type)
+        static string addContextMethods(Type type) {
+            return addContextClassHeader()
+            + addContextGetMethods(type)
+            + addContextHasMethods(type)
+            + addContextAddMethods(type)
+            + addContextReplaceMethods(type)
+            + addContextRemoveMethods(type)
             + addCloseClass();
         }
 
-        static string addEntityRepositoryClassHeader() {
-            return "\n    public partial class EntityRepository {";
+        static string addContextClassHeader() {
+            return "\n    public partial class Context {";
         }
 
-        static string addRepoGetMethods(Type type) {
+        static string addContextGetMethods(Type type) {
             string getMehod = isSingletonComponent(type) ? @"
-        public Entity $nameEntity { get { return GetCollection(Matcher.$Name).GetSingleEntity(); } }
+        public Entity $nameEntity { get { return GetGroup(Matcher.$Name).GetSingleEntity(); } }
 " : @"
-        public Entity $nameEntity { get { return GetCollection(Matcher.$Name).GetSingleEntity(); } }
+        public Entity $nameEntity { get { return GetGroup(Matcher.$Name).GetSingleEntity(); } }
 
         public $Type $name { get { return $nameEntity.$name; } }
 ";
             return buildString(type, getMehod);
         }
 
-        static string addRepoHasMethods(Type type) {
+        static string addContextHasMethods(Type type) {
             string hasMethod = isSingletonComponent(type) ? @"
         public bool is$Name {
             get { return $nameEntity != null; }
@@ -183,7 +183,7 @@ $assign
             return buildString(type, hasMethod);
         }
 
-        static object addRepoAddMethods(Type type) {
+        static object addContextAddMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Set$Name($Type component) {
             if (has$Name) {
@@ -205,7 +205,7 @@ $assign
 ");
         }
 
-        static string addRepoReplaceMethods(Type type) {
+        static string addContextReplaceMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Replace$Name($typedArgs) {
             var entity = $nameEntity;
@@ -220,7 +220,7 @@ $assign
 ");
         }
 
-        static string addRepoRemoveMethods(Type type) {
+        static string addContextRemoveMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public void Remove$Name() {
             DestroyEntity($nameEntity);
@@ -237,9 +237,9 @@ $assign
         static string addMatcher(Type type) {
             return buildString(type, @"
     public static partial class Matcher {
-        static AllOfEntityMatcher _matcher$Name;
+        static AllOfMatcher _matcher$Name;
 
-        public static AllOfEntityMatcher $Name {
+        public static AllOfMatcher $Name {
             get {
                 if (_matcher$Name == null) {
                     _matcher$Name = Matcher.AllOf(new [] { $Ids.$Name });
@@ -304,7 +304,7 @@ $assign
         static string indicesLookupTag(Type type) {
             Attribute[] attrs = Attribute.GetCustomAttributes(type);
             foreach (Attribute attr in attrs) {
-                var lookup = attr as EntityRepositoryAttribute;
+                var lookup = attr as ContextAttribute;
                 if (lookup != null) {
                     return lookup.tag;
                 }

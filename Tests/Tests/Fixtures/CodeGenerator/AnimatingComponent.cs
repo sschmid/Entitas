@@ -22,8 +22,8 @@ public class AnimatingComponent : IComponent {
         }
     }
 
-    public partial class EntityRepository {
-        public Entity animatingEntity { get { return GetCollection(Matcher.Animating).GetSingleEntity(); } }
+    public partial class Context {
+        public Entity animatingEntity { get { return GetGroup(Matcher.Animating).GetSingleEntity(); } }
 
         public bool isAnimating {
             get { return animatingEntity != null; }
@@ -41,9 +41,9 @@ public class AnimatingComponent : IComponent {
     }
 
     public static partial class Matcher {
-        static AllOfEntityMatcher _matcherAnimating;
+        static AllOfMatcher _matcherAnimating;
 
-        public static AllOfEntityMatcher Animating {
+        public static AllOfMatcher Animating {
             get {
                 if (_matcherAnimating == null) {
                     _matcherAnimating = Matcher.AllOf(new [] { ComponentIds.Animating });

@@ -1,26 +1,26 @@
 ﻿using Entitas;
 using System.Linq;
 
-public class ReactiveSubSystemSpy : IReactiveSubEntitySystem {
+public class ReactiveSubSystemSpy : IReactiveSystem {
     public int didExecute { get { return _didExecute; } }
 
     public Entity[] entites { get { return _entites; } }
 
-    readonly IEntityMatcher _matcher;
-    readonly EntityCollectionEventType _eventType;
+    readonly IMatcher _matcher;
+    readonly GroupEventType _eventType;
     int _didExecute;
     Entity[] _entites;
 
-    public ReactiveSubSystemSpy(IEntityMatcher matcher, EntityCollectionEventType eventType) {
+    public ReactiveSubSystemSpy(IMatcher matcher, GroupEventType eventType) {
         _matcher = matcher;
         _eventType = eventType;
     }
 
-    public IEntityMatcher GetTriggeringMatcher() {
+    public IMatcher GetTriggeringMatcher() {
         return _matcher;
     }
 
-    public EntityCollectionEventType GetEventType() {
+    public GroupEventType GetEventType() {
         return _eventType;
     }
 

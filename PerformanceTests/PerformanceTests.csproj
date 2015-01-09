@@ -35,18 +35,12 @@
     <Compile Include="PerformanceTests\IPerformanceTest.cs" />
     <Compile Include="PerformanceTestRunner.cs" />
     <Compile Include="PerformanceTests\EmptyTest.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryCreateEntity.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryDestroyAllEntites.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryGetEntities.cs" />
     <Compile Include="PerformanceTests\Entity\EntityGetComponents.cs" />
-    <Compile Include="PerformanceTests\EntityMatcher\EntityMatcherGetHashCode.cs" />
-    <Compile Include="PerformanceTests\EntityMatcher\EntityMatcherEquals.cs" />
     <Compile Include="PerformanceTests\Entity\EntityHasComponent.cs" />
     <Compile Include="PerformanceTests\Fixtures\ComponentA.cs" />
     <Compile Include="PerformanceTests\Fixtures\ComponentB.cs" />
     <Compile Include="PerformanceTests\Fixtures\ComponentC.cs" />
     <Compile Include="PerformanceTests\Entity\EntityRemoveAddComponent.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryOnEntityReplaced.cs" />
     <Compile Include="PerformanceTests\Entity\EntityGetComponent.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListAdd.cs" />
     <Compile Include="PerformanceTests\DataStructures\OrderedSetAdd.cs" />
@@ -63,8 +57,14 @@
     <Compile Include="PerformanceTests\DataStructures\ArrayGetItem.cs" />
     <Compile Include="PerformanceTests\Entity\EntityReplaceComponent.cs" />
     <Compile Include="PerformanceTests\Fixtures\CP.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryHasEntity.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\EntityRepositoryGetCollection.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\ContextCreateEntity.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\ContextDestroyAllEntites.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\ContextGetEntities.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\ContextHasEntity.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\ContextOnEntityReplaced.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\ContextGetGroup.cs" />
+    <Compile Include="PerformanceTests\EntityMatcher\MatcherGetHashCode.cs" />
+    <Compile Include="PerformanceTests\EntityMatcher\MatcherEquals.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

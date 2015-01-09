@@ -36,9 +36,9 @@ namespace Entitas {
     }
 
     public static partial class Matcher {
-        static AllOfEntityMatcher _matcherPosition;
+        static AllOfMatcher _matcherPosition;
 
-        public static AllOfEntityMatcher Position {
+        public static AllOfMatcher Position {
             get {
                 if (_matcherPosition == null) {
                     _matcherPosition = Matcher.AllOf(new [] { ComponentIds.Position });

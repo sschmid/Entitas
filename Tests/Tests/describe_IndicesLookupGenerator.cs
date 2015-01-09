@@ -29,9 +29,9 @@ class describe_IndicesLookupGenerator : nspec {
         };
         
         it["generates lookup with name from attribute"] = () => {
-            generates(typeof(OtherRepoComponent), "Other",
+            generates(typeof(OtherContextComponent), "Other",
                 @"public static class Other {
-    public const int OtherRepo = 0;
+    public const int OtherContext = 0;
 
     public const int TotalComponents = 1;
 }");
