@@ -54,17 +54,7 @@ namespace Entitas.CodeGenerator {
             foreach (var entry in files) {
                 var filePath = dir + entry.Key + ".cs";
                 var code = entry.Value;
-                write(filePath, code);
-            }
-        }
-
-        readonly static object _writeLock = new object();
-
-        static void write(string path, string text) {
-            lock (_writeLock) {
-                using (StreamWriter writer = new StreamWriter(path, false)) {
-                    writer.WriteLine(text);
-                }
+                File.WriteAllText(filePath, code);
             }
         }
     }

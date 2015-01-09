@@ -23,7 +23,7 @@ After you've read the readme, take a look at the [example project](https://githu
 ### Entity
 You can imagine an entity as a container holding data to represent certain objects in your application. You can add, replace or remove data from entities in form of `IComponent`. Entities have corresponding events to let you know if components were added, replaced or removed.
 
-Here's how you can interact with an entity. To enjoy a more natural and more readable API, simply use the code generator that comes with Entitas (see **Code Generator** further down). In this example you can see some generated methods for `PositionComponent`, `HealthComponent`, `MovableComponent`.
+Here's how you can interact with an entity. To enjoy a more natural and more readable API, simply use the code generator that comes with Entitas (see [Code Generator](#Code-Generator)). In this example you can see some generated methods for `PositionComponent`, `HealthComponent`, `MovableComponent`.
 ````cs
 entity.AddPosition(0, 0, 0);
 entity.AddHealth(100);
@@ -47,7 +47,8 @@ var repo = new EntityRepository(ComponentIds.TotalComponents);
 var entity = repo.CreateEntity();
 entity.isMovable = true;
 
-// Returns all entities having MoveComponent and PositionComponent. Matchers are also generated for you.
+// Returns all entities having MoveComponent and PositionComponent.
+// Matchers are also generated for you.
 var entities = repo.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
 foreach (var e in entities) {
     // do something
