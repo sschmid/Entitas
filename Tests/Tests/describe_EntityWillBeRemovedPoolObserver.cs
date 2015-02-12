@@ -2,27 +2,27 @@
 using Entitas;
 using System.Linq;
 
-class describe_EntityWillBeRemovedContextObserver : nspec {
+class describe_EntityWillBeRemovedPoolObserver : nspec {
 
     void when_created() {
 
-        Context ctx = null;
-        WillBeRemovedContextObserver observer = null;
+        Pool pool = null;
+        WillBeRemovedPoolObserver observer = null;
         before = () => {
-            ctx = new Context(CID.NumComponents);
+            pool = new Pool(CID.NumComponents);
         };
 
         it["throws when matcher has not exactely one index"] = expect<MatcherException>(() => {
-            new WillBeRemovedContextObserver(ctx, Matcher.AllOf(CID.ComponentA, CID.ComponentB));
+            new WillBeRemovedPoolObserver(pool, Matcher.AllOf(CID.ComponentA, CID.ComponentB));
         });
 
         context["when observing"] = () => {
             before = () => {
-                observer = new WillBeRemovedContextObserver(ctx, Matcher.AllOf(CID.ComponentA));
+                observer = new WillBeRemovedPoolObserver(pool, Matcher.AllOf(CID.ComponentA));
             };
 
             it["returns collected entities"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.RemoveComponentA();
 
@@ -34,9 +34,9 @@ class describe_EntityWillBeRemovedContextObserver : nspec {
             };
 
             it["only returns matching collected entities"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
-                var e2 = ctx.CreateEntity();
+                var e2 = pool.CreateEntity();
                 e2.AddComponentB();
                 e.RemoveComponentA();
                 e2.RemoveComponentB();
@@ -48,7 +48,7 @@ class describe_EntityWillBeRemovedContextObserver : nspec {
             };
 
             it["collects entites only once"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.RemoveComponentA();
                 e.AddComponentA();
@@ -63,7 +63,7 @@ class describe_EntityWillBeRemovedContextObserver : nspec {
             };
 
             it["clears collected entities on deactivation"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.RemoveComponentA();
 
@@ -73,7 +73,7 @@ class describe_EntityWillBeRemovedContextObserver : nspec {
 
             it["doesn't collect entities when deactivated"] = () => {
                 observer.Deactivate();
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.RemoveComponentA();
                 observer.collectedEntityComponentPairs.should_be_empty();
@@ -81,13 +81,13 @@ class describe_EntityWillBeRemovedContextObserver : nspec {
 
             it["continues collecting when activated"] = () => {
                 observer.Deactivate();
-                var e1 = ctx.CreateEntity();
+                var e1 = pool.CreateEntity();
                 e1.AddComponentA();
                 e1.RemoveComponentA();
 
                 observer.Activate();
 
-                var e2 = ctx.CreateEntity();
+                var e2 = pool.CreateEntity();
                 e2.AddComponentA();
                 e2.RemoveComponentA();
 
@@ -97,7 +97,7 @@ class describe_EntityWillBeRemovedContextObserver : nspec {
             };
 
             it["clears collected entites"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.RemoveComponentA();
 

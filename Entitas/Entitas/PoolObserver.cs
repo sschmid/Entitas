@@ -7,16 +7,16 @@ namespace Entitas {
         OnEntityAddedOrRemoved
     }
 
-    public class ContextObserver {
+    public class PoolObserver {
         public HashSet<Entity> collectedEntities { get { return _collectedEntities; } }
 
         readonly HashSet<Entity> _collectedEntities;
         readonly Group _group;
         readonly GroupEventType _eventType;
 
-        public ContextObserver(Context context, IMatcher matcher, GroupEventType eventType) {
+        public PoolObserver(Pool pool, IMatcher matcher, GroupEventType eventType) {
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
-            _group = context.GetGroup(matcher);
+            _group = pool.GetGroup(matcher);
             _eventType = eventType;
             Activate();
         }

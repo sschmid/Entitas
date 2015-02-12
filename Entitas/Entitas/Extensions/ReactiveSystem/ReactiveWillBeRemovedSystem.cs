@@ -3,11 +3,11 @@
         public IReactiveWillBeRemovedSystem subsystem { get { return _subsystem; } }
 
         readonly IReactiveWillBeRemovedSystem _subsystem;
-        readonly WillBeRemovedContextObserver _observer;
+        readonly WillBeRemovedPoolObserver _observer;
 
-        public ReactiveWillBeRemovedSystem(Context context, IReactiveWillBeRemovedSystem subSystem) {
+        public ReactiveWillBeRemovedSystem(Pool pool, IReactiveWillBeRemovedSystem subSystem) {
             _subsystem = subSystem;
-            _observer = new WillBeRemovedContextObserver(context, subSystem.GetTriggeringMatcher());
+            _observer = new WillBeRemovedPoolObserver(pool, subSystem.GetTriggeringMatcher());
         }
 
         public void Execute() {

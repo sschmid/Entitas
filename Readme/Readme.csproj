@@ -67,12 +67,6 @@
     <Compile Include="..\Entitas\Entitas\Group.cs">
       <Link>Libraries\Entitas\Group.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Context.cs">
-      <Link>Libraries\Entitas\Context.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\ContextObserver.cs">
-      <Link>Libraries\Entitas\ContextObserver.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
       <Link>Libraries\Entitas\Interfaces\IMatcher.cs</Link>
     </Compile>
@@ -81,9 +75,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\CollectionExtension.cs">
       <Link>Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ContextExtension.cs">
-      <Link>Libraries\Entitas\Extensions\ContextExtension.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\IReactiveSystem.cs">
       <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\IReactiveSystem.cs</Link>
@@ -97,12 +88,6 @@
     <Compile Include="..\Entitas\Entitas\Matcher\AllOfMatcher.cs">
       <Link>Libraries\Entitas\EntityMatcher\AllOfMatcher.cs</Link>
     </Compile>
-    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\ContextAttribute.cs">
-      <Link>Libraries\EntitasCodeGenerator\Attributes\ContextAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\WillBeRemovedContextObserver.cs">
-      <Link>Libraries\Entitas\WillBeRemovedContextObserver.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\ReactiveSystem.cs">
       <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveSystem.cs</Link>
     </Compile>
@@ -114,6 +99,21 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
       <Link>Libraries\Entitas\Interfaces\ISystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Pool.cs">
+      <Link>Libraries\Entitas\Pool.cs</Link>
+    </Compile>
+    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\PoolAttribute.cs">
+      <Link>Libraries\EntitasCodeGenerator\Attributes\PoolAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\WillBeRemovedPoolObserver.cs">
+      <Link>Libraries\Entitas\WillBeRemovedPoolObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\PoolObserver.cs">
+      <Link>Libraries\Entitas\PoolObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\PoolExtension.cs">
+      <Link>Libraries\Entitas\Extensions\PoolExtension.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

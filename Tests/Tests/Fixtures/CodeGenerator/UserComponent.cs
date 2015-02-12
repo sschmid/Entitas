@@ -42,7 +42,7 @@ public class UserComponent : IComponent {
         }
     }
 
-    public partial class Context {
+    public partial class Pool {
         public Entity userEntity { get { return GetGroup(Matcher.User).GetSingleEntity(); } }
 
         public UserComponent user { get { return userEntity.user; } }

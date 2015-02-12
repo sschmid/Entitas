@@ -2,10 +2,10 @@ using System;
 
 namespace Entitas.CodeGenerator {
     [AttributeUsage(AttributeTargets.Class)]
-    public class ContextAttribute : Attribute {
+    public class PoolAttribute : Attribute {
         public string tag;
 
-        public ContextAttribute(string tag) {
+        public PoolAttribute(string tag) {
             this.tag = tag;
         }
     }

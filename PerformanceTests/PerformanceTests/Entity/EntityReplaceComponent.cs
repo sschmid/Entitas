@@ -2,27 +2,27 @@
 
 public class EntityReplaceComponent : IPerformanceTest {
     const int n = 1000000;
-    Context _context;
+    Pool _pool;
     Entity _e;
 
     public void Before() {
-        _context = new Context(CP.NumComponents);
-        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
-        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentB }));
-        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentC }));
-        _context.GetGroup(Matcher.AllOf(new [] {
+        _pool = new Pool(CP.NumComponents);
+        _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
+        _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentB }));
+        _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentC }));
+        _pool.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB
         }));
-        _context.GetGroup(Matcher.AllOf(new [] {
+        _pool.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentC
         }));
-        _context.GetGroup(Matcher.AllOf(new [] {
+        _pool.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentB,
             CP.ComponentC
         }));
-        _context.GetGroup(Matcher.AllOf(new [] {
+        _pool.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB,
             CP.ComponentC

@@ -16,7 +16,7 @@ namespace Entitas {
         }
     }
 
-    public partial class Context {
+    public partial class Pool {
         public Entity animatingEntity { get { return GetGroup(Matcher.Animating).GetSingleEntity(); } }
 
         public bool isAnimating {

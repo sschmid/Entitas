@@ -35,21 +35,21 @@
     <Compile Include="Entitas\Entity.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
     <Compile Include="Entitas\Group.cs" />
-    <Compile Include="Entitas\Context.cs" />
-    <Compile Include="Entitas\ContextObserver.cs" />
     <Compile Include="Entitas\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
-    <Compile Include="Entitas\Extensions\ContextExtension.cs" />
     <Compile Include="Entitas\Extensions\ReactiveSystem\IReactiveSystem.cs" />
     <Compile Include="Entitas\Extensions\ReactiveSystem\IReactiveWillBeRemovedSystem.cs" />
     <Compile Include="Entitas\Matcher\AbstractMatcher.cs" />
     <Compile Include="Entitas\Matcher\AllOfMatcher.cs" />
-    <Compile Include="Entitas\WillBeRemovedContextObserver.cs" />
     <Compile Include="Entitas\Extensions\ReactiveSystem\ReactiveSystem.cs" />
     <Compile Include="Entitas\Extensions\ReactiveSystem\ReactiveWillBeRemovedSystem.cs" />
     <Compile Include="Entitas\Interfaces\IExecuteSystem.cs" />
     <Compile Include="Entitas\Interfaces\ISystem.cs" />
+    <Compile Include="Entitas\Pool.cs" />
+    <Compile Include="Entitas\WillBeRemovedPoolObserver.cs" />
+    <Compile Include="Entitas\PoolObserver.cs" />
+    <Compile Include="Entitas\Extensions\PoolExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using ToolKit;
 
 namespace Entitas {
-    public partial class Context {
+    public partial class Pool {
         readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
         readonly List<Group>[] _groupsForIndex;
@@ -12,10 +12,10 @@ namespace Entitas {
         int _creationIndex;
         Entity[] _entitiesCache;
 
-        public Context(int totalComponents) : this(totalComponents, 0) {
+        public Pool(int totalComponents) : this(totalComponents, 0) {
         }
 
-        public Context(int totalComponents, int startCreationIndex) {
+        public Pool(int totalComponents, int startCreationIndex) {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
             _groupsForIndex = new List<Group>[totalComponents];

@@ -37,7 +37,7 @@
     <Compile Include="EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs" />
     <Compile Include="EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs" />
     <Compile Include="EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs" />
-    <Compile Include="EntitasCodeGenerator\Attributes\ContextAttribute.cs" />
+    <Compile Include="EntitasCodeGenerator\Attributes\PoolAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

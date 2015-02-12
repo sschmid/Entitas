@@ -55,13 +55,13 @@
     <Compile Include="Tests\Fixtures\CodeGenerator\AnimatingComponent.cs" />
     <Compile Include="Tests\Fixtures\Component.cs" />
     <Compile Include="Tests\Test Extensions\TestHelper.cs" />
-    <Compile Include="Tests\describe_Context.cs" />
-    <Compile Include="Tests\describe_ContextObserver.cs" />
-    <Compile Include="Tests\describe_EntityWillBeRemovedContextObserver.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\OtherContextComponent.cs" />
     <Compile Include="Tests\describe_Group.cs" />
     <Compile Include="Tests\describe_Matcher.cs" />
     <Compile Include="Tests\describe_ReactiveSystem.cs" />
+    <Compile Include="Tests\describe_EntityWillBeRemovedPoolObserver.cs" />
+    <Compile Include="Tests\describe_PoolObserver.cs" />
+    <Compile Include="Tests\describe_Pool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -24,25 +24,25 @@ namespace Readme {
             var movable = entity.isMovable;
         }
 
-        void contextExample() {
+        void poolExample() {
             // Total components is kindly generated for you by the code generator
-            var context = new Context(ComponentIds.TotalComponents);
-            var entity = context.CreateEntity();
+            var pool = new Pool(ComponentIds.TotalComponents);
+            var entity = pool.CreateEntity();
             entity.isMovable = true;
 
             // Returns all entities having MoveComponent and PositionComponent. Matchers are also generated for you.
-            var entities = context.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
+            var entities = pool.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
             foreach (var e in entities) {
                 // do something
             }
         }
 
-        void groupExample(Context context) {
-            context.GetGroup(Matcher.Position).GetEntities();
+        void groupExample(Pool pool) {
+            pool.GetGroup(Matcher.Position).GetEntities();
         }
 
-        void contextObserverExample(Context context) {
-            var observer = context.CreateObserver(
+        void poolObserverExample(Pool pool) {
+            var observer = pool.CreateObserver(
                                Matcher.Position,
                                GroupEventType.OnEntityAdded
                            );
@@ -70,17 +70,17 @@ namespace Readme {
             e.RemovePosition();
         }
 
-        void userComponent(Context context, UserComponent component) {
-            var e = context.userEntity;
-            var name = context.user.name;
-            var has = context.hasUser;
+        void userComponent(Pool pool, UserComponent component) {
+            var e = pool.userEntity;
+            var name = pool.user.name;
+            var has = pool.hasUser;
 
-            context.SetUser("John", 42);
-            context.SetUser(component);
+            pool.SetUser("John", 42);
+            pool.SetUser(component);
 
-            context.ReplaceUser("Max", 24);
+            pool.ReplaceUser("Max", 24);
 
-            context.RemoveUser();
+            pool.RemoveUser();
         }
 
         void movableComponent(Entity e) {
@@ -89,11 +89,11 @@ namespace Readme {
             e.isMovable = false;
         }
 
-        void animatingComponent(Context context) {
-            var e = context.animatingEntity;
-            var isAnimating = context.isAnimating;
-            context.isAnimating = true;
-            context.isAnimating = false;
+        void animatingComponent(Pool pool) {
+            var e = pool.animatingEntity;
+            var isAnimating = pool.isAnimating;
+            pool.isAnimating = true;
+            pool.isAnimating = false;
         }
     }
 }

@@ -6,12 +6,12 @@ public class EntityEmittingSubSystem : IReactiveSystem {
 
     public Entity[] entites { get { return _entites; } }
 
-    Context _context;
+    readonly Pool _pool;
     int _didExecute;
     Entity[] _entites;
 
-    public EntityEmittingSubSystem(Context context) {
-        _context = context;
+    public EntityEmittingSubSystem(Pool pool) {
+        _pool = pool;
     }
 
     public IMatcher GetTriggeringMatcher() {
@@ -23,7 +23,7 @@ public class EntityEmittingSubSystem : IReactiveSystem {
     }
 
     public void Execute(Entity[] entities) {
-        _context.CreateEntity().AddComponent(CID.ComponentA, new ComponentA());
+        _pool.CreateEntity().AddComponent(CID.ComponentA, new ComponentA());
         _entites = entities.ToArray();
         _didExecute++;
     }

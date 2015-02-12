@@ -1,17 +1,17 @@
 ﻿using Entitas;
 
-public class ContextGetGroup : IPerformanceTest {
+public class PoolGetGroup : IPerformanceTest {
     const int n = 100000;
-    Context _context;
+    Pool _pool;
 
     public void Before() {
-        _context = new Context(CP.NumComponents);
+        _pool = new Pool(CP.NumComponents);
     }
 
     public void Run() {
         var m = Matcher.AllOf(new [] { CP.ComponentA });
         for (int i = 0; i < n; i++) {
-            _context.GetGroup(m);
+            _pool.GetGroup(m);
         }
     }
 }

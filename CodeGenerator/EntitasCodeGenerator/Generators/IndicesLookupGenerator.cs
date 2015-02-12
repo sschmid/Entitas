@@ -28,7 +28,7 @@ namespace Entitas.CodeGenerator {
         string lookupTagForType(Type type) {
             Attribute[] attrs = Attribute.GetCustomAttributes(type);
             foreach (Attribute attr in attrs) {
-                var era = attr as ContextAttribute;
+                var era = attr as PoolAttribute;
                 if (era != null) {
                     return era.tag;
                 }

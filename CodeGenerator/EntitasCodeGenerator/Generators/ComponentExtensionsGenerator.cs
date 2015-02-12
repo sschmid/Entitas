@@ -31,7 +31,7 @@ namespace Entitas.CodeGenerator {
             var code = addNamespace();
             code += addEntityMethods(type);
             if (isSingleEntity(type)) {
-                code += addContextMethods(type);
+                code += addPoolMethods(type);
             }
             code += addMatcher(type);
             code += closeNamespace();
@@ -133,25 +133,25 @@ $assign
 
         /*
          *
-         * CONTEXT METHODS
+         * POOL METHODS
          *
          */
 
-        static string addContextMethods(Type type) {
-            return addContextClassHeader()
-            + addContextGetMethods(type)
-            + addContextHasMethods(type)
-            + addContextAddMethods(type)
-            + addContextReplaceMethods(type)
-            + addContextRemoveMethods(type)
+        static string addPoolMethods(Type type) {
+            return addPoolClassHeader()
+            + addPoolGetMethods(type)
+            + addPoolHasMethods(type)
+            + addPoolAddMethods(type)
+            + addPoolReplaceMethods(type)
+            + addPoolRemoveMethods(type)
             + addCloseClass();
         }
 
-        static string addContextClassHeader() {
-            return "\n    public partial class Context {";
+        static string addPoolClassHeader() {
+            return "\n    public partial class Pool {";
         }
 
-        static string addContextGetMethods(Type type) {
+        static string addPoolGetMethods(Type type) {
             string getMehod = isSingletonComponent(type) ? @"
         public Entity $nameEntity { get { return GetGroup(Matcher.$Name).GetSingleEntity(); } }
 " : @"
@@ -162,7 +162,7 @@ $assign
             return buildString(type, getMehod);
         }
 
-        static string addContextHasMethods(Type type) {
+        static string addPoolHasMethods(Type type) {
             string hasMethod = isSingletonComponent(type) ? @"
         public bool is$Name {
             get { return $nameEntity != null; }
@@ -183,7 +183,7 @@ $assign
             return buildString(type, hasMethod);
         }
 
-        static object addContextAddMethods(Type type) {
+        static object addPoolAddMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Set$Name($Type component) {
             if (has$Name) {
@@ -205,7 +205,7 @@ $assign
 ");
         }
 
-        static string addContextReplaceMethods(Type type) {
+        static string addPoolReplaceMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Replace$Name($typedArgs) {
             var entity = $nameEntity;
@@ -220,7 +220,7 @@ $assign
 ");
         }
 
-        static string addContextRemoveMethods(Type type) {
+        static string addPoolRemoveMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public void Remove$Name() {
             DestroyEntity($nameEntity);
@@ -304,7 +304,7 @@ $assign
         static string indicesLookupTag(Type type) {
             Attribute[] attrs = Attribute.GetCustomAttributes(type);
             foreach (Attribute attr in attrs) {
-                var lookup = attr as ContextAttribute;
+                var lookup = attr as PoolAttribute;
                 if (lookup != null) {
                     return lookup.tag;
                 }

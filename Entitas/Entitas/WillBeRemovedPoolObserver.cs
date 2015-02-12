@@ -15,7 +15,7 @@ namespace Entitas {
         }
     }
 
-    public class WillBeRemovedContextObserver {
+    public class WillBeRemovedPoolObserver {
         public List<EntityComponentPair> collectedEntityComponentPairs { get { return _collectedEntityComponentPairs; } }
 
         readonly HashSet<Entity> _collectedEntities;
@@ -23,14 +23,14 @@ namespace Entitas {
         readonly Group _group;
         readonly int _index;
 
-        public WillBeRemovedContextObserver(Context context, AllOfMatcher matcher) {
+        public WillBeRemovedPoolObserver(Pool pool, AllOfMatcher matcher) {
             if (matcher.indices.Length != 1) {
                 throw new MatcherException(matcher);
             }
 
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
             _collectedEntityComponentPairs = new List<EntityComponentPair>();
-            _group = context.GetGroup(matcher);
+            _group = pool.GetGroup(matcher);
             _index = matcher.indices[0];
             Activate();
         }

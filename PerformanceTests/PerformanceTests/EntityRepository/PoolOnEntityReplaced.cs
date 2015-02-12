@@ -1,14 +1,14 @@
 ﻿using Entitas;
 
-public class ContextOnEntityReplaced : IPerformanceTest {
+public class PoolOnEntityReplaced : IPerformanceTest {
     const int n = 100000;
-    Context _context;
+    Pool _pool;
     Entity _e;
 
     public void Before() {
-        _context = new Context(CP.NumComponents);
-        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
-        _e = _context.CreateEntity();
+        _pool = new Pool(CP.NumComponents);
+        _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
+        _e = _pool.CreateEntity();
         _e.AddComponent(CP.ComponentA, new ComponentA());
     }
 

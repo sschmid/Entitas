@@ -4,17 +4,17 @@ using Entitas;
 class describe_ReactiveSystem : nspec {
 
     void when_created() {
-        Context ctx = null;
+        Pool pool = null;
         ReactiveSystem res = null;
         ReactiveSubSystemSpy subSystem = null;
         before = () => {
-            ctx = new Context(CID.NumComponents);
+            pool = new Pool(CID.NumComponents);
         };
 
         context["OnEntityAdded"] = () => {
             before = () => {
                 subSystem = getSubSystemSypWithOnEntityAdded();
-                res = new ReactiveSystem(ctx, subSystem);
+                res = new ReactiveSystem(pool, subSystem);
             };
 
             it["does not execute its subsystem when no entities were collected"] = () => {
@@ -23,7 +23,7 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["executes when triggeringMatcher matches"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.AddComponentB();
                 res.Execute();
@@ -34,7 +34,7 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["executes only once when triggeringMatcher matches"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.AddComponentB();
                 res.Execute();
@@ -46,7 +46,7 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["doesn't execute when triggeringMatcher doesn't match"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 res.Execute();
                 subSystem.didExecute.should_be(0);
@@ -57,11 +57,11 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityRemoved"] = () => {
             before = () => {
                 subSystem = getSubSystemSypWithOnEntityRemoved();
-                res = new ReactiveSystem(ctx, subSystem);
+                res = new ReactiveSystem(pool, subSystem);
             };
 
             it["executes when triggeringMatcher matches"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.AddComponentB();
                 e.RemoveComponentA();
@@ -73,7 +73,7 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["executes only once when triggeringMatcher matches"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.AddComponentB();
                 e.RemoveComponentA();
@@ -86,7 +86,7 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["doesn't execute when triggeringMatcher doesn't match"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.AddComponentB();
                 e.AddComponentC();
@@ -100,8 +100,8 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityAddedOrRemoved"] = () => {
             it["executes when added"] = () => {
                 subSystem = getSubSystemSypWithOnEntityAddedOrRemoved();
-                res = new ReactiveSystem(ctx, subSystem);
-                var e = ctx.CreateEntity();
+                res = new ReactiveSystem(pool, subSystem);
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.AddComponentB();
                 res.Execute();
@@ -112,11 +112,11 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["executes when removed"] = () => {
-                var e = ctx.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.AddComponentB();
                 subSystem = getSubSystemSypWithOnEntityAddedOrRemoved();
-                res = new ReactiveSystem(ctx, subSystem);
+                res = new ReactiveSystem(pool, subSystem);
                 e.RemoveComponentA();
                 res.Execute();
 
@@ -126,9 +126,9 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["collects matching entities created or modified in the subsystem"] = () => {
-                var sys = new EntityEmittingSubSystem(ctx);
-                res = new ReactiveSystem(ctx, sys);
-                var e = ctx.CreateEntity();
+                var sys = new EntityEmittingSubSystem(pool);
+                res = new ReactiveSystem(pool, sys);
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.AddComponentB();
                 res.Execute();

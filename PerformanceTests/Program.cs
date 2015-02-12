@@ -7,12 +7,12 @@ namespace PerformanceTests {
             Console.WriteLine("Running performance tests...");
             Thread.Sleep(1500);
 
-            run<ContextCreateEntity>();
-            run<ContextDestroyAllEntites>();
-            run<ContextGetGroup>();
-            run<ContextGetEntities>();
-            run<ContextHasEntity>();
-            run<ContextOnEntityReplaced>();
+            run<PoolCreateEntity>();
+            run<PoolDestroyAllEntites>();
+            run<PoolGetGroup>();
+            run<PoolGetEntities>();
+            run<PoolHasEntity>();
+            run<PoolOnEntityReplaced>();
             run<EmptyTest>();
 
             run<EntityGetComponent>();
@@ -45,11 +45,11 @@ namespace PerformanceTests {
         }
 
         //        Running performance tests...
-        //        ContextCreateEntity:                    109 ms
-        //        ContextDestroyAllEntites:               49 ms
-        //        ContextGetEntities:                     3 ms
-        //        ContextHasEntity:                       8 ms
-        //        ContextOnEntityReplaced:                8 ms
+        //        PoolCreateEntity:                    109 ms
+        //        PoolDestroyAllEntites:               49 ms
+        //        PoolGetEntities:                     3 ms
+        //        PoolHasEntity:                       8 ms
+        //        PoolOnEntityReplaced:                8 ms
         //
         //        EntityGetComponent:                     43 ms
         //        EntityGetComponents:                    3 ms
