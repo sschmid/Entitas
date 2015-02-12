@@ -76,9 +76,6 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
       <Link>Libraries\Entitas\Interfaces\IMatcher.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
-      <Link>Libraries\Entitas\Interfaces\ISystem.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
       <Link>Libraries\Entitas\EntityMatcher\Matcher.cs</Link>
     </Compile>
@@ -111,6 +108,12 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\ReactiveWillBeRemovedSystem.cs">
       <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveWillBeRemovedSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IExecuteSystem.cs">
+      <Link>Libraries\Entitas\Interfaces\IExecuteSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
+      <Link>Libraries\Entitas\Interfaces\ISystem.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

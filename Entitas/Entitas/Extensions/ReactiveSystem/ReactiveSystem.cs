@@ -1,5 +1,5 @@
 ﻿namespace Entitas {
-    public class ReactiveSystem : ISystem {
+    public class ReactiveSystem : IExecuteSystem {
         public IReactiveSystem subsystem { get { return _subsystem; } }
 
         readonly IReactiveSystem _subsystem;

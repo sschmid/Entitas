@@ -38,7 +38,6 @@
     <Compile Include="Entitas\Context.cs" />
     <Compile Include="Entitas\ContextObserver.cs" />
     <Compile Include="Entitas\Interfaces\IMatcher.cs" />
-    <Compile Include="Entitas\Interfaces\ISystem.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
     <Compile Include="Entitas\Extensions\ContextExtension.cs" />
@@ -49,6 +48,8 @@
     <Compile Include="Entitas\WillBeRemovedContextObserver.cs" />
     <Compile Include="Entitas\Extensions\ReactiveSystem\ReactiveSystem.cs" />
     <Compile Include="Entitas\Extensions\ReactiveSystem\ReactiveWillBeRemovedSystem.cs" />
+    <Compile Include="Entitas\Interfaces\IExecuteSystem.cs" />
+    <Compile Include="Entitas\Interfaces\ISystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
