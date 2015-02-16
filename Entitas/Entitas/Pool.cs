@@ -24,7 +24,7 @@ namespace Entitas {
 
         public Entity CreateEntity() {
             var entity = _entityPool.Get();
-            entity.creationIndex = _creationIndex++;
+            entity._creationIndex = _creationIndex++;
             _entities.Add(entity);
             _entitiesCache = null;
             entity.OnComponentAdded += onComponentAdded;

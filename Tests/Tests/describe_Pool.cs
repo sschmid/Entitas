@@ -10,6 +10,15 @@ class describe_Pool : nspec {
 
     void when_created() {
 
+        it["increments creationIndex"] = () => {
+            _pool.CreateEntity().creationIndex.should_be(0);
+            _pool.CreateEntity().creationIndex.should_be(1);
+        };
+
+        it["starts with given creationIndex"] = () => {
+            new Pool(CID.NumComponents, 42).CreateEntity().creationIndex.should_be(42);
+        };
+
         it["has no entities when no entities were created"] = () => {
             _pool.GetEntities().should_be_empty();
         };

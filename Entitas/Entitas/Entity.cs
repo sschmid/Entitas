@@ -10,7 +10,9 @@ namespace Entitas {
 
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
 
-        internal int creationIndex;
+        public int creationIndex { get { return _creationIndex; } }
+
+        internal int _creationIndex;
 
         readonly IComponent[] _components;
         IComponent[] _componentsCache;
@@ -189,7 +191,7 @@ namespace Entitas {
         }
 
         public int GetHashCode(Entity obj) {
-            return obj.creationIndex;
+            return obj._creationIndex;
         }
     }
 }
