@@ -1,5 +1,5 @@
 ﻿namespace Entitas {
-    public interface IReactiveSystem {
+    public interface IReactiveSystem : ISystem {
         IMatcher GetTriggeringMatcher();
 
         GroupEventType GetEventType();
