@@ -59,9 +59,8 @@
     <Compile Include="Tests\describe_Group.cs" />
     <Compile Include="Tests\describe_Matcher.cs" />
     <Compile Include="Tests\describe_ReactiveSystem.cs" />
-    <Compile Include="Tests\describe_EntityWillBeRemovedPoolObserver.cs" />
-    <Compile Include="Tests\describe_PoolObserver.cs" />
     <Compile Include="Tests\describe_Pool.cs" />
+    <Compile Include="Tests\describe_GroupObserver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

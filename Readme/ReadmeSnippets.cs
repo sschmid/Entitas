@@ -41,12 +41,10 @@ namespace Readme {
             pool.GetGroup(Matcher.Position).GetEntities();
         }
 
-        void poolObserverExample(Pool pool) {
-            var observer = pool.CreateObserver(
-                               Matcher.Position,
-                               GroupEventType.OnEntityAdded
-                           );
+        void groupObserverExample(Group group) {
+            var observer = group.CreateObserver(GroupEventType.OnEntityAdded);
 
+            // ----------------------------
             var entities = observer.collectedEntities;
             foreach (var e in entities) {
                 // do something

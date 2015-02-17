@@ -3,11 +3,11 @@
         public IReactiveSystem subsystem { get { return _subsystem; } }
 
         readonly IReactiveSystem _subsystem;
-        readonly PoolObserver _observer;
+        readonly GroupObserver _observer;
 
         public ReactiveSystem(Pool pool, IReactiveSystem subSystem) {
             _subsystem = subSystem;
-            _observer = new PoolObserver(pool, subSystem.GetTriggeringMatcher(), subSystem.GetEventType());
+            _observer = new GroupObserver(pool.GetGroup(subSystem.GetTriggeringMatcher()), subSystem.GetEventType());
         }
 
         public void Execute() {

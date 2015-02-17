@@ -79,9 +79,6 @@
     <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\IReactiveSystem.cs">
       <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\IReactiveSystem.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\IReactiveWillBeRemovedSystem.cs">
-      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\IReactiveWillBeRemovedSystem.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\AbstractMatcher.cs">
       <Link>Libraries\Entitas\EntityMatcher\AbstractMatcher.cs</Link>
     </Compile>
@@ -90,9 +87,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\ReactiveSystem.cs">
       <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\ReactiveWillBeRemovedSystem.cs">
-      <Link>Libraries\Entitas\Extensions\ReactiveEntitySystem\ReactiveWillBeRemovedSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IExecuteSystem.cs">
       <Link>Libraries\Entitas\Interfaces\IExecuteSystem.cs</Link>
@@ -106,14 +100,14 @@
     <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\PoolAttribute.cs">
       <Link>Libraries\EntitasCodeGenerator\Attributes\PoolAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\WillBeRemovedPoolObserver.cs">
-      <Link>Libraries\Entitas\WillBeRemovedPoolObserver.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\PoolObserver.cs">
-      <Link>Libraries\Entitas\PoolObserver.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\PoolExtension.cs">
       <Link>Libraries\Entitas\Extensions\PoolExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\GroupObserver.cs">
+      <Link>Libraries\Entitas\GroupObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\GroupExtension.cs">
+      <Link>Libraries\Entitas\Extensions\GroupExtension.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

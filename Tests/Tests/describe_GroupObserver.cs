@@ -1,19 +1,22 @@
 ﻿using NSpec;
 using Entitas;
 
-class describe_PoolObserver : nspec {
+class describe_GroupObserver : nspec {
 
     void when_created() {
 
         Pool pool = null;
-        PoolObserver observer = null;
+        Group group = null;
+        GroupObserver observer = null;
+
         before = () => {
             pool = new Pool(CID.NumComponents);
+            group = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
         };
 
         context["when observing with eventType OnEntityAdded"] = () => {
             before = () => {
-                observer = new PoolObserver(pool, Matcher.AllOf(new [] { CID.ComponentA }), GroupEventType.OnEntityAdded);
+                observer = new GroupObserver(group, GroupEventType.OnEntityAdded);
             };
 
             it["returns collected entities"] = () => {
@@ -92,7 +95,7 @@ class describe_PoolObserver : nspec {
 
         context["when observing with eventType OnEntityRemoved"] = () => {
             before = () => {
-                observer = new PoolObserver(pool, Matcher.AllOf(new [] { CID.ComponentA }), GroupEventType.OnEntityRemoved);
+                observer = new GroupObserver(group, GroupEventType.OnEntityRemoved);
             };
 
             it["returns collected entities"] = () => {
@@ -109,7 +112,7 @@ class describe_PoolObserver : nspec {
 
         context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
             before = () => {
-                observer = new PoolObserver(pool, Matcher.AllOf(new [] { CID.ComponentA }), GroupEventType.OnEntityAddedOrRemoved);
+                observer = new GroupObserver(group, GroupEventType.OnEntityAddedOrRemoved);
             };
 
             it["returns collected entities"] = () => {
