@@ -61,6 +61,10 @@ namespace Entitas {
             }
         }
 
+        public bool ContainsEntity(Entity entity) {
+            return _entities.Contains(entity);
+        }
+
         public Entity[] GetEntities() {
             if (_entitiesCache == null) {
                 _entitiesCache = new Entity[_entities.Count];

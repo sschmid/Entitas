@@ -33,6 +33,11 @@ class describe_Group : nspec {
             _group.Count.should_be(1);
         };
 
+        it["contains entity"] = () => {
+            add(_eA1);
+            _group.ContainsEntity(_eA1).should_be_true();
+        };
+
         it["doesn't add same entity twice"] = () => {
             add(_eA1);
             add(_eA1);
@@ -51,6 +56,12 @@ class describe_Group : nspec {
             add(_eA1);
             removeEA1();
             _group.GetEntities().should_be_empty();
+        };
+
+        it["doesn't contains entity"] = () => {
+            add(_eA1);
+            removeEA1();
+            _group.ContainsEntity(_eA1).should_be_false();
         };
 
         it["gets null when single entity does not exist"] = () => {

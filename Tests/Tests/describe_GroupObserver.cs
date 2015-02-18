@@ -129,6 +129,37 @@ class describe_GroupObserver : nspec {
                 entities.should_contain(e);
             };
         };
+
+        context["when observing with eventType OnEntityAddedStrict"] = () => {
+            before = () => {
+                observer = new GroupObserver(group, GroupEventType.OnEntityAddedStrict);
+            };
+
+            it["returns collected entities and ensures entities still match"] = () => {
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                e.RemoveComponentA();
+
+                var entities = observer.collectedEntities;
+                entities.Count.should_be(0);
+            };
+        };
+
+        context["when observing with eventType OnEntityRemovedStrict"] = () => {
+            before = () => {
+                observer = new GroupObserver(group, GroupEventType.OnEntityRemovedStrict);
+            };
+
+            it["returns collected entities"] = () => {
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                observer.collectedEntities.should_be_empty();
+                e.RemoveComponentA();
+                e.AddComponentA();
+                var entities = observer.collectedEntities;
+                entities.Count.should_be(0);
+            };
+        };
     }
 }
 
