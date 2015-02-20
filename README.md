@@ -171,7 +171,7 @@ The following code extends Unity with a menu item that opens a new window that l
 ```cs
 [MenuItem("Game/Entitas/Generate")]
 public static void EntitasGenerate() {
-    var assembly = Assembly.GetAssembly(typeof(EntitasCodeGenerator));
+    var assembly = Assembly.GetAssembly(typeof(Entity));
     EntitasCodeGenerator.Generate(assembly, "Assets/Sources/Generated/");
     AssetDatabase.Refresh();
 }
