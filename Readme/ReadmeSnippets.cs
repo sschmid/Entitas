@@ -30,7 +30,8 @@ namespace Readme {
             var entity = pool.CreateEntity();
             entity.isMovable = true;
 
-            // Returns all entities having MoveComponent and PositionComponent. Matchers are also generated for you.
+            // Returns all entities having MoveComponent and PositionComponent.
+            // Matchers are also generated for you.
             var entities = pool.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
             foreach (var e in entities) {
                 // do something
@@ -41,7 +42,8 @@ namespace Readme {
             pool.GetGroup(Matcher.Position).GetEntities();
         }
 
-        void groupObserverExample(Group group) {
+        void groupObserverExample(Pool pool) {
+            var group = pool.GetGroup(Matcher.Position);
             var observer = group.CreateObserver(GroupEventType.OnEntityAdded);
 
             // ----------------------------

@@ -13,11 +13,11 @@ develop | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?bran
 Entitas is fast, light and gets rid of unnecessary complexity. There are less than a handful classes you have to know to rocket start your game or application:
 
 - Entity
-- Entity Repository
-- Entity Collection
-- Entity Repository Observer
+- Pool
+- Group
+- Group Observer
 
-After you've read the readme, take a look at the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git) to see Entitas in action. The project illustrates how systems, collections, observers and entities all play together seamlessly.
+After you've read the readme, take a look at the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git) to see Entitas in action. The project illustrates how systems, groups, observers and entities all play together seamlessly.
 
 
 ### Entity
@@ -39,36 +39,34 @@ var hasPos = entity.hasPosition;
 var movable = entity.isMovable;
 ```
 
-### Entity Repository
-The Entity Repository is the factory where you create and destroy entities. Use it to filter entities of interest.
+### Pool
+The Pool is the factory where you create and destroy entities. Use it to filter entities of interest.
 ```cs
 // Total components is kindly generated for you by the code generator
-var repo = new EntityRepository(ComponentIds.TotalComponents);
-var entity = repo.CreateEntity();
+var pool = new Pool(ComponentIds.TotalComponents);
+var entity = pool.CreateEntity();
 entity.isMovable = true;
 
 // Returns all entities having MoveComponent and PositionComponent.
 // Matchers are also generated for you.
-var entities = repo.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
+var entities = pool.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
 foreach (var e in entities) {
     // do something
 }
 ```
 
-### Entity Collection
-Entity Collection enables super quick filtering on all the entities in the repository. They are continuously updated when entities change and can return groups of entities instantly. You have thousands of entities and want only those who have a `PositionComponent`? Just ask the repository for this collection, it already has the result waiting for you in no time.
+### Group
+Groups enables super quick filtering on all the entities in the pool. They are continuously updated when entities change and can return groups of entities instantly. You have thousands of entities and want only those who have a `PositionComponent`? Just ask the pool for this group, it already has the result waiting for you in no time.
 ```cs
-repo.GetCollection(Matcher.Position).GetEntities();
+pool.GetGroup(Matcher.Position).GetEntities();
 ```
-Both the collection and getting the entities is cached, so even calling this method multiple times is super fast. Always try to use collections when possible. `repo.GetEntities(Matcher.Movable)` internally uses collections, too.
+Both the group and getting the entities is cached, so even calling this method multiple times is super fast. Always try to use goups when possible. `pool.GetEntities(Matcher.Movable)` internally uses groups, too.
 
-### Entity Repository Observer
-Entity Repository Observer provides an easy way to react to changes made in the repository. Let's say you want to collect and process all the entities where a `PositionComponent` was added or replaced.
+### Group Observer
+The Group Observer provides an easy way to react to changes made in a group. Let's say you want to collect and process all the entities where a `PositionComponent` was added or replaced.
 ```cs
-var observer = repo.CreateObserver(
-                   Matcher.Position,
-                   EntityCollectionEventType.OnEntityAdded
-               );
+var group = pool.GetGroup(Matcher.Position);
+var observer = group.CreateObserver(GroupEventType.OnEntityAdded);
 
 var entities = observer.collectedEntities;
 foreach (var e in entities) {
@@ -83,16 +81,16 @@ observer.Deactivate();
 
 
 ## Processing entities with Systems
-Implement `ISystem` to process your entities. I recommend you create systems for each single task or behaviour in your application and execute them in a defined order. This helps to keep your app deterministic. Entitas also provides a special system called `ReactiveEntitySystem`, which is using an Entity Repository Observer under the hood. It holds changed entities of interest at your fingertips. Be sure to check out the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git).
+Implement `ISystem` to process your entities. I recommend you create systems for each single task or behaviour in your application and execute them in a defined order. This helps to keep your app deterministic. Entitas also provides a special system called `ReactiveSystem`, which is using an Group Observer under the hood. It holds changed entities of interest at your fingertips. Be sure to check out the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git).
 
 ## Code Generator
 The Code Generator generates classes and methods for you, so you can focus on getting the job done. It radically reduces the amount of code you have to write and improves readability by a huge magnitude. It makes your code less error-prone while ensuring best performance. I strongly recommend using it!
 
 The generated code can be different based on the content of the component. The Code Generator differentiates between four types:
 - standard component with public fields (e.g. PositionComponent)
-- single standard component that is meant to exist only once in the repository (e.g. UserComponent)
+- single standard component that is meant to exist only once in the pool (e.g. UserComponent)
 - flag component without any fields (e.g. MovableComponent)
-- single flag component that is meant to exist only once in the repository (e.g. AnimatingComponent)
+- single flag component that is meant to exist only once in the pool (e.g. AnimatingComponent)
 
 ### And here is what you get
 
@@ -127,18 +125,18 @@ public class UserComponent : IComponent {
 ```
 You get
 ```cs
-// all from standard component plus methods for the repository
+// all from standard component plus methods for the pool
 
-var e = repo.userEntity;
-var name = repo.user.name;
-var has = repo.hasUser;
+var e = pool.userEntity;
+var name = pool.user.name;
+var has = pool.hasUser;
 
-repo.SetUser("John", 42);
-repo.SetUser(component);
+pool.SetUser("John", 42);
+pool.SetUser(component);
 
-repo.ReplaceUser("Max", 24);
+pool.ReplaceUser("Max", 24);
 
-repo.RemoveUser();
+pool.RemoveUser();
 ```
 
 #### Flag component (e.g. MovableComponent)
@@ -159,48 +157,24 @@ public class AnimatingComponent : IComponent {}
 ```
 You get
 ```cs
-// all from flag component plus methods for the repository
+// all from flag component plus methods for the pool
 
-var e = repo.animatingEntity;
-var isAnimating = repo.isAnimating;
-repo.isAnimating = true;
-repo.isAnimating = false;
+var e = pool.animatingEntity;
+var isAnimating = pool.isAnimating;
+pool.isAnimating = true;
+pool.isAnimating = false;
 ```
 
 ### Unity tip
 The following code extends Unity with a menu item that opens a new window that lets you generate code with a single click.
 
-![Unity Entitas Menu](Readme/Unity-Entitas-Menu.png "Unity Entitas Menu")
-![Unity Entitas Window](Readme/Unity-Entitas-Window.png "Unity Entitas Window")
-
 ```cs
-using System.Reflection;
-using Entitas.CodeGenerator;
-using UnityEditor;
-using UnityEngine;
-
-public class EntitasEditorWindow : EditorWindow {
-    [MenuItem("Game/Entitas/Code Generator")]
-    public static void ShowEntitasCodeGeneratorWindow() {
-        var window = (EntitasEditorWindow)EditorWindow.GetWindow(typeof(EntitasEditorWindow));
-        window.title = "Code Generator";
-        window.minSize = new Vector2(135, 30);
-    }
-
-    const string generatedFolder = "Assets/Sources/Generated/";
-
-    void OnGUI() {
-        GUI.enabled = !EditorApplication.isCompiling;
-
-        if (GUILayout.Button("Generate")) {
-            var assembly = Assembly.GetAssembly(typeof(EntitasCodeGenerator));
-            EntitasCodeGenerator.Generate(assembly, generatedFolder);
-        }
-
-        GUI.enabled = true;
-
-        AssetDatabase.Refresh();
-    }
+[MenuItem("Game/Entitas/Generate")]
+public static void EntitasGenerate() {
+    EntitasCodeGenerator.generatedFolder = "Assets/Sources/Generated/";
+    var assembly = Assembly.GetAssembly(typeof(EntitasCodeGenerator));
+    EntitasCodeGenerator.Generate(assembly);
+    AssetDatabase.Refresh();
 }
 ```
 
