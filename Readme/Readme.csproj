@@ -118,10 +118,4 @@
     <Folder Include="Libraries\Entitas\" />
     <Folder Include="Libraries\EntitasCodeGenerator\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Dependencies\Dependencies.csproj">
-      <Project>{A65102DB-7A15-4F25-A318-79FE0A9545BB}</Project>
-      <Name>Dependencies</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

@@ -37,8 +37,6 @@ namespace PerformanceTests {
 //            run<OrderedDictionaryGetItemByIndex>();
 //            run<OrderedDictionaryGetItemByKey>();
 //            run<OrderedDictionaryRemove>();
-//            run<OrderedSetAdd>();
-//            run<OrderedSetRemove>();
 
             Console.WriteLine("\nPress any key...");
             Console.Read();
@@ -71,8 +69,6 @@ namespace PerformanceTests {
         //        OrderedDictionaryGetItemByIndex:        4 ms
         //        OrderedDictionaryGetItemByKey:          4 ms
         //        OrderedDictionaryRemove:                7 ms
-        //        OrderedSetAdd:                          44 ms
-        //        OrderedSetRemove:                       13 ms
 
         static void run<T>() where T : IPerformanceTest, new() {
             Thread.Sleep(100);

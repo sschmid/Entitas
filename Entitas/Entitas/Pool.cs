@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using ToolKit;
 
 namespace Entitas {
     public partial class Pool {
         readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
         readonly List<Group>[] _groupsForIndex;
-        readonly ObjectPool<Entity> _entityPool;
+        readonly ObjectPool _entityPool;
         readonly int _totalComponents;
         int _creationIndex;
         Entity[] _entitiesCache;
@@ -19,7 +18,7 @@ namespace Entitas {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
             _groupsForIndex = new List<Group>[totalComponents];
-            _entityPool = new ObjectPool<Entity>(() => new Entity(_totalComponents));
+            _entityPool = new ObjectPool(() => new Entity(_totalComponents));
         }
 
         public Entity CreateEntity() {
@@ -120,6 +119,25 @@ namespace Entitas {
                     groups[i].RemoveEntity(entity);
                 }
             }
+        }
+    }
+
+    class ObjectPool {
+        public int Count { get { return _pool.Count; } }
+
+        readonly Func<Entity> _factoryMethod;
+        readonly Stack<Entity> _pool = new Stack<Entity>();
+
+        public ObjectPool(Func<Entity> factoryMethod) {
+            _factoryMethod = factoryMethod;
+        }
+
+        public Entity Get() {
+            return _pool.Count > 0 ? _pool.Pop() : _factoryMethod();
+        }
+
+        public void Push(Entity entity) {
+            _pool.Push(entity);
         }
     }
 }

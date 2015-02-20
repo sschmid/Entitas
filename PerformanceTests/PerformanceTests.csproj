@@ -43,12 +43,10 @@
     <Compile Include="PerformanceTests\Entity\EntityRemoveAddComponent.cs" />
     <Compile Include="PerformanceTests\Entity\EntityGetComponent.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListAdd.cs" />
-    <Compile Include="PerformanceTests\DataStructures\OrderedSetAdd.cs" />
     <Compile Include="PerformanceTests\DataStructures\LinkedListAdd.cs" />
     <Compile Include="PerformanceTests\DataStructures\OrderedDictionaryAdd.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListRemove.cs" />
     <Compile Include="PerformanceTests\DataStructures\LinkedListRemove.cs" />
-    <Compile Include="PerformanceTests\DataStructures\OrderedSetRemove.cs" />
     <Compile Include="PerformanceTests\DataStructures\OrderedDictionaryRemove.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListGetItem.cs" />
     <Compile Include="PerformanceTests\DataStructures\DictionaryGetItem.cs" />
@@ -79,10 +77,6 @@
     <ProjectReference Include="..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Dependencies\Dependencies.csproj">
-      <Project>{A65102DB-7A15-4F25-A318-79FE0A9545BB}</Project>
-      <Name>Dependencies</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
