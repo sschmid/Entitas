@@ -3,19 +3,12 @@
 namespace Entitas {
     public enum GroupEventType : byte {
         OnEntityAdded,
-        OnEntityAddedStrict,
         OnEntityRemoved,
-        OnEntityRemovedStrict,
         OnEntityAddedOrRemoved
     }
 
     public class GroupObserver {
-        public HashSet<Entity> collectedEntities {
-            get {
-                filter();
-                return _collectedEntities;
-            }
-        }
+        public HashSet<Entity> collectedEntities { get { return _collectedEntities; } }
 
         readonly HashSet<Entity> _collectedEntities;
         readonly Group _group;
@@ -29,9 +22,9 @@ namespace Entitas {
         }
 
         public void Activate() {
-            if (_eventType == GroupEventType.OnEntityAdded || _eventType == GroupEventType.OnEntityAddedStrict) {
+            if (_eventType == GroupEventType.OnEntityAdded) {
                 _group.OnEntityAdded += addEntity;
-            } else if (_eventType == GroupEventType.OnEntityRemoved || _eventType == GroupEventType.OnEntityRemovedStrict) {
+            } else if (_eventType == GroupEventType.OnEntityRemoved) {
                 _group.OnEntityRemoved += addEntity;
             } else if (_eventType == GroupEventType.OnEntityAddedOrRemoved) {
                 _group.OnEntityAdded += addEntity;
@@ -51,30 +44,6 @@ namespace Entitas {
 
         void addEntity(Group group, Entity entity) {
             _collectedEntities.Add(entity);
-        }
-
-        void filter() {
-            if (_eventType == GroupEventType.OnEntityAddedStrict) {
-                var entitiesToRemove = new List<Entity>();
-                foreach (var entity in _collectedEntities) {
-                    if (!_group.ContainsEntity(entity)) {
-                        entitiesToRemove.Add(entity);
-                    }
-                }
-                foreach (var entity in entitiesToRemove) {
-                    _collectedEntities.Remove(entity);
-                }
-            } else if (_eventType == GroupEventType.OnEntityRemovedStrict) {
-                var entitiesToRemove = new List<Entity>();
-                foreach (var entity in _collectedEntities) {
-                    if (_group.ContainsEntity(entity)) {
-                        entitiesToRemove.Add(entity);
-                    }
-                }
-                foreach (var entity in entitiesToRemove) {
-                    _collectedEntities.Remove(entity);
-                }
-            }
         }
     }
 }
