@@ -26,6 +26,7 @@ class describe_ComponentExtensionsGenerator : nspec {
         it["single singleton component"] = () => generates(typeof(AnimatingComponent), AnimatingComponent.extensions);
         it["single component with fields"] = () => generates(typeof(UserComponent), UserComponent.extensions);
         it["can handle dictionary"] = () => generates(typeof(DictionaryComponent), DictionaryComponent.extensions);
+        it["can handle enums nested in component"] = () => generates(typeof(MyEnumComponent), MyEnumComponent.extensions);
         it["ignores [DontGenerate]"] = () => {
             var type = typeof(DontGenerateComponent);
             var generator = new ComponentExtensionsGenerator();

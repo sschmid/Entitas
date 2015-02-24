@@ -358,8 +358,11 @@ $assign
 
         static string getTypeName(Type type) {
             string typeStr;
-            return typeShortcuts.TryGetValue(type.Name, out typeStr) ?
-                typeStr : simpleTypeString(type);
+            var typeName = typeShortcuts.TryGetValue(type.Name, out typeStr) ? typeStr : simpleTypeString(type);
+            if (type.IsEnum) {
+                typeName = typeName.Replace("+", ".");
+            }
+            return typeName;
         }
 
         static string simpleTypeString(Type type) {
