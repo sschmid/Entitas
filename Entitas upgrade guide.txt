@@ -1,4 +1,11 @@
-Entitas 0.10.0 upgrade guide
+# CAUTION
+Xamarin Studio 5.7.x currently has a bug when find-replace (Menu -> Search -> Replace in files...)
+https://bugzilla.xamarin.com/show_bug.cgi?id=25360
+
+Please be aware of that issue and use any other text editor for that task.
+
+
+# Entitas 0.10.0 upgrade guide
 
 Beside features, Entitas 0.10.0 includes lots of renaming. If your current Entitas
 version is < 0.10.0, you might want to follow the next few simple renaming steps,
