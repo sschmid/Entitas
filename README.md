@@ -166,7 +166,7 @@ pool.isAnimating = false;
 ```
 
 ### Unity tip
-The following code extends Unity with a menu item that opens a new window that lets you generate code with a single click.
+The following code extends Unity with a menu item that generates code with a single click.
 
 ![Entitas Header](Readme/MenuItem.png)
 
