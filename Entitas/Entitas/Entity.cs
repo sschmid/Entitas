@@ -166,7 +166,7 @@ namespace Entitas {
                 componentsStr = componentsStr.Substring(0, componentsStr.Length - seperator.Length);
             }
 
-            return string.Format("Entity({0})", componentsStr);
+            return string.Format("Entity_{0}({1})", _creationIndex, componentsStr);
         }
     }
 

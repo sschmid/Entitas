@@ -109,7 +109,7 @@ class describe_Entity : nspec {
         it["can ToString"] = () => {
             e.AddComponentA();
             e.AddComponentB();
-            e.ToString().should_be("Entity(ComponentA, ComponentB)");
+            e.ToString().should_be("Entity_0(ComponentA, ComponentB)");
         };
 
         context["events"] = () => {
