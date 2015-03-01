@@ -62,6 +62,7 @@
     <Compile Include="Tests\describe_Pool.cs" />
     <Compile Include="Tests\describe_GroupObserver.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\EnumComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\DontGenerateIndexComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

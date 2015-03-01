@@ -13,7 +13,7 @@ namespace Entitas.CodeGenerator {
 
         Dictionary<string, List<Type>> getLookups(Type[] components) {
             var lookups = new Dictionary<string, List<Type>>();
-            foreach (var type in components) {
+            foreach (var type in components.Where(shouldGenerate)) {
                 var lookupTag = lookupTagForType(type);
                 if (!lookups.ContainsKey(lookupTag)) {
                     lookups.Add(lookupTag, new List<Type>());
@@ -54,6 +54,18 @@ namespace Entitas.CodeGenerator {
             }
 
             return code + "\n" + string.Format(totalFormat, components.Length);
+        }
+
+        static bool shouldGenerate(Type type) {
+            Attribute[] attrs = Attribute.GetCustomAttributes(type);
+            foreach (Attribute attr in attrs) {
+                var dontGenerate = attr as DontGenerateAttribute;
+                if (dontGenerate != null && !dontGenerate.generateIndex) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         string addCloseClass() {

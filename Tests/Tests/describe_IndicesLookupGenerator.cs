@@ -58,6 +58,18 @@ class describe_IndicesLookupGenerator : nspec {
     public const int TotalComponents = 2;
 }");
         };
+
+        it["ignores [DontGenerate(false)]"] = () => {
+            generates(new [] {
+                typeof(SomeComponent),
+                typeof(DontGenerateIndexComponent)
+            }, defaultLookupName,
+                @"public static class ComponentIds {
+    public const int Some = 0;
+
+    public const int TotalComponents = 1;
+}");
+        };
     }
 }
 
