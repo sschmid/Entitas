@@ -29,6 +29,11 @@ class describe_Pool : nspec {
             e.GetType().should_be(typeof(Entity));
         };
 
+        it["gets total entity count"] = () => {
+            var e = _pool.CreateEntity();
+            _pool.Count.should_be(1);
+        };
+
         it["doesn't have entites that were not created with CreateEntity()"] = () => {
             _pool.HasEntity(this.CreateEntity()).should_be_false();
         };
