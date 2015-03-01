@@ -24,7 +24,7 @@ namespace Entitas {
             _entityPool = new ObjectPool(() => new Entity(_totalComponents));
         }
 
-        public Entity CreateEntity() {
+        public virtual Entity CreateEntity() {
             var entity = _entityPool.Get();
             entity._creationIndex = _creationIndex++;
             _entities.Add(entity);
@@ -36,7 +36,7 @@ namespace Entitas {
             return entity;
         }
 
-        public void DestroyEntity(Entity entity) {
+        public virtual void DestroyEntity(Entity entity) {
             entity.RemoveAllComponents();
             entity.OnComponentAdded -= onComponentAdded;
             entity.OnComponentReplaced -= onComponentReplaced;
