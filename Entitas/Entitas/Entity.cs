@@ -58,7 +58,7 @@ namespace Entitas {
         public void ReplaceComponent(int index, IComponent component) {
             if (HasComponent(index)) {
                 replaceComponent(index, component);
-            } else {
+            } else if (component != null) {
                 AddComponent(index, component);
             }
         }

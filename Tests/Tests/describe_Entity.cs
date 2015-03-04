@@ -187,6 +187,15 @@ class describe_Entity : nspec {
                 didReplace.should_be(1);
             };
 
+            it["doesn't dispatch anything when replacing a non existing component with null"] = () => {
+                e.OnComponentAdded += (entity, index, component) => this.Fail();
+                e.OnComponentReplaced += (entity, index, component) => this.Fail();
+                e.OnComponentWillBeRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentRemoved += (entity, index, component) => this.Fail();
+                
+                e.ReplaceComponentA(null);
+            };
+
             it["dispatches OnComponentWillBeRemoved when called manually and component exists"] = () => {
                 e.AddComponentA();
                 e.OnComponentWillBeRemoved += (entity, index, component) => {
