@@ -165,7 +165,9 @@ pool.isAnimating = true;
 pool.isAnimating = false;
 ```
 
-### Unity tip
+# Unity
+
+## Code Generation
 The following code extends Unity with a menu item that generates code with a single click.
 
 ![Entitas Header](Readme/MenuItem.png)
@@ -178,6 +180,25 @@ public static void EntitasGenerate() {
     AssetDatabase.Refresh();
 }
 ```
+
+## Visual Debugging
+Visual Debugging enables you to actually see and inspect all of your entities in the Unity Editor. To enable this feature just use `DebugPool` instead of `Pool`. That's it!
+
+Once you use the `DebugPool` all pools and their entities will automatically show up in the hierarchy.
+
+![Entitas Visual Debug Hierarchy](Readme/VisualDebug-Hierarchy.png)
+
+Although entities are no GameObjects and components are no MonoBehaviours you can inspect them as if they were. All components of the selected entity are listed and all their fields are exposed. You can manipulate or remove components at runtime and even destroy the entity.
+
+![Entitas Visual Debug Inspector](Readme/VisualDebug-Inspector.png)
+
+When you select multiple entities, you can manually destroy some of them or batch destroy all of them.
+
+![Entitas Visual Debug MultiTarget](Readme/VisualDebug-MultiTarget.png)
+
+Give it a try and checkout the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git)
+
+![Entitas Visual Debug Inspector Example](Readme/VisualDebug-Inspector-Example.png)
 
 # Thanks to
 Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://github.com/cloudjubei) and [@devboy](https://github.com/devboy) for endless hours of discussion and helping making Entitas awesome!
