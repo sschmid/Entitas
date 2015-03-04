@@ -1,3 +1,14 @@
 test-results
 bin
 *.userprefs
+VisualDebug/Library/AssetServerCacheV3
+VisualDebug/Library/CurrentLayout.dwlt
+VisualDebug/Library/expandedItems
+VisualDebug/Library/FailedAssetImports.txt
+VisualDebug/Library/ShaderCache.db
+VisualDebug/Assembly-CSharp-Editor-vs.csproj
+VisualDebug/Assembly-CSharp-Editor.csproj
+VisualDebug/Assembly-CSharp-vs.csproj
+VisualDebug/Assembly-CSharp.csproj
+VisualDebug/VisualDebug-csharp.sln
+VisualDebug/VisualDebug.sln
