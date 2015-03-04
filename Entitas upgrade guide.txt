@@ -57,3 +57,9 @@ Now add Entitas 0.10.0 and EntitasCodeGenerator.
 
     IReactiveSubEntityWillBeRemovedSystem
         - Consider implementing ISystem & ISetPool and use group.OnEntityWillBeRemoved += foobar;
+
+
+# CODE GENERATOR
+
+    Use the code generator again
+
