@@ -7,6 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>PerformanceTests</RootNamespace>
     <AssemblyName>PerformanceTests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
