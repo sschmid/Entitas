@@ -29,7 +29,7 @@ namespace Entitas {
                 return false;
             }
 
-            var matcher = (IMatcher)obj;
+            var matcher = (AbstractMatcher)obj;
             if (matcher.indices.Length != _indices.Length) {
                 return false;
             }

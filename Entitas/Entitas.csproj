@@ -49,6 +49,10 @@
     <Compile Include="Entitas\Extensions\PoolExtension.cs" />
     <Compile Include="Entitas\GroupObserver.cs" />
     <Compile Include="Entitas\Extensions\GroupExtension.cs" />
+    <Compile Include="Entitas\Matcher\AnyOfMatcher.cs" />
+    <Compile Include="Entitas\Matcher\AllOfCompoundMatcher.cs" />
+    <Compile Include="Entitas\Matcher\AbstractCompoundMatcher.cs" />
+    <Compile Include="Entitas\Matcher\AnyOfCompoundMatcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -24,6 +24,18 @@ public static class EntityTestExtensions {
         e.AddComponent(CID.ComponentC, Component.C);
     }
 
+    public static void AddComponentD(this Entity e) {
+        e.AddComponent(CID.ComponentD, Component.D);
+    }
+
+    public static void AddComponentE(this Entity e) {
+        e.AddComponent(CID.ComponentE, Component.E);
+    }
+
+    public static void AddComponentF(this Entity e) {
+        e.AddComponent(CID.ComponentF, Component.F);
+    }
+
     public static bool HasComponentA(this Entity e) {
         return e.HasComponent(CID.ComponentA);
     }
