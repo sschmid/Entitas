@@ -17,7 +17,7 @@ classes and methods.
 # RENAME
 
     EntityRepository                                    -> Pool
-    EntityRepository.GetCollection()                    -> EntityRepository.GetGroup()
+    EntityRepository.GetCollection()                    -> Pool.GetGroup()
 
     EntityCollection                                    -> Group
     EntityCollection.EntityCollectionChange             -> Group.GroupChanged
