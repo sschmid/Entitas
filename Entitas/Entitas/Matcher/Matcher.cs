@@ -8,6 +8,10 @@
             return new AnyOfMatcher(indices);
         }
 
+        public static NoneOfMatcher NoneOf(params int[] indices) {
+            return new NoneOfMatcher(indices);
+        }
+
         // Compound Matcher
 
         public static AllOfCompoundMatcher AllOf(params IMatcher[] matchers) {
@@ -16,6 +20,10 @@
 
         public static AnyOfCompoundMatcher AnyOf(params IMatcher[] matchers) {
             return new AnyOfCompoundMatcher(matchers);
+        }
+        
+        public static NoneOfCompoundMatcher NoneOf(params IMatcher[] matchers) {
+            return new NoneOfCompoundMatcher(matchers);
         }
     }
 }

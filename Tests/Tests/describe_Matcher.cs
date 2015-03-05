@@ -64,6 +64,24 @@ class describe_Matcher : nspec {
             };
         };
 
+        context["noneOf"] = () => {
+            IMatcher m = null;
+            before = () => m = Matcher.NoneOf(new [] {
+                CID.ComponentA,
+                CID.ComponentB
+            });
+
+            it["doesn't match"] = () => {
+                m.Matches(eA).should_be_false();
+                m.Matches(eAB).should_be_false();
+            };
+
+            it["matches"] = () => {
+                m.Matches(eC).should_be_true();
+                m.Matches(this.CreateEntity()).should_be_true();
+            };
+        };
+
         context["equals"] = () => {
             it["equals equal AllOfMatcher"] = () => {
                 var m1 = allOfAB();
@@ -263,6 +281,63 @@ class describe_Matcher : nspec {
             };
         };
 
+        it["noneOf"] = () => {
+            AllOfMatcher allAB = null;
+            AllOfMatcher allBC = null;
+            AllOfMatcher allAC = null;
+            AnyOfMatcher anyBC = null;
+            NoneOfCompoundMatcher compound = null;
+            before = () => {
+                allAB = Matcher.AllOf(new[] {
+                    CID.ComponentB,
+                    CID.ComponentA
+                });
+                allBC = Matcher.AllOf(new[] {
+                    CID.ComponentC,
+                    CID.ComponentB
+                });
+                allAC = Matcher.AllOf(new[] {
+                    CID.ComponentC,
+                    CID.ComponentA
+                });
+                anyBC = Matcher.AnyOf(new[] {
+                    CID.ComponentC,
+                    CID.ComponentB
+                });
+            };
+
+            it["has all indices in order"] = () => {
+                compound = Matcher.NoneOf(allAB, allBC);
+                compound.indices.should_be(new [] {
+                    CID.ComponentA,
+                    CID.ComponentB,
+                    CID.ComponentC
+                });
+            };
+
+            it["matches"] = () => {
+                compound = Matcher.NoneOf(allAB, allAC);
+                var e = this.CreateEntity();
+                e.AddComponentB();
+                e.AddComponentC();
+                compound.Matches(e).should_be_true();
+            };
+
+            it["matches (mixed)"] = () => {
+                compound = Matcher.NoneOf(allAB, anyBC);
+                var e = this.CreateEntity();
+                e.AddComponentA();
+                compound.Matches(e).should_be_true();
+            };
+
+            it["doesn't match"] = () => {
+                compound = Matcher.NoneOf(allAB, anyBC);
+                var e = this.CreateEntity();
+                e.AddComponentC();
+                compound.Matches(e).should_be_false();
+            };
+        };
+
         context["equals"] = () => {
             it["doesn't equal when only indices are same"] = () => {
                 var all1 = Matcher.AllOf(0, 1);
@@ -343,8 +418,12 @@ class describe_Matcher : nspec {
                     CID.ComponentF
                 });
 
-                Matcher.AllOf(nested1, nested2).Matches(e).should_be_false();
-                Matcher.AnyOf(nested1, nested2).Matches(e).should_be_true();
+                var nestedAll = Matcher.AllOf(nested1, nested2);
+                var nestedAny = Matcher.AnyOf(nested1, nested2);
+                nestedAll.Matches(e).should_be_false();
+                nestedAny.Matches(e).should_be_true();
+
+                Matcher.NoneOf(nestedAll, nestedAny).Matches(e).should_be_false();
             };
         };
     }

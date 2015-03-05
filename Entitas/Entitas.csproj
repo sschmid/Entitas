@@ -53,6 +53,8 @@
     <Compile Include="Entitas\Matcher\AllOfCompoundMatcher.cs" />
     <Compile Include="Entitas\Matcher\AbstractCompoundMatcher.cs" />
     <Compile Include="Entitas\Matcher\AnyOfCompoundMatcher.cs" />
+    <Compile Include="Entitas\Matcher\NoneOfMatcher.cs" />
+    <Compile Include="Entitas\Matcher\NoneOfCompoundMatcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

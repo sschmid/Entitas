@@ -122,6 +122,12 @@
     <Compile Include="..\Entitas\Entitas\Matcher\AnyOfCompoundMatcher.cs">
       <Link>Libraries\Entitas\Matcher\AnyOfCompoundMatcher.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\NoneOfMatcher.cs">
+      <Link>Libraries\Entitas\Matcher\NoneOfMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\NoneOfCompoundMatcher.cs">
+      <Link>Libraries\Entitas\Matcher\NoneOfCompoundMatcher.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
