@@ -21,7 +21,11 @@ namespace Entitas {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
             _groupsForIndex = new List<Group>[totalComponents];
-            _entityPool = new ObjectPool(() => new Entity(_totalComponents));
+            _entityPool = new ObjectPool(createEntity);
+        }
+
+        Entity createEntity() {
+            return new Entity(_totalComponents);
         }
 
         public virtual Entity CreateEntity() {
@@ -49,8 +53,8 @@ namespace Entitas {
 
         public void DestroyAllEntities() {
             var entities = GetEntities();
-            foreach (var entity in entities) {
-                DestroyEntity(entity);
+            for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
+                DestroyEntity(entities[i]);
             }
         }
 
@@ -71,8 +75,9 @@ namespace Entitas {
             Group group;
             if (!_groups.TryGetValue(matcher, out group)) {
                 group = new Group(matcher);
-                foreach (var entity in _entities) {
-                    group.AddEntityIfMatching(entity);
+                var entities = GetEntities();
+                for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
+                    group.AddEntity(entities[i]);
                 }
                 _groups.Add(matcher, group);
 
@@ -92,7 +97,7 @@ namespace Entitas {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
-                    groups[i].AddEntityIfMatching(entity);
+                    groups[i].AddEntity(entity);
                 }
             }
         }

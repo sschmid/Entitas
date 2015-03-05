@@ -48,10 +48,13 @@ namespace Entitas {
                 throw new EntityDoesNotHaveComponentException(errorMsg, index);
             }
 
+            removeComponent(index);
+        }
+
+        void removeComponent(int index) {
             if (OnComponentWillBeRemoved != null) {
                 OnComponentWillBeRemoved(this, index, _components[index]);
             }
-
             replaceComponent(index, null);
         }
 
@@ -135,7 +138,7 @@ namespace Entitas {
         public int[] GetComponentIndices() {
             if (_componentIndicesCache == null) {
                 var indices = new List<int>();
-                for (int i = 0; i < _components.Length; i++) {
+                for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
                     if (_components[i] != null) {
                         indices.Add(i);
                     }
@@ -150,7 +153,7 @@ namespace Entitas {
         public void RemoveAllComponents() {
             var indices = GetComponentIndices();
             for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
-                RemoveComponent(indices[i]);
+                removeComponent(indices[i]);
             }
         }
 

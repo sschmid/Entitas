@@ -4,8 +4,8 @@
         }
 
         public override bool Matches(Entity entity) {
-            foreach (var matcher in matchers) {
-                if (!matcher.Matches(entity)) {
+            for (int i = 0, matchersLength = matchers.Length; i < matchersLength; i++) {
+                if (!matchers[i].Matches(entity)) {
                     return false;
                 }
             }

@@ -64,6 +64,8 @@
     <Compile Include="PerformanceTests\EntityRepository\PoolOnEntityReplaced.cs" />
     <Compile Include="PerformanceTests\EntityRepository\PoolGetEntities.cs" />
     <Compile Include="PerformanceTests\EntityRepository\PoolHasEntity.cs" />
+    <Compile Include="PerformanceTests\DataStructures\IterateHashSet.cs" />
+    <Compile Include="PerformanceTests\DataStructures\IterateHashetToArray.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -26,6 +26,10 @@ namespace PerformanceTests {
             run<MatcherGetHashCode>();
             run<EmptyTest>();
 
+            run<IterateHashetToArray>();
+            run<IterateHashSet>();
+            run<EmptyTest>();
+
 //            run<ArrayGetItem>();
 //            run<DictionaryGetItem>();
 //            run<LinkedListAdd>();
@@ -57,6 +61,9 @@ namespace PerformanceTests {
         //
         //        MatcherEquals:                          242 ms
         //        MatcherGetHashCode:                     21 ms
+        //
+        //        IterateHashetToArray:                   611 ms
+        //        IterateHashSet:                         953 ms
         //
         //        ArrayGetItem:                           2 ms
         //        DictionaryGetItem:                      7 ms

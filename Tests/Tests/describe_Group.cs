@@ -223,7 +223,7 @@ class describe_Group : nspec {
     }
 
     void add(Entity entity) {
-        _group.AddEntityIfMatching(entity);
+        _group.AddEntity(entity);
     }
 
     void willRemoveEA1() {

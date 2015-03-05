@@ -20,7 +20,7 @@ namespace Entitas {
             _matcher = matcher;
         }
 
-        public void AddEntityIfMatching(Entity entity) {
+        public void AddEntity(Entity entity) {
             if (_matcher.Matches(entity)) {
                 var added = _entities.Add(entity);
                 if (added) {
@@ -77,15 +77,17 @@ namespace Entitas {
         public Entity GetSingleEntity() {
             if (_singleEntityCache == null) {
                 var count = _entities.Count;
-                if (count == 0) {
-                    return null;
-                }
+                if (count == 1) {
+                    _singleEntityCache = System.Linq.Enumerable.First(_entities);
+                } else {
+                    if (count == 0) {
+                        return null;
+                    }
 
-                if (count > 1) {
-                    throw new SingleEntityException(_matcher);
+                    if (count > 1) {
+                        throw new SingleEntityException(_matcher);
+                    }
                 }
-
-                _singleEntityCache = System.Linq.Enumerable.First(_entities);
             }
 
             return _singleEntityCache;

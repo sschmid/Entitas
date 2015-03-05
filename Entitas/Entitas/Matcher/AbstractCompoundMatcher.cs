@@ -12,8 +12,8 @@ namespace Entitas {
 
         static int[] extractIndices(IMatcher[] matchers) {
             var indices = new List<int>();
-            foreach (var matcher in matchers) {
-                indices.AddRange(matcher.indices);
+            for (int i = 0, matchersLength = matchers.Length; i < matchersLength; i++) {
+                indices.AddRange(matchers[i].indices);
             }
 
             return indices.ToArray();
