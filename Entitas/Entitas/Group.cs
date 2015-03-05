@@ -20,16 +20,15 @@ namespace Entitas {
             _matcher = matcher;
         }
 
-        public void AddEntity(Entity entity) {
+        public bool Matches(Entity entity) {
+            return _matcher.Matches(entity);
+        }
+
+        public void HandleEntity(Entity entity) {
             if (_matcher.Matches(entity)) {
-                var added = _entities.Add(entity);
-                if (added) {
-                    _entitiesCache = null;
-                    _singleEntityCache = null;
-                    if (OnEntityAdded != null) {
-                        OnEntityAdded(this, entity);
-                    }
-                }
+                addEntity(entity);
+            } else {
+                removeEntity(entity);
             }
         }
 
@@ -50,7 +49,18 @@ namespace Entitas {
             }
         }
 
-        public void RemoveEntity(Entity entity) {
+        void addEntity(Entity entity) {
+            var added = _entities.Add(entity);
+            if (added) {
+                _entitiesCache = null;
+                _singleEntityCache = null;
+                if (OnEntityAdded != null) {
+                    OnEntityAdded(this, entity);
+                }
+            }
+        }
+
+        void removeEntity(Entity entity) {
             var removed = _entities.Remove(entity);
             if (removed) {
                 _entitiesCache = null;

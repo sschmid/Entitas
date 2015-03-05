@@ -33,19 +33,19 @@ namespace Entitas {
             entity._creationIndex = _creationIndex++;
             _entities.Add(entity);
             _entitiesCache = null;
-            entity.OnComponentAdded += onComponentAdded;
+            entity.OnComponentAdded += onComponentAddedOrRemoved;
             entity.OnComponentReplaced += onComponentReplaced;
             entity.OnComponentWillBeRemoved += onComponentWillBeRemoved;
-            entity.OnComponentRemoved += onComponentRemoved;
+            entity.OnComponentRemoved += onComponentAddedOrRemoved;
             return entity;
         }
 
         public virtual void DestroyEntity(Entity entity) {
             entity.RemoveAllComponents();
-            entity.OnComponentAdded -= onComponentAdded;
+            entity.OnComponentAdded -= onComponentAddedOrRemoved;
             entity.OnComponentReplaced -= onComponentReplaced;
             entity.OnComponentWillBeRemoved -= onComponentWillBeRemoved;
-            entity.OnComponentRemoved -= onComponentRemoved;
+            entity.OnComponentRemoved -= onComponentAddedOrRemoved;
             _entities.Remove(entity);
             _entitiesCache = null;
             _entityPool.Push(entity);
@@ -77,7 +77,7 @@ namespace Entitas {
                 group = new Group(matcher);
                 var entities = GetEntities();
                 for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
-                    group.AddEntity(entities[i]);
+                    group.HandleEntity(entities[i]);
                 }
                 _groups.Add(matcher, group);
 
@@ -93,11 +93,11 @@ namespace Entitas {
             return group;
         }
 
-        void onComponentAdded(Entity entity, int index, IComponent component) {
+        void onComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
-                    groups[i].AddEntity(entity);
+                    groups[i].HandleEntity(entity);
                 }
             }
         }
@@ -115,16 +115,12 @@ namespace Entitas {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
-                    groups[i].WillRemoveEntity(entity);
-                }
-            }
-        }
-
-        void onComponentRemoved(Entity entity, int index, IComponent component) {
-            var groups = _groupsForIndex[index];
-            if (groups != null) {
-                for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
-                    groups[i].RemoveEntity(entity);
+                    var group = groups[i];
+                    entity._components[index] = null;
+                    if (!group.Matches(entity)) {
+                        group.WillRemoveEntity(entity);
+                    }
+                    entity._components[index] = component;
                 }
             }
         }

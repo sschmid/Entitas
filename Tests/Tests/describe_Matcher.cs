@@ -143,7 +143,7 @@ class describe_Matcher : nspec {
 
     void when_compounding_matchers() {
 
-        it["allOf"] = () => {
+        context["allOf"] = () => {
             AllOfMatcher allAB = null;
             AllOfMatcher allBC = null;
             AnyOfMatcher anyAB = null;
@@ -219,7 +219,7 @@ class describe_Matcher : nspec {
             };
         };
 
-        it["anyOf"] = () => {
+        context["anyOf"] = () => {
             AllOfMatcher allAB = null;
             AllOfMatcher allBC = null;
             AnyOfMatcher anyBC = null;
@@ -281,7 +281,7 @@ class describe_Matcher : nspec {
             };
         };
 
-        it["noneOf"] = () => {
+        context["noneOf"] = () => {
             AllOfMatcher allAB = null;
             AllOfMatcher allBC = null;
             AllOfMatcher allAC = null;
@@ -375,7 +375,7 @@ class describe_Matcher : nspec {
 
         context["nested"] = () => {
 
-            it["works"] = () => {
+            it["works like a charme"] = () => {
                 var allAB = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
                 var allCD = Matcher.AllOf(CID.ComponentC, CID.ComponentD);
                 var allEF = Matcher.AllOf(CID.ComponentE, CID.ComponentF);

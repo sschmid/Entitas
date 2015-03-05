@@ -3,7 +3,7 @@ using Entitas;
 
 public static class TestExtensions {
     public static void Fail(this nspec spec) {
-        true.should_be_false();
+        false.should_be_true();
     }
 
     public static Entity CreateEntity(this nspec spec) {

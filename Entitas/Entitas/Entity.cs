@@ -14,7 +14,7 @@ namespace Entitas {
 
         internal int _creationIndex;
 
-        readonly IComponent[] _components;
+        internal readonly IComponent[] _components;
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
 

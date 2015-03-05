@@ -30,7 +30,7 @@ class describe_Pool : nspec {
         };
 
         it["gets total entity count"] = () => {
-            var e = _pool.CreateEntity();
+            _pool.CreateEntity();
             _pool.Count.should_be(1);
         };
 
@@ -229,6 +229,125 @@ class describe_Pool : nspec {
                     didDispatchWillBeRemoved.should_be(1);
                     didDispatchRemoved.should_be(1);
                     didDispatchAdded.should_be(1);
+                };
+            };
+        };
+
+        context["getGroup"] = () => {
+            context["AnyOfCompoundMatcher"] = () => {
+                AllOfMatcher allOfA = null;
+                AllOfMatcher allOfB = null;
+                AnyOfCompoundMatcher compound = null;
+                Group group = null;
+                Entity e = null;;
+                before = () => {
+                    allOfA = Matcher.AllOf(CID.ComponentA);
+                    allOfB = Matcher.AllOf(CID.ComponentB);
+                    compound = Matcher.AnyOf(allOfA, allOfB);
+                    group = _pool.GetGroup(compound);
+                    e = _pool.CreateEntity();
+                };
+
+                it["adds entity when matching"] = () => {
+                    e.AddComponentA();
+                    compound.Matches(e).should_be_true();
+                    group.Count.should_be(1);
+                };
+
+                it["doesn't add entity when not matching"] = () => {
+                    e.AddComponentC();
+                    compound.Matches(e).should_be_false();
+                    group.Count.should_be(0);
+                };
+
+                it["removes entity when not matching anymore"] = () => {
+                    e.AddComponentA();
+                    e.RemoveComponentA();
+                    group.Count.should_be(0);
+                };
+
+                it["doesn't remove entity when still matching"] = () => {
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    e.RemoveComponentB();
+                    group.Count.should_be(1);
+                };
+
+                it["will remove entity"] = () => {
+                    var didWillRemove = 0;
+                    group.OnEntityWillBeRemoved += (g, entity) => didWillRemove++;
+                    e.AddComponentA();
+                    e.WillRemoveComponent(CID.ComponentA);
+                    didWillRemove.should_be(1);
+                };
+
+                it["won't remove entity when still matching"] = () => {
+                    group.OnEntityWillBeRemoved += (g, entity) => this.Fail();
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    e.WillRemoveComponent(CID.ComponentB);
+                };
+            };
+
+            context["AllOfOfCompoundMatcher containing a NoneOfMatcher"] = () => {
+                AllOfMatcher allOfAB = null;
+                NoneOfMatcher noneOfC = null;
+                AllOfCompoundMatcher compound = null;
+                Group group = null;
+                Entity e = null;;
+                before = () => {
+                    allOfAB = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
+                    noneOfC = Matcher.NoneOf(CID.ComponentC);
+                    compound = Matcher.AllOf(allOfAB, noneOfC);
+                    group = _pool.GetGroup(compound);
+                    e = _pool.CreateEntity();
+                };
+
+                it["adds entity when matching"] = () => {
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    compound.Matches(e).should_be_true();
+                    group.Count.should_be(1);
+                };
+
+                it["doesn't add entity when not matching"] = () => {
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    e.AddComponentC();
+                    compound.Matches(e).should_be_false();
+                    group.Count.should_be(0);
+                };
+
+                it["removes entity when not matching anymore"] = () => {
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    e.RemoveComponentB();
+                    group.Count.should_be(0);
+                };
+
+                it["doesn't remove entity when still matching"] = () => {
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    e.AddComponentC();
+                    e.RemoveComponentC();
+                    group.Count.should_be(1);
+                };
+
+                it["will remove entity"] = () => {
+                    var didWillRemove = 0;
+                    group.OnEntityWillBeRemoved += (g, entity) => didWillRemove++;
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    e.WillRemoveComponent(CID.ComponentA);
+                    didWillRemove.should_be(1);
+                };
+
+                it["won't remove entity when still matching"] = () => {
+                    group.OnEntityWillBeRemoved += (g, entity) => this.Fail();
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    e.AddComponentC();
+                    e.WillRemoveComponent(CID.ComponentC);
                 };
             };
         };
