@@ -117,10 +117,11 @@ namespace Entitas {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
                     var group = groups[i];
                     entity._components[index] = null;
-                    if (!group.Matches(entity)) {
+                    var matches = group.Matches(entity);
+                    entity._components[index] = component;
+                    if (!matches) {
                         group.WillRemoveEntity(entity);
                     }
-                    entity._components[index] = component;
                 }
             }
         }
