@@ -3,8 +3,9 @@ using System.Collections.Generic;
 
 namespace Entitas {
     public partial class Pool {
-
+        public int totalComponents { get { return _totalComponents; } }
         public int Count { get { return _entities.Count; } }
+        public int pooledEntitiesCount { get { return _entityPool.Count; } }
 
         readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();

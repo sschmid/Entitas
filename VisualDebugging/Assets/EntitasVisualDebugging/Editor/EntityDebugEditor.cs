@@ -7,13 +7,22 @@ using UnityEngine;
 namespace Entitas.Debug {
     [CustomEditor(typeof(EntityDebugBehaviour)), CanEditMultipleObjects]
     public class EntityDebugEditor : Editor {
+        GUIStyle _foldoutStyle;
+
         public override void OnInspectorGUI() {
+            setStyles();
+
             if (targets.Length == 1) {
                 drawSingleTarget();
             } else {
                 drawMultiTargets();
             }
             EditorUtility.SetDirty(target);
+        }
+
+        void setStyles() {
+            _foldoutStyle = new GUIStyle(EditorStyles.foldout);
+            _foldoutStyle.fontStyle = FontStyle.Bold;
         }
 
         void drawSingleTarget() {
@@ -24,18 +33,27 @@ namespace Entitas.Debug {
             if (GUILayout.Button("Destroy Entity")) {
                 pool.DestroyEntity(entity);
             }
+            EditorGUILayout.Space();
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
+            EditorGUILayout.BeginHorizontal();
+            if (GUILayout.Button("Unfold all")) {
+                debugBehaviour.UnfoldAllComponents();
+            }
+            if (GUILayout.Button("Fold all")) {
+                debugBehaviour.FoldAllComponents();
+            }
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.Space();
 
             var indices = entity.GetComponentIndices();
             var components = entity.GetComponents();
+            EditorGUILayout.BeginVertical(GUI.skin.box);
             for (int i = 0; i < components.Length; i++) {
-                EditorGUILayout.BeginVertical(GUI.skin.button);
-                var index = indices[i];
-                var component = components[i];
-                drawComponent(entity, index, component);
-                EditorGUILayout.EndVertical();
+                drawComponent(debugBehaviour, entity, indices[i], components[i]);
             }
             EditorGUILayout.EndVertical();
         }
@@ -66,21 +84,25 @@ namespace Entitas.Debug {
             }
         }
 
-        void drawComponent(Entity entity, int index, IComponent component) {
+        void drawComponent(EntityDebugBehaviour debugBehaviour, Entity entity, int index, IComponent component) {
             var type = component.GetType();
 
+            EditorGUILayout.BeginVertical(GUI.skin.button);
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(type.Name, EditorStyles.boldLabel);
+            debugBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(debugBehaviour.unfoldedComponents[index], type.Name, _foldoutStyle);
             if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                 entity.RemoveComponent(index);
             }
             EditorGUILayout.EndHorizontal();
 
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            foreach (var field in fields) {
-                var value = field.GetValue(component);
-                drawField(entity, index, component, field, value);
+            if (debugBehaviour.unfoldedComponents[index]) {
+                var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+                foreach (var field in fields) {
+                    var value = field.GetValue(component);
+                    drawField(entity, index, component, field, value);
+                }
             }
+            EditorGUILayout.EndVertical();
         }
 
         void drawField(Entity entity, int index, IComponent component, FieldInfo field, object value) {

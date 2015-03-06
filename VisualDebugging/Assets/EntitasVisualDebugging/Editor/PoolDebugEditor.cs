@@ -10,6 +10,7 @@ namespace Entitas.Debug {
             var pool = debugBehaviour.pool;
 
             EditorGUILayout.LabelField("Entities", pool.Count.ToString());
+            EditorGUILayout.LabelField("Reusable entities", pool.pooledEntitiesCount.ToString());
             EditorUtility.SetDirty(target);
         }
     }

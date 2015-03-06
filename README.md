@@ -24,7 +24,7 @@ After you've read the readme, take a look at the [example project](https://githu
 You can imagine an entity as a container holding data to represent certain objects in your application. You can add, replace or remove data from entities in form of `IComponent`. Entities have corresponding events to let you know if components were added, replaced or removed.
 
 Here's how you can interact with an entity. To enjoy a more natural and more readable API, simply use the code generator that comes with Entitas (see [Code Generator](#Code-Generator)). In this example you can see some generated methods for `PositionComponent`, `HealthComponent`, `MovableComponent`.
-````cs
+```cs
 entity.AddPosition(0, 0, 0);
 entity.AddHealth(100);
 entity.isMovable = true;
@@ -183,6 +183,14 @@ public static void EntitasGenerate() {
 
 ## Visual Debugging
 Visual Debugging enables you to actually see and inspect all of your entities in the Unity Editor. To enable this feature just use `DebugPool` instead of `Pool`. That's it!
+
+```cs
+#if (UNITY_EDITOR)
+var pool = new DebugPool(ComponentIds.TotalComponents);
+#else
+var pool = new Pool(ComponentIds.TotalComponents);
+#endif
+```
 
 Once you use the `DebugPool` all pools and their entities will automatically show up in the hierarchy.
 
