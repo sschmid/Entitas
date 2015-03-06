@@ -86,17 +86,21 @@ namespace Entitas.Debug {
 
         void drawComponent(EntityDebugBehaviour debugBehaviour, Entity entity, int index, IComponent component) {
             var type = component.GetType();
+            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
 
             EditorGUILayout.BeginVertical(GUI.skin.button);
             EditorGUILayout.BeginHorizontal();
-            debugBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(debugBehaviour.unfoldedComponents[index], type.Name, _foldoutStyle);
+            if (fields.Length == 0) {
+                EditorGUILayout.LabelField(type.Name, EditorStyles.boldLabel);
+            } else {
+                debugBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(debugBehaviour.unfoldedComponents[index], type.Name, _foldoutStyle);
+            }
             if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                 entity.RemoveComponent(index);
             }
             EditorGUILayout.EndHorizontal();
 
             if (debugBehaviour.unfoldedComponents[index]) {
-                var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
                 foreach (var field in fields) {
                     var value = field.GetValue(component);
                     drawField(entity, index, component, field, value);
