@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Entitas;
+using Entitas.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
 
@@ -33,25 +34,21 @@ namespace Entitas.Debug {
             if (GUILayout.Button("Destroy Entity")) {
                 pool.DestroyEntity(entity);
             }
-            EditorGUILayout.Space();
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("Unfold all")) {
-                debugBehaviour.UnfoldAllComponents();
-            }
-            if (GUILayout.Button("Fold all")) {
+            EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
+            if (GUILayout.Button("▸", GUILayout.Width(21), GUILayout.Height(14))) {
                 debugBehaviour.FoldAllComponents();
             }
+            if (GUILayout.Button("▾", GUILayout.Width(21), GUILayout.Height(14))) {
+                debugBehaviour.UnfoldAllComponents();
+            }
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.EndVertical();
-
             EditorGUILayout.Space();
 
             var indices = entity.GetComponentIndices();
             var components = entity.GetComponents();
-            EditorGUILayout.BeginVertical(GUI.skin.box);
             for (int i = 0; i < components.Length; i++) {
                 drawComponent(debugBehaviour, entity, indices[i], components[i]);
             }
@@ -88,12 +85,12 @@ namespace Entitas.Debug {
             var type = component.GetType();
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
 
-            EditorGUILayout.BeginVertical(GUI.skin.button);
+            EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.BeginHorizontal();
             if (fields.Length == 0) {
-                EditorGUILayout.LabelField(type.Name, EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(type.RemoveComponentSuffix(), EditorStyles.boldLabel);
             } else {
-                debugBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(debugBehaviour.unfoldedComponents[index], type.Name, _foldoutStyle);
+                debugBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(debugBehaviour.unfoldedComponents[index], type.RemoveComponentSuffix(), _foldoutStyle);
             }
             if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                 entity.RemoveComponent(index);

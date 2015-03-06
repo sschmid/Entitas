@@ -47,7 +47,7 @@ namespace Entitas.Debug {
         }
 
         void updateName() {
-            _entitiesContainer.name = "Debug Pool (" + Count + ")";
+            _entitiesContainer.name = "Debug Pool (" + Count + " entities, " + pooledEntitiesCount + " reusable)";
         }
     }
 }
