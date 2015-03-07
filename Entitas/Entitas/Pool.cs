@@ -7,9 +7,9 @@ namespace Entitas {
         public int Count { get { return _entities.Count; } }
         public int pooledEntitiesCount { get { return _entityPool.Count; } }
 
-        readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
-        readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
-        readonly List<Group>[] _groupsForIndex;
+        protected readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
+        protected readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
+        protected readonly List<Group>[] _groupsForIndex;
         readonly ObjectPool _entityPool;
         readonly int _totalComponents;
         int _creationIndex;
@@ -118,7 +118,7 @@ namespace Entitas {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
                     var group = groups[i];
                     entity._components[index] = null;
-                    var matches = group.Matches(entity);
+                    var matches = group.matcher.Matches(entity);
                     entity._components[index] = component;
                     if (!matches) {
                         group.WillRemoveEntity(entity);

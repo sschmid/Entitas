@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour {
 
     void Start() {
         var pool = new DebugPool(ComponentIds.TotalComponents);
+        pool.GetGroup(Matcher.Name);
+        pool.GetGroup(Matcher.Test);
 
         for (int i = 0; i < 10; i++) {
             var e = pool.CreateEntity();

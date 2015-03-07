@@ -439,17 +439,17 @@ class describe_Matcher : nspec {
 
             it["AllOfCompoundMatcher"] = () => {
                 var m = Matcher.AllOf(allOf, anyOf, noneOf);
-                m.ToString().should_be("AllOfCompoundMatcher(AllOfMatcher(1, 2), AnyOfMatcher(3, 4), NoneOfMatcher(5, 6))");
+                m.ToString().should_be("AllOf(AllOf(1, 2), AnyOf(3, 4), NoneOf(5, 6))");
             };
 
             it["AnyOfCompoundMatcher"] = () => {
                 var m = Matcher.AnyOf(allOf, anyOf, noneOf);
-                m.ToString().should_be("AnyOfCompoundMatcher(AllOfMatcher(1, 2), AnyOfMatcher(3, 4), NoneOfMatcher(5, 6))");
+                m.ToString().should_be("AnyOf(AllOf(1, 2), AnyOf(3, 4), NoneOf(5, 6))");
             };
 
             it["NoneOfCompoundMatcher"] = () => {
                 var m = Matcher.NoneOf(allOf, anyOf, noneOf);
-                m.ToString().should_be("NoneOfCompoundMatcher(AllOfMatcher(1, 2), AnyOfMatcher(3, 4), NoneOfMatcher(5, 6))");
+                m.ToString().should_be("NoneOf(AllOf(1, 2), AnyOf(3, 4), NoneOf(5, 6))");
             };
         };
     }

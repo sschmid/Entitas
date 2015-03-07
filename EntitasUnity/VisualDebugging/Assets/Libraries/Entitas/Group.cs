@@ -10,6 +10,7 @@ namespace Entitas {
         public delegate void GroupChanged(Group group, Entity entity);
 
         public int Count { get { return _entities.Count; } }
+        public IMatcher matcher { get { return _matcher; } }
 
         readonly IMatcher _matcher;
         readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
@@ -18,10 +19,6 @@ namespace Entitas {
 
         public Group(IMatcher matcher) {
             _matcher = matcher;
-        }
-
-        public bool Matches(Entity entity) {
-            return _matcher.Matches(entity);
         }
 
         public void HandleEntity(Entity entity) {
@@ -101,6 +98,10 @@ namespace Entitas {
             }
 
             return _singleEntityCache;
+        }
+
+        public override string ToString() {
+            return string.Format("Group(" + _matcher + ")");
         }
     }
 

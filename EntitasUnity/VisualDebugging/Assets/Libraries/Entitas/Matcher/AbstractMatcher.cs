@@ -58,7 +58,11 @@ namespace Entitas {
                 indexStr = indexStr.Substring(0, indexStr.Length - seperator.Length);
             }
 
-            return string.Format("{0}({1})", GetType().Name, indexStr);
+            var name = GetType().Name;
+            if (name.EndsWith("Matcher")) {
+                name = name.Replace("Matcher", string.Empty);
+            }
+            return string.Format("{0}({1})", name, indexStr);
         }
     }
 }

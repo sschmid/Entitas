@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
-using Entitas;
 
 namespace Entitas.Unity.VisualDebugging {
     public class PoolDebugBehaviour : MonoBehaviour {
-        public Pool pool { get { return _pool; } }
+        public DebugPool pool { get { return _pool; } }
 
-        Pool _pool;
+        DebugPool _pool;
 
-        public void Init(Pool pool) {
+        public void Init(DebugPool pool) {
             _pool = pool;
         }
     }

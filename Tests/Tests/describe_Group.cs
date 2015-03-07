@@ -220,6 +220,12 @@ class describe_Group : nspec {
                 s.should_not_be_same(_group.GetSingleEntity());
             };
         };
+
+        it["can ToString"] = () => {
+            var m = Matcher.NoneOf(Matcher.AllOf(0), Matcher.AnyOf(1));
+            var group = new Group(m);
+            group.ToString().should_be("Group(NoneOf(AllOf(0), AnyOf(1)))");
+        };
     }
 
     void handle(Entity entity) {

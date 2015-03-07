@@ -49,7 +49,11 @@ namespace Entitas {
                 matcherStr = matcherStr.Substring(0, matcherStr.Length - seperator.Length);
             }
 
-            return string.Format("{0}({1})", GetType().Name, matcherStr);
+            var name = GetType().Name;
+            if (name.EndsWith("CompoundMatcher")) {
+                name = name.Replace("CompoundMatcher", string.Empty);
+            }
+            return string.Format("{0}({1})", name, matcherStr);
         }
     }
 }
