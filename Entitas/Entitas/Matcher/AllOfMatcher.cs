@@ -7,4 +7,10 @@ namespace Entitas {
             return entity.HasComponents(indices);
         }
     }
+
+    public static partial class Matcher {
+        public static AllOfMatcher AllOf(params int[] indices) {
+            return new AllOfMatcher(indices);
+        }
+    }
 }

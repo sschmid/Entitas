@@ -13,5 +13,11 @@
             return true;
         }
     }
+
+    public static partial class Matcher {
+        public static AllOfCompoundMatcher AllOf(params IMatcher[] matchers) {
+            return new AllOfCompoundMatcher(matchers);
+        }
+    }
 }
 

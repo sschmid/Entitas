@@ -7,5 +7,11 @@
             return entity.HasAnyComponent(indices);
         }
     }
+
+    public static partial class Matcher {
+        public static AnyOfMatcher AnyOf(params int[] indices) {
+            return new AnyOfMatcher(indices);
+        }
+    }
 }
 

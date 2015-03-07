@@ -13,5 +13,11 @@
             return true;
         }
     }
+
+    public static partial class Matcher {
+        public static NoneOfMatcher NoneOf(params int[] indices) {
+            return new NoneOfMatcher(indices);
+        }
+    }
 }
 

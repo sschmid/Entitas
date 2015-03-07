@@ -65,12 +65,6 @@
     <Compile Include="..\Entitas\Entitas\Extensions\PoolExtension.cs">
       <Link>Libraries\Entitas\Extensions\PoolExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\IReactiveSystem.cs">
-      <Link>Libraries\Entitas\Extensions\ReactiveSystem\IReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ReactiveSystem\ReactiveSystem.cs">
-      <Link>Libraries\Entitas\Extensions\ReactiveSystem\ReactiveSystem.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
       <Link>Libraries\Entitas\Interfaces\IComponent.cs</Link>
     </Compile>
@@ -91,9 +85,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\AnyOfMatcher.cs">
       <Link>Libraries\Entitas\Matcher\AnyOfMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
-      <Link>Libraries\Entitas\Matcher\Matcher.cs</Link>
     </Compile>
     <Compile Include="..\CodeGenerator\EntitasCodeGenerator\EntitasCodeGenerator.cs">
       <Link>Libraries\EntitasCodeGenerator\EntitasCodeGenerator.cs</Link>
@@ -127,6 +118,12 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\NoneOfCompoundMatcher.cs">
       <Link>Libraries\Entitas\Matcher\NoneOfCompoundMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\ReactiveSystem.cs">
+      <Link>Libraries\Entitas\ReactiveSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
+      <Link>Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
