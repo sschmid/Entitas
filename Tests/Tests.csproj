@@ -87,9 +87,9 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CodeGenerator\CodeGenerator.csproj">
+    <ProjectReference Include="..\EntitasCodeGenerator\EntitasCodeGenerator.csproj">
       <Project>{4D7C8232-6930-4F13-9D9A-3C32A340BB62}</Project>
-      <Name>CodeGenerator</Name>
+      <Name>EntitasCodeGenerator</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

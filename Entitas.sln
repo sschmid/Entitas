@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceTests", "PerformanceTests\PerformanceTests.csproj", "{3F97DA95-DF04-49BF-BB3C-961A516680F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeGenerator", "CodeGenerator\CodeGenerator.csproj", "{4D7C8232-6930-4F13-9D9A-3C32A340BB62}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntitasCodeGenerator", "EntitasCodeGenerator\EntitasCodeGenerator.csproj", "{4D7C8232-6930-4F13-9D9A-3C32A340BB62}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readme", "Readme\Readme.csproj", "{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}"
 EndProject
@@ -76,7 +76,7 @@ Global
 		$4.inheritsScope = text/x-csharp
 		$4.scope = text/x-csharp
 		$0.StandardHeader = $5
-		$5.Text = 
+		$5.Text =
 		$5.IncludeInNewFiles = True
 		$0.NameConventionPolicy = $6
 		$6.Rules = $7

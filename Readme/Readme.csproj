@@ -86,24 +86,6 @@
     <Compile Include="..\Entitas\Entitas\Matcher\AnyOfMatcher.cs">
       <Link>Libraries\Entitas\Matcher\AnyOfMatcher.cs</Link>
     </Compile>
-    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\EntitasCodeGenerator.cs">
-      <Link>Libraries\EntitasCodeGenerator\EntitasCodeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs">
-      <Link>Libraries\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\PoolAttribute.cs">
-      <Link>Libraries\EntitasCodeGenerator\Attributes\PoolAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs">
-      <Link>Libraries\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs">
-      <Link>Libraries\EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\CodeGenerator\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs">
-      <Link>Libraries\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\AllOfCompoundMatcher.cs">
       <Link>Libraries\Entitas\Matcher\AllOfCompoundMatcher.cs</Link>
     </Compile>
@@ -124,6 +106,24 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
       <Link>Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\EntitasCodeGenerator.cs">
+      <Link>Libraries\EntitasCodeGenerator\EntitasCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs">
+      <Link>Libraries\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Attributes\PoolAttribute.cs">
+      <Link>Libraries\EntitasCodeGenerator\Attributes\PoolAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs">
+      <Link>Libraries\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs">
+      <Link>Libraries\EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs">
+      <Link>Libraries\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
