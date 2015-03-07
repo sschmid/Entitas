@@ -13,8 +13,8 @@ namespace Entitas {
         public int creationIndex { get { return _creationIndex; } }
 
         internal int _creationIndex;
+        internal readonly IComponent[] _components;
 
-        readonly IComponent[] _components;
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
 
@@ -48,17 +48,20 @@ namespace Entitas {
                 throw new EntityDoesNotHaveComponentException(errorMsg, index);
             }
 
+            removeComponent(index);
+        }
+
+        void removeComponent(int index) {
             if (OnComponentWillBeRemoved != null) {
                 OnComponentWillBeRemoved(this, index, _components[index]);
             }
-
             replaceComponent(index, null);
         }
 
         public void ReplaceComponent(int index, IComponent component) {
             if (HasComponent(index)) {
                 replaceComponent(index, component);
-            } else {
+            } else if (component != null) {
                 AddComponent(index, component);
             }
         }
@@ -135,7 +138,7 @@ namespace Entitas {
         public int[] GetComponentIndices() {
             if (_componentIndicesCache == null) {
                 var indices = new List<int>();
-                for (int i = 0; i < _components.Length; i++) {
+                for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
                     if (_components[i] != null) {
                         indices.Add(i);
                     }
@@ -150,7 +153,7 @@ namespace Entitas {
         public void RemoveAllComponents() {
             var indices = GetComponentIndices();
             for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
-                RemoveComponent(indices[i]);
+                removeComponent(indices[i]);
             }
         }
 

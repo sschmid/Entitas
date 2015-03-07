@@ -20,16 +20,15 @@ namespace Entitas {
             _matcher = matcher;
         }
 
-        public void AddEntityIfMatching(Entity entity) {
+        public bool Matches(Entity entity) {
+            return _matcher.Matches(entity);
+        }
+
+        public void HandleEntity(Entity entity) {
             if (_matcher.Matches(entity)) {
-                var added = _entities.Add(entity);
-                if (added) {
-                    _entitiesCache = null;
-                    _singleEntityCache = null;
-                    if (OnEntityAdded != null) {
-                        OnEntityAdded(this, entity);
-                    }
-                }
+                addEntity(entity);
+            } else {
+                removeEntity(entity);
             }
         }
 
@@ -50,7 +49,18 @@ namespace Entitas {
             }
         }
 
-        public void RemoveEntity(Entity entity) {
+        void addEntity(Entity entity) {
+            var added = _entities.Add(entity);
+            if (added) {
+                _entitiesCache = null;
+                _singleEntityCache = null;
+                if (OnEntityAdded != null) {
+                    OnEntityAdded(this, entity);
+                }
+            }
+        }
+
+        void removeEntity(Entity entity) {
             var removed = _entities.Remove(entity);
             if (removed) {
                 _entitiesCache = null;
@@ -77,15 +87,17 @@ namespace Entitas {
         public Entity GetSingleEntity() {
             if (_singleEntityCache == null) {
                 var count = _entities.Count;
-                if (count == 0) {
-                    return null;
-                }
+                if (count == 1) {
+                    _singleEntityCache = System.Linq.Enumerable.First(_entities);
+                } else {
+                    if (count == 0) {
+                        return null;
+                    }
 
-                if (count > 1) {
-                    throw new SingleEntityException(_matcher);
+                    if (count > 1) {
+                        throw new SingleEntityException(_matcher);
+                    }
                 }
-
-                _singleEntityCache = System.Linq.Enumerable.First(_entities);
             }
 
             return _singleEntityCache;
