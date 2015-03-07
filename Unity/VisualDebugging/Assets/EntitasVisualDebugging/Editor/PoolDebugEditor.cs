@@ -1,7 +1,7 @@
 ﻿using Entitas;
 using UnityEditor;
 
-namespace Entitas.Debug {
+namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(PoolDebugBehaviour))]
     public class PoolDebugEditor : Editor {
 

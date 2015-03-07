@@ -1,6 +1,6 @@
 ﻿using Entitas.CodeGenerator;
 
-namespace Entitas.Debug {
+namespace Entitas.Unity.VisualDebugging {
     [DontGenerate(false)]
     public class DebugComponent : IComponent {
         public EntityDebugBehaviour debugBehaviour;

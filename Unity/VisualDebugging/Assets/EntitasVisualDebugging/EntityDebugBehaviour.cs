@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Entitas;
 
-namespace Entitas.Debug {
+namespace Entitas.Unity.VisualDebugging {
     public class EntityDebugBehaviour : MonoBehaviour {
         public Pool pool { get { return _pool; } }
         public Entity entity { get { return _entity; } }

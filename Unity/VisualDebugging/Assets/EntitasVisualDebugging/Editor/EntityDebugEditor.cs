@@ -5,7 +5,7 @@ using Entitas.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.Debug {
+namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(EntityDebugBehaviour)), CanEditMultipleObjects]
     public class EntityDebugEditor : Editor {
         GUIStyle _foldoutStyle;
