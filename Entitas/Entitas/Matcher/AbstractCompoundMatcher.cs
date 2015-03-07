@@ -37,6 +37,20 @@ namespace Entitas {
 
             return true;
         }
+
+        public override string ToString() {
+            const string seperator = ", ";
+            var matcherStr = string.Empty;
+            for (int i = 0, _matchersLength = _matchers.Length; i < _matchersLength; i++) {
+                matcherStr += _matchers[i] + seperator;
+            }
+
+            if (matcherStr != string.Empty) {
+                matcherStr = matcherStr.Substring(0, matcherStr.Length - seperator.Length);
+            }
+
+            return string.Format("{0}({1})", GetType().Name, matcherStr);
+        }
     }
 }
 

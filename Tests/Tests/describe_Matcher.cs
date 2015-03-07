@@ -426,6 +426,32 @@ class describe_Matcher : nspec {
                 Matcher.NoneOf(nestedAll, nestedAny).Matches(e).should_be_false();
             };
         };
+
+        context["can ToString"] = () => {
+            AllOfMatcher allOf = null;
+            AnyOfMatcher anyOf = null;
+            NoneOfMatcher noneOf = null;
+            before = () => {
+                allOf = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
+                anyOf = Matcher.AnyOf(CID.ComponentC, CID.ComponentD);
+                noneOf = Matcher.NoneOf(CID.ComponentE, CID.ComponentF);
+            };
+
+            it["AllOfCompoundMatcher"] = () => {
+                var m = Matcher.AllOf(allOf, anyOf, noneOf);
+                m.ToString().should_be("AllOfCompoundMatcher(AllOfMatcher(1, 2), AnyOfMatcher(3, 4), NoneOfMatcher(5, 6))");
+            };
+
+            it["AnyOfCompoundMatcher"] = () => {
+                var m = Matcher.AnyOf(allOf, anyOf, noneOf);
+                m.ToString().should_be("AnyOfCompoundMatcher(AllOfMatcher(1, 2), AnyOfMatcher(3, 4), NoneOfMatcher(5, 6))");
+            };
+
+            it["NoneOfCompoundMatcher"] = () => {
+                var m = Matcher.NoneOf(allOf, anyOf, noneOf);
+                m.ToString().should_be("NoneOfCompoundMatcher(AllOfMatcher(1, 2), AnyOfMatcher(3, 4), NoneOfMatcher(5, 6))");
+            };
+        };
     }
 
     IMatcher allOfAB() {
