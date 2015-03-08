@@ -52,18 +52,18 @@ namespace Entitas {
             _entityPool.Push(entity);
         }
 
-        public void DestroyAllEntities() {
+        public virtual void DestroyAllEntities() {
             var entities = GetEntities();
             for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
                 DestroyEntity(entities[i]);
             }
         }
 
-        public bool HasEntity(Entity entity) {
+        public virtual bool HasEntity(Entity entity) {
             return _entities.Contains(entity);
         }
 
-        public Entity[] GetEntities() {
+        public virtual Entity[] GetEntities() {
             if (_entitiesCache == null) {
                 _entitiesCache = new Entity[_entities.Count];
                 _entities.CopyTo(_entitiesCache);
@@ -72,7 +72,7 @@ namespace Entitas {
             return _entitiesCache;
         }
 
-        public Group GetGroup(IMatcher matcher) {
+        public virtual Group GetGroup(IMatcher matcher) {
             Group group;
             if (!_groups.TryGetValue(matcher, out group)) {
                 group = new Group(matcher);
@@ -94,7 +94,7 @@ namespace Entitas {
             return group;
         }
 
-        void onComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
+        protected void onComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
@@ -103,7 +103,7 @@ namespace Entitas {
             }
         }
 
-        void onComponentReplaced(Entity entity, int index, IComponent component) {
+        protected void onComponentReplaced(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
@@ -112,7 +112,7 @@ namespace Entitas {
             }
         }
 
-        void onComponentWillBeRemoved(Entity entity, int index, IComponent component) {
+        protected void onComponentWillBeRemoved(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {

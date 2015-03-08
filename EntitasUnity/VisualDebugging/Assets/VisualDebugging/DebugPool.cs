@@ -39,6 +39,12 @@ namespace Entitas.Unity.VisualDebugging {
             updateName();
         }
 
+        public override Group GetGroup(IMatcher matcher) {
+            var group = base.GetGroup(matcher);
+            updateName();
+            return group;
+        }
+
         void addDebugComponent(Entity entity) {
             var debugBehaviour = new GameObject().AddComponent<EntityDebugBehaviour>();
             debugBehaviour.Init(this, entity, _debugIndex);
@@ -49,7 +55,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void updateName() {
-            _entitiesContainer.name = "Debug Pool (" + Count + " entities, " + pooledEntitiesCount + " reusable)";
+            _entitiesContainer.name = string.Format("Debug Pool ({0} entities, {1} reusable, {2} groups)", Count, pooledEntitiesCount, groups.Count);
         }
     }
 }
