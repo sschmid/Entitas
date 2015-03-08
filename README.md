@@ -168,18 +168,9 @@ pool.isAnimating = false;
 # Unity
 
 ## Code Generation
-The following code extends Unity with a menu item that generates code with a single click.
+Entitas extends Unity with a menu item that generates code with a single click.
 
 ![Entitas Header](Readme/MenuItem.png)
-
-```cs
-[MenuItem("Game/Entitas/Generate")]
-public static void EntitasGenerate() {
-    var assembly = Assembly.GetAssembly(typeof(Entity));
-    EntitasCodeGenerator.Generate(assembly, "Assets/Sources/Generated/");
-    AssetDatabase.Refresh();
-}
-```
 
 ## Visual Debugging
 Visual Debugging enables you to actually see and inspect all of your entities in the Unity Editor. To enable this feature just use `DebugPool` instead of `Pool`. That's it!
@@ -196,7 +187,7 @@ Once you use the `DebugPool` all pools and their entities will automatically sho
 
 ![Entitas Visual Debug Hierarchy](Readme/VisualDebug-Hierarchy.png)
 
-Although entities are no GameObjects and components are no MonoBehaviours you can inspect them as if they were. All components of the selected entity are listed and all their fields are exposed. You can manipulate or remove components at runtime and even destroy the entity.
+Although entities are no GameObjects and components are no MonoBehaviours you can inspect them as if they were. All components of the selected entity are listed and all their fields are exposed. You can manipulate or remove components at runtime and even destroy the entity. All the default Unity drawers are supported and you can easily create your own `ICustomTypeDrawer` to draw custom objects. [Take a look at these example implementations](https://github.com/sschmid/Entitas-CSharp/tree/master/EntitasUnity/VisualDebugging/Assets/Scripts/Editor)
 
 ![Entitas Visual Debug Inspector](Readme/VisualDebug-Inspector.png)
 
@@ -207,6 +198,7 @@ When you select multiple entities, you can manually destroy some of them or batc
 Give it a try and checkout the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git)
 
 ![Entitas Visual Debug Inspector Example](Readme/VisualDebug-Inspector-Example.png)
+![Entitas Visual Debug Inspector Example2](Readme/VisualDebug-Inspector-Example2.png)
 
 # Thanks to
 Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://github.com/cloudjubei) and [@devboy](https://github.com/devboy) for endless hours of discussion and helping making Entitas awesome!
