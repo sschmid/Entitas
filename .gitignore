@@ -1,5 +1,5 @@
 test-results
-bin
+*/bin
 *.userprefs
 EntitasUnity/VisualDebugging/Library/AssetServerCacheV3
 EntitasUnity/VisualDebugging/Library/CurrentLayout.dwlt
