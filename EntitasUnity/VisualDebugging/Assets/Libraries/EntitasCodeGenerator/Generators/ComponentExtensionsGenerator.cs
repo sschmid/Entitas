@@ -339,25 +339,26 @@ $assign
         }
 
         static Dictionary<string, string> typeShortcuts = new Dictionary<string, string>() {
-            { "Byte", "byte" },
-            { "SByte", "sbyte" },
-            { "Int32", "int" },
-            { "UInt32", "uint" },
-            { "Int16", "short" },
-            { "UInt16", "ushort" },
-            { "Int64", "long" },
-            { "UInt64", "ulong" },
-            { "Single", "float" },
-            { "Double", "double" },
-            { "Char", "char" },
-            { "Boolean", "bool" },
-            { "String", "string" },
-            { "Decimal", "decimal" }
+            { "System.Byte", "byte" },
+            { "System.SByte", "sbyte" },
+            { "System.Int32", "int" },
+            { "System.UInt32", "uint" },
+            { "System.Int16", "short" },
+            { "System.UInt16", "ushort" },
+            { "System.Int64", "long" },
+            { "System.UInt64", "ulong" },
+            { "System.Single", "float" },
+            { "System.Double", "double" },
+            { "System.Char", "char" },
+            { "System.Boolean", "bool" },
+            { "System.Object", "object" },
+            { "System.String", "string" },
+            { "System.Decimal", "decimal" }
         };
 
         static string getTypeName(Type type) {
             string typeStr;
-            var typeName = typeShortcuts.TryGetValue(type.Name, out typeStr) ? typeStr : simpleTypeString(type);
+            var typeName = typeShortcuts.TryGetValue(type.FullName, out typeStr) ? typeStr : simpleTypeString(type);
             if (type.IsEnum) {
                 typeName = typeName.Replace("+", ".");
             }
