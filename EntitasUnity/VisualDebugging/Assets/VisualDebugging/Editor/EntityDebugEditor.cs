@@ -11,6 +11,19 @@ namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(EntityDebugBehaviour)), CanEditMultipleObjects]
     public class EntityDebugEditor : Editor {
         GUIStyle _foldoutStyle;
+        ICustomTypeDrawer[] _customTypeDrawers;
+
+        void Awake() {
+            var assembly = Assembly.GetAssembly(typeof(EntityDebugEditor));
+            var customDrawers = assembly.GetTypes()
+                .Where(type => type.GetInterfaces().Contains(typeof(ICustomTypeDrawer)))
+                .ToArray();
+
+            _customTypeDrawers = new ICustomTypeDrawer[customDrawers.Length];
+            for (int i = 0; i < customDrawers.Length; i++) {
+                _customTypeDrawers[i] = (ICustomTypeDrawer)Activator.CreateInstance(customDrawers[i]);
+            }
+        }
 
         public override void OnInspectorGUI() {
             setStyles();
@@ -119,6 +132,13 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         object drawAndGetNewValue(Entity entity, int index, IComponent component, string fieldName, Type fieldType, object value) {
+            // Custom type support
+            foreach (var drawer in _customTypeDrawers) {
+                if (drawer.HandlesType(fieldType)) {
+                    return drawer.DrawAndGetNewValue(entity, index, component, fieldName, value);
+                }
+            }
+
             // Unity's builtin types
             if (fieldType == typeof(Bounds))                        return EditorGUILayout.BoundsField(fieldName, (Bounds)value);
             if (fieldType == typeof(Color))                         return EditorGUILayout.ColorField(fieldName, (Color)value);
@@ -135,8 +155,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (fieldType == typeof(UnityEngine.Object))            return EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, fieldType, true);
             if (fieldType.IsSubclassOf(typeof(UnityEngine.Object))) return EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, fieldType, true);
 
-            // Custom type support
-            if (fieldType == typeof(DateTime))                      return DateTime.Parse(EditorGUILayout.TextField(fieldName, ((DateTime)value).ToString()));
+            // IList
             if (fieldType.GetInterfaces().Contains(typeof(IList)))  return drawAndGetNewList(entity, index, component, fieldName, (IList)value);
 
             // Anything else

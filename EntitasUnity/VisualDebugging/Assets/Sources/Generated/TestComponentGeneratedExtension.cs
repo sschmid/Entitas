@@ -8,7 +8,7 @@ namespace Entitas {
             AddComponent(ComponentIds.Test, component);
         }
 
-        public void AddTest(UnityEngine.Bounds newBounds, UnityEngine.Color newColor, UnityEngine.AnimationCurve newAnimationCurve, TestComponent.MyEnum newMyEnum, float newMyFloat, int newMyInt, UnityEngine.Rect newRect, string newMyString, UnityEngine.Vector2 newVector2, UnityEngine.Vector3 newVector3, UnityEngine.Vector4 newVector4, bool newMyBool, UnityEngine.Object newUnityObject, UnityEngine.GameObject newGameObject, MyObject newCustomObject, object newMyObject, System.DateTime newDate, System.String[] newStrings, System.Int32[] newInts, System.String[][] newStringStrings) {
+        public void AddTest(UnityEngine.Bounds newBounds, UnityEngine.Color newColor, UnityEngine.AnimationCurve newAnimationCurve, TestComponent.MyEnum newMyEnum, float newMyFloat, int newMyInt, UnityEngine.Rect newRect, string newMyString, UnityEngine.Vector2 newVector2, UnityEngine.Vector3 newVector3, UnityEngine.Vector4 newVector4, bool newMyBool, UnityEngine.Object newUnityObject, UnityEngine.GameObject newGameObject, MyObject newMyObject, object newSomeObject, System.DateTime newDate, System.String[] newStrings, System.Int32[] newInts, System.String[][] newStringStrings) {
             var component = new TestComponent();
             component.bounds = newBounds;
             component.color = newColor;
@@ -24,8 +24,8 @@ namespace Entitas {
             component.myBool = newMyBool;
             component.unityObject = newUnityObject;
             component.gameObject = newGameObject;
-            component.customObject = newCustomObject;
             component.myObject = newMyObject;
+            component.someObject = newSomeObject;
             component.date = newDate;
             component.strings = newStrings;
             component.ints = newInts;
@@ -33,7 +33,7 @@ namespace Entitas {
             AddTest(component);
         }
 
-        public void ReplaceTest(UnityEngine.Bounds newBounds, UnityEngine.Color newColor, UnityEngine.AnimationCurve newAnimationCurve, TestComponent.MyEnum newMyEnum, float newMyFloat, int newMyInt, UnityEngine.Rect newRect, string newMyString, UnityEngine.Vector2 newVector2, UnityEngine.Vector3 newVector3, UnityEngine.Vector4 newVector4, bool newMyBool, UnityEngine.Object newUnityObject, UnityEngine.GameObject newGameObject, MyObject newCustomObject, object newMyObject, System.DateTime newDate, System.String[] newStrings, System.Int32[] newInts, System.String[][] newStringStrings) {
+        public void ReplaceTest(UnityEngine.Bounds newBounds, UnityEngine.Color newColor, UnityEngine.AnimationCurve newAnimationCurve, TestComponent.MyEnum newMyEnum, float newMyFloat, int newMyInt, UnityEngine.Rect newRect, string newMyString, UnityEngine.Vector2 newVector2, UnityEngine.Vector3 newVector3, UnityEngine.Vector4 newVector4, bool newMyBool, UnityEngine.Object newUnityObject, UnityEngine.GameObject newGameObject, MyObject newMyObject, object newSomeObject, System.DateTime newDate, System.String[] newStrings, System.Int32[] newInts, System.String[][] newStringStrings) {
             TestComponent component;
             if (hasTest) {
                 WillRemoveComponent(ComponentIds.Test);
@@ -55,8 +55,8 @@ namespace Entitas {
             component.myBool = newMyBool;
             component.unityObject = newUnityObject;
             component.gameObject = newGameObject;
-            component.customObject = newCustomObject;
             component.myObject = newMyObject;
+            component.someObject = newSomeObject;
             component.date = newDate;
             component.strings = newStrings;
             component.ints = newInts;

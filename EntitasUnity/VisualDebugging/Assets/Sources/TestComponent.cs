@@ -23,8 +23,8 @@ public class TestComponent : IComponent {
 
     public UnityEngine.Object unityObject;
     public GameObject gameObject;
-    public MyObject customObject;
-    public object myObject;
+    public MyObject myObject;
+    public object someObject;
 
     public DateTime date;
     public string[] strings;
