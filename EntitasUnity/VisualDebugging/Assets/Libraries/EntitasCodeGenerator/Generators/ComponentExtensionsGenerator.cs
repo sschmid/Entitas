@@ -351,7 +351,6 @@ $assign
             { "Double", "double" },
             { "Char", "char" },
             { "Boolean", "bool" },
-            { "Object", "object" },
             { "String", "string" },
             { "Decimal", "decimal" }
         };

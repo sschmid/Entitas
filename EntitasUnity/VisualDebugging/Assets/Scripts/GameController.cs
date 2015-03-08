@@ -10,7 +10,12 @@ public class GameController : MonoBehaviour {
         pool.GetGroup(Matcher.Name);
         pool.GetGroup(Matcher.Test);
 
+
         for (int i = 0; i < 10; i++) {
+            string[][] stringStrings = new string[2][];
+            stringStrings[0] = new string[] {"Entity", "Component", "System"};
+            stringStrings[1] = new string[] {"Entity2", "Component2", "System2"};
+
             var e = pool.CreateEntity();
             e.AddTest(new Bounds(),
                 Color.red,
@@ -24,9 +29,14 @@ public class GameController : MonoBehaviour {
                 Vector3.one,
                 Vector4.one,
                 true,
+                new UnityEngine.Object(),
+                new GameObject("GameObject " + i),
                 new MyObject(),
                 new object(),
-                DateTime.Now
+                DateTime.Now,
+                new [] {"Entity", "Component", "System"},
+                new [] {1, 2, 3},
+                stringStrings
             );
         }
     }

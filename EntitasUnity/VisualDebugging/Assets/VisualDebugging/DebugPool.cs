@@ -39,6 +39,11 @@ namespace Entitas.Unity.VisualDebugging {
             updateName();
         }
 
+        public override void DestroyAllEntities() {
+            base.DestroyAllEntities();
+            Object.Destroy(_entitiesContainer.gameObject);
+        }
+
         public override Group GetGroup(IMatcher matcher) {
             var group = base.GetGroup(matcher);
             updateName();

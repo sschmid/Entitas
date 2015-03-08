@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Reflection;
 using Entitas;
 using Entitas.CodeGenerator;
@@ -107,41 +109,66 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawField(Entity entity, int index, IComponent component, FieldInfo field, object value) {
-            var currentValue = value;
-            var newValue = value;
-
-            // Unity's builtin types
-            if (field.FieldType == typeof(Bounds))              newValue = EditorGUILayout.BoundsField(field.Name, (Bounds)currentValue);
-            else if (field.FieldType == typeof(Color))          newValue = EditorGUILayout.ColorField(field.Name, (Color)currentValue);
-            else if (field.FieldType == typeof(AnimationCurve)) newValue = EditorGUILayout.CurveField(field.Name, (AnimationCurve)currentValue);
-            else if (field.FieldType.IsEnum)                    newValue = EditorGUILayout.EnumPopup(field.Name, (Enum)currentValue);
-            else if (field.FieldType == typeof(float))          newValue = EditorGUILayout.FloatField(field.Name, (float)currentValue);
-            else if (field.FieldType == typeof(int))            newValue = EditorGUILayout.IntField(field.Name, (int)currentValue);
-            else if (field.FieldType == typeof(Rect))           newValue = EditorGUILayout.RectField(field.Name, (Rect)currentValue);
-            else if (field.FieldType == typeof(string))         newValue = EditorGUILayout.TextField(field.Name, (string)currentValue);
-            else if (field.FieldType == typeof(Vector2))        newValue = EditorGUILayout.Vector2Field(field.Name, (Vector2)currentValue);
-            else if (field.FieldType == typeof(Vector3))        newValue = EditorGUILayout.Vector3Field(field.Name, (Vector3)currentValue);
-            else if (field.FieldType == typeof(Vector4))        newValue = EditorGUILayout.Vector4Field(field.Name, (Vector4)currentValue);
-            else if (field.FieldType == typeof(bool))           newValue = EditorGUILayout.Toggle(field.Name, (bool)currentValue);
-            else if (field.FieldType.IsSubclassOf(typeof(UnityEngine.Object)))
-                newValue = EditorGUILayout.ObjectField(field.Name, (UnityEngine.Object)currentValue, field.FieldType, true);
-
-            // Custom type support
-            else if (field.FieldType == typeof(DateTime))       newValue = DateTime.Parse(EditorGUILayout.TextField(field.Name, ((DateTime)currentValue).ToString()));
-
-            // Anything else
-            else EditorGUILayout.LabelField(field.Name, currentValue == null ? "null" : currentValue.ToString());
-
-            var changed = (currentValue == null && newValue != null) ||
-                          (currentValue != null && newValue == null) ||
-                          ((currentValue != null && newValue != null &&
-                          !newValue.Equals(currentValue)));
-
-            if (changed) {
+            var newValue = drawAndGetNewValue(entity, index, component, field.Name, field.FieldType, value);
+            if (didValueChange(value, newValue)) {
                 entity.WillRemoveComponent(index);
                 field.SetValue(component, newValue);
                 entity.ReplaceComponent(index, component);
+                Debug.Log("Replaced " + component + "." + field.Name + " = " + newValue);
             }
+        }
+
+        object drawAndGetNewValue(Entity entity, int index, IComponent component, string fieldName, Type fieldType, object value) {
+            // Unity's builtin types
+            if (fieldType == typeof(Bounds))                        return EditorGUILayout.BoundsField(fieldName, (Bounds)value);
+            if (fieldType == typeof(Color))                         return EditorGUILayout.ColorField(fieldName, (Color)value);
+            if (fieldType == typeof(AnimationCurve))                return EditorGUILayout.CurveField(fieldName, (AnimationCurve)value);
+            if (fieldType.IsEnum)                                   return EditorGUILayout.EnumPopup(fieldName, (Enum)value);
+            if (fieldType == typeof(float))                         return EditorGUILayout.FloatField(fieldName, (float)value);
+            if (fieldType == typeof(int))                           return EditorGUILayout.IntField(fieldName, (int)value);
+            if (fieldType == typeof(Rect))                          return EditorGUILayout.RectField(fieldName, (Rect)value);
+            if (fieldType == typeof(string))                        return EditorGUILayout.TextField(fieldName, (string)value);
+            if (fieldType == typeof(Vector2))                       return EditorGUILayout.Vector2Field(fieldName, (Vector2)value);
+            if (fieldType == typeof(Vector3))                       return EditorGUILayout.Vector3Field(fieldName, (Vector3)value);
+            if (fieldType == typeof(Vector4))                       return EditorGUILayout.Vector4Field(fieldName, (Vector4)value);
+            if (fieldType == typeof(bool))                          return EditorGUILayout.Toggle(fieldName, (bool)value);
+            if (fieldType == typeof(UnityEngine.Object))            return EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, fieldType, true);
+            if (fieldType.IsSubclassOf(typeof(UnityEngine.Object))) return EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, fieldType, true);
+
+            // Custom type support
+            if (fieldType == typeof(DateTime))                      return DateTime.Parse(EditorGUILayout.TextField(fieldName, ((DateTime)value).ToString()));
+            if (fieldType.GetInterfaces().Contains(typeof(IList)))  return drawAndGetNewList(entity, index, component, fieldName, (IList)value);
+
+            // Anything else
+            EditorGUILayout.LabelField(fieldName, value == null ? "null" : value.ToString());
+            return value;
+        }
+
+        object drawAndGetNewList(Entity entity, int index, IComponent component, string fieldName, IList list) {
+            EditorGUILayout.LabelField(fieldName);
+            var indent = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = indent + 1;
+            for (int i = 0; i < list.Count; i++) {
+                var value = list[i];
+                var type = value.GetType();
+                var newValue = drawAndGetNewValue(entity, index, component, fieldName + "[" + i + "]", type, value);
+
+                if (didValueChange(value, newValue)) {
+                    entity.WillRemoveComponent(index);
+                    list[i] = newValue;
+                    entity.ReplaceComponent(index, component);
+                    Debug.Log("Replaced " + component + "." + fieldName + "[" + i + "] = " + newValue);
+                }
+            }
+            EditorGUI.indentLevel = indent;
+            return list;
+        }
+
+        bool didValueChange(object value, object newValue) {
+            return (value == null && newValue != null) ||
+                   (value != null && newValue == null) ||
+                   ((value != null && newValue != null &&
+                   !newValue.Equals(value)));
         }
     }
 }

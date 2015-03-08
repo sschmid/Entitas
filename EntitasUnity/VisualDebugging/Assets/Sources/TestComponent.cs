@@ -21,9 +21,14 @@ public class TestComponent : IComponent {
     public Vector4 vector4;
     public bool myBool;
 
+    public UnityEngine.Object unityObject;
+    public GameObject gameObject;
     public MyObject customObject;
     public object myObject;
 
     public DateTime date;
+    public string[] strings;
+    public int[] ints;
+    public string[][] stringStrings;
 }
 
