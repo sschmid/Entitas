@@ -9,6 +9,8 @@ mkdir -v bin/tmp/EntitasUnity
 cp -rv EntitasUnity/CodeGenerator bin/tmp/EntitasUnity/
 cp -rv EntitasUnity/VisualDebugging/Assets/VisualDebugging bin/tmp/EntitasUnity/
 
+cp RELEASE_NOTES.md bin/tmp/RELEASE_NOTES.md
+
 cd bin/tmp
 zip -r ../Entitas.zip ./
 cd ..
