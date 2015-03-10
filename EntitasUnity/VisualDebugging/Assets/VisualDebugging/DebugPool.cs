@@ -41,7 +41,9 @@ namespace Entitas.Unity.VisualDebugging {
 
         public override void DestroyAllEntities() {
             base.DestroyAllEntities();
-            Object.Destroy(_entitiesContainer.gameObject);
+            if (_entitiesContainer != null) {
+                Object.Destroy(_entitiesContainer.gameObject);
+            }
         }
 
         public override Group GetGroup(IMatcher matcher) {
@@ -60,7 +62,9 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void updateName() {
-            _entitiesContainer.name = string.Format("Debug Pool ({0} entities, {1} reusable, {2} groups)", Count, pooledEntitiesCount, groups.Count);
+            if (_entitiesContainer != null) {
+                _entitiesContainer.name = string.Format("Debug Pool ({0} entities, {1} reusable, {2} groups)", Count, pooledEntitiesCount, groups.Count);
+            }
         }
     }
 }

@@ -39,7 +39,9 @@ namespace Entitas.Unity.VisualDebugging {
         public void DestroyBehaviour() {
             _entity.OnComponentAdded -= onEntityChanged;
             _entity.OnComponentRemoved -= onEntityChanged;
-            Destroy(gameObject);
+            if (this != null) {
+                Destroy(gameObject);
+            }
         }
 
         void onEntityChanged(Entity e, int index, IComponent component) {
