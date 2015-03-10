@@ -64,6 +64,9 @@
     <Compile Include="Tests\describe_GroupObserver.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\EnumComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\DontGenerateIndexComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\ListComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\MultiDimArrayComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\HashSetComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
