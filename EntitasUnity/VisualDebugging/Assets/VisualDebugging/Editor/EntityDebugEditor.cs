@@ -155,32 +155,81 @@ namespace Entitas.Unity.VisualDebugging {
             if (fieldType == typeof(UnityEngine.Object))            return EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, fieldType, true);
             if (fieldType.IsSubclassOf(typeof(UnityEngine.Object))) return EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, fieldType, true);
 
-            // IList
-            if (fieldType.GetInterfaces().Contains(typeof(IList)))  return drawAndGetNewList(entity, index, component, fieldName, (IList)value);
+            if (fieldType.IsArray)                                  return drawAndGetArray(entity, index, component, fieldName, (Array)value);
+            if (fieldType.GetInterfaces().Contains(typeof(IList)))  return drawAndGetList(entity, index, component, fieldName, (IList)value);
 
             // Anything else
             EditorGUILayout.LabelField(fieldName, value == null ? "null" : value.ToString());
             return value;
         }
 
-        object drawAndGetNewList(Entity entity, int index, IComponent component, string fieldName, IList list) {
-            EditorGUILayout.LabelField(fieldName);
-            var indent = EditorGUI.indentLevel;
-            EditorGUI.indentLevel = indent + 1;
-            for (int i = 0; i < list.Count; i++) {
-                var value = list[i];
-                var type = value.GetType();
-                var newValue = drawAndGetNewValue(entity, index, component, fieldName + "[" + i + "]", type, value);
+        object drawAndGetArray(Entity entity, int index, IComponent component, string fieldName, Array array) {
+            if (array == null) {
+                EditorGUILayout.LabelField(fieldName, "null");
+            } else {
+                EditorGUILayout.LabelField(fieldName);
+                var indent = EditorGUI.indentLevel;
+                EditorGUI.indentLevel = indent + 1;
 
-                if (didValueChange(value, newValue)) {
-                    entity.WillRemoveComponent(index);
-                    list[i] = newValue;
-                    entity.ReplaceComponent(index, component);
-                    Debug.Log("Replaced " + component + "." + fieldName + "[" + i + "] = " + newValue);
+                var elementType = array.GetType().GetElementType();
+                if (array.Rank == 1) {
+                    for (int i = 0; i < array.GetLength(0); i++) {
+                        drawArrayItem(entity, index, component, array.GetValue(i), elementType,
+                            fieldName + "[" + i + "]", newValue => array.SetValue(newValue, i));
+                    }
+                } else if (array.Rank == 2) {
+                    for (int i = 0; i < array.GetLength(0); i++) {
+                        for (int j = 0; j < array.GetLength(1); j++) {
+                            drawArrayItem(entity, index, component, array.GetValue(i, j), elementType,
+                                fieldName + "[" + i + ", " + j + "]", newValue => array.SetValue(newValue, i, j));
+                        }
+                        EditorGUILayout.Space();
+                    }
+                } else if (array.Rank == 3) {
+                    for (int i = 0; i < array.GetLength(0); i++) {
+                        for (int j = 0; j < array.GetLength(1); j++) {
+                            for (int k = 0; k < array.GetLength(2); k++) {
+                                drawArrayItem(entity, index, component, array.GetValue(i, j, k), elementType,
+                                    fieldName + "[" + i + ", " + j + " ," + k + "]", newValue => array.SetValue(newValue, i, j, k));
+                            }
+                            EditorGUILayout.Space();
+                        }
+                        EditorGUILayout.Space();
+                    }
                 }
+
+                EditorGUI.indentLevel = indent;
             }
-            EditorGUI.indentLevel = indent;
+
+            return array;
+        }
+
+        object drawAndGetList(Entity entity, int index, IComponent component, string fieldName, IList list) {
+            if (list == null) {
+                EditorGUILayout.LabelField(fieldName, "null");
+            } else {
+                EditorGUILayout.LabelField(fieldName);
+                var indent = EditorGUI.indentLevel;
+                EditorGUI.indentLevel = indent + 1;
+                var elementType = list.GetType().GetGenericArguments()[0];
+                for (int i = 0; i < list.Count; i++) {
+                    drawArrayItem(entity, index, component, list[i], elementType,
+                        fieldName + "[" + i + "]", newValue => list[i] = newValue);
+                }
+                EditorGUI.indentLevel = indent;
+            }
+
             return list;
+        }
+
+        void drawArrayItem(Entity entity, int index, IComponent component, object value, Type elementType, string fieldName, Action<object> setValue) {
+            var newValue = drawAndGetNewValue(entity, index, component, fieldName, elementType, value);
+            if (didValueChange(value, newValue)) {
+                entity.WillRemoveComponent(index);
+                setValue(newValue);
+                entity.ReplaceComponent(index, component);
+                Debug.Log("Replaced " + component + "." + fieldName + " = " + newValue);
+            }
         }
 
         bool didValueChange(object value, object newValue) {

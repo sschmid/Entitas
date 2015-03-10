@@ -1,7 +1,8 @@
-﻿using Entitas;
+﻿using System;
+using System.Collections.Generic;
+using Entitas;
 using Entitas.Unity.VisualDebugging;
 using UnityEngine;
-using System;
 
 public class GameController : MonoBehaviour {
 
@@ -10,11 +11,17 @@ public class GameController : MonoBehaviour {
         pool.GetGroup(Matcher.Name);
         pool.GetGroup(Matcher.Test);
 
-
         for (int i = 0; i < 10; i++) {
-            string[][] stringStrings = new string[2][];
-            stringStrings[0] = new string[] {"Entity", "Component", "System"};
-            stringStrings[1] = new string[] {"Entity2", "Component2", "System2"};
+            string[][] jaggedArray = new string[2][];
+            jaggedArray[0] = new [] { "Entity", "Component", "System" };
+            jaggedArray[1] = new [] { "For", "C#" };
+
+            int[,] arrayDim2 = new int[2, 3];
+            int[,,] arrayDim3 = new int[3, 2, 4];
+            List<string>[] listArray = new List<string>[] {
+                new List<string> {"1", "2", "3"},
+                new List<string> {"4", "5", "6"}
+            };
 
             var e = pool.CreateEntity();
             e.AddTest(new Bounds(),
@@ -34,9 +41,12 @@ public class GameController : MonoBehaviour {
                 new MyObject(),
                 new object(),
                 DateTime.Now,
-                new [] {"Entity", "Component", "System"},
-                new [] {1, 2, 3},
-                stringStrings
+                new [] { "Entity", "Component", "System" },
+                arrayDim2,
+                arrayDim3,
+                jaggedArray,
+                listArray,
+                new List<string>{"One", "Two", "Three"}
             );
         }
     }

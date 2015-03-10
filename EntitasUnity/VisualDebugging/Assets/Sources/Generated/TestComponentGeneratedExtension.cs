@@ -8,7 +8,7 @@ namespace Entitas {
             AddComponent(ComponentIds.Test, component);
         }
 
-        public void AddTest(UnityEngine.Bounds newBounds, UnityEngine.Color newColor, UnityEngine.AnimationCurve newAnimationCurve, TestComponent.MyEnum newMyEnum, float newMyFloat, int newMyInt, UnityEngine.Rect newRect, string newMyString, UnityEngine.Vector2 newVector2, UnityEngine.Vector3 newVector3, UnityEngine.Vector4 newVector4, bool newMyBool, UnityEngine.Object newUnityObject, UnityEngine.GameObject newGameObject, MyObject newMyObject, object newSomeObject, System.DateTime newDate, System.String[] newStrings, System.Int32[] newInts, System.String[][] newStringStrings) {
+        public void AddTest(UnityEngine.Bounds newBounds, UnityEngine.Color newColor, UnityEngine.AnimationCurve newAnimationCurve, TestComponent.MyEnum newMyEnum, float newMyFloat, int newMyInt, UnityEngine.Rect newRect, string newMyString, UnityEngine.Vector2 newVector2, UnityEngine.Vector3 newVector3, UnityEngine.Vector4 newVector4, bool newMyBool, UnityEngine.Object newUnityObject, UnityEngine.GameObject newGameObject, MyObject newMyObject, object newAnObject, System.DateTime newDate, System.String[] newArray, System.Int32[,] newArrayDim2, System.Int32[,,] newArrayDim3, System.String[][] newJaggedArray, System.Collections.Generic.List<string>[] newListArray, System.Collections.Generic.List<string> newList) {
             var component = new TestComponent();
             component.bounds = newBounds;
             component.color = newColor;
@@ -25,15 +25,18 @@ namespace Entitas {
             component.unityObject = newUnityObject;
             component.gameObject = newGameObject;
             component.myObject = newMyObject;
-            component.someObject = newSomeObject;
+            component.anObject = newAnObject;
             component.date = newDate;
-            component.strings = newStrings;
-            component.ints = newInts;
-            component.stringStrings = newStringStrings;
+            component.array = newArray;
+            component.arrayDim2 = newArrayDim2;
+            component.arrayDim3 = newArrayDim3;
+            component.jaggedArray = newJaggedArray;
+            component.listArray = newListArray;
+            component.list = newList;
             AddTest(component);
         }
 
-        public void ReplaceTest(UnityEngine.Bounds newBounds, UnityEngine.Color newColor, UnityEngine.AnimationCurve newAnimationCurve, TestComponent.MyEnum newMyEnum, float newMyFloat, int newMyInt, UnityEngine.Rect newRect, string newMyString, UnityEngine.Vector2 newVector2, UnityEngine.Vector3 newVector3, UnityEngine.Vector4 newVector4, bool newMyBool, UnityEngine.Object newUnityObject, UnityEngine.GameObject newGameObject, MyObject newMyObject, object newSomeObject, System.DateTime newDate, System.String[] newStrings, System.Int32[] newInts, System.String[][] newStringStrings) {
+        public void ReplaceTest(UnityEngine.Bounds newBounds, UnityEngine.Color newColor, UnityEngine.AnimationCurve newAnimationCurve, TestComponent.MyEnum newMyEnum, float newMyFloat, int newMyInt, UnityEngine.Rect newRect, string newMyString, UnityEngine.Vector2 newVector2, UnityEngine.Vector3 newVector3, UnityEngine.Vector4 newVector4, bool newMyBool, UnityEngine.Object newUnityObject, UnityEngine.GameObject newGameObject, MyObject newMyObject, object newAnObject, System.DateTime newDate, System.String[] newArray, System.Int32[,] newArrayDim2, System.Int32[,,] newArrayDim3, System.String[][] newJaggedArray, System.Collections.Generic.List<string>[] newListArray, System.Collections.Generic.List<string> newList) {
             TestComponent component;
             if (hasTest) {
                 WillRemoveComponent(ComponentIds.Test);
@@ -56,11 +59,14 @@ namespace Entitas {
             component.unityObject = newUnityObject;
             component.gameObject = newGameObject;
             component.myObject = newMyObject;
-            component.someObject = newSomeObject;
+            component.anObject = newAnObject;
             component.date = newDate;
-            component.strings = newStrings;
-            component.ints = newInts;
-            component.stringStrings = newStringStrings;
+            component.array = newArray;
+            component.arrayDim2 = newArrayDim2;
+            component.arrayDim3 = newArrayDim3;
+            component.jaggedArray = newJaggedArray;
+            component.listArray = newListArray;
+            component.list = newList;
             ReplaceComponent(ComponentIds.Test, component);
         }
 

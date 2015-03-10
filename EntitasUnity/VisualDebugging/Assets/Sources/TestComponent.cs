@@ -1,6 +1,7 @@
-﻿using Entitas;
+﻿using System;
+using System.Collections.Generic;
+using Entitas;
 using UnityEngine;
-using System;
 
 public class TestComponent : IComponent {
     public Bounds bounds;
@@ -24,11 +25,14 @@ public class TestComponent : IComponent {
     public UnityEngine.Object unityObject;
     public GameObject gameObject;
     public MyObject myObject;
-    public object someObject;
+    public object anObject;
 
     public DateTime date;
-    public string[] strings;
-    public int[] ints;
-    public string[][] stringStrings;
+    public string[] array;
+    public int[,] arrayDim2;
+    public int[,,] arrayDim3;
+    public string[][] jaggedArray;
+    public List<string>[] listArray;
+    public List<string> list;
 }
 
