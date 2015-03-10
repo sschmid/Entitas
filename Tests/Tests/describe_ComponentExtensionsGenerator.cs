@@ -25,11 +25,12 @@ class describe_ComponentExtensionsGenerator : nspec {
         it["component with fields"] = () => generates(typeof(PersonComponent), PersonComponent.extensions);
         it["single singleton component"] = () => generates(typeof(AnimatingComponent), AnimatingComponent.extensions);
         it["single component with fields"] = () => generates(typeof(UserComponent), UserComponent.extensions);
-        it["can handle dictionary"] = () => generates(typeof(DictionaryComponent), DictionaryComponent.extensions);
-        it["can handle enums nested in component"] = () => generates(typeof(MyEnumComponent), MyEnumComponent.extensions);
-        it["can handle List<>"] = () => generates(typeof(ListComponent), ListComponent.extensions);
-        it["can handle [,]"] = () => generates(typeof(MultiDimArrayComponent), MultiDimArrayComponent.extensions);
-        it["can handle HashSet<>"] = () => generates(typeof(HashSetComponent), HashSetComponent.extensions);
+        it["can generate dictionary"] = () => generates(typeof(DictionaryComponent), DictionaryComponent.extensions);
+        it["can generate enums nested in component"] = () => generates(typeof(MyEnumComponent), MyEnumComponent.extensions);
+        it["can generate List<>"] = () => generates(typeof(ListComponent), ListComponent.extensions);
+        it["can generate [,]"] = () => generates(typeof(MultiDimArrayComponent), MultiDimArrayComponent.extensions);
+        it["can generate HashSet<>"] = () => generates(typeof(HashSetComponent), HashSetComponent.extensions);
+        it["can generate List<>[]"] = () => generates(typeof(ListArrayComponent), ListArrayComponent.extensions);
         it["ignores [DontGenerate]"] = () => {
             var type = typeof(DontGenerateComponent);
             var generator = new ComponentExtensionsGenerator();

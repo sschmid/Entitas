@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Entitas.CodeGenerator {
     public class ComponentExtensionsGenerator {
@@ -366,10 +367,25 @@ $assign
         }
 
         static string simpleTypeString(Type type) {
-            var typeString = type.FullName.Split('`')[0];
-            var genericTypes = type.GetGenericArguments().Select<Type, string>(getTypeName).ToArray();
-            return type.GetGenericArguments().Length == 0 ? typeString :
-                typeString + "<" + string.Join(", ", genericTypes) + ">";
+            var typeData = type.ToString().Split('`');
+            var typeString = typeData[0];
+
+            if (typeData.Length > 1) {
+                var typeMetaData = typeData[1].Substring(1);
+                var removeBracesRegex = new Regex(@"(?<=\[).*?(?=\])");
+                var remainderRegex = new Regex(@"(?<=\]).*");
+                var genericTypeStrings = removeBracesRegex.Match(typeMetaData);
+                var genericTypes = genericTypeStrings.ToString().Split(',');
+                genericTypes = genericTypes.Select(str => {
+                    string typeStr;
+                    return typeShortcuts.TryGetValue(str, out typeStr) ? typeStr : str;
+                }).ToArray();
+
+                typeString += "<" + string.Join(", ", genericTypes) + ">";
+                typeString += remainderRegex.Match(typeMetaData);
+            }
+
+            return typeString;
         }
 
         static string addCloseClass() {

@@ -67,6 +67,7 @@
     <Compile Include="Tests\Fixtures\CodeGenerator\ListComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\MultiDimArrayComponent.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\HashSetComponent.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\ListArrayComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
