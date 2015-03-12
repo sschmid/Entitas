@@ -125,6 +125,9 @@
     <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs">
       <Link>Libraries\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\TypeGenerator.cs">
+      <Link>Libraries\EntitasCodeGenerator\Generators\TypeGenerator.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

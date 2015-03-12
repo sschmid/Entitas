@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace Entitas.CodeGenerator {
     public class ComponentExtensionsGenerator {
@@ -317,7 +316,7 @@ $assign
         static string fieldNamesWithType(FieldInfo[] fields) {
             var typedArgs = fields.Select(arg => {
                 var newArg = "new" + arg.Name.UppercaseFirst();
-                var type = getTypeName(arg.FieldType);
+                var type = TypeGenerator.Generate(arg.FieldType);
                 return type + " " + newArg;
             }).ToArray();
 
@@ -337,55 +336,6 @@ $assign
         static string fieldNames(FieldInfo[] fields) {
             var args = fields.Select(arg => "new" + arg.Name.UppercaseFirst()).ToArray();
             return string.Join(", ", args);
-        }
-
-        static Dictionary<string, string> typeShortcuts = new Dictionary<string, string>() {
-            { "System.Byte", "byte" },
-            { "System.SByte", "sbyte" },
-            { "System.Int32", "int" },
-            { "System.UInt32", "uint" },
-            { "System.Int16", "short" },
-            { "System.UInt16", "ushort" },
-            { "System.Int64", "long" },
-            { "System.UInt64", "ulong" },
-            { "System.Single", "float" },
-            { "System.Double", "double" },
-            { "System.Char", "char" },
-            { "System.Boolean", "bool" },
-            { "System.Object", "object" },
-            { "System.String", "string" },
-            { "System.Decimal", "decimal" }
-        };
-
-        static string getTypeName(Type type) {
-            string typeStr;
-            var typeName = typeShortcuts.TryGetValue(type.FullName, out typeStr) ? typeStr : simpleTypeString(type);
-            if (type.IsEnum) {
-                typeName = typeName.Replace("+", ".");
-            }
-            return typeName;
-        }
-
-        static string simpleTypeString(Type type) {
-            var typeData = type.ToString().Split('`');
-            var typeString = typeData[0];
-
-            if (typeData.Length > 1) {
-                var typeMetaData = typeData[1].Substring(1);
-                var removeBracesRegex = new Regex(@"(?<=\[).*?(?=\])");
-                var remainderRegex = new Regex(@"(?<=\]).*");
-                var genericTypeStrings = removeBracesRegex.Match(typeMetaData);
-                var genericTypes = genericTypeStrings.ToString().Split(',');
-                genericTypes = genericTypes.Select(str => {
-                    string typeStr;
-                    return typeShortcuts.TryGetValue(str, out typeStr) ? typeStr : str;
-                }).ToArray();
-
-                typeString += "<" + string.Join(", ", genericTypes) + ">";
-                typeString += remainderRegex.Match(typeMetaData);
-            }
-
-            return typeString;
         }
 
         static string addCloseClass() {
