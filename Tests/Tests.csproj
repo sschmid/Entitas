@@ -64,6 +64,7 @@
     <Compile Include="Tests\Fixtures\CodeGenerator\DontGenerateIndexComponent.cs" />
     <Compile Include="Tests\describe_TypeGenerator.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\TestEnum.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\NestedClass.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -52,6 +52,10 @@ class describe_TypeGenerator : nspec {
             it["generates NestedTest.NestedTestEnum"] = () => generate<NestedTest.NestedTestEnum>().should_be("NestedTest.NestedTestEnum");
         };
 
+        context["nested class"] = () => {
+            it["generates NestedClass.InnerClass"] = () => generate<NestedClass.InnerClass>().should_be("NestedClass.InnerClass");
+        };
+
         context["mixed"] = () => {
             it["generates List<int>[,]"] = () => generate<List<int>[,]>().should_be("System.Collections.Generic.List<int>[,]");
             it["generates Dictionary<List<NestedTest.NestedTestEnum>[,], Entity>[]"] = () => generate<Dictionary<List<NestedTest.NestedTestEnum>[,], Entity>[]>().should_be("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest.NestedTestEnum>[,], Entitas.Entity>[]");

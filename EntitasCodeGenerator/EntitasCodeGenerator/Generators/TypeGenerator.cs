@@ -33,7 +33,7 @@ namespace Entitas.CodeGenerator {
             if (type.IsArray) {
                 return generateArrayString(type);
             }
-            if (type.IsEnum) {
+            if (type.IsNested) {
                 return type.FullName.Replace('+', '.');
             }
 
