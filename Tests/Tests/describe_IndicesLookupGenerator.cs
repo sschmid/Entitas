@@ -4,46 +4,120 @@ using System;
 
 class describe_IndicesLookupGenerator : nspec {
     const string defaultLookupName = "ComponentIds";
+    bool logResults = false;
 
     void generates(Type type, string lookupName, string lookupCode) {
         generates(new [] { type }, lookupName, lookupCode);
     }
 
     void generates(Type[] types, string lookupName, string lookupCode) {
-        var generator = new IndicesLookupGenerator();
-        var lookups = generator.GenerateIndicesLookup(types);
+        var lookups = IndicesLookupGenerator.GenerateIndicesLookup(types);
         lookups.Count.should_be(1);
+        if (logResults) {
+            Console.WriteLine("should:\n" + lookupCode);
+            Console.WriteLine("was:\n" + lookups[lookupName]);
+        }
+
         lookups.ContainsKey(lookupName).should_be_true();
         lookups[lookupName].should_be(lookupCode);
     }
+
+    const string defaultTagCode = @"
+
+namespace Entitas {
+    public partial class Pool {
+        public Pool() : this(ComponentIds.TotalComponents) {
+        }
+    }
+}
+
+namespace Entitas {
+    public partial class Matcher : AllOfMatcher {
+        public Matcher(int index) : base(new [] { index }) {
+        }
+
+        public override string ToString() {
+            return string.Format(""Matcher("" + ComponentIds.IdToString(indices[0]) + "")"");
+        }
+    }
+}";
 
     void when_generating() {
 
         it["generates default lookup"] = () => {
             generates(typeof(SomeComponent), defaultLookupName,
-                @"public static class ComponentIds {
+                @"using System.Collections.Generic;
+
+public static class ComponentIds {
     public const int Some = 0;
 
     public const int TotalComponents = 1;
-}");
+
+    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
+        { 0, ""Some"" }
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}" + defaultTagCode);
         };
-        
+
         it["generates lookup with name from attribute"] = () => {
-            generates(typeof(OtherPoolComponent), "Other",
-                @"public static class Other {
+            generates(typeof(OtherPoolComponent), "OtherComponentIds",
+                @"using Entitas;
+
+using System.Collections.Generic;
+
+public static class OtherComponentIds {
     public const int OtherPool = 0;
 
     public const int TotalComponents = 1;
+
+    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
+        { 0, ""OtherPool"" }
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+public partial class OtherPool : Pool {
+    public OtherPool() : base(OtherComponentIds.TotalComponents) {
+    }
+
+    public OtherPool(int startCreationIndex) : base(OtherComponentIds.TotalComponents, startCreationIndex) {
+    }
+}
+
+public partial class OtherMatcher : AllOfMatcher {
+    public OtherMatcher(int index) : base(new [] { index }) {
+    }
+
+    public override string ToString() {
+        return string.Format(""Other("" + OtherComponentIds.IdToString(indices[0]) + "")"");
+    }
 }");
         };
-    
+
         it["generates id for [DontGenerate]"] = () => {
             generates(typeof(DontGenerateComponent), defaultLookupName,
-                @"public static class ComponentIds {
+                @"using System.Collections.Generic;
+
+public static class ComponentIds {
     public const int DontGenerate = 0;
 
     public const int TotalComponents = 1;
-}");
+
+    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
+        { 0, ""DontGenerate"" }
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}" + defaultTagCode);
         };
 
         it["generates ids for all types"] = () => {
@@ -51,12 +125,23 @@ class describe_IndicesLookupGenerator : nspec {
                 typeof(SomeComponent),
                 typeof(DontGenerateComponent)
             }, defaultLookupName,
-                @"public static class ComponentIds {
+                @"using System.Collections.Generic;
+
+public static class ComponentIds {
     public const int Some = 0;
     public const int DontGenerate = 1;
 
     public const int TotalComponents = 2;
-}");
+
+    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
+        { 0, ""Some"" },
+        { 1, ""DontGenerate"" }
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}" + defaultTagCode);
         };
 
         it["ignores [DontGenerate(false)]"] = () => {
@@ -64,11 +149,21 @@ class describe_IndicesLookupGenerator : nspec {
                 typeof(SomeComponent),
                 typeof(DontGenerateIndexComponent)
             }, defaultLookupName,
-                @"public static class ComponentIds {
+                @"using System.Collections.Generic;
+
+public static class ComponentIds {
     public const int Some = 0;
 
     public const int TotalComponents = 1;
-}");
+
+    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
+        { 0, ""Some"" }
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}" + defaultTagCode);
         };
     }
 }

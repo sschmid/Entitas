@@ -8,7 +8,7 @@ namespace Entitas {
         }
     }
 
-    public static partial class Matcher {
+    public partial class Matcher {
         public static AllOfMatcher AllOf(params int[] indices) {
             return new AllOfMatcher(indices);
         }

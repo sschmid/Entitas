@@ -20,13 +20,13 @@ public class MovableComponent : IComponent {
         }
     }
 
-    public static partial class Matcher {
+    public partial class Matcher {
         static AllOfMatcher _matcherMovable;
 
         public static AllOfMatcher Movable {
             get {
                 if (_matcherMovable == null) {
-                    _matcherMovable = Matcher.AllOf(new [] { ComponentIds.Movable });
+                    _matcherMovable = new Matcher(ComponentIds.Movable);
                 }
 
                 return _matcherMovable;

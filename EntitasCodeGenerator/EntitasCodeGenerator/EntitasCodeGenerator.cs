@@ -39,14 +39,14 @@ namespace Entitas.CodeGenerator {
         }
 
         static void generateIndicesLookup(string dir, Type[] components) {
-            var generator = new IndicesLookupGenerator();
-            var lookups = generator.GenerateIndicesLookup(components);
+            var lookups = IndicesLookupGenerator
+                .GenerateIndicesLookup(components);
             writeFiles(dir, lookups);
         }
 
         static void generateComponentExtensions(string dir, Type[] components) {
-            var generator = new ComponentExtensionsGenerator();
-            var extensions = generator.GenerateComponentExtensions(components);
+            var extensions = ComponentExtensionsGenerator
+                .GenerateComponentExtensions(components, "GeneratedExtension");
             writeFiles(dir, extensions);
         }
 
@@ -67,6 +67,22 @@ namespace Entitas.CodeGenerator {
             }
 
             return type.Name;
+        }
+
+        public static string PoolName(this Type type) {
+            Attribute[] attrs = Attribute.GetCustomAttributes(type);
+            foreach (Attribute attr in attrs) {
+                var customPool = attr as PoolAttribute;
+                if (customPool != null) {
+                    return customPool.tag;
+                }
+            }
+
+            return string.Empty;
+        }
+
+        public static string IndicesLookupTag(this Type type) {
+            return type.PoolName() + "ComponentIds";
         }
 
         public static string UppercaseFirst(this string str) {

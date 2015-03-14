@@ -74,13 +74,13 @@ namespace Entitas {
         }
     }
 
-    public static partial class Matcher {
+    public partial class Matcher {
         static AllOfMatcher _matcherUser;
 
         public static AllOfMatcher User {
             get {
                 if (_matcherUser == null) {
-                    _matcherUser = Matcher.AllOf(new [] { ComponentIds.User });
+                    _matcherUser = new Matcher(ComponentIds.User);
                 }
 
                 return _matcherUser;

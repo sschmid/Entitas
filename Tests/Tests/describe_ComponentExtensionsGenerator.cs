@@ -6,10 +6,11 @@ class describe_ComponentExtensionsGenerator : nspec {
 
     bool logResults = false;
 
+    const string classSuffix = "GeneratedExtension";
     void generates(Type type, string code) {
-        var generator = new ComponentExtensionsGenerator();
-        var extensions = generator.GenerateComponentExtensions(new[] { type });
-        var filePath = type + ComponentExtensionsGenerator.classSuffix;
+        var extensions = ComponentExtensionsGenerator
+            .GenerateComponentExtensions(new[] { type }, classSuffix);
+        var filePath = type + classSuffix;
 
         extensions.Count.should_be(1);
         extensions.ContainsKey(filePath).should_be_true();
@@ -25,10 +26,11 @@ class describe_ComponentExtensionsGenerator : nspec {
         it["component with fields"] = () => generates(typeof(PersonComponent), PersonComponent.extensions);
         it["single singleton component"] = () => generates(typeof(AnimatingComponent), AnimatingComponent.extensions);
         it["single component with fields"] = () => generates(typeof(UserComponent), UserComponent.extensions);
+        it["component for custom pool"] = () => generates(typeof(OtherPoolComponent), OtherPoolComponent.extensions);
         it["ignores [DontGenerate]"] = () => {
             var type = typeof(DontGenerateComponent);
-            var generator = new ComponentExtensionsGenerator();
-            var extensions = generator.GenerateComponentExtensions(new[] { type });
+            var extensions = ComponentExtensionsGenerator
+                .GenerateComponentExtensions(new[] { type }, classSuffix);
             extensions.Count.should_be(0);
         };
     }

@@ -31,13 +31,13 @@ namespace Entitas {
         }
     }
 
-    public static partial class Matcher {
+    public partial class Matcher {
         static AllOfMatcher _matcherName;
 
         public static AllOfMatcher Name {
             get {
                 if (_matcherName == null) {
-                    _matcherName = Matcher.AllOf(new [] { ComponentIds.Name });
+                    _matcherName = new Matcher(ComponentIds.Name);
                 }
 
                 return _matcherName;

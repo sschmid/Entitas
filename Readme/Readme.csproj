@@ -128,6 +128,12 @@
     <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\TypeGenerator.cs">
       <Link>Libraries\EntitasCodeGenerator\Generators\TypeGenerator.cs</Link>
     </Compile>
+    <Compile Include="Components\UIPositionComponent.cs" />
+    <Compile Include="Components\Generated\UIComponentIds.cs" />
+    <Compile Include="Components\Generated\UIPositionComponentGeneratedExtension.cs" />
+    <Compile Include="Components\CoinsComponent.cs" />
+    <Compile Include="Components\Generated\CoinsComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\MetaComponentIds.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

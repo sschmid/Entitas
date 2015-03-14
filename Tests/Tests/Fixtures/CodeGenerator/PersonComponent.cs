@@ -39,13 +39,13 @@ public class PersonComponent : IComponent {
         }
     }
 
-    public static partial class Matcher {
+    public partial class Matcher {
         static AllOfMatcher _matcherPerson;
 
         public static AllOfMatcher Person {
             get {
                 if (_matcherPerson == null) {
-                    _matcherPerson = Matcher.AllOf(new [] { ComponentIds.Person });
+                    _matcherPerson = new Matcher(ComponentIds.Person);
                 }
 
                 return _matcherPerson;

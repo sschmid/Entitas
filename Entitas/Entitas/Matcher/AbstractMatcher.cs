@@ -49,20 +49,20 @@ namespace Entitas {
 
         public override string ToString() {
             const string seperator = ", ";
-            var indexStr = string.Empty;
+            var indicesString = string.Empty;
             for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++) {
-                indexStr += _indices[i] + seperator;
+                indicesString += _indices[i] + seperator;
             }
 
-            if (indexStr != string.Empty) {
-                indexStr = indexStr.Substring(0, indexStr.Length - seperator.Length);
+            if (indicesString != string.Empty) {
+                indicesString = indicesString.Substring(0, indicesString.Length - seperator.Length);
             }
 
             var name = GetType().Name;
             if (name.EndsWith("Matcher")) {
                 name = name.Replace("Matcher", string.Empty);
             }
-            return string.Format("{0}({1})", name, indexStr);
+            return string.Format("{0}({1})", name, indicesString);
         }
     }
 }

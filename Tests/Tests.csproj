@@ -55,7 +55,6 @@
     <Compile Include="Tests\Fixtures\CodeGenerator\AnimatingComponent.cs" />
     <Compile Include="Tests\Fixtures\Component.cs" />
     <Compile Include="Tests\Test Extensions\TestHelper.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\OtherContextComponent.cs" />
     <Compile Include="Tests\describe_Group.cs" />
     <Compile Include="Tests\describe_Matcher.cs" />
     <Compile Include="Tests\describe_ReactiveSystem.cs" />
@@ -65,6 +64,7 @@
     <Compile Include="Tests\describe_TypeGenerator.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\TestEnum.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\NestedClass.cs" />
+    <Compile Include="Tests\Fixtures\CodeGenerator\OtherPoolComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

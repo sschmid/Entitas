@@ -40,13 +40,13 @@ public class AnimatingComponent : IComponent {
         }
     }
 
-    public static partial class Matcher {
+    public partial class Matcher {
         static AllOfMatcher _matcherAnimating;
 
         public static AllOfMatcher Animating {
             get {
                 if (_matcherAnimating == null) {
-                    _matcherAnimating = Matcher.AllOf(new [] { ComponentIds.Animating });
+                    _matcherAnimating = new Matcher(ComponentIds.Animating);
                 }
 
                 return _matcherAnimating;

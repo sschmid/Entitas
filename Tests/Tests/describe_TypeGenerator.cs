@@ -52,7 +52,7 @@ class describe_TypeGenerator : nspec {
             it["generates NestedTest.NestedTestEnum"] = () => generate<NestedTest.NestedTestEnum>().should_be("NestedTest.NestedTestEnum");
         };
 
-        context["nested class"] = () => {
+        context["nested"] = () => {
             it["generates NestedClass.InnerClass"] = () => generate<NestedClass.InnerClass>().should_be("NestedClass.InnerClass");
         };
 

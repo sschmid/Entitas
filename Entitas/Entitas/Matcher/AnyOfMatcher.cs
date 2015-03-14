@@ -8,7 +8,7 @@
         }
     }
 
-    public static partial class Matcher {
+    public partial class Matcher {
         public static AnyOfMatcher AnyOf(params int[] indices) {
             return new AnyOfMatcher(indices);
         }

@@ -14,7 +14,7 @@
         }
     }
 
-    public static partial class Matcher {
+    public partial class Matcher {
         public static NoneOfCompoundMatcher NoneOf(params IMatcher[] matchers) {
             return new NoneOfCompoundMatcher(matchers);
         }

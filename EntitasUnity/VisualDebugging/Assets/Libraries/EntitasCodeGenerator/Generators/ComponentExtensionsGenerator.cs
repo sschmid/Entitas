@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 
 namespace Entitas.CodeGenerator {
-    public class ComponentExtensionsGenerator {
-        public const string classSuffix = "GeneratedExtension";
+    public static class ComponentExtensionsGenerator {
 
-        public Dictionary<string, string> GenerateComponentExtensions(Type[] components) {
+        public static Dictionary<string, string> GenerateComponentExtensions(Type[] components, string classSuffix) {
             return components
                 .Where(shouldGenerate)
                 .ToDictionary(
@@ -29,14 +27,30 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateComponentExtension(Type type) {
-            var code = addNamespace();
-            code += addEntityMethods(type);
-            if (isSingleEntity(type)) {
-                code += addPoolMethods(type);
+            string code;
+            if (type.PoolName() == string.Empty) {
+                code = addNamespace();
+                code += addEntityMethods(type);
+                if (isSingleEntity(type)) {
+                    code += addPoolMethods(type);
+                }
+                code += addMatcher(type);
+                code += closeNamespace();
+            } else {
+                code = addUsing();
+                code += addNamespace();
+                code += addEntityMethods(type);
+                code += closeNamespace();
+                if (isSingleEntity(type)) {
+                    code += addPoolMethods(type);
+                }
+                code += addMatcher(type);
             }
-            code += addMatcher(type);
-            code += closeNamespace();
             return code;
+        }
+
+        static string addUsing() {
+            return "using Entitas;\n\n";
         }
 
         static string addNamespace() {
@@ -139,7 +153,7 @@ $assign
          */
 
         static string addPoolMethods(Type type) {
-            return addPoolClassHeader()
+            return addPoolClassHeader(type)
             + addPoolGetMethods(type)
             + addPoolHasMethods(type)
             + addPoolAddMethods(type)
@@ -148,15 +162,15 @@ $assign
             + addCloseClass();
         }
 
-        static string addPoolClassHeader() {
-            return "\n    public partial class Pool {";
+        static string addPoolClassHeader(Type type) {
+            return buildString(type, "\n    public partial class $TagPool {");
         }
 
         static string addPoolGetMethods(Type type) {
             string getMehod = isSingletonComponent(type) ? @"
-        public Entity $nameEntity { get { return GetGroup(Matcher.$Name).GetSingleEntity(); } }
+        public Entity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
 " : @"
-        public Entity $nameEntity { get { return GetGroup(Matcher.$Name).GetSingleEntity(); } }
+        public Entity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
 
         public $Type $name { get { return $nameEntity.$name; } }
 ";
@@ -188,7 +202,7 @@ $assign
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Set$Name($Type component) {
             if (has$Name) {
-                throw new SingleEntityException(Matcher.$Name);
+                throw new SingleEntityException($TagMatcher.$Name);
             }
             var entity = CreateEntity();
             entity.Add$Name(component);
@@ -197,7 +211,7 @@ $assign
 
         public Entity Set$Name($typedArgs) {
             if (has$Name) {
-                throw new SingleEntityException(Matcher.$Name);
+                throw new SingleEntityException($TagMatcher.$Name);
             }
             var entity = CreateEntity();
             entity.Add$Name($args);
@@ -237,13 +251,13 @@ $assign
 
         static string addMatcher(Type type) {
             return buildString(type, @"
-    public static partial class Matcher {
+    public partial class $TagMatcher {
         static AllOfMatcher _matcher$Name;
 
         public static AllOfMatcher $Name {
             get {
                 if (_matcher$Name == null) {
-                    _matcher$Name = Matcher.AllOf(new [] { $Ids.$Name });
+                    _matcher$Name = new $TagMatcher($Ids.$Name);
                 }
 
                 return _matcher$Name;
@@ -280,14 +294,15 @@ $assign
             var a0_type = type;
             var a1_name = type.RemoveComponentSuffix();
             var a2_lowercaseName = a1_name.LowercaseFirst();
-            var a3_tag = indicesLookupTag(type);
+            var a3_tag = type.PoolName();
+            var a4_ids = type.IndicesLookupTag();
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            var a4_fieldNamesWithType = fieldNamesWithType(fields);
-            var a5_fieldAssigns = fieldAssignments(fields);
-            var a6_fieldNames = fieldNames(fields);
+            var a5_fieldNamesWithType = fieldNamesWithType(fields);
+            var a6_fieldAssigns = fieldAssignments(fields);
+            var a7_fieldNames = fieldNames(fields);
 
             return string.Format(format, a0_type, a1_name, a2_lowercaseName,
-                a3_tag, a4_fieldNamesWithType, a5_fieldAssigns, a6_fieldNames);
+                a3_tag, a4_ids, a5_fieldNamesWithType, a6_fieldAssigns, a7_fieldNames);
         }
 
         static string createFormatString(string format) {
@@ -296,28 +311,17 @@ $assign
                 .Replace("$Type", "{0}")
                 .Replace("$Name", "{1}")
                 .Replace("$name", "{2}")
-                .Replace("$Ids", "{3}")
-                .Replace("$typedArgs", "{4}")
-                .Replace("$assign", "{5}")
-                .Replace("$args", "{6}");
-        }
-
-        static string indicesLookupTag(Type type) {
-            Attribute[] attrs = Attribute.GetCustomAttributes(type);
-            foreach (Attribute attr in attrs) {
-                var lookup = attr as PoolAttribute;
-                if (lookup != null) {
-                    return lookup.tag;
-                }
-            }
-
-            return "ComponentIds";
+                .Replace("$Tag", "{3}")
+                .Replace("$Ids", "{4}")
+                .Replace("$typedArgs", "{5}")
+                .Replace("$assign", "{6}")
+                .Replace("$args", "{7}");
         }
 
         static string fieldNamesWithType(FieldInfo[] fields) {
             var typedArgs = fields.Select(arg => {
                 var newArg = "new" + arg.Name.UppercaseFirst();
-                var type = getTypeName(arg.FieldType);
+                var type = TypeGenerator.Generate(arg.FieldType);
                 return type + " " + newArg;
             }).ToArray();
 
@@ -337,55 +341,6 @@ $assign
         static string fieldNames(FieldInfo[] fields) {
             var args = fields.Select(arg => "new" + arg.Name.UppercaseFirst()).ToArray();
             return string.Join(", ", args);
-        }
-
-        static Dictionary<string, string> typeShortcuts = new Dictionary<string, string>() {
-            { "System.Byte", "byte" },
-            { "System.SByte", "sbyte" },
-            { "System.Int32", "int" },
-            { "System.UInt32", "uint" },
-            { "System.Int16", "short" },
-            { "System.UInt16", "ushort" },
-            { "System.Int64", "long" },
-            { "System.UInt64", "ulong" },
-            { "System.Single", "float" },
-            { "System.Double", "double" },
-            { "System.Char", "char" },
-            { "System.Boolean", "bool" },
-            { "System.Object", "object" },
-            { "System.String", "string" },
-            { "System.Decimal", "decimal" }
-        };
-
-        static string getTypeName(Type type) {
-            string typeStr;
-            var typeName = typeShortcuts.TryGetValue(type.FullName, out typeStr) ? typeStr : simpleTypeString(type);
-            if (type.IsEnum) {
-                typeName = typeName.Replace("+", ".");
-            }
-            return typeName;
-        }
-
-        static string simpleTypeString(Type type) {
-            var typeData = type.ToString().Split('`');
-            var typeString = typeData[0];
-
-            if (typeData.Length > 1) {
-                var typeMetaData = typeData[1].Substring(1);
-                var removeBracesRegex = new Regex(@"(?<=\[).*?(?=\])");
-                var remainderRegex = new Regex(@"(?<=\]).*");
-                var genericTypeStrings = removeBracesRegex.Match(typeMetaData);
-                var genericTypes = genericTypeStrings.ToString().Split(',');
-                genericTypes = genericTypes.Select(str => {
-                    string typeStr;
-                    return typeShortcuts.TryGetValue(str, out typeStr) ? typeStr : str;
-                }).ToArray();
-
-                typeString += "<" + string.Join(", ", genericTypes) + ">";
-                typeString += remainderRegex.Match(typeMetaData);
-            }
-
-            return typeString;
         }
 
         static string addCloseClass() {
