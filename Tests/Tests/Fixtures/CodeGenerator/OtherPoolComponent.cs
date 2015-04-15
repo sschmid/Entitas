@@ -43,8 +43,8 @@ namespace Entitas {
             RemoveComponent(OtherComponentIds.OtherPool);
         }
     }
-}
-    public partial class OtherPool {
+
+    public partial class Pool {
         public Entity otherPoolEntity { get { return GetGroup(OtherMatcher.OtherPool).GetSingleEntity(); } }
 
         public OtherPoolComponent otherPool { get { return otherPoolEntity.otherPool; } }
@@ -84,6 +84,7 @@ namespace Entitas {
             DestroyEntity(otherPoolEntity);
         }
     }
+}
 
     public partial class OtherMatcher {
         static AllOfMatcher _matcherOtherPool;

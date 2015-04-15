@@ -35,6 +35,7 @@ namespace Entitas {
         }
     }
 }
+
     public partial class UIMatcher {
         static AllOfMatcher _matcherUIPosition;
 

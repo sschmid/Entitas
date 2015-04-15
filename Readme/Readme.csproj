@@ -37,13 +37,7 @@
     <Compile Include="Components\HealthComponent.cs" />
     <Compile Include="Components\MovableComponent.cs" />
     <Compile Include="Components\UserComponent.cs" />
-    <Compile Include="Components\Generated\ComponentIds.cs" />
-    <Compile Include="Components\Generated\HealthComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\MovableComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\PositionComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\UserComponentGeneratedExtension.cs" />
     <Compile Include="Components\AnimatingComponent.cs" />
-    <Compile Include="Components\Generated\AnimatingComponentGeneratedExtension.cs" />
     <Compile Include="..\Entitas\Entitas\Entity.cs">
       <Link>Libraries\Entitas\Entity.cs</Link>
     </Compile>
@@ -129,18 +123,24 @@
       <Link>Libraries\EntitasCodeGenerator\Generators\TypeGenerator.cs</Link>
     </Compile>
     <Compile Include="Components\UIPositionComponent.cs" />
+    <Compile Include="Components\CoinsComponent.cs" />
+    <Compile Include="Components\Generated\AnimatingComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\CoinsComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\ComponentIds.cs" />
+    <Compile Include="Components\Generated\HealthComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\MetaComponentIds.cs" />
+    <Compile Include="Components\Generated\MovableComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\PositionComponentGeneratedExtension.cs" />
     <Compile Include="Components\Generated\UIComponentIds.cs" />
     <Compile Include="Components\Generated\UIPositionComponentGeneratedExtension.cs" />
-    <Compile Include="Components\CoinsComponent.cs" />
-    <Compile Include="Components\Generated\CoinsComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\MetaComponentIds.cs" />
+    <Compile Include="Components\Generated\UserComponentGeneratedExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Components\" />
-    <Folder Include="Components\Generated\" />
     <Folder Include="Libraries\" />
     <Folder Include="Libraries\Entitas\" />
     <Folder Include="Libraries\EntitasCodeGenerator\" />
+    <Folder Include="Components\Generated\" />
   </ItemGroup>
 </Project>

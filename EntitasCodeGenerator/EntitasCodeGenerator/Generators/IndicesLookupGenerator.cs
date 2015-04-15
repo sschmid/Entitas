@@ -43,7 +43,6 @@ namespace Entitas.CodeGenerator {
             + addIndices(components)
             + idToString(components)
             + addCloseClass()
-            + addPool(tag)
             + addMatcher(tag);
         }
 
@@ -92,30 +91,6 @@ namespace Entitas.CodeGenerator {
             return "\n}";
         }
 
-        static string addPool(string lookupTag) {
-            var tag = stripDefaultTag(lookupTag);
-            if (tag != string.Empty) {
-                return string.Format(@"
-
-public partial class {0}Pool : Pool {{
-    public {0}Pool() : base({1}.TotalComponents) {{
-    }}
-
-    public {0}Pool(int startCreationIndex) : base({1}.TotalComponents, startCreationIndex) {{
-    }}
-}}", tag, lookupTag);
-            }
-
-            return string.Format(@"
-
-namespace Entitas {{
-    public partial class {0}Pool {{
-        public {0}Pool() : this({1}.TotalComponents) {{
-        }}
-    }}
-}}", tag, lookupTag);
-        }
-
         static string addMatcher(string lookupTag) {
             var tag = stripDefaultTag(lookupTag);
             if (tag == string.Empty) {
@@ -127,7 +102,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            return string.Format(""Matcher("" + ComponentIds.IdToString(indices[0]) + "")"");
+            return string.Format(""Matcher_"" + ComponentIds.IdToString(indices[0]));
         }
     }
 }";
@@ -140,7 +115,7 @@ public partial class {0}Matcher : AllOfMatcher {{
     }}
 
     public override string ToString() {{
-        return string.Format(""{0}("" + {0}ComponentIds.IdToString(indices[0]) + "")"");
+        return string.Format(""{0}_"" + {0}ComponentIds.IdToString(indices[0]));
     }}
 }}", tag);
         }

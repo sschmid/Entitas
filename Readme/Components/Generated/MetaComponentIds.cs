@@ -16,19 +16,11 @@ public static class MetaComponentIds {
     }
 }
 
-public partial class MetaPool : Pool {
-    public MetaPool() : base(MetaComponentIds.TotalComponents) {
-    }
-
-    public MetaPool(int startCreationIndex) : base(MetaComponentIds.TotalComponents, startCreationIndex) {
-    }
-}
-
 public partial class MetaMatcher : AllOfMatcher {
     public MetaMatcher(int index) : base(new [] { index }) {
     }
 
     public override string ToString() {
-        return string.Format("Meta(" + MetaComponentIds.IdToString(indices[0]) + ")");
+        return string.Format("Meta_" + MetaComponentIds.IdToString(indices[0]));
     }
 }

@@ -40,10 +40,10 @@ namespace Entitas.CodeGenerator {
                 code = addUsing();
                 code += addNamespace();
                 code += addEntityMethods(type);
-                code += closeNamespace();
                 if (isSingleEntity(type)) {
                     code += addPoolMethods(type);
                 }
+                code += closeNamespace();
                 code += addMatcher(type);
             }
             return code;
@@ -58,7 +58,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string closeNamespace() {
-            return "}";
+            return "}\n";
         }
 
         /*
@@ -163,7 +163,7 @@ $assign
         }
 
         static string addPoolClassHeader(Type type) {
-            return buildString(type, "\n    public partial class $TagPool {");
+            return buildString(type, "\n    public partial class Pool {");
         }
 
         static string addPoolGetMethods(Type type) {

@@ -53,5 +53,6 @@ public class AnimatingComponent : IComponent {
             }
         }
     }
-}";
+}
+";
 }

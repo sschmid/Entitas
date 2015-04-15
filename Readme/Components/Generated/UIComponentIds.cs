@@ -16,19 +16,11 @@ public static class UIComponentIds {
     }
 }
 
-public partial class UIPool : Pool {
-    public UIPool() : base(UIComponentIds.TotalComponents) {
-    }
-
-    public UIPool(int startCreationIndex) : base(UIComponentIds.TotalComponents, startCreationIndex) {
-    }
-}
-
 public partial class UIMatcher : AllOfMatcher {
     public UIMatcher(int index) : base(new [] { index }) {
     }
 
     public override string ToString() {
-        return string.Format("UI(" + UIComponentIds.IdToString(indices[0]) + ")");
+        return string.Format("UI_" + UIComponentIds.IdToString(indices[0]));
     }
 }

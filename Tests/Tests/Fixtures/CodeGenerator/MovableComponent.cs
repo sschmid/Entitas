@@ -33,5 +33,6 @@ public class MovableComponent : IComponent {
             }
         }
     }
-}";
+}
+";
 }

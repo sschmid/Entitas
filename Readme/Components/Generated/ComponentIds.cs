@@ -23,19 +23,12 @@ public static class ComponentIds {
 }
 
 namespace Entitas {
-    public partial class Pool {
-        public Pool() : this(ComponentIds.TotalComponents) {
-        }
-    }
-}
-
-namespace Entitas {
     public partial class Matcher : AllOfMatcher {
         public Matcher(int index) : base(new [] { index }) {
         }
 
         public override string ToString() {
-            return string.Format("Matcher(" + ComponentIds.IdToString(indices[0]) + ")");
+            return string.Format("Matcher_" + ComponentIds.IdToString(indices[0]));
         }
     }
 }

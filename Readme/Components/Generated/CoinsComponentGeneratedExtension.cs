@@ -32,8 +32,8 @@ namespace Entitas {
             RemoveComponent(MetaComponentIds.Coins);
         }
     }
-}
-    public partial class MetaPool {
+
+    public partial class Pool {
         public Entity coinsEntity { get { return GetGroup(MetaMatcher.Coins).GetSingleEntity(); } }
 
         public CoinsComponent coins { get { return coinsEntity.coins; } }
@@ -73,6 +73,7 @@ namespace Entitas {
             DestroyEntity(coinsEntity);
         }
     }
+}
 
     public partial class MetaMatcher {
         static AllOfMatcher _matcherCoins;

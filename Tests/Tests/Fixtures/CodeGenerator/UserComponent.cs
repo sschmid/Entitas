@@ -96,5 +96,6 @@ public class UserComponent : IComponent {
             }
         }
     }
-}";
+}
+";
 }
