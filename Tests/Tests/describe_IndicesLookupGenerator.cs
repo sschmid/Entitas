@@ -25,19 +25,12 @@ class describe_IndicesLookupGenerator : nspec {
     const string defaultTagCode = @"
 
 namespace Entitas {
-    public partial class Pool {
-        public Pool() : this(ComponentIds.TotalComponents) {
-        }
-    }
-}
-
-namespace Entitas {
     public partial class Matcher : AllOfMatcher {
         public Matcher(int index) : base(new [] { index }) {
         }
 
         public override string ToString() {
-            return string.Format(""Matcher("" + ComponentIds.IdToString(indices[0]) + "")"");
+            return string.Format(""Matcher_"" + ComponentIds.IdToString(indices[0]));
         }
     }
 }";
@@ -83,20 +76,12 @@ public static class OtherComponentIds {
     }
 }
 
-public partial class OtherPool : Pool {
-    public OtherPool() : base(OtherComponentIds.TotalComponents) {
-    }
-
-    public OtherPool(int startCreationIndex) : base(OtherComponentIds.TotalComponents, startCreationIndex) {
-    }
-}
-
 public partial class OtherMatcher : AllOfMatcher {
     public OtherMatcher(int index) : base(new [] { index }) {
     }
 
     public override string ToString() {
-        return string.Format(""Other("" + OtherComponentIds.IdToString(indices[0]) + "")"");
+        return string.Format(""Other_"" + OtherComponentIds.IdToString(indices[0]));
     }
 }");
         };
