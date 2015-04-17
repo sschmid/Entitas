@@ -38,6 +38,10 @@ namespace Entitas {
             return true;
         }
 
+        public override int GetHashCode() {
+            return base.GetHashCode();
+        }
+
         public override string ToString() {
             const string seperator = ", ";
             var matcherStr = string.Empty;
