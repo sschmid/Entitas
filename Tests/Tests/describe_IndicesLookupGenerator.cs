@@ -30,7 +30,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            return string.Format(""Matcher_"" + ComponentIds.IdToString(indices[0]));
+            return ComponentIds.IdToString(indices[0]);
         }
     }
 }";
@@ -81,7 +81,7 @@ public partial class OtherMatcher : AllOfMatcher {
     }
 
     public override string ToString() {
-        return string.Format(""Other_"" + OtherComponentIds.IdToString(indices[0]));
+        return OtherComponentIds.IdToString(indices[0]);
     }
 }");
         };

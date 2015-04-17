@@ -102,7 +102,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            return string.Format(""Matcher_"" + ComponentIds.IdToString(indices[0]));
+            return ComponentIds.IdToString(indices[0]);
         }
     }
 }";
@@ -115,7 +115,7 @@ public partial class {0}Matcher : AllOfMatcher {{
     }}
 
     public override string ToString() {{
-        return string.Format(""{0}_"" + {0}ComponentIds.IdToString(indices[0]));
+        return {0}ComponentIds.IdToString(indices[0]);
     }}
 }}", tag);
         }
