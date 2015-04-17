@@ -2,24 +2,41 @@
 ./runTests.sh
 if [ $? = 0 ]
 then
-	rm -rfv bin
-	mkdir -v bin
-	mkdir -v bin/tmp
+	WD=$(pwd)
+	BIN_DIR="bin"
+	TMP_DIR="${BIN_DIR}/tmp"
+	TMP_UNITY_DIR="${TMP_DIR}/EntitasUnity"
 
-	cp -rv Entitas/Entitas bin/tmp
-	cp -rv EntitasCodeGenerator/EntitasCodeGenerator bin/tmp
-	mkdir -v bin/tmp/EntitasUnity
-	cp -rv EntitasUnity/CodeGenerator bin/tmp/EntitasUnity/
-	cp -rv EntitasUnity/VisualDebugging/Assets/VisualDebugging bin/tmp/EntitasUnity/
+	echo "CLEAN **************************************************************************"
+	rm -rfv $BIN_DIR
 
-	cp RELEASE_NOTES.md bin/tmp/RELEASE_NOTES.md
+	echo "CREATE FOLDERS *****************************************************************"
+	mkdir -v $BIN_DIR
+	mkdir -v $TMP_DIR
+	mkdir -v $TMP_UNITY_DIR
 
-	cd bin/tmp
-	zip -r ../Entitas.zip ./
-	cd ..
-	rm -rfv tmp
+	echo "COPY SOURCES *******************************************************************"
+	cp -rv Entitas/Entitas $TMP_DIR
+	cp -rv EntitasCodeGenerator/EntitasCodeGenerator $TMP_DIR
+	cp -rv EntitasUnity/CodeGenerator $TMP_UNITY_DIR
+	cp -rv EntitasUnity/VisualDebugging/Assets/VisualDebugging $TMP_UNITY_DIR
 
+	cp RELEASE_NOTES.md ${TMP_DIR}/RELEASE_NOTES.md
+
+	echo "DELETE GARBAGE *****************************************************************"
+	cd $TMP_DIR
+	find . -name "*.meta" -type f -delete
 	find . -name "*.DS_Store" -type f -delete
+
+	echo "CREATE ZIP ARCHIVE *************************************************************"
+	cd $TMP_DIR
+	zip -r ../Entitas.zip ./
+	cd $WD
+
+	echo "DELETE TEMP FOLDER *************************************************************"
+	rm -rfv $TMP_DIR
+
+	echo "DONE ***************************************************************************"
 else
 	echo "ERROR: Tests didn't pass!"
 	exit 1
