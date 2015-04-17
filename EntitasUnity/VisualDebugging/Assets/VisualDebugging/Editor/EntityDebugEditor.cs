@@ -14,6 +14,7 @@ namespace Entitas.Unity.VisualDebugging {
         ICustomTypeDrawer[] _customTypeDrawers;
 
         void Awake() {
+            setStyles();
             var assembly = Assembly.GetAssembly(typeof(EntityDebugEditor));
             var customDrawers = assembly.GetTypes()
                 .Where(type => type.GetInterfaces().Contains(typeof(ICustomTypeDrawer)))
@@ -25,20 +26,18 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public override void OnInspectorGUI() {
-            setStyles();
+        void setStyles() {
+            _foldoutStyle = new GUIStyle(EditorStyles.foldout);
+            _foldoutStyle.fontStyle = FontStyle.Bold;
+        }
 
+        public override void OnInspectorGUI() {
             if (targets.Length == 1) {
                 drawSingleTarget();
             } else {
                 drawMultiTargets();
             }
             EditorUtility.SetDirty(target);
-        }
-
-        void setStyles() {
-            _foldoutStyle = new GUIStyle(EditorStyles.foldout);
-            _foldoutStyle.fontStyle = FontStyle.Bold;
         }
 
         void drawSingleTarget() {
@@ -127,7 +126,6 @@ namespace Entitas.Unity.VisualDebugging {
                 entity.WillRemoveComponent(index);
                 field.SetValue(component, newValue);
                 entity.ReplaceComponent(index, component);
-                Debug.Log("Replaced " + component + "." + field.Name + " = " + newValue);
             }
         }
 
@@ -135,7 +133,7 @@ namespace Entitas.Unity.VisualDebugging {
             // Custom type support
             foreach (var drawer in _customTypeDrawers) {
                 if (drawer.HandlesType(fieldType)) {
-                    return drawer.DrawAndGetNewValue(entity, index, component, fieldName, value);
+                                                                    return drawer.DrawAndGetNewValue(entity, index, component, fieldName, value);
                 }
             }
 
@@ -228,7 +226,6 @@ namespace Entitas.Unity.VisualDebugging {
                 entity.WillRemoveComponent(index);
                 setValue(newValue);
                 entity.ReplaceComponent(index, component);
-                Debug.Log("Replaced " + component + "." + fieldName + " = " + newValue);
             }
         }
 

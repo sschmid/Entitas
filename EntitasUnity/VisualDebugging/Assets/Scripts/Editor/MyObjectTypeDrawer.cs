@@ -1,7 +1,6 @@
 ﻿using System;
 using Entitas;
 using UnityEditor;
-using UnityEngine;
 
 public class MyObjectTypeDrawer : ICustomTypeDrawer {
     public bool HandlesType(Type type) {
@@ -15,7 +14,6 @@ public class MyObjectTypeDrawer : ICustomTypeDrawer {
             entity.WillRemoveComponent(index);
             myObject.name = newValue;
             entity.ReplaceComponent(index, component);
-            Debug.Log("Replaced " + component + "." + fieldName + " = " + newValue);
         }
 
         return myObject;
