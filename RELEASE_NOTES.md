@@ -52,4 +52,4 @@
 
 ##### Code Generator
 - Supports enums nested in components
-- Added option to [DontGenerate] to ignore generating inde, too
+- Added option to [DontGenerate] to ignore generating index, too
