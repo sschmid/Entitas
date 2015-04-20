@@ -134,6 +134,9 @@
     <Compile Include="Components\Generated\UIComponentIds.cs" />
     <Compile Include="Components\Generated\UIPositionComponentGeneratedExtension.cs" />
     <Compile Include="Components\Generated\UserComponentGeneratedExtension.cs" />
+    <Compile Include="..\Entitas\Entitas\Interfaces\IStartSystem.cs">
+      <Link>Libraries\Entitas\Interfaces\IStartSystem.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
