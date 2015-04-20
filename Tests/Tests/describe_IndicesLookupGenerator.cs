@@ -37,6 +37,8 @@ namespace Entitas {
 
     void when_generating() {
 
+
+
         it["generates default lookup"] = () => {
             generates(typeof(SomeComponent), defaultLookupName,
                 @"using System.Collections.Generic;
@@ -55,6 +57,8 @@ public static class ComponentIds {
     }
 }" + defaultTagCode);
         };
+
+
 
         it["generates lookup with name from attribute"] = () => {
             generates(typeof(OtherPoolComponent), "OtherComponentIds",
@@ -86,6 +90,8 @@ public partial class OtherMatcher : AllOfMatcher {
 }");
         };
 
+
+
         it["generates id for [DontGenerate]"] = () => {
             generates(typeof(DontGenerateComponent), defaultLookupName,
                 @"using System.Collections.Generic;
@@ -105,7 +111,9 @@ public static class ComponentIds {
 }" + defaultTagCode);
         };
 
-        it["generates ids for all types"] = () => {
+
+
+        it["generates ids for all types ordered alphabetically"] = () => {
             generates(new [] {
                 typeof(SomeComponent),
                 typeof(DontGenerateComponent)
@@ -113,14 +121,14 @@ public static class ComponentIds {
                 @"using System.Collections.Generic;
 
 public static class ComponentIds {
-    public const int Some = 0;
-    public const int DontGenerate = 1;
+    public const int DontGenerate = 0;
+    public const int Some = 1;
 
     public const int TotalComponents = 2;
 
     static readonly Dictionary<int, string> components = new Dictionary<int, string> {
-        { 0, ""Some"" },
-        { 1, ""DontGenerate"" }
+        { 0, ""DontGenerate"" },
+        { 1, ""Some"" }
     };
 
     public static string IdToString(int componentId) {
@@ -128,6 +136,8 @@ public static class ComponentIds {
     }
 }" + defaultTagCode);
         };
+
+
 
         it["ignores [DontGenerate(false)]"] = () => {
             generates(new [] {

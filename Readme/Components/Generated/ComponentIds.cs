@@ -1,20 +1,20 @@
 using System.Collections.Generic;
 
 public static class ComponentIds {
-    public const int Position = 0;
+    public const int Animating = 0;
     public const int Health = 1;
     public const int Movable = 2;
-    public const int User = 3;
-    public const int Animating = 4;
+    public const int Position = 3;
+    public const int User = 4;
 
     public const int TotalComponents = 5;
 
     static readonly Dictionary<int, string> components = new Dictionary<int, string> {
-        { 0, "Position" },
+        { 0, "Animating" },
         { 1, "Health" },
         { 2, "Movable" },
-        { 3, "User" },
-        { 4, "Animating" }
+        { 3, "Position" },
+        { 4, "User" }
     };
 
     public static string IdToString(int componentId) {
@@ -28,7 +28,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            return string.Format("Matcher_" + ComponentIds.IdToString(indices[0]));
+            return ComponentIds.IdToString(indices[0]);
         }
     }
 }

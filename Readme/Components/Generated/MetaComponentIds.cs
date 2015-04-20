@@ -21,6 +21,6 @@ public partial class MetaMatcher : AllOfMatcher {
     }
 
     public override string ToString() {
-        return string.Format("Meta_" + MetaComponentIds.IdToString(indices[0]));
+        return MetaComponentIds.IdToString(indices[0]);
     }
 }

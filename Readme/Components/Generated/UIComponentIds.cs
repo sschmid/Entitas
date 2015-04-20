@@ -21,6 +21,6 @@ public partial class UIMatcher : AllOfMatcher {
     }
 
     public override string ToString() {
-        return string.Format("UI_" + UIComponentIds.IdToString(indices[0]));
+        return UIComponentIds.IdToString(indices[0]);
     }
 }
