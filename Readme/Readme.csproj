@@ -140,6 +140,12 @@
     <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\PoolAttributeGenerator.cs">
       <Link>Libraries\EntitasCodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\CodeGeneratorConfig.cs">
+      <Link>Libraries\EntitasCodeGenerator\CodeGeneratorConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Properties.cs">
+      <Link>Libraries\EntitasCodeGenerator\Properties.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using Entitas;
 using Entitas.CodeGenerator;
@@ -8,17 +9,13 @@ using UnityEngine;
 
 public static class EntitasCodeGeneratorEditor {
 
-    const string defaultGeneratedFolder = "Assets/Sources/Generated/";
-    const string generatedFolderKey = "Entitas.CodeGenerator.GeneratedFolder";
-
-    const string poolsKey = "Entitas.CodeGenerator.Pools";
+    const string configPath = "Entitas.properties";
 
     [MenuItem("Entitas/Generate")]
-    public static void EntitasGenerate() {
+    public static void Generate() {
         var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
-        var poolNames = EditorPrefs.GetString(poolsKey, string.Empty).Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-        var dir = EditorPrefs.GetString(generatedFolderKey, defaultGeneratedFolder);
-        EntitasCodeGenerator.Generate(types, poolNames, dir);
+        var config = loadConfig();
+        EntitasCodeGenerator.Generate(types, config.pools, config.generatedFolderPath);
         AssetDatabase.Refresh();
     }
 
@@ -28,12 +25,13 @@ public static class EntitasCodeGeneratorEditor {
     }
 
     static void drawCodeGenerator() {
+        var config = loadConfig();
+
         EditorGUILayout.BeginVertical(GUI.skin.box);
         EditorGUILayout.LabelField("CodeGenerator", EditorStyles.boldLabel);
 
         // Generated Folder
-        var dir = EditorPrefs.GetString(generatedFolderKey, defaultGeneratedFolder);
-        dir = EditorGUILayout.TextField("Generated Folder", dir);
+        config.generatedFolderPath = EditorGUILayout.TextField("Generated Folder", config.generatedFolderPath);
 
         // Pools
         EditorGUILayout.Space();
@@ -42,7 +40,7 @@ public static class EntitasCodeGeneratorEditor {
         EditorGUILayout.TextField("DefaultPool");
         EditorGUI.EndDisabledGroup();
 
-        var pools = new List<string>(EditorPrefs.GetString(poolsKey, string.Empty).Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+        var pools = new List<string>(config.pools);
         for (int i = 0; i < pools.Count; i++) {
             EditorGUILayout.BeginHorizontal();
             pools[i] = EditorGUILayout.TextField(pools[i]);
@@ -56,19 +54,31 @@ public static class EntitasCodeGeneratorEditor {
             pools.Add("PoolName");
         }
 
-        var poolNames = string.Join(",", pools.ToArray()).Replace(" ", string.Empty);
-        if (poolNames == string.Empty) {
+        if (pools.Count == 0) {
             EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple pools. " +
                 "The code generator generates subclasses of PoolAttribute for each pool name. " +
                 "You can assign components to a specific pool with the generated attribute, e.g. [UI] or [MetaGame], " +
                 "otherwise they are assigned to the default pool.", MessageType.Info);
         }
 
-        EditorGUILayout.EndVertical();
-
         if (GUI.changed) {
-            EditorPrefs.SetString(generatedFolderKey, dir);
-            EditorPrefs.SetString(poolsKey, poolNames);
+            config.pools = pools.ToArray();
+            saveConfig(config);
         }
+
+        EditorGUILayout.Space();
+        if (GUILayout.Button("Generate")) {
+            Generate();
+        }
+
+        EditorGUILayout.EndVertical();
+    }
+
+    static CodeGeneratorConfig loadConfig() {
+        return new CodeGeneratorConfig(File.Exists(configPath) ? File.ReadAllText(configPath) : string.Empty);
+    }
+
+    static void saveConfig(CodeGeneratorConfig config) {
+        File.WriteAllText(configPath, config.ToString());
     }
 }

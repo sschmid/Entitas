@@ -66,6 +66,8 @@
     <Compile Include="Tests\Fixtures\CodeGenerator\NestedClass.cs" />
     <Compile Include="Tests\Fixtures\CodeGenerator\OtherPoolComponent.cs" />
     <Compile Include="Tests\describe_PoolAttributeGenerator.cs" />
+    <Compile Include="Tests\describe_Properties.cs" />
+    <Compile Include="Tests\describe_CodeGeneratorConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
