@@ -1,22 +1,22 @@
 using System;
-using System.IO;
-using System.Reflection;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
     public static class EntitasCodeGenerator {
         public const string componentSuffix = "Component";
 
-        public static void Generate(Assembly assembly, string dir) {
+        public static void Generate(Type[] types, string[] poolNames, string dir) {
             if (!Directory.Exists(dir)) {
                 Directory.CreateDirectory(dir);
             }
 
             CleanDir(dir);
-            var components = GetComponents(assembly.GetTypes());
+            var components = GetComponents(types);
             generateIndicesLookup(dir, components);
             generateComponentExtensions(dir, components);
+            generatePoolAttributes(dir, poolNames);
         }
 
         public static void CleanDir(string dir) {
@@ -48,6 +48,12 @@ namespace Entitas.CodeGenerator {
             var extensions = ComponentExtensionsGenerator
                 .GenerateComponentExtensions(components, "GeneratedExtension");
             writeFiles(dir, extensions);
+        }
+
+        static void generatePoolAttributes(string dir, string[] poolNames) {
+            var poolAttributes = PoolAttributeGenerator
+                .GeneratePoolAttributes(poolNames);
+            writeFiles(dir, poolAttributes);
         }
 
         static void writeFiles(string dir, Dictionary<string, string> files) {

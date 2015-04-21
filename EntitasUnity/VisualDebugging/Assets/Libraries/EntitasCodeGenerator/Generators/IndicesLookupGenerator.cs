@@ -6,7 +6,8 @@ namespace Entitas.CodeGenerator {
     public static class IndicesLookupGenerator {
 
         public static Dictionary<string, string> GenerateIndicesLookup(Type[] components) {
-            return getLookups(components).ToDictionary(
+            var sortedComponents = components.OrderBy(type => type.ToString()).ToArray();
+            return getLookups(sortedComponents).ToDictionary(
                 lookup => lookup.Key,
                 lookup => generateIndicesLookup(lookup.Key, lookup.Value.ToArray())
             );

@@ -11,23 +11,49 @@ namespace Entitas {
             return pool.GetGroup(matcher).GetEntities();
         }
 
-        public static IExecuteSystem CreateSystem<T>(this Pool pool) where T: ISystem, new() {
-            return pool.CreateSystem(typeof(T));
+        public static IStartSystem CreateStartSystem<T>(this Pool pool) where T: ISystem, new() {
+            return pool.CreateStartSystem(typeof(T));
         }
 
-        public static IExecuteSystem CreateSystem(this Pool pool, Type systemType) {
+        public static IStartSystem CreateStartSystem(this Pool pool, Type systemType) {
             var system = (ISystem)Activator.CreateInstance(systemType);
 
-            var setPool = system as ISetPool;
-            if (setPool != null) setPool.SetPool(pool);
+            var startSystem = system as IStartSystem;
+            if (startSystem != null) {
+                setPool(system, pool);
+                return (IStartSystem)system;
+            }
+
+            throw new Exception("Cannot create IStartSystem for " + systemType);
+        }
+
+        public static IExecuteSystem CreateExecuteSystem<T>(this Pool pool) where T: ISystem, new() {
+            return pool.CreateExecuteSystem(typeof(T));
+        }
+
+        public static IExecuteSystem CreateExecuteSystem(this Pool pool, Type systemType) {
+            var system = (ISystem)Activator.CreateInstance(systemType);
 
             var executeSystem = system as IExecuteSystem;
-            if (executeSystem != null) return (IExecuteSystem)system;
+            if (executeSystem != null) {
+                setPool(system, pool);
+                return (IExecuteSystem)system;
+            }
 
             var reactiveSystem = system as IReactiveSystem;
-            if (reactiveSystem != null) return new ReactiveSystem(pool, reactiveSystem);
+            if (reactiveSystem != null) {
+                setPool(system, pool);
+                return new ReactiveSystem(pool, reactiveSystem);
+            }
 
-            return null;
+            throw new Exception("Cannot create IExecuteSystem for " + systemType);
+        }
+
+        static void setPool(ISystem system, Pool pool) {
+            var poolSystem = system as ISetPool;
+            if (poolSystem != null) {
+                poolSystem.SetPool(pool);
+            }
         }
     }
 }

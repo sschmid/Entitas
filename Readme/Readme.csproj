@@ -137,6 +137,9 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IStartSystem.cs">
       <Link>Libraries\Entitas\Interfaces\IStartSystem.cs</Link>
     </Compile>
+    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\PoolAttributeGenerator.cs">
+      <Link>Libraries\EntitasCodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
