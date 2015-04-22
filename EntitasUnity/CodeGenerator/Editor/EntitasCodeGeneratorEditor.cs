@@ -11,10 +11,18 @@ public static class EntitasCodeGeneratorEditor {
 
     const string configPath = "Entitas.properties";
 
+    public static CodeGeneratorConfig LoadConfig() {
+        return new CodeGeneratorConfig(File.Exists(configPath) ? File.ReadAllText(configPath) : string.Empty);
+    }
+
+    public static void SaveConfig(CodeGeneratorConfig config) {
+        File.WriteAllText(configPath, config.ToString());
+    }
+
     [MenuItem("Entitas/Generate")]
     public static void Generate() {
         var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
-        var config = loadConfig();
+        var config = LoadConfig();
         EntitasCodeGenerator.Generate(types, config.pools, config.generatedFolderPath);
         AssetDatabase.Refresh();
     }
@@ -25,7 +33,7 @@ public static class EntitasCodeGeneratorEditor {
     }
 
     static void drawCodeGenerator() {
-        var config = loadConfig();
+        var config = LoadConfig();
 
         EditorGUILayout.BeginVertical(GUI.skin.box);
         EditorGUILayout.LabelField("CodeGenerator", EditorStyles.boldLabel);
@@ -63,7 +71,7 @@ public static class EntitasCodeGeneratorEditor {
 
         if (GUI.changed) {
             config.pools = pools.ToArray();
-            saveConfig(config);
+            SaveConfig(config);
         }
 
         EditorGUILayout.Space();
@@ -72,13 +80,5 @@ public static class EntitasCodeGeneratorEditor {
         }
 
         EditorGUILayout.EndVertical();
-    }
-
-    static CodeGeneratorConfig loadConfig() {
-        return new CodeGeneratorConfig(File.Exists(configPath) ? File.ReadAllText(configPath) : string.Empty);
-    }
-
-    static void saveConfig(CodeGeneratorConfig config) {
-        File.WriteAllText(configPath, config.ToString());
     }
 }
