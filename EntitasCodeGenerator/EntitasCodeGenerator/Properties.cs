@@ -12,6 +12,7 @@ namespace Entitas.CodeGenerator {
         public Properties(string properties) {
             _dict = properties
                 .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .Where(property => !property.TrimStart(' ').StartsWith("#", StringComparison.Ordinal))
                 .Select(property => property.Split('='))
                 .Aggregate(new Dictionary<string, string>(), (dict, property) => {
                     dict.Add(property[0].Trim(), property[1].Trim());
@@ -29,7 +30,7 @@ namespace Entitas.CodeGenerator {
 
         public string this[string key] {
             get { return _dict[key]; }
-            set { _dict[key] = value.Trim(); }
+            set { _dict[key.Trim()] = value.Trim(); }
         }
 
         public override string ToString() {
