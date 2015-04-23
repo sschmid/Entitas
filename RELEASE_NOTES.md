@@ -1,7 +1,43 @@
+# 0.12.0
+
+##### Important
+- Entitas 0.12.0 generates prefixed matchers based on the PoolAttribute and introduces some API changes. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+##### General
+- Added IStartSystem and pool.CreateStartSystem() extension
+- Renamed pool.CreateSystem() to pool.CreateExecuteSystem()
+- Added pool.CreateStartSystem()
+- Added EntitasUpdater to automatically update the introduced matcher API changes
+
+##### Visual Debugging
+- Fixed null exceptions
+- Added support for multi dimensional and jagged arrays
+- Removed Debug.Log
+
+##### Code Generator
+- Added Code Generator PreferenceItem
+	- set generated folder path
+	- define multiple pools
+
+![entitas-preferences](https://cloud.githubusercontent.com/assets/233700/7296726/8d74bb5a-e9c2-11e4-8324-10a0db7191ff.png)
+- Added PoolAttributeGenerator
+- Generated Matcher is now prefixed based on PoolAttribute (e.g. UIMatcher)
+- Generating ToString() for matchers to print component name instead of index
+- IndicesLookupGenerator generates indices ordered alphabetically
+- Added TypeGenerator to streamline string generation from types
+- Added support for nested classes
+
+##### Other
+- Added Properties and CodeGeneratorConfig to serialize Entitas preferences to file
+- Removed warning in AbstractCompoundMatcher
+- buildPackage.sh only builds when all tests are passing
+- buildPackage.sh deletes meta files before creating zip archive
+
+
 # 0.11.0
 
 ##### Reminder
-- Entitas 0.10.0 included lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/Entitas%20upgrade%20guide.txt) if you are on < v0.10.0
+- Entitas 0.10.0 included lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md) if you are on < v0.10.0
 
 ##### General
 - Added AllOfCompoundMatcher
@@ -32,10 +68,11 @@
 - Moved and renamed some folders
 - Added buildPackage.sh which creates a bin/Entitas.zip with all necessary source files
 
+
 # 0.10.0
 
 ##### Important
-- Entitas 0.10.0 includes lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/Entitas%20upgrade%20guide.txt)
+- Entitas 0.10.0 includes lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
 
 ##### General
 - Added empty ISystem and IExecuteSystem for more flexibility
