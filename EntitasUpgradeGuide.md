@@ -51,7 +51,7 @@ public class CoreGameAttribute : PoolAttribute {
 
 #### Update API
 
-    Click the MenuItem "Entias/Update API". All occurrences of the old Matcher will be updated
+    Click the MenuItem "Entitas/Update API". All occurrences of the old Matcher will be updated
     to the new version, which is prefixed based on the PoolAttribute.
 
 #### Delete
