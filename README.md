@@ -202,6 +202,11 @@ Give it a try and checkout the [example project](https://github.com/sschmid/Enti
 ![Entitas Visual Debug Inspector Example](Readme/VisualDebug-Inspector-Example.png)
 ![Entitas Visual Debug Inspector Example2](Readme/VisualDebug-Inspector-Example2.png)
 
+# Install Entitas
+Each release is published with Entitas.zip attached containing all source files you need. It contains Entitas, CodeGenerator and Unity tools like VisualDebugging and Menu/Preferences extensions. [Show releases](https://github.com/sschmid/Entitas-CSharp/releases)
+
+Alternatively you can download bin/Entitas.zip
+
 # Thanks to
 Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://github.com/cloudjubei) and [@devboy](https://github.com/devboy) for endless hours of discussion and helping making Entitas awesome!
 
