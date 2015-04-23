@@ -2,16 +2,16 @@
 using Entitas.CodeGenerator;
 using System;
 
-class describe_EntitasCodeGenerator : nspec {
+class describe_CodeGenerator : nspec {
     static void filterIgnores(Type type) {
         var types = new[] { type };
-        var filtered = EntitasCodeGenerator.GetComponents(types);
+        var filtered = CodeGenerator.GetComponents(types);
         filtered.should_not_contain(type);
     }
 
     static void filterKeeps(Type type) {
         var types = new[] { type };
-        var filtered = EntitasCodeGenerator.GetComponents(types);
+        var filtered = CodeGenerator.GetComponents(types);
         filtered.should_contain(type);
     }
 

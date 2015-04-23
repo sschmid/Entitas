@@ -7,7 +7,7 @@ namespace Readme {
         public static void Main(string[] args) {
             var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
             var generatedFolder = getProjectDir() + "/Components/Generated/";
-            EntitasCodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder);
+            CodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder);
         }
 
         static string getProjectDir() {

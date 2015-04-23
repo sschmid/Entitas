@@ -38,6 +38,18 @@
     <Compile Include="Components\MovableComponent.cs" />
     <Compile Include="Components\UserComponent.cs" />
     <Compile Include="Components\AnimatingComponent.cs" />
+    <Compile Include="Components\UIPositionComponent.cs" />
+    <Compile Include="Components\CoinsComponent.cs" />
+    <Compile Include="Components\Generated\AnimatingComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\CoinsComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\ComponentIds.cs" />
+    <Compile Include="Components\Generated\HealthComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\MetaComponentIds.cs" />
+    <Compile Include="Components\Generated\MovableComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\PositionComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\UIComponentIds.cs" />
+    <Compile Include="Components\Generated\UIPositionComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\UserComponentGeneratedExtension.cs" />
     <Compile Include="..\Entitas\Entitas\Entity.cs">
       <Link>Libraries\Entitas\Entity.cs</Link>
     </Compile>
@@ -49,6 +61,9 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Pool.cs">
       <Link>Libraries\Entitas\Pool.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\ReactiveSystem.cs">
+      <Link>Libraries\Entitas\ReactiveSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\CollectionExtension.cs">
       <Link>Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
@@ -68,91 +83,51 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
       <Link>Libraries\Entitas\Interfaces\IMatcher.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
+      <Link>Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IStartSystem.cs">
+      <Link>Libraries\Entitas\Interfaces\IStartSystem.cs</Link>
+    </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
       <Link>Libraries\Entitas\Interfaces\ISystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AbstractMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AbstractMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AllOfMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AllOfMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AnyOfMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AnyOfMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AllOfCompoundMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AllOfCompoundMatcher.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\AbstractCompoundMatcher.cs">
       <Link>Libraries\Entitas\Matcher\AbstractCompoundMatcher.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\AbstractMatcher.cs">
+      <Link>Libraries\Entitas\Matcher\AbstractMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\AllOfCompoundMatcher.cs">
+      <Link>Libraries\Entitas\Matcher\AllOfCompoundMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\AllOfMatcher.cs">
+      <Link>Libraries\Entitas\Matcher\AllOfMatcher.cs</Link>
+    </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\AnyOfCompoundMatcher.cs">
       <Link>Libraries\Entitas\Matcher\AnyOfCompoundMatcher.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\NoneOfMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\NoneOfMatcher.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Matcher\AnyOfMatcher.cs">
+      <Link>Libraries\Entitas\Matcher\AnyOfMatcher.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\NoneOfCompoundMatcher.cs">
       <Link>Libraries\Entitas\Matcher\NoneOfCompoundMatcher.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\ReactiveSystem.cs">
-      <Link>Libraries\Entitas\ReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\EntitasCodeGenerator.cs">
-      <Link>Libraries\EntitasCodeGenerator\EntitasCodeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs">
-      <Link>Libraries\EntitasCodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Attributes\PoolAttribute.cs">
-      <Link>Libraries\EntitasCodeGenerator\Attributes\PoolAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs">
-      <Link>Libraries\EntitasCodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs">
-      <Link>Libraries\EntitasCodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs">
-      <Link>Libraries\EntitasCodeGenerator\Generators\IndicesLookupGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\TypeGenerator.cs">
-      <Link>Libraries\EntitasCodeGenerator\Generators\TypeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="Components\UIPositionComponent.cs" />
-    <Compile Include="Components\CoinsComponent.cs" />
-    <Compile Include="Components\Generated\AnimatingComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\CoinsComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\ComponentIds.cs" />
-    <Compile Include="Components\Generated\HealthComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\MetaComponentIds.cs" />
-    <Compile Include="Components\Generated\MovableComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\PositionComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\UIComponentIds.cs" />
-    <Compile Include="Components\Generated\UIPositionComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\UserComponentGeneratedExtension.cs" />
-    <Compile Include="..\Entitas\Entitas\Interfaces\IStartSystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IStartSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Generators\PoolAttributeGenerator.cs">
-      <Link>Libraries\EntitasCodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\CodeGeneratorConfig.cs">
-      <Link>Libraries\EntitasCodeGenerator\CodeGeneratorConfig.cs</Link>
-    </Compile>
-    <Compile Include="..\EntitasCodeGenerator\EntitasCodeGenerator\Properties.cs">
-      <Link>Libraries\EntitasCodeGenerator\Properties.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Matcher\NoneOfMatcher.cs">
+      <Link>Libraries\Entitas\Matcher\NoneOfMatcher.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Components\" />
+    <Folder Include="Components\Generated\" />
     <Folder Include="Libraries\" />
     <Folder Include="Libraries\Entitas\" />
-    <Folder Include="Libraries\EntitasCodeGenerator\" />
-    <Folder Include="Components\Generated\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
+      <Project>{4D7C8232-6930-4F13-9D9A-3C32A340BB62}</Project>
+      <Name>Entitas.CodeGenerator</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

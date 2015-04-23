@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("PerformanceTests")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Entitas.CodeGenerator")]
+[assembly: AssemblyDescription("CodeGenerator for Entitas")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("")]

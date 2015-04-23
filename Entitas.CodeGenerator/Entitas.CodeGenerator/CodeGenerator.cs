@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
-    public static class EntitasCodeGenerator {
+    public static class CodeGenerator {
         public const string componentSuffix = "Component";
 
         public static void Generate(Type[] types, string[] poolNames, string dir) {
@@ -67,7 +67,7 @@ namespace Entitas.CodeGenerator {
 
     public static class EntitasCodeGeneratorExtensions {
         public static string RemoveComponentSuffix(this Type type) {
-            const string componentSuffix = EntitasCodeGenerator.componentSuffix;
+            const string componentSuffix = CodeGenerator.componentSuffix;
             if (type.Name.EndsWith(componentSuffix)) {
                 return type.Name.Substring(0, type.Name.Length - componentSuffix.Length);
             }
