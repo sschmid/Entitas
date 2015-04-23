@@ -140,7 +140,7 @@ namespace Entitas.Unity.VisualDebugging {
             // Unity's builtin types
             if (fieldType == typeof(Bounds))                        return EditorGUILayout.BoundsField(fieldName, (Bounds)value);
             if (fieldType == typeof(Color))                         return EditorGUILayout.ColorField(fieldName, (Color)value);
-            if (fieldType == typeof(AnimationCurve))                return EditorGUILayout.CurveField(fieldName, (AnimationCurve)value);
+            if (fieldType == typeof(AnimationCurve))                return drawAndGetAnimationCurve(fieldName, (AnimationCurve)value);
             if (fieldType.IsEnum)                                   return EditorGUILayout.EnumPopup(fieldName, (Enum)value);
             if (fieldType == typeof(float))                         return EditorGUILayout.FloatField(fieldName, (float)value);
             if (fieldType == typeof(int))                           return EditorGUILayout.IntField(fieldName, (int)value);
@@ -159,6 +159,15 @@ namespace Entitas.Unity.VisualDebugging {
             // Anything else
             EditorGUILayout.LabelField(fieldName, value == null ? "null" : value.ToString());
             return value;
+        }
+
+        object drawAndGetAnimationCurve(string fieldName, AnimationCurve animationCurve) {
+            if (animationCurve == null) {
+                EditorGUILayout.LabelField(fieldName, "null");
+            } else {
+                animationCurve = EditorGUILayout.CurveField(fieldName, animationCurve);
+            }
+            return animationCurve;
         }
 
         object drawAndGetArray(Entity entity, int index, IComponent component, string fieldName, Array array) {
