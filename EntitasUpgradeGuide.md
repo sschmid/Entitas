@@ -31,10 +31,10 @@ of Entitas, EntitasCodeGenerator and EntitasUnity.
 #### Setup Entitas Preferences
 
     Open the Unity preference panel and select Entitas. Check and update the path to the folder where
-    the code generator will save all generated files. If you are using the `PoolAttribue` in your components,
-    add all custom pool names used in your application. Make sure that all existing custom PoolAttribues call
+    the code generator will save all generated files. If you are using the PoolAttribute in your components,
+    add all custom pool names used in your application. Make sure that all existing custom PoolAttributes call
     the base constructor with the same name as the class (without 'Attribute').
-    If you are not using the `PoolAttribue` in your components, you can skip this process.
+    If you are not using the PoolAttribute in your components, you can skip this process.
 
 ```cs
 using Entitas.CodeGenerator;
@@ -51,8 +51,8 @@ public class CoreGameAttribute : PoolAttribute {
 
 #### Update API
 
-    Click the MenuItem "Entias/Update API". All occurrences of the old `Matcher` will be updated
-    to the new version, which is prefixed based on the `PoolAttribute`.
+    Click the MenuItem "Entias/Update API". All occurrences of the old Matcher will be updated
+    to the new version, which is prefixed based on the PoolAttribute.
 
 #### Delete
 
