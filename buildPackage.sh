@@ -5,7 +5,6 @@ then
 	WD=$(pwd)
 	BIN_DIR="bin"
 	TMP_DIR="${BIN_DIR}/tmp"
-	TMP_UNITY_DIR="${TMP_DIR}/EntitasUnity"
 
 	echo "CLEAN **************************************************************************"
 	rm -rfv $BIN_DIR
@@ -13,13 +12,12 @@ then
 	echo "CREATE FOLDERS *****************************************************************"
 	mkdir -v $BIN_DIR
 	mkdir -v $TMP_DIR
-	mkdir -v $TMP_UNITY_DIR
 
 	echo "COPY SOURCES *******************************************************************"
 	cp -rv Entitas/Entitas $TMP_DIR
-	cp -rv EntitasCodeGenerator/EntitasCodeGenerator $TMP_DIR
-	cp -rv EntitasUnity/CodeGenerator $TMP_UNITY_DIR
-	cp -rv EntitasUnity/VisualDebugging/Assets/VisualDebugging $TMP_UNITY_DIR
+	cp -rv Entitas.CodeGenerator/Entitas.CodeGenerator $TMP_DIR
+	cp -rv Entitas.Unity.CodeGenerator/Assets/Entitas.Unity.CodeGenerator $TMP_DIR
+	cp -rv Entitas.Unity.VisualDebugging/Assets/Entitas.Unity.VisualDebugging $TMP_DIR
 
 	cp RELEASE_NOTES.md ${TMP_DIR}/RELEASE_NOTES.md
 
