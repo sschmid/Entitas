@@ -8,13 +8,13 @@ namespace Entitas {
             AddComponent(ComponentIds.Array3D, component);
         }
 
-        public void AddArray3D(int[,,] newArray23) {
+        public void AddArray3D(int[,,] newArray3d) {
             var component = new Array3DComponent();
-            component.array23 = newArray23;
+            component.array3d = newArray3d;
             AddArray3D(component);
         }
 
-        public void ReplaceArray3D(int[,,] newArray23) {
+        public void ReplaceArray3D(int[,,] newArray3d) {
             Array3DComponent component;
             if (hasArray3D) {
                 WillRemoveComponent(ComponentIds.Array3D);
@@ -22,7 +22,7 @@ namespace Entitas {
             } else {
                 component = new Array3DComponent();
             }
-            component.array23 = newArray23;
+            component.array3d = newArray3d;
             ReplaceComponent(ComponentIds.Array3D, component);
         }
 

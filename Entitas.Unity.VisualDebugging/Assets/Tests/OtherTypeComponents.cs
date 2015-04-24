@@ -31,7 +31,7 @@ public class Array2DComponent : IComponent {
 }
 
 public class Array3DComponent : IComponent {
-    public int[,,] array23;
+    public int[,,] array3d;
 }
 
 public class JaggedArrayComponent : IComponent {

@@ -191,20 +191,67 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         object drawAndGetArray(Type type, string fieldName, Array array, Entity entity, int index, IComponent component) {
+            var elementType = type.GetElementType();
             EditorGUILayout.LabelField(fieldName);
             var indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = indent + 1;
-
-            var elementType = type.GetElementType();
             if (array.Rank == 1) {
+                if (array.GetLength(0) == 0) {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(fieldName);
+                    if (GUILayout.Button("Add element", GUILayout.Height(14))) {
+                        object defaultValue;
+                        if (createDefault(elementType, out defaultValue)) {
+                            var newArray = Array.CreateInstance(elementType, 1);
+                            newArray.SetValue(defaultValue, 0);
+                            array = newArray;
+                        }
+                    }
+                    EditorGUILayout.EndHorizontal();
+                } else {
+                    EditorGUILayout.LabelField(fieldName);
+                }
+
+                Action editAction = null;
                 for (int i = 0; i < array.GetLength(0); i++) {
-                    drawArrayItem(entity, index, component, array.GetValue(i), elementType,
+                    EditorGUILayout.BeginHorizontal();
+                    drawArrayElement(entity, index, component, array.GetValue(i), elementType,
                         fieldName + "[" + i + "]", newValue => array.SetValue(newValue, i));
+
+                    if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
+                        var removeAt = i;
+                        editAction = () => {
+                            array = arrayRemoveAt(array, elementType, removeAt);
+                        };
+                    }
+                    if (GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
+                        object defaultValue;
+                        if (createDefault(elementType, out defaultValue)) {
+                            var insertAt = i;
+                            editAction = () => {
+                                array = arrayInsertAt(array, elementType, defaultValue, insertAt);
+                            };
+                        }
+                    }
+                    if (GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
+                        object defaultValue;
+                        if (createDefault(elementType, out defaultValue)) {
+                            var insertAt = i + 1;
+                            editAction = () => {
+                                array = arrayInsertAt(array, elementType, defaultValue, insertAt);
+                            };
+                        }
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
+
+                if (editAction != null) {
+                    editAction();
                 }
             } else if (array.Rank == 2) {
                 for (int i = 0; i < array.GetLength(0); i++) {
                     for (int j = 0; j < array.GetLength(1); j++) {
-                        drawArrayItem(entity, index, component, array.GetValue(i, j), elementType,
+                        drawArrayElement(entity, index, component, array.GetValue(i, j), elementType,
                             fieldName + "[" + i + ", " + j + "]", newValue => array.SetValue(newValue, i, j));
                     }
                     EditorGUILayout.Space();
@@ -213,7 +260,7 @@ namespace Entitas.Unity.VisualDebugging {
                 for (int i = 0; i < array.GetLength(0); i++) {
                     for (int j = 0; j < array.GetLength(1); j++) {
                         for (int k = 0; k < array.GetLength(2); k++) {
-                            drawArrayItem(entity, index, component, array.GetValue(i, j, k), elementType,
+                            drawArrayElement(entity, index, component, array.GetValue(i, j, k), elementType,
                                 fieldName + "[" + i + ", " + j + " ," + k + "]", newValue => array.SetValue(newValue, i, j, k));
                         }
                         EditorGUILayout.Space();
@@ -225,6 +272,35 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUI.indentLevel = indent;
 
             return array;
+        }
+
+        Array arrayRemoveAt(Array array, Type elementType, int removeAt) {
+            var newArray = Array.CreateInstance(elementType, array.GetLength(0) - 1);
+            var indexOffset = 0;
+            for (int j = 0; j < array.GetLength(0); j++) {
+                if (j == removeAt) {
+                    indexOffset = -1;
+                    continue;
+                }
+                newArray.SetValue(array.GetValue(j), j + indexOffset);
+            }
+
+            return newArray;
+        }
+
+        Array arrayInsertAt(Array array, Type elementType, object value, int insertAt) {
+            var newArray = Array.CreateInstance(elementType, array.GetLength(0) + 1);
+            var indexOffset = 0;
+            for (int i = 0; i < newArray.GetLength(0); i++) {
+                if (i == insertAt) {
+                    indexOffset = -1;
+                    newArray.SetValue(value, i);
+                    continue;
+                }
+                newArray.SetValue(array.GetValue(i + indexOffset), i);
+            }
+
+            return newArray;
         }
 
         object drawAndGetList(Type type, string fieldName, IList list, Entity entity, int index, IComponent component) {
@@ -248,7 +324,7 @@ namespace Entitas.Unity.VisualDebugging {
             Action editAction = null;
             for (int i = 0; i < list.Count; i++) {
                 EditorGUILayout.BeginHorizontal();
-                drawArrayItem(entity, index, component, list[i], elementType,
+                drawArrayElement(entity, index, component, list[i], elementType,
                     fieldName + "[" + i + "]", newValue => list[i] = newValue);
 
                 if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
@@ -280,7 +356,7 @@ namespace Entitas.Unity.VisualDebugging {
             return list;
         }
 
-        void drawArrayItem(Entity entity, int index, IComponent component, object value, Type elementType, string fieldName, Action<object> setValue) {
+        void drawArrayElement(Entity entity, int index, IComponent component, object value, Type elementType, string fieldName, Action<object> setValue) {
             var newValue = drawAndGetNewValue(entity, index, component, fieldName, elementType, value);
             if (didValueChange(value, newValue)) {
                 entity.WillRemoveComponent(index);
