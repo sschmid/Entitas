@@ -130,17 +130,30 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         object drawAndGetNewValue(Entity entity, int index, IComponent component, string fieldName, Type fieldType, object value) {
+            if (value == null) {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(fieldName, "null");
+                if (GUILayout.Button("Create", GUILayout.Height(14))) {
+                    object defaultValue;
+                    if (createDefault(fieldType, out defaultValue)) {
+                        value = defaultValue;
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
+                return value;
+            }
+
             // Custom type support
             foreach (var drawer in _customTypeDrawers) {
                 if (drawer.HandlesType(fieldType)) {
-                                                                    return drawer.DrawAndGetNewValue(entity, index, component, fieldName, value);
+                    return drawer.DrawAndGetNewValue(entity, index, component, fieldName, value);
                 }
             }
 
             // Unity's builtin types
             if (fieldType == typeof(Bounds))                        return EditorGUILayout.BoundsField(fieldName, (Bounds)value);
             if (fieldType == typeof(Color))                         return EditorGUILayout.ColorField(fieldName, (Color)value);
-            if (fieldType == typeof(AnimationCurve))                return drawAndGetAnimationCurve(fieldName, (AnimationCurve)value);
+            if (fieldType == typeof(AnimationCurve))                return EditorGUILayout.CurveField(fieldName, (AnimationCurve)value);
             if (fieldType.IsEnum)                                   return EditorGUILayout.EnumPopup(fieldName, (Enum)value);
             if (fieldType == typeof(float))                         return EditorGUILayout.FloatField(fieldName, (float)value);
             if (fieldType == typeof(int))                           return EditorGUILayout.IntField(fieldName, (int)value);
@@ -157,112 +170,95 @@ namespace Entitas.Unity.VisualDebugging {
             if (fieldType.GetInterfaces().Contains(typeof(IList)))  return drawAndGetList(entity, index, component, fieldName, (IList)value);
 
             // Anything else
-            EditorGUILayout.LabelField(fieldName, value == null ? "null" : value.ToString());
+            EditorGUILayout.LabelField(fieldName, value.ToString());
             return value;
         }
 
-        object drawAndGetAnimationCurve(string fieldName, AnimationCurve animationCurve) {
-            if (animationCurve == null) {
-                EditorGUILayout.LabelField(fieldName, "null");
-            } else {
-                animationCurve = EditorGUILayout.CurveField(fieldName, animationCurve);
-            }
-            return animationCurve;
-        }
-
         object drawAndGetArray(Entity entity, int index, IComponent component, string fieldName, Array array) {
-            if (array == null) {
-                EditorGUILayout.LabelField(fieldName, "null");
-            } else {
-                EditorGUILayout.LabelField(fieldName);
-                var indent = EditorGUI.indentLevel;
-                EditorGUI.indentLevel = indent + 1;
+            EditorGUILayout.LabelField(fieldName);
+            var indent = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = indent + 1;
 
-                var elementType = array.GetType().GetElementType();
-                if (array.Rank == 1) {
-                    for (int i = 0; i < array.GetLength(0); i++) {
-                        drawArrayItem(entity, index, component, array.GetValue(i), elementType,
-                            fieldName + "[" + i + "]", newValue => array.SetValue(newValue, i));
-                    }
-                } else if (array.Rank == 2) {
-                    for (int i = 0; i < array.GetLength(0); i++) {
-                        for (int j = 0; j < array.GetLength(1); j++) {
-                            drawArrayItem(entity, index, component, array.GetValue(i, j), elementType,
-                                fieldName + "[" + i + ", " + j + "]", newValue => array.SetValue(newValue, i, j));
-                        }
-                        EditorGUILayout.Space();
-                    }
-                } else if (array.Rank == 3) {
-                    for (int i = 0; i < array.GetLength(0); i++) {
-                        for (int j = 0; j < array.GetLength(1); j++) {
-                            for (int k = 0; k < array.GetLength(2); k++) {
-                                drawArrayItem(entity, index, component, array.GetValue(i, j, k), elementType,
-                                    fieldName + "[" + i + ", " + j + " ," + k + "]", newValue => array.SetValue(newValue, i, j, k));
-                            }
-                            EditorGUILayout.Space();
-                        }
-                        EditorGUILayout.Space();
-                    }
+            var elementType = array.GetType().GetElementType();
+            if (array.Rank == 1) {
+                for (int i = 0; i < array.GetLength(0); i++) {
+                    drawArrayItem(entity, index, component, array.GetValue(i), elementType,
+                        fieldName + "[" + i + "]", newValue => array.SetValue(newValue, i));
                 }
-
-                EditorGUI.indentLevel = indent;
+            } else if (array.Rank == 2) {
+                for (int i = 0; i < array.GetLength(0); i++) {
+                    for (int j = 0; j < array.GetLength(1); j++) {
+                        drawArrayItem(entity, index, component, array.GetValue(i, j), elementType,
+                            fieldName + "[" + i + ", " + j + "]", newValue => array.SetValue(newValue, i, j));
+                    }
+                    EditorGUILayout.Space();
+                }
+            } else if (array.Rank == 3) {
+                for (int i = 0; i < array.GetLength(0); i++) {
+                    for (int j = 0; j < array.GetLength(1); j++) {
+                        for (int k = 0; k < array.GetLength(2); k++) {
+                            drawArrayItem(entity, index, component, array.GetValue(i, j, k), elementType,
+                                fieldName + "[" + i + ", " + j + " ," + k + "]", newValue => array.SetValue(newValue, i, j, k));
+                        }
+                        EditorGUILayout.Space();
+                    }
+                    EditorGUILayout.Space();
+                }
             }
+
+            EditorGUI.indentLevel = indent;
 
             return array;
         }
 
         object drawAndGetList(Entity entity, int index, IComponent component, string fieldName, IList list) {
-            if (list == null) {
-                EditorGUILayout.LabelField(fieldName, "null");
+            var elementType = list.GetType().GetGenericArguments()[0];
+            if (list.Count == 0) {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(fieldName);
+                if (GUILayout.Button("Add element", GUILayout.Height(14))) {
+                    object defaultValue;
+                    if (createDefault(elementType, out defaultValue)) {
+                        list.Add(defaultValue);
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
             } else {
-                var elementType = list.GetType().GetGenericArguments()[0];
-                if (list.Count == 0) {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(fieldName);
-                    if (GUILayout.Button("Add element", GUILayout.Height(14))) {
-                        object defaultValue;
-                        if (createDefault(elementType, out defaultValue)) {
-                            list.Add(defaultValue);
-                        }
-                    }
-                    EditorGUILayout.EndHorizontal();
-                } else {
-                    EditorGUILayout.LabelField(fieldName);
-                }
-
-                var indent = EditorGUI.indentLevel;
-                EditorGUI.indentLevel = indent + 1;
-                Action editAction = null;
-                for (int i = 0; i < list.Count; i++) {
-                    EditorGUILayout.BeginHorizontal();
-                    drawArrayItem(entity, index, component, list[i], elementType,
-                        fieldName + "[" + i + "]", newValue => list[i] = newValue);
-                    if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
-                        var removeAt = i;
-                        editAction = () => list.RemoveAt(removeAt);
-                    }
-                    if (GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
-                        object defaultValue;
-                        if (createDefault(elementType, out defaultValue)) {
-                            var insertAt = i;
-                            editAction = () => list.Insert(insertAt, defaultValue);
-                        }
-                    }
-                    if (GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
-                        object defaultValue;
-                        if (createDefault(elementType, out defaultValue)) {
-                            var insertAt = i + 1;
-                            editAction = () => list.Insert(insertAt, defaultValue);
-                        }
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-
-                if (editAction != null) {
-                    editAction();
-                }
-                EditorGUI.indentLevel = indent;
+                EditorGUILayout.LabelField(fieldName);
             }
+
+            var indent = EditorGUI.indentLevel;
+            EditorGUI.indentLevel = indent + 1;
+            Action editAction = null;
+            for (int i = 0; i < list.Count; i++) {
+                EditorGUILayout.BeginHorizontal();
+                drawArrayItem(entity, index, component, list[i], elementType,
+                    fieldName + "[" + i + "]", newValue => list[i] = newValue);
+                if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
+                    var removeAt = i;
+                    editAction = () => list.RemoveAt(removeAt);
+                }
+                if (GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
+                    object defaultValue;
+                    if (createDefault(elementType, out defaultValue)) {
+                        var insertAt = i;
+                        editAction = () => list.Insert(insertAt, defaultValue);
+                    }
+                }
+                if (GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
+                    object defaultValue;
+                    if (createDefault(elementType, out defaultValue)) {
+                        var insertAt = i + 1;
+                        editAction = () => list.Insert(insertAt, defaultValue);
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+
+            if (editAction != null) {
+                editAction();
+            }
+            EditorGUI.indentLevel = indent;
 
             return list;
         }
@@ -284,14 +280,14 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         bool createDefault(Type type, out object defaultValue) {
-            if (type.IsValueType) {
+            try {
                 defaultValue = Activator.CreateInstance(type);
                 return true;
-            }
-
-            if (type == typeof(string)) {
-                defaultValue = string.Empty;
-                return true;
+            } catch (Exception) {
+                if (type == typeof(string)) {
+                    defaultValue = string.Empty;
+                    return true;
+                }
             }
 
             defaultValue = null;
