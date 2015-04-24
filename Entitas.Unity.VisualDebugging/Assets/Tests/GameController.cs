@@ -54,6 +54,12 @@ public class GameController : MonoBehaviour {
             };
             e.AddListArray(listArray);
             e.AddList(new List<string>{ "Apple", "Banana", "Peach" });
+            var dict = new Dictionary<string, string> {
+                { "1", "One" },
+                { "2", "Two" },
+                { "3", "Three" },
+            };
+            e.AddDictionary(dict);
         }
     }
 
@@ -87,6 +93,8 @@ public class GameController : MonoBehaviour {
         e.AddListArray(listArray);
         List<string> list = null;
         e.AddList(list);
+        Dictionary<string, string> dict = null;
+        e.AddDictionary(dict);
     }
 }
 

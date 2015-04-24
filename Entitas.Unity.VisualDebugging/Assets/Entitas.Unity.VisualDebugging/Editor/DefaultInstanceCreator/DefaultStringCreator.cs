@@ -1,5 +1,4 @@
 using System;
-using Entitas.Unity.VisualDebugging;
 
 namespace Entitas.Unity.VisualDebugging {
     public class DefaultStringCreator : IDefaultInstanceCreator {

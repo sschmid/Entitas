@@ -46,3 +46,7 @@ public class ListComponent : IComponent {
     public List<string> list;
 }
 
+public class DictionaryComponent : IComponent {
+    public Dictionary<string, string> dict;
+}
+

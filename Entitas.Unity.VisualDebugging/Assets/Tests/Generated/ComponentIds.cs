@@ -9,23 +9,24 @@ public static class ComponentIds {
     public const int Color = 5;
     public const int CustomObject = 6;
     public const int DateTime = 7;
-    public const int GameObject = 8;
-    public const int JaggedArray = 9;
-    public const int ListArray = 10;
-    public const int List = 11;
-    public const int MyBool = 12;
-    public const int MyEnum = 13;
-    public const int MyFloat = 14;
-    public const int MyInt = 15;
-    public const int MyString = 16;
-    public const int Rect = 17;
-    public const int SystemObject = 18;
-    public const int UnityObject = 19;
-    public const int Vector2 = 20;
-    public const int Vector3 = 21;
-    public const int Vector4 = 22;
+    public const int Dictionary = 8;
+    public const int GameObject = 9;
+    public const int JaggedArray = 10;
+    public const int ListArray = 11;
+    public const int List = 12;
+    public const int MyBool = 13;
+    public const int MyEnum = 14;
+    public const int MyFloat = 15;
+    public const int MyInt = 16;
+    public const int MyString = 17;
+    public const int Rect = 18;
+    public const int SystemObject = 19;
+    public const int UnityObject = 20;
+    public const int Vector2 = 21;
+    public const int Vector3 = 22;
+    public const int Vector4 = 23;
 
-    public const int TotalComponents = 23;
+    public const int TotalComponents = 24;
 
     static readonly Dictionary<int, string> components = new Dictionary<int, string> {
         { 0, "AnimationCurve" },
@@ -36,21 +37,22 @@ public static class ComponentIds {
         { 5, "Color" },
         { 6, "CustomObject" },
         { 7, "DateTime" },
-        { 8, "GameObject" },
-        { 9, "JaggedArray" },
-        { 10, "ListArray" },
-        { 11, "List" },
-        { 12, "MyBool" },
-        { 13, "MyEnum" },
-        { 14, "MyFloat" },
-        { 15, "MyInt" },
-        { 16, "MyString" },
-        { 17, "Rect" },
-        { 18, "SystemObject" },
-        { 19, "UnityObject" },
-        { 20, "Vector2" },
-        { 21, "Vector3" },
-        { 22, "Vector4" }
+        { 8, "Dictionary" },
+        { 9, "GameObject" },
+        { 10, "JaggedArray" },
+        { 11, "ListArray" },
+        { 12, "List" },
+        { 13, "MyBool" },
+        { 14, "MyEnum" },
+        { 15, "MyFloat" },
+        { 16, "MyInt" },
+        { 17, "MyString" },
+        { 18, "Rect" },
+        { 19, "SystemObject" },
+        { 20, "UnityObject" },
+        { 21, "Vector2" },
+        { 22, "Vector3" },
+        { 23, "Vector4" }
     };
 
     public static string IdToString(int componentId) {

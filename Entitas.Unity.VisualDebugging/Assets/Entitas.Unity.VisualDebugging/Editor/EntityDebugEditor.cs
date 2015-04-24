@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using System.Reflection;
 using Entitas;
@@ -11,34 +10,24 @@ namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(EntityDebugBehaviour)), CanEditMultipleObjects]
     public class EntityDebugEditor : Editor {
         GUIStyle _foldoutStyle;
-        IDefaultInstanceCreator[] _defaultInstanceCreators;
-        ITypeDrawer[] _typeDrawers;
+        static IDefaultInstanceCreator[] _defaultInstanceCreators;
+        static ITypeDrawer[] _typeDrawers;
 
         void Awake() {
-            setStyles();
-            var types = Assembly.GetAssembly(typeof(EntityDebugEditor)).GetTypes();
-            var defaultInstanceCreators = types
-                .Where(type => type.GetInterfaces().Contains(typeof(IDefaultInstanceCreator)))
-                .ToArray();
-
-            _defaultInstanceCreators = new IDefaultInstanceCreator[defaultInstanceCreators.Length];
-            for (int i = 0; i < defaultInstanceCreators.Length; i++) {
-                _defaultInstanceCreators[i] = (IDefaultInstanceCreator)Activator.CreateInstance(defaultInstanceCreators[i]);
-            }
-
-            var typeDrawers = types
-                .Where(type => type.GetInterfaces().Contains(typeof(ITypeDrawer)))
-                .ToArray();
-
-            _typeDrawers = new ITypeDrawer[typeDrawers.Length];
-            for (int i = 0; i < typeDrawers.Length; i++) {
-                _typeDrawers[i] = (ITypeDrawer)Activator.CreateInstance(typeDrawers[i]);
-            }
-        }
-
-        void setStyles() {
             _foldoutStyle = new GUIStyle(EditorStyles.foldout);
             _foldoutStyle.fontStyle = FontStyle.Bold;
+
+            var types = Assembly.GetAssembly(typeof(EntityDebugEditor)).GetTypes();
+
+            _defaultInstanceCreators = types
+                .Where(type => type.GetInterfaces().Contains(typeof(IDefaultInstanceCreator)))
+                .Select(type => (IDefaultInstanceCreator)Activator.CreateInstance(type))
+                .ToArray();
+
+            _typeDrawers = types
+                .Where(type => type.GetInterfaces().Contains(typeof(ITypeDrawer)))
+                .Select(type => (ITypeDrawer)Activator.CreateInstance(type))
+                .ToArray();
         }
 
         public override void OnInspectorGUI() {
@@ -106,15 +95,15 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawComponent(EntityDebugBehaviour debugBehaviour, Entity entity, int index, IComponent component) {
-            var type = component.GetType();
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+            var componentType = component.GetType();
+            var fields = componentType.GetFields(BindingFlags.Public | BindingFlags.Instance);
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.BeginHorizontal();
             if (fields.Length == 0) {
-                EditorGUILayout.LabelField(type.RemoveComponentSuffix(), EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(componentType.RemoveComponentSuffix(), EditorStyles.boldLabel);
             } else {
-                debugBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(debugBehaviour.unfoldedComponents[index], type.RemoveComponentSuffix(), _foldoutStyle);
+                debugBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(debugBehaviour.unfoldedComponents[index], componentType.RemoveComponentSuffix(), _foldoutStyle);
             }
             if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                 entity.RemoveComponent(index);
@@ -124,28 +113,36 @@ namespace Entitas.Unity.VisualDebugging {
             if (debugBehaviour.unfoldedComponents[index]) {
                 foreach (var field in fields) {
                     var value = field.GetValue(component);
-                    drawField(entity, index, component, field, value);
+                    DrawAndSetElement(field.FieldType, field.Name, value,
+                        entity, index, component, newValue => field.SetValue(component, newValue));
                 }
             }
             EditorGUILayout.EndVertical();
         }
 
-        void drawField(Entity entity, int index, IComponent component, FieldInfo field, object value) {
-            var newValue = drawAndGetNewValue(entity, index, component, field.Name, field.FieldType, value);
+        public static void DrawAndSetElement(Type type, string fieldName, object value, Entity entity, int index, IComponent component, Action<object> setValue) {
+            var newValue = DrawAndGetNewValue(type, fieldName, value, entity, index, component);
             if (didValueChange(value, newValue)) {
                 entity.WillRemoveComponent(index);
-                field.SetValue(component, newValue);
+                setValue(newValue);
                 entity.ReplaceComponent(index, component);
             }
         }
 
-        object drawAndGetNewValue(Entity entity, int index, IComponent component, string fieldName, Type fieldType, object value) {
+        static bool didValueChange(object value, object newValue) {
+            return (value == null && newValue != null) ||
+                   (value != null && newValue == null) ||
+                   ((value != null && newValue != null &&
+                   !newValue.Equals(value)));
+        }
+
+        public static object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
             if (value == null) {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(fieldName, "null");
                 if (GUILayout.Button("Create", GUILayout.Height(14))) {
                     object defaultValue;
-                    if (createDefault(fieldType, out defaultValue)) {
+                    if (CreateDefault(type, out defaultValue)) {
                         value = defaultValue;
                     }
                 }
@@ -153,28 +150,49 @@ namespace Entitas.Unity.VisualDebugging {
                 return value;
             }
 
-            if (!fieldType.IsValueType) {
+            if (!type.IsValueType) {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.BeginVertical();
             }
 
-            var typeDrawer = getTypeDrawer(fieldType);
+            var typeDrawer = getTypeDrawer(type);
             if (typeDrawer != null) {
-                value = typeDrawer.DrawAndGetNewValue(fieldType, fieldName, value, entity, index, component);
-            } else if (fieldType.IsArray) {
-                value = drawAndGetArray(fieldType, fieldName, (Array)value, entity, index, component);
-            } else if (fieldType.GetInterfaces().Contains(typeof(IList))) {
-                value = drawAndGetList(fieldType, fieldName, (IList)value, entity, index, component);
+                value = typeDrawer.DrawAndGetNewValue(type, fieldName, value, entity, index, component);
             } else {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(fieldName, value.ToString());
-                if (GUILayout.Button("Missing ITypeDrawer", GUILayout.Height(14))) {
-                    var typeName = TypeGenerator.Generate(fieldType);
-                    EditorUtility.DisplayDialog(
-                        "No ITypeDrawer found",
-                        "There's no ITypeDrawer implementation to handle the type '" + typeName + "'.\n\n" +
-                        "Please implement:\n\n" +
-                        string.Format(@"using System;
+                drawUnsupportedType(type, fieldName, value);
+            }
+
+            if (!type.IsValueType) {
+                EditorGUILayout.EndVertical();
+                if (GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
+                    value = null;
+                }
+                EditorGUILayout.EndHorizontal();
+            }
+
+            return value;
+        }
+
+        static ITypeDrawer getTypeDrawer(Type type) {
+            foreach (var drawer in _typeDrawers) {
+                if (drawer.HandlesType(type)) {
+                    return drawer;
+                }
+            }
+
+            return null;
+        }
+
+        static void drawUnsupportedType(Type type, string fieldName, object value) {
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(fieldName, value.ToString());
+            if (GUILayout.Button("Missing ITypeDrawer", GUILayout.Height(14))) {
+                var typeName = TypeGenerator.Generate(type);
+                EditorUtility.DisplayDialog(
+                    "No ITypeDrawer found",
+                    "There's no ITypeDrawer implementation to handle the type '" + typeName + "'.\n\n" +
+                    "Please implement:\n\n" +
+                    string.Format(@"using System;
 using Entitas;
 using Entitas.Unity.VisualDebugging;
 using UnityEditor;
@@ -188,216 +206,13 @@ public class {{type}}TypeDrawer : ITypeDrawer {{
         return your implementation to draw the type {0}
     }}
 }}", typeName),
-                        "Ok"
-                    );
-                                    }
-                EditorGUILayout.EndHorizontal();
+                    "Ok"
+                );
             }
-
-            if (!fieldType.IsValueType) {
-                EditorGUILayout.EndVertical();
-                if (GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
-                    value = null;
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-
-            return value;
+            EditorGUILayout.EndHorizontal();
         }
 
-        ITypeDrawer getTypeDrawer(Type type) {
-            foreach (var drawer in _typeDrawers) {
-                if (drawer.HandlesType(type)) {
-                    return drawer;
-                }
-            }
-
-            return null;
-        }
-
-        object drawAndGetArray(Type type, string fieldName, Array array, Entity entity, int index, IComponent component) {
-            var elementType = type.GetElementType();
-            EditorGUILayout.LabelField(fieldName);
-            var indent = EditorGUI.indentLevel;
-            EditorGUI.indentLevel = indent + 1;
-            if (array.Rank == 1) {
-                if (array.GetLength(0) == 0) {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(fieldName);
-                    if (GUILayout.Button("Add element", GUILayout.Height(14))) {
-                        object defaultValue;
-                        if (createDefault(elementType, out defaultValue)) {
-                            var newArray = Array.CreateInstance(elementType, 1);
-                            newArray.SetValue(defaultValue, 0);
-                            array = newArray;
-                        }
-                    }
-                    EditorGUILayout.EndHorizontal();
-                } else {
-                    EditorGUILayout.LabelField(fieldName);
-                }
-
-                Action editAction = null;
-                for (int i = 0; i < array.GetLength(0); i++) {
-                    EditorGUILayout.BeginHorizontal();
-                    drawArrayElement(entity, index, component, array.GetValue(i), elementType,
-                        fieldName + "[" + i + "]", newValue => array.SetValue(newValue, i));
-
-                    if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
-                        var removeAt = i;
-                        editAction = () => {
-                            array = arrayRemoveAt(array, elementType, removeAt);
-                        };
-                    }
-                    if (GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
-                        object defaultValue;
-                        if (createDefault(elementType, out defaultValue)) {
-                            var insertAt = i;
-                            editAction = () => {
-                                array = arrayInsertAt(array, elementType, defaultValue, insertAt);
-                            };
-                        }
-                    }
-                    if (GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
-                        object defaultValue;
-                        if (createDefault(elementType, out defaultValue)) {
-                            var insertAt = i + 1;
-                            editAction = () => {
-                                array = arrayInsertAt(array, elementType, defaultValue, insertAt);
-                            };
-                        }
-                    }
-                    EditorGUILayout.EndHorizontal();
-                }
-
-                if (editAction != null) {
-                    editAction();
-                }
-            } else if (array.Rank == 2) {
-                for (int i = 0; i < array.GetLength(0); i++) {
-                    for (int j = 0; j < array.GetLength(1); j++) {
-                        drawArrayElement(entity, index, component, array.GetValue(i, j), elementType,
-                            fieldName + "[" + i + ", " + j + "]", newValue => array.SetValue(newValue, i, j));
-                    }
-                    EditorGUILayout.Space();
-                }
-            } else if (array.Rank == 3) {
-                for (int i = 0; i < array.GetLength(0); i++) {
-                    for (int j = 0; j < array.GetLength(1); j++) {
-                        for (int k = 0; k < array.GetLength(2); k++) {
-                            drawArrayElement(entity, index, component, array.GetValue(i, j, k), elementType,
-                                fieldName + "[" + i + ", " + j + " ," + k + "]", newValue => array.SetValue(newValue, i, j, k));
-                        }
-                        EditorGUILayout.Space();
-                    }
-                    EditorGUILayout.Space();
-                }
-            }
-
-            EditorGUI.indentLevel = indent;
-
-            return array;
-        }
-
-        Array arrayRemoveAt(Array array, Type elementType, int removeAt) {
-            var newArray = Array.CreateInstance(elementType, array.GetLength(0) - 1);
-            var indexOffset = 0;
-            for (int j = 0; j < array.GetLength(0); j++) {
-                if (j == removeAt) {
-                    indexOffset = -1;
-                    continue;
-                }
-                newArray.SetValue(array.GetValue(j), j + indexOffset);
-            }
-
-            return newArray;
-        }
-
-        Array arrayInsertAt(Array array, Type elementType, object value, int insertAt) {
-            var newArray = Array.CreateInstance(elementType, array.GetLength(0) + 1);
-            var indexOffset = 0;
-            for (int i = 0; i < newArray.GetLength(0); i++) {
-                if (i == insertAt) {
-                    indexOffset = -1;
-                    newArray.SetValue(value, i);
-                    continue;
-                }
-                newArray.SetValue(array.GetValue(i + indexOffset), i);
-            }
-
-            return newArray;
-        }
-
-        object drawAndGetList(Type type, string fieldName, IList list, Entity entity, int index, IComponent component) {
-            var elementType = type.GetGenericArguments()[0];
-            if (list.Count == 0) {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(fieldName);
-                if (GUILayout.Button("Add element", GUILayout.Height(14))) {
-                    object defaultValue;
-                    if (createDefault(elementType, out defaultValue)) {
-                        list.Add(defaultValue);
-                    }
-                }
-                EditorGUILayout.EndHorizontal();
-            } else {
-                EditorGUILayout.LabelField(fieldName);
-            }
-
-            var indent = EditorGUI.indentLevel;
-            EditorGUI.indentLevel = indent + 1;
-            Action editAction = null;
-            for (int i = 0; i < list.Count; i++) {
-                EditorGUILayout.BeginHorizontal();
-                drawArrayElement(entity, index, component, list[i], elementType,
-                    fieldName + "[" + i + "]", newValue => list[i] = newValue);
-
-                if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
-                    var removeAt = i;
-                    editAction = () => list.RemoveAt(removeAt);
-                }
-                if (GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
-                    object defaultValue;
-                    if (createDefault(elementType, out defaultValue)) {
-                        var insertAt = i;
-                        editAction = () => list.Insert(insertAt, defaultValue);
-                    }
-                }
-                if (GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
-                    object defaultValue;
-                    if (createDefault(elementType, out defaultValue)) {
-                        var insertAt = i + 1;
-                        editAction = () => list.Insert(insertAt, defaultValue);
-                    }
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-
-            if (editAction != null) {
-                editAction();
-            }
-            EditorGUI.indentLevel = indent;
-
-            return list;
-        }
-
-        void drawArrayElement(Entity entity, int index, IComponent component, object value, Type elementType, string fieldName, Action<object> setValue) {
-            var newValue = drawAndGetNewValue(entity, index, component, fieldName, elementType, value);
-            if (didValueChange(value, newValue)) {
-                entity.WillRemoveComponent(index);
-                setValue(newValue);
-                entity.ReplaceComponent(index, component);
-            }
-        }
-
-        bool didValueChange(object value, object newValue) {
-            return (value == null && newValue != null) ||
-                   (value != null && newValue == null) ||
-                   ((value != null && newValue != null &&
-                   !newValue.Equals(value)));
-        }
-
-        bool createDefault(Type type, out object defaultValue) {
+        public static bool CreateDefault(Type type, out object defaultValue) {
             try {
                 defaultValue = Activator.CreateInstance(type);
                 return true;
