@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour {
 
     void Start() {
-        var pool = new DebugPool(ComponentIds.TotalComponents);
+        var pool = new DebugPool(ComponentIds.TotalComponents, "Test Pool");
         pool.GetGroup(Matcher.Vector3);
         pool.GetGroup(Matcher.GameObject);
         pool.GetGroup(Matcher.AllOf(Matcher.GameObject, Matcher.Vector3));

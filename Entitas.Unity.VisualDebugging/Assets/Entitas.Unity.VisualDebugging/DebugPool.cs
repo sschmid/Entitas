@@ -7,18 +7,20 @@ namespace Entitas.Unity.VisualDebugging {
         public Dictionary<IMatcher, Group> groups { get { return _groups; }}
 
         int _debugIndex;
+        string _name;
         Transform _entitiesContainer;
 
-        public DebugPool(int totalComponents) : base(totalComponents + 1) {
-            init(totalComponents);
+        public DebugPool(int totalComponents, string name = "Debug Pool") : base(totalComponents + 1) {
+            init(totalComponents, name);
         }
 
-        public DebugPool(int totalComponents, int startCreationIndex) : base(totalComponents + 1, startCreationIndex) {
-            init(totalComponents);
+        public DebugPool(int totalComponents, int startCreationIndex, string name = "Debug Pool") : base(totalComponents + 1, startCreationIndex) {
+            init(totalComponents, name);
         }
 
-        void init(int totalComponents) {
+        void init(int totalComponents, string name) {
             _debugIndex = totalComponents;
+            _name = name;
             _entitiesContainer = new GameObject().transform;
             _entitiesContainer.gameObject.AddComponent<PoolDebugBehaviour>().Init(this);
             updateName();
@@ -63,7 +65,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         void updateName() {
             if (_entitiesContainer != null) {
-                _entitiesContainer.name = string.Format("Debug Pool ({0} entities, {1} reusable, {2} groups)", Count, pooledEntitiesCount, groups.Count);
+                _entitiesContainer.name = string.Format(_name + " ({0} entities, {1} reusable, {2} groups)", Count, pooledEntitiesCount, groups.Count);
             }
         }
     }
