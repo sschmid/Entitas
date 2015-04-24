@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
     public class DebugPool : Pool {
+        public string name { get { return _name; } }
         public GameObject entitiesContainer { get { return _entitiesContainer.gameObject; } }
         public Dictionary<IMatcher, Group> groups { get { return _groups; }}
 
