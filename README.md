@@ -180,6 +180,7 @@ Visual Debugging enables you to actually see and inspect all of your entities in
 ```cs
 #if (UNITY_EDITOR)
 var pool = new DebugPool(ComponentIds.TotalComponents);
+DontDestroyOnLoad(pool.entitiesContainer);
 #else
 var pool = new Pool(ComponentIds.TotalComponents);
 #endif
