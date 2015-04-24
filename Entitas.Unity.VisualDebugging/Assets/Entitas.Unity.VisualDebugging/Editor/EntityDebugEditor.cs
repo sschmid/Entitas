@@ -11,12 +11,22 @@ namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(EntityDebugBehaviour)), CanEditMultipleObjects]
     public class EntityDebugEditor : Editor {
         GUIStyle _foldoutStyle;
+        IDefaultInstanceCreator[] _defaultInstanceCreators;
         ICustomTypeDrawer[] _customTypeDrawers;
 
         void Awake() {
             setStyles();
-            var assembly = Assembly.GetAssembly(typeof(EntityDebugEditor));
-            var customDrawers = assembly.GetTypes()
+            var types = Assembly.GetAssembly(typeof(EntityDebugEditor)).GetTypes();
+            var defaultInstanceCreators = types
+                .Where(type => type.GetInterfaces().Contains(typeof(IDefaultInstanceCreator)))
+                .ToArray();
+
+            _defaultInstanceCreators = new IDefaultInstanceCreator[defaultInstanceCreators.Length];
+            for (int i = 0; i < defaultInstanceCreators.Length; i++) {
+                _defaultInstanceCreators[i] = (IDefaultInstanceCreator)Activator.CreateInstance(defaultInstanceCreators[i]);
+            }
+
+            var customDrawers = types
                 .Where(type => type.GetInterfaces().Contains(typeof(ICustomTypeDrawer)))
                 .ToArray();
 
@@ -284,9 +294,11 @@ namespace Entitas.Unity.VisualDebugging {
                 defaultValue = Activator.CreateInstance(type);
                 return true;
             } catch (Exception) {
-                if (type == typeof(string)) {
-                    defaultValue = string.Empty;
-                    return true;
+                foreach (var creator in _defaultInstanceCreators) {
+                    if (creator.HandlesType(type)) {
+                        defaultValue = creator.CreateDefault(type);
+                        return true;
+                    }
                 }
             }
 

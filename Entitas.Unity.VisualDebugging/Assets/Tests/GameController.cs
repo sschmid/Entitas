@@ -38,7 +38,7 @@ public class GameController : MonoBehaviour {
             e.AddGameObject(new GameObject("Player"));
 
             // Custom
-            e.AddCustomObject(new CustomObject());
+            e.AddCustomObject(new CustomObject("Custom Object"));
             e.AddSystemObject(new object());
             e.AddDateTime(DateTime.Now);
             e.AddArray(new [] { "Hello", ", ", "world", "!" });

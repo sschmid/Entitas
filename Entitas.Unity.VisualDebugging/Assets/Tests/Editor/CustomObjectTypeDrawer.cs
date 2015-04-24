@@ -2,9 +2,13 @@
 using Entitas;
 using UnityEditor;
 
-public class MyObjectTypeDrawer : ICustomTypeDrawer {
+public class CustomObjectTypeDrawer : ICustomTypeDrawer, IDefaultInstanceCreator {
     public bool HandlesType(Type type) {
         return type == typeof(CustomObject);
+    }
+
+    public object CreateDefault(Type type) {
+        return new CustomObject("Default");
     }
 
     public object DrawAndGetNewValue(Entity entity, int index, IComponent component, string fieldName, object value) {
