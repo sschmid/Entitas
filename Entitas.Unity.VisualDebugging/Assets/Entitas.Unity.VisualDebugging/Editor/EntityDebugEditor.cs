@@ -385,6 +385,26 @@ namespace Entitas.Unity.VisualDebugging {
                 }
             }
 
+            var typeName = TypeGenerator.Generate(type);
+            EditorUtility.DisplayDialog(
+                "No IDefaultInstanceCreator found",
+                "There's no IDefaultInstanceCreator implementation to handle the type " + typeName + "\n" +
+                "Please implement:\n\n" +
+                string.Format(@"using System;
+using Entitas.Unity.VisualDebugging;
+
+public class DefaultMyTypeCreator : IDefaultInstanceCreator {{
+    public bool HandlesType(Type type) {{
+        return type == typeof({0});
+    }}
+
+    public object CreateDefault(Type type) {{
+        return null; // Your implementation to create an instance of type {0}
+    }}
+}}
+", typeName),
+                "Ok"
+            );
             defaultValue = null;
             return false;
         }
