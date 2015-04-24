@@ -1,8 +1,9 @@
 ﻿using System;
 using Entitas;
+using Entitas.Unity.VisualDebugging;
 using UnityEditor;
 
-public class CustomObjectTypeDrawer : ICustomTypeDrawer, IDefaultInstanceCreator {
+public class CustomObjectTypeDrawer : ITypeDrawer, IDefaultInstanceCreator {
     public bool HandlesType(Type type) {
         return type == typeof(CustomObject);
     }
@@ -11,7 +12,7 @@ public class CustomObjectTypeDrawer : ICustomTypeDrawer, IDefaultInstanceCreator
         return new CustomObject("Default");
     }
 
-    public object DrawAndGetNewValue(Entity entity, int index, IComponent component, string fieldName, object value) {
+    public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
         var myObject = (CustomObject)value;
         var newValue = EditorGUILayout.TextField(fieldName, myObject.name);
         if (newValue != myObject.name) {

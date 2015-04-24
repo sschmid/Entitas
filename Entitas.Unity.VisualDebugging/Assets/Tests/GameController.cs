@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour {
     }
 
     void createTestEntities(Pool pool) {
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             var e = pool.CreateEntity();
 
             // Unity's builtIn

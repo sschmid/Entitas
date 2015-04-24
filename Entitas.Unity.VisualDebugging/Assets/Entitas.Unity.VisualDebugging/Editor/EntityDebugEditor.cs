@@ -12,7 +12,7 @@ namespace Entitas.Unity.VisualDebugging {
     public class EntityDebugEditor : Editor {
         GUIStyle _foldoutStyle;
         IDefaultInstanceCreator[] _defaultInstanceCreators;
-        ICustomTypeDrawer[] _customTypeDrawers;
+        ITypeDrawer[] _typeDrawers;
 
         void Awake() {
             setStyles();
@@ -26,13 +26,13 @@ namespace Entitas.Unity.VisualDebugging {
                 _defaultInstanceCreators[i] = (IDefaultInstanceCreator)Activator.CreateInstance(defaultInstanceCreators[i]);
             }
 
-            var customDrawers = types
-                .Where(type => type.GetInterfaces().Contains(typeof(ICustomTypeDrawer)))
+            var typeDrawers = types
+                .Where(type => type.GetInterfaces().Contains(typeof(ITypeDrawer)))
                 .ToArray();
 
-            _customTypeDrawers = new ICustomTypeDrawer[customDrawers.Length];
-            for (int i = 0; i < customDrawers.Length; i++) {
-                _customTypeDrawers[i] = (ICustomTypeDrawer)Activator.CreateInstance(customDrawers[i]);
+            _typeDrawers = new ITypeDrawer[typeDrawers.Length];
+            for (int i = 0; i < typeDrawers.Length; i++) {
+                _typeDrawers[i] = (ITypeDrawer)Activator.CreateInstance(typeDrawers[i]);
             }
         }
 
@@ -153,43 +153,49 @@ namespace Entitas.Unity.VisualDebugging {
                 return value;
             }
 
-            // Custom type support
-            foreach (var drawer in _customTypeDrawers) {
-                if (drawer.HandlesType(fieldType)) {
-                    return drawer.DrawAndGetNewValue(entity, index, component, fieldName, value);
-                }
+            if (!fieldType.IsValueType) {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.BeginVertical();
             }
 
-            // Unity's builtin types
-            if (fieldType == typeof(Bounds))                        return EditorGUILayout.BoundsField(fieldName, (Bounds)value);
-            if (fieldType == typeof(Color))                         return EditorGUILayout.ColorField(fieldName, (Color)value);
-            if (fieldType == typeof(AnimationCurve))                return EditorGUILayout.CurveField(fieldName, (AnimationCurve)value);
-            if (fieldType.IsEnum)                                   return EditorGUILayout.EnumPopup(fieldName, (Enum)value);
-            if (fieldType == typeof(float))                         return EditorGUILayout.FloatField(fieldName, (float)value);
-            if (fieldType == typeof(int))                           return EditorGUILayout.IntField(fieldName, (int)value);
-            if (fieldType == typeof(Rect))                          return EditorGUILayout.RectField(fieldName, (Rect)value);
-            if (fieldType == typeof(string))                        return EditorGUILayout.TextField(fieldName, (string)value);
-            if (fieldType == typeof(Vector2))                       return EditorGUILayout.Vector2Field(fieldName, (Vector2)value);
-            if (fieldType == typeof(Vector3))                       return EditorGUILayout.Vector3Field(fieldName, (Vector3)value);
-            if (fieldType == typeof(Vector4))                       return EditorGUILayout.Vector4Field(fieldName, (Vector4)value);
-            if (fieldType == typeof(bool))                          return EditorGUILayout.Toggle(fieldName, (bool)value);
-            if (fieldType == typeof(UnityEngine.Object))            return EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, fieldType, true);
-            if (fieldType.IsSubclassOf(typeof(UnityEngine.Object))) return EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, fieldType, true);
+            var typeDrawer = getTypeDrawer(fieldType);
+            if (typeDrawer != null) {
+                value = typeDrawer.DrawAndGetNewValue(fieldType, fieldName, value, entity, index, component);
+            } else if (fieldType.IsArray) {
+                value = drawAndGetArray(fieldType, fieldName, (Array)value, entity, index, component);
+            } else if (fieldType.GetInterfaces().Contains(typeof(IList))) {
+                value = drawAndGetList(fieldType, fieldName, (IList)value, entity, index, component);
+            } else {
+                EditorGUILayout.LabelField(fieldName, value.ToString());
+            }
 
-            if (fieldType.IsArray)                                  return drawAndGetArray(entity, index, component, fieldName, (Array)value);
-            if (fieldType.GetInterfaces().Contains(typeof(IList)))  return drawAndGetList(entity, index, component, fieldName, (IList)value);
+            if (!fieldType.IsValueType) {
+                EditorGUILayout.EndVertical();
+                if (GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
+                    value = null;
+                }
+                EditorGUILayout.EndHorizontal();
+            }
 
-            // Anything else
-            EditorGUILayout.LabelField(fieldName, value.ToString());
             return value;
         }
 
-        object drawAndGetArray(Entity entity, int index, IComponent component, string fieldName, Array array) {
+        ITypeDrawer getTypeDrawer(Type type) {
+            foreach (var drawer in _typeDrawers) {
+                if (drawer.HandlesType(type)) {
+                    return drawer;
+                }
+            }
+
+            return null;
+        }
+
+        object drawAndGetArray(Type type, string fieldName, Array array, Entity entity, int index, IComponent component) {
             EditorGUILayout.LabelField(fieldName);
             var indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = indent + 1;
 
-            var elementType = array.GetType().GetElementType();
+            var elementType = type.GetElementType();
             if (array.Rank == 1) {
                 for (int i = 0; i < array.GetLength(0); i++) {
                     drawArrayItem(entity, index, component, array.GetValue(i), elementType,
@@ -221,8 +227,8 @@ namespace Entitas.Unity.VisualDebugging {
             return array;
         }
 
-        object drawAndGetList(Entity entity, int index, IComponent component, string fieldName, IList list) {
-            var elementType = list.GetType().GetGenericArguments()[0];
+        object drawAndGetList(Type type, string fieldName, IList list, Entity entity, int index, IComponent component) {
+            var elementType = type.GetGenericArguments()[0];
             if (list.Count == 0) {
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(fieldName);
@@ -244,6 +250,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.BeginHorizontal();
                 drawArrayItem(entity, index, component, list[i], elementType,
                     fieldName + "[" + i + "]", newValue => list[i] = newValue);
+
                 if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                     var removeAt = i;
                     editAction = () => list.RemoveAt(removeAt);
