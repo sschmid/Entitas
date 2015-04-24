@@ -60,6 +60,20 @@ public class GameController : MonoBehaviour {
                 { "3", "Three" },
             };
             e.AddDictionary(dict);
+            var dict2 = new Dictionary<int, string[]> {
+                { 1, new [] { "One", "Two", "Three" } },
+                { 2, new [] { "Four", "Five", "Six" } }
+            };
+            var dictArray = new Dictionary<int, string[]>[] {
+                new Dictionary<int, string[]> {
+                    { 1, new [] { "One", "Two", "Three" } },
+                    { 2, new [] { "Four", "Five", "Six" } }
+                }, new Dictionary<int, string[]> {
+                    { 3, new [] { "One", "Two", "Three" } },
+                    { 4, new [] { "Four", "Five", "Six" } }
+                }
+            };
+            e.AddDictArray(dict2, dictArray);
         }
     }
 
@@ -95,6 +109,9 @@ public class GameController : MonoBehaviour {
         e.AddList(list);
         Dictionary<string, string> dict = null;
         e.AddDictionary(dict);
+        Dictionary<int, string[]> dict2 = null;
+        Dictionary<int, string[]>[] dictArray = null;
+        e.AddDictArray(dict2, dictArray);
     }
 }
 

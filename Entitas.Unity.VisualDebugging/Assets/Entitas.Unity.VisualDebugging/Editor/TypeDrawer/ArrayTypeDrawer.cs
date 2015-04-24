@@ -13,7 +13,6 @@ namespace Entitas.Unity.VisualDebugging {
             var array = (Array)value;
             var elementType = type.GetElementType();
             var indent = EditorGUI.indentLevel;
-            EditorGUI.indentLevel = indent + 1;
             if (array.Rank == 1) {
                 if (array.GetLength(0) == 0) {
                     EditorGUILayout.BeginHorizontal();
@@ -30,6 +29,7 @@ namespace Entitas.Unity.VisualDebugging {
                 } else {
                     EditorGUILayout.LabelField(fieldName);
                 }
+                EditorGUI.indentLevel = indent + 1;
 
                 Func<Array> editAction = null;
                 for (int i = 0; i < array.GetLength(0); i++) {
@@ -49,6 +49,7 @@ namespace Entitas.Unity.VisualDebugging {
                     array = editAction();
                 }
             } else if (array.Rank == 2) {
+                EditorGUILayout.LabelField(fieldName);
                 for (int i = 0; i < array.GetLength(0); i++) {
                     for (int j = 0; j < array.GetLength(1); j++) {
                         EntityDebugEditor.DrawAndSetElement(elementType, fieldName + "[" + i + ", " + j + "]", array.GetValue(i, j),
@@ -57,6 +58,7 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.Space();
                 }
             } else if (array.Rank == 3) {
+                EditorGUILayout.LabelField(fieldName);
                 for (int i = 0; i < array.GetLength(0); i++) {
                     for (int j = 0; j < array.GetLength(1); j++) {
                         for (int k = 0; k < array.GetLength(2); k++) {

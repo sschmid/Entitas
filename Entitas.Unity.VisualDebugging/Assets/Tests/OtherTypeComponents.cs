@@ -50,3 +50,8 @@ public class DictionaryComponent : IComponent {
     public Dictionary<string, string> dict;
 }
 
+public class DictArrayComponent : IComponent {
+    public Dictionary<int, string[]> dict;
+    public Dictionary<int, string[]>[] dictArray;
+}
+
