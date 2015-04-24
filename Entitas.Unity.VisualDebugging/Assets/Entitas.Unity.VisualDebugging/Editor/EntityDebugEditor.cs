@@ -166,7 +166,32 @@ namespace Entitas.Unity.VisualDebugging {
             } else if (fieldType.GetInterfaces().Contains(typeof(IList))) {
                 value = drawAndGetList(fieldType, fieldName, (IList)value, entity, index, component);
             } else {
+                EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(fieldName, value.ToString());
+                if (GUILayout.Button("Missing ITypeDrawer", GUILayout.Height(14))) {
+                    var typeName = TypeGenerator.Generate(fieldType);
+                    EditorUtility.DisplayDialog(
+                        "No ITypeDrawer found",
+                        "There's no ITypeDrawer implementation to handle the type '" + typeName + "'.\n\n" +
+                        "Please implement:\n\n" +
+                        string.Format(@"using System;
+using Entitas;
+using Entitas.Unity.VisualDebugging;
+using UnityEditor;
+
+public class {{type}}TypeDrawer : ITypeDrawer {{
+    public bool HandlesType(Type type) {{
+        return type == typeof({0});
+    }}
+
+    public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {{
+        return your implementation to draw the type {0}
+    }}
+}}", typeName),
+                        "Ok"
+                    );
+                                    }
+                EditorGUILayout.EndHorizontal();
             }
 
             if (!fieldType.IsValueType) {
@@ -388,18 +413,18 @@ namespace Entitas.Unity.VisualDebugging {
             var typeName = TypeGenerator.Generate(type);
             EditorUtility.DisplayDialog(
                 "No IDefaultInstanceCreator found",
-                "There's no IDefaultInstanceCreator implementation to handle the type " + typeName + "\n" +
+                "There's no IDefaultInstanceCreator implementation to handle the type '" + typeName + "'.\n\n" +
                 "Please implement:\n\n" +
                 string.Format(@"using System;
 using Entitas.Unity.VisualDebugging;
 
-public class DefaultMyTypeCreator : IDefaultInstanceCreator {{
+public class Default{{type}}Creator : IDefaultInstanceCreator {{
     public bool HandlesType(Type type) {{
         return type == typeof({0});
     }}
 
     public object CreateDefault(Type type) {{
-        return null; // Your implementation to create an instance of type {0}
+        return your implementation to create an instance of type {0}
     }}
 }}
 ", typeName),
