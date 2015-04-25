@@ -11,8 +11,14 @@ Assembly-CSharp-Editor.csproj
 Assembly-CSharp-vs.csproj
 Assembly-CSharp.csproj
 CurrentMaximizeLayout.dwlt
+
+Entitas.Unity-csharp.sln
+Entitas.Unity.sln
+
 Entitas.Unity.CodeGenerator-csharp.sln
 Entitas.Unity.CodeGenerator.sln
+
 Entitas.Unity.VisualDebugging-csharp.sln
 Entitas.Unity.VisualDebugging.sln
+
 bin/Entitas

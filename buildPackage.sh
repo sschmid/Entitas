@@ -16,6 +16,7 @@ then
 	echo "COPY SOURCES *******************************************************************"
 	cp -rv Entitas/Entitas $TMP_DIR
 	cp -rv Entitas.CodeGenerator/Entitas.CodeGenerator $TMP_DIR
+	cp -rv Entitas.Unity/Assets/Entitas.Unity $TMP_DIR
 	cp -rv Entitas.Unity.CodeGenerator/Assets/Entitas.Unity.CodeGenerator $TMP_DIR
 	cp -rv Entitas.Unity.VisualDebugging/Assets/Entitas.Unity.VisualDebugging $TMP_DIR
 
