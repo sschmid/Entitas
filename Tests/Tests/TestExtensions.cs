@@ -1,5 +1,5 @@
-﻿using NSpec;
-using Entitas;
+﻿using Entitas;
+using NSpec;
 
 public static class TestExtensions {
     public static void Fail(this nspec spec) {

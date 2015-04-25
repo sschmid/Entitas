@@ -26,11 +26,15 @@ then
 	cd $TMP_DIR
 	find . -name "*.meta" -type f -delete
 	find . -name "*.DS_Store" -type f -delete
+	cd $WD
 
 	echo "CREATE ZIP ARCHIVE *************************************************************"
 	cd $TMP_DIR
 	zip -r ../Entitas.zip ./
 	cd $WD
+
+	echo "COPY TO TEMP TO BIN ************************************************************"
+	cp -rv "${TMP_DIR}/." $BIN_DIR
 
 	echo "DELETE TEMP FOLDER *************************************************************"
 	rm -rfv $TMP_DIR

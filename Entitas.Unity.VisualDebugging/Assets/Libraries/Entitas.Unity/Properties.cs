@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.Unity {
     public class Properties {
         readonly Dictionary<string, string> _dict;
 

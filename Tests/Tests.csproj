@@ -35,48 +35,83 @@
     <Reference Include="NSpec">
       <HintPath>Libraries\NSpec\NSpec.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>Libraries\UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\describe_Entity.cs" />
-    <Compile Include="Tests\Fixtures\ReactiveSubSystemSpy.cs" />
-    <Compile Include="Tests\Fixtures\EntityEmittingSubSystem.cs" />
-    <Compile Include="Tests\describe_ComponentExtensionsGenerator.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\FakeComponent.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\SomeClass.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\SomeComponent.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\View.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\DontGenerateComponent.cs" />
-    <Compile Include="Tests\describe_IndicesLookupGenerator.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\PersonComponent.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\MovableComponent.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\UserComponent.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\AnimatingComponent.cs" />
-    <Compile Include="Tests\Fixtures\Component.cs" />
-    <Compile Include="Tests\Test Extensions\TestHelper.cs" />
-    <Compile Include="Tests\describe_Group.cs" />
-    <Compile Include="Tests\describe_Matcher.cs" />
-    <Compile Include="Tests\describe_ReactiveSystem.cs" />
-    <Compile Include="Tests\describe_Pool.cs" />
-    <Compile Include="Tests\describe_GroupObserver.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\DontGenerateIndexComponent.cs" />
-    <Compile Include="Tests\describe_TypeGenerator.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\TestEnum.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\NestedClass.cs" />
-    <Compile Include="Tests\Fixtures\CodeGenerator\OtherPoolComponent.cs" />
-    <Compile Include="Tests\describe_PoolAttributeGenerator.cs" />
-    <Compile Include="Tests\describe_Properties.cs" />
-    <Compile Include="Tests\describe_CodeGeneratorConfig.cs" />
-    <Compile Include="Tests\describe_CodeGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentExtensionsGenerator.cs" />
+    <Compile Include="Tests\Entitas\describe_Entity.cs" />
+    <Compile Include="Tests\Entitas\describe_Group.cs" />
+    <Compile Include="Tests\Entitas\describe_GroupObserver.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_IndicesLookupGenerator.cs" />
+    <Compile Include="Tests\Entitas\describe_Matcher.cs" />
+    <Compile Include="Tests\Entitas\describe_Pool.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_PoolAttributeGenerator.cs" />
+    <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_TypeGenerator.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\EntityEmittingSubSystem.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\ReactiveSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\AnimatingComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\DontGenerateComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\DontGenerateIndexComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\FakeComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\MovableComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\NestedClass.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\OtherPoolComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\PersonComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\SomeClass.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\SomeComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestEnum.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\UserComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\View.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Components.cs" />
+    <Compile Include="Tests\TestExtensions.cs" />
+    <Compile Include="Tests\Entitas.Unity\describe_EntitasPreferencesConfig.cs" />
+    <Compile Include="Tests\Entitas.Unity\describe_Properties.cs" />
+    <Compile Include="Tests\Entitas.Unity.CodeGenerator\describe_CodeGeneratorConfig.cs" />
+    <Compile Include="Tests\check_namespaces.cs" />
+    <Compile Include="..\Entitas.Unity.CodeGenerator\Assets\Entitas.Unity.CodeGenerator\CodeGeneratorConfig.cs">
+      <Link>Libraries\Entitas.Unity.CodeGenerator\CodeGeneratorConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugComponent.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\DebugComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugPool.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\DebugPool.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\EntityDebugBehaviour.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\EntityDebugBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\PoolDebugBehaviour.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\PoolDebugBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\EntitasPreferencesConfig.cs">
+      <Link>Libraries\Entitas.Unity\EntitasPreferencesConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\Properties.cs">
+      <Link>Libraries\Entitas.Unity\Properties.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Tests\" />
     <Folder Include="Libraries\" />
     <Folder Include="Libraries\NSpec\" />
-    <Folder Include="Tests\Fixtures\" />
-    <Folder Include="Tests\Fixtures\CodeGenerator\" />
-    <Folder Include="Tests\Test Extensions\" />
+    <Folder Include="Tests\Entitas\" />
+    <Folder Include="Tests\Entitas.CodeGenerator\" />
+    <Folder Include="Tests\Entitas.Unity\" />
+    <Folder Include="Tests\Entitas\Fixtures\" />
+    <Folder Include="Tests\Entitas.CodeGenerator\Fixtures\" />
+    <Folder Include="Tests\Entitas.Unity.CodeGenerator\" />
+    <Folder Include="Libraries\Entitas.Unity.CodeGenerator\" />
+    <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
+    <Folder Include="Libraries\Entitas.Unity\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

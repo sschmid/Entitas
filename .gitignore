@@ -21,4 +21,5 @@ Entitas.Unity.CodeGenerator.sln
 Entitas.Unity.VisualDebugging-csharp.sln
 Entitas.Unity.VisualDebugging.sln
 
-bin/Entitas
+bin
+!bin/Entitas.zip

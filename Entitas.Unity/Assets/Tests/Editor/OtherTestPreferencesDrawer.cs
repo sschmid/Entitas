@@ -2,7 +2,7 @@
 using UnityEditor;
 
 public class OtherTestPreferencesDrawer : IEntitasPreferencesDrawer {
-    public void Draw(string configPath) {
+    public void Draw(EntitasPreferencesConfig config) {
         EditorGUILayout.LabelField("Other Test");
     }
 }
