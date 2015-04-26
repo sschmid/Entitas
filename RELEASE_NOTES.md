@@ -30,7 +30,7 @@
 - Added name property to DebugPool
 - Added VisualDebuggingConfig and VisualDebuggingPreferencesDrawer
 
-![entitas-preferences](https://cloud.githubusercontent.com/assets/233700/7339544/5e23e3be-ec72-11e4-9d90-7cdd9ec6032d.png)
+![entitas-preferences](https://cloud.githubusercontent.com/assets/233700/7339599/ef454f34-ec74-11e4-9775-963f477bfb16.png)
 - EntityDebugEditor can generate IDefaultInstanceCreator and ITypeDrawer implementations for unsupported types
 - Fixed: handling null values
 - Renamed ICustomTypeDrawer to ITypeDrawer
