@@ -23,11 +23,12 @@ public static class ComponentIds {
     public const int Rect = 19;
     public const int SystemObject = 20;
     public const int UnityObject = 21;
-    public const int Vector2 = 22;
-    public const int Vector3 = 23;
-    public const int Vector4 = 24;
+    public const int UnsupportedObject = 22;
+    public const int Vector2 = 23;
+    public const int Vector3 = 24;
+    public const int Vector4 = 25;
 
-    public const int TotalComponents = 25;
+    public const int TotalComponents = 26;
 
     static readonly Dictionary<int, string> components = new Dictionary<int, string> {
         { 0, "AnimationCurve" },
@@ -52,9 +53,10 @@ public static class ComponentIds {
         { 19, "Rect" },
         { 20, "SystemObject" },
         { 21, "UnityObject" },
-        { 22, "Vector2" },
-        { 23, "Vector3" },
-        { 24, "Vector4" }
+        { 22, "UnsupportedObject" },
+        { 23, "Vector2" },
+        { 24, "Vector3" },
+        { 25, "Vector4" }
     };
 
     public static string IdToString(int componentId) {

@@ -74,6 +74,7 @@ public class GameController : MonoBehaviour {
                 }
             };
             e.AddDictArray(dict2, dictArray);
+            e.AddUnsupportedObject(new UnsupportedObject("Unsupported Object"));
         }
     }
 
@@ -112,6 +113,8 @@ public class GameController : MonoBehaviour {
         Dictionary<int, string[]> dict2 = null;
         Dictionary<int, string[]>[] dictArray = null;
         e.AddDictArray(dict2, dictArray);
+        UnsupportedObject unsupportedObject = null;
+        e.AddUnsupportedObject(unsupportedObject);
     }
 }
 

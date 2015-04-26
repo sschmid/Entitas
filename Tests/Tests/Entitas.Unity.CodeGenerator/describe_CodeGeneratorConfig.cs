@@ -4,13 +4,13 @@ using Entitas.Unity;
 
 class describe_CodeGeneratorConfig : nspec {
 
+    const string configString =
+        "Entitas.Unity.CodeGenerator.GeneratedFolderPath = path/to/folder/\n" +
+        "Entitas.Unity.CodeGenerator.Pools = Core, Meta, UI\n";
+
     void when_creating_config() {
 
         it["creates config from EntitasPreferencesConfig"] = () => {
-            const string configString =
-                "Entitas.Unity.CodeGenerator.GeneratedFolderPath = path/to/folder/\n" +
-                "Entitas.Unity.CodeGenerator.Pools = Core, Meta, UI\n";
-            
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
 
             config.generatedFolderPath.should_be("path/to/folder/");
@@ -24,9 +24,6 @@ class describe_CodeGeneratorConfig : nspec {
         };
 
         it["sets values"] = () => {
-            const string configString = "Entitas.Unity.CodeGenerator.GeneratedFolderPath = path/to/folder/\n" +
-                                        "Entitas.Unity.CodeGenerator.Pools = Core, Meta ,UI";
-
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
             config.generatedFolderPath = "new/path/";
             config.pools = new [] { "Other1", "Other2" };
@@ -36,9 +33,6 @@ class describe_CodeGeneratorConfig : nspec {
         };
 
         it["gets string"] = () => {
-            const string configString = "Entitas.Unity.CodeGenerator.GeneratedFolderPath = path/to/folder/\n" +
-                                        "Entitas.Unity.CodeGenerator.Pools = Core, Meta ,UI";
-
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
             config.generatedFolderPath = "new/path/";
             config.pools = new [] { "Other1", "Other2" };

@@ -55,3 +55,14 @@ public class DictArrayComponent : IComponent {
     public Dictionary<int, string[]>[] dictArray;
 }
 
+public class UnsupportedObject {
+    public string name;
+
+    public UnsupportedObject(string name) {
+        this.name = name;
+    }
+}
+
+public class UnsupportedObjectComponent : IComponent {
+    public UnsupportedObject unsupportedObject;
+}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Entitas;
@@ -188,26 +189,15 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.LabelField(fieldName, value.ToString());
             if (GUILayout.Button("Missing ITypeDrawer", GUILayout.Height(14))) {
                 var typeName = TypeGenerator.Generate(type);
-                EditorUtility.DisplayDialog(
-                    "No ITypeDrawer found",
-                    "There's no ITypeDrawer implementation to handle the type '" + typeName + "'.\n\n" +
-                    "Please implement:\n\n" +
-                    string.Format(@"using System;
-using Entitas;
-using Entitas.Unity.VisualDebugging;
-using UnityEditor;
-
-public class {{type}}TypeDrawer : ITypeDrawer {{
-    public bool HandlesType(Type type) {{
-        return type == typeof({0});
-    }}
-
-    public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {{
-        return your implementation to draw the type {0}
-    }}
-}}", typeName),
-                    "Ok"
-                );
+                if (EditorUtility.DisplayDialog(
+                        "No ITypeDrawer found",
+                        "There's no ITypeDrawer implementation to handle the type '" + typeName + "'.\n\n" +
+                        "Do you want to generate a ITypeDrawer implementation?",
+                        "Generate",
+                        "Cancel"
+                    )) {
+                    generateITypeDrawer(typeName);
+                }
             }
             EditorGUILayout.EndHorizontal();
         }
@@ -226,27 +216,76 @@ public class {{type}}TypeDrawer : ITypeDrawer {{
             }
 
             var typeName = TypeGenerator.Generate(type);
-            EditorUtility.DisplayDialog(
-                "No IDefaultInstanceCreator found",
-                "There's no IDefaultInstanceCreator implementation to handle the type '" + typeName + "'.\n\n" +
-                "Please implement:\n\n" +
-                string.Format(@"using System;
+            if (EditorUtility.DisplayDialog(
+                    "No IDefaultInstanceCreator found",
+                    "There's no IDefaultInstanceCreator implementation to handle the type '" + typeName + "'.\n\n" +
+                    "Do you want to generate a IDefaultInstanceCreator implementation?",
+                    "Generate",
+                    "Cancel"
+                )) {
+                generateIDefaultInstanceCreator(typeName);
+            }
+
+            defaultValue = null;
+            return false;
+        }
+
+        static void generateIDefaultInstanceCreator(string typeName) {
+            var config = new VisualDebuggingConfig(EntitasPreferencesEditor.LoadConfig());
+            var folder = config.defaultInstanceCreatorFolderPath;
+            var filePath = folder + "Default_type_InstanceCreator.cs";
+            var template = string.Format(defaultInstanceCreatorTemplateFormat, typeName);
+            generateTemplate(folder, filePath, template);
+        }
+
+        static void generateITypeDrawer(string typeName) {
+            var config = new VisualDebuggingConfig(EntitasPreferencesEditor.LoadConfig());
+            var folder = config.typeDrawerFolderPath;
+            var filePath = folder + "Type_TypeDrawer.cs";
+            var template = string.Format(typeDrawerTemplateFormat, typeName);
+            generateTemplate(folder, filePath, template);
+        }
+
+        static void generateTemplate(string folder, string filePath, string template) {
+            if (!Directory.Exists(folder)) {
+                Directory.CreateDirectory(folder);
+            }
+            File.WriteAllText(filePath, template);
+            AssetDatabase.Refresh();
+            EditorApplication.isPlaying = false;
+            Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filePath);
+        }
+
+        const string defaultInstanceCreatorTemplateFormat = @"using System;
 using Entitas.Unity.VisualDebugging;
 
-public class Default{{type}}Creator : IDefaultInstanceCreator {{
+// Please rename class name and file name
+public class Default_type_InstanceCreator : IDefaultInstanceCreator {{
     public bool HandlesType(Type type) {{
         return type == typeof({0});
     }}
 
     public object CreateDefault(Type type) {{
-        return your implementation to create an instance of type {0}
+        // return your implementation to create an instance of type {0}
+        throw new NotImplementedException();
     }}
 }}
-", typeName),
-                "Ok"
-            );
-            defaultValue = null;
-            return false;
-        }
+";
+
+        const string typeDrawerTemplateFormat = @"using System;
+using Entitas;
+using Entitas.Unity.VisualDebugging;
+
+public class Type_TypeDrawer : ITypeDrawer {{
+    public bool HandlesType(Type type) {{
+        return type == typeof({0});
+    }}
+
+    public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {{
+        // return your implementation to draw the type {0}
+        throw new NotImplementedException();
+    }}
+}}";
     }
 }
+

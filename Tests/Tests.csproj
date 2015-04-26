@@ -80,6 +80,8 @@
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\EntityDebugBehaviour.cs" />
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\PoolDebugBehaviour.cs" />
     <Compile Include="Libraries\Entitas.Unity\Properties.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_VisualDebuggingConfig.cs" />
+    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -95,6 +97,7 @@
     <Folder Include="Libraries\Entitas.Unity\" />
     <Folder Include="Libraries\Entitas.Unity.CodeGenerator\" />
     <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
+    <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />
