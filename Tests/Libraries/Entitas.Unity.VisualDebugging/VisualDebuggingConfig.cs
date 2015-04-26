@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 
-namespace Entitas.Unity.CodeGenerator {
-    public class CodeGeneratorConfig {
+namespace Entitas.Unity.VisualDebugging {
+    public class VisualDebuggingConfig {
         public string generatedFolderPath { 
             get { return _config.GetValueOrDefault(generatedFolderPathKey, defaultgeneratedFolderPath); }
             set { _config[generatedFolderPathKey] = value; }
@@ -18,21 +18,17 @@ namespace Entitas.Unity.CodeGenerator {
             set { _config[poolsKey] = string.Join(",", value.Where(pool => !string.IsNullOrEmpty(pool)).ToArray()).Replace(" ", string.Empty); }
         }
 
-        const string generatedFolderPathKey = "Entitas.Unity.CodeGenerator.GeneratedFolderPath";
-        const string poolsKey = "Entitas.Unity.CodeGenerator.Pools";
+        const string generatedFolderPathKey = "Entitas.CodeGenerator.GeneratedFolderPath";
+        const string poolsKey = "Entitas.CodeGenerator.Pools";
 
         const string defaultgeneratedFolderPath = "Assets/Generated/";
 
         readonly EntitasPreferencesConfig _config;
 
-        public CodeGeneratorConfig(EntitasPreferencesConfig config) {
+        public VisualDebuggingConfig(EntitasPreferencesConfig config) {
             _config = config;
             generatedFolderPath = generatedFolderPath;
             pools = pools;
-        }
-
-        public override string ToString() {
-            return _config.ToString();
         }
     }
 }
