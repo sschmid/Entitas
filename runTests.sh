@@ -1,5 +1,5 @@
 #!/bin/sh
-xbuild Entitas.sln /verbosity:minimal
+xbuild Tests/Tests.csproj /verbosity:minimal
 if [ $? = 0 ]
 then
 	mono Tests/Libraries/NSpec/NSpecRunner.exe Tests/bin/Debug/Tests.dll
