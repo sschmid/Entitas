@@ -1,3 +1,47 @@
+# 0.13.0
+
+##### Reminder
+- Entitas 0.12.0 generates prefixed matchers based on the PoolAttribute and introduces some API changes. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+##### General
+- Split into multiple modules and seperate projects. Entitas now consists of
+	- Entitas
+	- Entitas.CodeGenerator
+	- Entitas.Unity
+	- Entitas.Unity.CodeGenerator
+	- Entitas.Unity.VisualDebugging
+
+##### Entitas.Unity
+- Added IEntitasPreferencesDrawer to be able to extend the Entitas preferences panel
+
+##### Entitas.Unity.CodeGenerator
+- Entitas preferences internal keys changed. Please check your settings in projectRoot/Entitas.properties and update keys
+	- Entitas.CodeGenerator.GeneratedFolderPath -> Entitas.Unity.CodeGenerator.GeneratedFolderPath
+	- Entitas.CodeGenerator.Pools 				-> Entitas.Unity.CodeGenerator.Pools
+
+##### Entitas.Unity.VisualDebugging
+- Added support to set fields to null
+- Added support to create a new instance if the value of a field is null
+- Added IDefaultInstanceCreator to create default objects for unsupported types
+- Added IDefaultInstanceCreator implementations for array, dictionary and string
+- Added support to insert and remove elements from lists, arrays and dictionaries
+
+![entitas-itypedrawer](https://cloud.githubusercontent.com/assets/233700/7339538/226d8028-ec72-11e4-8971-53029fb20da8.png)
+- Added name property to DebugPool
+- Added VisualDebuggingConfig and VisualDebuggingPreferencesDrawer
+
+![entitas-preferences](https://cloud.githubusercontent.com/assets/233700/7339544/5e23e3be-ec72-11e4-9d90-7cdd9ec6032d.png)
+- EntityDebugEditor can generate IDefaultInstanceCreator and ITypeDrawer implementations for unsupported types
+- Fixed: handling null values
+- Renamed ICustomTypeDrawer to ITypeDrawer
+- Big refactoring to simplify drawing types
+
+##### Other
+- buildPackage.sh keeps uncompressed source files in bin folder
+- Added updateDependencies.sh which updates all dependencies of Entitas.Unity.CodeGenerator, Entitas.Unity.VisualDebugging and tests
+- Renamed and moved files and folders to be more consistent with the new project structure
+
+
 # 0.12.0
 
 ##### Important
