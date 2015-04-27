@@ -2,44 +2,44 @@
 ./runTests.sh
 if [ $? = 0 ]
 then
-	WD=$(pwd)
+	echo "*** BUILDING PACKAGE"
+
 	BIN_DIR="bin"
-	TMP_DIR="${BIN_DIR}/tmp"
+	TMP_DIR=$BIN_DIR"/tmp"
 
-	echo "CLEAN **************************************************************************"
-	rm -rfv $BIN_DIR
+	ES="Entitas"
+	CG=$ES".CodeGenerator"
+	ESU=$ES".Unity"
+	UCG=$ESU".CodeGenerator"
+	UVD=$ESU".VisualDebugging"
 
-	echo "CREATE FOLDERS *****************************************************************"
-	mkdir -v $BIN_DIR
-	mkdir -v $TMP_DIR
+	echo "*** CLEAN"
+	rm -rf $BIN_DIR
 
-	echo "COPY SOURCES *******************************************************************"
-	cp -rv Entitas/Entitas $TMP_DIR
-	cp -rv Entitas.CodeGenerator/Entitas.CodeGenerator $TMP_DIR
-	cp -rv Entitas.Unity/Assets/Entitas.Unity $TMP_DIR
-	cp -rv Entitas.Unity.CodeGenerator/Assets/Entitas.Unity.CodeGenerator $TMP_DIR
-	cp -rv Entitas.Unity.VisualDebugging/Assets/Entitas.Unity.VisualDebugging $TMP_DIR
+	echo "*** CREATE FOLDERS"
+	mkdir $BIN_DIR
+	mkdir $TMP_DIR
 
+	echo "*** COPY SOURCES"
+	cp -r {$ES"/"$ES,$CG"/"$CG,$ESU"/Assets/"$ESU,$UCG"/Assets/"$UCG,$UVD"/Assets/"$UVD} $TMP_DIR
 	cp RELEASE_NOTES.md ${TMP_DIR}/RELEASE_NOTES.md
 
-	echo "DELETE GARBAGE *****************************************************************"
+	echo "*** DELETE GARBAGE"
+	find "./"$TMP_DIR -name "*.meta" -type f -delete
+	find "./"$TMP_DIR -name "*.DS_Store" -type f -delete
+
+	echo "*** CREATE ZIP ARCHIVE"
 	cd $TMP_DIR
-	find . -name "*.meta" -type f -delete
-	find . -name "*.DS_Store" -type f -delete
-	cd $WD
+	zip -rq ../Entitas.zip ./
+	cd -
 
-	echo "CREATE ZIP ARCHIVE *************************************************************"
-	cd $TMP_DIR
-	zip -r ../Entitas.zip ./
-	cd $WD
+	echo "*** COPY TEMP TO BIN"
+	cp -r $TMP_DIR"/." $BIN_DIR
 
-	echo "COPY TO TEMP TO BIN ************************************************************"
-	cp -rv "${TMP_DIR}/." $BIN_DIR
+	echo "*** DELETE TEMP FOLDER"
+	rm -rf $TMP_DIR
 
-	echo "DELETE TEMP FOLDER *************************************************************"
-	rm -rfv $TMP_DIR
-
-	echo "DONE ***************************************************************************"
+	echo "*** DONE ***"
 else
 	echo "ERROR: Tests didn't pass!"
 	exit 1

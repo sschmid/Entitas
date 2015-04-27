@@ -2,34 +2,31 @@
 ./buildPackage.sh
 if [ $? = 0 ]
 then
+	echo "*** UPDATING DEPENDENCIES"
+
 	BIN_DIR="bin"
-	LIBRARIES_DIR_NAME="Libraries"
 
-	UNITY_CODE_GENERATOR_LIBRARIES_DIR="Entitas.Unity.CodeGenerator/Assets/${LIBRARIES_DIR_NAME}"
-	UNITY_VISUAL_DEBUGGING_LIBRARIES_DIR="Entitas.Unity.VisualDebugging/Assets/${LIBRARIES_DIR_NAME}"
-	TESTS_LIBRARIES_DIR="Tests/Libraries"
+	ES="Entitas"
+	CG=$ES".CodeGenerator"
+	ESU=$ES".Unity"
+	UCG=$ESU".CodeGenerator"
+	UVD=$ESU".VisualDebugging"
 
-	echo "CLEAN **************************************************************************"
-	rm -rfv $UNITY_CODE_GENERATOR_LIBRARIES_DIR
-	rm -rfv $UNITY_VISUAL_DEBUGGING_LIBRARIES_DIR
-	mkdir $UNITY_CODE_GENERATOR_LIBRARIES_DIR
-	mkdir $UNITY_VISUAL_DEBUGGING_LIBRARIES_DIR
+	UCODEGEN_LIBS_DIR=$UCG"/Assets/Libraries"
+	UVD_LIBS_DIR=$UVD"/Assets/Libraries"
+	TESTS_LIBS_DIR="Tests/Libraries"
 
-	echo "COPY ***************************************************************************"
-	cp -rv "${BIN_DIR}/Entitas" $UNITY_CODE_GENERATOR_LIBRARIES_DIR
-	cp -rv "${BIN_DIR}/Entitas.CodeGenerator" $UNITY_CODE_GENERATOR_LIBRARIES_DIR
-	cp -rv "${BIN_DIR}/Entitas.Unity" $UNITY_CODE_GENERATOR_LIBRARIES_DIR
+	echo "*** CLEAN"
+	find "./"$UCODEGEN_LIBS_DIR -type f -name "*.cs" -delete
+	find "./"$UVD_LIBS_DIR -type f -name "*.cs" -delete
+	rm -rf $TESTS_LIBS_DIR"/"{$ESU,$UCG,$UVD}
 
-	cp -rv "${BIN_DIR}/Entitas" $UNITY_VISUAL_DEBUGGING_LIBRARIES_DIR
-	cp -rv "${BIN_DIR}/Entitas.CodeGenerator" $UNITY_VISUAL_DEBUGGING_LIBRARIES_DIR
-	cp -rv "${BIN_DIR}/Entitas.Unity" $UNITY_VISUAL_DEBUGGING_LIBRARIES_DIR
-	cp -rv "${BIN_DIR}/Entitas.Unity.CodeGenerator" $UNITY_VISUAL_DEBUGGING_LIBRARIES_DIR
+	echo "*** COPY"
+	cp -r $BIN_DIR"/"{$ES,$CG,$ESU} $UCODEGEN_LIBS_DIR
+	cp -r $BIN_DIR"/"{$ES,$CG,$ESU,$UCG} $UVD_LIBS_DIR
+	cp -r $BIN_DIR"/"{$ESU,$UCG,$UVD} $TESTS_LIBS_DIR
 
-	cp -rv "${BIN_DIR}/Entitas.Unity" $TESTS_LIBRARIES_DIR
-	cp -rv "${BIN_DIR}/Entitas.Unity.CodeGenerator" $TESTS_LIBRARIES_DIR
-	cp -rv "${BIN_DIR}/Entitas.Unity.VisualDebugging" $TESTS_LIBRARIES_DIR
-
-echo "DONE ***************************************************************************"
+	echo "*** DONE ***"
 else
 	echo "ERROR: Tests didn't pass!"
 	exit 1
