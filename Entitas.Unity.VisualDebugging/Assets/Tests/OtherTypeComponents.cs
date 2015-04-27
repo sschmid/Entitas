@@ -55,6 +55,10 @@ public class DictArrayComponent : IComponent {
     public Dictionary<int, string[]>[] dictArray;
 }
 
+public class HashSetComponent : IComponent {
+    public HashSet<string> hashset;
+}
+
 public class UnsupportedObject {
     public string name;
 

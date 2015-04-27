@@ -123,14 +123,14 @@ namespace Entitas.Unity.VisualDebugging {
 
         public static void DrawAndSetElement(Type type, string fieldName, object value, Entity entity, int index, IComponent component, Action<object> setValue) {
             var newValue = DrawAndGetNewValue(type, fieldName, value, entity, index, component);
-            if (didValueChange(value, newValue)) {
+            if (DidValueChange(value, newValue)) {
                 entity.WillRemoveComponent(index);
                 setValue(newValue);
                 entity.ReplaceComponent(index, component);
             }
         }
 
-        static bool didValueChange(object value, object newValue) {
+        public static bool DidValueChange(object value, object newValue) {
             return (value == null && newValue != null) ||
                    (value != null && newValue == null) ||
                    ((value != null && newValue != null &&
