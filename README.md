@@ -10,6 +10,8 @@ branch  | tests
 master  | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?branch=master)](https://travis-ci.org/sschmid/Entitas-CSharp)
 develop | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?branch=develop)](https://travis-ci.org/sschmid/Entitas-CSharp)
 
+### [-> Install Entitas](#install-entitas)
+
 ## Overview
 Entitas consists of the following modules
 
