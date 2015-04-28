@@ -16,7 +16,7 @@ Entitas consists of the following modules
 Module  | Content
 :-------|:-------
 Entitas | Contains the core classes
-Entitas.CodeGenerator | Contains the optional but highly recommended [code generator](#entitas.codegenerator)
+Entitas.CodeGenerator | Contains the optional but highly recommended [code generator](#entitascodegenerator)
 Entitas.Unity | Contains the plugin based Entitas preferences panel for Unity
 Entitas.Unity.CodeGenerator | Plugs into the Entitas preferences panel and adds convenient menu items
 Entitas.Unity.VisualDebugging | Integrates Entitas into Unity. Inspect pools, entites and components
@@ -35,7 +35,7 @@ After you've read the readme, take a look at the [example project](https://githu
 ### Entity
 An entity is a container holding data to represent certain objects in your application. You can add, replace or remove data from entities in form of `IComponent`. Entities have corresponding events to let you know if components were added, replaced or removed.
 
-Here's how you can interact with an entity. To enjoy a more natural and more readable API, simply use the code generator that comes with Entitas (see [Code Generator](#entitas.codegenerator)). In this example you can see some generated methods for `PositionComponent`, `HealthComponent`, `MovableComponent`.
+Here's how you can interact with an entity. To enjoy a more natural and more readable API, simply use the code generator that comes with Entitas (see [Code Generator](#entitascodegenerator)). In this example you can see some generated methods for `PositionComponent`, `HealthComponent`, `MovableComponent`.
 ```cs
 entity.AddPosition(0, 0, 0);
 entity.AddHealth(100);
@@ -211,7 +211,7 @@ When you select multiple entities, you can manually destroy some of them or batc
 
 ![Entitas Visual Debug MultiTarget](Readme/VisualDebug-MultiTarget.png)
 
-It also plugs into the Entitas preferences, where you can specify the folders where you want to save the generated IDefaultInstanceCreator and ITypeDrawer implementations.
+Entitas.Unity.VisualDebugging also plugs into the Entitas preferences, where you can specify the folders where you want to save the generated IDefaultInstanceCreator and ITypeDrawer implementations.
 
 ![Entitas Preferences](Readme/Entitas-Preferences.png)
 
