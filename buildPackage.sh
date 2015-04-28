@@ -23,6 +23,7 @@ then
 	echo "*** COPY SOURCES"
 	cp -r {$ES"/"$ES,$CG"/"$CG,$ESU"/Assets/"$ESU,$UCG"/Assets/"$UCG,$UVD"/Assets/"$UVD} $TMP_DIR
 	cp RELEASE_NOTES.md ${TMP_DIR}/RELEASE_NOTES.md
+	cp README.md ${TMP_DIR}/README.md
 
 	echo "*** DELETE GARBAGE"
 	find "./"$TMP_DIR -name "*.meta" -type f -delete

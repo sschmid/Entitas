@@ -10,6 +10,16 @@ branch  | tests
 master  | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?branch=master)](https://travis-ci.org/sschmid/Entitas-CSharp)
 develop | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?branch=develop)](https://travis-ci.org/sschmid/Entitas-CSharp)
 
+## Overview
+Entitas consists of the following modules
+
+Module  | Content
+:-------|:-------
+Entitas | Contains the core classes
+Entitas.CodeGenerator | Contains the optional but highly recommended [code generator](#entitas.codegenerator)
+Entitas.Unity | Contains the plugin based Entitas preferences panel for Unity
+Entitas.Unity.CodeGenerator | Plugs into the Entitas preferences panel and adds convenient menu items
+Entitas.Unity.VisualDebugging | Integrates Entitas into Unity. Inspect pools, entites and components
 
 ## Getting started
 Entitas is fast, light and gets rid of unnecessary complexity. There are less than a handful classes you have to know to rocket start your game or application:
@@ -23,9 +33,9 @@ After you've read the readme, take a look at the [example project](https://githu
 
 
 ### Entity
-You can imagine an entity as a container holding data to represent certain objects in your application. You can add, replace or remove data from entities in form of `IComponent`. Entities have corresponding events to let you know if components were added, replaced or removed.
+An entity is a container holding data to represent certain objects in your application. You can add, replace or remove data from entities in form of `IComponent`. Entities have corresponding events to let you know if components were added, replaced or removed.
 
-Here's how you can interact with an entity. To enjoy a more natural and more readable API, simply use the code generator that comes with Entitas (see [Code Generator](#code-generator)). In this example you can see some generated methods for `PositionComponent`, `HealthComponent`, `MovableComponent`.
+Here's how you can interact with an entity. To enjoy a more natural and more readable API, simply use the code generator that comes with Entitas (see [Code Generator](#entitas.codegenerator)). In this example you can see some generated methods for `PositionComponent`, `HealthComponent`, `MovableComponent`.
 ```cs
 entity.AddPosition(0, 0, 0);
 entity.AddHealth(100);
@@ -85,7 +95,7 @@ observer.Deactivate();
 ## Processing entities with Systems
 Implement `ISystem` to process your entities. I recommend you create systems for each single task or behaviour in your application and execute them in a defined order. This helps to keep your app deterministic. Entitas also provides a special system called `ReactiveSystem`, which is using an Group Observer under the hood. It holds changed entities of interest at your fingertips. Be sure to check out the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git).
 
-## Code Generator
+# Entitas.CodeGenerator
 The Code Generator generates classes and methods for you, so you can focus on getting the job done. It radically reduces the amount of code you have to write and improves readability by a huge magnitude. It makes your code less error-prone while ensuring best performance. I strongly recommend using it!
 
 The generated code can be different based on the content of the component. The Code Generator differentiates between four types:
@@ -167,14 +177,17 @@ pool.isAnimating = true;
 pool.isAnimating = false;
 ```
 
-# Unity
+# Entitas.Unity.CodeGenerator
 
-## Code Generation
-Entitas extends Unity with a menu item that generates code with a single click.
+Entitas.Unity.CodeGenerator extends Unity with a menu item that generates code with a single click.
 
 ![Entitas Header](Readme/MenuItem.png)
 
-## Visual Debugging
+It also plugs into the Entitas preferences, where you can specify the path to the folder, where the generated files should be saved. In order to have multiple pools, you can specify them here, and the corresponding PoolAttributes will be generated for you.
+
+![Entitas Preferences](Readme/Entitas-Preferences.png)
+
+# Entitas.Unity.VisualDebugging
 Visual Debugging enables you to actually see and inspect all of your entities in the Unity Editor. To enable this feature just use `DebugPool` instead of `Pool`. That's it!
 
 ```cs
@@ -190,7 +203,7 @@ Once you use the `DebugPool` all pools and their entities will automatically sho
 
 ![Entitas Visual Debug Hierarchy](Readme/VisualDebug-Hierarchy.png)
 
-Although entities are no GameObjects and components are no MonoBehaviours you can inspect them as if they were. All components of the selected entity are listed and all their fields are exposed. You can manipulate or remove components at runtime and even destroy the entity. All the default Unity drawers are supported and you can easily create your own `ICustomTypeDrawer` to draw custom objects. [Take a look at these example implementations](https://github.com/sschmid/Entitas-CSharp/tree/master/EntitasUnity/VisualDebugging/Assets/Scripts/Editor)
+Although entities are no GameObjects and components are no MonoBehaviours you can inspect them as if they were. All components of the selected entity are listed and all their fields are exposed. You can manipulate or remove components at runtime and even destroy the entity. All the default Unity drawers are supported and you can easily create your own `ITypeDrawer` to draw custom objects. [Take a look at these example implementations](https://github.com/sschmid/Entitas-CSharp/tree/develop/Entitas.Unity.VisualDebugging/Assets/Entitas.Unity.VisualDebugging/Editor/TypeDrawer)
 
 ![Entitas Visual Debug Inspector](Readme/VisualDebug-Inspector.png)
 
@@ -198,18 +211,32 @@ When you select multiple entities, you can manually destroy some of them or batc
 
 ![Entitas Visual Debug MultiTarget](Readme/VisualDebug-MultiTarget.png)
 
+It also plugs into the Entitas preferences, where you can specify the folders where you want to save the generated IDefaultInstanceCreator and ITypeDrawer implementations.
+
+![Entitas Preferences](Readme/Entitas-Preferences.png)
+
 Give it a try and checkout the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git)
 
 ![Entitas Visual Debug Inspector Example](Readme/VisualDebug-Inspector-Example.png)
 ![Entitas Visual Debug Inspector Example2](Readme/VisualDebug-Inspector-Example2.png)
 
 # Install Entitas
-Each release is published with Entitas.zip attached containing all source files you need. It contains Entitas, CodeGenerator and Unity tools like VisualDebugging and Menu/Preferences extensions. [Show releases](https://github.com/sschmid/Entitas-CSharp/releases)
+Each release is published with Entitas.zip attached containing all source files you need. It contains
+- Entitas
+- Entitas.CodeGenerator
+- Entitas.Unity
+- Entitas.Unity.CodeGenerator
+- Entitas.Unity.VisualDebugging
 
-Alternatively you can download bin/Entitas.zip
+[Show releases](https://github.com/sschmid/Entitas-CSharp/releases)
+
+Alternatively you can download [bin/Entitas.zip](https://github.com/sschmid/Entitas-CSharp/tree/develop/bin)
 
 # Thanks to
 Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://github.com/cloudjubei) and [@devboy](https://github.com/devboy) for endless hours of discussion and helping making Entitas awesome!
+
+# Maintainers(s)
+- [@sschmid](https://github.com/sschmid)
 
 # Different language?
 Entitas is also available in
