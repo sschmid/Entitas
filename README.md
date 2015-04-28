@@ -232,8 +232,6 @@ Each release is published with Entitas.zip attached containing all source files 
 
 [Show releases](https://github.com/sschmid/Entitas-CSharp/releases)
 
-Alternatively you can download [bin/Entitas.zip](https://github.com/sschmid/Entitas-CSharp/tree/develop/bin)
-
 # Thanks to
 Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://github.com/cloudjubei) and [@devboy](https://github.com/devboy) for endless hours of discussion and helping making Entitas awesome!
 
