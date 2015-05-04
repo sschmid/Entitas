@@ -85,6 +85,16 @@ class describe_Properties : nspec {
                 "Some.Test = some value\n" +
                 "Some.Other.Test = other value\n");
         };
+
+        it["replaces string \\n with real newline"] = () => {
+            var p = new Properties(
+                "Some.Test=some\\nvalue\n" +
+                "Some.Other.Test  =  other value \n");
+
+            p["Some.Test"].should_be("some\\nvalue");
+            p.ReplaceWithRealLinebreaks("\\n");
+            p["Some.Test"].should_be("some\nvalue");
+        };
     }
 }
 

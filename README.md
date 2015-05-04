@@ -93,7 +93,6 @@ To stop observing, simply deactivate the observer.
 observer.Deactivate();
 ```
 
-
 ## Processing entities with Systems
 Implement `ISystem` to process your entities. I recommend you create systems for each single task or behaviour in your application and execute them in a defined order. This helps to keep your app deterministic. Entitas also provides a special system called `ReactiveSystem`, which is using an Group Observer under the hood. It holds changed entities of interest at your fingertips. Be sure to check out the [example project](https://github.com/sschmid/Entitas-CSharp-Example.git).
 

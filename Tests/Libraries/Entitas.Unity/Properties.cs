@@ -33,6 +33,12 @@ namespace Entitas.Unity {
             set { _dict[key.Trim()] = value.Trim(); }
         }
 
+        public void ReplaceWithRealLinebreaks(string linebreak) {
+            foreach (var key in _dict.Keys.ToArray()) {
+                _dict[key] = _dict[key].Replace(linebreak, "\n");
+            }
+        }
+
         public override string ToString() {
             return _dict.Aggregate(string.Empty, (properties, kv) => properties + kv.Key + " = " + kv.Value + "\n");
         }
