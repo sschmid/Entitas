@@ -14,10 +14,10 @@ namespace Entitas.Unity {
                 .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
                 .Where(property => !property.TrimStart(' ').StartsWith("#", StringComparison.Ordinal))
                 .Select(property => property.Split('='))
-                .Aggregate(new Dictionary<string, string>(), (dict, property) => {
-                    dict.Add(property[0].Trim(), property[1].Trim());
-                    return dict;
-            });
+                .ToDictionary(
+                    property => property[0].Trim(),
+                    property => property[1].Trim()
+                );
         }
 
         public int Count {
@@ -33,9 +33,9 @@ namespace Entitas.Unity {
             set { _dict[key.Trim()] = value.Trim(); }
         }
 
-        public void ReplaceWithRealLinebreaks(string linebreak) {
+        public void Replace(string str, string replacement) {
             foreach (var key in _dict.Keys.ToArray()) {
-                _dict[key] = _dict[key].Replace(linebreak, "\n");
+                _dict[key] = _dict[key].Replace(str, replacement);
             }
         }
 
