@@ -10,14 +10,16 @@ namespace Entitas.Unity {
         }
 
         public Properties(string properties) {
+            var newLine = new[] { '\n' };
+            var seperator = new[] { '=' };
             _dict = properties
-                .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .Split(newLine, StringSplitOptions.RemoveEmptyEntries)
                 .Where(property => !property.TrimStart(' ').StartsWith("#", StringComparison.Ordinal))
-                .Select(property => property.Split('='))
-                .Aggregate(new Dictionary<string, string>(), (dict, property) => {
-                    dict.Add(property[0].Trim(), property[1].Trim());
-                    return dict;
-            });
+                .Select(property => property.Split(seperator, 2))
+                .ToDictionary(
+                    property => property[0].Trim(),
+                    property => property[1].Trim()
+                );
         }
 
         public int Count {
@@ -31,6 +33,12 @@ namespace Entitas.Unity {
         public string this[string key] {
             get { return _dict[key]; }
             set { _dict[key.Trim()] = value.Trim(); }
+        }
+
+        public void Replace(string str, string replacement) {
+            foreach (var key in _dict.Keys.ToArray()) {
+                _dict[key] = _dict[key].Replace(str, replacement);
+            }
         }
 
         public override string ToString() {
