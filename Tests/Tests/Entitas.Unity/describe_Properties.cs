@@ -95,6 +95,15 @@ class describe_Properties : nspec {
             p.Replace("\\n", "\n");
             p["Some.Test"].should_be("some\nvalue");
         };
+
+        it["split only the first '='"] = () => {
+            var p = new Properties(
+                "Some.Test=some=value\n" +
+                "Some.Other.Test  =  =other value \n");
+
+            p["Some.Test"].should_be("some=value");
+            p["Some.Other.Test"].should_be("=other value");
+        };
     }
 }
 

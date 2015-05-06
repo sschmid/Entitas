@@ -10,14 +10,16 @@ namespace Entitas.Unity {
         }
 
         public Properties(string properties) {
+            var newLine = new[] { '\n' };
+            var seperator = new[] { '=' };
             _dict = properties
-                .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                .Split(newLine, StringSplitOptions.RemoveEmptyEntries)
                 .Where(property => !property.TrimStart(' ').StartsWith("#", StringComparison.Ordinal))
-                .Select(property => property.Split('='))
+                .Select(property => property.Split(seperator, 2))
                 .ToDictionary(
-                    property => property[0].Trim(),
-                    property => property[1].Trim()
-                );
+                property => property[0].Trim(),
+                property => property[1].Trim()
+            );
         }
 
         public int Count {
