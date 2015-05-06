@@ -23,3 +23,5 @@ Entitas.Unity.VisualDebugging.sln
 
 bin
 !bin/Entitas.zip
+shadercompiler-64bit*
+ShaderCache
