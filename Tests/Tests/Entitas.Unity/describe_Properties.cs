@@ -4,105 +4,287 @@ using NSpec;
 
 class describe_Properties : nspec {
 
-    void when_creating_properties() {
-        it["is empty"] = () => new Properties().Count.should_be(0);
-        it["creates emtpy string when empty"] = () => new Properties().ToString().should_be(string.Empty);
-        it["adds every property from input string and trims whitespace"] = () => {
-            var p = new Properties(
-                        "Some.Test=some value\n" +
-                        "   Some.Other.Test  =  other value  \n"
-                    );
-
-            var expectedProperties = new Dictionary<string, string> {
-                { "Some.Test", "some value" },
-                { "Some.Other.Test", "other value" }
-            };
-
-            p.Count.should_be(expectedProperties.Count);
+    void assertProperties(string input, string expectedOutput, Dictionary<string, string>expectedProperties) {
+        var p = new Properties(input);
+        var expectedCount = expectedProperties != null ? expectedProperties.Count : 0;
+        p.Count.should_be(expectedCount);
+        p.ToString().should_be(expectedOutput);
+        if (expectedProperties != null) {
             foreach (var kv in expectedProperties) {
+                p.HasKey(kv.Key).should_be_true();
                 p[kv.Key].should_be(kv.Value);
             }
+        }
+    }
+
+    void when_creating_properties() {
+        context["when empty"] = () => {
+            it["is empty"] = () => assertProperties(string.Empty, string.Empty, null);
         };
 
-        it["creates newline seperated property list for every property"] = () => {
-            var properties =
-                "Some.Test=some value\n" +
-                "  Some.Other.Test  =  other value \n";
-            new Properties(properties).ToString().should_be(
-                "Some.Test = some value\n" +
-                "Some.Other.Test = other value\n"
-            );
+        context["when single line"] = () => {
+            it["creates Properties from single line input string"] = () => {
+                const string input = "some.key=some value";
+
+                const string expectedOutput = "some.key = some value\n";
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key", "some value" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
         };
 
-        it["can change existing properties and trims whitespace"] = () => {
-            var p = new Properties(
-                        "Some.Test=some value\n" +
-                        "Some.Other.Test  =  other value \n");
+        context["ignores whitespace"] = () => {
+            it["ignores whitespace between key and value"] = () => {
+                const string input = "some.key  =  some value";
 
-            p[" Some.Test "] = " new value ";
-            p.ToString().should_be(
-                "Some.Test = new value\n" +
-                "Some.Other.Test = other value\n"
-            );
+                const string expectedOutput = "some.key = some value\n";
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key", "some value" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+
+            it["ignores whitespace before key"] = () => {
+                const string input = "  some.key = some value";
+
+                const string expectedOutput = "some.key = some value\n";
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key", "some value" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+
+            it["keeps whitespace after value"] = () => {
+                const string input = "some.key = some value ";
+
+                const string expectedOutput = "some.key = some value \n";
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key", "some value " }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
         };
 
-        it["can add new properties and trims whitespace"] = () => {
-            var p = new Properties();
-            p[" newKey "] = " new value ";
-            p["newKey"].should_be("new value");
-            p.ToString().should_be("newKey = new value\n");
+        context["when multiline"] = () => {
+            it["creates Properties from multiline input string"] = () => {
+                const string input =
+                    "some.key.1=some value 1" + "\n" +
+                    " some.key.2 = some value 2 " + "\n" +
+                    "some.key.3=some value 3" + "\n";
+
+                const string expectedOutput =
+                    "some.key.1 = some value 1\n" +
+                    "some.key.2 = some value 2 \n" +
+                    "some.key.3 = some value 3\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key.1", "some value 1" },
+                    { "some.key.2", "some value 2 " },
+                    { "some.key.3", "some value 3" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+
+            it["creates Properties from multiline input string where values contain ="] = () => {
+                const string input =
+                    "some.key.1=some=value 1" + "\n" +
+                    "some.key.2 ==some value 2 " + "\n" +
+                    "some.key.3=some value=" + "\n";
+
+                const string expectedOutput =
+                    "some.key.1 = some=value 1\n" +
+                    "some.key.2 = =some value 2 \n" +
+                    "some.key.3 = some value=\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key.1", "some=value 1" },
+                    { "some.key.2", "=some value 2 " },
+                    { "some.key.3", "some value=" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+
+            it["ignores blank lines"] = () => {
+                const string input =
+                    "\n" +
+                    "some.key.1=some value 1" + "\n" +
+                    "\n" +
+                    " some.key.2 = some value 2 " + "\n" +
+                    "\n" +
+                    "some.key.3=some value 3" + "\n";
+
+                const string expectedOutput =
+                    "some.key.1 = some value 1\n" +
+                    "some.key.2 = some value 2 \n" +
+                    "some.key.3 = some value 3\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key.1", "some value 1" },
+                    { "some.key.2", "some value 2 " },
+                    { "some.key.3", "some value 3" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+
+            it["ignores lines starting with #"] = () => {
+                const string input =
+                    "#some.key.1=some value 1" + "\n" +
+                    "  #some.key.2 = some value 2 " + "\n" +
+                    "some.key.3=some value 3" + "\n";
+
+                const string expectedOutput =
+                    "some.key.3 = some value 3\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key.3", "some value 3" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+
+            it["supports multiline values ending with \\"] = () => {
+                const string input =
+                    "some.key=some val\\\nue\n" +
+                    "some.other.key=other val\\\nue\n";
+
+                const string expectedOutput =
+                    "some.key = some value\n" +
+                    "some.other.key = other value\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key", "some value" },
+                    { "some.other.key", "other value" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+
+            it["trims leading whitespace of multilines"] = () => {
+                const string input =
+                    "some.key=some val\\\n   ue\n" +
+                    "some.other.key=other val\\\n   ue\n";
+
+                const string expectedOutput =
+                    "some.key = some value\n" +
+                    "some.other.key = other value\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key", "some value" },
+                    { "some.other.key", "other value" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
         };
 
-        it["contains key"] = () => new Properties("validKey = value").ContainsKey("validKey").should_be_true();
-        it["doesn't contain key"] = () => new Properties().ContainsKey("invalidKey").should_be_false();
+        context["when replacing special characters in values"] = () => {
+            it["replaces \\n with newline"] = () => {
+                const string input =
+                    @"some.key=some\nvalue" + "\n" +
+                    @"some.other.key=other\nvalue" + "\n";
 
-        it["ignores empty lines"] = () => {
-            var p = new Properties(
-                        "\n" +
-                        "Some.Test = some value\n" +
-                        "\n" +
-                        "Some.Other.Test = other value\n" +
-                        "\n");
+                const string expectedOutput =
+                    @"some.key = some\nvalue" + "\n" +
+                    @"some.other.key = other\nvalue" + "\n";
 
-            p.Count.should_be(2);
-            p.ToString().should_be(
-                "Some.Test = some value\n" +
-                "Some.Other.Test = other value\n");
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key", "some\nvalue" },
+                    { "some.other.key", "other\nvalue" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+
+            it["replaces \\r with carriage return"] = () => {
+                const string input =
+                    @"some.key=some\rvalue" + "\n" +
+                    @"some.other.key=other\rvalue" + "\n";
+
+                const string expectedOutput =
+                    @"some.key = some\rvalue" + "\n" +
+                    @"some.other.key = other\rvalue" + "\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key", "some\rvalue" },
+                    { "some.other.key", "other\rvalue" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+
+            it["replaces \\t with tabs"] = () => {
+                const string input =
+                    @"some.key=some\tvalue" + "\n" +
+                    @"some.other.key=other\tvalue" + "\n";
+
+                const string expectedOutput =
+                    @"some.key = some\tvalue" + "\n" +
+                    @"some.other.key = other\tvalue" + "\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "some.key", "some\tvalue" },
+                    { "some.other.key", "other\tvalue" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
         };
 
-        it["ignores comments (lines starting with #)"] = () => {
-            var p = new Properties(
-                "# This is a comment" +
-                "\n" +
-                "Some.Test = some value\n" +
-                "   ### This is a comment" +
-                "\n" +
-                "Some.Other.Test = other value\n" +
-                "\n");
+        context["adding properties"] = () => {
+            Properties p = null;
+            before = () => {
+                p = new Properties();
+            };
 
-            p.Count.should_be(2);
-            p.ToString().should_be(
-                "Some.Test = some value\n" +
-                "Some.Other.Test = other value\n");
+            it["set new property"] = () => {
+                p["key"] = "value";
+                p["key"].should_be("value");
+            };
+
+            it["trims key"] = () => {
+                p[" key "] = "value";
+                p["key"].should_be("value");
+            };
+
+            it["trims start of value"] = () => {
+                p["key"] = " value";
+                p["key"].should_be("value");
+            };
+
+            it["keeps trailing whitespace of value"] = () => {
+                p["key"] = "value ";
+                p["key"].should_be("value ");
+            };
         };
 
-        it["replaces string with replacemnet"] = () => {
-            var p = new Properties(
-                "Some.Test=some\\nvalue\n" +
-                "Some.Other.Test  =  other value \n");
+        context["placeholder"] = () => {
+            it["replaces placeholder within ${...}"] = () => {
+                const string input =
+                    "project.name = Entitas" + "\n" +
+                    "project.domain = com.sschmid" + "\n" +
+                    "project.bundleId = ${project.domain}.${project.name}" + "\n";
 
-            p["Some.Test"].should_be("some\\nvalue");
-            p.Replace("\\n", "\n");
-            p["Some.Test"].should_be("some\nvalue");
-        };
+                const string expectedOutput =
+                    "project.name = Entitas\n" +
+                    "project.domain = com.sschmid\n" +
+                    "project.bundleId = com.sschmid.Entitas\n";
 
-        it["split only the first '='"] = () => {
-            var p = new Properties(
-                "Some.Test=some=value\n" +
-                "Some.Other.Test  =  =other value \n");
+                var expectedProperties = new Dictionary<string, string> {
+                    { "project.name", "Entitas" },
+                    { "project.domain", "com.sschmid" },
+                    { "project.bundleId", "com.sschmid.Entitas" }
+                };
 
-            p["Some.Test"].should_be("some=value");
-            p["Some.Other.Test"].should_be("=other value");
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
         };
     }
 }

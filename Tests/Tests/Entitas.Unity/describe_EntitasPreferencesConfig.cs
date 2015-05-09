@@ -11,8 +11,8 @@ class describe_EntitasPreferencesConfig : nspec {
 
         it["gets string from empty config"] = () => config.ToString().should_be(string.Empty);
         it["gets default value from empty config and sets value for trimmed key"] = () => {
-            config.GetValueOrDefault(" testKey ", " testValue ").should_be(" testValue ");
-            config.ToString().should_be("testKey = testValue\n");
+            config.GetValueOrDefault(" testKey ", " testValue ").should_be("testValue ");
+            config.ToString().should_be("testKey = testValue \n");
         };
 
         it["sets value for trimmed key"] = () => {
