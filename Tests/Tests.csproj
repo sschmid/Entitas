@@ -82,6 +82,7 @@
     <Compile Include="Libraries\Entitas.Unity\Properties.cs" />
     <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_VisualDebuggingConfig.cs" />
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\NamespaceComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

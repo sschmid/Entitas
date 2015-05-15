@@ -1,12 +1,14 @@
 ﻿using NSpec;
 using Entitas.CodeGenerator;
 using System;
+using My.Namespace;
 
 class describe_ComponentExtensionsGenerator : nspec {
 
     bool logResults = false;
 
     const string classSuffix = "GeneratedExtension";
+
     void generates(Type type, string code) {
         var extensions = ComponentExtensionsGenerator
             .GenerateComponentExtensions(new[] { type }, classSuffix);
@@ -33,6 +35,8 @@ class describe_ComponentExtensionsGenerator : nspec {
                 .GenerateComponentExtensions(new[] { type }, classSuffix);
             extensions.Count.should_be(0);
         };
+
+        it["works with namespaces"] = () => generates(typeof(NamespaceComponent), NamespaceComponent.extensions);
     }
 }
 
