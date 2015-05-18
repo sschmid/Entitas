@@ -14,9 +14,18 @@ namespace Entitas.Unity.CodeGenerator {
 
         [MenuItem("Entitas/Migration/Migrate Matcher")]
         public static void MigrateMatcher() {
-            var sourceFiles = getSourceFiles(Application.dataPath);
-            migrateMatcher(sourceFiles);
-            AssetDatabase.Refresh();
+            if (EditorUtility.DisplayDialog(
+                    "Migrate Matcher",
+                    "Entitas 0.12.0 introduced prefixed matchers based on the PoolAttribute, " +
+                    "e.g UIMatcher.Button (instead of Matcher.Button).\n\n" +
+                    "If you were using a version < 0.12.0 click 'Migrate Matcher' to let Entitas update your source files.",
+                    "Migrate Matcher",
+                    "Cancel"
+                )) {
+                var sourceFiles = getSourceFiles(Application.dataPath);
+                migrateMatcher(sourceFiles);
+                AssetDatabase.Refresh();
+            }
         }
 
         static void migrateMatcher(Dictionary<string, string> sourceFiles) {
