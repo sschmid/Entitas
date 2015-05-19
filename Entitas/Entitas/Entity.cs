@@ -22,7 +22,7 @@ namespace Entitas {
             _components = new IComponent[totalComponents];
         }
 
-        public void AddComponent(int index, IComponent component) {
+        public Entity AddComponent(int index, IComponent component) {
             if (HasComponent(index)) {
                 var errorMsg = "Cannot add component at index " + index + " to " + this;
                 throw new EntityAlreadyHasComponentException(errorMsg, index);
@@ -34,6 +34,8 @@ namespace Entitas {
             if (OnComponentAdded != null) {
                 OnComponentAdded(this, index, component);
             }
+
+            return this;
         }
 
         public void WillRemoveComponent(int index) {
@@ -42,13 +44,15 @@ namespace Entitas {
             }
         }
 
-        public void RemoveComponent(int index) {
+        public Entity RemoveComponent(int index) {
             if (!HasComponent(index)) {
                 var errorMsg = "Cannot remove component at index " + index + " from " + this;
                 throw new EntityDoesNotHaveComponentException(errorMsg, index);
             }
 
             removeComponent(index);
+
+            return this;
         }
 
         void removeComponent(int index) {
@@ -58,12 +62,14 @@ namespace Entitas {
             replaceComponent(index, null);
         }
 
-        public void ReplaceComponent(int index, IComponent component) {
+        public Entity ReplaceComponent(int index, IComponent component) {
             if (HasComponent(index)) {
                 replaceComponent(index, component);
             } else if (component != null) {
                 AddComponent(index, component);
             }
+
+            return this;
         }
 
         void replaceComponent(int index, IComponent replacement) {

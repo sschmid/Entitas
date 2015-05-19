@@ -20,6 +20,11 @@ public class AnimatingComponent : IComponent {
                 }
             }
         }
+
+        public Entity IsAnimating(bool value) {
+            isAnimating = value;
+            return this;
+        }
     }
 
     public partial class Pool {

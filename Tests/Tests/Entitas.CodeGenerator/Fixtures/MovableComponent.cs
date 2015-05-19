@@ -18,6 +18,11 @@ public class MovableComponent : IComponent {
                 }
             }
         }
+
+        public Entity IsMovable(bool value) {
+            isMovable = value;
+            return this;
+        }
     }
 
     public partial class Matcher {

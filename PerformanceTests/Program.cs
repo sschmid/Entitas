@@ -15,6 +15,7 @@ namespace PerformanceTests {
             run<PoolOnEntityReplaced>();
             run<EmptyTest>();
 
+            run<EntityAddComponent>();
             run<EntityGetComponent>();
             run<EntityGetComponents>();
             run<EntityHasComponent>();

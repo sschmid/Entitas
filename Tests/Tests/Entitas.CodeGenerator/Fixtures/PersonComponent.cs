@@ -10,18 +10,18 @@ public class PersonComponent : IComponent {
 
         public bool hasPerson { get { return HasComponent(ComponentIds.Person); } }
 
-        public void AddPerson(PersonComponent component) {
-            AddComponent(ComponentIds.Person, component);
+        public Entity AddPerson(PersonComponent component) {
+            return AddComponent(ComponentIds.Person, component);
         }
 
-        public void AddPerson(int newAge, string newName) {
+        public Entity AddPerson(int newAge, string newName) {
             var component = new PersonComponent();
             component.age = newAge;
             component.name = newName;
-            AddPerson(component);
+            return AddPerson(component);
         }
 
-        public void ReplacePerson(int newAge, string newName) {
+        public Entity ReplacePerson(int newAge, string newName) {
             PersonComponent component;
             if (hasPerson) {
                 WillRemoveComponent(ComponentIds.Person);
@@ -31,11 +31,11 @@ public class PersonComponent : IComponent {
             }
             component.age = newAge;
             component.name = newName;
-            ReplaceComponent(ComponentIds.Person, component);
+            return ReplaceComponent(ComponentIds.Person, component);
         }
 
-        public void RemovePerson() {
-            RemoveComponent(ComponentIds.Person);
+        public Entity RemovePerson() {
+            return RemoveComponent(ComponentIds.Person);
         }
     }
 

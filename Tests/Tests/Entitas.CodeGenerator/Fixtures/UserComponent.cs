@@ -13,18 +13,18 @@ public class UserComponent : IComponent {
 
         public bool hasUser { get { return HasComponent(ComponentIds.User); } }
 
-        public void AddUser(UserComponent component) {
-            AddComponent(ComponentIds.User, component);
+        public Entity AddUser(UserComponent component) {
+            return AddComponent(ComponentIds.User, component);
         }
 
-        public void AddUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public Entity AddUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
             var component = new UserComponent();
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
-            AddUser(component);
+            return AddUser(component);
         }
 
-        public void ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public Entity ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
             UserComponent component;
             if (hasUser) {
                 WillRemoveComponent(ComponentIds.User);
@@ -34,11 +34,11 @@ public class UserComponent : IComponent {
             }
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
-            ReplaceComponent(ComponentIds.User, component);
+            return ReplaceComponent(ComponentIds.User, component);
         }
 
-        public void RemoveUser() {
-            RemoveComponent(ComponentIds.User);
+        public Entity RemoveUser() {
+            return RemoveComponent(ComponentIds.User);
         }
     }
 

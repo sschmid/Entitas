@@ -102,6 +102,11 @@ namespace Entitas.CodeGenerator {
                 }
             }
         }
+
+        public Entity Is$Name(bool value) {
+            is$Name = value;
+            return this;
+        }
 " : @"
         public bool has$Name { get { return HasComponent($Ids.$Name); } }
 ";
@@ -110,21 +115,21 @@ namespace Entitas.CodeGenerator {
 
         static string addAddMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
-        public void Add$Name($Type component) {
-            AddComponent($Ids.$Name, component);
+        public Entity Add$Name($Type component) {
+            return AddComponent($Ids.$Name, component);
         }
 
-        public void Add$Name($typedArgs) {
+        public Entity Add$Name($typedArgs) {
             var component = new $Type();
 $assign
-            Add$Name(component);
+            return Add$Name(component);
         }
 ");
         }
 
         static string addReplaceMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
-        public void Replace$Name($typedArgs) {
+        public Entity Replace$Name($typedArgs) {
             $Type component;
             if (has$Name) {
                 WillRemoveComponent($Ids.$Name);
@@ -133,15 +138,15 @@ $assign
                 component = new $Type();
             }
 $assign
-            ReplaceComponent($Ids.$Name, component);
+            return ReplaceComponent($Ids.$Name, component);
         }
 ");
         }
 
         static string addRemoveMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
-        public void Remove$Name() {
-            RemoveComponent($Ids.$Name);
+        public Entity Remove$Name() {
+            return RemoveComponent($Ids.$Name);
         }
 ");
         }

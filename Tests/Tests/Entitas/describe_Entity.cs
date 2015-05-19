@@ -15,6 +15,10 @@ class describe_Entity : nspec {
             e.HasComponentA().should_be_true();
         };
 
+        it["returns entity when adding a component"] = () => {
+            e.AddComponent(0, null).should_be_same(e);
+        };
+
         it["doesn't have component of type when no component of that type was added"] = () => {
             e.HasComponentA().should_be_false();
         };
@@ -52,6 +56,11 @@ class describe_Entity : nspec {
             e.HasComponentA().should_be_false();
         };
 
+        it["returns entity when removing a component"] = () => {
+            e.AddComponentA();
+            e.RemoveComponent(1).should_be_same(e);
+        };
+
         it["gets a component of type"] = () => {
             e.AddComponentA();
             e.GetComponentA().should_be_same(Component.A);
@@ -62,6 +71,10 @@ class describe_Entity : nspec {
             var newComponentA = new ComponentA();
             e.ReplaceComponentA(newComponentA);
             e.GetComponentA().should_be_same(newComponentA);
+        };
+
+        it["returns entity when replacing a component"] = () => {
+            e.ReplaceComponent(1, null).should_be_same(e);
         };
 
         it["replacing a non existing component adds component"] = () => {

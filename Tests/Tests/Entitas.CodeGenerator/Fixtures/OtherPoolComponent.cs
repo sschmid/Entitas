@@ -15,18 +15,18 @@ namespace Entitas {
 
         public bool hasOtherPool { get { return HasComponent(OtherComponentIds.OtherPool); } }
 
-        public void AddOtherPool(OtherPoolComponent component) {
-            AddComponent(OtherComponentIds.OtherPool, component);
+        public Entity AddOtherPool(OtherPoolComponent component) {
+            return AddComponent(OtherComponentIds.OtherPool, component);
         }
 
-        public void AddOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public Entity AddOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
             var component = new OtherPoolComponent();
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
-            AddOtherPool(component);
+            return AddOtherPool(component);
         }
 
-        public void ReplaceOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public Entity ReplaceOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
             OtherPoolComponent component;
             if (hasOtherPool) {
                 WillRemoveComponent(OtherComponentIds.OtherPool);
@@ -36,11 +36,11 @@ namespace Entitas {
             }
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
-            ReplaceComponent(OtherComponentIds.OtherPool, component);
+            return ReplaceComponent(OtherComponentIds.OtherPool, component);
         }
 
-        public void RemoveOtherPool() {
-            RemoveComponent(OtherComponentIds.OtherPool);
+        public Entity RemoveOtherPool() {
+            return RemoveComponent(OtherComponentIds.OtherPool);
         }
     }
 
