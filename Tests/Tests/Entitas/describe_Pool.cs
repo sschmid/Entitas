@@ -91,14 +91,14 @@ class describe_Pool : nspec {
             };
 
             it["destroys entity when pushing back to object pool"] = () => {
-                var e = this.CreateEntity();
+                var e = _pool.CreateEntity();
                 e.AddComponentA();
                 _pool.DestroyEntity(e);
                 e.HasComponent(CID.ComponentA).should_be_false();
             };
 
             it["returns pushed entity"] = () => {
-                var e = this.CreateEntity();
+                var e = _pool.CreateEntity();
                 e.AddComponentA();
                 _pool.DestroyEntity(e);
                 var entity = _pool.CreateEntity();
@@ -107,7 +107,7 @@ class describe_Pool : nspec {
             };
 
             it["returns new entity"] = () => {
-                var e = this.CreateEntity();
+                var e = _pool.CreateEntity();
                 e.AddComponentA();
                 _pool.DestroyEntity(e);
                 _pool.CreateEntity();
@@ -190,6 +190,12 @@ class describe_Pool : nspec {
                     eA.AddComponentB();
                     g.GetEntities().should_not_contain(eA);
                 };
+
+                it["throws when destroying an entity the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {
+                    var e = _pool.CreateEntity();
+                    _pool.DestroyEntity(e);
+                    _pool.DestroyEntity(e);
+                });
 
                 it["group dispatches OnEntityWillBeRemoved, OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
                     var g = _pool.GetGroup(matcher);

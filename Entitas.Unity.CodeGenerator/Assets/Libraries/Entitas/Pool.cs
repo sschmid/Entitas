@@ -42,12 +42,17 @@ namespace Entitas {
         }
 
         public virtual void DestroyEntity(Entity entity) {
+            var removed = _entities.Remove(entity);
+            if (!removed) {
+                throw new PoolDoesNotContainEntityException(entity,
+                    "Could not destroy entity!");
+            }
+
             entity.RemoveAllComponents();
             entity.OnComponentAdded -= onComponentAddedOrRemoved;
             entity.OnComponentReplaced -= onComponentReplaced;
             entity.OnComponentWillBeRemoved -= onComponentWillBeRemoved;
             entity.OnComponentRemoved -= onComponentAddedOrRemoved;
-            _entities.Remove(entity);
             _entitiesCache = null;
             _entityPool.Push(entity);
         }
@@ -144,6 +149,12 @@ namespace Entitas {
 
         public void Push(Entity entity) {
             _pool.Push(entity);
+        }
+    }
+
+    public class PoolDoesNotContainEntityException : Exception {
+        public PoolDoesNotContainEntityException(Entity entity, string message) :
+            base(message + "\nPool does not contain entity " + entity) {
         }
     }
 }
