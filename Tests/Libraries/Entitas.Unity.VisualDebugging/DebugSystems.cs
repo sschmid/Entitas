@@ -92,7 +92,6 @@ namespace Entitas.Unity.VisualDebugging {
         public override void Start() {
             _totalDuration = 0;
             foreach (var system in _startSystems) {
-                system.Start();
                 var duration = monitorSystemStartDuration(system);
                 _totalDuration += duration;
                 updateSystemInfo(system, duration);

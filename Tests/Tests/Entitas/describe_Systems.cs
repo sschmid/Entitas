@@ -80,6 +80,16 @@ class describe_Systems : nspec {
                 systems.systems.Length.should_be(1);
             };
 
+            it["updates systems cache"] = () => {
+                var system = new StartSystemSpy();
+                systems.Add(system);
+                var s = systems.systems;
+                systems.Add(system);
+                systems.systems.should_contain(system);
+                systems.systems.Length.should_be(2);
+                systems.systems.should_not_be_same(s);
+            };
+
             it["starts IStartSystem"] = () => {
                 var system = new StartSystemSpy();
                 systems.Add(system);
