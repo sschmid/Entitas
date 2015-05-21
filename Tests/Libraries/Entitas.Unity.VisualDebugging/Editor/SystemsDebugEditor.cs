@@ -22,8 +22,8 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.Space();
 
             EditorGUILayout.BeginHorizontal();
-            systems.updateInterval = (UpdateInterval)EditorGUILayout.EnumPopup("Update Interval", systems.updateInterval);
-            if (GUILayout.Button("Update now", GUILayout.Width(80), GUILayout.Height(14))) {
+            systems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset Ø", systems.avgResetInterval);
+            if (GUILayout.Button("Reset Ø now", GUILayout.Width(88), GUILayout.Height(14))) {
                 systems.Reset();
             }
             EditorGUILayout.EndHorizontal();

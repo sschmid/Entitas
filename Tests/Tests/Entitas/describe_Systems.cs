@@ -73,6 +73,13 @@ class describe_Systems : nspec {
                 systems.executeSystemsCount.should_be(0);
             };
 
+            it["contains IStartSystem when added"] = () => {
+                var system = new StartSystemSpy();
+                systems.Add(system);
+                systems.systems.should_contain(system);
+                systems.systems.Length.should_be(1);
+            };
+
             it["starts IStartSystem"] = () => {
                 var system = new StartSystemSpy();
                 systems.Add(system);
@@ -86,6 +93,13 @@ class describe_Systems : nspec {
                 systems.executeSystemsCount.should_be(1);
             };
 
+            it["contains IExecuteSystem when added"] = () => {
+                var system = new ExecuteSystemSpy();
+                systems.Add(system);
+                systems.systems.should_contain(system);
+                systems.systems.Length.should_be(1);
+            };
+
             it["executes IExecuteSystem"] = () => {
                 var system = new ExecuteSystemSpy();
                 systems.Add(system);
@@ -97,6 +111,13 @@ class describe_Systems : nspec {
                 systems.Add(new StartExecuteSystemSpy());
                 systems.startSystemsCount.should_be(1);
                 systems.executeSystemsCount.should_be(1);
+            };
+
+            it["contains IStartSystem, IExecuteSystem when added"] = () => {
+                var system = new StartExecuteSystemSpy();
+                systems.Add(system);
+                systems.systems.should_contain(system);
+                systems.systems.Length.should_be(1);
             };
 
             it["starts and executes IStartSystem, IExecuteSystem"] = () => {

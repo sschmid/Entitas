@@ -12,7 +12,7 @@ namespace Entitas.Unity.VisualDebugging {
         public double minExecutionDuration { get { return _minExecutionDuration; } }
         public double maxExecutionDuration { get { return _maxExecutionDuration; } }
         public double averageExecutionDuration { 
-            get { return _durationsCount == 0 ? 0: _totalExecutionDuration / _durationsCount; }
+            get { return _durationsCount == 0 ? 0 : _totalExecutionDuration / _durationsCount; }
         }
 
         string _systemName;
@@ -28,6 +28,9 @@ namespace Entitas.Unity.VisualDebugging {
         public void AddExecutionDuration(double executionDuration) {
             if (executionDuration < _minExecutionDuration || _totalExecutionDuration == -1) {
                 _minExecutionDuration = executionDuration;
+                if (_totalExecutionDuration == -1) {
+                    _totalExecutionDuration = 0;
+                }
             }
             if (executionDuration > _maxExecutionDuration) {
                 _maxExecutionDuration = executionDuration;
@@ -43,7 +46,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
     }
 
-    public enum UpdateInterval {
+    public enum AvgResetInterval {
         EveryFrame = 1,
         Every30Frames = 30,
         Every60Frames = 60,
@@ -63,7 +66,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public float threshold;
-        public UpdateInterval updateInterval = UpdateInterval.Every60Frames;
+        public AvgResetInterval avgResetInterval = AvgResetInterval.Never;
 
         readonly string _name;
         readonly Transform _container;
@@ -86,9 +89,21 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
+        public override void Start() {
+            _totalDuration = 0;
+            foreach (var system in _startSystems) {
+                system.Start();
+                var duration = monitorSystemStartDuration(system);
+                _totalDuration += duration;
+                updateSystemInfo(system, duration);
+            }
+            
+            updateName();
+        }
+
         public override void Execute() {
             _totalDuration = 0;
-            if (Time.frameCount % (int)updateInterval == 0) {
+            if (Time.frameCount % (int)avgResetInterval == 0) {
                 Reset();
             }
             foreach (var system in _executeSystems) {
@@ -100,6 +115,14 @@ namespace Entitas.Unity.VisualDebugging {
             updateName();
         }
 
+        double monitorSystemStartDuration(IStartSystem system) {
+            _stopwatch.Reset();
+            _stopwatch.Start();
+            system.Start();
+            _stopwatch.Stop();
+            return _stopwatch.Elapsed.TotalMilliseconds;
+        }
+
         double monitorSystemExecutionDuration(IExecuteSystem system) {
             _stopwatch.Reset();
             _stopwatch.Start();
@@ -108,7 +131,7 @@ namespace Entitas.Unity.VisualDebugging {
             return _stopwatch.Elapsed.TotalMilliseconds;
         }
 
-        void updateSystemInfo(IExecuteSystem system, double executionDuration) {
+        void updateSystemInfo(ISystem system, double executionDuration) {
             var reactiveSystem = system as ReactiveSystem;
             var systemType = reactiveSystem != null
                                 ? reactiveSystem.subsystem.GetType()
