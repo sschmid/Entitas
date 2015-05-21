@@ -29,7 +29,7 @@ class check_namespaces : nspec {
             var sourceFiles = getSourceFiles(entitasDir);
 
             sourceFiles.Count.should_be_greater_than(60);
-            sourceFiles.Count.should_be_less_than(70);
+            sourceFiles.Count.should_be_less_than(100);
 
             const string namespacePattern = @"(?:^namespace)\s.*\b";
             const string expectedNamespacePattern = @".+?[^\/]*";

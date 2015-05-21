@@ -58,6 +58,21 @@ class describe_Systems : nspec {
                 systems = new Systems();
             };
 
+            it["has no systems"] = () => {
+                systems.startSystemsCount.should_be(0);
+                systems.executeSystemsCount.should_be(0);
+            };
+
+            it["returns systems when adding system"] = () => {
+                systems.Add(new StartSystemSpy()).should_be_same(systems);
+            };
+
+            it["has systems count when adding IStartSystem"] = () => {
+                systems.Add(new StartSystemSpy());
+                systems.startSystemsCount.should_be(1);
+                systems.executeSystemsCount.should_be(0);
+            };
+
             it["starts IStartSystem"] = () => {
                 var system = new StartSystemSpy();
                 systems.Add(system);
@@ -65,11 +80,23 @@ class describe_Systems : nspec {
                 system.started.should_be_true();
             };
 
+            it["has systems count when adding IExecuteSystem"] = () => {
+                systems.Add(new ExecuteSystemSpy());
+                systems.startSystemsCount.should_be(0);
+                systems.executeSystemsCount.should_be(1);
+            };
+
             it["executes IExecuteSystem"] = () => {
                 var system = new ExecuteSystemSpy();
                 systems.Add(system);
                 systems.Execute();
                 system.executed.should_be_true();
+            };
+
+            it["has systems count when adding IStartSystem, IExecuteSystem"] = () => {
+                systems.Add(new StartExecuteSystemSpy());
+                systems.startSystemsCount.should_be(1);
+                systems.executeSystemsCount.should_be(1);
             };
 
             it["starts and executes IStartSystem, IExecuteSystem"] = () => {

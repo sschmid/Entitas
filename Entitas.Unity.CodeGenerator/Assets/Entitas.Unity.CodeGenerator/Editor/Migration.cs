@@ -12,7 +12,7 @@ namespace Entitas.Unity.CodeGenerator {
 
     public static class Migration {
 
-        [MenuItem("Entitas/Migration/Migrate Matcher")]
+        [MenuItem("Entitas/Migration/Migrate Matcher...")]
         public static void MigrateMatcher() {
             if (EditorUtility.DisplayDialog(
                     "Migrate Matcher",

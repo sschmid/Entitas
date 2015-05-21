@@ -4,23 +4,26 @@ using System.Collections.Generic;
 namespace Entitas {
     public class Systems {
 
-        readonly List<IStartSystem> _startSystems;
-        readonly List<IExecuteSystem> _executeSystems;
+        public int startSystemsCount { get { return _startSystems.Count; } }
+        public int executeSystemsCount { get { return _executeSystems.Count; } }
+
+        protected readonly List<IStartSystem> _startSystems;
+        protected readonly List<IExecuteSystem> _executeSystems;
 
         public Systems() {
             _startSystems = new List<IStartSystem>();
             _executeSystems = new List<IExecuteSystem>();
         }
 
-        public void Add<T>() {
-            Add(typeof(T));
+        public virtual Systems Add<T>() {
+            return Add(typeof(T));
         }
 
-        public void Add(Type systemType) {
-            Add((ISystem)Activator.CreateInstance(systemType));
+        public virtual Systems Add(Type systemType) {
+            return Add((ISystem)Activator.CreateInstance(systemType));
         }
 
-        public void Add(ISystem system) {
+        public virtual Systems Add(ISystem system) {
             var reactiveSystem = system as ReactiveSystem;
             var startSystem = reactiveSystem != null
                 ? reactiveSystem.subsystem as IStartSystem
@@ -34,15 +37,17 @@ namespace Entitas {
             if (executeSystem != null) {
                 _executeSystems.Add(executeSystem);
             }
+
+            return this;
         }
 
-        public void Start() {
+        public virtual void Start() {
             foreach (var system in _startSystems) {
                 system.Start();
             }
         }
 
-        public void Execute() {
+        public virtual void Execute() {
             foreach (var system in _executeSystems) {
                 system.Execute();
             }
