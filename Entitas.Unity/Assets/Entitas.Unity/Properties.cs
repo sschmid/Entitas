@@ -28,18 +28,17 @@ namespace Entitas.Unity {
 
         string[] mergeMultilineValues(string[] lines) {
             var currentProperty = string.Empty;
-            var mergedLines = new List<string>();
-            foreach (var line in lines) {
+            return lines.Aggregate(new List<string>(), (acc, line) => {
                 currentProperty += line;
                 if (currentProperty.EndsWith("\\", StringComparison.Ordinal)) {
                     currentProperty = currentProperty.Substring(0, currentProperty.Length - 1);
                 } else {
-                    mergedLines.Add(currentProperty);
+                    acc.Add(currentProperty);
                     currentProperty = string.Empty;
                 }
-            }
 
-            return mergedLines.ToArray();
+                return acc;
+            }).ToArray();
         }
 
         void addProperties(string[] lines) {

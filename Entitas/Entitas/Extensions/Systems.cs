@@ -58,14 +58,14 @@ namespace Entitas {
         }
 
         public virtual void Start() {
-            foreach (var system in _startSystems) {
-                system.Start();
+            for (int i = 0, _startSystemsCount = _startSystems.Count; i < _startSystemsCount; i++) {
+                _startSystems[i].Start();
             }
         }
 
         public virtual void Execute() {
-            foreach (var system in _executeSystems) {
-                system.Execute();
+            for (int i = 0, _executeSystemsCount = _executeSystems.Count; i < _executeSystemsCount; i++) {
+                _executeSystems[i].Execute();
             }
         }
     }

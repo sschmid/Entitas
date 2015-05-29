@@ -91,7 +91,8 @@ namespace Entitas.Unity.VisualDebugging {
 
         public override void Start() {
             _totalDuration = 0;
-            foreach (var system in _startSystems) {
+            for (int i = 0, _startSystemsCount = _startSystems.Count; i < _startSystemsCount; i++) {
+                var system = _startSystems[i];
                 var duration = monitorSystemStartDuration(system);
                 _totalDuration += duration;
                 updateSystemInfo(system, duration);
@@ -105,7 +106,8 @@ namespace Entitas.Unity.VisualDebugging {
             if (Time.frameCount % (int)avgResetInterval == 0) {
                 Reset();
             }
-            foreach (var system in _executeSystems) {
+            for (int i = 0, _executeSystemsCount = _executeSystems.Count; i < _executeSystemsCount; i++) {
+                var system = _executeSystems[i];
                 var duration = monitorSystemExecutionDuration(system);
                 _totalDuration += duration;
                 updateSystemInfo(system, duration);
