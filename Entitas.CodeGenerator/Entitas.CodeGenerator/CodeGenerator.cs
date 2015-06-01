@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -39,28 +38,23 @@ namespace Entitas.CodeGenerator {
         }
 
         static void generateIndicesLookup(string dir, Type[] components) {
-            var lookups = IndicesLookupGenerator
-                .GenerateIndicesLookup(components);
-            writeFiles(dir, lookups);
+            var files = new IndicesLookupGenerator().Generate(components);
+            writeFiles(dir, files);
         }
 
         static void generateComponentExtensions(string dir, Type[] components) {
-            var extensions = ComponentExtensionsGenerator
-                .GenerateComponentExtensions(components, "GeneratedExtension");
-            writeFiles(dir, extensions);
+            var files = new ComponentExtensionsGenerator().Generate(components);
+            writeFiles(dir, files);
         }
 
         static void generatePoolAttributes(string dir, string[] poolNames) {
-            var poolAttributes = PoolAttributeGenerator
-                .GeneratePoolAttributes(poolNames);
-            writeFiles(dir, poolAttributes);
+            var files = new PoolAttributeGenerator().Generate(poolNames);
+            writeFiles(dir, files);
         }
 
-        static void writeFiles(string dir, Dictionary<string, string> files) {
-            foreach (var entry in files) {
-                var filePath = dir + entry.Key + ".cs";
-                var code = entry.Value;
-                File.WriteAllText(filePath, code);
+        static void writeFiles(string dir, CodeGenFile[] files) {
+            foreach (var file in files) {
+                File.WriteAllText(file.fileName + ".cs", file.fileContent);
             }
         }
     }

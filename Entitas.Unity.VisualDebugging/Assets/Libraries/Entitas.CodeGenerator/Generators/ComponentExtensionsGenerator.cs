@@ -4,48 +4,53 @@ using System.Linq;
 using System.Reflection;
 
 namespace Entitas.CodeGenerator {
-    public static class ComponentExtensionsGenerator {
+    public class ComponentExtensionsGenerator : IComponentCodeGenerator {
 
-        public static Dictionary<string, string> GenerateComponentExtensions(Type[] components, string classSuffix) {
+        const string classSuffix = "GeneratedExtension";
+
+        public CodeGenFile[] Generate(Type[] components) {
             return components
-                .Where(shouldGenerate)
-                .ToDictionary(
-                type => type + classSuffix,
-                type => generateComponentExtension(type)
-            );
+                    .Where(shouldGenerate)
+                    .Aggregate(new List<CodeGenFile>(), (files, type) => {
+                        files.Add(new CodeGenFile {
+                            fileName = type + classSuffix,
+                            fileContent = generateComponentExtension(type)
+                        });
+                        return files;
+                    }).ToArray();
         }
 
         static bool shouldGenerate(Type type) {
-            Attribute[] attrs = Attribute.GetCustomAttributes(type);
-            foreach (Attribute attr in attrs) {
-                if (attr is DontGenerateAttribute) {
-                    return false;
-                }
-            }
-
-            return true;
+            return !Attribute.GetCustomAttributes(type)
+                .Any(attr => attr is DontGenerateAttribute);
         }
 
         static string generateComponentExtension(Type type) {
-            string code;
-            if (type.PoolName() == string.Empty) {
-                code = addNamespace();
-                code += addEntityMethods(type);
-                if (isSingleEntity(type)) {
-                    code += addPoolMethods(type);
-                }
-                code += addMatcher(type);
-                code += closeNamespace();
-            } else {
-                code = addUsing();
-                code += addNamespace();
-                code += addEntityMethods(type);
-                if (isSingleEntity(type)) {
-                    code += addPoolMethods(type);
-                }
-                code += closeNamespace();
-                code += addMatcher(type);
+            return type.PoolName() == string.Empty
+                        ? addDefaultPoolCode(type)
+                        : addCustomPoolCode(type);
+        }
+
+        static string addDefaultPoolCode(Type type) {
+            var code = addNamespace();
+            code += addEntityMethods(type);
+            if (isSingleEntity(type)) {
+                code += addPoolMethods(type);
             }
+            code += addMatcher(type);
+            code += closeNamespace();
+            return code;
+        }
+
+        static string addCustomPoolCode(Type type) {
+            var code = addUsing();
+            code += addNamespace();
+            code += addEntityMethods(type);
+            if (isSingleEntity(type)) {
+                code += addPoolMethods(type);
+            }
+            code += closeNamespace();
+            code += addMatcher(type);
             return code;
         }
 
@@ -69,12 +74,12 @@ namespace Entitas.CodeGenerator {
 
         static string addEntityMethods(Type type) {
             return addEntityClassHeader()
-            + addGetMethods(type)
-            + addHasMethods(type)
-            + addAddMethods(type)
-            + addReplaceMethods(type)
-            + addRemoveMethods(type)
-            + addCloseClass();
+                    + addGetMethods(type)
+                    + addHasMethods(type)
+                    + addAddMethods(type)
+                    + addReplaceMethods(type)
+                    + addRemoveMethods(type)
+                    + addCloseClass();
         }
 
         static string addEntityClassHeader() {
@@ -159,12 +164,12 @@ $assign
 
         static string addPoolMethods(Type type) {
             return addPoolClassHeader(type)
-            + addPoolGetMethods(type)
-            + addPoolHasMethods(type)
-            + addPoolAddMethods(type)
-            + addPoolReplaceMethods(type)
-            + addPoolRemoveMethods(type)
-            + addCloseClass();
+                    + addPoolGetMethods(type)
+                    + addPoolHasMethods(type)
+                    + addPoolAddMethods(type)
+                    + addPoolReplaceMethods(type)
+                    + addPoolRemoveMethods(type)
+                    + addCloseClass();
         }
 
         static string addPoolClassHeader(Type type) {
@@ -279,14 +284,8 @@ $assign
          */
 
         static bool isSingleEntity(Type type) {
-            Attribute[] attrs = Attribute.GetCustomAttributes(type);
-            foreach (Attribute attr in attrs) {
-                if (attr is SingleEntityAttribute) {
-                    return true;
-                }
-            }
-
-            return false;
+            return Attribute.GetCustomAttributes(type)
+                .Any(attr => attr is SingleEntityAttribute);;
         }
 
         static bool isSingletonComponent(Type type) {
@@ -312,15 +311,15 @@ $assign
 
         static string createFormatString(string format) {
             return format.Replace("{", "{{")
-                .Replace("}", "}}")
-                .Replace("$Type", "{0}")
-                .Replace("$Name", "{1}")
-                .Replace("$name", "{2}")
-                .Replace("$Tag", "{3}")
-                .Replace("$Ids", "{4}")
-                .Replace("$typedArgs", "{5}")
-                .Replace("$assign", "{6}")
-                .Replace("$args", "{7}");
+                        .Replace("}", "}}")
+                        .Replace("$Type", "{0}")
+                        .Replace("$Name", "{1}")
+                        .Replace("$name", "{2}")
+                        .Replace("$Tag", "{3}")
+                        .Replace("$Ids", "{4}")
+                        .Replace("$typedArgs", "{5}")
+                        .Replace("$assign", "{6}")
+                        .Replace("$args", "{7}");
         }
 
         static string fieldNamesWithType(FieldInfo[] fields) {

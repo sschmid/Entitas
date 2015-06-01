@@ -2,6 +2,7 @@
 using Entitas.CodeGenerator;
 using System;
 using My.Namespace;
+using System.Linq;
 
 class describe_ComponentExtensionsGenerator : nspec {
 
@@ -10,17 +11,18 @@ class describe_ComponentExtensionsGenerator : nspec {
     const string classSuffix = "GeneratedExtension";
 
     void generates(Type type, string code) {
-        var extensions = ComponentExtensionsGenerator
-            .GenerateComponentExtensions(new[] { type }, classSuffix);
+        var files = new ComponentExtensionsGenerator().Generate(new[] { type });
         var filePath = type + classSuffix;
 
-        extensions.Count.should_be(1);
-        extensions.ContainsKey(filePath).should_be_true();
+        files.Length.should_be(1);
+        files.Any(f => f.fileName == filePath).should_be_true();
+
+        var file = files.First(f => f.fileName == filePath);
         if (logResults) {
             Console.WriteLine("should:\n" + code);
-            Console.WriteLine("was:\n" + extensions[filePath]);
+            Console.WriteLine("was:\n" + file.fileContent);
         }
-        extensions[filePath].should_be(code);
+        file.fileContent.should_be(code);
     }
 
     void when_generating() {
@@ -31,9 +33,8 @@ class describe_ComponentExtensionsGenerator : nspec {
         it["component for custom pool"] = () => generates(typeof(OtherPoolComponent), OtherPoolComponent.extensions);
         it["ignores [DontGenerate]"] = () => {
             var type = typeof(DontGenerateComponent);
-            var extensions = ComponentExtensionsGenerator
-                .GenerateComponentExtensions(new[] { type }, classSuffix);
-            extensions.Count.should_be(0);
+            var files = new ComponentExtensionsGenerator().Generate(new[] { type });
+            files.Length.should_be(0);
         };
 
         it["works with namespaces"] = () => generates(typeof(NamespaceComponent), NamespaceComponent.extensions);

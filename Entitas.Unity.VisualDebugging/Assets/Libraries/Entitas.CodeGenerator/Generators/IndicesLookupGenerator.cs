@@ -1,50 +1,48 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Entitas.CodeGenerator {
-    public static class IndicesLookupGenerator {
+    public class IndicesLookupGenerator : IComponentCodeGenerator {
 
-        public static Dictionary<string, string> GenerateIndicesLookup(Type[] components) {
+        public CodeGenFile[] Generate(Type[] components) {
             var sortedComponents = components.OrderBy(type => type.ToString()).ToArray();
-            return getLookups(sortedComponents).ToDictionary(
-                lookup => lookup.Key,
-                lookup => generateIndicesLookup(lookup.Key, lookup.Value.ToArray())
-            );
+            return getLookups(sortedComponents)
+                .Aggregate(new List<CodeGenFile>(), (files, lookup) => {
+                    files.Add(new CodeGenFile {
+                        fileName = lookup.Key,
+                        fileContent = generateIndicesLookup(lookup.Key, lookup.Value.ToArray())
+                    });
+                    return files;
+                }).ToArray();
         }
 
         static Dictionary<string, List<Type>> getLookups(Type[] components) {
-            var lookups = new Dictionary<string, List<Type>>();
-            foreach (var type in components.Where(shouldGenerate)) {
-                var lookupTag = type.IndicesLookupTag();
-                if (!lookups.ContainsKey(lookupTag)) {
-                    lookups.Add(lookupTag, new List<Type>());
-                }
-
-                lookups[lookupTag].Add(type);
-            }
-
-            return lookups;
+            return components
+                .Where(shouldGenerate)
+                .Aggregate(new Dictionary<string, List<Type>>(), (lookups, type) => {
+                    var lookupTag = type.IndicesLookupTag();
+                    if (!lookups.ContainsKey(lookupTag)) {
+                        lookups.Add(lookupTag, new List<Type>());
+                    }
+                        
+                    lookups[lookupTag].Add(type);
+                    return lookups;
+                });
         }
 
         static bool shouldGenerate(Type type) {
-            Attribute[] attrs = Attribute.GetCustomAttributes(type);
-            foreach (Attribute attr in attrs) {
-                var dontGenerate = attr as DontGenerateAttribute;
-                if (dontGenerate != null && !dontGenerate.generateIndex) {
-                    return false;
-                }
-            }
-
-            return true;
+            return Attribute.GetCustomAttributes(type)
+                .OfType<DontGenerateAttribute>()
+                .All(attr => attr.generateIndex);;
         }
 
         static string generateIndicesLookup(string tag, Type[] components) {
             return addClassHeader(tag)
-            + addIndices(components)
-            + idToString(components)
-            + addCloseClass()
-            + addMatcher(tag);
+                    + addIndices(components)
+                    + addIdToString(components)
+                    + addCloseClass()
+                    + addMatcher(tag);
         }
 
         static string addClassHeader(string lookupTag) {
@@ -66,7 +64,7 @@ namespace Entitas.CodeGenerator {
             return code + "\n" + string.Format(totalFormat, components.Length);
         }
 
-        static string idToString(Type[] components) {
+        static string addIdToString(Type[] components) {
             const string format = "        {{ {0}, \"{1}\" }},\n";
             const string formatLast = "        {{ {0}, \"{1}\" }}\n";
             var code = string.Empty;

@@ -1,6 +1,7 @@
 ﻿using NSpec;
 using Entitas.CodeGenerator;
 using System;
+using System.Linq;
 
 class describe_IndicesLookupGenerator : nspec {
     const string defaultLookupName = "ComponentIds";
@@ -11,15 +12,19 @@ class describe_IndicesLookupGenerator : nspec {
     }
 
     void generates(Type[] types, string lookupName, string lookupCode) {
-        var lookups = IndicesLookupGenerator.GenerateIndicesLookup(types);
-        lookups.Count.should_be(1);
+        var files = new IndicesLookupGenerator().Generate(types);
+        files.Length.should_be(1);
+
+        files.Any(f => f.fileName == lookupName).should_be_true();
+        
+        var file = files.First(f => f.fileName == lookupName);
+
         if (logResults) {
             Console.WriteLine("should:\n" + lookupCode);
-            Console.WriteLine("was:\n" + lookups[lookupName]);
+            Console.WriteLine("was:\n" + file.fileContent);
         }
 
-        lookups.ContainsKey(lookupName).should_be_true();
-        lookups[lookupName].should_be(lookupCode);
+        file.fileContent.should_be(lookupCode);
     }
 
     const string defaultTagCode = @"

@@ -40,6 +40,9 @@
     <Compile Include="Entitas.CodeGenerator\Generators\TypeGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\CodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\CodeGenFile.cs" />
+    <Compile Include="Entitas.CodeGenerator\IComponentCodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\IPoolCodeGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
