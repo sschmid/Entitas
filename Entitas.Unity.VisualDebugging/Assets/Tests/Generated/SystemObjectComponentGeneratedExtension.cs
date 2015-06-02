@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasSystemObject { get { return HasComponent(ComponentIds.SystemObject); } }
 
-        public void AddSystemObject(SystemObjectComponent component) {
-            AddComponent(ComponentIds.SystemObject, component);
+        public Entity AddSystemObject(SystemObjectComponent component) {
+            return AddComponent(ComponentIds.SystemObject, component);
         }
 
-        public void AddSystemObject(object newSystemObject) {
+        public Entity AddSystemObject(object newSystemObject) {
             var component = new SystemObjectComponent();
             component.systemObject = newSystemObject;
-            AddSystemObject(component);
+            return AddSystemObject(component);
         }
 
-        public void ReplaceSystemObject(object newSystemObject) {
+        public Entity ReplaceSystemObject(object newSystemObject) {
             SystemObjectComponent component;
             if (hasSystemObject) {
                 WillRemoveComponent(ComponentIds.SystemObject);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new SystemObjectComponent();
             }
             component.systemObject = newSystemObject;
-            ReplaceComponent(ComponentIds.SystemObject, component);
+            return ReplaceComponent(ComponentIds.SystemObject, component);
         }
 
-        public void RemoveSystemObject() {
-            RemoveComponent(ComponentIds.SystemObject);
+        public Entity RemoveSystemObject() {
+            return RemoveComponent(ComponentIds.SystemObject);
         }
     }
 

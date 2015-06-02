@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasAnimationCurve { get { return HasComponent(ComponentIds.AnimationCurve); } }
 
-        public void AddAnimationCurve(AnimationCurveComponent component) {
-            AddComponent(ComponentIds.AnimationCurve, component);
+        public Entity AddAnimationCurve(AnimationCurveComponent component) {
+            return AddComponent(ComponentIds.AnimationCurve, component);
         }
 
-        public void AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
+        public Entity AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
             var component = new AnimationCurveComponent();
             component.animationCurve = newAnimationCurve;
-            AddAnimationCurve(component);
+            return AddAnimationCurve(component);
         }
 
-        public void ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
+        public Entity ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
             AnimationCurveComponent component;
             if (hasAnimationCurve) {
                 WillRemoveComponent(ComponentIds.AnimationCurve);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new AnimationCurveComponent();
             }
             component.animationCurve = newAnimationCurve;
-            ReplaceComponent(ComponentIds.AnimationCurve, component);
+            return ReplaceComponent(ComponentIds.AnimationCurve, component);
         }
 
-        public void RemoveAnimationCurve() {
-            RemoveComponent(ComponentIds.AnimationCurve);
+        public Entity RemoveAnimationCurve() {
+            return RemoveComponent(ComponentIds.AnimationCurve);
         }
     }
 

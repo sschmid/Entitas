@@ -16,6 +16,11 @@ namespace Entitas {
                 }
             }
         }
+
+        public Entity IsTest(bool value) {
+            isTest = value;
+            return this;
+        }
     }
 }
 

@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasMyInt { get { return HasComponent(ComponentIds.MyInt); } }
 
-        public void AddMyInt(MyIntComponent component) {
-            AddComponent(ComponentIds.MyInt, component);
+        public Entity AddMyInt(MyIntComponent component) {
+            return AddComponent(ComponentIds.MyInt, component);
         }
 
-        public void AddMyInt(int newMyInt) {
+        public Entity AddMyInt(int newMyInt) {
             var component = new MyIntComponent();
             component.myInt = newMyInt;
-            AddMyInt(component);
+            return AddMyInt(component);
         }
 
-        public void ReplaceMyInt(int newMyInt) {
+        public Entity ReplaceMyInt(int newMyInt) {
             MyIntComponent component;
             if (hasMyInt) {
                 WillRemoveComponent(ComponentIds.MyInt);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new MyIntComponent();
             }
             component.myInt = newMyInt;
-            ReplaceComponent(ComponentIds.MyInt, component);
+            return ReplaceComponent(ComponentIds.MyInt, component);
         }
 
-        public void RemoveMyInt() {
-            RemoveComponent(ComponentIds.MyInt);
+        public Entity RemoveMyInt() {
+            return RemoveComponent(ComponentIds.MyInt);
         }
     }
 

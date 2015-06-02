@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasMyString { get { return HasComponent(ComponentIds.MyString); } }
 
-        public void AddMyString(MyStringComponent component) {
-            AddComponent(ComponentIds.MyString, component);
+        public Entity AddMyString(MyStringComponent component) {
+            return AddComponent(ComponentIds.MyString, component);
         }
 
-        public void AddMyString(string newMyString) {
+        public Entity AddMyString(string newMyString) {
             var component = new MyStringComponent();
             component.myString = newMyString;
-            AddMyString(component);
+            return AddMyString(component);
         }
 
-        public void ReplaceMyString(string newMyString) {
+        public Entity ReplaceMyString(string newMyString) {
             MyStringComponent component;
             if (hasMyString) {
                 WillRemoveComponent(ComponentIds.MyString);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new MyStringComponent();
             }
             component.myString = newMyString;
-            ReplaceComponent(ComponentIds.MyString, component);
+            return ReplaceComponent(ComponentIds.MyString, component);
         }
 
-        public void RemoveMyString() {
-            RemoveComponent(ComponentIds.MyString);
+        public Entity RemoveMyString() {
+            return RemoveComponent(ComponentIds.MyString);
         }
     }
 

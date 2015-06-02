@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasList { get { return HasComponent(ComponentIds.List); } }
 
-        public void AddList(ListComponent component) {
-            AddComponent(ComponentIds.List, component);
+        public Entity AddList(ListComponent component) {
+            return AddComponent(ComponentIds.List, component);
         }
 
-        public void AddList(System.Collections.Generic.List<string> newList) {
+        public Entity AddList(System.Collections.Generic.List<string> newList) {
             var component = new ListComponent();
             component.list = newList;
-            AddList(component);
+            return AddList(component);
         }
 
-        public void ReplaceList(System.Collections.Generic.List<string> newList) {
+        public Entity ReplaceList(System.Collections.Generic.List<string> newList) {
             ListComponent component;
             if (hasList) {
                 WillRemoveComponent(ComponentIds.List);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new ListComponent();
             }
             component.list = newList;
-            ReplaceComponent(ComponentIds.List, component);
+            return ReplaceComponent(ComponentIds.List, component);
         }
 
-        public void RemoveList() {
-            RemoveComponent(ComponentIds.List);
+        public Entity RemoveList() {
+            return RemoveComponent(ComponentIds.List);
         }
     }
 

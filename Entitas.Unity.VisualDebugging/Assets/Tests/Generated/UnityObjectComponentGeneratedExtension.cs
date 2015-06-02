@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasUnityObject { get { return HasComponent(ComponentIds.UnityObject); } }
 
-        public void AddUnityObject(UnityObjectComponent component) {
-            AddComponent(ComponentIds.UnityObject, component);
+        public Entity AddUnityObject(UnityObjectComponent component) {
+            return AddComponent(ComponentIds.UnityObject, component);
         }
 
-        public void AddUnityObject(UnityEngine.Object newUnityObject) {
+        public Entity AddUnityObject(UnityEngine.Object newUnityObject) {
             var component = new UnityObjectComponent();
             component.unityObject = newUnityObject;
-            AddUnityObject(component);
+            return AddUnityObject(component);
         }
 
-        public void ReplaceUnityObject(UnityEngine.Object newUnityObject) {
+        public Entity ReplaceUnityObject(UnityEngine.Object newUnityObject) {
             UnityObjectComponent component;
             if (hasUnityObject) {
                 WillRemoveComponent(ComponentIds.UnityObject);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new UnityObjectComponent();
             }
             component.unityObject = newUnityObject;
-            ReplaceComponent(ComponentIds.UnityObject, component);
+            return ReplaceComponent(ComponentIds.UnityObject, component);
         }
 
-        public void RemoveUnityObject() {
-            RemoveComponent(ComponentIds.UnityObject);
+        public Entity RemoveUnityObject() {
+            return RemoveComponent(ComponentIds.UnityObject);
         }
     }
 

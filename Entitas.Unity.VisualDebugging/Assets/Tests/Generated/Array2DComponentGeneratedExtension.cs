@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasArray2D { get { return HasComponent(ComponentIds.Array2D); } }
 
-        public void AddArray2D(Array2DComponent component) {
-            AddComponent(ComponentIds.Array2D, component);
+        public Entity AddArray2D(Array2DComponent component) {
+            return AddComponent(ComponentIds.Array2D, component);
         }
 
-        public void AddArray2D(int[,] newArray2d) {
+        public Entity AddArray2D(int[,] newArray2d) {
             var component = new Array2DComponent();
             component.array2d = newArray2d;
-            AddArray2D(component);
+            return AddArray2D(component);
         }
 
-        public void ReplaceArray2D(int[,] newArray2d) {
+        public Entity ReplaceArray2D(int[,] newArray2d) {
             Array2DComponent component;
             if (hasArray2D) {
                 WillRemoveComponent(ComponentIds.Array2D);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new Array2DComponent();
             }
             component.array2d = newArray2d;
-            ReplaceComponent(ComponentIds.Array2D, component);
+            return ReplaceComponent(ComponentIds.Array2D, component);
         }
 
-        public void RemoveArray2D() {
-            RemoveComponent(ComponentIds.Array2D);
+        public Entity RemoveArray2D() {
+            return RemoveComponent(ComponentIds.Array2D);
         }
     }
 

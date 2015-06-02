@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasMyBool { get { return HasComponent(ComponentIds.MyBool); } }
 
-        public void AddMyBool(MyBoolComponent component) {
-            AddComponent(ComponentIds.MyBool, component);
+        public Entity AddMyBool(MyBoolComponent component) {
+            return AddComponent(ComponentIds.MyBool, component);
         }
 
-        public void AddMyBool(bool newMyBool) {
+        public Entity AddMyBool(bool newMyBool) {
             var component = new MyBoolComponent();
             component.myBool = newMyBool;
-            AddMyBool(component);
+            return AddMyBool(component);
         }
 
-        public void ReplaceMyBool(bool newMyBool) {
+        public Entity ReplaceMyBool(bool newMyBool) {
             MyBoolComponent component;
             if (hasMyBool) {
                 WillRemoveComponent(ComponentIds.MyBool);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new MyBoolComponent();
             }
             component.myBool = newMyBool;
-            ReplaceComponent(ComponentIds.MyBool, component);
+            return ReplaceComponent(ComponentIds.MyBool, component);
         }
 
-        public void RemoveMyBool() {
-            RemoveComponent(ComponentIds.MyBool);
+        public Entity RemoveMyBool() {
+            return RemoveComponent(ComponentIds.MyBool);
         }
     }
 

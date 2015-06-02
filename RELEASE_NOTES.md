@@ -1,3 +1,36 @@
+# 0.14.0
+
+##### General
+- Upgraded all Unity projects to Unity 5
+
+##### Entitas
+- Added Systems class
+- Re-combined pool extensions for creating systems to pool.CreateSystem() and removed pool.CreateStartSystem() and pool.CreateExecuteSystem()
+- Fixed: Pool won't destroy entities it doesn't contain
+
+##### Entitas.Unity
+- Properties now support multiline values and placeholder replacement with ${key}
+
+##### Entitas.Unity.CodeGenerator
+- Added fluent api to Entity
+```cs
+pool.CreateEntity()
+    .IsGameBoardElement(true)
+    .IsMovable(true)
+    .AddPosition(x, y)
+    .AddResource(Res.Piece0)
+    .IsInteractive(true);
+```
+- CodeGenerator takes arrays of IComponentCodeGenerator and IPoolCodeGenerator to generate files so you can easily provide your own custom code generators
+- Added dialog for 'Migrate Matcher' menu item
+
+##### Entitas.Unity.VisualDebugging
+- Added DebugSystems
+
+![visualdebug-systems](https://cloud.githubusercontent.com/assets/233700/7938066/ebe8b4b6-0943-11e5-9cec-ce694d624aca.png)
+- Added HashSetTypeDrawer
+
+
 # 0.13.0
 
 ##### Reminder
@@ -47,7 +80,7 @@
 ##### Important
 - Entitas 0.12.0 generates prefixed matchers based on the PoolAttribute and introduces some API changes. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
 
-##### General
+##### Entitas
 - Added IStartSystem and pool.CreateStartSystem() extension
 - Renamed pool.CreateSystem() to pool.CreateExecuteSystem()
 - Added pool.CreateStartSystem()
@@ -83,7 +116,7 @@
 ##### Reminder
 - Entitas 0.10.0 included lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md) if you are on < v0.10.0
 
-##### General
+##### Entitas
 - Added AllOfCompoundMatcher
 - Added AnyOfMatcher
 - Added AnyOfCompoundMatcher
@@ -118,7 +151,7 @@
 ##### Important
 - Entitas 0.10.0 includes lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
 
-##### General
+##### Entitas
 - Added empty ISystem and IExecuteSystem for more flexibility
 - Added public creationIndex to Entity
 - Observer is now on group not on pool

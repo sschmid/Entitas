@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasVector4 { get { return HasComponent(ComponentIds.Vector4); } }
 
-        public void AddVector4(Vector4Component component) {
-            AddComponent(ComponentIds.Vector4, component);
+        public Entity AddVector4(Vector4Component component) {
+            return AddComponent(ComponentIds.Vector4, component);
         }
 
-        public void AddVector4(UnityEngine.Vector4 newVector4) {
+        public Entity AddVector4(UnityEngine.Vector4 newVector4) {
             var component = new Vector4Component();
             component.vector4 = newVector4;
-            AddVector4(component);
+            return AddVector4(component);
         }
 
-        public void ReplaceVector4(UnityEngine.Vector4 newVector4) {
+        public Entity ReplaceVector4(UnityEngine.Vector4 newVector4) {
             Vector4Component component;
             if (hasVector4) {
                 WillRemoveComponent(ComponentIds.Vector4);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new Vector4Component();
             }
             component.vector4 = newVector4;
-            ReplaceComponent(ComponentIds.Vector4, component);
+            return ReplaceComponent(ComponentIds.Vector4, component);
         }
 
-        public void RemoveVector4() {
-            RemoveComponent(ComponentIds.Vector4);
+        public Entity RemoveVector4() {
+            return RemoveComponent(ComponentIds.Vector4);
         }
     }
 

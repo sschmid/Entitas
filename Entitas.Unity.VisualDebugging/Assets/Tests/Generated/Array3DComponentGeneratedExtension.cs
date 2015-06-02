@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasArray3D { get { return HasComponent(ComponentIds.Array3D); } }
 
-        public void AddArray3D(Array3DComponent component) {
-            AddComponent(ComponentIds.Array3D, component);
+        public Entity AddArray3D(Array3DComponent component) {
+            return AddComponent(ComponentIds.Array3D, component);
         }
 
-        public void AddArray3D(int[,,] newArray3d) {
+        public Entity AddArray3D(int[,,] newArray3d) {
             var component = new Array3DComponent();
             component.array3d = newArray3d;
-            AddArray3D(component);
+            return AddArray3D(component);
         }
 
-        public void ReplaceArray3D(int[,,] newArray3d) {
+        public Entity ReplaceArray3D(int[,,] newArray3d) {
             Array3DComponent component;
             if (hasArray3D) {
                 WillRemoveComponent(ComponentIds.Array3D);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new Array3DComponent();
             }
             component.array3d = newArray3d;
-            ReplaceComponent(ComponentIds.Array3D, component);
+            return ReplaceComponent(ComponentIds.Array3D, component);
         }
 
-        public void RemoveArray3D() {
-            RemoveComponent(ComponentIds.Array3D);
+        public Entity RemoveArray3D() {
+            return RemoveComponent(ComponentIds.Array3D);
         }
     }
 

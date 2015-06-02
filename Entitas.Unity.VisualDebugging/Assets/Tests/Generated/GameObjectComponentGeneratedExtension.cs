@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasGameObject { get { return HasComponent(ComponentIds.GameObject); } }
 
-        public void AddGameObject(GameObjectComponent component) {
-            AddComponent(ComponentIds.GameObject, component);
+        public Entity AddGameObject(GameObjectComponent component) {
+            return AddComponent(ComponentIds.GameObject, component);
         }
 
-        public void AddGameObject(UnityEngine.GameObject newGameObject) {
+        public Entity AddGameObject(UnityEngine.GameObject newGameObject) {
             var component = new GameObjectComponent();
             component.gameObject = newGameObject;
-            AddGameObject(component);
+            return AddGameObject(component);
         }
 
-        public void ReplaceGameObject(UnityEngine.GameObject newGameObject) {
+        public Entity ReplaceGameObject(UnityEngine.GameObject newGameObject) {
             GameObjectComponent component;
             if (hasGameObject) {
                 WillRemoveComponent(ComponentIds.GameObject);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new GameObjectComponent();
             }
             component.gameObject = newGameObject;
-            ReplaceComponent(ComponentIds.GameObject, component);
+            return ReplaceComponent(ComponentIds.GameObject, component);
         }
 
-        public void RemoveGameObject() {
-            RemoveComponent(ComponentIds.GameObject);
+        public Entity RemoveGameObject() {
+            return RemoveComponent(ComponentIds.GameObject);
         }
     }
 

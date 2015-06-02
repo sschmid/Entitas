@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasDateTime { get { return HasComponent(ComponentIds.DateTime); } }
 
-        public void AddDateTime(DateTimeComponent component) {
-            AddComponent(ComponentIds.DateTime, component);
+        public Entity AddDateTime(DateTimeComponent component) {
+            return AddComponent(ComponentIds.DateTime, component);
         }
 
-        public void AddDateTime(System.DateTime newDate) {
+        public Entity AddDateTime(System.DateTime newDate) {
             var component = new DateTimeComponent();
             component.date = newDate;
-            AddDateTime(component);
+            return AddDateTime(component);
         }
 
-        public void ReplaceDateTime(System.DateTime newDate) {
+        public Entity ReplaceDateTime(System.DateTime newDate) {
             DateTimeComponent component;
             if (hasDateTime) {
                 WillRemoveComponent(ComponentIds.DateTime);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new DateTimeComponent();
             }
             component.date = newDate;
-            ReplaceComponent(ComponentIds.DateTime, component);
+            return ReplaceComponent(ComponentIds.DateTime, component);
         }
 
-        public void RemoveDateTime() {
-            RemoveComponent(ComponentIds.DateTime);
+        public Entity RemoveDateTime() {
+            return RemoveComponent(ComponentIds.DateTime);
         }
     }
 

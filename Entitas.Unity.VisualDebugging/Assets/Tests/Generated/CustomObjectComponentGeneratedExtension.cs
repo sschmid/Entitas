@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasCustomObject { get { return HasComponent(ComponentIds.CustomObject); } }
 
-        public void AddCustomObject(CustomObjectComponent component) {
-            AddComponent(ComponentIds.CustomObject, component);
+        public Entity AddCustomObject(CustomObjectComponent component) {
+            return AddComponent(ComponentIds.CustomObject, component);
         }
 
-        public void AddCustomObject(CustomObject newCustomObject) {
+        public Entity AddCustomObject(CustomObject newCustomObject) {
             var component = new CustomObjectComponent();
             component.customObject = newCustomObject;
-            AddCustomObject(component);
+            return AddCustomObject(component);
         }
 
-        public void ReplaceCustomObject(CustomObject newCustomObject) {
+        public Entity ReplaceCustomObject(CustomObject newCustomObject) {
             CustomObjectComponent component;
             if (hasCustomObject) {
                 WillRemoveComponent(ComponentIds.CustomObject);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new CustomObjectComponent();
             }
             component.customObject = newCustomObject;
-            ReplaceComponent(ComponentIds.CustomObject, component);
+            return ReplaceComponent(ComponentIds.CustomObject, component);
         }
 
-        public void RemoveCustomObject() {
-            RemoveComponent(ComponentIds.CustomObject);
+        public Entity RemoveCustomObject() {
+            return RemoveComponent(ComponentIds.CustomObject);
         }
     }
 

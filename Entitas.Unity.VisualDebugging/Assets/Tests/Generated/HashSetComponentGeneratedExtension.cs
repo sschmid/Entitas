@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasHashSet { get { return HasComponent(ComponentIds.HashSet); } }
 
-        public void AddHashSet(HashSetComponent component) {
-            AddComponent(ComponentIds.HashSet, component);
+        public Entity AddHashSet(HashSetComponent component) {
+            return AddComponent(ComponentIds.HashSet, component);
         }
 
-        public void AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
+        public Entity AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
             var component = new HashSetComponent();
             component.hashset = newHashset;
-            AddHashSet(component);
+            return AddHashSet(component);
         }
 
-        public void ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
+        public Entity ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
             HashSetComponent component;
             if (hasHashSet) {
                 WillRemoveComponent(ComponentIds.HashSet);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new HashSetComponent();
             }
             component.hashset = newHashset;
-            ReplaceComponent(ComponentIds.HashSet, component);
+            return ReplaceComponent(ComponentIds.HashSet, component);
         }
 
-        public void RemoveHashSet() {
-            RemoveComponent(ComponentIds.HashSet);
+        public Entity RemoveHashSet() {
+            return RemoveComponent(ComponentIds.HashSet);
         }
     }
 

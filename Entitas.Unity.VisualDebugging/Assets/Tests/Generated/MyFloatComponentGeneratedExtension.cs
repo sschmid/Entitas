@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasMyFloat { get { return HasComponent(ComponentIds.MyFloat); } }
 
-        public void AddMyFloat(MyFloatComponent component) {
-            AddComponent(ComponentIds.MyFloat, component);
+        public Entity AddMyFloat(MyFloatComponent component) {
+            return AddComponent(ComponentIds.MyFloat, component);
         }
 
-        public void AddMyFloat(float newMyFloat) {
+        public Entity AddMyFloat(float newMyFloat) {
             var component = new MyFloatComponent();
             component.myFloat = newMyFloat;
-            AddMyFloat(component);
+            return AddMyFloat(component);
         }
 
-        public void ReplaceMyFloat(float newMyFloat) {
+        public Entity ReplaceMyFloat(float newMyFloat) {
             MyFloatComponent component;
             if (hasMyFloat) {
                 WillRemoveComponent(ComponentIds.MyFloat);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new MyFloatComponent();
             }
             component.myFloat = newMyFloat;
-            ReplaceComponent(ComponentIds.MyFloat, component);
+            return ReplaceComponent(ComponentIds.MyFloat, component);
         }
 
-        public void RemoveMyFloat() {
-            RemoveComponent(ComponentIds.MyFloat);
+        public Entity RemoveMyFloat() {
+            return RemoveComponent(ComponentIds.MyFloat);
         }
     }
 

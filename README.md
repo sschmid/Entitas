@@ -17,7 +17,7 @@ Entitas consists of the following modules
 
 Module  | Content
 :-------|:-------
-Entitas | Contains the core classes
+Entitas | Contains the complete ECS, basically everything you need to get started
 Entitas.CodeGenerator | Contains the optional but highly recommended [code generator](#entitascodegenerator)
 Entitas.Unity | Contains the plugin based Entitas preferences panel for Unity
 Entitas.Unity.CodeGenerator | Plugs into the Entitas preferences panel and adds convenient menu items
@@ -99,7 +99,7 @@ Implement `ISystem` to process your entities. I recommend you create systems for
 # Entitas.CodeGenerator
 The Code Generator generates classes and methods for you, so you can focus on getting the job done. It radically reduces the amount of code you have to write and improves readability by a huge magnitude. It makes your code less error-prone while ensuring best performance. I strongly recommend using it!
 
-The generated code can be different based on the content of the component. The Code Generator differentiates between four types:
+The Code Generator is smart and produces different output based on the content of the component. The Code Generator differentiates between four types:
 - standard component with public fields (e.g. PositionComponent)
 - single standard component that is meant to exist only once in the pool (e.g. UserComponent)
 - flag component without any fields (e.g. MovableComponent)

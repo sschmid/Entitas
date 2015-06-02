@@ -6,16 +6,25 @@ namespace Entitas.CodeGenerator {
     public static class CodeGenerator {
         public const string componentSuffix = "Component";
 
-        public static void Generate(Type[] types, string[] poolNames, string dir) {
+        public static void Generate(Type[] types, string[] poolNames, string dir,
+                IComponentCodeGenerator[] componentCodeGenerators, IPoolCodeGenerator[] poolCodeGenerators) {
+
             if (!Directory.Exists(dir)) {
                 Directory.CreateDirectory(dir);
             }
 
             CleanDir(dir);
             var components = GetComponents(types);
-            generateIndicesLookup(dir, components);
-            generateComponentExtensions(dir, components);
-            generatePoolAttributes(dir, poolNames);
+
+            foreach (var generator in componentCodeGenerators) {
+                var files = generator.Generate(components);
+                writeFiles(dir, files);
+            }
+
+            foreach (var generator in poolCodeGenerators) {
+                var files = generator.Generate(poolNames);
+                writeFiles(dir, files);
+            }
         }
 
         public static void CleanDir(string dir) {
@@ -37,24 +46,9 @@ namespace Entitas.CodeGenerator {
                 .ToArray();
         }
 
-        static void generateIndicesLookup(string dir, Type[] components) {
-            var files = new IndicesLookupGenerator().Generate(components);
-            writeFiles(dir, files);
-        }
-
-        static void generateComponentExtensions(string dir, Type[] components) {
-            var files = new ComponentExtensionsGenerator().Generate(components);
-            writeFiles(dir, files);
-        }
-
-        static void generatePoolAttributes(string dir, string[] poolNames) {
-            var files = new PoolAttributeGenerator().Generate(poolNames);
-            writeFiles(dir, files);
-        }
-
         static void writeFiles(string dir, CodeGenFile[] files) {
             foreach (var file in files) {
-                File.WriteAllText(file.fileName + ".cs", file.fileContent);
+                File.WriteAllText(dir + file.fileName + ".cs", file.fileContent);
             }
         }
     }

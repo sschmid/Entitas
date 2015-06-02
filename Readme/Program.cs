@@ -12,7 +12,18 @@ namespace Readme {
         static void generate() {
             var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
             var generatedFolder = getEntitasProjectDir() + "/Readme/Components/Generated/";
-            CodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder);
+
+            var componentCodeGenerators = new IComponentCodeGenerator[] {
+                new IndicesLookupGenerator(),
+                new ComponentExtensionsGenerator()
+            };
+
+            var poolCodeGenerators = new IPoolCodeGenerator[] {
+                new PoolAttributeGenerator()
+            };
+
+            CodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder,
+                componentCodeGenerators, poolCodeGenerators);
         }
 
         static string getEntitasProjectDir() {

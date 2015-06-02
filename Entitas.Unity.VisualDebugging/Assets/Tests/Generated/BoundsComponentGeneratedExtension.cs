@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasBounds { get { return HasComponent(ComponentIds.Bounds); } }
 
-        public void AddBounds(BoundsComponent component) {
-            AddComponent(ComponentIds.Bounds, component);
+        public Entity AddBounds(BoundsComponent component) {
+            return AddComponent(ComponentIds.Bounds, component);
         }
 
-        public void AddBounds(UnityEngine.Bounds newBounds) {
+        public Entity AddBounds(UnityEngine.Bounds newBounds) {
             var component = new BoundsComponent();
             component.bounds = newBounds;
-            AddBounds(component);
+            return AddBounds(component);
         }
 
-        public void ReplaceBounds(UnityEngine.Bounds newBounds) {
+        public Entity ReplaceBounds(UnityEngine.Bounds newBounds) {
             BoundsComponent component;
             if (hasBounds) {
                 WillRemoveComponent(ComponentIds.Bounds);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new BoundsComponent();
             }
             component.bounds = newBounds;
-            ReplaceComponent(ComponentIds.Bounds, component);
+            return ReplaceComponent(ComponentIds.Bounds, component);
         }
 
-        public void RemoveBounds() {
-            RemoveComponent(ComponentIds.Bounds);
+        public Entity RemoveBounds() {
+            return RemoveComponent(ComponentIds.Bounds);
         }
     }
 

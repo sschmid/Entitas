@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasMyEnum { get { return HasComponent(ComponentIds.MyEnum); } }
 
-        public void AddMyEnum(MyEnumComponent component) {
-            AddComponent(ComponentIds.MyEnum, component);
+        public Entity AddMyEnum(MyEnumComponent component) {
+            return AddComponent(ComponentIds.MyEnum, component);
         }
 
-        public void AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
+        public Entity AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
             var component = new MyEnumComponent();
             component.myEnum = newMyEnum;
-            AddMyEnum(component);
+            return AddMyEnum(component);
         }
 
-        public void ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
+        public Entity ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
             MyEnumComponent component;
             if (hasMyEnum) {
                 WillRemoveComponent(ComponentIds.MyEnum);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new MyEnumComponent();
             }
             component.myEnum = newMyEnum;
-            ReplaceComponent(ComponentIds.MyEnum, component);
+            return ReplaceComponent(ComponentIds.MyEnum, component);
         }
 
-        public void RemoveMyEnum() {
-            RemoveComponent(ComponentIds.MyEnum);
+        public Entity RemoveMyEnum() {
+            return RemoveComponent(ComponentIds.MyEnum);
         }
     }
 

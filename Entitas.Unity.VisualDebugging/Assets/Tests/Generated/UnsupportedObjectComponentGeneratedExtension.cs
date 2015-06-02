@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasUnsupportedObject { get { return HasComponent(ComponentIds.UnsupportedObject); } }
 
-        public void AddUnsupportedObject(UnsupportedObjectComponent component) {
-            AddComponent(ComponentIds.UnsupportedObject, component);
+        public Entity AddUnsupportedObject(UnsupportedObjectComponent component) {
+            return AddComponent(ComponentIds.UnsupportedObject, component);
         }
 
-        public void AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
+        public Entity AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
             var component = new UnsupportedObjectComponent();
             component.unsupportedObject = newUnsupportedObject;
-            AddUnsupportedObject(component);
+            return AddUnsupportedObject(component);
         }
 
-        public void ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
+        public Entity ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
             UnsupportedObjectComponent component;
             if (hasUnsupportedObject) {
                 WillRemoveComponent(ComponentIds.UnsupportedObject);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new UnsupportedObjectComponent();
             }
             component.unsupportedObject = newUnsupportedObject;
-            ReplaceComponent(ComponentIds.UnsupportedObject, component);
+            return ReplaceComponent(ComponentIds.UnsupportedObject, component);
         }
 
-        public void RemoveUnsupportedObject() {
-            RemoveComponent(ComponentIds.UnsupportedObject);
+        public Entity RemoveUnsupportedObject() {
+            return RemoveComponent(ComponentIds.UnsupportedObject);
         }
     }
 

@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasRect { get { return HasComponent(ComponentIds.Rect); } }
 
-        public void AddRect(RectComponent component) {
-            AddComponent(ComponentIds.Rect, component);
+        public Entity AddRect(RectComponent component) {
+            return AddComponent(ComponentIds.Rect, component);
         }
 
-        public void AddRect(UnityEngine.Rect newRect) {
+        public Entity AddRect(UnityEngine.Rect newRect) {
             var component = new RectComponent();
             component.rect = newRect;
-            AddRect(component);
+            return AddRect(component);
         }
 
-        public void ReplaceRect(UnityEngine.Rect newRect) {
+        public Entity ReplaceRect(UnityEngine.Rect newRect) {
             RectComponent component;
             if (hasRect) {
                 WillRemoveComponent(ComponentIds.Rect);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new RectComponent();
             }
             component.rect = newRect;
-            ReplaceComponent(ComponentIds.Rect, component);
+            return ReplaceComponent(ComponentIds.Rect, component);
         }
 
-        public void RemoveRect() {
-            RemoveComponent(ComponentIds.Rect);
+        public Entity RemoveRect() {
+            return RemoveComponent(ComponentIds.Rect);
         }
     }
 

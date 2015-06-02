@@ -4,18 +4,18 @@ namespace Entitas {
 
         public bool hasDictArray { get { return HasComponent(ComponentIds.DictArray); } }
 
-        public void AddDictArray(DictArrayComponent component) {
-            AddComponent(ComponentIds.DictArray, component);
+        public Entity AddDictArray(DictArrayComponent component) {
+            return AddComponent(ComponentIds.DictArray, component);
         }
 
-        public void AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
+        public Entity AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
             var component = new DictArrayComponent();
             component.dict = newDict;
             component.dictArray = newDictArray;
-            AddDictArray(component);
+            return AddDictArray(component);
         }
 
-        public void ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
+        public Entity ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
             DictArrayComponent component;
             if (hasDictArray) {
                 WillRemoveComponent(ComponentIds.DictArray);
@@ -25,11 +25,11 @@ namespace Entitas {
             }
             component.dict = newDict;
             component.dictArray = newDictArray;
-            ReplaceComponent(ComponentIds.DictArray, component);
+            return ReplaceComponent(ComponentIds.DictArray, component);
         }
 
-        public void RemoveDictArray() {
-            RemoveComponent(ComponentIds.DictArray);
+        public Entity RemoveDictArray() {
+            return RemoveComponent(ComponentIds.DictArray);
         }
     }
 

@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasListArray { get { return HasComponent(ComponentIds.ListArray); } }
 
-        public void AddListArray(ListArrayComponent component) {
-            AddComponent(ComponentIds.ListArray, component);
+        public Entity AddListArray(ListArrayComponent component) {
+            return AddComponent(ComponentIds.ListArray, component);
         }
 
-        public void AddListArray(System.Collections.Generic.List<string>[] newListArray) {
+        public Entity AddListArray(System.Collections.Generic.List<string>[] newListArray) {
             var component = new ListArrayComponent();
             component.listArray = newListArray;
-            AddListArray(component);
+            return AddListArray(component);
         }
 
-        public void ReplaceListArray(System.Collections.Generic.List<string>[] newListArray) {
+        public Entity ReplaceListArray(System.Collections.Generic.List<string>[] newListArray) {
             ListArrayComponent component;
             if (hasListArray) {
                 WillRemoveComponent(ComponentIds.ListArray);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new ListArrayComponent();
             }
             component.listArray = newListArray;
-            ReplaceComponent(ComponentIds.ListArray, component);
+            return ReplaceComponent(ComponentIds.ListArray, component);
         }
 
-        public void RemoveListArray() {
-            RemoveComponent(ComponentIds.ListArray);
+        public Entity RemoveListArray() {
+            return RemoveComponent(ComponentIds.ListArray);
         }
     }
 

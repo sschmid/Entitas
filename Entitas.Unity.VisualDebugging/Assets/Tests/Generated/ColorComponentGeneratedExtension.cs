@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasColor { get { return HasComponent(ComponentIds.Color); } }
 
-        public void AddColor(ColorComponent component) {
-            AddComponent(ComponentIds.Color, component);
+        public Entity AddColor(ColorComponent component) {
+            return AddComponent(ComponentIds.Color, component);
         }
 
-        public void AddColor(UnityEngine.Color newColor) {
+        public Entity AddColor(UnityEngine.Color newColor) {
             var component = new ColorComponent();
             component.color = newColor;
-            AddColor(component);
+            return AddColor(component);
         }
 
-        public void ReplaceColor(UnityEngine.Color newColor) {
+        public Entity ReplaceColor(UnityEngine.Color newColor) {
             ColorComponent component;
             if (hasColor) {
                 WillRemoveComponent(ComponentIds.Color);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new ColorComponent();
             }
             component.color = newColor;
-            ReplaceComponent(ComponentIds.Color, component);
+            return ReplaceComponent(ComponentIds.Color, component);
         }
 
-        public void RemoveColor() {
-            RemoveComponent(ComponentIds.Color);
+        public Entity RemoveColor() {
+            return RemoveComponent(ComponentIds.Color);
         }
     }
 

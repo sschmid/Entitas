@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasJaggedArray { get { return HasComponent(ComponentIds.JaggedArray); } }
 
-        public void AddJaggedArray(JaggedArrayComponent component) {
-            AddComponent(ComponentIds.JaggedArray, component);
+        public Entity AddJaggedArray(JaggedArrayComponent component) {
+            return AddComponent(ComponentIds.JaggedArray, component);
         }
 
-        public void AddJaggedArray(string[][] newJaggedArray) {
+        public Entity AddJaggedArray(string[][] newJaggedArray) {
             var component = new JaggedArrayComponent();
             component.jaggedArray = newJaggedArray;
-            AddJaggedArray(component);
+            return AddJaggedArray(component);
         }
 
-        public void ReplaceJaggedArray(string[][] newJaggedArray) {
+        public Entity ReplaceJaggedArray(string[][] newJaggedArray) {
             JaggedArrayComponent component;
             if (hasJaggedArray) {
                 WillRemoveComponent(ComponentIds.JaggedArray);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new JaggedArrayComponent();
             }
             component.jaggedArray = newJaggedArray;
-            ReplaceComponent(ComponentIds.JaggedArray, component);
+            return ReplaceComponent(ComponentIds.JaggedArray, component);
         }
 
-        public void RemoveJaggedArray() {
-            RemoveComponent(ComponentIds.JaggedArray);
+        public Entity RemoveJaggedArray() {
+            return RemoveComponent(ComponentIds.JaggedArray);
         }
     }
 

@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasDictionary { get { return HasComponent(ComponentIds.Dictionary); } }
 
-        public void AddDictionary(DictionaryComponent component) {
-            AddComponent(ComponentIds.Dictionary, component);
+        public Entity AddDictionary(DictionaryComponent component) {
+            return AddComponent(ComponentIds.Dictionary, component);
         }
 
-        public void AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
+        public Entity AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
             var component = new DictionaryComponent();
             component.dict = newDict;
-            AddDictionary(component);
+            return AddDictionary(component);
         }
 
-        public void ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
+        public Entity ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
             DictionaryComponent component;
             if (hasDictionary) {
                 WillRemoveComponent(ComponentIds.Dictionary);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new DictionaryComponent();
             }
             component.dict = newDict;
-            ReplaceComponent(ComponentIds.Dictionary, component);
+            return ReplaceComponent(ComponentIds.Dictionary, component);
         }
 
-        public void RemoveDictionary() {
-            RemoveComponent(ComponentIds.Dictionary);
+        public Entity RemoveDictionary() {
+            return RemoveComponent(ComponentIds.Dictionary);
         }
     }
 
