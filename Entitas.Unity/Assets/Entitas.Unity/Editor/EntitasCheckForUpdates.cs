@@ -63,10 +63,21 @@ namespace Entitas.Unity {
                     }
                     break;
                 case 0:
-                    Debug.Log("Entitas is up to date (" + localVersionString + ")");
+                    EditorUtility.DisplayDialog("Entitas Update",
+                        "Entitas is up to date (" + localVersionString + ")",
+                        "Ok"
+                    );
                     break;
                 case -1:
-                    Debug.Log("Your Entitas version seems to be newer than the latest release?!?");
+                    if (EditorUtility.DisplayDialog("Entitas Update",
+                            string.Format("Your Entitas version seems to be newer than the latest release?!?\n\n" +
+                            "Currently installed version: {0}\n" +
+                            "Latest release: {1}", localVersion, remoteVersion),
+                            "Show release",
+                            "Cancel"
+                        )) {
+                        Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/releases");
+                    }
                     break;
             }
         }
