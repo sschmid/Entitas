@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Entitas.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
 
@@ -17,10 +18,34 @@ namespace Entitas.Unity.VisualDebugging {
 
         public static Dictionary<string, int> GetStats() {
             var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
-            return new Dictionary<string, int> {
-                { "Components", types.Count(implementsComponent) },
+            var components = types.Where(implementsComponent).ToArray();
+            var pools = getPools(components);
+
+            var stats = new Dictionary<string, int> {
+                { "Components", components.Length },
                 { "Systems", types.Count(implementsSystem) }
             };
+
+            foreach (var pool in pools) {
+                stats.Add(pool.Key, pool.Value);
+            }
+
+            return stats;
+        }
+
+        static Dictionary<string, int> getPools(Type[] components) {
+            return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
+                var lookupTag = type.PoolName();
+                if (lookupTag == string.Empty) {
+                    lookupTag = "DefaultPool";
+                }
+                if (!lookups.ContainsKey(lookupTag)) {
+                    lookups.Add(lookupTag, 0);
+                }
+
+                lookups[lookupTag] += 1;
+                return lookups;
+            });
         }
 
         static bool implementsComponent(Type type) {
