@@ -87,9 +87,5 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Entitas.Unity\Assembly-CSharp.csproj">
-      <Project>{520A8C80-EFE1-1AE2-149B-37C28729220D}</Project>
-      <Name>Assembly-CSharp</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -7,39 +7,39 @@ namespace PerformanceTests {
             Console.WriteLine("Running performance tests...");
             Thread.Sleep(1500);
 
-//            run<PoolCreateEntity>();
-//            run<PoolDestroyAllEntites>();
-//            run<PoolGetGroup>();
-//            run<PoolGetEntities>();
-//            run<PoolHasEntity>();
-//            run<PoolOnEntityReplaced>();
-//            run<EmptyTest>();
-//
-//            run<EntityAddComponent>();
-//            run<EntityGetComponent>();
-//            run<EntityGetComponents>();
-//            run<EntityHasComponent>();
-//            run<EntityRemoveAddComponent>();
-//            run<EntityReplaceComponent>();
-//            run<EmptyTest>();
-//
-//            run<MatcherEquals>();
-//            run<MatcherGetHashCode>();
-//            run<EmptyTest>();
-//
-//            run<IterateHashetToArray>();
-//            run<IterateHashSet>();
-//            run<EmptyTest>();
-//
-//            run<ObjectGetProperty>();
-//            run<EmptyTest>();
-//            run<ObserverIterateCollectedEntities>();
-            run<PropertiesCreate>();
+            run<PoolCreateEntity>();
+            run<PoolDestroyAllEntites>();
+            run<PoolGetGroup>();
+            run<PoolGetEntities>();
+            run<PoolHasEntity>();
+            run<PoolOnEntityReplaced>();
+            run<EmptyTest>();
+
+            run<EntityAddComponent>();
+            run<EntityGetComponent>();
+            run<EntityGetComponents>();
+            run<EntityHasComponent>();
+            run<EntityRemoveAddComponent>();
+            run<EntityReplaceComponent>();
+            run<EmptyTest>();
+
+            run<MatcherEquals>();
+            run<MatcherGetHashCode>();
+            run<EmptyTest>();
+
+            run<IterateHashetToArray>();
+            run<IterateHashSet>();
+            run<EmptyTest>();
+
+            run<ObjectGetProperty>();
+            run<EmptyTest>();
+            run<ObserverIterateCollectedEntities>();
+//            run<PropertiesCreate>();
 
 
 
-//            run<ArrayGetItem>();
-//            run<DictionaryGetItem>();
+            run<ArrayGetItem>();
+            run<DictionaryGetItem>();
 //            run<LinkedListAdd>();
 //            run<LinkedListRemove>();
 //            run<ListAdd>();

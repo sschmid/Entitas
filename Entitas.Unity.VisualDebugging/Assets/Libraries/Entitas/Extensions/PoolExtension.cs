@@ -17,6 +17,10 @@ namespace Entitas {
 
         public static ISystem CreateSystem(this Pool pool, Type systemType) {
             var system = (ISystem)Activator.CreateInstance(systemType);
+            return pool.CreateSystem(system);
+        }
+
+        public static ISystem CreateSystem(this Pool pool, ISystem system) {
             setPool(system, pool);
             var reactiveSystem = system as IReactiveSystem;
             return reactiveSystem != null

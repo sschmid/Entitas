@@ -14,8 +14,8 @@ public class IterateHashSet : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            for (var j = _set.GetEnumerator(); j.MoveNext();) {
-                var k = j.Current;
+            foreach (var item in _set) {
+                var k = item;
             }
         }
     }
