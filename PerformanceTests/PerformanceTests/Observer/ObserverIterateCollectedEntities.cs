@@ -6,7 +6,7 @@ public class ObserverIterateCollectedEntities : IPerformanceTest {
 
     public void Before() {
         var pool = new Pool(CP.NumComponents);
-        var group = pool.GetGroup(Matcher.AllOf(new [] {CP.ComponentA}));
+        var group = pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
         _observer = group.CreateObserver();
 
         for (int i = 0; i < 1000; i++) {
@@ -16,8 +16,8 @@ public class ObserverIterateCollectedEntities : IPerformanceTest {
     }
 
     public void Run() {
+        var entities = _observer.collectedEntities;
         for (int i = 0; i < n; i++) {
-            var entities = _observer.collectedEntities;
             for (var j = entities.GetEnumerator(); j.MoveNext();) {
                 var e2 = j.Current;
             }

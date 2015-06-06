@@ -4,18 +4,18 @@ namespace Entitas {
 
         public bool hasUser { get { return HasComponent(ComponentIds.User); } }
 
-        public void AddUser(UserComponent component) {
-            AddComponent(ComponentIds.User, component);
+        public Entity AddUser(UserComponent component) {
+            return AddComponent(ComponentIds.User, component);
         }
 
-        public void AddUser(string newName, int newAge) {
+        public Entity AddUser(string newName, int newAge) {
             var component = new UserComponent();
             component.name = newName;
             component.age = newAge;
-            AddUser(component);
+            return AddUser(component);
         }
 
-        public void ReplaceUser(string newName, int newAge) {
+        public Entity ReplaceUser(string newName, int newAge) {
             UserComponent component;
             if (hasUser) {
                 WillRemoveComponent(ComponentIds.User);
@@ -25,11 +25,11 @@ namespace Entitas {
             }
             component.name = newName;
             component.age = newAge;
-            ReplaceComponent(ComponentIds.User, component);
+            return ReplaceComponent(ComponentIds.User, component);
         }
 
-        public void RemoveUser() {
-            RemoveComponent(ComponentIds.User);
+        public Entity RemoveUser() {
+            return RemoveComponent(ComponentIds.User);
         }
     }
 

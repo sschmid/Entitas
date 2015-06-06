@@ -116,6 +116,39 @@
     <Compile Include="..\Entitas\Entitas\Matcher\NoneOfMatcher.cs">
       <Link>Libraries\Entitas\Matcher\NoneOfMatcher.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CodeGenFile.cs">
+      <Link>Libraries\Entitas.CodeGenerator\CodeGenFile.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CodeGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\CodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\IComponentCodeGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\IComponentCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\IPoolCodeGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\IPoolCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\PoolAttribute.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Attributes\PoolAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\ComponentExtensionsGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\IndicesLookupGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Generators\IndicesLookupGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\TypeGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Generators\TypeGenerator.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -123,11 +156,6 @@
     <Folder Include="Components\Generated\" />
     <Folder Include="Libraries\" />
     <Folder Include="Libraries\Entitas\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
-      <Project>{4D7C8232-6930-4F13-9D9A-3C32A340BB62}</Project>
-      <Name>Entitas.CodeGenerator</Name>
-    </ProjectReference>
+    <Folder Include="Libraries\Entitas.CodeGenerator\" />
   </ItemGroup>
 </Project>

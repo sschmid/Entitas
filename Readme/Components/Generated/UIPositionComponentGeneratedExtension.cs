@@ -6,18 +6,18 @@ namespace Entitas {
 
         public bool hasUIPosition { get { return HasComponent(UIComponentIds.UIPosition); } }
 
-        public void AddUIPosition(UIPositionComponent component) {
-            AddComponent(UIComponentIds.UIPosition, component);
+        public Entity AddUIPosition(UIPositionComponent component) {
+            return AddComponent(UIComponentIds.UIPosition, component);
         }
 
-        public void AddUIPosition(int newX, int newY) {
+        public Entity AddUIPosition(int newX, int newY) {
             var component = new UIPositionComponent();
             component.x = newX;
             component.y = newY;
-            AddUIPosition(component);
+            return AddUIPosition(component);
         }
 
-        public void ReplaceUIPosition(int newX, int newY) {
+        public Entity ReplaceUIPosition(int newX, int newY) {
             UIPositionComponent component;
             if (hasUIPosition) {
                 WillRemoveComponent(UIComponentIds.UIPosition);
@@ -27,11 +27,11 @@ namespace Entitas {
             }
             component.x = newX;
             component.y = newY;
-            ReplaceComponent(UIComponentIds.UIPosition, component);
+            return ReplaceComponent(UIComponentIds.UIPosition, component);
         }
 
-        public void RemoveUIPosition() {
-            RemoveComponent(UIComponentIds.UIPosition);
+        public Entity RemoveUIPosition() {
+            return RemoveComponent(UIComponentIds.UIPosition);
         }
     }
 }

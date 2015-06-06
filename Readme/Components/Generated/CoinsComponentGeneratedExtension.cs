@@ -6,17 +6,17 @@ namespace Entitas {
 
         public bool hasCoins { get { return HasComponent(MetaComponentIds.Coins); } }
 
-        public void AddCoins(CoinsComponent component) {
-            AddComponent(MetaComponentIds.Coins, component);
+        public Entity AddCoins(CoinsComponent component) {
+            return AddComponent(MetaComponentIds.Coins, component);
         }
 
-        public void AddCoins(int newCount) {
+        public Entity AddCoins(int newCount) {
             var component = new CoinsComponent();
             component.count = newCount;
-            AddCoins(component);
+            return AddCoins(component);
         }
 
-        public void ReplaceCoins(int newCount) {
+        public Entity ReplaceCoins(int newCount) {
             CoinsComponent component;
             if (hasCoins) {
                 WillRemoveComponent(MetaComponentIds.Coins);
@@ -25,11 +25,11 @@ namespace Entitas {
                 component = new CoinsComponent();
             }
             component.count = newCount;
-            ReplaceComponent(MetaComponentIds.Coins, component);
+            return ReplaceComponent(MetaComponentIds.Coins, component);
         }
 
-        public void RemoveCoins() {
-            RemoveComponent(MetaComponentIds.Coins);
+        public Entity RemoveCoins() {
+            return RemoveComponent(MetaComponentIds.Coins);
         }
     }
 

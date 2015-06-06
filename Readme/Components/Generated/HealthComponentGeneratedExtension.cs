@@ -4,17 +4,17 @@ namespace Entitas {
 
         public bool hasHealth { get { return HasComponent(ComponentIds.Health); } }
 
-        public void AddHealth(HealthComponent component) {
-            AddComponent(ComponentIds.Health, component);
+        public Entity AddHealth(HealthComponent component) {
+            return AddComponent(ComponentIds.Health, component);
         }
 
-        public void AddHealth(int newHealth) {
+        public Entity AddHealth(int newHealth) {
             var component = new HealthComponent();
             component.health = newHealth;
-            AddHealth(component);
+            return AddHealth(component);
         }
 
-        public void ReplaceHealth(int newHealth) {
+        public Entity ReplaceHealth(int newHealth) {
             HealthComponent component;
             if (hasHealth) {
                 WillRemoveComponent(ComponentIds.Health);
@@ -23,11 +23,11 @@ namespace Entitas {
                 component = new HealthComponent();
             }
             component.health = newHealth;
-            ReplaceComponent(ComponentIds.Health, component);
+            return ReplaceComponent(ComponentIds.Health, component);
         }
 
-        public void RemoveHealth() {
-            RemoveComponent(ComponentIds.Health);
+        public Entity RemoveHealth() {
+            return RemoveComponent(ComponentIds.Health);
         }
     }
 

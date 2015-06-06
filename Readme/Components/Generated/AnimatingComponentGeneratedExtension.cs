@@ -14,6 +14,11 @@ namespace Entitas {
                 }
             }
         }
+
+        public Entity IsAnimating(bool value) {
+            isAnimating = value;
+            return this;
+        }
     }
 
     public partial class Pool {

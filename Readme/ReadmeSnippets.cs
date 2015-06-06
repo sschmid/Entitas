@@ -3,9 +3,12 @@
 namespace Readme {
     public class ReadmeSnippets {
         public ReadmeSnippets() {
+            new AnimatingComponent();
+            new CoinsComponent();
             new HealthComponent();
             new MovableComponent();
             new PositionComponent();
+            new UIPositionComponent();
             new UserComponent();
         }
 
