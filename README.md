@@ -16,8 +16,6 @@ develop | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?bran
 
 ### Natural and readable API
 The optional [code generator](https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator) lets you write code that is super fast, save and literally screams its intent.
-
-Code from example project [Match One](https://github.com/sschmid/Match-One)
 ```cs
 public static Entity CreateRedGem(this Pool pool, int x, int y) {
 	return pool.CreateEntity()
@@ -56,16 +54,15 @@ The Code Generator generates classes and methods for you, so you can focus on ge
 
 
 # Unity integration
-The optional Unity module integrates Entitas nicely into Unity and provides powerful editor extensions to inspect and debug pool, groups, entities and components.
+The optional Unity module integrates Entitas nicely into Unity and provides powerful editor extensions to inspect and debug pools, groups, entities, components and systems.
+
+[Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Unity)
 
 ![Entitas.Unity-MenuItems](Readme/Images/Entitas.Unity-MenuItems.png)
 ![Entitas.Unity.VisualDebugging-Entity](Readme/Images/Entitas.Unity.VisualDebugging-Entity.png)
-![Entitas.Unity.VisualDebugging-DebugPool](Readme/Images/Entitas.Unity.VisualDebugging-DebugPool.png)
-![Entitas.Unity.VisualDebugging-DebugSystems](Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png)
-![Entitas.Unity.VisualDebugging-Preference](Readme/Images/Entitas.Unity.VisualDebugging-Preference.png)
 
 # Entitas deep dive
-[Goto to the wiki](https://github.com/sschmid/Entitas-CSharp/wiki) or checkout the awesome [example projects](https://github.com/sschmid/Entitas-CSharp/wiki/Examples) to see Entitas in action. These example projects illustrate how systems, groups, observers and entities all play together seamlessly.
+[Read the wiki](https://github.com/sschmid/Entitas-CSharp/wiki) or checkout the awesome [example projects](https://github.com/sschmid/Entitas-CSharp/wiki/Examples) to see Entitas in action. These example projects illustrate how systems, groups, observers and entities all play together seamlessly.
 
 
 # Download Entitas
