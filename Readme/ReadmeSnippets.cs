@@ -54,7 +54,7 @@ namespace Readme {
             foreach (var e in entities) {
                 // do something
             }
-            observer.ClearCollectedEntites();
+            observer.ClearCollectedEntities();
 
 
             // ----------------------------

@@ -88,7 +88,7 @@ class describe_GroupObserver : nspec {
                 var e = pool.CreateEntity();
                 e.AddComponentA();
 
-                observer.ClearCollectedEntites();
+                observer.ClearCollectedEntities();
                 observer.collectedEntities.should_be_empty();
             };
         };
@@ -121,7 +121,7 @@ class describe_GroupObserver : nspec {
                 var entities = observer.collectedEntities;
                 entities.Count.should_be(1);
                 entities.should_contain(e);
-                observer.ClearCollectedEntites();
+                observer.ClearCollectedEntities();
 
                 e.RemoveComponentA();
                 entities = observer.collectedEntities;

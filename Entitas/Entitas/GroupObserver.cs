@@ -38,7 +38,7 @@ namespace Entitas {
             _collectedEntities.Clear();
         }
 
-        public void ClearCollectedEntites() {
+        public void ClearCollectedEntities() {
             _collectedEntities.Clear();
         }
 

@@ -14,7 +14,7 @@
             if (_observer.collectedEntities.Count != 0) {
                 var buffer = new Entity[_observer.collectedEntities.Count];
                 _observer.collectedEntities.CopyTo(buffer, 0);
-                _observer.ClearCollectedEntites();
+                _observer.ClearCollectedEntities();
                 _subsystem.Execute(buffer);
             }
         }
