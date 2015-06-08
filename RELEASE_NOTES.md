@@ -1,3 +1,17 @@
+# 0.15.0
+
+##### Entitas
+- Added entitas_version file
+- Added CreateSystem(ISystem) to PoolExtensions
+- Fixed typo GroupObserver.ClearCollectedEntities()
+
+##### Entitas.Unity
+- Added "Check for updates..." menu item
+
+##### Entitas.Unity.VisualDebugging
+- Added Stats menu item to log current components, systems and pools
+
+
 # 0.14.0
 
 ##### General

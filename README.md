@@ -13,8 +13,6 @@ master  | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?bran
 develop | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?branch=develop)](https://travis-ci.org/sschmid/Entitas-CSharp)
 
 # First glimpse
-
-### Natural and readable API
 The optional [code generator](https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator) lets you write code that is super fast, save and literally screams its intent.
 ```cs
 public static Entity CreateRedGem(this Pool pool, int x, int y) {
@@ -35,6 +33,7 @@ foreach (var entity in entities) {
     entity.ReplacePosition(pos.x, pos.y + move.speed);
 }
 ```
+
 
 # Getting started
 Entitas is fast, light and gets rid of unnecessary complexity. There are less than a handful classes you have to know to rocket start your game or application:
@@ -61,6 +60,7 @@ The optional Unity module integrates Entitas nicely into Unity and provides powe
 ![Entitas.Unity-MenuItems](Readme/Images/Entitas.Unity-MenuItems.png)
 ![Entitas.Unity.VisualDebugging-Entity](Readme/Images/Entitas.Unity.VisualDebugging-Entity.png)
 
+
 # Entitas deep dive
 [Read the wiki](https://github.com/sschmid/Entitas-CSharp/wiki) or checkout the awesome [example projects](https://github.com/sschmid/Entitas-CSharp/wiki/Examples) to see Entitas in action. These example projects illustrate how systems, groups, observers and entities all play together seamlessly.
 
@@ -75,11 +75,14 @@ Each release is published with Entitas.zip attached containing all source files 
 
 [Show releases](https://github.com/sschmid/Entitas-CSharp/releases)
 
+
 # Thanks to
 Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://github.com/cloudjubei) and [@devboy](https://github.com/devboy) for endless hours of discussion and helping making Entitas awesome!
 
+
 # Maintainers(s)
 - [@sschmid](https://github.com/sschmid)
+
 
 # Different language?
 Entitas is also available in
