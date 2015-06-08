@@ -15,7 +15,9 @@ develop | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?bran
 # First glimpse
 
 ### Natural and readable API
-The optional [code generator](#entitascodegenerator) lets you write code that is super fast, save and literally screams its intent
+The optional [code generator](https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator) lets you write code that is super fast, save and literally screams its intent.
+
+Code from example project [Match One](https://github.com/sschmid/Match-One)
 ```cs
 public static Entity CreateRedGem(this Pool pool, int x, int y) {
 	return pool.CreateEntity()
@@ -44,13 +46,13 @@ Entitas is fast, light and gets rid of unnecessary complexity. There are less th
 - Group
 - Group Observer
 
-[Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator)
+[Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Overview-&-Getting-started)
 
 
 # Code Generator
 The Code Generator generates classes and methods for you, so you can focus on getting the job done. It radically reduces the amount of code you have to write and improves readability by a huge magnitude. It makes your code less error-prone while ensuring best performance. I strongly recommend using it!
 
-[Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Overview-&-Getting-started)
+[Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator)
 
 
 # Unity integration
