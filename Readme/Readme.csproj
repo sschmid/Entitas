@@ -149,6 +149,14 @@
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\TypeGenerator.cs">
       <Link>Libraries\Entitas.CodeGenerator\Generators\TypeGenerator.cs</Link>
     </Compile>
+    <Compile Include="Components\GameBoardElementComponent.cs" />
+    <Compile Include="Components\ResourceComponent.cs" />
+    <Compile Include="Components\InteractiveComponent.cs" />
+    <Compile Include="Components\Generated\GameBoardElementComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\InteractiveComponentGeneratedExtension.cs" />
+    <Compile Include="Components\Generated\ResourceComponentGeneratedExtension.cs" />
+    <Compile Include="Components\MoveComponent.cs" />
+    <Compile Include="Components\Generated\MoveComponentGeneratedExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

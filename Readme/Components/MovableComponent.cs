@@ -1,4 +1,5 @@
 ﻿using Entitas;
 
-public class MovableComponent : IComponent {}
+public class MovableComponent : IComponent {
+}
 

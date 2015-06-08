@@ -8,15 +8,14 @@ namespace Entitas {
             return AddComponent(ComponentIds.Position, component);
         }
 
-        public Entity AddPosition(int newX, int newY, int newZ) {
+        public Entity AddPosition(int newX, int newY) {
             var component = new PositionComponent();
             component.x = newX;
             component.y = newY;
-            component.z = newZ;
             return AddPosition(component);
         }
 
-        public Entity ReplacePosition(int newX, int newY, int newZ) {
+        public Entity ReplacePosition(int newX, int newY) {
             PositionComponent component;
             if (hasPosition) {
                 WillRemoveComponent(ComponentIds.Position);
@@ -26,7 +25,6 @@ namespace Entitas {
             }
             component.x = newX;
             component.y = newY;
-            component.z = newZ;
             return ReplaceComponent(ComponentIds.Position, component);
         }
 
