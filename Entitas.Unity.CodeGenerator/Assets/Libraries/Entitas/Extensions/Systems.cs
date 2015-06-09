@@ -16,6 +16,7 @@ namespace Entitas {
 
         public int startSystemsCount { get { return _startSystems.Count; } }
         public int executeSystemsCount { get { return _executeSystems.Count; } }
+        public int totalSystemsCount { get { return _systems.Count; } }
 
         protected readonly List<ISystem> _systems;
         protected ISystem[] _systemsCache;

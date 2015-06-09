@@ -14,6 +14,7 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.LabelField(systems.name, EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Start Systems", systems.startSystemsCount.ToString());
             EditorGUILayout.LabelField("Execute Systems", systems.executeSystemsCount.ToString());
+            EditorGUILayout.LabelField("Total Systems", systems.totalSystemsCount.ToString());
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(GUI.skin.box);

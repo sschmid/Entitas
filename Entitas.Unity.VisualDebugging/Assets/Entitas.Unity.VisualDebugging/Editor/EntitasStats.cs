@@ -9,6 +9,9 @@ using UnityEngine;
 namespace Entitas.Unity.VisualDebugging {
     public static class EntitasStats {
 
+        public const string keyComponents = "Components";
+        public const string keySystems = "Systems";
+
         [MenuItem("Entitas/Stats")]
         public static void LogStats() {
             foreach (var stat in GetStats()) {
@@ -22,8 +25,8 @@ namespace Entitas.Unity.VisualDebugging {
             var pools = getPools(components);
 
             var stats = new Dictionary<string, int> {
-                { "Components", components.Length },
-                { "Systems", types.Count(implementsSystem) }
+                { keyComponents, components.Length },
+                { keySystems, types.Count(implementsSystem) }
             };
 
             foreach (var pool in pools) {
