@@ -18,6 +18,16 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
+
+            EditorGUILayout.BeginHorizontal();
+            systems.paused = EditorGUILayout.Toggle("Step manually", systems.paused);
+            GUI.enabled = systems.paused;
+            if (GUILayout.Button("Step", GUILayout.Width(100))) {
+                systems.Step();
+            }
+            GUI.enabled = true;
+            EditorGUILayout.EndHorizontal();
+
             EditorGUILayout.LabelField("Execution duration", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Total", systems.totalDuration.ToString());
             EditorGUILayout.Space();

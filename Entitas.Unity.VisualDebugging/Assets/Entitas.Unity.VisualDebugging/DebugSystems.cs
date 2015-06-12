@@ -65,6 +65,8 @@ namespace Entitas.Unity.VisualDebugging {
                     .ToArray(); }
         }
 
+        public bool paused;
+
         public float threshold;
         public AvgResetInterval avgResetInterval = AvgResetInterval.Never;
 
@@ -102,11 +104,17 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public override void Execute() {
+            if (!paused) {
+                Step();
+            }
+        }
+
+        public void Step() {
             _totalDuration = 0;
             if (Time.frameCount % (int)avgResetInterval == 0) {
                 Reset();
             }
-            for (int i = 0, _executeSystemsCount = _executeSystems.Count; i < _executeSystemsCount; i++) {
+            for (int i = 0, exeSystemsCount = _executeSystems.Count; i < exeSystemsCount; i++) {
                 var system = _executeSystems[i];
                 var duration = monitorSystemExecutionDuration(system);
                 _totalDuration += duration;
