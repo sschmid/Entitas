@@ -34,7 +34,7 @@ namespace Entitas.CodeGenerator {
         static bool shouldGenerate(Type type) {
             return Attribute.GetCustomAttributes(type)
                 .OfType<DontGenerateAttribute>()
-                .All(attr => attr.generateIndex);;
+                .All(attr => attr.generateIndex);
         }
 
         static string generateIndicesLookup(string tag, Type[] components) {

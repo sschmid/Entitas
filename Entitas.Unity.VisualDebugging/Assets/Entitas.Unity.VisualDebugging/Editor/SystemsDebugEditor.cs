@@ -45,10 +45,13 @@ namespace Entitas.Unity.VisualDebugging {
                 .OrderByDescending(systemInfo => systemInfo.averageExecutionDuration)
                 .ToArray();
             foreach (var systemInfo in orderedSystemInfos) {
+                EditorGUILayout.BeginHorizontal();
+                systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
                 var avg = string.Format("Ø {0:0.000}", systemInfo.averageExecutionDuration).PadRight(9);
                 var min = string.Format("min {0:0.000}", systemInfo.minExecutionDuration).PadRight(11);
                 var max = string.Format("max {0:0.000}", systemInfo.maxExecutionDuration);
                 EditorGUILayout.LabelField(systemInfo.systemName, avg + "\t" + min + "\t" + max);
+                EditorGUILayout.EndHorizontal();
             }
 
             EditorGUILayout.EndVertical();

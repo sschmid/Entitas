@@ -245,7 +245,7 @@ class describe_Pool : nspec {
                 AllOfMatcher allOfB = null;
                 AnyOfCompoundMatcher compound = null;
                 Group group = null;
-                Entity e = null;;
+                Entity e = null;
                 before = () => {
                     allOfA = Matcher.AllOf(CID.ComponentA);
                     allOfB = Matcher.AllOf(CID.ComponentB);
@@ -300,7 +300,7 @@ class describe_Pool : nspec {
                 NoneOfMatcher noneOfC = null;
                 AllOfCompoundMatcher compound = null;
                 Group group = null;
-                Entity e = null;;
+                Entity e = null;
                 before = () => {
                     allOfAB = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
                     noneOfC = Matcher.NoneOf(CID.ComponentC);

@@ -285,7 +285,7 @@ $assign
 
         static bool isSingleEntity(Type type) {
             return Attribute.GetCustomAttributes(type)
-                .Any(attr => attr is SingleEntityAttribute);;
+                .Any(attr => attr is SingleEntityAttribute);
         }
 
         static bool isSingletonComponent(Type type) {
