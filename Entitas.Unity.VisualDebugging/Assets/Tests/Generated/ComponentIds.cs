@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-public static class ComponentIds {
+    public static class ComponentIds {
     public const int AnimationCurve = 0;
     public const int Array2D = 1;
     public const int Array3D = 2;
@@ -31,34 +29,34 @@ public static class ComponentIds {
 
     public const int TotalComponents = 27;
 
-    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
-        { 0, "AnimationCurve" },
-        { 1, "Array2D" },
-        { 2, "Array3D" },
-        { 3, "Array" },
-        { 4, "Bounds" },
-        { 5, "Color" },
-        { 6, "CustomObject" },
-        { 7, "DateTime" },
-        { 8, "DictArray" },
-        { 9, "Dictionary" },
-        { 10, "GameObject" },
-        { 11, "HashSet" },
-        { 12, "JaggedArray" },
-        { 13, "ListArray" },
-        { 14, "List" },
-        { 15, "MyBool" },
-        { 16, "MyEnum" },
-        { 17, "MyFloat" },
-        { 18, "MyInt" },
-        { 19, "MyString" },
-        { 20, "Rect" },
-        { 21, "SystemObject" },
-        { 22, "UnityObject" },
-        { 23, "UnsupportedObject" },
-        { 24, "Vector2" },
-        { 25, "Vector3" },
-        { 26, "Vector4" }
+    static readonly string[] components = {
+        "AnimationCurve",
+        "Array2D",
+        "Array3D",
+        "Array",
+        "Bounds",
+        "Color",
+        "CustomObject",
+        "DateTime",
+        "DictArray",
+        "Dictionary",
+        "GameObject",
+        "HashSet",
+        "JaggedArray",
+        "ListArray",
+        "List",
+        "MyBool",
+        "MyEnum",
+        "MyFloat",
+        "MyInt",
+        "MyString",
+        "Rect",
+        "SystemObject",
+        "UnityObject",
+        "UnsupportedObject",
+        "Vector2",
+        "Vector3",
+        "Vector4"
     };
 
     public static string IdToString(int componentId) {

@@ -46,15 +46,13 @@ namespace Entitas {
 
         it["generates default lookup"] = () => {
             generates(typeof(SomeComponent), defaultLookupName,
-                @"using System.Collections.Generic;
-
-public static class ComponentIds {
+                @"public static class ComponentIds {
     public const int Some = 0;
 
     public const int TotalComponents = 1;
 
-    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
-        { 0, ""Some"" }
+    static readonly string[] components = {
+        ""Some""
     };
 
     public static string IdToString(int componentId) {
@@ -69,15 +67,13 @@ public static class ComponentIds {
             generates(typeof(OtherPoolComponent), "OtherComponentIds",
                 @"using Entitas;
 
-using System.Collections.Generic;
-
 public static class OtherComponentIds {
     public const int OtherPool = 0;
 
     public const int TotalComponents = 1;
 
-    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
-        { 0, ""OtherPool"" }
+    static readonly string[] components = {
+        ""OtherPool""
     };
 
     public static string IdToString(int componentId) {
@@ -99,15 +95,13 @@ public partial class OtherMatcher : AllOfMatcher {
 
         it["generates id for [DontGenerate]"] = () => {
             generates(typeof(DontGenerateComponent), defaultLookupName,
-                @"using System.Collections.Generic;
-
-public static class ComponentIds {
+                @"public static class ComponentIds {
     public const int DontGenerate = 0;
 
     public const int TotalComponents = 1;
 
-    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
-        { 0, ""DontGenerate"" }
+    static readonly string[] components = {
+        ""DontGenerate""
     };
 
     public static string IdToString(int componentId) {
@@ -123,17 +117,15 @@ public static class ComponentIds {
                 typeof(SomeComponent),
                 typeof(DontGenerateComponent)
             }, defaultLookupName,
-                @"using System.Collections.Generic;
-
-public static class ComponentIds {
+                @"public static class ComponentIds {
     public const int DontGenerate = 0;
     public const int Some = 1;
 
     public const int TotalComponents = 2;
 
-    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
-        { 0, ""DontGenerate"" },
-        { 1, ""Some"" }
+    static readonly string[] components = {
+        ""DontGenerate"",
+        ""Some""
     };
 
     public static string IdToString(int componentId) {
@@ -149,15 +141,13 @@ public static class ComponentIds {
                 typeof(SomeComponent),
                 typeof(DontGenerateIndexComponent)
             }, defaultLookupName,
-                @"using System.Collections.Generic;
-
-public static class ComponentIds {
+                @"public static class ComponentIds {
     public const int Some = 0;
 
     public const int TotalComponents = 1;
 
-    static readonly Dictionary<int, string> components = new Dictionary<int, string> {
-        { 0, ""Some"" }
+    static readonly string[] components = {
+        ""Some""
     };
 
     public static string IdToString(int componentId) {

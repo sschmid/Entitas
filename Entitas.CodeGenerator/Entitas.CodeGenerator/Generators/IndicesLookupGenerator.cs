@@ -46,7 +46,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addClassHeader(string lookupTag) {
-            var code = string.Format("using System.Collections.Generic;\n\npublic static class {0} {{\n", lookupTag);
+            var code = string.Format("public static class {0} {{\n", lookupTag);
             if (stripDefaultTag(lookupTag) != string.Empty) {
                 code = "using Entitas;\n\n" + code;
             }
@@ -65,8 +65,8 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addIdToString(Type[] components) {
-            const string format = "        {{ {0}, \"{1}\" }},\n";
-            const string formatLast = "        {{ {0}, \"{1}\" }}\n";
+            const string format = "        \"{1}\",\n";
+            const string formatLast = "        \"{1}\"\n";
             var code = string.Empty;
             for (int i = 0; i < components.Length; i++) {
                 if (i < components.Length - 1) {
@@ -78,7 +78,7 @@ namespace Entitas.CodeGenerator {
 
             return string.Format(@"
 
-    static readonly Dictionary<int, string> components = new Dictionary<int, string> {{
+    static readonly string[] components = {{
 {0}    }};
 
     public static string IdToString(int componentId) {{
