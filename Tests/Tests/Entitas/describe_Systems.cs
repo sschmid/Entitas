@@ -58,38 +58,8 @@ class describe_Systems : nspec {
                 systems = new Systems();
             };
 
-            it["has no systems"] = () => {
-                systems.startSystemsCount.should_be(0);
-                systems.executeSystemsCount.should_be(0);
-                systems.totalSystemsCount.should_be(0);
-            };
-
             it["returns systems when adding system"] = () => {
                 systems.Add(new StartSystemSpy()).should_be_same(systems);
-            };
-
-            it["has systems count when adding IStartSystem"] = () => {
-                systems.Add(new StartSystemSpy());
-                systems.startSystemsCount.should_be(1);
-                systems.executeSystemsCount.should_be(0);
-                systems.totalSystemsCount.should_be(1);
-            };
-
-            it["contains IStartSystem when added"] = () => {
-                var system = new StartSystemSpy();
-                systems.Add(system);
-                systems.systems.should_contain(system);
-                systems.systems.Length.should_be(1);
-            };
-
-            it["updates systems cache"] = () => {
-                var system = new StartSystemSpy();
-                systems.Add(system);
-                var s = systems.systems;
-                systems.Add(system);
-                systems.systems.should_contain(system);
-                systems.systems.Length.should_be(2);
-                systems.systems.should_not_be_same(s);
             };
 
             it["starts IStartSystem"] = () => {
@@ -99,39 +69,11 @@ class describe_Systems : nspec {
                 system.started.should_be_true();
             };
 
-            it["has systems count when adding IExecuteSystem"] = () => {
-                systems.Add(new ExecuteSystemSpy());
-                systems.startSystemsCount.should_be(0);
-                systems.executeSystemsCount.should_be(1);
-                systems.totalSystemsCount.should_be(1);
-            };
-
-            it["contains IExecuteSystem when added"] = () => {
-                var system = new ExecuteSystemSpy();
-                systems.Add(system);
-                systems.systems.should_contain(system);
-                systems.systems.Length.should_be(1);
-            };
-
             it["executes IExecuteSystem"] = () => {
                 var system = new ExecuteSystemSpy();
                 systems.Add(system);
                 systems.Execute();
                 system.executed.should_be_true();
-            };
-
-            it["has systems count when adding IStartSystem, IExecuteSystem"] = () => {
-                systems.Add(new StartExecuteSystemSpy());
-                systems.startSystemsCount.should_be(1);
-                systems.executeSystemsCount.should_be(1);
-                systems.totalSystemsCount.should_be(1);
-            };
-
-            it["contains IStartSystem, IExecuteSystem when added"] = () => {
-                var system = new StartExecuteSystemSpy();
-                systems.Add(system);
-                systems.systems.should_contain(system);
-                systems.systems.Length.should_be(1);
             };
 
             it["starts and executes IStartSystem, IExecuteSystem"] = () => {

@@ -59,6 +59,10 @@ namespace Entitas.Unity.VisualDebugging {
     }
 
     public class DebugSystems : Systems {
+        public int startSystemsCount { get { return _startSystems.Count; } }
+        public int executeSystemsCount { get { return _executeSystems.Count; } }
+        public int totalSystemsCount { get { return _systems.Count; } }
+
         public string name { get { return _name; } }
         public GameObject container { get { return _container.gameObject; } }
         public double totalDuration { get { return _totalDuration; } }
@@ -73,6 +77,7 @@ namespace Entitas.Unity.VisualDebugging {
         public float threshold;
         public AvgResetInterval avgResetInterval = AvgResetInterval.Never;
 
+        readonly List<ISystem> _systems;
         readonly string _name;
         readonly Transform _container;
         double _totalDuration;
@@ -81,11 +86,17 @@ namespace Entitas.Unity.VisualDebugging {
 
         public DebugSystems(string name = "Debug Systems") {
             _name = name;
+            _systems = new List<ISystem>();
             _container = new GameObject().transform;
             _container.gameObject.AddComponent<SystemsDebugBehaviour>().Init(this);
             _systemInfos = new Dictionary<Type, SystemInfo>();
             _stopwatch = new Stopwatch();
             updateName();
+        }
+
+        public override Systems Add(ISystem system) {
+            _systems.Add(system);
+            return base.Add(system);
         }
 
         public void Reset() {
@@ -172,7 +183,7 @@ namespace Entitas.Unity.VisualDebugging {
         void updateName() {
             if (_container != null) {
                 _container.name = string.Format("{0} ({1} start, {2} exe, {3:0.###} ms)",
-                    _name, startSystemsCount, executeSystemsCount, _totalDuration);
+                    _name, _startSystems.Count, _executeSystems.Count, _totalDuration);
             }
         }
     }
