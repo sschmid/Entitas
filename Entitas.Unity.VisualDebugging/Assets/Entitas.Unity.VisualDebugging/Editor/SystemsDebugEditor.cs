@@ -7,14 +7,15 @@ namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(SystemsDebugBehaviour))]
     public class SystemsDebugEditor : Editor {
         SystemMonitorEditor _systemMonitor;
-        List<float> _systemMonitorData;
+        Queue<float> _systemMonitorData;
+        const int systemMonitorDataLength = 60;
 
         public override void OnInspectorGUI() {
             var debugBehaviour = (SystemsDebugBehaviour)target;
             var systems = debugBehaviour.systems;
             if (_systemMonitor == null) {
                 _systemMonitor = new SystemMonitorEditor(this, 80f);
-                _systemMonitorData = new List<float>();
+                _systemMonitorData = new Queue<float>(systemMonitorDataLength);
                 if (EditorApplication.update != Repaint) {
                     EditorApplication.update += Repaint;
                 }
@@ -35,7 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (GUILayout.Button("Step", GUILayout.Width(100))) {
                 systems.Step();
                 addDuration((float)systems.totalDuration);
-                _systemMonitor.Draw(_systemMonitorData);
+                _systemMonitor.Draw(_systemMonitorData.ToArray());
             }
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
@@ -47,7 +48,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (!EditorApplication.isPaused && !systems.paused) {
                 addDuration((float)systems.totalDuration);
             }
-            _systemMonitor.Draw(_systemMonitorData);
+            _systemMonitor.Draw(_systemMonitorData.ToArray());
 
             EditorGUILayout.BeginHorizontal();
             systems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset Ø", systems.avgResetInterval);
@@ -77,10 +78,11 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void addDuration(float duration) {
-            _systemMonitorData.Add(duration);
-            if (_systemMonitorData.Count > 60) {
-                _systemMonitorData.RemoveAt(0);
+            if (_systemMonitorData.Count > systemMonitorDataLength) {
+                _systemMonitorData.Dequeue();
             }
+
+            _systemMonitorData.Enqueue(duration);
         }
     }
 }

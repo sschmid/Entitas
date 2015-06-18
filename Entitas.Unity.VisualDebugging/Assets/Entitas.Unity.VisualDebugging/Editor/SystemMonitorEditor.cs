@@ -37,13 +37,13 @@ namespace Entitas.Unity.VisualDebugging {
             _centeredStyle.normal.textColor = _fontColor;
         }
 
-        public void Draw(List<float> data) {
+        public void Draw(float[] data) {
             var rect = GUILayoutUtility.GetRect(Screen.width, _windowHeight);
             _barTop = rect.y + yBorder;
-            _lineWidth = (float)(Screen.width - (xBorder * 2)) / data.Count;
+            _lineWidth = (float)(Screen.width - (xBorder * 2)) / data.Length;
             _barFloor = rect.y + rect.height - yBorder;
             _dataMax = 0f;
-            if (data.Count != 0) {
+            if (data.Length != 0) {
                 _dataMax = data.Max();
             }
             if (_dataMax % axisRounding != 0) {
@@ -53,7 +53,7 @@ namespace Entitas.Unity.VisualDebugging {
             drawGridLines(data);
         }
 
-        void drawGridLines(List<float> data) {
+        void drawGridLines(float[] data) {
             Handles.color = Color.grey;
             var lineSpacing = (_barFloor - _barTop) / (gridLines + 1);
             for (int i = 0; i <= gridLines + 1; i++) {
@@ -66,12 +66,12 @@ namespace Entitas.Unity.VisualDebugging {
             drawLine(data);
         }
 
-        void drawLine(List<float> lineData) {
+        void drawLine(float[] lineData) {
             Vector2 previousLine = Vector2.zero;
             Vector2 newLine;
             Handles.color = _lineColor;
 
-            for (int i = 0; i < lineData.Count; i++) {
+            for (int i = 0; i < lineData.Length; i++) {
                 var lineTop = _barFloor - ((_barFloor - _barTop) * (lineData[i] / _dataMax));
                 newLine = new Vector2(xBorder + (_lineWidth * i), lineTop);
                 if (i > 0) {

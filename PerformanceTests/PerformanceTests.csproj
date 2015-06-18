@@ -70,6 +70,8 @@
     <Compile Include="PerformanceTests\Entity\ObjectGetProperty.cs" />
     <Compile Include="PerformanceTests\Observer\ObserverIterateCollectedEntities.cs" />
     <Compile Include="PerformanceTests\Properties\PropertiesCreate.cs" />
+    <Compile Include="PerformanceTests\DataStructures\QueueDequeue.cs" />
+    <Compile Include="PerformanceTests\DataStructures\ListQueue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

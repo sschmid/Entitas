@@ -36,10 +36,10 @@ namespace PerformanceTests {
             run<ObserverIterateCollectedEntities>();
 //            run<PropertiesCreate>();
 
-
-
             run<ArrayGetItem>();
             run<DictionaryGetItem>();
+            run<QueueDequeue>();
+            run<ListQueue>();
 //            run<LinkedListAdd>();
 //            run<LinkedListRemove>();
 //            run<ListAdd>();
