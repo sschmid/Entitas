@@ -1,14 +1,24 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(SystemsDebugBehaviour))]
     public class SystemsDebugEditor : Editor {
+        SystemMonitorEditor _systemMonitor;
+        List<float> _systemMonitorData;
 
         public override void OnInspectorGUI() {
             var debugBehaviour = (SystemsDebugBehaviour)target;
             var systems = debugBehaviour.systems;
+            if (_systemMonitor == null) {
+                _systemMonitor = new SystemMonitorEditor(this, 80f);
+                _systemMonitorData = new List<float>();
+                if (EditorApplication.update != Repaint) {
+                    EditorApplication.update += Repaint;
+                }
+            }
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField(systems.name, EditorStyles.boldLabel);
@@ -24,6 +34,8 @@ namespace Entitas.Unity.VisualDebugging {
             GUI.enabled = systems.paused;
             if (GUILayout.Button("Step", GUILayout.Width(100))) {
                 systems.Step();
+                addDuration((float)systems.totalDuration);
+                _systemMonitor.Draw(_systemMonitorData);
             }
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
@@ -31,6 +43,11 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.LabelField("Execution duration", EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Total", systems.totalDuration.ToString());
             EditorGUILayout.Space();
+
+            if (!EditorApplication.isPaused && !systems.paused) {
+                addDuration((float)systems.totalDuration);
+            }
+            _systemMonitor.Draw(_systemMonitorData);
 
             EditorGUILayout.BeginHorizontal();
             systems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset Ø", systems.avgResetInterval);
@@ -57,6 +74,13 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.EndVertical();
 
             EditorUtility.SetDirty(target);
+        }
+
+        void addDuration(float duration) {
+            _systemMonitorData.Add(duration);
+            if (_systemMonitorData.Count > 60) {
+                _systemMonitorData.RemoveAt(0);
+            }
         }
     }
 }
