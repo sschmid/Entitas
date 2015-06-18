@@ -59,6 +59,7 @@ The optional Unity module integrates Entitas nicely into Unity and provides powe
 
 ![Entitas.Unity-MenuItems](Readme/Images/Entitas.Unity-MenuItems.png)
 ![Entitas.Unity.VisualDebugging-Entity](Readme/Images/Entitas.Unity.VisualDebugging-Entity.png)
+![Entitas.Unity.VisualDebugging-Systems](Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png)
 
 
 # Entitas deep dive

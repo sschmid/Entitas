@@ -1,3 +1,21 @@
+# 0.16.0
+
+#### Breaking changes
+- Moved system getters in Systems to DebugSystems
+
+##### Entitas.Unity.CodeGenerator
+- Generated ComponentIds use array instead of dictionary for component name lookup
+
+##### Entitas.Unity.VisualDebugging
+- Added "Step manually" to DebugSystems
+- Added activate / deactivate systems at runtime
+- Displaying Systems.totalSystemsCount in SystemsDebugEditor
+- Added SystemsMonitor visual graph
+
+![Entitas.Unity.VisualDebugging-Debugsystems](https://cloud.githubusercontent.com/assets/233700/8241713/3bf5e3ce-160b-11e5-8876-497bb09c04b1.png)
+- Removed override DebugSystems.DestroyAllEntities()
+
+
 # 0.15.0
 
 ##### Entitas
@@ -41,7 +59,7 @@ pool.CreateEntity()
 ##### Entitas.Unity.VisualDebugging
 - Added DebugSystems
 
-![visualdebug-systems](https://cloud.githubusercontent.com/assets/233700/7938066/ebe8b4b6-0943-11e5-9cec-ce694d624aca.png)
+![Entitas.Unity.VisualDebugging-Systems](https://cloud.githubusercontent.com/assets/233700/7938066/ebe8b4b6-0943-11e5-9cec-ce694d624aca.png)
 - Added HashSetTypeDrawer
 
 
@@ -73,11 +91,11 @@ pool.CreateEntity()
 - Added IDefaultInstanceCreator implementations for array, dictionary and string
 - Added support to insert and remove elements from lists, arrays and dictionaries
 
-![entitas-itypedrawer](https://cloud.githubusercontent.com/assets/233700/7339538/226d8028-ec72-11e4-8971-53029fb20da8.png)
+![Entitas.Unity.VisualDebugging-ITypeDrawer](https://cloud.githubusercontent.com/assets/233700/7339538/226d8028-ec72-11e4-8971-53029fb20da8.png)
 - Added name property to DebugPool
 - Added VisualDebuggingConfig and VisualDebuggingPreferencesDrawer
 
-![entitas-preferences](https://cloud.githubusercontent.com/assets/233700/7339599/ef454f34-ec74-11e4-9775-963f477bfb16.png)
+![Entitas.Unity.VisualDebugging-Preferences](https://cloud.githubusercontent.com/assets/233700/7339599/ef454f34-ec74-11e4-9775-963f477bfb16.png)
 - EntityDebugEditor can generate IDefaultInstanceCreator and ITypeDrawer implementations for unsupported types
 - Fixed: handling null values
 - Renamed ICustomTypeDrawer to ITypeDrawer
@@ -110,7 +128,7 @@ pool.CreateEntity()
 	- set generated folder path
 	- define multiple pools
 
-![entitas-preferences](https://cloud.githubusercontent.com/assets/233700/7296726/8d74bb5a-e9c2-11e4-8324-10a0db7191ff.png)
+![Entitas.Unity.CodeGenerator-Preferences](https://cloud.githubusercontent.com/assets/233700/7296726/8d74bb5a-e9c2-11e4-8324-10a0db7191ff.png)
 - Added PoolAttributeGenerator
 - Generated Matcher is now prefixed based on PoolAttribute (e.g. UIMatcher)
 - Generating ToString() for matchers to print component name instead of index
@@ -145,10 +163,10 @@ pool.CreateEntity()
 - Added component folding and pooled entities count
 - Added groups to PoolDebugEditor
 
-![visualdebugging-groups](https://cloud.githubusercontent.com/assets/233700/6547980/e342b3fe-c5e9-11e4-8caa-77662a14679b.png)
+![Entitas.Unity.VisualDebugging-Groups](https://cloud.githubusercontent.com/assets/233700/6547980/e342b3fe-c5e9-11e4-8caa-77662a14679b.png)
 - Added support for IList
 
-![visualdebugging-ilist](https://cloud.githubusercontent.com/assets/233700/6547984/eecc3e3e-c5e9-11e4-98bb-700a84047abe.png)
+![Entitas.Unity.VisualDebugging-IList](https://cloud.githubusercontent.com/assets/233700/6547984/eecc3e3e-c5e9-11e4-98bb-700a84047abe.png)
 - UI improvements
 
 ##### Code Generator
