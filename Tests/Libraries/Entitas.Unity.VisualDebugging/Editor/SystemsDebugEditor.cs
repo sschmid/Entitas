@@ -14,8 +14,8 @@ namespace Entitas.Unity.VisualDebugging {
             var debugBehaviour = (SystemsDebugBehaviour)target;
             var systems = debugBehaviour.systems;
             if (_systemMonitor == null) {
-                _systemMonitor = new SystemMonitorEditor(this, 80f);
-                _systemMonitorData = new Queue<float>(systemMonitorDataLength);
+                _systemMonitor = new SystemMonitorEditor();
+                _systemMonitorData = new Queue<float>(new float[systemMonitorDataLength]);
                 if (EditorApplication.update != Repaint) {
                     EditorApplication.update += Repaint;
                 }
@@ -36,7 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (GUILayout.Button("Step", GUILayout.Width(100))) {
                 systems.Step();
                 addDuration((float)systems.totalDuration);
-                _systemMonitor.Draw(_systemMonitorData.ToArray());
+                _systemMonitor.Draw(_systemMonitorData.ToArray(), 80f);
             }
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
@@ -48,7 +48,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (!EditorApplication.isPaused && !systems.paused) {
                 addDuration((float)systems.totalDuration);
             }
-            _systemMonitor.Draw(_systemMonitorData.ToArray());
+            _systemMonitor.Draw(_systemMonitorData.ToArray(), 80f);
 
             EditorGUILayout.BeginHorizontal();
             systems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset Ø", systems.avgResetInterval);

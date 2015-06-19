@@ -1,4 +1,4 @@
-    public static class ComponentIds {
+public static class ComponentIds {
     public const int AnimationCurve = 0;
     public const int Array2D = 1;
     public const int Array3D = 2;

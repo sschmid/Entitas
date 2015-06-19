@@ -1,99 +1,93 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
     public class SystemMonitorEditor {
-        const float xBorder = 50;
-        const float yBorder = 20;
-        const string formatString = "{0:0.0}";
-        const string axisFormatString = "{0:0.0}";
-        const int gridLines = 1;
-        const float axisRounding = 10f;
-        const float pipRadius = 1f;
+        public float xBorder = 48;
+        public float yBorder = 20;
+        public int rightLinePadding = 10;
+        public string labelFormat = "{0:0.0}";
+        public string axisFormat = "{0:0.0}";
+        public int gridLines = 1;
+        public float axisRounding = 10f;
+        public float anchorRadius = 1f;
+        public Color lineColor = Color.magenta;
 
-        readonly Editor _editor;
         readonly GUIStyle _labelTextStyle;
         readonly GUIStyle _centeredStyle;
 
-        Color _lineColor = Color.magenta;
-        Color _fontColor = Color.white;
-
-        float _windowHeight;
-        float _barFloor;
-        float _barTop;
-        float _lineWidth;
-        float _dataMax;
-
-        public SystemMonitorEditor(Editor editor, float windowHeight) {
-            _editor = editor;
-            _windowHeight = windowHeight;
-            _labelTextStyle = new GUIStyle();
+        public SystemMonitorEditor() {
+            _labelTextStyle = new GUIStyle(GUI.skin.label);
             _labelTextStyle.alignment = TextAnchor.UpperRight;
-            _labelTextStyle.normal.textColor = _fontColor;
             _centeredStyle = new GUIStyle();
             _centeredStyle.alignment = TextAnchor.UpperCenter;
-            _centeredStyle.normal.textColor = _fontColor;
+            _centeredStyle.normal.textColor = Color.white;
         }
 
-        public void Draw(float[] data) {
-            var rect = GUILayoutUtility.GetRect(Screen.width, _windowHeight);
-            _barTop = rect.y + yBorder;
-            _lineWidth = (float)(Screen.width - (xBorder * 2)) / data.Length;
-            _barFloor = rect.y + rect.height - yBorder;
-            _dataMax = 0f;
-            if (data.Length != 0) {
-                _dataMax = data.Max();
-            }
-            if (_dataMax % axisRounding != 0) {
-                _dataMax = _dataMax + axisRounding - (_dataMax % axisRounding);
+        public void Draw(float[] data, float height) {
+            var rect = GUILayoutUtility.GetRect(Screen.width, height);
+            var top = rect.y + yBorder;
+            var floor = rect.y + rect.height - yBorder;
+            var availableHeight = floor - top;
+            var max = data.Length != 0 ? data.Max() : 0f;
+            if (max % axisRounding != 0) {
+                max = max + axisRounding - (max % axisRounding);
             }
 
-            drawGridLines(data);
+            drawGridLines(top, availableHeight, max);
+            drawLine(data, floor, availableHeight, max);
         }
 
-        void drawGridLines(float[] data) {
+        void drawGridLines(float top, float availableHeight, float max) {
+            var handleColor = Handles.color;
             Handles.color = Color.grey;
-            var lineSpacing = (_barFloor - _barTop) / (gridLines + 1);
-            for (int i = 0; i <= gridLines + 1; i++) {
-                Handles.DrawLine(new Vector2(xBorder, _barTop + (lineSpacing * i)),
-                    new Vector2(Screen.width - xBorder, _barTop + (lineSpacing * i)));
-                GUI.Label(new Rect(0, _barTop + (lineSpacing * i) - 8, xBorder - 2, 50),
-                    string.Format(axisFormatString, (_dataMax * (1 - ((lineSpacing * i) / (_barFloor - _barTop))))),
-                    _labelTextStyle);
+            var n = gridLines + 1;
+            var lineSpacing = availableHeight / n;
+            for (int i = 0; i <= n; i++) {
+                var lineY = top + (lineSpacing * i);
+                Handles.DrawLine(
+                    new Vector2(xBorder, lineY),
+                    new Vector2(Screen.width - rightLinePadding, lineY)
+                );
+                GUI.Label(
+                    new Rect(0, lineY - 8, xBorder - 2, 50),
+                    string.Format(axisFormat, max * (1f - ((float)i / (float)n))),
+                    _labelTextStyle
+                );
             }
-            drawLine(data);
+            Handles.color = handleColor;
         }
 
-        void drawLine(float[] lineData) {
-            Vector2 previousLine = Vector2.zero;
+        void drawLine(float[] data, float floor, float availableHeight, float max) {
+            var lineWidth = (float)(Screen.width - xBorder - rightLinePadding) / data.Length;
+            var handleColor = Handles.color;
+            Handles.color = lineColor;
+            Vector2 prevLine = Vector2.zero;
             Vector2 newLine;
-            Handles.color = _lineColor;
-
-            for (int i = 0; i < lineData.Length; i++) {
-                var lineTop = _barFloor - ((_barFloor - _barTop) * (lineData[i] / _dataMax));
-                newLine = new Vector2(xBorder + (_lineWidth * i), lineTop);
+            for (int i = 0; i < data.Length; i++) {
+                var value = data[i];
+                var lineTop = floor - (availableHeight * (value / max));
+                newLine = new Vector2(xBorder + (lineWidth * i), lineTop);
                 if (i > 0) {
-                    Handles.DrawAAPolyLine(previousLine, newLine);
+                    Handles.DrawAAPolyLine(prevLine, newLine);
                 }
-                previousLine = newLine;
-                var selectRect = new Rect((previousLine - (Vector2.up * 0.5f)).x - pipRadius * 3,
-                                 (previousLine - (Vector2.up * 0.5f)).y - pipRadius * 3, pipRadius * 6, pipRadius * 6);
-                if (selectRect.Contains(Event.current.mousePosition)) {
-                    Handles.DrawSolidDisc(previousLine - (Vector2.up * 0.5f), Vector3.forward, pipRadius * 2);
-                    selectRect.y -= 16;
-                    selectRect.width += 50;
-                    selectRect.x -= 25;
-                    GUI.Label(selectRect, string.Format(formatString, lineData[i]), _centeredStyle);
-                    if (_editor != null) {
-                        _editor.Repaint();
-                    }
+                prevLine = newLine;
+                var anchorPosRadius3 = anchorRadius * 3;
+                var anchorPosRadius6 = anchorRadius * 6;
+                var anchorPos = newLine - (Vector2.up * 0.5f);
+                var labelRect = new Rect(anchorPos.x - anchorPosRadius3, anchorPos.y - anchorPosRadius3, anchorPosRadius6, anchorPosRadius6);
+                if (labelRect.Contains(Event.current.mousePosition)) {
+                    Handles.DrawSolidDisc(anchorPos, Vector3.forward, anchorRadius * 2);
+                    labelRect.y -= 16;
+                    labelRect.width += 50;
+                    labelRect.x -= 25;
+                    GUI.Label(labelRect, string.Format(labelFormat, value), _centeredStyle);
                 } else {
-                    Handles.DrawSolidDisc(previousLine - (Vector2.up * 0.5f), Vector3.forward, pipRadius);
+                    Handles.DrawSolidDisc(anchorPos, Vector3.forward, anchorRadius);
                 }
             }
-            Handles.color = Color.white;
+            Handles.color = handleColor;
         }
     }
 }
