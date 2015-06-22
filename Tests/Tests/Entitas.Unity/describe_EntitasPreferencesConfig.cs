@@ -16,9 +16,9 @@ class describe_EntitasPreferencesConfig : nspec {
         };
 
         it["sets value for trimmed key"] = () => {
-            config[" test key "] = "test value";
-            config["test key"].should_be("test value");
-            config.ToString().should_be("test key = test value\n");
+            config[" test key "] = " test value ";
+            config["test key"].should_be("test value ");
+            config.ToString().should_be("test key = test value \n");
         };
     }
 }

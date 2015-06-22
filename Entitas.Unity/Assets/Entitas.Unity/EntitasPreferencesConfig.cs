@@ -18,8 +18,6 @@
 
         public string GetValueOrDefault(string key, string defaultValue) {
             key = key.Trim();
-            defaultValue = defaultValue.TrimStart();
-
             if (_properties.HasKey(key)) {
                 return _properties[key];
             }
