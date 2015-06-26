@@ -18,7 +18,8 @@ namespace Entitas.Unity.CodeGenerator {
             };
 
             var poolCodeGenerators = new IPoolCodeGenerator [] {
-                new PoolAttributeGenerator()
+                new PoolAttributeGenerator(),
+                new PoolsGenerator()
             };
 
             Entitas.CodeGenerator.CodeGenerator.Generate(types, config.pools, config.generatedFolderPath,

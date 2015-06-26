@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entitas;
-using Entitas.Unity.VisualDebugging;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
 
     void Start() {
-        var pool = new DebugPool(ComponentIds.TotalComponents, "Test Pool");
+        var pool = Pools.pool;
         pool.GetGroup(Matcher.Vector3);
         pool.GetGroup(Matcher.GameObject);
         pool.GetGroup(Matcher.AllOf(Matcher.GameObject, Matcher.Vector3));

@@ -11,11 +11,11 @@ namespace Entitas.Unity.VisualDebugging {
         string _name;
         Transform _entitiesContainer;
 
-        public DebugPool(int totalComponents, string name = "Debug Pool") : base(totalComponents + 1) {
+        public DebugPool(int totalComponents, string name = "Pool") : base(totalComponents + 1) {
             init(totalComponents, name);
         }
 
-        public DebugPool(int totalComponents, int startCreationIndex, string name = "Debug Pool") : base(totalComponents + 1, startCreationIndex) {
+        public DebugPool(int totalComponents, int startCreationIndex, string name = "Pool") : base(totalComponents + 1, startCreationIndex) {
             init(totalComponents, name);
         }
 

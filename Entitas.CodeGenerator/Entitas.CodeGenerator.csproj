@@ -43,6 +43,7 @@
     <Compile Include="Entitas.CodeGenerator\CodeGenFile.cs" />
     <Compile Include="Entitas.CodeGenerator\IComponentCodeGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\IPoolCodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\PoolsGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -87,14 +87,14 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addGetMethods(Type type) {
-            string getMethod = isSingletonComponent(type) ?
+            var getMethod = isSingletonComponent(type) ?
                 "\n        static readonly $Type $nameComponent = new $Type();\n" :
                 "\n        public $Type $name { get { return ($Type)GetComponent($Ids.$Name); } }\n";
             return buildString(type, getMethod);
         }
 
         static string addHasMethods(Type type) {
-            string hasMethod = isSingletonComponent(type) ? @"
+            var hasMethod = isSingletonComponent(type) ? @"
         public bool is$Name {
             get { return HasComponent($Ids.$Name); }
             set {
@@ -177,7 +177,7 @@ $assign
         }
 
         static string addPoolGetMethods(Type type) {
-            string getMehod = isSingletonComponent(type) ? @"
+            var getMehod = isSingletonComponent(type) ? @"
         public Entity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
 " : @"
         public Entity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
@@ -188,7 +188,7 @@ $assign
         }
 
         static string addPoolHasMethods(Type type) {
-            string hasMethod = isSingletonComponent(type) ? @"
+            var hasMethod = isSingletonComponent(type) ? @"
         public bool is$Name {
             get { return $nameEntity != null; }
             set {

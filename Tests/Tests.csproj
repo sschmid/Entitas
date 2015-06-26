@@ -87,6 +87,7 @@
     <Compile Include="Tests\Entitas\Fixtures\StartSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\ExecuteSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\StartExecuteSystemSpy.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_PoolsGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

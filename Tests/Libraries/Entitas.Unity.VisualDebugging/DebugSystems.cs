@@ -84,7 +84,7 @@ namespace Entitas.Unity.VisualDebugging {
         Dictionary<Type, SystemInfo> _systemInfos;
         Stopwatch _stopwatch;
 
-        public DebugSystems(string name = "Debug Systems") {
+        public DebugSystems(string name = "Systems") {
             _name = name;
             _systems = new List<ISystem>();
             _container = new GameObject().transform;
