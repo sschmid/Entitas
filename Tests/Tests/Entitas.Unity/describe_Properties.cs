@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entitas.Unity;
 using NSpec;
 
@@ -72,10 +73,10 @@ class describe_Properties : nspec {
 
         context["when multiline"] = () => {
             it["creates Properties from multiline input string"] = () => {
-                const string input =
-                    "some.key.1=some value 1" + "\n" +
-                    " some.key.2 = some value 2 " + "\n" +
-                    "some.key.3=some value 3" + "\n";
+                var input =
+                    "some.key.1=some value 1" + Environment.NewLine +
+                    " some.key.2 = some value 2 " + Environment.NewLine +
+                    "some.key.3=some value 3" + Environment.NewLine;
 
                 const string expectedOutput =
                     "some.key.1 = some value 1\n" +
@@ -92,10 +93,10 @@ class describe_Properties : nspec {
             };
 
             it["creates Properties from multiline input string where values contain ="] = () => {
-                const string input =
-                    "some.key.1=some=value 1" + "\n" +
-                    "some.key.2 ==some value 2 " + "\n" +
-                    "some.key.3=some value=" + "\n";
+                var input =
+                    "some.key.1=some=value 1" + Environment.NewLine +
+                    "some.key.2 ==some value 2 " + Environment.NewLine +
+                    "some.key.3=some value=" + Environment.NewLine;
 
                 const string expectedOutput =
                     "some.key.1 = some=value 1\n" +
@@ -112,13 +113,13 @@ class describe_Properties : nspec {
             };
 
             it["ignores blank lines"] = () => {
-                const string input =
-                    "\n" +
-                    "some.key.1=some value 1" + "\n" +
-                    "\n" +
-                    " some.key.2 = some value 2 " + "\n" +
-                    "\n" +
-                    "some.key.3=some value 3" + "\n";
+                var input =
+                    Environment.NewLine +
+                    "some.key.1=some value 1" + Environment.NewLine +
+                    Environment.NewLine +
+                    " some.key.2 = some value 2 " + Environment.NewLine +
+                    Environment.NewLine +
+                    "some.key.3=some value 3" + Environment.NewLine;
 
                 const string expectedOutput =
                     "some.key.1 = some value 1\n" +
@@ -135,10 +136,10 @@ class describe_Properties : nspec {
             };
 
             it["ignores lines starting with #"] = () => {
-                const string input =
-                    "#some.key.1=some value 1" + "\n" +
-                    "  #some.key.2 = some value 2 " + "\n" +
-                    "some.key.3=some value 3" + "\n";
+                var input =
+                    "#some.key.1=some value 1" + Environment.NewLine +
+                    "  #some.key.2 = some value 2 " + Environment.NewLine +
+                    "some.key.3=some value 3" + Environment.NewLine;
 
                 const string expectedOutput =
                     "some.key.3 = some value 3\n";
@@ -151,9 +152,9 @@ class describe_Properties : nspec {
             };
 
             it["supports multiline values ending with \\"] = () => {
-                const string input =
-                    "some.key=some val\\\nue\n" +
-                    "some.other.key=other val\\\nue\n";
+                var input =
+                    "some.key=some val\\" + Environment.NewLine + "ue" + Environment.NewLine +
+                    "some.other.key=other val\\" +Environment.NewLine + "ue" + Environment.NewLine;
 
                 const string expectedOutput =
                     "some.key = some value\n" +
@@ -168,9 +169,9 @@ class describe_Properties : nspec {
             };
 
             it["trims leading whitespace of multilines"] = () => {
-                const string input =
-                    "some.key=some val\\\n   ue\n" +
-                    "some.other.key=other val\\\n   ue\n";
+                var input =
+                    "some.key=some val\\" + Environment.NewLine + "   ue" + Environment.NewLine +
+                    "some.other.key=other val\\" + Environment.NewLine + "   ue" + Environment.NewLine;
 
                 const string expectedOutput =
                     "some.key = some value\n" +
@@ -187,9 +188,9 @@ class describe_Properties : nspec {
 
         context["when replacing special characters in values"] = () => {
             it["replaces \\n with newline"] = () => {
-                const string input =
-                    @"some.key=some\nvalue" + "\n" +
-                    @"some.other.key=other\nvalue" + "\n";
+                var input =
+                    @"some.key=some\nvalue" + Environment.NewLine +
+                    @"some.other.key=other\nvalue" + Environment.NewLine;
 
                 const string expectedOutput =
                     @"some.key = some\nvalue" + "\n" +
@@ -203,27 +204,10 @@ class describe_Properties : nspec {
                 assertProperties(input, expectedOutput, expectedProperties);
             };
 
-            it["replaces \\r with carriage return"] = () => {
-                const string input =
-                    @"some.key=some\rvalue" + "\n" +
-                    @"some.other.key=other\rvalue" + "\n";
-
-                const string expectedOutput =
-                    @"some.key = some\rvalue" + "\n" +
-                    @"some.other.key = other\rvalue" + "\n";
-
-                var expectedProperties = new Dictionary<string, string> {
-                    { "some.key", "some\rvalue" },
-                    { "some.other.key", "other\rvalue" }
-                };
-
-                assertProperties(input, expectedOutput, expectedProperties);
-            };
-
             it["replaces \\t with tabs"] = () => {
-                const string input =
-                    @"some.key=some\tvalue" + "\n" +
-                    @"some.other.key=other\tvalue" + "\n";
+                var input =
+                    @"some.key=some\tvalue" + Environment.NewLine +
+                    @"some.other.key=other\tvalue" + Environment.NewLine;
 
                 const string expectedOutput =
                     @"some.key = some\tvalue" + "\n" +
@@ -267,10 +251,10 @@ class describe_Properties : nspec {
 
         context["placeholder"] = () => {
             it["replaces placeholder within ${...}"] = () => {
-                const string input =
-                    "project.name = Entitas" + "\n" +
-                    "project.domain = com.sschmid" + "\n" +
-                    "project.bundleId = ${project.domain}.${project.name}" + "\n";
+                var input =
+                    "project.name = Entitas" + Environment.NewLine +
+                    "project.domain = com.sschmid" + Environment.NewLine +
+                    "project.bundleId = ${project.domain}.${project.name}" + Environment.NewLine;
 
                 const string expectedOutput =
                     "project.name = Entitas\n" +

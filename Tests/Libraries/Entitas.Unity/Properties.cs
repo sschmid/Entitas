@@ -18,7 +18,7 @@ namespace Entitas.Unity {
         }
 
         string[] getLinesWithProperties(string properties) {
-            var delimiter = new[] { '\n' };
+            var delimiter = new[] { Environment.NewLine };
             return properties
                 .Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
                 .Select(line => line.TrimStart(' '))
@@ -73,7 +73,6 @@ namespace Entitas.Unity {
                 _dict[key.Trim()] = value
                                         .TrimStart()
                                         .Replace("\\n", "\n")
-                                        .Replace("\\r", "\r")
                                         .Replace("\\t", "\t");
             }
         }
@@ -82,7 +81,6 @@ namespace Entitas.Unity {
             return _dict.Aggregate(string.Empty, (properties, kv) => {
                 var content = kv.Value
                     .Replace("\n", "\\n")
-                    .Replace("\r", "\\r")
                     .Replace("\t", "\\t");
 
                 return properties + kv.Key + " = " + content + "\n";
