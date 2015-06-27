@@ -23,7 +23,8 @@ namespace Readme {
             };
 
             var poolCodeGenerators = new IPoolCodeGenerator[] {
-                new PoolAttributeGenerator()
+                new PoolAttributeGenerator(),
+                new PoolsGenerator()
             };
 
             CodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder,

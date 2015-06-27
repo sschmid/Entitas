@@ -16,7 +16,9 @@ public static class Pools {
         get {
             if (_pool == null) {
                 #if (UNITY_EDITOR)
-                _pool = new Entitas.Unity.VisualDebugging.DebugPool(ComponentIds.TotalComponents, ""Pool"");
+                var pool = new Entitas.Unity.VisualDebugging.DebugPool(ComponentIds.TotalComponents, ""Pool"");
+                DontDestroyOnLoad(pool.entitiesContainer);
+                _pool = pool;
                 #else
                 _pool = new Pool(ComponentIds.TotalComponents);
                 #endif
@@ -37,7 +39,9 @@ public static class Pools {
         get {
             if (_meta == null) {
                 #if (UNITY_EDITOR)
-                _meta = new Entitas.Unity.VisualDebugging.DebugPool(MetaComponentIds.TotalComponents, ""Meta Pool"");
+                var pool = new Entitas.Unity.VisualDebugging.DebugPool(MetaComponentIds.TotalComponents, ""Meta Pool"");
+                DontDestroyOnLoad(pool.entitiesContainer);
+                _meta = pool;
                 #else
                 _meta = new Pool(MetaComponentIds.TotalComponents);
                 #endif
@@ -58,7 +62,9 @@ public static class Pools {
         get {
             if (_meta == null) {
                 #if (UNITY_EDITOR)
-                _meta = new Entitas.Unity.VisualDebugging.DebugPool(MetaComponentIds.TotalComponents, ""Meta Pool"");
+                var pool = new Entitas.Unity.VisualDebugging.DebugPool(MetaComponentIds.TotalComponents, ""Meta Pool"");
+                DontDestroyOnLoad(pool.entitiesContainer);
+                _meta = pool;
                 #else
                 _meta = new Pool(MetaComponentIds.TotalComponents);
                 #endif
@@ -74,7 +80,9 @@ public static class Pools {
         get {
             if (_core == null) {
                 #if (UNITY_EDITOR)
-                _core = new Entitas.Unity.VisualDebugging.DebugPool(CoreComponentIds.TotalComponents, ""Core Pool"");
+                var pool = new Entitas.Unity.VisualDebugging.DebugPool(CoreComponentIds.TotalComponents, ""Core Pool"");
+                DontDestroyOnLoad(pool.entitiesContainer);
+                _core = pool;
                 #else
                 _core = new Pool(CoreComponentIds.TotalComponents);
                 #endif
