@@ -21,7 +21,7 @@ namespace Entitas.Unity {
 
         static string requestLatestRelease() {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-            httpWebRequest.UserAgent = "sschmid/Entitas-CSharp/Entitas.Unity/CheckForUpdates";
+            httpWebRequest.UserAgent = Environment.UserName + "sschmid/Entitas-CSharp/Entitas.Unity/CheckForUpdates";
             httpWebRequest.Timeout = 15000;
             var webResponse = httpWebRequest.GetResponse();
             var response = string.Empty;
