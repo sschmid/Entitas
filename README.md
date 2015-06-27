@@ -35,7 +35,7 @@ foreach (var entity in entities) {
 ```
 
 
-# Getting started
+# Overview
 Entitas is fast, light and gets rid of unnecessary complexity. There are less than a handful classes you have to know to rocket start your game or application:
 
 - Entity
@@ -43,7 +43,7 @@ Entitas is fast, light and gets rid of unnecessary complexity. There are less th
 - Group
 - Group Observer
 
-[Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Overview-&-Getting-started)
+[Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Overview)
 
 
 # Code Generator

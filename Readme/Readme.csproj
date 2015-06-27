@@ -166,6 +166,10 @@
     <Compile Include="Components\Generated\Components\UIComponentIds.cs" />
     <Compile Include="Components\Generated\Components\UIPositionComponentGeneratedExtension.cs" />
     <Compile Include="Components\Generated\Components\UserComponentGeneratedExtension.cs" />
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\PoolsGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Generators\PoolsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="Components\Generated\Pools\Pools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -174,5 +178,6 @@
     <Folder Include="Libraries\Entitas\" />
     <Folder Include="Libraries\Entitas.CodeGenerator\" />
     <Folder Include="Components\Generated\" />
+    <Folder Include="Components\Generated\Pools\" />
   </ItemGroup>
 </Project>

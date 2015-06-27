@@ -61,8 +61,8 @@ namespace Readme {
         }
 
         static void poolExample() {
-            // Total components is kindly generated for you by the code generator
-            var pool = new Pool(ComponentIds.TotalComponents);
+            // Pools.pool is kindly generated for you by the code generator
+            var pool = Pools.pool;
             var entity = pool.CreateEntity();
             entity.isMovable = true;
 
@@ -76,6 +76,12 @@ namespace Readme {
 
         static void groupExample(Pool pool) {
             pool.GetGroup(Matcher.Position).GetEntities();
+
+            // ----------------------------
+
+            pool.GetGroup(Matcher.Position).OnEntityAdded += (group, entity) => {
+                // Do something
+            };
         }
 
         static void groupObserverExample(Pool pool) {
