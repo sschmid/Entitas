@@ -18,12 +18,19 @@ namespace Readme {
                 new ComponentExtensionsGenerator()
             };
 
+            var systemCodeGenerators = new ISystemCodeGenerator[] {
+                new SystemExtensionsGenerator()
+            };
+
             var poolCodeGenerators = new IPoolCodeGenerator[] {
                 new PoolAttributeGenerator()
             };
 
             CodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder,
-                componentCodeGenerators, poolCodeGenerators);
+                componentCodeGenerators, systemCodeGenerators, poolCodeGenerators);
+
+            Console.WriteLine("Done. Press any key...");
+            Console.Read();
         }
 
         static string getEntitasProjectDir() {

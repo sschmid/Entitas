@@ -1,5 +1,6 @@
-﻿using Entitas.CodeGenerator;
+﻿using System;
 using System.Reflection;
+using Entitas.CodeGenerator;
 
 public class Program {
     public static void Main(string[] args) {
@@ -10,11 +11,18 @@ public class Program {
             new ComponentExtensionsGenerator()
         };
 
+        var systemCodeGenerators = new ISystemCodeGenerator[] {
+            new SystemExtensionsGenerator()
+        };
+
         var poolCodeGenerators = new IPoolCodeGenerator[] {
             new PoolAttributeGenerator()
         };
 
         CodeGenerator.Generate(assembly.GetTypes(), new string[0], "Generated/",
-            componentCodeGenerators, poolCodeGenerators);
+            componentCodeGenerators, systemCodeGenerators, poolCodeGenerators);
+
+        Console.WriteLine("Done. Press any key...");
+        Console.Read();
     }
 }

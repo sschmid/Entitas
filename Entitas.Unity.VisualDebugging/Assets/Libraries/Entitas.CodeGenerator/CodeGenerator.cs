@@ -7,29 +7,45 @@ namespace Entitas.CodeGenerator {
         public const string componentSuffix = "Component";
 
         public static void Generate(Type[] types, string[] poolNames, string dir,
-                IComponentCodeGenerator[] componentCodeGenerators, IPoolCodeGenerator[] poolCodeGenerators) {
+                                    IComponentCodeGenerator[] componentCodeGenerators,
+                                    ISystemCodeGenerator[] systemCodeGenerators,
+                                    IPoolCodeGenerator[] poolCodeGenerators) {
 
-            if (!Directory.Exists(dir)) {
-                Directory.CreateDirectory(dir);
-            }
-
+            dir = GetSafeDir(dir);
             CleanDir(dir);
+            
             var components = GetComponents(types);
-
             foreach (var generator in componentCodeGenerators) {
                 var files = generator.Generate(components);
-                writeFiles(dir, files);
+                writeFiles(dir + "Components/", files);
+            }
+
+            var systems = GetSystems(types);
+            foreach (var generator in systemCodeGenerators) {
+                var files = generator.Generate(systems);
+                writeFiles(dir + "Systems/", files);
             }
 
             foreach (var generator in poolCodeGenerators) {
                 var files = generator.Generate(poolNames);
-                writeFiles(dir, files);
+                writeFiles(dir + "Pools/", files);
             }
         }
 
+        public static string GetSafeDir(string dir) {
+            if (!dir.EndsWith("/", StringComparison.Ordinal)) {
+                dir += "/";
+            }
+            if (!dir.EndsWith("Generated/", StringComparison.Ordinal)) {
+                dir += "Generated/";
+            }
+            return dir;
+        }
+
         public static void CleanDir(string dir) {
+            dir = GetSafeDir(dir);
             if (Directory.Exists(dir)) {
-                FileInfo[] files = new DirectoryInfo(dir).GetFiles("*.cs");
+                FileInfo[] files = new DirectoryInfo(dir).GetFiles("*.cs", SearchOption.AllDirectories);
                 foreach (var file in files) {
                     try {
                         File.Delete(file.FullName);
@@ -37,16 +53,30 @@ namespace Entitas.CodeGenerator {
                         Console.WriteLine("Could not delete file " + file);
                     }
                 }
+            } else {
+                Directory.CreateDirectory(dir);
             }
         }
 
-        public static Type[]GetComponents(Type[] types) {
+        public static Type[] GetComponents(Type[] types) {
             return types
                 .Where(type => type.GetInterfaces().Contains(typeof(IComponent)))
                 .ToArray();
         }
 
+        public static Type[] GetSystems(Type[] types) {
+            return types
+                .Where(type => !type.IsInterface
+                    && type != typeof(ReactiveSystem)
+                    && type != typeof(Systems)
+                    && type.GetInterfaces().Contains(typeof(ISystem)))
+                .ToArray();
+        }
+
         static void writeFiles(string dir, CodeGenFile[] files) {
+            if (!Directory.Exists(dir)) {
+                Directory.CreateDirectory(dir);
+            }
             foreach (var file in files) {
                 File.WriteAllText(dir + file.fileName + ".cs", file.fileContent);
             }

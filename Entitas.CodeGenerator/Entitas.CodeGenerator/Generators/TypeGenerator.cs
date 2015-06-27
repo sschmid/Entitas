@@ -5,7 +5,7 @@ using System.Linq;
 namespace Entitas.CodeGenerator {
     public static class TypeGenerator {
 
-        static readonly Dictionary<string, string> builtInTypes = new Dictionary<string, string>() {
+        static readonly Dictionary<string, string> _builtInTypes = new Dictionary<string, string>() {
             { "System.Boolean", "bool" },
             { "System.Byte", "byte" },
             { "System.SByte", "sbyte" },
@@ -24,8 +24,8 @@ namespace Entitas.CodeGenerator {
         };
 
         public static string Generate(Type type) {
-            if (builtInTypes.ContainsKey(type.FullName)) {
-                return builtInTypes[type.FullName];
+            if (_builtInTypes.ContainsKey(type.FullName)) {
+                return _builtInTypes[type.FullName];
             }
             if (type.IsGenericType) {
                 return generateGenericTypeString(type);

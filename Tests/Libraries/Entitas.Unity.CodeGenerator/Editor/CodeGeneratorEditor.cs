@@ -17,13 +17,17 @@ namespace Entitas.Unity.CodeGenerator {
                 new ComponentExtensionsGenerator()
             };
 
+            var systemCodeGenerators = new ISystemCodeGenerator [] {
+                new SystemExtensionsGenerator()
+            };
+
             var poolCodeGenerators = new IPoolCodeGenerator [] {
                 new PoolAttributeGenerator(),
                 new PoolsGenerator()
             };
 
             Entitas.CodeGenerator.CodeGenerator.Generate(types, config.pools, config.generatedFolderPath,
-                componentCodeGenerators, poolCodeGenerators);
+                componentCodeGenerators, systemCodeGenerators, poolCodeGenerators);
 
             AssetDatabase.Refresh();
         }

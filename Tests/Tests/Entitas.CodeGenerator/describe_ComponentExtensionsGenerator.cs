@@ -15,13 +15,14 @@ class describe_ComponentExtensionsGenerator : nspec {
         var filePath = type + classSuffix;
 
         files.Length.should_be(1);
-        files.Any(f => f.fileName == filePath).should_be_true();
+        var file = files[0];
 
-        var file = files.First(f => f.fileName == filePath);
         if (logResults) {
             Console.WriteLine("should:\n" + code);
             Console.WriteLine("was:\n" + file.fileContent);
         }
+
+        file.fileName.should_be(filePath);
         file.fileContent.should_be(code);
     }
 
