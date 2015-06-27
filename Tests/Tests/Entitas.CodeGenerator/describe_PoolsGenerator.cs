@@ -17,7 +17,7 @@ public static class Pools {
             if (_pool == null) {
                 #if (UNITY_EDITOR)
                 var pool = new Entitas.Unity.VisualDebugging.DebugPool(ComponentIds.TotalComponents, ""Pool"");
-                DontDestroyOnLoad(pool.entitiesContainer);
+                UnityEngine.Object.DontDestroyOnLoad(pool.entitiesContainer);
                 _pool = pool;
                 #else
                 _pool = new Pool(ComponentIds.TotalComponents);
@@ -40,7 +40,7 @@ public static class Pools {
             if (_meta == null) {
                 #if (UNITY_EDITOR)
                 var pool = new Entitas.Unity.VisualDebugging.DebugPool(MetaComponentIds.TotalComponents, ""Meta Pool"");
-                DontDestroyOnLoad(pool.entitiesContainer);
+                UnityEngine.Object.DontDestroyOnLoad(pool.entitiesContainer);
                 _meta = pool;
                 #else
                 _meta = new Pool(MetaComponentIds.TotalComponents);
@@ -63,7 +63,7 @@ public static class Pools {
             if (_meta == null) {
                 #if (UNITY_EDITOR)
                 var pool = new Entitas.Unity.VisualDebugging.DebugPool(MetaComponentIds.TotalComponents, ""Meta Pool"");
-                DontDestroyOnLoad(pool.entitiesContainer);
+                UnityEngine.Object.DontDestroyOnLoad(pool.entitiesContainer);
                 _meta = pool;
                 #else
                 _meta = new Pool(MetaComponentIds.TotalComponents);
@@ -81,7 +81,7 @@ public static class Pools {
             if (_core == null) {
                 #if (UNITY_EDITOR)
                 var pool = new Entitas.Unity.VisualDebugging.DebugPool(CoreComponentIds.TotalComponents, ""Core Pool"");
-                DontDestroyOnLoad(pool.entitiesContainer);
+                UnityEngine.Object.DontDestroyOnLoad(pool.entitiesContainer);
                 _core = pool;
                 #else
                 _core = new Pool(CoreComponentIds.TotalComponents);
