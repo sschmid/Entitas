@@ -1,7 +1,54 @@
+# 0.17.0
+
+##### Breaking changes
+- Added `systemCodeGenerators` to CodeGenerator.Generate()
+```cs
+CodeGenerator.Generate(Type[] types, string[] poolNames, string dir,
+                            IComponentCodeGenerator[] componentCodeGenerators,
+                            ISystemCodeGenerator[] systemCodeGenerators,
+                            IPoolCodeGenerator[] poolCodeGenerators)
+```
+
+##### Entitas.CodeGenerator
+- Added PoolsGenerator which creates a getter for all pools
+```cs
+var pool = Pools.pool;
+var metaPool = Pools.meta;
+```
+
+- Added SystemExtensionsGenerator
+```cs
+new Systems()
+    .Add(pool.CreateGameBoardSystem())
+    .Add(pool.CreateCreateGameBoardCacheSystem())
+    .Add(pool.CreateFallSystem())
+    .Add(pool.CreateFillSystem())
+
+    .Add(pool.CreateProcessInputSystem())
+
+    .Add(pool.CreateRemoveViewSystem())
+    .Add(pool.CreateAddViewSystem())
+    .Add(pool.CreateRenderPositionSystem())
+
+    .Add(pool.CreateDestroySystem())
+    .Add(pool.CreateScoreSystem());
+```
+- Added Components, Systems & Pools sub folders to generated folder
+
+##### Entitas.Unity
+- Properties split with Environment.NewLine instead of '\n'
+
+##### Entitas.Unity.CodeGenerator
+- Entitas preferences appends "/Generated/" to generated folder if necessary
+
+##### Entitas.Unity.VisualDebugging
+- Using Queue<float> for SystemsDebugEditor.systemMonitorData
+
+
 # 0.16.0
 
-#### Breaking changes
-- Moved system getters in Systems to DebugSystems
+##### Breaking changes
+- Moved system getters from Systems to DebugSystems
 
 ##### Entitas.Unity.CodeGenerator
 - Generated ComponentIds use array instead of dictionary for component name lookup
