@@ -88,8 +88,9 @@ Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://githu
 
 # Different language?
 Entitas is also available in
-- [Swift](https://github.com/arne-schroppe/Entitas-Swift)
+- [Swift](https://github.com/mzaks/Entitas)
 - [Objective-C](https://github.com/wooga/entitas)
 - [Clojure](https://github.com/mhaemmerle/entitas-clj)
 - [Haskell](https://github.com/mhaemmerle/entitas-haskell)
 - [Erlang](https://github.com/mhaemmerle/entitas_erl)
+- [Go](https://github.com/eproxus/entitas)
