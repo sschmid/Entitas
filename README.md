@@ -82,7 +82,7 @@ Each release is published with Entitas.zip attached containing all source files 
 Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://github.com/cloudjubei) and [@devboy](https://github.com/devboy) for endless hours of discussion and helping making Entitas awesome!
 
 
-# Maintainers(s)
+# Maintainer(s)
 - [@sschmid](https://github.com/sschmid)
 
 
