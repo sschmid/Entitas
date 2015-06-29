@@ -2,7 +2,7 @@
 ./buildPackage.sh
 if [ $? = 0 ]
 then
-	echo "*** UPDATING DEPENDENCIES"
+	echo "Update dependencies"
 
 	BIN_DIR="bin"
 
@@ -17,19 +17,19 @@ then
 	UVD_LIBS_DIR=$UVD"/Assets/Libraries"
 	TESTS_LIBS_DIR="Tests/Libraries"
 
-	echo "*** CLEAN"
+	echo "  Clean target folders"
 	find "./"$ESU_LIBS_DIR -type f -name "*.cs" -delete
 	find "./"$UCODEGEN_LIBS_DIR -type f -name "*.cs" -delete
 	find "./"$UVD_LIBS_DIR -type f -name "*.cs" -delete
 	rm -rf $TESTS_LIBS_DIR"/"{$ESU,$UCG,$UVD}
 
-	echo "*** COPY"
+	echo "  Copy sources"
 	cp -r $BIN_DIR"/"$ES $ESU_LIBS_DIR
 	cp -r $BIN_DIR"/"{$ES,$CG,$ESU} $UCODEGEN_LIBS_DIR
 	cp -r $BIN_DIR"/"{$ES,$CG,$ESU,$UCG} $UVD_LIBS_DIR
 	cp -r $BIN_DIR"/"{$ESU,$UCG,$UVD} $TESTS_LIBS_DIR
 
-	echo "*** DONE ***"
+	echo "Done."
 else
 	echo "ERROR: Tests didn't pass!"
 	exit 1
