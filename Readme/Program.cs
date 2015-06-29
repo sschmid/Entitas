@@ -11,7 +11,7 @@ namespace Readme {
 
         static void generate() {
             var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
-            var generatedFolder = getEntitasProjectDir() + "/Readme/Components/Generated/";
+            var generatedFolder = getEntitasProjectDir() + "/Readme/Readme/Generated/";
 
             var componentCodeGenerators = new IComponentCodeGenerator[] {
                 new IndicesLookupGenerator(),

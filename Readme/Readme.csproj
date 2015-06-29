@@ -8,6 +8,7 @@
     <RootNamespace>Readme</RootNamespace>
     <AssemblyName>Readme</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ReleaseVersion>0.17.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,14 +33,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadmeSnippets.cs" />
-    <Compile Include="Components\PositionComponent.cs" />
-    <Compile Include="Components\HealthComponent.cs" />
-    <Compile Include="Components\MovableComponent.cs" />
-    <Compile Include="Components\UserComponent.cs" />
-    <Compile Include="Components\AnimatingComponent.cs" />
-    <Compile Include="Components\UIPositionComponent.cs" />
-    <Compile Include="Components\CoinsComponent.cs" />
     <Compile Include="..\Entitas\Entitas\Entity.cs">
       <Link>Libraries\Entitas\Entity.cs</Link>
     </Compile>
@@ -63,6 +56,9 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\PoolExtension.cs">
       <Link>Libraries\Entitas\Extensions\PoolExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\Systems.cs">
+      <Link>Libraries\Entitas\Extensions\Systems.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
       <Link>Libraries\Entitas\Interfaces\IComponent.cs</Link>
@@ -106,6 +102,18 @@
     <Compile Include="..\Entitas\Entitas\Matcher\NoneOfMatcher.cs">
       <Link>Libraries\Entitas\Matcher\NoneOfMatcher.cs</Link>
     </Compile>
+    <Compile Include="Readme\ReadmeSnippets.cs" />
+    <Compile Include="Readme\Components\AnimatingComponent.cs" />
+    <Compile Include="Readme\Components\CoinsComponent.cs" />
+    <Compile Include="Readme\Components\GameBoardElementComponent.cs" />
+    <Compile Include="Readme\Components\HealthComponent.cs" />
+    <Compile Include="Readme\Components\InteractiveComponent.cs" />
+    <Compile Include="Readme\Components\MovableComponent.cs" />
+    <Compile Include="Readme\Components\MoveComponent.cs" />
+    <Compile Include="Readme\Components\PositionComponent.cs" />
+    <Compile Include="Readme\Components\ResourceComponent.cs" />
+    <Compile Include="Readme\Components\UIPositionComponent.cs" />
+    <Compile Include="Readme\Components\UserComponent.cs" />
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CodeGenFile.cs">
       <Link>Libraries\Entitas.CodeGenerator\CodeGenFile.cs</Link>
     </Compile>
@@ -117,6 +125,9 @@
     </Compile>
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\IPoolCodeGenerator.cs">
       <Link>Libraries\Entitas.CodeGenerator\IPoolCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\ISystemCodeGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\ISystemCodeGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs">
       <Link>Libraries\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
@@ -136,48 +147,42 @@
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs">
       <Link>Libraries\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\TypeGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Generators\TypeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="Components\GameBoardElementComponent.cs" />
-    <Compile Include="Components\ResourceComponent.cs" />
-    <Compile Include="Components\InteractiveComponent.cs" />
-    <Compile Include="Components\MoveComponent.cs" />
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\SystemExtensionsGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Generators\SystemExtensionsGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\ISystemCodeGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\ISystemCodeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\Systems.cs">
-      <Link>Libraries\Entitas\Extensions\Systems.cs</Link>
-    </Compile>
-    <Compile Include="Components\Generated\Components\AnimatingComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\CoinsComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\ComponentIds.cs" />
-    <Compile Include="Components\Generated\Components\GameBoardElementComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\HealthComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\InteractiveComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\MetaComponentIds.cs" />
-    <Compile Include="Components\Generated\Components\MovableComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\MoveComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\PositionComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\ResourceComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\UIComponentIds.cs" />
-    <Compile Include="Components\Generated\Components\UIPositionComponentGeneratedExtension.cs" />
-    <Compile Include="Components\Generated\Components\UserComponentGeneratedExtension.cs" />
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\PoolsGenerator.cs">
       <Link>Libraries\Entitas.CodeGenerator\Generators\PoolsGenerator.cs</Link>
     </Compile>
-    <Compile Include="Components\Generated\Pools\Pools.cs" />
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\SystemExtensionsGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Generators\SystemExtensionsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\TypeGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\Generators\TypeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="Readme\Generated\Components\AnimatingComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\CoinsComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\ComponentIds.cs" />
+    <Compile Include="Readme\Generated\Components\GameBoardElementComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\HealthComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\InteractiveComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\MetaComponentIds.cs" />
+    <Compile Include="Readme\Generated\Components\MovableComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\MoveComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\PositionComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\ResourceComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\UIComponentIds.cs" />
+    <Compile Include="Readme\Generated\Components\UIPositionComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Components\UserComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Pools\Pools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="Components\" />
     <Folder Include="Libraries\" />
     <Folder Include="Libraries\Entitas\" />
+    <Folder Include="Readme\" />
     <Folder Include="Libraries\Entitas.CodeGenerator\" />
-    <Folder Include="Components\Generated\" />
-    <Folder Include="Components\Generated\Pools\" />
+    <Folder Include="Readme\Generated\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Entitas\Entitas\entitas_version">
+      <Link>Libraries\Entitas\entitas_version</Link>
+    </None>
   </ItemGroup>
 </Project>

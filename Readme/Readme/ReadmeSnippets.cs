@@ -10,9 +10,12 @@ namespace Readme {
         static ReadmeSnippets() {
             new AnimatingComponent();
             new CoinsComponent();
+            new GameBoardElementComponent();
             new HealthComponent();
+            new InteractiveComponent();
             new MovableComponent();
             new PositionComponent();
+            new ResourceComponent();
             new UIPositionComponent();
             new UserComponent();
         }
@@ -111,6 +114,7 @@ namespace Readme {
             e.RemovePosition();
         }
 
+        #pragma warning disable
         static void userComponent(Pool pool, UserComponent component) {
             var e = pool.userEntity;
             var name = pool.user.name;

@@ -8,7 +8,9 @@ public static class Pools {
         get {
             if (_pool == null) {
                 #if (UNITY_EDITOR)
-                _pool = new Entitas.Unity.VisualDebugging.DebugPool(ComponentIds.TotalComponents, "Pool");
+                var pool = new Entitas.Unity.VisualDebugging.DebugPool(ComponentIds.TotalComponents, "Pool");
+                UnityEngine.Object.DontDestroyOnLoad(pool.entitiesContainer);
+                _pool = pool;
                 #else
                 _pool = new Pool(ComponentIds.TotalComponents);
                 #endif

@@ -12,6 +12,7 @@ public class IterateHashSet : IPerformanceTest {
         }
     }
 
+    #pragma warning disable
     public void Run() {
         for (int i = 0; i < n; i++) {
             foreach (var item in _set) {

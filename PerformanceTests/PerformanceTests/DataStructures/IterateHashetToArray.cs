@@ -12,6 +12,7 @@ public class IterateHashetToArray : IPerformanceTest {
         }
     }
 
+    #pragma warning disable
     public void Run() {
         for (int i = 0; i < n; i++) {
             var array = new int[_set.Count];

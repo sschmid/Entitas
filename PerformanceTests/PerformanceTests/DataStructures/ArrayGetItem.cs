@@ -15,6 +15,7 @@ public class ArrayGetItem : IPerformanceTest {
         }
     }
 
+    #pragma warning disable
     public void Run() {
         for (int i = 0; i < n; i++) {
             var e = _array[random.Next(0, elements)];
