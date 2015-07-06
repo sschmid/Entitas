@@ -2,13 +2,9 @@
 using System.Threading;
 
 public class AReactiveSystem : IReactiveSystem {
-    public IMatcher GetTriggeringMatcher() {
-        return Matcher.MyString;
-    }
+    public IMatcher trigger { get { return Matcher.MyString; } }
 
-    public GroupEventType GetEventType() {
-        return GroupEventType.OnEntityAdded;
-    }
+    public GroupEventType eventType { get { return GroupEventType.OnEntityAdded; } }
 
     public void Execute(Entity[] entities) {
         Thread.Sleep(4);

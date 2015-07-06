@@ -19,13 +19,9 @@ public class ReactiveSubSystemSpy : IStartSystem, IReactiveSystem {
         _eventType = eventType;
     }
 
-    public IMatcher GetTriggeringMatcher() {
-        return _matcher;
-    }
+    public IMatcher trigger { get { return _matcher; } }
 
-    public GroupEventType GetEventType() {
-        return _eventType;
-    }
+    public GroupEventType eventType { get { return _eventType; } }
 
     public void Start() {
         _started = true;

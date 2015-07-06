@@ -7,7 +7,7 @@
 
         public ReactiveSystem(Pool pool, IReactiveSystem subSystem) {
             _subsystem = subSystem;
-            _observer = new GroupObserver(pool.GetGroup(subSystem.GetTriggeringMatcher()), subSystem.GetEventType());
+            _observer = new GroupObserver(pool.GetGroup(subSystem.trigger), subSystem.eventType);
         }
 
         public void Execute() {
