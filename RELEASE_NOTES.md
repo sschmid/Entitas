@@ -1,3 +1,28 @@
+# 0.18.0
+
+##### Breaking changes
+- Use the command line tool `MigrationAssistant.exe` to automatically migrate
+    - Changed IReactiveSystem.GetTriggeringMatcher to IReactiveSystem.trigger
+    - Changed IReactiveSystem.GetEventType to IReactiveSystem.eventType
+
+```
+$ mono MigrationAssistant.exe
+usage:
+[-l]             - print all available versions
+[version] [path] - apply migration of version [version] to source files located at [path]
+
+$ mono MigrationAssistant.exe -l
+0.18.0 - Migrates IReactiveSystem API
+
+// Example from Math-One example project, where all the systems are located in the Features folder
+$ mono MigrationAssistant.exe 0.18.0 /Path/To/Project/Assets/Sources/Features
+```
+
+##### Entitas.Unity
+- Fixed code generation issues on Windows by converting and normalizing line endings
+- Fixed EntitasCheckForUpdates.CheckForUpdates() by temporarily trusting all sources
+
+
 # 0.17.0
 
 ##### Breaking changes
