@@ -12,6 +12,7 @@ then
 	ESU=$ES".Unity"
 	UCG=$ESU".CodeGenerator"
 	UVD=$ESU".VisualDebugging"
+	MIG=$ES."Migration"
 
 	echo "  Clean bin"
 	rm -rf $BIN_DIR
@@ -22,6 +23,7 @@ then
 
 	echo "  Copy sources to temp"
 	cp -r {$ES"/"$ES,$CG"/"$CG,$ESU"/Assets/"$ESU,$UCG"/Assets/"$UCG,$UVD"/Assets/"$UVD} $TMP_DIR
+	cp $MIG"/bin/Release/Entitas.Migration.exe" ${TMP_DIR}"/MigrationAssistant.exe"
 	cp RELEASE_NOTES.md ${TMP_DIR}/RELEASE_NOTES.md
 	cp README.md ${TMP_DIR}/README.md
 

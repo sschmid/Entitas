@@ -99,6 +99,10 @@
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\SomeSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\NamespaceSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\CtorArgsSystem.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_MigrateReactiveSystem.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
+    <Compile Include="Tests\Entitas.Migration\Fixtures\M0180\SubFolder\SourceFile2.cs" />
+    <Compile Include="Tests\Entitas.Migration\Fixtures\M0180\SourceFile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -115,6 +119,9 @@
     <Folder Include="Libraries\Entitas.Unity.CodeGenerator\" />
     <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
+    <Folder Include="Tests\Entitas.Migration\" />
+    <Folder Include="Tests\Entitas.Migration\Fixtures\" />
+    <Folder Include="Tests\Entitas.Migration\Fixtures\M0180\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />
@@ -123,6 +130,8 @@
     <None Include="Libraries\NSpec\NSpecRunner.exe" />
     <None Include="Libraries\NSpec\NSpecRunner.exe.config" />
     <None Include="Libraries\NSpec\NSpecRunner.exe.mdb" />
+    <None Include="Tests\Entitas.Migration\Fixtures\M0180\SubFolder\TextFile2.txt" />
+    <None Include="Tests\Entitas.Migration\Fixtures\M0180\TextFile.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas\Entitas.csproj">
@@ -132,6 +141,10 @@
     <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
       <Project>{4D7C8232-6930-4F13-9D9A-3C32A340BB62}</Project>
       <Name>Entitas.CodeGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj">
+      <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
+      <Name>Entitas.Migration</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -18,6 +18,7 @@ class check_namespaces : nspec {
                 !p.Contains("Tests/") &&
                 !p.Contains("Readme/") &&
                 !p.Contains("bin/") &&
+                !p.Contains("obj/") &&
                 !p.Contains("AssemblyInfo.cs") &&
                 !p.Contains("Program.cs"))
             .ToDictionary(p => p, p => File.ReadAllText(p));
