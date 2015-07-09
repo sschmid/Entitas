@@ -5,6 +5,25 @@ https://bugzilla.xamarin.com/show_bug.cgi?id=25360
 Please be aware of that issue and use any other text editor for that task.
 
 
+# Entitas 0.18.0 upgrade guide
+Entitas 0.18.0 changes IReactiveSystem. To upgrade your source files, follow these steps
+- Install Entitas 0.18.0 (which will result in compiler errors)
+- Use the command line tool `MigrationAssistant.exe` to automatically migrate
+
+```
+$ mono MigrationAssistant.exe
+usage:
+[-l]             - print all available versions
+[version] [path] - apply migration of version [version] to source files located at [path]
+
+$ mono MigrationAssistant.exe -l
+0.18.0 - Migrates IReactiveSystem API
+
+// Example from Math-One example project, where all the systems are located in the Features folder
+$ mono MigrationAssistant.exe 0.18.0 /Path/To/Project/Assets/Sources/Features
+```
+
+
 # Entitas 0.12.0 upgrade guide
 
 Entitas 0.12.0 generates prefixed matchers based on the PoolAttribute and introduces some
