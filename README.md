@@ -8,6 +8,8 @@ Entitas is a super fast Entity Component System specifically made for C# and Uni
 
 [![Join the chat at https://gitter.im/sschmid/Entitas-CSharp](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sschmid/Entitas-CSharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Twitter-Follow-Me](Readme/Images/Twitter-Follow-Me.png)](https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Fsschmid%2FEntitas-CSharp&screen_name=s_schmid&tw_p=followbutton)
+
 branch  | tests
 :------:|------
 master  | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?branch=master)](https://travis-ci.org/sschmid/Entitas-CSharp)
