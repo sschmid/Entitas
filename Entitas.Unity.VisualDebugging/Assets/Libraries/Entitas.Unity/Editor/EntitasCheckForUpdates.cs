@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
@@ -20,10 +22,12 @@ namespace Entitas.Unity {
         }
 
         static string requestLatestRelease() {
+            ServicePointManager.ServerCertificateValidationCallback += trustSource;
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
             httpWebRequest.UserAgent = Environment.UserName + "sschmid/Entitas-CSharp/Entitas.Unity/CheckForUpdates";
             httpWebRequest.Timeout = 15000;
             var webResponse = httpWebRequest.GetResponse();
+            ServicePointManager.ServerCertificateValidationCallback -= trustSource;
             var response = string.Empty;
             using (var streamReader = new StreamReader(webResponse.GetResponseStream())) {
                 response = streamReader.ReadToEnd();
@@ -80,6 +84,10 @@ namespace Entitas.Unity {
                     }
                     break;
             }
+        }
+
+        static bool trustSource(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) {
+            return true;
         }
     }
 }
