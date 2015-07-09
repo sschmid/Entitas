@@ -11,14 +11,19 @@ namespace Entitas.Unity {
         }
 
         public Properties(string properties) {
+            properties = convertLineEndings(properties);
             _dict = new Dictionary<string, string>();
             var lines = getLinesWithProperties(properties);
             addProperties(mergeMultilineValues(lines));
             replacePlaceholders();
         }
 
+        string convertLineEndings(string str) {
+            return str.Replace("\r\n", "\n");
+        }
+
         string[] getLinesWithProperties(string properties) {
-            var delimiter = new[] { Environment.NewLine };
+            var delimiter = new[] { '\n' };
             return properties
                 .Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
                 .Select(line => line.TrimStart(' '))
