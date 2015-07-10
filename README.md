@@ -85,7 +85,7 @@ Big shout out to [@mzaks](https://github.com/mzaks), [@cloudjubei](https://githu
 
 
 # Maintainer(s)
-- [@sschmid](https://github.com/sschmid)
+- [@sschmid](https://github.com/sschmid) | Twitter: [@s_schmid](https://twitter.com/s_schmid)
 
 
 # Different language?
