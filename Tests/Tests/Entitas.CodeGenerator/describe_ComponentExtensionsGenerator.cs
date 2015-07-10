@@ -2,7 +2,6 @@
 using Entitas.CodeGenerator;
 using System;
 using My.Namespace;
-using System.Linq;
 
 class describe_ComponentExtensionsGenerator : nspec {
 
@@ -39,6 +38,7 @@ class describe_ComponentExtensionsGenerator : nspec {
         };
 
         it["works with namespaces"] = () => generates(typeof(NamespaceComponent), NamespaceComponent.extensions);
+        it["component with properties"] = () => generates(typeof(Person2Component), Person2Component.extensions);
     }
 }
 

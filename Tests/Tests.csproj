@@ -103,6 +103,7 @@
     <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
     <Compile Include="Tests\Entitas.Migration\Fixtures\M0180\SubFolder\SourceFile2.cs" />
     <Compile Include="Tests\Entitas.Migration\Fixtures\M0180\SourceFile.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Person2Component.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

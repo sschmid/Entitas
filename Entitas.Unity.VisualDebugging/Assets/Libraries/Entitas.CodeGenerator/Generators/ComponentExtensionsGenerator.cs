@@ -289,8 +289,10 @@ $assign
         }
 
         static bool isSingletonComponent(Type type) {
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            return fields.Length == 0;
+            var bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+            var fields = type.GetFields(bindingFlags);
+            var properties = type.GetProperties(bindingFlags);
+            return fields.Length == 0 && properties.Length == 0;
         }
 
         static string buildString(Type type, string format) {
@@ -300,13 +302,22 @@ $assign
             var a2_lowercaseName = a1_name.LowercaseFirst();
             var a3_tag = type.PoolName();
             var a4_ids = type.IndicesLookupTag();
-            var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
-            var a5_fieldNamesWithType = fieldNamesWithType(fields);
-            var a6_fieldAssigns = fieldAssignments(fields);
-            var a7_fieldNames = fieldNames(fields);
+            var memberNameInfos = getFieldAndPropertyInfos(type);
+            var a5_fieldNamesWithType = fieldNamesWithType(memberNameInfos);
+            var a6_fieldAssigns = fieldAssignments(memberNameInfos);
+            var a7_fieldNames = fieldNames(memberNameInfos);
 
             return string.Format(format, a0_type, a1_name, a2_lowercaseName,
                 a3_tag, a4_ids, a5_fieldNamesWithType, a6_fieldAssigns, a7_fieldNames);
+        }
+
+        static MemberTypeNameInfo[] getFieldAndPropertyInfos(Type type) {
+            var bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+            var fieldInfos = type.GetFields(bindingFlags)
+                .Select(field => new MemberTypeNameInfo { name = field.Name, type = field.FieldType });
+            var propertyInfos = type.GetProperties(bindingFlags)
+                .Select(property => new MemberTypeNameInfo { name = property.Name, type = property.PropertyType });
+            return fieldInfos.Concat(propertyInfos).ToArray();
         }
 
         static string createFormatString(string format) {
@@ -322,34 +333,40 @@ $assign
                         .Replace("$args", "{7}");
         }
 
-        static string fieldNamesWithType(FieldInfo[] fields) {
-            var typedArgs = fields.Select(arg => {
-                var newArg = "new" + arg.Name.UppercaseFirst();
-                var type = TypeGenerator.Generate(arg.FieldType);
-                return type + " " + newArg;
+        static string fieldNamesWithType(MemberTypeNameInfo[] infos) {
+            MemberInfo m;
+            var typedArgs = infos.Select(info => {
+                var newArg = "new" + info.name.UppercaseFirst();
+                var typeString = TypeGenerator.Generate(info.type);
+                return typeString + " " + newArg;
             }).ToArray();
 
             return string.Join(", ", typedArgs);
         }
 
-        static string fieldAssignments(FieldInfo[] fields) {
+        static string fieldAssignments(MemberTypeNameInfo[] infos) {
             const string format = "            component.{0} = {1};";
-            var assignments = fields.Select(arg => {
-                var newArg = "new" + arg.Name.UppercaseFirst();
-                return string.Format(format, arg.Name, newArg);
+            var assignments = infos.Select(info => {
+                var newArg = "new" + info.name.UppercaseFirst();
+                return string.Format(format, info.name, newArg);
             }).ToArray();
 
             return string.Join("\n", assignments);
         }
 
-        static string fieldNames(FieldInfo[] fields) {
-            var args = fields.Select(arg => "new" + arg.Name.UppercaseFirst()).ToArray();
+        static string fieldNames(MemberTypeNameInfo[] infos) {
+            var args = infos.Select(info => "new" + info.name.UppercaseFirst()).ToArray();
             return string.Join(", ", args);
         }
 
         static string addCloseClass() {
             return "    }\n";
         }
+    }
+
+    struct MemberTypeNameInfo {
+        public string name;
+        public Type type;
     }
 }
 
