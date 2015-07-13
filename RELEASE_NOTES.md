@@ -1,3 +1,9 @@
+# 0.18.1
+
+##### Entitas.CodeGenerator
+- ComponentExtensionsGenerator now supports properties
+
+
 # 0.18.0
 
 ##### Breaking changes
