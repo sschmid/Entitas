@@ -17,7 +17,7 @@ public class Program {
 
         var poolCodeGenerators = new IPoolCodeGenerator[] {
             new PoolAttributeGenerator(),
-            new PoolsGenerator()
+//            new PoolsGenerator()
         };
 
         CodeGenerator.Generate(assembly.GetTypes(), new string[0], "Generated/",

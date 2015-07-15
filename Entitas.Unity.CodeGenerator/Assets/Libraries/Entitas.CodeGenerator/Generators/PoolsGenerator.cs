@@ -31,16 +31,17 @@ public static class Pools {{{0}
     }}";
 
         public CodeGenFile[] Generate(string[] poolNames) {
-            var getters = poolNames == null || poolNames.Length == 0
-                ? string.Format(getter, "pool", string.Empty, string.Empty)
-                : poolNames.Aggregate(string.Empty, (acc, poolName) =>
-                    acc + string.Format(getter, poolName.LowercaseFirst(), poolName, poolName + " "));
-
-            return new [] { new CodeGenFile {
-                    fileName = fileName,
-                    fileContent = string.Format(classTemplate, getters)
-                }
-            };
+//            var getters = poolNames == null || poolNames.Length == 0
+//                ? string.Format(getter, "pool", string.Empty, string.Empty)
+//                : poolNames.Aggregate(string.Empty, (acc, poolName) =>
+//                    acc + string.Format(getter, poolName.LowercaseFirst(), poolName, poolName + " "));
+//
+//            return new [] { new CodeGenFile {
+//                    fileName = fileName,
+//                    fileContent = string.Format(classTemplate, getters)
+//                }
+//            };
+            return new CodeGenFile[0];
         }
     }
 }
