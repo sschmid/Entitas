@@ -95,4 +95,4 @@ Entitas is also available in
 - [Clojure](https://github.com/mhaemmerle/entitas-clj)
 - [Haskell](https://github.com/mhaemmerle/entitas-haskell)
 - [Erlang](https://github.com/mhaemmerle/entitas_erl)
-- [Go](https://github.com/eproxus/entitas)
+- [Go](https://github.com/wooga/go-entitas)
