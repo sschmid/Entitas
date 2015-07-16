@@ -334,7 +334,6 @@ $assign
         }
 
         static string fieldNamesWithType(MemberTypeNameInfo[] infos) {
-            MemberInfo m;
             var typedArgs = infos.Select(info => {
                 var newArg = "new" + info.name.UppercaseFirst();
                 var typeString = TypeGenerator.Generate(info.type);
