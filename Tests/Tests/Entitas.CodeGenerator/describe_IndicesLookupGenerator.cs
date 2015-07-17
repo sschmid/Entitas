@@ -4,8 +4,7 @@ using System;
 using System.Linq;
 
 class describe_IndicesLookupGenerator : nspec {
-    const string defaultLookupName = "ComponentIds";
-    bool logResults = false;
+    bool logResults = true;
 
     void generates(Type type, string lookupName, string lookupCode) {
         generates(new [] { type }, lookupName, lookupCode);
@@ -27,6 +26,29 @@ class describe_IndicesLookupGenerator : nspec {
         file.fileContent.should_be(lookupCode);
     }
 
+    void generatesEmptyLookup(string[] poolNames, string[] lookupNames, string[] lookupCodes) {
+        var files = new IndicesLookupGenerator().Generate(poolNames);
+        files.Length.should_be(poolNames.Length == 0 ? 1 : poolNames.Length);
+
+        foreach (var f in files) {
+            System.Console.WriteLine("f.fileName: " + f.fileName);
+        }
+
+        for (int i = 0; i < lookupNames.Length; i++) {
+            var lookupName = lookupNames[i];
+            var lookupCode = lookupCodes[i];
+            files.Any(f => f.fileName == lookupName).should_be_true();
+            var file = files.First(f => f.fileName == lookupName);
+
+            if (logResults) {
+                Console.WriteLine("should:\n" + lookupCode);
+                Console.WriteLine("was:\n" + file.fileContent);
+            }
+
+            file.fileContent.should_be(lookupCode);
+        }
+    }
+
     const string defaultTagCode = @"
 
 namespace Entitas {
@@ -42,10 +64,8 @@ namespace Entitas {
 
     void when_generating() {
 
-
-
         it["generates default lookup"] = () => {
-            generates(typeof(SomeComponent), defaultLookupName,
+            generates(typeof(SomeComponent), CodeGenerator.defaultIndicesLookupTag,
                 @"public static class ComponentIds {
     public const int Some = 0;
 
@@ -94,7 +114,7 @@ public partial class OtherMatcher : AllOfMatcher {
 
 
         it["generates id for [DontGenerate]"] = () => {
-            generates(typeof(DontGenerateComponent), defaultLookupName,
+            generates(typeof(DontGenerateComponent), CodeGenerator.defaultIndicesLookupTag,
                 @"public static class ComponentIds {
     public const int DontGenerate = 0;
 
@@ -116,7 +136,7 @@ public partial class OtherMatcher : AllOfMatcher {
             generates(new [] {
                 typeof(SomeComponent),
                 typeof(DontGenerateComponent)
-            }, defaultLookupName,
+            }, CodeGenerator.defaultIndicesLookupTag,
                 @"public static class ComponentIds {
     public const int DontGenerate = 0;
     public const int Some = 1;
@@ -140,7 +160,7 @@ public partial class OtherMatcher : AllOfMatcher {
             generates(new [] {
                 typeof(SomeComponent),
                 typeof(DontGenerateIndexComponent)
-            }, defaultLookupName,
+            }, CodeGenerator.defaultIndicesLookupTag,
                 @"public static class ComponentIds {
     public const int Some = 0;
 
@@ -154,6 +174,104 @@ public partial class OtherMatcher : AllOfMatcher {
         return components[componentId];
     }
 }" + defaultTagCode);
+        };
+
+        it["generates empty lookup with total components when for default pool"] = () => {
+            generatesEmptyLookup(new string[0], new [] { CodeGenerator.defaultIndicesLookupTag }, new [] { @"public static class ComponentIds {
+
+    public const int TotalComponents = 0;
+
+    static readonly string[] components = {
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+namespace Entitas {
+    public partial class Matcher : AllOfMatcher {
+        public Matcher(int index) : base(new [] { index }) {
+        }
+
+        public override string ToString() {
+            return ComponentIds.IdToString(indices[0]);
+        }
+    }
+}" });
+        };
+
+        it["generates empty lookup with total components when for pool names"] = () => {
+            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.defaultIndicesLookupTag }, new [] { @"using Entitas;
+
+public static class MetaComponentIds {
+
+    public const int TotalComponents = 0;
+
+    static readonly string[] components = {
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+public partial class MetaMatcher : AllOfMatcher {
+    public MetaMatcher(int index) : base(new [] { index }) {
+    }
+
+    public override string ToString() {
+        return MetaComponentIds.IdToString(indices[0]);
+    }
+}" });
+        };
+
+        it["generates multiple empty lookup with total components when for pool names"] = () => {
+            generatesEmptyLookup(new [] { "Meta", "Core" },
+                new [] { "Meta" + CodeGenerator.defaultIndicesLookupTag, "Core" + CodeGenerator.defaultIndicesLookupTag },
+                new [] { @"using Entitas;
+
+public static class MetaComponentIds {
+
+    public const int TotalComponents = 0;
+
+    static readonly string[] components = {
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+public partial class MetaMatcher : AllOfMatcher {
+    public MetaMatcher(int index) : base(new [] { index }) {
+    }
+
+    public override string ToString() {
+        return MetaComponentIds.IdToString(indices[0]);
+    }
+}", @"using Entitas;
+
+public static class CoreComponentIds {
+
+    public const int TotalComponents = 0;
+
+    static readonly string[] components = {
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+public partial class CoreMatcher : AllOfMatcher {
+    public CoreMatcher(int index) : base(new [] { index }) {
+    }
+
+    public override string ToString() {
+        return CoreComponentIds.IdToString(indices[0]);
+    }
+}" });
         };
     }
 }

@@ -16,13 +16,16 @@ namespace Entitas.Unity.CodeGenerator {
             codeGeneratorConfig.generatedFolderPath = EditorGUILayout.TextField("Generated Folder", codeGeneratorConfig.generatedFolderPath);
 
             // Pools
+            var pools = new List<string>(codeGeneratorConfig.pools);
+
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Pools");
-            EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.TextField("DefaultPool");
-            EditorGUI.EndDisabledGroup();
+            if (pools.Count == 0) {
+                EditorGUI.BeginDisabledGroup(true);
+                EditorGUILayout.TextField("DefaultPool");
+                EditorGUI.EndDisabledGroup();
+            }
 
-            var pools = new List<string>(codeGeneratorConfig.pools);
             for (int i = 0; i < pools.Count; i++) {
                 EditorGUILayout.BeginHorizontal();
                 pools[i] = EditorGUILayout.TextField(pools[i]);

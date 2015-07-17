@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace Entitas.CodeGenerator {
-    public interface ISystemCodeGenerator {
+    public interface ISystemCodeGenerator : ICodeGenerator {
         CodeGenFile[] Generate(Type[] systems);
     }
 }

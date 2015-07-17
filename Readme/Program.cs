@@ -13,22 +13,15 @@ namespace Readme {
             var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
             var generatedFolder = getEntitasProjectDir() + "/Readme/Readme/Generated/";
 
-            var componentCodeGenerators = new IComponentCodeGenerator[] {
+            var codeGenerators = new ICodeGenerator[] {
+                new ComponentExtensionsGenerator(),
                 new IndicesLookupGenerator(),
-                new ComponentExtensionsGenerator()
-            };
-
-            var systemCodeGenerators = new ISystemCodeGenerator[] {
+                new PoolAttributeGenerator(),
+                new PoolsGenerator(),
                 new SystemExtensionsGenerator()
             };
 
-            var poolCodeGenerators = new IPoolCodeGenerator[] {
-                new PoolAttributeGenerator(),
-//                new PoolsGenerator()
-            };
-
-            CodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder,
-                componentCodeGenerators, systemCodeGenerators, poolCodeGenerators);
+            CodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder, codeGenerators);
 
             Console.WriteLine("Done. Press any key...");
             Console.Read();

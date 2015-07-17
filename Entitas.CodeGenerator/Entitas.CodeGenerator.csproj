@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4D7C8232-6930-4F13-9D9A-3C32A340BB62}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Entitas.CodeGenerator</RootNamespace>
     <AssemblyName>Entitas.CodeGenerator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -47,6 +47,7 @@
     <Compile Include="Entitas.CodeGenerator\Generators\PoolsGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\ISystemCodeGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\SystemExtensionsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\ICodeGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

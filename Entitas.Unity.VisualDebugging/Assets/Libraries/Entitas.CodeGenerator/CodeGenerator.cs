@@ -5,30 +5,24 @@ using System.Linq;
 namespace Entitas.CodeGenerator {
     public static class CodeGenerator {
         public const string componentSuffix = "Component";
+        public const string defaultIndicesLookupTag = "ComponentIds";
 
-        public static void Generate(Type[] types, string[] poolNames, string dir,
-                                    IComponentCodeGenerator[] componentCodeGenerators,
-                                    ISystemCodeGenerator[] systemCodeGenerators,
-                                    IPoolCodeGenerator[] poolCodeGenerators) {
-
+        public static void Generate(Type[] types, string[] poolNames, string dir, ICodeGenerator[] codeGenerators) {
             dir = GetSafeDir(dir);
             CleanDir(dir);
             
+            foreach (var generator in codeGenerators.OfType<IPoolCodeGenerator>()) {
+                writeFiles(dir, generator.Generate(poolNames));
+            }
+
             var components = GetComponents(types);
-            foreach (var generator in componentCodeGenerators) {
-                var files = generator.Generate(components);
-                writeFiles(dir + "Components/", files);
+            foreach (var generator in codeGenerators.OfType<IComponentCodeGenerator>()) {
+                writeFiles(dir, generator.Generate(components));
             }
 
             var systems = GetSystems(types);
-            foreach (var generator in systemCodeGenerators) {
-                var files = generator.Generate(systems);
-                writeFiles(dir + "Systems/", files);
-            }
-
-            foreach (var generator in poolCodeGenerators) {
-                var files = generator.Generate(poolNames);
-                writeFiles(dir + "Pools/", files);
+            foreach (var generator in codeGenerators.OfType<ISystemCodeGenerator>()) {
+                writeFiles(dir, generator.Generate(systems));
             }
         }
 
@@ -106,7 +100,7 @@ namespace Entitas.CodeGenerator {
         }
 
         public static string IndicesLookupTag(this Type type) {
-            return type.PoolName() + "ComponentIds";
+            return type.PoolName() + CodeGenerator.defaultIndicesLookupTag;
         }
 
         public static string UppercaseFirst(this string str) {

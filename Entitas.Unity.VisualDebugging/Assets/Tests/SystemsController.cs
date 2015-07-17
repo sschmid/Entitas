@@ -21,11 +21,12 @@ public class SystemsController : MonoBehaviour {
 
     Systems createSystems() {
         return new DebugSystems()
-            .Add(_pool.CreateSystem<SlowStartSystem>())
-            .Add(_pool.CreateSystem<SlowStartExecuteSystem>())
-            .Add(_pool.CreateSystem<FastSystem>())
-            .Add(_pool.CreateSystem<SlowSystem>())
-            .Add(_pool.CreateSystem<RandomDurationSystem>())
-            .Add(_pool.CreateSystem<AReactiveSystem>());
+            .Add(_pool.CreateSlowStartSystem())
+            .Add(_pool.CreateSlowStartExecuteSystem())
+            .Add(_pool.CreateFastSystem())
+            .Add(_pool.CreateSlowSystem())
+            .Add(_pool.CreateRandomDurationSystem())
+            .Add(_pool.CreateAReactiveSystem())
+            .Add(_pool.CreateCollectReactiveSystem());
     }
 }

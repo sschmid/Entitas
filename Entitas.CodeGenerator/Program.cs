@@ -6,22 +6,15 @@ public class Program {
     public static void Main(string[] args) {
         var assembly = Assembly.GetAssembly(typeof(CodeGenerator));
 
-        var componentCodeGenerators = new IComponentCodeGenerator[] {
+        var codeGenerators = new ICodeGenerator[] {
+            new ComponentExtensionsGenerator(),
             new IndicesLookupGenerator(),
-            new ComponentExtensionsGenerator()
-        };
-
-        var systemCodeGenerators = new ISystemCodeGenerator[] {
+            new PoolAttributeGenerator(),
+            new PoolsGenerator(),
             new SystemExtensionsGenerator()
         };
 
-        var poolCodeGenerators = new IPoolCodeGenerator[] {
-            new PoolAttributeGenerator(),
-//            new PoolsGenerator()
-        };
-
-        CodeGenerator.Generate(assembly.GetTypes(), new string[0], "Generated/",
-            componentCodeGenerators, systemCodeGenerators, poolCodeGenerators);
+        CodeGenerator.Generate(assembly.GetTypes(), new string[0], "Generated/", codeGenerators);
 
         Console.WriteLine("Done. Press any key...");
         Console.Read();

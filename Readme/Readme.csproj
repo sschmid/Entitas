@@ -156,21 +156,24 @@
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\TypeGenerator.cs">
       <Link>Libraries\Entitas.CodeGenerator\Generators\TypeGenerator.cs</Link>
     </Compile>
-    <Compile Include="Readme\Generated\Components\AnimatingComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\CoinsComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\ComponentIds.cs" />
-    <Compile Include="Readme\Generated\Components\GameBoardElementComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\HealthComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\InteractiveComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\MetaComponentIds.cs" />
-    <Compile Include="Readme\Generated\Components\MovableComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\MoveComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\PositionComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\ResourceComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\UIComponentIds.cs" />
-    <Compile Include="Readme\Generated\Components\UIPositionComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Components\UserComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Pools\Pools.cs" />
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\ICodeGenerator.cs">
+      <Link>Libraries\Entitas.CodeGenerator\ICodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="Readme\Generated\AnimatingComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\CoinsComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\ComponentIds.cs" />
+    <Compile Include="Readme\Generated\GameBoardElementComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\HealthComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\InteractiveComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\MetaComponentIds.cs" />
+    <Compile Include="Readme\Generated\MovableComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\MoveComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\Pools.cs" />
+    <Compile Include="Readme\Generated\PositionComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\ResourceComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\UIComponentIds.cs" />
+    <Compile Include="Readme\Generated\UIPositionComponentGeneratedExtension.cs" />
+    <Compile Include="Readme\Generated\UserComponentGeneratedExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

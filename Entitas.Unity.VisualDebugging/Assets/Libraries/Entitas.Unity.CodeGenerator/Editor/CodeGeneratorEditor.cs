@@ -12,22 +12,15 @@ namespace Entitas.Unity.CodeGenerator {
             var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
             var config = new CodeGeneratorConfig(EntitasPreferencesEditor.LoadConfig());
 
-            var componentCodeGenerators = new IComponentCodeGenerator [] {
+            var codeGenerators = new ICodeGenerator[] {
+                new ComponentExtensionsGenerator(),
                 new IndicesLookupGenerator(),
-                new ComponentExtensionsGenerator()
-            };
-
-            var systemCodeGenerators = new ISystemCodeGenerator [] {
+                new PoolAttributeGenerator(),
+                new PoolsGenerator(),
                 new SystemExtensionsGenerator()
             };
 
-            var poolCodeGenerators = new IPoolCodeGenerator [] {
-                new PoolAttributeGenerator(),
-                new PoolsGenerator()
-            };
-
-            Entitas.CodeGenerator.CodeGenerator.Generate(types, config.pools, config.generatedFolderPath,
-                componentCodeGenerators, systemCodeGenerators, poolCodeGenerators);
+            Entitas.CodeGenerator.CodeGenerator.Generate(types, config.pools, config.generatedFolderPath, codeGenerators);
 
             AssetDatabase.Refresh();
         }

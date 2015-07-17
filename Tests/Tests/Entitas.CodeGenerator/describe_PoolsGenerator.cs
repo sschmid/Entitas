@@ -94,16 +94,16 @@ public static class Pools {
 }";
 
     void generates(string[] poolNames, string fileContent) {
-//        var files = new PoolsGenerator().Generate(poolNames);
-//        files.Length.should_be(1);
-//        var file = files[0];
-//        if (logResults) {
-//            Console.WriteLine("should:\n" + fileContent);
-//            Console.WriteLine("was:\n" + file.fileContent);
-//        }
-//
-//        file.fileName.should_be("Pools");
-//        file.fileContent.should_be(fileContent);
+        var files = new PoolsGenerator().Generate(poolNames);
+        files.Length.should_be(1);
+        var file = files[0];
+        if (logResults) {
+            Console.WriteLine("should:\n" + fileContent);
+            Console.WriteLine("was:\n" + file.fileContent);
+        }
+
+        file.fileName.should_be("Pools");
+        file.fileContent.should_be(fileContent);
     }
 
     void when_generating() {

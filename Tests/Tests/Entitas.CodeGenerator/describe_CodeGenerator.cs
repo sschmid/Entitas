@@ -41,8 +41,8 @@ class describe_CodeGenerator : nspec {
         it["ignores IExecuteSystems interface"] = () => systemFilterIgnores(typeof(IExecuteSystem));
         it["ignores IReactiveSystem interface"] = () => systemFilterIgnores(typeof(IReactiveSystem));
 
-        it["ignores ReactiveSystem interface"] = () => systemFilterIgnores(typeof(ReactiveSystem));
-        it["ignores ReactiveSystem interface"] = () => systemFilterIgnores(typeof(Systems));
+        it["ignores ReactiveSystem"] = () => systemFilterIgnores(typeof(ReactiveSystem));
+        it["ignores Systems"] = () => systemFilterIgnores(typeof(Systems));
 
         it["ignores non ISystems"] = () => systemFilterIgnores(typeof(SomeClass));
         it["ignores non ISystems ending with *System"] = () => systemFilterIgnores(typeof(FakeSystem));
@@ -54,7 +54,6 @@ class describe_CodeGenerator : nspec {
         it["appends '/' and 'Generated/ 'if necessary"] = () => CodeGenerator.GetSafeDir("Assets").should_be("Assets/Generated/");
         it["appends '/' and 'Generated/ 'if necessary"] = () => CodeGenerator.GetSafeDir("Assets/").should_be("Assets/Generated/");
         it["appends '/' and 'Generated/ 'if necessary"] = () => CodeGenerator.GetSafeDir("Assets/Generated").should_be("Assets/Generated/");
-        it["appends '/' and 'Generated/ 'if necessary"] = () => CodeGenerator.GetSafeDir("Assets/Generated/").should_be("Assets/Generated/");
         it["appends '/' and 'Generated/ 'if necessary"] = () => CodeGenerator.GetSafeDir("Assets/Generated/").should_be("Assets/Generated/");
         it["appends '/' and 'Generated/ 'if necessary"] = () => CodeGenerator.GetSafeDir("/").should_be("/Generated/");
     }
