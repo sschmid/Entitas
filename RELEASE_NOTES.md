@@ -1,3 +1,9 @@
+# 0.18.2
+
+##### Entitas.CodeGenerator
+- Fixed #9
+
+
 # 0.18.1
 
 ##### Entitas.CodeGenerator
