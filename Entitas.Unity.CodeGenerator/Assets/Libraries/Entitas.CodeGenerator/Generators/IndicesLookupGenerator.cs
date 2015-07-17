@@ -117,7 +117,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            return ComponentIds.IdToString(indices[0]);
+            return " + CodeGenerator.defaultIndicesLookupTag + @".IdToString(indices[0]);
         }
     }
 }";
@@ -130,7 +130,7 @@ public partial class {0}Matcher : AllOfMatcher {{
     }}
 
     public override string ToString() {{
-        return {0}ComponentIds.IdToString(indices[0]);
+        return {0}" + CodeGenerator.defaultIndicesLookupTag + @".IdToString(indices[0]);
     }}
 }}", tag);
         }

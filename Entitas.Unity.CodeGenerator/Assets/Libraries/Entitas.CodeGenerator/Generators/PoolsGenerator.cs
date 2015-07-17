@@ -18,11 +18,11 @@ public static class Pools {{{0}
         get {{
             if (_{0} == null) {{
                 #if (UNITY_EDITOR)
-                var pool = new Entitas.Unity.VisualDebugging.DebugPool({1}ComponentIds.TotalComponents, ""{2}Pool"");
+                var pool = new Entitas.Unity.VisualDebugging.DebugPool({1}" + CodeGenerator.defaultIndicesLookupTag + @".TotalComponents, ""{2}Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(pool.entitiesContainer);
                 _{0} = pool;
                 #else
-                _{0} = new Pool({1}ComponentIds.TotalComponents);
+                _{0} = new Pool({1}" + CodeGenerator.defaultIndicesLookupTag + @".TotalComponents);
                 #endif
             }}
 
