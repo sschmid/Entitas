@@ -1,7 +1,7 @@
 ﻿using Entitas;
 
-public class CollectReactiveSystem : IReactiveSystem {
-    public IMatcher trigger { get { return Matcher.MyString; } }
+public class ProcessRandomValueSystem : IReactiveSystem {
+    public IMatcher trigger { get { return Matcher.MyFloat; } }
 
     public GroupEventType eventType { get { return GroupEventType.OnEntityAdded; } }
 

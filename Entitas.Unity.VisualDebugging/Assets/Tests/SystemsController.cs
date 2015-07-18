@@ -27,6 +27,7 @@ public class SystemsController : MonoBehaviour {
             .Add(_pool.CreateSlowSystem())
             .Add(_pool.CreateRandomDurationSystem())
             .Add(_pool.CreateAReactiveSystem())
-            .Add(_pool.CreateCollectReactiveSystem());
+            .Add(_pool.CreateRandomValueSystem())
+            .Add(_pool.CreateProcessRandomValueSystem());
     }
 }

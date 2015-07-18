@@ -65,6 +65,14 @@ namespace Entitas.Unity.VisualDebugging {
             foreach (var systemInfo in orderedSystemInfos) {
                 EditorGUILayout.BeginHorizontal();
                 systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
+                var reactiveSystem = systemInfo.system as ReactiveSystem;
+                if (reactiveSystem != null) {
+                    if (systemInfo.isActive) {
+                        reactiveSystem.Activate();
+                    } else {
+                        reactiveSystem.Deactivate();
+                    }
+                }
                 var avg = string.Format("Ø {0:0.000}", systemInfo.averageExecutionDuration).PadRight(9);
                 var min = string.Format("min {0:0.000}", systemInfo.minExecutionDuration).PadRight(11);
                 var max = string.Format("max {0:0.000}", systemInfo.maxExecutionDuration);

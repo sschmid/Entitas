@@ -23,11 +23,15 @@ namespace Entitas {
 
         public void Activate() {
             if (_eventType == GroupEventType.OnEntityAdded) {
+                _group.OnEntityAdded -= addEntity;
                 _group.OnEntityAdded += addEntity;
             } else if (_eventType == GroupEventType.OnEntityRemoved) {
+                _group.OnEntityRemoved -= addEntity;
                 _group.OnEntityRemoved += addEntity;
             } else if (_eventType == GroupEventType.OnEntityAddedOrRemoved) {
+                _group.OnEntityAdded -= addEntity;
                 _group.OnEntityAdded += addEntity;
+                _group.OnEntityRemoved -= addEntity;
                 _group.OnEntityRemoved += addEntity;
             }
         }

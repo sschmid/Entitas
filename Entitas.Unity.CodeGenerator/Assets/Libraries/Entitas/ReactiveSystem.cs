@@ -10,6 +10,14 @@
             _observer = new GroupObserver(pool.GetGroup(subSystem.trigger), subSystem.eventType);
         }
 
+        public void Activate() {
+            _observer.Activate();
+        }
+
+        public void Deactivate() {
+            _observer.Deactivate();
+        }
+
         public void Execute() {
             if (_observer.collectedEntities.Count != 0) {
                 var entities = new Entity[_observer.collectedEntities.Count];

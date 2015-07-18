@@ -52,6 +52,30 @@ class describe_ReactiveSystem : nspec {
                 subSystem.didExecute.should_be(0);
                 subSystem.entites.should_be_null();
             };
+
+            it["deactivates"] = () => {
+                res.Deactivate();
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                res.Execute();
+
+                subSystem.didExecute.should_be(0);
+                subSystem.entites.should_be_null();
+            };
+
+            it["activates"] = () => {
+                res.Deactivate();
+                res.Activate();
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                res.Execute();
+
+                subSystem.didExecute.should_be(1);
+                subSystem.entites.Length.should_be(1);
+                subSystem.entites.should_contain(e);
+            };
         };
 
         context["OnEntityRemoved"] = () => {

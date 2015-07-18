@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 
 class describe_IndicesLookupGenerator : nspec {
-    bool logResults = true;
+    bool logResults = false;
 
     void generates(Type type, string lookupName, string lookupCode) {
         generates(new [] { type }, lookupName, lookupCode);
@@ -30,9 +30,9 @@ class describe_IndicesLookupGenerator : nspec {
         var files = new IndicesLookupGenerator().Generate(poolNames);
         files.Length.should_be(poolNames.Length == 0 ? 1 : poolNames.Length);
 
-        foreach (var f in files) {
-            System.Console.WriteLine("f.fileName: " + f.fileName);
-        }
+//        foreach (var f in files) {
+//            System.Console.WriteLine("f.fileName: " + f.fileName);
+//        }
 
         for (int i = 0; i < lookupNames.Length; i++) {
             var lookupName = lookupNames[i];
