@@ -53,8 +53,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         static bool implementsComponent(Type type) {
             return type.GetInterfaces().Contains(typeof(IComponent))
-                && type != typeof(IComponent)
-                && type != typeof(DebugComponent);
+                && type != typeof(IComponent);
         }
 
         static bool implementsSystem(Type type) {

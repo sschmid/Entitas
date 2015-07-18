@@ -9,6 +9,7 @@ public class SystemsController : MonoBehaviour {
 
     void Start() {
         _pool = new Pool(ComponentIds.TotalComponents);
+        new PoolObserver(_pool, "Systems Pool");
         _systems = createSystems();
         _systems.Start();
         _pool.CreateEntity().AddMyString("");
@@ -44,5 +45,4 @@ public class SystemsController : MonoBehaviour {
             .Add(_pool.CreateRandomDurationSystem())
             .Add(_pool.CreateAReactiveSystem());
     }
-
 }

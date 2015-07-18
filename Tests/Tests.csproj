@@ -76,13 +76,8 @@
     <Compile Include="Tests\check_namespaces.cs" />
     <Compile Include="Libraries\Entitas.Unity\EntitasPreferencesConfig.cs" />
     <Compile Include="Libraries\Entitas.Unity.CodeGenerator\CodeGeneratorConfig.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\DebugComponent.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\DebugPool.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\EntityDebugBehaviour.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\PoolDebugBehaviour.cs" />
     <Compile Include="Libraries\Entitas.Unity\Properties.cs" />
     <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_VisualDebuggingConfig.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\NamespaceComponent.cs" />
     <Compile Include="Tests\Entitas\describe_Systems.cs" />
     <Compile Include="Tests\Entitas\Fixtures\StartSystemSpy.cs" />
@@ -104,6 +99,12 @@
     <Compile Include="Tests\Entitas.Migration\Fixtures\M0180\SubFolder\SourceFile2.cs" />
     <Compile Include="Tests\Entitas.Migration\Fixtures\M0180\SourceFile.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Person2Component.cs" />
+    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs" />
+    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\Entity\EntityBehaviour.cs" />
+    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserver.cs" />
+    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserverBehaviour.cs" />
+    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\DebugSystems.cs" />
+    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\SystemsDebugBehaviour.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -118,11 +119,11 @@
     <Folder Include="Tests\Entitas.Unity.CodeGenerator\" />
     <Folder Include="Libraries\Entitas.Unity\" />
     <Folder Include="Libraries\Entitas.Unity.CodeGenerator\" />
-    <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Tests\Entitas.Migration\" />
     <Folder Include="Tests\Entitas.Migration\Fixtures\" />
     <Folder Include="Tests\Entitas.Migration\Fixtures\M0180\" />
+    <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

@@ -82,6 +82,69 @@ class describe_Pool : nspec {
             _pool.GetEntities().should_not_be_same(entities1);
         };
 
+        context["events"] = () => {
+
+            it["dispatches OnEntityCreated when creating a new entity"] = () => {
+                Pool eventPool = null;
+                Entity eventEntity = null;
+                _pool.OnEntityCreated += (pool, entity) => {
+                    eventPool = pool;
+                    eventEntity = entity;
+                };
+
+                var e = _pool.CreateEntity();
+                eventPool.should_be_same(_pool);
+                eventEntity.should_be_same(e);
+            };
+
+            it["dispatches OnEntityWillBeDestroyed when destroying a new entity"] = () => {
+                var e = _pool.CreateEntity();
+                e.AddComponentA();
+                Pool eventPool = null;
+                Entity eventEntity = null;
+                _pool.OnEntityWillBeDestroyed += (pool, entity) => {
+                    eventPool = pool;
+                    eventEntity = entity;
+                    entity.HasComponentA().should_be_true();
+                };
+                _pool.DestroyEntity(e);
+                eventPool.should_be_same(_pool);
+                eventEntity.should_be_same(e);
+            };
+
+            it["dispatches OnEntityDestroyed when destroying a new entity"] = () => {
+                var e = _pool.CreateEntity();
+                Pool eventPool = null;
+                Entity eventEntity = null;
+                _pool.OnEntityDestroyed += (pool, entity) => {
+                    eventPool = pool;
+                    eventEntity = entity;
+                    entity.HasComponentA().should_be_false();
+                };
+                _pool.DestroyEntity(e);
+                eventPool.should_be_same(_pool);
+                eventEntity.should_be_same(e);
+            };
+
+            it["dispatches OnGroupCreated when creating a new group"] = () => {
+                Pool eventPool = null;
+                Group eventGroup = null;
+                _pool.OnGroupCreated += (pool, g) => {
+                    eventPool = pool;
+                    eventGroup = g;
+                };
+                var group = _pool.GetGroup(Matcher.AllOf(0));
+                eventPool.should_be_same(_pool);
+                eventGroup.should_be_same(group);
+            };
+
+            it["doesn't dispatch OnGroupCreeated when group alredy exists"] = () => {
+                _pool.GetGroup(Matcher.AllOf(0));
+                _pool.OnGroupCreated += (pool, g) => this.Fail();
+                _pool.GetGroup(Matcher.AllOf(0));
+            };
+        };
+
         context["entity pool"] = () => {
 
             it["gets entity from object pool"] = () => {
