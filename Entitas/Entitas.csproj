@@ -54,7 +54,7 @@
     <Compile Include="Entitas\Interfaces\IReactiveSystem.cs" />
     <Compile Include="Entitas\ReactiveSystem.cs" />
     <Compile Include="Entitas\Interfaces\IStartSystem.cs" />
-    <Compile Include="Entitas\Extensions\Systems.cs" />
+    <Compile Include="Entitas\Systems.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
