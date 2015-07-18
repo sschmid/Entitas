@@ -1,3 +1,16 @@
+# 0.18.3
+
+##### Entitas
+- Added ReactiveSystem.Activate() and .Deactivate()
+
+##### Entitas.Unity.VisualDebugging
+- Displaying nested systems hierarchy for DebugSystems
+
+![entitas unity visualdebugging-debugsystemshierarchy](https://cloud.githubusercontent.com/assets/233700/8761742/6e26dd22-2d61-11e5-943b-94683b7b02ec.png)
+![entitas unity visualdebugging-debugsystemshierarchyeditor](https://cloud.githubusercontent.com/assets/233700/8761746/9628dbfe-2d61-11e5-9b75-570e5c538c0d.png)
+- Unchecking a ReacitveSystem in VisualDebugging deactivates it
+
+
 # 0.18.2
 
 ##### Entitas.CodeGenerator
