@@ -32,13 +32,13 @@ namespace Entitas.Unity.VisualDebugging {
 
             EditorGUILayout.BeginHorizontal();
             systems.paused = EditorGUILayout.Toggle("Step manually", systems.paused);
-            GUI.enabled = systems.paused;
+            EditorGUI.BeginDisabledGroup(!systems.paused);
             if (GUILayout.Button("Step", GUILayout.Width(100))) {
                 systems.Step();
                 addDuration((float)systems.totalDuration);
                 _systemMonitor.Draw(_systemMonitorData.ToArray(), 80f);
             }
-            GUI.enabled = true;
+            EditorGUI.EndDisabledGroup();
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.LabelField("Execution duration", EditorStyles.boldLabel);
@@ -59,12 +59,24 @@ namespace Entitas.Unity.VisualDebugging {
 
             systems.threshold = EditorGUILayout.Slider("Threshold", systems.threshold, 0f, 100f);
             EditorGUILayout.Space();
-            var orderedSystemInfos = systems.systemInfos
+
+            drawSystemInfos(systems.systemInfos, false);
+
+            EditorGUILayout.EndVertical();
+
+            EditorUtility.SetDirty(target);
+        }
+
+        void drawSystemInfos(SystemInfo[] systemInfos, bool isChildSysem) {
+            var orderedSystemInfos = systemInfos
                 .OrderByDescending(systemInfo => systemInfo.averageExecutionDuration)
                 .ToArray();
+
             foreach (var systemInfo in orderedSystemInfos) {
                 EditorGUILayout.BeginHorizontal();
+                EditorGUI.BeginDisabledGroup(isChildSysem);
                 systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
+                EditorGUI.EndDisabledGroup();
                 var reactiveSystem = systemInfo.system as ReactiveSystem;
                 if (reactiveSystem != null) {
                     if (systemInfo.isActive) {
@@ -78,11 +90,15 @@ namespace Entitas.Unity.VisualDebugging {
                 var max = string.Format("max {0:0.000}", systemInfo.maxExecutionDuration);
                 EditorGUILayout.LabelField(systemInfo.systemName, avg + "\t" + min + "\t" + max);
                 EditorGUILayout.EndHorizontal();
+
+                var debugSystem = systemInfo.system as DebugSystems;
+                if (debugSystem != null) {
+                    var indent = EditorGUI.indentLevel;
+                    EditorGUI.indentLevel += 1;
+                    drawSystemInfos(debugSystem.systemInfos, true);
+                    EditorGUI.indentLevel = indent;
+                }
             }
-
-            EditorGUILayout.EndVertical();
-
-            EditorUtility.SetDirty(target);
         }
 
         void addDuration(float duration) {

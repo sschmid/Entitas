@@ -29,9 +29,15 @@ namespace Entitas.Unity.VisualDebugging {
 
         public SystemInfo(ISystem system, Type systemType) {
             _system = system;
-            _systemName = systemType.Name.EndsWith(systemSuffix, StringComparison.Ordinal)
-                ? systemType.Name.Substring(0, systemType.Name.Length - systemSuffix.Length)
-                : systemType.Name;
+
+            var debugSystem = system as DebugSystems;
+            if (debugSystem != null) {
+                _systemName = debugSystem.name;
+            } else {
+                _systemName = systemType.Name.EndsWith(systemSuffix, StringComparison.Ordinal)
+                    ? systemType.Name.Substring(0, systemType.Name.Length - systemSuffix.Length)
+                    : systemType.Name;
+            }
             
             isActive = true;
         }
@@ -104,6 +110,11 @@ namespace Entitas.Unity.VisualDebugging {
 
         public override Systems Add(ISystem system) {
             _systems.Add(system);
+            var debugSystems = system as DebugSystems;
+            if (debugSystems != null) {
+                debugSystems.container.transform.SetParent(_container.transform, false);
+            }
+
             return base.Add(system);
         }
 

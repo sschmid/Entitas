@@ -28,6 +28,21 @@ public class SystemsController : MonoBehaviour {
             .Add(_pool.CreateRandomDurationSystem())
             .Add(_pool.CreateAReactiveSystem())
             .Add(_pool.CreateRandomValueSystem())
-            .Add(_pool.CreateProcessRandomValueSystem());
+            .Add(_pool.CreateProcessRandomValueSystem())
+            .Add(createSubSystems());
     }
+
+    Systems createSubSystems() {
+        return new DebugSystems("Sub Systems")
+            .Add(_pool.CreateFastSystem())
+            .Add(_pool.CreateSlowSystem())
+            .Add(createSubSubSystems());
+    }
+
+    Systems createSubSubSystems() {
+        return new DebugSystems("Sub Sub Systems")
+            .Add(_pool.CreateRandomDurationSystem())
+            .Add(_pool.CreateAReactiveSystem());
+    }
+
 }
