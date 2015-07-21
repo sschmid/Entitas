@@ -18,7 +18,6 @@ namespace Entitas {
         public Entity ReplacePosition(int newX, int newY) {
             PositionComponent component;
             if (hasPosition) {
-                WillRemoveComponent(ComponentIds.Position);
                 component = position;
             } else {
                 component = new PositionComponent();

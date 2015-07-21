@@ -18,7 +18,6 @@ namespace Entitas {
         public Entity ReplaceUser(string newName, int newAge) {
             UserComponent component;
             if (hasUser) {
-                WillRemoveComponent(ComponentIds.User);
                 component = user;
             } else {
                 component = new UserComponent();

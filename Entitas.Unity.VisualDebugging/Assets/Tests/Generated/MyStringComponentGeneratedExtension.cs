@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceMyString(string newMyString) {
             MyStringComponent component;
             if (hasMyString) {
-                WillRemoveComponent(ComponentIds.MyString);
                 component = myString;
             } else {
                 component = new MyStringComponent();

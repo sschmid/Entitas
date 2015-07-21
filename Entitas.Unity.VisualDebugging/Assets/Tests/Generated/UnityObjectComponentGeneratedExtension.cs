@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceUnityObject(UnityEngine.Object newUnityObject) {
             UnityObjectComponent component;
             if (hasUnityObject) {
-                WillRemoveComponent(ComponentIds.UnityObject);
                 component = unityObject;
             } else {
                 component = new UnityObjectComponent();

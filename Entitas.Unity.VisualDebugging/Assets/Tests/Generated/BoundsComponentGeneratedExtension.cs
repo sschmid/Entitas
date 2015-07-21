@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceBounds(UnityEngine.Bounds newBounds) {
             BoundsComponent component;
             if (hasBounds) {
-                WillRemoveComponent(ComponentIds.Bounds);
                 component = bounds;
             } else {
                 component = new BoundsComponent();

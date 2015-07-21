@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
             HashSetComponent component;
             if (hasHashSet) {
-                WillRemoveComponent(ComponentIds.HashSet);
                 component = hashSet;
             } else {
                 component = new HashSetComponent();

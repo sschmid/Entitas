@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
             UnsupportedObjectComponent component;
             if (hasUnsupportedObject) {
-                WillRemoveComponent(ComponentIds.UnsupportedObject);
                 component = unsupportedObject;
             } else {
                 component = new UnsupportedObjectComponent();

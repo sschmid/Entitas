@@ -19,7 +19,6 @@ namespace Entitas {
         public Entity ReplaceCoins(int newCount) {
             CoinsComponent component;
             if (hasCoins) {
-                WillRemoveComponent(MetaComponentIds.Coins);
                 component = coins;
             } else {
                 component = new CoinsComponent();

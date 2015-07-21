@@ -260,22 +260,14 @@ class describe_Pool : nspec {
                     _pool.DestroyEntity(e);
                 });
 
-                it["group dispatches OnEntityWillBeRemoved, OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
+                it["group dispatches OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
                     var g = _pool.GetGroup(matcher);
-                    var didDispatchWillBeRemoved = 0;
                     var didDispatchRemoved = 0;
                     var didDispatchAdded = 0;
-                    Group eventGroupWillBeRemoved = null;
                     Group eventGroupRemoved = null;
                     Group eventGroupAdded = null;
-                    Entity eventEntityWillBeRemoved = null;
                     Entity eventEntityRemoved = null;
                     Entity eventEntityAdded = null;
-                    g.OnEntityWillBeRemoved += (group, entity) => {
-                        eventGroupWillBeRemoved = group;
-                        eventEntityWillBeRemoved = entity;
-                        didDispatchWillBeRemoved++;
-                    };
                     g.OnEntityRemoved += (group, entity) => {
                         eventGroupRemoved = group;
                         eventEntityRemoved = entity;
@@ -286,16 +278,12 @@ class describe_Pool : nspec {
                         eventEntityAdded = entity;
                         didDispatchAdded++;
                     };
-                    eAB1.WillRemoveComponent(CID.ComponentA);
                     eAB1.ReplaceComponentA(new ComponentA());
 
-                    eventGroupWillBeRemoved.should_be_same(g);
                     eventGroupRemoved.should_be_same(g);
                     eventGroupAdded.should_be_same(g);
-                    eventEntityWillBeRemoved.should_be_same(eAB1);
                     eventEntityRemoved.should_be_same(eAB1);
                     eventEntityAdded.should_be_same(eAB1);
-                    didDispatchWillBeRemoved.should_be(1);
                     didDispatchRemoved.should_be(1);
                     didDispatchAdded.should_be(1);
                 };
@@ -341,21 +329,6 @@ class describe_Pool : nspec {
                     e.RemoveComponentB();
                     group.Count.should_be(1);
                 };
-
-                it["will remove entity"] = () => {
-                    var didWillRemove = 0;
-                    group.OnEntityWillBeRemoved += (g, entity) => didWillRemove++;
-                    e.AddComponentA();
-                    e.WillRemoveComponent(CID.ComponentA);
-                    didWillRemove.should_be(1);
-                };
-
-                it["won't remove entity when still matching"] = () => {
-                    group.OnEntityWillBeRemoved += (g, entity) => this.Fail();
-                    e.AddComponentA();
-                    e.AddComponentB();
-                    e.WillRemoveComponent(CID.ComponentB);
-                };
             };
 
             context["AllOfOfCompoundMatcher containing a NoneOfMatcher"] = () => {
@@ -400,23 +373,6 @@ class describe_Pool : nspec {
                     e.AddComponentC();
                     e.RemoveComponentC();
                     group.Count.should_be(1);
-                };
-
-                it["will remove entity"] = () => {
-                    var didWillRemove = 0;
-                    group.OnEntityWillBeRemoved += (g, entity) => didWillRemove++;
-                    e.AddComponentA();
-                    e.AddComponentB();
-                    e.WillRemoveComponent(CID.ComponentA);
-                    didWillRemove.should_be(1);
-                };
-
-                it["won't remove entity when still matching"] = () => {
-                    group.OnEntityWillBeRemoved += (g, entity) => this.Fail();
-                    e.AddComponentA();
-                    e.AddComponentB();
-                    e.AddComponentC();
-                    e.WillRemoveComponent(CID.ComponentC);
                 };
             };
         };

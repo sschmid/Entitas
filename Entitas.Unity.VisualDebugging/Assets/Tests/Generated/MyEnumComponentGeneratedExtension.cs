@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
             MyEnumComponent component;
             if (hasMyEnum) {
-                WillRemoveComponent(ComponentIds.MyEnum);
                 component = myEnum;
             } else {
                 component = new MyEnumComponent();

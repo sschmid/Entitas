@@ -20,7 +20,6 @@ namespace Entitas {
         public Entity ReplaceUIPosition(int newX, int newY) {
             UIPositionComponent component;
             if (hasUIPosition) {
-                WillRemoveComponent(UIComponentIds.UIPosition);
                 component = uIPosition;
             } else {
                 component = new UIPositionComponent();

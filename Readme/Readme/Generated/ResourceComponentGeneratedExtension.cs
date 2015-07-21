@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceResource(string newName) {
             ResourceComponent component;
             if (hasResource) {
-                WillRemoveComponent(ComponentIds.Resource);
                 component = resource;
             } else {
                 component = new ResourceComponent();

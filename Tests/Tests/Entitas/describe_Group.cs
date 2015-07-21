@@ -122,30 +122,11 @@ class describe_Group : nspec {
                 handle(_eA1);
             };
             
-            it["dispatches OnEntityWillBeRemoved when entity will be removed"] = () => {
-                _group.OnEntityWillBeRemoved += (group, entity) => {
-                    didDispatch++;
-                    group.should_be_same(_group);
-                    entity.should_be_same(_eA1);
-                };
-
-                handle(_eA1);
-                willRemoveEA1();
-                didDispatch.should_be(1);
-            };
-
-            it["doesn't dispatch OnEntityWillBeRemoved when group doesn't contain entity"] = () => {
-                _group.OnEntityWillBeRemoved += (group, entity) => this.Fail();
-                handle(_eA1);
-                _group.WillRemoveEntity(new Entity(0));
-            };
-
             it["dispatches OnEntityRemoved and OnEntityAdded when updating"] = () => {
                 handle(_eA1);
                 var removed = 0;
                 var added = 0;
                 _group.OnEntityRemoved += (group, entity) => removed++;
-                _group.OnEntityWillBeRemoved += (group, entity) => this.Fail();
                 _group.OnEntityAdded += (group, entity) => added++;
 
                 _group.UpdateEntity(_eA1);
@@ -156,7 +137,6 @@ class describe_Group : nspec {
 
             it["doesn't dispatch OnEntityRemoved and OnEntityAdded when updating when group doesn't contain entity"] = () => {
                 _group.OnEntityRemoved += (group, entity) => this.Fail();
-                _group.OnEntityWillBeRemoved += (group, entity) => this.Fail();
                 _group.OnEntityAdded += (group, entity) => this.Fail();
                 _group.UpdateEntity(_eA1);
             };
@@ -230,10 +210,6 @@ class describe_Group : nspec {
 
     void handle(Entity entity) {
         _group.HandleEntity(entity);
-    }
-
-    void willRemoveEA1() {
-        _group.WillRemoveEntity(_eA1);
     }
 }
 

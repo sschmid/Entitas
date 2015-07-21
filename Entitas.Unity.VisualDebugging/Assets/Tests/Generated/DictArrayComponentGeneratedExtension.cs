@@ -18,7 +18,6 @@ namespace Entitas {
         public Entity ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
             DictArrayComponent component;
             if (hasDictArray) {
-                WillRemoveComponent(ComponentIds.DictArray);
                 component = dictArray;
             } else {
                 component = new DictArrayComponent();

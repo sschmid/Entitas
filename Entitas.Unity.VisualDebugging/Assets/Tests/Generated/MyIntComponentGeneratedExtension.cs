@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceMyInt(int newMyInt) {
             MyIntComponent component;
             if (hasMyInt) {
-                WillRemoveComponent(ComponentIds.MyInt);
                 component = myInt;
             } else {
                 component = new MyIntComponent();

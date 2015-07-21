@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceSystemObject(object newSystemObject) {
             SystemObjectComponent component;
             if (hasSystemObject) {
-                WillRemoveComponent(ComponentIds.SystemObject);
                 component = systemObject;
             } else {
                 component = new SystemObjectComponent();

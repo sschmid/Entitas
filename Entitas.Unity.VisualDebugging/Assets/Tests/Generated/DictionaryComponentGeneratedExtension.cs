@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
             DictionaryComponent component;
             if (hasDictionary) {
-                WillRemoveComponent(ComponentIds.Dictionary);
                 component = dictionary;
             } else {
                 component = new DictionaryComponent();

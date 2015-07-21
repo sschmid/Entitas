@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceHealth(int newHealth) {
             HealthComponent component;
             if (hasHealth) {
-                WillRemoveComponent(ComponentIds.Health);
                 component = health;
             } else {
                 component = new HealthComponent();

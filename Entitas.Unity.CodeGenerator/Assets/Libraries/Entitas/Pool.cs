@@ -45,7 +45,6 @@ namespace Entitas {
             _entitiesCache = null;
             entity.OnComponentAdded += onComponentAddedOrRemoved;
             entity.OnComponentReplaced += onComponentReplaced;
-            entity.OnComponentWillBeRemoved += onComponentWillBeRemoved;
             entity.OnComponentRemoved += onComponentAddedOrRemoved;
 
             if (OnEntityCreated != null) {
@@ -70,7 +69,6 @@ namespace Entitas {
             entity.RemoveAllComponents();
             entity.OnComponentAdded -= onComponentAddedOrRemoved;
             entity.OnComponentReplaced -= onComponentReplaced;
-            entity.OnComponentWillBeRemoved -= onComponentWillBeRemoved;
             entity.OnComponentRemoved -= onComponentAddedOrRemoved;
             _entityPool.Push(entity);
 
@@ -134,26 +132,11 @@ namespace Entitas {
             }
         }
 
-        protected void onComponentReplaced(Entity entity, int index, IComponent component) {
+        protected void onComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
                     groups[i].UpdateEntity(entity);
-                }
-            }
-        }
-
-        protected void onComponentWillBeRemoved(Entity entity, int index, IComponent component) {
-            var groups = _groupsForIndex[index];
-            if (groups != null) {
-                for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
-                    var group = groups[i];
-                    entity._components[index] = null;
-                    var matches = group.matcher.Matches(entity);
-                    entity._components[index] = component;
-                    if (!matches) {
-                        group.WillRemoveEntity(entity);
-                    }
                 }
             }
         }

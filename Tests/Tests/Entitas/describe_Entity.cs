@@ -142,8 +142,7 @@ class describe_Entity : nspec {
                     eventIndex = index;
                     eventComponent = component;
                 };
-                e.OnComponentReplaced += (entity, index, component) => this.Fail();
-                e.OnComponentWillBeRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
                 e.OnComponentRemoved += (entity, index, component) => this.Fail();
 
                 e.AddComponentA();
@@ -155,22 +154,8 @@ class describe_Entity : nspec {
             it["dispatches OnComponentRemoved when removing a component"] = () => {
                 e.AddComponentA();
                 e.OnComponentAdded += (entity, index, component) => this.Fail();
-                e.OnComponentReplaced += (entity, index, component) => this.Fail();
+                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
                 e.OnComponentRemoved += (entity, index, component) => {
-                    eventEntity = entity;
-                    eventIndex = index;
-                    eventComponent = component;
-                };
-
-                e.RemoveComponentA();
-                eventEntity.should_be_same(e);
-                eventIndex.should_be(CID.ComponentA);
-                eventComponent.should_be_same(Component.A);
-            };
-
-            it["dispatches OnComponentWillBeRemoved when removing a component"] = () => {
-                e.AddComponentA();
-                e.OnComponentWillBeRemoved += (entity, index, component) => {
                     eventEntity = entity;
                     eventIndex = index;
                     eventComponent = component;
@@ -187,13 +172,12 @@ class describe_Entity : nspec {
                 var newComponentA = new ComponentA();
                 var didReplace = 0;
                 e.OnComponentAdded += (entity, index, component) => this.Fail();
-                e.OnComponentReplaced += (entity, index, component) => {
+                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => {
                     entity.should_be_same(entity);
                     index.should_be(CID.ComponentA);
-                    component.should_be_same(newComponentA);
+                    newComponent.should_be_same(newComponentA);
                     didReplace++;
                 };
-                e.OnComponentWillBeRemoved += (entity, index, component) => this.Fail();
                 e.OnComponentRemoved += (entity, index, component) => this.Fail();
                 
                 e.ReplaceComponentA(newComponentA);
@@ -202,38 +186,10 @@ class describe_Entity : nspec {
 
             it["doesn't dispatch anything when replacing a non existing component with null"] = () => {
                 e.OnComponentAdded += (entity, index, component) => this.Fail();
-                e.OnComponentReplaced += (entity, index, component) => this.Fail();
-                e.OnComponentWillBeRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
                 e.OnComponentRemoved += (entity, index, component) => this.Fail();
                 
                 e.ReplaceComponentA(null);
-            };
-
-            it["dispatches OnComponentWillBeRemoved when called manually and component exists"] = () => {
-                e.AddComponentA();
-                e.OnComponentWillBeRemoved += (entity, index, component) => {
-                    eventEntity = entity;
-                    eventIndex = index;
-                    eventComponent = component;
-                };
-
-                e.WillRemoveComponent(CID.ComponentA);
-                eventEntity.should_be_same(e);
-                eventIndex.should_be(CID.ComponentA);
-                eventComponent.should_be_same(Component.A);
-            };
-
-            it["doesn't dispatch OnComponentWillBeRemoved when called manually and entity doesn't have"] = () => {
-                e.OnComponentWillBeRemoved += (entity, index, component) => {
-                    eventEntity = entity;
-                    eventIndex = index;
-                    eventComponent = component;
-                };
-
-                e.WillRemoveComponent(CID.ComponentA);
-                eventEntity.should_be_null();
-                eventIndex.should_be(CID.None);
-                eventComponent.should_be_null();
             };
 
             it["dispatches OnComponentAdded when attempting to replace a component which hasn't been added"] = () => {
@@ -242,8 +198,7 @@ class describe_Entity : nspec {
                     eventIndex = index;
                     eventComponent = component;
                 };
-                e.OnComponentReplaced += (entity, index, component) => this.Fail();
-                e.OnComponentWillBeRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
                 e.OnComponentRemoved += (entity, index, component) => this.Fail();
 
                 var newComponentA = new ComponentA();
@@ -371,6 +326,46 @@ class describe_Entity : nspec {
                     e.RemoveAllComponents();
                     e.GetComponentIndices().should_not_be_same(c);
                 };
+            };
+        };
+
+        context["component pooling"] = () => {
+
+            it["provides previous and new component OnComponentReplaced when replacing with different component"] = () => {
+                const int i = 1;
+                var prevComp = new ComponentA();
+                var newComp = new ComponentA();
+                var didReplace = 0;
+                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => {
+                    entity.should_be_same(e);
+                    previousComponent.should_be_same(prevComp);
+                    newComponent.should_be_same(newComp);
+
+                    didReplace += 1;
+                };
+
+                e.AddComponent(i, prevComp);
+                e.ReplaceComponent(i, newComp);
+
+                didReplace.should_be(1);
+            };
+
+            it["provides previous and new component OnComponentReplaced when replacing with same component"] = () => {
+                const int i = 1;
+                var comp = new ComponentA();
+                var didReplace = 0;
+                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => {
+                    entity.should_be_same(e);
+                    previousComponent.should_be_same(comp);
+                    newComponent.should_be_same(comp);
+
+                    didReplace += 1;
+                };
+
+                e.AddComponent(i, comp);
+                e.ReplaceComponent(i, comp);
+
+                didReplace.should_be(1);
             };
         };
     }

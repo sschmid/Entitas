@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace Entitas {
     public class Group {
         public event GroupChanged OnEntityAdded;
-        public event GroupChanged OnEntityWillBeRemoved;
         public event GroupChanged OnEntityRemoved;
 
         public delegate void GroupChanged(Group group, Entity entity);
@@ -37,12 +36,6 @@ namespace Entitas {
                 if (OnEntityAdded != null) {
                     OnEntityAdded(this, entity);
                 }
-            }
-        }
-
-        public void WillRemoveEntity(Entity entity) {
-            if (_entities.Contains(entity) && OnEntityWillBeRemoved != null) {
-                OnEntityWillBeRemoved(this, entity);
             }
         }
 

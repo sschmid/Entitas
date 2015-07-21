@@ -4,11 +4,11 @@ using System.Collections.Generic;
 namespace Entitas {
     public partial class Entity {
         public event EntityChanged OnComponentAdded;
-        public event EntityChanged OnComponentReplaced;
-        public event EntityChanged OnComponentWillBeRemoved;
+        public event EntityComponentReplaced OnComponentReplaced;
         public event EntityChanged OnComponentRemoved;
 
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
+        public delegate void EntityComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
         public int creationIndex { get { return _creationIndex; } }
 
@@ -38,28 +38,15 @@ namespace Entitas {
             return this;
         }
 
-        public void WillRemoveComponent(int index) {
-            if (HasComponent(index) && OnComponentWillBeRemoved != null) {
-                OnComponentWillBeRemoved(this, index, _components[index]);
-            }
-        }
-
         public Entity RemoveComponent(int index) {
             if (!HasComponent(index)) {
                 var errorMsg = "Cannot remove component at index " + index + " from " + this;
                 throw new EntityDoesNotHaveComponentException(errorMsg, index);
             }
 
-            removeComponent(index);
+            replaceComponent(index, null);
 
             return this;
-        }
-
-        void removeComponent(int index) {
-            if (OnComponentWillBeRemoved != null) {
-                OnComponentWillBeRemoved(this, index, _components[index]);
-            }
-            replaceComponent(index, null);
         }
 
         public Entity ReplaceComponent(int index, IComponent component) {
@@ -73,10 +60,10 @@ namespace Entitas {
         }
 
         void replaceComponent(int index, IComponent replacement) {
-            var component = _components[index];
-            if (component == replacement) {
+            var previousComponent = _components[index];
+            if (previousComponent == replacement) {
                 if (OnComponentReplaced != null) {
-                    OnComponentReplaced(this, index, replacement);
+                    OnComponentReplaced(this, index, previousComponent, replacement);
                 }
             } else {
                 _components[index] = replacement;
@@ -84,10 +71,12 @@ namespace Entitas {
                 if (replacement == null) {
                     _componentIndicesCache = null;
                     if (OnComponentRemoved != null) {
-                        OnComponentRemoved(this, index, component);
+                        OnComponentRemoved(this, index, previousComponent);
                     }
-                } else if (OnComponentReplaced != null) {
-                    OnComponentReplaced(this, index, replacement);
+                } else {
+                    if (OnComponentReplaced != null) {
+                        OnComponentReplaced(this, index, previousComponent, replacement);
+                    }
                 }
             }
         }
@@ -159,7 +148,7 @@ namespace Entitas {
         public void RemoveAllComponents() {
             var indices = GetComponentIndices();
             for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
-                removeComponent(indices[i]);
+                replaceComponent(indices[i], null);
             }
         }
 

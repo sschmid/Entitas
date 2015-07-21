@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceCustomObject(CustomObject newCustomObject) {
             CustomObjectComponent component;
             if (hasCustomObject) {
-                WillRemoveComponent(ComponentIds.CustomObject);
                 component = customObject;
             } else {
                 component = new CustomObjectComponent();

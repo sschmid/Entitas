@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceArray2D(int[,] newArray2d) {
             Array2DComponent component;
             if (hasArray2D) {
-                WillRemoveComponent(ComponentIds.Array2D);
                 component = array2D;
             } else {
                 component = new Array2DComponent();

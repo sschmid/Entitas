@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceMove(int newSpeed) {
             MoveComponent component;
             if (hasMove) {
-                WillRemoveComponent(ComponentIds.Move);
                 component = move;
             } else {
                 component = new MoveComponent();
