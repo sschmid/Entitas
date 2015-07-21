@@ -27,13 +27,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            OtherPoolComponent component;
-            if (hasOtherPool) {
-                WillRemoveComponent(OtherComponentIds.OtherPool);
-                component = otherPool;
-            } else {
-                component = new OtherPoolComponent();
-            }
+            OtherPoolComponent component = new OtherPoolComponent();
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             return ReplaceComponent(OtherComponentIds.OtherPool, component);

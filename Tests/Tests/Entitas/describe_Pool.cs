@@ -287,6 +287,25 @@ class describe_Pool : nspec {
                     didDispatchRemoved.should_be(1);
                     didDispatchAdded.should_be(1);
                 };
+
+                it["group dispatches OnEntityUpdated with previous and current component when replacing a component"] = () => {
+                    var updated = 0;
+                    var prevComp = eA.GetComponent(CID.ComponentA);
+                    var newComp = new ComponentA();
+                    var g = _pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                    g.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => {
+                        updated += 1;
+                        group.should_be_same(g);
+                        entity.should_be_same(eA);
+                        index.should_be(CID.ComponentA);
+                        previousComponent.should_be_same(prevComp);
+                        newComponent.should_be_same(newComp);
+                    };
+
+                    eA.ReplaceComponent(CID.ComponentA, newComp);
+
+                    updated.should_be(1);
+                };
             };
         };
 

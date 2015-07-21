@@ -25,13 +25,7 @@ public class UserComponent : IComponent {
         }
 
         public Entity ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            UserComponent component;
-            if (hasUser) {
-                WillRemoveComponent(ComponentIds.User);
-                component = user;
-            } else {
-                component = new UserComponent();
-            }
+            UserComponent component = new UserComponent();
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             return ReplaceComponent(ComponentIds.User, component);

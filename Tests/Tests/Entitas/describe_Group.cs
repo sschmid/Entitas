@@ -129,7 +129,7 @@ class describe_Group : nspec {
                 _group.OnEntityRemoved += (group, entity) => removed++;
                 _group.OnEntityAdded += (group, entity) => added++;
 
-                _group.UpdateEntity(_eA1);
+                _group.UpdateEntity(_eA1, 0, null, null);
 
                 removed.should_be(1);
                 added.should_be(1);
@@ -138,7 +138,7 @@ class describe_Group : nspec {
             it["doesn't dispatch OnEntityRemoved and OnEntityAdded when updating when group doesn't contain entity"] = () => {
                 _group.OnEntityRemoved += (group, entity) => this.Fail();
                 _group.OnEntityAdded += (group, entity) => this.Fail();
-                _group.UpdateEntity(_eA1);
+                _group.UpdateEntity(_eA1, 0, null, null);
             };
         };
 

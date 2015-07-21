@@ -4,11 +4,11 @@ using System.Collections.Generic;
 namespace Entitas {
     public partial class Entity {
         public event EntityChanged OnComponentAdded;
-        public event EntityComponentReplaced OnComponentReplaced;
+        public event ComponentReplaced OnComponentReplaced;
         public event EntityChanged OnComponentRemoved;
 
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
-        public delegate void EntityComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
+        public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
         public int creationIndex { get { return _creationIndex; } }
 

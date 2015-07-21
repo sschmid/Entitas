@@ -4,9 +4,11 @@ using System.Collections.Generic;
 namespace Entitas {
     public class Group {
         public event GroupChanged OnEntityAdded;
+        public event GroupUpdated OnEntityUpdated;
         public event GroupChanged OnEntityRemoved;
 
         public delegate void GroupChanged(Group group, Entity entity);
+        public delegate void GroupUpdated(Group group, Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
         public int Count { get { return _entities.Count; } }
         public IMatcher matcher { get { return _matcher; } }
@@ -28,13 +30,16 @@ namespace Entitas {
             }
         }
 
-        public void UpdateEntity(Entity entity) {
+        public void UpdateEntity(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             if (_entities.Contains(entity)) {
                 if (OnEntityRemoved != null) {
                     OnEntityRemoved(this, entity);
                 }
                 if (OnEntityAdded != null) {
                     OnEntityAdded(this, entity);
+                }
+                if (OnEntityUpdated != null) {
+                    OnEntityUpdated(this, entity, index, previousComponent, newComponent);
                 }
             }
         }

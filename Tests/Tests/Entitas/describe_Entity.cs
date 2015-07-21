@@ -332,7 +332,6 @@ class describe_Entity : nspec {
         context["component pooling"] = () => {
 
             it["provides previous and new component OnComponentReplaced when replacing with different component"] = () => {
-                const int i = 1;
                 var prevComp = new ComponentA();
                 var newComp = new ComponentA();
                 var didReplace = 0;
@@ -344,14 +343,13 @@ class describe_Entity : nspec {
                     didReplace += 1;
                 };
 
-                e.AddComponent(i, prevComp);
-                e.ReplaceComponent(i, newComp);
+                e.AddComponent(CID.ComponentA, prevComp);
+                e.ReplaceComponent(CID.ComponentA, newComp);
 
                 didReplace.should_be(1);
             };
 
             it["provides previous and new component OnComponentReplaced when replacing with same component"] = () => {
-                const int i = 1;
                 var comp = new ComponentA();
                 var didReplace = 0;
                 e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => {
@@ -362,8 +360,8 @@ class describe_Entity : nspec {
                     didReplace += 1;
                 };
 
-                e.AddComponent(i, comp);
-                e.ReplaceComponent(i, comp);
+                e.AddComponent(CID.ComponentA, comp);
+                e.ReplaceComponent(CID.ComponentA, comp);
 
                 didReplace.should_be(1);
             };

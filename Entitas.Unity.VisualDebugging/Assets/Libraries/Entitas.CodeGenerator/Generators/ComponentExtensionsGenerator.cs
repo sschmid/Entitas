@@ -135,13 +135,7 @@ $assign
         static string addReplaceMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Replace$Name($typedArgs) {
-            $Type component;
-            if (has$Name) {
-                WillRemoveComponent($Ids.$Name);
-                component = $name;
-            } else {
-                component = new $Type();
-            }
+            $Type component = new $Type();
 $assign
             return ReplaceComponent($Ids.$Name, component);
         }

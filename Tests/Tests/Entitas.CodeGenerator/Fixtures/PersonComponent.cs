@@ -22,13 +22,7 @@ public class PersonComponent : IComponent {
         }
 
         public Entity ReplacePerson(int newAge, string newName) {
-            PersonComponent component;
-            if (hasPerson) {
-                WillRemoveComponent(ComponentIds.Person);
-                component = person;
-            } else {
-                component = new PersonComponent();
-            }
+            PersonComponent component = new PersonComponent();
             component.age = newAge;
             component.name = newName;
             return ReplaceComponent(ComponentIds.Person, component);
