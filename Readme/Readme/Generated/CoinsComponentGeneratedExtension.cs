@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Entitas;
 
 namespace Entitas {
@@ -6,29 +8,34 @@ namespace Entitas {
 
         public bool hasCoins { get { return HasComponent(MetaComponentIds.Coins); } }
 
-        public Entity AddCoins(CoinsComponent component) {
-            return AddComponent(MetaComponentIds.Coins, component);
+        static readonly Stack<CoinsComponent> _coinsComponentPool = new Stack<CoinsComponent>();
+
+        public static void ClearCoinsComponentPool() {
+            _coinsComponentPool.Clear();
         }
 
         public Entity AddCoins(int newCount) {
-            var component = new CoinsComponent();
+            var component = _coinsComponentPool.Count > 0 ? _coinsComponentPool.Pop() : new CoinsComponent();
             component.count = newCount;
-            return AddCoins(component);
+            return AddComponent(MetaComponentIds.Coins, component);
         }
 
         public Entity ReplaceCoins(int newCount) {
-            CoinsComponent component;
-            if (hasCoins) {
-                component = coins;
-            } else {
-                component = new CoinsComponent();
-            }
+            var previousComponent = coins;
+            var component = _coinsComponentPool.Count > 0 ? _coinsComponentPool.Pop() : new CoinsComponent();
             component.count = newCount;
-            return ReplaceComponent(MetaComponentIds.Coins, component);
+            ReplaceComponent(MetaComponentIds.Coins, component);
+            if (previousComponent != null) {
+                _coinsComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveCoins() {
-            return RemoveComponent(MetaComponentIds.Coins);
+            var component = coins;
+            RemoveComponent(MetaComponentIds.Coins);
+            _coinsComponentPool.Push(component);
+            return this;
         }
     }
 
@@ -38,15 +45,6 @@ namespace Entitas {
         public CoinsComponent coins { get { return coinsEntity.coins; } }
 
         public bool hasCoins { get { return coinsEntity != null; } }
-
-        public Entity SetCoins(CoinsComponent component) {
-            if (hasCoins) {
-                throw new SingleEntityException(MetaMatcher.Coins);
-            }
-            var entity = CreateEntity();
-            entity.AddCoins(component);
-            return entity;
-        }
 
         public Entity SetCoins(int newCount) {
             if (hasCoins) {

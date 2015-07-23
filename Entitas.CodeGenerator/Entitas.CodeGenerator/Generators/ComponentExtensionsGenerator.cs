@@ -32,7 +32,8 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addDefaultPoolCode(Type type) {
-            var code = addNamespace();
+            var code = addComponentPoolUsings(type);
+            code += addNamespace();
             code += addEntityMethods(type);
             if (isSingleEntity(type)) {
                 code += addPoolMethods(type);
@@ -43,7 +44,8 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addCustomPoolCode(Type type) {
-            var code = addUsing();
+            var code = addComponentPoolUsings(type);
+            code += addUsings();
             code += addNamespace();
             code += addEntityMethods(type);
             if (isSingleEntity(type)) {
@@ -54,7 +56,13 @@ namespace Entitas.CodeGenerator {
             return code;
         }
 
-        static string addUsing() {
+        static string addComponentPoolUsings(Type type) {
+            return isSingletonComponent(type)
+                ? string.Empty
+                : "using System.Collections.Generic;\n\n";
+        }
+
+        static string addUsings() {
             return "using Entitas;\n\n";
         }
 
@@ -76,6 +84,7 @@ namespace Entitas.CodeGenerator {
             return addEntityClassHeader()
                     + addGetMethods(type)
                     + addHasMethods(type)
+                    + addComponentPoolMethods(type)
                     + addAddMethods(type)
                     + addReplaceMethods(type)
                     + addRemoveMethods(type)
@@ -118,16 +127,22 @@ namespace Entitas.CodeGenerator {
             return buildString(type, hasMethod);
         }
 
-        static string addAddMethods(Type type) {
+        static string addComponentPoolMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
-        public Entity Add$Name($Type component) {
-            return AddComponent($Ids.$Name, component);
+        static readonly Stack<$Type> _$nameComponentPool = new Stack<$Type>();
+
+        public static void Clear$NameComponentPool() {
+            _$nameComponentPool.Clear();
+        }
+");
         }
 
+        static string addAddMethods(Type type) {
+            return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Add$Name($typedArgs) {
-            var component = new $Type();
+            var component = _$nameComponentPool.Count > 0 ? _$nameComponentPool.Pop() : new $Type();
 $assign
-            return Add$Name(component);
+            return AddComponent($Ids.$Name, component);
         }
 ");
         }
@@ -135,9 +150,14 @@ $assign
         static string addReplaceMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Replace$Name($typedArgs) {
-            $Type component = new $Type();
+            var previousComponent = $name;
+            var component = _$nameComponentPool.Count > 0 ? _$nameComponentPool.Pop() : new $Type();
 $assign
-            return ReplaceComponent($Ids.$Name, component);
+            ReplaceComponent($Ids.$Name, component);
+            if (previousComponent != null) {
+                _$nameComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 ");
         }
@@ -145,7 +165,10 @@ $assign
         static string addRemoveMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Remove$Name() {
-            return RemoveComponent($Ids.$Name);
+            var component = $name;
+            RemoveComponent($Ids.$Name);
+            _$nameComponentPool.Push(component);
+            return this;
         }
 ");
         }
@@ -204,15 +227,6 @@ $assign
 
         static object addPoolAddMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
-        public Entity Set$Name($Type component) {
-            if (has$Name) {
-                throw new SingleEntityException($TagMatcher.$Name);
-            }
-            var entity = CreateEntity();
-            entity.Add$Name(component);
-            return entity;
-        }
-
         public Entity Set$Name($typedArgs) {
             if (has$Name) {
                 throw new SingleEntityException($TagMatcher.$Name);
@@ -284,9 +298,7 @@ $assign
 
         static bool isSingletonComponent(Type type) {
             var bindingFlags = BindingFlags.Instance | BindingFlags.Public;
-            var fields = type.GetFields(bindingFlags);
-            var properties = type.GetProperties(bindingFlags);
-            return fields.Length == 0 && properties.Length == 0;
+            return type.GetFields(bindingFlags).Length == 0;
         }
 
         static string buildString(Type type, string format) {
@@ -296,7 +308,7 @@ $assign
             var a2_lowercaseName = a1_name.LowercaseFirst();
             var a3_tag = type.PoolName();
             var a4_ids = type.IndicesLookupTag();
-            var memberNameInfos = getFieldAndPropertyInfos(type);
+            var memberNameInfos = getFieldInfos(type);
             var a5_fieldNamesWithType = fieldNamesWithType(memberNameInfos);
             var a6_fieldAssigns = fieldAssignments(memberNameInfos);
             var a7_fieldNames = fieldNames(memberNameInfos);
@@ -305,13 +317,10 @@ $assign
                 a3_tag, a4_ids, a5_fieldNamesWithType, a6_fieldAssigns, a7_fieldNames);
         }
 
-        static MemberTypeNameInfo[] getFieldAndPropertyInfos(Type type) {
-            var bindingFlags = BindingFlags.Instance | BindingFlags.Public;
-            var fieldInfos = type.GetFields(bindingFlags)
-                .Select(field => new MemberTypeNameInfo { name = field.Name, type = field.FieldType });
-            var propertyInfos = type.GetProperties(bindingFlags)
-                .Select(property => new MemberTypeNameInfo { name = property.Name, type = property.PropertyType });
-            return fieldInfos.Concat(propertyInfos).ToArray();
+        static MemberTypeNameInfo[] getFieldInfos(Type type) {
+            return type.GetFields(BindingFlags.Instance | BindingFlags.Public)
+                .Select(field => new MemberTypeNameInfo { name = field.Name, type = field.FieldType })
+                .ToArray();
         }
 
         static string createFormatString(string format) {

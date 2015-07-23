@@ -1,34 +1,41 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
 
         public bool hasPosition { get { return HasComponent(ComponentIds.Position); } }
 
-        public Entity AddPosition(PositionComponent component) {
-            return AddComponent(ComponentIds.Position, component);
+        static readonly Stack<PositionComponent> _positionComponentPool = new Stack<PositionComponent>();
+
+        public static void ClearPositionComponentPool() {
+            _positionComponentPool.Clear();
         }
 
         public Entity AddPosition(int newX, int newY) {
-            var component = new PositionComponent();
+            var component = _positionComponentPool.Count > 0 ? _positionComponentPool.Pop() : new PositionComponent();
             component.x = newX;
             component.y = newY;
-            return AddPosition(component);
+            return AddComponent(ComponentIds.Position, component);
         }
 
         public Entity ReplacePosition(int newX, int newY) {
-            PositionComponent component;
-            if (hasPosition) {
-                component = position;
-            } else {
-                component = new PositionComponent();
-            }
+            var previousComponent = position;
+            var component = _positionComponentPool.Count > 0 ? _positionComponentPool.Pop() : new PositionComponent();
             component.x = newX;
             component.y = newY;
-            return ReplaceComponent(ComponentIds.Position, component);
+            ReplaceComponent(ComponentIds.Position, component);
+            if (previousComponent != null) {
+                _positionComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemovePosition() {
-            return RemoveComponent(ComponentIds.Position);
+            var component = position;
+            RemoveComponent(ComponentIds.Position);
+            _positionComponentPool.Push(component);
+            return this;
         }
     }
 

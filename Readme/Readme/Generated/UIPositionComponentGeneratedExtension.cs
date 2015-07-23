@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 using Entitas;
 
 namespace Entitas {
@@ -6,31 +8,36 @@ namespace Entitas {
 
         public bool hasUIPosition { get { return HasComponent(UIComponentIds.UIPosition); } }
 
-        public Entity AddUIPosition(UIPositionComponent component) {
-            return AddComponent(UIComponentIds.UIPosition, component);
+        static readonly Stack<UIPositionComponent> _uIPositionComponentPool = new Stack<UIPositionComponent>();
+
+        public static void ClearUIPositionComponentPool() {
+            _uIPositionComponentPool.Clear();
         }
 
         public Entity AddUIPosition(int newX, int newY) {
-            var component = new UIPositionComponent();
+            var component = _uIPositionComponentPool.Count > 0 ? _uIPositionComponentPool.Pop() : new UIPositionComponent();
             component.x = newX;
             component.y = newY;
-            return AddUIPosition(component);
+            return AddComponent(UIComponentIds.UIPosition, component);
         }
 
         public Entity ReplaceUIPosition(int newX, int newY) {
-            UIPositionComponent component;
-            if (hasUIPosition) {
-                component = uIPosition;
-            } else {
-                component = new UIPositionComponent();
-            }
+            var previousComponent = uIPosition;
+            var component = _uIPositionComponentPool.Count > 0 ? _uIPositionComponentPool.Pop() : new UIPositionComponent();
             component.x = newX;
             component.y = newY;
-            return ReplaceComponent(UIComponentIds.UIPosition, component);
+            ReplaceComponent(UIComponentIds.UIPosition, component);
+            if (previousComponent != null) {
+                _uIPositionComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveUIPosition() {
-            return RemoveComponent(UIComponentIds.UIPosition);
+            var component = uIPosition;
+            RemoveComponent(UIComponentIds.UIPosition);
+            _uIPositionComponentPool.Push(component);
+            return this;
         }
     }
 }

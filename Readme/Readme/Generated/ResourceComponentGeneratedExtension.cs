@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public ResourceComponent resource { get { return (ResourceComponent)GetComponent(ComponentIds.Resource); } }
 
         public bool hasResource { get { return HasComponent(ComponentIds.Resource); } }
 
-        public Entity AddResource(ResourceComponent component) {
-            return AddComponent(ComponentIds.Resource, component);
+        static readonly Stack<ResourceComponent> _resourceComponentPool = new Stack<ResourceComponent>();
+
+        public static void ClearResourceComponentPool() {
+            _resourceComponentPool.Clear();
         }
 
         public Entity AddResource(string newName) {
-            var component = new ResourceComponent();
+            var component = _resourceComponentPool.Count > 0 ? _resourceComponentPool.Pop() : new ResourceComponent();
             component.name = newName;
-            return AddResource(component);
+            return AddComponent(ComponentIds.Resource, component);
         }
 
         public Entity ReplaceResource(string newName) {
-            ResourceComponent component;
-            if (hasResource) {
-                component = resource;
-            } else {
-                component = new ResourceComponent();
-            }
+            var previousComponent = resource;
+            var component = _resourceComponentPool.Count > 0 ? _resourceComponentPool.Pop() : new ResourceComponent();
             component.name = newName;
-            return ReplaceComponent(ComponentIds.Resource, component);
+            ReplaceComponent(ComponentIds.Resource, component);
+            if (previousComponent != null) {
+                _resourceComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveResource() {
-            return RemoveComponent(ComponentIds.Resource);
+            var component = resource;
+            RemoveComponent(ComponentIds.Resource);
+            _resourceComponentPool.Push(component);
+            return this;
         }
     }
 

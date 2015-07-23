@@ -7,7 +7,9 @@ public class OtherPoolComponent : IComponent {
     public DateTime timestamp;
     public bool isLoggedIn;
     public static string extensions =
-        @"using Entitas;
+        @"using System.Collections.Generic;
+
+using Entitas;
 
 namespace Entitas {
     public partial class Entity {
@@ -15,26 +17,36 @@ namespace Entitas {
 
         public bool hasOtherPool { get { return HasComponent(OtherComponentIds.OtherPool); } }
 
-        public Entity AddOtherPool(OtherPoolComponent component) {
-            return AddComponent(OtherComponentIds.OtherPool, component);
+        static readonly Stack<OtherPoolComponent> _otherPoolComponentPool = new Stack<OtherPoolComponent>();
+
+        public static void ClearOtherPoolComponentPool() {
+            _otherPoolComponentPool.Clear();
         }
 
         public Entity AddOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var component = new OtherPoolComponent();
+            var component = _otherPoolComponentPool.Count > 0 ? _otherPoolComponentPool.Pop() : new OtherPoolComponent();
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
-            return AddOtherPool(component);
+            return AddComponent(OtherComponentIds.OtherPool, component);
         }
 
         public Entity ReplaceOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            OtherPoolComponent component = new OtherPoolComponent();
+            var previousComponent = otherPool;
+            var component = _otherPoolComponentPool.Count > 0 ? _otherPoolComponentPool.Pop() : new OtherPoolComponent();
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
-            return ReplaceComponent(OtherComponentIds.OtherPool, component);
+            ReplaceComponent(OtherComponentIds.OtherPool, component);
+            if (previousComponent != null) {
+                _otherPoolComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveOtherPool() {
-            return RemoveComponent(OtherComponentIds.OtherPool);
+            var component = otherPool;
+            RemoveComponent(OtherComponentIds.OtherPool);
+            _otherPoolComponentPool.Push(component);
+            return this;
         }
     }
 
@@ -44,15 +56,6 @@ namespace Entitas {
         public OtherPoolComponent otherPool { get { return otherPoolEntity.otherPool; } }
 
         public bool hasOtherPool { get { return otherPoolEntity != null; } }
-
-        public Entity SetOtherPool(OtherPoolComponent component) {
-            if (hasOtherPool) {
-                throw new SingleEntityException(OtherMatcher.OtherPool);
-            }
-            var entity = CreateEntity();
-            entity.AddOtherPool(component);
-            return entity;
-        }
 
         public Entity SetOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
             if (hasOtherPool) {

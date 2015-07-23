@@ -4,32 +4,44 @@ public class PersonComponent : IComponent {
     public int age;
     public string name;
     public static string extensions =
-        @"namespace Entitas {
+        @"using System.Collections.Generic;
+
+namespace Entitas {
     public partial class Entity {
         public PersonComponent person { get { return (PersonComponent)GetComponent(ComponentIds.Person); } }
 
         public bool hasPerson { get { return HasComponent(ComponentIds.Person); } }
 
-        public Entity AddPerson(PersonComponent component) {
-            return AddComponent(ComponentIds.Person, component);
+        static readonly Stack<PersonComponent> _personComponentPool = new Stack<PersonComponent>();
+
+        public static void ClearPersonComponentPool() {
+            _personComponentPool.Clear();
         }
 
         public Entity AddPerson(int newAge, string newName) {
-            var component = new PersonComponent();
+            var component = _personComponentPool.Count > 0 ? _personComponentPool.Pop() : new PersonComponent();
             component.age = newAge;
             component.name = newName;
-            return AddPerson(component);
+            return AddComponent(ComponentIds.Person, component);
         }
 
         public Entity ReplacePerson(int newAge, string newName) {
-            PersonComponent component = new PersonComponent();
+            var previousComponent = person;
+            var component = _personComponentPool.Count > 0 ? _personComponentPool.Pop() : new PersonComponent();
             component.age = newAge;
             component.name = newName;
-            return ReplaceComponent(ComponentIds.Person, component);
+            ReplaceComponent(ComponentIds.Person, component);
+            if (previousComponent != null) {
+                _personComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemovePerson() {
-            return RemoveComponent(ComponentIds.Person);
+            var component = person;
+            RemoveComponent(ComponentIds.Person);
+            _personComponentPool.Push(component);
+            return this;
         }
     }
 

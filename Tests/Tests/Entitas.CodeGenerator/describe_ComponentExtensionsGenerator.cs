@@ -38,7 +38,6 @@ class describe_ComponentExtensionsGenerator : nspec {
         };
 
         it["works with namespaces"] = () => generates(typeof(NamespaceComponent), NamespaceComponent.extensions);
-        it["component with properties"] = () => generates(typeof(Person2Component), Person2Component.extensions);
     }
 }
 
