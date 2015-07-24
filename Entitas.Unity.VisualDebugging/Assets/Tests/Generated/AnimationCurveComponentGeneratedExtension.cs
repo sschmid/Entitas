@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
             AnimationCurveComponent component;
             if (hasAnimationCurve) {
-                WillRemoveComponent(ComponentIds.AnimationCurve);
                 component = animationCurve;
             } else {
                 component = new AnimationCurveComponent();

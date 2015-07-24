@@ -127,7 +127,6 @@ namespace Entitas.Unity.VisualDebugging {
         public static void DrawAndSetElement(Type type, string fieldName, object value, Entity entity, int index, IComponent component, Action<object> setValue) {
             var newValue = DrawAndGetNewValue(type, fieldName, value, entity, index, component);
             if (DidValueChange(value, newValue)) {
-                entity.WillRemoveComponent(index);
                 setValue(newValue);
                 entity.ReplaceComponent(index, component);
             }

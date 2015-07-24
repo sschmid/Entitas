@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceRect(UnityEngine.Rect newRect) {
             RectComponent component;
             if (hasRect) {
-                WillRemoveComponent(ComponentIds.Rect);
                 component = rect;
             } else {
                 component = new RectComponent();

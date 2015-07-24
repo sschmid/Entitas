@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceColor(UnityEngine.Color newColor) {
             ColorComponent component;
             if (hasColor) {
-                WillRemoveComponent(ComponentIds.Color);
                 component = color;
             } else {
                 component = new ColorComponent();

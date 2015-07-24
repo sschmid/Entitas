@@ -260,44 +260,48 @@ class describe_Pool : nspec {
                     _pool.DestroyEntity(e);
                 });
 
-                it["group dispatches OnEntityWillBeRemoved, OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
+                it["group dispatches OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
                     var g = _pool.GetGroup(matcher);
-                    var didDispatchWillBeRemoved = 0;
                     var didDispatchRemoved = 0;
                     var didDispatchAdded = 0;
-                    Group eventGroupWillBeRemoved = null;
-                    Group eventGroupRemoved = null;
-                    Group eventGroupAdded = null;
-                    Entity eventEntityWillBeRemoved = null;
-                    Entity eventEntityRemoved = null;
-                    Entity eventEntityAdded = null;
-                    g.OnEntityWillBeRemoved += (group, entity) => {
-                        eventGroupWillBeRemoved = group;
-                        eventEntityWillBeRemoved = entity;
-                        didDispatchWillBeRemoved++;
-                    };
-                    g.OnEntityRemoved += (group, entity) => {
-                        eventGroupRemoved = group;
-                        eventEntityRemoved = entity;
+                    var componentA = new ComponentA();
+                    g.OnEntityRemoved += (group, entity, index, component) => {
+                        group.should_be_same(g);
+                        entity.should_be_same(eAB1);
+                        index.should_be(CID.ComponentA);
+                        component.should_be_same(Component.A);
                         didDispatchRemoved++;
                     };
-                    g.OnEntityAdded += (group, entity) => {
-                        eventGroupAdded = group;
-                        eventEntityAdded = entity;
+                    g.OnEntityAdded += (group, entity, index, component) => {
+                        group.should_be_same(g);
+                        entity.should_be_same(eAB1);
+                        index.should_be(CID.ComponentA);
+                        component.should_be_same(componentA);
                         didDispatchAdded++;
                     };
-                    eAB1.WillRemoveComponent(CID.ComponentA);
-                    eAB1.ReplaceComponentA(new ComponentA());
+                    eAB1.ReplaceComponentA(componentA);
 
-                    eventGroupWillBeRemoved.should_be_same(g);
-                    eventGroupRemoved.should_be_same(g);
-                    eventGroupAdded.should_be_same(g);
-                    eventEntityWillBeRemoved.should_be_same(eAB1);
-                    eventEntityRemoved.should_be_same(eAB1);
-                    eventEntityAdded.should_be_same(eAB1);
-                    didDispatchWillBeRemoved.should_be(1);
                     didDispatchRemoved.should_be(1);
                     didDispatchAdded.should_be(1);
+                };
+
+                it["group dispatches OnEntityUpdated with previous and current component when replacing a component"] = () => {
+                    var updated = 0;
+                    var prevComp = eA.GetComponent(CID.ComponentA);
+                    var newComp = new ComponentA();
+                    var g = _pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                    g.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => {
+                        updated += 1;
+                        group.should_be_same(g);
+                        entity.should_be_same(eA);
+                        index.should_be(CID.ComponentA);
+                        previousComponent.should_be_same(prevComp);
+                        newComponent.should_be_same(newComp);
+                    };
+
+                    eA.ReplaceComponent(CID.ComponentA, newComp);
+
+                    updated.should_be(1);
                 };
             };
         };
@@ -340,21 +344,6 @@ class describe_Pool : nspec {
                     e.AddComponentB();
                     e.RemoveComponentB();
                     group.Count.should_be(1);
-                };
-
-                it["will remove entity"] = () => {
-                    var didWillRemove = 0;
-                    group.OnEntityWillBeRemoved += (g, entity) => didWillRemove++;
-                    e.AddComponentA();
-                    e.WillRemoveComponent(CID.ComponentA);
-                    didWillRemove.should_be(1);
-                };
-
-                it["won't remove entity when still matching"] = () => {
-                    group.OnEntityWillBeRemoved += (g, entity) => this.Fail();
-                    e.AddComponentA();
-                    e.AddComponentB();
-                    e.WillRemoveComponent(CID.ComponentB);
                 };
             };
 
@@ -400,23 +389,6 @@ class describe_Pool : nspec {
                     e.AddComponentC();
                     e.RemoveComponentC();
                     group.Count.should_be(1);
-                };
-
-                it["will remove entity"] = () => {
-                    var didWillRemove = 0;
-                    group.OnEntityWillBeRemoved += (g, entity) => didWillRemove++;
-                    e.AddComponentA();
-                    e.AddComponentB();
-                    e.WillRemoveComponent(CID.ComponentA);
-                    didWillRemove.should_be(1);
-                };
-
-                it["won't remove entity when still matching"] = () => {
-                    group.OnEntityWillBeRemoved += (g, entity) => this.Fail();
-                    e.AddComponentA();
-                    e.AddComponentB();
-                    e.AddComponentC();
-                    e.WillRemoveComponent(CID.ComponentC);
                 };
             };
         };

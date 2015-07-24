@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceList(System.Collections.Generic.List<string> newList) {
             ListComponent component;
             if (hasList) {
-                WillRemoveComponent(ComponentIds.List);
                 component = list;
             } else {
                 component = new ListComponent();

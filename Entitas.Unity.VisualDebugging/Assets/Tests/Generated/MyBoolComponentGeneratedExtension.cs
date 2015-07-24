@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceMyBool(bool newMyBool) {
             MyBoolComponent component;
             if (hasMyBool) {
-                WillRemoveComponent(ComponentIds.MyBool);
                 component = myBool;
             } else {
                 component = new MyBoolComponent();

@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceDateTime(System.DateTime newDate) {
             DateTimeComponent component;
             if (hasDateTime) {
-                WillRemoveComponent(ComponentIds.DateTime);
                 component = dateTime;
             } else {
                 component = new DateTimeComponent();

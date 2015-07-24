@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceJaggedArray(string[][] newJaggedArray) {
             JaggedArrayComponent component;
             if (hasJaggedArray) {
-                WillRemoveComponent(ComponentIds.JaggedArray);
                 component = jaggedArray;
             } else {
                 component = new JaggedArrayComponent();

@@ -46,7 +46,7 @@ namespace Entitas {
             _collectedEntities.Clear();
         }
 
-        void addEntity(Group group, Entity entity) {
+        void addEntity(Group group, Entity entity, int index, IComponent component) {
             _collectedEntities.Add(entity);
         }
     }

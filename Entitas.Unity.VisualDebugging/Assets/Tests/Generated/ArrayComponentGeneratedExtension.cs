@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceArray(string[] newArray) {
             ArrayComponent component;
             if (hasArray) {
-                WillRemoveComponent(ComponentIds.Array);
                 component = array;
             } else {
                 component = new ArrayComponent();

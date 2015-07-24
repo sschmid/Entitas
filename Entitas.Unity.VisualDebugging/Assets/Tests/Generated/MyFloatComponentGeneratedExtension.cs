@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceMyFloat(float newMyFloat) {
             MyFloatComponent component;
             if (hasMyFloat) {
-                WillRemoveComponent(ComponentIds.MyFloat);
                 component = myFloat;
             } else {
                 component = new MyFloatComponent();

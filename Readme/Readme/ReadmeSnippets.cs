@@ -82,7 +82,7 @@ namespace Readme {
 
             // ----------------------------
 
-            pool.GetGroup(Matcher.Position).OnEntityAdded += (group, entity) => {
+            pool.GetGroup(Matcher.Position).OnEntityAdded += (group, entity, index, component) => {
                 // Do something
             };
         }
@@ -107,10 +107,7 @@ namespace Readme {
             var has = e.hasPosition;
 
             e.AddPosition(x, y);
-            e.AddPosition(component);
-
             e.ReplacePosition(x, y);
-
             e.RemovePosition();
         }
 
@@ -121,10 +118,7 @@ namespace Readme {
             var has = pool.hasUser;
 
             pool.SetUser("John", 42);
-            pool.SetUser(component);
-
             pool.ReplaceUser("Max", 24);
-
             pool.RemoveUser();
         }
 

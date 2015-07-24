@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceListArray(System.Collections.Generic.List<string>[] newListArray) {
             ListArrayComponent component;
             if (hasListArray) {
-                WillRemoveComponent(ComponentIds.ListArray);
                 component = listArray;
             } else {
                 component = new ListArrayComponent();

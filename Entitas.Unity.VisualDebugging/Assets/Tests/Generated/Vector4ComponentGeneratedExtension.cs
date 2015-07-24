@@ -17,7 +17,6 @@ namespace Entitas {
         public Entity ReplaceVector4(UnityEngine.Vector4 newVector4) {
             Vector4Component component;
             if (hasVector4) {
-                WillRemoveComponent(ComponentIds.Vector4);
                 component = vector4;
             } else {
                 component = new Vector4Component();
