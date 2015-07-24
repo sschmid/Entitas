@@ -1,5 +1,5 @@
-﻿using Entitas;
-using System.Linq;
+﻿using System.Collections.Generic;
+using Entitas;
 
 public class EntityEmittingSubSystem : IReactiveSystem {
     public int didExecute { get { return _didExecute; } }
@@ -18,7 +18,7 @@ public class EntityEmittingSubSystem : IReactiveSystem {
 
     public GroupEventType eventType { get { return GroupEventType.OnEntityAdded; } }
 
-    public void Execute(Entity[] entities) {
+    public void Execute(List<Entity> entities) {
         _pool.CreateEntity().AddComponent(CID.ComponentA, new ComponentA());
         _entites = entities.ToArray();
         _didExecute++;
