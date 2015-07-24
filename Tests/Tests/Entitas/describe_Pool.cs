@@ -264,26 +264,23 @@ class describe_Pool : nspec {
                     var g = _pool.GetGroup(matcher);
                     var didDispatchRemoved = 0;
                     var didDispatchAdded = 0;
-                    Group eventGroupRemoved = null;
-                    Group eventGroupAdded = null;
-                    Entity eventEntityRemoved = null;
-                    Entity eventEntityAdded = null;
-                    g.OnEntityRemoved += (group, entity) => {
-                        eventGroupRemoved = group;
-                        eventEntityRemoved = entity;
+                    var componentA = new ComponentA();
+                    g.OnEntityRemoved += (group, entity, index, component) => {
+                        group.should_be_same(g);
+                        entity.should_be_same(eAB1);
+                        index.should_be(CID.ComponentA);
+                        component.should_be_same(Component.A);
                         didDispatchRemoved++;
                     };
-                    g.OnEntityAdded += (group, entity) => {
-                        eventGroupAdded = group;
-                        eventEntityAdded = entity;
+                    g.OnEntityAdded += (group, entity, index, component) => {
+                        group.should_be_same(g);
+                        entity.should_be_same(eAB1);
+                        index.should_be(CID.ComponentA);
+                        component.should_be_same(componentA);
                         didDispatchAdded++;
                     };
-                    eAB1.ReplaceComponentA(new ComponentA());
+                    eAB1.ReplaceComponentA(componentA);
 
-                    eventGroupRemoved.should_be_same(g);
-                    eventGroupAdded.should_be_same(g);
-                    eventEntityRemoved.should_be_same(eAB1);
-                    eventEntityAdded.should_be_same(eAB1);
                     didDispatchRemoved.should_be(1);
                     didDispatchAdded.should_be(1);
                 };

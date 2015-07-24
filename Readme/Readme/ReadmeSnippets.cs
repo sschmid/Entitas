@@ -82,7 +82,7 @@ namespace Readme {
 
             // ----------------------------
 
-            pool.GetGroup(Matcher.Position).OnEntityAdded += (group, entity) => {
+            pool.GetGroup(Matcher.Position).OnEntityAdded += (group, entity, index, component) => {
                 // Do something
             };
         }

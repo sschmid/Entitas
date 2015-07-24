@@ -127,7 +127,7 @@ namespace Entitas {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
-                    groups[i].HandleEntity(entity);
+                    groups[i].HandleEntity(entity, index, component);
                 }
             }
         }

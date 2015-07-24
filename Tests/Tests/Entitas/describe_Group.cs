@@ -80,54 +80,53 @@ class describe_Group : nspec {
             };
 
             it["dispatches OnEntityAdded when matching entity added"] = () => {
-                _group.OnEntityAdded += (group, entity) => {
+                _group.OnEntityAdded += (group, entity, index, component) => {
                     didDispatch++;
                     group.should_be_same(_group);
                     entity.should_be_same(_eA1);
+                    index.should_be(CID.ComponentA);
+                    component.should_be_same(Component.A);
                 };
 
-                handle(_eA1);
+                handleAddEA(_eA1);
                 didDispatch.should_be(1);
             };
 
             it["doesn't dispatches OnEntityAdded when matching entity already has been added"] = () => {
-                _group.OnEntityAdded += (group, entity) => {
-                    didDispatch++;
-                    group.should_be_same(_group);
-                    entity.should_be_same(_eA1);
-                };
-
-                handle(_eA1);
-                handle(_eA1);
+                _group.OnEntityAdded += (group, entity, index, component) => didDispatch++;
+                handleAddEA(_eA1);
+                handleAddEA(_eA1);
                 didDispatch.should_be(1);
             };
 
             it["dispatches OnEntityRemoved when entity got removed"] = () => {
-                _group.OnEntityRemoved += (group, entity) => {
+                _group.OnEntityRemoved += (group, entity, index, component) => {
                     didDispatch++;
                     group.should_be_same(_group);
                     entity.should_be_same(_eA1);
+                    index.should_be(CID.ComponentA);
+                    component.should_be_same(Component.A);
                 };
 
                 handle(_eA1);
                 _eA1.RemoveComponentA();
-                handle(_eA1);
+                handleRemoveEA(_eA1, Component.A);
 
                 didDispatch.should_be(1);
             };
 
             it["doesn't dispatch OnEntityRemoved when entity didn't get removed"] = () => {
-                _group.OnEntityRemoved += (group, entity) => this.Fail();
+                _group.OnEntityRemoved += (group, entity, index, component) => this.Fail();
                 _eA1.RemoveComponentA();
-                handle(_eA1);
+                handleRemoveEA(_eA1, Component.A);
             };
             
             it["dispatches OnEntityRemoved and OnEntityAdded when updating"] = () => {
                 handle(_eA1);
                 var removed = 0;
                 var added = 0;
-                _group.OnEntityRemoved += (group, entity) => removed++;
-                _group.OnEntityAdded += (group, entity) => added++;
+                _group.OnEntityRemoved += (group, entity, index, component) => removed++;
+                _group.OnEntityAdded += (group, entity, index, component) => added++;
 
                 _group.UpdateEntity(_eA1, 0, null, null);
 
@@ -136,8 +135,8 @@ class describe_Group : nspec {
             };
 
             it["doesn't dispatch OnEntityRemoved and OnEntityAdded when updating when group doesn't contain entity"] = () => {
-                _group.OnEntityRemoved += (group, entity) => this.Fail();
-                _group.OnEntityAdded += (group, entity) => this.Fail();
+                _group.OnEntityRemoved += (group, entity, index, component) => this.Fail();
+                _group.OnEntityAdded += (group, entity, index, component) => this.Fail();
                 _group.UpdateEntity(_eA1, 0, null, null);
             };
         };
@@ -208,8 +207,20 @@ class describe_Group : nspec {
         };
     }
 
+    void handle(Entity entity, int index, IComponent component) {
+        _group.HandleEntity(entity, index, component);
+    }
+
     void handle(Entity entity) {
         _group.HandleEntity(entity);
+    }
+
+    void handleAddEA(Entity entity) {
+        handle(entity, CID.ComponentA, entity.GetComponent(CID.ComponentA));
+    }
+
+    void handleRemoveEA(Entity entity, IComponent component) {
+        handle(entity, CID.ComponentA, component);
     }
 }
 
