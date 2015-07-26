@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public ListComponent list { get { return (ListComponent)GetComponent(ComponentIds.List); } }
 
         public bool hasList { get { return HasComponent(ComponentIds.List); } }
 
-        public Entity AddList(ListComponent component) {
-            return AddComponent(ComponentIds.List, component);
+        static readonly Stack<ListComponent> _listComponentPool = new Stack<ListComponent>();
+
+        public static void ClearListComponentPool() {
+            _listComponentPool.Clear();
         }
 
         public Entity AddList(System.Collections.Generic.List<string> newList) {
-            var component = new ListComponent();
+            var component = _listComponentPool.Count > 0 ? _listComponentPool.Pop() : new ListComponent();
             component.list = newList;
-            return AddList(component);
+            return AddComponent(ComponentIds.List, component);
         }
 
         public Entity ReplaceList(System.Collections.Generic.List<string> newList) {
-            ListComponent component;
-            if (hasList) {
-                component = list;
-            } else {
-                component = new ListComponent();
-            }
+            var previousComponent = list;
+            var component = _listComponentPool.Count > 0 ? _listComponentPool.Pop() : new ListComponent();
             component.list = newList;
-            return ReplaceComponent(ComponentIds.List, component);
+            ReplaceComponent(ComponentIds.List, component);
+            if (previousComponent != null) {
+                _listComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveList() {
-            return RemoveComponent(ComponentIds.List);
+            var component = list;
+            RemoveComponent(ComponentIds.List);
+            _listComponentPool.Push(component);
+            return this;
         }
     }
 

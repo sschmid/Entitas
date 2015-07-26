@@ -1,4 +1,5 @@
-﻿using Entitas;
+﻿using System.Collections.Generic;
+using Entitas;
 
 public class SomeStartReactiveSystem : IStartSystem, IReactiveSystem {
     public IMatcher trigger { get { return Matcher.AllOf(0); } }
@@ -8,7 +9,7 @@ public class SomeStartReactiveSystem : IStartSystem, IReactiveSystem {
     public void Start() {
     }
 
-    public void Execute(Entity[] entities) {
+    public void Execute(List<Entity> entities) {
     }
 }
 

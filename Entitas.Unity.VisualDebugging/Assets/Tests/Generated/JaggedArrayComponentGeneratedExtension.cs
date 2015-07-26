@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public JaggedArrayComponent jaggedArray { get { return (JaggedArrayComponent)GetComponent(ComponentIds.JaggedArray); } }
 
         public bool hasJaggedArray { get { return HasComponent(ComponentIds.JaggedArray); } }
 
-        public Entity AddJaggedArray(JaggedArrayComponent component) {
-            return AddComponent(ComponentIds.JaggedArray, component);
+        static readonly Stack<JaggedArrayComponent> _jaggedArrayComponentPool = new Stack<JaggedArrayComponent>();
+
+        public static void ClearJaggedArrayComponentPool() {
+            _jaggedArrayComponentPool.Clear();
         }
 
         public Entity AddJaggedArray(string[][] newJaggedArray) {
-            var component = new JaggedArrayComponent();
+            var component = _jaggedArrayComponentPool.Count > 0 ? _jaggedArrayComponentPool.Pop() : new JaggedArrayComponent();
             component.jaggedArray = newJaggedArray;
-            return AddJaggedArray(component);
+            return AddComponent(ComponentIds.JaggedArray, component);
         }
 
         public Entity ReplaceJaggedArray(string[][] newJaggedArray) {
-            JaggedArrayComponent component;
-            if (hasJaggedArray) {
-                component = jaggedArray;
-            } else {
-                component = new JaggedArrayComponent();
-            }
+            var previousComponent = jaggedArray;
+            var component = _jaggedArrayComponentPool.Count > 0 ? _jaggedArrayComponentPool.Pop() : new JaggedArrayComponent();
             component.jaggedArray = newJaggedArray;
-            return ReplaceComponent(ComponentIds.JaggedArray, component);
+            ReplaceComponent(ComponentIds.JaggedArray, component);
+            if (previousComponent != null) {
+                _jaggedArrayComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveJaggedArray() {
-            return RemoveComponent(ComponentIds.JaggedArray);
+            var component = jaggedArray;
+            RemoveComponent(ComponentIds.JaggedArray);
+            _jaggedArrayComponentPool.Push(component);
+            return this;
         }
     }
 

@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public ListArrayComponent listArray { get { return (ListArrayComponent)GetComponent(ComponentIds.ListArray); } }
 
         public bool hasListArray { get { return HasComponent(ComponentIds.ListArray); } }
 
-        public Entity AddListArray(ListArrayComponent component) {
-            return AddComponent(ComponentIds.ListArray, component);
+        static readonly Stack<ListArrayComponent> _listArrayComponentPool = new Stack<ListArrayComponent>();
+
+        public static void ClearListArrayComponentPool() {
+            _listArrayComponentPool.Clear();
         }
 
         public Entity AddListArray(System.Collections.Generic.List<string>[] newListArray) {
-            var component = new ListArrayComponent();
+            var component = _listArrayComponentPool.Count > 0 ? _listArrayComponentPool.Pop() : new ListArrayComponent();
             component.listArray = newListArray;
-            return AddListArray(component);
+            return AddComponent(ComponentIds.ListArray, component);
         }
 
         public Entity ReplaceListArray(System.Collections.Generic.List<string>[] newListArray) {
-            ListArrayComponent component;
-            if (hasListArray) {
-                component = listArray;
-            } else {
-                component = new ListArrayComponent();
-            }
+            var previousComponent = listArray;
+            var component = _listArrayComponentPool.Count > 0 ? _listArrayComponentPool.Pop() : new ListArrayComponent();
             component.listArray = newListArray;
-            return ReplaceComponent(ComponentIds.ListArray, component);
+            ReplaceComponent(ComponentIds.ListArray, component);
+            if (previousComponent != null) {
+                _listArrayComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveListArray() {
-            return RemoveComponent(ComponentIds.ListArray);
+            var component = listArray;
+            RemoveComponent(ComponentIds.ListArray);
+            _listArrayComponentPool.Push(component);
+            return this;
         }
     }
 

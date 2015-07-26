@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public DateTimeComponent dateTime { get { return (DateTimeComponent)GetComponent(ComponentIds.DateTime); } }
 
         public bool hasDateTime { get { return HasComponent(ComponentIds.DateTime); } }
 
-        public Entity AddDateTime(DateTimeComponent component) {
-            return AddComponent(ComponentIds.DateTime, component);
+        static readonly Stack<DateTimeComponent> _dateTimeComponentPool = new Stack<DateTimeComponent>();
+
+        public static void ClearDateTimeComponentPool() {
+            _dateTimeComponentPool.Clear();
         }
 
         public Entity AddDateTime(System.DateTime newDate) {
-            var component = new DateTimeComponent();
+            var component = _dateTimeComponentPool.Count > 0 ? _dateTimeComponentPool.Pop() : new DateTimeComponent();
             component.date = newDate;
-            return AddDateTime(component);
+            return AddComponent(ComponentIds.DateTime, component);
         }
 
         public Entity ReplaceDateTime(System.DateTime newDate) {
-            DateTimeComponent component;
-            if (hasDateTime) {
-                component = dateTime;
-            } else {
-                component = new DateTimeComponent();
-            }
+            var previousComponent = dateTime;
+            var component = _dateTimeComponentPool.Count > 0 ? _dateTimeComponentPool.Pop() : new DateTimeComponent();
             component.date = newDate;
-            return ReplaceComponent(ComponentIds.DateTime, component);
+            ReplaceComponent(ComponentIds.DateTime, component);
+            if (previousComponent != null) {
+                _dateTimeComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveDateTime() {
-            return RemoveComponent(ComponentIds.DateTime);
+            var component = dateTime;
+            RemoveComponent(ComponentIds.DateTime);
+            _dateTimeComponentPool.Push(component);
+            return this;
         }
     }
 

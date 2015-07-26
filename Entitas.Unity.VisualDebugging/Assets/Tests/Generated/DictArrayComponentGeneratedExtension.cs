@@ -1,34 +1,41 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public DictArrayComponent dictArray { get { return (DictArrayComponent)GetComponent(ComponentIds.DictArray); } }
 
         public bool hasDictArray { get { return HasComponent(ComponentIds.DictArray); } }
 
-        public Entity AddDictArray(DictArrayComponent component) {
-            return AddComponent(ComponentIds.DictArray, component);
+        static readonly Stack<DictArrayComponent> _dictArrayComponentPool = new Stack<DictArrayComponent>();
+
+        public static void ClearDictArrayComponentPool() {
+            _dictArrayComponentPool.Clear();
         }
 
         public Entity AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
-            var component = new DictArrayComponent();
+            var component = _dictArrayComponentPool.Count > 0 ? _dictArrayComponentPool.Pop() : new DictArrayComponent();
             component.dict = newDict;
             component.dictArray = newDictArray;
-            return AddDictArray(component);
+            return AddComponent(ComponentIds.DictArray, component);
         }
 
         public Entity ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
-            DictArrayComponent component;
-            if (hasDictArray) {
-                component = dictArray;
-            } else {
-                component = new DictArrayComponent();
-            }
+            var previousComponent = dictArray;
+            var component = _dictArrayComponentPool.Count > 0 ? _dictArrayComponentPool.Pop() : new DictArrayComponent();
             component.dict = newDict;
             component.dictArray = newDictArray;
-            return ReplaceComponent(ComponentIds.DictArray, component);
+            ReplaceComponent(ComponentIds.DictArray, component);
+            if (previousComponent != null) {
+                _dictArrayComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveDictArray() {
-            return RemoveComponent(ComponentIds.DictArray);
+            var component = dictArray;
+            RemoveComponent(ComponentIds.DictArray);
+            _dictArrayComponentPool.Push(component);
+            return this;
         }
     }
 

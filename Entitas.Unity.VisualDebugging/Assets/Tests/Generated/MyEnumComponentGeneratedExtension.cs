@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public MyEnumComponent myEnum { get { return (MyEnumComponent)GetComponent(ComponentIds.MyEnum); } }
 
         public bool hasMyEnum { get { return HasComponent(ComponentIds.MyEnum); } }
 
-        public Entity AddMyEnum(MyEnumComponent component) {
-            return AddComponent(ComponentIds.MyEnum, component);
+        static readonly Stack<MyEnumComponent> _myEnumComponentPool = new Stack<MyEnumComponent>();
+
+        public static void ClearMyEnumComponentPool() {
+            _myEnumComponentPool.Clear();
         }
 
         public Entity AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
-            var component = new MyEnumComponent();
+            var component = _myEnumComponentPool.Count > 0 ? _myEnumComponentPool.Pop() : new MyEnumComponent();
             component.myEnum = newMyEnum;
-            return AddMyEnum(component);
+            return AddComponent(ComponentIds.MyEnum, component);
         }
 
         public Entity ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
-            MyEnumComponent component;
-            if (hasMyEnum) {
-                component = myEnum;
-            } else {
-                component = new MyEnumComponent();
-            }
+            var previousComponent = myEnum;
+            var component = _myEnumComponentPool.Count > 0 ? _myEnumComponentPool.Pop() : new MyEnumComponent();
             component.myEnum = newMyEnum;
-            return ReplaceComponent(ComponentIds.MyEnum, component);
+            ReplaceComponent(ComponentIds.MyEnum, component);
+            if (previousComponent != null) {
+                _myEnumComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveMyEnum() {
-            return RemoveComponent(ComponentIds.MyEnum);
+            var component = myEnum;
+            RemoveComponent(ComponentIds.MyEnum);
+            _myEnumComponentPool.Push(component);
+            return this;
         }
     }
 

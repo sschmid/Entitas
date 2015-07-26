@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public DictionaryComponent dictionary { get { return (DictionaryComponent)GetComponent(ComponentIds.Dictionary); } }
 
         public bool hasDictionary { get { return HasComponent(ComponentIds.Dictionary); } }
 
-        public Entity AddDictionary(DictionaryComponent component) {
-            return AddComponent(ComponentIds.Dictionary, component);
+        static readonly Stack<DictionaryComponent> _dictionaryComponentPool = new Stack<DictionaryComponent>();
+
+        public static void ClearDictionaryComponentPool() {
+            _dictionaryComponentPool.Clear();
         }
 
         public Entity AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
-            var component = new DictionaryComponent();
+            var component = _dictionaryComponentPool.Count > 0 ? _dictionaryComponentPool.Pop() : new DictionaryComponent();
             component.dict = newDict;
-            return AddDictionary(component);
+            return AddComponent(ComponentIds.Dictionary, component);
         }
 
         public Entity ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
-            DictionaryComponent component;
-            if (hasDictionary) {
-                component = dictionary;
-            } else {
-                component = new DictionaryComponent();
-            }
+            var previousComponent = dictionary;
+            var component = _dictionaryComponentPool.Count > 0 ? _dictionaryComponentPool.Pop() : new DictionaryComponent();
             component.dict = newDict;
-            return ReplaceComponent(ComponentIds.Dictionary, component);
+            ReplaceComponent(ComponentIds.Dictionary, component);
+            if (previousComponent != null) {
+                _dictionaryComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveDictionary() {
-            return RemoveComponent(ComponentIds.Dictionary);
+            var component = dictionary;
+            RemoveComponent(ComponentIds.Dictionary);
+            _dictionaryComponentPool.Push(component);
+            return this;
         }
     }
 

@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public HashSetComponent hashSet { get { return (HashSetComponent)GetComponent(ComponentIds.HashSet); } }
 
         public bool hasHashSet { get { return HasComponent(ComponentIds.HashSet); } }
 
-        public Entity AddHashSet(HashSetComponent component) {
-            return AddComponent(ComponentIds.HashSet, component);
+        static readonly Stack<HashSetComponent> _hashSetComponentPool = new Stack<HashSetComponent>();
+
+        public static void ClearHashSetComponentPool() {
+            _hashSetComponentPool.Clear();
         }
 
         public Entity AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
-            var component = new HashSetComponent();
+            var component = _hashSetComponentPool.Count > 0 ? _hashSetComponentPool.Pop() : new HashSetComponent();
             component.hashset = newHashset;
-            return AddHashSet(component);
+            return AddComponent(ComponentIds.HashSet, component);
         }
 
         public Entity ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
-            HashSetComponent component;
-            if (hasHashSet) {
-                component = hashSet;
-            } else {
-                component = new HashSetComponent();
-            }
+            var previousComponent = hashSet;
+            var component = _hashSetComponentPool.Count > 0 ? _hashSetComponentPool.Pop() : new HashSetComponent();
             component.hashset = newHashset;
-            return ReplaceComponent(ComponentIds.HashSet, component);
+            ReplaceComponent(ComponentIds.HashSet, component);
+            if (previousComponent != null) {
+                _hashSetComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveHashSet() {
-            return RemoveComponent(ComponentIds.HashSet);
+            var component = hashSet;
+            RemoveComponent(ComponentIds.HashSet);
+            _hashSetComponentPool.Push(component);
+            return this;
         }
     }
 

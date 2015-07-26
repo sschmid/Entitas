@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public AnimationCurveComponent animationCurve { get { return (AnimationCurveComponent)GetComponent(ComponentIds.AnimationCurve); } }
 
         public bool hasAnimationCurve { get { return HasComponent(ComponentIds.AnimationCurve); } }
 
-        public Entity AddAnimationCurve(AnimationCurveComponent component) {
-            return AddComponent(ComponentIds.AnimationCurve, component);
+        static readonly Stack<AnimationCurveComponent> _animationCurveComponentPool = new Stack<AnimationCurveComponent>();
+
+        public static void ClearAnimationCurveComponentPool() {
+            _animationCurveComponentPool.Clear();
         }
 
         public Entity AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
-            var component = new AnimationCurveComponent();
+            var component = _animationCurveComponentPool.Count > 0 ? _animationCurveComponentPool.Pop() : new AnimationCurveComponent();
             component.animationCurve = newAnimationCurve;
-            return AddAnimationCurve(component);
+            return AddComponent(ComponentIds.AnimationCurve, component);
         }
 
         public Entity ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
-            AnimationCurveComponent component;
-            if (hasAnimationCurve) {
-                component = animationCurve;
-            } else {
-                component = new AnimationCurveComponent();
-            }
+            var previousComponent = animationCurve;
+            var component = _animationCurveComponentPool.Count > 0 ? _animationCurveComponentPool.Pop() : new AnimationCurveComponent();
             component.animationCurve = newAnimationCurve;
-            return ReplaceComponent(ComponentIds.AnimationCurve, component);
+            ReplaceComponent(ComponentIds.AnimationCurve, component);
+            if (previousComponent != null) {
+                _animationCurveComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveAnimationCurve() {
-            return RemoveComponent(ComponentIds.AnimationCurve);
+            var component = animationCurve;
+            RemoveComponent(ComponentIds.AnimationCurve);
+            _animationCurveComponentPool.Push(component);
+            return this;
         }
     }
 

@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public SystemObjectComponent systemObject { get { return (SystemObjectComponent)GetComponent(ComponentIds.SystemObject); } }
 
         public bool hasSystemObject { get { return HasComponent(ComponentIds.SystemObject); } }
 
-        public Entity AddSystemObject(SystemObjectComponent component) {
-            return AddComponent(ComponentIds.SystemObject, component);
+        static readonly Stack<SystemObjectComponent> _systemObjectComponentPool = new Stack<SystemObjectComponent>();
+
+        public static void ClearSystemObjectComponentPool() {
+            _systemObjectComponentPool.Clear();
         }
 
         public Entity AddSystemObject(object newSystemObject) {
-            var component = new SystemObjectComponent();
+            var component = _systemObjectComponentPool.Count > 0 ? _systemObjectComponentPool.Pop() : new SystemObjectComponent();
             component.systemObject = newSystemObject;
-            return AddSystemObject(component);
+            return AddComponent(ComponentIds.SystemObject, component);
         }
 
         public Entity ReplaceSystemObject(object newSystemObject) {
-            SystemObjectComponent component;
-            if (hasSystemObject) {
-                component = systemObject;
-            } else {
-                component = new SystemObjectComponent();
-            }
+            var previousComponent = systemObject;
+            var component = _systemObjectComponentPool.Count > 0 ? _systemObjectComponentPool.Pop() : new SystemObjectComponent();
             component.systemObject = newSystemObject;
-            return ReplaceComponent(ComponentIds.SystemObject, component);
+            ReplaceComponent(ComponentIds.SystemObject, component);
+            if (previousComponent != null) {
+                _systemObjectComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveSystemObject() {
-            return RemoveComponent(ComponentIds.SystemObject);
+            var component = systemObject;
+            RemoveComponent(ComponentIds.SystemObject);
+            _systemObjectComponentPool.Push(component);
+            return this;
         }
     }
 

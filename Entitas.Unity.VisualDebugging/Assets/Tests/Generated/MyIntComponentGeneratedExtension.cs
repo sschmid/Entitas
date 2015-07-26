@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public MyIntComponent myInt { get { return (MyIntComponent)GetComponent(ComponentIds.MyInt); } }
 
         public bool hasMyInt { get { return HasComponent(ComponentIds.MyInt); } }
 
-        public Entity AddMyInt(MyIntComponent component) {
-            return AddComponent(ComponentIds.MyInt, component);
+        static readonly Stack<MyIntComponent> _myIntComponentPool = new Stack<MyIntComponent>();
+
+        public static void ClearMyIntComponentPool() {
+            _myIntComponentPool.Clear();
         }
 
         public Entity AddMyInt(int newMyInt) {
-            var component = new MyIntComponent();
+            var component = _myIntComponentPool.Count > 0 ? _myIntComponentPool.Pop() : new MyIntComponent();
             component.myInt = newMyInt;
-            return AddMyInt(component);
+            return AddComponent(ComponentIds.MyInt, component);
         }
 
         public Entity ReplaceMyInt(int newMyInt) {
-            MyIntComponent component;
-            if (hasMyInt) {
-                component = myInt;
-            } else {
-                component = new MyIntComponent();
-            }
+            var previousComponent = myInt;
+            var component = _myIntComponentPool.Count > 0 ? _myIntComponentPool.Pop() : new MyIntComponent();
             component.myInt = newMyInt;
-            return ReplaceComponent(ComponentIds.MyInt, component);
+            ReplaceComponent(ComponentIds.MyInt, component);
+            if (previousComponent != null) {
+                _myIntComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveMyInt() {
-            return RemoveComponent(ComponentIds.MyInt);
+            var component = myInt;
+            RemoveComponent(ComponentIds.MyInt);
+            _myIntComponentPool.Push(component);
+            return this;
         }
     }
 

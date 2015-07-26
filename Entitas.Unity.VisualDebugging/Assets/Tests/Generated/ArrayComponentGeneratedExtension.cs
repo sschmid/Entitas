@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public ArrayComponent array { get { return (ArrayComponent)GetComponent(ComponentIds.Array); } }
 
         public bool hasArray { get { return HasComponent(ComponentIds.Array); } }
 
-        public Entity AddArray(ArrayComponent component) {
-            return AddComponent(ComponentIds.Array, component);
+        static readonly Stack<ArrayComponent> _arrayComponentPool = new Stack<ArrayComponent>();
+
+        public static void ClearArrayComponentPool() {
+            _arrayComponentPool.Clear();
         }
 
         public Entity AddArray(string[] newArray) {
-            var component = new ArrayComponent();
+            var component = _arrayComponentPool.Count > 0 ? _arrayComponentPool.Pop() : new ArrayComponent();
             component.array = newArray;
-            return AddArray(component);
+            return AddComponent(ComponentIds.Array, component);
         }
 
         public Entity ReplaceArray(string[] newArray) {
-            ArrayComponent component;
-            if (hasArray) {
-                component = array;
-            } else {
-                component = new ArrayComponent();
-            }
+            var previousComponent = array;
+            var component = _arrayComponentPool.Count > 0 ? _arrayComponentPool.Pop() : new ArrayComponent();
             component.array = newArray;
-            return ReplaceComponent(ComponentIds.Array, component);
+            ReplaceComponent(ComponentIds.Array, component);
+            if (previousComponent != null) {
+                _arrayComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveArray() {
-            return RemoveComponent(ComponentIds.Array);
+            var component = array;
+            RemoveComponent(ComponentIds.Array);
+            _arrayComponentPool.Push(component);
+            return this;
         }
     }
 

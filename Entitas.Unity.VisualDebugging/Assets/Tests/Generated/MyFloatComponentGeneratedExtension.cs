@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public MyFloatComponent myFloat { get { return (MyFloatComponent)GetComponent(ComponentIds.MyFloat); } }
 
         public bool hasMyFloat { get { return HasComponent(ComponentIds.MyFloat); } }
 
-        public Entity AddMyFloat(MyFloatComponent component) {
-            return AddComponent(ComponentIds.MyFloat, component);
+        static readonly Stack<MyFloatComponent> _myFloatComponentPool = new Stack<MyFloatComponent>();
+
+        public static void ClearMyFloatComponentPool() {
+            _myFloatComponentPool.Clear();
         }
 
         public Entity AddMyFloat(float newMyFloat) {
-            var component = new MyFloatComponent();
+            var component = _myFloatComponentPool.Count > 0 ? _myFloatComponentPool.Pop() : new MyFloatComponent();
             component.myFloat = newMyFloat;
-            return AddMyFloat(component);
+            return AddComponent(ComponentIds.MyFloat, component);
         }
 
         public Entity ReplaceMyFloat(float newMyFloat) {
-            MyFloatComponent component;
-            if (hasMyFloat) {
-                component = myFloat;
-            } else {
-                component = new MyFloatComponent();
-            }
+            var previousComponent = myFloat;
+            var component = _myFloatComponentPool.Count > 0 ? _myFloatComponentPool.Pop() : new MyFloatComponent();
             component.myFloat = newMyFloat;
-            return ReplaceComponent(ComponentIds.MyFloat, component);
+            ReplaceComponent(ComponentIds.MyFloat, component);
+            if (previousComponent != null) {
+                _myFloatComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveMyFloat() {
-            return RemoveComponent(ComponentIds.MyFloat);
+            var component = myFloat;
+            RemoveComponent(ComponentIds.MyFloat);
+            _myFloatComponentPool.Push(component);
+            return this;
         }
     }
 

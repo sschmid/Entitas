@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public RectComponent rect { get { return (RectComponent)GetComponent(ComponentIds.Rect); } }
 
         public bool hasRect { get { return HasComponent(ComponentIds.Rect); } }
 
-        public Entity AddRect(RectComponent component) {
-            return AddComponent(ComponentIds.Rect, component);
+        static readonly Stack<RectComponent> _rectComponentPool = new Stack<RectComponent>();
+
+        public static void ClearRectComponentPool() {
+            _rectComponentPool.Clear();
         }
 
         public Entity AddRect(UnityEngine.Rect newRect) {
-            var component = new RectComponent();
+            var component = _rectComponentPool.Count > 0 ? _rectComponentPool.Pop() : new RectComponent();
             component.rect = newRect;
-            return AddRect(component);
+            return AddComponent(ComponentIds.Rect, component);
         }
 
         public Entity ReplaceRect(UnityEngine.Rect newRect) {
-            RectComponent component;
-            if (hasRect) {
-                component = rect;
-            } else {
-                component = new RectComponent();
-            }
+            var previousComponent = rect;
+            var component = _rectComponentPool.Count > 0 ? _rectComponentPool.Pop() : new RectComponent();
             component.rect = newRect;
-            return ReplaceComponent(ComponentIds.Rect, component);
+            ReplaceComponent(ComponentIds.Rect, component);
+            if (previousComponent != null) {
+                _rectComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveRect() {
-            return RemoveComponent(ComponentIds.Rect);
+            var component = rect;
+            RemoveComponent(ComponentIds.Rect);
+            _rectComponentPool.Push(component);
+            return this;
         }
     }
 

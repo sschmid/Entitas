@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public Vector4Component vector4 { get { return (Vector4Component)GetComponent(ComponentIds.Vector4); } }
 
         public bool hasVector4 { get { return HasComponent(ComponentIds.Vector4); } }
 
-        public Entity AddVector4(Vector4Component component) {
-            return AddComponent(ComponentIds.Vector4, component);
+        static readonly Stack<Vector4Component> _vector4ComponentPool = new Stack<Vector4Component>();
+
+        public static void ClearVector4ComponentPool() {
+            _vector4ComponentPool.Clear();
         }
 
         public Entity AddVector4(UnityEngine.Vector4 newVector4) {
-            var component = new Vector4Component();
+            var component = _vector4ComponentPool.Count > 0 ? _vector4ComponentPool.Pop() : new Vector4Component();
             component.vector4 = newVector4;
-            return AddVector4(component);
+            return AddComponent(ComponentIds.Vector4, component);
         }
 
         public Entity ReplaceVector4(UnityEngine.Vector4 newVector4) {
-            Vector4Component component;
-            if (hasVector4) {
-                component = vector4;
-            } else {
-                component = new Vector4Component();
-            }
+            var previousComponent = vector4;
+            var component = _vector4ComponentPool.Count > 0 ? _vector4ComponentPool.Pop() : new Vector4Component();
             component.vector4 = newVector4;
-            return ReplaceComponent(ComponentIds.Vector4, component);
+            ReplaceComponent(ComponentIds.Vector4, component);
+            if (previousComponent != null) {
+                _vector4ComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveVector4() {
-            return RemoveComponent(ComponentIds.Vector4);
+            var component = vector4;
+            RemoveComponent(ComponentIds.Vector4);
+            _vector4ComponentPool.Push(component);
+            return this;
         }
     }
 

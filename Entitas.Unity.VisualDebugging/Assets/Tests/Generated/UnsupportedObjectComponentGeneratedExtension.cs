@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public UnsupportedObjectComponent unsupportedObject { get { return (UnsupportedObjectComponent)GetComponent(ComponentIds.UnsupportedObject); } }
 
         public bool hasUnsupportedObject { get { return HasComponent(ComponentIds.UnsupportedObject); } }
 
-        public Entity AddUnsupportedObject(UnsupportedObjectComponent component) {
-            return AddComponent(ComponentIds.UnsupportedObject, component);
+        static readonly Stack<UnsupportedObjectComponent> _unsupportedObjectComponentPool = new Stack<UnsupportedObjectComponent>();
+
+        public static void ClearUnsupportedObjectComponentPool() {
+            _unsupportedObjectComponentPool.Clear();
         }
 
         public Entity AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
-            var component = new UnsupportedObjectComponent();
+            var component = _unsupportedObjectComponentPool.Count > 0 ? _unsupportedObjectComponentPool.Pop() : new UnsupportedObjectComponent();
             component.unsupportedObject = newUnsupportedObject;
-            return AddUnsupportedObject(component);
+            return AddComponent(ComponentIds.UnsupportedObject, component);
         }
 
         public Entity ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
-            UnsupportedObjectComponent component;
-            if (hasUnsupportedObject) {
-                component = unsupportedObject;
-            } else {
-                component = new UnsupportedObjectComponent();
-            }
+            var previousComponent = unsupportedObject;
+            var component = _unsupportedObjectComponentPool.Count > 0 ? _unsupportedObjectComponentPool.Pop() : new UnsupportedObjectComponent();
             component.unsupportedObject = newUnsupportedObject;
-            return ReplaceComponent(ComponentIds.UnsupportedObject, component);
+            ReplaceComponent(ComponentIds.UnsupportedObject, component);
+            if (previousComponent != null) {
+                _unsupportedObjectComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveUnsupportedObject() {
-            return RemoveComponent(ComponentIds.UnsupportedObject);
+            var component = unsupportedObject;
+            RemoveComponent(ComponentIds.UnsupportedObject);
+            _unsupportedObjectComponentPool.Push(component);
+            return this;
         }
     }
 

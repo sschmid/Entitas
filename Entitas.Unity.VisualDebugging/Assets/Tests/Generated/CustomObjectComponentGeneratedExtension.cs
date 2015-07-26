@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public CustomObjectComponent customObject { get { return (CustomObjectComponent)GetComponent(ComponentIds.CustomObject); } }
 
         public bool hasCustomObject { get { return HasComponent(ComponentIds.CustomObject); } }
 
-        public Entity AddCustomObject(CustomObjectComponent component) {
-            return AddComponent(ComponentIds.CustomObject, component);
+        static readonly Stack<CustomObjectComponent> _customObjectComponentPool = new Stack<CustomObjectComponent>();
+
+        public static void ClearCustomObjectComponentPool() {
+            _customObjectComponentPool.Clear();
         }
 
         public Entity AddCustomObject(CustomObject newCustomObject) {
-            var component = new CustomObjectComponent();
+            var component = _customObjectComponentPool.Count > 0 ? _customObjectComponentPool.Pop() : new CustomObjectComponent();
             component.customObject = newCustomObject;
-            return AddCustomObject(component);
+            return AddComponent(ComponentIds.CustomObject, component);
         }
 
         public Entity ReplaceCustomObject(CustomObject newCustomObject) {
-            CustomObjectComponent component;
-            if (hasCustomObject) {
-                component = customObject;
-            } else {
-                component = new CustomObjectComponent();
-            }
+            var previousComponent = customObject;
+            var component = _customObjectComponentPool.Count > 0 ? _customObjectComponentPool.Pop() : new CustomObjectComponent();
             component.customObject = newCustomObject;
-            return ReplaceComponent(ComponentIds.CustomObject, component);
+            ReplaceComponent(ComponentIds.CustomObject, component);
+            if (previousComponent != null) {
+                _customObjectComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveCustomObject() {
-            return RemoveComponent(ComponentIds.CustomObject);
+            var component = customObject;
+            RemoveComponent(ComponentIds.CustomObject);
+            _customObjectComponentPool.Push(component);
+            return this;
         }
     }
 

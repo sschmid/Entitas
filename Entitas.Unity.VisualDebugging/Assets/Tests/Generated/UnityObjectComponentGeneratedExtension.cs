@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public UnityObjectComponent unityObject { get { return (UnityObjectComponent)GetComponent(ComponentIds.UnityObject); } }
 
         public bool hasUnityObject { get { return HasComponent(ComponentIds.UnityObject); } }
 
-        public Entity AddUnityObject(UnityObjectComponent component) {
-            return AddComponent(ComponentIds.UnityObject, component);
+        static readonly Stack<UnityObjectComponent> _unityObjectComponentPool = new Stack<UnityObjectComponent>();
+
+        public static void ClearUnityObjectComponentPool() {
+            _unityObjectComponentPool.Clear();
         }
 
         public Entity AddUnityObject(UnityEngine.Object newUnityObject) {
-            var component = new UnityObjectComponent();
+            var component = _unityObjectComponentPool.Count > 0 ? _unityObjectComponentPool.Pop() : new UnityObjectComponent();
             component.unityObject = newUnityObject;
-            return AddUnityObject(component);
+            return AddComponent(ComponentIds.UnityObject, component);
         }
 
         public Entity ReplaceUnityObject(UnityEngine.Object newUnityObject) {
-            UnityObjectComponent component;
-            if (hasUnityObject) {
-                component = unityObject;
-            } else {
-                component = new UnityObjectComponent();
-            }
+            var previousComponent = unityObject;
+            var component = _unityObjectComponentPool.Count > 0 ? _unityObjectComponentPool.Pop() : new UnityObjectComponent();
             component.unityObject = newUnityObject;
-            return ReplaceComponent(ComponentIds.UnityObject, component);
+            ReplaceComponent(ComponentIds.UnityObject, component);
+            if (previousComponent != null) {
+                _unityObjectComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveUnityObject() {
-            return RemoveComponent(ComponentIds.UnityObject);
+            var component = unityObject;
+            RemoveComponent(ComponentIds.UnityObject);
+            _unityObjectComponentPool.Push(component);
+            return this;
         }
     }
 

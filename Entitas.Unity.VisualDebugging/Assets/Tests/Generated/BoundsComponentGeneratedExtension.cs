@@ -1,32 +1,39 @@
+using System.Collections.Generic;
+
 namespace Entitas {
     public partial class Entity {
         public BoundsComponent bounds { get { return (BoundsComponent)GetComponent(ComponentIds.Bounds); } }
 
         public bool hasBounds { get { return HasComponent(ComponentIds.Bounds); } }
 
-        public Entity AddBounds(BoundsComponent component) {
-            return AddComponent(ComponentIds.Bounds, component);
+        static readonly Stack<BoundsComponent> _boundsComponentPool = new Stack<BoundsComponent>();
+
+        public static void ClearBoundsComponentPool() {
+            _boundsComponentPool.Clear();
         }
 
         public Entity AddBounds(UnityEngine.Bounds newBounds) {
-            var component = new BoundsComponent();
+            var component = _boundsComponentPool.Count > 0 ? _boundsComponentPool.Pop() : new BoundsComponent();
             component.bounds = newBounds;
-            return AddBounds(component);
+            return AddComponent(ComponentIds.Bounds, component);
         }
 
         public Entity ReplaceBounds(UnityEngine.Bounds newBounds) {
-            BoundsComponent component;
-            if (hasBounds) {
-                component = bounds;
-            } else {
-                component = new BoundsComponent();
-            }
+            var previousComponent = bounds;
+            var component = _boundsComponentPool.Count > 0 ? _boundsComponentPool.Pop() : new BoundsComponent();
             component.bounds = newBounds;
-            return ReplaceComponent(ComponentIds.Bounds, component);
+            ReplaceComponent(ComponentIds.Bounds, component);
+            if (previousComponent != null) {
+                _boundsComponentPool.Push(previousComponent);
+            }
+            return this;
         }
 
         public Entity RemoveBounds() {
-            return RemoveComponent(ComponentIds.Bounds);
+            var component = bounds;
+            RemoveComponent(ComponentIds.Bounds);
+            _boundsComponentPool.Push(component);
+            return this;
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using Entitas;
+﻿using System.Collections.Generic;
+using Entitas;
 
 public class ProcessRandomValueSystem : IReactiveSystem, ISetPool {
     public IMatcher trigger { get { return Matcher.MyFloat; } }
@@ -11,7 +12,7 @@ public class ProcessRandomValueSystem : IReactiveSystem, ISetPool {
         _pool = pool;
     }
 
-    public void Execute(Entity[] entities) {
+    public void Execute(List<Entity> entities) {
 //        UnityEngine.Debug.Log("entities.Length: " + entities.Length);
         foreach (var e in entities) {
             _pool.DestroyEntity(e);
