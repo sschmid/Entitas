@@ -72,7 +72,7 @@ namespace Entitas.CodeGenerator {
                 Directory.CreateDirectory(dir);
             }
             foreach (var file in files) {
-                File.WriteAllText(dir + file.fileName + ".cs", file.fileContent);
+                File.WriteAllText(dir + file.fileName + ".cs", file.fileContent.Replace("\n", Environment.NewLine));
             }
         }
     }
