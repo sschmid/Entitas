@@ -1,3 +1,29 @@
+# 0.19.0
+
+##### Breaking changes
+- Entitas
+  - Added new e.OnComponentReplaced and removed all *WillBeRemoved events
+  - Added component index and changed component to OnEntityAdded and OnEntityRemoved
+  - IReactiveSystem.Execute takes List<Entity> instead of Entity[]
+    - Entitas now runs without producing garbage!
+
+- Entitas.Unity.CodeGenerator
+  - Removed support for properties in components
+
+- Entitas.Unity.VisualDebugging
+  - Replaced DebugPool with a more flexible PoolObserver
+
+##### Entitas
+- Added group.OnEntityUpdated event with previous and new component
+
+##### Entitas.CodeGenerator
+- ComponentExtensionsGenerator generates component object pool
+- Converting newlines in generated files to Environment.NewLine (Pull request #11, thanks @movrajr)
+
+##### Other
+- Added policy.mdpolicy
+
+
 # 0.18.3
 
 ##### Entitas
