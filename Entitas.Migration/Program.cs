@@ -6,7 +6,8 @@ namespace Entitas.Migration {
         public static void Main(string[] args) {
 
             var allMigrations = new IMigration[] {
-                new M0180()
+                new M0180(),
+                new M0190()
             };
 
             if (args == null) {

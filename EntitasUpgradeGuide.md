@@ -1,8 +1,34 @@
-# CAUTION
-Xamarin Studio 5.7.x currently has a bug when find-replace (Menu -> Search -> Replace in files...)
-https://bugzilla.xamarin.com/show_bug.cgi?id=25360
+# Entitas 0.19.0 upgrade guide
+Entitas 0.19.0 introduces a few breaking changes:
 
-Please be aware of that issue and use any other text editor for that task.
+Added new e.OnComponentReplaced and removed all *WillBeRemoved events.
+
+If you used `group.OnEntityWillBeRemoved`, you could replace it either with
+```cs
+_group.OnEntityRemoved += (group, entity, index, component) => { //... };
+```
+or with
+```cs
+_group.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => { // ...};
+```
+If your generated component extensions are not compiling, find/replace `WillRemoveComponent` with `//WillRemoveComponent`
+to temporarily ignore the errors.
+
+IReactiveSystem.Execute takes List<Entity> instead of Entity[]. Use the command line tool `MigrationAssistant.exe` to automatically migrate.
+
+```
+$ mono MigrationAssistant.exe
+usage:
+[-l]             - print all available versions
+[version] [path] - apply migration of version [version] to source files located at [path]
+
+$ mono MigrationAssistant.exe -l
+0.18.0 - Migrates IReactiveSystem API
+0.19.0 - Migrates IReactiveSystem.Execute
+
+// Example from Math-One example project, where all the systems are located in the Features folder
+$ mono MigrationAssistant.exe 0.19.0 /Path/To/Project/Assets/Sources/Features
+```
 
 
 # Entitas 0.18.0 upgrade guide
@@ -132,4 +158,3 @@ of Entitas, EntitasCodeGenerator and ToolKit.
 #### Code Generator
 
     Use the code generator and generate
-

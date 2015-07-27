@@ -3,7 +3,7 @@ using System.Linq;
 using Entitas.Migration;
 using NSpec;
 
-class describe_MigrateReactiveSystem : nspec {
+class describe_M0180 : nspec {
 
     void when_migration() {
 

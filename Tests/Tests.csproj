@@ -94,16 +94,15 @@
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\SomeSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\NamespaceSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\CtorArgsSystem.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_MigrateReactiveSystem.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
-    <Compile Include="Tests\Entitas.Migration\Fixtures\M0180\SubFolder\SourceFile2.cs" />
-    <Compile Include="Tests\Entitas.Migration\Fixtures\M0180\SourceFile.cs" />
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs" />
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\Entity\EntityBehaviour.cs" />
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserver.cs" />
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserverBehaviour.cs" />
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\DebugSystems.cs" />
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\SystemsDebugBehaviour.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0180.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0190.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -121,7 +120,6 @@
     <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Tests\Entitas.Migration\" />
     <Folder Include="Tests\Entitas.Migration\Fixtures\" />
-    <Folder Include="Tests\Entitas.Migration\Fixtures\M0180\" />
     <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
   </ItemGroup>
   <ItemGroup>
@@ -131,8 +129,6 @@
     <None Include="Libraries\NSpec\NSpecRunner.exe" />
     <None Include="Libraries\NSpec\NSpecRunner.exe.config" />
     <None Include="Libraries\NSpec\NSpecRunner.exe.mdb" />
-    <None Include="Tests\Entitas.Migration\Fixtures\M0180\SubFolder\TextFile2.txt" />
-    <None Include="Tests\Entitas.Migration\Fixtures\M0180\TextFile.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas\Entitas.csproj">
