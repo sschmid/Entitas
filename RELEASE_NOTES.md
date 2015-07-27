@@ -1,6 +1,8 @@
 # 0.19.0
 
 ##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
 - Entitas
   - Added new e.OnComponentReplaced and removed all *WillBeRemoved events
   - Added component index and changed component to OnEntityAdded and OnEntityRemoved
