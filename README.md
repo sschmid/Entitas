@@ -15,6 +15,9 @@ branch  | tests
 master  | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?branch=master)](https://travis-ci.org/sschmid/Entitas-CSharp)
 develop | [![Build Status](https://travis-ci.org/sschmid/Entitas-CSharp.svg?branch=develop)](https://travis-ci.org/sschmid/Entitas-CSharp)
 
+# Watch the talk from UniteEurope 2015
+[![UniteEurope 2015](Readme/Images/UniteEurope-2015.png)](http://buff.ly/1KtKlm6)
+
 # First glimpse
 The optional [code generator](https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator) lets you write code that is super fast, save and literally screams its intent.
 ```cs
