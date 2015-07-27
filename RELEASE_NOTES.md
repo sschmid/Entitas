@@ -9,7 +9,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
   - IReactiveSystem.Execute takes List<Entity> instead of Entity[]
     - Entitas now runs without producing garbage!
 
-- Entitas.Unity.CodeGenerator
+- Entitas.CodeGenerator
   - Removed support for properties in components
 
 - Entitas.Unity.VisualDebugging
