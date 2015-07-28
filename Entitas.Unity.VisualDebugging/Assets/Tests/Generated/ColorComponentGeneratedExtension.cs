@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceColor(UnityEngine.Color newColor) {
-            var previousComponent = color;
+            var previousComponent = hasColor ? color : null;
             var component = _colorComponentPool.Count > 0 ? _colorComponentPool.Pop() : new ColorComponent();
             component.color = newColor;
             ReplaceComponent(ComponentIds.Color, component);

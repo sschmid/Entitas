@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceHealth(int newHealth) {
-            var previousComponent = health;
+            var previousComponent = hasHealth ? health : null;
             var component = _healthComponentPool.Count > 0 ? _healthComponentPool.Pop() : new HealthComponent();
             component.health = newHealth;
             ReplaceComponent(ComponentIds.Health, component);

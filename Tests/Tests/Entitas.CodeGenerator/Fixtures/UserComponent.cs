@@ -29,7 +29,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var previousComponent = user;
+            var previousComponent = hasUser ? user : null;
             var component = _userComponentPool.Count > 0 ? _userComponentPool.Pop() : new UserComponent();
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;

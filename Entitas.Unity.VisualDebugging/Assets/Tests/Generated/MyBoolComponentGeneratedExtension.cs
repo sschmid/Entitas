@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceMyBool(bool newMyBool) {
-            var previousComponent = myBool;
+            var previousComponent = hasMyBool ? myBool : null;
             var component = _myBoolComponentPool.Count > 0 ? _myBoolComponentPool.Pop() : new MyBoolComponent();
             component.myBool = newMyBool;
             ReplaceComponent(ComponentIds.MyBool, component);

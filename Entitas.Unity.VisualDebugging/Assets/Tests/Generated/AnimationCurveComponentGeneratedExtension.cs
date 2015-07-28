@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
-            var previousComponent = animationCurve;
+            var previousComponent = hasAnimationCurve ? animationCurve : null;
             var component = _animationCurveComponentPool.Count > 0 ? _animationCurveComponentPool.Pop() : new AnimationCurveComponent();
             component.animationCurve = newAnimationCurve;
             ReplaceComponent(ComponentIds.AnimationCurve, component);

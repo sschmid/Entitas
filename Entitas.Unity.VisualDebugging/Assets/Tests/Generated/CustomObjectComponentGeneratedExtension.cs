@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceCustomObject(CustomObject newCustomObject) {
-            var previousComponent = customObject;
+            var previousComponent = hasCustomObject ? customObject : null;
             var component = _customObjectComponentPool.Count > 0 ? _customObjectComponentPool.Pop() : new CustomObjectComponent();
             component.customObject = newCustomObject;
             ReplaceComponent(ComponentIds.CustomObject, component);

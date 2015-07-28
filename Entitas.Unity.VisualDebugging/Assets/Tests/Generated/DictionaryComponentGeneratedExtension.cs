@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
-            var previousComponent = dictionary;
+            var previousComponent = hasDictionary ? dictionary : null;
             var component = _dictionaryComponentPool.Count > 0 ? _dictionaryComponentPool.Pop() : new DictionaryComponent();
             component.dict = newDict;
             ReplaceComponent(ComponentIds.Dictionary, component);

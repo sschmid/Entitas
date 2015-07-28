@@ -22,7 +22,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceUIPosition(int newX, int newY) {
-            var previousComponent = uIPosition;
+            var previousComponent = hasUIPosition ? uIPosition : null;
             var component = _uIPositionComponentPool.Count > 0 ? _uIPositionComponentPool.Pop() : new UIPositionComponent();
             component.x = newX;
             component.y = newY;

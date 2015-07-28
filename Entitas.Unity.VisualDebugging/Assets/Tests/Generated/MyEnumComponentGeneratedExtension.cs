@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
-            var previousComponent = myEnum;
+            var previousComponent = hasMyEnum ? myEnum : null;
             var component = _myEnumComponentPool.Count > 0 ? _myEnumComponentPool.Pop() : new MyEnumComponent();
             component.myEnum = newMyEnum;
             ReplaceComponent(ComponentIds.MyEnum, component);

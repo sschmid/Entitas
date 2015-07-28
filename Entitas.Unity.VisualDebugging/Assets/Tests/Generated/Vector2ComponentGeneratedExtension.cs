@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceVector2(UnityEngine.Vector2 newVector2) {
-            var previousComponent = vector2;
+            var previousComponent = hasVector2 ? vector2 : null;
             var component = _vector2ComponentPool.Count > 0 ? _vector2ComponentPool.Pop() : new Vector2Component();
             component.vector2 = newVector2;
             ReplaceComponent(ComponentIds.Vector2, component);

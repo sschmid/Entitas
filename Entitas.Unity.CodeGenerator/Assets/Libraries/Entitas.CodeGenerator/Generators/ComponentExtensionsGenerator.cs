@@ -150,7 +150,7 @@ $assign
         static string addReplaceMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Replace$Name($typedArgs) {
-            var previousComponent = $name;
+            var previousComponent = has$Name ? $name : null;
             var component = _$nameComponentPool.Count > 0 ? _$nameComponentPool.Pop() : new $Type();
 $assign
             ReplaceComponent($Ids.$Name, component);

@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceMyFloat(float newMyFloat) {
-            var previousComponent = myFloat;
+            var previousComponent = hasMyFloat ? myFloat : null;
             var component = _myFloatComponentPool.Count > 0 ? _myFloatComponentPool.Pop() : new MyFloatComponent();
             component.myFloat = newMyFloat;
             ReplaceComponent(ComponentIds.MyFloat, component);

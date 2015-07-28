@@ -21,7 +21,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceCoins(int newCount) {
-            var previousComponent = coins;
+            var previousComponent = hasCoins ? coins : null;
             var component = _coinsComponentPool.Count > 0 ? _coinsComponentPool.Pop() : new CoinsComponent();
             component.count = newCount;
             ReplaceComponent(MetaComponentIds.Coins, component);

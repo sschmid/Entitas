@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceMyString(string newMyString) {
-            var previousComponent = myString;
+            var previousComponent = hasMyString ? myString : null;
             var component = _myStringComponentPool.Count > 0 ? _myStringComponentPool.Pop() : new MyStringComponent();
             component.myString = newMyString;
             ReplaceComponent(ComponentIds.MyString, component);

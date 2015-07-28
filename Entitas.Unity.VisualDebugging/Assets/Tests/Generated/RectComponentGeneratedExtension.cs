@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceRect(UnityEngine.Rect newRect) {
-            var previousComponent = rect;
+            var previousComponent = hasRect ? rect : null;
             var component = _rectComponentPool.Count > 0 ? _rectComponentPool.Pop() : new RectComponent();
             component.rect = newRect;
             ReplaceComponent(ComponentIds.Rect, component);

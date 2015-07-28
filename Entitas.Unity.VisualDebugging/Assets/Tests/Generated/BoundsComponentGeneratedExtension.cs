@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceBounds(UnityEngine.Bounds newBounds) {
-            var previousComponent = bounds;
+            var previousComponent = hasBounds ? bounds : null;
             var component = _boundsComponentPool.Count > 0 ? _boundsComponentPool.Pop() : new BoundsComponent();
             component.bounds = newBounds;
             ReplaceComponent(ComponentIds.Bounds, component);

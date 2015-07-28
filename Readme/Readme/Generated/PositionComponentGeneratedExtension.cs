@@ -20,7 +20,7 @@ namespace Entitas {
         }
 
         public Entity ReplacePosition(int newX, int newY) {
-            var previousComponent = position;
+            var previousComponent = hasPosition ? position : null;
             var component = _positionComponentPool.Count > 0 ? _positionComponentPool.Pop() : new PositionComponent();
             component.x = newX;
             component.y = newY;

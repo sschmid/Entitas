@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceMyInt(int newMyInt) {
-            var previousComponent = myInt;
+            var previousComponent = hasMyInt ? myInt : null;
             var component = _myIntComponentPool.Count > 0 ? _myIntComponentPool.Pop() : new MyIntComponent();
             component.myInt = newMyInt;
             ReplaceComponent(ComponentIds.MyInt, component);

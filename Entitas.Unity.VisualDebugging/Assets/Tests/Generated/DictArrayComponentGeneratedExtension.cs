@@ -20,7 +20,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
-            var previousComponent = dictArray;
+            var previousComponent = hasDictArray ? dictArray : null;
             var component = _dictArrayComponentPool.Count > 0 ? _dictArrayComponentPool.Pop() : new DictArrayComponent();
             component.dict = newDict;
             component.dictArray = newDictArray;

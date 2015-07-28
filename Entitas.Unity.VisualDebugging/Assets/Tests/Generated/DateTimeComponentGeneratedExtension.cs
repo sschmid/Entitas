@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceDateTime(System.DateTime newDate) {
-            var previousComponent = dateTime;
+            var previousComponent = hasDateTime ? dateTime : null;
             var component = _dateTimeComponentPool.Count > 0 ? _dateTimeComponentPool.Pop() : new DateTimeComponent();
             component.date = newDate;
             ReplaceComponent(ComponentIds.DateTime, component);

@@ -26,7 +26,7 @@ namespace Entitas {
         }
 
         public Entity ReplacePerson(int newAge, string newName) {
-            var previousComponent = person;
+            var previousComponent = hasPerson ? person : null;
             var component = _personComponentPool.Count > 0 ? _personComponentPool.Pop() : new PersonComponent();
             component.age = newAge;
             component.name = newName;

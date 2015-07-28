@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceJaggedArray(string[][] newJaggedArray) {
-            var previousComponent = jaggedArray;
+            var previousComponent = hasJaggedArray ? jaggedArray : null;
             var component = _jaggedArrayComponentPool.Count > 0 ? _jaggedArrayComponentPool.Pop() : new JaggedArrayComponent();
             component.jaggedArray = newJaggedArray;
             ReplaceComponent(ComponentIds.JaggedArray, component);

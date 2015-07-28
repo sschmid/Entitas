@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceArray3D(int[,,] newArray3d) {
-            var previousComponent = array3D;
+            var previousComponent = hasArray3D ? array3D : null;
             var component = _array3DComponentPool.Count > 0 ? _array3DComponentPool.Pop() : new Array3DComponent();
             component.array3d = newArray3d;
             ReplaceComponent(ComponentIds.Array3D, component);

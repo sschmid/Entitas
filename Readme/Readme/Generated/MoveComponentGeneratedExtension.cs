@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceMove(int newSpeed) {
-            var previousComponent = move;
+            var previousComponent = hasMove ? move : null;
             var component = _moveComponentPool.Count > 0 ? _moveComponentPool.Pop() : new MoveComponent();
             component.speed = newSpeed;
             ReplaceComponent(ComponentIds.Move, component);

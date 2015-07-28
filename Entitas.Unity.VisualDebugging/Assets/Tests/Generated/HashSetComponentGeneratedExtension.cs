@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
-            var previousComponent = hashSet;
+            var previousComponent = hasHashSet ? hashSet : null;
             var component = _hashSetComponentPool.Count > 0 ? _hashSetComponentPool.Pop() : new HashSetComponent();
             component.hashset = newHashset;
             ReplaceComponent(ComponentIds.HashSet, component);

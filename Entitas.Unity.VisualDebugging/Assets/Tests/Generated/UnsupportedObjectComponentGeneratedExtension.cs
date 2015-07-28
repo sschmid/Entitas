@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
-            var previousComponent = unsupportedObject;
+            var previousComponent = hasUnsupportedObject ? unsupportedObject : null;
             var component = _unsupportedObjectComponentPool.Count > 0 ? _unsupportedObjectComponentPool.Pop() : new UnsupportedObjectComponent();
             component.unsupportedObject = newUnsupportedObject;
             ReplaceComponent(ComponentIds.UnsupportedObject, component);

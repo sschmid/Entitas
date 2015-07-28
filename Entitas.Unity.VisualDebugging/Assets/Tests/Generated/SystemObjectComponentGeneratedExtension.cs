@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceSystemObject(object newSystemObject) {
-            var previousComponent = systemObject;
+            var previousComponent = hasSystemObject ? systemObject : null;
             var component = _systemObjectComponentPool.Count > 0 ? _systemObjectComponentPool.Pop() : new SystemObjectComponent();
             component.systemObject = newSystemObject;
             ReplaceComponent(ComponentIds.SystemObject, component);

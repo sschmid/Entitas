@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceListArray(System.Collections.Generic.List<string>[] newListArray) {
-            var previousComponent = listArray;
+            var previousComponent = hasListArray ? listArray : null;
             var component = _listArrayComponentPool.Count > 0 ? _listArrayComponentPool.Pop() : new ListArrayComponent();
             component.listArray = newListArray;
             ReplaceComponent(ComponentIds.ListArray, component);

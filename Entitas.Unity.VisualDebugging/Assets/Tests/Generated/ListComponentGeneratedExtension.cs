@@ -19,7 +19,7 @@ namespace Entitas {
         }
 
         public Entity ReplaceList(System.Collections.Generic.List<string> newList) {
-            var previousComponent = list;
+            var previousComponent = hasList ? list : null;
             var component = _listComponentPool.Count > 0 ? _listComponentPool.Pop() : new ListComponent();
             component.list = newList;
             ReplaceComponent(ComponentIds.List, component);
