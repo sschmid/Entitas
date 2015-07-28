@@ -23,9 +23,15 @@ namespace Entitas {
         public static ISystem CreateSystem(this Pool pool, ISystem system) {
             setPool(system, pool);
             var reactiveSystem = system as IReactiveSystem;
-            return reactiveSystem != null
-                    ? new ReactiveSystem(pool, reactiveSystem)
-                    : system;
+            if (reactiveSystem != null) {
+                return new ReactiveSystem(pool, reactiveSystem);
+            }
+            var multiReactiveSystem = system as IMultiReactiveSystem;
+            if (multiReactiveSystem != null) {
+                return new ReactiveSystem(pool, multiReactiveSystem);
+            }
+
+            return system;
         }
 
         static void setPool(ISystem system, Pool pool) {

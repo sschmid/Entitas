@@ -6,17 +6,17 @@ class describe_GroupObserver : nspec {
     void when_created() {
 
         Pool pool = null;
-        Group group = null;
+        Group groupA = null;
         GroupObserver observer = null;
 
         before = () => {
             pool = new Pool(CID.NumComponents);
-            group = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+            groupA = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
         };
 
         context["when observing with eventType OnEntityAdded"] = () => {
             before = () => {
-                observer = new GroupObserver(group, GroupEventType.OnEntityAdded);
+                observer = new GroupObserver(groupA, GroupEventType.OnEntityAdded);
             };
 
             it["returns collected entities"] = () => {
@@ -95,7 +95,7 @@ class describe_GroupObserver : nspec {
 
         context["when observing with eventType OnEntityRemoved"] = () => {
             before = () => {
-                observer = new GroupObserver(group, GroupEventType.OnEntityRemoved);
+                observer = new GroupObserver(groupA, GroupEventType.OnEntityRemoved);
             };
 
             it["returns collected entities"] = () => {
@@ -112,7 +112,7 @@ class describe_GroupObserver : nspec {
 
         context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
             before = () => {
-                observer = new GroupObserver(group, GroupEventType.OnEntityAddedOrRemoved);
+                observer = new GroupObserver(groupA, GroupEventType.OnEntityAddedOrRemoved);
             };
 
             it["returns collected entities"] = () => {
@@ -127,6 +127,116 @@ class describe_GroupObserver : nspec {
                 entities = observer.collectedEntities;
                 entities.Count.should_be(1);
                 entities.should_contain(e);
+            };
+        };
+
+        context["when observing multiple groups"] = () => {
+
+            Group groupB = null;
+            before = () => {
+                groupB = pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentB }));
+            };
+
+            it["throws when goup count != eventType count"] = expect<GroupObserverException>(() => {
+                observer = new GroupObserver(
+                    new [] { groupA },
+                    new [] { GroupEventType.OnEntityAdded, GroupEventType.OnEntityAdded }
+                );
+            });
+
+            context["when observing with eventType OnEntityAdded"] = () => {
+                before = () => {
+                    observer = new GroupObserver(
+                        new [] { groupA, groupB },
+                        new [] { GroupEventType.OnEntityAdded, GroupEventType.OnEntityAdded }
+                    );
+                };
+                it["returns collected entities"] = () => {
+                    var eA = pool.CreateEntity();
+                    eA.AddComponentA();
+                    var eB = pool.CreateEntity();
+                    eB.AddComponentB();
+
+                    var entities = observer.collectedEntities;
+                    entities.Count.should_be(2);
+                    entities.should_contain(eA);
+                    entities.should_contain(eB);
+                };
+            };
+
+            context["when observing with eventType OnEntityRemoved"] = () => {
+                before = () => {
+                    observer = new GroupObserver(
+                        new [] { groupA, groupB },
+                        new [] { GroupEventType.OnEntityRemoved, GroupEventType.OnEntityRemoved }
+                    );
+                };
+                it["returns collected entities"] = () => {
+                    var eA = pool.CreateEntity();
+                    eA.AddComponentA();
+                    var eB = pool.CreateEntity();
+                    eB.AddComponentB();
+                    observer.collectedEntities.should_be_empty();
+
+                    eA.RemoveComponentA();
+                    eB.RemoveComponentB();
+                    var entities = observer.collectedEntities;
+                    entities.Count.should_be(2);
+                    entities.should_contain(eA);
+                    entities.should_contain(eB);
+                };
+            };
+
+            context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
+                before = () => {
+                    observer = new GroupObserver(
+                        new [] { groupA, groupB },
+                        new [] { GroupEventType.OnEntityAddedOrRemoved, GroupEventType.OnEntityAddedOrRemoved }
+                    );
+                };
+                it["returns collected entities"] = () => {
+                    var eA = pool.CreateEntity();
+                    eA.AddComponentA();
+                    var eB = pool.CreateEntity();
+                    eB.AddComponentB();
+                    var entities = observer.collectedEntities;
+                    entities.Count.should_be(2);
+                    entities.should_contain(eA);
+                    entities.should_contain(eB);
+                    observer.ClearCollectedEntities();
+
+                    eA.RemoveComponentA();
+                    eB.RemoveComponentB();
+                    entities = observer.collectedEntities;
+                    entities.Count.should_be(2);
+                    entities.should_contain(eA);
+                    entities.should_contain(eB);
+                };
+            };
+
+            context["when observing with mixed eventTypes"] = () => {
+                before = () => {
+                    observer = new GroupObserver(
+                        new [] { groupA, groupB },
+                        new [] { GroupEventType.OnEntityAdded, GroupEventType.OnEntityRemoved }
+                    );
+                };
+                it["returns collected entities"] = () => {
+                    var eA = pool.CreateEntity();
+                    eA.AddComponentA();
+                    var eB = pool.CreateEntity();
+                    eB.AddComponentB();
+                    var entities = observer.collectedEntities;
+                    entities.Count.should_be(1);
+                    entities.should_contain(eA);
+                    observer.ClearCollectedEntities();
+
+                    eA.RemoveComponentA();
+                    eB.RemoveComponentB();
+                    entities = observer.collectedEntities;
+                    entities.Count.should_be(1);
+                    entities.should_contain(eB);
+                };
             };
         };
     }

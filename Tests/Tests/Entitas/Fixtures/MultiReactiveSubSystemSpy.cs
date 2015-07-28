@@ -1,27 +1,27 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 
-public class ReactiveSubSystemSpy : IStartSystem, IReactiveSystem {
+public class MultiReactiveSubSystemSpy : IStartSystem, IMultiReactiveSystem {
     public int didExecute { get { return _didExecute; } }
 
     public bool started { get { return _started; } }
 
     public Entity[] entities { get { return _entities; } }
 
-    readonly IMatcher _matcher;
-    readonly GroupEventType _eventType;
+    readonly IMatcher[] _matchers;
+    readonly GroupEventType[] _eventTypes;
     int _didExecute;
     bool _started;
     Entity[] _entities;
 
-    public ReactiveSubSystemSpy(IMatcher matcher, GroupEventType eventType) {
-        _matcher = matcher;
-        _eventType = eventType;
+    public MultiReactiveSubSystemSpy(IMatcher[] matchers, GroupEventType[] eventTypes) {
+        _matchers = matchers;
+        _eventTypes = eventTypes;
     }
 
-    public IMatcher trigger { get { return _matcher; } }
+    public IMatcher[] triggers { get { return _matchers; } }
 
-    public GroupEventType eventType { get { return _eventType; } }
+    public GroupEventType[] eventTypes { get { return _eventTypes; } }
 
     public void Start() {
         _started = true;

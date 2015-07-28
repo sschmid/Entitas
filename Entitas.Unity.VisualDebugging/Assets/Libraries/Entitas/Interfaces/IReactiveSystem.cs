@@ -1,12 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Entitas {
-    public interface IReactiveSystem : ISystem {
+﻿namespace Entitas {
+    public interface IReactiveSystem : IReactiveExecuteSystem {
         IMatcher trigger { get; }
-
         GroupEventType eventType { get; }
-
-        void Execute(List<Entity> entities);
     }
 }
 
