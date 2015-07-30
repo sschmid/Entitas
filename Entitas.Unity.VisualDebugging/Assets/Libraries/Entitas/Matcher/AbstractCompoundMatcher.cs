@@ -43,21 +43,25 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            const string seperator = ", ";
-            var matcherStr = string.Empty;
-            for (int i = 0, _matchersLength = _matchers.Length; i < _matchersLength; i++) {
-                matcherStr += _matchers[i] + seperator;
+            if (_toStringCache == null) {
+                const string seperator = ", ";
+                var matcherStr = string.Empty;
+                for (int i = 0, _matchersLength = _matchers.Length; i < _matchersLength; i++) {
+                    matcherStr += _matchers[i] + seperator;
+                }
+
+                if (matcherStr != string.Empty) {
+                    matcherStr = matcherStr.Substring(0, matcherStr.Length - seperator.Length);
+                }
+
+                var name = GetType().Name;
+                if (name.EndsWith("CompoundMatcher")) {
+                    name = name.Replace("CompoundMatcher", string.Empty);
+                }
+                _toStringCache =  name + "(" + matcherStr + ")";
             }
 
-            if (matcherStr != string.Empty) {
-                matcherStr = matcherStr.Substring(0, matcherStr.Length - seperator.Length);
-            }
-
-            var name = GetType().Name;
-            if (name.EndsWith("CompoundMatcher")) {
-                name = name.Replace("CompoundMatcher", string.Empty);
-            }
-            return string.Format("{0}({1})", name, matcherStr);
+            return _toStringCache;
         }
     }
 }

@@ -19,10 +19,8 @@ namespace Entitas.Unity.VisualDebugging {
             _groups = new List<Group>();
             _entitiesContainer = new GameObject().transform;
             _entitiesContainer.gameObject.AddComponent<PoolObserverBehaviour>().Init(this);
-            updateName();
 
             _pool.OnEntityCreated += onEntityCreated;
-            _pool.OnEntityDestroyed += onEntityDestroyed;
             _pool.OnGroupCreated += onGroupCreated;
         }
 
@@ -30,22 +28,18 @@ namespace Entitas.Unity.VisualDebugging {
             var entityBehaviour = new GameObject().AddComponent<EntityBehaviour>();
             entityBehaviour.Init(_pool, entity);
             entityBehaviour.transform.SetParent(_entitiesContainer, false);
-            updateName();
-        }
-
-        void onEntityDestroyed(Pool pool, Entity entity) {
-            updateName();
         }
 
         void onGroupCreated(Pool pool, Group group) {
             _groups.Add(group);
-            updateName();
         }
 
-        void updateName() {
-            if (_entitiesContainer != null) {
-                _entitiesContainer.name = string.Format(_name + " ({0} entities, {1} reusable, {2} groups)", _pool.Count, _pool.pooledEntitiesCount, _groups.Count);
-            }
+        public override string ToString() {
+            return _entitiesContainer.name = 
+                _name + " (" +
+                _pool.Count + " entities, " +
+                _pool.pooledEntitiesCount + " reusable, " +
+                _groups.Count + " groups)";
         }
     }
 }

@@ -327,6 +327,43 @@ class describe_Entity : nspec {
                     e.GetComponentIndices().should_not_be_same(c);
                 };
             };
+
+            context["ToString"] = () => {
+                it["caches entity description"] = () => {
+                    e.ToString().should_be_same(e.ToString());
+                };
+
+                it["updates cache when a new component was added"] = () => {
+                    e.AddComponentA();
+                    var str = e.ToString();
+                    e.AddComponentB();
+                    e.ToString().should_not_be_same(str);
+                };
+
+                it["updates cache when a component was removed"] = () => {
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    var str = e.ToString();
+                    e.RemoveComponentA();
+                    e.ToString().should_not_be_same(str);
+                };
+
+                it["doesn't update cache when a component was replaced"] = () => {
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    var str = e.ToString();
+                    e.ReplaceComponentA(new ComponentA());
+                    e.ToString().should_be_same(str);
+                };
+
+                it["updates cache when all components were removed"] = () => {
+                    e.AddComponentA();
+                    e.AddComponentB();
+                    var str = e.ToString();
+                    e.RemoveAllComponents();
+                    e.ToString().should_not_be_same(str);
+                };
+            };
         };
 
         context["component pooling"] = () => {

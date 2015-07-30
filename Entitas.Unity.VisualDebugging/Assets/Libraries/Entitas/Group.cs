@@ -17,6 +17,7 @@ namespace Entitas {
         readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         Entity[] _entitiesCache;
         Entity _singleEntityCache;
+        string _toStringCache;
 
         public Group(IMatcher matcher) {
             _matcher = matcher;
@@ -123,7 +124,10 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            return string.Format("Group(" + _matcher + ")");
+            if (_toStringCache == null) {
+                _toStringCache = "Group(" + _matcher + ")";
+            }
+            return _toStringCache;
         }
     }
 

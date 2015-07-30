@@ -7,6 +7,7 @@ namespace Entitas {
 
         readonly int[] _indices;
         readonly int _hash;
+        protected string _toStringCache;
 
         protected AbstractMatcher(int[] indices) {
             var indicesSet = new HashSet<int>(indices);
@@ -48,21 +49,25 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            const string seperator = ", ";
-            var indicesString = string.Empty;
-            for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++) {
-                indicesString += _indices[i] + seperator;
+            if (_toStringCache == null) {
+                const string seperator = ", ";
+                var indicesString = string.Empty;
+                for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++) {
+                    indicesString += _indices[i] + seperator;
+                }
+
+                if (indicesString != string.Empty) {
+                    indicesString = indicesString.Substring(0, indicesString.Length - seperator.Length);
+                }
+
+                var name = GetType().Name;
+                if (name.EndsWith("Matcher")) {
+                    name = name.Replace("Matcher", string.Empty);
+                }
+                _toStringCache = name + "(" + indicesString + ")";
             }
 
-            if (indicesString != string.Empty) {
-                indicesString = indicesString.Substring(0, indicesString.Length - seperator.Length);
-            }
-
-            var name = GetType().Name;
-            if (name.EndsWith("Matcher")) {
-                name = name.Replace("Matcher", string.Empty);
-            }
-            return string.Format("{0}({1})", name, indicesString);
+            return _toStringCache;
         }
     }
 }
