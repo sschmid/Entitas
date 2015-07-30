@@ -186,6 +186,20 @@ class describe_Pool : nspec {
                 e.AddComponentA();
                 g.GetEntities().should_contain(e);
             };
+
+            context["when in object pool"] = () => {
+                Entity e = null;
+                before = () => {
+                    e = _pool.CreateEntity();
+                    e.AddComponentA();
+                    _pool.DestroyEntity(e);
+                };
+
+                it["throws when adding component"] = expect<EntityIsNotEnabledException>(() => e.AddComponentA());
+                it["throws when removing component"] = expect<EntityIsNotEnabledException>(() => e.RemoveComponentA());
+                it["throws when replacing component"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(new ComponentA()));
+                it["throws when replacing component with null"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(null));
+            };
         };
 
         context["get entities"] = () => {
@@ -244,14 +258,6 @@ class describe_Pool : nspec {
                     var g = _pool.GetGroup(matcher);
                     _pool.DestroyEntity(eAB1);
                     g.GetEntities().should_not_contain(eAB1);
-                };
-
-                it["ignores adding components to destroyed entity"] = () => {
-                    var g = _pool.GetGroup(matcher);
-                    _pool.DestroyEntity(eA);
-                    eA.AddComponentA();
-                    eA.AddComponentB();
-                    g.GetEntities().should_not_contain(eA);
                 };
 
                 it["throws when destroying an entity the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {

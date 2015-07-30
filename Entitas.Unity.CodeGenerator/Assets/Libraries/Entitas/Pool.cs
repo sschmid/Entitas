@@ -40,6 +40,7 @@ namespace Entitas {
 
         public virtual Entity CreateEntity() {
             var entity = _entityPool.Get();
+            entity._isEnabled = true;
             entity._creationIndex = _creationIndex++;
             _entities.Add(entity);
             _entitiesCache = null;
@@ -70,6 +71,7 @@ namespace Entitas {
             entity.OnComponentAdded -= onComponentAddedOrRemoved;
             entity.OnComponentReplaced -= onComponentReplaced;
             entity.OnComponentRemoved -= onComponentAddedOrRemoved;
+            entity._isEnabled = false;
             _entityPool.Push(entity);
 
             if (OnEntityDestroyed != null) {

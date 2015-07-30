@@ -15,6 +15,7 @@ namespace Entitas {
 
         internal int _creationIndex;
         internal readonly IComponent[] _components;
+        internal bool _isEnabled = true;
 
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
@@ -25,6 +26,10 @@ namespace Entitas {
         }
 
         public Entity AddComponent(int index, IComponent component) {
+            if (!_isEnabled) {
+                throw new EntityIsNotEnabledException("Cannot add component!");
+            }
+
             if (HasComponent(index)) {
                 var errorMsg = "Cannot add component at index " + index + " to " + this;
                 throw new EntityAlreadyHasComponentException(errorMsg, index);
@@ -42,6 +47,10 @@ namespace Entitas {
         }
 
         public Entity RemoveComponent(int index) {
+            if (!_isEnabled) {
+                throw new EntityIsNotEnabledException("Cannot remove component!");
+            }
+
             if (!HasComponent(index)) {
                 var errorMsg = "Cannot remove component at index " + index + " from " + this;
                 throw new EntityDoesNotHaveComponentException(errorMsg, index);
@@ -53,6 +62,10 @@ namespace Entitas {
         }
 
         public Entity ReplaceComponent(int index, IComponent component) {
+            if (!_isEnabled) {
+                throw new EntityIsNotEnabledException("Cannot replace component!");
+            }
+
             if (HasComponent(index)) {
                 replaceComponent(index, component);
             } else if (component != null) {
@@ -190,6 +203,12 @@ namespace Entitas {
     public class EntityDoesNotHaveComponentException : Exception {
         public EntityDoesNotHaveComponentException(string message, int index) :
             base(message + "\nEntity does not have a component at index " + index) {
+        }
+    }
+
+    public class EntityIsNotEnabledException : Exception {
+        public EntityIsNotEnabledException(string message) :
+            base(message + "\nEntity is not enabled!") {
         }
     }
 
