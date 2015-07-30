@@ -19,7 +19,7 @@ namespace Entitas {
         protected readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         protected readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
         protected readonly List<Group>[] _groupsForIndex;
-        readonly ObjectPool _entityPool;
+        readonly Stack<Entity> _entityPool = new Stack<Entity>();
         readonly int _totalComponents;
         int _creationIndex;
         Entity[] _entitiesCache;
@@ -31,15 +31,11 @@ namespace Entitas {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
             _groupsForIndex = new List<Group>[totalComponents];
-            _entityPool = new ObjectPool(createEntity);
-        }
-
-        Entity createEntity() {
-            return new Entity(_totalComponents);
+            _entityPool = new Stack<Entity>();
         }
 
         public virtual Entity CreateEntity() {
-            var entity = _entityPool.Get();
+            var entity = _entityPool.Count > 0 ? _entityPool.Pop() : new Entity(_totalComponents);
             entity._isEnabled = true;
             entity._creationIndex = _creationIndex++;
             _entities.Add(entity);
@@ -141,25 +137,6 @@ namespace Entitas {
                     groups[i].UpdateEntity(entity, index, previousComponent, newComponent);
                 }
             }
-        }
-    }
-
-    class ObjectPool {
-        public int Count { get { return _pool.Count; } }
-
-        readonly Func<Entity> _factoryMethod;
-        readonly Stack<Entity> _pool = new Stack<Entity>();
-
-        public ObjectPool(Func<Entity> factoryMethod) {
-            _factoryMethod = factoryMethod;
-        }
-
-        public Entity Get() {
-            return _pool.Count > 0 ? _pool.Pop() : _factoryMethod();
-        }
-
-        public void Push(Entity entity) {
-            _pool.Push(entity);
         }
     }
 
