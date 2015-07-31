@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,6 +17,8 @@ namespace Entitas.Unity.VisualDebugging {
 
         readonly GUIStyle _labelTextStyle;
         readonly GUIStyle _centeredStyle;
+        readonly Vector3[] _cachedLinePointVerticies;
+        Vector3[] _linePoints;
 
         public SystemMonitorEditor() {
             _labelTextStyle = new GUIStyle(GUI.skin.label);
@@ -23,6 +26,13 @@ namespace Entitas.Unity.VisualDebugging {
             _centeredStyle = new GUIStyle();
             _centeredStyle.alignment = TextAnchor.UpperCenter;
             _centeredStyle.normal.textColor = Color.white;
+            _linePoints = new Vector3[64];
+            _cachedLinePointVerticies = new [] {
+                new Vector3(-1, 1 ,0) * anchorRadius,
+                new Vector3(1, 1, 0) * anchorRadius,
+                new Vector3(1, -1, 0) * anchorRadius,
+                new Vector3(-1, -1, 0) * anchorRadius,
+            };
         }
 
         public void Draw(float[] data, float height) {
@@ -60,34 +70,54 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawLine(float[] data, float floor, float availableHeight, float max) {
+            if (data.Length > _linePoints.Length) {
+                GrowLinePointsArray(data.Length * 2);
+            }
+
             var lineWidth = (float)(Screen.width - xBorder - rightLinePadding) / data.Length;
             var handleColor = Handles.color;
-            Handles.color = lineColor;
-            Vector2 prevLine = Vector2.zero;
+            Rect labelRect = new Rect();
             Vector2 newLine;
+            bool mousePositionDiscovered = false;
+            float mouseHoverDataValue = 0;
+            float linePointScale;
+            Handles.color = lineColor;
+            Handles.matrix = Matrix4x4.identity;
+            HandleUtility.handleMaterial.SetPass(0);
             for (int i = 0; i < data.Length; i++) {
                 var value = data[i];
                 var lineTop = floor - (availableHeight * (value / max));
                 newLine = new Vector2(xBorder + (lineWidth * i), lineTop);
-                if (i > 0) {
-                    Handles.DrawAAPolyLine(prevLine, newLine);
+                _linePoints[i] = new Vector3(newLine.x, newLine.y, 0);
+                linePointScale = 1f;
+                if (!mousePositionDiscovered) {
+                    var anchorPosRadius3 = anchorRadius * 3;
+                    var anchorPosRadius6 = anchorRadius * 6;
+                    var anchorPos = newLine - (Vector2.up * 0.5f);
+                    labelRect = new Rect(anchorPos.x - anchorPosRadius3, anchorPos.y - anchorPosRadius3, anchorPosRadius6, anchorPosRadius6);
+                    if (labelRect.Contains(Event.current.mousePosition)) {
+                        mousePositionDiscovered = true;
+                        mouseHoverDataValue = value;
+                        linePointScale = 2f;
+                    }
                 }
-                prevLine = newLine;
-                var anchorPosRadius3 = anchorRadius * 3;
-                var anchorPosRadius6 = anchorRadius * 6;
-                var anchorPos = newLine - (Vector2.up * 0.5f);
-                var labelRect = new Rect(anchorPos.x - anchorPosRadius3, anchorPos.y - anchorPosRadius3, anchorPosRadius6, anchorPosRadius6);
-                if (labelRect.Contains(Event.current.mousePosition)) {
-                    Handles.DrawSolidDisc(anchorPos, Vector3.forward, anchorRadius * 2);
-                    labelRect.y -= 16;
-                    labelRect.width += 50;
-                    labelRect.x -= 25;
-                    GUI.Label(labelRect, string.Format(labelFormat, value), _centeredStyle);
-                } else {
-                    Handles.DrawSolidDisc(anchorPos, Vector3.forward, anchorRadius);
-                }
+                Handles.matrix = Matrix4x4.TRS(_linePoints[i], Quaternion.identity, Vector3.one * linePointScale);
+                Handles.DrawAAConvexPolygon(_cachedLinePointVerticies);
+            }
+            Handles.matrix = Matrix4x4.identity;
+            Handles.DrawAAPolyLine(2f, data.Length, _linePoints);
+
+            if (mousePositionDiscovered) {
+                labelRect.y -= 16;
+                labelRect.width += 50;
+                labelRect.x -= 25;
+                GUI.Label(labelRect, string.Format(labelFormat, mouseHoverDataValue), _centeredStyle);
             }
             Handles.color = handleColor;
+        }
+
+        void GrowLinePointsArray(int desiredSize) {
+            Array.Resize<Vector3>(ref _linePoints, desiredSize);
         }
     }
 }
