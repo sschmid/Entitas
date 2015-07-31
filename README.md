@@ -1,5 +1,6 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas-Header.png" alt="Introducing Entitas">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas-Header.png"
+         alt="Introducing Entitas">
 </p>
 <p align="center">
     <a href="https://gitter.im/sschmid/Entitas-CSharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
@@ -24,10 +25,12 @@
 Entitas is a super fast Entity Component System specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions were made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.](https://cleancoders.com)
 
 [![Download Entitas.zip](https://img.shields.io/badge/download-entitas.zip-blue.svg)](https://github.com/sschmid/Entitas-CSharp/blob/master/bin/Entitas.zip?raw=true)
-- **[Wiki, Roadmap, Overview and example projects](https://github.com/sschmid/Entitas-CSharp/wiki)**
+###**[» Wiki, Roadmap, Overview and example projects](https://github.com/sschmid/Entitas-CSharp/wiki)**
+
 
 # Watch the talk from UniteEurope 2015
 [![UniteEurope 2015](https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope-2015.png)](http://buff.ly/1KtKlm6)
+
 
 # First glimpse
 The optional [code generator](https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator) lets you write code that is super fast, save and literally screams its intent.
@@ -74,9 +77,14 @@ The optional Unity module integrates Entitas nicely into Unity and provides powe
 
 [Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Unity)
 
-![Entitas.Unity-MenuItems](Readme/Images/Entitas.Unity-MenuItems.png)
-![Entitas.Unity.VisualDebugging-Entity](Readme/Images/Entitas.Unity.VisualDebugging-Entity.png)
-![Entitas.Unity.VisualDebugging-Systems](Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png)
+<p align="center">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas.Unity-MenuItems.png"
+         alt="Entitas.Unity MenuItems">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas.Unity.VisualDebugging-Entity.png"
+         alt="Entitas.Unity.VisualDebugging Entity">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png"
+         alt="Entitas.Unity.VisualDebugging Systems">
+</p>
 
 
 # Entitas deep dive
