@@ -105,6 +105,7 @@
     <Compile Include="Tests\Entitas.Migration\describe_M0190.cs" />
     <Compile Include="Tests\Entitas\Fixtures\MultiReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\ReactiveEnsureSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\MultiReactiveEnsureSubSystemSpy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

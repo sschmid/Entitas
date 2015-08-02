@@ -199,9 +199,8 @@ class describe_ReactiveSystem : nspec {
 
         context["ensure components matcher"] = () => {
 
-            ReactiveEnsureSubSystemSpy ensureSubSystem = null;
-            before = () => {
-                ensureSubSystem = new ReactiveEnsureSubSystemSpy(
+            it["only passes in entites matching required matcher"] = () => {
+                var ensureSubSystem = new ReactiveEnsureSubSystemSpy(
                     allOfAB(),
                     GroupEventType.OnEntityAdded,
                     Matcher.AllOf(new [] {
@@ -211,9 +210,40 @@ class describe_ReactiveSystem : nspec {
                     })
                 );
                 reactiveSystem = new ReactiveSystem(pool, ensureSubSystem);
+
+                var eAB = pool.CreateEntity();
+                eAB.AddComponentA();
+                eAB.AddComponentB();
+                var eABC = pool.CreateEntity();
+                eABC.AddComponentA();
+                eABC.AddComponentB();
+                eABC.AddComponentC();
+                reactiveSystem.Execute();
+
+                ensureSubSystem.didExecute.should_be(1);
+                ensureSubSystem.entities.Length.should_be(1);
+                ensureSubSystem.entities.should_contain(eABC);
             };
 
-            it["only passes in entites matching required matcher"] = () => {
+            it["only passes in entites matching required matcher (multi reactive)"] = () => {
+                var matchers = new IMatcher[] {
+                    Matcher.AllOf(new [] { CID.ComponentA }),
+                    Matcher.AllOf(new [] { CID.ComponentB })
+                };
+                var eventTypes = new [] {
+                    GroupEventType.OnEntityAdded,
+                    GroupEventType.OnEntityRemoved,
+                };
+
+                var ensure = Matcher.AllOf(new [] {
+                    CID.ComponentA,
+                    CID.ComponentB,
+                    CID.ComponentC
+                });
+
+                var ensureSubSystem = new MultiReactiveEnsureSubSystemSpy(matchers, eventTypes, ensure);
+                reactiveSystem = new ReactiveSystem(pool, ensureSubSystem);
+
                 var eAB = pool.CreateEntity();
                 eAB.AddComponentA();
                 eAB.AddComponentB();
