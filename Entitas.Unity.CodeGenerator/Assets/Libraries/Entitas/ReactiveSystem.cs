@@ -6,6 +6,7 @@ namespace Entitas {
 
         readonly IReactiveExecuteSystem _subsystem;
         readonly GroupObserver _observer;
+        readonly IMatcher _ensureComponents;
         readonly List<Entity> _buffer;
 
         public ReactiveSystem(Pool pool, IReactiveSystem subSystem) :
@@ -18,6 +19,10 @@ namespace Entitas {
 
         ReactiveSystem(Pool pool, IReactiveExecuteSystem subSystem, IMatcher[] triggers, GroupEventType[] eventTypes) {
             _subsystem = subSystem;
+            var ensureComponents = subSystem as IEnsureComponents;
+            if (ensureComponents != null) {
+                _ensureComponents = ensureComponents.ensureComponents;
+            }
             var groups = new Group[triggers.Length];
             for (int i = 0, triggersLength = triggers.Length; i < triggersLength; i++) {
                 groups[i] = pool.GetGroup(triggers[i]);
@@ -36,7 +41,15 @@ namespace Entitas {
 
         public void Execute() {
             if (_observer.collectedEntities.Count != 0) {
-                _buffer.AddRange(_observer.collectedEntities);
+                if (_ensureComponents != null) {
+                    foreach (var e in _observer.collectedEntities) {
+                        if (_ensureComponents.Matches(e)) {
+                            _buffer.Add(e);
+                        }
+                    }
+                } else {
+                    _buffer.AddRange(_observer.collectedEntities);
+                }
                 _observer.ClearCollectedEntities();
                 _subsystem.Execute(_buffer);
                 _buffer.Clear();

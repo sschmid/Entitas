@@ -180,6 +180,9 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveExecuteSystem.cs">
       <Link>Libraries\Entitas\Interfaces\IReactiveExecuteSystem.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IEnsureComponents.cs">
+      <Link>Libraries\Entitas\Interfaces\IEnsureComponents.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -196,6 +196,38 @@ class describe_ReactiveSystem : nspec {
                 multiSubSystem.entities.should_contain(eB);
             };
         };
+
+        context["ensure components matcher"] = () => {
+
+            ReactiveEnsureSubSystemSpy ensureSubSystem = null;
+            before = () => {
+                ensureSubSystem = new ReactiveEnsureSubSystemSpy(
+                    allOfAB(),
+                    GroupEventType.OnEntityAdded,
+                    Matcher.AllOf(new [] {
+                        CID.ComponentA,
+                        CID.ComponentB,
+                        CID.ComponentC
+                    })
+                );
+                reactiveSystem = new ReactiveSystem(pool, ensureSubSystem);
+            };
+
+            it["only passes in entites matching required matcher"] = () => {
+                var eAB = pool.CreateEntity();
+                eAB.AddComponentA();
+                eAB.AddComponentB();
+                var eABC = pool.CreateEntity();
+                eABC.AddComponentA();
+                eABC.AddComponentB();
+                eABC.AddComponentC();
+                reactiveSystem.Execute();
+
+                ensureSubSystem.didExecute.should_be(1);
+                ensureSubSystem.entities.Length.should_be(1);
+                ensureSubSystem.entities.should_contain(eABC);
+            };
+        };
     }
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityAdded() {
