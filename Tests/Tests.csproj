@@ -106,6 +106,9 @@
     <Compile Include="Tests\Entitas\Fixtures\MultiReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\ReactiveEnsureSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\MultiReactiveEnsureSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\ReactiveExcludeSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\MultiReactiveExcludeSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\ReactiveEnsureExcludeSubSystemSpy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

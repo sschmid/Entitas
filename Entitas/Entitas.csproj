@@ -58,6 +58,7 @@
     <Compile Include="Entitas\Interfaces\IMultiReactiveSystem.cs" />
     <Compile Include="Entitas\Interfaces\IReactiveExecuteSystem.cs" />
     <Compile Include="Entitas\Interfaces\IEnsureComponents.cs" />
+    <Compile Include="Entitas\Interfaces\IExcludeComponents.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

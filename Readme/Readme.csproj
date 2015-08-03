@@ -183,6 +183,9 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IEnsureComponents.cs">
       <Link>Libraries\Entitas\Interfaces\IEnsureComponents.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IExcludeComponents.cs">
+      <Link>Libraries\Entitas\Interfaces\IExcludeComponents.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -258,6 +258,89 @@ class describe_ReactiveSystem : nspec {
                 ensureSubSystem.entities.should_contain(eABC);
             };
         };
+
+        context["exlude components"] = () => {
+            it["only passes in entites not matching matcher"] = () => {
+                var excludeSubSystem = new ReactiveExcludeSubSystemSpy(
+                    allOfAB(),
+                    GroupEventType.OnEntityAdded,
+                    Matcher.AllOf(new [] { CID.ComponentC })
+                );
+                reactiveSystem = new ReactiveSystem(pool, excludeSubSystem);
+
+                var eAB = pool.CreateEntity();
+                eAB.AddComponentA();
+                eAB.AddComponentB();
+                var eABC = pool.CreateEntity();
+                eABC.AddComponentA();
+                eABC.AddComponentB();
+                eABC.AddComponentC();
+                reactiveSystem.Execute();
+
+                excludeSubSystem.didExecute.should_be(1);
+                excludeSubSystem.entities.Length.should_be(1);
+                excludeSubSystem.entities.should_contain(eAB);
+            };
+
+            it["only passes in entites not matching required matcher (multi reactive)"] = () => {
+                var matchers = new IMatcher[] {
+                    Matcher.AllOf(new [] { CID.ComponentA }),
+                    Matcher.AllOf(new [] { CID.ComponentB })
+                };
+                var eventTypes = new [] {
+                    GroupEventType.OnEntityAdded,
+                    GroupEventType.OnEntityRemoved,
+                };
+
+                var exclude = Matcher.AllOf(new [] {
+                    CID.ComponentC
+                });
+
+                var excludeSubSystem = new MultiReactiveExcludeSubSystemSpy(matchers, eventTypes, exclude);
+                reactiveSystem = new ReactiveSystem(pool, excludeSubSystem);
+
+                var eAB = pool.CreateEntity();
+                eAB.AddComponentA();
+                eAB.AddComponentB();
+                var eABC = pool.CreateEntity();
+                eABC.AddComponentA();
+                eABC.AddComponentB();
+                eABC.AddComponentC();
+                reactiveSystem.Execute();
+
+                excludeSubSystem.didExecute.should_be(1);
+                excludeSubSystem.entities.Length.should_be(1);
+                excludeSubSystem.entities.should_contain(eAB);
+            };
+        };
+
+        context["ensure / exlude components mix"] = () => {
+            it["only passes in entites"] = () => {
+                var ensureExcludeSystem = new ReactiveEnsureExcludeSubSystemSpy(
+                    allOfAB(),
+                    GroupEventType.OnEntityAdded,
+                    Matcher.AllOf(new [] { CID.ComponentA, CID.ComponentB }),
+                    Matcher.AllOf(new [] { CID.ComponentC })
+                );
+                reactiveSystem = new ReactiveSystem(pool, ensureExcludeSystem);
+
+                var eAB = pool.CreateEntity();
+                eAB.AddComponentA();
+                eAB.AddComponentB();
+                var eAC = pool.CreateEntity();
+                eAC.AddComponentA();
+                eAC.AddComponentC();
+                var eABC = pool.CreateEntity();
+                eABC.AddComponentA();
+                eABC.AddComponentB();
+                eABC.AddComponentC();
+                reactiveSystem.Execute();
+
+                ensureExcludeSystem.didExecute.should_be(1);
+                ensureExcludeSystem.entities.Length.should_be(1);
+                ensureExcludeSystem.entities.should_contain(eAB);
+            };
+        };
     }
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityAdded() {

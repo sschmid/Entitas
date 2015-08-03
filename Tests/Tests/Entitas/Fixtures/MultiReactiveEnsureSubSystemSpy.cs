@@ -1,13 +1,13 @@
 ﻿using Entitas;
 
 public class MultiReactiveEnsureSubSystemSpy : MultiReactiveSubSystemSpy, IEnsureComponents {
-    public IMatcher ensureComponents { get { return _ensureComponent; } }
+    public IMatcher ensureComponents { get { return _excludeComponents; } }
 
-    readonly IMatcher _ensureComponent;
+    readonly IMatcher _excludeComponents;
 
-    public MultiReactiveEnsureSubSystemSpy(IMatcher[] matchers, GroupEventType[] eventTypes, IMatcher ensureComponent) :
+    public MultiReactiveEnsureSubSystemSpy(IMatcher[] matchers, GroupEventType[] eventTypes, IMatcher ensureComponents) :
         base(matchers, eventTypes) {
-        _ensureComponent = ensureComponent;
+        _excludeComponents = ensureComponents;
     }
 }
 
