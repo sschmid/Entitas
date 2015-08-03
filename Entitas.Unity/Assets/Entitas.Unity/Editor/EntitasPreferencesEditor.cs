@@ -14,6 +14,8 @@ namespace Entitas.Unity {
 
         const string configPath = "Entitas.properties";
 
+        static Vector2 _scrollViewPosition;
+
         [PreferenceItem("Entitas")]
         public static void PreferenceItem() {
             var config = LoadConfig();
@@ -24,10 +26,12 @@ namespace Entitas.Unity {
                 .Select(type => (IEntitasPreferencesDrawer)Activator.CreateInstance(type))
                 .ToArray();
 
+            _scrollViewPosition = EditorGUILayout.BeginScrollView(_scrollViewPosition);
             foreach (var drawer in preferencesDrawers) {
                 drawer.Draw(config);
                 EditorGUILayout.Space();
             }
+            EditorGUILayout.EndScrollView();
 
             if (GUI.changed) {
                 SaveConfig(config);

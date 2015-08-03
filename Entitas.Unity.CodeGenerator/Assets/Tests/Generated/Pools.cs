@@ -8,10 +8,10 @@ public static class Pools {
         get {
             if (_pool == null) {
                 _pool = new Pool(ComponentIds.TotalComponents);
-                #if (UNITY_EDITOR)
+//                #if (UNITY_EDITOR)
 //                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool, "Pool");
 //                UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-                #endif
+//                #endif
             }
 
             return _pool;
