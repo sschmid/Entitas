@@ -2,7 +2,7 @@ using System;
 
 namespace Entitas.CodeGenerator {
 
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class PoolAttribute : Attribute {
         public string tag;
 

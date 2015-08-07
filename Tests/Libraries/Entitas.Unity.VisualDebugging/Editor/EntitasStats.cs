@@ -38,15 +38,17 @@ namespace Entitas.Unity.VisualDebugging {
 
         static Dictionary<string, int> getPools(Type[] components) {
             return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
-                var lookupTag = type.PoolName();
-                if (lookupTag == string.Empty) {
-                    lookupTag = "DefaultPool";
+                var lookupTags = type.PoolNames();
+                if (lookupTags.Length == 0) {
+                    lookupTags = new [] { "DefaultPool" };
                 }
-                if (!lookups.ContainsKey(lookupTag)) {
-                    lookups.Add(lookupTag, 0);
-                }
+                foreach (var lookupTag in lookupTags) {
+                    if (!lookups.ContainsKey(lookupTag)) {
+                        lookups.Add(lookupTag, 0);
+                    }
 
-                lookups[lookupTag] += 1;
+                    lookups[lookupTag] += 1;
+                }
                 return lookups;
             });
         }

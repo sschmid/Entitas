@@ -26,7 +26,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateComponentExtension(Type type) {
-            return type.PoolName() == string.Empty
+            return type.PoolNames().Length == 0
                         ? addDefaultPoolCode(type)
                         : addCustomPoolCode(type);
         }
@@ -306,8 +306,10 @@ $assign
             var a0_type = type;
             var a1_name = type.RemoveComponentSuffix();
             var a2_lowercaseName = a1_name.LowercaseFirst();
-            var a3_tag = type.PoolName();
-            var a4_ids = type.IndicesLookupTag();
+            var poolNames = type.PoolNames();
+            var a3_tag = poolNames.Length == 0 ? string.Empty : poolNames[0];
+            var lookupTags = type.IndicesLookupTags();
+            var a4_ids = lookupTags.Length == 0 ? string.Empty : lookupTags[0];
             var memberNameInfos = getFieldInfos(type);
             var a5_fieldNamesWithType = fieldNamesWithType(memberNameInfos);
             var a6_fieldAssigns = fieldAssignments(memberNameInfos);

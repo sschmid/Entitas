@@ -11,19 +11,24 @@ class describe_IndicesLookupGenerator : nspec {
     }
 
     void generates(Type[] types, string lookupName, string lookupCode) {
+        generates(types, new [] { lookupName }, new [] { lookupCode });
+    }
+
+    void generates(Type[] types, string[] lookupNames, string[] lookupCodes) {
         var files = new IndicesLookupGenerator().Generate(types);
-        files.Length.should_be(1);
+        files.Length.should_be(lookupNames.Length);
 
-        files.Any(f => f.fileName == lookupName).should_be_true();
-        
-        var file = files.First(f => f.fileName == lookupName);
-
-        if (logResults) {
-            Console.WriteLine("should:\n" + lookupCode);
-            Console.WriteLine("was:\n" + file.fileContent);
+        for (int i = 0; i < lookupNames.Length; i++) {
+            var lookupName = lookupNames[i];
+            var lookupCode = lookupCodes[i];
+            files.Any(f => f.fileName == lookupName).should_be_true();
+            var file = files.Single(f => f.fileName == lookupName);
+            if (logResults) {
+                Console.WriteLine("should:\n" + lookupCode);
+                Console.WriteLine("was:\n" + file.fileContent);
+            }
+            file.fileContent.should_be(lookupCode);
         }
-
-        file.fileContent.should_be(lookupCode);
     }
 
     void generatesEmptyLookup(string[] poolNames, string[] lookupNames, string[] lookupCodes) {
@@ -273,6 +278,168 @@ public partial class CoreMatcher : AllOfMatcher {
     }
 }" });
         };
+
+        context["when component is in multiple pools"] = () => {
+
+            it["rearranges ids to have the same index in every lookup (2 pools)"] = () => {
+                generates(new [] {
+                    typeof(AComponent),
+                    typeof(BComponent)
+                }, new [] { "PoolAComponentIds", "PoolBComponentIds" }, new [] {
+                    @"using Entitas;
+
+public static class PoolAComponentIds {
+    public const int B = 0;
+    public const int A = 1;
+
+    public const int TotalComponents = 2;
+
+    static readonly string[] components = {
+        ""B"",
+        ""A""
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+public partial class PoolAMatcher : AllOfMatcher {
+    public PoolAMatcher(int index) : base(new [] { index }) {
+    }
+
+    public override string ToString() {
+        return PoolAComponentIds.IdToString(indices[0]);
+    }
+}",
+                    @"using Entitas;
+
+public static class PoolBComponentIds {
+    public const int B = 0;
+
+    public const int TotalComponents = 1;
+
+    static readonly string[] components = {
+        ""B""
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+public partial class PoolBMatcher : AllOfMatcher {
+    public PoolBMatcher(int index) : base(new [] { index }) {
+    }
+
+    public override string ToString() {
+        return PoolBComponentIds.IdToString(indices[0]);
+    }
+}"
+                });
+            };
+
+            it["rearranges ids to have the same index in every lookup (3 pools)"] = () => {
+                generates(new [] {
+                    typeof(AComponent),
+                    typeof(BComponent),
+                    typeof(CComponent),
+                    typeof(DComponent),
+                    typeof(EComponent),
+                    typeof(FComponent)
+                }, new [] {
+                    "PoolAComponentIds",
+                    "PoolBComponentIds",
+                    "PoolCComponentIds",
+                }, new [] {
+                    @"using Entitas;
+
+public static class PoolAComponentIds {
+    public const int C = 0;
+    public const int B = 1;
+    public const int A = 2;
+
+    public const int TotalComponents = 3;
+
+    static readonly string[] components = {
+        ""C"",
+        ""B"",
+        ""A""
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+public partial class PoolAMatcher : AllOfMatcher {
+    public PoolAMatcher(int index) : base(new [] { index }) {
+    }
+
+    public override string ToString() {
+        return PoolAComponentIds.IdToString(indices[0]);
+    }
+}",
+                    @"using Entitas;
+
+public static class PoolBComponentIds {
+    public const int C = 0;
+    public const int B = 1;
+    public const int D = 2;
+
+    public const int TotalComponents = 3;
+
+    static readonly string[] components = {
+        ""C"",
+        ""B"",
+        ""D""
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+public partial class PoolBMatcher : AllOfMatcher {
+    public PoolBMatcher(int index) : base(new [] { index }) {
+    }
+
+    public override string ToString() {
+        return PoolBComponentIds.IdToString(indices[0]);
+    }
+}",
+                    @"using Entitas;
+
+public static class PoolCComponentIds {
+    public const int C = 0;
+    public const int E = 1;
+    public const int D = 2;
+    public const int F = 3;
+
+    public const int TotalComponents = 4;
+
+    static readonly string[] components = {
+        ""C"",
+        ""E"",
+        ""D"",
+        ""F""
+    };
+
+    public static string IdToString(int componentId) {
+        return components[componentId];
+    }
+}
+
+public partial class PoolCMatcher : AllOfMatcher {
+    public PoolCMatcher(int index) : base(new [] { index }) {
+    }
+
+    public override string ToString() {
+        return PoolCComponentIds.IdToString(indices[0]);
+    }
+}"
+                });
+            };        };
     }
 }
 

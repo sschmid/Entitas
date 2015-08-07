@@ -109,6 +109,12 @@
     <Compile Include="Tests\Entitas\Fixtures\ReactiveExcludeSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\MultiReactiveExcludeSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\ReactiveEnsureExcludeSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\BComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\AComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\CComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\DComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\EComponent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\FComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -127,6 +133,7 @@
     <Folder Include="Tests\Entitas.Migration\" />
     <Folder Include="Tests\Entitas.Migration\Fixtures\" />
     <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
+    <Folder Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

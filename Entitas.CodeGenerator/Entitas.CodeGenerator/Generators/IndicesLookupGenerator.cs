@@ -33,16 +33,40 @@ namespace Entitas.CodeGenerator {
                 }).ToArray();
         }
 
-        static Dictionary<string, List<Type>> getLookups(Type[] components) {
+        static Dictionary<string, Type[]> getLookups(Type[] components) {
+            var currentIndex = 0;
             return components
                 .Where(shouldGenerate)
-                .Aggregate(new Dictionary<string, List<Type>>(), (lookups, type) => {
-                    var lookupTag = type.IndicesLookupTag();
-                    if (!lookups.ContainsKey(lookupTag)) {
-                        lookups.Add(lookupTag, new List<Type>());
+                .Aggregate(new Dictionary<Type, string[]>(), (acc, type) => {
+                    acc.Add(type, type.IndicesLookupTags());
+                    return acc;
+                })
+                .OrderByDescending(kv => kv.Value.Length)
+                .Aggregate(new Dictionary<string, Type[]>(), (lookups, kv) => {
+                    var type = kv.Key;
+                    var lookupTags = kv.Value;
+                    var incrementIndex = false;
+                    foreach (var lookupTag in lookupTags) {
+                        if (!lookups.ContainsKey(lookupTag)) {
+                            lookups.Add(lookupTag, new Type[components.Length]);
+                        }
+
+                        var types = lookups[lookupTag];
+                        if (lookupTags.Length == 1) {
+                            for (int i = 0; i < types.Length; i++) {
+                                if (types[i] == null) {
+                                    types[i] = type;
+                                    break;
+                                }
+                            }
+                        } else {
+                            types[currentIndex] = type;
+                            incrementIndex = true;
+                        }
                     }
-                        
-                    lookups[lookupTag].Add(type);
+                    if (incrementIndex) {
+                        currentIndex++;
+                    }
                     return lookups;
                 });
         }
@@ -74,22 +98,26 @@ namespace Entitas.CodeGenerator {
             const string totalFormat = "    public const int TotalComponents = {0};";
             var code = string.Empty;
             for (int i = 0; i < components.Length; i++) {
-                code += string.Format(fieldFormat, components[i].RemoveComponentSuffix(), i);
+                var type = components[i];
+                if (type != null) {
+                    code += string.Format(fieldFormat, type.RemoveComponentSuffix(), i);
+                }
             }
 
-            return code + "\n" + string.Format(totalFormat, components.Length);
+            return code + "\n" + string.Format(totalFormat, components.Count(type => type != null));
         }
 
         static string addIdToString(Type[] components) {
             const string format = "        \"{1}\",\n";
-            const string formatLast = "        \"{1}\"\n";
             var code = string.Empty;
             for (int i = 0; i < components.Length; i++) {
-                if (i < components.Length - 1) {
-                    code += string.Format(format, i, components[i].RemoveComponentSuffix());
-                } else {
-                    code += string.Format(formatLast, i, components[i].RemoveComponentSuffix());
+                var type = components[i];
+                if (type != null) {
+                    code += string.Format(format, i, type.RemoveComponentSuffix());
                 }
+            }
+            if (code.EndsWith(",\n")) {
+                code = code.Remove(code.Length - 2) + "\n";
             }
 
             return string.Format(@"
@@ -136,7 +164,7 @@ public partial class {0}Matcher : AllOfMatcher {{
         }
 
         static string stripDefaultTag(string tag) {
-            return tag.Replace(typeof(object).IndicesLookupTag(), string.Empty);
+            return tag.Replace(CodeGenerator.defaultIndicesLookupTag, string.Empty);
         }
     }
 }

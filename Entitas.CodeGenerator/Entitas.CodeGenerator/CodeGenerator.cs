@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -87,20 +88,27 @@ namespace Entitas.CodeGenerator {
             return type.Name;
         }
 
-        public static string PoolName(this Type type) {
-            Attribute[] attrs = Attribute.GetCustomAttributes(type);
-            foreach (Attribute attr in attrs) {
-                var customPool = attr as PoolAttribute;
-                if (customPool != null) {
-                    return customPool.tag;
-                }
-            }
+        public static string[] PoolNames(this Type type) {
+            return Attribute.GetCustomAttributes(type)
+                .Aggregate(new List<string>(), (poolNames, attr) => {
+                    var poolAttribute = attr as PoolAttribute;
+                    if (poolAttribute != null) {
+                        poolNames.Add(poolAttribute.tag);
+                    }
 
-            return string.Empty;
+                    return poolNames;
+                }).ToArray();
         }
 
-        public static string IndicesLookupTag(this Type type) {
-            return type.PoolName() + CodeGenerator.defaultIndicesLookupTag;
+        public static string[] IndicesLookupTags(this Type type) {
+            var poolNames = type.PoolNames();
+            if (poolNames.Length == 0) {
+                return new [] { CodeGenerator.defaultIndicesLookupTag };
+            }
+
+            return poolNames
+                .Select(poolName => poolName + CodeGenerator.defaultIndicesLookupTag)
+                .ToArray();
         }
 
         public static string UppercaseFirst(this string str) {
