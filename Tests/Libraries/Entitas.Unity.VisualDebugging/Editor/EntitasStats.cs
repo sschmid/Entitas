@@ -9,9 +9,6 @@ using UnityEngine;
 namespace Entitas.Unity.VisualDebugging {
     public static class EntitasStats {
 
-        public const string keyComponents = "Components";
-        public const string keySystems = "Systems";
-
         [MenuItem("Entitas/Stats")]
         public static void LogStats() {
             foreach (var stat in GetStats()) {
@@ -25,15 +22,20 @@ namespace Entitas.Unity.VisualDebugging {
             var pools = getPools(components);
 
             var stats = new Dictionary<string, int> {
-                { keyComponents, components.Length },
-                { keySystems, types.Count(implementsSystem) }
+                { "Total Components", components.Length },
+                { "Systems", types.Count(implementsSystem) }
             };
 
             foreach (var pool in pools) {
-                stats.Add(pool.Key, pool.Value);
+                stats.Add("Components in " + pool.Key, pool.Value);
             }
 
             return stats;
+        }
+
+        static bool implementsComponent(Type type) {
+            return type.GetInterfaces().Contains(typeof(IComponent))
+                && type != typeof(IComponent);
         }
 
         static Dictionary<string, int> getPools(Type[] components) {
@@ -51,11 +53,6 @@ namespace Entitas.Unity.VisualDebugging {
                 }
                 return lookups;
             });
-        }
-
-        static bool implementsComponent(Type type) {
-            return type.GetInterfaces().Contains(typeof(IComponent))
-                && type != typeof(IComponent);
         }
 
         static bool implementsSystem(Type type) {
