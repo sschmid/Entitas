@@ -31,7 +31,7 @@ namespace Entitas.Unity.CodeGenerator {
             var pools = new List<string>(codeGeneratorConfig.pools);
             if (pools.Count == 0) {
                 EditorGUI.BeginDisabledGroup(true);
-                EditorGUILayout.TextField("DefaultPool");
+                EditorGUILayout.TextField("Pool");
                 EditorGUI.EndDisabledGroup();
             }
 

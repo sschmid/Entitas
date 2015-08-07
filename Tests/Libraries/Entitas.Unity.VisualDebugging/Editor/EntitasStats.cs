@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Entitas.Unity.VisualDebugging {
     public static class EntitasStats {
 
-        [MenuItem("Entitas/Stats")]
+        [MenuItem("Entitas/Log Stats")]
         public static void LogStats() {
             foreach (var stat in GetStats()) {
                 Debug.Log(stat.Key + ": " + stat.Value);
@@ -42,7 +42,7 @@ namespace Entitas.Unity.VisualDebugging {
             return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
                 var lookupTags = type.PoolNames();
                 if (lookupTags.Length == 0) {
-                    lookupTags = new [] { "DefaultPool" };
+                    lookupTags = new [] { "Pool" };
                 }
                 foreach (var lookupTag in lookupTags) {
                     if (!lookups.ContainsKey(lookupTag)) {
