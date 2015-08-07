@@ -97,7 +97,9 @@ namespace Entitas.CodeGenerator {
                     }
 
                     return poolNames;
-                }).ToArray();
+                })
+                .OrderBy(poolName => poolName)
+                .ToArray();
         }
 
         public static string[] IndicesLookupTags(this Type type) {

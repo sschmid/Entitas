@@ -268,7 +268,7 @@ $assign
         */
 
         static string addMatcher(Type type) {
-            return buildString(type, @"
+            const string matcherFormat = @"
     public partial class $TagMatcher {
         static AllOfMatcher _matcher$Name;
 
@@ -282,7 +282,17 @@ $assign
             }
         }
     }
-");
+";
+            var poolNames = type.PoolNames();
+            if (poolNames.Length == 0) {
+                return buildString(type, matcherFormat);
+            }
+
+            var matchers = poolNames.Aggregate(string.Empty, (acc, poolName) => {
+                return acc + buildString(type, matcherFormat.Replace("$Tag", poolName));
+            });
+
+            return buildString(type, matchers);
         }
 
         /*
