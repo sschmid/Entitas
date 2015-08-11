@@ -28,7 +28,7 @@ Entitas is a super fast Entity Component System specifically made for C# and Uni
 ###**[» Wiki, Roadmap, Overview and example projects](https://github.com/sschmid/Entitas-CSharp/wiki)**
 
 
-# Watch the talk from UniteEurope 2015
+# Watch the talk from Unite Europe 2015
 [![UniteEurope 2015](https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope-2015.png)](http://buff.ly/1KtKlm6)
 
 
