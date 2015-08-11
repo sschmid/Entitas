@@ -1,8 +1,8 @@
 ﻿using Entitas;
 using System.Threading;
 
-public class SlowStartExecuteSystem : IStartSystem, IExecuteSystem {
-    public void Start() {
+public class SlowInitializeExecuteSystem : IInitializeSystem, IExecuteSystem {
+    public void Initialize() {
         Thread.Sleep(80);
     }
 

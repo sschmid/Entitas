@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -80,15 +80,15 @@
     <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_VisualDebuggingConfig.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\NamespaceComponent.cs" />
     <Compile Include="Tests\Entitas\describe_Systems.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\StartSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\InitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\ExecuteSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\StartExecuteSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\InitializeExecuteSystemSpy.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_PoolsGenerator.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_SystemExtensionsGenerator.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestStartSystem.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestInitializeSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestExecuteSystem.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestStartExecuteSystem.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestInitializeExecuteSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestReactiveSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\FakeSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\SomeSystem.cs" />

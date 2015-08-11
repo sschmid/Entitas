@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-public class StartExecuteSystemSpy : IStartSystem, IExecuteSystem {
+public class InitializeExecuteSystemSpy : IInitializeSystem, IExecuteSystem {
 
     public bool started { get { return _started; } }
     public bool executed { get { return _executed; } }
@@ -8,7 +8,7 @@ public class StartExecuteSystemSpy : IStartSystem, IExecuteSystem {
     bool _started;
     bool _executed;
 
-    public void Start() {
+    public void Initialize() {
         _started = true;
     }
 

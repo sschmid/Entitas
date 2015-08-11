@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 
-public class MultiReactiveSubSystemSpy : IStartSystem, IMultiReactiveSystem {
+public class MultiReactiveSubSystemSpy : IInitializeSystem, IMultiReactiveSystem {
     public int didExecute { get { return _didExecute; } }
 
     public bool started { get { return _started; } }
@@ -23,7 +23,7 @@ public class MultiReactiveSubSystemSpy : IStartSystem, IMultiReactiveSystem {
 
     public GroupEventType[] eventTypes { get { return _eventTypes; } }
 
-    public void Start() {
+    public void Initialize() {
         _started = true;
     }
 

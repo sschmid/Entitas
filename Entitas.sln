@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas", "Entitas\Entitas.csproj", "{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{E2247925-03D6-40FC-AFA4-D7DA01FA6F4E}"
@@ -31,34 +33,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1FD9529F-AD62-BA9D-663B-19EE10134E18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1FD9529F-AD62-BA9D-663B-19EE10134E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1FD9529F-AD62-BA9D-663B-19EE10134E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1FD9529F-AD62-BA9D-663B-19EE10134E18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{473E785C-BFBC-3731-D01C-B3014E64B5F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{473E785C-BFBC-3731-D01C-B3014E64B5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{473E785C-BFBC-3731-D01C-B3014E64B5F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{473E785C-BFBC-3731-D01C-B3014E64B5F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{520A8C80-EFE1-1AE2-149B-37C28729220D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{520A8C80-EFE1-1AE2-149B-37C28729220D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{520A8C80-EFE1-1AE2-149B-37C28729220D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{520A8C80-EFE1-1AE2-149B-37C28729220D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,7 +40,37 @@ Global
 		{E2247925-03D6-40FC-AFA4-D7DA01FA6F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2247925-03D6-40FC-AFA4-D7DA01FA6F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2247925-03D6-40FC-AFA4-D7DA01FA6F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2247925-03D6-40FC-AFA4-D7DA01FA6F4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F97DA95-DF04-49BF-BB3C-961A516680F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D7C8232-6930-4F13-9D9A-3C32A340BB62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{520A8C80-EFE1-1AE2-149B-37C28729220D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{520A8C80-EFE1-1AE2-149B-37C28729220D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{520A8C80-EFE1-1AE2-149B-37C28729220D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{520A8C80-EFE1-1AE2-149B-37C28729220D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FD9529F-AD62-BA9D-663B-19EE10134E18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FD9529F-AD62-BA9D-663B-19EE10134E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FD9529F-AD62-BA9D-663B-19EE10134E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FD9529F-AD62-BA9D-663B-19EE10134E18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{473E785C-BFBC-3731-D01C-B3014E64B5F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{473E785C-BFBC-3731-D01C-B3014E64B5F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{473E785C-BFBC-3731-D01C-B3014E64B5F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{473E785C-BFBC-3731-D01C-B3014E64B5F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{520A8C80-EFE1-1AE2-149B-37C28729220D} = {A362D161-4159-4B27-A67D-0DF1E3FE4BDF}
@@ -78,11 +82,10 @@ Global
 		$0.DotNetNamingPolicy = $1
 		$1.DirectoryNamespaceAssociation = None
 		$1.ResourceNamePolicy = FileName
-		$0.TextStylePolicy = $2
+		$0.TextStylePolicy = $3
 		$2.inheritsSet = VisualStudio
 		$2.inheritsScope = text/plain
 		$2.scope = text/plain
-		$0.TextStylePolicy = $3
 		$3.inheritsSet = VisualStudio
 		$3.inheritsScope = text/plain
 		$3.scope = text/x-csharp
@@ -115,14 +118,13 @@ Global
 		$5.IncludeInNewFiles = True
 		$0.NameConventionPolicy = $6
 		$6.Rules = $7
-		$7.NamingRule = $8
+		$7.NamingRule = $23
 		$8.Name = PascalCase
 		$8.AffectedEntity = Namespace, Class, Struct, Enum, Delegate, Event, EnumMember
 		$8.VisibilityMask = VisibilityMask
 		$8.NamingStyle = PascalCase
 		$8.IncludeInstanceMembers = True
 		$8.IncludeStaticEntities = True
-		$7.NamingRule = $9
 		$9.Name = Interfaces
 		$9.RequiredPrefixes = $10
 		$10.String = I
@@ -131,7 +133,6 @@ Global
 		$9.NamingStyle = PascalCase
 		$9.IncludeInstanceMembers = True
 		$9.IncludeStaticEntities = True
-		$7.NamingRule = $11
 		$11.Name = Attributes
 		$11.RequiredSuffixes = $12
 		$12.String = Attributes
@@ -140,7 +141,6 @@ Global
 		$11.NamingStyle = PascalCase
 		$11.IncludeInstanceMembers = True
 		$11.IncludeStaticEntities = True
-		$7.NamingRule = $13
 		$13.Name = Event Args
 		$13.RequiredSuffixes = $14
 		$14.String = EventArgs
@@ -149,7 +149,6 @@ Global
 		$13.NamingStyle = PascalCase
 		$13.IncludeInstanceMembers = True
 		$13.IncludeStaticEntities = True
-		$7.NamingRule = $15
 		$15.Name = Exceptions
 		$15.RequiredSuffixes = $16
 		$16.String = Exception
@@ -158,14 +157,12 @@ Global
 		$15.NamingStyle = PascalCase
 		$15.IncludeInstanceMembers = True
 		$15.IncludeStaticEntities = True
-		$7.NamingRule = $17
 		$17.Name = camelCase
 		$17.AffectedEntity = Property, ConstantField, LocalVars
 		$17.VisibilityMask = VisibilityMask
 		$17.NamingStyle = CamelCase
 		$17.IncludeInstanceMembers = True
 		$17.IncludeStaticEntities = True
-		$7.NamingRule = $18
 		$18.Name = Fields (non public)
 		$18.RequiredPrefixes = $19
 		$19.String = _
@@ -174,28 +171,24 @@ Global
 		$18.NamingStyle = CamelCase
 		$18.IncludeInstanceMembers = True
 		$18.IncludeStaticEntities = True
-		$7.NamingRule = $20
 		$20.Name = Fields
 		$20.AffectedEntity = Field, ReadonlyField
 		$20.VisibilityMask = Public
 		$20.NamingStyle = CamelCase
 		$20.IncludeInstanceMembers = True
 		$20.IncludeStaticEntities = True
-		$7.NamingRule = $21
 		$21.Name = Methods (public)
 		$21.AffectedEntity = Methods
 		$21.VisibilityMask = Public
 		$21.NamingStyle = PascalCase
 		$21.IncludeInstanceMembers = True
 		$21.IncludeStaticEntities = True
-		$7.NamingRule = $22
 		$22.Name = Methods
 		$22.AffectedEntity = Methods
 		$22.VisibilityMask = Private, Internal, Protected
 		$22.NamingStyle = CamelCase
 		$22.IncludeInstanceMembers = True
 		$22.IncludeStaticEntities = True
-		$7.NamingRule = $23
 		$23.Name = Type Parameters
 		$23.RequiredPrefixes = $24
 		$24.String = T

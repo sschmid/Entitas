@@ -11,7 +11,7 @@ public class SystemsController : MonoBehaviour {
         _pool = new Pool(ComponentIds.TotalComponents);
         new PoolObserver(_pool, "Systems Pool");
         _systems = createSystems();
-        _systems.Start();
+        _systems.Initialize();
         _pool.CreateEntity().AddMyString("");
     }
 
@@ -22,8 +22,8 @@ public class SystemsController : MonoBehaviour {
 
     Systems createSystems() {
         return new DebugSystems()
-            .Add(_pool.CreateSlowStartSystem())
-            .Add(_pool.CreateSlowStartExecuteSystem())
+            .Add(_pool.CreateSlowInitializeSystem())
+            .Add(_pool.CreateSlowInitializeExecuteSystem())
             .Add(_pool.CreateFastSystem())
             .Add(_pool.CreateSlowSystem())
             .Add(_pool.CreateRandomDurationSystem())

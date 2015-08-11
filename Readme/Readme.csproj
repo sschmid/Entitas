@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -63,14 +63,14 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IExecuteSystem.cs">
       <Link>Libraries\Entitas\Interfaces\IExecuteSystem.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IInitializeSystem.cs">
+      <Link>Libraries\Entitas\Interfaces\IInitializeSystem.cs</Link>
+    </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
       <Link>Libraries\Entitas\Interfaces\IMatcher.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
       <Link>Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IStartSystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IStartSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
       <Link>Libraries\Entitas\Interfaces\ISystem.cs</Link>

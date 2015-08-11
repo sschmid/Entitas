@@ -14,10 +14,10 @@ class describe_SystemExtensionsGenerator : nspec {
     }
 }";
 
-    const string startSystem = @"namespace Entitas {
+    const string initializeSystem = @"namespace Entitas {
     public partial class Pool {
-        public ISystem CreateTestStartSystem() {
-            return this.CreateSystem<TestStartSystem>();
+        public ISystem CreateTestInitializeSystem() {
+            return this.CreateSystem<TestInitializeSystem>();
         }
     }
 }";
@@ -30,10 +30,10 @@ class describe_SystemExtensionsGenerator : nspec {
     }
 }";
 
-    const string startExecuteSystem = @"namespace Entitas {
+    const string initializeExecuteSystem = @"namespace Entitas {
     public partial class Pool {
-        public ISystem CreateTestStartExecuteSystem() {
-            return this.CreateSystem<TestStartExecuteSystem>();
+        public ISystem CreateTestInitializeExecuteSystem() {
+            return this.CreateSystem<TestInitializeExecuteSystem>();
         }
     }
 }";
@@ -71,9 +71,9 @@ class describe_SystemExtensionsGenerator : nspec {
 
     void when_generating() {
         it["System"] = () => generates<TestSystem>(system);
-        it["StartSystem"] = () => generates<TestStartSystem>(startSystem);
+        it["InitializeSystem"] = () => generates<TestInitializeSystem>(initializeSystem);
         it["ExecuteSystem"] = () => generates<TestExecuteSystem>(executeSystem);
-        it["StartExecuteSystem"] = () => generates<TestStartExecuteSystem>(startExecuteSystem);
+        it["InitializeExecuteSystem"] = () => generates<TestInitializeExecuteSystem>(initializeExecuteSystem);
         it["ReactiveSystem"] = () => generates<TestReactiveSystem>(reactiveSystem);
         it["Ignores namespace in method name"] = () => generates<Tests.NamespaceSystem>(namespaceSystem);
         it["Ignores system with constructor args"] = () => ignores<CtorArgsSystem>();
