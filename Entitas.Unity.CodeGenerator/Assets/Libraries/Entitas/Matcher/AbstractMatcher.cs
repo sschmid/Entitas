@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Entitas {
     public abstract class AbstractMatcher : IMatcher {
@@ -50,21 +51,24 @@ namespace Entitas {
 
         public override string ToString() {
             if (_toStringCache == null) {
-                const string seperator = ", ";
-                var indicesString = string.Empty;
-                for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++) {
-                    indicesString += _indices[i] + seperator;
-                }
-
-                if (indicesString != string.Empty) {
-                    indicesString = indicesString.Substring(0, indicesString.Length - seperator.Length);
-                }
-
                 var name = GetType().Name;
                 if (name.EndsWith("Matcher")) {
-                    name = name.Replace("Matcher", string.Empty);
+                    name = name.Substring(0, name.Length - 7);
                 }
-                _toStringCache = name + "(" + indicesString + ")";
+                var sb = new StringBuilder();
+                sb.Append(name);
+                sb.Append("(");
+
+                const string seperator = ", ";
+                var lastSeperator = _indices.Length - 1 ;
+                for (int i = 0, indicesLength = _indices.Length; i < indicesLength; i++) {
+                    sb.Append(_indices[i]);
+                    if (i < lastSeperator) {
+                        sb.Append(seperator);
+                    }
+                }
+                sb.Append(")");
+                _toStringCache = sb.ToString();
             }
 
             return _toStringCache;

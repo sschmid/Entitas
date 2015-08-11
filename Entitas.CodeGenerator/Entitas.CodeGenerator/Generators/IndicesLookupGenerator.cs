@@ -35,13 +35,15 @@ namespace Entitas.CodeGenerator {
 
         static Dictionary<string, Type[]> getLookups(Type[] components) {
             var currentIndex = 0;
-            return components
+            var orderedComponents = components
                 .Where(shouldGenerate)
                 .Aggregate(new Dictionary<Type, string[]>(), (acc, type) => {
                     acc.Add(type, type.IndicesLookupTags());
                     return acc;
                 })
-                .OrderByDescending(kv => kv.Value.Length)
+                .OrderByDescending(kv => kv.Value.Length);
+
+            return orderedComponents
                 .Aggregate(new Dictionary<string, Type[]>(), (lookups, kv) => {
                     var type = kv.Key;
                     var lookupTags = kv.Value;

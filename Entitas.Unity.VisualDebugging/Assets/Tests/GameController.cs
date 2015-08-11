@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour {
         pool.GetGroup(Matcher.Vector3);
         pool.GetGroup(Matcher.GameObject);
         pool.GetGroup(Matcher.AllOf(Matcher.GameObject, Matcher.Vector3));
-        pool.GetGroup(Matcher.AllOf(Matcher.GameObject, Matcher.Vector3, Matcher.NoneOf(Matcher.MyString, Matcher.MyEnum)));
+        pool.GetGroup(Matcher.AllOf(Matcher.GameObject, Matcher.Vector3));
 
         createTestEntities(pool);
         createTestEntityWithNullValues(pool);

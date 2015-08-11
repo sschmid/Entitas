@@ -201,9 +201,9 @@ class describe_Group : nspec {
         };
 
         it["can ToString"] = () => {
-            var m = Matcher.NoneOf(Matcher.AllOf(0), Matcher.AnyOf(1));
+            var m = Matcher.AllOf(Matcher.AllOf(0), Matcher.AllOf(1));
             var group = new Group(m);
-            group.ToString().should_be("Group(NoneOf(AllOf(0), AnyOf(1)))");
+            group.ToString().should_be("Group(AllOf(0, 1))");
         };
     }
 

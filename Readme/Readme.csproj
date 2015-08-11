@@ -75,29 +75,11 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
       <Link>Libraries\Entitas\Interfaces\ISystem.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AbstractCompoundMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AbstractCompoundMatcher.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\AbstractMatcher.cs">
       <Link>Libraries\Entitas\Matcher\AbstractMatcher.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AllOfCompoundMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AllOfCompoundMatcher.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\AllOfMatcher.cs">
       <Link>Libraries\Entitas\Matcher\AllOfMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AnyOfCompoundMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AnyOfCompoundMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AnyOfMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AnyOfMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\NoneOfCompoundMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\NoneOfCompoundMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\NoneOfMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\NoneOfMatcher.cs</Link>
     </Compile>
     <Compile Include="Readme\ReadmeSnippets.cs" />
     <Compile Include="Readme\Components\AnimatingComponent.cs" />
