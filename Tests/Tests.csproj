@@ -74,9 +74,6 @@
     <Compile Include="Tests\Entitas.Unity\describe_Properties.cs" />
     <Compile Include="Tests\Entitas.Unity.CodeGenerator\describe_CodeGeneratorConfig.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
-    <Compile Include="Libraries\Entitas.Unity\EntitasPreferencesConfig.cs" />
-    <Compile Include="Libraries\Entitas.Unity.CodeGenerator\CodeGeneratorConfig.cs" />
-    <Compile Include="Libraries\Entitas.Unity\Properties.cs" />
     <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_VisualDebuggingConfig.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\NamespaceComponent.cs" />
     <Compile Include="Tests\Entitas\describe_Systems.cs" />
@@ -95,12 +92,6 @@
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\NamespaceSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\CtorArgsSystem.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\Entity\EntityBehaviour.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserver.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserverBehaviour.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\DebugSystems.cs" />
-    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\SystemsDebugBehaviour.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0180.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0190.cs" />
     <Compile Include="Tests\Entitas\Fixtures\MultiReactiveSubSystemSpy.cs" />
@@ -115,6 +106,33 @@
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\DComponent.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\EComponent.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\FComponent.cs" />
+    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\EntitasPreferencesConfig.cs">
+      <Link>Libraries\Entitas.Unity\EntitasPreferencesConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\Properties.cs">
+      <Link>Libraries\Entitas.Unity\Properties.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.CodeGenerator\Assets\Entitas.Unity.CodeGenerator\CodeGeneratorConfig.cs">
+      <Link>Libraries\Entitas.Unity.CodeGenerator\CodeGeneratorConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\VisualDebuggingConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\Entity\EntityBehaviour.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\Entity\EntityBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserver.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserver.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserverBehaviour.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserverBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\SystemsObserver\DebugSystems.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\DebugSystems.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\SystemsObserver\SystemsDebugBehaviour.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\SystemsDebugBehaviour.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -127,13 +145,13 @@
     <Folder Include="Tests\Entitas\Fixtures\" />
     <Folder Include="Tests\Entitas.CodeGenerator\Fixtures\" />
     <Folder Include="Tests\Entitas.Unity.CodeGenerator\" />
-    <Folder Include="Libraries\Entitas.Unity\" />
-    <Folder Include="Libraries\Entitas.Unity.CodeGenerator\" />
     <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Tests\Entitas.Migration\" />
     <Folder Include="Tests\Entitas.Migration\Fixtures\" />
-    <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\" />
+    <Folder Include="Libraries\Entitas.Unity\" />
+    <Folder Include="Libraries\Entitas.Unity.CodeGenerator\" />
+    <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />
