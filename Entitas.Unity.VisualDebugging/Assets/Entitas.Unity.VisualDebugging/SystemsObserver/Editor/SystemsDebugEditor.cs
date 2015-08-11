@@ -23,7 +23,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField(systems.name, EditorStyles.boldLabel);
-            EditorGUILayout.LabelField("Start Systems", systems.startSystemsCount.ToString());
+            EditorGUILayout.LabelField("Initialize Systems", systems.initializeSystemsCount.ToString());
             EditorGUILayout.LabelField("Execute Systems", systems.executeSystemsCount.ToString());
             EditorGUILayout.LabelField("Total Systems", systems.totalSystemsCount.ToString());
             EditorGUILayout.EndVertical();
