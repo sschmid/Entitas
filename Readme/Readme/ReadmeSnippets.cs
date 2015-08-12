@@ -54,7 +54,7 @@ namespace Readme {
             entity.isMovable = true;
 
             entity.ReplacePosition(10, 100);
-            entity.ReplaceHealth(entity.health.health - 1);
+            entity.ReplaceHealth(entity.health.value - 1);
             entity.isMovable = false;
 
             entity.RemovePosition();

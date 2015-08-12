@@ -12,16 +12,16 @@ namespace Entitas {
             _healthComponentPool.Clear();
         }
 
-        public Entity AddHealth(int newHealth) {
+        public Entity AddHealth(int newValue) {
             var component = _healthComponentPool.Count > 0 ? _healthComponentPool.Pop() : new HealthComponent();
-            component.health = newHealth;
+            component.value = newValue;
             return AddComponent(ComponentIds.Health, component);
         }
 
-        public Entity ReplaceHealth(int newHealth) {
+        public Entity ReplaceHealth(int newValue) {
             var previousComponent = hasHealth ? health : null;
             var component = _healthComponentPool.Count > 0 ? _healthComponentPool.Pop() : new HealthComponent();
-            component.health = newHealth;
+            component.value = newValue;
             ReplaceComponent(ComponentIds.Health, component);
             if (previousComponent != null) {
                 _healthComponentPool.Push(previousComponent);
