@@ -39,6 +39,7 @@ namespace Entitas {
         public virtual Entity CreateEntity() {
             var entity = _entityPool.Count > 0 ? _entityPool.Pop() : new Entity(_totalComponents);
             entity._isEnabled = true;
+            entity._isDestroyed = false;
             entity._creationIndex = _creationIndex++;
             _entities.Add(entity);
             _entitiesCache = null;
