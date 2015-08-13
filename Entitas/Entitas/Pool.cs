@@ -20,6 +20,7 @@ namespace Entitas {
         protected readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
         protected readonly List<Group>[] _groupsForIndex;
         readonly Stack<Entity> _entityPool = new Stack<Entity>();
+        readonly Stack<Entity> _entityLoopDelayPool = new Stack<Entity>();
         readonly int _totalComponents;
         int _creationIndex;
         Entity[] _entitiesCache;
@@ -32,6 +33,7 @@ namespace Entitas {
             _creationIndex = startCreationIndex;
             _groupsForIndex = new List<Group>[totalComponents];
             _entityPool = new Stack<Entity>();
+            _entityLoopDelayPool = new Stack<Entity>();
         }
 
         public virtual Entity CreateEntity() {
@@ -68,7 +70,7 @@ namespace Entitas {
             entity.OnComponentReplaced -= onComponentReplaced;
             entity.OnComponentRemoved -= onComponentAddedOrRemoved;
             entity._isEnabled = false;
-            _entityPool.Push(entity);
+            _entityLoopDelayPool.Push(entity);
 
             if (OnEntityDestroyed != null) {
                 OnEntityDestroyed(this, entity);
@@ -119,6 +121,14 @@ namespace Entitas {
             }
 
             return group;
+        }
+
+        public virtual void EndLoop() {
+            if(_entityLoopDelayPool.Count == 0) return;
+
+            for (int i = 0, entityLoopDelayCount = _entityLoopDelayPool.Count; i < entityLoopDelayCount; i++) {
+                _entityPool.Push(_entityLoopDelayPool.Pop());
+            }
         }
 
         protected void onComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
