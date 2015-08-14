@@ -133,12 +133,12 @@ namespace Entitas {
 
         public virtual void EndLoop() {
             for (int i = 0, entityLoopDelayCount = _entityLoopDelayPool.Count; i < entityLoopDelayCount; i++) {
-					_entityPool.Push(_entityLoopDelayPool.Pop());
-			}
+                _entityPool.Push(_entityLoopDelayPool.Pop());
+            }
 
-			for (int i = 0, entityCurrentLoopCount = _entityCurrentLoopPool.Count; i < entityCurrentLoopCount; i++) {
-					_entityLoopDelayPool.Push(_entityCurrentLoopPool.Pop());
-			}
+            for (int i = 0, entityCurrentLoopCount = _entityCurrentLoopPool.Count; i < entityCurrentLoopCount; i++) {
+                _entityLoopDelayPool.Push(_entityCurrentLoopPool.Pop());
+            }
         }
 
         protected void onComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
