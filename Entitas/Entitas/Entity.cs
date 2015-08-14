@@ -169,10 +169,6 @@ namespace Entitas {
             }
         }
 
-        public bool IsDestroyed() {
-            return !_isEnabled;
-        }
-
         public override string ToString() {
             if (_toStringCache == null) {
                 var sb = new StringBuilder()
