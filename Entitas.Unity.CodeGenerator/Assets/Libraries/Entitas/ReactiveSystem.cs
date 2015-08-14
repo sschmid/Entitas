@@ -72,8 +72,10 @@ namespace Entitas {
                 }
 
                 _observer.ClearCollectedEntities();
-                _subsystem.Execute(_buffer);
-                _buffer.Clear();
+                if (_buffer.Count != 0) {
+                    _subsystem.Execute(_buffer);
+                    _buffer.Clear();
+                }
             }
         }
     }
