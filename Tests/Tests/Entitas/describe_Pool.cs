@@ -34,11 +34,11 @@ class describe_Pool : nspec {
             _pool.Count.should_be(1);
         };
 
-        it["doesn't have entites that were not created with CreateEntity()"] = () => {
+        it["doesn't have entities that were not created with CreateEntity()"] = () => {
             _pool.HasEntity(this.CreateEntity()).should_be_false();
         };
 
-        it["has entites that were created with CreateEntity()"] = () => {
+        it["has entities that were created with CreateEntity()"] = () => {
             _pool.HasEntity(_pool.CreateEntity()).should_be_true();
         };
 
@@ -64,7 +64,7 @@ class describe_Pool : nspec {
             e.GetComponents().should_be_empty();
         };
 
-        it["destroys all entites"] = () => {
+        it["destroys all entities"] = () => {
             var e = _pool.CreateEntity();
             e.AddComponentA();
             _pool.CreateEntity();

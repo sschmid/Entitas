@@ -146,7 +146,7 @@ namespace Entitas {
 
     public class SingleEntityException : Exception {
         public SingleEntityException(IMatcher matcher) :
-            base("Multiple entites exist matching " + matcher) {
+            base("Multiple entities exist matching " + matcher) {
         }
     }
 }

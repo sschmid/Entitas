@@ -60,7 +60,6 @@
     <Compile Include="PerformanceTests\EntityMatcher\MatcherGetHashCode.cs" />
     <Compile Include="PerformanceTests\EntityMatcher\MatcherEquals.cs" />
     <Compile Include="PerformanceTests\EntityRepository\PoolCreateEntity.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\PoolDestroyAllEntites.cs" />
     <Compile Include="PerformanceTests\EntityRepository\PoolGetGroup.cs" />
     <Compile Include="PerformanceTests\EntityRepository\PoolOnEntityReplaced.cs" />
     <Compile Include="PerformanceTests\EntityRepository\PoolGetEntities.cs" />
@@ -73,6 +72,7 @@
     <Compile Include="PerformanceTests\Properties\PropertiesCreate.cs" />
     <Compile Include="PerformanceTests\DataStructures\QueueDequeue.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListQueue.cs" />
+    <Compile Include="PerformanceTests\EntityRepository\PoolDestroyAllEntities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

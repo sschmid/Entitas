@@ -39,7 +39,7 @@ class describe_GroupObserver : nspec {
                 entities.should_contain(e);
             };
 
-            it["collects entites only once"] = () => {
+            it["collects entities only once"] = () => {
                 var e = pool.CreateEntity();
                 e.AddComponentA();
                 e.RemoveComponentA();
@@ -84,7 +84,7 @@ class describe_GroupObserver : nspec {
                 entities.should_contain(e2);
             };
 
-            it["clears collected entites"] = () => {
+            it["clears collected entities"] = () => {
                 var e = pool.CreateEntity();
                 e.AddComponentA();
 
@@ -92,7 +92,7 @@ class describe_GroupObserver : nspec {
                 observer.collectedEntities.should_be_empty();
             };
 
-            it["removes destroyed entites from collectedEntities"] = () => {
+            it["removes destroyed entities from collectedEntities"] = () => {
                 var e = pool.CreateEntity();
                 e.AddComponentA();
 

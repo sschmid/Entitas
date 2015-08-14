@@ -157,9 +157,9 @@ class describe_ReactiveSystem : nspec {
                 e.AddComponentA();
                 e.AddComponentB();
                 reactiveSystem.Execute();
-                sys.entites.Length.should_be(1);
+                sys.entities.Length.should_be(1);
                 reactiveSystem.Execute();
-                sys.entites.Length.should_be(1);
+                sys.entities.Length.should_be(1);
             };
         };
 
@@ -199,7 +199,7 @@ class describe_ReactiveSystem : nspec {
 
         context["ensure components matcher"] = () => {
 
-            it["only passes in entites matching required matcher"] = () => {
+            it["only passes in entities matching required matcher"] = () => {
                 var ensureSubSystem = new ReactiveEnsureSubSystemSpy(
                     allOfAB(),
                     GroupEventType.OnEntityAdded,
@@ -225,7 +225,7 @@ class describe_ReactiveSystem : nspec {
                 ensureSubSystem.entities.should_contain(eABC);
             };
 
-            it["only passes in entites matching required matcher (multi reactive)"] = () => {
+            it["only passes in entities matching required matcher (multi reactive)"] = () => {
                 var matchers = new IMatcher[] {
                     Matcher.AllOf(new [] { CID.ComponentA }),
                     Matcher.AllOf(new [] { CID.ComponentB })
@@ -285,7 +285,7 @@ class describe_ReactiveSystem : nspec {
         };
 
         context["exlude components"] = () => {
-            it["only passes in entites not matching matcher"] = () => {
+            it["only passes in entities not matching matcher"] = () => {
                 var excludeSubSystem = new ReactiveExcludeSubSystemSpy(
                     allOfAB(),
                     GroupEventType.OnEntityAdded,
@@ -307,7 +307,7 @@ class describe_ReactiveSystem : nspec {
                 excludeSubSystem.entities.should_contain(eAB);
             };
 
-            it["only passes in entites not matching required matcher (multi reactive)"] = () => {
+            it["only passes in entities not matching required matcher (multi reactive)"] = () => {
                 var matchers = new IMatcher[] {
                     Matcher.AllOf(new [] { CID.ComponentA }),
                     Matcher.AllOf(new [] { CID.ComponentB })
@@ -340,7 +340,7 @@ class describe_ReactiveSystem : nspec {
         };
 
         context["ensure / exlude components mix"] = () => {
-            it["only passes in entites"] = () => {
+            it["only passes in entities"] = () => {
                 var ensureExcludeSystem = new ReactiveEnsureExcludeSubSystemSpy(
                     allOfAB(),
                     GroupEventType.OnEntityAdded,

@@ -15,7 +15,7 @@ class describe_Group : nspec {
     }
 
     void when_created() {
-        it["doesn't have entites which haven't been added"] = () => {
+        it["doesn't have entities which haven't been added"] = () => {
             _group.GetEntities().should_be_empty();
         };
 

@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-public class PoolDestroyAllEntites : IPerformanceTest {
+public class PoolDestroyAllEntities : IPerformanceTest {
     const int n = 100000;
     Pool _pool;
 
