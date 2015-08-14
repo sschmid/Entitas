@@ -16,7 +16,6 @@ namespace Entitas {
         internal int _creationIndex;
         internal readonly IComponent[] _components;
         internal bool _isEnabled = true;
-        internal bool _isDestroyed = false;
 
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
@@ -171,11 +170,7 @@ namespace Entitas {
         }
 
         public bool IsDestroyed() {
-            return _isDestroyed;
-        }
-
-        public void Destroy() {
-            _isDestroyed = true;
+            return !_isEnabled;
         }
 
         public override string ToString() {

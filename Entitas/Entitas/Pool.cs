@@ -21,6 +21,7 @@ namespace Entitas {
         protected readonly List<Group>[] _groupsForIndex;
         readonly Stack<Entity> _entityPool = new Stack<Entity>();
         readonly Stack<Entity> _entityLoopDelayPool = new Stack<Entity>();
+        readonly Stack<Entity> _entityCurrentLoopPool = new Stack<Entity>();
         readonly int _totalComponents;
         int _creationIndex;
         Entity[] _entitiesCache;
@@ -34,12 +35,12 @@ namespace Entitas {
             _groupsForIndex = new List<Group>[totalComponents];
             _entityPool = new Stack<Entity>();
             _entityLoopDelayPool = new Stack<Entity>();
+            _entityCurrentLoopPool = new Stack<Entity>();
         }
 
         public virtual Entity CreateEntity() {
             var entity = _entityPool.Count > 0 ? _entityPool.Pop() : new Entity(_totalComponents);
             entity._isEnabled = true;
-            entity._isDestroyed = false;
             entity._creationIndex = _creationIndex++;
             _entities.Add(entity);
             _entitiesCache = null;
@@ -54,7 +55,7 @@ namespace Entitas {
             return entity;
         }
 
-        public virtual void DestroyEntity(Entity entity) {
+        public virtual void DestroyEntity(Entity entity, bool allowReuseNow = true) {
             var removed = _entities.Remove(entity);
             if (!removed) {
                 throw new PoolDoesNotContainEntityException(entity,
@@ -71,17 +72,23 @@ namespace Entitas {
             entity.OnComponentReplaced -= onComponentReplaced;
             entity.OnComponentRemoved -= onComponentAddedOrRemoved;
             entity._isEnabled = false;
-            _entityLoopDelayPool.Push(entity);
+
+            if(allowReuseNow) {
+                _entityPool.Push(entity);
+            }
+            else {
+                _entityCurrentLoopPool.Push(entity);
+            }
 
             if (OnEntityDestroyed != null) {
                 OnEntityDestroyed(this, entity);
             }
         }
 
-        public virtual void DestroyAllEntities() {
+        public virtual void DestroyAllEntities(bool allowReuseNow = true) {
             var entities = GetEntities();
             for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
-                DestroyEntity(entities[i]);
+                DestroyEntity(entities[i], allowReuseNow);
             }
         }
 
@@ -125,11 +132,13 @@ namespace Entitas {
         }
 
         public virtual void EndLoop() {
-            if(_entityLoopDelayPool.Count == 0) return;
-
             for (int i = 0, entityLoopDelayCount = _entityLoopDelayPool.Count; i < entityLoopDelayCount; i++) {
-                _entityPool.Push(_entityLoopDelayPool.Pop());
-            }
+					_entityPool.Push(_entityLoopDelayPool.Pop());
+			}
+
+			for (int i = 0, entityCurrentLoopCount = _entityCurrentLoopPool.Count; i < entityCurrentLoopCount; i++) {
+					_entityLoopDelayPool.Push(_entityCurrentLoopPool.Pop());
+			}
         }
 
         protected void onComponentAddedOrRemoved(Entity entity, int index, IComponent component) {

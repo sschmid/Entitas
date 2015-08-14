@@ -164,7 +164,6 @@ class describe_Pool : nspec {
                 var e = _pool.CreateEntity();
                 e.AddComponentA();
                 _pool.DestroyEntity(e);
-                _pool.EndLoop();
                 var entity = _pool.CreateEntity();
                 entity.HasComponent(CID.ComponentA).should_be_false();
                 entity.should_be_same(e);
@@ -174,7 +173,6 @@ class describe_Pool : nspec {
                 var e = _pool.CreateEntity();
                 e.AddComponentA();
                 _pool.DestroyEntity(e);
-                _pool.EndLoop();
                 _pool.CreateEntity();
                 var entityFromPool = _pool.CreateEntity();
                 entityFromPool.HasComponent(CID.ComponentA).should_be_false();

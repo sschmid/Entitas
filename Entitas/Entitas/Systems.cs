@@ -59,10 +59,6 @@ namespace Entitas {
 
             for (int i = 0, poolsCount = _pools.Count; i < poolsCount; i++) {
                 _pools[i].EndLoop();
-
-                foreach (var e in _pools[i].GetEntities()) {
-                    if(e.IsDestroyed()) _pools[i].DestroyEntity(e);
-                }
             }
         }
     }
