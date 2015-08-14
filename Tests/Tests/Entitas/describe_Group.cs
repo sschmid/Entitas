@@ -198,6 +198,20 @@ class describe_Group : nspec {
                 handle(_eA1);
                 s.should_not_be_same(_group.GetSingleEntity());
             };
+
+            it["updates cache when calling EntityWillBeDestroyed"] = () => {
+                handle(_eA1);
+                var g = _group.GetEntities();
+                _group.EntityWillBeDestroyed(_eA1);
+                g.should_not_be_same(_group.GetEntities());
+            };
+
+            it["updates single cache when calling EntityWillBeDestroyed"] = () => {
+                handle(_eA1);
+                var g = _group.GetSingleEntity();
+                _group.EntityWillBeDestroyed(_eA1);
+                g.should_not_be_same(_group.GetSingleEntity());
+            };
         };
 
         it["can ToString"] = () => {

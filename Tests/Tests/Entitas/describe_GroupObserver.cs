@@ -91,6 +91,15 @@ class describe_GroupObserver : nspec {
                 observer.ClearCollectedEntities();
                 observer.collectedEntities.should_be_empty();
             };
+
+            it["removes destroyed entites from collectedEntities"] = () => {
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+
+                pool.DestroyEntity(e);
+                var entities = observer.collectedEntities;
+                entities.Count.should_be(0);
+            };
         };
 
         context["when observing with eventType OnEntityRemoved"] = () => {

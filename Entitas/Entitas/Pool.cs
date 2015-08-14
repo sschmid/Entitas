@@ -40,9 +40,9 @@ namespace Entitas {
             entity._creationIndex = _creationIndex++;
             _entities.Add(entity);
             _entitiesCache = null;
-            entity.OnComponentAdded += onComponentAddedOrRemoved;
-            entity.OnComponentReplaced += onComponentReplaced;
-            entity.OnComponentRemoved += onComponentAddedOrRemoved;
+            entity.OnComponentAdded += updateGroupsComponentAddedOrRemoved;
+            entity.OnComponentReplaced += updateGroupsComponentReplaced;
+            entity.OnComponentRemoved += updateGroupsComponentAddedOrRemoved;
 
             if (OnEntityCreated != null) {
                 OnEntityCreated(this, entity);
@@ -59,14 +59,16 @@ namespace Entitas {
             }
             _entitiesCache = null;
 
+            updateGroupsEntityWillBeDestroyed(entity);
             if (OnEntityWillBeDestroyed != null) {
                 OnEntityWillBeDestroyed(this, entity);
             }
 
+            entity.OnComponentAdded -= updateGroupsComponentAddedOrRemoved;
+            entity.OnComponentReplaced -= updateGroupsComponentReplaced;
+            entity.OnComponentRemoved -= updateGroupsComponentAddedOrRemoved;
             entity.RemoveAllComponents();
-            entity.OnComponentAdded -= onComponentAddedOrRemoved;
-            entity.OnComponentReplaced -= onComponentReplaced;
-            entity.OnComponentRemoved -= onComponentAddedOrRemoved;
+
             entity._isEnabled = false;
             _entityPool.Push(entity);
 
@@ -121,7 +123,7 @@ namespace Entitas {
             return group;
         }
 
-        protected void onComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
+        protected void updateGroupsComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
@@ -130,11 +132,23 @@ namespace Entitas {
             }
         }
 
-        protected void onComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
+        protected void updateGroupsComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
                     groups[i].UpdateEntity(entity, index, previousComponent, newComponent);
+                }
+            }
+        }
+
+        void updateGroupsEntityWillBeDestroyed(Entity entity) {
+            for (int i = 0, groupsForIndexLength = _groupsForIndex.Length; i < groupsForIndexLength; i++) {
+                var groups = _groupsForIndex[i];
+                if (groups != null) {
+                    for (int j = 0, groupsCount = groups.Count; j < groupsCount; j++) {
+                        var group = groups[j];
+                        group.EntityWillBeDestroyed(entity);
+                    }
                 }
             }
         }

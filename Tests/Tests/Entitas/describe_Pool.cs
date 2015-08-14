@@ -138,10 +138,47 @@ class describe_Pool : nspec {
                 eventGroup.should_be_same(group);
             };
 
-            it["doesn't dispatch OnGroupCreeated when group alredy exists"] = () => {
+            it["doesn't dispatch OnGroupCreated when group alredy exists"] = () => {
                 _pool.GetGroup(Matcher.AllOf(0));
                 _pool.OnGroupCreated += (pool, g) => this.Fail();
                 _pool.GetGroup(Matcher.AllOf(0));
+            };
+
+            context["destroy entity"] = () => {
+                it["dispatches OnEntityWillBeDestroyed when destroying an entity"] = () => {
+                    var destroyed = 0;
+                    var group = _pool.GetGroup(Matcher.AllOf(CID.ComponentA));
+                    var e = _pool.CreateEntity();
+                    group.OnEntityWillBeDestroyed += (g, entity) => {
+                        destroyed += 1;
+                        g.should_be_same(group);
+                        entity.should_be_same(e);
+                        entity.HasComponentA().should_be_true();
+                    };
+
+                    e.AddComponentA();
+
+                    _pool.DestroyEntity(e);
+                    destroyed.should_be(1);
+                };
+
+                it["dispatches OnEntityWillBeDestroyed only when group contains entity"] = () => {
+                    var group = _pool.GetGroup(Matcher.AllOf(CID.ComponentB));
+                    var e = _pool.CreateEntity();
+                    group.OnEntityWillBeDestroyed += (g, entity) => this.Fail();
+
+                    e.AddComponentA();
+                    _pool.DestroyEntity(e);
+                };
+
+                it["doesn't dispatch OnEntityRemoved"] = () => {
+                    var group = _pool.GetGroup(Matcher.AllOf(CID.ComponentA));
+                    var e = _pool.CreateEntity();
+                    group.OnEntityRemoved += (g, entity, index, component) => this.Fail();
+
+                    e.AddComponentA();
+                    _pool.DestroyEntity(e);
+                };
             };
         };
 
