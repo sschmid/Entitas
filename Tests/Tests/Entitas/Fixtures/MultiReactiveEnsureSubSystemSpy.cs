@@ -5,8 +5,8 @@ public class MultiReactiveEnsureSubSystemSpy : MultiReactiveSubSystemSpy, IEnsur
 
     readonly IMatcher _excludeComponents;
 
-    public MultiReactiveEnsureSubSystemSpy(IMatcher[] matchers, GroupEventType[] eventTypes, IMatcher ensureComponents) :
-        base(matchers, eventTypes) {
+    public MultiReactiveEnsureSubSystemSpy(TriggerOnEvent[] triggers, IMatcher ensureComponents) :
+        base(triggers) {
         _excludeComponents = ensureComponents;
     }
 }

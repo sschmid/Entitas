@@ -8,20 +8,16 @@ public class MultiReactiveSubSystemSpy : IStartSystem, IMultiReactiveSystem {
 
     public Entity[] entities { get { return _entities; } }
 
-    readonly IMatcher[] _matchers;
-    readonly GroupEventType[] _eventTypes;
+    readonly TriggerOnEvent[] _triggers;
     int _didExecute;
     bool _started;
     Entity[] _entities;
 
-    public MultiReactiveSubSystemSpy(IMatcher[] matchers, GroupEventType[] eventTypes) {
-        _matchers = matchers;
-        _eventTypes = eventTypes;
+    public MultiReactiveSubSystemSpy(TriggerOnEvent[] triggers) {
+        _triggers = triggers;
     }
 
-    public IMatcher[] triggers { get { return _matchers; } }
-
-    public GroupEventType[] eventTypes { get { return _eventTypes; } }
+    public TriggerOnEvent[] triggers { get { return _triggers; } }
 
     public void Start() {
         _started = true;

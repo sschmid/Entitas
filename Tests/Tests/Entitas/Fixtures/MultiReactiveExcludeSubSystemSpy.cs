@@ -5,8 +5,8 @@ public class MultiReactiveExcludeSubSystemSpy : MultiReactiveSubSystemSpy, IExcl
 
     readonly IMatcher _excludeComponents;
 
-    public MultiReactiveExcludeSubSystemSpy(IMatcher[] matchers, GroupEventType[] eventTypes, IMatcher excludeComponents) :
-    base(matchers, eventTypes) {
+    public MultiReactiveExcludeSubSystemSpy(TriggerOnEvent[] triggers, IMatcher excludeComponents) :
+        base(triggers) {
         _excludeComponents = excludeComponents;
     }
 }

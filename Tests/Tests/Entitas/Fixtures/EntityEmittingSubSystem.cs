@@ -14,9 +14,7 @@ public class EntityEmittingSubSystem : IReactiveSystem {
         _pool = pool;
     }
 
-    public IMatcher trigger { get { return Matcher.AllOf(new [] { CID.ComponentA }); } }
-
-    public GroupEventType eventType { get { return GroupEventType.OnEntityAdded; } }
+    public TriggerOnEvent trigger { get { return Matcher.AllOf(new [] { CID.ComponentA }).OnEntityAdded(); } }
 
     public void Execute(List<Entity> entities) {
         _pool.CreateEntity().AddComponent(CID.ComponentA, new ComponentA());

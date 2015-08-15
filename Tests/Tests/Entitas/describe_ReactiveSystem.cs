@@ -165,15 +165,11 @@ class describe_ReactiveSystem : nspec {
 
         context["MultiReactiveSystem"] = () => {
             before = () => {
-                var matchers = new IMatcher[] {
-                    Matcher.AllOf(new [] { CID.ComponentA }),
-                    Matcher.AllOf(new [] { CID.ComponentB })
+                var triggers = new [] {
+                    Matcher.AllOf(new [] { CID.ComponentA }).OnEntityAdded(),
+                    Matcher.AllOf(new [] { CID.ComponentB }).OnEntityRemoved()
                 };
-                var eventTypes = new [] {
-                    GroupEventType.OnEntityAdded,
-                    GroupEventType.OnEntityRemoved,
-                };
-                multiSubSystem = new MultiReactiveSubSystemSpy(matchers, eventTypes);
+                multiSubSystem = new MultiReactiveSubSystemSpy(triggers);
                 reactiveSystem = new ReactiveSystem(pool, multiSubSystem);
             };
             
@@ -226,22 +222,17 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["only passes in entities matching required matcher (multi reactive)"] = () => {
-                var matchers = new IMatcher[] {
-                    Matcher.AllOf(new [] { CID.ComponentA }),
-                    Matcher.AllOf(new [] { CID.ComponentB })
+                var triggers = new [] {
+                    Matcher.AllOf(new [] { CID.ComponentA }).OnEntityAdded(),
+                    Matcher.AllOf(new [] { CID.ComponentB }).OnEntityRemoved()
                 };
-                var eventTypes = new [] {
-                    GroupEventType.OnEntityAdded,
-                    GroupEventType.OnEntityRemoved,
-                };
-
                 var ensure = Matcher.AllOf(new [] {
                     CID.ComponentA,
                     CID.ComponentB,
                     CID.ComponentC
                 });
 
-                var ensureSubSystem = new MultiReactiveEnsureSubSystemSpy(matchers, eventTypes, ensure);
+                var ensureSubSystem = new MultiReactiveEnsureSubSystemSpy(triggers, ensure);
                 reactiveSystem = new ReactiveSystem(pool, ensureSubSystem);
 
                 var eAB = pool.CreateEntity();
@@ -308,20 +299,15 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["only passes in entities not matching required matcher (multi reactive)"] = () => {
-                var matchers = new IMatcher[] {
-                    Matcher.AllOf(new [] { CID.ComponentA }),
-                    Matcher.AllOf(new [] { CID.ComponentB })
+                var triggers = new [] {
+                    Matcher.AllOf(new [] { CID.ComponentA }).OnEntityAdded(),
+                    Matcher.AllOf(new [] { CID.ComponentB }).OnEntityRemoved()
                 };
-                var eventTypes = new [] {
-                    GroupEventType.OnEntityAdded,
-                    GroupEventType.OnEntityRemoved,
-                };
-
                 var exclude = Matcher.AllOf(new [] {
                     CID.ComponentC
                 });
 
-                var excludeSubSystem = new MultiReactiveExcludeSubSystemSpy(matchers, eventTypes, exclude);
+                var excludeSubSystem = new MultiReactiveExcludeSubSystemSpy(triggers, exclude);
                 reactiveSystem = new ReactiveSystem(pool, excludeSubSystem);
 
                 var eAB = pool.CreateEntity();

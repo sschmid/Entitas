@@ -2,9 +2,7 @@
 using Entitas;
 
 public class ProcessRandomValueSystem : IReactiveSystem, ISetPool {
-    public IMatcher trigger { get { return Matcher.MyFloat; } }
-
-    public GroupEventType eventType { get { return GroupEventType.OnEntityAdded; } }
+    public TriggerOnEvent trigger { get { return Matcher.MyFloat.OnEntityAdded(); } }
 
     Pool _pool;
 

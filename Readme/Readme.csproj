@@ -168,6 +168,9 @@
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\TypeGenerator.cs">
       <Link>Libraries\Entitas.CodeGenerator\Generators\TypeGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\TriggerOnEvent.cs">
+      <Link>Libraries\Entitas\Matcher\TriggerOnEvent.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

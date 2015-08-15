@@ -3,9 +3,7 @@ using Entitas;
 
 public class TestReactiveSystem : IReactiveSystem {
 
-    public IMatcher trigger { get { return null; } }
-
-    public GroupEventType eventType { get { return GroupEventType.OnEntityAdded; } }
+    public TriggerOnEvent trigger { get { return default(TriggerOnEvent); } }
 
     public void Execute(List<Entity> entities) {
     }
