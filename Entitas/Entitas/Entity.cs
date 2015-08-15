@@ -14,8 +14,8 @@ namespace Entitas {
         public int creationIndex { get { return _creationIndex; } }
 
         internal int _creationIndex;
-        internal readonly IComponent[] _components;
         internal bool _isEnabled = true;
+        readonly IComponent[] _components;
 
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
