@@ -1,3 +1,22 @@
+# 0.21.0
+
+##### Fixes
+- Entitas.Migration
+  - Changed target framework to .NET 3.5 to fix build errors in VisualStudio (#22)
+
+##### Entitas
+- Changed pool.DestroyEntity(entity) behaviour
+  - won't trigger group.OnEntityRemoved anymore
+  - triggers group.OnEntityWillBeDestroyed
+  - removes entity from all groupObserver.collectedEntities
+    - ReactiveSystem doesn't pass on destroyed entities anymore
+- ReactiveSystem doesn't call Execute() when filtered entities.Count == 0
+
+
+##### Other
+- Added project files (#18)
+
+
 # 0.20.0
 
 ##### Breaking changes

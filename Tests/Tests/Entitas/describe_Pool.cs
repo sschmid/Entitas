@@ -224,7 +224,7 @@ class describe_Pool : nspec {
                 g.GetEntities().should_contain(e);
             };
 
-            context["when in object pool"] = () => {
+            context["when entity gets destroyed and pushed to object pool"] = () => {
                 Entity e = null;
                 before = () => {
                     e = _pool.CreateEntity();
