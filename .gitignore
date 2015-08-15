@@ -8,6 +8,10 @@ Thumbs.db
 Library
 Temp
 *.unitypackage
+*-CSharp-vs.csproj
+*-CSharp.csproj
+*-CSharp-Editor.csproj
+*-CSharp-Editor-vs.csproj
 
 # Xamarin
 obj
@@ -17,3 +21,10 @@ test-results
 # Custom
 bin
 !bin/Entitas.zip
+
+Entitas.Unity/Entitas.Unity-csharp.sln
+Entitas.Unity/Entitas.Unity.sln
+Entitas.Unity.CodeGenerator/Entitas.Unity.CodeGenerator-csharp.sln
+Entitas.Unity.CodeGenerator/Entitas.Unity.CodeGenerator.sln
+Entitas.Unity.VisualDebugging/Entitas.Unity.VisualDebugging-csharp.sln
+Entitas.Unity.VisualDebugging/Entitas.Unity.VisualDebugging.sln
