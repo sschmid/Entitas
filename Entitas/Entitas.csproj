@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -47,7 +47,7 @@
     <Compile Include="Entitas\Extensions\GroupExtension.cs" />
     <Compile Include="Entitas\Interfaces\IReactiveSystem.cs" />
     <Compile Include="Entitas\ReactiveSystem.cs" />
-    <Compile Include="Entitas\Interfaces\IStartSystem.cs" />
+    <Compile Include="Entitas\Interfaces\IInitializeSystem.cs" />
     <Compile Include="Entitas\Systems.cs" />
     <Compile Include="Entitas\Interfaces\IMultiReactiveSystem.cs" />
     <Compile Include="Entitas\Interfaces\IReactiveExecuteSystem.cs" />

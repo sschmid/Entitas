@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 
-public class ReactiveSubSystemSpy : IStartSystem, IReactiveSystem {
+public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
     public int didExecute { get { return _didExecute; } }
 
     public bool started { get { return _started; } }
@@ -21,7 +21,7 @@ public class ReactiveSubSystemSpy : IStartSystem, IReactiveSystem {
 
     public TriggerOnEvent trigger { get { return new TriggerOnEvent(_matcher, _eventType); } }
 
-    public void Start() {
+    public void Initialize() {
         _started = true;
     }
 

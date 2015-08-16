@@ -1,7 +1,7 @@
 namespace Entitas {
     public partial class Pool {
         public ISystem CreateSomeStartExecuteSystem() {
-            return this.CreateSystem<SomeStartExecuteSystem>();
+            return this.CreateSystem<SomeInitializeExecuteSystem>();
         }
     }
 }

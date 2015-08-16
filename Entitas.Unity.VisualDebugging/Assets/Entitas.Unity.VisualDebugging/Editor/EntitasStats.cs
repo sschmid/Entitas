@@ -58,7 +58,7 @@ namespace Entitas.Unity.VisualDebugging {
         static bool implementsSystem(Type type) {
             return type.GetInterfaces().Contains(typeof(ISystem))
                 && type != typeof(ISystem)
-                && type != typeof(IStartSystem)
+                && type != typeof(IInitializeSystem)
                 && type != typeof(IExecuteSystem)
                 && type != typeof(IReactiveSystem)
                 && type != typeof(ReactiveSystem)

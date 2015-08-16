@@ -37,7 +37,7 @@ class describe_CodeGenerator : nspec {
 
     void when_filtering_systems() {
         it["ignores ISystems interface"] = () => systemFilterIgnores(typeof(ISystem));
-        it["ignores IStartSystems interface"] = () => systemFilterIgnores(typeof(IStartSystem));
+        it["ignores IInitializeSystems interface"] = () => systemFilterIgnores(typeof(IInitializeSystem));
         it["ignores IExecuteSystems interface"] = () => systemFilterIgnores(typeof(IExecuteSystem));
         it["ignores IReactiveSystem interface"] = () => systemFilterIgnores(typeof(IReactiveSystem));
 

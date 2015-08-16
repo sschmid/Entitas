@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 
 namespace Entitas {
-    public class Systems : IStartSystem, IExecuteSystem {
+    public class Systems : IInitializeSystem, IExecuteSystem {
 
-        protected readonly List<IStartSystem> _startSystems;
+        protected readonly List<IInitializeSystem> _initializeSystems;
         protected readonly List<IExecuteSystem> _executeSystems;
 
         public Systems() {
-            _startSystems = new List<IStartSystem>();
+            _initializeSystems = new List<IInitializeSystem>();
             _executeSystems = new List<IExecuteSystem>();
         }
 
@@ -22,12 +22,12 @@ namespace Entitas {
 
         public virtual Systems Add(ISystem system) {
             var reactiveSystem = system as ReactiveSystem;
-            var startSystem = reactiveSystem != null
-                ? reactiveSystem.subsystem as IStartSystem
-                : system as IStartSystem;
+            var initializeSystem = reactiveSystem != null
+                ? reactiveSystem.subsystem as IInitializeSystem
+                : system as IInitializeSystem;
 
-            if (startSystem != null) {
-                _startSystems.Add(startSystem);
+            if (initializeSystem != null) {
+                _initializeSystems.Add(initializeSystem);
             }
 
             var executeSystem = system as IExecuteSystem;
@@ -38,9 +38,9 @@ namespace Entitas {
             return this;
         }
 
-        public virtual void Start() {
-            for (int i = 0, startSysCount = _startSystems.Count; i < startSysCount; i++) {
-                _startSystems[i].Start();
+        public virtual void Initialize() {
+            for (int i = 0, initializeSysCount = _initializeSystems.Count; i < initializeSysCount; i++) {
+                _initializeSystems[i].Initialize();
             }
         }
 
