@@ -133,6 +133,7 @@
     <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\SystemsObserver\SystemsDebugBehaviour.cs">
       <Link>Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\SystemsDebugBehaviour.cs</Link>
     </Compile>
+    <Compile Include="Tests\Entitas.Migration\describe_M0220.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -147,7 +148,6 @@
     <Folder Include="Tests\Entitas.Unity.CodeGenerator\" />
     <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Tests\Entitas.Migration\" />
-    <Folder Include="Tests\Entitas.Migration\Fixtures\" />
     <Folder Include="Tests\Entitas.CodeGenerator\Fixtures\Components in multiple pools\" />
     <Folder Include="Libraries\Entitas.Unity\" />
     <Folder Include="Libraries\Entitas.Unity.CodeGenerator\" />
