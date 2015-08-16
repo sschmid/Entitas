@@ -39,7 +39,7 @@ namespace Entitas {
         }
 
         public virtual void Initialize() {
-            for (int i = 0, startSysCount = _initializeSystems.Count; i < startSysCount; i++) {
+            for (int i = 0, initializeSysCount = _initializeSystems.Count; i < initializeSysCount; i++) {
                 _initializeSystems[i].Initialize();
             }
         }

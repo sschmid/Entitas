@@ -4,13 +4,13 @@ using Entitas;
 public class MultiReactiveSubSystemSpy : IInitializeSystem, IMultiReactiveSystem {
     public int didExecute { get { return _didExecute; } }
 
-    public bool started { get { return _started; } }
+    public bool initialized { get { return _initialized; } }
 
     public Entity[] entities { get { return _entities; } }
 
     readonly TriggerOnEvent[] _triggers;
     int _didExecute;
-    bool _started;
+    bool _initialized;
     Entity[] _entities;
 
     public MultiReactiveSubSystemSpy(TriggerOnEvent[] triggers) {
@@ -20,7 +20,7 @@ public class MultiReactiveSubSystemSpy : IInitializeSystem, IMultiReactiveSystem
     public TriggerOnEvent[] triggers { get { return _triggers; } }
 
     public void Initialize() {
-        _started = true;
+        _initialized = true;
     }
 
     public void Execute(List<Entity> entities) {

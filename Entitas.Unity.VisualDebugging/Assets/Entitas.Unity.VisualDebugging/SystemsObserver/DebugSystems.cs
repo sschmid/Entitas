@@ -130,7 +130,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var system = _initializeSystems[i];
                 var systemInfo = getSystemInfo(system);
                 if (systemInfo.isActive) {
-                    var duration = monitorSystemStartDuration(system);
+                    var duration = monitorSystemInitializeDuration(system);
                     _totalDuration += duration;
                     systemInfo.AddExecutionDuration(duration);
                 }
@@ -163,7 +163,7 @@ namespace Entitas.Unity.VisualDebugging {
             updateName();
         }
 
-        double monitorSystemStartDuration(IInitializeSystem system) {
+        double monitorSystemInitializeDuration(IInitializeSystem system) {
             _stopwatch.Reset();
             _stopwatch.Start();
             system.Initialize();
@@ -196,7 +196,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         void updateName() {
             if (_container != null) {
-                _container.name = string.Format("{0} ({1} start, {2} exe, {3:0.###} ms)",
+                _container.name = string.Format("{0} ({1} init, {2} exe, {3:0.###} ms)",
                     _name, _initializeSystems.Count, _executeSystems.Count, _totalDuration);
             }
         }

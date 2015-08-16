@@ -4,14 +4,14 @@ using Entitas;
 public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
     public int didExecute { get { return _didExecute; } }
 
-    public bool started { get { return _started; } }
+    public bool initialized { get { return _initialized; } }
 
     public Entity[] entities { get { return _entities; } }
 
     readonly IMatcher _matcher;
     readonly GroupEventType _eventType;
     int _didExecute;
-    bool _started;
+    bool _initialized;
     Entity[] _entities;
 
     public ReactiveSubSystemSpy(IMatcher matcher, GroupEventType eventType) {
@@ -22,7 +22,7 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
     public TriggerOnEvent trigger { get { return new TriggerOnEvent(_matcher, _eventType); } }
 
     public void Initialize() {
-        _started = true;
+        _initialized = true;
     }
 
     public void Execute(List<Entity> entities) {

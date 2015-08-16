@@ -1,12 +1,12 @@
 ﻿using Entitas;
 
 public class InitializeSystemSpy : IInitializeSystem {
-    public bool started { get { return _started; } }
+    public bool initialized { get { return _initialized; } }
 
-    bool _started;
+    bool _initialized;
 
     public void Initialize() {
-        _started = true;
+        _initialized = true;
     }
 }
 
