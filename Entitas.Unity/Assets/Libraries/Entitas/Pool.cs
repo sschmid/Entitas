@@ -141,7 +141,7 @@ namespace Entitas {
             }
         }
 
-        void updateGroupsEntityWillBeDestroyed(Entity entity) {
+        protected void updateGroupsEntityWillBeDestroyed(Entity entity) {
             for (int i = 0, groupsForIndexLength = _groupsForIndex.Length; i < groupsForIndexLength; i++) {
                 var groups = _groupsForIndex[i];
                 if (groups != null) {
