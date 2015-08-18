@@ -160,7 +160,10 @@ class describe_Pool : nspec {
                 e.HasComponent(CID.ComponentA).should_be_false();
             };
 
-            it["returns pushed entity"] = () => {
+            xit["returns pushed entity"] = () => {
+
+                // #if (ENTITAS_ENTITY_OBJECT_POOL)
+
                 var e = _pool.CreateEntity();
                 e.AddComponentA();
                 _pool.DestroyEntity(e);
