@@ -75,7 +75,7 @@ The Code Generator generates classes and methods for you, so you can focus on ge
 # Unity integration
 The optional Unity module integrates Entitas nicely into Unity and provides powerful editor extensions to inspect and debug pools, groups, entities, components and systems.
 
-[Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Unity)
+[Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Unity-integration)
 
 <p align="center">
     <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas.Unity-MenuItems.png"
@@ -88,7 +88,7 @@ The optional Unity module integrates Entitas nicely into Unity and provides powe
 
 
 # Entitas deep dive
-[Read the wiki](https://github.com/sschmid/Entitas-CSharp/wiki) or checkout the awesome [example projects](https://github.com/sschmid/Entitas-CSharp/wiki/Examples) to see Entitas in action. These example projects illustrate how systems, groups, observers and entities all play together seamlessly.
+[Read the wiki](https://github.com/sschmid/Entitas-CSharp/wiki) or checkout the awesome [example projects](https://github.com/sschmid/Entitas-CSharp/wiki/Example-projects) to see Entitas in action. These example projects illustrate how systems, groups, observers and entities all play together seamlessly.
 
 
 # Download Entitas
