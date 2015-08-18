@@ -47,9 +47,6 @@ namespace Entitas {
                     group.OnEntityRemoved -= addEntity;
                     group.OnEntityRemoved += addEntity;
                 }
-
-                group.OnEntityWillBeDestroyed -= removeEntity;
-                group.OnEntityWillBeDestroyed += removeEntity;
             }
         }
 
@@ -68,10 +65,6 @@ namespace Entitas {
 
         void addEntity(Group group, Entity entity, int index, IComponent component) {
             _collectedEntities.Add(entity);
-        }
-
-        void removeEntity(Group group, Entity entity) {
-            _collectedEntities.Remove(entity);
         }
     }
 

@@ -59,16 +59,14 @@ namespace Entitas {
             }
             _entitiesCache = null;
 
-            updateGroupsEntityWillBeDestroyed(entity);
             if (OnEntityWillBeDestroyed != null) {
                 OnEntityWillBeDestroyed(this, entity);
             }
 
+            entity.RemoveAllComponents();
             entity.OnComponentAdded -= updateGroupsComponentAddedOrRemoved;
             entity.OnComponentReplaced -= updateGroupsComponentReplaced;
             entity.OnComponentRemoved -= updateGroupsComponentAddedOrRemoved;
-            entity.RemoveAllComponents();
-
             entity._isEnabled = false;
             _entityPool.Push(entity);
 
@@ -137,18 +135,6 @@ namespace Entitas {
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
                     groups[i].UpdateEntity(entity, index, previousComponent, newComponent);
-                }
-            }
-        }
-
-        protected void updateGroupsEntityWillBeDestroyed(Entity entity) {
-            for (int i = 0, groupsForIndexLength = _groupsForIndex.Length; i < groupsForIndexLength; i++) {
-                var groups = _groupsForIndex[i];
-                if (groups != null) {
-                    for (int j = 0, groupsCount = groups.Count; j < groupsCount; j++) {
-                        var group = groups[j];
-                        group.EntityWillBeDestroyed(entity);
-                    }
                 }
             }
         }
