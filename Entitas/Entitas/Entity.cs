@@ -224,5 +224,37 @@ namespace Entitas {
             return obj._creationIndex;
         }
     }
+
+    public partial class Entity {
+        public event EntityReleased OnEntityReleased;
+        public delegate void EntityReleased(Entity entity);
+        
+        internal int _refCount = 0;
+
+        public Entity Retain(){
+            _refCount++;
+            return this;
+        }
+
+        public void Release(){
+            _refCount--;
+            if(_refCount == 0 && OnEntityReleased != null){
+                OnEntityReleased(this);
+            }
+            if(_refCount<0){
+                throw new EntityIsAlreadyReleasedException();
+            }
+        }
+
+        public void ResetRefCount(){
+            _refCount = 0;
+        }
+    }
+
+    public class EntityIsAlreadyReleasedException : Exception {
+        public EntityIsAlreadyReleasedException() :
+            base("Entity is already released!") {
+        }
+    }
 }
 

@@ -200,6 +200,17 @@ class describe_Group : nspec {
             };
         };
 
+        it["counts entity reference up on entity added and down on entity removed"] = () => {
+            Entity eventEntity = null;
+            _eA1.OnEntityReleased += (entity) => {
+                eventEntity = entity;
+            };
+            handle(_eA1);
+            _eA1.RemoveComponentA();
+            handle(_eA1);
+            eventEntity.should_be_same(_eA1);
+        };
+
         it["can ToString"] = () => {
             var m = Matcher.AllOf(Matcher.AllOf(0), Matcher.AllOf(1));
             var group = new Group(m);

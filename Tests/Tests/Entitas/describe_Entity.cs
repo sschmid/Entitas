@@ -218,6 +218,29 @@ class describe_Entity : nspec {
             };
         };
 
+        context["reference counting"] = () => {
+            it["dispatches OnEntityReleased when retain and release"] = () => {
+                Entity eventEntity = null;
+                e.OnEntityReleased += (entity) => {
+                    eventEntity = entity;
+                };
+                e.Retain();
+                e.Release();
+                eventEntity.should_be_same(e);
+            };
+
+            it["does not dipatch and does not throw, when OnEntityReleased is not set"] = () => {
+                e.Retain();
+                e.Release();
+            };
+
+            it["throws when releasing more than it has been retained"] = expect<EntityIsAlreadyReleasedException>(() => {
+                e.Retain();
+                e.Release();
+                e.Release();
+            });
+        };
+
         context["invalid operations"] = () => {
             it["throws when adding a component of the same type twice"] = expect<EntityAlreadyHasComponentException>(() => {
                 e.AddComponentA();
