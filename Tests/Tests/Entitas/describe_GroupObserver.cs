@@ -92,27 +92,25 @@ class describe_GroupObserver : nspec {
                 observer.collectedEntities.should_be_empty();
             };
             
-            it["counts entity reference up when collecting"] = () => {
-                var e = pool.CreateEntity();
-                e.AddComponentA();
-                e.OnEntityReleased += (entity) => this.Fail();
-                e.RemoveComponentA();
-            };
-            
-            it["counts entity reference down when clearing"] = () => {
-                Entity eventEntity = null;
-                var e = pool.CreateEntity();
-                e.ResetRefCount();
-                e.OnEntityReleased += (entity) => {
-                    eventEntity = entity;
+            context["reference counting"] = () => {
+                it["keeps reference count of an entity at one even after destroy"] = () => {
+                    var e = pool.CreateEntity();
+                    e.AddComponentA();
+                    e.OnEntityReleased += (entity) => this.Fail();
+                    pool.DestroyEntity(e);
                 };
-                e.AddComponentA();
-                e.RemoveComponentA();
-                observer.ClearCollectedEntities();
-                eventEntity.should_be_same(e);
+                
+                it["counts entity reference down when clearing"] = () => {
+                    Entity eventEntity = null;
+                    var e = pool.CreateEntity();
+                    e.OnEntityReleased += (entity) => {
+                        eventEntity = entity;
+                    };
+                    pool.DestroyEntity(e);
+                    observer.ClearCollectedEntities();
+                    eventEntity.should_be_same(e);
+                };
             };
-
-            
         };
 
         context["when observing with eventType OnEntityRemoved"] = () => {

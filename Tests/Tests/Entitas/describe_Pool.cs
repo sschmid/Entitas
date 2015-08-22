@@ -160,16 +160,27 @@ class describe_Pool : nspec {
                 e.HasComponent(CID.ComponentA).should_be_false();
             };
 
-            xit["returns pushed entity"] = () => {
-
-                // #if (ENTITAS_ENTITY_OBJECT_POOL)
-
+            it["returns pushed entity"] = () => {
                 var e = _pool.CreateEntity();
                 e.AddComponentA();
                 _pool.DestroyEntity(e);
                 var entity = _pool.CreateEntity();
                 entity.HasComponent(CID.ComponentA).should_be_false();
                 entity.should_be_same(e);
+            };
+
+            it["returns pushed entity only after observer is cleared"] = () => {
+                var e = _pool.CreateEntity();
+                var groupA = _pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                var observer = new GroupObserver(groupA, GroupEventType.OnEntityAdded);
+                e.AddComponentA();
+                _pool.DestroyEntity(e);
+                var entity = _pool.CreateEntity();
+                entity.HasComponent(CID.ComponentA).should_be_false();
+                entity.should_not_be_same(e);
+                observer.ClearCollectedEntities();
+                var entity2 = _pool.CreateEntity();
+                entity2.should_be_same(e);
             };
 
             it["returns new entity"] = () => {
