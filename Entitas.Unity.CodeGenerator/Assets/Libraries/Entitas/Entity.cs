@@ -164,9 +164,10 @@ namespace Entitas {
 
         public void RemoveAllComponents() {
             _toStringCache = null;
-            var indices = GetComponentIndices();
-            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
-                replaceComponent(indices[i], null);
+            for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
+                if (_components[i] != null) {
+                    replaceComponent(i, null);
+                }
             }
         }
 
