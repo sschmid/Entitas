@@ -143,6 +143,19 @@ class describe_Pool : nspec {
                 _pool.OnGroupCreated += (pool, g) => this.Fail();
                 _pool.GetGroup(Matcher.AllOf(0));
             };
+
+            it["removes all external delegates when destroying an entity"] = () => {
+                var e = _pool.CreateEntity();
+                e.OnComponentAdded += (entity, index, component) => this.Fail();
+                e.OnComponentRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
+                _pool.DestroyEntity(e);
+                var e2 = _pool.CreateEntity();
+                e2.should_be_same(e);
+                e2.AddComponentA();
+                e2.ReplaceComponentA(Component.A);
+                e2.RemoveComponentA();
+            };
         };
 
         context["entity pool"] = () => {

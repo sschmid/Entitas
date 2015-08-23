@@ -82,6 +82,7 @@ namespace Entitas {
             entity.OnComponentReplaced -= _updateGroupsComponentReplacedCached;
             entity.OnComponentRemoved -= _updateGroupsComponentAddedOrRemovedCached;
             entity._isEnabled = false;
+            entity.destroy();
 
             if (entity._refCount == 1) {
                 entity.OnEntityReleased -= _reuseAfterEntityReleasedCached;

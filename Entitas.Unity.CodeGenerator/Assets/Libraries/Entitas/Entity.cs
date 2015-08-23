@@ -171,6 +171,12 @@ namespace Entitas {
             }
         }
 
+        internal void destroy() {
+            OnComponentAdded = null;
+            OnComponentReplaced = null;
+            OnComponentRemoved = null;
+        }
+
         public override string ToString() {
             if (_toStringCache == null) {
                 var sb = new StringBuilder()
