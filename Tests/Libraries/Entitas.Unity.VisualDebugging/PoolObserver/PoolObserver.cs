@@ -38,9 +38,7 @@ namespace Entitas.Unity.VisualDebugging {
             return _entitiesContainer.name = 
                 _name + " (" +
                 _pool.Count + " entities, " +
-                #if (ENTITAS_ENTITY_OBJECT_POOL)
                 _pool.pooledEntitiesCount + " reusable, " +
-                #endif
                 _groups.Count + " groups)";
         }
     }
