@@ -14,7 +14,7 @@ namespace Entitas.Unity.VisualDebugging {
             var debugBehaviour = (SystemsDebugBehaviour)target;
             var systems = debugBehaviour.systems;
             if (_systemMonitor == null) {
-                _systemMonitor = new SystemMonitorEditor();
+                _systemMonitor = new SystemMonitorEditor(systemMonitorDataLength);
                 _systemMonitorData = new Queue<float>(new float[systemMonitorDataLength]);
                 if (EditorApplication.update != Repaint) {
                     EditorApplication.update += Repaint;
@@ -102,7 +102,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void addDuration(float duration) {
-            if (_systemMonitorData.Count > systemMonitorDataLength) {
+            if (_systemMonitorData.Count >= systemMonitorDataLength) {
                 _systemMonitorData.Dequeue();
             }
 

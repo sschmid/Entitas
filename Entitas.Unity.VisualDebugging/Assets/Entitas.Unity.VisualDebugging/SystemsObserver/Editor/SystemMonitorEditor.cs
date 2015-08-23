@@ -18,15 +18,15 @@ namespace Entitas.Unity.VisualDebugging {
         readonly GUIStyle _labelTextStyle;
         readonly GUIStyle _centeredStyle;
         readonly Vector3[] _cachedLinePointVerticies;
-        Vector3[] _linePoints;
+        readonly Vector3[] _linePoints;
 
-        public SystemMonitorEditor() {
+        public SystemMonitorEditor(int dataLength) {
             _labelTextStyle = new GUIStyle(GUI.skin.label);
             _labelTextStyle.alignment = TextAnchor.UpperRight;
             _centeredStyle = new GUIStyle();
             _centeredStyle.alignment = TextAnchor.UpperCenter;
             _centeredStyle.normal.textColor = Color.white;
-            _linePoints = new Vector3[64];
+            _linePoints = new Vector3[dataLength];
             _cachedLinePointVerticies = new [] {
                 new Vector3(-1, 1 ,0) * anchorRadius,
                 new Vector3(1, 1, 0) * anchorRadius,
@@ -70,13 +70,9 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawLine(float[] data, float floor, float availableHeight, float max) {
-            if (data.Length > _linePoints.Length) {
-                GrowLinePointsArray(data.Length * 2);
-            }
-
             var lineWidth = (float)(Screen.width - xBorder - rightLinePadding) / data.Length;
             var handleColor = Handles.color;
-            Rect labelRect = new Rect();
+            var labelRect = new Rect();
             Vector2 newLine;
             bool mousePositionDiscovered = false;
             float mouseHoverDataValue = 0;
@@ -98,7 +94,7 @@ namespace Entitas.Unity.VisualDebugging {
                     if (labelRect.Contains(Event.current.mousePosition)) {
                         mousePositionDiscovered = true;
                         mouseHoverDataValue = value;
-                        linePointScale = 2f;
+                        linePointScale = 3f;
                     }
                 }
                 Handles.matrix = Matrix4x4.TRS(_linePoints[i], Quaternion.identity, Vector3.one * linePointScale);
@@ -114,10 +110,6 @@ namespace Entitas.Unity.VisualDebugging {
                 GUI.Label(labelRect, string.Format(labelFormat, mouseHoverDataValue), _centeredStyle);
             }
             Handles.color = handleColor;
-        }
-
-        void GrowLinePointsArray(int desiredSize) {
-            Array.Resize<Vector3>(ref _linePoints, desiredSize);
         }
     }
 }
