@@ -55,16 +55,20 @@ namespace Entitas {
                 var group = _groups[i];
                 group.OnEntityAdded -= addEntity;
                 group.OnEntityRemoved -= addEntity;
-                _collectedEntities.Clear();
             }
+            ClearCollectedEntities();
         }
 
         public void ClearCollectedEntities() {
+            foreach (var entity in _collectedEntities) {
+                entity.Release();
+            }
             _collectedEntities.Clear();
         }
 
         void addEntity(Group group, Entity entity, int index, IComponent component) {
             _collectedEntities.Add(entity);
+            entity.Retain();
         }
     }
 

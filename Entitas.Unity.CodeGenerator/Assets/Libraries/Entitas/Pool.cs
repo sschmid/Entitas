@@ -14,18 +14,18 @@ namespace Entitas {
 
         public int totalComponents { get { return _totalComponents; } }
         public int Count { get { return _entities.Count; } }
+        public int pooledEntitiesCount { get { return _entityPool.Count; } }
 
         protected readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         protected readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
         protected readonly List<Group>[] _groupsForIndex;
+        readonly Stack<Entity> _entityPool = new Stack<Entity>();
+        readonly HashSet<Entity> _nonReusableEntities = new HashSet<Entity>();
+
         readonly int _totalComponents;
         int _creationIndex;
         Entity[] _entitiesCache;
 
-        #if (ENTITAS_ENTITY_OBJECT_POOL)
-        public int pooledEntitiesCount { get { return _entityPool.Count; } }
-        readonly Stack<Entity> _entityPool = new Stack<Entity>();
-        #endif
 
         public Pool(int totalComponents) : this(totalComponents, 0) {
         }
@@ -34,26 +34,20 @@ namespace Entitas {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
             _groupsForIndex = new List<Group>[totalComponents];
-
-            #if (ENTITAS_ENTITY_OBJECT_POOL)
             _entityPool = new Stack<Entity>();
-            #endif
         }
 
         public virtual Entity CreateEntity() {
-            #if (ENTITAS_ENTITY_OBJECT_POOL)
             var entity = _entityPool.Count > 0 ? _entityPool.Pop() : new Entity(_totalComponents);
-            #else
-            var entity = new Entity(_totalComponents);
-            #endif
-
             entity._isEnabled = true;
             entity._creationIndex = _creationIndex++;
+            entity.Retain();
             _entities.Add(entity);
             _entitiesCache = null;
             entity.OnComponentAdded += updateGroupsComponentAddedOrRemoved;
             entity.OnComponentReplaced += updateGroupsComponentReplaced;
             entity.OnComponentRemoved += updateGroupsComponentAddedOrRemoved;
+            entity.OnEntityReleased += reuseAfterEntityReleased;
 
             if (OnEntityCreated != null) {
                 OnEntityCreated(this, entity);
@@ -69,7 +63,7 @@ namespace Entitas {
                     "Could not destroy entity!");
             }
             _entitiesCache = null;
-
+            
             if (OnEntityWillBeDestroyed != null) {
                 OnEntityWillBeDestroyed(this, entity);
             }
@@ -80,9 +74,8 @@ namespace Entitas {
             entity.OnComponentRemoved -= updateGroupsComponentAddedOrRemoved;
             entity._isEnabled = false;
 
-            #if (ENTITAS_ENTITY_OBJECT_POOL)
-            _entityPool.Push(entity);
-            #endif
+            _nonReusableEntities.Add(entity);
+            entity.Release();
 
             if (OnEntityDestroyed != null) {
                 OnEntityDestroyed(this, entity);
@@ -151,6 +144,12 @@ namespace Entitas {
                     groups[i].UpdateEntity(entity, index, previousComponent, newComponent);
                 }
             }
+        }
+
+        protected void reuseAfterEntityReleased(Entity entity) {
+            entity.OnEntityReleased -= reuseAfterEntityReleased;
+            _entityPool.Push(entity);
+            _nonReusableEntities.Remove(entity);
         }
     }
 
