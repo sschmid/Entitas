@@ -231,17 +231,17 @@ namespace Entitas {
 
         internal int _refCount;
 
-        public Entity Retain() {
+        public void Retain() {
             _refCount += 1;
-            return this;
         }
 
         public void Release() {
             _refCount -= 1;
-            if (_refCount == 0 && OnEntityReleased != null) {
-                OnEntityReleased(this);
-            }
-            if (_refCount < 0) {
+            if (_refCount == 0) {
+                if (OnEntityReleased != null) {
+                    OnEntityReleased(this);
+                }
+            } else if (_refCount < 0) {
                 throw new EntityIsAlreadyReleasedException();
             }
         }

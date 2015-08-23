@@ -74,7 +74,12 @@ namespace Entitas {
             entity.OnComponentRemoved -= updateGroupsComponentAddedOrRemoved;
             entity._isEnabled = false;
 
-            _nonReusableEntities.Add(entity);
+            if (entity._refCount == 1) {
+                entity.OnEntityReleased -= reuseAfterEntityReleased;
+                _entityPool.Push(entity);
+            } else {
+                _nonReusableEntities.Add(entity);
+            }
             entity.Release();
 
             if (OnEntityDestroyed != null) {

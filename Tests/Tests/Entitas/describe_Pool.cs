@@ -175,9 +175,9 @@ class describe_Pool : nspec {
                 var observer = new GroupObserver(groupA, GroupEventType.OnEntityAdded);
                 e.AddComponentA();
                 _pool.DestroyEntity(e);
-                var entity = _pool.CreateEntity();
-                entity.HasComponent(CID.ComponentA).should_be_false();
-                entity.should_not_be_same(e);
+                var entity1 = _pool.CreateEntity();
+                entity1.HasComponent(CID.ComponentA).should_be_false();
+                entity1.should_not_be_same(e);
                 observer.ClearCollectedEntities();
                 var entity2 = _pool.CreateEntity();
                 entity2.should_be_same(e);

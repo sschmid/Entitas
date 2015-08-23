@@ -8,6 +8,7 @@ namespace PerformanceTests {
             Thread.Sleep(1500);
 
             run<PoolCreateEntity>();
+            run<PoolDestroyEntity>();
             run<PoolDestroyAllEntities>();
             run<PoolGetGroup>();
             run<PoolGetEntities>();
@@ -35,11 +36,11 @@ namespace PerformanceTests {
             run<EmptyTest>();
             run<ObserverIterateCollectedEntities>();
 //            run<PropertiesCreate>();
-
-            run<ArrayGetItem>();
-            run<DictionaryGetItem>();
-            run<QueueDequeue>();
-            run<ListQueue>();
+//
+//            run<ArrayGetItem>();
+//            run<DictionaryGetItem>();
+//            run<QueueDequeue>();
+//            run<ListQueue>();
 //            run<LinkedListAdd>();
 //            run<LinkedListRemove>();
 //            run<ListAdd>();
@@ -55,7 +56,8 @@ namespace PerformanceTests {
         }
 
         //        Running performance tests...
-        //        PoolCreateEntity:                       68 ms
+        //        PoolCreateEntity:                       93 ms
+        //        PoolDestroyEntity:                      51 ms
         //        PoolDestroyAllEntities:                 49 ms
         //        PoolGetGroup:                           5 ms
         //        PoolGetEntities:                        23 ms
