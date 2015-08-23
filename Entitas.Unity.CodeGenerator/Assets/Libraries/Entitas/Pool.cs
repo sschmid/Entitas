@@ -26,6 +26,10 @@ namespace Entitas {
         int _creationIndex;
         Entity[] _entitiesCache;
 
+        // Cached delegates to avoid gc allocations
+        Entity.EntityChanged _updateGroupsComponentAddedOrRemovedCached;
+        Entity.ComponentReplaced _updateGroupsComponentReplacedCached;
+        Entity.EntityReleased _reuseAfterEntityReleasedCached;
 
         public Pool(int totalComponents) : this(totalComponents, 0) {
         }
@@ -35,6 +39,11 @@ namespace Entitas {
             _creationIndex = startCreationIndex;
             _groupsForIndex = new List<Group>[totalComponents];
             _entityPool = new Stack<Entity>();
+
+            // Cached delegates to avoid gc allocations
+            _updateGroupsComponentAddedOrRemovedCached = updateGroupsComponentAddedOrRemoved;
+            _updateGroupsComponentReplacedCached = updateGroupsComponentReplaced;
+            _reuseAfterEntityReleasedCached = reuseAfterEntityReleased;
         }
 
         public virtual Entity CreateEntity() {
@@ -44,10 +53,10 @@ namespace Entitas {
             entity.Retain();
             _entities.Add(entity);
             _entitiesCache = null;
-            entity.OnComponentAdded += updateGroupsComponentAddedOrRemoved;
-            entity.OnComponentReplaced += updateGroupsComponentReplaced;
-            entity.OnComponentRemoved += updateGroupsComponentAddedOrRemoved;
-            entity.OnEntityReleased += reuseAfterEntityReleased;
+            entity.OnComponentAdded += _updateGroupsComponentAddedOrRemovedCached;
+            entity.OnComponentReplaced += _updateGroupsComponentReplacedCached;
+            entity.OnComponentRemoved += _updateGroupsComponentAddedOrRemovedCached;
+            entity.OnEntityReleased += _reuseAfterEntityReleasedCached;
 
             if (OnEntityCreated != null) {
                 OnEntityCreated(this, entity);
@@ -69,13 +78,13 @@ namespace Entitas {
             }
 
             entity.RemoveAllComponents();
-            entity.OnComponentAdded -= updateGroupsComponentAddedOrRemoved;
-            entity.OnComponentReplaced -= updateGroupsComponentReplaced;
-            entity.OnComponentRemoved -= updateGroupsComponentAddedOrRemoved;
+            entity.OnComponentAdded -= _updateGroupsComponentAddedOrRemovedCached;
+            entity.OnComponentReplaced -= _updateGroupsComponentReplacedCached;
+            entity.OnComponentRemoved -= _updateGroupsComponentAddedOrRemovedCached;
             entity._isEnabled = false;
 
             if (entity._refCount == 1) {
-                entity.OnEntityReleased -= reuseAfterEntityReleased;
+                entity.OnEntityReleased -= _reuseAfterEntityReleasedCached;
                 _entityPool.Push(entity);
             } else {
                 _nonReusableEntities.Add(entity);
@@ -152,7 +161,7 @@ namespace Entitas {
         }
 
         protected void reuseAfterEntityReleased(Entity entity) {
-            entity.OnEntityReleased -= reuseAfterEntityReleased;
+            entity.OnEntityReleased -= _reuseAfterEntityReleasedCached;
             _entityPool.Push(entity);
             _nonReusableEntities.Remove(entity);
         }
