@@ -75,11 +75,11 @@ namespace Entitas {
                     _buffer.AddRange(_observer.collectedEntities);
                 }
 
-                _observer.ClearCollectedEntities();
                 if (_buffer.Count != 0) {
                     _subsystem.Execute(_buffer);
                     _buffer.Clear();
                 }
+                _observer.ClearCollectedEntities();
             }
         }
     }
