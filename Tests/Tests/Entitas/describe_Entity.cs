@@ -382,6 +382,12 @@ class describe_Entity : nspec {
                     e.RemoveAllComponents();
                     e.ToString().should_not_be_same(str);
                 };
+
+                it["updates cache when RemoveAllComponents is called, even if entity has no components"] = () => {
+                    var str = e.ToString();
+                    e.RemoveAllComponents();
+                    e.ToString().should_not_be_same(str);
+                };
             };
         };
 

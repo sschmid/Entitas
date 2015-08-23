@@ -163,6 +163,7 @@ namespace Entitas {
         }
 
         public void RemoveAllComponents() {
+            _toStringCache = null;
             var indices = GetComponentIndices();
             for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
                 replaceComponent(indices[i], null);
