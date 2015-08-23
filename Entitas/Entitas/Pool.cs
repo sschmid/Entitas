@@ -14,16 +14,18 @@ namespace Entitas {
 
         public int totalComponents { get { return _totalComponents; } }
         public int Count { get { return _entities.Count; } }
+        public int pooledEntitiesCount { get { return _entityPool.Count; } }
 
         protected readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         protected readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
         protected readonly List<Group>[] _groupsForIndex;
+        readonly Stack<Entity> _entityPool = new Stack<Entity>();
+        readonly HashSet<Entity> _nonReusableEntities = new HashSet<Entity>();
+
         readonly int _totalComponents;
         int _creationIndex;
         Entity[] _entitiesCache;
 
-        public int pooledEntitiesCount { get { return _entityPool.Count; } }
-        readonly Stack<Entity> _entityPool = new Stack<Entity>();
 
         public Pool(int totalComponents) : this(totalComponents, 0) {
         }
@@ -32,16 +34,13 @@ namespace Entitas {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
             _groupsForIndex = new List<Group>[totalComponents];
-
             _entityPool = new Stack<Entity>();
         }
 
         public virtual Entity CreateEntity() {
             var entity = _entityPool.Count > 0 ? _entityPool.Pop() : new Entity(_totalComponents);
-
             entity._isEnabled = true;
             entity._creationIndex = _creationIndex++;
-            entity.ResetRefCount();
             entity.Retain();
             _entities.Add(entity);
             _entitiesCache = null;
@@ -146,21 +145,17 @@ namespace Entitas {
                 }
             }
         }
-    }
-
-    public class PoolDoesNotContainEntityException : Exception {
-        public PoolDoesNotContainEntityException(Entity entity, string message) :
-            base(message + "\nPool does not contain entity " + entity) {
-        }
-    }
-
-    public partial class Pool {
-        HashSet<Entity> _nonReusableEntities = new HashSet<Entity>();
 
         protected void reuseAfterEntityReleased(Entity entity) {
             entity.OnEntityReleased -= reuseAfterEntityReleased;
             _entityPool.Push(entity);
             _nonReusableEntities.Remove(entity);
+        }
+    }
+
+    public class PoolDoesNotContainEntityException : Exception {
+        public PoolDoesNotContainEntityException(Entity entity, string message) :
+            base(message + "\nPool does not contain entity " + entity) {
         }
     }
 }

@@ -8,6 +8,8 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
 
     public Entity[] entities { get { return _entities; } }
 
+    public bool replaceComponentAOnExecute;
+
     readonly IMatcher _matcher;
     readonly GroupEventType _eventType;
     int _didExecute;
@@ -28,5 +30,10 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
     public void Execute(List<Entity> entities) {
         _didExecute++;
         _entities = entities.ToArray();
+
+        if (replaceComponentAOnExecute) {
+            var e = _entities[0];
+            e.ReplaceComponentA(Component.A);
+        }
     }
 }

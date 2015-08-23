@@ -46,6 +46,17 @@ class describe_ReactiveSystem : nspec {
                 subSystem.entities.should_contain(e);
             };
 
+            it["collects changed entities in execute"] = () => {
+                subSystem.replaceComponentAOnExecute = true;
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                reactiveSystem.Execute();
+                reactiveSystem.Execute();
+
+                subSystem.didExecute.should_be(2);
+            };
+
             it["doesn't execute when triggeringMatcher doesn't match"] = () => {
                 var e = pool.CreateEntity();
                 e.AddComponentA();

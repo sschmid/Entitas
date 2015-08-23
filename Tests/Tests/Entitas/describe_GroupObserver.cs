@@ -96,18 +96,19 @@ class describe_GroupObserver : nspec {
                 it["keeps reference count of an entity at one even after destroy"] = () => {
                     var e = pool.CreateEntity();
                     e.AddComponentA();
-                    e.OnEntityReleased += (entity) => this.Fail();
+                    e.OnEntityReleased += entity => this.Fail();
                     pool.DestroyEntity(e);
                 };
                 
                 it["counts entity reference down when clearing"] = () => {
                     Entity eventEntity = null;
                     var e = pool.CreateEntity();
-                    e.OnEntityReleased += (entity) => {
+                    e.OnEntityReleased += entity => {
                         eventEntity = entity;
                     };
                     pool.DestroyEntity(e);
                     observer.ClearCollectedEntities();
+                    eventEntity.should_not_be_null();
                     eventEntity.should_be_same(e);
                 };
             };
