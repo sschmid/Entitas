@@ -126,7 +126,7 @@ class describe_Pool : nspec {
                 eventEntity.should_be_same(e);
             };
 
-            it["dispatches OnEntityDestroyed when destroying a new entity. The entity is released only after event dispatch is done"] = () => {
+            it["Entity is released after OnEntityDestroyed"] = () => {
                 var e = _pool.CreateEntity();
                 Pool eventPool = null;
                 Entity eventEntity = null;
