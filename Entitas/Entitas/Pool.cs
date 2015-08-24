@@ -82,7 +82,11 @@ namespace Entitas {
             entity.OnComponentReplaced -= _updateGroupsComponentReplacedCached;
             entity.OnComponentRemoved -= _updateGroupsComponentAddedOrRemovedCached;
             entity._isEnabled = false;
-            entity.destroy();
+            entity.destroy();           
+
+            if (OnEntityDestroyed != null) {
+                OnEntityDestroyed(this, entity);
+            }
 
             if (entity._refCount == 1) {
                 entity.OnEntityReleased -= _reuseAfterEntityReleasedCached;
@@ -91,10 +95,6 @@ namespace Entitas {
                 _nonReusableEntities.Add(entity);
             }
             entity.Release();
-
-            if (OnEntityDestroyed != null) {
-                OnEntityDestroyed(this, entity);
-            }
         }
 
         public virtual void DestroyAllEntities() {

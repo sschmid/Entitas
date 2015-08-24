@@ -138,6 +138,7 @@ class describe_ReactiveSystem : nspec {
                 subSystem.executeBlock = (entities) => {
                     var providedEntity = entities[0];
                     var newEntitty = pool.CreateEntity();
+                    providedEntity.should_not_be_null();
                     providedEntity.should_not_be_same(newEntitty);
                     wasExecuted = true;
                 };
