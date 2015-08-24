@@ -59,11 +59,6 @@
     <Compile Include="PerformanceTests\Fixtures\CP.cs" />
     <Compile Include="PerformanceTests\EntityMatcher\MatcherGetHashCode.cs" />
     <Compile Include="PerformanceTests\EntityMatcher\MatcherEquals.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\PoolCreateEntity.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\PoolGetGroup.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\PoolOnEntityReplaced.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\PoolGetEntities.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\PoolHasEntity.cs" />
     <Compile Include="PerformanceTests\DataStructures\IterateHashSet.cs" />
     <Compile Include="PerformanceTests\DataStructures\IterateHashetToArray.cs" />
     <Compile Include="PerformanceTests\Entity\EntityAddComponent.cs" />
@@ -72,18 +67,24 @@
     <Compile Include="PerformanceTests\Properties\PropertiesCreate.cs" />
     <Compile Include="PerformanceTests\DataStructures\QueueDequeue.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListQueue.cs" />
-    <Compile Include="PerformanceTests\EntityRepository\PoolDestroyAllEntities.cs" />
+    <Compile Include="PerformanceTests\Pool\PoolCreateEntity.cs" />
+    <Compile Include="PerformanceTests\Pool\PoolGetGroup.cs" />
+    <Compile Include="PerformanceTests\Pool\PoolOnEntityReplaced.cs" />
+    <Compile Include="PerformanceTests\Pool\PoolGetEntities.cs" />
+    <Compile Include="PerformanceTests\Pool\PoolHasEntity.cs" />
+    <Compile Include="PerformanceTests\Pool\PoolDestroyAllEntities.cs" />
+    <Compile Include="PerformanceTests\Pool\PoolDestroyEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="PerformanceTests\" />
-    <Folder Include="PerformanceTests\EntityRepository\" />
     <Folder Include="PerformanceTests\Entity\" />
     <Folder Include="PerformanceTests\Fixtures\" />
     <Folder Include="PerformanceTests\EntityMatcher\" />
     <Folder Include="PerformanceTests\DataStructures\" />
     <Folder Include="PerformanceTests\Observer\" />
     <Folder Include="PerformanceTests\Properties\" />
+    <Folder Include="PerformanceTests\Pool\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas\Entitas.csproj">

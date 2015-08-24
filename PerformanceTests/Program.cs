@@ -8,6 +8,7 @@ namespace PerformanceTests {
             Thread.Sleep(1500);
 
             run<PoolCreateEntity>();
+            run<PoolDestroyEntity>();
             run<PoolDestroyAllEntities>();
             run<PoolGetGroup>();
             run<PoolGetEntities>();
@@ -35,11 +36,11 @@ namespace PerformanceTests {
             run<EmptyTest>();
             run<ObserverIterateCollectedEntities>();
 //            run<PropertiesCreate>();
-
-            run<ArrayGetItem>();
-            run<DictionaryGetItem>();
-            run<QueueDequeue>();
-            run<ListQueue>();
+//
+//            run<ArrayGetItem>();
+//            run<DictionaryGetItem>();
+//            run<QueueDequeue>();
+//            run<ListQueue>();
 //            run<LinkedListAdd>();
 //            run<LinkedListRemove>();
 //            run<ListAdd>();
@@ -55,29 +56,30 @@ namespace PerformanceTests {
         }
 
         //        Running performance tests...
-        //        PoolCreateEntity:                       68 ms
-        //        PoolDestroyAllEntities:                 49 ms
+        //        PoolCreateEntity:                       30 ms
+        //        PoolDestroyEntity:                      29 ms
+        //        PoolDestroyAllEntities:                 25 ms
         //        PoolGetGroup:                           5 ms
-        //        PoolGetEntities:                        23 ms
-        //        PoolHasEntity:                          9 ms
+        //        PoolGetEntities:                        2 ms
+        //        PoolHasEntity:                          10 ms
         //        PoolOnEntityReplaced:                   6 ms
         //
-        //        EntityAddComponent:                     272 ms
-        //        EntityGetComponent:                     45 ms
+        //        EntityAddComponent:                     257 ms
+        //        EntityGetComponent:                     44 ms
         //        EntityGetComponents:                    4 ms
         //        EntityHasComponent:                     2 ms
-        //        EntityRemoveAddComponent:               406 ms
+        //        EntityRemoveAddComponent:               289 ms
         //        EntityReplaceComponent:                 20 ms
         //
-        //        MatcherEquals:                          161 ms
-        //        MatcherGetHashCode:                     26 ms
+        //        MatcherEquals:                          171 ms
+        //        MatcherGetHashCode:                     17 ms
         //
-        //        IterateHashetToArray:                   476 ms
-        //        IterateHashSet:                         752 ms
+        //        IterateHashetToArray:                   456 ms
+        //        IterateHashSet:                         774 ms
         //
         //        ObjectGetProperty:                      6 ms
         //
-        //        ObserverIterateCollectedEntities:       884 ms
+        //        ObserverIterateCollectedEntities:       957 ms
         //        PropertiesCreate:                       251 ms
         //
         //        ArrayGetItem:                           2 ms

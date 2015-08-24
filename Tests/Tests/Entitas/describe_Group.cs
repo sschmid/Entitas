@@ -200,15 +200,59 @@ class describe_Group : nspec {
             };
         };
 
-        it["counts entity reference up on entity added and down on entity removed"] = () => {
-            Entity eventEntity = null;
-            _eA1.OnEntityReleased += (entity) => {
-                eventEntity = entity;
+        context["reference counting"] = () => {
+            it["counts entity reference up on entity added and down on entity removed"] = () => {
+                Entity eventEntity = null;
+                _eA1.OnEntityReleased += entity => {
+                    eventEntity = entity;
+                };
+                handle(_eA1);
+                _eA1.RemoveComponentA();
+                handle(_eA1);
+                eventEntity.should_be_same(_eA1);
             };
-            handle(_eA1);
-            _eA1.RemoveComponentA();
-            handle(_eA1);
-            eventEntity.should_be_same(_eA1);
+
+            it["invalidates singleEntityCache"] = () => {
+                _eA1.OnEntityReleased += entity => {
+                    _group.GetSingleEntity().should_be_null();
+                };
+                handle(_eA1);
+                _group.GetSingleEntity();
+                _eA1.RemoveComponentA();
+                handle(_eA1);
+            };
+
+            it["invalidates singleEntityCache"] = () => {
+                _eA1.OnEntityReleased += entity => {
+                    _group.GetSingleEntity().should_be_null();
+                };
+                handleAddEA(_eA1);
+                _group.GetSingleEntity();
+                var c = _eA1.GetComponent(CID.ComponentA);
+                _eA1.RemoveComponentA();
+                handleRemoveEA(_eA1, c);
+            };
+
+            it["invalidates entitiesCache"] = () => {
+                _eA1.OnEntityReleased += entity => {
+                    _group.GetEntities().Length.should_be(0);
+                };
+                handle(_eA1);
+                _group.GetEntities();
+                _eA1.RemoveComponentA();
+                handle(_eA1);
+            };
+
+            it["invalidates entitiesCache"] = () => {
+                _eA1.OnEntityReleased += entity => {
+                    _group.GetEntities().Length.should_be(0);
+                };
+                handleAddEA(_eA1);
+                _group.GetEntities();
+                var c = _eA1.GetComponent(CID.ComponentA);
+                _eA1.RemoveComponentA();
+                handleRemoveEA(_eA1, c);
+            };
         };
 
         it["can ToString"] = () => {

@@ -163,10 +163,18 @@ namespace Entitas {
         }
 
         public void RemoveAllComponents() {
-            var indices = GetComponentIndices();
-            for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
-                replaceComponent(indices[i], null);
+            _toStringCache = null;
+            for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
+                if (_components[i] != null) {
+                    replaceComponent(i, null);
+                }
             }
+        }
+
+        internal void destroy() {
+            OnComponentAdded = null;
+            OnComponentReplaced = null;
+            OnComponentRemoved = null;
         }
 
         public override string ToString() {
@@ -228,26 +236,22 @@ namespace Entitas {
     public partial class Entity {
         public event EntityReleased OnEntityReleased;
         public delegate void EntityReleased(Entity entity);
-        
-        internal int _refCount = 0;
 
-        public Entity Retain(){
-            _refCount++;
-            return this;
+        internal int _refCount;
+
+        public void Retain() {
+            _refCount += 1;
         }
 
-        public void Release(){
-            _refCount--;
-            if(_refCount == 0 && OnEntityReleased != null){
-                OnEntityReleased(this);
-            }
-            if(_refCount<0){
+        public void Release() {
+            _refCount -= 1;
+            if (_refCount == 0) {
+                if (OnEntityReleased != null) {
+                    OnEntityReleased(this);
+                }
+            } else if (_refCount < 0) {
                 throw new EntityIsAlreadyReleasedException();
             }
-        }
-
-        public void ResetRefCount(){
-            _refCount = 0;
         }
     }
 

@@ -221,17 +221,13 @@ class describe_Entity : nspec {
         context["reference counting"] = () => {
             it["dispatches OnEntityReleased when retain and release"] = () => {
                 Entity eventEntity = null;
-                e.OnEntityReleased += (entity) => {
+                e.OnEntityReleased += entity => {
                     eventEntity = entity;
                 };
                 e.Retain();
                 e.Release();
+                eventEntity.should_not_be_null();
                 eventEntity.should_be_same(e);
-            };
-
-            it["does not dipatch and does not throw, when OnEntityReleased is not set"] = () => {
-                e.Retain();
-                e.Release();
             };
 
             it["throws when releasing more than it has been retained"] = expect<EntityIsAlreadyReleasedException>(() => {
@@ -382,6 +378,12 @@ class describe_Entity : nspec {
                 it["updates cache when all components were removed"] = () => {
                     e.AddComponentA();
                     e.AddComponentB();
+                    var str = e.ToString();
+                    e.RemoveAllComponents();
+                    e.ToString().should_not_be_same(str);
+                };
+
+                it["updates cache when RemoveAllComponents is called, even if entity has no components"] = () => {
                     var str = e.ToString();
                     e.RemoveAllComponents();
                     e.ToString().should_not_be_same(str);

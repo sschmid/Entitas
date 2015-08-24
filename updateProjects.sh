@@ -2,7 +2,7 @@
 ./buildPackage.sh
 if [ $? = 0 ]
 then
-	echo "Update dependencies"
+	echo "Update projects"
 
 	BIN_DIR="bin"
 
