@@ -120,6 +120,24 @@ class describe_ReactiveSystem : nspec {
                 subSystem.didExecute.should_be(0);
                 subSystem.entities.should_be_null();
             };
+
+            it["gets non released entity in execute after destroy"] = () => {
+                
+                bool wasExecuted = false;
+                subSystem.executeBlock = (entities) => {
+                    var providedEntity = entities[0];
+                    var newEntitty = pool.CreateEntity();
+                    providedEntity.should_not_be_same(newEntitty);
+                    wasExecuted = true;
+                };
+                
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                pool.DestroyEntity(e);
+                reactiveSystem.Execute();
+                wasExecuted.should_be_true();
+            };
         };
 
         context["OnEntityAddedOrRemoved"] = () => {
