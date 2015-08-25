@@ -148,6 +148,10 @@ class describe_ReactiveSystem : nspec {
                 pool.DestroyEntity(e);
                 reactiveSystem.Execute();
                 didExecute.should_be_true();
+
+                var reusedEntity = pool.CreateEntity();
+                reusedEntity.should_not_be_null();
+                reusedEntity.should_be_same(e);
             };
         };
 
@@ -325,6 +329,41 @@ class describe_ReactiveSystem : nspec {
                 excludeSubSystem.didExecute.should_be(1);
                 excludeSubSystem.entities.Length.should_be(1);
                 excludeSubSystem.entities.should_contain(eAB);
+            };
+
+            it["only passes in entities not matching matcher and reuses entities only after the subsystem is executed"] = () => {
+                var excludeSubSystem = new ReactiveExcludeSubSystemSpy(
+                    allOfAB(),
+                    GroupEventType.OnEntityRemoved,
+                    Matcher.AllOf(new [] { CID.ComponentC })
+                );
+                var didExecute = false;
+                excludeSubSystem.executeBlock = entities => {
+                    entities.Count.should_be(1);
+                    var providedEntity = entities[0];
+                    var newEntitty = pool.CreateEntity();
+                    providedEntity.should_not_be_null();
+                    providedEntity.should_not_be_same(newEntitty);
+                    didExecute = true;
+                };
+                reactiveSystem = new ReactiveSystem(pool, excludeSubSystem);
+                
+
+                var e1 = pool.CreateEntity();
+                e1.AddComponentA();
+                e1.AddComponentB();
+                pool.DestroyEntity(e1);
+                var e2 = pool.CreateEntity();
+                e2.AddComponentA();
+                e2.AddComponentB();
+                e2.AddComponentC();
+                e2.RemoveComponentB();
+                reactiveSystem.Execute();
+                didExecute.should_be_true();
+
+                var reusedEntity = pool.CreateEntity();
+                reusedEntity.should_not_be_null();
+                reusedEntity.should_be_same(e1);
             };
 
             it["only passes in entities not matching required matcher (multi reactive)"] = () => {

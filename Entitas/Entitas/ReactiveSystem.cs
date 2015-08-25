@@ -51,18 +51,17 @@ namespace Entitas {
         public void Execute() {
             if (_observer.collectedEntities.Count != 0) {
                 if (_ensureComponents != null) {
+                    // No need to retain e, becuase destroyed entities will be filtered out.
                     if (_excludeComponents != null) {
                         foreach (var e in _observer.collectedEntities) {
                             if (_ensureComponents.Matches(e) && !_excludeComponents.Matches(e)) {
                                 _buffer.Add(e);
-//                                e.Retain();
                             }
                         }
                     } else {
                         foreach (var e in _observer.collectedEntities) {
                             if (_ensureComponents.Matches(e)) {
                                 _buffer.Add(e);
-//                                e.Retain();
                             }
                         }
                     }
@@ -70,7 +69,7 @@ namespace Entitas {
                     foreach (var e in _observer.collectedEntities) {
                         if (!_excludeComponents.Matches(e)) {
                             _buffer.Add(e);
-//                            e.Retain();
+                            e.Retain();
                         }
                     }
                 } else {
@@ -83,9 +82,9 @@ namespace Entitas {
                 _observer.ClearCollectedEntities();
                 if (_buffer.Count != 0) {
                     _subsystem.Execute(_buffer);
-//                    for (int i = 0; i < _buffer.Count; i++) {
-//                        _buffer[i].Release();
-//                    }
+                    for (int i = 0; i < _buffer.Count; i++) {
+                        _buffer[i].Release();
+                    }
                     _buffer.Clear();
                 }
             }
