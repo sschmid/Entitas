@@ -126,6 +126,24 @@ class describe_Pool : nspec {
                 eventEntity.should_be_same(e);
             };
 
+            it["Entity is released after OnEntityDestroyed"] = () => {
+                var e = _pool.CreateEntity();
+                Pool eventPool = null;
+                Entity eventEntity = null;
+                _pool.OnEntityDestroyed += (pool, entity) => {
+                    eventPool = pool;
+                    eventEntity = entity;
+                    var newEntity = _pool.CreateEntity();
+                    newEntity.should_not_be_null();
+                    newEntity.should_not_be_same(eventEntity);
+                };
+                _pool.DestroyEntity(e);
+                eventPool.should_be_same(_pool);
+                var reusedEntity = _pool.CreateEntity();
+                eventEntity.should_be_same(e);
+                reusedEntity.should_be_same(e);
+            };
+
             it["dispatches OnGroupCreated when creating a new group"] = () => {
                 Pool eventPool = null;
                 Group eventGroup = null;

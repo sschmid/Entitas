@@ -60,16 +60,16 @@ public static class EntityTestExtensions {
         e.RemoveComponent(CID.ComponentC);
     }
 
-    public static IComponent GetComponentA(this Entity e) {
-        return e.GetComponent(CID.ComponentA);
+    public static ComponentA GetComponentA(this Entity e) {
+        return (ComponentA)e.GetComponent(CID.ComponentA);
     }
 
-    public static IComponent GetComponentB(this Entity e) {
-        return e.GetComponent(CID.ComponentB);
+    public static ComponentB GetComponentB(this Entity e) {
+        return (ComponentB)e.GetComponent(CID.ComponentB);
     }
 
-    public static IComponent GetComponentC(this Entity e) {
-        return e.GetComponent(CID.ComponentC);
+    public static ComponentC GetComponentC(this Entity e) {
+        return (ComponentC)e.GetComponent(CID.ComponentC);
     }
 
     public static void ReplaceComponentA(this Entity e, ComponentA component) {

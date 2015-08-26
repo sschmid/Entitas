@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
     public class ReactiveSystem : IExecuteSystem {
@@ -55,12 +54,14 @@ namespace Entitas {
                     if (_excludeComponents != null) {
                         foreach (var e in _observer.collectedEntities) {
                             if (_ensureComponents.Matches(e) && !_excludeComponents.Matches(e)) {
+                                e.Retain();
                                 _buffer.Add(e);
                             }
                         }
                     } else {
                         foreach (var e in _observer.collectedEntities) {
                             if (_ensureComponents.Matches(e)) {
+                                e.Retain();
                                 _buffer.Add(e);
                             }
                         }
@@ -68,16 +69,23 @@ namespace Entitas {
                 } else if (_excludeComponents != null) {
                     foreach (var e in _observer.collectedEntities) {
                         if (!_excludeComponents.Matches(e)) {
+                            e.Retain();
                             _buffer.Add(e);
                         }
                     }
                 } else {
-                    _buffer.AddRange(_observer.collectedEntities);
+                    foreach (var e in _observer.collectedEntities) {
+                        e.Retain();
+                        _buffer.Add(e);
+                    }
                 }
 
                 _observer.ClearCollectedEntities();
                 if (_buffer.Count != 0) {
                     _subsystem.Execute(_buffer);
+                    for (int i = 0, bufferCount = _buffer.Count; i < bufferCount; i++) {
+                        _buffer[i].Release();
+                    }
                     _buffer.Clear();
                 }
             }

@@ -131,6 +131,28 @@ class describe_ReactiveSystem : nspec {
                 subSystem.didExecute.should_be(0);
                 subSystem.entities.should_be_null();
             };
+
+            it["retains entities until execute completed"] = () => {
+                var didExecute = false;
+                subSystem.executeBlock = entities => {
+                    var providedEntity = entities[0];
+                    var newEntitty = pool.CreateEntity();
+                    providedEntity.should_not_be_null();
+                    providedEntity.should_not_be_same(newEntitty);
+                    didExecute = true;
+                };
+                
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                pool.DestroyEntity(e);
+                reactiveSystem.Execute();
+                didExecute.should_be_true();
+
+                var reusedEntity = pool.CreateEntity();
+                reusedEntity.should_not_be_null();
+                reusedEntity.should_be_same(e);
+            };
         };
 
         context["OnEntityAddedOrRemoved"] = () => {
@@ -232,6 +254,32 @@ class describe_ReactiveSystem : nspec {
                 ensureSubSystem.entities.should_contain(eABC);
             };
 
+            it["retains entities until execute completed"] = () => {
+                var ensureSubSystem = new ReactiveEnsureSubSystemSpy(
+                    allOfAB(),
+                    GroupEventType.OnEntityAdded,
+                    Matcher.AllOf(new [] {
+                        CID.ComponentA,
+                        CID.ComponentB,
+                        CID.ComponentC
+                    })
+                );
+                reactiveSystem = new ReactiveSystem(pool, ensureSubSystem);
+
+                var eABC = pool.CreateEntity();
+
+                eABC.AddComponentA();
+                eABC.AddComponentB();
+                eABC.AddComponentC();                
+                var refCountBefore = eABC.GetRefCount();
+                refCountBefore.should_be(3); // referd by pool, group and group observer
+
+                reactiveSystem.Execute();
+                var refCountAfter = eABC.GetRefCount();
+               
+                refCountAfter.should_be(2); // refered by pool and group
+            };
+
             it["only passes in entities matching required matcher (multi reactive)"] = () => {
                 var triggers = new [] {
                     Matcher.AllOf(new [] { CID.ComponentA }).OnEntityAdded(),
@@ -309,6 +357,41 @@ class describe_ReactiveSystem : nspec {
                 excludeSubSystem.entities.should_contain(eAB);
             };
 
+            it["retains entities until execute completed"] = () => {
+                var excludeSubSystem = new ReactiveExcludeSubSystemSpy(
+                    allOfAB(),
+                    GroupEventType.OnEntityRemoved,
+                    Matcher.AllOf(new [] { CID.ComponentC })
+                );
+                var didExecute = false;
+                excludeSubSystem.executeBlock = entities => {
+                    entities.Count.should_be(1);
+                    var providedEntity = entities[0];
+                    var newEntitty = pool.CreateEntity();
+                    providedEntity.should_not_be_null();
+                    providedEntity.should_not_be_same(newEntitty);
+                    didExecute = true;
+                };
+                reactiveSystem = new ReactiveSystem(pool, excludeSubSystem);
+                
+
+                var e1 = pool.CreateEntity();
+                e1.AddComponentA();
+                e1.AddComponentB();
+                pool.DestroyEntity(e1);
+                var e2 = pool.CreateEntity();
+                e2.AddComponentA();
+                e2.AddComponentB();
+                e2.AddComponentC();
+                e2.RemoveComponentB();
+                reactiveSystem.Execute();
+                didExecute.should_be_true();
+
+                var reusedEntity = pool.CreateEntity();
+                reusedEntity.should_not_be_null();
+                reusedEntity.should_be_same(e1);
+            };
+
             it["only passes in entities not matching required matcher (multi reactive)"] = () => {
                 var triggers = new [] {
                     Matcher.AllOf(new [] { CID.ComponentA }).OnEntityAdded(),
@@ -362,6 +445,28 @@ class describe_ReactiveSystem : nspec {
                 ensureExcludeSystem.entities.Length.should_be(1);
                 ensureExcludeSystem.entities.should_contain(eAB);
             };
+
+            it["retains entities until execute completed"] = () => {
+                var ensureExcludeSystem = new ReactiveEnsureExcludeSubSystemSpy(
+                    allOfAB(),
+                    GroupEventType.OnEntityAdded,
+                    Matcher.AllOf(new [] { CID.ComponentA, CID.ComponentB }),
+                    Matcher.AllOf(new [] { CID.ComponentC })
+                );
+                reactiveSystem = new ReactiveSystem(pool, ensureExcludeSystem);
+
+                var eAB = pool.CreateEntity();
+                eAB.AddComponentA();
+                eAB.AddComponentB();
+                var refCountBefore = eAB.GetRefCount();
+                refCountBefore.should_be(3); // referd by pool, group and group observer
+                
+                reactiveSystem.Execute();
+
+                var refCountAfter = eAB.GetRefCount();
+               
+                refCountAfter.should_be(2); // refered by pool and group
+            };
         };
     }
 
@@ -385,3 +490,9 @@ class describe_ReactiveSystem : nspec {
     }
 }
 
+public static class EntityExtgensions {
+    public static int GetRefCount(this Entity e) {
+        return (int)e.GetType().GetField("_refCount", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(e);
+    }
+}
