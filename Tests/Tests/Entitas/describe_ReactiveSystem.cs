@@ -132,7 +132,7 @@ class describe_ReactiveSystem : nspec {
                 subSystem.entities.should_be_null();
             };
 
-            it["gets non released entity in execute after destroy and starts reusing entities after reactive system was executed"] = () => {
+            it["retains entities until execute completed"] = () => {
                 var didExecute = false;
                 subSystem.executeBlock = entities => {
                     var providedEntity = entities[0];
@@ -254,7 +254,7 @@ class describe_ReactiveSystem : nspec {
                 ensureSubSystem.entities.should_contain(eABC);
             };
 
-            it["doesn't release entities without retaining them"] = () => {
+            it["retains entities until execute completed"] = () => {
                 var ensureSubSystem = new ReactiveEnsureSubSystemSpy(
                     allOfAB(),
                     GroupEventType.OnEntityAdded,
@@ -271,11 +271,11 @@ class describe_ReactiveSystem : nspec {
                 eABC.AddComponentA();
                 eABC.AddComponentB();
                 eABC.AddComponentC();                
-                int refCountBefore = eABC.GetRefCount();
+                var refCountBefore = eABC.GetRefCount();
                 refCountBefore.should_be(3); // referd by pool, group and group observer
 
                 reactiveSystem.Execute();
-                int refCountAfter = eABC.GetRefCount();
+                var refCountAfter = eABC.GetRefCount();
                
                 refCountAfter.should_be(2); // refered by pool and group
             };
@@ -357,7 +357,7 @@ class describe_ReactiveSystem : nspec {
                 excludeSubSystem.entities.should_contain(eAB);
             };
 
-            it["only passes in entities not matching matcher and reuses entities only after the subsystem is executed"] = () => {
+            it["retains entities until execute completed"] = () => {
                 var excludeSubSystem = new ReactiveExcludeSubSystemSpy(
                     allOfAB(),
                     GroupEventType.OnEntityRemoved,
@@ -446,7 +446,7 @@ class describe_ReactiveSystem : nspec {
                 ensureExcludeSystem.entities.should_contain(eAB);
             };
 
-            it["keeps ref count correct"] = () => {
+            it["retains entities until execute completed"] = () => {
                 var ensureExcludeSystem = new ReactiveEnsureExcludeSubSystemSpy(
                     allOfAB(),
                     GroupEventType.OnEntityAdded,
@@ -458,12 +458,12 @@ class describe_ReactiveSystem : nspec {
                 var eAB = pool.CreateEntity();
                 eAB.AddComponentA();
                 eAB.AddComponentB();
-                int refCountBefore = eAB.GetRefCount();
+                var refCountBefore = eAB.GetRefCount();
                 refCountBefore.should_be(3); // referd by pool, group and group observer
                 
                 reactiveSystem.Execute();
 
-                int refCountAfter = eAB.GetRefCount();
+                var refCountAfter = eAB.GetRefCount();
                
                 refCountAfter.should_be(2); // refered by pool and group
             };
