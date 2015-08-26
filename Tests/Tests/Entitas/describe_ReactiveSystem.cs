@@ -132,7 +132,7 @@ class describe_ReactiveSystem : nspec {
                 subSystem.entities.should_be_null();
             };
 
-            it["gets non released entity in execute after destroy"] = () => {
+            it["gets non released entity in execute after destroy and starts reusing entities after reactive system was executed"] = () => {
                 var didExecute = false;
                 subSystem.executeBlock = entities => {
                     var providedEntity = entities[0];
@@ -252,6 +252,32 @@ class describe_ReactiveSystem : nspec {
                 ensureSubSystem.didExecute.should_be(1);
                 ensureSubSystem.entities.Length.should_be(1);
                 ensureSubSystem.entities.should_contain(eABC);
+            };
+
+            it["doesn't release entities without retaining them"] = () => {
+                var ensureSubSystem = new ReactiveEnsureSubSystemSpy(
+                    allOfAB(),
+                    GroupEventType.OnEntityAdded,
+                    Matcher.AllOf(new [] {
+                        CID.ComponentA,
+                        CID.ComponentB,
+                        CID.ComponentC
+                    })
+                );
+                reactiveSystem = new ReactiveSystem(pool, ensureSubSystem);
+
+                var eABC = pool.CreateEntity();
+
+                eABC.AddComponentA();
+                eABC.AddComponentB();
+                eABC.AddComponentC();                
+                int refCountBefore = eABC.GetRefCount();
+                refCountBefore.should_be(3); // referd by pool, group and group observer
+
+                reactiveSystem.Execute();
+                int refCountAfter = eABC.GetRefCount();
+               
+                refCountAfter.should_be(2); // refered by pool and group
             };
 
             it["only passes in entities matching required matcher (multi reactive)"] = () => {
@@ -419,6 +445,28 @@ class describe_ReactiveSystem : nspec {
                 ensureExcludeSystem.entities.Length.should_be(1);
                 ensureExcludeSystem.entities.should_contain(eAB);
             };
+
+            it["keeps ref count correct"] = () => {
+                var ensureExcludeSystem = new ReactiveEnsureExcludeSubSystemSpy(
+                    allOfAB(),
+                    GroupEventType.OnEntityAdded,
+                    Matcher.AllOf(new [] { CID.ComponentA, CID.ComponentB }),
+                    Matcher.AllOf(new [] { CID.ComponentC })
+                );
+                reactiveSystem = new ReactiveSystem(pool, ensureExcludeSystem);
+
+                var eAB = pool.CreateEntity();
+                eAB.AddComponentA();
+                eAB.AddComponentB();
+                int refCountBefore = eAB.GetRefCount();
+                refCountBefore.should_be(3); // referd by pool, group and group observer
+                
+                reactiveSystem.Execute();
+
+                int refCountAfter = eAB.GetRefCount();
+               
+                refCountAfter.should_be(2); // refered by pool and group
+            };
         };
     }
 
@@ -442,3 +490,9 @@ class describe_ReactiveSystem : nspec {
     }
 }
 
+public static class EntityExtgensions {
+    public static int GetRefCount(this Entity e) {
+        return (int)e.GetType().GetField("_refCount", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(e);
+    }
+}
