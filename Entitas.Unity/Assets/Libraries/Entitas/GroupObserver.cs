@@ -14,6 +14,7 @@ namespace Entitas {
         readonly HashSet<Entity> _collectedEntities;
         readonly Group[] _groups;
         readonly GroupEventType[] _eventTypes;
+        Group.GroupChanged _addEntityCache;
 
         public GroupObserver(Group group, GroupEventType eventType)
             : this(new [] { group }, new [] { eventType }) {
@@ -28,6 +29,7 @@ namespace Entitas {
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
             _groups = groups;
             _eventTypes = eventTypes;
+            _addEntityCache = addEntity;
             Activate();
         }
 
@@ -36,16 +38,16 @@ namespace Entitas {
                 var group = _groups[i];
                 var eventType = _eventTypes[i];
                 if (eventType == GroupEventType.OnEntityAdded) {
-                    group.OnEntityAdded -= addEntity;
-                    group.OnEntityAdded += addEntity;
+                    group.OnEntityAdded -= _addEntityCache;
+                    group.OnEntityAdded += _addEntityCache;
                 } else if (eventType == GroupEventType.OnEntityRemoved) {
-                    group.OnEntityRemoved -= addEntity;
-                    group.OnEntityRemoved += addEntity;
+                    group.OnEntityRemoved -= _addEntityCache;
+                    group.OnEntityRemoved += _addEntityCache;
                 } else if (eventType == GroupEventType.OnEntityAddedOrRemoved) {
-                    group.OnEntityAdded -= addEntity;
-                    group.OnEntityAdded += addEntity;
-                    group.OnEntityRemoved -= addEntity;
-                    group.OnEntityRemoved += addEntity;
+                    group.OnEntityAdded -= _addEntityCache;
+                    group.OnEntityAdded += _addEntityCache;
+                    group.OnEntityRemoved -= _addEntityCache;
+                    group.OnEntityRemoved += _addEntityCache;
                 }
             }
         }
@@ -53,8 +55,8 @@ namespace Entitas {
         public void Deactivate() {
             for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
                 var group = _groups[i];
-                group.OnEntityAdded -= addEntity;
-                group.OnEntityRemoved -= addEntity;
+                group.OnEntityAdded -= _addEntityCache;
+                group.OnEntityRemoved -= _addEntityCache;
             }
             ClearCollectedEntities();
         }
@@ -67,8 +69,7 @@ namespace Entitas {
         }
 
         void addEntity(Group group, Entity entity, int index, IComponent component) {
-            _collectedEntities.Add(entity);
-            entity.Retain();
+            _collectedEntities.Add(entity.Retain());
         }
     }
 
