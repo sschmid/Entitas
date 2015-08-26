@@ -239,8 +239,9 @@ namespace Entitas {
 
         internal int _refCount;
 
-        public void Retain() {
+        public Entity Retain() {
             _refCount += 1;
+            return this;
         }
 
         public void Release() {

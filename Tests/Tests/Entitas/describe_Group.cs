@@ -253,6 +253,20 @@ class describe_Group : nspec {
                 _eA1.RemoveComponentA();
                 handleRemoveEA(_eA1, c);
             };
+
+            it["retains entity until removed"] = () => {
+                handleAddEA(_eA1);
+                var didRemove = 0;
+                _group.OnEntityRemoved += (group, entity, index, component) => {
+                    didRemove += 1;
+                    entity.GetRefCount().should_be(1);
+                };
+                var c = _eA1.GetComponent(CID.ComponentA);
+                _eA1.RemoveComponentA();
+                handleRemoveEA(_eA1, c);
+
+                didRemove.should_be(1);
+            };
         };
 
         it["can ToString"] = () => {
