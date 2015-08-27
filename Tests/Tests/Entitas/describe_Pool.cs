@@ -75,6 +75,8 @@ class describe_Pool : nspec {
             it["destroys all entities"] = () => {
                 pool.CreateEntity();
                 pool.DestroyAllEntities();
+                pool.HasEntity(e).should_be_false();
+                pool.Count.should_be(0);
                 pool.GetEntities().should_be_empty();
                 e.GetComponents().should_be_empty();
             };
@@ -264,7 +266,7 @@ class describe_Pool : nspec {
             };
         };
 
-        context["get entities"] = () => {
+        context["groups"] = () => {
 
             it["gets empty group for matcher when no entities were created"] = () => {
                 var g = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
