@@ -2,12 +2,12 @@
 using Entitas;
 
 class describe_Group : nspec {
-    Group _group;
+    Group _groupA;
     Entity _eA1;
     Entity _eA2;
 
     void before_each() {
-        _group = new Group(Matcher.AllOf(new [] { CID.ComponentA }));
+        _groupA = new Group(Matcher.AllOf(new [] { CID.ComponentA }));
         _eA1 = this.CreateEntity();
         _eA1.AddComponentA();
         _eA2 = this.CreateEntity();
@@ -15,61 +15,72 @@ class describe_Group : nspec {
     }
 
     void when_created() {
+
         it["doesn't have entities which haven't been added"] = () => {
-            _group.GetEntities().should_be_empty();
+            _groupA.GetEntities().should_be_empty();
         };
 
         it["is empty"] = () => {
-            _group.Count.should_be(0);
+            _groupA.Count.should_be(0);
+        };
+
+        it["doesn't contain entity"] = () => {
+            _groupA.ContainsEntity(_eA1).should_be_false();
         };
 
         context["when entity is matching"] = () => {
             before = () => {
-                handle(_eA1);
+                handleSilently(_eA1);
             };
 
-            it["adds matching entity"] = () => _group.GetEntities().should_contain(_eA1);
-            it["isn't empty"] = () => _group.Count.should_be(1);
-            it["contains entity"] = () => _group.ContainsEntity(_eA1).should_be_true();
-
+            it["adds matching entity"] = () => {
+                var entities = _groupA.GetEntities();
+                entities.Length.should_be(1);
+                entities.should_contain(_eA1);
+            };
+            it["isn't empty"] = () => _groupA.Count.should_be(1);
+            it["contains entity"] = () => _groupA.ContainsEntity(_eA1).should_be_true();
             it["doesn't add same entity twice"] = () => {
-                handle(_eA1);
-                _group.GetEntities().should_contain(_eA1);
-                _group.GetEntities().Length.should_be(1);
+                handleSilently(_eA1);
+                var entities = _groupA.GetEntities();
+                entities.Length.should_be(1);
+                entities.should_contain(_eA1);
+            };
+
+            context["when entity doesn't match anymore"] = () => {
+                before = () => {
+                    _eA1.RemoveComponentA();
+                    handleSilently(_eA1);
+                };
+
+                it["removes entity"] = () => _groupA.GetEntities().should_be_empty();
+                it["is empty"] = () => _groupA.Count.should_be(0);
+                it["doesn't contains entity"] = () => _groupA.ContainsEntity(_eA1).should_be_false();
             };
         };
 
-        context["when entity doesn't match"] = () => {
-            before = () => {
-                handle(_eA1);
-                _eA1.RemoveComponentA();
-                handle(_eA1);
-            };
-
-            it["doesn't add entity when not matching"] = () => {
-                var e = this.CreateEntity();
-                e.AddComponentB();
-                handle(e);
-                _group.GetEntities().should_be_empty();
-            };
-
-            it["removes entity"] = () => _group.GetEntities().should_be_empty();
-            it["doesn't contains entity"] = () => _group.ContainsEntity(_eA1).should_be_false();
+        it["doesn't add entity when not matching"] = () => {
+            var e = this.CreateEntity();
+            e.AddComponentB();
+            handleSilently(e);
+            _groupA.GetEntities().should_be_empty();
+            _groupA.Count.should_be(0);
+            _groupA.ContainsEntity(e).should_be_false();
         };
 
         it["gets null when single entity does not exist"] = () => {
-            _group.GetSingleEntity().should_be_null();
+            _groupA.GetSingleEntity().should_be_null();
         };
 
         it["gets single entity"] = () => {
-            handle(_eA1);
-            _group.GetSingleEntity().should_be_same(_eA1);
+            handleSilently(_eA1);
+            _groupA.GetSingleEntity().should_be_same(_eA1);
         };
 
         it["throws when attempting to get single entity and multiple matching entities exist"] = expect<SingleEntityException>(() => {
-            handle(_eA1);
-            handle(_eA2);
-            _group.GetSingleEntity();
+            handleSilently(_eA1);
+            handleSilently(_eA2);
+            _groupA.GetSingleEntity();
         });
 
         context["events"] = () => {
@@ -80,35 +91,50 @@ class describe_Group : nspec {
             };
 
             it["dispatches OnEntityAdded when matching entity added"] = () => {
-                _group.OnEntityAdded += (group, entity, index, component) => {
+                _groupA.OnEntityAdded += (group, entity, index, component) => {
                     didDispatch++;
-                    group.should_be_same(_group);
+                    group.should_be_same(_groupA);
                     entity.should_be_same(_eA1);
                     index.should_be(CID.ComponentA);
                     component.should_be_same(Component.A);
                 };
+                _groupA.OnEntityRemoved += (group, entity, index, component) => this.Fail();
+                _groupA.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => this.Fail();
 
                 handleAddEA(_eA1);
                 didDispatch.should_be(1);
             };
 
             it["doesn't dispatches OnEntityAdded when matching entity already has been added"] = () => {
-                _group.OnEntityAdded += (group, entity, index, component) => didDispatch++;
                 handleAddEA(_eA1);
+                _groupA.OnEntityAdded += (group, entity, index, component) => didDispatch++;
+                _groupA.OnEntityRemoved += (group, entity, index, component) => this.Fail();
+                _groupA.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => this.Fail();
                 handleAddEA(_eA1);
-                didDispatch.should_be(1);
+                didDispatch.should_be(0);
+            };
+
+            it["doesn't dispatches OnEntityAdded when entity is not matching"] = () => {
+                var e = this.CreateEntity();
+                e.AddComponentB();
+                _groupA.OnEntityAdded += (group, entity, index, component) => this.Fail();
+                _groupA.OnEntityRemoved += (group, entity, index, component) => this.Fail();
+                _groupA.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => this.Fail();
+                handleAddEB(e);
             };
 
             it["dispatches OnEntityRemoved when entity got removed"] = () => {
-                _group.OnEntityRemoved += (group, entity, index, component) => {
+                handleSilently(_eA1);
+                _groupA.OnEntityRemoved += (group, entity, index, component) => {
                     didDispatch++;
-                    group.should_be_same(_group);
+                    group.should_be_same(_groupA);
                     entity.should_be_same(_eA1);
                     index.should_be(CID.ComponentA);
                     component.should_be_same(Component.A);
                 };
+                _groupA.OnEntityAdded += (group, entity, index, component) => this.Fail();
+                _groupA.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => this.Fail();
 
-                handle(_eA1);
                 _eA1.RemoveComponentA();
                 handleRemoveEA(_eA1, Component.A);
 
@@ -116,156 +142,184 @@ class describe_Group : nspec {
             };
 
             it["doesn't dispatch OnEntityRemoved when entity didn't get removed"] = () => {
-                _group.OnEntityRemoved += (group, entity, index, component) => this.Fail();
+                _groupA.OnEntityRemoved += (group, entity, index, component) => this.Fail();
                 _eA1.RemoveComponentA();
                 handleRemoveEA(_eA1, Component.A);
             };
-            
-            it["dispatches OnEntityRemoved and OnEntityAdded when updating"] = () => {
-                handle(_eA1);
+
+            it["dispatches OnEntityRemoved, OnEntityAdded and OnEntityUpdated when updating"] = () => {
+                handleSilently(_eA1);
                 var removed = 0;
                 var added = 0;
-                _group.OnEntityRemoved += (group, entity, index, component) => removed++;
-                _group.OnEntityAdded += (group, entity, index, component) => added++;
+                var updated = 0;
+                var newComponentA = new ComponentA();
+                _groupA.OnEntityRemoved += (group, entity, index, component) => {
+                    removed += 1;
+                    group.should_be(_groupA);
+                    entity.should_be(_eA1);
+                    index.should_be(CID.ComponentA);
+                    component.should_be_same(Component.A);
+                };
+                _groupA.OnEntityAdded += (group, entity, index, component) => {
+                    added += 1;
+                    group.should_be(_groupA);
+                    entity.should_be(_eA1);
+                    index.should_be(CID.ComponentA);
+                    component.should_be_same(newComponentA);
+                };
+                _groupA.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => {
+                    updated += 1;
+                    group.should_be(_groupA);
+                    entity.should_be(_eA1);
+                    index.should_be(CID.ComponentA);
+                    previousComponent.should_be_same(Component.A);
+                    newComponent.should_be_same(newComponentA);
+                };
 
-                _group.UpdateEntity(_eA1, 0, null, null);
+                updateEA(_eA1, newComponentA);
 
                 removed.should_be(1);
                 added.should_be(1);
+                updated.should_be(1);
             };
 
             it["doesn't dispatch OnEntityRemoved and OnEntityAdded when updating when group doesn't contain entity"] = () => {
-                _group.OnEntityRemoved += (group, entity, index, component) => this.Fail();
-                _group.OnEntityAdded += (group, entity, index, component) => this.Fail();
-                _group.UpdateEntity(_eA1, 0, null, null);
+                _groupA.OnEntityRemoved += (group, entity, index, component) => this.Fail();
+                _groupA.OnEntityAdded += (group, entity, index, component) => this.Fail();
+                _groupA.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => this.Fail();
+                updateEA(_eA1, new ComponentA());
             };
         };
 
         context["internal caching"] = () => {
-            it["gets cached entities"] = () => {
-                handle(_eA1);
-                _group.GetEntities().should_be_same(_group.GetEntities());
+            context["GetEntities()"] = () => {
+                Entity[] cache = null;
+                before = () => {
+                    handleSilently(_eA1);
+                    cache = _groupA.GetEntities();
+                };
+
+                it["gets cached entities"] = () => {
+                    _groupA.GetEntities().should_be_same(cache);
+                };
+
+                it["updates cache when adding a new matching entity"] = () => {
+                    handleSilently(_eA2);
+                    _groupA.GetEntities().should_not_be_same(cache);
+                };
+
+                it["doesn't update cache when attempting to add a not matching entity"] = () => {
+                    var e = this.CreateEntity();
+                    handleSilently(e);
+                    _groupA.GetEntities().should_be_same(cache);
+                };
+
+                it["updates cache when removing an entity"] = () => {
+                    _eA1.RemoveComponentA();
+                    handleSilently(_eA1);
+                    _groupA.GetEntities().should_not_be_same(cache);
+                };
+
+                it["doesn't update cache when attempting to remove an entity that wasn't added before"] = () => {
+                    _eA2.RemoveComponentA();
+                    handleSilently(_eA2);
+                    _groupA.GetEntities().should_be_same(cache);
+                };
             };
 
-            it["updates cache when adding a new matching entity"] = () => {
-                handle(_eA1);
-                var g = _group.GetEntities();
-                handle(_eA2);
-                g.should_not_be_same(_group.GetEntities());
-            };
+            context["SingleEntity()"] = () => {
+                Entity cache = null;
+                before = () => {
+                    handleSilently(_eA1);
+                    cache = _groupA.GetSingleEntity();
+                };
 
-            it["doesn't update cache when attempting to add a not matching entity"] = () => {
-                handle(_eA1);
-                var g = _group.GetEntities();
-                var e = this.CreateEntity();
-                handle(e);
-                g.should_be_same(_group.GetEntities());
-            };
+                it["gets cached singleEntities"] = () => {
+                    _groupA.GetSingleEntity().should_be_same(cache);
+                };
 
-            it["updates cache when removing an entity"] = () => {
-                handle(_eA1);
-                var g = _group.GetEntities();
-                _eA1.RemoveComponentA();
-                handle(_eA1);
-                g.should_not_be_same(_group.GetEntities());
-            };
+                it["updates cache when new single entity was added"] = () => {
+                    _eA1.RemoveComponentA();
+                    handleSilently(_eA1);
+                    handleSilently(_eA2);
+                    _groupA.GetSingleEntity().should_not_be_same(cache);
+                };
 
-            it["doesn't update cache when attempting to remove an entity that wasn't added before"] = () => {
-                var g = _group.GetEntities();
-                _eA1.RemoveComponentA();
-                handle(_eA1);
-                g.should_be_same(_group.GetEntities());
-            };
-
-            it["gets cached singleEntities"] = () => {
-                handle(_eA1);
-                _group.GetSingleEntity().should_be_same(_group.GetSingleEntity());
-            };
-
-            it["updates cache when new single entity was added"] = () => {
-                handle(_eA1);
-                var s = _group.GetSingleEntity();
-                _eA1.RemoveComponentA();
-                handle(_eA1);
-                handle(_eA2);
-                s.should_not_be_same(_group.GetSingleEntity());
-            };
-
-            it["updates cache when single entity is removed"] = () => {
-                handle(_eA1);
-                var s = _group.GetSingleEntity();
-                _eA1.RemoveComponentA();
-                handle(_eA1);
-                s.should_not_be_same(_group.GetSingleEntity());
+                it["updates cache when single entity is removed"] = () => {
+                    _eA1.RemoveComponentA();
+                    handleSilently(_eA1);
+                    _groupA.GetSingleEntity().should_not_be_same(cache);
+                };
             };
         };
 
         context["reference counting"] = () => {
-            it["counts entity reference up on entity added and down on entity removed"] = () => {
-                Entity eventEntity = null;
-                _eA1.OnEntityReleased += entity => {
-                    eventEntity = entity;
-                };
-                handle(_eA1);
-                _eA1.RemoveComponentA();
-                handle(_eA1);
-                eventEntity.should_be_same(_eA1);
+
+            it["retains matched entity"] = () => {
+                _eA1.GetRefCount().should_be(0);
+                handleSilently(_eA1);
+                _eA1.GetRefCount().should_be(1);
             };
 
-            it["invalidates singleEntityCache"] = () => {
-                _eA1.OnEntityReleased += entity => {
-                    _group.GetSingleEntity().should_be_null();
-                };
-                handle(_eA1);
-                _group.GetSingleEntity();
+            it["releases removed entity"] = () => {
+                handleSilently(_eA1);
                 _eA1.RemoveComponentA();
-                handle(_eA1);
+                handleSilently(_eA1);
+                _eA1.GetRefCount().should_be(0);
             };
 
-            it["invalidates singleEntityCache"] = () => {
+            it["invalidates entitiesCache (silent mode)"] = () => {
                 _eA1.OnEntityReleased += entity => {
-                    _group.GetSingleEntity().should_be_null();
+                    _groupA.GetEntities().Length.should_be(0);
                 };
-                handleAddEA(_eA1);
-                _group.GetSingleEntity();
-                var c = _eA1.GetComponent(CID.ComponentA);
+                handleSilently(_eA1);
+                _groupA.GetEntities();
                 _eA1.RemoveComponentA();
-                handleRemoveEA(_eA1, c);
+                handleSilently(_eA1);
             };
 
             it["invalidates entitiesCache"] = () => {
                 _eA1.OnEntityReleased += entity => {
-                    _group.GetEntities().Length.should_be(0);
-                };
-                handle(_eA1);
-                _group.GetEntities();
-                _eA1.RemoveComponentA();
-                handle(_eA1);
-            };
-
-            it["invalidates entitiesCache"] = () => {
-                _eA1.OnEntityReleased += entity => {
-                    _group.GetEntities().Length.should_be(0);
+                    _groupA.GetEntities().Length.should_be(0);
                 };
                 handleAddEA(_eA1);
-                _group.GetEntities();
-                var c = _eA1.GetComponent(CID.ComponentA);
+                _groupA.GetEntities();
                 _eA1.RemoveComponentA();
-                handleRemoveEA(_eA1, c);
+                handleRemoveEA(_eA1, Component.A);
+            };
+
+            it["invalidates singleEntityCache (silent mode)"] = () => {
+                _eA1.OnEntityReleased += entity => {
+                    _groupA.GetSingleEntity().should_be_null();
+                };
+                handleSilently(_eA1);
+                _groupA.GetSingleEntity();
+                _eA1.RemoveComponentA();
+                handleSilently(_eA1);
+            };
+
+            it["invalidates singleEntityCache"] = () => {
+                _eA1.OnEntityReleased += entity => {
+                    _groupA.GetSingleEntity().should_be_null();
+                };
+                handleAddEA(_eA1);
+                _groupA.GetSingleEntity();
+                _eA1.RemoveComponentA();
+                handleRemoveEA(_eA1, Component.A);
             };
 
             it["retains entity until removed"] = () => {
                 handleAddEA(_eA1);
-                var didRemove = 0;
-                _group.OnEntityRemoved += (group, entity, index, component) => {
-                    didRemove += 1;
+                var didDispatch = 0;
+                _groupA.OnEntityRemoved += (group, entity, index, component) => {
+                    didDispatch += 1;
                     entity.GetRefCount().should_be(1);
                 };
-                var c = _eA1.GetComponent(CID.ComponentA);
                 _eA1.RemoveComponentA();
-                handleRemoveEA(_eA1, c);
+                handleRemoveEA(_eA1, Component.A);
 
-                didRemove.should_be(1);
+                didDispatch.should_be(1);
+                _eA1.GetRefCount().should_be(0);
             };
         };
 
@@ -276,20 +330,28 @@ class describe_Group : nspec {
         };
     }
 
-    void handle(Entity entity, int index, IComponent component) {
-        _group.HandleEntity(entity, index, component);
+    void handleSilently(Entity entity) {
+        _groupA.HandleEntitySilently(entity);
     }
 
-    void handle(Entity entity) {
-        _group.HandleEntity(entity);
+    void handle(Entity entity, int index, IComponent component) {
+        _groupA.HandleEntity(entity, index, component);
     }
 
     void handleAddEA(Entity entity) {
         handle(entity, CID.ComponentA, entity.GetComponent(CID.ComponentA));
     }
 
+    void handleAddEB(Entity entity) {
+        handle(entity, CID.ComponentB, entity.GetComponent(CID.ComponentB));
+    }
+
     void handleRemoveEA(Entity entity, IComponent component) {
         handle(entity, CID.ComponentA, component);
+    }
+
+    void updateEA(Entity entity, IComponent component) {
+        _groupA.UpdateEntity(entity, CID.ComponentA, Component.A, component);
     }
 }
 
