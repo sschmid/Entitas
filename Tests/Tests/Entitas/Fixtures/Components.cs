@@ -1,6 +1,10 @@
 ﻿using Entitas;
 
-public class ComponentA : IComponent {}
+public class ComponentA : IComponent {
+    public override string ToString() {
+        return string.Format("This is ComponentA");
+    }
+}
 public class ComponentB : IComponent {}
 public class ComponentC : IComponent {}
 public class ComponentD : IComponent {}

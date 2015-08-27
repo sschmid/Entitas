@@ -107,6 +107,37 @@ namespace Entitas {
             return _components[index];
         }
 
+        public IComponent[] GetComponents() {
+            if (_componentsCache == null) {
+                var components = new List<IComponent>(16);
+                for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
+                    var component = _components[i];
+                    if (component != null) {
+                        components.Add(component);
+                    }
+                }
+
+                _componentsCache = components.ToArray();
+            }
+
+            return _componentsCache;
+        }
+
+        public int[] GetComponentIndices() {
+            if (_componentIndicesCache == null) {
+                var indices = new List<int>(16);
+                for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
+                    if (_components[i] != null) {
+                        indices.Add(i);
+                    }
+                }
+
+                _componentIndicesCache = indices.ToArray();
+            }
+
+            return _componentIndicesCache;
+        }
+
         public bool HasComponent(int index) {
             return _components[index] != null;
         }
@@ -129,37 +160,6 @@ namespace Entitas {
             }
 
             return false;
-        }
-
-        public IComponent[] GetComponents() {
-            if (_componentsCache == null) {
-                var components = new List<IComponent>(20);
-                for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
-                    var component = _components[i];
-                    if (component != null) {
-                        components.Add(component);
-                    }
-                }
-
-                _componentsCache = components.ToArray();
-            }
-
-            return _componentsCache;
-        }
-
-        public int[] GetComponentIndices() {
-            if (_componentIndicesCache == null) {
-                var indices = new List<int>(20);
-                for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
-                    if (_components[i] != null) {
-                        indices.Add(i);
-                    }
-                }
-
-                _componentIndicesCache = indices.ToArray();
-            }
-
-            return _componentIndicesCache;
         }
 
         public void RemoveAllComponents() {
@@ -190,7 +190,7 @@ namespace Entitas {
                 var components = GetComponents();
                 var lastSeperator = components.Length - 1 ;
                 for (int i = 0, componentsLength = components.Length; i < componentsLength; i++) {
-                    sb.Append(components[i]);
+                    sb.Append(components[i].GetType());
                     if (i < lastSeperator) {
                         sb.Append(seperator);
                     }

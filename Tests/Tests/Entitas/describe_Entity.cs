@@ -3,6 +3,36 @@ using NSpec;
 
 class describe_Entity : nspec {
 
+    readonly int[] _indicesA = { CID.ComponentA };
+    readonly int[] _indicesAB = { CID.ComponentA, CID.ComponentB };
+
+    void assertHasComponentA(Entity e, IComponent component = null) {
+        if (component == null) {
+            component = Component.A;
+        }
+
+        e.GetComponentA().should_be_same(component);
+        var components = e.GetComponents();
+        components.Length.should_be(1);
+        components.should_contain(component);
+        var indices = e.GetComponentIndices();
+        indices.Length.should_be(1);
+        indices.should_contain(CID.ComponentA);
+        e.HasComponentA().should_be_true();
+        e.HasComponents(_indicesA).should_be_true();
+        e.HasAnyComponent(_indicesA).should_be_true();
+    }
+
+    void assertHasNotComponentA(Entity e) {
+        var components = e.GetComponents();
+        components.Length.should_be(0);
+        var indices = e.GetComponentIndices();
+        indices.Length.should_be(0);
+        e.HasComponentA().should_be_false();
+        e.HasComponents(_indicesA).should_be_false();
+        e.HasAnyComponent(_indicesA).should_be_false();
+    }
+
     void when_created() {
 
         Entity e = null;
@@ -10,34 +40,49 @@ class describe_Entity : nspec {
             e = this.CreateEntity();
         };
 
-        it["doesn't have component of type when no component of that type was added"] = () => {
-            e.HasComponentA().should_be_false();
-        };
+        context["initial state"] = () => {
 
-        it["doesn't have components of types when no components of these types were added"] = () => {
-            e.HasComponents(new [] { CID.ComponentA }).should_be_false();
-        };
+            it["throws when attempting to get component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
+                e.GetComponentA();
+            });
 
-        it["returns entity when adding a component"] = () => {
-            e.AddComponent(0, null).should_be_same(e);
-        };
+            it["gets empty array of components when no components were added"] = () => {
+                e.GetComponents().should_be_empty();
+            };
 
-        it["doesn't have any components of types when no components of these types were added"] = () => {
-            e.HasAnyComponent(new [] { CID.ComponentA }).should_be_false();
-        };
+            it["gets empty array of component indices when no components were added"] = () => {
+                e.GetComponentIndices().should_be_empty();
+            };
 
-        it["replacing a non existing component adds component"] = () => {
-            var newComponentA = new ComponentA();
-            e.ReplaceComponentA(newComponentA);
-            e.GetComponentA().should_be_same(newComponentA);
-        };
+            it["doesn't have component of type when no component of that type was added"] = () => {
+                e.HasComponentA().should_be_false();
+            };
 
-        it["gets empty array of components when no components were added"] = () => {
-            e.GetComponents().should_be_empty();
-        };
+            it["doesn't have components of types when no components of these types were added"] = () => {
+                e.HasComponents(_indicesA).should_be_false();
+            };
 
-        it["gets empty array of component indices when no components were added"] = () => {
-            e.GetComponentIndices().should_be_empty();
+            it["doesn't have any components of types when no components of these types were added"] = () => {
+                e.HasAnyComponent(_indicesA).should_be_false();
+            };
+
+            it["returns entity when adding a component"] = () => {
+                e.AddComponent(0, null).should_be_same(e);
+            };
+
+            it["adds a component"] = () => {
+                e.AddComponentA();
+                assertHasComponentA(e);
+            };
+
+            it["throws when attempting to remove a component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
+                e.RemoveComponentA();
+            });
+
+            it["replacing a non existing component adds component"] = () => {
+                e.ReplaceComponentA(Component.A);
+                assertHasComponentA(e);
+            };
         };
 
         context["when component added"] = () => {
@@ -45,47 +90,36 @@ class describe_Entity : nspec {
                 e.AddComponentA();
             };
 
-            it["has component of type when component of that type was added"] = () => {
-                e.HasComponentA().should_be_true();
-            };
+            it["throws when adding a component of the same type twice"] = expect<EntityAlreadyHasComponentException>(() => {
+                e.AddComponentA();
+                e.AddComponentA();
+            });
 
-            it["doesn't have components of types when not all components of these types were added"] = () => {
-                e.HasComponents(new [] { CID.ComponentA, CID.ComponentB }).should_be_false();
-            };
-
-            it["has components of types when all components of these types were added"] = () => {
-                e.AddComponentB();
-                e.HasComponents(new [] { CID.ComponentA, CID.ComponentB }).should_be_true();
-            };
-
-            it["has any components of types when any component of these types was added"] = () => {
-                e.HasAnyComponent(new [] {
-                    CID.ComponentA,
-                    CID.ComponentB
-                }).should_be_true();
+            it["returns entity when removing a component"] = () => {
+                e.RemoveComponent(CID.ComponentA).should_be_same(e);
             };
 
             it["removes a component of type"] = () => {
                 e.RemoveComponentA();
-                e.HasComponentA().should_be_false();
+                assertHasNotComponentA(e);
             };
 
-            it["returns entity when removing a component"] = () => {
-                e.RemoveComponent(1).should_be_same(e);
-            };
-
-            it["gets a component of type"] = () => {
-                e.GetComponentA().should_be_same(Component.A);
+            it["returns entity when replacing a component"] = () => {
+                e.ReplaceComponent(CID.ComponentA, null).should_be_same(e);
             };
 
             it["replaces existing component"] = () => {
                 var newComponentA = new ComponentA();
                 e.ReplaceComponentA(newComponentA);
-                e.GetComponentA().should_be_same(newComponentA);
+                assertHasComponentA(e, newComponentA);
             };
 
-            it["returns entity when replacing a component"] = () => {
-                e.ReplaceComponent(1, null).should_be_same(e);
+            it["doesn't have components of types when not all components of these types were added"] = () => {
+                e.HasComponents(_indicesAB).should_be_false();
+            };
+
+            it["has any components of types when any component of these types was added"] = () => {
+                e.HasAnyComponent(_indicesAB).should_be_true();
             };
 
             context["when adding another component"] = () => {
@@ -94,17 +128,25 @@ class describe_Entity : nspec {
                 };
 
                 it["gets all components"] = () => {
-                    var allComponents = e.GetComponents();
-                    allComponents.Length.should_be(2);
-                    allComponents.should_contain(Component.A);
-                    allComponents.should_contain(Component.B);
+                    var components = e.GetComponents();
+                    components.Length.should_be(2);
+                    components.should_contain(Component.A);
+                    components.should_contain(Component.B);
                 };
 
                 it["gets all component indices"] = () => {
-                    var allComponentIndices = e.GetComponentIndices();
-                    allComponentIndices.Length.should_be(2);
-                    allComponentIndices.should_contain(CID.ComponentA);
-                    allComponentIndices.should_contain(CID.ComponentB);
+                    var componentIndices = e.GetComponentIndices();
+                    componentIndices.Length.should_be(2);
+                    componentIndices.should_contain(CID.ComponentA);
+                    componentIndices.should_contain(CID.ComponentB);
+                };
+
+                it["has other component"] = () => {
+                    e.HasComponentB().should_be_true();
+                };
+
+                it["has components of types when all components of these types were added"] = () => {
+                    e.HasComponents(_indicesAB).should_be_true();
                 };
 
                 it["removes all components"] = () => {
@@ -281,21 +323,6 @@ class describe_Entity : nspec {
                     e.Release();
                 };
             };
-        };
-
-        context["invalid operations"] = () => {
-            it["throws when adding a component of the same type twice"] = expect<EntityAlreadyHasComponentException>(() => {
-                e.AddComponentA();
-                e.AddComponentA();
-            });
-
-            it["throws when attempting to remove a component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
-                e.RemoveComponentA();
-            });
-
-            it["throws when attempting to get component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
-                e.GetComponentA();
-            });
         };
 
         context["internal caching"] = () => {
