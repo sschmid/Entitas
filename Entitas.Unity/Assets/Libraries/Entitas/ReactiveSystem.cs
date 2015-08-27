@@ -29,9 +29,10 @@ namespace Entitas {
                 _excludeComponents = excludeComponents.excludeComponents;
             }
 
-            var groups = new Group[triggers.Length];
-            var eventTypes = new GroupEventType[triggers.Length];
-            for (int i = 0, triggersLength = triggers.Length; i < triggersLength; i++) {
+            var triggersLength = triggers.Length;
+            var groups = new Group[triggersLength];
+            var eventTypes = new GroupEventType[triggersLength];
+            for (int i = 0; i < triggersLength; i++) {
                 var trigger = triggers[i];
                 groups[i] = pool.GetGroup(trigger.trigger);
                 eventTypes[i] = trigger.eventType;

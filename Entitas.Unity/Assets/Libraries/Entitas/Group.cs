@@ -4,13 +4,15 @@ using System.Collections.Generic;
 namespace Entitas {
     public class Group {
         public event GroupChanged OnEntityAdded;
-        public event GroupUpdated OnEntityUpdated;
         public event GroupChanged OnEntityRemoved;
+        public event GroupUpdated OnEntityUpdated;
 
         public delegate void GroupChanged(Group group, Entity entity, int index, IComponent component);
+
         public delegate void GroupUpdated(Group group, Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
         public int Count { get { return _entities.Count; } }
+
         public IMatcher matcher { get { return _matcher; } }
 
         readonly IMatcher _matcher;
@@ -23,11 +25,11 @@ namespace Entitas {
             _matcher = matcher;
         }
 
-        public void HandleEntity(Entity entity) {
+        public void HandleEntitySilently(Entity entity) {
             if (_matcher.Matches(entity)) {
-                addEntity(entity);
+                addEntitySilently(entity);
             } else {
-                removeEntity(entity);
+                removeEntitySilently(entity);
             }
         }
 
@@ -53,7 +55,7 @@ namespace Entitas {
             }
         }
 
-        void addEntity(Entity entity) {
+        void addEntitySilently(Entity entity) {
             var added = _entities.Add(entity);
             if (added) {
                 _entitiesCache = null;
@@ -74,7 +76,7 @@ namespace Entitas {
             }
         }
 
-        void removeEntity(Entity entity) {
+        void removeEntitySilently(Entity entity) {
             var removed = _entities.Remove(entity);
             if (removed) {
                 _entitiesCache = null;
@@ -112,7 +114,10 @@ namespace Entitas {
             if (_singleEntityCache == null) {
                 var count = _entities.Count;
                 if (count == 1) {
-                    _singleEntityCache = System.Linq.Enumerable.First(_entities);
+                    using (var enumerator = _entities.GetEnumerator()) {
+                        enumerator.MoveNext();
+                        _singleEntityCache = enumerator.Current;
+                    }
                 } else {
                     if (count == 0) {
                         return null;

@@ -13,7 +13,7 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField(poolObserver.name, EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Entities", poolObserver.pool.Count.ToString());
-            EditorGUILayout.LabelField("Reusable entities", poolObserver.pool.pooledEntitiesCount.ToString());
+            EditorGUILayout.LabelField("Reusable entities", poolObserver.pool.reusableEntitiesCount.ToString());
             EditorGUILayout.EndVertical();
 
             var groups = poolObserver.groups;
