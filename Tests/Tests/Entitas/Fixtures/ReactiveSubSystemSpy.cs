@@ -27,9 +27,9 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
         _initialized = true;
     }
 
-    public System.Action<List<Entity>> executeBlock;
+    public System.Action<List<Entity>> executeAction;
     public void Execute(List<Entity> entities) {
-	    if(executeBlock == null) {
+	    if(executeAction == null) {
 			_didExecute++;
 			_entities = entities.ToArray();
 			
@@ -38,7 +38,7 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
 				e.ReplaceComponentA(Component.A);
 			}
         } else {
-            executeBlock(entities);
+            executeAction(entities);
         }
     }
 }
