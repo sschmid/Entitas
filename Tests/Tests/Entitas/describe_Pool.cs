@@ -2,17 +2,16 @@
 using Entitas;
 
 class describe_Pool : nspec {
-    Pool _pool;
-
-    void before_each() {
-        _pool = new Pool(CID.NumComponents);
-    }
-
     void when_created() {
 
+        Pool pool = null;
+        before = () => {
+            pool = new Pool(CID.NumComponents);
+        };
+
         it["increments creationIndex"] = () => {
-            _pool.CreateEntity().creationIndex.should_be(0);
-            _pool.CreateEntity().creationIndex.should_be(1);
+            pool.CreateEntity().creationIndex.should_be(0);
+            pool.CreateEntity().creationIndex.should_be(1);
         };
 
         it["starts with given creationIndex"] = () => {
@@ -20,155 +19,176 @@ class describe_Pool : nspec {
         };
 
         it["has no entities when no entities were created"] = () => {
-            _pool.GetEntities().should_be_empty();
+            pool.GetEntities().should_be_empty();
+        };
+
+        it["gets total entity count"] = () => {
+            pool.Count.should_be(0);
         };
 
         it["creates entity"] = () => {
-            var e = _pool.CreateEntity();
+            var e = pool.CreateEntity();
             e.should_not_be_null();
             e.GetType().should_be(typeof(Entity));
         };
 
-        it["gets total entity count"] = () => {
-            _pool.CreateEntity();
-            _pool.Count.should_be(1);
+        context["when entity created"] = () => {
+
+            Entity e = null;
+            before = () => {
+                e = pool.CreateEntity(); 
+                e.AddComponentA();
+            };
+
+            it["gets total entity count"] = () => {
+                pool.Count.should_be(1);
+            };
+
+            it["has entities that were created with CreateEntity()"] = () => {
+                pool.HasEntity(e).should_be_true();
+            };
+
+            it["doesn't have entities that were not created with CreateEntity()"] = () => {
+                pool.HasEntity(this.CreateEntity()).should_be_false();
+            };
+
+            it["returns all created entities"] = () => {
+                var e2 = pool.CreateEntity();
+                var entities = pool.GetEntities();
+                entities.Length.should_be(2);
+                entities.should_contain(e);
+                entities.should_contain(e2);
+            };
+
+            it["destroys entity and removes it"] = () => {
+                pool.DestroyEntity(e);
+                pool.HasEntity(e).should_be_false();
+                pool.Count.should_be(0);
+                pool.GetEntities().should_be_empty();
+            };
+
+            it["destroys an entity and removes all its components"] = () => {
+                pool.DestroyEntity(e);
+                e.GetComponents().should_be_empty();
+            };
+
+            it["destroys all entities"] = () => {
+                pool.CreateEntity();
+                pool.DestroyAllEntities();
+                pool.GetEntities().should_be_empty();
+                e.GetComponents().should_be_empty();
+            };
         };
 
-        it["doesn't have entities that were not created with CreateEntity()"] = () => {
-            _pool.HasEntity(this.CreateEntity()).should_be_false();
-        };
+        context["internal caching"] = () => {
+            it["caches entities"] = () => {
+                var entities = pool.GetEntities();
+                pool.GetEntities().should_be_same(entities);
+            };
 
-        it["has entities that were created with CreateEntity()"] = () => {
-            _pool.HasEntity(_pool.CreateEntity()).should_be_true();
-        };
+            it["updates entities cache when creating an entity"] = () => {
+                var entities = pool.GetEntities();
+                pool.CreateEntity();
+                pool.GetEntities().should_not_be_same(entities);
+            };
 
-        it["returns all created entities"] = () => {
-            var e1 = _pool.CreateEntity();
-            var e2 = _pool.CreateEntity();
-            var entities = _pool.GetEntities();
-            entities.should_contain(e1);
-            entities.should_contain(e2);
-            entities.Length.should_be(2);
-        };
-
-        it["destroys entity and removes it"] = () => {
-            var e = _pool.CreateEntity();
-            _pool.DestroyEntity(e);
-            _pool.HasEntity(e).should_be_false();
-        };
-
-        it["destroys an entity and removes all its components"] = () => {
-            var e = _pool.CreateEntity();
-            e.AddComponentA();
-            _pool.DestroyEntity(e);
-            e.GetComponents().should_be_empty();
-        };
-
-        it["destroys all entities"] = () => {
-            var e = _pool.CreateEntity();
-            e.AddComponentA();
-            _pool.CreateEntity();
-            _pool.DestroyAllEntities();
-            _pool.GetEntities().should_be_empty();
-            e.GetComponents().should_be_empty();
-        };
-
-        it["caches entities"] = () => {
-            _pool.CreateEntity();
-            var entities1 = _pool.GetEntities();
-            var entities2 = _pool.GetEntities();
-            entities1.should_be_same(entities2);
-            _pool.DestroyEntity(_pool.CreateEntity());
-            _pool.GetEntities().should_not_be_same(entities1);
+            it["updates entities cache when destroying an entity"] = () => {
+                var e = pool.CreateEntity();
+                var entities = pool.GetEntities();
+                pool.DestroyEntity(e);
+                pool.GetEntities().should_not_be_same(entities);
+            };
         };
 
         context["events"] = () => {
 
+            var didDispatch = 0;
+            before = () => {
+                didDispatch = 0;
+            };
+
             it["dispatches OnEntityCreated when creating a new entity"] = () => {
-                Pool eventPool = null;
                 Entity eventEntity = null;
-                _pool.OnEntityCreated += (pool, entity) => {
-                    eventPool = pool;
+                pool.OnEntityCreated += (p, entity) => {
+                    didDispatch += 1;
                     eventEntity = entity;
+                    p.should_be_same(p);
                 };
 
-                var e = _pool.CreateEntity();
-                eventPool.should_be_same(_pool);
+                var e = pool.CreateEntity();
+                didDispatch.should_be(1);
                 eventEntity.should_be_same(e);
             };
 
-            it["dispatches OnEntityWillBeDestroyed when destroying a new entity"] = () => {
-                var e = _pool.CreateEntity();
+            it["dispatches OnEntityWillBeDestroyed when destroying an entity"] = () => {
+                var e = pool.CreateEntity();
                 e.AddComponentA();
-                Pool eventPool = null;
-                Entity eventEntity = null;
-                _pool.OnEntityWillBeDestroyed += (pool, entity) => {
-                    eventPool = pool;
-                    eventEntity = entity;
+                pool.OnEntityWillBeDestroyed += (p, entity) => {
+                    didDispatch += 1;
+                    p.should_be_same(pool);
+                    entity.should_be_same(e);
                     entity.HasComponentA().should_be_true();
+                    entity.IsEnabled().should_be_true();
                 };
-                _pool.DestroyEntity(e);
-                eventPool.should_be_same(_pool);
-                eventEntity.should_be_same(e);
+                pool.DestroyEntity(e);
+                didDispatch.should_be(1);
             };
 
-            it["dispatches OnEntityDestroyed when destroying a new entity"] = () => {
-                var e = _pool.CreateEntity();
-                Pool eventPool = null;
-                Entity eventEntity = null;
-                _pool.OnEntityDestroyed += (pool, entity) => {
-                    eventPool = pool;
-                    eventEntity = entity;
+            it["dispatches OnEntityDestroyed when destroying an entity"] = () => {
+                var e = pool.CreateEntity();
+                pool.OnEntityDestroyed += (p, entity) => {
+                    didDispatch += 1;
+                    p.should_be_same(pool);
+                    entity.should_be_same(e);
                     entity.HasComponentA().should_be_false();
+                    entity.IsEnabled().should_be_false();
                 };
-                _pool.DestroyEntity(e);
-                eventPool.should_be_same(_pool);
-                eventEntity.should_be_same(e);
+                pool.DestroyEntity(e);
+                didDispatch.should_be(1);
             };
 
             it["Entity is released after OnEntityDestroyed"] = () => {
-                var e = _pool.CreateEntity();
-                Pool eventPool = null;
-                Entity eventEntity = null;
-                _pool.OnEntityDestroyed += (pool, entity) => {
-                    eventPool = pool;
-                    eventEntity = entity;
-                    var newEntity = _pool.CreateEntity();
+                var e = pool.CreateEntity();
+                pool.OnEntityDestroyed += (p, entity) => {
+                    didDispatch += 1;
+                    p.should_be_same(pool);
+                    entity.should_be_same(e);
+                    entity.RefCount().should_be(1);
+                    var newEntity = pool.CreateEntity();
                     newEntity.should_not_be_null();
-                    newEntity.should_not_be_same(eventEntity);
+                    newEntity.should_not_be_same(entity);
                 };
-                _pool.DestroyEntity(e);
-                eventPool.should_be_same(_pool);
-                var reusedEntity = _pool.CreateEntity();
-                eventEntity.should_be_same(e);
+                pool.DestroyEntity(e);
+                var reusedEntity = pool.CreateEntity();
                 reusedEntity.should_be_same(e);
+                didDispatch.should_be(1);
             };
 
             it["dispatches OnGroupCreated when creating a new group"] = () => {
-                Pool eventPool = null;
                 Group eventGroup = null;
-                _pool.OnGroupCreated += (pool, g) => {
-                    eventPool = pool;
+                pool.OnGroupCreated += (p, g) => {
+                    didDispatch += 1;
+                    p.should_be_same(pool);
                     eventGroup = g;
                 };
-                var group = _pool.GetGroup(Matcher.AllOf(0));
-                eventPool.should_be_same(_pool);
+                var group = pool.GetGroup(Matcher.AllOf(0));
+                didDispatch.should_be(1);
                 eventGroup.should_be_same(group);
             };
 
             it["doesn't dispatch OnGroupCreated when group alredy exists"] = () => {
-                _pool.GetGroup(Matcher.AllOf(0));
-                _pool.OnGroupCreated += (pool, g) => this.Fail();
-                _pool.GetGroup(Matcher.AllOf(0));
+                pool.GetGroup(Matcher.AllOf(0));
+                pool.OnGroupCreated += (p, g) => this.Fail();
+                pool.GetGroup(Matcher.AllOf(0));
             };
 
             it["removes all external delegates when destroying an entity"] = () => {
-                var e = _pool.CreateEntity();
+                var e = pool.CreateEntity();
                 e.OnComponentAdded += (entity, index, component) => this.Fail();
                 e.OnComponentRemoved += (entity, index, component) => this.Fail();
                 e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
-                _pool.DestroyEntity(e);
-                var e2 = _pool.CreateEntity();
+                pool.DestroyEntity(e);
+                var e2 = pool.CreateEntity();
                 e2.should_be_same(e);
                 e2.AddComponentA();
                 e2.ReplaceComponentA(Component.A);
@@ -179,65 +199,62 @@ class describe_Pool : nspec {
         context["entity pool"] = () => {
 
             it["gets entity from object pool"] = () => {
-                var e = _pool.CreateEntity();
+                var e = pool.CreateEntity();
                 e.should_not_be_null();
                 e.GetType().should_be(typeof(Entity));
             };
 
             it["destroys entity when pushing back to object pool"] = () => {
-                var e = _pool.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
-                _pool.DestroyEntity(e);
+                pool.DestroyEntity(e);
                 e.HasComponent(CID.ComponentA).should_be_false();
             };
 
             it["returns pushed entity"] = () => {
-                var e = _pool.CreateEntity();
+                var e = pool.CreateEntity();
                 e.AddComponentA();
-                _pool.DestroyEntity(e);
-                var entity = _pool.CreateEntity();
+                pool.DestroyEntity(e);
+                var entity = pool.CreateEntity();
                 entity.HasComponent(CID.ComponentA).should_be_false();
                 entity.should_be_same(e);
             };
 
-            it["returns pushed entity only after observer is cleared"] = () => {
-                var e = _pool.CreateEntity();
-                var groupA = _pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
-                var observer = new GroupObserver(groupA, GroupEventType.OnEntityAdded);
-                e.AddComponentA();
-                _pool.DestroyEntity(e);
-                var entity1 = _pool.CreateEntity();
-                entity1.HasComponent(CID.ComponentA).should_be_false();
-                entity1.should_not_be_same(e);
-                observer.ClearCollectedEntities();
-                var entity2 = _pool.CreateEntity();
-                entity2.should_be_same(e);
+            it["only returns released entities"] = () => {
+                var e1 = pool.CreateEntity();
+                e1.Retain();
+                pool.DestroyEntity(e1);
+                var e2 = pool.CreateEntity();
+                e2.should_not_be_same(e1);
+                e1.Release();
+                var e3 = pool.CreateEntity();
+                e3.should_be_same(e1);
             };
 
             it["returns new entity"] = () => {
-                var e = _pool.CreateEntity();
-                e.AddComponentA();
-                _pool.DestroyEntity(e);
-                _pool.CreateEntity();
-                var entityFromPool = _pool.CreateEntity();
-                entityFromPool.HasComponent(CID.ComponentA).should_be_false();
-                entityFromPool.should_not_be_same(e);
+                var e1 = pool.CreateEntity();
+                e1.AddComponentA();
+                pool.DestroyEntity(e1);
+                pool.CreateEntity();
+                var e2 = pool.CreateEntity();
+                e2.HasComponent(CID.ComponentA).should_be_false();
+                e2.should_not_be_same(e1);
             };
 
             it["sets up entity from pool"] = () => {
-                _pool.DestroyEntity(_pool.CreateEntity());                
-                var g = _pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
-                var e = _pool.CreateEntity();
+                pool.DestroyEntity(pool.CreateEntity());                
+                var g = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                var e = pool.CreateEntity();
                 e.AddComponentA();
                 g.GetEntities().should_contain(e);
             };
 
-            context["when entity gets destroyed and pushed to object pool"] = () => {
+            context["when entity gets destroyed"] = () => {
                 Entity e = null;
                 before = () => {
-                    e = _pool.CreateEntity();
+                    e = pool.CreateEntity();
                     e.AddComponentA();
-                    _pool.DestroyEntity(e);
+                    pool.DestroyEntity(e);
                 };
 
                 it["throws when adding component"] = expect<EntityIsNotEnabledException>(() => e.AddComponentA());
@@ -250,7 +267,7 @@ class describe_Pool : nspec {
         context["get entities"] = () => {
 
             it["gets empty group for matcher when no entities were created"] = () => {
-                var g = _pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                var g = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
                 g.should_not_be_null();
                 g.GetEntities().should_be_empty();
             };
@@ -260,59 +277,59 @@ class describe_Pool : nspec {
                 Entity eAB2 = null;
                 Entity eA = null;
 
-                IMatcher matcher = Matcher.AllOf(new [] {
+                IMatcher matcherAB = Matcher.AllOf(new [] {
                     CID.ComponentA,
                     CID.ComponentB
                 });
 
                 before = () => {
-                    eAB1 = _pool.CreateEntity();
+                    eAB1 = pool.CreateEntity();
                     eAB1.AddComponentA();
                     eAB1.AddComponentB();
-                    eAB2 = _pool.CreateEntity();
+                    eAB2 = pool.CreateEntity();
                     eAB2.AddComponentA();
                     eAB2.AddComponentB();
-                    eA = _pool.CreateEntity();
+                    eA = pool.CreateEntity();
                     eA.AddComponentA();
                 };
 
                 it["gets group with matching entities"] = () => {
-                    var g = _pool.GetGroup(matcher).GetEntities();
+                    var g = pool.GetGroup(matcherAB).GetEntities();
                     g.Length.should_be(2);
                     g.should_contain(eAB1);
                     g.should_contain(eAB2);
                 };
 
                 it["gets cached group"] = () => {
-                    _pool.GetGroup(matcher).should_be_same(_pool.GetGroup(matcher));
+                    pool.GetGroup(matcherAB).should_be_same(pool.GetGroup(matcherAB));
                 };
 
                 it["cached group contains newly created matching entity"] = () => {
-                    var g = _pool.GetGroup(matcher);
+                    var g = pool.GetGroup(matcherAB);
                     eA.AddComponentB();
                     g.GetEntities().should_contain(eA);
                 };
 
                 it["cached group doesn't contain entity which are not matching anymore"] = () => {
-                    var g = _pool.GetGroup(matcher);
+                    var g = pool.GetGroup(matcherAB);
                     eAB1.RemoveComponentA();
                     g.GetEntities().should_not_contain(eAB1);
                 };
 
                 it["removes destroyed entity"] = () => {
-                    var g = _pool.GetGroup(matcher);
-                    _pool.DestroyEntity(eAB1);
+                    var g = pool.GetGroup(matcherAB);
+                    pool.DestroyEntity(eAB1);
                     g.GetEntities().should_not_contain(eAB1);
                 };
 
                 it["throws when destroying an entity the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {
-                    var e = _pool.CreateEntity();
-                    _pool.DestroyEntity(e);
-                    _pool.DestroyEntity(e);
+                    var e = pool.CreateEntity();
+                    pool.DestroyEntity(e);
+                    pool.DestroyEntity(e);
                 });
 
                 it["group dispatches OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
-                    var g = _pool.GetGroup(matcher);
+                    var g = pool.GetGroup(matcherAB);
                     var didDispatchRemoved = 0;
                     var didDispatchAdded = 0;
                     var componentA = new ComponentA();
@@ -340,7 +357,7 @@ class describe_Pool : nspec {
                     var updated = 0;
                     var prevComp = eA.GetComponent(CID.ComponentA);
                     var newComp = new ComponentA();
-                    var g = _pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                    var g = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
                     g.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => {
                         updated += 1;
                         group.should_be_same(g);

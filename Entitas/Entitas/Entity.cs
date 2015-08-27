@@ -172,9 +172,11 @@ namespace Entitas {
         }
 
         internal void destroy() {
+            RemoveAllComponents();
             OnComponentAdded = null;
             OnComponentReplaced = null;
             OnComponentRemoved = null;
+            _isEnabled = false;
         }
 
         public override string ToString() {

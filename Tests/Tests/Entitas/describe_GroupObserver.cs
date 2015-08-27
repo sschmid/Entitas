@@ -93,14 +93,14 @@ class describe_GroupObserver : nspec {
                     e.AddComponentA();
                     e.OnEntityReleased += entity => this.Fail();
                     pool.DestroyEntity(e);
-                    e.GetRefCount().should_be(1);
+                    e.RefCount().should_be(1);
                 };
                 
                 it["releases entity when clearing collected entities"] = () => {
                     var e = pool.CreateEntity();
                     pool.DestroyEntity(e);
                     observer.ClearCollectedEntities();
-                    e.GetRefCount().should_be(0);
+                    e.RefCount().should_be(0);
                 };
             };
         };

@@ -1,6 +1,22 @@
 ﻿using Entitas;
 using NSpec;
 
+public static class EntityExtensions {
+    public static int RefCount(this Entity entity) {
+        return (int)entity.GetType().GetField(
+            "_refCount", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
+        ).GetValue(entity);
+    }
+    
+    public static bool IsEnabled(this Entity entity) {
+        return (bool)entity.GetType().GetField(
+            "_isEnabled", 
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
+        ).GetValue(entity);
+    }
+}
+
 public static class TestExtensions {
     public static void Fail(this nspec spec) {
         false.should_be_true();

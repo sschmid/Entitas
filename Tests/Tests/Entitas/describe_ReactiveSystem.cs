@@ -271,11 +271,11 @@ class describe_ReactiveSystem : nspec {
                 eABC.AddComponentA();
                 eABC.AddComponentB();
                 eABC.AddComponentC();                
-                var refCountBefore = eABC.GetRefCount();
+                var refCountBefore = eABC.RefCount();
                 refCountBefore.should_be(3); // referd by pool, group and group observer
 
                 reactiveSystem.Execute();
-                var refCountAfter = eABC.GetRefCount();
+                var refCountAfter = eABC.RefCount();
                
                 refCountAfter.should_be(2); // refered by pool and group
             };
@@ -458,12 +458,12 @@ class describe_ReactiveSystem : nspec {
                 var eAB = pool.CreateEntity();
                 eAB.AddComponentA();
                 eAB.AddComponentB();
-                var refCountBefore = eAB.GetRefCount();
+                var refCountBefore = eAB.RefCount();
                 refCountBefore.should_be(3); // referd by pool, group and group observer
                 
                 reactiveSystem.Execute();
 
-                var refCountAfter = eAB.GetRefCount();
+                var refCountAfter = eAB.RefCount();
                
                 refCountAfter.should_be(2); // refered by pool and group
             };
@@ -490,9 +490,3 @@ class describe_ReactiveSystem : nspec {
     }
 }
 
-public static class EntityExtgensions {
-    public static int GetRefCount(this Entity e) {
-        return (int)e.GetType().GetField("_refCount", 
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(e);
-    }
-}

@@ -256,16 +256,16 @@ class describe_Group : nspec {
         context["reference counting"] = () => {
 
             it["retains matched entity"] = () => {
-                _eA1.GetRefCount().should_be(0);
+                _eA1.RefCount().should_be(0);
                 handleSilently(_eA1);
-                _eA1.GetRefCount().should_be(1);
+                _eA1.RefCount().should_be(1);
             };
 
             it["releases removed entity"] = () => {
                 handleSilently(_eA1);
                 _eA1.RemoveComponentA();
                 handleSilently(_eA1);
-                _eA1.GetRefCount().should_be(0);
+                _eA1.RefCount().should_be(0);
             };
 
             it["invalidates entitiesCache (silent mode)"] = () => {
@@ -313,13 +313,13 @@ class describe_Group : nspec {
                 var didDispatch = 0;
                 _groupA.OnEntityRemoved += (group, entity, index, component) => {
                     didDispatch += 1;
-                    entity.GetRefCount().should_be(1);
+                    entity.RefCount().should_be(1);
                 };
                 _eA1.RemoveComponentA();
                 handleRemoveEA(_eA1, Component.A);
 
                 didDispatch.should_be(1);
-                _eA1.GetRefCount().should_be(0);
+                _eA1.RefCount().should_be(0);
             };
         };
 
