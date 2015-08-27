@@ -5,8 +5,8 @@ using System.Text;
 namespace Entitas {
     public partial class Entity {
         public event EntityChanged OnComponentAdded;
-        public event ComponentReplaced OnComponentReplaced;
         public event EntityChanged OnComponentRemoved;
+        public event ComponentReplaced OnComponentReplaced;
 
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
         public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
