@@ -19,97 +19,88 @@ class describe_GroupObserver : nspec {
                 observer = new GroupObserver(groupA, GroupEventType.OnEntityAdded);
             };
 
-            it["returns collected entities"] = () => {
-                var e = pool.CreateEntity();
-                e.AddComponentA();
-
-                var entities = observer.collectedEntities;
-                entities.Count.should_be(1);
-                entities.should_contain(e);
+            it["is empty when nothing happend"] = () => {
+                observer.collectedEntities.should_be_empty();
             };
 
-            it["only returns matching collected entities"] = () => {
-                var e = pool.CreateEntity();
-                e.AddComponentA();
-                var e2 = pool.CreateEntity();
-                e2.AddComponentB();
+            context["when entity collected"] = () => {
+                Entity e = null;
+                before = () => {
+                    e = pool.CreateEntity();
+                    e.AddComponentA();
+                };
+
+                it["returns collected entities"] = () => {
+                    var entities = observer.collectedEntities;
+                    entities.Count.should_be(1);
+                    entities.should_contain(e);
+                };
+
+                it["only returns matching collected entities"] = () => {
+                    var e2 = pool.CreateEntity();
+                    e2.AddComponentB();
                 
-                var entities = observer.collectedEntities;
-                entities.Count.should_be(1);
-                entities.should_contain(e);
+                    var entities = observer.collectedEntities;
+                    entities.Count.should_be(1);
+                    entities.should_contain(e);
+                };
+
+                it["collects entities only once"] = () => {
+                    e.RemoveComponentA();
+                    e.AddComponentA();
+
+                    var entities = observer.collectedEntities;
+                    entities.Count.should_be(1);
+                    entities.should_contain(e);
+                };
+
+                it["clears collected entities on deactivation"] = () => {
+                    observer.Deactivate();
+                    observer.collectedEntities.should_be_empty();
+                };
+
+                it["doesn't collect entities when deactivated"] = () => {
+                    observer.Deactivate();
+                    var e2 = pool.CreateEntity();
+                    e2.AddComponentA();
+                    observer.collectedEntities.should_be_empty();
+                };
+                
+                it["continues collecting when activated"] = () => {
+                    observer.Deactivate();
+                    var e1 = pool.CreateEntity();
+                    e1.AddComponentA();
+
+                    observer.Activate();
+
+                    var e2 = pool.CreateEntity();
+                    e2.AddComponentA();
+
+                    var entities = observer.collectedEntities;
+                    entities.Count.should_be(1);
+                    entities.should_contain(e2);
+                };
+
+                it["clears collected entities"] = () => {
+                    observer.ClearCollectedEntities();
+                    observer.collectedEntities.should_be_empty();
+                };
             };
 
-            it["collects entities only once"] = () => {
-                var e = pool.CreateEntity();
-                e.AddComponentA();
-                e.RemoveComponentA();
-                e.AddComponentA();
-
-                var entities = observer.collectedEntities;
-                entities.Count.should_be(1);
-                entities.should_contain(e);
-            };
-
-            it["returns empty list when no entities were collected"] = () => {
-                observer.collectedEntities.should_be_empty();
-            };
-
-            it["clears collected entities on deactivation"] = () => {
-                var e = pool.CreateEntity();
-                e.AddComponentA();
-
-                observer.Deactivate();
-                observer.collectedEntities.should_be_empty();
-            };
-
-            it["doesn't collect entities when deactivated"] = () => {
-                observer.Deactivate();
-                var e = pool.CreateEntity();
-                e.AddComponentA();
-                observer.collectedEntities.should_be_empty();
-            };
-
-            it["continues collecting when activated"] = () => {
-                observer.Deactivate();
-                var e1 = pool.CreateEntity();
-                e1.AddComponentA();
-
-                observer.Activate();
-
-                var e2 = pool.CreateEntity();
-                e2.AddComponentA();
-
-                var entities = observer.collectedEntities;
-                entities.Count.should_be(1);
-                entities.should_contain(e2);
-            };
-
-            it["clears collected entities"] = () => {
-                var e = pool.CreateEntity();
-                e.AddComponentA();
-
-                observer.ClearCollectedEntities();
-                observer.collectedEntities.should_be_empty();
-            };
-            
             context["reference counting"] = () => {
-                it["keeps reference count of an entity at one even after destroy"] = () => {
+                it["retains entity even after destroy"] = () => {
                     var e = pool.CreateEntity();
                     e.AddComponentA();
                     e.OnEntityReleased += entity => this.Fail();
                     pool.DestroyEntity(e);
+                    e.GetRefCount().should_be(1);
                 };
                 
-                it["counts entity reference down when clearing"] = () => {
-                    Entity eventEntity = null;
+                it["releases entity when clearing collected entities"] = () => {
                     var e = pool.CreateEntity();
-                    e.OnEntityReleased += entity => {
-                        eventEntity = entity;
-                    };
                     pool.DestroyEntity(e);
                     observer.ClearCollectedEntities();
-                    eventEntity.should_not_be_null();
-                    eventEntity.should_be_same(e);
+                    e.GetRefCount().should_be(0);
                 };
             };
         };
@@ -158,10 +149,13 @@ class describe_GroupObserver : nspec {
                 groupB = pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentB }));
             };
 
-            it["throws when goup count != eventType count"] = expect<GroupObserverException>(() => {
+            it["throws when group count != eventType count"] = expect<GroupObserverException>(() => {
                 observer = new GroupObserver(
                     new [] { groupA },
-                    new [] { GroupEventType.OnEntityAdded, GroupEventType.OnEntityAdded }
+                    new [] {
+                        GroupEventType.OnEntityAdded,
+                        GroupEventType.OnEntityAdded
+                    }
                 );
             });
 
@@ -169,7 +163,10 @@ class describe_GroupObserver : nspec {
                 before = () => {
                     observer = new GroupObserver(
                         new [] { groupA, groupB },
-                        new [] { GroupEventType.OnEntityAdded, GroupEventType.OnEntityAdded }
+                        new [] {
+                            GroupEventType.OnEntityAdded,
+                            GroupEventType.OnEntityAdded
+                        }
                     );
                 };
                 it["returns collected entities"] = () => {
@@ -189,7 +186,10 @@ class describe_GroupObserver : nspec {
                 before = () => {
                     observer = new GroupObserver(
                         new [] { groupA, groupB },
-                        new [] { GroupEventType.OnEntityRemoved, GroupEventType.OnEntityRemoved }
+                        new [] {
+                            GroupEventType.OnEntityRemoved,
+                            GroupEventType.OnEntityRemoved
+                        }
                     );
                 };
                 it["returns collected entities"] = () => {
@@ -212,7 +212,10 @@ class describe_GroupObserver : nspec {
                 before = () => {
                     observer = new GroupObserver(
                         new [] { groupA, groupB },
-                        new [] { GroupEventType.OnEntityAddedOrRemoved, GroupEventType.OnEntityAddedOrRemoved }
+                        new [] {
+                            GroupEventType.OnEntityAddedOrRemoved,
+                            GroupEventType.OnEntityAddedOrRemoved
+                        }
                     );
                 };
                 it["returns collected entities"] = () => {
@@ -239,7 +242,10 @@ class describe_GroupObserver : nspec {
                 before = () => {
                     observer = new GroupObserver(
                         new [] { groupA, groupB },
-                        new [] { GroupEventType.OnEntityAdded, GroupEventType.OnEntityRemoved }
+                        new [] {
+                            GroupEventType.OnEntityAdded,
+                            GroupEventType.OnEntityRemoved
+                        }
                     );
                 };
                 it["returns collected entities"] = () => {
