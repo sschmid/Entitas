@@ -119,7 +119,7 @@ The project is hosted on [GitHub][github-entitas] where you can [report issues][
 - Fork the project
 - Checkout the latest develop
 - Start a feature/yourFeatureOrBugfix branch based on the latest develop
-- Make sure to add/update tests. This is important so nobody will break it in a future version
+- Make sure to add/update tests. This is important so nobody will break it in a future version. Please write tests first, followed by the implementation.
 - Commit and push until you are happy with your contribution
 - Create a [pull request][pulls]
 
