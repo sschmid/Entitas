@@ -6,7 +6,7 @@ namespace Entitas.Migration {
 
         public string version { get { return "0.18.0"; } }
 
-        public string description { get { return "Migrates IReactiveSystem API"; } }
+        public string description { get { return "Migrates IReactiveSystem GetXyz methods to getters"; } }
 
         const string methodEndPattern = @"(\s|.)*?\}";
         const string triggerPattern = @"public\s*IMatcher\s*GetTriggeringMatcher\s*\(\s*\)\s*\{\s*";

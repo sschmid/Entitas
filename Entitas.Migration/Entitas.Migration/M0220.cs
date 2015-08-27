@@ -6,7 +6,7 @@ namespace Entitas.Migration {
 
         public string version { get { return "0.22.0"; } }
 
-        public string description { get { return "Migrates IReactiveSystem.trigger"; } }
+        public string description { get { return "Migrates IReactiveSystem to combine trigger and eventTypes to TriggerOnEvent"; } }
 
         const string triggerPattern = @"public\s*IMatcher\s*trigger\s*\{\s*get\s*\{\s*return\s*(?<matcher>.*?)\s*;\s*\}\s*\}";
         const string eventTypePattern = @"^\s*public\s*GroupEventType\s*eventType\s*\{\s*get\s*\{\s*return\s*GroupEventType\.(?<eventType>\w*)\s*;\s*\}\s*\}";

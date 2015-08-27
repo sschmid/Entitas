@@ -6,7 +6,7 @@ namespace Entitas.Migration {
 
         public string version { get { return "0.19.0"; } }
 
-        public string description { get { return "Migrates IReactiveSystem.Execute"; } }
+        public string description { get { return "Migrates IReactiveSystem.Execute to accept List<Entity>"; } }
 
         const string executePattern = @"public\s*void\s*Execute\s*\(\s*Entity\s*\[\s*\]\s*entities\s*\)";
         const string executeReplacement = "public void Execute(System.Collections.Generic.List<Entity> entities)";
