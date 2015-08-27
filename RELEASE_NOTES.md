@@ -1,3 +1,39 @@
+# 0.22.0
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+- Entitas
+  - Restored previous pool.DestroyEntity() behaviour
+  - IReactiveSystem and IMultiReactiveSystem changed and use `TriggerOnEvent`
+  - Use the command line tool `MigrationAssistant.exe` to automatically migrate IReactiveSystem
+  - Renamed IStartSystem.Start to IInitializeSystem.Initialize (#21)
+
+##### Fixes
+- Entitas
+  - e.RemoveAllComponents() updates toString cache, even if entity has no components
+
+##### Entitas
+- Added AERC (Automatic Entity Reference Counting) (#30, solves #25)
+- Reduced gc allocations in e.RemoveAllComponents()
+- Reduced gc allocations in pool.CreateEntity() and pool.DestroyEntity()
+- pool.DestroyEntity() will clean suscribed event delegates of entities (#27)
+- entity.ToString() will always use component type
+- Streamlined and refactored tests and sources
+
+##### Entitas.Unity.VisualDebugging
+- Improved SystemMonitorEditor graph performance (#14)
+
+#### Entitas.Migration
+- Added M0220 (Migrates IReactiveSystem to combine trigger and eventTypes to TriggerOnEvent)
+- Updated migration descriptions
+
+##### Other
+- Removed project files
+- Renamed updateDependencies.sh to updateProjects.sh
+- buildPackage.sh includes EntitasUpgradeGuide.md in Entitas.zip
+
+
 # 0.21.0
 
 ##### Fixes
@@ -11,7 +47,6 @@
   - removes entity from all groupObserver.collectedEntities
     - ReactiveSystem doesn't pass on destroyed entities anymore
 - ReactiveSystem doesn't call Execute() when filtered entities.Count == 0
-
 
 ##### Other
 - Added project files (#18)

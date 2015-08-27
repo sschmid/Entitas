@@ -1,3 +1,24 @@
+# Entitas 0.22.0 upgrade guide
+Entitas 0.22.0 changed IReactiveSystem and IMultiReactiveSystem and renamed IStartSystem.Start to IInitializeSystem.Initialize.
+
+Use the command line tool `MigrationAssistant.exe` to automatically migrate IReactiveSystem.
+
+```
+$ mono MigrationAssistant.exe
+usage:
+[-l]             - print all available versions
+[version] [path] - apply migration of version [version] to source files located at [path]
+
+$ mono MigrationAssistant.exe -l
+0.18.0 - Migrates IReactiveSystem GetXyz methods to getters
+0.19.0 - Migrates IReactiveSystem.Execute to accept List<Entity>
+0.22.0 - Migrates IReactiveSystem to combine trigger and eventTypes to TriggerOnEvent
+
+// Example from Math-One example project, where all the systems are located in the Features folder
+$ mono MigrationAssistant.exe 0.22.0 /Path/To/Project/Assets/Sources/Features
+```
+
+
 # Entitas 0.19.0 upgrade guide
 Entitas 0.19.0 introduces a few breaking changes:
 
