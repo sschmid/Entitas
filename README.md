@@ -13,6 +13,9 @@
 
     <a href="https://github.com/sschmid/Entitas-CSharp/releases">
         <img src="https://img.shields.io/github/release/sschmid/Entitas-CSharp.svg" alt="Latest release"></a>
+
+    <a href="https://github.com/sschmid/Entitas-CSharp/commits">
+        <img src="https://img.shields.io/github/commits-since/sschmid/Entitas-CSharp/0.22.0.svg" alt="New commits"></a>
 </p>
 
 Entitas - The Entity Component System for C# and Unity
