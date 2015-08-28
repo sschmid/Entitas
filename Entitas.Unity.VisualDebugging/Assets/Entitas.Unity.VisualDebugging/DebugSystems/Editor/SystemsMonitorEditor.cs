@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
-    public class SystemMonitorEditor {
+    public class SystemsMonitorEditor {
         public float xBorder = 48;
         public float yBorder = 20;
         public int rightLinePadding = 10;
@@ -20,7 +20,7 @@ namespace Entitas.Unity.VisualDebugging {
         readonly Vector3[] _cachedLinePointVerticies;
         readonly Vector3[] _linePoints;
 
-        public SystemMonitorEditor(int dataLength) {
+        public SystemsMonitorEditor(int dataLength) {
             _labelTextStyle = new GUIStyle(GUI.skin.label);
             _labelTextStyle.alignment = TextAnchor.UpperRight;
             _centeredStyle = new GUIStyle();
