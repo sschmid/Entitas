@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
@@ -9,7 +8,7 @@ namespace Entitas.Unity.VisualDebugging {
         static Texture2D hierarchyIcon {
             get {
                 if (_hierarchyIcon == null) {
-                    var guid = AssetDatabase.FindAssets("l:Entitas-HierarchyIcon").SingleOrDefault();
+                    var guid = AssetDatabase.FindAssets("l:Entitas-HierarchyIcon")[0];
                     if (guid != null) {
                         var path = AssetDatabase.GUIDToAssetPath(guid);
                         _hierarchyIcon = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
