@@ -102,7 +102,7 @@ namespace Entitas.Unity.VisualDebugging {
             _name = name;
             _systems = new List<ISystem>();
             _container = new GameObject().transform;
-            _container.gameObject.AddComponent<SystemsDebugBehaviour>().Init(this);
+            _container.gameObject.AddComponent<DebugSystemsBehaviour>().Init(this);
             _systemInfos = new Dictionary<Type, SystemInfo>();
             _stopwatch = new Stopwatch();
             updateName();

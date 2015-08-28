@@ -127,13 +127,13 @@
     <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserverBehaviour.cs">
       <Link>Libraries\Entitas.Unity.VisualDebugging\PoolObserver\PoolObserverBehaviour.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\SystemsObserver\DebugSystems.cs">
-      <Link>Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\DebugSystems.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\SystemsObserver\SystemsDebugBehaviour.cs">
-      <Link>Libraries\Entitas.Unity.VisualDebugging\SystemsObserver\SystemsDebugBehaviour.cs</Link>
-    </Compile>
     <Compile Include="Tests\Entitas.Migration\describe_M0220.cs" />
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystems.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystems.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
+      <Link>Libraries\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -152,6 +152,7 @@
     <Folder Include="Libraries\Entitas.Unity\" />
     <Folder Include="Libraries\Entitas.Unity.CodeGenerator\" />
     <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
+    <Folder Include="Libraries\Entitas.Unity.VisualDebugging\DebugSystems\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

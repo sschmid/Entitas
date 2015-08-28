@@ -4,17 +4,17 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
-    [CustomEditor(typeof(SystemsDebugBehaviour))]
-    public class SystemsDebugEditor : Editor {
-        SystemMonitorEditor _systemMonitor;
+    [CustomEditor(typeof(DebugSystemsBehaviour))]
+    public class DebugSystemsEditor : Editor {
+		SystemsMonitorEditor _systemsMonitor;
         Queue<float> _systemMonitorData;
         const int systemMonitorDataLength = 60;
 
         public override void OnInspectorGUI() {
-            var debugBehaviour = (SystemsDebugBehaviour)target;
-            var systems = debugBehaviour.systems;
-            if (_systemMonitor == null) {
-                _systemMonitor = new SystemMonitorEditor(systemMonitorDataLength);
+			var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
+            var systems = debugSystemsBehaviour.systems;
+            if (_systemsMonitor == null) {
+                _systemsMonitor = new SystemsMonitorEditor(systemMonitorDataLength);
                 _systemMonitorData = new Queue<float>(new float[systemMonitorDataLength]);
                 if (EditorApplication.update != Repaint) {
                     EditorApplication.update += Repaint;
@@ -36,7 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (GUILayout.Button("Step", GUILayout.Width(100))) {
                 systems.Step();
                 addDuration((float)systems.totalDuration);
-                _systemMonitor.Draw(_systemMonitorData.ToArray(), 80f);
+                _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
             }
             EditorGUI.EndDisabledGroup();
             EditorGUILayout.EndHorizontal();
@@ -48,7 +48,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (!EditorApplication.isPaused && !systems.paused) {
                 addDuration((float)systems.totalDuration);
             }
-            _systemMonitor.Draw(_systemMonitorData.ToArray(), 80f);
+            _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
 
             EditorGUILayout.BeginHorizontal();
             systems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset Ø", systems.avgResetInterval);
