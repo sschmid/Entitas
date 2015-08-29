@@ -307,6 +307,24 @@ class describe_Entity : nspec {
                 e.Release();
             });
 
+            it["throws when releasing monitored entity down to ref count 0 (1)"] = expect<EntityIsNotDestroyedException>(() => {
+                e.OnComponentAdded += (e1, i, c)=>{};
+                e.Retain();
+                e.Release();
+            });
+
+            it["throws when releasing monitored entity down to ref count 0 (2)"] = expect<EntityIsNotDestroyedException>(() => {
+                e.OnComponentRemoved += (e1, i, c)=>{};
+                e.Retain();
+                e.Release();
+            });
+
+            it["throws when releasing monitored entity down to ref count 0 (3)"] = expect<EntityIsNotDestroyedException>(() => {
+                e.OnComponentReplaced += (e1, i, c1, c2)=>{};
+                e.Retain();
+                e.Release();
+            });
+
             context["events"] = () => {
                 it["doesn't dispatch OnEntityReleased when retaining"] = () => {
                     e.OnEntityReleased += entity => this.Fail();
