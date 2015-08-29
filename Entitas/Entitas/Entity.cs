@@ -249,10 +249,6 @@ namespace Entitas {
         public void Release() {
             _refCount -= 1;
             if (_refCount == 0) {
-                bool isMonitoredByPool = OnComponentAdded != null || OnComponentRemoved != null || OnComponentReplaced != null;
-                if(isMonitoredByPool){
-                    throw new EntityIsNotDestroyedException();
-                }
                 if (OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }
@@ -265,12 +261,6 @@ namespace Entitas {
     public class EntityIsAlreadyReleasedException : Exception {
         public EntityIsAlreadyReleasedException() :
             base("Entity is already released!") {
-        }
-    }
-
-    public class EntityIsNotDestroyedException : Exception {
-        public EntityIsNotDestroyedException() :
-            base("Entity is not destroyed yet!") {
         }
     }
 }
