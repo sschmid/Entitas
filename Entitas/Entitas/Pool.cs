@@ -157,7 +157,7 @@ namespace Entitas {
 
         protected void onEntityReleased(Entity entity) {
             if(entity._isEnabled){
-                throw new EntityIsNotDestroyedException();
+                throw new EntityIsNotDestroyedException("Cannot release entity.");
             }
             entity.OnEntityReleased -= _cachedOnEntityReleased;
             _retainedEntities.Remove(entity);
@@ -172,8 +172,8 @@ namespace Entitas {
     }
 
     public class EntityIsNotDestroyedException : Exception {
-        public EntityIsNotDestroyedException() :
-            base("Entity is not destroyed yet!") {
+        public EntityIsNotDestroyedException(string message) :
+            base(message + "\nEntity is not destroyed yet!") {
         }
     }
 }

@@ -166,7 +166,7 @@ class describe_Pool : nspec {
                 didDispatch.should_be(1);
             };
             
-            it["throws if Entity is released before it is destroyed"] = expect<EntityIsNotDestroyedException>(() => {
+            it["throws if entity is released before it is destroyed"] = expect<EntityIsNotDestroyedException>(() => {
                 var e = pool.CreateEntity();
                 e.Release();
             });
