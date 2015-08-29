@@ -165,6 +165,11 @@ class describe_Pool : nspec {
                 reusedEntity.should_be_same(e);
                 didDispatch.should_be(1);
             };
+            
+            it["throws if Entity is released before it is destroyed"] = expect<EntityIsNotDestroyedException>(() => {
+                var e = pool.CreateEntity();
+                e.Release();
+            });
 
             it["dispatches OnGroupCreated when creating a new group"] = () => {
                 Group eventGroup = null;

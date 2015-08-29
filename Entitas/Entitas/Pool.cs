@@ -156,6 +156,9 @@ namespace Entitas {
         }
 
         protected void onEntityReleased(Entity entity) {
+            if(entity._isEnabled){
+                throw new EntityIsNotDestroyedException();
+            }
             entity.OnEntityReleased -= _cachedOnEntityReleased;
             _retainedEntities.Remove(entity);
             _reusableEntities.Push(entity);
@@ -165,6 +168,12 @@ namespace Entitas {
     public class PoolDoesNotContainEntityException : Exception {
         public PoolDoesNotContainEntityException(Entity entity, string message) :
             base(message + "\nPool does not contain entity " + entity) {
+        }
+    }
+
+    public class EntityIsNotDestroyedException : Exception {
+        public EntityIsNotDestroyedException() :
+            base("Entity is not destroyed yet!") {
         }
     }
 }
