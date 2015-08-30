@@ -36,7 +36,7 @@ First glimpse
 
 The optional [code generator][wiki-code-generator] lets you write code that is super fast, safe and literally screams its intent.
 
-```cs
+```csharp
 public static Entity CreateRedGem(this Pool pool, int x, int y) {
     return pool.CreateEntity()
                .IsGameBoardElement(true)
@@ -47,7 +47,7 @@ public static Entity CreateRedGem(this Pool pool, int x, int y) {
 }
 ```
 
-```cs
+```csharp
 var entities = pool.GetEntities(Matcher.AllOf(Matcher.Move, Matcher.Position));
 foreach (var entity in entities) {
     var move = entity.move;
