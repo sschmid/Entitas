@@ -34,7 +34,8 @@ Watch the talk from Unite Europe 2015
 First glimpse
 =============
 
-The optional [code generator][wiki-code-generator] lets you write code that is super fast, save and literally screams its intent.
+The optional [code generator][wiki-code-generator] lets you write code that is super fast, safe and literally screams its intent.
+
 ```cs
 public static Entity CreateRedGem(this Pool pool, int x, int y) {
     return pool.CreateEntity()
