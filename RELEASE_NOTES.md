@@ -1,3 +1,16 @@
+# 0.22.1
+
+##### Entitas
+- Throwing an exception when releasing an entity that is not destroyed yet (#32)
+
+##### Entitas.Unity.VisualDebugging
+- Added HierarchyIcon
+- Renamed DebugSystems related classes
+
+##### Other
+- buildPackage.sh includes HierarchyIcon.png.meta
+
+
 # 0.22.0
 
 ##### Breaking changes
