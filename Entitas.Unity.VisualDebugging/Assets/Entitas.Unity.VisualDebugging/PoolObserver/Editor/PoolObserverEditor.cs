@@ -14,6 +14,7 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.LabelField(poolObserver.name, EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Entities", poolObserver.pool.Count.ToString());
             EditorGUILayout.LabelField("Reusable entities", poolObserver.pool.reusableEntitiesCount.ToString());
+            EditorGUILayout.LabelField("Retained entities", poolObserver.pool.retainedEntitiesCount.ToString());
             EditorGUILayout.EndVertical();
 
             var groups = poolObserver.groups;
