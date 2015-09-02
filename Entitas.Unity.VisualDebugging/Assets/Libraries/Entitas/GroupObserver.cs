@@ -69,7 +69,10 @@ namespace Entitas {
         }
 
         void addEntity(Group group, Entity entity, int index, IComponent component) {
-            _collectedEntities.Add(entity.Retain());
+            var added = _collectedEntities.Add(entity);
+            if (added) {
+                entity.Retain();
+            }
         }
     }
 
