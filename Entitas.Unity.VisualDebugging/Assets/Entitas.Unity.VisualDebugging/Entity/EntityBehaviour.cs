@@ -15,7 +15,7 @@ namespace Entitas.Unity.VisualDebugging {
             _pool = pool;
             _entity = entity;
             _unfoldedComponents = new bool[_pool.totalComponents];
-            _entity.OnComponentRemoved += onComponentRemoved;
+            _entity.OnEntityReleased += onEntityReleased;
 
             UnfoldAllComponents();
         }
@@ -33,14 +33,12 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public void DestroyBehaviour() {
-            _entity.OnComponentRemoved -= onComponentRemoved;
+            _entity.OnEntityReleased -= onEntityReleased;
             Destroy(gameObject);
         }
 
-        void onComponentRemoved(Entity e, int index, IComponent component) {
-            if (!_pool.HasEntity(e)) {
-                DestroyBehaviour();
-            }
+        void onEntityReleased(Entity e) {
+            DestroyBehaviour();
         }
 
         void Update() {
