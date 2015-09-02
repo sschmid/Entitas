@@ -1,10 +1,24 @@
+# 0.22.2
+
+##### Fixes
+- Entitas
+  - GroupObserver retains entities only once
+
+##### Entitas.Unity.VisualDebugging
+- PoolObserver now shows retained entities
+- Destroying EntityBehaviour e.OnEntityReleased instead of e.OnComponentRemoved
+
+##### Other
+- New logo
+
+
 # 0.22.1
 
 ##### Entitas
 - Throwing an exception when releasing an entity that is not destroyed yet (#32)
 
 ##### Entitas.Unity.VisualDebugging
-- Added HierarchyIcon
+- Added hierarchy icon
 - Renamed DebugSystems related classes
 
 ##### Other
