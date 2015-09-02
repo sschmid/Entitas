@@ -100,9 +100,18 @@ class describe_GroupObserver : nspec {
                 
                 it["releases entity when clearing collected entities"] = () => {
                     var e = pool.CreateEntity();
+                    e.AddComponentA();
                     pool.DestroyEntity(e);
                     observerA.ClearCollectedEntities();
                     e.RefCount().should_be(0);
+                };
+
+                it["retains entities only once"] = () => {
+                    var e = pool.CreateEntity();
+                    e.AddComponentA();
+                    e.ReplaceComponentA(new ComponentA());
+                    pool.DestroyEntity(e);
+                    e.RefCount().should_be(1);
                 };
             };
         };
