@@ -49,5 +49,19 @@ namespace Entitas {
                 _executeSystems[i].Execute();
             }
         }
+
+        public virtual void ClearReactiveSystems() {
+            for (int i = 0, exeSysCount = _executeSystems.Count; i < exeSysCount; i++) {
+                var reactiveSystem = _executeSystems[i] as ReactiveSystem;
+                if (reactiveSystem != null) {
+                    reactiveSystem.Clear();
+                }
+                
+                var nestedSystems = _executeSystems[i] as Systems;
+                if (nestedSystems != null) {
+                    nestedSystems.ClearReactiveSystems();
+                }
+            }
+        }
     }
 }

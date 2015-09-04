@@ -93,6 +93,16 @@ class describe_ReactiveSystem : nspec {
                 subSystem.entities.Length.should_be(1);
                 subSystem.entities.should_contain(e);
             };
+
+            it["clears"] = () => {
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                reactiveSystem.Clear();
+                reactiveSystem.Execute();
+
+                subSystem.didExecute.should_be(0);
+            };
         };
 
         context["OnEntityRemoved"] = () => {
@@ -196,23 +206,6 @@ class describe_ReactiveSystem : nspec {
                 reactiveSystem.Execute();
                 sys.entities.Length.should_be(1);
                 sys.didExecute.should_be(2);
-            };
-        };
-
-        context["Clear reactive system"] = () => {
-            before = () => {
-                subSystem = getSubSystemSypWithOnEntityAdded();
-                reactiveSystem = new ReactiveSystem(pool, subSystem);
-            };
-
-            it["deos not executes when trigger matches but the reactive system was cleared before"] = () => {
-                var e = pool.CreateEntity();
-                e.AddComponentA();
-                e.AddComponentB();
-                reactiveSystem.Clear();
-                reactiveSystem.Execute();
-
-                subSystem.didExecute.should_be(0);
             };
         };
 

@@ -98,7 +98,7 @@ class describe_Systems : nspec {
                 spy.initialized.should_be_true();
             };
 
-            it["cleares reactive systems so they are initialized but not executed"] = () => {
+            it["clears reactive systems"] = () => {
                 var system = createReactiveSystem();
 
                 systems.Add(system);
@@ -111,11 +111,10 @@ class describe_Systems : nspec {
                 spy.initialized.should_be_true();
             };
 
-            it["inititalizes and cleares reactive systems recursively"] = () => {
+            it["clears reactive systems recursively"] = () => {
                 var system = createReactiveSystem();
-                
-                var parentSystems = new Systems();
                 systems.Add(system);
+                var parentSystems = new Systems();
                 parentSystems.Add(systems);
                 
                 parentSystems.Initialize();
