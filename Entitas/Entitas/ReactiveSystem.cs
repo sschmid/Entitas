@@ -49,6 +49,10 @@ namespace Entitas {
             _observer.Deactivate();
         }
 
+        public void Clear() {
+            _observer.ClearCollectedEntities();
+        }
+
         public void Execute() {
             if (_observer.collectedEntities.Count != 0) {
                 if (_ensureComponents != null) {

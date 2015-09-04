@@ -97,6 +97,35 @@ class describe_Systems : nspec {
                 spy.didExecute.should_be(1);
                 spy.initialized.should_be_true();
             };
+
+            it["cleares reactive systems so they are initialized but not executed"] = () => {
+                var system = createReactiveSystem();
+
+                systems.Add(system);
+                systems.Initialize();
+                systems.ClearReactiveSystems();
+                systems.Execute();
+
+                var spy = (ReactiveSubSystemSpy)system.subsystem;
+                spy.didExecute.should_be(0);
+                spy.initialized.should_be_true();
+            };
+
+            it["inititalizes and cleares reactive systems recursively"] = () => {
+                var system = createReactiveSystem();
+                
+                var parentSystems = new Systems();
+                systems.Add(system);
+                parentSystems.Add(systems);
+                
+                parentSystems.Initialize();
+                parentSystems.ClearReactiveSystems();
+                parentSystems.Execute();
+
+                var spy = (ReactiveSubSystemSpy)system.subsystem;
+                spy.didExecute.should_be(0);
+                spy.initialized.should_be_true();
+            };
         };
     }
 }
