@@ -199,6 +199,23 @@ class describe_ReactiveSystem : nspec {
             };
         };
 
+        context["Clear reactive system"] = () => {
+            before = () => {
+                subSystem = getSubSystemSypWithOnEntityAdded();
+                reactiveSystem = new ReactiveSystem(pool, subSystem);
+            };
+
+            it["deos not executes when trigger matches but the reactive system was cleared before"] = () => {
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                reactiveSystem.Clear();
+                reactiveSystem.Execute();
+
+                subSystem.didExecute.should_be(0);
+            };
+        };
+
         context["MultiReactiveSystem"] = () => {
             before = () => {
                 var triggers = new [] {
