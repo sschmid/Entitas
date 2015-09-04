@@ -8,6 +8,7 @@ namespace Entitas {
         readonly GroupObserver _observer;
         readonly IMatcher _ensureComponents;
         readonly IMatcher _excludeComponents;
+        readonly bool _clearAfterExecute;
         readonly List<Entity> _buffer;
 
         public ReactiveSystem(Pool pool, IReactiveSystem subSystem) :
@@ -28,6 +29,8 @@ namespace Entitas {
             if (excludeComponents != null) {
                 _excludeComponents = excludeComponents.excludeComponents;
             }
+
+            _clearAfterExecute = (subSystem as IClearReactiveSystem) != null;
 
             var triggersLength = triggers.Length;
             var groups = new Group[triggersLength];
@@ -88,6 +91,9 @@ namespace Entitas {
                         _buffer[i].Release();
                     }
                     _buffer.Clear();
+                    if (_clearAfterExecute) {
+                        _observer.ClearCollectedEntities();
+                    }
                 }
             }
         }
