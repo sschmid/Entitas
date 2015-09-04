@@ -3,7 +3,7 @@ using Entitas;
 
 class describe_ReactiveSystem : nspec {
 
-    IMatcher _mactherAB = Matcher.AllOf(new [] {
+    readonly IMatcher _matcherAB = Matcher.AllOf(new [] {
         CID.ComponentA,
         CID.ComponentB
     });
@@ -246,7 +246,7 @@ class describe_ReactiveSystem : nspec {
                 Entity eAB = null;
                 Entity eABC = null;
                 before = () => {
-                    ensureSubSystem = new ReactiveEnsureSubSystemSpy(_mactherAB, GroupEventType.OnEntityAdded, Matcher.AllOf(new[] {
+                    ensureSubSystem = new ReactiveEnsureSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded, Matcher.AllOf(new[] {
                         CID.ComponentA,
                         CID.ComponentB,
                         CID.ComponentC
@@ -325,7 +325,7 @@ class describe_ReactiveSystem : nspec {
 
             it["doesn't call execute when no entities left after filtering"] = () => {
                 var ensureSubSystem = new ReactiveEnsureSubSystemSpy(
-                                          _mactherAB,
+                                          _matcherAB,
                                           GroupEventType.OnEntityAdded,
                                           Matcher.AllOf(new [] {
                         CID.ComponentA,
@@ -357,7 +357,7 @@ class describe_ReactiveSystem : nspec {
                 Entity eAB = null;
                 Entity eABC = null;
                 before = () => {
-                    excludeSubSystem = new ReactiveExcludeSubSystemSpy(_mactherAB,
+                    excludeSubSystem = new ReactiveExcludeSubSystemSpy(_matcherAB,
                         GroupEventType.OnEntityAdded,
                         Matcher.AllOf(new[] { CID.ComponentC })
                     );
@@ -436,7 +436,7 @@ class describe_ReactiveSystem : nspec {
             Entity eAC = null;
             Entity eABC = null;
             before = () => {
-                ensureExcludeSystem = new ReactiveEnsureExcludeSubSystemSpy(_mactherAB, GroupEventType.OnEntityAdded,
+                ensureExcludeSystem = new ReactiveEnsureExcludeSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded,
                     Matcher.AllOf(new[] {
                     CID.ComponentA,
                     CID.ComponentB
@@ -487,18 +487,40 @@ class describe_ReactiveSystem : nspec {
                 didExecute.should_be(1);
             };
         };
+
+        context["IClearReactiveSystem"] = () => {
+            ClearReactiveSubSystemSpy clearSubSystem = null;
+            before = () => {
+                clearSubSystem = getClearSubSystemSypWithOnEntityAdded();
+                reactiveSystem = new ReactiveSystem(pool, clearSubSystem);
+            };
+
+            it["clears reactive system after execute when implementing IClearReactiveSystem"] = () => {
+                clearSubSystem.replaceComponentAOnExecute = true;
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                e.AddComponentB();
+                reactiveSystem.Execute();
+                reactiveSystem.Execute();
+                clearSubSystem.didExecute.should_be(1);
+            };
+        };
     }
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityAdded() {
-        return new ReactiveSubSystemSpy(_mactherAB, GroupEventType.OnEntityAdded);
+        return new ReactiveSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded);
     }
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityRemoved() {
-        return new ReactiveSubSystemSpy(_mactherAB, GroupEventType.OnEntityRemoved);
+        return new ReactiveSubSystemSpy(_matcherAB, GroupEventType.OnEntityRemoved);
     }
 
     ReactiveSubSystemSpy getSubSystemSypWithOnEntityAddedOrRemoved() {
-        return new ReactiveSubSystemSpy(_mactherAB, GroupEventType.OnEntityAddedOrRemoved);
+        return new ReactiveSubSystemSpy(_matcherAB, GroupEventType.OnEntityAddedOrRemoved);
+    }
+
+    ClearReactiveSubSystemSpy getClearSubSystemSypWithOnEntityAdded() {
+        return new ClearReactiveSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded);
     }
 }
 

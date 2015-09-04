@@ -55,6 +55,7 @@
     <Compile Include="Entitas\Interfaces\IExcludeComponents.cs" />
     <Compile Include="Entitas\Extensions\AllOfMatcherExtension.cs" />
     <Compile Include="Entitas\Matcher\TriggerOnEvent.cs" />
+    <Compile Include="Entitas\Interfaces\IClearReactiveSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

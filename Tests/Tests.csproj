@@ -134,6 +134,7 @@
     <Compile Include="..\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
       <Link>Libraries\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
     </Compile>
+    <Compile Include="Tests\Entitas\Fixtures\ClearReactiveSubSystemSpy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
