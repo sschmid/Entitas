@@ -145,9 +145,13 @@ namespace Entitas.CodeGenerator {
         static string addTypeToIdMap(Type[] components) {
             const string format = @"{{typeof({0}), {1}}}";
 
-            var componentFields = components.Where(t => t != null)
-                .Select((t,i) => string.Format(format, t.FullName, i))
-                .Aggregate((a, b) => a +",\n        "+b);
+            var componentFields = "";
+
+            if (components != null && components.Count() > 0) {
+                componentFields = components.Where(t => t != null)
+                    .Select((t, i) => string.Format(format, t.FullName, i))
+                    .Aggregate((a, b) => a + ",\n        " + b);
+            }
 
             return "\n" + string.Format(@"
     private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {{
@@ -158,7 +162,7 @@ namespace Entitas.CodeGenerator {
         static string addComponentToId() {
             return string.Format(@"
     public static int ComponentToId(IComponent c) {{
-        return typeToInt[c.getType()];
+        return typeToInt[c.GetType()];
     }}
 ");
         }
