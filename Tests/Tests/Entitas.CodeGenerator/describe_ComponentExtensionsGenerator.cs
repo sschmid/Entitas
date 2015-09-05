@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas.CodeGenerator;
 using System;
 using My.Namespace;
@@ -22,7 +22,11 @@ class describe_ComponentExtensionsGenerator : nspec {
         }
 
         file.fileName.should_be(filePath);
-        file.fileContent.should_be(code);
+
+        var expectedUnified = CodeGenerator.sanitizeString(code);
+        var generatedUnified = CodeGenerator.sanitizeString(file.fileContent);
+
+        generatedUnified.should_be(expectedUnified);
     }
 
     void when_generating() {

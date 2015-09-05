@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Entitas.CodeGenerator {
     public class IndicesLookupGenerator : IComponentCodeGenerator, IPoolCodeGenerator {
@@ -80,22 +81,28 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateIndicesLookup(string tag, Type[] components) {
-            return addClassHeader(tag)
+            return addIncludes()
+                    + addClassHeader(tag)
                     + addIndices(components)
-                    + addDefineTypeToId(components)
+                    + addTypeToIdMap(components)
                     + addIdToString(components)
-                    + addTypeToId()
+                    + addComponentToId()
                     + addCloseClass()
                     + addMatcher(tag);
         }
 
         static string addClassHeader(string lookupTag) {
-            var code = string.Format("using System;\nusing System.Collections.Generic;\n\npublic static class {0} {{\n", lookupTag);
+            var code = string.Format("public static class {0} {{\n", lookupTag);
             
             if (stripDefaultTag(lookupTag) != string.Empty) {
-                code = "using Entitas;\n" + code;
+                code = "using Entitas;\n\n" + code;
             }
             return code;
+        }
+
+        static string addIncludes(){
+            return "using System;\n" +
+                   "using System.Collections.Generic;\n";
         }
 
         static string addIndices(Type[] components) {
@@ -135,23 +142,25 @@ namespace Entitas.CodeGenerator {
     }}", code);
         }
 
-        static string addDefineTypeToId(Type[] components) {
-            const string field = @"
+        static string addTypeToIdMap(Type[] components) {
+            const string format = @"{{typeof({0}), {1}}}";
+
+            var componentFields = components.Where(t => t != null)
+                .Select((t,i) => string.Format(format, t.FullName, i))
+                .Aggregate((a, b) => a +",\n        "+b);
+
+            return "\n" + string.Format(@"
     private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {{
         {0}
-    }};";
-            const string format = @"{{typeof({0}), {1}}}";
-            var componentFields = string.Join(",\n\t\t", components.Select((t, i) => string.Format(format, components[i].FullName, i)).ToArray());
-
-            return string.Format(field, componentFields);
+    }};", componentFields);
         }
 
-        static string addTypeToId() {
+        static string addComponentToId() {
             return string.Format(@"
-    public static int TypeToId(Type t){{
-        return typeToInt[t];
+    public static int ComponentToId(IComponent c) {{
+        return typeToInt[c.getType()];
     }}
-            ");
+");
         }
 
         static string addCloseClass() {
