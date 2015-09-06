@@ -65,12 +65,8 @@ namespace Entitas {
         }
 
         /// <summary>
-        /// Called whenever
+        /// Called whenever a Component is replaced on an Entity.
         /// </summary>
-        /// <param name="entity"></param>
-        /// <param name="index"></param>
-        /// <param name="previousComponent"></param>
-        /// <param name="newComponent"></param>
         public void UpdateEntity(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             if (_entities.Contains(entity)) {
                 if (OnEntityRemoved != null) {
