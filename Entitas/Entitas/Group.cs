@@ -1,10 +1,30 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
+
+    /// <summary>
+    /// Represents a Group of Entities defined by a <see cref="IMatcher"/>.
+    /// Responsible for maintaining a list of entities conforming to that <see cref="IMatcher"/> and the events surrounding it as defined by <see cref="OnEntityAdded"/>, <see cref="OnEntityRemoved"/> and <see cref="OnEntityUpdated"/>.
+    /// </summary>
     public class Group {
-        public event GroupChanged OnEntityAdded;
+
+        /// <summary>
+        /// Called whenever an Entity is removed from the group, or a Component to which this Group is subscribed on an Entity is changed. <para/>
+        /// Upon change, the event is called with the old Component, and called before <see cref="OnEntityAdded"/> and <see cref="OnEntityUpdated"/>.
+        /// </summary>
         public event GroupChanged OnEntityRemoved;
+
+        /// <summary>
+        /// Called whenever an Entity is added to the group, or a Component to which this Group is subscribed on an Entity is changed. <para/>
+        /// Upon change, the event is called with the new Component, and called before <see cref="OnEntityUpdated"/>, but after <see cref="OnEntityRemoved"/>.
+        /// </summary>
+        public event GroupChanged OnEntityAdded;
+
+        /// <summary>
+        /// Called whenever an Entity in this group is updated (i.e.; has its Component replaced).
+        /// This event is called after <see cref="OnEntityRemoved"/> and <see cref="OnEntityAdded"/>
+        /// </summary>
         public event GroupUpdated OnEntityUpdated;
 
         public delegate void GroupChanged(Group group, Entity entity, int index, IComponent component);
@@ -33,6 +53,9 @@ namespace Entitas {
             }
         }
 
+        /// <summary>
+        /// Called whenever a Component is removed or added to an Entity and will add or remove the Entity from the Group. 
+        /// </summary>
         public void HandleEntity(Entity entity, int index, IComponent component) {
             if (_matcher.Matches(entity)) {
                 addEntity(entity, index, component);
@@ -41,6 +64,13 @@ namespace Entitas {
             }
         }
 
+        /// <summary>
+        /// Called whenever
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="index"></param>
+        /// <param name="previousComponent"></param>
+        /// <param name="newComponent"></param>
         public void UpdateEntity(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             if (_entities.Contains(entity)) {
                 if (OnEntityRemoved != null) {

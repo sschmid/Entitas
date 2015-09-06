@@ -1,7 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
+
+    /// <summary>
+    /// The pool is the central API by which to control the lifecycle of <see cref="Entity"/> and <see cref="Group"/>, and serves as a cache for both to avoid unnecessary creation.
+    /// The Entity lifecycle is managed by <see cref="CreateEntity"/> and <see cref="DestroyEntity"/>. 
+    /// </summary>
     public partial class Pool {
 
         public event PoolChanged OnEntityCreated;
@@ -65,6 +70,10 @@ namespace Entitas {
             return entity;
         }
 
+        /// <summary>
+        /// API to destroy an entity. 
+        /// <see cref="Entity.destroy"/> 
+        /// </summary>
         public virtual void DestroyEntity(Entity entity) {
             var removed = _entities.Remove(entity);
             if (!removed) {
@@ -112,6 +121,9 @@ namespace Entitas {
             return _entitiesCache;
         }
 
+        /// <summary>
+        /// Creates a Group for the given matcher and caches the result internally for subsequent calls.
+        /// </summary>
         public virtual Group GetGroup(IMatcher matcher) {
             Group group;
             if (!_groups.TryGetValue(matcher, out group)) {

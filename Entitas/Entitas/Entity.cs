@@ -1,11 +1,27 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Entitas {
+
+    /// <summary>
+    /// The Entity class serves as the lifecycle manager for the <see cref="IComponent"/>, managing creation, caching and event handling.
+    /// </summary>
     public partial class Entity {
+
+        /// <summary>
+        /// Called whenever a Component is attached to an entity that did not have a Component of that type attached to it.
+        /// </summary>
         public event EntityChanged OnComponentAdded;
+
+        /// <summary>
+        /// Called whenever a Component is removed from an Entity.
+        /// </summary>
         public event EntityChanged OnComponentRemoved;
+
+        /// <summary>
+        /// Called whenever a Component is replaced with a Component of the same type.
+        /// </summary>
         public event ComponentReplaced OnComponentReplaced;
 
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
@@ -25,6 +41,16 @@ namespace Entitas {
             _components = new IComponent[totalComponents];
         }
 
+        /// <summary>
+        /// Adds the given Component to the Entity, ensuring <see cref="OnComponentAdded"/> is called. 
+        /// Preferred usage is to use the generated syntax for the specific Components. (See: AddXXXX )
+        /// 
+        /// Throws: <para/>
+        /// - <see cref="EntityIsNotEnabledException"/> if the Entity is not enabled. <para/>
+        /// - <see cref="EntityAlreadyHasComponentException"/> if the Entity already has the Component. Use <see cref="ReplaceComponent"/> instead.<para/>
+        /// </summary>
+        /// <param name="index">The index of the Component to add. See generated *ComponentsIds of the Pool that instantiated this Entity.</param>
+        /// <param name="component">The component to add.</param>
         public Entity AddComponent(int index, IComponent component) {
             if (!_isEnabled) {
                 throw new EntityIsNotEnabledException("Cannot add component!");
@@ -46,6 +72,17 @@ namespace Entitas {
             return this;
         }
 
+        /// <summary>
+        /// Removes the specified Component from the Entity, ensuring <see cref="OnComponentRemoved"/> is called. 
+        /// Preferred usage is to use the generated syntax for the specific Components. (See: RemoveXXXX )
+        /// 
+        /// <para/>
+        /// Throws: <para/>
+        /// - <see cref="EntityIsNotEnabledException"/> if the Entity is not enabled. <para/>
+        /// - <see cref="EntityDoesNotHaveComponentException"/> if the Entity does not have the Component.<para/>
+        /// </summary>
+        /// <param name="index">The index of the Component to remove. See generated *ComponentsIds of the Pool that instantiated this Entity.</param>
+        /// <param name="component">The component to remove.</param>
         public Entity RemoveComponent(int index) {
             if (!_isEnabled) {
                 throw new EntityIsNotEnabledException("Cannot remove component!");
@@ -61,6 +98,20 @@ namespace Entitas {
             return this;
         }
 
+        /// <summary>
+        /// Replaces the specified Component from the Entity, ensuring the following lifecycle: <para/> 
+        /// - If the entity does not have the Component, calls <see cref="OnComponentAdded"/>. <para/>
+        /// - Otherwise if the given component is null, calls <see cref="OnComponentRemoved"/>. <para/>
+        /// - Else calls <see cref="OnComponentReplaced"/>. <para/> 
+        /// 
+        /// Preferred usage is to use the generated syntax for the specific Components, which handles caching of the previously used Component. (See: ReplaceXXXX )
+        /// 
+        /// <para/>
+        /// Throws: <para/>
+        /// - <see cref="EntityIsNotEnabledException"/> if the Entity is not enabled. <para/>
+        /// </summary>
+        /// <param name="index">The index of the Component to add. See generated *ComponentsIds of the Pool that instantiated this Entity.</param>
+        /// <param name="component">The component to replace.</param>
         public Entity ReplaceComponent(int index, IComponent component) {
             if (!_isEnabled) {
                 throw new EntityIsNotEnabledException("Cannot replace component!");
@@ -171,6 +222,10 @@ namespace Entitas {
             }
         }
 
+        /// <summary>
+        /// Used internally by the Pool to destroy an entity.
+        /// To destroy an entity, use <see cref="Pool.DestroyEntity"/> on the source Pool of this Entity.
+        /// </summary>
         internal void destroy() {
             RemoveAllComponents();
             OnComponentAdded = null;
@@ -241,11 +296,18 @@ namespace Entitas {
 
         internal int _refCount;
 
+        /// <summary>
+        /// Increases the reference count on this Entity. Used by the Entity Reference Counting.
+        /// </summary>
         public Entity Retain() {
             _refCount += 1;
             return this;
         }
-
+        
+        /// <summary>
+        /// Decreases the reference count on this Entity and ensures callbacks are made when nothing references this Entity.
+        /// See <see cref="Pool.DestroyEntity"/> to directly destroy an entity.
+        /// </summary>
         public void Release() {
             _refCount -= 1;
             if (_refCount == 0) {
