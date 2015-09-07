@@ -4,37 +4,42 @@ using NSpec;
 
 class describe_PoolsGenerator : nspec {
 
-    bool logResults = false;
+    bool logResults = true;
 
     const string defaultPool = @"using Entitas;
 using System.Collections.Generic;
 
 public static class Pools {
 
-    static Pool _pool;
+    static Pool __pool;
 
     public static Pool pool {
         get {
-            if (_pool == null) {
-                _pool = new Pool(ComponentIds.TotalComponents);
+            if (__pool == null) {
+                __pool = new Pool(ComponentIds.TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool, ""Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(__pool, ""Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
 
-            return _pool;
+            return __pool;
         }
     }
 
     /// <summary>
-    /// Provides a list of all Pools, instantiating those which have not been instantiated.
+    /// Creates a listing of all Pools, instantiating those which have not been instantiated.
     /// </summary>
-    public static List<Pool> List {
+    static ReadOnlyCollection<Pool> _list;
+
+    public static ReadOnlyCollection<Pool> List {
         get {
-            return new List<Pool>{
-                pool
-            };
+            if(_list == null){
+                _list = new ReadOnlyCollection<Pool>(new List<Pool>{
+                    pool
+                });
+            }
+            return _list;
         }
     }
 
@@ -45,30 +50,35 @@ using System.Collections.Generic;
 
 public static class Pools {
 
-    static Pool _meta;
+    static Pool __meta;
 
     public static Pool meta {
         get {
-            if (_meta == null) {
-                _meta = new Pool(MetaComponentIds.TotalComponents);
+            if (__meta == null) {
+                __meta = new Pool(MetaComponentIds.TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, ""Meta Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(__meta, ""Meta Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
 
-            return _meta;
+            return __meta;
         }
     }
 
     /// <summary>
-    /// Provides a list of all Pools, instantiating those which have not been instantiated.
+    /// Creates a listing of all Pools, instantiating those which have not been instantiated.
     /// </summary>
-    public static List<Pool> List {
+    static ReadOnlyCollection<Pool> _list;
+
+    public static ReadOnlyCollection<Pool> List {
         get {
-            return new List<Pool>{
-                meta
-            };
+            if(_list == null){
+                _list = new ReadOnlyCollection<Pool>(new List<Pool>{
+                    meta
+                });
+            }
+            return _list;
         }
     }
 
@@ -79,47 +89,52 @@ using System.Collections.Generic;
 
 public static class Pools {
 
-    static Pool _meta;
+    static Pool __meta;
 
     public static Pool meta {
         get {
-            if (_meta == null) {
-                _meta = new Pool(MetaComponentIds.TotalComponents);
+            if (__meta == null) {
+                __meta = new Pool(MetaComponentIds.TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, ""Meta Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(__meta, ""Meta Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
 
-            return _meta;
+            return __meta;
         }
     }
 
-    static Pool _core;
+    static Pool __core;
 
     public static Pool core {
         get {
-            if (_core == null) {
-                _core = new Pool(CoreComponentIds.TotalComponents);
+            if (__core == null) {
+                __core = new Pool(CoreComponentIds.TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_core, ""Core Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(__core, ""Core Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
 
-            return _core;
+            return __core;
         }
     }
 
     /// <summary>
-    /// Provides a list of all Pools, instantiating those which have not been instantiated.
+    /// Creates a listing of all Pools, instantiating those which have not been instantiated.
     /// </summary>
-    public static List<Pool> List {
+    static ReadOnlyCollection<Pool> _list;
+
+    public static ReadOnlyCollection<Pool> List {
         get {
-            return new List<Pool>{
-                meta,
-                core
-            };
+            if(_list == null){
+                _list = new ReadOnlyCollection<Pool>(new List<Pool>{
+                    meta,
+                    core
+                });
+            }
+            return _list;
         }
     }
 

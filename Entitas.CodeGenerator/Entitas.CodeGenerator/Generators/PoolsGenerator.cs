@@ -13,32 +13,37 @@ public static class Pools {{{0}{1}
 
         const string getter = @"
 
-    static Pool _{0};
+    static Pool __{0};
 
     public static Pool {0} {{
         get {{
-            if (_{0} == null) {{
-                _{0} = new Pool({1}" + CodeGenerator.defaultIndicesLookupTag + @".TotalComponents);
+            if (__{0} == null) {{
+                __{0} = new Pool({1}" + CodeGenerator.defaultIndicesLookupTag + @".TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_{0}, ""{2}Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(__{0}, ""{2}Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }}
 
-            return _{0};
+            return __{0};
         }}
     }}";
 
         const string list = @"
 
     /// <summary>
-    /// Provides a list of all Pools, instantiating those which have not been instantiated.
+    /// Creates a listing of all Pools, instantiating those which have not been instantiated.
     /// </summary>
-    public static List<Pool> List {{
+    static ReadOnlyCollection<Pool> _list;
+
+    public static ReadOnlyCollection<Pool> List {{
         get {{
-            return new List<Pool>{{
-                {0}
-            }};
+            if(_list == null){{
+                _list = new ReadOnlyCollection<Pool>(new List<Pool>{{
+                    {0}
+                }});
+            }}
+            return _list;
         }}
     }}
 ";
@@ -55,7 +60,7 @@ public static class Pools {{{0}{1}
                     acc + string.Format(getter, poolName.LowercaseFirst(), poolName, poolName + " "));
                 listField = string.Format(list, poolNames.Select(name => name.LowercaseFirst())
                     .Aggregate((a, b) => a + @",
-                " + b));
+                    " + b));
             }
 
             return new [] { new CodeGenFile {
