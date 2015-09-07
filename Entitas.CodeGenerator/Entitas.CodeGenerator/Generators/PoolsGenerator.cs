@@ -7,6 +7,7 @@ namespace Entitas.CodeGenerator {
         const string fileName = "Pools";
         const string classTemplate = @"using Entitas;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 public static class Pools {{{0}{1}
 }}";
