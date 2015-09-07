@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.CodeGenerator;
 
 namespace Entitas.CodeGenerator {
@@ -6,37 +6,67 @@ namespace Entitas.CodeGenerator {
 
         const string fileName = "Pools";
         const string classTemplate = @"using Entitas;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
-public static class Pools {{{0}
+public static class Pools {{{0}{1}
 }}";
 
         const string getter = @"
 
-    static Pool _{0};
+    static Pool __{0};
 
     public static Pool {0} {{
         get {{
-            if (_{0} == null) {{
-                _{0} = new Pool({1}" + CodeGenerator.defaultIndicesLookupTag + @".TotalComponents);
+            if (__{0} == null) {{
+                __{0} = new Pool({1}" + CodeGenerator.defaultIndicesLookupTag + @".TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_{0}, ""{2}Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(__{0}, ""{2}Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }}
 
-            return _{0};
+            return __{0};
         }}
     }}";
 
+        const string list = @"
+
+    /// <summary>
+    /// Creates a listing of all Pools, instantiating those which have not been instantiated.
+    /// </summary>
+    static ReadOnlyCollection<Pool> _list;
+
+    public static ReadOnlyCollection<Pool> List {{
+        get {{
+            if(_list == null){{
+                _list = new ReadOnlyCollection<Pool>(new List<Pool>{{
+                    {0}
+                }});
+            }}
+            return _list;
+        }}
+    }}
+";
         public CodeGenFile[] Generate(string[] poolNames) {
-            var getters = poolNames == null || poolNames.Length == 0
-                ? string.Format(getter, "pool", string.Empty, string.Empty)
-                : poolNames.Aggregate(string.Empty, (acc, poolName) =>
+
+            var getters = "";
+            var listField = "";
+
+            if (poolNames == null || poolNames.Length == 0) {
+                getters = string.Format(getter, "pool", string.Empty, string.Empty);
+                listField = string.Format(list, "pool", string.Empty, string.Empty);
+            } else {
+                getters = poolNames.Aggregate(string.Empty, (acc, poolName) =>
                     acc + string.Format(getter, poolName.LowercaseFirst(), poolName, poolName + " "));
+                listField = string.Format(list, poolNames.Select(name => name.LowercaseFirst())
+                    .Aggregate((a, b) => a + @",
+                    " + b));
+            }
 
             return new [] { new CodeGenFile {
                     fileName = fileName,
-                    fileContent = string.Format(classTemplate, getters)
+                    fileContent = string.Format(classTemplate, getters, listField)
                 }
             };
         }
