@@ -7,8 +7,22 @@ namespace Entitas.CodeGenerator {
         const string fileName = "Pools";
         const string classTemplate = @"using Entitas;
 
-public static class Pools {{{0}
+public static class Pools {{{0}{1}
 }}";
+
+        const string allPoolsGetter = @"
+
+    static Pool[] _allPools;
+
+    public static Pool[] allPools {{
+        get {{
+            if (_allPools == null) {{
+                _allPools = new [] {{ {0} }};
+            }}
+
+            return _allPools;
+        }}
+    }}";
 
         const string getter = @"
 
@@ -29,14 +43,20 @@ public static class Pools {{{0}
     }}";
 
         public CodeGenFile[] Generate(string[] poolNames) {
+            const string defaultPoolName = "pool";
+
+            var allPools = poolNames == null || poolNames.Length == 0
+                ? string.Format(allPoolsGetter, defaultPoolName)
+                : string.Format(allPoolsGetter, string.Join(", ", poolNames.Select(poolName => poolName.LowercaseFirst()).ToArray()));
+
             var getters = poolNames == null || poolNames.Length == 0
-                ? string.Format(getter, "pool", string.Empty, string.Empty)
+                ? string.Format(getter, defaultPoolName, string.Empty, string.Empty)
                 : poolNames.Aggregate(string.Empty, (acc, poolName) =>
                     acc + string.Format(getter, poolName.LowercaseFirst(), poolName, poolName + " "));
 
             return new [] { new CodeGenFile {
                     fileName = fileName,
-                    fileContent = string.Format(classTemplate, getters)
+                    fileContent = string.Format(classTemplate, allPools, getters)
                 }
             };
         }
