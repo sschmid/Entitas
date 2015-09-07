@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas.CodeGenerator;
 using NSpec;
 
@@ -7,6 +7,7 @@ class describe_PoolsGenerator : nspec {
     bool logResults = false;
 
     const string defaultPool = @"using Entitas;
+using System.Collections.Generic;
 
 public static class Pools {
 
@@ -25,9 +26,22 @@ public static class Pools {
             return _pool;
         }
     }
+
+    /// <summary>
+    /// Provides a list of all Pools, instantiating those which have not been instantiated.
+    /// </summary>
+    public static List<Pool> List {
+        get {
+            return new List<Pool>{
+                pool
+            };
+        }
+    }
+
 }";
 
     const string metaPool = @"using Entitas;
+using System.Collections.Generic;
 
 public static class Pools {
 
@@ -46,9 +60,22 @@ public static class Pools {
             return _meta;
         }
     }
+
+    /// <summary>
+    /// Provides a list of all Pools, instantiating those which have not been instantiated.
+    /// </summary>
+    public static List<Pool> List {
+        get {
+            return new List<Pool>{
+                meta
+            };
+        }
+    }
+
 }";
 
     const string metaCorePool = @"using Entitas;
+using System.Collections.Generic;
 
 public static class Pools {
 
@@ -83,6 +110,19 @@ public static class Pools {
             return _core;
         }
     }
+
+    /// <summary>
+    /// Provides a list of all Pools, instantiating those which have not been instantiated.
+    /// </summary>
+    public static List<Pool> List {
+        get {
+            return new List<Pool>{
+                meta,
+                core
+            };
+        }
+    }
+
 }";
 
     void generates(string[] poolNames, string fileContent) {
