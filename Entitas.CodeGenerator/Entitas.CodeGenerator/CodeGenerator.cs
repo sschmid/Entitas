@@ -76,6 +76,15 @@ namespace Entitas.CodeGenerator {
                 File.WriteAllText(dir + file.fileName + ".cs", file.fileContent.Replace("\n", Environment.NewLine));
             }
         }
+
+        /// <summary>
+        /// Sanitizes the string to be used for test-case comparison by removing all line-ends and tabs.
+        /// </summary>
+        public static String sanitizeString(string code) {
+            return code.Replace("\r\n", "")
+                        .Replace("\n", "")
+                        .Replace("\t", "");
+        }
     }
 
     public static class EntitasCodeGeneratorExtensions {

@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Entitas.CodeGenerator {
     public class IndicesLookupGenerator : IComponentCodeGenerator, IPoolCodeGenerator {
@@ -80,19 +81,28 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateIndicesLookup(string tag, Type[] components) {
-            return addClassHeader(tag)
+            return addIncludes()
+                    + addClassHeader(tag)
                     + addIndices(components)
+                    + addTypeToIdMap(components)
                     + addIdToString(components)
+                    + addComponentToId()
                     + addCloseClass()
                     + addMatcher(tag);
         }
 
         static string addClassHeader(string lookupTag) {
             var code = string.Format("public static class {0} {{\n", lookupTag);
+            
             if (stripDefaultTag(lookupTag) != string.Empty) {
                 code = "using Entitas;\n\n" + code;
             }
             return code;
+        }
+
+        static string addIncludes(){
+            return "using System;\n" +
+                   "using System.Collections.Generic;\n";
         }
 
         static string addIndices(Type[] components) {
@@ -130,6 +140,31 @@ namespace Entitas.CodeGenerator {
     public static string IdToString(int componentId) {{
         return components[componentId];
     }}", code);
+        }
+
+        static string addTypeToIdMap(Type[] components) {
+            const string format = @"{{typeof({0}), {1}}}";
+
+            var componentFields = "";
+
+            if (components != null && components.Count() > 0) {
+                componentFields = components.Where(t => t != null)
+                    .Select((t, i) => string.Format(format, t.FullName, i))
+                    .Aggregate((a, b) => a + ",\n        " + b);
+            }
+
+            return "\n" + string.Format(@"
+    private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {{
+        {0}
+    }};", componentFields);
+        }
+
+        static string addComponentToId() {
+            return string.Format(@"
+    public static int ComponentToId(IComponent c) {{
+        return typeToInt[c.GetType()];
+    }}
+");
         }
 
         static string addCloseClass() {

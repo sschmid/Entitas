@@ -1,10 +1,10 @@
-﻿using NSpec;
+using NSpec;
 using Entitas.CodeGenerator;
 using System;
 using System.Linq;
 
 class describe_IndicesLookupGenerator : nspec {
-    bool logResults = false;
+    bool logResults = true;
 
     void generates(Type type, string lookupName, string lookupCode) {
         generates(new [] { type }, lookupName, lookupCode);
@@ -16,18 +16,24 @@ class describe_IndicesLookupGenerator : nspec {
 
     void generates(Type[] types, string[] lookupNames, string[] lookupCodes) {
         var files = new IndicesLookupGenerator().Generate(types);
+        
         files.Length.should_be(lookupNames.Length);
 
         for (int i = 0; i < lookupNames.Length; i++) {
             var lookupName = lookupNames[i];
             var lookupCode = lookupCodes[i];
+
             files.Any(f => f.fileName == lookupName).should_be_true();
             var file = files.Single(f => f.fileName == lookupName);
             if (logResults) {
                 Console.WriteLine("should:\n" + lookupCode);
                 Console.WriteLine("was:\n" + file.fileContent);
             }
-            file.fileContent.should_be(lookupCode);
+
+            var expectedUnified = CodeGenerator.sanitizeString(lookupCode);
+            var generatedUnified = CodeGenerator.sanitizeString(file.fileContent);
+
+            generatedUnified.should_be(expectedUnified);
         }
     }
 
@@ -71,10 +77,16 @@ namespace Entitas {
 
         it["generates default lookup"] = () => {
             generates(typeof(SomeComponent), CodeGenerator.defaultIndicesLookupTag,
-                @"public static class ComponentIds {
+                @"using System;
+using System.Collections.Generic;
+public static class ComponentIds {
     public const int Some = 0;
 
     public const int TotalComponents = 1;
+
+    private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {
+        {typeof(SomeComponent), 0}
+    };
 
     static readonly string[] components = {
         ""Some""
@@ -83,6 +95,10 @@ namespace Entitas {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
+    public static int ComponentToId(IComponent c) {
+        return typeToInt[c.getType()];
+    }
+
 }" + defaultTagCode);
         };
 
@@ -90,12 +106,18 @@ namespace Entitas {
 
         it["generates lookup with name from attribute"] = () => {
             generates(typeof(OtherPoolComponent), "OtherComponentIds",
-                @"using Entitas;
+                @"using System;
+using System.Collections.Generic;
+using Entitas;
 
 public static class OtherComponentIds {
     public const int OtherPool = 0;
 
     public const int TotalComponents = 1;
+
+    private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {
+        {typeof(OtherPoolComponent), 0}
+    };
 
     static readonly string[] components = {
         ""OtherPool""
@@ -104,6 +126,10 @@ public static class OtherComponentIds {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
+    public static int ComponentToId(IComponent c) {
+        return typeToInt[c.getType()];
+    }
+
 }
 
 public partial class OtherMatcher : AllOfMatcher {
@@ -120,10 +146,16 @@ public partial class OtherMatcher : AllOfMatcher {
 
         it["generates id for [DontGenerate]"] = () => {
             generates(typeof(DontGenerateComponent), CodeGenerator.defaultIndicesLookupTag,
-                @"public static class ComponentIds {
+                @"using System;
+using System.Collections.Generic;
+public static class ComponentIds {
     public const int DontGenerate = 0;
 
     public const int TotalComponents = 1;
+
+    private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {
+        {typeof(DontGenerateComponent), 0}
+    };
 
     static readonly string[] components = {
         ""DontGenerate""
@@ -132,6 +164,10 @@ public partial class OtherMatcher : AllOfMatcher {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
+    public static int ComponentToId(IComponent c) {
+        return typeToInt[c.getType()];
+    }
+
 }" + defaultTagCode);
         };
 
@@ -142,11 +178,18 @@ public partial class OtherMatcher : AllOfMatcher {
                 typeof(SomeComponent),
                 typeof(DontGenerateComponent)
             }, CodeGenerator.defaultIndicesLookupTag,
-                @"public static class ComponentIds {
+                @"using System;
+using System.Collections.Generic;
+public static class ComponentIds {
     public const int DontGenerate = 0;
     public const int Some = 1;
 
     public const int TotalComponents = 2;
+
+    private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {
+        {typeof(DontGenerateComponent), 0},
+        {typeof(SomeComponent), 1}
+    };
 
     static readonly string[] components = {
         ""DontGenerate"",
@@ -156,6 +199,10 @@ public partial class OtherMatcher : AllOfMatcher {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
+    public static int ComponentToId(IComponent c) {
+        return typeToInt[c.getType()];
+    }
+
 }" + defaultTagCode);
         };
 
@@ -166,10 +213,16 @@ public partial class OtherMatcher : AllOfMatcher {
                 typeof(SomeComponent),
                 typeof(DontGenerateIndexComponent)
             }, CodeGenerator.defaultIndicesLookupTag,
-                @"public static class ComponentIds {
+                @"using System;
+using System.Collections.Generic;
+public static class ComponentIds {
     public const int Some = 0;
 
     public const int TotalComponents = 1;
+
+    private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {
+        {typeof(SomeComponent), 0}
+    };
 
     static readonly string[] components = {
         ""Some""
@@ -177,6 +230,9 @@ public partial class OtherMatcher : AllOfMatcher {
 
     public static string IdToString(int componentId) {
         return components[componentId];
+    }
+    public static int ComponentToId(IComponent c) {
+        return typeToInt[c.getType()];
     }
 }" + defaultTagCode);
         };
@@ -286,13 +342,20 @@ public partial class CoreMatcher : AllOfMatcher {
                     typeof(AComponent),
                     typeof(BComponent)
                 }, new [] { "PoolAComponentIds", "PoolBComponentIds" }, new [] {
-                    @"using Entitas;
+                    @"using System;
+using System.Collections.Generic;
+using Entitas;
 
 public static class PoolAComponentIds {
     public const int B = 0;
     public const int A = 1;
 
     public const int TotalComponents = 2;
+
+    private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {
+        {typeof(BComponent), 0},
+        {typeof(AComponent), 1}
+    };
 
     static readonly string[] components = {
         ""B"",
@@ -302,13 +365,19 @@ public static class PoolAComponentIds {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
+    public static int ComponentToId(IComponent c) {
+        return typeToInt[c.getType()];
+    }
+
 }
 
 public partial class PoolAMatcher : AllOfMatcher {
-    public PoolAMatcher(int index) : base(new [] { index }) {
+    public PoolAMatcher(int index) : base(new[] { index })
+    {
     }
 
-    public override string ToString() {
+    public override string ToString()
+    {
         return PoolAComponentIds.IdToString(indices[0]);
     }
 }",
@@ -352,7 +421,9 @@ public partial class PoolBMatcher : AllOfMatcher {
                     "PoolBComponentIds",
                     "PoolCComponentIds",
                 }, new [] {
-                    @"using Entitas;
+                    @"using System;
+using System.Collections.Generic;
+using Entitas;
 
 public static class PoolAComponentIds {
     public const int C = 0;
@@ -360,6 +431,12 @@ public static class PoolAComponentIds {
     public const int A = 2;
 
     public const int TotalComponents = 3;
+
+    private static readonly Dictionary<Type, int> typeToInt = new Dictionary<Type, int>() {
+        {typeof(CComponent), 0},
+        {typeof(BComponent), 1},
+        {typeof(AComponent), 2}
+    };
 
     static readonly string[] components = {
         ""C"",
@@ -370,10 +447,15 @@ public static class PoolAComponentIds {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
+    public static int ComponentToId(IComponent c) {
+        return typeToInt[c.getType()];
+    }
+
 }
 
-public partial class PoolAMatcher : AllOfMatcher {
-    public PoolAMatcher(int index) : base(new [] { index }) {
+public partial class PoolAMatcher : AllOfMatcher
+{
+    public PoolAMatcher(int index) : base(new[] { index }) {
     }
 
     public override string ToString() {
