@@ -9,20 +9,21 @@ class describe_ComponentExtensionsGenerator : nspec {
 
     const string classSuffix = "GeneratedExtension";
 
-    void generates(Type type, string code) {
+    void generates(Type type, string expectedFileContent) {
+        expectedFileContent = expectedFileContent.ToUnixLineEndings();
         var files = new ComponentExtensionsGenerator().Generate(new[] { type });
-        var filePath = type + classSuffix;
+        var expectedFilePath = type + classSuffix;
 
         files.Length.should_be(1);
         var file = files[0];
 
         if (logResults) {
-            Console.WriteLine("should:\n" + code);
+            Console.WriteLine("should:\n" + expectedFileContent);
             Console.WriteLine("was:\n" + file.fileContent);
         }
 
-        file.fileName.should_be(filePath);
-        file.fileContent.should_be(code);
+        file.fileName.should_be(expectedFilePath);
+        file.fileContent.should_be(expectedFileContent);
     }
 
     void when_generating() {

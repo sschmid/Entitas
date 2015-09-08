@@ -18,7 +18,7 @@ public class MetaGameAttribute : PoolAttribute {
     }
 }
 
-");
+".ToUnixLineEndings());
         };
 
 
@@ -37,7 +37,7 @@ public class UIAttribute : PoolAttribute {
     }
 }
 
-");
+".ToUnixLineEndings());
         };
     }
 }

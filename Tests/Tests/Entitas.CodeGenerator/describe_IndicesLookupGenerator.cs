@@ -20,14 +20,14 @@ class describe_IndicesLookupGenerator : nspec {
 
         for (int i = 0; i < lookupNames.Length; i++) {
             var lookupName = lookupNames[i];
-            var lookupCode = lookupCodes[i];
+            var expectedLookupCode = lookupCodes[i].ToUnixLineEndings();;
             files.Any(f => f.fileName == lookupName).should_be_true();
             var file = files.Single(f => f.fileName == lookupName);
             if (logResults) {
-                Console.WriteLine("should:\n" + lookupCode);
+                Console.WriteLine("should:\n" + expectedLookupCode);
                 Console.WriteLine("was:\n" + file.fileContent);
             }
-            file.fileContent.should_be(lookupCode);
+            file.fileContent.should_be(expectedLookupCode);
         }
     }
 
@@ -41,16 +41,16 @@ class describe_IndicesLookupGenerator : nspec {
 
         for (int i = 0; i < lookupNames.Length; i++) {
             var lookupName = lookupNames[i];
-            var lookupCode = lookupCodes[i];
+            var expectedLookupCode = lookupCodes[i].ToUnixLineEndings();
             files.Any(f => f.fileName == lookupName).should_be_true();
             var file = files.First(f => f.fileName == lookupName);
 
             if (logResults) {
-                Console.WriteLine("should:\n" + lookupCode);
+                Console.WriteLine("should:\n" + expectedLookupCode);
                 Console.WriteLine("was:\n" + file.fileContent);
             }
 
-            file.fileContent.should_be(lookupCode);
+            file.fileContent.should_be(expectedLookupCode);
         }
     }
 

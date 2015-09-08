@@ -54,13 +54,14 @@ class describe_SystemExtensionsGenerator : nspec {
     }
 }";
 
-    void generates<T>(string code) {
+    void generates<T>(string expectedCode) {
+        expectedCode = expectedCode.ToUnixLineEndings();
         var type = typeof(T);
         var files = new SystemExtensionsGenerator().Generate(new [] { type });
         files.Length.should_be(1);
         var file = files[0];
         file.fileName.should_be(type + classSuffix);
-        file.fileContent.should_be(code);
+        file.fileContent.should_be(expectedCode);
     }
 
     void ignores<T>() {

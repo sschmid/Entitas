@@ -122,6 +122,7 @@ public static class Pools {
 }";
 
     void generates(string[] poolNames, string fileContent) {
+        fileContent = fileContent.ToUnixLineEndings();
         var files = new PoolsGenerator().Generate(poolNames);
         files.Length.should_be(1);
         var file = files[0];
