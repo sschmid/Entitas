@@ -11,7 +11,7 @@ namespace Entitas.CodeGenerator {
                 .Aggregate(new List<CodeGenFile>(), (files, lookup) => {
                     files.Add(new CodeGenFile {
                         fileName = lookup.Key,
-                        fileContent = generateIndicesLookup(lookup.Key, lookup.Value.ToArray())
+                        fileContent = generateIndicesLookup(lookup.Key, lookup.Value.ToArray()).ToUnixLineEndings()
                     });
                     return files;
                 }).ToArray();
@@ -27,7 +27,7 @@ namespace Entitas.CodeGenerator {
                     var lookupTag = poolName + CodeGenerator.defaultIndicesLookupTag;
                     files.Add(new CodeGenFile {
                         fileName = lookupTag,
-                        fileContent = generateIndicesLookup(lookupTag, noTypes)
+                        fileContent = generateIndicesLookup(lookupTag, noTypes).ToUnixLineEndings()
                     });
                     return files;
                 }).ToArray();

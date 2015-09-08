@@ -56,7 +56,7 @@ public static class Pools {{{0}{1}
 
             return new [] { new CodeGenFile {
                     fileName = fileName,
-                    fileContent = string.Format(classTemplate, allPools, getters)
+                    fileContent = string.Format(classTemplate, allPools, getters).ToUnixLineEndings()
                 }
             };
         }

@@ -14,7 +14,7 @@ namespace Entitas.CodeGenerator {
                     .Aggregate(new List<CodeGenFile>(), (files, type) => {
                         files.Add(new CodeGenFile {
                             fileName = type + classSuffix,
-                            fileContent = generateComponentExtension(type)
+                            fileContent = generateComponentExtension(type).ToUnixLineEndings()
                         });
                         return files;
                     }).ToArray();

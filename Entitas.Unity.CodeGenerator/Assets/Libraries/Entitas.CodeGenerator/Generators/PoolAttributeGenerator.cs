@@ -8,7 +8,7 @@ namespace Entitas.CodeGenerator {
             return poolNames.Aggregate(new List<CodeGenFile>(), (files, poolName) => {
                 files.Add(new CodeGenFile {
                     fileName = poolName + "Attribute",
-                    fileContent = generatePoolAttributes(poolName)
+                    fileContent = generatePoolAttributes(poolName).ToUnixLineEndings()
                 });
                 return files;
             }).ToArray();

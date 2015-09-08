@@ -22,7 +22,7 @@ namespace Entitas.CodeGenerator {
                     .Aggregate(new List<CodeGenFile>(), (files, type) => {
                         files.Add(new CodeGenFile {
                             fileName = type + classSuffix,
-                            fileContent = string.Format(classTemplate, type.Name, type)
+                            fileContent = string.Format(classTemplate, type.Name, type).ToUnixLineEndings()
                         });
                         return files;
                         })
