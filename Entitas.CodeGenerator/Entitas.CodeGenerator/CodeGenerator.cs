@@ -78,14 +78,11 @@ namespace Entitas.CodeGenerator {
         }
     }
 
-    public static class EntitasCodeGeneratorExtensions {
+    public static class CodeGeneratorExtensions {
         public static string RemoveComponentSuffix(this Type type) {
-            const string componentSuffix = CodeGenerator.componentSuffix;
-            if (type.Name.EndsWith(componentSuffix)) {
-                return type.Name.Substring(0, type.Name.Length - componentSuffix.Length);
-            }
-
-            return type.Name;
+            return type.Name.EndsWith(CodeGenerator.componentSuffix)
+                        ? type.Name.Substring(0, type.Name.Length - CodeGenerator.componentSuffix.Length)
+                        : type.Name;
         }
 
         public static string[] PoolNames(this Type type) {
@@ -119,6 +116,10 @@ namespace Entitas.CodeGenerator {
 
         public static string LowercaseFirst(this string str) {
             return char.ToLower(str[0]) + str.Substring(1);
+        }
+
+        public static string ToUnixLineEndings(this string str) {
+            return str.Replace(Environment.NewLine, "\n");
         }
     }
 }
