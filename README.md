@@ -116,6 +116,10 @@ Contributing to Entitas
 
 The project is hosted on [GitHub][github-entitas] where you can [report issues][issues], fork the project and [submit pull requests][pulls].
 
+Entitas.sln contains all projects and tests in one solution. All Unity projects are not committed to the repository and can be generated with Unity. Open Entitas.Unity, Entitas.Unity.CodeGenerator and Entitas.Unity.VisualDebugging in Unity and generate all projects by clicking Assets -> Sync MonoDevelop Project.
+
+To run the tests, navigate to the project root folder and execute runTests.sh.
+
 - Check the [issues][issues] to make sure nobody hasn't already requested it and/or contributed it
 - Fork the project
 - Checkout the latest develop
