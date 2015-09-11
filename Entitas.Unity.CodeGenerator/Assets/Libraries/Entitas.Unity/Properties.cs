@@ -18,11 +18,11 @@ namespace Entitas.Unity {
             replacePlaceholders();
         }
 
-        string convertLineEndings(string str) {
+        static string convertLineEndings(string str) {
             return str.Replace("\r\n", "\n");
         }
 
-        string[] getLinesWithProperties(string properties) {
+        static string[] getLinesWithProperties(string properties) {
             var delimiter = new[] { '\n' };
             return properties
                 .Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
@@ -31,7 +31,7 @@ namespace Entitas.Unity {
                 .ToArray();
         }
 
-        string[] mergeMultilineValues(string[] lines) {
+        static string[] mergeMultilineValues(string[] lines) {
             var currentProperty = string.Empty;
             return lines.Aggregate(new List<string>(), (acc, line) => {
                 currentProperty += line;
