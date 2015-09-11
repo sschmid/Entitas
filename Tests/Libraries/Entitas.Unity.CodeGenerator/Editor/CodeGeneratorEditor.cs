@@ -13,9 +13,9 @@ namespace Entitas.Unity.CodeGenerator {
             var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
             var config = new CodeGeneratorConfig(EntitasPreferencesEditor.LoadConfig());
 
-            var disabledCodeGenerators = config.disabledCodeGenerators;
+            var enabledCodeGenerators = config.enabledCodeGenerators;
             var codeGenerators = GetCodeGenerators()
-                .Where(type => !disabledCodeGenerators.Contains(type.Name))
+                .Where(type => enabledCodeGenerators.Contains(type.Name))
                 .Select(type => (ICodeGenerator)Activator.CreateInstance(type))
                 .ToArray();
 

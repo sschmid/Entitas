@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Unity;
 using Entitas.Unity.CodeGenerator;
@@ -63,19 +64,21 @@ namespace Entitas.Unity.CodeGenerator {
             EditorGUILayout.LabelField("Code Generators", EditorStyles.boldLabel);
 
             var codeGenerators = CodeGeneratorEditor.GetCodeGenerators();
-            var disabledCodeGenerators = new HashSet<string>(codeGeneratorConfig.disabledCodeGenerators);
+            var enabledCodeGenerators = new HashSet<string>(codeGeneratorConfig.enabledCodeGenerators);
 
             foreach (var codeGenerator in codeGenerators) {
-                var isEnabled = !disabledCodeGenerators.Contains(codeGenerator.Name);
+                var isEnabled = enabledCodeGenerators.Contains(codeGenerator.Name);
                 isEnabled = EditorGUILayout.Toggle(codeGenerator.Name, isEnabled);
                 if (isEnabled) {
-                    disabledCodeGenerators.Remove(codeGenerator.Name);
+                    enabledCodeGenerators.Add(codeGenerator.Name);
                 } else {
-                    disabledCodeGenerators.Add(codeGenerator.Name);
+                    enabledCodeGenerators.Remove(codeGenerator.Name);
                 }
             }
 
-            codeGeneratorConfig.disabledCodeGenerators = disabledCodeGenerators.ToArray();
+            var sortedCodeGenerators = enabledCodeGenerators.ToArray();
+            Array.Sort(sortedCodeGenerators);
+            codeGeneratorConfig.enabledCodeGenerators = sortedCodeGenerators;
         }
 
         void drawGenerateButton() {
