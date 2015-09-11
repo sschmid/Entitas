@@ -22,6 +22,7 @@ Entitas is a super fast Entity Component System (ECS) specifically made for C# a
 
 [![Download Entitas.zip][download-entitas-shield]][entitas-zip]
 ### **[» Wiki, Roadmap, Overview and example projects][wiki]**
+### **[» Community: Games and Examples #madeWithEntitas][wiki-games-and-examples]**
 
 
 Watch the talk from Unite Europe 2015
@@ -162,6 +163,7 @@ Entitas is also available in
 [wiki-overview]: https://github.com/sschmid/Entitas-CSharp/wiki/Overview "Wiki - Overview"
 [wiki-unity-integration]: https://github.com/sschmid/Entitas-CSharp/wiki/Unity-integration "Wiki - Unity Integration"
 [wiki-example-projects]: https://github.com/sschmid/Entitas-CSharp/wiki/Example-projects "Wiki - Example Projects"
+[wiki-games-and-examples]: https://github.com/sschmid/Entitas-CSharp/wiki/Games-and-Examples "Wiki - Games and Examples #madeWithEntitas"
 
 [unite-europe-2015-video-thumbnail]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope-2015.png "Video: Watch the Entitas Talk at Unite Europe 2015"
 [unite-europe-2015-video]: http://buff.ly/1KtKlm6 "Video: Watch the Entitas Talk at Unite Europe 2015"
