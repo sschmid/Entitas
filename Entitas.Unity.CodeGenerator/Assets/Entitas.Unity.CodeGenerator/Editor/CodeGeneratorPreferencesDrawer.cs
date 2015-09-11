@@ -21,11 +21,11 @@ namespace Entitas.Unity.CodeGenerator {
             EditorGUILayout.EndVertical();
         }
 
-        void drawGeneratedFolderPath(CodeGeneratorConfig codeGeneratorConfig) {
+        static void drawGeneratedFolderPath(CodeGeneratorConfig codeGeneratorConfig) {
             codeGeneratorConfig.generatedFolderPath = EditorGUILayout.TextField("Generated Folder", codeGeneratorConfig.generatedFolderPath);
         }
 
-        void drawPools(CodeGeneratorConfig codeGeneratorConfig) {
+        static void drawPools(CodeGeneratorConfig codeGeneratorConfig) {
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Pools");
             
@@ -59,7 +59,7 @@ namespace Entitas.Unity.CodeGenerator {
             codeGeneratorConfig.pools = pools.ToArray();
         }
 
-        void drawCodeGenerators(CodeGeneratorConfig codeGeneratorConfig) {
+        static void drawCodeGenerators(CodeGeneratorConfig codeGeneratorConfig) {
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Code Generators", EditorStyles.boldLabel);
 
@@ -81,7 +81,7 @@ namespace Entitas.Unity.CodeGenerator {
             codeGeneratorConfig.enabledCodeGenerators = sortedCodeGenerators;
         }
 
-        void drawGenerateButton() {
+        static void drawGenerateButton() {
             EditorGUILayout.Space();
             if (GUILayout.Button("Generate")) {
                 CodeGeneratorEditor.Generate();
