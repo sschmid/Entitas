@@ -11,15 +11,17 @@ namespace Entitas.Unity.CodeGenerator {
         [MenuItem("Entitas/Generate")]
         public static void Generate() {
             var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
-            var config = new CodeGeneratorConfig(EntitasPreferencesEditor.LoadConfig());
+            var codeGenerators = GetCodeGenerators();
+            var codeGeneratorNames = codeGenerators.Select(cg => cg.Name).ToArray();
+            var config = new CodeGeneratorConfig(EntitasPreferencesEditor.LoadConfig(), codeGeneratorNames);
 
-            var enabledCodeGenerators = config.enabledCodeGenerators;
-            var codeGenerators = GetCodeGenerators()
-                .Where(type => enabledCodeGenerators.Contains(type.Name))
+            var enabledCodeGeneratorNames = config.enabledCodeGenerators;
+            var enabledCodeGenerators = codeGenerators
+                .Where(type => enabledCodeGeneratorNames.Contains(type.Name))
                 .Select(type => (ICodeGenerator)Activator.CreateInstance(type))
                 .ToArray();
 
-            Entitas.CodeGenerator.CodeGenerator.Generate(types, config.pools, config.generatedFolderPath, codeGenerators);
+            Entitas.CodeGenerator.CodeGenerator.Generate(types, config.pools, config.generatedFolderPath, enabledCodeGenerators);
 
             AssetDatabase.Refresh();
         }

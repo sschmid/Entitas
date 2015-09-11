@@ -12,10 +12,12 @@ namespace Entitas.Unity.CodeGenerator {
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField("CodeGenerator", EditorStyles.boldLabel);
 
-            var codeGeneratorConfig = new CodeGeneratorConfig(config);
+            var codeGenerators = CodeGeneratorEditor.GetCodeGenerators();
+            var codeGeneratorNames = codeGenerators.Select(cg => cg.Name).ToArray();
+            var codeGeneratorConfig = new CodeGeneratorConfig(config, codeGeneratorNames);
             drawGeneratedFolderPath(codeGeneratorConfig);
             drawPools(codeGeneratorConfig);
-            drawCodeGenerators(codeGeneratorConfig);
+            drawCodeGenerators(codeGeneratorConfig, codeGenerators);
             drawGenerateButton();
 
             EditorGUILayout.EndVertical();
@@ -59,11 +61,10 @@ namespace Entitas.Unity.CodeGenerator {
             codeGeneratorConfig.pools = pools.ToArray();
         }
 
-        static void drawCodeGenerators(CodeGeneratorConfig codeGeneratorConfig) {
+        static void drawCodeGenerators(CodeGeneratorConfig codeGeneratorConfig, Type[] codeGenerators) {
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Code Generators", EditorStyles.boldLabel);
 
-            var codeGenerators = CodeGeneratorEditor.GetCodeGenerators();
             var enabledCodeGenerators = new HashSet<string>(codeGeneratorConfig.enabledCodeGenerators);
 
             foreach (var codeGenerator in codeGenerators) {
