@@ -1,4 +1,5 @@
-﻿using System.Linq;
+#if UNITY_EDITOR
+using System.Linq;
 using Entitas.CodeGenerator;
 
 namespace Entitas.CodeGenerator {
@@ -62,3 +63,4 @@ public static class Pools {{{0}{1}
         }
     }
 }
+#endif
