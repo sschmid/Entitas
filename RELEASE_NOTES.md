@@ -1,3 +1,30 @@
+# 0.23.0
+
+##### Breaking changes
+Before updating, please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+- Gerneral
+  - Updated and applied policy
+
+##### Entitas
+- Reimplemented new matcher AnyOf and NoneOf
+
+```csharp
+Matcher.AllOf(Matcher.A, Matcher.B)
+       .AnyOf(Matcher.C, Matcher.D)
+       .NoneOf(Matcher.Equals, Matcher.F);
+
+```
+
+##### Entitas.CodeGenerator
+- Updated generators to work with new matchers
+- PoolsGenerator generates Pools.allPools (#39)
+- Code Generators convert local newline to unix newline
+
+##### Entitas.Unity.CodeGenerator
+- Changed CodeGeneratorConfig.disabledCodeGenerators to CodeGeneratorConfig.enabledCodeGenerators
+
+
 # 0.22.3
 
 ##### Entitas
@@ -96,7 +123,8 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 - Added `IEnsureComponents` to optionally ensure entities passed in via ReactiveSystem have certain components
 - Added `IExcludeComponents` to optionally exclude entities passed in via ReactiveSystem
 - Added support for multiple PoolAttributes on components
-```cs
+
+```csharp
 [PoolA, PoolB, PoolC]
 public class SomeComponent : IComponent {}
 ```
@@ -197,7 +225,8 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 
 ##### Breaking changes
 - Added `systemCodeGenerators` to CodeGenerator.Generate()
-```cs
+
+```csharp
 CodeGenerator.Generate(Type[] types, string[] poolNames, string dir,
                             IComponentCodeGenerator[] componentCodeGenerators,
                             ISystemCodeGenerator[] systemCodeGenerators,
@@ -206,13 +235,15 @@ CodeGenerator.Generate(Type[] types, string[] poolNames, string dir,
 
 ##### Entitas.CodeGenerator
 - Added PoolsGenerator which creates a getter for all pools
-```cs
+
+```csharp
 var pool = Pools.pool;
 var metaPool = Pools.meta;
 ```
 
 - Added SystemExtensionsGenerator
-```cs
+
+```csharp
 new Systems()
     .Add(pool.CreateGameBoardSystem())
     .Add(pool.CreateCreateGameBoardCacheSystem())
@@ -287,7 +318,8 @@ new Systems()
 
 ##### Entitas.Unity.CodeGenerator
 - Added fluent api to Entity
-```cs
+
+```csharp
 pool.CreateEntity()
     .IsGameBoardElement(true)
     .IsMovable(true)
