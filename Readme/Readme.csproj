@@ -90,12 +90,6 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
       <Link>Libraries\Entitas\Interfaces\IComponent.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IEnsureComponents.cs">
-      <Link>Libraries\Entitas\Interfaces\IEnsureComponents.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IExcludeComponents.cs">
-      <Link>Libraries\Entitas\Interfaces\IExcludeComponents.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IExecuteSystem.cs">
       <Link>Libraries\Entitas\Interfaces\IExecuteSystem.cs</Link>
     </Compile>
@@ -104,12 +98,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
       <Link>Libraries\Entitas\Interfaces\IMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IMultiReactiveSystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IMultiReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveExecuteSystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IReactiveExecuteSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
       <Link>Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
@@ -164,9 +152,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\TriggerOnEvent.cs">
       <Link>Libraries\Entitas\Matcher\TriggerOnEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IClearReactiveSystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IClearReactiveSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
       <Link>Libraries\Entitas\Matcher\Matcher.cs</Link>

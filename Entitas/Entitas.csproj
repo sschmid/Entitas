@@ -47,12 +47,7 @@
     <Compile Include="Entitas\ReactiveSystem.cs" />
     <Compile Include="Entitas\Interfaces\IInitializeSystem.cs" />
     <Compile Include="Entitas\Systems.cs" />
-    <Compile Include="Entitas\Interfaces\IMultiReactiveSystem.cs" />
-    <Compile Include="Entitas\Interfaces\IReactiveExecuteSystem.cs" />
-    <Compile Include="Entitas\Interfaces\IEnsureComponents.cs" />
-    <Compile Include="Entitas\Interfaces\IExcludeComponents.cs" />
     <Compile Include="Entitas\Matcher\TriggerOnEvent.cs" />
-    <Compile Include="Entitas\Interfaces\IClearReactiveSystem.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
