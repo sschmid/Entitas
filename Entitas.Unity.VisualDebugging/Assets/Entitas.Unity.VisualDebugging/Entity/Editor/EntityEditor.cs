@@ -238,7 +238,7 @@ namespace Entitas.Unity.VisualDebugging {
             var config = new VisualDebuggingConfig(EntitasPreferencesEditor.LoadConfig());
             var folder = config.defaultInstanceCreatorFolderPath;
             var filePath = folder + "Default_type_InstanceCreator.cs";
-            var template = string.Format(defaultInstanceCreatorTemplateFormat, typeName);
+            var template = string.Format(DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT, typeName);
             generateTemplate(folder, filePath, template);
         }
 
@@ -246,7 +246,7 @@ namespace Entitas.Unity.VisualDebugging {
             var config = new VisualDebuggingConfig(EntitasPreferencesEditor.LoadConfig());
             var folder = config.typeDrawerFolderPath;
             var filePath = folder + "Type_TypeDrawer.cs";
-            var template = string.Format(typeDrawerTemplateFormat, typeName);
+            var template = string.Format(TYPE_DRAWER_TEMPLATE_FORMAT, typeName);
             generateTemplate(folder, filePath, template);
         }
 
@@ -260,7 +260,7 @@ namespace Entitas.Unity.VisualDebugging {
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filePath);
         }
 
-        const string defaultInstanceCreatorTemplateFormat = @"using System;
+        const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT = @"using System;
 using Entitas.Unity.VisualDebugging;
 
 // Please rename class name and file name
@@ -276,7 +276,7 @@ public class Default_type_InstanceCreator : IDefaultInstanceCreator {{
 }}
 ";
 
-        const string typeDrawerTemplateFormat = @"using System;
+        const string TYPE_DRAWER_TEMPLATE_FORMAT = @"using System;
 using Entitas;
 using Entitas.Unity.VisualDebugging;
 

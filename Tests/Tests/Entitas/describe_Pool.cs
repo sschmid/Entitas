@@ -23,7 +23,7 @@ class describe_Pool : nspec {
         };
 
         it["gets total entity count"] = () => {
-            pool.Count.should_be(0);
+            pool.count.should_be(0);
         };
 
         it["creates entity"] = () => {
@@ -41,7 +41,7 @@ class describe_Pool : nspec {
             };
 
             it["gets total entity count"] = () => {
-                pool.Count.should_be(1);
+                pool.count.should_be(1);
             };
 
             it["has entities that were created with CreateEntity()"] = () => {
@@ -63,7 +63,7 @@ class describe_Pool : nspec {
             it["destroys entity and removes it"] = () => {
                 pool.DestroyEntity(e);
                 pool.HasEntity(e).should_be_false();
-                pool.Count.should_be(0);
+                pool.count.should_be(0);
                 pool.GetEntities().should_be_empty();
             };
 
@@ -76,7 +76,7 @@ class describe_Pool : nspec {
                 pool.CreateEntity();
                 pool.DestroyAllEntities();
                 pool.HasEntity(e).should_be_false();
-                pool.Count.should_be(0);
+                pool.count.should_be(0);
                 pool.GetEntities().should_be_empty();
                 e.GetComponents().should_be_empty();
             };

@@ -6,9 +6,9 @@ using Entitas.CodeGenerator;
 namespace Entitas.CodeGenerator {
     public class SystemExtensionsGenerator : ISystemCodeGenerator {
 
-        const string classSuffix = "GeneratedExtension";
+        const string CLASS_SUFFIX = "GeneratedExtension";
 
-        const string classTemplate = @"namespace Entitas {{
+        const string CLASS_TEMPLATE = @"namespace Entitas {{
     public partial class Pool {{
         public ISystem Create{0}() {{
             return this.CreateSystem<{1}>();
@@ -21,8 +21,8 @@ namespace Entitas.CodeGenerator {
                     .Where(type => type.GetConstructor(new Type[0]) != null)
                     .Aggregate(new List<CodeGenFile>(), (files, type) => {
                         files.Add(new CodeGenFile {
-                            fileName = type + classSuffix,
-                            fileContent = string.Format(classTemplate, type.Name, type).ToUnixLineEndings()
+                            fileName = type + CLASS_SUFFIX,
+                            fileContent = string.Format(CLASS_TEMPLATE, type.Name, type).ToUnixLineEndings()
                         });
                         return files;
                         })

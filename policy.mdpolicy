@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PolicySet name="policy">
+<PolicySet name="Entitas">
   <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
   <VersionControlPolicy inheritsSet="Mono" />
   <CSharpFormattingPolicy inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp">
     <IndentSwitchBody>True</IndentSwitchBody>
-    <AutoPropertyFormatting>ForceOneLine</AutoPropertyFormatting>
     <NamespaceBraceStyle>EndOfLine</NamespaceBraceStyle>
     <ClassBraceStyle>EndOfLine</ClassBraceStyle>
     <InterfaceBraceStyle>EndOfLine</InterfaceBraceStyle>
@@ -22,13 +21,15 @@
     <NewParentheses>False</NewParentheses>
     <SpacesBeforeBrackets>False</SpacesBeforeBrackets>
     <BlankLinesBeforeUsings>1</BlankLinesBeforeUsings>
+    <BlankLinesBetweenMembers>0</BlankLinesBetweenMembers>
+    <AlignToFirstMethodDeclarationParameter>False</AlignToFirstMethodDeclarationParameter>
     <AlignToFirstIndexerDeclarationParameter>False</AlignToFirstIndexerDeclarationParameter>
   </CSharpFormattingPolicy>
   <NameConventionPolicy>
     <Rules>
       <NamingRule>
         <Name>PascalCase</Name>
-        <AffectedEntity>Namespace, Class, Struct, Enum, Delegate, Event, EnumMember</AffectedEntity>
+        <AffectedEntity>Namespace, Class, Struct, Enum, Delegate, Event, EnumMember, Label</AffectedEntity>
         <VisibilityMask>VisibilityMask</VisibilityMask>
         <NamingStyle>PascalCase</NamingStyle>
         <IncludeInstanceMembers>True</IncludeInstanceMembers>
@@ -48,7 +49,7 @@
       <NamingRule>
         <Name>Attributes</Name>
         <RequiredSuffixes>
-          <String>Attributes</String>
+          <String>Attribute</String>
         </RequiredSuffixes>
         <AffectedEntity>CustomAttributes</AffectedEntity>
         <VisibilityMask>VisibilityMask</VisibilityMask>
@@ -80,7 +81,7 @@
       </NamingRule>
       <NamingRule>
         <Name>camelCase</Name>
-        <AffectedEntity>Property, ConstantField, LocalVars</AffectedEntity>
+        <AffectedEntity>Property, Parameter, LambdaParameter, LocalVariable</AffectedEntity>
         <VisibilityMask>VisibilityMask</VisibilityMask>
         <NamingStyle>CamelCase</NamingStyle>
         <IncludeInstanceMembers>True</IncludeInstanceMembers>
@@ -132,6 +133,14 @@
         <IncludeInstanceMembers>True</IncludeInstanceMembers>
         <IncludeStaticEntities>True</IncludeStaticEntities>
       </NamingRule>
+      <NamingRule>
+        <Name>Constants</Name>
+        <AffectedEntity>ConstantField, LocalConstant</AffectedEntity>
+        <VisibilityMask>VisibilityMask</VisibilityMask>
+        <NamingStyle>AllUpper</NamingStyle>
+        <IncludeInstanceMembers>True</IncludeInstanceMembers>
+        <IncludeStaticEntities>True</IncludeStaticEntities>
+      </NamingRule>
     </Rules>
   </NameConventionPolicy>
   <ChangeLogPolicy inheritsSet="Mono" />
@@ -146,4 +155,16 @@
     <DirectoryNamespaceAssociation>None</DirectoryNamespaceAssociation>
     <ResourceNamePolicy>FileName</ResourceNamePolicy>
   </DotNetNamingPolicy>
+  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-fsharp" />
+  <FSharpFormattingPolicy scope="text/x-fsharp">
+    <DefaultFormat>
+      <IndentOnTryWith>False</IndentOnTryWith>
+      <ReorderOpenDeclaration>False</ReorderOpenDeclaration>
+      <SpaceAfterComma>True</SpaceAfterComma>
+      <SpaceAfterSemicolon>True</SpaceAfterSemicolon>
+      <SpaceAroundDelimiter>True</SpaceAroundDelimiter>
+      <SpaceBeforeArgument>True</SpaceBeforeArgument>
+      <SpaceBeforeColon>True</SpaceBeforeColon>
+    </DefaultFormat>
+  </FSharpFormattingPolicy>
 </PolicySet>

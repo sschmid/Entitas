@@ -13,7 +13,7 @@ namespace Entitas {
         public delegate void GroupChanged(Pool pool, Group group);
 
         public int totalComponents { get { return _totalComponents; } }
-        public int Count { get { return _entities.Count; } }
+        public int count { get { return _entities.Count; } }
         public int reusableEntitiesCount { get { return _reusableEntities.Count; } }
         public int retainedEntitiesCount { get { return _retainedEntities.Count; } }
 

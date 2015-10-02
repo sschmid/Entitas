@@ -8,14 +8,14 @@ namespace Entitas.Unity.VisualDebugging {
     public class DebugSystemsEditor : Editor {
 		SystemsMonitorEditor _systemsMonitor;
         Queue<float> _systemMonitorData;
-        const int systemMonitorDataLength = 60;
+        const int SYSTEM_MONITOR_DATA_LENGTH = 60;
 
         public override void OnInspectorGUI() {
 			var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
             var systems = debugSystemsBehaviour.systems;
             if (_systemsMonitor == null) {
-                _systemsMonitor = new SystemsMonitorEditor(systemMonitorDataLength);
-                _systemMonitorData = new Queue<float>(new float[systemMonitorDataLength]);
+                _systemsMonitor = new SystemsMonitorEditor(SYSTEM_MONITOR_DATA_LENGTH);
+                _systemMonitorData = new Queue<float>(new float[SYSTEM_MONITOR_DATA_LENGTH]);
                 if (EditorApplication.update != Repaint) {
                     EditorApplication.update += Repaint;
                 }
@@ -102,7 +102,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void addDuration(float duration) {
-            if (_systemMonitorData.Count >= systemMonitorDataLength) {
+            if (_systemMonitorData.Count >= SYSTEM_MONITOR_DATA_LENGTH) {
                 _systemMonitorData.Dequeue();
             }
 

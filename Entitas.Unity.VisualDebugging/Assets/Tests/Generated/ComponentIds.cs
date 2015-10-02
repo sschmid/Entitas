@@ -29,7 +29,7 @@ public static class ComponentIds {
 
     public const int TotalComponents = 27;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         "AnArray",
         "AnimationCurve",
         "Array2D",
@@ -60,6 +60,6 @@ public static class ComponentIds {
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }

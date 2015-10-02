@@ -76,7 +76,7 @@ namespace Entitas.Unity.VisualDebugging {
             return array;
         }
 
-        Func<Array> drawEditActions(Array array, Type elementType, int index) {
+        static Func<Array> drawEditActions(Array array, Type elementType, int index) {
             if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                 return () => arrayRemoveAt(array, elementType, index);
             }
@@ -96,13 +96,13 @@ namespace Entitas.Unity.VisualDebugging {
             return null;
         }
 
-        Array arrayRemoveAt(Array array, Type elementType, int removeAt) {
+        static Array arrayRemoveAt(Array array, Type elementType, int removeAt) {
             var arrayList = new ArrayList(array);
             arrayList.RemoveAt(removeAt);
             return arrayList.ToArray(elementType);
         }
 
-        Array arrayInsertAt(Array array, Type elementType, object value, int insertAt) {
+        static Array arrayInsertAt(Array array, Type elementType, object value, int insertAt) {
             var arrayList = new ArrayList(array);
             arrayList.Insert(insertAt, value);
             return arrayList.ToArray(elementType);

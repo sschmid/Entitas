@@ -2,10 +2,10 @@ public static class ComponentIds {
 
     public const int TotalComponents = 0;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }

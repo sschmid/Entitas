@@ -5,8 +5,8 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
     public static class CodeGenerator {
-        public const string componentSuffix = "Component";
-        public const string defaultIndicesLookupTag = "ComponentIds";
+        public const string COMPONENT_SUFFIX = "Component";
+        public const string DEFAULT_INDICES_LOOKUP_TAG = "ComponentIds";
 
         public static void Generate(Type[] types, string[] poolNames, string dir, ICodeGenerator[] codeGenerators) {
             dir = GetSafeDir(dir);
@@ -80,8 +80,8 @@ namespace Entitas.CodeGenerator {
 
     public static class CodeGeneratorExtensions {
         public static string RemoveComponentSuffix(this Type type) {
-            return type.Name.EndsWith(CodeGenerator.componentSuffix)
-                        ? type.Name.Substring(0, type.Name.Length - CodeGenerator.componentSuffix.Length)
+            return type.Name.EndsWith(CodeGenerator.COMPONENT_SUFFIX)
+                        ? type.Name.Substring(0, type.Name.Length - CodeGenerator.COMPONENT_SUFFIX.Length)
                         : type.Name;
         }
 
@@ -102,11 +102,11 @@ namespace Entitas.CodeGenerator {
         public static string[] IndicesLookupTags(this Type type) {
             var poolNames = type.PoolNames();
             if (poolNames.Length == 0) {
-                return new [] { CodeGenerator.defaultIndicesLookupTag };
+                return new [] { CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG };
             }
 
             return poolNames
-                .Select(poolName => poolName + CodeGenerator.defaultIndicesLookupTag)
+                .Select(poolName => poolName + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG)
                 .ToArray();
         }
 

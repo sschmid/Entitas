@@ -37,7 +37,7 @@ namespace Entitas.Unity.VisualDebugging {
         public override string ToString() {
             return _entitiesContainer.name = 
                 _name + " (" +
-                _pool.Count + " entities, " +
+                _pool.count + " entities, " +
                 _pool.reusableEntitiesCount + " reusable, " +
                 _groups.Count + " groups)";
         }

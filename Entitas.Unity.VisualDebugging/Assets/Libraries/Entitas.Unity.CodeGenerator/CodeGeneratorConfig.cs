@@ -4,36 +4,36 @@ using System.Linq;
 namespace Entitas.Unity.CodeGenerator {
     public class CodeGeneratorConfig {
         public string generatedFolderPath { 
-            get { return _config.GetValueOrDefault(generatedFolderPathKey, defaultGeneratedFolderPath); }
-            set { _config[generatedFolderPathKey] = value; }
+            get { return _config.GetValueOrDefault(GENERATED_FOLDER_PATH_KEY, DEFAULT_GENERATED_FOLDER_PATH); }
+            set { _config[GENERATED_FOLDER_PATH_KEY] = value; }
         }
 
         public string[] pools {
             get { 
-                return _config.GetValueOrDefault(poolsKey, string.Empty)
+                return _config.GetValueOrDefault(POOLS_KEY, string.Empty)
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(poolName => poolName.Trim())
                     .ToArray();
             }
-            set { _config[poolsKey] = string.Join(",", value.Where(pool => !string.IsNullOrEmpty(pool)).ToArray()).Replace(" ", string.Empty); }
+            set { _config[POOLS_KEY] = string.Join(",", value.Where(pool => !string.IsNullOrEmpty(pool)).ToArray()).Replace(" ", string.Empty); }
         }
 
         public string[] enabledCodeGenerators {
             get { 
-                return _config.GetValueOrDefault(enabledCodeGeneratorsKey, _defaultEnabledCodeGenerators)
+                return _config.GetValueOrDefault(ENABLED_CODE_GENERATORS_KEY, _defaultEnabledCodeGenerators)
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Select(generator => generator.Trim())
                     .ToArray();
             }
-            set { _config[enabledCodeGeneratorsKey] = joinCodeGenerators(value); }
+            set { _config[ENABLED_CODE_GENERATORS_KEY] = joinCodeGenerators(value); }
         }
 
-        const string generatedFolderPathKey = "Entitas.Unity.CodeGenerator.GeneratedFolderPath";
-        const string poolsKey = "Entitas.Unity.CodeGenerator.Pools";
-        const string enabledCodeGeneratorsKey = "Entitas.Unity.CodeGenerator.EnabledCodeGenerators";
+        const string GENERATED_FOLDER_PATH_KEY = "Entitas.Unity.CodeGenerator.GeneratedFolderPath";
+        const string POOLS_KEY = "Entitas.Unity.CodeGenerator.Pools";
+        const string ENABLED_CODE_GENERATORS_KEY = "Entitas.Unity.CodeGenerator.EnabledCodeGenerators";
 
-        const string defaultGeneratedFolderPath = "Assets/Generated/";
-        string _defaultEnabledCodeGenerators;
+        const string DEFAULT_GENERATED_FOLDER_PATH = "Assets/Generated/";
+        readonly string _defaultEnabledCodeGenerators;
 
         readonly EntitasPreferencesConfig _config;
 

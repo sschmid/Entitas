@@ -7,7 +7,7 @@ class describe_Properties : nspec {
     void assertProperties(string input, string expectedOutput, Dictionary<string, string>expectedProperties) {
         var p = new Properties(input);
         var expectedCount = expectedProperties != null ? expectedProperties.Count : 0;
-        p.Count.should_be(expectedCount);
+        p.count.should_be(expectedCount);
         p.ToString().should_be(expectedOutput);
         if (expectedProperties != null) {
             foreach (var kv in expectedProperties) {

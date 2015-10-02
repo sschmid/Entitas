@@ -12,7 +12,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField(poolObserver.name, EditorStyles.boldLabel);
-            EditorGUILayout.LabelField("Entities", poolObserver.pool.Count.ToString());
+            EditorGUILayout.LabelField("Entities", poolObserver.pool.count.ToString());
             EditorGUILayout.LabelField("Reusable entities", poolObserver.pool.reusableEntitiesCount.ToString());
             EditorGUILayout.LabelField("Retained entities", poolObserver.pool.retainedEntitiesCount.ToString());
             EditorGUILayout.EndVertical();
@@ -21,10 +21,10 @@ namespace Entitas.Unity.VisualDebugging {
             if (groups.Length != 0) {
                 EditorGUILayout.BeginVertical(GUI.skin.box);
                 EditorGUILayout.LabelField("Groups (" + groups.Length + ")", EditorStyles.boldLabel);
-                foreach (var group in groups.OrderByDescending(g => g.Count)) {
+                foreach (var group in groups.OrderByDescending(g => g.count)) {
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField(group.ToString());
-                    EditorGUILayout.LabelField(group.Count.ToString(), GUILayout.Width(48));
+                    EditorGUILayout.LabelField(group.count.ToString(), GUILayout.Width(48));
                     EditorGUILayout.EndHorizontal();
                 }
                 EditorGUILayout.EndVertical();

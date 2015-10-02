@@ -6,14 +6,14 @@ using System.Reflection;
 namespace Entitas.CodeGenerator {
     public class ComponentExtensionsGenerator : IComponentCodeGenerator {
 
-        const string classSuffix = "GeneratedExtension";
+        const string CLASS_SUFFIX = "GeneratedExtension";
 
         public CodeGenFile[] Generate(Type[] components) {
             return components
                     .Where(shouldGenerate)
                     .Aggregate(new List<CodeGenFile>(), (files, type) => {
                         files.Add(new CodeGenFile {
-                            fileName = type + classSuffix,
+                            fileName = type + CLASS_SUFFIX,
                             fileContent = generateComponentExtension(type).ToUnixLineEndings()
                         });
                         return files;
@@ -268,7 +268,7 @@ $assign
         */
 
         static string addMatcher(Type type) {
-            const string matcherFormat = @"
+            const string MATCHER_FORMAT = @"
     public partial class $TagMatcher {
         static IMatcher _matcher$Name;
 
@@ -285,11 +285,11 @@ $assign
 ";
             var poolNames = type.PoolNames();
             if (poolNames.Length == 0) {
-                return buildString(type, matcherFormat);
+                return buildString(type, MATCHER_FORMAT);
             }
 
             var matchers = poolNames.Aggregate(string.Empty, (acc, poolName) => {
-                return acc + buildString(type, matcherFormat.Replace("$Tag", poolName));
+                return acc + buildString(type, MATCHER_FORMAT.Replace("$Tag", poolName));
             });
 
             return buildString(type, matchers);
@@ -359,10 +359,10 @@ $assign
         }
 
         static string fieldAssignments(MemberTypeNameInfo[] infos) {
-            const string format = "            component.{0} = {1};";
+            const string FORMAT = "            component.{0} = {1};";
             var assignments = infos.Select(info => {
                 var newArg = "new" + info.name.UppercaseFirst();
-                return string.Format(format, info.name, newArg);
+                return string.Format(FORMAT, info.name, newArg);
             }).ToArray();
 
             return string.Join("\n", assignments);

@@ -109,7 +109,6 @@ Global
 		$3.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $4
 		$4.IndentSwitchBody = True
-		$4.AutoPropertyFormatting = ForceOneLine
 		$4.NamespaceBraceStyle = EndOfLine
 		$4.ClassBraceStyle = EndOfLine
 		$4.InterfaceBraceStyle = EndOfLine
@@ -127,6 +126,8 @@ Global
 		$4.NewParentheses = False
 		$4.SpacesBeforeBrackets = False
 		$4.BlankLinesBeforeUsings = 1
+		$4.BlankLinesBetweenMembers = 0
+		$4.AlignToFirstMethodDeclarationParameter = False
 		$4.AlignToFirstIndexerDeclarationParameter = False
 		$4.inheritsSet = Mono
 		$4.inheritsScope = text/x-csharp
@@ -138,7 +139,7 @@ Global
 		$6.Rules = $7
 		$7.NamingRule = $8
 		$8.Name = PascalCase
-		$8.AffectedEntity = Namespace, Class, Struct, Enum, Delegate, Event, EnumMember
+		$8.AffectedEntity = Namespace, Class, Struct, Enum, Delegate, Event, EnumMember, Label
 		$8.VisibilityMask = VisibilityMask
 		$8.NamingStyle = PascalCase
 		$8.IncludeInstanceMembers = True
@@ -155,7 +156,7 @@ Global
 		$7.NamingRule = $11
 		$11.Name = Attributes
 		$11.RequiredSuffixes = $12
-		$12.String = Attributes
+		$12.String = Attribute
 		$11.AffectedEntity = CustomAttributes
 		$11.VisibilityMask = VisibilityMask
 		$11.NamingStyle = PascalCase
@@ -181,9 +182,9 @@ Global
 		$15.IncludeStaticEntities = True
 		$7.NamingRule = $17
 		$17.Name = camelCase
-		$17.AffectedEntity = Property, ConstantField, LocalVars
+		$17.AffectedEntity = Property, Parameter, LambdaParameter, LocalVariable
 		$17.VisibilityMask = VisibilityMask
-		$17.NamingStyle = CamelCase
+		$17.NamingStyle = CamelCaseWithLowerLetterUnderscore
 		$17.IncludeInstanceMembers = True
 		$17.IncludeStaticEntities = True
 		$7.NamingRule = $18
@@ -225,6 +226,13 @@ Global
 		$23.NamingStyle = PascalCase
 		$23.IncludeInstanceMembers = True
 		$23.IncludeStaticEntities = True
+		$7.NamingRule = $25
+		$25.Name = Constants
+		$25.AffectedEntity = ConstantField, LocalConstant
+		$25.VisibilityMask = VisibilityMask
+		$25.NamingStyle = AllUpper
+		$25.IncludeInstanceMembers = True
+		$25.IncludeStaticEntities = True
 		version = 0.17.0
 	EndGlobalSection
 EndGlobal

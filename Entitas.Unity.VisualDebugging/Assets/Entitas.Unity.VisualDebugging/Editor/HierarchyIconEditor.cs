@@ -32,9 +32,9 @@ namespace Entitas.Unity.VisualDebugging {
                     || gameObject.GetComponent<EntityBehaviour>() != null
                     || gameObject.GetComponent<DebugSystemsBehaviour>() != null) {
 
-                    const float iconSize = 16f;
-                    const float iconOffset = iconSize + 2f;
-                    var rect = new Rect(selectionRect.x + selectionRect.width - iconOffset, selectionRect.y, iconSize, iconSize);
+                    const float ICON_SIZE = 16f;
+                    const float ICON_OFFSET = ICON_SIZE + 2f;
+                    var rect = new Rect(selectionRect.x + selectionRect.width - ICON_OFFSET, selectionRect.y, ICON_SIZE, ICON_SIZE);
                     GUI.DrawTexture(rect, hierarchyIcon);
                 }
             }

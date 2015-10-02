@@ -5,7 +5,7 @@ class describe_Group : nspec {
     Group _groupA;
 
     void assertContains(params Entity[] expectedEntities) {
-        _groupA.Count.should_be(expectedEntities.Length);
+        _groupA.count.should_be(expectedEntities.Length);
         var entities = _groupA.GetEntities();
         entities.Length.should_be(expectedEntities.Length);
         foreach (var e in expectedEntities) {
@@ -15,7 +15,7 @@ class describe_Group : nspec {
     }
 
     void assertContainsNot(Entity entity) {
-        _groupA.Count.should_be(0);
+        _groupA.count.should_be(0);
         _groupA.GetEntities().should_be_empty();
        _groupA.ContainsEntity(entity).should_be_false();
     }
@@ -39,7 +39,7 @@ class describe_Group : nspec {
             };
 
             it["is empty"] = () => {
-                _groupA.Count.should_be(0);
+                _groupA.count.should_be(0);
             };
 
             it["doesn't contain entity"] = () => {

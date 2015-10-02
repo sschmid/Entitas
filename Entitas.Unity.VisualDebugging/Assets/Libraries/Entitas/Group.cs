@@ -11,7 +11,7 @@ namespace Entitas {
 
         public delegate void GroupUpdated(Group group, Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
-        public int Count { get { return _entities.Count; } }
+        public int count { get { return _entities.Count; } }
 
         public IMatcher matcher { get { return _matcher; } }
 

@@ -5,11 +5,11 @@ public static class MetaComponentIds {
 
     public const int TotalComponents = 1;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         "Coins"
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }

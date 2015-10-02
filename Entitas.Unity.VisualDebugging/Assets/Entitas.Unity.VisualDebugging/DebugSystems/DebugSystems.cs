@@ -25,7 +25,7 @@ namespace Entitas.Unity.VisualDebugging {
         double _maxExecutionDuration;
         int _durationsCount;
 
-        const string systemSuffix = "System";
+        const string SYSTEM_SUFFIX = "System";
 
         public SystemInfo(ISystem system, Type systemType) {
             _system = system;
@@ -34,8 +34,8 @@ namespace Entitas.Unity.VisualDebugging {
             if (debugSystem != null) {
                 _systemName = debugSystem.name;
             } else {
-                _systemName = systemType.Name.EndsWith(systemSuffix, StringComparison.Ordinal)
-                    ? systemType.Name.Substring(0, systemType.Name.Length - systemSuffix.Length)
+                _systemName = systemType.Name.EndsWith(SYSTEM_SUFFIX, StringComparison.Ordinal)
+                    ? systemType.Name.Substring(0, systemType.Name.Length - SYSTEM_SUFFIX.Length)
                     : systemType.Name;
             }
             

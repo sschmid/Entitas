@@ -57,18 +57,18 @@ class describe_IndicesLookupGenerator : nspec {
     void when_generating() {
 
         it["generates default lookup"] = () => {
-            generates(typeof(SomeComponent), CodeGenerator.defaultIndicesLookupTag,
+            generates(typeof(SomeComponent), CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG,
                 @"public static class ComponentIds {
     public const int Some = 0;
 
     public const int TotalComponents = 1;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""Some""
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }");
         };
@@ -84,12 +84,12 @@ public static class OtherComponentIds {
 
     public const int TotalComponents = 1;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""OtherPool""
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }");
         };
@@ -97,18 +97,18 @@ public static class OtherComponentIds {
 
 
         it["generates id for [DontGenerate]"] = () => {
-            generates(typeof(DontGenerateComponent), CodeGenerator.defaultIndicesLookupTag,
+            generates(typeof(DontGenerateComponent), CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG,
                 @"public static class ComponentIds {
     public const int DontGenerate = 0;
 
     public const int TotalComponents = 1;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""DontGenerate""
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }");
         };
@@ -119,20 +119,20 @@ public static class OtherComponentIds {
             generates(new [] {
                 typeof(SomeComponent),
                 typeof(DontGenerateComponent)
-            }, CodeGenerator.defaultIndicesLookupTag,
+            }, CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG,
                 @"public static class ComponentIds {
     public const int DontGenerate = 0;
     public const int Some = 1;
 
     public const int TotalComponents = 2;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""DontGenerate"",
         ""Some""
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }");
         };
@@ -143,66 +143,66 @@ public static class OtherComponentIds {
             generates(new [] {
                 typeof(SomeComponent),
                 typeof(DontGenerateIndexComponent)
-            }, CodeGenerator.defaultIndicesLookupTag,
+            }, CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG,
                 @"public static class ComponentIds {
     public const int Some = 0;
 
     public const int TotalComponents = 1;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""Some""
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }");
         };
 
         it["generates empty lookup with total components when for default pool"] = () => {
-            generatesEmptyLookup(new string[0], new [] { CodeGenerator.defaultIndicesLookupTag }, new [] { @"public static class ComponentIds {
+            generatesEmptyLookup(new string[0], new [] { CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
 
     public const int TotalComponents = 0;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }" });
         };
 
         it["generates empty lookup with total components when for pool names"] = () => {
-            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.defaultIndicesLookupTag }, new [] { @"using Entitas;
+            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG }, new [] { @"using Entitas;
 
 public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }" });
         };
 
         it["generates multiple empty lookup with total components when for pool names"] = () => {
             generatesEmptyLookup(new [] { "Meta", "Core" },
-                new [] { "Meta" + CodeGenerator.defaultIndicesLookupTag, "Core" + CodeGenerator.defaultIndicesLookupTag },
+                new [] { "Meta" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG },
                 new [] { @"using Entitas;
 
 public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }", @"using Entitas;
 
@@ -210,11 +210,11 @@ public static class CoreComponentIds {
 
     public const int TotalComponents = 0;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }" });
         };
@@ -234,13 +234,13 @@ public static class PoolAComponentIds {
 
     public const int TotalComponents = 2;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""B"",
         ""A""
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }",
                     @"using Entitas;
@@ -250,12 +250,12 @@ public static class PoolBComponentIds {
 
     public const int TotalComponents = 1;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""B""
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }"
                 });
@@ -283,14 +283,14 @@ public static class PoolAComponentIds {
 
     public const int TotalComponents = 3;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""C"",
         ""B"",
         ""A""
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }",
                     @"using Entitas;
@@ -302,14 +302,14 @@ public static class PoolBComponentIds {
 
     public const int TotalComponents = 3;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""C"",
         ""B"",
         ""D""
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }",
                     @"using Entitas;
@@ -322,7 +322,7 @@ public static class PoolCComponentIds {
 
     public const int TotalComponents = 4;
 
-    static readonly string[] components = {
+    static readonly string[] _components = {
         ""C"",
         ""E"",
         ""D"",
@@ -330,7 +330,7 @@ public static class PoolCComponentIds {
     };
 
     public static string IdToString(int componentId) {
-        return components[componentId];
+        return _components[componentId];
     }
 }"
                 });

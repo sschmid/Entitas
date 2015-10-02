@@ -12,7 +12,7 @@ namespace Entitas.Unity {
 
     public static class EntitasPreferencesEditor {
 
-        const string configPath = "Entitas.properties";
+        const string CONFIG_PATH = "Entitas.properties";
 
         static Vector2 _scrollViewPosition;
 
@@ -39,11 +39,11 @@ namespace Entitas.Unity {
         }
 
         public static EntitasPreferencesConfig LoadConfig() {
-            return new EntitasPreferencesConfig(File.Exists(configPath) ? File.ReadAllText(configPath) : string.Empty);
+            return new EntitasPreferencesConfig(File.Exists(CONFIG_PATH) ? File.ReadAllText(CONFIG_PATH) : string.Empty);
         }
 
         public static void SaveConfig(EntitasPreferencesConfig config) {
-            File.WriteAllText(configPath, config.ToString());
+            File.WriteAllText(CONFIG_PATH, config.ToString());
         }
     }
 }

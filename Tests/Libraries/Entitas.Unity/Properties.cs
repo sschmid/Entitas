@@ -55,16 +55,16 @@ namespace Entitas.Unity {
         }
 
         void replacePlaceholders() {
-            const string placeholderPattern = @"(?:(?<=\${).+?(?=}))";
+            const string PLACEHOLDER_PATTERN = @"(?:(?<=\${).+?(?=}))";
             foreach (var key in _dict.Keys.ToArray()) {
-                var matches = Regex.Matches(_dict[key], placeholderPattern);
+                var matches = Regex.Matches(_dict[key], PLACEHOLDER_PATTERN);
                 foreach (Match match in matches) {
                     _dict[key] = _dict[key].Replace("${" + match.Value + "}", _dict[match.Value]);
                 }
             }
         }
 
-        public int Count {
+        public int count {
             get { return _dict.Count; }
         }
 
