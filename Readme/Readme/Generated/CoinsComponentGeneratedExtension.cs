@@ -73,12 +73,12 @@ namespace Entitas {
 }
 
     public partial class MetaMatcher {
-        static AllOfMatcher _matcherCoins;
+        static IMatcher _matcherCoins;
 
-        public static AllOfMatcher Coins {
+        public static IMatcher Coins {
             get {
                 if (_matcherCoins == null) {
-                    _matcherCoins = new MetaMatcher(MetaComponentIds.Coins);
+                    _matcherCoins = MetaMatcher.AllOf(MetaComponentIds.Coins);
                 }
 
                 return _matcherCoins;

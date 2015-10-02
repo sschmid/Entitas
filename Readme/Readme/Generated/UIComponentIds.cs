@@ -13,12 +13,3 @@ public static class UIComponentIds {
         return components[componentId];
     }
 }
-
-public partial class UIMatcher : AllOfMatcher {
-    public UIMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return UIComponentIds.IdToString(indices[0]);
-    }
-}

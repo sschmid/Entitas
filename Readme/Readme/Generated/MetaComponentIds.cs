@@ -13,12 +13,3 @@ public static class MetaComponentIds {
         return components[componentId];
     }
 }
-
-public partial class MetaMatcher : AllOfMatcher {
-    public MetaMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return MetaComponentIds.IdToString(indices[0]);
-    }
-}

@@ -43,12 +43,12 @@ namespace Entitas {
 }
 
     public partial class UIMatcher {
-        static AllOfMatcher _matcherUIPosition;
+        static IMatcher _matcherUIPosition;
 
-        public static AllOfMatcher UIPosition {
+        public static IMatcher UIPosition {
             get {
                 if (_matcherUIPosition == null) {
-                    _matcherUIPosition = new UIMatcher(UIComponentIds.UIPosition);
+                    _matcherUIPosition = UIMatcher.AllOf(UIComponentIds.UIPosition);
                 }
 
                 return _matcherUIPosition;
