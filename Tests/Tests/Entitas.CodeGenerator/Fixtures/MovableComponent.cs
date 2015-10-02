@@ -26,12 +26,12 @@ public class MovableComponent : IComponent {
     }
 
     public partial class Matcher {
-        static AllOfMatcher _matcherMovable;
+        static IMatcher _matcherMovable;
 
-        public static AllOfMatcher Movable {
+        public static IMatcher Movable {
             get {
                 if (_matcherMovable == null) {
-                    _matcherMovable = new Matcher(ComponentIds.Movable);
+                    _matcherMovable = Matcher.AllOf(ComponentIds.Movable);
                 }
 
                 return _matcherMovable;

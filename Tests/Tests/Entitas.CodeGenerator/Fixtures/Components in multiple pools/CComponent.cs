@@ -31,12 +31,12 @@ namespace Entitas {
 }
 
     public partial class PoolAMatcher {
-        static AllOfMatcher _matcherC;
+        static IMatcher _matcherC;
 
-        public static AllOfMatcher C {
+        public static IMatcher C {
             get {
                 if (_matcherC == null) {
-                    _matcherC = new PoolAMatcher(PoolAComponentIds.C);
+                    _matcherC = PoolAMatcher.AllOf(PoolAComponentIds.C);
                 }
 
                 return _matcherC;
@@ -45,12 +45,12 @@ namespace Entitas {
     }
 
     public partial class PoolBMatcher {
-        static AllOfMatcher _matcherC;
+        static IMatcher _matcherC;
 
-        public static AllOfMatcher C {
+        public static IMatcher C {
             get {
                 if (_matcherC == null) {
-                    _matcherC = new PoolBMatcher(PoolAComponentIds.C);
+                    _matcherC = PoolBMatcher.AllOf(PoolAComponentIds.C);
                 }
 
                 return _matcherC;
@@ -59,12 +59,12 @@ namespace Entitas {
     }
 
     public partial class PoolCMatcher {
-        static AllOfMatcher _matcherC;
+        static IMatcher _matcherC;
 
-        public static AllOfMatcher C {
+        public static IMatcher C {
             get {
                 if (_matcherC == null) {
-                    _matcherC = new PoolCMatcher(PoolAComponentIds.C);
+                    _matcherC = PoolCMatcher.AllOf(PoolAComponentIds.C);
                 }
 
                 return _matcherC;

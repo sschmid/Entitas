@@ -22,12 +22,12 @@ namespace Entitas {
     }
 
     public partial class Matcher {
-        static AllOfMatcher _matcherGameBoardElement;
+        static IMatcher _matcherGameBoardElement;
 
-        public static AllOfMatcher GameBoardElement {
+        public static IMatcher GameBoardElement {
             get {
                 if (_matcherGameBoardElement == null) {
-                    _matcherGameBoardElement = new Matcher(ComponentIds.GameBoardElement);
+                    _matcherGameBoardElement = Matcher.AllOf(ComponentIds.GameBoardElement);
                 }
 
                 return _matcherGameBoardElement;

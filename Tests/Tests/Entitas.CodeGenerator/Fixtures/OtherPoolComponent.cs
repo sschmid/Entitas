@@ -84,12 +84,12 @@ namespace Entitas {
 }
 
     public partial class OtherMatcher {
-        static AllOfMatcher _matcherOtherPool;
+        static IMatcher _matcherOtherPool;
 
-        public static AllOfMatcher OtherPool {
+        public static IMatcher OtherPool {
             get {
                 if (_matcherOtherPool == null) {
-                    _matcherOtherPool = new OtherMatcher(OtherComponentIds.OtherPool);
+                    _matcherOtherPool = OtherMatcher.AllOf(OtherComponentIds.OtherPool);
                 }
 
                 return _matcherOtherPool;

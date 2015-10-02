@@ -54,19 +54,6 @@ class describe_IndicesLookupGenerator : nspec {
         }
     }
 
-    const string defaultTagCode = @"
-
-namespace Entitas {
-    public partial class Matcher : AllOfMatcher {
-        public Matcher(int index) : base(new [] { index }) {
-        }
-
-        public override string ToString() {
-            return ComponentIds.IdToString(indices[0]);
-        }
-    }
-}";
-
     void when_generating() {
 
         it["generates default lookup"] = () => {
@@ -83,7 +70,7 @@ namespace Entitas {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
-}" + defaultTagCode);
+}");
         };
 
 
@@ -104,15 +91,6 @@ public static class OtherComponentIds {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
-}
-
-public partial class OtherMatcher : AllOfMatcher {
-    public OtherMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return OtherComponentIds.IdToString(indices[0]);
-    }
 }");
         };
 
@@ -132,7 +110,7 @@ public partial class OtherMatcher : AllOfMatcher {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
-}" + defaultTagCode);
+}");
         };
 
 
@@ -156,7 +134,7 @@ public partial class OtherMatcher : AllOfMatcher {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
-}" + defaultTagCode);
+}");
         };
 
 
@@ -178,7 +156,7 @@ public partial class OtherMatcher : AllOfMatcher {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
-}" + defaultTagCode);
+}");
         };
 
         it["generates empty lookup with total components when for default pool"] = () => {
@@ -191,17 +169,6 @@ public partial class OtherMatcher : AllOfMatcher {
 
     public static string IdToString(int componentId) {
         return components[componentId];
-    }
-}
-
-namespace Entitas {
-    public partial class Matcher : AllOfMatcher {
-        public Matcher(int index) : base(new [] { index }) {
-        }
-
-        public override string ToString() {
-            return ComponentIds.IdToString(indices[0]);
-        }
     }
 }" });
         };
@@ -218,15 +185,6 @@ public static class MetaComponentIds {
 
     public static string IdToString(int componentId) {
         return components[componentId];
-    }
-}
-
-public partial class MetaMatcher : AllOfMatcher {
-    public MetaMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return MetaComponentIds.IdToString(indices[0]);
     }
 }" });
         };
@@ -246,15 +204,6 @@ public static class MetaComponentIds {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
-}
-
-public partial class MetaMatcher : AllOfMatcher {
-    public MetaMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return MetaComponentIds.IdToString(indices[0]);
-    }
 }", @"using Entitas;
 
 public static class CoreComponentIds {
@@ -266,15 +215,6 @@ public static class CoreComponentIds {
 
     public static string IdToString(int componentId) {
         return components[componentId];
-    }
-}
-
-public partial class CoreMatcher : AllOfMatcher {
-    public CoreMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return CoreComponentIds.IdToString(indices[0]);
     }
 }" });
         };
@@ -302,15 +242,6 @@ public static class PoolAComponentIds {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
-}
-
-public partial class PoolAMatcher : AllOfMatcher {
-    public PoolAMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return PoolAComponentIds.IdToString(indices[0]);
-    }
 }",
                     @"using Entitas;
 
@@ -325,15 +256,6 @@ public static class PoolBComponentIds {
 
     public static string IdToString(int componentId) {
         return components[componentId];
-    }
-}
-
-public partial class PoolBMatcher : AllOfMatcher {
-    public PoolBMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return PoolBComponentIds.IdToString(indices[0]);
     }
 }"
                 });
@@ -370,15 +292,6 @@ public static class PoolAComponentIds {
     public static string IdToString(int componentId) {
         return components[componentId];
     }
-}
-
-public partial class PoolAMatcher : AllOfMatcher {
-    public PoolAMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return PoolAComponentIds.IdToString(indices[0]);
-    }
 }",
                     @"using Entitas;
 
@@ -397,15 +310,6 @@ public static class PoolBComponentIds {
 
     public static string IdToString(int componentId) {
         return components[componentId];
-    }
-}
-
-public partial class PoolBMatcher : AllOfMatcher {
-    public PoolBMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return PoolBComponentIds.IdToString(indices[0]);
     }
 }",
                     @"using Entitas;
@@ -427,15 +331,6 @@ public static class PoolCComponentIds {
 
     public static string IdToString(int componentId) {
         return components[componentId];
-    }
-}
-
-public partial class PoolCMatcher : AllOfMatcher {
-    public PoolCMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return PoolCComponentIds.IdToString(indices[0]);
     }
 }"
                 });

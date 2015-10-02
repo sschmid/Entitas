@@ -117,12 +117,6 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
       <Link>Libraries\Entitas\Interfaces\ISystem.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AbstractMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AbstractMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\AllOfMatcher.cs">
-      <Link>Libraries\Entitas\Matcher\AllOfMatcher.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CodeGenFile.cs">
       <Link>Libraries\Entitas.CodeGenerator\CodeGenFile.cs</Link>
     </Compile>
@@ -173,6 +167,21 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IClearReactiveSystem.cs">
       <Link>Libraries\Entitas\Interfaces\IClearReactiveSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
+      <Link>Libraries\Entitas\Matcher\Matcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\MatcherEquals.cs">
+      <Link>Libraries\Entitas\Matcher\MatcherEquals.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\MatcherInterfaces.cs">
+      <Link>Libraries\Entitas\Matcher\MatcherInterfaces.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\MatcherStatic.cs">
+      <Link>Libraries\Entitas\Matcher\MatcherStatic.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\MatcherToString.cs">
+      <Link>Libraries\Entitas\Matcher\MatcherToString.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -270,12 +270,12 @@ $assign
         static string addMatcher(Type type) {
             const string matcherFormat = @"
     public partial class $TagMatcher {
-        static AllOfMatcher _matcher$Name;
+        static IMatcher _matcher$Name;
 
-        public static AllOfMatcher $Name {
+        public static IMatcher $Name {
             get {
                 if (_matcher$Name == null) {
-                    _matcher$Name = new $TagMatcher($Ids.$Name);
+                    _matcher$Name = $TagMatcher.AllOf($Ids.$Name);
                 }
 
                 return _matcher$Name;

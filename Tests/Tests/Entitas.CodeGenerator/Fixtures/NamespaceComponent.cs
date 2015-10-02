@@ -27,12 +27,12 @@ namespace My.Namespace {
     }
 
     public partial class Matcher {
-        static AllOfMatcher _matcherNamespace;
+        static IMatcher _matcherNamespace;
 
-        public static AllOfMatcher Namespace {
+        public static IMatcher Namespace {
             get {
                 if (_matcherNamespace == null) {
-                    _matcherNamespace = new Matcher(ComponentIds.Namespace);
+                    _matcherNamespace = Matcher.AllOf(ComponentIds.Namespace);
                 }
 
                 return _matcherNamespace;
