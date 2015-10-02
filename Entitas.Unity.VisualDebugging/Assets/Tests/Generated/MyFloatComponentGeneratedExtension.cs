@@ -38,12 +38,12 @@ namespace Entitas {
     }
 
     public partial class Matcher {
-        static AllOfMatcher _matcherMyFloat;
+        static IMatcher _matcherMyFloat;
 
-        public static AllOfMatcher MyFloat {
+        public static IMatcher MyFloat {
             get {
                 if (_matcherMyFloat == null) {
-                    _matcherMyFloat = new Matcher(ComponentIds.MyFloat);
+                    _matcherMyFloat = Matcher.AllOf(ComponentIds.MyFloat);
                 }
 
                 return _matcherMyFloat;

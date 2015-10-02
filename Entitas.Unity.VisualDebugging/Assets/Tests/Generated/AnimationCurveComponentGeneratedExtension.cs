@@ -38,12 +38,12 @@ namespace Entitas {
     }
 
     public partial class Matcher {
-        static AllOfMatcher _matcherAnimationCurve;
+        static IMatcher _matcherAnimationCurve;
 
-        public static AllOfMatcher AnimationCurve {
+        public static IMatcher AnimationCurve {
             get {
                 if (_matcherAnimationCurve == null) {
-                    _matcherAnimationCurve = new Matcher(ComponentIds.AnimationCurve);
+                    _matcherAnimationCurve = Matcher.AllOf(ComponentIds.AnimationCurve);
                 }
 
                 return _matcherAnimationCurve;

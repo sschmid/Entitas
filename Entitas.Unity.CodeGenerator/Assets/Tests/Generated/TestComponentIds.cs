@@ -13,12 +13,3 @@ public static class TestComponentIds {
         return components[componentId];
     }
 }
-
-public partial class TestMatcher : AllOfMatcher {
-    public TestMatcher(int index) : base(new [] { index }) {
-    }
-
-    public override string ToString() {
-        return TestComponentIds.IdToString(indices[0]);
-    }
-}

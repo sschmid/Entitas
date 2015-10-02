@@ -9,14 +9,3 @@ public static class ComponentIds {
         return components[componentId];
     }
 }
-
-namespace Entitas {
-    public partial class Matcher : AllOfMatcher {
-        public Matcher(int index) : base(new [] { index }) {
-        }
-
-        public override string ToString() {
-            return ComponentIds.IdToString(indices[0]);
-        }
-    }
-}

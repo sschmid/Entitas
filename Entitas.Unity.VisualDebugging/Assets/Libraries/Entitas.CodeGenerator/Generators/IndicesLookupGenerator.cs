@@ -83,8 +83,7 @@ namespace Entitas.CodeGenerator {
             return addClassHeader(tag)
                     + addIndices(components)
                     + addIdToString(components)
-                    + addCloseClass()
-                    + addMatcher(tag);
+                    + addCloseClass();
         }
 
         static string addClassHeader(string lookupTag) {
@@ -134,35 +133,6 @@ namespace Entitas.CodeGenerator {
 
         static string addCloseClass() {
             return "\n}";
-        }
-
-        static string addMatcher(string lookupTag) {
-            var tag = stripDefaultTag(lookupTag);
-            if (tag == string.Empty) {
-                return @"
-
-namespace Entitas {
-    public partial class Matcher : AllOfMatcher {
-        public Matcher(int index) : base(new [] { index }) {
-        }
-
-        public override string ToString() {
-            return " + CodeGenerator.defaultIndicesLookupTag + @".IdToString(indices[0]);
-        }
-    }
-}";
-            }
-
-            return string.Format(@"
-
-public partial class {0}Matcher : AllOfMatcher {{
-    public {0}Matcher(int index) : base(new [] {{ index }}) {{
-    }}
-
-    public override string ToString() {{
-        return {0}" + CodeGenerator.defaultIndicesLookupTag + @".IdToString(indices[0]);
-    }}
-}}", tag);
         }
 
         static string stripDefaultTag(string tag) {

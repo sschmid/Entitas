@@ -1,8 +1,8 @@
 public static class ComponentIds {
-    public const int AnimationCurve = 0;
-    public const int Array2D = 1;
-    public const int Array3D = 2;
-    public const int Array = 3;
+    public const int AnArray = 0;
+    public const int AnimationCurve = 1;
+    public const int Array2D = 2;
+    public const int Array3D = 3;
     public const int Bounds = 4;
     public const int Color = 5;
     public const int CustomObject = 6;
@@ -30,10 +30,10 @@ public static class ComponentIds {
     public const int TotalComponents = 27;
 
     static readonly string[] components = {
+        "AnArray",
         "AnimationCurve",
         "Array2D",
         "Array3D",
-        "Array",
         "Bounds",
         "Color",
         "CustomObject",
@@ -61,16 +61,5 @@ public static class ComponentIds {
 
     public static string IdToString(int componentId) {
         return components[componentId];
-    }
-}
-
-namespace Entitas {
-    public partial class Matcher : AllOfMatcher {
-        public Matcher(int index) : base(new [] { index }) {
-        }
-
-        public override string ToString() {
-            return ComponentIds.IdToString(indices[0]);
-        }
     }
 }

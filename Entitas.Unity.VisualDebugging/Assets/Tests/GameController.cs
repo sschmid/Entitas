@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour {
             e.AddCustomObject(new CustomObject("Custom Object"));
             e.AddSystemObject(new object());
             e.AddDateTime(DateTime.Now);
-            e.AddArray(new [] { "Hello", ", ", "world", "!" });
+            e.AddAnArray(new [] { "Hello", ", ", "world", "!" });
             e.AddArray2D(new int[2, 3]);
             e.AddArray3D(new int[2, 3, 4]);
             string[][] jaggedArray = new string[2][];
@@ -97,7 +97,7 @@ public class GameController : MonoBehaviour {
         object systemObject = null;
         e.AddSystemObject(systemObject);
         string[] array = null;
-        e.AddArray(array);
+        e.AddAnArray(array);
         int[,] array2d = null;
         e.AddArray2D(array2d);
         int[,,] array3d = null;

@@ -38,12 +38,12 @@ namespace Entitas {
     }
 
     public partial class Matcher {
-        static AllOfMatcher _matcherColor;
+        static IMatcher _matcherColor;
 
-        public static AllOfMatcher Color {
+        public static IMatcher Color {
             get {
                 if (_matcherColor == null) {
-                    _matcherColor = new Matcher(ComponentIds.Color);
+                    _matcherColor = Matcher.AllOf(ComponentIds.Color);
                 }
 
                 return _matcherColor;

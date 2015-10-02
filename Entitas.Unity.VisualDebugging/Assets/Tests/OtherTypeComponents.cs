@@ -22,7 +22,7 @@ public class DateTimeComponent : IComponent {
     public DateTime date;
 }
 
-public class ArrayComponent : IComponent {
+public class AnArrayComponent : IComponent {
     public string[] array;
 }
 
