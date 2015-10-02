@@ -51,7 +51,6 @@
     <Compile Include="Entitas\Interfaces\IReactiveExecuteSystem.cs" />
     <Compile Include="Entitas\Interfaces\IEnsureComponents.cs" />
     <Compile Include="Entitas\Interfaces\IExcludeComponents.cs" />
-    <Compile Include="Entitas\Extensions\AllOfMatcherExtension.cs" />
     <Compile Include="Entitas\Matcher\TriggerOnEvent.cs" />
     <Compile Include="Entitas\Interfaces\IClearReactiveSystem.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
@@ -59,6 +58,7 @@
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
     <Compile Include="Entitas\Matcher\MatcherStatic.cs" />
     <Compile Include="Entitas\Matcher\MatcherInterfaces.cs" />
+    <Compile Include="Entitas\Extensions\IMatcherExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

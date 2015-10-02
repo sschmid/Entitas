@@ -183,6 +183,9 @@
     <Compile Include="..\Entitas\Entitas\Matcher\MatcherToString.cs">
       <Link>Libraries\Entitas\Matcher\MatcherToString.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\IMatcherExtension.cs">
+      <Link>Libraries\Entitas\Extensions\IMatcherExtension.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

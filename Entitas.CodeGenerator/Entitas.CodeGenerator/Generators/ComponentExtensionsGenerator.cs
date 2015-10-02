@@ -275,7 +275,7 @@ $assign
         public static IMatcher $Name {
             get {
                 if (_matcher$Name == null) {
-                    _matcher$Name = $TagMatcher.AllOf($Ids.$Name);
+                    _matcher$Name = Matcher.AllOf($Ids.$Name);
                 }
 
                 return _matcher$Name;

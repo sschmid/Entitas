@@ -89,7 +89,7 @@ namespace Entitas {
         public static IMatcher OtherPool {
             get {
                 if (_matcherOtherPool == null) {
-                    _matcherOtherPool = OtherMatcher.AllOf(OtherComponentIds.OtherPool);
+                    _matcherOtherPool = Matcher.AllOf(OtherComponentIds.OtherPool);
                 }
 
                 return _matcherOtherPool;

@@ -1,5 +1,5 @@
 ﻿namespace Entitas {
-    public static class AllOfMatcherExtension {
+    public static class IMatcherExtension {
         public static TriggerOnEvent OnEntityAdded(this IMatcher matcher) {
             return new TriggerOnEvent(matcher, GroupEventType.OnEntityAdded);
         }

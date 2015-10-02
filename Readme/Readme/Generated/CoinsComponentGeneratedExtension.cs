@@ -78,7 +78,7 @@ namespace Entitas {
         public static IMatcher Coins {
             get {
                 if (_matcherCoins == null) {
-                    _matcherCoins = MetaMatcher.AllOf(MetaComponentIds.Coins);
+                    _matcherCoins = Matcher.AllOf(MetaComponentIds.Coins);
                 }
 
                 return _matcherCoins;
