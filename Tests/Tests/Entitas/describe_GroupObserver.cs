@@ -9,7 +9,7 @@ class describe_GroupObserver : nspec {
         Group groupA = null;
         GroupObserver observerA = null;
 
-        AllOfMatcher mactherA = Matcher.AllOf(new[] { CID.ComponentA });
+        IMatcher mactherA = Matcher.AllOf(new[] { CID.ComponentA });
 
         before = () => {
             pool = new Pool(CID.NumComponents);

@@ -37,8 +37,6 @@
     <Compile Include="Entitas\Group.cs" />
     <Compile Include="Entitas\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
-    <Compile Include="Entitas\Matcher\AbstractMatcher.cs" />
-    <Compile Include="Entitas\Matcher\AllOfMatcher.cs" />
     <Compile Include="Entitas\Interfaces\IExecuteSystem.cs" />
     <Compile Include="Entitas\Interfaces\ISystem.cs" />
     <Compile Include="Entitas\Pool.cs" />
@@ -56,6 +54,11 @@
     <Compile Include="Entitas\Extensions\AllOfMatcherExtension.cs" />
     <Compile Include="Entitas\Matcher\TriggerOnEvent.cs" />
     <Compile Include="Entitas\Interfaces\IClearReactiveSystem.cs" />
+    <Compile Include="Entitas\Matcher\Matcher.cs" />
+    <Compile Include="Entitas\Matcher\MatcherToString.cs" />
+    <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
+    <Compile Include="Entitas\Matcher\MatcherStatic.cs" />
+    <Compile Include="Entitas\Matcher\MatcherInterfaces.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
