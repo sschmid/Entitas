@@ -12,7 +12,7 @@ Before updating, please follow the [Entitas upgrade guide](https://github.com/ss
 ```csharp
 Matcher.AllOf(Matcher.A, Matcher.B)
        .AnyOf(Matcher.C, Matcher.D)
-       .NoneOf(Matcher.Equals, Matcher.F);
+       .NoneOf(Matcher.E, Matcher.F);
 
 ```
 
