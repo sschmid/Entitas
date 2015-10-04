@@ -13,15 +13,15 @@ namespace Entitas {
         void Execute(List<Entity> entities);
     }
 
-    public interface IClearReactiveSystem {
-    }
-
     public interface IEnsureComponents {
         IMatcher ensureComponents { get; }
     }
 
     public interface IExcludeComponents {
         IMatcher excludeComponents { get; }
+    }
+
+    public interface IClearReactiveSystem {
     }
 }
 

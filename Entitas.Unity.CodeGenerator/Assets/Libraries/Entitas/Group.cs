@@ -110,20 +110,16 @@ namespace Entitas {
 
         public Entity GetSingleEntity() {
             if (_singleEntityCache == null) {
-                var count = _entities.Count;
-                if (count == 1) {
+                var c = _entities.Count;
+                if (c == 1) {
                     using (var enumerator = _entities.GetEnumerator()) {
                         enumerator.MoveNext();
                         _singleEntityCache = enumerator.Current;
                     }
+                } else if (c == 0) {
+                    return null;
                 } else {
-                    if (count == 0) {
-                        return null;
-                    }
-
-                    if (count > 1) {
-                        throw new SingleEntityException(_matcher);
-                    }
+                    throw new SingleEntityException(_matcher);
                 }
             }
 

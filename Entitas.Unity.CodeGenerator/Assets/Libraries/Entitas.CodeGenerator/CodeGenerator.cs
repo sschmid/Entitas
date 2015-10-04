@@ -40,7 +40,7 @@ namespace Entitas.CodeGenerator {
         public static void CleanDir(string dir) {
             dir = GetSafeDir(dir);
             if (Directory.Exists(dir)) {
-                FileInfo[] files = new DirectoryInfo(dir).GetFiles("*.cs", SearchOption.AllDirectories);
+                var files = new DirectoryInfo(dir).GetFiles("*.cs", SearchOption.AllDirectories);
                 foreach (var file in files) {
                     try {
                         File.Delete(file.FullName);

@@ -46,8 +46,7 @@ namespace Entitas.Unity.CodeGenerator {
         }
 
         static string joinCodeGenerators(string[] codeGenerators) {
-            return string.Join(
-                                ",",
+            return string.Join(",",
                                 codeGenerators
                                     .Where(generator => !string.IsNullOrEmpty(generator))
                                     .ToArray()
