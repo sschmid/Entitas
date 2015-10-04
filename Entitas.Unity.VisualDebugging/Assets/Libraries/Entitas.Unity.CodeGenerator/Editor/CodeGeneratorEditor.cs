@@ -10,6 +10,8 @@ namespace Entitas.Unity.CodeGenerator {
 
         [MenuItem("Entitas/Generate")]
         public static void Generate() {
+            assertCanGenerate();
+
             var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
             var codeGenerators = GetCodeGenerators();
             var codeGeneratorNames = codeGenerators.Select(cg => cg.Name).ToArray();
@@ -35,6 +37,20 @@ namespace Entitas.Unity.CodeGenerator {
                     && type != typeof(ISystemCodeGenerator))
                 .OrderBy(type => type.FullName)
                 .ToArray();
+        }
+
+        static void assertCanGenerate() {
+            if (EditorApplication.isCompiling) {
+                throw new Exception("Can not generate because Unity is still compiling. Please wait...");
+            }
+
+            var assembly = Assembly.GetAssembly(typeof(Editor));
+            var logEntries = assembly.GetType("UnityEditorInternal.LogEntries");
+            logEntries.GetMethod("Clear").Invoke(new object(), null);
+            var canCompile = (int)logEntries.GetMethod("GetCount").Invoke(new object(), null) == 0;
+            if (!canCompile) {
+                throw new Exception("Can not generate because there are compile errors!");
+            }
         }
     }
 }
