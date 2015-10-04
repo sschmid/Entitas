@@ -76,7 +76,7 @@ Code Generator
 
 The Code Generator generates classes and methods for you, so you can focus on getting the job done. It radically reduces the amount of code you have to write and improves readability by a huge magnitude. It makes your code less error-prone while ensuring best performance. I strongly recommend using it!
 
-[Read more...][wiki-code-generator]]
+[Read more...][wiki-code-generator]
 
 
 Unity integration
