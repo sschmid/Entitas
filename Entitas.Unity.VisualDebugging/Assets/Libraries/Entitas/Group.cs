@@ -8,11 +8,9 @@ namespace Entitas {
         public event GroupUpdated OnEntityUpdated;
 
         public delegate void GroupChanged(Group group, Entity entity, int index, IComponent component);
-
         public delegate void GroupUpdated(Group group, Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
         public int count { get { return _entities.Count; } }
-
         public IMatcher matcher { get { return _matcher; } }
 
         readonly IMatcher _matcher;
