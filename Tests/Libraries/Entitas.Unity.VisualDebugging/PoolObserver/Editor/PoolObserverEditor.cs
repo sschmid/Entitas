@@ -17,6 +17,15 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.LabelField("Retained entities", poolObserver.pool.retainedEntitiesCount.ToString());
             EditorGUILayout.EndVertical();
 
+            if (GUILayout.Button("Create Entity")) {
+                var creationIndex = poolObserver.pool.CreateEntity().creationIndex;
+                var entityBehaviourName = "Entity_" + creationIndex + "()";
+                var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
+                    .Single(eb => eb.name == entityBehaviourName);
+
+                Selection.activeGameObject = entityBehaviour.gameObject;
+            }
+
             var groups = poolObserver.groups;
             if (groups.Length != 0) {
                 EditorGUILayout.BeginVertical(GUI.skin.box);

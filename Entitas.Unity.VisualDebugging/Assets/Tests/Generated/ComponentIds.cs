@@ -29,7 +29,7 @@ public static class ComponentIds {
 
     public const int TotalComponents = 27;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         "AnArray",
         "AnimationCurve",
         "Array2D",
@@ -59,7 +59,33 @@ public static class ComponentIds {
         "Vector4"
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(AnArrayComponent),
+        typeof(AnimationCurveComponent),
+        typeof(Array2DComponent),
+        typeof(Array3DComponent),
+        typeof(BoundsComponent),
+        typeof(ColorComponent),
+        typeof(CustomObjectComponent),
+        typeof(DateTimeComponent),
+        typeof(DictArrayComponent),
+        typeof(DictionaryComponent),
+        typeof(GameObjectComponent),
+        typeof(HashSetComponent),
+        typeof(JaggedArrayComponent),
+        typeof(ListArrayComponent),
+        typeof(ListComponent),
+        typeof(MyBoolComponent),
+        typeof(MyEnumComponent),
+        typeof(MyFloatComponent),
+        typeof(MyIntComponent),
+        typeof(MyStringComponent),
+        typeof(RectComponent),
+        typeof(SystemObjectComponent),
+        typeof(UnityObjectComponent),
+        typeof(UnsupportedObjectComponent),
+        typeof(Vector2Component),
+        typeof(Vector3Component),
+        typeof(Vector4Component)
+    };
 }

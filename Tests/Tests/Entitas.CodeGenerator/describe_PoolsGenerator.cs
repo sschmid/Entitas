@@ -29,7 +29,7 @@ public static class Pools {
             if (_pool == null) {
                 _pool = new Pool(ComponentIds.TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool, ""Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool, ComponentIds.componentNames, ComponentIds.componentTypes, ""Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
@@ -62,7 +62,7 @@ public static class Pools {
             if (_meta == null) {
                 _meta = new Pool(MetaComponentIds.TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, ""Meta Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, MetaComponentIds.componentNames, MetaComponentIds.componentTypes, ""Meta Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
@@ -95,7 +95,7 @@ public static class Pools {
             if (_meta == null) {
                 _meta = new Pool(MetaComponentIds.TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, ""Meta Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, MetaComponentIds.componentNames, MetaComponentIds.componentTypes, ""Meta Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
@@ -111,7 +111,7 @@ public static class Pools {
             if (_core == null) {
                 _core = new Pool(CoreComponentIds.TotalComponents);
                 #if (UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_core, ""Core Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_core, CoreComponentIds.componentNames, CoreComponentIds.componentTypes, ""Core Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }

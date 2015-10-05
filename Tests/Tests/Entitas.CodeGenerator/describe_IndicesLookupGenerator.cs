@@ -63,13 +63,13 @@ class describe_IndicesLookupGenerator : nspec {
 
     public const int TotalComponents = 1;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""Some""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(SomeComponent)
+    };
 }");
         };
 
@@ -84,13 +84,13 @@ public static class OtherComponentIds {
 
     public const int TotalComponents = 1;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""OtherPool""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(OtherPoolComponent)
+    };
 }");
         };
 
@@ -103,13 +103,13 @@ public static class OtherComponentIds {
 
     public const int TotalComponents = 1;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""DontGenerate""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(DontGenerateComponent)
+    };
 }");
         };
 
@@ -126,14 +126,15 @@ public static class OtherComponentIds {
 
     public const int TotalComponents = 2;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""DontGenerate"",
         ""Some""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(DontGenerateComponent),
+        typeof(SomeComponent)
+    };
 }");
         };
 
@@ -149,13 +150,13 @@ public static class OtherComponentIds {
 
     public const int TotalComponents = 1;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""Some""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(SomeComponent)
+    };
 }");
         };
 
@@ -164,12 +165,11 @@ public static class OtherComponentIds {
 
     public const int TotalComponents = 0;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+    };
 }" });
         };
 
@@ -180,12 +180,11 @@ public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+    };
 }" });
         };
 
@@ -198,24 +197,22 @@ public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+    };
 }", @"using Entitas;
 
 public static class CoreComponentIds {
 
     public const int TotalComponents = 0;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+    };
 }" });
         };
 
@@ -234,14 +231,15 @@ public static class PoolAComponentIds {
 
     public const int TotalComponents = 2;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""B"",
         ""A""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(BComponent),
+        typeof(AComponent)
+    };
 }",
                     @"using Entitas;
 
@@ -250,13 +248,13 @@ public static class PoolBComponentIds {
 
     public const int TotalComponents = 1;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""B""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(BComponent)
+    };
 }"
                 });
             };
@@ -283,15 +281,17 @@ public static class PoolAComponentIds {
 
     public const int TotalComponents = 3;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""C"",
         ""B"",
         ""A""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(CComponent),
+        typeof(BComponent),
+        typeof(AComponent)
+    };
 }",
                     @"using Entitas;
 
@@ -302,15 +302,17 @@ public static class PoolBComponentIds {
 
     public const int TotalComponents = 3;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""C"",
         ""B"",
         ""D""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(CComponent),
+        typeof(BComponent),
+        typeof(DComponent)
+    };
 }",
                     @"using Entitas;
 
@@ -322,16 +324,19 @@ public static class PoolCComponentIds {
 
     public const int TotalComponents = 4;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         ""C"",
         ""E"",
         ""D"",
         ""F""
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(CComponent),
+        typeof(EComponent),
+        typeof(DComponent),
+        typeof(FComponent)
+    };
 }"
                 });
             };        };

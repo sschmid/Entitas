@@ -82,7 +82,8 @@ namespace Entitas.CodeGenerator {
         static string generateIndicesLookup(string tag, Type[] components) {
             return addClassHeader(tag)
                     + addIndices(components)
-                    + addIdToString(components)
+                    + addComponentNames(components)
+                    + addComponentTypes(components)
                     + addCloseClass();
         }
 
@@ -108,7 +109,7 @@ namespace Entitas.CodeGenerator {
             return code + "\n" + string.Format(TOTAL_FORMAT, components.Count(type => type != null));
         }
 
-        static string addIdToString(Type[] components) {
+        static string addComponentNames(Type[] components) {
             const string FORMAT = "        \"{1}\",\n";
             var code = string.Empty;
             for (int i = 0; i < components.Length; i++) {
@@ -123,12 +124,27 @@ namespace Entitas.CodeGenerator {
 
             return string.Format(@"
 
-    static readonly string[] _components = {{
-{0}    }};
+    public static readonly string[] componentNames = {{
+{0}    }};", code);
+        }
 
-    public static string IdToString(int componentId) {{
-        return _components[componentId];
-    }}", code);
+        static string addComponentTypes(Type[] components) {
+            const string FORMAT = "        typeof({1}),\n";
+            var code = string.Empty;
+            for (int i = 0; i < components.Length; i++) {
+                var type = components[i];
+                if (type != null) {
+                    code += string.Format(FORMAT, i, TypeGenerator.Generate(type));
+                }
+            }
+            if (code.EndsWith(",\n")) {
+                code = code.Remove(code.Length - 2) + "\n";
+            }
+
+            return string.Format(@"
+
+    public static readonly System.Type[] componentTypes = {{
+{0}    }};", code);
         }
 
         static string addCloseClass() {

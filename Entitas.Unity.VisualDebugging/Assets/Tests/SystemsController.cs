@@ -9,7 +9,7 @@ public class SystemsController : MonoBehaviour {
 
     void Start() {
         _pool = new Pool(ComponentIds.TotalComponents);
-        new PoolObserver(_pool, "Systems Pool");
+        new PoolObserver(_pool, ComponentIds.componentNames, ComponentIds.componentTypes, "Systems Pool");
         _systems = createSystems();
         _systems.Initialize();
         _pool.CreateEntity().AddMyString("");

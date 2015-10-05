@@ -50,6 +50,15 @@ namespace Entitas.Unity.VisualDebugging {
                 pool.DestroyEntity(entity);
             }
 
+            EditorGUILayout.BeginHorizontal();
+            entityBehaviour.componentToAdd = EditorGUILayout.Popup(entityBehaviour.componentToAdd, entityBehaviour.componentNames);
+            if (GUILayout.Button("Add Component")) {
+                var index = entityBehaviour.componentToAdd;
+                var component = (IComponent)Activator.CreateInstance(entityBehaviour.componentTypes[index]);
+                entity.AddComponent(index, component);
+            }
+            EditorGUILayout.EndHorizontal();
+
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
