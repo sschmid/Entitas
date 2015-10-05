@@ -1,3 +1,8 @@
+# 0.24.1
+##### Entitas.Unity.VisualDebugging
+- Added support for adding components to multiple entities at once at runtime
+
+
 # 0.24.0
 
 ##### Breaking changes
