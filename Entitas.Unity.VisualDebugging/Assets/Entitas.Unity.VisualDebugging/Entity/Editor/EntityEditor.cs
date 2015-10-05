@@ -54,7 +54,8 @@ namespace Entitas.Unity.VisualDebugging {
             entityBehaviour.componentToAdd = EditorGUILayout.Popup(entityBehaviour.componentToAdd, entityBehaviour.componentNames);
             if (GUILayout.Button("Add Component")) {
                 var index = entityBehaviour.componentToAdd;
-                var component = (IComponent)Activator.CreateInstance(entityBehaviour.componentTypes[index]);
+                var componentType = entityBehaviour.componentTypes[index];
+                var component = (IComponent)Activator.CreateInstance(componentType);
                 entity.AddComponent(index, component);
             }
             EditorGUILayout.EndHorizontal();
@@ -80,6 +81,20 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawMultiTargets() {
+            EditorGUILayout.BeginHorizontal();
+            var aEntityBehaviour = (EntityBehaviour)targets[0];
+            aEntityBehaviour.componentToAdd = EditorGUILayout.Popup(aEntityBehaviour.componentToAdd, aEntityBehaviour.componentNames);
+            if (GUILayout.Button("Add Component")) {
+                var index = aEntityBehaviour.componentToAdd;
+                var componentType = aEntityBehaviour.componentTypes[index];
+                foreach (var t in targets) {
+                    var entity = ((EntityBehaviour)t).entity;
+                    var component = (IComponent)Activator.CreateInstance(componentType);
+                    entity.AddComponent(index, component);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+
             if (GUILayout.Button("Destroy selected entities")) {
                 foreach (var t in targets) {
                     var entityBehaviour = (EntityBehaviour)t;
