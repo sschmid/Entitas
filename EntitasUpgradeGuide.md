@@ -1,3 +1,16 @@
+# Entitas 0.24.0 upgrade guide
+To fix the compile errors after updating to Entitas 0.24.0, delete in `Pools.cs`
+
+```csharp
+#if (UNITY_EDITOR)
+var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool, ComponentIds.componentNames, ComponentIds.componentTypes, "Pool");
+UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
+#endif
+```
+
+and generate again.
+
+
 # Entitas 0.23.0 upgrade guide
 Entitas 0.23.0 changed and applied naming conventions.
 Before updating to this version, follow these steps to prepare your project:

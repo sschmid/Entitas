@@ -1,3 +1,19 @@
+# 0.24.0
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+##### Entitas.Unity.CodeGenerator
+- Throwing exception when attempting to generate while Unity is still compiling or assembly won't compile
+
+##### Entitas.Unity.VisualDebugging
+- Added support for creating entities and adding components at runtime
+
+![entitas unity visualdebugging-debugpool](https://cloud.githubusercontent.com/assets/233700/10291395/d83c3ec4-6ba9-11e5-9c1d-3e18fe2c6370.png)
+
+![entitas unity visualdebugging-entity](https://cloud.githubusercontent.com/assets/233700/10291401/e15d29be-6ba9-11e5-8fc1-87767430342c.png)
+
+
 # 0.23.0
 
 ##### Breaking changes
