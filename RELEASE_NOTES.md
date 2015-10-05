@@ -2,6 +2,8 @@
 ##### Entitas.Unity.VisualDebugging
 - Added support for adding components to multiple entities at once at runtime
 
+![Entitas.Unity.VisualDebugging-Entity](https://cloud.githubusercontent.com/assets/233700/10293066/d4668120-6bb2-11e5-895e-cfdd25cc2e74.png)
+
 
 # 0.24.0
 
@@ -14,9 +16,9 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 ##### Entitas.Unity.VisualDebugging
 - Added support for creating entities and adding components at runtime
 
-![entitas unity visualdebugging-debugpool](https://cloud.githubusercontent.com/assets/233700/10291395/d83c3ec4-6ba9-11e5-9c1d-3e18fe2c6370.png)
+![Entitas.Unity.VisualDebugging-PoolObserver](https://cloud.githubusercontent.com/assets/233700/10291395/d83c3ec4-6ba9-11e5-9c1d-3e18fe2c6370.png)
 
-![entitas unity visualdebugging-entity](https://cloud.githubusercontent.com/assets/233700/10291401/e15d29be-6ba9-11e5-8fc1-87767430342c.png)
+![Entitas.Unity.VisualDebugging-Entity](https://cloud.githubusercontent.com/assets/233700/10291401/e15d29be-6ba9-11e5-8fc1-87767430342c.png)
 
 
 # 0.23.0
