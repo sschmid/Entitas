@@ -50,16 +50,6 @@ namespace Entitas.Unity.VisualDebugging {
                 pool.DestroyEntity(entity);
             }
 
-            EditorGUILayout.BeginHorizontal();
-            entityBehaviour.componentToAdd = EditorGUILayout.Popup(entityBehaviour.componentToAdd, entityBehaviour.componentNames);
-            if (GUILayout.Button("Add Component")) {
-                var index = entityBehaviour.componentToAdd;
-                var componentType = entityBehaviour.componentTypes[index];
-                var component = (IComponent)Activator.CreateInstance(componentType);
-                entity.AddComponent(index, component);
-            }
-            EditorGUILayout.EndHorizontal();
-
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
@@ -70,8 +60,18 @@ namespace Entitas.Unity.VisualDebugging {
                 entityBehaviour.UnfoldAllComponents();
             }
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.Space();
 
+            EditorGUILayout.Space();
+            entityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", entityBehaviour.componentToAdd, entityBehaviour.componentNames);
+            if (entityBehaviour.componentToAdd >= 0) {
+                var index = entityBehaviour.componentToAdd;
+                entityBehaviour.componentToAdd = -1;
+                var componentType = entityBehaviour.componentTypes[index];
+                var component = (IComponent)Activator.CreateInstance(componentType);
+                entity.AddComponent(index, component);
+            }
+
+            EditorGUILayout.Space();
             var indices = entity.GetComponentIndices();
             var components = entity.GetComponents();
             for (int i = 0; i < components.Length; i++) {
@@ -81,11 +81,13 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawMultiTargets() {
+            EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();
             var aEntityBehaviour = (EntityBehaviour)targets[0];
-            aEntityBehaviour.componentToAdd = EditorGUILayout.Popup(aEntityBehaviour.componentToAdd, aEntityBehaviour.componentNames);
-            if (GUILayout.Button("Add Component")) {
+            aEntityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", aEntityBehaviour.componentToAdd, aEntityBehaviour.componentNames);
+            if (aEntityBehaviour.componentToAdd >= 0) {
                 var index = aEntityBehaviour.componentToAdd;
+                aEntityBehaviour.componentToAdd = -1;
                 var componentType = aEntityBehaviour.componentTypes[index];
                 foreach (var t in targets) {
                     var entity = ((EntityBehaviour)t).entity;
@@ -95,6 +97,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
             EditorGUILayout.EndHorizontal();
 
+            EditorGUILayout.Space();
             if (GUILayout.Button("Destroy selected entities")) {
                 foreach (var t in targets) {
                     var entityBehaviour = (EntityBehaviour)t;

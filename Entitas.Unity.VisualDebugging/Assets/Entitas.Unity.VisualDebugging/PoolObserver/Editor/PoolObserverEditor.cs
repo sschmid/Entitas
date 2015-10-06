@@ -15,7 +15,6 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.LabelField("Entities", poolObserver.pool.count.ToString());
             EditorGUILayout.LabelField("Reusable entities", poolObserver.pool.reusableEntitiesCount.ToString());
             EditorGUILayout.LabelField("Retained entities", poolObserver.pool.retainedEntitiesCount.ToString());
-            EditorGUILayout.EndVertical();
 
             if (GUILayout.Button("Create Entity")) {
                 var creationIndex = poolObserver.pool.CreateEntity().creationIndex;
@@ -25,6 +24,12 @@ namespace Entitas.Unity.VisualDebugging {
 
                 Selection.activeGameObject = entityBehaviour.gameObject;
             }
+
+            if (GUILayout.Button("Destroy All Entities")) {
+                poolObserver.pool.DestroyAllEntities();
+            }
+
+            EditorGUILayout.EndVertical();
 
             var groups = poolObserver.groups;
             if (groups.Length != 0) {
