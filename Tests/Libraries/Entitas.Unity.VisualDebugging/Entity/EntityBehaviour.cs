@@ -23,6 +23,7 @@ namespace Entitas.Unity.VisualDebugging {
             _entity = entity;
             _componentNames = componentNames;
             _componentTypes = componentTypes;
+            componentToAdd = -1;
             _unfoldedComponents = new bool[_pool.totalComponents];
             _entity.OnEntityReleased += onEntityReleased;
             Update();
