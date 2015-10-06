@@ -10,7 +10,7 @@ namespace Entitas.Unity {
         void Draw(EntitasPreferencesConfig config);
     }
 
-    public static class EntitasPreferencesEditor {
+    public static class EntitasPreferences {
 
         const string CONFIG_PATH = "Entitas.properties";
 

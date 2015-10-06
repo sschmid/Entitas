@@ -6,16 +6,16 @@ using Entitas.CodeGenerator;
 using UnityEditor;
 
 namespace Entitas.Unity.CodeGenerator {
-    public static class CodeGeneratorEditor {
+    public static class CodeGenerator {
 
-        [MenuItem("Entitas/Generate")]
+        [MenuItem("Entitas/Generate", false, 1)]
         public static void Generate() {
             assertCanGenerate();
 
             var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
             var codeGenerators = GetCodeGenerators();
             var codeGeneratorNames = codeGenerators.Select(cg => cg.Name).ToArray();
-            var config = new CodeGeneratorConfig(EntitasPreferencesEditor.LoadConfig(), codeGeneratorNames);
+            var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(), codeGeneratorNames);
 
             var enabledCodeGeneratorNames = config.enabledCodeGenerators;
             var enabledCodeGenerators = codeGenerators

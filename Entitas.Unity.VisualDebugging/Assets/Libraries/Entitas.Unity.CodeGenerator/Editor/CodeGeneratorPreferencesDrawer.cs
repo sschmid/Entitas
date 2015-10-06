@@ -12,7 +12,7 @@ namespace Entitas.Unity.CodeGenerator {
             EditorGUILayout.BeginVertical(GUI.skin.box);
             EditorGUILayout.LabelField("CodeGenerator", EditorStyles.boldLabel);
 
-            var codeGenerators = CodeGeneratorEditor.GetCodeGenerators();
+            var codeGenerators = CodeGenerator.GetCodeGenerators();
             var codeGeneratorNames = codeGenerators.Select(cg => cg.Name).ToArray();
             var codeGeneratorConfig = new CodeGeneratorConfig(config, codeGeneratorNames);
             drawGeneratedFolderPath(codeGeneratorConfig);
@@ -85,7 +85,7 @@ namespace Entitas.Unity.CodeGenerator {
         static void drawGenerateButton() {
             EditorGUILayout.Space();
             if (GUILayout.Button("Generate")) {
-                CodeGeneratorEditor.Generate();
+                CodeGenerator.Generate();
             }
         }
     }

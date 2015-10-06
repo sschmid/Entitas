@@ -32,7 +32,7 @@ then
 	find "./"$TMP_DIR -name "*.meta" -type f -delete
 	find "./"$TMP_DIR -name "*.DS_Store" -type f -delete
 
-	ICON_META=$UVD"/Editor/HierarchyIcon.png.meta"
+	ICON_META=$UVD"/Editor/EntitasHierarchyIcon.png.meta"
 	cp $UVD"/Assets/"$ICON_META $TMP_DIR/$ICON_META
 
 	echo "  Create zip archive"

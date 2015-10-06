@@ -8,6 +8,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         public void Init(PoolObserver poolObserver) {
             _poolObserver = poolObserver;
+            Update();
         }
 
         void Update() {

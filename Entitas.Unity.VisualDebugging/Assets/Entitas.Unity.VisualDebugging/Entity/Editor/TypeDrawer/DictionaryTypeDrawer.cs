@@ -19,9 +19,9 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.LabelField(fieldName);
             if (GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
                 object defaultKey;
-                if (EntityEditor.CreateDefault(keyType, out defaultKey)) {
+                if (EntityInspector.CreateDefault(keyType, out defaultKey)) {
                     object defaultValue;
-                    if (EntityEditor.CreateDefault(valueType, out defaultValue)) {
+                    if (EntityInspector.CreateDefault(valueType, out defaultValue)) {
                         dictionary[defaultKey] = defaultValue;
                     }
                 }
@@ -36,7 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var keys = new ArrayList(dictionary.Keys);
                 for (int i = 0; i < keys.Count; i++) {
                     var key = keys[i];
-                    EntityEditor.DrawAndSetElement(keyType, "key", key,
+                    EntityInspector.DrawAndSetElement(keyType, "key", key,
                         entity, index, component, newValue => {
                         var tmpValue = dictionary[key];
                         dictionary.Remove(key);
@@ -45,7 +45,7 @@ namespace Entitas.Unity.VisualDebugging {
                         }
                     });
 
-                    EntityEditor.DrawAndSetElement(valueType, "value", dictionary[key],
+                    EntityInspector.DrawAndSetElement(valueType, "value", dictionary[key],
                         entity, index, component, newValue => dictionary[key] = newValue);
 
                     EditorGUILayout.Space();

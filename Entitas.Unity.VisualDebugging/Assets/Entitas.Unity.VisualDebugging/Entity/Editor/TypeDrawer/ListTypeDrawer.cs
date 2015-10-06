@@ -18,7 +18,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.LabelField(fieldName);
                 if (GUILayout.Button("Add element", GUILayout.Height(14))) {
                     object defaultValue;
-                    if (EntityEditor.CreateDefault(elementType, out defaultValue)) {
+                    if (EntityInspector.CreateDefault(elementType, out defaultValue)) {
                         list.Add(defaultValue);
                     }
                 }
@@ -32,7 +32,7 @@ namespace Entitas.Unity.VisualDebugging {
             Action editAction = null;
             for (int i = 0; i < list.Count; i++) {
                 EditorGUILayout.BeginHorizontal();
-                EntityEditor.DrawAndSetElement(elementType, fieldName + "[" + i + "]", list[i],
+                EntityInspector.DrawAndSetElement(elementType, fieldName + "[" + i + "]", list[i],
                     entity, index, component, newValue => list[i] = newValue);
 
                 if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
@@ -41,14 +41,14 @@ namespace Entitas.Unity.VisualDebugging {
                 }
                 if (GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
                     object defaultValue;
-                    if (EntityEditor.CreateDefault(elementType, out defaultValue)) {
+                    if (EntityInspector.CreateDefault(elementType, out defaultValue)) {
                         var insertAt = i;
                         editAction = () => list.Insert(insertAt, defaultValue);
                     }
                 }
                 if (GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
                     object defaultValue;
-                    if (EntityEditor.CreateDefault(elementType, out defaultValue)) {
+                    if (EntityInspector.CreateDefault(elementType, out defaultValue)) {
                         var insertAt = i + 1;
                         editAction = () => list.Insert(insertAt, defaultValue);
                     }

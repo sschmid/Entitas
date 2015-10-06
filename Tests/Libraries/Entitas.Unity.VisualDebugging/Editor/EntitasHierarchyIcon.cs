@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Entitas.Unity.VisualDebugging {
 
     [InitializeOnLoad]
-    public static class HierarchyIconEditor {
+    public static class EntitasHierarchyIcon {
         static Texture2D hierarchyIcon {
             get {
                 if (_hierarchyIcon == null) {
@@ -21,7 +21,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         static Texture2D _hierarchyIcon;
 
-        static HierarchyIconEditor() {
+        static EntitasHierarchyIcon() {
             EditorApplication.hierarchyWindowItemOnGUI += onHierarchyWindowItemOnGUI;
         }
 

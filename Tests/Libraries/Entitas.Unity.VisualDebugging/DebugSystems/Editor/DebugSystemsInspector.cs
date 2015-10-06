@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(DebugSystemsBehaviour))]
-    public class DebugSystemsEditor : Editor {
-		SystemsMonitorEditor _systemsMonitor;
+    public class DebugSystemsInspector : Editor {
+		SystemsMonitor _systemsMonitor;
         Queue<float> _systemMonitorData;
         const int SYSTEM_MONITOR_DATA_LENGTH = 60;
 
@@ -14,7 +14,7 @@ namespace Entitas.Unity.VisualDebugging {
 			var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
             var systems = debugSystemsBehaviour.systems;
             if (_systemsMonitor == null) {
-                _systemsMonitor = new SystemsMonitorEditor(SYSTEM_MONITOR_DATA_LENGTH);
+                _systemsMonitor = new SystemsMonitor(SYSTEM_MONITOR_DATA_LENGTH);
                 _systemMonitorData = new Queue<float>(new float[SYSTEM_MONITOR_DATA_LENGTH]);
                 if (EditorApplication.update != Repaint) {
                     EditorApplication.update += Repaint;

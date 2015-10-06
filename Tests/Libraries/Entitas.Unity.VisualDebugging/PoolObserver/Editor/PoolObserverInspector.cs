@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(PoolObserverBehaviour))]
-    public class PoolObserverEditor : Editor {
+    public class PoolObserverInspector : Editor {
 
         public override void OnInspectorGUI() {
             var poolObserver = ((PoolObserverBehaviour)target).poolObserver;

@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(EntityBehaviour)), CanEditMultipleObjects]
-    public class EntityEditor : Editor {
+    public class EntityInspector : Editor {
         GUIStyle _foldoutStyle;
         static IDefaultInstanceCreator[] _defaultInstanceCreators;
         static ITypeDrawer[] _typeDrawers;
@@ -18,7 +18,7 @@ namespace Entitas.Unity.VisualDebugging {
             _foldoutStyle = new GUIStyle(EditorStyles.foldout);
             _foldoutStyle.fontStyle = FontStyle.Bold;
 
-            var types = Assembly.GetAssembly(typeof(EntityEditor)).GetTypes();
+            var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
 
             _defaultInstanceCreators = types
                 .Where(type => type.GetInterfaces().Contains(typeof(IDefaultInstanceCreator)))
@@ -262,7 +262,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static void generateIDefaultInstanceCreator(string typeName) {
-            var config = new VisualDebuggingConfig(EntitasPreferencesEditor.LoadConfig());
+            var config = new VisualDebuggingConfig(EntitasPreferences.LoadConfig());
             var folder = config.defaultInstanceCreatorFolderPath;
             var filePath = folder + "Default_type_InstanceCreator.cs";
             var template = string.Format(DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT, typeName);
@@ -270,7 +270,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static void generateITypeDrawer(string typeName) {
-            var config = new VisualDebuggingConfig(EntitasPreferencesEditor.LoadConfig());
+            var config = new VisualDebuggingConfig(EntitasPreferences.LoadConfig());
             var folder = config.typeDrawerFolderPath;
             var filePath = folder + "Type_TypeDrawer.cs";
             var template = string.Format(TYPE_DRAWER_TEMPLATE_FORMAT, typeName);

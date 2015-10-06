@@ -21,7 +21,7 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.LabelField(fieldName);
             if (GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
                 object defaultValue;
-                if (EntityEditor.CreateDefault(elementType, out defaultValue)) {
+                if (EntityInspector.CreateDefault(elementType, out defaultValue)) {
                     itemsToAdd.Add(defaultValue);
                 }
             }
@@ -32,8 +32,8 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUI.indentLevel = indent + 1;
             foreach (var item in (IEnumerable)value) {
                 EditorGUILayout.BeginHorizontal();
-                var newItem = EntityEditor.DrawAndGetNewValue(elementType, string.Empty, item, entity, index, component);
-                if (EntityEditor.DidValueChange(item, newItem)) {
+                var newItem = EntityInspector.DrawAndGetNewValue(elementType, string.Empty, item, entity, index, component);
+                if (EntityInspector.DidValueChange(item, newItem)) {
                     itemsToRemove.Add(item);
                     itemsToAdd.Add(newItem);
                 }
