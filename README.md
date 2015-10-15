@@ -20,7 +20,10 @@ Entitas - The Entity Component System for C# and Unity
 
 Entitas is a super fast Entity Component System (ECS) specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions were made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.][clean-coders]
 
-[![Download Entitas.zip][download-entitas-shield]][entitas-zip]
+[![Download Entitas-CSharp.zip][download-entitas-csharp-shield]][entitas-csharp-zip]
+
+[![Download Entitas-Unity.zip][download-entitas-unity-shield]][entitas-unity-zip]
+
 ### **[» Wiki, Roadmap, Overview and example projects][wiki]**
 ### **[» Community: Games and Examples #madeWithEntitas][wiki-games-and-examples]**
 
@@ -163,8 +166,10 @@ Entitas is also available in
 
 
 [clean-coders]: https://cleancoders.com "Clean Coders"
-[download-entitas-shield]: https://img.shields.io/badge/download-entitas.zip-blue.svg "Download Entitas"
-[entitas-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/bin/Entitas.zip?raw=true "Download Entitas"
+[download-entitas-csharp-shield]: https://img.shields.io/badge/download-entitas.csharp-blue.svg "Download Entitas-CSharp.zip"
+[download-entitas-unity-shield]: https://img.shields.io/badge/download-entitas.unity-blue.svg "Download Entitas-Unity.zip"
+[entitas-csharp-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/bin/Entitas-CSharp.zip?raw=true "Download Entitas-CSharp.zip"
+[entitas-unity-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/bin/Entitas-Unity.zip?raw=true "Download Entitas-Unity.zip"
 
 [wiki]: https://github.com/sschmid/Entitas-CSharp/wiki "Entitas Wiki"
 [wiki-code-generator]: https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator "Wiki - Code Generator"
