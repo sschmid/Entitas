@@ -1,4 +1,18 @@
+# 0.24.2
+
+##### General
+- Renamed XyzEditor to XyzInspector
+- Streamlined naming
+
+##### Entitas.Unity.VisualDebugging
+- Simplified adding a component at runtime
+
+##### Other
+- buildPackage.sh now creates Entitas-CSharp.zip and Entitas-Unity.zip
+
+
 # 0.24.1
+
 ##### Entitas.Unity.VisualDebugging
 - Added support for adding components to multiple entities at once at runtime
 
