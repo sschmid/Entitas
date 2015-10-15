@@ -15,6 +15,7 @@
         <img src="https://img.shields.io/github/release/sschmid/Entitas-CSharp.svg" alt="Latest release"></a>
 </p>
 
+
 Entitas - The Entity Component System for C# and Unity
 ======================================================
 
@@ -111,14 +112,12 @@ Each release is published with zip files attached containing all source files yo
 - Entitas
 - Entitas.CodeGenerator
 
-
 **Entitas-Unity.zip**
 - Entitas
 - Entitas.CodeGenerator
 - Entitas.Unity
 - Entitas.Unity.CodeGenerator
 - Entitas.Unity.VisualDebugging
-
 
 [Show releases][releases]
 
