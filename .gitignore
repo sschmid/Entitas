@@ -20,7 +20,6 @@ test-results
 
 # Custom
 bin
-!bin/Entitas.zip
 
 Entitas.Unity/Entitas.Unity-csharp.sln
 Entitas.Unity/Entitas.Unity.sln
