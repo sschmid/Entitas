@@ -268,6 +268,13 @@ class describe_Pool : nspec {
                 it["throws when removing component"] = expect<EntityIsNotEnabledException>(() => e.RemoveComponentA());
                 it["throws when replacing component"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(new ComponentA()));
                 it["throws when replacing component with null"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(null));
+
+                it["sets componentIndexResolver to null"] = () => {
+                    e = pool.CreateEntity();
+                    e.componentIndexResolver = index => string.Empty;
+                    pool.DestroyEntity(e);
+                    e.componentIndexResolver.should_be_null();
+                };
             };
         };
 
