@@ -1,3 +1,12 @@
+# 0.24.3
+
+##### Entitas
+- Added systems.ActivateReactiveSystems() and systems.DeactivateReactiveSystems which should be called when you don't use systems anymore
+
+##### Other
+- Merged shell scripts
+
+
 # 0.24.2
 
 ##### General
