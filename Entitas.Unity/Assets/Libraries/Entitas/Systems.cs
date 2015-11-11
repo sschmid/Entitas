@@ -50,6 +50,34 @@ namespace Entitas {
             }
         }
 
+        public void ActivateReactiveSystems() {
+            for (int i = 0, exeSysCount = _executeSystems.Count; i < exeSysCount; i++) {
+                var reactiveSystem = _executeSystems[i] as ReactiveSystem;
+                if (reactiveSystem != null) {
+                    reactiveSystem.Activate();
+                }
+
+                var nestedSystems = _executeSystems[i] as Systems;
+                if (nestedSystems != null) {
+                    nestedSystems.ActivateReactiveSystems();
+                }
+            }
+        }
+
+        public void DeactivateReactiveSystems() {
+            for (int i = 0, exeSysCount = _executeSystems.Count; i < exeSysCount; i++) {
+                var reactiveSystem = _executeSystems[i] as ReactiveSystem;
+                if (reactiveSystem != null) {
+                    reactiveSystem.Deactivate();
+                }
+
+                var nestedSystems = _executeSystems[i] as Systems;
+                if (nestedSystems != null) {
+                    nestedSystems.DeactivateReactiveSystems();
+                }
+            }
+        }
+
         public virtual void ClearReactiveSystems() {
             for (int i = 0, exeSysCount = _executeSystems.Count; i < exeSysCount; i++) {
                 var reactiveSystem = _executeSystems[i] as ReactiveSystem;
