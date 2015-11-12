@@ -158,7 +158,8 @@ class describe_Entity : nspec {
                 };
 
                 it["can ToString"] = () => {
-                    e.ToString().should_be("Entity_0(ComponentA, ComponentB)");
+                    e.AddComponent(0, new SomeComponent());
+                    e.ToString().should_be("Entity_0(Some, ComponentA, ComponentB)");
                 };
             };
         };
