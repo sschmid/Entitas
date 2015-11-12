@@ -26,14 +26,14 @@ namespace Entitas {
         }
 
         static void appendIndices(StringBuilder sb, string prefix, int[] indexArray) {
-            const string SEPERATOR = ", ";
+            const string SEPARATOR = ", ";
             sb.Append(prefix);
             sb.Append("(");
-            var lastSeperator = indexArray.Length - 1;
+            var lastSeparator = indexArray.Length - 1;
             for (int i = 0, indicesLength = indexArray.Length; i < indicesLength; i++) {
                 sb.Append(indexArray[i]);
-                if (i < lastSeperator) {
-                    sb.Append(SEPERATOR);
+                if (i < lastSeparator) {
+                    sb.Append(SEPARATOR);
                 }
             }
             sb.Append(")");
