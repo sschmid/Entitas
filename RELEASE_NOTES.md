@@ -8,6 +8,7 @@
 
 ##### Entitas.Unity.CodeGenerator
 - ComponentExtensionsGenerator sets matcher.componentNames
+- Removed generating unused using in ComponentExtensionsGenerator
 
 ##### Other
 - Added update_project_dependencies.sh
