@@ -20,6 +20,7 @@ collect_sources() {
   cp README.md "$SRC_DIR/README.md"
   cp RELEASE_NOTES.md "$SRC_DIR/RELEASE_NOTES.md"
   cp EntitasUpgradeGuide.md "$SRC_DIR/EntitasUpgradeGuide.md"
+  cp LICENSE.txt "$SRC_DIR/LICENSE.txt"
 
   find "./$SRC_DIR" -name "*.meta" -type f -delete
   find "./$SRC_DIR" -name "*.DS_Store" -type f -delete
