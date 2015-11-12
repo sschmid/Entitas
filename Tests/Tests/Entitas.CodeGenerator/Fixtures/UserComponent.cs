@@ -87,6 +87,7 @@ namespace Entitas {
             get {
                 if (_matcherUser == null) {
                     _matcherUser = Matcher.AllOf(ComponentIds.User);
+                    _matcherUser.componentNames = ComponentIds.componentNames;
                 }
 
                 return _matcherUser;

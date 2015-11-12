@@ -276,6 +276,7 @@ $assign
             get {
                 if (_matcher$Name == null) {
                     _matcher$Name = Matcher.AllOf($Ids.$Name);
+                    _matcher$Name.componentNames = $Ids.componentNames;
                 }
 
                 return _matcher$Name;

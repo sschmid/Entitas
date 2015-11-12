@@ -89,6 +89,12 @@ class describe_Matcher : nspec {
             });
 
             it["can ToString"] = () => m.ToString().should_be("AllOf(1, 2)");
+
+            it["resolves index when componentNames is set"] = () => {
+                var matcher = (Matcher)m;
+                matcher.componentNames = new [] { "one", "two", "three" };
+                matcher.ToString().should_be("AllOf(two, three)");
+            };
         };
 
         context["anyOf"] = () => {

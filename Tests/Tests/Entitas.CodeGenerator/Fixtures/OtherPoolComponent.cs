@@ -90,6 +90,7 @@ namespace Entitas {
             get {
                 if (_matcherOtherPool == null) {
                     _matcherOtherPool = Matcher.AllOf(OtherComponentIds.OtherPool);
+                    _matcherOtherPool.componentNames = OtherComponentIds.componentNames;
                 }
 
                 return _matcherOtherPool;

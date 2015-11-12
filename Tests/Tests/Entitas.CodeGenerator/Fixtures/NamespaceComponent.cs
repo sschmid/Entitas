@@ -33,6 +33,7 @@ namespace My.Namespace {
             get {
                 if (_matcherNamespace == null) {
                     _matcherNamespace = Matcher.AllOf(ComponentIds.Namespace);
+                    _matcherNamespace.componentNames = ComponentIds.componentNames;
                 }
 
                 return _matcherNamespace;

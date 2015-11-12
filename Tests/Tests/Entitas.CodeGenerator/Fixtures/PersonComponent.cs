@@ -52,6 +52,7 @@ namespace Entitas {
             get {
                 if (_matcherPerson == null) {
                     _matcherPerson = Matcher.AllOf(ComponentIds.Person);
+                    _matcherPerson.componentNames = ComponentIds.componentNames;
                 }
 
                 return _matcherPerson;

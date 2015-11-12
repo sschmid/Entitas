@@ -37,6 +37,7 @@ namespace Entitas {
             get {
                 if (_matcherC == null) {
                     _matcherC = Matcher.AllOf(PoolAComponentIds.C);
+                    _matcherC.componentNames = PoolAComponentIds.componentNames;
                 }
 
                 return _matcherC;
@@ -51,6 +52,7 @@ namespace Entitas {
             get {
                 if (_matcherC == null) {
                     _matcherC = Matcher.AllOf(PoolAComponentIds.C);
+                    _matcherC.componentNames = PoolAComponentIds.componentNames;
                 }
 
                 return _matcherC;
@@ -65,6 +67,7 @@ namespace Entitas {
             get {
                 if (_matcherC == null) {
                     _matcherC = Matcher.AllOf(PoolAComponentIds.C);
+                    _matcherC.componentNames = PoolAComponentIds.componentNames;
                 }
 
                 return _matcherC;
