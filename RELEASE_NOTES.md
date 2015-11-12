@@ -1,3 +1,19 @@
+# 0.24.4
+
+##### Entitas
+- Added entity.componentNames. This field is set by Entitas.Unity.VisualDebugging to provide better error messages
+- Added matcher.componentNames. This field is set by Entitas.Unity.CodeGenerator to provide better error messages
+- entity.ToString() now removes ComponentSuffix
+- Fixed typo
+
+##### Entitas.Unity.CodeGenerator
+- ComponentExtensionsGenerator sets matcher.componentNames
+
+##### Other
+- Added update_project_dependencies.sh
+- Refactored build commands into build_commands.sh
+
+
 # 0.24.3
 
 ##### Entitas

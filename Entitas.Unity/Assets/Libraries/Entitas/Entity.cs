@@ -291,7 +291,7 @@ namespace Entitas {
         public static string RemoveComponentSuffix(this Type type) {
             return type.Name.EndsWith(COMPONENT_SUFFIX)
                 ? type.Name.Substring(0, type.Name.Length - COMPONENT_SUFFIX.Length)
-                    : type.Name;
+                : type.Name;
         }
     }
 }
