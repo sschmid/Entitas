@@ -95,6 +95,17 @@ class describe_Matcher : nspec {
                 matcher.componentNames = new [] { "one", "two", "three" };
                 matcher.ToString().should_be("AllOf(two, three)");
             };
+
+            it["uses componentNames when merged matcher ToString"] = () => {
+                var m1 = (Matcher)Matcher.AllOf(new [] { CID.ComponentA });
+                var m2 = (Matcher)Matcher.AllOf(new [] { CID.ComponentB });
+                var m3 = (Matcher)Matcher.AllOf(new [] { CID.ComponentC });
+
+                m2.componentNames = new [] {"m_0", "m_1", "m_2", "m_3"};
+
+                var mergedMatcher = Matcher.AllOf(m1, m2, m3);
+                mergedMatcher.ToString().should_be("AllOf(m_1, m_2, m_3)");
+            };
         };
 
         context["anyOf"] = () => {
@@ -207,6 +218,12 @@ class describe_Matcher : nspec {
             };
 
             it["can ToString"] = () => m.ToString().should_be("AllOf(1, 2).NoneOf(3, 4)");
+
+            it["resolves index when componentNames is set"] = () => {
+                var matcher = (Matcher)m;
+                matcher.componentNames = new [] { "one", "two", "three", "four", "five" };
+                matcher.ToString().should_be("AllOf(two, three).NoneOf(four, five)");
+            };
         };
 
         context["anyOf.noneOf"] = () => {
