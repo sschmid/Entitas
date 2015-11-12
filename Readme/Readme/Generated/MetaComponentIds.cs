@@ -1,5 +1,3 @@
-using Entitas;
-
 public static class MetaComponentIds {
     public const int Coins = 0;
 

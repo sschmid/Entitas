@@ -77,9 +77,7 @@ class describe_IndicesLookupGenerator : nspec {
 
         it["generates lookup with name from attribute"] = () => {
             generates(typeof(OtherPoolComponent), "OtherComponentIds",
-                @"using Entitas;
-
-public static class OtherComponentIds {
+                @"public static class OtherComponentIds {
     public const int OtherPool = 0;
 
     public const int TotalComponents = 1;
@@ -174,9 +172,7 @@ public static class OtherComponentIds {
         };
 
         it["generates empty lookup with total components when for pool names"] = () => {
-            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG }, new [] { @"using Entitas;
-
-public static class MetaComponentIds {
+            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG }, new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -191,9 +187,7 @@ public static class MetaComponentIds {
         it["generates multiple empty lookup with total components when for pool names"] = () => {
             generatesEmptyLookup(new [] { "Meta", "Core" },
                 new [] { "Meta" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG },
-                new [] { @"using Entitas;
-
-public static class MetaComponentIds {
+                new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -202,9 +196,7 @@ public static class MetaComponentIds {
 
     public static readonly System.Type[] componentTypes = {
     };
-}", @"using Entitas;
-
-public static class CoreComponentIds {
+}", @"public static class CoreComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -223,9 +215,7 @@ public static class CoreComponentIds {
                     typeof(AComponent),
                     typeof(BComponent)
                 }, new [] { "PoolAComponentIds", "PoolBComponentIds" }, new [] {
-                    @"using Entitas;
-
-public static class PoolAComponentIds {
+                    @"public static class PoolAComponentIds {
     public const int B = 0;
     public const int A = 1;
 
@@ -241,9 +231,7 @@ public static class PoolAComponentIds {
         typeof(AComponent)
     };
 }",
-                    @"using Entitas;
-
-public static class PoolBComponentIds {
+                    @"public static class PoolBComponentIds {
     public const int B = 0;
 
     public const int TotalComponents = 1;
@@ -272,9 +260,7 @@ public static class PoolBComponentIds {
                     "PoolBComponentIds",
                     "PoolCComponentIds",
                 }, new [] {
-                    @"using Entitas;
-
-public static class PoolAComponentIds {
+                    @"public static class PoolAComponentIds {
     public const int C = 0;
     public const int B = 1;
     public const int A = 2;
@@ -293,9 +279,7 @@ public static class PoolAComponentIds {
         typeof(AComponent)
     };
 }",
-                    @"using Entitas;
-
-public static class PoolBComponentIds {
+                    @"public static class PoolBComponentIds {
     public const int C = 0;
     public const int B = 1;
     public const int D = 2;
@@ -314,9 +298,7 @@ public static class PoolBComponentIds {
         typeof(DComponent)
     };
 }",
-                    @"using Entitas;
-
-public static class PoolCComponentIds {
+                    @"public static class PoolCComponentIds {
     public const int C = 0;
     public const int E = 1;
     public const int D = 2;

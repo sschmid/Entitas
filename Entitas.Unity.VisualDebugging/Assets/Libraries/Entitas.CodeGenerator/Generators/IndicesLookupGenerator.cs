@@ -88,11 +88,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addClassHeader(string lookupTag) {
-            var code = string.Format("public static class {0} {{\n", lookupTag);
-            if (stripDefaultTag(lookupTag) != string.Empty) {
-                code = "using Entitas;\n\n" + code;
-            }
-            return code;
+            return string.Format("public static class {0} {{\n", lookupTag);
         }
 
         static string addIndices(Type[] components) {
