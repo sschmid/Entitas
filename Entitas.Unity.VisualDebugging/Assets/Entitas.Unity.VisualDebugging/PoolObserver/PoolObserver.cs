@@ -13,7 +13,6 @@ namespace Entitas.Unity.VisualDebugging {
         readonly string[] _componentNames;
         readonly Type[] _componentTypes;
         readonly string _name;
-        readonly Entity.ComponentIndexResolver _componentIndexResolverCache;
         readonly List<Group> _groups;
         readonly Transform _entitiesContainer;
 
@@ -22,7 +21,6 @@ namespace Entitas.Unity.VisualDebugging {
             _componentNames = componentNames;
             _componentTypes = componentTypes;
             _name = name;
-            _componentIndexResolverCache = resolveComponentIndex;
             _groups = new List<Group>();
             _entitiesContainer = new GameObject().transform;
             _entitiesContainer.gameObject.AddComponent<PoolObserverBehaviour>().Init(this);
@@ -32,7 +30,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void onEntityCreated(Pool pool, Entity entity) {
-            entity.componentIndexResolver = _componentIndexResolverCache;
+            entity.componentNames = _componentNames;
 
             var entityBehaviour = new GameObject().AddComponent<EntityBehaviour>();
             entityBehaviour.Init(_pool, entity, _componentNames, _componentTypes);
@@ -41,10 +39,6 @@ namespace Entitas.Unity.VisualDebugging {
 
         void onGroupCreated(Pool pool, Group group) {
             _groups.Add(group);
-        }
-
-        string resolveComponentIndex(int index) {
-            return _componentNames[index];
         }
 
         public override string ToString() {

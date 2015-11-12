@@ -271,9 +271,9 @@ class describe_Pool : nspec {
 
                 it["sets componentIndexResolver to null"] = () => {
                     e = pool.CreateEntity();
-                    e.componentIndexResolver = index => string.Empty;
+                    e.componentNames = new string[0];
                     pool.DestroyEntity(e);
-                    e.componentIndexResolver.should_be_null();
+                    e.componentNames.should_be_null();
                 };
             };
         };
