@@ -84,6 +84,24 @@ namespace Entitas {
             return indices;
         }
 
+        static string[] getComponentNames(IMatcher[] matchers) {
+            for (int i = 0, matchersLength = matchers.Length; i < matchersLength; i++) {
+                var matcher = matchers[i] as Matcher;
+                if (matcher != null && matcher.componentNames != null) {
+                    return matcher.componentNames;
+                }
+            }
+
+            return null;
+        }
+
+        static void setComponentNames(Matcher matcher, IMatcher[] matchers) {
+            var componentNames = getComponentNames(matchers);
+            if (componentNames != null) {
+                matcher.componentNames = componentNames;
+            }
+        }
+
         static int[] distinctIndices(IEnumerable<int> indices) {
             var indicesSet = new HashSet<int>(indices);
             var uniqueIndices = new int[indicesSet.Count];

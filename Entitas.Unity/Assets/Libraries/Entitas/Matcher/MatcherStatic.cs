@@ -7,7 +7,9 @@
         }
 
         public static IAllOfMatcher AllOf(params IMatcher[] matchers) {
-            return Matcher.AllOf(mergeIndices(matchers));
+            var allOfMatcher = (Matcher)Matcher.AllOf(mergeIndices(matchers));
+            setComponentNames(allOfMatcher, matchers);
+            return allOfMatcher;
         }
 
         public static IAnyOfMatcher AnyOf(params int[] indices) {
@@ -17,7 +19,9 @@
         }
 
         public static IAnyOfMatcher AnyOf(params IMatcher[] matchers) {
-            return Matcher.AnyOf(mergeIndices(matchers));
+            var anyOfMatcher = (Matcher)Matcher.AnyOf(mergeIndices(matchers));
+            setComponentNames(anyOfMatcher, matchers);
+            return anyOfMatcher;
         }
     }
 }
