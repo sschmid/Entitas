@@ -86,8 +86,9 @@ namespace Entitas {
         public static IMatcher User {
             get {
                 if (_matcherUser == null) {
-                    _matcherUser = Matcher.AllOf(ComponentIds.User);
-                    _matcherUser.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.User);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherUser = matcher;
                 }
 
                 return _matcherUser;

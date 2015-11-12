@@ -11,7 +11,7 @@ public static class ComponentIds {
 
     public const int TotalComponents = 9;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         "Animating",
         "GameBoardElement",
         "Health",
@@ -23,7 +23,15 @@ public static class ComponentIds {
         "User"
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(AnimatingComponent),
+        typeof(GameBoardElementComponent),
+        typeof(HealthComponent),
+        typeof(InteractiveComponent),
+        typeof(MovableComponent),
+        typeof(MoveComponent),
+        typeof(PositionComponent),
+        typeof(ResourceComponent),
+        typeof(UserComponent)
+    };
 }

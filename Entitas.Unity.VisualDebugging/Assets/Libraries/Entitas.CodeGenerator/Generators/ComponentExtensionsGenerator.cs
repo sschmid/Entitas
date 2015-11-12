@@ -275,7 +275,9 @@ $assign
         public static IMatcher $Name {
             get {
                 if (_matcher$Name == null) {
-                    _matcher$Name = Matcher.AllOf($Ids.$Name);
+                    var matcher = (Matcher)Matcher.AllOf($Ids.$Name);
+                    matcher.componentNames = $Ids.componentNames;
+                    _matcher$Name = matcher;
                 }
 
                 return _matcher$Name;

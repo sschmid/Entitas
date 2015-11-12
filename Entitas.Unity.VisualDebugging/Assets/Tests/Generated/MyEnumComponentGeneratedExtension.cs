@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher MyEnum {
             get {
                 if (_matcherMyEnum == null) {
-                    _matcherMyEnum = Matcher.AllOf(ComponentIds.MyEnum);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MyEnum);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherMyEnum = matcher;
                 }
 
                 return _matcherMyEnum;

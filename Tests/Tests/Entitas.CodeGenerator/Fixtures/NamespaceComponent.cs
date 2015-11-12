@@ -32,8 +32,9 @@ namespace My.Namespace {
         public static IMatcher Namespace {
             get {
                 if (_matcherNamespace == null) {
-                    _matcherNamespace = Matcher.AllOf(ComponentIds.Namespace);
-                    _matcherNamespace.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Namespace);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherNamespace = matcher;
                 }
 
                 return _matcherNamespace;

@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher JaggedArray {
             get {
                 if (_matcherJaggedArray == null) {
-                    _matcherJaggedArray = Matcher.AllOf(ComponentIds.JaggedArray);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.JaggedArray);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherJaggedArray = matcher;
                 }
 
                 return _matcherJaggedArray;

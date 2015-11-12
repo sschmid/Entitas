@@ -89,8 +89,9 @@ namespace Entitas {
         public static IMatcher OtherPool {
             get {
                 if (_matcherOtherPool == null) {
-                    _matcherOtherPool = Matcher.AllOf(OtherComponentIds.OtherPool);
-                    _matcherOtherPool.componentNames = OtherComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(OtherComponentIds.OtherPool);
+                    matcher.componentNames = OtherComponentIds.componentNames;
+                    _matcherOtherPool = matcher;
                 }
 
                 return _matcherOtherPool;

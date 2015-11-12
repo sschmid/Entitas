@@ -11,9 +11,7 @@ namespace Entitas {
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
         public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
-        public delegate string ComponentIndexResolver(int index);
-
-        public ComponentIndexResolver componentIndexResolver;
+        public string[] componentNames;
 
         public int creationIndex { get { return _creationIndex; } }
 
@@ -36,10 +34,10 @@ namespace Entitas {
 
             if (HasComponent(index)) {
                 string errorMsg;
-                if (componentIndexResolver == null) {
+                if (componentNames == null) {
                     errorMsg = "Cannot add component at index " + index + " to " + this;
                 } else {
-                    errorMsg = "Cannot add component " + componentIndexResolver(index) + " to " + this;
+                    errorMsg = "Cannot add component " + componentNames[index] + " to " + this;
                 }
 
                 throw new EntityAlreadyHasComponentException(errorMsg, index);
@@ -63,10 +61,10 @@ namespace Entitas {
 
             if (!HasComponent(index)) {
                 string errorMsg;
-                if (componentIndexResolver == null) {
+                if (componentNames == null) {
                     errorMsg = "Cannot remove component at index " + index + " from " + this;
                 } else {
-                    errorMsg = "Cannot remove component " + componentIndexResolver(index) + " from " + this;
+                    errorMsg = "Cannot remove component " + componentNames[index] + " from " + this;
                 }
 
                 throw new EntityDoesNotHaveComponentException(errorMsg, index);
@@ -117,10 +115,10 @@ namespace Entitas {
         public IComponent GetComponent(int index) {
             if (!HasComponent(index)) {
                 string errorMsg;
-                if (componentIndexResolver == null) {
+                if (componentNames == null) {
                     errorMsg = "Cannot get component at index " + index + " from " + this;
                 } else {
-                    errorMsg = "Cannot get component " + componentIndexResolver(index) + " from " + this;
+                    errorMsg = "Cannot get component " + componentNames[index] + " from " + this;
                 }
 
                 throw new EntityDoesNotHaveComponentException(errorMsg, index);
@@ -198,7 +196,7 @@ namespace Entitas {
             OnComponentAdded = null;
             OnComponentReplaced = null;
             OnComponentRemoved = null;
-            componentIndexResolver = null;
+            componentNames = null;
             _isEnabled = false;
         }
 

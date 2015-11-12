@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher MyBool {
             get {
                 if (_matcherMyBool == null) {
-                    _matcherMyBool = Matcher.AllOf(ComponentIds.MyBool);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MyBool);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherMyBool = matcher;
                 }
 
                 return _matcherMyBool;

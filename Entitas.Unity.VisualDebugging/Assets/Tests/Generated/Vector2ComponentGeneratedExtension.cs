@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher Vector2 {
             get {
                 if (_matcherVector2 == null) {
-                    _matcherVector2 = Matcher.AllOf(ComponentIds.Vector2);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Vector2);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherVector2 = matcher;
                 }
 
                 return _matcherVector2;

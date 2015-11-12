@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher Resource {
             get {
                 if (_matcherResource == null) {
-                    _matcherResource = Matcher.AllOf(ComponentIds.Resource);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Resource);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherResource = matcher;
                 }
 
                 return _matcherResource;

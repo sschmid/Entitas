@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher Rect {
             get {
                 if (_matcherRect == null) {
-                    _matcherRect = Matcher.AllOf(ComponentIds.Rect);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Rect);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherRect = matcher;
                 }
 
                 return _matcherRect;

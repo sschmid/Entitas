@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher MyInt {
             get {
                 if (_matcherMyInt == null) {
-                    _matcherMyInt = Matcher.AllOf(ComponentIds.MyInt);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MyInt);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherMyInt = matcher;
                 }
 
                 return _matcherMyInt;

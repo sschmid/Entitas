@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher MyFloat {
             get {
                 if (_matcherMyFloat == null) {
-                    _matcherMyFloat = Matcher.AllOf(ComponentIds.MyFloat);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MyFloat);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherMyFloat = matcher;
                 }
 
                 return _matcherMyFloat;

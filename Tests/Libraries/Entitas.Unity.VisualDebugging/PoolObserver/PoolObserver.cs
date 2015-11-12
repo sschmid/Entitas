@@ -41,10 +41,6 @@ namespace Entitas.Unity.VisualDebugging {
             _groups.Add(group);
         }
 
-        string resolveComponentIndex(int index) {
-            return _componentNames[index];
-        }
-
         public override string ToString() {
             return _entitiesContainer.name = 
                 _name + " (" +

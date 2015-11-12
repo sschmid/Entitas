@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher Color {
             get {
                 if (_matcherColor == null) {
-                    _matcherColor = Matcher.AllOf(ComponentIds.Color);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Color);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherColor = matcher;
                 }
 
                 return _matcherColor;

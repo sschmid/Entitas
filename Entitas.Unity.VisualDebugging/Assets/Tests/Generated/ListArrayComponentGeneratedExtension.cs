@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher ListArray {
             get {
                 if (_matcherListArray == null) {
-                    _matcherListArray = Matcher.AllOf(ComponentIds.ListArray);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.ListArray);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherListArray = matcher;
                 }
 
                 return _matcherListArray;

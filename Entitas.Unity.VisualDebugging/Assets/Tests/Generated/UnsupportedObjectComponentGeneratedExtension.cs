@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher UnsupportedObject {
             get {
                 if (_matcherUnsupportedObject == null) {
-                    _matcherUnsupportedObject = Matcher.AllOf(ComponentIds.UnsupportedObject);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.UnsupportedObject);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherUnsupportedObject = matcher;
                 }
 
                 return _matcherUnsupportedObject;

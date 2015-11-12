@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher CustomObject {
             get {
                 if (_matcherCustomObject == null) {
-                    _matcherCustomObject = Matcher.AllOf(ComponentIds.CustomObject);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.CustomObject);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherCustomObject = matcher;
                 }
 
                 return _matcherCustomObject;

@@ -27,7 +27,9 @@ namespace Entitas {
         public static IMatcher GameBoardElement {
             get {
                 if (_matcherGameBoardElement == null) {
-                    _matcherGameBoardElement = Matcher.AllOf(ComponentIds.GameBoardElement);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.GameBoardElement);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherGameBoardElement = matcher;
                 }
 
                 return _matcherGameBoardElement;

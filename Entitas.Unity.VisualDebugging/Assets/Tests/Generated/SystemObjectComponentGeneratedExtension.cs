@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher SystemObject {
             get {
                 if (_matcherSystemObject == null) {
-                    _matcherSystemObject = Matcher.AllOf(ComponentIds.SystemObject);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.SystemObject);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherSystemObject = matcher;
                 }
 
                 return _matcherSystemObject;

@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher Dictionary {
             get {
                 if (_matcherDictionary == null) {
-                    _matcherDictionary = Matcher.AllOf(ComponentIds.Dictionary);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Dictionary);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherDictionary = matcher;
                 }
 
                 return _matcherDictionary;

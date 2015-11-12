@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher DateTime {
             get {
                 if (_matcherDateTime == null) {
-                    _matcherDateTime = Matcher.AllOf(ComponentIds.DateTime);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.DateTime);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherDateTime = matcher;
                 }
 
                 return _matcherDateTime;

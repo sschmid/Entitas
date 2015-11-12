@@ -3,9 +3,7 @@
 namespace Entitas {
     public partial class Matcher {
 
-        public delegate string ComponentIndexResolver(int index);
-
-        public ComponentIndexResolver componentIndexResolver;
+        public string[] componentNames;
 
         string _toStringCache;
 
@@ -13,16 +11,16 @@ namespace Entitas {
             if (_toStringCache == null) {
                 var sb = new StringBuilder();
                 if (_allOfIndices != null) {
-                    appendIndices(sb, "AllOf", _allOfIndices, componentIndexResolver);
+                    appendIndices(sb, "AllOf", _allOfIndices, componentNames);
                 }
                 if (_anyOfIndices != null) {
                     if (_allOfIndices != null) {
                         sb.Append(".");
                     }
-                    appendIndices(sb, "AnyOf", _anyOfIndices, componentIndexResolver);
+                    appendIndices(sb, "AnyOf", _anyOfIndices, componentNames);
                 }
                 if (_noneOfIndices != null) {
-                    appendIndices(sb, ".NoneOf", _noneOfIndices, componentIndexResolver);
+                    appendIndices(sb, ".NoneOf", _noneOfIndices, componentNames);
                 }
                 _toStringCache = sb.ToString();
             }
@@ -30,17 +28,17 @@ namespace Entitas {
             return _toStringCache;
         }
 
-        static void appendIndices(StringBuilder sb, string prefix, int[] indexArray, ComponentIndexResolver componentIndexResolver) {
+        static void appendIndices(StringBuilder sb, string prefix, int[] indexArray, string[] componentNames) {
             const string SEPARATOR = ", ";
             sb.Append(prefix);
             sb.Append("(");
             var lastSeparator = indexArray.Length - 1;
             for (int i = 0, indicesLength = indexArray.Length; i < indicesLength; i++) {
                 var index = indexArray[i];
-                if (componentIndexResolver == null) {
+                if (componentNames == null) {
                     sb.Append(index);
                 } else {
-                    sb.Append(componentIndexResolver(index));
+                    sb.Append(componentNames[index]);
                 }
 
                 if (i < lastSeparator) {

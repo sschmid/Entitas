@@ -51,8 +51,9 @@ namespace Entitas {
         public static IMatcher Person {
             get {
                 if (_matcherPerson == null) {
-                    _matcherPerson = Matcher.AllOf(ComponentIds.Person);
-                    _matcherPerson.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Person);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherPerson = matcher;
                 }
 
                 return _matcherPerson;

@@ -51,8 +51,9 @@ public class AnimatingComponent : IComponent {
         public static IMatcher Animating {
             get {
                 if (_matcherAnimating == null) {
-                    _matcherAnimating = Matcher.AllOf(ComponentIds.Animating);
-                    _matcherAnimating.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Animating);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherAnimating = matcher;
                 }
 
                 return _matcherAnimating;

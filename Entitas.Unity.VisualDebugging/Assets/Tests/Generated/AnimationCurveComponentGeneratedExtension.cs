@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher AnimationCurve {
             get {
                 if (_matcherAnimationCurve == null) {
-                    _matcherAnimationCurve = Matcher.AllOf(ComponentIds.AnimationCurve);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.AnimationCurve);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherAnimationCurve = matcher;
                 }
 
                 return _matcherAnimationCurve;

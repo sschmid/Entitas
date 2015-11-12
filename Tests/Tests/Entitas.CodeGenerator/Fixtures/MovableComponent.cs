@@ -31,8 +31,9 @@ public class MovableComponent : IComponent {
         public static IMatcher Movable {
             get {
                 if (_matcherMovable == null) {
-                    _matcherMovable = Matcher.AllOf(ComponentIds.Movable);
-                    _matcherMovable.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Movable);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherMovable = matcher;
                 }
 
                 return _matcherMovable;

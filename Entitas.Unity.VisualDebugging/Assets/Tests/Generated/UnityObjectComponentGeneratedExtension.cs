@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher UnityObject {
             get {
                 if (_matcherUnityObject == null) {
-                    _matcherUnityObject = Matcher.AllOf(ComponentIds.UnityObject);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.UnityObject);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherUnityObject = matcher;
                 }
 
                 return _matcherUnityObject;

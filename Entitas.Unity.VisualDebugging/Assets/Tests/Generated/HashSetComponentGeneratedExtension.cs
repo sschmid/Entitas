@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher HashSet {
             get {
                 if (_matcherHashSet == null) {
-                    _matcherHashSet = Matcher.AllOf(ComponentIds.HashSet);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.HashSet);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherHashSet = matcher;
                 }
 
                 return _matcherHashSet;

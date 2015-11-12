@@ -45,7 +45,9 @@ namespace Entitas {
         public static IMatcher DictArray {
             get {
                 if (_matcherDictArray == null) {
-                    _matcherDictArray = Matcher.AllOf(ComponentIds.DictArray);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.DictArray);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherDictArray = matcher;
                 }
 
                 return _matcherDictArray;

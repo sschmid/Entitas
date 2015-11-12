@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher Array3D {
             get {
                 if (_matcherArray3D == null) {
-                    _matcherArray3D = Matcher.AllOf(ComponentIds.Array3D);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Array3D);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherArray3D = matcher;
                 }
 
                 return _matcherArray3D;

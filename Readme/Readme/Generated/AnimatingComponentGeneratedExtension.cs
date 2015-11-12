@@ -45,7 +45,9 @@ namespace Entitas {
         public static IMatcher Animating {
             get {
                 if (_matcherAnimating == null) {
-                    _matcherAnimating = Matcher.AllOf(ComponentIds.Animating);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Animating);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherAnimating = matcher;
                 }
 
                 return _matcherAnimating;

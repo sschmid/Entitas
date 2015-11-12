@@ -43,7 +43,9 @@ namespace Entitas {
         public static IMatcher Bounds {
             get {
                 if (_matcherBounds == null) {
-                    _matcherBounds = Matcher.AllOf(ComponentIds.Bounds);
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Bounds);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherBounds = matcher;
                 }
 
                 return _matcherBounds;

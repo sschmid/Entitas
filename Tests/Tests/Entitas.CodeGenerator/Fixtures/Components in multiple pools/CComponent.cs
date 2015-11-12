@@ -36,8 +36,9 @@ namespace Entitas {
         public static IMatcher C {
             get {
                 if (_matcherC == null) {
-                    _matcherC = Matcher.AllOf(PoolAComponentIds.C);
-                    _matcherC.componentNames = PoolAComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(PoolAComponentIds.C);
+                    matcher.componentNames = PoolAComponentIds.componentNames;
+                    _matcherC = matcher;
                 }
 
                 return _matcherC;
@@ -51,8 +52,9 @@ namespace Entitas {
         public static IMatcher C {
             get {
                 if (_matcherC == null) {
-                    _matcherC = Matcher.AllOf(PoolAComponentIds.C);
-                    _matcherC.componentNames = PoolAComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(PoolAComponentIds.C);
+                    matcher.componentNames = PoolAComponentIds.componentNames;
+                    _matcherC = matcher;
                 }
 
                 return _matcherC;
@@ -66,8 +68,9 @@ namespace Entitas {
         public static IMatcher C {
             get {
                 if (_matcherC == null) {
-                    _matcherC = Matcher.AllOf(PoolAComponentIds.C);
-                    _matcherC.componentNames = PoolAComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(PoolAComponentIds.C);
+                    matcher.componentNames = PoolAComponentIds.componentNames;
+                    _matcherC = matcher;
                 }
 
                 return _matcherC;

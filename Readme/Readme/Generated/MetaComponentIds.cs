@@ -5,11 +5,11 @@ public static class MetaComponentIds {
 
     public const int TotalComponents = 1;
 
-    static readonly string[] _components = {
+    public static readonly string[] componentNames = {
         "Coins"
     };
 
-    public static string IdToString(int componentId) {
-        return _components[componentId];
-    }
+    public static readonly System.Type[] componentTypes = {
+        typeof(CoinsComponent)
+    };
 }
