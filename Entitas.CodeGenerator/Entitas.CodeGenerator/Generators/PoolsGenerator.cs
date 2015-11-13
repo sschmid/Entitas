@@ -32,7 +32,7 @@ public static class Pools {{{0}{1}
         get {{
             if (_{0} == null) {{
                 _{0} = new Pool({1}" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG + @".TotalComponents);
-                #if (UNITY_EDITOR)
+                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_{0}, {1}" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG + @".componentNames, {1}" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG + @".componentTypes, ""{2}Pool"");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
