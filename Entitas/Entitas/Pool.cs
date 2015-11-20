@@ -141,8 +141,15 @@ namespace Entitas {
         protected void updateGroupsComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
+                var events = new List<Group.GroupChanged>(groups.Count);
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
-                    groups[i].HandleEntity(entity, index, component);
+                    events.Add(groups[i].handleEntity(entity));
+                }
+                for (int i = 0, eventsCount = events.Count; i < eventsCount; i++) {
+                    var groupChangedEvent = events[i];
+                    if (groupChangedEvent != null) {
+                        groupChangedEvent(groups[i], entity, index, component);
+                    }
                 }
             }
         }

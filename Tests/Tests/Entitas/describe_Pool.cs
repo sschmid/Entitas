@@ -385,6 +385,42 @@ class describe_Pool : nspec {
 
                     updated.should_be(1);
                 };
+
+                context["event timing"] = () => {
+
+                    before = () => {
+                        pool = new Pool(CID.NumComponents);
+                    };
+                    
+                    it["dispatches group.OnEntityAdded events after all groups are updated"] = () => {
+                        var groupA = pool.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
+                        var groupB = pool.GetGroup(Matcher.AllOf(CID.ComponentB));
+
+                        groupA.OnEntityAdded += delegate {
+                            groupB.count.should_be(1);
+                        };
+
+                        var entity = pool.CreateEntity();
+                        entity.AddComponentA();
+                        entity.AddComponentB();
+                    };
+
+                    it["dispatches group.OnEntityRemoved events after all groups are updated"] = () => {
+                        pool = new Pool(CID.NumComponents);
+                        var groupB = pool.GetGroup(Matcher.AllOf(CID.ComponentB));
+                        var groupA = pool.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
+
+                        groupB.OnEntityRemoved += delegate {
+                            groupA.count.should_be(0);
+                        };
+
+                        var entity = pool.CreateEntity();
+                        entity.AddComponentA();
+                        entity.AddComponentB();
+
+                        entity.RemoveComponentB();
+                    };
+                };
             };
         };
     }
