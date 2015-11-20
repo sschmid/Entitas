@@ -1,3 +1,12 @@
+# 0.24.5
+
+##### Entitas
+- Fixed dispatching group events after all groups are updated
+
+##### Entitas.CodeGenerator
+- Supporting ENTITAS_DISABLE_VISUAL_DEBUGGING compiler flag
+
+
 # 0.24.4
 
 ##### Entitas
