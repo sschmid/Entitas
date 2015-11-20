@@ -39,6 +39,12 @@ namespace Entitas {
             }
         }
 
+        internal GroupChanged handleEntity(Entity entity) {
+            return _matcher.Matches(entity)
+                        ? addEntity(entity)
+                        : removeEntity(entity);
+        }
+
         public void UpdateEntity(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             if (_entities.Contains(entity)) {
                 if (OnEntityRemoved != null) {
@@ -53,34 +59,36 @@ namespace Entitas {
             }
         }
 
-        void addEntitySilently(Entity entity) {
+        bool addEntitySilently(Entity entity) {
             var added = _entities.Add(entity);
             if (added) {
                 _entitiesCache = null;
                 _singleEntityCache = null;
                 entity.Retain();
             }
+
+            return added;
         }
 
         void addEntity(Entity entity, int index, IComponent component) {
-            var added = _entities.Add(entity);
-            if (added) {
-                _entitiesCache = null;
-                _singleEntityCache = null;
-                entity.Retain();
-                if (OnEntityAdded != null) {
-                    OnEntityAdded(this, entity, index, component);
-                }
+            if (addEntitySilently(entity) && OnEntityAdded != null) {
+                OnEntityAdded(this, entity, index, component);
             }
         }
 
-        void removeEntitySilently(Entity entity) {
+        GroupChanged addEntity(Entity entity) {
+            return addEntitySilently(entity) ? OnEntityAdded : null;
+        }
+
+        bool removeEntitySilently(Entity entity) {
             var removed = _entities.Remove(entity);
             if (removed) {
                 _entitiesCache = null;
                 _singleEntityCache = null;
                 entity.Release();
             }
+
+            return removed;
         }
 
         void removeEntity(Entity entity, int index, IComponent component) {
@@ -93,6 +101,10 @@ namespace Entitas {
                 }
                 entity.Release();
             }
+        }
+
+        GroupChanged removeEntity(Entity entity) {
+            return removeEntitySilently(entity) ? OnEntityRemoved : null;
         }
 
         public bool ContainsEntity(Entity entity) {
