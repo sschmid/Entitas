@@ -2,6 +2,9 @@
     <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas-Header.png" alt="Introducing Entitas">
 </p>
 <p align="center">
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9HGYPFMLG2W4">
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Donate-PayPal.gif" alt="Thank you!"></a>
+
     <a href="https://gitter.im/sschmid/Entitas-CSharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
         <img src="https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg" alt="Join the chat at https://gitter.im/sschmid/Entitas-CSharp"></a>
 
@@ -20,6 +23,21 @@ Entitas - The Entity Component System for C# and Unity
 ======================================================
 
 Entitas is a super fast Entity Component System (ECS) specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions were made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.][clean-coders]
+
+<p align="left">
+    <a href="https://dev.windows.com">
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/csharp.png" alt="Unity3d" height="64"></a>
+    <a href="http://unity3d.com">
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/WorksWithUnity.png" alt="Unity3d" height="64"></a>
+    <a href="http://unity3d.com/unite/archive/2015">
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope2015.png" alt="Unite Europe 2015" height="64"></a>
+    <a href="http://unity3d.com/unite/archive/2015">
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteBoston2015.png" alt="Unite Boston 2015" height="64"></a>
+</p>
+
+
+Download
+=====================================
 
 [![Download Entitas-CSharp.zip][download-entitas-csharp-shield]][entitas-csharp-zip]
 
