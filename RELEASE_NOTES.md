@@ -1,3 +1,14 @@
+# 0.24.6
+
+##### Entitas
+- Changed entity.Retain() to accept an owner object
+
+##### Entitas.Unity.VisualDebugging
+- Added VisualDebugging support for displaying owners of entities
+
+![Entitas.Unity.VisualDebugging-RefrenceCount](https://cloud.githubusercontent.com/assets/233700/11320810/0463033a-90a7-11e5-931b-5074b50d7e62.png)
+
+
 # 0.24.5
 
 ##### Entitas
