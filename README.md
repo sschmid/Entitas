@@ -184,7 +184,7 @@ Entitas is also available in
 [wiki-example-projects]: https://github.com/sschmid/Entitas-CSharp/wiki/Example-projects "Wiki - Example Projects"
 [wiki-games-and-examples]: https://github.com/sschmid/Entitas-CSharp/wiki/Games-and-Examples "Wiki - Games and Examples #madeWithEntitas"
 
-[unite-europe-2015-video-thumbnail]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope-2015.png "Video: Watch the Entitas Talk at Unite Europe 2015"
+[unite-europe-2015-video-thumbnail]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope2015-Video.png "Video: Watch the Entitas Talk at Unite Europe 2015"
 [unite-europe-2015-video]: http://buff.ly/1KtKlm6 "Video: Watch the Entitas Talk at Unite Europe 2015"
 
 [github-entitas]: https://github.com/sschmid/Entitas-CSharp "sschmid/Entitas-CSharp"
