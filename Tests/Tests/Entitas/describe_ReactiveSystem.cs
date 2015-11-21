@@ -153,7 +153,7 @@ class describe_ReactiveSystem : nspec {
                 subSystem.executeAction = entities => {
                     didExecute += 1;
                     providedEntity = entities[0];
-                    providedEntity.RefCount().should_be(1);
+                    providedEntity.refCount.should_be(1);
                 };
 
                 var e = pool.CreateEntity();
@@ -162,7 +162,7 @@ class describe_ReactiveSystem : nspec {
                 pool.DestroyEntity(e);
                 reactiveSystem.Execute();
                 didExecute.should_be(1);
-                providedEntity.RefCount().should_be(0);
+                providedEntity.refCount.should_be(0);
             };
         };
 
@@ -270,28 +270,28 @@ class describe_ReactiveSystem : nspec {
                 };
 
                 it["retains included entities until execute completed"] = () => {
-                    eABC.RefCount().should_be(3); // retained by pool, group and group observer
+                    eABC.refCount.should_be(3); // retained by pool, group and group observer
                     var didExecute = 0;
                     ensureSubSystem.executeAction = entities => {
                         didExecute += 1;
-                        eABC.RefCount().should_be(3);
+                        eABC.refCount.should_be(3);
                     };
                     reactiveSystem.Execute();
                     didExecute.should_be(1);
-                    eABC.RefCount().should_be(2); // retained by pool and group
+                    eABC.refCount.should_be(2); // retained by pool and group
                 };
 
                 it["doesn't retain not included entities until execute completed"] = () => {
-                    eAB.RefCount().should_be(3); // retained by pool, group and group observer
+                    eAB.refCount.should_be(3); // retained by pool, group and group observer
                     var didExecute = 0;
                     ensureSubSystem.executeAction = entity => {
                         didExecute += 1;
-                        eAB.RefCount().should_be(2);
+                        eAB.refCount.should_be(2);
                     };
                     reactiveSystem.Execute();
                     didExecute.should_be(1);
-                    eABC.RefCount().should_be(2); // retained by pool and group
-                    eAB.RefCount().should_be(2); // retained by pool and group
+                    eABC.refCount.should_be(2); // retained by pool and group
+                    eAB.refCount.should_be(2); // retained by pool and group
                 };
             };
 
@@ -383,7 +383,7 @@ class describe_ReactiveSystem : nspec {
                     var didExecute = 0;
                     excludeSubSystem.executeAction = entities => {
                         didExecute += 1;
-                        eAB.RefCount().should_be(3);
+                        eAB.refCount.should_be(3);
                     };
 
                     reactiveSystem.Execute();
@@ -394,7 +394,7 @@ class describe_ReactiveSystem : nspec {
                     var didExecute = 0;
                     excludeSubSystem.executeAction = entities => {
                         didExecute += 1;
-                        eABC.RefCount().should_be(2);
+                        eABC.refCount.should_be(2);
                     };
 
                     reactiveSystem.Execute();
@@ -468,7 +468,7 @@ class describe_ReactiveSystem : nspec {
                 var didExecute = 0;
                 ensureExcludeSystem.executeAction = entities => {
                     didExecute += 1;
-                    eAB.RefCount().should_be(3);
+                    eAB.refCount.should_be(3);
                 };
 
                 reactiveSystem.Execute();
@@ -479,8 +479,8 @@ class describe_ReactiveSystem : nspec {
                 var didExecute = 0;
                 ensureExcludeSystem.executeAction = entities => {
                     didExecute += 1;
-                    eAC.RefCount().should_be(1);
-                    eABC.RefCount().should_be(2);
+                    eAC.refCount.should_be(1);
+                    eABC.refCount.should_be(2);
                 };
 
                 reactiveSystem.Execute();

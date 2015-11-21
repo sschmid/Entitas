@@ -205,11 +205,14 @@ namespace Entitas {
                 var sb = new StringBuilder()
                     .Append("Entity_")
                     .Append(_creationIndex)
+                    .Append("(")
+                    .Append(refCount)
+                    .Append(")")
                     .Append("(");
 
                 const string SEPARATOR = ", ";
                 var components = GetComponents();
-                var lastSeparator = components.Length - 1 ;
+                var lastSeparator = components.Length - 1;
                 for (int i = 0, componentsLength = components.Length; i < componentsLength; i++) {
                     sb.Append(components[i].GetType().RemoveComponentSuffix());
                     if (i < lastSeparator) {
@@ -260,28 +263,47 @@ namespace Entitas {
         public event EntityReleased OnEntityReleased;
         public delegate void EntityReleased(Entity entity);
 
-        internal int _refCount;
+        public int refCount {
+            get {
+                var totalRefCount = 0;
+                foreach (var count in refCounts.Values) {
+                    totalRefCount += count;
+                }
 
-        public Entity Retain() {
-            _refCount += 1;
+                return totalRefCount;
+            }
+        }
+
+        public readonly Dictionary<object, int> refCounts = new Dictionary<object, int>();
+
+        public Entity Retain(object owner) {
+            if (refCounts.ContainsKey(owner)) {
+                refCounts[owner] += 1;
+            } else {
+                refCounts.Add(owner, 1);
+            }
+
             return this;
         }
 
-        public void Release() {
-            _refCount -= 1;
-            if (_refCount == 0) {
+        public void Release(object owner) {
+            if (refCounts.ContainsKey(owner) && refCounts[owner] > 0) {
+                refCounts[owner] -= 1;
+            } else {
+                throw new EntityIsNotRetainedByOwnerException(owner);
+            }
+
+            if (refCount == 0) {
                 if (OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }
-            } else if (_refCount < 0) {
-                throw new EntityIsAlreadyReleasedException();
             }
         }
     }
 
-    public class EntityIsAlreadyReleasedException : Exception {
-        public EntityIsAlreadyReleasedException() :
-            base("Entity is already released!") {
+    public class EntityIsNotRetainedByOwnerException : Exception {
+        public EntityIsNotRetainedByOwnerException(object owner) :
+            base("Entity is not retained by owner: " + owner) {
         }
     }
 

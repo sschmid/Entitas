@@ -64,7 +64,7 @@ namespace Entitas {
             if (added) {
                 _entitiesCache = null;
                 _singleEntityCache = null;
-                entity.Retain();
+                entity.Retain(this);
             }
 
             return added;
@@ -85,7 +85,7 @@ namespace Entitas {
             if (removed) {
                 _entitiesCache = null;
                 _singleEntityCache = null;
-                entity.Release();
+                entity.Release(this);
             }
 
             return removed;
@@ -99,7 +99,7 @@ namespace Entitas {
                 if (OnEntityRemoved != null) {
                     OnEntityRemoved(this, entity, index, component);
                 }
-                entity.Release();
+                entity.Release(this);
             }
         }
 

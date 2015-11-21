@@ -50,7 +50,7 @@ namespace Entitas {
             var entity = _reusableEntities.Count > 0 ? _reusableEntities.Pop() : new Entity(_totalComponents);
             entity._isEnabled = true;
             entity._creationIndex = _creationIndex++;
-            entity.Retain();
+            entity.Retain(this);
             _entities.Add(entity);
             _entitiesCache = null;
             entity.OnComponentAdded += _cachedUpdateGroupsComponentAddedOrRemoved;
@@ -83,13 +83,13 @@ namespace Entitas {
                 OnEntityDestroyed(this, entity);
             }
 
-            if (entity._refCount == 1) {
+            if (entity.refCount == 1) {
                 entity.OnEntityReleased -= _cachedOnEntityReleased;
                 _reusableEntities.Push(entity);
             } else {
                 _retainedEntities.Add(entity);
             }
-            entity.Release();
+            entity.Release(this);
         }
 
         public virtual void DestroyAllEntities() {

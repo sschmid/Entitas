@@ -63,7 +63,7 @@ namespace Entitas {
 
         public void ClearCollectedEntities() {
             foreach (var entity in _collectedEntities) {
-                entity.Release();
+                entity.Release(this);
             }
             _collectedEntities.Clear();
         }
@@ -71,7 +71,7 @@ namespace Entitas {
         void addEntity(Group group, Entity entity, int index, IComponent component) {
             var added = _collectedEntities.Add(entity);
             if (added) {
-                entity.Retain();
+                entity.Retain(this);
             }
         }
     }

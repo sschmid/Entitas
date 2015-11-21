@@ -1,5 +1,3 @@
-using Entitas;
-
 public static class TestComponentIds {
     public const int Test = 0;
 

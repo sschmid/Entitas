@@ -155,7 +155,7 @@ class describe_Pool : nspec {
                     didDispatch += 1;
                     p.should_be_same(pool);
                     entity.should_be_same(e);
-                    entity.RefCount().should_be(1);
+                    entity.refCount.should_be(1);
                     var newEntity = pool.CreateEntity();
                     newEntity.should_not_be_null();
                     newEntity.should_not_be_same(entity);
@@ -168,7 +168,7 @@ class describe_Pool : nspec {
             
             it["throws if entity is released before it is destroyed"] = expect<EntityIsNotDestroyedException>(() => {
                 var e = pool.CreateEntity();
-                e.Release();
+                e.Release(pool);
             });
 
             it["dispatches OnGroupCreated when creating a new group"] = () => {
@@ -229,11 +229,11 @@ class describe_Pool : nspec {
 
             it["only returns released entities"] = () => {
                 var e1 = pool.CreateEntity();
-                e1.Retain();
+                e1.Retain(this);
                 pool.DestroyEntity(e1);
                 var e2 = pool.CreateEntity();
                 e2.should_not_be_same(e1);
-                e1.Release();
+                e1.Release(this);
                 var e3 = pool.CreateEntity();
                 e3.should_be_same(e1);
             };

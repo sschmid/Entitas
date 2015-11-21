@@ -46,6 +46,7 @@ namespace Entitas.Unity.VisualDebugging {
                 _name + " (" +
                 _pool.count + " entities, " +
                 _pool.reusableEntitiesCount + " reusable, " +
+                _pool.retainedEntitiesCount + " retained, " +
                 _groups.Count + " groups)";
         }
     }

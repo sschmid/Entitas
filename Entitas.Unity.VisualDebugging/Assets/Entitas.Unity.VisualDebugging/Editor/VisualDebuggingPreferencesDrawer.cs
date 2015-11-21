@@ -8,13 +8,15 @@ namespace Entitas.Unity.VisualDebugging {
             var visualDebuggingConfig = new VisualDebuggingConfig(config);
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            EditorGUILayout.LabelField("VisualDebugging", EditorStyles.boldLabel);
+            {
+                EditorGUILayout.LabelField("VisualDebugging", EditorStyles.boldLabel);
 
-            visualDebuggingConfig.defaultInstanceCreatorFolderPath = EditorGUILayout.TextField("DefaultInstanceCreator Folder", visualDebuggingConfig.defaultInstanceCreatorFolderPath);
-            visualDebuggingConfig.typeDrawerFolderPath = EditorGUILayout.TextField("TypeDrawer Folder", visualDebuggingConfig.typeDrawerFolderPath);
+                visualDebuggingConfig.defaultInstanceCreatorFolderPath = EditorGUILayout.TextField("DefaultInstanceCreator Folder", visualDebuggingConfig.defaultInstanceCreatorFolderPath);
+                visualDebuggingConfig.typeDrawerFolderPath = EditorGUILayout.TextField("TypeDrawer Folder", visualDebuggingConfig.typeDrawerFolderPath);
 
-            EditorGUILayout.HelpBox("Specify the folder where to save generated templates.", MessageType.Info);
+                EditorGUILayout.HelpBox("Specify the folder where to save generated templates.", MessageType.Info);
 
+            }
             EditorGUILayout.EndVertical();
         }
     }

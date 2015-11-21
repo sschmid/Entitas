@@ -159,7 +159,8 @@ class describe_Entity : nspec {
 
                 it["can ToString"] = () => {
                     e.AddComponent(0, new SomeComponent());
-                    e.ToString().should_be("Entity_0(Some, ComponentA, ComponentB)");
+                    e.Retain(this); 
+                    e.ToString().should_be("Entity_0(1)(Some, ComponentA, ComponentB)");
                 };
             };
         };
@@ -291,27 +292,50 @@ class describe_Entity : nspec {
 
         context["reference counting"] = () => {
             it["retains entity"] = () => {
-                e.RefCount().should_be(0);
-                e.Retain();
-                e.RefCount().should_be(1);
+                e.refCount.should_be(0);
+                e.Retain(this);
+                e.refCount.should_be(1);
             };
 
             it["releases entity"] = () => {
-                e.Retain();
-                e.Release();
-                e.RefCount().should_be(0);
+                e.Retain(this);
+                e.Release(this);
+                e.refCount.should_be(0);
             };
 
-            it["throws when releasing more than it has been retained"] = expect<EntityIsAlreadyReleasedException>(() => {
-                e.Retain();
-                e.Release();
-                e.Release();
+            it["throws when releasing more than it has been retained"] = expect<EntityIsNotRetainedByOwnerException>(() => {
+                e.Retain(this);
+                e.Release(this);
+                e.Release(this);
+            });
+
+            it["retains multiple times with same owner"] = () => {
+                var owner = new object();
+                e.Retain(owner);
+                e.Retain(owner);
+                e.refCount.should_be(2);
+            };
+
+            it["throws when releasing with unknown owner"] = expect<EntityIsNotRetainedByOwnerException>(() => {
+                var owner = new object();
+                var unknownOwner = new object();
+                e.Retain(owner);
+                e.Release(unknownOwner);
+            });
+
+            it["throws when releasing with owner which doesn't retain entity anymore"] = expect<EntityIsNotRetainedByOwnerException>(() => {
+                var owner1 = new object();
+                var owner2 = new object();
+                e.Retain(owner1);
+                e.Retain(owner2);
+                e.Release(owner2);
+                e.Release(owner2);
             });
 
             context["events"] = () => {
                 it["doesn't dispatch OnEntityReleased when retaining"] = () => {
                     e.OnEntityReleased += entity => this.Fail();
-                    e.Retain();
+                    e.Retain(this);
                 };
 
                 it["dispatches OnEntityReleased when retain and release"] = () => {
@@ -320,8 +344,8 @@ class describe_Entity : nspec {
                         didDispatch += 1;
                         entity.should_be_same(e);
                     };
-                    e.Retain();
-                    e.Release();
+                    e.Retain(this);
+                    e.Release(this);
                 };
             };
         };

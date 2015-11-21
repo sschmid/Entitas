@@ -51,31 +51,45 @@ namespace Entitas.Unity.VisualDebugging {
             }
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
-            if (GUILayout.Button("▸", GUILayout.Width(21), GUILayout.Height(14))) {
-                entityBehaviour.FoldAllComponents();
-            }
-            if (GUILayout.Button("▾", GUILayout.Width(21), GUILayout.Height(14))) {
-                entityBehaviour.UnfoldAllComponents();
-            }
-            EditorGUILayout.EndHorizontal();
+            {
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
+                    if (GUILayout.Button("▸", GUILayout.Width(21), GUILayout.Height(14))) {
+                        entityBehaviour.FoldAllComponents();
+                    }
+                    if (GUILayout.Button("▾", GUILayout.Width(21), GUILayout.Height(14))) {
+                        entityBehaviour.UnfoldAllComponents();
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.Space();
-            entityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", entityBehaviour.componentToAdd, entityBehaviour.componentNames);
-            if (entityBehaviour.componentToAdd >= 0) {
-                var index = entityBehaviour.componentToAdd;
-                entityBehaviour.componentToAdd = -1;
-                var componentType = entityBehaviour.componentTypes[index];
-                var component = (IComponent)Activator.CreateInstance(componentType);
-                entity.AddComponent(index, component);
-            }
+                EditorGUILayout.Space();
+                entityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", entityBehaviour.componentToAdd, entityBehaviour.componentNames);
+                if (entityBehaviour.componentToAdd >= 0) {
+                    var index = entityBehaviour.componentToAdd;
+                    entityBehaviour.componentToAdd = -1;
+                    var componentType = entityBehaviour.componentTypes[index];
+                    var component = (IComponent)Activator.CreateInstance(componentType);
+                    entity.AddComponent(index, component);
+                }
 
-            EditorGUILayout.Space();
-            var indices = entity.GetComponentIndices();
-            var components = entity.GetComponents();
-            for (int i = 0; i < components.Length; i++) {
-                drawComponent(entityBehaviour, entity, indices[i], components[i]);
+                EditorGUILayout.Space();
+                var indices = entity.GetComponentIndices();
+                var components = entity.GetComponents();
+                for (int i = 0; i < components.Length; i++) {
+                    drawComponent(entityBehaviour, entity, indices[i], components[i]);
+                }
+
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("Retained by (" + entity.refCount + ")", EditorStyles.boldLabel);
+                EditorGUILayout.BeginVertical(GUI.skin.box);
+                {
+                    foreach (var kv in entity.refCounts) {
+                        EditorGUILayout.LabelField(kv.Key.ToString(), kv.Value.ToString());
+                    }
+                }
+                EditorGUILayout.EndVertical();
             }
             EditorGUILayout.EndVertical();
         }
@@ -83,16 +97,18 @@ namespace Entitas.Unity.VisualDebugging {
         void drawMultiTargets() {
             EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();
-            var aEntityBehaviour = (EntityBehaviour)targets[0];
-            aEntityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", aEntityBehaviour.componentToAdd, aEntityBehaviour.componentNames);
-            if (aEntityBehaviour.componentToAdd >= 0) {
-                var index = aEntityBehaviour.componentToAdd;
-                aEntityBehaviour.componentToAdd = -1;
-                var componentType = aEntityBehaviour.componentTypes[index];
-                foreach (var t in targets) {
-                    var entity = ((EntityBehaviour)t).entity;
-                    var component = (IComponent)Activator.CreateInstance(componentType);
-                    entity.AddComponent(index, component);
+            {
+                var aEntityBehaviour = (EntityBehaviour)targets[0];
+                aEntityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", aEntityBehaviour.componentToAdd, aEntityBehaviour.componentNames);
+                if (aEntityBehaviour.componentToAdd >= 0) {
+                    var index = aEntityBehaviour.componentToAdd;
+                    aEntityBehaviour.componentToAdd = -1;
+                    var componentType = aEntityBehaviour.componentTypes[index];
+                    foreach (var t in targets) {
+                        var entity = ((EntityBehaviour)t).entity;
+                        var component = (IComponent)Activator.CreateInstance(componentType);
+                        entity.AddComponent(index, component);
+                    }
                 }
             }
             EditorGUILayout.EndHorizontal();
@@ -116,10 +132,12 @@ namespace Entitas.Unity.VisualDebugging {
                 var entity = entityBehaviour.entity;
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(entity.ToString());
-                if (GUILayout.Button("Destroy Entity")) {
-                    entityBehaviour.DestroyBehaviour();
-                    pool.DestroyEntity(entity);
+                {
+                    EditorGUILayout.LabelField(entity.ToString());
+                    if (GUILayout.Button("Destroy Entity")) {
+                        entityBehaviour.DestroyBehaviour();
+                        pool.DestroyEntity(entity);
+                    }
                 }
                 EditorGUILayout.EndHorizontal();
             }
@@ -130,22 +148,26 @@ namespace Entitas.Unity.VisualDebugging {
             var fields = componentType.GetFields(BindingFlags.Public | BindingFlags.Instance);
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            EditorGUILayout.BeginHorizontal();
-            if (fields.Length == 0) {
-                EditorGUILayout.LabelField(componentType.RemoveComponentSuffix(), EditorStyles.boldLabel);
-            } else {
-                entityBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(entityBehaviour.unfoldedComponents[index], componentType.RemoveComponentSuffix(), _foldoutStyle);
-            }
-            if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
-                entity.RemoveComponent(index);
-            }
-            EditorGUILayout.EndHorizontal();
+            {
+                EditorGUILayout.BeginHorizontal();
+                {
+                    if (fields.Length == 0) {
+                        EditorGUILayout.LabelField(componentType.RemoveComponentSuffix(), EditorStyles.boldLabel);
+                    } else {
+                        entityBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(entityBehaviour.unfoldedComponents[index], componentType.RemoveComponentSuffix(), _foldoutStyle);
+                    }
+                    if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
+                        entity.RemoveComponent(index);
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
 
-            if (entityBehaviour.unfoldedComponents[index]) {
-                foreach (var field in fields) {
-                    var value = field.GetValue(component);
-                    DrawAndSetElement(field.FieldType, field.Name, value,
-                        entity, index, component, newValue => field.SetValue(component, newValue));
+                if (entityBehaviour.unfoldedComponents[index]) {
+                    foreach (var field in fields) {
+                        var value = field.GetValue(component);
+                        DrawAndSetElement(field.FieldType, field.Name, value,
+                            entity, index, component, newValue => field.SetValue(component, newValue));
+                    }
                 }
             }
             EditorGUILayout.EndVertical();
@@ -161,19 +183,21 @@ namespace Entitas.Unity.VisualDebugging {
 
         public static bool DidValueChange(object value, object newValue) {
             return (value == null && newValue != null) ||
-                   (value != null && newValue == null) ||
-                   ((value != null && newValue != null &&
-                   !newValue.Equals(value)));
+            (value != null && newValue == null) ||
+            ((value != null && newValue != null &&
+            !newValue.Equals(value)));
         }
 
         public static object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
             if (value == null) {
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(fieldName, "null");
-                if (GUILayout.Button("Create", GUILayout.Height(14))) {
-                    object defaultValue;
-                    if (CreateDefault(type, out defaultValue)) {
-                        value = defaultValue;
+                {
+                    EditorGUILayout.LabelField(fieldName, "null");
+                    if (GUILayout.Button("Create", GUILayout.Height(14))) {
+                        object defaultValue;
+                        if (CreateDefault(type, out defaultValue)) {
+                            value = defaultValue;
+                        }
                     }
                 }
                 EditorGUILayout.EndHorizontal();
@@ -215,18 +239,20 @@ namespace Entitas.Unity.VisualDebugging {
 
         static void drawUnsupportedType(Type type, string fieldName, object value) {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(fieldName, value.ToString());
-            if (GUILayout.Button("Missing ITypeDrawer", GUILayout.Height(14))) {
-                var typeName = TypeGenerator.Generate(type);
-                if (EditorUtility.DisplayDialog(
-                        "No ITypeDrawer found",
-                        "There's no ITypeDrawer implementation to handle the type '" + typeName + "'.\n" +
-                        "Providing an ITypeDrawer enables you draw instances for that type.\n\n" + 
-                        "Do you want to generate an ITypeDrawer implementation for '" + typeName + "'?\n",
-                        "Generate",
-                        "Cancel"
-                    )) {
-                    generateITypeDrawer(typeName);
+            {
+                EditorGUILayout.LabelField(fieldName, value.ToString());
+                if (GUILayout.Button("Missing ITypeDrawer", GUILayout.Height(14))) {
+                    var typeName = TypeGenerator.Generate(type);
+                    if (EditorUtility.DisplayDialog(
+                            "No ITypeDrawer found",
+                            "There's no ITypeDrawer implementation to handle the type '" + typeName + "'.\n" +
+                            "Providing an ITypeDrawer enables you draw instances for that type.\n\n" +
+                            "Do you want to generate an ITypeDrawer implementation for '" + typeName + "'?\n",
+                            "Generate",
+                            "Cancel"
+                        )) {
+                        generateITypeDrawer(typeName);
+                    }
                 }
             }
             EditorGUILayout.EndHorizontal();
@@ -249,7 +275,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (EditorUtility.DisplayDialog(
                     "No IDefaultInstanceCreator found",
                     "There's no IDefaultInstanceCreator implementation to handle the type '" + typeName + "'.\n" +
-                    "Providing an IDefaultInstanceCreator enables you to create instances for that type.\n\n" + 
+                    "Providing an IDefaultInstanceCreator enables you to create instances for that type.\n\n" +
                     "Do you want to generate an IDefaultInstanceCreator implementation for '" + typeName + "'?\n",
                     "Generate",
                     "Cancel"
@@ -319,4 +345,3 @@ public class Type_TypeDrawer : ITypeDrawer {{
 }}";
     }
 }
-
