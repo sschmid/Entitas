@@ -1,6 +1,7 @@
 <p align="center">
     <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas-Header.png" alt="Introducing Entitas">
 </p>
+
 <p align="center">
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9HGYPFMLG2W4">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Donate-PayPal.gif" alt="Thank you!"></a>
@@ -26,7 +27,7 @@ Entitas is a super fast Entity Component System (ECS) specifically made for C# a
 
 <p align="left">
     <a href="https://dev.windows.com">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/csharp.png" alt="Unity3d" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/csharp.png" alt="CSharp" height="64"></a>
     <a href="http://unity3d.com">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/WorksWithUnity.png" alt="Unity3d" height="64"></a>
     <a href="http://unity3d.com/unite/archive/2015">
@@ -34,14 +35,6 @@ Entitas is a super fast Entity Component System (ECS) specifically made for C# a
     <a href="http://unity3d.com/unite/archive/2015">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteBoston2015.png" alt="Unite Boston 2015" height="64"></a>
 </p>
-
-
-Download
-=====================================
-
-[![Download Entitas-CSharp.zip][download-entitas-csharp-shield]][entitas-csharp-zip]
-
-[![Download Entitas-Unity.zip][download-entitas-unity-shield]][entitas-unity-zip]
 
 ### **[» Wiki, Roadmap, Overview and example projects][wiki]**
 ### **[» Community: Games and Examples #madeWithEntitas][wiki-games-and-examples]**
@@ -183,10 +176,6 @@ Entitas is also available in
 
 
 [clean-coders]: https://cleancoders.com "Clean Coders"
-[download-entitas-csharp-shield]: https://img.shields.io/badge/download-entitas.csharp-blue.svg "Download Entitas-CSharp.zip"
-[download-entitas-unity-shield]: https://img.shields.io/badge/download-entitas.unity-blue.svg "Download Entitas-Unity.zip"
-[entitas-csharp-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/bin/Entitas-CSharp.zip?raw=true "Download Entitas-CSharp.zip"
-[entitas-unity-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/bin/Entitas-Unity.zip?raw=true "Download Entitas-Unity.zip"
 
 [wiki]: https://github.com/sschmid/Entitas-CSharp/wiki "Entitas Wiki"
 [wiki-code-generator]: https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator "Wiki - Code Generator"
