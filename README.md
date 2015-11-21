@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas-Header.png" alt="Introducing Entitas">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas-Header.png" alt="Entitas">
 </p>
 
 <p align="center">
@@ -20,10 +20,10 @@
 </p>
 
 
-Entitas - The Entity Component System for C# and Unity
-======================================================
+The Entity Component System for C# and Unity
+============================================
 
-Entitas is a super fast Entity Component System (ECS) specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions were made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.][clean-coders]
+Entitas is a super fast Entity Component System (ECS) specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions have been made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.][clean-coders]
 
 <p align="left">
     <a href="https://dev.windows.com">
@@ -34,15 +34,19 @@ Entitas is a super fast Entity Component System (ECS) specifically made for C# a
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope2015.png" alt="Unite Europe 2015" height="64"></a>
     <a href="http://unity3d.com/unite/archive/2015">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteBoston2015.png" alt="Unite Boston 2015" height="64"></a>
+    <a href="https://www.wooga.com">
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/wooga-logo.png" alt="Wooga" height="64"></a>
 </p>
 
-### **[» Wiki, Roadmap, Overview and example projects][wiki]**
+---
+
+### **[» Wiki, Overview, Roadmap and example projects][wiki]**
 ### **[» Community: Games and Examples #madeWithEntitas][wiki-games-and-examples]**
 
 
 Watch the talk from Unite Europe 2015
 =====================================
-<a href="http://slideshare.net/sschmid/uniteeurope-2015" target="_blank">» Open the slides</a>
+<a href="http://slideshare.net/sschmid/uniteeurope-2015" target="_blank">» Open the slides on SlideShare</a>
 
 [![UniteEurope 2015][unite-europe-2015-video-thumbnail]][unite-europe-2015-video]
 
