@@ -263,18 +263,10 @@ namespace Entitas {
         public event EntityReleased OnEntityReleased;
         public delegate void EntityReleased(Entity entity);
 
-        public int refCount {
-            get {
-                var totalRefCount = 0;
-                foreach (var count in refCounts.Values) {
-                    totalRefCount += count;
-                }
-
-                return totalRefCount;
-            }
-        }
-
+        public int refCount { get { return _refCount; } }
         public readonly Dictionary<object, int> refCounts = new Dictionary<object, int>();
+
+        int _refCount;
 
         public Entity Retain(object owner) {
             if (refCounts.ContainsKey(owner)) {
@@ -282,6 +274,7 @@ namespace Entitas {
             } else {
                 refCounts.Add(owner, 1);
             }
+            _refCount += 1;
 
             return this;
         }
@@ -289,11 +282,12 @@ namespace Entitas {
         public void Release(object owner) {
             if (refCounts.ContainsKey(owner) && refCounts[owner] > 0) {
                 refCounts[owner] -= 1;
+                _refCount -= 1;
             } else {
                 throw new EntityIsNotRetainedByOwnerException(owner);
             }
 
-            if (refCount == 0) {
+            if (_refCount == 0) {
                 if (OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }
