@@ -309,12 +309,11 @@ class describe_Entity : nspec {
                 e.Release(this);
             });
 
-            it["retains multiple times with same owner"] = () => {
-                var owner = new object();
-                e.Retain(owner);
-                e.Retain(owner);
-                e.refCount.should_be(2);
-            };
+            it["throws when retaining twice with same owner"] = expect<EntityIsAlreadyRetainedByOwnerException>(() => {
+                var owner1 = new object();
+                e.Retain(owner1);
+                e.Retain(owner1);
+            });
 
             it["throws when releasing with unknown owner"] = expect<EntityIsNotRetainedByOwnerException>(() => {
                 var owner = new object();

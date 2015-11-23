@@ -26,17 +26,18 @@ namespace PerformanceTests {
 
             run<MatcherEquals>();
             run<MatcherGetHashCode>();
-            run<EmptyTest>();
-
-            run<IterateHashetToArray>();
-            run<IterateHashSet>();
-            run<EmptyTest>();
-
-            run<ObjectGetProperty>();
-            run<EmptyTest>();
-            run<ObserverIterateCollectedEntities>();
+//            run<EmptyTest>();
+//
+//            run<IterateHashetToArray>();
+//            run<IterateHashSet>();
+//            run<EmptyTest>();
+//
+//            run<ObjectGetProperty>();
+//            run<EmptyTest>();
+//            run<ObserverIterateCollectedEntities>();
 //            run<PropertiesCreate>();
 //
+//            run<HashSetContainsAdd>();
 //            run<ArrayGetItem>();
 //            run<DictionaryGetItem>();
 //            run<QueueDequeue>();
@@ -82,6 +83,7 @@ namespace PerformanceTests {
         //        ObserverIterateCollectedEntities:       957 ms
         //        PropertiesCreate:                       251 ms
         //
+        //        HashSetContainsAdd:                     173 ms
         //        ArrayGetItem:                           2 ms
         //        DictionaryGetItem:                      7 ms
         //        LinkedListAdd:                          17 ms
