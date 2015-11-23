@@ -263,41 +263,33 @@ namespace Entitas {
         public event EntityReleased OnEntityReleased;
         public delegate void EntityReleased(Entity entity);
 
-        public int refCount {
-            get {
-                var totalRefCount = 0;
-                foreach (var count in refCounts.Values) {
-                    totalRefCount += count;
-                }
-
-                return totalRefCount;
-            }
-        }
-
-        public readonly Dictionary<object, int> refCounts = new Dictionary<object, int>();
+        public int refCount { get { return owners.Count; } }
+        public readonly HashSet<object> owners = new HashSet<object>();
 
         public Entity Retain(object owner) {
-            if (refCounts.ContainsKey(owner)) {
-                refCounts[owner] += 1;
-            } else {
-                refCounts.Add(owner, 1);
+            if (!owners.Add(owner)) {
+                throw new EntityIsAlreadyRetainedByOwnerException(owner);
             }
 
             return this;
         }
 
         public void Release(object owner) {
-            if (refCounts.ContainsKey(owner) && refCounts[owner] > 0) {
-                refCounts[owner] -= 1;
-            } else {
+            if (!owners.Remove(owner)) {
                 throw new EntityIsNotRetainedByOwnerException(owner);
             }
 
-            if (refCount == 0) {
+            if (owners.Count == 0) {
                 if (OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }
             }
+        }
+    }
+
+    public class EntityIsAlreadyRetainedByOwnerException : Exception {
+        public EntityIsAlreadyRetainedByOwnerException(object owner) :
+            base("Entity is already retained by owner: " + owner) {
         }
     }
 
