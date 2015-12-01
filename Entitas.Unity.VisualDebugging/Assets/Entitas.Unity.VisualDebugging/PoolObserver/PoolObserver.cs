@@ -27,6 +27,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             _pool.OnEntityCreated += onEntityCreated;
             _pool.OnGroupCreated += onGroupCreated;
+            _pool.OnGroupCleared += onGroupCleared;
         }
 
         void onEntityCreated(Pool pool, Entity entity) {
@@ -39,6 +40,10 @@ namespace Entitas.Unity.VisualDebugging {
 
         void onGroupCreated(Pool pool, Group group) {
             _groups.Add(group);
+        }
+
+        void onGroupCleared(Pool pool, Group group) {
+            _groups.Remove(group);
         }
 
         public override string ToString() {

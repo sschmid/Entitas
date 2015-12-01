@@ -8,6 +8,7 @@ namespace Entitas {
         public event PoolChanged OnEntityWillBeDestroyed;
         public event PoolChanged OnEntityDestroyed;
         public event GroupChanged OnGroupCreated;
+        public event GroupChanged OnGroupCleared;
 
         public delegate void PoolChanged(Pool pool, Entity entity);
         public delegate void GroupChanged(Pool pool, Group group);
@@ -147,6 +148,10 @@ namespace Entitas {
                 group.RemoveAllEventHandlers();
                 for (int i = 0, n = group.GetEntities().Length; i < n; i++) {
                     group.GetEntities()[i].Release(group);
+                }
+
+                if (OnGroupCleared != null) {
+                    OnGroupCleared(this, group);
                 }
             }
             _groups.Clear();

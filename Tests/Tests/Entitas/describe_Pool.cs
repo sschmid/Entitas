@@ -194,6 +194,21 @@ class describe_Pool : nspec {
                 pool.GetGroup(Matcher.AllOf(0));
             };
 
+            it["dispatches OnGroupCleared when clearing groups"] = () => {
+                Group eventGroup = null;
+                pool.OnGroupCleared += (p, g) => {
+                    didDispatch += 1;
+                    p.should_be_same(pool);
+                    eventGroup = g;
+                };
+                var group1 = pool.GetGroup(Matcher.AllOf(0));
+                var group2 = pool.GetGroup(Matcher.AllOf(1));
+                pool.ClearGroups();
+
+                didDispatch.should_be(2);
+                eventGroup.should_be_same(group2);
+            };
+
             it["removes all external delegates when destroying an entity"] = () => {
                 var e = pool.CreateEntity();
                 e.OnComponentAdded += (entity, index, component) => this.Fail();
