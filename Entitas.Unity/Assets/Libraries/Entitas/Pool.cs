@@ -83,7 +83,7 @@ namespace Entitas {
                 OnEntityDestroyed(this, entity);
             }
 
-            if (entity.refCount == 1) {
+            if (entity.retainCount == 1) {
                 entity.OnEntityReleased -= _cachedOnEntityReleased;
                 _reusableEntities.Push(entity);
             } else {

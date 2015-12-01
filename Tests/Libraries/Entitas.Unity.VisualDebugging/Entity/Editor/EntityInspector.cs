@@ -82,7 +82,7 @@ namespace Entitas.Unity.VisualDebugging {
                 }
 
                 EditorGUILayout.Space();
-                EditorGUILayout.LabelField("Retained by (" + entity.refCount + ")", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Retained by (" + entity.retainCount + ")", EditorStyles.boldLabel);
                 EditorGUILayout.BeginVertical(GUI.skin.box);
                 {
                     foreach (var owner in entity.owners) {
