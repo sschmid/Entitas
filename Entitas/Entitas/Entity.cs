@@ -206,7 +206,7 @@ namespace Entitas {
                     .Append("Entity_")
                     .Append(_creationIndex)
                     .Append("(")
-                    .Append(refCount)
+                    .Append(retainCount)
                     .Append(")")
                     .Append("(");
 
@@ -263,7 +263,7 @@ namespace Entitas {
         public event EntityReleased OnEntityReleased;
         public delegate void EntityReleased(Entity entity);
 
-        public int refCount { get { return owners.Count; } }
+        public int retainCount { get { return owners.Count; } }
         public readonly HashSet<object> owners = new HashSet<object>();
 
         public Entity Retain(object owner) {

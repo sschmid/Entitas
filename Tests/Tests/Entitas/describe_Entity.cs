@@ -292,15 +292,15 @@ class describe_Entity : nspec {
 
         context["reference counting"] = () => {
             it["retains entity"] = () => {
-                e.refCount.should_be(0);
+                e.retainCount.should_be(0);
                 e.Retain(this);
-                e.refCount.should_be(1);
+                e.retainCount.should_be(1);
             };
 
             it["releases entity"] = () => {
                 e.Retain(this);
                 e.Release(this);
-                e.refCount.should_be(0);
+                e.retainCount.should_be(0);
             };
 
             it["throws when releasing more than it has been retained"] = expect<EntityIsNotRetainedByOwnerException>(() => {

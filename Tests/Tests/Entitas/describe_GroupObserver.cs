@@ -95,7 +95,7 @@ class describe_GroupObserver : nspec {
                     e.AddComponentA();
                     e.OnEntityReleased += entity => this.Fail();
                     pool.DestroyEntity(e);
-                    e.refCount.should_be(1);
+                    e.retainCount.should_be(1);
                 };
                 
                 it["releases entity when clearing collected entities"] = () => {
@@ -103,7 +103,7 @@ class describe_GroupObserver : nspec {
                     e.AddComponentA();
                     pool.DestroyEntity(e);
                     observerA.ClearCollectedEntities();
-                    e.refCount.should_be(0);
+                    e.retainCount.should_be(0);
                 };
 
                 it["retains entities only once"] = () => {
@@ -111,7 +111,7 @@ class describe_GroupObserver : nspec {
                     e.AddComponentA();
                     e.ReplaceComponentA(new ComponentA());
                     pool.DestroyEntity(e);
-                    e.refCount.should_be(1);
+                    e.retainCount.should_be(1);
                 };
             };
         };

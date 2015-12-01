@@ -28,7 +28,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             if (GUILayout.Button("Create Entity")) {
                 var entity = poolObserver.pool.CreateEntity();
-                var entityBehaviourName = "Entity_" + entity.creationIndex + "(" + entity.refCount + ")()";
+                var entityBehaviourName = "Entity_" + entity.creationIndex + "(" + entity.retainCount + ")()";
                 var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
                     .Single(eb => eb.name == entityBehaviourName);
 

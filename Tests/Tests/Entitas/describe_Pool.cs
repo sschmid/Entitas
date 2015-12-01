@@ -160,7 +160,7 @@ class describe_Pool : nspec {
                     didDispatch += 1;
                     p.should_be_same(pool);
                     entity.should_be_same(e);
-                    entity.refCount.should_be(1);
+                    entity.retainCount.should_be(1);
                     var newEntity = pool.CreateEntity();
                     newEntity.should_not_be_null();
                     newEntity.should_not_be_same(entity);
