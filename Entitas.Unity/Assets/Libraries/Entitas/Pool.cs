@@ -145,6 +145,9 @@ namespace Entitas {
         public void ClearGroups() {
             foreach (var group in _groups.Values) {
                 group.RemoveAllEventHandlers();
+                for (int i = 0, n = group.GetEntities().Length; i < n; i++) {
+                    group.GetEntities()[i].Release(group);
+                }
             }
             _groups.Clear();
 
