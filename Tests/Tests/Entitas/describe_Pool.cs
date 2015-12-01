@@ -80,6 +80,11 @@ class describe_Pool : nspec {
                 pool.GetEntities().should_be_empty();
                 e.GetComponents().should_be_empty();
             };
+
+            it["throws when destroying all entities and there are stille entities retained"] = expect<PoolStillHasRetainedEntitiesException>(() => {
+                pool.CreateEntity().Retain(new object());
+                pool.DestroyAllEntities();
+            });
         };
 
         context["internal caching"] = () => {
@@ -421,6 +426,46 @@ class describe_Pool : nspec {
                         entity.RemoveComponentB();
                     };
                 };
+            };
+        };
+
+        context["reset"] = () => {
+
+            it["resets groups"] = () => {
+                var m = Matcher.AllOf(CID.ComponentA);
+                var groupsCreated = 0;
+                Group createdGroup = null;
+                pool.OnGroupCreated += (p, g) => {
+                    groupsCreated += 1;
+                    createdGroup = g;
+                };
+
+                var initialGroup = pool.GetGroup(m);
+
+                pool.ClearGroups();
+
+                pool.GetGroup(m);
+
+                pool.CreateEntity().AddComponentA();
+
+                groupsCreated.should_be(2);
+                createdGroup.should_not_be_same(initialGroup);
+
+                initialGroup.count.should_be(0);
+                createdGroup.count.should_be(1);
+            };
+
+            it["removes all event handlers from groups"] = () => {
+                var m = Matcher.AllOf(CID.ComponentA);
+                var group = pool.GetGroup(m);
+
+                group.OnEntityAdded += (g, entity, index, component) => this.Fail();
+
+                pool.ClearGroups();
+
+                var e = pool.CreateEntity();
+                e.AddComponentA();
+                group.HandleEntity(e, CID.ComponentA, Component.A);
             };
         };
     }

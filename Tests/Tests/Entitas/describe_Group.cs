@@ -17,7 +17,7 @@ class describe_Group : nspec {
     void assertContainsNot(Entity entity) {
         _groupA.count.should_be(0);
         _groupA.GetEntities().should_be_empty();
-       _groupA.ContainsEntity(entity).should_be_false();
+        _groupA.ContainsEntity(entity).should_be_false();
     }
 
     void when_created() {
@@ -94,6 +94,24 @@ class describe_Group : nspec {
             handleSilently(eA2);
             _groupA.GetSingleEntity();
         });
+
+        it["reset removes all event handlers"] = () => {
+            _groupA.OnEntityAdded += (group, entity, index, component) => this.Fail();
+            _groupA.OnEntityRemoved += (group, entity, index, component) => this.Fail();
+            _groupA.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => this.Fail();
+
+            _groupA.RemoveAllEventHandlers();
+
+            handleAddEA(eA1);
+
+            var cA = eA1.GetComponentA();
+            eA1.RemoveComponentA();
+            handleRemoveEA(eA1, cA);
+
+            eA1.AddComponentA();
+            handleAddEA(eA1);
+            updateEA(eA1, Component.A);
+        };
 
         context["events"] = () => {
             var didDispatch = 0;

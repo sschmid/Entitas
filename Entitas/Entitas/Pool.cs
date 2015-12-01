@@ -97,6 +97,10 @@ namespace Entitas {
             for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
                 DestroyEntity(entities[i]);
             }
+
+            if (_retainedEntities.Count != 0) {
+                throw new PoolStillHasRetainedEntitiesException();
+            }
         }
 
         public virtual bool HasEntity(Entity entity) {
@@ -136,6 +140,17 @@ namespace Entitas {
             }
 
             return group;
+        }
+
+        public void ClearGroups() {
+            foreach (var group in _groups.Values) {
+                group.RemoveAllEventHandlers();
+            }
+            _groups.Clear();
+
+            for (int i = 0, groupsForIndexLength = _groupsForIndex.Length; i < groupsForIndexLength; i++) {
+                _groupsForIndex[i] = null;
+            }
         }
 
         protected void updateGroupsComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
@@ -183,6 +198,9 @@ namespace Entitas {
         public EntityIsNotDestroyedException(string message) :
             base(message + "\nEntity is not destroyed yet!") {
         }
+    }
+
+    public class PoolStillHasRetainedEntitiesException : Exception {
     }
 }
 

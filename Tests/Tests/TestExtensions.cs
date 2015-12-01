@@ -12,7 +12,7 @@ public static class EntityExtensions {
 
 public static class TestExtensions {
     public static void Fail(this nspec spec) {
-        false.should_be_true();
+        "but did".should_be("should not execute");
     }
 
     public static Entity CreateEntity(this nspec spec) {

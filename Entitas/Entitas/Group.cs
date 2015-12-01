@@ -59,6 +59,12 @@ namespace Entitas {
             }
         }
 
+        public void RemoveAllEventHandlers() {
+            OnEntityAdded = null;
+            OnEntityRemoved = null;
+            OnEntityUpdated = null;
+        }
+
         bool addEntitySilently(Entity entity) {
             var added = _entities.Add(entity);
             if (added) {
