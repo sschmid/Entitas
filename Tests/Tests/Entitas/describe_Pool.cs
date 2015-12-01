@@ -467,6 +467,17 @@ class describe_Pool : nspec {
                 e.AddComponentA();
                 group.HandleEntity(e, CID.ComponentA, Component.A);
             };
+
+            it["releases entities in groups"] = () => {
+                var m = Matcher.AllOf(CID.ComponentA);
+                pool.GetGroup(m);
+                var entity = pool.CreateEntity();
+                entity.AddComponentA();
+
+                pool.ClearGroups();
+
+                entity.retainCount.should_be(1);
+            };
         };
     }
 }
