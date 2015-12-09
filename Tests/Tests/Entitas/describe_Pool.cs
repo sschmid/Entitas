@@ -1,5 +1,5 @@
-﻿using NSpec;
-using Entitas;
+﻿using Entitas;
+using NSpec;
 
 class describe_Pool : nspec {
     void when_created() {
@@ -36,7 +36,7 @@ class describe_Pool : nspec {
 
             Entity e = null;
             before = () => {
-                e = pool.CreateEntity(); 
+                e = pool.CreateEntity();
                 e.AddComponentA();
             };
 
@@ -79,6 +79,44 @@ class describe_Pool : nspec {
                 pool.count.should_be(0);
                 pool.GetEntities().should_be_empty();
                 e.GetComponents().should_be_empty();
+            };
+
+            it["ensures same deterministic order when getting entities after destroying all entities"] = () => {
+
+                // This is a Unity specific problem. Run Unity Test Tools with in the Entitas.Unity project
+
+                const int numEntities = 10;
+                for (int i = 0; i < numEntities; i++) {
+                    pool.CreateEntity();
+                }
+
+                var order1 = new int[numEntities];
+                var entities1 = pool.GetEntities();
+                for (int i = 0; i < numEntities; i++) {
+                    order1[i] = entities1[i].creationIndex;
+                }
+
+                pool.DestroyAllEntities();
+                pool.ResetCreationIndex();
+
+                for (int i = 0; i < numEntities; i++) {
+                    pool.CreateEntity();
+                }
+
+                var order2 = new int[numEntities];
+                var entities2 = pool.GetEntities();
+                for (int i = 0; i < numEntities; i++) {
+                    order2[i] = entities2[i].creationIndex;
+                }
+
+                for (int i = 0; i < numEntities; i++) {
+                    var index1 = order1[i];
+                    var index2 = order2[i];
+
+                    System.Console.WriteLine(index1 + " | " + index2);
+
+                    index1.should_be(index2);
+                }
             };
 
             it["throws when destroying all entities and there are stille entities retained"] = expect<PoolStillHasRetainedEntitiesException>(() => {
@@ -170,7 +208,7 @@ class describe_Pool : nspec {
                 reusedEntity.should_be_same(e);
                 didDispatch.should_be(1);
             };
-            
+
             it["throws if entity is released before it is destroyed"] = expect<EntityIsNotDestroyedException>(() => {
                 var e = pool.CreateEntity();
                 e.Release(pool);
@@ -269,7 +307,7 @@ class describe_Pool : nspec {
             };
 
             it["sets up entity from pool"] = () => {
-                pool.DestroyEntity(pool.CreateEntity());                
+                pool.DestroyEntity(pool.CreateEntity());
                 var g = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
                 var e = pool.CreateEntity();
                 e.AddComponentA();
@@ -411,7 +449,7 @@ class describe_Pool : nspec {
                     before = () => {
                         pool = new Pool(CID.NumComponents);
                     };
-                    
+
                     it["dispatches group.OnEntityAdded events after all groups are updated"] = () => {
                         var groupA = pool.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
                         var groupB = pool.GetGroup(Matcher.AllOf(CID.ComponentB));
@@ -446,54 +484,67 @@ class describe_Pool : nspec {
 
         context["reset"] = () => {
 
-            it["resets groups"] = () => {
-                var m = Matcher.AllOf(CID.ComponentA);
-                var groupsCreated = 0;
-                Group createdGroup = null;
-                pool.OnGroupCreated += (p, g) => {
-                    groupsCreated += 1;
-                    createdGroup = g;
+            context["groups"] = () => {
+
+                it["resets and removes groups from pool"] = () => {
+                    var m = Matcher.AllOf(CID.ComponentA);
+                    var groupsCreated = 0;
+                    Group createdGroup = null;
+                    pool.OnGroupCreated += (p, g) => {
+                        groupsCreated += 1;
+                        createdGroup = g;
+                    };
+
+                    var initialGroup = pool.GetGroup(m);
+
+                    pool.ClearGroups();
+
+                    pool.GetGroup(m);
+
+                    pool.CreateEntity().AddComponentA();
+
+                    groupsCreated.should_be(2);
+                    createdGroup.should_not_be_same(initialGroup);
+
+                    initialGroup.count.should_be(0);
+                    createdGroup.count.should_be(1);
                 };
 
-                var initialGroup = pool.GetGroup(m);
+                it["removes all event handlers from groups"] = () => {
+                    var m = Matcher.AllOf(CID.ComponentA);
+                    var group = pool.GetGroup(m);
 
-                pool.ClearGroups();
+                    group.OnEntityAdded += (g, entity, index, component) => this.Fail();
 
-                pool.GetGroup(m);
+                    pool.ClearGroups();
 
-                pool.CreateEntity().AddComponentA();
+                    var e = pool.CreateEntity();
+                    e.AddComponentA();
+                    group.HandleEntity(e, CID.ComponentA, Component.A);
+                };
 
-                groupsCreated.should_be(2);
-                createdGroup.should_not_be_same(initialGroup);
+                it["releases entities in groups"] = () => {
+                    var m = Matcher.AllOf(CID.ComponentA);
+                    pool.GetGroup(m);
+                    var entity = pool.CreateEntity();
+                    entity.AddComponentA();
 
-                initialGroup.count.should_be(0);
-                createdGroup.count.should_be(1);
+                    pool.ClearGroups();
+
+                    entity.retainCount.should_be(1);
+                };
             };
 
-            it["removes all event handlers from groups"] = () => {
-                var m = Matcher.AllOf(CID.ComponentA);
-                var group = pool.GetGroup(m);
+            context["pool"] = () => {
 
-                group.OnEntityAdded += (g, entity, index, component) => this.Fail();
+                it["resets creation index"] = () => {
+                    pool.CreateEntity();
 
-                pool.ClearGroups();
+                    pool.ResetCreationIndex();
 
-                var e = pool.CreateEntity();
-                e.AddComponentA();
-                group.HandleEntity(e, CID.ComponentA, Component.A);
-            };
-
-            it["releases entities in groups"] = () => {
-                var m = Matcher.AllOf(CID.ComponentA);
-                pool.GetGroup(m);
-                var entity = pool.CreateEntity();
-                entity.AddComponentA();
-
-                pool.ClearGroups();
-
-                entity.retainCount.should_be(1);
+                    pool.CreateEntity().creationIndex.should_be(0);
+                };
             };
         };
     }
 }
-

@@ -161,6 +161,10 @@ namespace Entitas {
             }
         }
 
+        public void ResetCreationIndex() {
+            _creationIndex = 0;
+        }
+
         protected void updateGroupsComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
