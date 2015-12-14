@@ -1,3 +1,21 @@
+# 0.25.0
+
+##### Entitas
+- Improved AERC performance
+- Added group.RemoveAllEventHandlers()
+- Added pool.ClearGroups() to remove all groups and remove all their event handlers
+- Added pool.ResetCreationIndex()
+- Throwing exception when there are retained entities and pool.DestroyAllEntities() is called
+- Renamed entity.refCount to entity.retainCount
+
+##### Entitas.Unity.VisualDebugging
+- Fixed creating entities
+- Showing warning when there are retained entities
+
+##### Other
+- Added UnityTests project with Unity Test Tools to fix a Unity specific HashSet bug
+
+
 # 0.24.6
 
 ##### Entitas
