@@ -239,7 +239,7 @@ class describe_Pool : nspec {
                     p.should_be_same(pool);
                     eventGroup = g;
                 };
-                var group1 = pool.GetGroup(Matcher.AllOf(0));
+                pool.GetGroup(Matcher.AllOf(0));
                 var group2 = pool.GetGroup(Matcher.AllOf(1));
                 pool.ClearGroups();
 

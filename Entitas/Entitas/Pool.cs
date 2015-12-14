@@ -99,6 +99,8 @@ namespace Entitas {
                 DestroyEntity(entities[i]);
             }
 
+            _entities.Clear();
+
             if (_retainedEntities.Count != 0) {
                 throw new PoolStillHasRetainedEntitiesException();
             }
@@ -202,17 +204,16 @@ namespace Entitas {
 
     public class PoolDoesNotContainEntityException : Exception {
         public PoolDoesNotContainEntityException(Entity entity, string message) :
-            base(message + "\nPool does not contain entity " + entity) {
+        base(message + "\nPool does not contain entity " + entity) {
         }
     }
 
     public class EntityIsNotDestroyedException : Exception {
         public EntityIsNotDestroyedException(string message) :
-            base(message + "\nEntity is not destroyed yet!") {
+        base(message + "\nEntity is not destroyed yet!") {
         }
     }
 
     public class PoolStillHasRetainedEntitiesException : Exception {
     }
 }
-
