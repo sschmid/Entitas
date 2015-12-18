@@ -103,6 +103,10 @@ class describe_ReactiveSystem : nspec {
 
                 subSystem.didExecute.should_be(0);
             };
+
+            it["can ToString"] = () => {
+                reactiveSystem.ToString().should_be("ReactiveSystem(ReactiveSubSystemSpy)");
+            };
         };
 
         context["OnEntityRemoved"] = () => {
