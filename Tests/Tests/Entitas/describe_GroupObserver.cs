@@ -87,6 +87,10 @@ class describe_GroupObserver : nspec {
                     observerA.ClearCollectedEntities();
                     observerA.collectedEntities.should_be_empty();
                 };
+
+                it["can ToString"] = () => {
+                    observerA.ToString().should_be("GroupObserver(Group(AllOf(1)))");
+                };
             };
 
             context["reference counting"] = () => {
@@ -190,6 +194,10 @@ class describe_GroupObserver : nspec {
                     entities.Count.should_be(2);
                     entities.should_contain(eA);
                     entities.should_contain(eB);
+                };
+
+                it["can ToString"] = () => {
+                    observerA.ToString().should_be("GroupObserver(Group(AllOf(1)), Group(AllOf(2)))");
                 };
             };
 

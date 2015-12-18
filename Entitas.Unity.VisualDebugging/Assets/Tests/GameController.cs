@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour {
 
         createTestEntities(pool);
         createTestEntityWithNullValues(pool);
+
+        pool.CreateSystem<AReactiveSystem>();
     }
 
     void createTestEntities(Pool pool) {

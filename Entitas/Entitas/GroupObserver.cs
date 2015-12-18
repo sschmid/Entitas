@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Entitas {
     public enum GroupEventType : byte {
@@ -15,6 +16,7 @@ namespace Entitas {
         readonly Group[] _groups;
         readonly GroupEventType[] _eventTypes;
         Group.GroupChanged _addEntityCache;
+        string _toStringCache;
 
         public GroupObserver(Group group, GroupEventType eventType)
             : this(new [] { group }, new [] { eventType }) {
@@ -73,6 +75,26 @@ namespace Entitas {
             if (added) {
                 entity.Retain(this);
             }
+        }
+
+        public override string ToString() {
+            if (_toStringCache == null) {
+                var sb = new StringBuilder().Append("GroupObserver(");
+
+                const string SEPARATOR = ", ";
+                var lastSeparator = _groups.Length - 1;
+                for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
+                    sb.Append(_groups[i]);
+                    if (i < lastSeparator) {
+                        sb.Append(SEPARATOR);
+                    }
+                }
+
+                sb.Append(")");
+                _toStringCache = sb.ToString();
+            }
+
+            return _toStringCache;
         }
     }
 
