@@ -13,12 +13,12 @@ class check_namespaces : nspec {
 
     static Dictionary<string, string> getSourceFiles(string path) {
         return Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories)
-            .Where(p => !p.Contains("Generated/") &&
-                !p.Contains("Libraries/") &&
-                !p.Contains("Tests/") &&
-                !p.Contains("Readme/") &&
-                !p.Contains("bin/") &&
-                !p.Contains("obj/") &&
+            .Where(p => !p.Contains("Generated" + Path.DirectorySeparatorChar) &&
+                !p.Contains("Libraries" + Path.DirectorySeparatorChar) &&
+                !p.Contains("Tests" + Path.DirectorySeparatorChar) &&
+                !p.Contains("Readme" + Path.DirectorySeparatorChar) &&
+                !p.Contains("bin" + Path.DirectorySeparatorChar) &&
+                !p.Contains("obj" + Path.DirectorySeparatorChar) &&
                 !p.Contains("AssemblyInfo.cs") &&
                 !p.Contains("Program.cs"))
             .ToDictionary(p => p, p => File.ReadAllText(p));
@@ -33,10 +33,10 @@ class check_namespaces : nspec {
             sourceFiles.Count.should_be_less_than(100);
 
             const string namespacePattern = @"(?:^namespace)\s.*\b";
-            const string expectedNamespacePattern = @".+?[^\/]*";
+            string expectedNamespacePattern = string.Format(@".+?[^\{0}]*", Path.DirectorySeparatorChar);
 
             foreach (var file in sourceFiles) {
-                var fileName = file.Key.Replace(entitasDir + "/", string.Empty);
+                var fileName = file.Key.Replace(entitasDir + Path.DirectorySeparatorChar, string.Empty);
                 var expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
                         .ToString()
                         .Replace("namespace ", string.Empty)
