@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Entitas {
     public class Group {
@@ -12,14 +13,17 @@ namespace Entitas {
 
         public int count { get { return _entities.Count; } }
         public IMatcher matcher { get { return _matcher; } }
+        public PoolMetaData poolMetaData { get { return _poolMetaData; } }
 
         readonly IMatcher _matcher;
+        readonly PoolMetaData _poolMetaData;
+
         readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         Entity[] _entitiesCache;
         Entity _singleEntityCache;
         string _toStringCache;
 
-        public Group(IMatcher matcher) {
+        public Group(IMatcher matcher, PoolMetaData poolMetaData = null) {
             _matcher = matcher;
         }
 
@@ -137,7 +141,7 @@ namespace Entitas {
                 } else if (c == 0) {
                     return null;
                 } else {
-                    throw new SingleEntityException(_matcher);
+                    throw new GroupSingleEntityException(this);
                 }
             }
 
@@ -152,9 +156,10 @@ namespace Entitas {
         }
     }
 
-    public class SingleEntityException : Exception {
-        public SingleEntityException(IMatcher matcher) :
-            base("Multiple entities exist matching " + matcher) {
+    public class GroupSingleEntityException : EntitasException {
+        public GroupSingleEntityException(Group group) :
+            base("Cannot get the single entity from " + group + "!\nGroup contains " + group.count + " entities:",
+                string.Join("\n", group.GetEntities().Select(e => e.ToString()).ToArray())) {
         }
     }
 }

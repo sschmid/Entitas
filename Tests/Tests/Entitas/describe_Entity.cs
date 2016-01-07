@@ -42,6 +42,20 @@ class describe_Entity : nspec {
 
         context["initial state"] = () => {
 
+            it["has default PoolMetaData"] = () => {
+                e.poolMetaData.poolName.should_be("No Pool");
+                e.poolMetaData.componentNames.Length.should_be(CID.NumComponents);
+                for (int i = 0; i < e.poolMetaData.componentNames.Length; i++) {
+                    e.poolMetaData.componentNames[i].should_be(i.ToString());
+                }
+            };
+
+            it["has custom PoolMetaData when set"] = () => {
+                var poolMetaData = new PoolMetaData(null, null);
+                e = new Entity(0, poolMetaData);
+                e.poolMetaData.should_be_same(poolMetaData);
+            };
+
             it["throws when attempting to get component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
                 e.GetComponentA();
             });

@@ -25,7 +25,8 @@ namespace Entitas {
         public GroupObserver(Group[] groups, GroupEventType[] eventTypes) {
             if (groups.Length != eventTypes.Length) {
                 throw new GroupObserverException("Unbalanced count with groups (" + groups.Length +
-                    ") and event types (" + eventTypes.Length + ")");
+                    ") and event types (" + eventTypes.Length + ").",
+                    "Group and event type count must be equal.");
             }
 
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
@@ -98,8 +99,8 @@ namespace Entitas {
         }
     }
 
-    public class GroupObserverException : Exception {
-        public GroupObserverException(string message) : base(message) {
+    public class GroupObserverException : EntitasException {
+        public GroupObserverException(string message, string hint) : base(message, hint) {
         }
     }
 }

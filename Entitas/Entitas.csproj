@@ -54,6 +54,7 @@
     <Compile Include="Entitas\Matcher\MatcherStatic.cs" />
     <Compile Include="Entitas\Matcher\MatcherInterfaces.cs" />
     <Compile Include="Entitas\Extensions\IMatcherExtension.cs" />
+    <Compile Include="Entitas\EntitasException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
