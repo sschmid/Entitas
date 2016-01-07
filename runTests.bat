@@ -10,7 +10,7 @@ IF NOT EXIST "%msbuild.exe%" (
 )
 
 REM Compile tests.
-CALL %msbuild.exe% Tests\Tests.csproj /property:Configuration=Debug
+CALL %msbuild.exe% Tests\Tests.csproj /property:Configuration=Debug /verbosity:minimal
 
 IF NOT %ERRORLEVEL% == 0 (
 	ECHO Error %ERRORLEVEL%: Could not compile tests.
