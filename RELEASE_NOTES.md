@@ -1,3 +1,20 @@
+# 0.26.0
+
+##### General
+- Updated projects to Unity 5.3
+- Improved all error messages and added hints
+- Changed and applied policy.mdpolicy to all sources
+
+##### Entitas.Unity
+- Moved Entitas Preferences to its own Editor Window
+
+![Entitas.Unity - Entitas Preferences Window](https://cloud.githubusercontent.com/assets/233700/12222689/9492611a-b7c3-11e5-880d-c4cc83c9234e.png)
+
+##### Other
+- Added runTests.bat for running test on windows (#49)
+- Updated license
+
+
 # 0.25.0
 
 ##### Entitas
