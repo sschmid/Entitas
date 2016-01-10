@@ -31,8 +31,6 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void onEntityCreated(Pool pool, Entity entity) {
-            entity.componentNames = _componentNames;
-
             var entityBehaviour = new GameObject().AddComponent<EntityBehaviour>();
             entityBehaviour.Init(_pool, entity, _componentNames, _componentTypes);
             entityBehaviour.transform.SetParent(_entitiesContainer, false);

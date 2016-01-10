@@ -10,6 +10,7 @@ namespace Entitas {
         readonly IMatcher _excludeComponents;
         readonly bool _clearAfterExecute;
         readonly List<Entity> _buffer;
+        string _toStringCache;
 
         public ReactiveSystem(Pool pool, IReactiveSystem subSystem) :
             this(pool, subSystem, new [] { subSystem.trigger }) {
@@ -96,6 +97,14 @@ namespace Entitas {
                     }
                 }
             }
+        }
+
+        public override string ToString() {
+            if (_toStringCache == null) {
+                _toStringCache = "ReactiveSystem(" + subsystem + ")";
+            }
+
+            return _toStringCache;
         }
     }
 }

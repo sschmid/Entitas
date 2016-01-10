@@ -11,36 +11,44 @@ namespace Entitas {
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
         public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
-        public string[] componentNames;
-
         public int creationIndex { get { return _creationIndex; } }
+        public PoolMetaData poolMetaData { get { return _poolMetaData; } }
 
         internal int _creationIndex;
         internal bool _isEnabled = true;
+
         readonly IComponent[] _components;
+        readonly PoolMetaData _poolMetaData;
 
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
         string _toStringCache;
 
-        public Entity(int totalComponents) {
+        public Entity(int totalComponents, PoolMetaData poolMetaData = null) {
             _components = new IComponent[totalComponents];
+
+            if (poolMetaData != null) {
+                _poolMetaData = poolMetaData;
+            } else {
+                var componentNames = new string[totalComponents];
+                for (int i = 0, componentNamesLength = componentNames.Length; i < componentNamesLength; i++) {
+                    componentNames[i] = i.ToString();
+                }
+                _poolMetaData = new PoolMetaData("No Pool", componentNames);
+            }
         }
 
         public Entity AddComponent(int index, IComponent component) {
             if (!_isEnabled) {
-                throw new EntityIsNotEnabledException("Cannot add component!");
+                throw new EntityIsNotEnabledException("Cannot add component '" + _poolMetaData.componentNames[index] + "' to " + this + "!");
             }
 
             if (HasComponent(index)) {
-                string errorMsg;
-                if (componentNames == null) {
-                    errorMsg = "Cannot add component at index " + index + " to " + this;
-                } else {
-                    errorMsg = "Cannot add component " + componentNames[index] + " to " + this;
-                }
-
-                throw new EntityAlreadyHasComponentException(errorMsg, index);
+                throw new EntityAlreadyHasComponentException(
+                    index,
+                    "Cannot add component '" + _poolMetaData.componentNames[index] + "' to " + this + "!",
+                    "You should check if an entity already has the component before adding it or use entity.ReplaceComponent()."
+                );
             }
 
             _components[index] = component;
@@ -56,18 +64,15 @@ namespace Entitas {
 
         public Entity RemoveComponent(int index) {
             if (!_isEnabled) {
-                throw new EntityIsNotEnabledException("Cannot remove component!");
+                throw new EntityIsNotEnabledException("Cannot remove component '" + _poolMetaData.componentNames[index] + "' from " + this + "!");
             }
 
             if (!HasComponent(index)) {
-                string errorMsg;
-                if (componentNames == null) {
-                    errorMsg = "Cannot remove component at index " + index + " from " + this;
-                } else {
-                    errorMsg = "Cannot remove component " + componentNames[index] + " from " + this;
-                }
-
-                throw new EntityDoesNotHaveComponentException(errorMsg, index);
+                throw new EntityDoesNotHaveComponentException(
+                    index,
+                    "Cannot remove component '" + _poolMetaData.componentNames[index] + "' from " + this + "!",
+                    "You should check if an entity has the component before removing it."
+                );
             }
 
             replaceComponent(index, null);
@@ -77,7 +82,7 @@ namespace Entitas {
 
         public Entity ReplaceComponent(int index, IComponent component) {
             if (!_isEnabled) {
-                throw new EntityIsNotEnabledException("Cannot replace component!");
+                throw new EntityIsNotEnabledException("Cannot replace component '" + _poolMetaData.componentNames[index] + "' on " + this + "!");
             }
 
             if (HasComponent(index)) {
@@ -114,14 +119,11 @@ namespace Entitas {
 
         public IComponent GetComponent(int index) {
             if (!HasComponent(index)) {
-                string errorMsg;
-                if (componentNames == null) {
-                    errorMsg = "Cannot get component at index " + index + " from " + this;
-                } else {
-                    errorMsg = "Cannot get component " + componentNames[index] + " from " + this;
-                }
-
-                throw new EntityDoesNotHaveComponentException(errorMsg, index);
+                throw new EntityDoesNotHaveComponentException(
+                    index,
+                    "Cannot get component '" + _poolMetaData.componentNames[index] + "' from " + this + "!",
+                    "You should check if an entity has the component before getting it."
+                );
             }
 
             return _components[index];
@@ -196,7 +198,6 @@ namespace Entitas {
             OnComponentAdded = null;
             OnComponentReplaced = null;
             OnComponentRemoved = null;
-            componentNames = null;
             _isEnabled = false;
         }
 
@@ -228,21 +229,21 @@ namespace Entitas {
         }
     }
 
-    public class EntityAlreadyHasComponentException : Exception {
-        public EntityAlreadyHasComponentException(string message, int index) :
-            base(message + "\nEntity already has a component at index " + index) {
+    public class EntityAlreadyHasComponentException : EntitasException {
+        public EntityAlreadyHasComponentException(int index, string message, string hint) :
+            base(message + "\nEntity already has a component at index " + index + "!", hint) {
         }
     }
 
-    public class EntityDoesNotHaveComponentException : Exception {
-        public EntityDoesNotHaveComponentException(string message, int index) :
-            base(message + "\nEntity does not have a component at index " + index) {
+    public class EntityDoesNotHaveComponentException : EntitasException {
+        public EntityDoesNotHaveComponentException(int index, string message, string hint) :
+            base(message + "\nEntity does not have a component at index " + index + "!", hint) {
         }
     }
 
-    public class EntityIsNotEnabledException : Exception {
+    public class EntityIsNotEnabledException : EntitasException {
         public EntityIsNotEnabledException(string message) :
-            base(message + "\nEntity is not enabled!") {
+            base(message + "\nEntity is not enabled!", "The entity has already been destroyed. You cannot modify destroyed entities.") {
         }
     }
 
@@ -268,7 +269,7 @@ namespace Entitas {
 
         public Entity Retain(object owner) {
             if (!owners.Add(owner)) {
-                throw new EntityIsAlreadyRetainedByOwnerException(owner);
+                throw new EntityIsAlreadyRetainedByOwnerException(this, owner);
             }
 
             return this;
@@ -276,7 +277,7 @@ namespace Entitas {
 
         public void Release(object owner) {
             if (!owners.Remove(owner)) {
-                throw new EntityIsNotRetainedByOwnerException(owner);
+                throw new EntityIsNotRetainedByOwnerException(this, owner);
             }
 
             if (owners.Count == 0) {
@@ -287,15 +288,17 @@ namespace Entitas {
         }
     }
 
-    public class EntityIsAlreadyRetainedByOwnerException : Exception {
-        public EntityIsAlreadyRetainedByOwnerException(object owner) :
-            base("Entity is already retained by owner: " + owner) {
+    public class EntityIsAlreadyRetainedByOwnerException : EntitasException {
+        public EntityIsAlreadyRetainedByOwnerException(Entity entity, object owner) :
+            base("'" + owner + "' cannot retain " + entity + "!\nEntity is already retained by this object!",
+                "The entity must be released by this object first.") {
         }
     }
 
-    public class EntityIsNotRetainedByOwnerException : Exception {
-        public EntityIsNotRetainedByOwnerException(object owner) :
-            base("Entity is not retained by owner: " + owner) {
+    public class EntityIsNotRetainedByOwnerException : EntitasException {
+        public EntityIsNotRetainedByOwnerException(Entity entity, object owner) :
+            base("'" + owner + "' cannot release " + entity + "!\nEntity is not retained by this object!",
+                "An entity can only be released from objects that retain it.") {
         }
     }
 

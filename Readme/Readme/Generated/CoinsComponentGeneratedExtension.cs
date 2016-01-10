@@ -48,7 +48,8 @@ namespace Entitas {
 
         public Entity SetCoins(int newCount) {
             if (hasCoins) {
-                throw new SingleEntityException(MetaMatcher.Coins);
+                throw new EntitasException("Could not set coins!\n" + this + " already has an entity with CoinsComponent!",
+                    "You should check if the pool already has a coinsEntity before setting it or use pool.ReplaceCoins().");
             }
             var entity = CreateEntity();
             entity.AddCoins(newCount);

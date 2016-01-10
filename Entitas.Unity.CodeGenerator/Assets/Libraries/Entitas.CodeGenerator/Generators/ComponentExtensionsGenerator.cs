@@ -229,7 +229,8 @@ $assign
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Set$Name($typedArgs) {
             if (has$Name) {
-                throw new SingleEntityException($TagMatcher.$Name);
+                throw new EntitasException(""Could not set $name!\n"" + this + "" already has an entity with $Type!"",
+                    ""You should check if the pool already has a $nameEntity before setting it or use pool.Replace$Name()."");
             }
             var entity = CreateEntity();
             entity.Add$Name($args);

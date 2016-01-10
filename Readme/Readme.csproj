@@ -171,6 +171,9 @@
     <Compile Include="..\Entitas\Entitas\Extensions\IMatcherExtension.cs">
       <Link>Libraries\Entitas\Extensions\IMatcherExtension.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\EntitasException.cs">
+      <Link>Libraries\Entitas\EntitasException.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

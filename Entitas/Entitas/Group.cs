@@ -13,17 +13,15 @@ namespace Entitas {
 
         public int count { get { return _entities.Count; } }
         public IMatcher matcher { get { return _matcher; } }
-        public PoolMetaData poolMetaData { get { return _poolMetaData; } }
 
         readonly IMatcher _matcher;
-        readonly PoolMetaData _poolMetaData;
 
         readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         Entity[] _entitiesCache;
         Entity _singleEntityCache;
         string _toStringCache;
 
-        public Group(IMatcher matcher, PoolMetaData poolMetaData = null) {
+        public Group(IMatcher matcher) {
             _matcher = matcher;
         }
 
