@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Entitas.Migration;
 using NSpec;
@@ -16,12 +17,12 @@ class describe_M0220 : nspec {
         it["finds all reactive system"] = () => {
             var updatedFiles = m.Migrate(dir);
             updatedFiles.Length.should_be(1);
-            updatedFiles.Any(file => file.fileName == dir + "/RenderPositionSystem.cs").should_be_true();
+            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "RenderPositionSystem.cs")).should_be_true();
         };
 
         it["migrates to new api"] = () => {
             var updatedFiles = m.Migrate(dir);
-            var reactiveSystemFile = updatedFiles.Single(file => file.fileName == dir + "/RenderPositionSystem.cs");
+            var reactiveSystemFile = updatedFiles.Single(file => file.fileName == Path.Combine(dir, "RenderPositionSystem.cs"));
             reactiveSystemFile.fileContent.should_be(@"using System.Collections.Generic;
 using Entitas;
 
