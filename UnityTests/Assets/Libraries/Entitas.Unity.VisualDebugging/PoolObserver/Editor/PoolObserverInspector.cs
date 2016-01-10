@@ -11,7 +11,7 @@ namespace Entitas.Unity.VisualDebugging {
             var poolObserver = ((PoolObserverBehaviour)target).poolObserver;
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            EditorGUILayout.LabelField(poolObserver.name, EditorStyles.boldLabel);
+            EditorGUILayout.LabelField(poolObserver.pool.metaData.poolName, EditorStyles.boldLabel);
             EditorGUILayout.LabelField("Entities", poolObserver.pool.count.ToString());
             EditorGUILayout.LabelField("Reusable entities", poolObserver.pool.reusableEntitiesCount.ToString());
 

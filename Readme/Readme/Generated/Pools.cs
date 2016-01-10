@@ -20,7 +20,7 @@ public static class Pools {
         get {
             if (_pool == null) {
                 _pool = new Pool(ComponentIds.TotalComponents);
-                #if (UNITY_EDITOR)
+                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool, ComponentIds.componentNames, ComponentIds.componentTypes, "Pool");
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif

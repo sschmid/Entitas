@@ -57,7 +57,8 @@ namespace Entitas {
 
         public Entity SetUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
             if (hasUser) {
-                throw new SingleEntityException(Matcher.User);
+                throw new EntitasException(""Could not set user!\n"" + this + "" already has an entity with UserComponent!"",
+                    ""You should check if the pool already has a userEntity before setting it or use pool.ReplaceUser()."");
             }
             var entity = CreateEntity();
             entity.AddUser(newTimestamp, newIsLoggedIn);

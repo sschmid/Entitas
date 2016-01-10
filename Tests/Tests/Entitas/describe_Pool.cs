@@ -15,7 +15,7 @@ class describe_Pool : nspec {
         };
 
         it["starts with given creationIndex"] = () => {
-            new Pool(CID.NumComponents, 42).CreateEntity().creationIndex.should_be(42);
+            new Pool(CID.NumComponents, 42, null).CreateEntity().creationIndex.should_be(42);
         };
 
         it["has no entities when no entities were created"] = () => {
@@ -30,6 +30,40 @@ class describe_Pool : nspec {
             var e = pool.CreateEntity();
             e.should_not_be_null();
             e.GetType().should_be(typeof(Entity));
+        };
+
+        it["has default PoolMetaData"] = () => {
+            pool.metaData.poolName.should_be("Unnamed Pool");
+            pool.metaData.componentNames.Length.should_be(CID.NumComponents);
+            for (int i = 0; i < pool.metaData.componentNames.Length; i++) {
+                pool.metaData.componentNames[i].should_be("Index " + i);
+            }
+        };
+
+        it["can ToString"] = () => {
+            pool.ToString().should_be("Unnamed Pool");
+        };
+
+        context["when PoolMetaData set"] = () => {
+
+            PoolMetaData metaData = null;
+            before = () => {
+                var componentNames = new [] { "Health", "Position", "View" };
+                metaData = new PoolMetaData("My Pool", componentNames);
+                pool = new Pool(componentNames.Length, 0, metaData);
+            };
+
+            it["has custom PoolMetaData"] = () => {
+                pool.metaData.should_be_same(metaData);
+            };
+
+            it["creates entity with PoolMetaData"] = () => {
+                pool.CreateEntity().poolMetaData.should_be_same(metaData);
+            };
+
+            it["throws when componentNames is not same length as totalComponents"] = expect<PoolMetaDataException>(() => {
+                new Pool(metaData.componentNames.Length + 1, 0, metaData);
+            });
         };
 
         context["when entity created"] = () => {
@@ -112,9 +146,6 @@ class describe_Pool : nspec {
                 for (int i = 0; i < numEntities; i++) {
                     var index1 = order1[i];
                     var index2 = order2[i];
-
-                    System.Console.WriteLine(index1 + " | " + index2);
-
                     index1.should_be(index2);
                 }
             };
@@ -326,13 +357,6 @@ class describe_Pool : nspec {
                 it["throws when removing component"] = expect<EntityIsNotEnabledException>(() => e.RemoveComponentA());
                 it["throws when replacing component"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(new ComponentA()));
                 it["throws when replacing component with null"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(null));
-
-                it["sets componentIndexResolver to null"] = () => {
-                    e = pool.CreateEntity();
-                    e.componentNames = new string[0];
-                    pool.DestroyEntity(e);
-                    e.componentNames.should_be_null();
-                };
             };
         };
 
