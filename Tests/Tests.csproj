@@ -137,6 +137,7 @@
     </Compile>
     <Compile Include="Tests\Entitas\describe_PoolMetaData.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0260.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -8,7 +8,8 @@ namespace Entitas.Migration {
             var allMigrations = new IMigration[] {
                 new M0180(),
                 new M0190(),
-                new M0220()
+                new M0220(),
+                new M0260()
             };
 
             if (args == null) {
