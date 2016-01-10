@@ -27,9 +27,9 @@ public static class Pools {
     public static Pool pool {
         get {
             if (_pool == null) {
-                _pool = new Pool(ComponentIds.TotalComponents);
+                _pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData(""Pool"", ComponentIds.componentNames));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool, ComponentIds.componentNames, ComponentIds.componentTypes, ""Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool, ComponentIds.componentTypes);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
@@ -60,9 +60,9 @@ public static class Pools {
     public static Pool meta {
         get {
             if (_meta == null) {
-                _meta = new Pool(MetaComponentIds.TotalComponents);
+                _meta = new Pool(MetaComponentIds.TotalComponents, 0, new PoolMetaData(""Meta Pool"", MetaComponentIds.componentNames));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, MetaComponentIds.componentNames, MetaComponentIds.componentTypes, ""Meta Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, MetaComponentIds.componentTypes);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
@@ -93,9 +93,9 @@ public static class Pools {
     public static Pool meta {
         get {
             if (_meta == null) {
-                _meta = new Pool(MetaComponentIds.TotalComponents);
+                _meta = new Pool(MetaComponentIds.TotalComponents, 0, new PoolMetaData(""Meta Pool"", MetaComponentIds.componentNames));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, MetaComponentIds.componentNames, MetaComponentIds.componentTypes, ""Meta Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, MetaComponentIds.componentTypes);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
@@ -109,9 +109,9 @@ public static class Pools {
     public static Pool core {
         get {
             if (_core == null) {
-                _core = new Pool(CoreComponentIds.TotalComponents);
+                _core = new Pool(CoreComponentIds.TotalComponents, 0, new PoolMetaData(""Core Pool"", CoreComponentIds.componentNames));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_core, CoreComponentIds.componentNames, CoreComponentIds.componentTypes, ""Core Pool"");
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_core, CoreComponentIds.componentTypes);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }

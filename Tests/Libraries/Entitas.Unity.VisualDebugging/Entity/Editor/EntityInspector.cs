@@ -65,7 +65,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
-                entityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", entityBehaviour.componentToAdd, entityBehaviour.componentNames);
+                entityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", entityBehaviour.componentToAdd, entityBehaviour.entity.poolMetaData.componentNames);
                 if (entityBehaviour.componentToAdd >= 0) {
                     var index = entityBehaviour.componentToAdd;
                     entityBehaviour.componentToAdd = -1;
@@ -99,7 +99,7 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.BeginHorizontal();
             {
                 var aEntityBehaviour = (EntityBehaviour)targets[0];
-                aEntityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", aEntityBehaviour.componentToAdd, aEntityBehaviour.componentNames);
+                aEntityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", aEntityBehaviour.componentToAdd, aEntityBehaviour.entity.poolMetaData.componentNames);
                 if (aEntityBehaviour.componentToAdd >= 0) {
                     var index = aEntityBehaviour.componentToAdd;
                     aEntityBehaviour.componentToAdd = -1;

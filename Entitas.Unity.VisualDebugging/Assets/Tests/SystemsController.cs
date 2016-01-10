@@ -8,8 +8,8 @@ public class SystemsController : MonoBehaviour {
     Pool _pool;
 
     void Start() {
-        _pool = new Pool(ComponentIds.TotalComponents);
-        new PoolObserver(_pool, ComponentIds.componentNames, ComponentIds.componentTypes, "Systems Pool");
+        _pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData("Systems Pool", ComponentIds.componentNames));
+        new PoolObserver(_pool, ComponentIds.componentTypes);
         _systems = createSystems();
         _systems.Initialize();
         _pool.CreateEntity().AddMyString("");
