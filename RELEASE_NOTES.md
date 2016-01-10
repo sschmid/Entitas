@@ -1,3 +1,9 @@
+# 0.26.1
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+
 # 0.26.0
 
 ##### General
