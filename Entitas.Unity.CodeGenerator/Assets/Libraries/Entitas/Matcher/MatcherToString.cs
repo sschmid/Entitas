@@ -29,7 +29,7 @@ namespace Entitas {
         }
 
         static void appendIndices(StringBuilder sb, string prefix, int[] indexArray, string[] componentNames) {
-            const string SEPARATOR = ", ";
+            const string separator = ", ";
             sb.Append(prefix);
             sb.Append("(");
             var lastSeparator = indexArray.Length - 1;
@@ -42,7 +42,7 @@ namespace Entitas {
                 }
 
                 if (i < lastSeparator) {
-                    sb.Append(SEPARATOR);
+                    sb.Append(separator);
                 }
             }
             sb.Append(")");

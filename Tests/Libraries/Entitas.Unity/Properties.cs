@@ -55,9 +55,9 @@ namespace Entitas.Unity {
         }
 
         void replacePlaceholders() {
-            const string PLACEHOLDER_PATTERN = @"(?:(?<=\${).+?(?=}))";
+            const string placeholderPattern = @"(?:(?<=\${).+?(?=}))";
             foreach (var key in _dict.Keys.ToArray()) {
-                var matches = Regex.Matches(_dict[key], PLACEHOLDER_PATTERN);
+                var matches = Regex.Matches(_dict[key], placeholderPattern);
                 foreach (Match match in matches) {
                     _dict[key] = _dict[key].Replace("${" + match.Value + "}", _dict[match.Value]);
                 }

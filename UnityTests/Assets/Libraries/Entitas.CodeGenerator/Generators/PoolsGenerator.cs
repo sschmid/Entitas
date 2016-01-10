@@ -43,14 +43,14 @@ public static class Pools {{{0}{1}
     }}";
 
         public CodeGenFile[] Generate(string[] poolNames) {
-            const string DEFAULT_POOL_NAME = "pool";
+            const string defaultPoolName = "pool";
 
             var allPools = poolNames == null || poolNames.Length == 0
-                ? string.Format(ALL_POOLS_GETTER, DEFAULT_POOL_NAME)
+                ? string.Format(ALL_POOLS_GETTER, defaultPoolName)
                 : string.Format(ALL_POOLS_GETTER, string.Join(", ", poolNames.Select(poolName => poolName.LowercaseFirst()).ToArray()));
 
             var getters = poolNames == null || poolNames.Length == 0
-                ? string.Format(GETTER, DEFAULT_POOL_NAME, string.Empty, string.Empty)
+                ? string.Format(GETTER, defaultPoolName, string.Empty, string.Empty)
                 : poolNames.Aggregate(string.Empty, (acc, poolName) =>
                     acc + string.Format(GETTER, poolName.LowercaseFirst(), poolName, poolName + " "));
 

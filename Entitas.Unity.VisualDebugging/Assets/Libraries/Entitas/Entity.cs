@@ -211,13 +211,13 @@ namespace Entitas {
                     .Append(")")
                     .Append("(");
 
-                const string SEPARATOR = ", ";
+                const string separator = ", ";
                 var components = GetComponents();
                 var lastSeparator = components.Length - 1;
                 for (int i = 0, componentsLength = components.Length; i < componentsLength; i++) {
                     sb.Append(components[i].GetType().RemoveComponentSuffix());
                     if (i < lastSeparator) {
-                        sb.Append(SEPARATOR);
+                        sb.Append(separator);
                     }
                 }
 

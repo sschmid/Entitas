@@ -37,8 +37,8 @@ namespace Entitas.Unity {
         }
 
         static string parseVersion(string response) {
-            const string VERSION_PATTERN = @"(?<=""tag_name"":"").*?(?="")";
-            return Regex.Match(response, VERSION_PATTERN).Value;
+            const string versionPattern = @"(?<=""tag_name"":"").*?(?="")";
+            return Regex.Match(response, versionPattern).Value;
         }
 
         static string getLocalVersion() {

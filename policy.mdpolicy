@@ -83,7 +83,7 @@
         <Name>camelCase</Name>
         <AffectedEntity>Property, Parameter, LambdaParameter, LocalVariable</AffectedEntity>
         <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>CamelCase</NamingStyle>
+        <NamingStyle>CamelCaseWithLowerLetterUnderscore</NamingStyle>
         <IncludeInstanceMembers>True</IncludeInstanceMembers>
         <IncludeStaticEntities>True</IncludeStaticEntities>
       </NamingRule>
@@ -135,9 +135,17 @@
       </NamingRule>
       <NamingRule>
         <Name>Constants</Name>
-        <AffectedEntity>ConstantField, LocalConstant</AffectedEntity>
+        <AffectedEntity>ConstantField</AffectedEntity>
         <VisibilityMask>VisibilityMask</VisibilityMask>
         <NamingStyle>AllUpper</NamingStyle>
+        <IncludeInstanceMembers>True</IncludeInstanceMembers>
+        <IncludeStaticEntities>True</IncludeStaticEntities>
+      </NamingRule>
+      <NamingRule>
+        <Name>Constants (local)</Name>
+        <AffectedEntity>LocalConstant</AffectedEntity>
+        <VisibilityMask>VisibilityMask</VisibilityMask>
+        <NamingStyle>CamelCase</NamingStyle>
         <IncludeInstanceMembers>True</IncludeInstanceMembers>
         <IncludeStaticEntities>True</IncludeStaticEntities>
       </NamingRule>

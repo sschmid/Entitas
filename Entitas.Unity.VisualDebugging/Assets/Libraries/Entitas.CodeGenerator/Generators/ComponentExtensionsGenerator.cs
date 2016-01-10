@@ -269,7 +269,7 @@ $assign
         */
 
         static string addMatcher(Type type) {
-            const string MATCHER_FORMAT = @"
+            const string matcherFormat = @"
     public partial class $TagMatcher {
         static IMatcher _matcher$Name;
 
@@ -288,11 +288,11 @@ $assign
 ";
             var poolNames = type.PoolNames();
             if (poolNames.Length == 0) {
-                return buildString(type, MATCHER_FORMAT);
+                return buildString(type, matcherFormat);
             }
 
             var matchers = poolNames.Aggregate(string.Empty, (acc, poolName) => {
-                return acc + buildString(type, MATCHER_FORMAT.Replace("$Tag", poolName));
+                return acc + buildString(type, matcherFormat.Replace("$Tag", poolName));
             });
 
             return buildString(type, matchers);
@@ -362,10 +362,10 @@ $assign
         }
 
         static string fieldAssignments(MemberTypeNameInfo[] infos) {
-            const string FORMAT = "            component.{0} = {1};";
+            const string format = "            component.{0} = {1};";
             var assignments = infos.Select(info => {
                 var newArg = "new" + info.name.UppercaseFirst();
-                return string.Format(FORMAT, info.name, newArg);
+                return string.Format(format, info.name, newArg);
             }).ToArray();
 
             return string.Join("\n", assignments);

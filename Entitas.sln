@@ -228,11 +228,18 @@ Global
 		$23.IncludeStaticEntities = True
 		$7.NamingRule = $25
 		$25.Name = Constants
-		$25.AffectedEntity = ConstantField, LocalConstant
+		$25.AffectedEntity = ConstantField
 		$25.VisibilityMask = VisibilityMask
 		$25.NamingStyle = AllUpper
 		$25.IncludeInstanceMembers = True
 		$25.IncludeStaticEntities = True
+		$7.NamingRule = $26
+		$26.Name = Constants (local)
+		$26.AffectedEntity = LocalConstant
+		$26.VisibilityMask = VisibilityMask
+		$26.NamingStyle = CamelCase
+		$26.IncludeInstanceMembers = True
+		$26.IncludeStaticEntities = True
 		version = 0.17.0
 	EndGlobalSection
 EndGlobal

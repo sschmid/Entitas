@@ -82,12 +82,12 @@ namespace Entitas {
             if (_toStringCache == null) {
                 var sb = new StringBuilder().Append("GroupObserver(");
 
-                const string SEPARATOR = ", ";
+                const string separator = ", ";
                 var lastSeparator = _groups.Length - 1;
                 for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
                     sb.Append(_groups[i]);
                     if (i < lastSeparator) {
-                        sb.Append(SEPARATOR);
+                        sb.Append(separator);
                     }
                 }
 

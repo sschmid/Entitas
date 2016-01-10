@@ -8,26 +8,26 @@ namespace Entitas.Migration {
 
         public string description { get { return "Migrates IReactiveSystem GetXyz methods to getters"; } }
 
-        const string methodEndPattern = @"(\s|.)*?\}";
-        const string triggerPattern = @"public\s*IMatcher\s*GetTriggeringMatcher\s*\(\s*\)\s*\{\s*";
-        const string triggerEndPattern = triggerPattern + methodEndPattern;
-        const string triggerReplacement = "public IMatcher trigger { get { ";
+        const string METHOD_END_PATTERN = @"(\s|.)*?\}";
+        const string TRIGGER_PATTERN = @"public\s*IMatcher\s*GetTriggeringMatcher\s*\(\s*\)\s*\{\s*";
+        const string TRIGGER_END_PATTERN = TRIGGER_PATTERN + METHOD_END_PATTERN;
+        const string TRIGGER_REPLACEMENT = "public IMatcher trigger { get { ";
 
-        const string eventTypePattern = @"public\s*GroupEventType\s*GetEventType\s*\(\s*\)\s*\{\s*";
-        const string eventTypePatternEnd = eventTypePattern + methodEndPattern;
-        const string eventTypeReplacement = "public GroupEventType eventType { get { ";
+        const string EVENT_TYPE_PATTERN = @"public\s*GroupEventType\s*GetEventType\s*\(\s*\)\s*\{\s*";
+        const string EVENT_TYPE_PATTERN_END = EVENT_TYPE_PATTERN + METHOD_END_PATTERN;
+        const string EVENT_TYPE_REPLACEMENT = "public GroupEventType eventType { get { ";
 
         public MigrationFile[] Migrate(string path) {
             var files = MigrationUtils.GetSourceFiles(path)
-                .Where(file => Regex.IsMatch(file.fileContent, triggerPattern) || Regex.IsMatch(file.fileContent, eventTypePattern))
+                .Where(file => Regex.IsMatch(file.fileContent, TRIGGER_PATTERN) || Regex.IsMatch(file.fileContent, EVENT_TYPE_PATTERN))
                 .ToArray();
 
             for (int i = 0; i < files.Length; i++) {
                 var file = files[i];
-                file.fileContent = Regex.Replace(file.fileContent, triggerEndPattern, match => match.Value + " }", RegexOptions.Multiline);
-                file.fileContent = Regex.Replace(file.fileContent, eventTypePatternEnd, match => match.Value + " }", RegexOptions.Multiline);
-                file.fileContent = Regex.Replace(file.fileContent, triggerPattern, triggerReplacement, RegexOptions.Multiline);
-                file.fileContent = Regex.Replace(file.fileContent, eventTypePattern, eventTypeReplacement, RegexOptions.Multiline);
+                file.fileContent = Regex.Replace(file.fileContent, TRIGGER_END_PATTERN, match => match.Value + " }", RegexOptions.Multiline);
+                file.fileContent = Regex.Replace(file.fileContent, EVENT_TYPE_PATTERN_END, match => match.Value + " }", RegexOptions.Multiline);
+                file.fileContent = Regex.Replace(file.fileContent, TRIGGER_PATTERN, TRIGGER_REPLACEMENT, RegexOptions.Multiline);
+                file.fileContent = Regex.Replace(file.fileContent, EVENT_TYPE_PATTERN, EVENT_TYPE_REPLACEMENT, RegexOptions.Multiline);
                 files[i] = file;
             }
 

@@ -92,26 +92,26 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addIndices(Type[] components) {
-            const string FIELD_FORMAT = "    public const int {0} = {1};\n";
-            const string TOTAL_FORMAT = "    public const int TotalComponents = {0};";
+            const string fieldFormat = "    public const int {0} = {1};\n";
+            const string totalFormat = "    public const int TotalComponents = {0};";
             var code = string.Empty;
             for (int i = 0; i < components.Length; i++) {
                 var type = components[i];
                 if (type != null) {
-                    code += string.Format(FIELD_FORMAT, type.RemoveComponentSuffix(), i);
+                    code += string.Format(fieldFormat, type.RemoveComponentSuffix(), i);
                 }
             }
 
-            return code + "\n" + string.Format(TOTAL_FORMAT, components.Count(type => type != null));
+            return code + "\n" + string.Format(totalFormat, components.Count(type => type != null));
         }
 
         static string addComponentNames(Type[] components) {
-            const string FORMAT = "        \"{1}\",\n";
+            const string format = "        \"{1}\",\n";
             var code = string.Empty;
             for (int i = 0; i < components.Length; i++) {
                 var type = components[i];
                 if (type != null) {
-                    code += string.Format(FORMAT, i, type.RemoveComponentSuffix());
+                    code += string.Format(format, i, type.RemoveComponentSuffix());
                 }
             }
             if (code.EndsWith(",\n")) {
@@ -125,12 +125,12 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addComponentTypes(Type[] components) {
-            const string FORMAT = "        typeof({1}),\n";
+            const string format = "        typeof({1}),\n";
             var code = string.Empty;
             for (int i = 0; i < components.Length; i++) {
                 var type = components[i];
                 if (type != null) {
-                    code += string.Format(FORMAT, i, TypeGenerator.Generate(type));
+                    code += string.Format(format, i, TypeGenerator.Generate(type));
                 }
             }
             if (code.EndsWith(",\n")) {
