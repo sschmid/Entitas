@@ -13,9 +13,6 @@ namespace Entitas.Unity.VisualDebugging {
 
                 visualDebuggingConfig.defaultInstanceCreatorFolderPath = EditorGUILayout.TextField("DefaultInstanceCreator Folder", visualDebuggingConfig.defaultInstanceCreatorFolderPath);
                 visualDebuggingConfig.typeDrawerFolderPath = EditorGUILayout.TextField("TypeDrawer Folder", visualDebuggingConfig.typeDrawerFolderPath);
-
-                EditorGUILayout.HelpBox("Specify the folder where to save generated templates.", MessageType.Info);
-
             }
             EditorGUILayout.EndVertical();
         }

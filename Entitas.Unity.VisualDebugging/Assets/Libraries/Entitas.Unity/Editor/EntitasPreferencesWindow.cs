@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Entitas.Unity {
     public class EntitasPreferencesWindow : EditorWindow {
 
-        [MenuItem("Entitas/Open Preferences...", false, 0)]
+        [MenuItem("Entitas/Open Preferences...", false, 1)]
         public static void OpenPreferences() {
             EditorWindow.GetWindow<EntitasPreferencesWindow>().Show();
         }
