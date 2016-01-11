@@ -8,7 +8,7 @@ using UnityEditor;
 namespace Entitas.Unity.CodeGenerator {
     public static class CodeGenerator {
 
-        [MenuItem("Entitas/Generate", false, 10)]
+        [MenuItem("Entitas/Generate", false, 100)]
         public static void Generate() {
             assertCanGenerate();
 
