@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.Unity.VisualDebugging {
+namespace Entitas.Unity {
     public static class EntitasFeedback {
 
         [MenuItem("Entitas/Feedback/Report a bug...", false, 3)]
