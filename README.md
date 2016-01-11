@@ -46,7 +46,7 @@ Entitas is a super fast Entity Component System (ECS) specifically made for C# a
 
 Watch the talk from Unite Europe 2015
 =====================================
-<a href="http://slideshare.net/sschmid/uniteeurope-2015" target="_blank">» Open the slides on SlideShare</a>
+<a href="http://www.slideshare.net/sschmid/uniteeurope-2015" target="_blank">» Open the slides on SlideShare</a>
 
 [![UniteEurope 2015][unite-europe-2015-video-thumbnail]][unite-europe-2015-video]
 
@@ -171,7 +171,7 @@ Different language?
 ===================
 
 Entitas is also available in
-- [Swift](https://github.com/mzaks/Entitas)
+- [Swift](https://github.com/mzaks/Entitas-Swift)
 - [Objective-C](https://github.com/wooga/entitas)
 - [Go](https://github.com/wooga/go-entitas)
 - [Clojure](https://github.com/mhaemmerle/entitas-clj)
