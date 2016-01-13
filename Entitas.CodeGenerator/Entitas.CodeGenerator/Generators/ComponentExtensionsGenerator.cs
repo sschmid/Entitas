@@ -104,10 +104,10 @@ namespace Entitas.CodeGenerator {
 
         static string addHasMethods(Type type) {
             var hasMethod = isSingletonComponent(type) ? @"
-        public bool is$Name {
+        public bool $prefix$Name {
             get { return HasComponent($Ids.$Name); }
             set {
-                if (value != is$Name) {
+                if (value != $prefix$Name) {
                     if (value) {
                         AddComponent($Ids.$Name, $nameComponent);
                     } else {
@@ -117,8 +117,8 @@ namespace Entitas.CodeGenerator {
             }
         }
 
-        public Entity Is$Name(bool value) {
-            is$Name = value;
+        public Entity $Prefix$Name(bool value) {
+            $prefix$Name = value;
             return this;
         }
 " : @"
@@ -206,13 +206,13 @@ $assign
 
         static string addPoolHasMethods(Type type) {
             var hasMethod = isSingletonComponent(type) ? @"
-        public bool is$Name {
+        public bool $prefix$Name {
             get { return $nameEntity != null; }
             set {
                 var entity = $nameEntity;
                 if (value != (entity != null)) {
                     if (value) {
-                        CreateEntity().is$Name = true;
+                        CreateEntity().$prefix$Name = true;
                     } else {
                         DestroyEntity(entity);
                     }
@@ -327,9 +327,13 @@ $assign
             var a5_fieldNamesWithType = fieldNamesWithType(memberNameInfos);
             var a6_fieldAssigns = fieldAssignments(memberNameInfos);
             var a7_fieldNames = fieldNames(memberNameInfos);
+            var prefix = type.CustomPrefix();
+            var a8_prefix = prefix.UppercaseFirst();
+            var a9_lowercasePrefix = prefix.LowercaseFirst();
 
             return string.Format(format, a0_type, a1_name, a2_lowercaseName,
-                a3_tag, a4_ids, a5_fieldNamesWithType, a6_fieldAssigns, a7_fieldNames);
+                a3_tag, a4_ids, a5_fieldNamesWithType, a6_fieldAssigns, a7_fieldNames,
+                a8_prefix, a9_lowercasePrefix);
         }
 
         static MemberTypeNameInfo[] getFieldInfos(Type type) {
@@ -348,7 +352,9 @@ $assign
                         .Replace("$Ids", "{4}")
                         .Replace("$typedArgs", "{5}")
                         .Replace("$assign", "{6}")
-                        .Replace("$args", "{7}");
+                        .Replace("$args", "{7}")
+                        .Replace("$Prefix", "{8}")
+                        .Replace("$prefix", "{9}");
         }
 
         static string fieldNamesWithType(MemberTypeNameInfo[] infos) {

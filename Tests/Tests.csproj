@@ -138,6 +138,7 @@
     <Compile Include="Tests\Entitas\describe_PoolMetaData.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0260.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\CustomPrefixComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

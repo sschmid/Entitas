@@ -48,6 +48,7 @@
     <Compile Include="Entitas.CodeGenerator\ISystemCodeGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\SystemExtensionsGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\ICodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -103,6 +103,14 @@ namespace Entitas.CodeGenerator {
                 .ToArray();
         }
 
+        public static string CustomPrefix(this Type type) {
+            var attr = Attribute.GetCustomAttributes(type)
+                .OfType<CustomPrefixAttribute>()
+                .SingleOrDefault();
+
+            return attr != null ? attr.prefix : "is" ;
+        }
+
         public static string UppercaseFirst(this string str) {
             return char.ToUpper(str[0]) + str.Substring(1);
         }
