@@ -52,6 +52,15 @@ update_project_dependencies() {
   echo "Updating project dependencies done."
 }
 
+generateProjectFiles() {
+  echo "Generating project files..."
+  PWD=$(pwd)
+  /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath "$PWD/$ESU" -executeMethod Commands.GenerateProjectFiles
+  /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath $PWD/$UCG -executeMethod Commands.GenerateProjectFiles
+  /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath $PWD/$UVD -executeMethod Commands.GenerateProjectFiles
+  echo "Generating project files done."
+}
+
 build() {
   echo "Building..."
   xbuild /target:Clean /property:Configuration=Release Entitas.sln
