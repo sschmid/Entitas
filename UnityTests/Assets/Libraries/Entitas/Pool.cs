@@ -186,6 +186,11 @@ namespace Entitas {
             _creationIndex = 0;
         }
 
+        public void Reset() {
+            ClearGroups();
+            ResetCreationIndex();
+        }
+
         public override string ToString() {
             return _metaData.poolName;
         }
