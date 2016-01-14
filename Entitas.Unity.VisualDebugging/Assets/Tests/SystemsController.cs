@@ -22,15 +22,22 @@ public class SystemsController : MonoBehaviour {
 
     Systems createSystems() {
         return new DebugSystems()
-            .Add(_pool.CreateSlowInitializeSystem())
-            .Add(_pool.CreateSlowInitializeExecuteSystem())
-            .Add(_pool.CreateFastSystem())
-            .Add(_pool.CreateSlowSystem())
-            .Add(_pool.CreateRandomDurationSystem())
-            .Add(_pool.CreateAReactiveSystem())
-            .Add(_pool.CreateRandomValueSystem())
-            .Add(_pool.CreateProcessRandomValueSystem())
-            .Add(createSubSystems());
+            .Add(_pool.CreateSomeInitializeSystem())
+            .Add(_pool.CreateSomeExecuteSystem())
+            .Add(_pool.CreateSomeReactiveSystem())
+            .Add(_pool.CreateSomeInitializeExecuteSystem())
+            .Add(_pool.CreateSomeInitializeReactiveSystem());
+        
+//        return new DebugSystems()
+//            .Add(_pool.CreateSlowInitializeSystem())
+//            .Add(_pool.CreateSlowInitializeExecuteSystem())
+//            .Add(_pool.CreateFastSystem())
+//            .Add(_pool.CreateSlowSystem())
+//            .Add(_pool.CreateRandomDurationSystem())
+//            .Add(_pool.CreateAReactiveSystem())
+//            .Add(_pool.CreateRandomValueSystem())
+//            .Add(_pool.CreateProcessRandomValueSystem())
+//            .Add(createSubSystems());
     }
 
     Systems createSubSystems() {
