@@ -10,6 +10,8 @@ namespace Entitas.Unity.VisualDebugging {
         Queue<float> _systemMonitorData;
         const int SYSTEM_MONITOR_DATA_LENGTH = 60;
 
+        bool _sortSystemInfos;
+
         public override void OnInspectorGUI() {
             var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
             var systems = debugSystemsBehaviour.systems;
@@ -64,6 +66,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.EndHorizontal();
 
                 systems.threshold = EditorGUILayout.Slider("Threshold", systems.threshold, 0f, 100f);
+                _sortSystemInfos = EditorGUILayout.Toggle("Sort by execution duration", _sortSystemInfos);
                 EditorGUILayout.Space();
 
                 drawSystemInfos(systems.systemInfos, false);
@@ -74,11 +77,13 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawSystemInfos(SystemInfo[] systemInfos, bool isChildSysem) {
-            var orderedSystemInfos = systemInfos
-                .OrderByDescending(systemInfo => systemInfo.averageExecutionDuration)
-                .ToArray();
+            if (_sortSystemInfos) {
+                systemInfos = systemInfos
+                    .OrderByDescending(systemInfo => systemInfo.averageExecutionDuration)
+                    .ToArray();
+            }
 
-            foreach (var systemInfo in orderedSystemInfos) {
+            foreach (var systemInfo in systemInfos) {
                 EditorGUILayout.BeginHorizontal();
                 {
                     EditorGUI.BeginDisabledGroup(isChildSysem);
