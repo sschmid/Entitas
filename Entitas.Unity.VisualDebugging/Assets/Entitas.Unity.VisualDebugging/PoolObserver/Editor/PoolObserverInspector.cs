@@ -51,6 +51,9 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.LabelField(group.count.ToString(), GUILayout.Width(48));
                     EditorGUILayout.EndHorizontal();
                 }
+                if (GUILayout.Button("Clear Groups")) {
+                    poolObserver.pool.ClearGroups();
+                }
                 EditorGUILayout.EndVertical();
             }
 
