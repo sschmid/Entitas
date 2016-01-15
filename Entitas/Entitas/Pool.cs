@@ -188,6 +188,7 @@ namespace Entitas {
 
         public void Reset() {
             ClearGroups();
+            DestroyAllEntities();
             ResetCreationIndex();
         }
 
