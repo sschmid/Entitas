@@ -10,6 +10,8 @@ namespace Entitas.Unity.VisualDebugging {
         Queue<float> _systemMonitorData;
         const int SYSTEM_MONITOR_DATA_LENGTH = 60;
 
+        bool _sortSystemInfos;
+
         public override void OnInspectorGUI() {
             var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
             var systems = debugSystemsBehaviour.systems;
@@ -64,6 +66,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.EndHorizontal();
 
                 systems.threshold = EditorGUILayout.Slider("Threshold", systems.threshold, 0f, 100f);
+                _sortSystemInfos = EditorGUILayout.Toggle("Sort by execution duration", _sortSystemInfos);
                 EditorGUILayout.Space();
 
                 drawSystemInfos(systems.systemInfos, false);
@@ -74,11 +77,13 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawSystemInfos(SystemInfo[] systemInfos, bool isChildSysem) {
-            var orderedSystemInfos = systemInfos
-                .OrderByDescending(systemInfo => systemInfo.averageExecutionDuration)
-                .ToArray();
+            if (_sortSystemInfos) {
+                systemInfos = systemInfos
+                    .OrderByDescending(systemInfo => systemInfo.averageExecutionDuration)
+                    .ToArray();
+            }
 
-            foreach (var systemInfo in orderedSystemInfos) {
+            foreach (var systemInfo in systemInfos) {
                 EditorGUILayout.BeginHorizontal();
                 {
                     EditorGUI.BeginDisabledGroup(isChildSysem);
@@ -97,7 +102,8 @@ namespace Entitas.Unity.VisualDebugging {
                     var avg = string.Format("Ø {0:0.000}", systemInfo.averageExecutionDuration).PadRight(9);
                     var min = string.Format("min {0:0.000}", systemInfo.minExecutionDuration).PadRight(11);
                     var max = string.Format("max {0:0.000}", systemInfo.maxExecutionDuration);
-                    EditorGUILayout.LabelField(systemInfo.systemName, avg + "\t" + min + "\t" + max);
+
+                    EditorGUILayout.LabelField(systemInfo.systemName, avg + "\t" + min + "\t" + max, getSystemStyle(systemInfo));
                 }
                 EditorGUILayout.EndHorizontal();
 
@@ -109,6 +115,23 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUI.indentLevel = indent;
                 }
             }
+        }
+
+        static GUIStyle getSystemStyle(SystemInfo systemInfo) {
+            var style = new GUIStyle(GUI.skin.label);
+            var color = style.normal.textColor;
+            if (systemInfo.system is IInitializeSystem) {
+                color.g = 1;
+            }
+            if (systemInfo.system is IExecuteSystem) {
+                color.r = 1;
+            }
+            if (systemInfo.system is ReactiveSystem || systemInfo.system is IReactiveSystem) {
+                color.b = 1;
+            }
+
+            style.normal.textColor = color;
+            return style;
         }
 
         void addDuration(float duration) {
