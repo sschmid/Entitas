@@ -8,4 +8,5 @@ update_project_dependencies
 generateProjectFiles
 build
 runTests
+collect_misc_files
 create_zip
