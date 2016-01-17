@@ -11,7 +11,6 @@ public class ProcessRandomValueSystem : IReactiveSystem, ISetPool {
     }
 
     public void Execute(List<Entity> entities) {
-//        UnityEngine.Debug.Log("entities.Length: " + entities.Length);
         foreach (var e in entities) {
             _pool.DestroyEntity(e);
         }

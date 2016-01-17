@@ -6,7 +6,7 @@ public class AReactiveSystem : IReactiveSystem {
     public TriggerOnEvent trigger { get { return Matcher.MyString.OnEntityAdded(); } }
 
     public void Execute(List<Entity> entities) {
-        Thread.Sleep(4);
+        Thread.Sleep(2);
     }
 }
 
