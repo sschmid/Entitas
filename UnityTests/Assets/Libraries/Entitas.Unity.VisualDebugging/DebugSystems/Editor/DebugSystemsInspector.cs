@@ -10,6 +10,10 @@ namespace Entitas.Unity.VisualDebugging {
         Queue<float> _systemMonitorData;
         const int SYSTEM_MONITOR_DATA_LENGTH = 60;
 
+        static bool _showInitializeSystems = true;
+        static bool _showExecuteSystems = true;
+        static bool _hideEmptySystems = true;
+        
         float _threshold;
         bool _sortSystemInfos;
 
@@ -39,7 +43,7 @@ namespace Entitas.Unity.VisualDebugging {
         void drawStepper(DebugSystems systems) {
             EditorGUILayout.BeginVertical(GUI.skin.box);
             {
-                EditorGUILayout.LabelField("Step Mode");
+                EditorGUILayout.LabelField("Step Mode", EditorStyles.boldLabel);
                 EditorGUILayout.BeginHorizontal();
                 {
                     var buttonStyle = new GUIStyle(GUI.skin.button);
@@ -99,21 +103,26 @@ namespace Entitas.Unity.VisualDebugging {
 
                 _threshold = EditorGUILayout.Slider("Threshold Ø ms", _threshold, 0f, 33f);
                 _sortSystemInfos = EditorGUILayout.Toggle("Sort by execution duration", _sortSystemInfos);
+                _hideEmptySystems = EditorGUILayout.Toggle("Hide empty systems", _hideEmptySystems);
                 EditorGUILayout.Space();
 
-                EditorGUILayout.BeginVertical(GUI.skin.box);
-                {
-                    EditorGUILayout.LabelField("Initialize Systems", EditorStyles.boldLabel);
-                    drawSystemInfos(systems, true, false);
+                _showInitializeSystems = EditorGUILayout.Foldout(_showInitializeSystems, "Initialize Systems");
+                if (_showInitializeSystems && showSystems(systems, true)) {
+                    EditorGUILayout.BeginVertical(GUI.skin.box);
+                    {
+                        drawSystemInfos(systems, true, false);
+                    }
+                    EditorGUILayout.EndVertical();
                 }
-                EditorGUILayout.EndVertical();
 
-                EditorGUILayout.BeginVertical(GUI.skin.box);
-                {
-                    EditorGUILayout.LabelField("Execute Systems", EditorStyles.boldLabel);
-                    drawSystemInfos(systems, false, false);
+                _showExecuteSystems = EditorGUILayout.Foldout(_showExecuteSystems, "Execute Systems");
+                if (_showExecuteSystems && showSystems(systems, false)) {
+                    EditorGUILayout.BeginVertical(GUI.skin.box);
+                    {
+                        drawSystemInfos(systems, false, false);
+                    }
+                    EditorGUILayout.EndVertical();
                 }
-                EditorGUILayout.EndVertical();
             }
             EditorGUILayout.EndVertical();
         }
@@ -131,6 +140,13 @@ namespace Entitas.Unity.VisualDebugging {
             }
 
             foreach (var systemInfo in systemInfos) {
+                var debugSystems = systemInfo.system as DebugSystems;
+                if (debugSystems != null) {
+                    if (!showSystems(debugSystems, initOnly)) {
+                        continue;
+                    }
+                }
+
                 EditorGUILayout.BeginHorizontal();
                 {
                     EditorGUI.BeginDisabledGroup(isChildSysem);
@@ -163,6 +179,18 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUI.indentLevel = indent;
                 }
             }
+        }
+
+        static bool showSystems(DebugSystems systems, bool initOnly) {
+            if (!_hideEmptySystems) {
+                return true;
+            }
+
+            if (initOnly) {
+                return systems.totalInitializeSystemsCount > 0;
+            }
+
+            return systems.totalExecuteSystemsCount > 0;
         }
 
         static GUIStyle getSystemStyle(SystemInfo systemInfo) {
