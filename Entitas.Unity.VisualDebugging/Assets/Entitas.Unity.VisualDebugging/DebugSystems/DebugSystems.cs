@@ -17,6 +17,36 @@ namespace Entitas.Unity.VisualDebugging {
     public class DebugSystems : Systems {
         public static AvgResetInterval avgResetInterval = AvgResetInterval.Never;
 
+        public int totalInitializeSystemsCount { 
+            get {
+                var total = 0;
+                foreach (var system in _initializeSystems) {
+                    var debugSystems = system as DebugSystems;
+                    if (debugSystems != null) {
+                        total += debugSystems.totalInitializeSystemsCount;
+                    } else {
+                        total += 1;
+                    }
+                }
+                return total;
+            }
+        }
+
+        public int totalExecuteSystemsCount {
+            get {
+                var total = 0;
+                foreach (var system in _executeSystems) {
+                    var debugSystems = system as DebugSystems;
+                    if (debugSystems != null) {
+                        total += debugSystems.totalExecuteSystemsCount;
+                    } else {
+                        total += 1;
+                    }
+                }
+                return total;
+            }
+        }
+
         public int initializeSystemsCount { get { return _initializeSystems.Count; } }
         public int executeSystemsCount { get { return _executeSystems.Count; } }
         public int totalSystemsCount { get { return _systems.Count; } }
@@ -59,10 +89,10 @@ namespace Entitas.Unity.VisualDebugging {
 
             var systemInfo = new SystemInfo(system);
             if (systemInfo.isInitializeSystems) {
-                _initializeSystemInfos.Add(new SystemInfo(system));
+                _initializeSystemInfos.Add(systemInfo);
             }
             if (systemInfo.isExecuteSystems || systemInfo.isReactiveSystems) {
-                _executeSystemInfos.Add(new SystemInfo(system));
+                _executeSystemInfos.Add(systemInfo);
             }
 
             return base.Add(system);

@@ -10,7 +10,7 @@ public class SystemsController : MonoBehaviour {
     void Start() {
         _pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData("Systems Pool", ComponentIds.componentNames));
         new PoolObserver(_pool, ComponentIds.componentTypes);
-        _systems = createNestedSystems();
+        _systems = createEmptySystems();
         _systems.Initialize();
         _pool.CreateEntity().AddMyString("");
     }
@@ -58,6 +58,18 @@ public class SystemsController : MonoBehaviour {
         systems3.Add(createSomeSystems());
 
         return new DebugSystems("Nested Systems")
+            .Add(systems1);
+    }
+
+    Systems createEmptySystems() {
+        var systems1 = new DebugSystems("Empty 1");
+        var systems2 = new DebugSystems("Empty 2");
+        var systems3 = new DebugSystems("Empty 3");
+
+        systems1.Add(systems2);
+        systems2.Add(systems3);
+
+        return new DebugSystems("Empty Systems")
             .Add(systems1);
     }
 

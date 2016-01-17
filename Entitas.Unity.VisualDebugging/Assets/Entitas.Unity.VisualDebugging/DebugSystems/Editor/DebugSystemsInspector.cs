@@ -39,7 +39,7 @@ namespace Entitas.Unity.VisualDebugging {
         void drawStepper(DebugSystems systems) {
             EditorGUILayout.BeginVertical(GUI.skin.box);
             {
-                EditorGUILayout.LabelField("Step Mode");
+                EditorGUILayout.LabelField("Step Mode", EditorStyles.boldLabel);
                 EditorGUILayout.BeginHorizontal();
                 {
                     var buttonStyle = new GUIStyle(GUI.skin.button);
@@ -130,39 +130,54 @@ namespace Entitas.Unity.VisualDebugging {
                     .ToArray();
             }
 
-            foreach (var systemInfo in systemInfos) {
-                EditorGUILayout.BeginHorizontal();
-                {
-                    EditorGUI.BeginDisabledGroup(isChildSysem);
-                    {
-                        systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
-                    }
-                    EditorGUI.EndDisabledGroup();
-                    var reactiveSystem = systemInfo.system as ReactiveSystem;
-                    if (reactiveSystem != null) {
-                        if (systemInfo.isActive) {
-                            reactiveSystem.Activate();
-                        } else {
-                            reactiveSystem.Deactivate();
+            if (hasSubSystems(systems, initOnly)) {
+                foreach (var systemInfo in systemInfos) {
+                    var debugSystems = systemInfo.system as DebugSystems;
+                    if (debugSystems != null) {
+                        if (!hasSubSystems(debugSystems, initOnly)) {
+                            continue;
                         }
                     }
 
-                    var avg = string.Format("Ø {0:0.000}", systemInfo.averageExecutionDuration).PadRight(9);
-                    var min = string.Format("min {0:0.000}", systemInfo.minExecutionDuration).PadRight(11);
-                    var max = string.Format("max {0:0.000}", systemInfo.maxExecutionDuration);
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        EditorGUI.BeginDisabledGroup(isChildSysem);
+                        {
+                            systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
+                        }
+                        EditorGUI.EndDisabledGroup();
+                        var reactiveSystem = systemInfo.system as ReactiveSystem;
+                        if (reactiveSystem != null) {
+                            if (systemInfo.isActive) {
+                                reactiveSystem.Activate();
+                            } else {
+                                reactiveSystem.Deactivate();
+                            }
+                        }
 
-                    EditorGUILayout.LabelField(systemInfo.systemName, avg + "\t" + min + "\t" + max, getSystemStyle(systemInfo));
-                }
-                EditorGUILayout.EndHorizontal();
+                        var avg = string.Format("Ø {0:0.000}", systemInfo.averageExecutionDuration).PadRight(9);
+                        var min = string.Format("min {0:0.000}", systemInfo.minExecutionDuration).PadRight(11);
+                        var max = string.Format("max {0:0.000}", systemInfo.maxExecutionDuration);
 
-                var debugSystem = systemInfo.system as DebugSystems;
-                if (debugSystem != null) {
-                    var indent = EditorGUI.indentLevel;
-                    EditorGUI.indentLevel += 1;
-                    drawSystemInfos(debugSystem, initOnly, true);
-                    EditorGUI.indentLevel = indent;
+                        EditorGUILayout.LabelField(systemInfo.systemName, avg + "\t" + min + "\t" + max, getSystemStyle(systemInfo));
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+                    var debugSystem = systemInfo.system as DebugSystems;
+                    if (debugSystem != null) {
+                        var indent = EditorGUI.indentLevel;
+                        EditorGUI.indentLevel += 1;
+                        drawSystemInfos(debugSystem, initOnly, true);
+                        EditorGUI.indentLevel = indent;
+                    }
                 }
             }
+        }
+
+        static bool hasSubSystems(DebugSystems systems, bool initOnly) {
+            var init = initOnly && systems.totalInitializeSystemsCount > 0;
+            var exe = !initOnly && systems.totalExecuteSystemsCount > 0;
+            return init || exe;
         }
 
         static GUIStyle getSystemStyle(SystemInfo systemInfo) {
