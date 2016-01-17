@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
-    public class IndicesLookupGenerator : IComponentCodeGenerator, IPoolCodeGenerator {
+    public class ComponentLookupGenerator : IComponentCodeGenerator, IPoolCodeGenerator {
 
         public CodeGenFile[] Generate(Type[] components) {
             var sortedComponents = components.OrderBy(type => type.ToString()).ToArray();
@@ -24,7 +24,7 @@ namespace Entitas.CodeGenerator {
             }
             return poolNames
                 .Aggregate(new List<CodeGenFile>(), (files, poolName) => {
-                    var lookupTag = poolName + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG;
+                    var lookupTag = poolName + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG;
                     files.Add(new CodeGenFile {
                         fileName = lookupTag,
                         fileContent = generateIndicesLookup(lookupTag, noTypes).ToUnixLineEndings()
@@ -38,7 +38,7 @@ namespace Entitas.CodeGenerator {
             var orderedComponents = components
                 .Where(shouldGenerate)
                 .Aggregate(new Dictionary<Type, string[]>(), (acc, type) => {
-                    acc.Add(type, type.IndicesLookupTags());
+                    acc.Add(type, type.ComponentLookupTags());
                     return acc;
                 })
                 .OrderByDescending(kv => kv.Value.Length);
@@ -148,7 +148,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string stripDefaultTag(string tag) {
-            return tag.Replace(CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG, string.Empty);
+            return tag.Replace(CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG, string.Empty);
         }
     }
 }

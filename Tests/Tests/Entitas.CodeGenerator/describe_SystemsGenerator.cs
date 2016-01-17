@@ -2,7 +2,7 @@
 using Entitas.CodeGenerator;
 using NSpec;
 
-class describe_SystemExtensionsGenerator : nspec {
+class describe_SystemsGenerator : nspec {
 
     const string classSuffix = "GeneratedExtension";
 
@@ -57,7 +57,7 @@ class describe_SystemExtensionsGenerator : nspec {
     void generates<T>(string expectedCode) {
         expectedCode = expectedCode.ToUnixLineEndings();
         var type = typeof(T);
-        var files = new SystemExtensionsGenerator().Generate(new [] { type });
+        var files = new SystemsGenerator().Generate(new [] { type });
         files.Length.should_be(1);
         var file = files[0];
         file.fileName.should_be(type + classSuffix);
@@ -66,7 +66,7 @@ class describe_SystemExtensionsGenerator : nspec {
 
     void ignores<T>() {
         var type = typeof(T);
-        var files = new SystemExtensionsGenerator().Generate(new [] { type });
+        var files = new SystemsGenerator().Generate(new [] { type });
         files.Length.should_be(0);
     }
 

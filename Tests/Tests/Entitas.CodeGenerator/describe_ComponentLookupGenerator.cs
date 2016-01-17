@@ -3,7 +3,7 @@ using Entitas.CodeGenerator;
 using System;
 using System.Linq;
 
-class describe_IndicesLookupGenerator : nspec {
+class describe_ComponentLookupGenerator : nspec {
     bool logResults = false;
 
     void generates(Type type, string lookupName, string lookupCode) {
@@ -15,7 +15,7 @@ class describe_IndicesLookupGenerator : nspec {
     }
 
     void generates(Type[] types, string[] lookupNames, string[] lookupCodes) {
-        var files = new IndicesLookupGenerator().Generate(types);
+        var files = new ComponentLookupGenerator().Generate(types);
         files.Length.should_be(lookupNames.Length);
 
         for (int i = 0; i < lookupNames.Length; i++) {
@@ -32,7 +32,7 @@ class describe_IndicesLookupGenerator : nspec {
     }
 
     void generatesEmptyLookup(string[] poolNames, string[] lookupNames, string[] lookupCodes) {
-        var files = new IndicesLookupGenerator().Generate(poolNames);
+        var files = new ComponentLookupGenerator().Generate(poolNames);
         files.Length.should_be(poolNames.Length == 0 ? 1 : poolNames.Length);
 
 //        foreach (var f in files) {
@@ -57,7 +57,7 @@ class describe_IndicesLookupGenerator : nspec {
     void when_generating() {
 
         it["generates default lookup"] = () => {
-            generates(typeof(SomeComponent), CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG,
+            generates(typeof(SomeComponent), CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
     public const int Some = 0;
 
@@ -95,7 +95,7 @@ class describe_IndicesLookupGenerator : nspec {
 
 
         it["generates id for [DontGenerate]"] = () => {
-            generates(typeof(DontGenerateComponent), CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG,
+            generates(typeof(DontGenerateComponent), CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
     public const int DontGenerate = 0;
 
@@ -117,7 +117,7 @@ class describe_IndicesLookupGenerator : nspec {
             generates(new [] {
                 typeof(SomeComponent),
                 typeof(DontGenerateComponent)
-            }, CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG,
+            }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
     public const int DontGenerate = 0;
     public const int Some = 1;
@@ -142,7 +142,7 @@ class describe_IndicesLookupGenerator : nspec {
             generates(new [] {
                 typeof(SomeComponent),
                 typeof(DontGenerateIndexComponent)
-            }, CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG,
+            }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
     public const int Some = 0;
 
@@ -159,7 +159,7 @@ class describe_IndicesLookupGenerator : nspec {
         };
 
         it["generates empty lookup with total components when for default pool"] = () => {
-            generatesEmptyLookup(new string[0], new [] { CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
+            generatesEmptyLookup(new string[0], new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -172,7 +172,7 @@ class describe_IndicesLookupGenerator : nspec {
         };
 
         it["generates empty lookup with total components when for pool names"] = () => {
-            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG }, new [] { @"public static class MetaComponentIds {
+            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -186,7 +186,7 @@ class describe_IndicesLookupGenerator : nspec {
 
         it["generates multiple empty lookup with total components when for pool names"] = () => {
             generatesEmptyLookup(new [] { "Meta", "Core" },
-                new [] { "Meta" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG },
+                new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG },
                 new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;

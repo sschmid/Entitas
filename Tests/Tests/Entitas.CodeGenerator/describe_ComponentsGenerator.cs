@@ -3,7 +3,7 @@ using Entitas.CodeGenerator;
 using System;
 using My.Namespace;
 
-class describe_ComponentExtensionsGenerator : nspec {
+class describe_ComponentsGenerator : nspec {
 
     bool logResults = false;
 
@@ -11,7 +11,7 @@ class describe_ComponentExtensionsGenerator : nspec {
 
     void generates(Type type, string expectedFileContent) {
         expectedFileContent = expectedFileContent.ToUnixLineEndings();
-        var files = new ComponentExtensionsGenerator().Generate(new[] { type });
+        var files = new ComponentsGenerator().Generate(new[] { type });
         var expectedFilePath = type + classSuffix;
 
         files.Length.should_be(1);
@@ -34,7 +34,7 @@ class describe_ComponentExtensionsGenerator : nspec {
         it["component for custom pool"] = () => generates(typeof(OtherPoolComponent), OtherPoolComponent.extensions);
         it["ignores [DontGenerate]"] = () => {
             var type = typeof(DontGenerateComponent);
-            var files = new ComponentExtensionsGenerator().Generate(new[] { type });
+            var files = new ComponentsGenerator().Generate(new[] { type });
             files.Length.should_be(0);
         };
 

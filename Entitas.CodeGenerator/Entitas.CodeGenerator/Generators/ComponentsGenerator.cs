@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 
 namespace Entitas.CodeGenerator {
-    public class ComponentExtensionsGenerator : IComponentCodeGenerator {
+    public class ComponentsGenerator : IComponentCodeGenerator {
 
         const string CLASS_SUFFIX = "GeneratedExtension";
 
@@ -321,7 +321,7 @@ $assign
             var a2_lowercaseName = a1_name.LowercaseFirst();
             var poolNames = type.PoolNames();
             var a3_tag = poolNames.Length == 0 ? string.Empty : poolNames[0];
-            var lookupTags = type.IndicesLookupTags();
+            var lookupTags = type.ComponentLookupTags();
             var a4_ids = lookupTags.Length == 0 ? string.Empty : lookupTags[0];
             var memberNameInfos = getFieldInfos(type);
             var a5_fieldNamesWithType = fieldNamesWithType(memberNameInfos);
