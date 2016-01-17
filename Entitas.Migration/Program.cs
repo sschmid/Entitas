@@ -46,8 +46,10 @@ namespace Entitas.Migration {
 
         static void printAllMigrations(IMigration[] migrations) {
             foreach (var m in migrations) {
-                Console.WriteLine(m.version + " - " + m.description);
+                Console.WriteLine("========================================");
+                Console.WriteLine(m.version + "\n  - " + m.description + "\n  - Use on folder, " + m.workingDirectory);
             }
+            Console.WriteLine("========================================");
         }
 
         static void printVersionNotFound(string version, IMigration[] migrations) {

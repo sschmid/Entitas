@@ -6,6 +6,8 @@ namespace Entitas.Migration {
 
         public string version { get { return "0.18.0"; } }
 
+        public string workingDirectory { get { return "where all systems are located"; } }
+
         public string description { get { return "Migrates IReactiveSystem GetXyz methods to getters"; } }
 
         const string METHOD_END_PATTERN = @"(\s|.)*?\}";
