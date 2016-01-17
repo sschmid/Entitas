@@ -37,18 +37,29 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawStepper(DebugSystems systems) {
-            EditorGUILayout.BeginHorizontal(GUI.skin.box);
+            EditorGUILayout.BeginVertical(GUI.skin.box);
             {
-                systems.paused = EditorGUILayout.Toggle("Step manually", systems.paused);
-                EditorGUI.BeginDisabledGroup(!systems.paused);
-                if (GUILayout.Button("Step", GUILayout.Width(100))) {
-                    systems.Step();
-                    addDuration((float)systems.totalDuration);
-                    _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
+                EditorGUILayout.LabelField("Step Mode");
+                EditorGUILayout.BeginHorizontal();
+                {
+                    var buttonStyle = new GUIStyle(GUI.skin.button);
+                    if (systems.paused) {
+                        buttonStyle.normal = GUI.skin.button.active;
+                    }
+                    if (GUILayout.Button("▌▌", buttonStyle, GUILayout.Width(50))) {
+                        systems.paused = !systems.paused;
+                    }
+                    if (GUILayout.Button("Step", GUILayout.Width(100))) {
+                        systems.paused = true;
+                        systems.Step();
+                        addDuration((float)systems.totalDuration);
+                        _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
+                    }
+                    GUILayout.FlexibleSpace();
                 }
-                EditorGUI.EndDisabledGroup();
+                EditorGUILayout.EndHorizontal();
             }
-            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
         }
 
         void drawSystemsMonitor(DebugSystems systems) {
