@@ -90,9 +90,9 @@ namespace Entitas.Unity.VisualDebugging {
             {
                 EditorGUILayout.BeginHorizontal();
                 {
-                    systems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", systems.avgResetInterval);
+                    DebugSystems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", DebugSystems.avgResetInterval);
                     if (GUILayout.Button("Reset Ø now", GUILayout.Width(88), GUILayout.Height(14))) {
-                        systems.Reset();
+                        systems.ResetDurations();
                     }
                 }
                 EditorGUILayout.EndHorizontal();

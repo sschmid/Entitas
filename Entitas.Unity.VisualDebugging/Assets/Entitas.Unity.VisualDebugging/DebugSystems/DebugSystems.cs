@@ -5,124 +5,18 @@ using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
 
-    public class SystemInfo {
-        public ISystem system { get { return _system; } }
-        public SystemInterfaceFlags interfaceFlags { get { return _interfaceFlags; } }
-
-        public bool isInitializeSystems {
-            get { return (_interfaceFlags & SystemInterfaceFlags.IInitializeSystem) == SystemInterfaceFlags.IInitializeSystem; }
-        }
-
-        public bool isExecuteSystems {
-            get { return (_interfaceFlags & SystemInterfaceFlags.IExecuteSystem) == SystemInterfaceFlags.IExecuteSystem; }
-        }
-
-        public bool isReactiveSystems {
-            get { return (_interfaceFlags & SystemInterfaceFlags.IReactiveSystem) == SystemInterfaceFlags.IReactiveSystem; }
-        }
-
-        public string systemName { get { return _systemName; } }
-        public double totalExecutionDuration { get { return _totalExecutionDuration; } }
-        public double minExecutionDuration { get { return _minExecutionDuration; } }
-        public double maxExecutionDuration { get { return _maxExecutionDuration; } }
-        public double averageExecutionDuration {
-            get { return _durationsCount == 0 ? 0 : _totalExecutionDuration / _durationsCount; }
-        }
-
-        public bool isActive;
-
-        readonly ISystem _system;
-        readonly SystemInterfaceFlags _interfaceFlags;
-
-        readonly string _systemName;
-
-        double _totalExecutionDuration = -1;
-        double _minExecutionDuration;
-        double _maxExecutionDuration;
-        int _durationsCount;
-
-        const string SYSTEM_SUFFIX = "System";
-
-        public SystemInfo(ISystem system) {
-            _system = system;
-
-            var reactiveSystem = system as ReactiveSystem;
-            var isReactive = reactiveSystem != null;
-            Type systemType;
-            if (isReactive) {
-                _interfaceFlags = getInterfaceFlags(reactiveSystem.subsystem, isReactive);
-                systemType = reactiveSystem.subsystem.GetType();
-            } else {
-                _interfaceFlags = getInterfaceFlags(system, isReactive);
-                systemType = system.GetType();
-            }
-
-            var debugSystem = system as DebugSystems;
-            if (debugSystem != null) {
-                _systemName = debugSystem.name;
-            } else {
-                _systemName = systemType.Name.EndsWith(SYSTEM_SUFFIX, StringComparison.Ordinal)
-                    ? systemType.Name.Substring(0, systemType.Name.Length - SYSTEM_SUFFIX.Length)
-                    : systemType.Name;
-            }
-            
-            isActive = true;
-        }
-
-        public void AddExecutionDuration(double executionDuration) {
-            if (executionDuration < _minExecutionDuration || _totalExecutionDuration == -1) {
-                _minExecutionDuration = executionDuration;
-                if (_totalExecutionDuration == -1) {
-                    _totalExecutionDuration = 0;
-                }
-            }
-            if (executionDuration > _maxExecutionDuration) {
-                _maxExecutionDuration = executionDuration;
-            }
-
-            _totalExecutionDuration += executionDuration;
-            _durationsCount += 1;
-        }
-
-        public void Reset() {
-            _totalExecutionDuration = 0;
-            _durationsCount = 0;
-        }
-
-        static SystemInterfaceFlags getInterfaceFlags(ISystem system, bool isReactive) {
-            var flags = SystemInterfaceFlags.None;
-            if (system is IInitializeSystem) {
-                flags |= SystemInterfaceFlags.IInitializeSystem;
-            }
-            if (system is IExecuteSystem) {
-                flags |= SystemInterfaceFlags.IExecuteSystem;
-            }
-            if (isReactive) {
-                flags |= SystemInterfaceFlags.IReactiveSystem;
-            }
-
-            return flags;
-        }
-    }
-
     public enum AvgResetInterval {
-        EveryFrame = 1,
-        Every30Frames = 30,
-        Every60Frames = 60,
-        Every120Frames = 120,
-        Every300Frames = 300,
+        Always = 1,
+        VeryFast = 30,
+        Fast = 60,
+        Normal = 120,
+        Slow = 300,
         Never = int.MaxValue
     }
 
-    [Flags]
-    public enum SystemInterfaceFlags {
-        None = 0,
-        IInitializeSystem = 1,
-        IExecuteSystem = 2,
-        IReactiveSystem = 4
-    }
-
     public class DebugSystems : Systems {
+        public static AvgResetInterval avgResetInterval = AvgResetInterval.Never;
+
         public int initializeSystemsCount { get { return _initializeSystems.Count; } }
         public int executeSystemsCount { get { return _executeSystems.Count; } }
         public int totalSystemsCount { get { return _systems.Count; } }
@@ -135,7 +29,6 @@ namespace Entitas.Unity.VisualDebugging {
 
         public bool paused;
 
-        public AvgResetInterval avgResetInterval = AvgResetInterval.Never;
 
         readonly string _name;
 
@@ -175,12 +68,16 @@ namespace Entitas.Unity.VisualDebugging {
             return base.Add(system);
         }
 
-        public void Reset() {
+        public void ResetDurations() {
             foreach (var systemInfo in _initializeSystemInfos) {
-                systemInfo.Reset();
+                systemInfo.ResetDurations();
             }
             foreach (var systemInfo in _executeSystemInfos) {
-                systemInfo.Reset();
+                systemInfo.ResetDurations();
+                var debugSystems = systemInfo.system as DebugSystems;
+                if (debugSystems != null) {
+                    debugSystems.ResetDurations();
+                }
             }
         }
 
@@ -208,7 +105,7 @@ namespace Entitas.Unity.VisualDebugging {
         public void Step() {
             _totalDuration = 0;
             if (Time.frameCount % (int)avgResetInterval == 0) {
-                Reset();
+                ResetDurations();
             }
             for (int i = 0, exeSystemsCount = _executeSystems.Count; i < exeSystemsCount; i++) {
                 var system = _executeSystems[i];

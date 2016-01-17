@@ -139,6 +139,9 @@
     <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0260.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\CustomPrefixComponent.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_SystemInfo.cs" />
+    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestMultiReactiveSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
