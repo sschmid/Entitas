@@ -4,7 +4,7 @@ using System.Linq;
 using Entitas.CodeGenerator;
 
 namespace Entitas.CodeGenerator {
-    public class SystemExtensionsGenerator : ISystemCodeGenerator {
+    public class SystemsGenerator : ISystemCodeGenerator {
 
         const string CLASS_SUFFIX = "GeneratedExtension";
 
