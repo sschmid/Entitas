@@ -5,6 +5,28 @@ using System.Text.RegularExpressions;
 
 namespace Entitas.Unity {
     public class Properties {
+
+        public string[] keys { get { return _dict.Keys.ToArray(); } }
+        public string[] values { get { return _dict.Values.ToArray(); } }
+
+        public int count {
+            get { return _dict.Count; }
+        }
+
+        public bool HasKey(string key) {
+            return _dict.ContainsKey(key);
+        }
+
+        public string this[string key] {
+            get { return _dict[key]; }
+            set { 
+                _dict[key.Trim()] = value
+                    .TrimStart()
+                    .Replace("\\n", "\n")
+                    .Replace("\\t", "\t");
+            }
+        }
+
         readonly Dictionary<string, string> _dict;
 
         public Properties() : this(string.Empty) {
@@ -61,24 +83,6 @@ namespace Entitas.Unity {
                 foreach (Match match in matches) {
                     _dict[key] = _dict[key].Replace("${" + match.Value + "}", _dict[match.Value]);
                 }
-            }
-        }
-
-        public int count {
-            get { return _dict.Count; }
-        }
-
-        public bool HasKey(string key) {
-            return _dict.ContainsKey(key);
-        }
-
-        public string this[string key] {
-            get { return _dict[key]; }
-            set { 
-                _dict[key.Trim()] = value
-                                        .TrimStart()
-                                        .Replace("\\n", "\n")
-                                        .Replace("\\t", "\t");
             }
         }
 
