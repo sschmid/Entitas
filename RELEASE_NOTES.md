@@ -6,9 +6,6 @@ If you're using Entitas with Unity, please open the Entitas preferences and make
 ##### Entitas
 - Added `pool.Reset()` which clears all groups, destroys all entities and resets creationIndex
 
-##### Entitas.Unity
-- Added "Feedback" menu item to report bugs, request features, join the chat, read the wiki and donate
-
 ##### Entitas.CodeGenerator
 - Renamed some code generators
 - Added `CustomPrefixAttribute` to support custom prefixes for flag components
@@ -23,6 +20,9 @@ entity.isDestroy = true;
 // with CustomPrefixAttribute
 entity.flagDestroy = true;
 ```
+
+##### Entitas.Unity
+- Added "Feedback" menu item to report bugs, request features, join the chat, read the wiki and donate
 
 ##### Entitas.Unity.CodeGenerator
 - Removing invalid code generator names from Entitas.properties
