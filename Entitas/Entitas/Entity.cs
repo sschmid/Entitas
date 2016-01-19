@@ -99,7 +99,7 @@ namespace Entitas {
             return this;
         }
 
-        /// Replaces an existing component at a certain index or adds it if doesn't exist yet.
+        /// Replaces an existing component at a certain index or adds it if it doesn't exist yet.
         /// The prefered way is to use the generated methods from the code generator.
         public Entity ReplaceComponent(int index, IComponent component) {
             if (!_isEnabled) {
@@ -138,7 +138,7 @@ namespace Entitas {
             }
         }
 
-        /// Gets a component at a certain index. You can only get a component at an index when it exists.
+        /// Gets a component at a certain index. You can only get a component at an index if it exists.
         /// The prefered way is to use the generated methods from the code generator.
         public IComponent GetComponent(int index) {
             if (!HasComponent(index)) {
