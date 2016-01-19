@@ -67,13 +67,21 @@ namespace Entitas.Unity.CodeGenerator {
 
             var enabledCodeGenerators = new HashSet<string>(codeGeneratorConfig.enabledCodeGenerators);
 
+            var availableGeneratorNames = new HashSet<string>();
             foreach (var codeGenerator in codeGenerators) {
+                availableGeneratorNames.Add(codeGenerator.Name);
                 var isEnabled = enabledCodeGenerators.Contains(codeGenerator.Name);
                 isEnabled = EditorGUILayout.Toggle(codeGenerator.Name, isEnabled);
                 if (isEnabled) {
                     enabledCodeGenerators.Add(codeGenerator.Name);
                 } else {
                     enabledCodeGenerators.Remove(codeGenerator.Name);
+                }
+            }
+
+            foreach (var generatorName in codeGeneratorConfig.enabledCodeGenerators.ToArray()) {
+                if (!availableGeneratorNames.Contains(generatorName)) {
+                    enabledCodeGenerators.Remove(generatorName);
                 }
             }
 

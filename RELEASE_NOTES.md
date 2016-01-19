@@ -1,3 +1,56 @@
+# 0.27.0
+
+##### Note
+If you're using Entitas with Unity, please open the Entitas preferences and make sure that all your desired code generators are activated. Due to some code generator renamings the ComponentLookupGenerator and the ComponentsGenerator are inactive. Activate them (if desired) and generate.
+
+##### Entitas
+- Added `pool.Reset()` which clears all groups, destroys all entities and resets creationIndex
+
+##### Entitas.CodeGenerator
+- Renamed some code generators
+- Added `CustomPrefixAttribute` to support custom prefixes for flag components
+```
+[CustomPrefix("flag")]
+public class DestroyComponent : IComponent {
+}
+
+// default
+entity.isDestroy = true;
+
+// with CustomPrefixAttribute
+entity.flagDestroy = true;
+```
+
+##### Entitas.Unity
+- Added "Feedback" menu item to report bugs, request features, join the chat, read the wiki and donate
+
+##### Entitas.Unity.CodeGenerator
+- Removing invalid code generator names from Entitas.properties
+
+##### Entitas.Unity.VisualDebugging
+- Lots of UI tweaks
+- Added toggle to sort systems by execution duration
+- Added toggle to hide empty systems
+- ReactiveSystems are highlighted with a white font color
+- Added Clear Groups Button
+- Added Entity Release Button
+- Splitted systems list into initialize and execute systems and visualizing them separately
+- Improved stepper UI
+
+##### Entitas.Migration
+- All migrations now contain information about on which folder they should be applied
+
+```
+0.26.0
+  - Deactivates code to prevent compile erros
+  - Use on folder, where generated files are located
+```
+
+##### Other
+- Added Commands.GenerateProjectFiles and using it in build.sh
+- Updated build.sh and build_commands.sh to include latest MigrationAssistant.exe
+
+
 # 0.26.1
 
 ##### Breaking changes

@@ -33,8 +33,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\IndicesLookupGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator\Attributes\PoolAttribute.cs" />
@@ -46,8 +44,11 @@
     <Compile Include="Entitas.CodeGenerator\IPoolCodeGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\PoolsGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\ISystemCodeGenerator.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\SystemExtensionsGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\ICodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\SystemsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentLookupGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

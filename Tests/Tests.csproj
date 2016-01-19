@@ -43,11 +43,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGenerator.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentExtensionsGenerator.cs" />
     <Compile Include="Tests\Entitas\describe_Entity.cs" />
     <Compile Include="Tests\Entitas\describe_Group.cs" />
     <Compile Include="Tests\Entitas\describe_GroupObserver.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_IndicesLookupGenerator.cs" />
     <Compile Include="Tests\Entitas\describe_Matcher.cs" />
     <Compile Include="Tests\Entitas\describe_Pool.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_PoolAttributeGenerator.cs" />
@@ -81,7 +79,6 @@
     <Compile Include="Tests\Entitas\Fixtures\ExecuteSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\InitializeExecuteSystemSpy.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_PoolsGenerator.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_SystemExtensionsGenerator.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestInitializeSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestExecuteSystem.cs" />
@@ -138,6 +135,13 @@
     <Compile Include="Tests\Entitas\describe_PoolMetaData.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0260.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\CustomPrefixComponent.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_SystemInfo.cs" />
+    <Compile Include="Libraries\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestMultiReactiveSystem.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentsGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_SystemsGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentLookupGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -6,6 +6,8 @@ namespace Entitas.Migration {
 
         public string version { get { return "0.19.0"; } }
 
+        public string workingDirectory { get { return "where all systems are located"; } }
+
         public string description { get { return "Migrates IReactiveSystem.Execute to accept List<Entity>"; } }
 
         const string EXECUTE_PATTERN = @"public\s*void\s*Execute\s*\(\s*Entity\s*\[\s*\]\s*entities\s*\)";

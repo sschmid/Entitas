@@ -7,7 +7,7 @@ class describe_EntitasErrorMessages : nspec {
         try {
             action();
         } catch (Exception exception) {
-            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("================================================================================");
             Console.WriteLine(exception.GetType());
             Console.WriteLine("--------------------------------------------------------------------------------");

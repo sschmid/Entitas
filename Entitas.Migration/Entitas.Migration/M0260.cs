@@ -4,6 +4,8 @@ namespace Entitas.Migration {
 
         public string version { get { return "0.26.0"; } }
 
+        public string workingDirectory { get { return "where generated files are located"; } }
+
         public string description { get { return "Deactivates code to prevent compile erros"; } }
 
         const string POOL_PATTERN_1 = @"var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(";

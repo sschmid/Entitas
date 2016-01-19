@@ -183,6 +183,32 @@ class describe_Properties : nspec {
 
                 assertProperties(input, expectedOutput, expectedProperties);
             };
+
+            it["has all keys"] = () => {
+                var input =
+                    "some.key.1=some value 1" + "\n" +
+                    " some.key.2 = some value 2 " + "\n" +
+                    "some.key.3=some value 3" + "\n";
+
+                var keys = new Properties(input).keys;
+                keys.Length.should_be(3);
+                keys.should_contain("some.key.1");
+                keys.should_contain("some.key.2");
+                keys.should_contain("some.key.3");
+            };
+
+            it["has all values"] = () => {
+                var input =
+                    "some.key.1=some value 1" + "\n" +
+                    " some.key.2 = some value 2 " + "\n" +
+                    "some.key.3=some value 3" + "\n";
+
+                var values = new Properties(input).values;
+                values.Length.should_be(3);
+                values.should_contain("some value 1");
+                values.should_contain("some value 2 ");
+                values.should_contain("some value 3");
+            };
         };
 
         context["when replacing special characters in values"] = () => {

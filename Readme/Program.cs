@@ -14,11 +14,11 @@ namespace Readme {
             var generatedFolder = getEntitasProjectDir() + "/Readme/Readme/Generated/";
 
             var codeGenerators = new ICodeGenerator[] {
-                new ComponentExtensionsGenerator(),
-                new IndicesLookupGenerator(),
+                new ComponentsGenerator(),
+                new ComponentLookupGenerator(),
                 new PoolAttributeGenerator(),
                 new PoolsGenerator(),
-                new SystemExtensionsGenerator()
+                new SystemsGenerator()
             };
 
             CodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder, codeGenerators);

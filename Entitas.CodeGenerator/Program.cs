@@ -7,11 +7,11 @@ public class Program {
         var assembly = Assembly.GetAssembly(typeof(CodeGenerator));
 
         var codeGenerators = new ICodeGenerator[] {
-            new ComponentExtensionsGenerator(),
-            new IndicesLookupGenerator(),
+            new ComponentsGenerator(),
+            new ComponentLookupGenerator(),
             new PoolAttributeGenerator(),
             new PoolsGenerator(),
-            new SystemExtensionsGenerator()
+            new SystemsGenerator()
         };
 
         CodeGenerator.Generate(assembly.GetTypes(), new string[0], "Generated/", codeGenerators);

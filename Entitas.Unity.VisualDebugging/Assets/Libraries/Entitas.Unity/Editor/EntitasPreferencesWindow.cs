@@ -9,7 +9,7 @@ namespace Entitas.Unity {
 
         [MenuItem("Entitas/Preferences...", false, 1)]
         public static void OpenPreferences() {
-            EditorWindow.GetWindow<EntitasPreferencesWindow>().Show();
+            EditorWindow.GetWindow<EntitasPreferencesWindow>("Entitas Prefs").Show();
         }
 
         static Vector2 _scrollViewPosition;

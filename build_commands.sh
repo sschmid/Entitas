@@ -16,17 +16,8 @@ collect_sources() {
   mkdir $BIN_DIR $SRC_DIR
 
   cp -r {"$ES/$ES","$CG/$CG","$ESU/Assets/$ESU","$UCG/Assets/$UCG","$UVD/Assets/$UVD"} $SRC_DIR
-  cp "$MIG/bin/Release/Entitas.Migration.exe" "$SRC_DIR/MigrationAssistant.exe"
-  cp README.md "$SRC_DIR/README.md"
-  cp RELEASE_NOTES.md "$SRC_DIR/RELEASE_NOTES.md"
-  cp EntitasUpgradeGuide.md "$SRC_DIR/EntitasUpgradeGuide.md"
-  cp LICENSE.txt "$SRC_DIR/LICENSE.txt"
-
   find "./$SRC_DIR" -name "*.meta" -type f -delete
   find "./$SRC_DIR" -name "*.DS_Store" -type f -delete
-
-  icon_meta="$UVD/Editor/EntitasHierarchyIcon.png.meta"
-  cp "$UVD/Assets/$icon_meta" "$SRC_DIR/$icon_meta"
 
   echo "Collecting sources done."
 }
@@ -52,6 +43,16 @@ update_project_dependencies() {
   echo "Updating project dependencies done."
 }
 
+generateProjectFiles() {
+  echo "Generating project files..."
+  PWD=$(pwd)
+  # Unity bug: https://support.unity3d.com/hc/en-us/requests/36273
+  # /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath "$PWD/$ESU" -executeMethod Commands.GenerateProjectFiles
+  /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath $PWD/$UCG -executeMethod Commands.GenerateProjectFiles
+  /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath $PWD/$UVD -executeMethod Commands.GenerateProjectFiles
+  echo "Generating project files done."
+}
+
 build() {
   echo "Building..."
   xbuild /target:Clean /property:Configuration=Release Entitas.sln
@@ -61,6 +62,21 @@ build() {
 
 runTests() {
   mono Tests/Libraries/NSpec/NSpecRunner.exe Tests/bin/Release/Tests.dll
+}
+
+collect_misc_files() {
+  echo "Collecting misc files..."
+
+  cp "$MIG/bin/Release/Entitas.Migration.exe" "$SRC_DIR/MigrationAssistant.exe"
+  cp README.md "$SRC_DIR/README.md"
+  cp RELEASE_NOTES.md "$SRC_DIR/RELEASE_NOTES.md"
+  cp EntitasUpgradeGuide.md "$SRC_DIR/EntitasUpgradeGuide.md"
+  cp LICENSE.txt "$SRC_DIR/LICENSE.txt"
+
+  icon_meta="$UVD/Editor/EntitasHierarchyIcon.png.meta"
+  cp "$UVD/Assets/$icon_meta" "$SRC_DIR/$icon_meta"
+
+  echo "Collecting misc files done."
 }
 
 create_zip() {

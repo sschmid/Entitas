@@ -3,7 +3,7 @@ using System.Threading;
 
 public class SlowInitializeSystem : IInitializeSystem {
     public void Initialize() {
-        Thread.Sleep(100);
+        Thread.Sleep(30);
     }
 }
 

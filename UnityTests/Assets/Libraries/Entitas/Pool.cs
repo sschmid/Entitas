@@ -51,9 +51,9 @@ namespace Entitas {
                 }
             } else {
                 var componentNames = new string[totalComponents];
-                const string suffix = "Index ";
+                const string prefix = "Index ";
                 for (int i = 0, componentNamesLength = componentNames.Length; i < componentNamesLength; i++) {
-                    componentNames[i] = suffix + i;
+                    componentNames[i] = prefix + i;
                 }
                 _metaData = new PoolMetaData("Unnamed Pool", componentNames);
             }
@@ -184,6 +184,12 @@ namespace Entitas {
 
         public void ResetCreationIndex() {
             _creationIndex = 0;
+        }
+
+        public void Reset() {
+            ClearGroups();
+            DestroyAllEntities();
+            ResetCreationIndex();
         }
 
         public override string ToString() {

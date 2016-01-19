@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
     public static class CodeGenerator {
-        public const string DEFAULT_INDICES_LOOKUP_TAG = "ComponentIds";
+        public const string DEFAULT_COMPONENT_LOOKUP_TAG = "ComponentIds";
 
         public static void Generate(Type[] types, string[] poolNames, string dir, ICodeGenerator[] codeGenerators) {
             dir = GetSafeDir(dir);
@@ -92,15 +92,23 @@ namespace Entitas.CodeGenerator {
                 .ToArray();
         }
 
-        public static string[] IndicesLookupTags(this Type type) {
+        public static string[] ComponentLookupTags(this Type type) {
             var poolNames = type.PoolNames();
             if (poolNames.Length == 0) {
-                return new [] { CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG };
+                return new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG };
             }
 
             return poolNames
-                .Select(poolName => poolName + CodeGenerator.DEFAULT_INDICES_LOOKUP_TAG)
+                .Select(poolName => poolName + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
                 .ToArray();
+        }
+
+        public static string CustomPrefix(this Type type) {
+            var attr = Attribute.GetCustomAttributes(type)
+                .OfType<CustomPrefixAttribute>()
+                .SingleOrDefault();
+
+            return attr != null ? attr.prefix : "is" ;
         }
 
         public static string UppercaseFirst(this string str) {

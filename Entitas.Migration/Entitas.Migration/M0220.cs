@@ -6,6 +6,8 @@ namespace Entitas.Migration {
 
         public string version { get { return "0.22.0"; } }
 
+        public string workingDirectory { get { return "where all systems are located"; } }
+
         public string description { get { return "Migrates IReactiveSystem to combine trigger and eventTypes to TriggerOnEvent"; } }
 
         const string TRIGGER_PATTERN = @"public\s*IMatcher\s*trigger\s*\{\s*get\s*\{\s*return\s*(?<matcher>.*?)\s*;\s*\}\s*\}";
