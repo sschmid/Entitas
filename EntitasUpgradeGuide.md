@@ -1,4 +1,4 @@
-# 0.27.0 upgrade guide
+# Entitas 0.27.0 upgrade guide
 
 If you're using Entitas with Unity, please open the Entitas preferences and make
 sure that all your desired code generators are activated.
