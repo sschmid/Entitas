@@ -7,44 +7,31 @@ public class UserComponent : IComponent {
     public DateTime timestamp;
     public bool isLoggedIn;
     public static string extensions =
-        @"using System.Collections.Generic;
-
-namespace Entitas {
+        @"namespace Entitas {
     public partial class Entity {
         public UserComponent user { get { return (UserComponent)GetComponent(ComponentIds.User); } }
 
         public bool hasUser { get { return HasComponent(ComponentIds.User); } }
 
-        static readonly Stack<UserComponent> _userComponentPool = new Stack<UserComponent>();
-
-        public static void ClearUserComponentPool() {
-            _userComponentPool.Clear();
-        }
-
         public Entity AddUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var component = _userComponentPool.Count > 0 ? _userComponentPool.Pop() : new UserComponent();
+            var componentPool = GetComponentPool(ComponentIds.User);
+            var component = (UserComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UserComponent());
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             return AddComponent(ComponentIds.User, component);
         }
 
         public Entity ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var previousComponent = hasUser ? user : null;
-            var component = _userComponentPool.Count > 0 ? _userComponentPool.Pop() : new UserComponent();
+            var componentPool = GetComponentPool(ComponentIds.User);
+            var component = (UserComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UserComponent());
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             ReplaceComponent(ComponentIds.User, component);
-            if (previousComponent != null) {
-                _userComponentPool.Push(previousComponent);
-            }
             return this;
         }
 
         public Entity RemoveUser() {
-            var component = user;
-            RemoveComponent(ComponentIds.User);
-            _userComponentPool.Push(component);
-            return this;
+            return RemoveComponent(ComponentIds.User);;
         }
     }
 

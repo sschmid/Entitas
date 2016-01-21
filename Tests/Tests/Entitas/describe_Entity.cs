@@ -52,7 +52,7 @@ class describe_Entity : nspec {
 
             it["has custom PoolMetaData when set"] = () => {
                 var poolMetaData = new PoolMetaData(null, null);
-                e = new Entity(0, poolMetaData);
+                e = new Entity(0, null, poolMetaData);
                 e.poolMetaData.should_be_same(poolMetaData);
             };
 
@@ -96,6 +96,15 @@ class describe_Entity : nspec {
             it["replacing a non existing component adds component"] = () => {
                 e.ReplaceComponentA(Component.A);
                 assertHasComponentA(e);
+            };
+
+            it["gets component pool"] = () => {
+                var componentPool = e.GetComponentPool(CID.ComponentA);
+                componentPool.Count.should_be(0);
+            };
+
+            it["gets same component pool instance"] = () => {
+                e.GetComponentPool(CID.ComponentA).should_be_same(e.GetComponentPool(CID.ComponentA));
             };
         };
 

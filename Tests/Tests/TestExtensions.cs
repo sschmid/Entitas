@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using NSpec;
+using System.Collections.Generic;
 
 public static class EntityExtensions {
     public static bool IsEnabled(this Entity entity) {
@@ -16,7 +17,7 @@ public static class TestExtensions {
     }
 
     public static Entity CreateEntity(this nspec spec) {
-        return new Entity(CID.NumComponents);
+        return new Entity(CID.NumComponents, new Stack<IComponent>[CID.NumComponents]);
     }
 }
 

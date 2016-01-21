@@ -14,6 +14,7 @@ namespace Entitas {
         public delegate void GroupChanged(Pool pool, Group group);
 
         public int totalComponents { get { return _totalComponents; } }
+        public Stack<IComponent>[] componentPools { get { return _componentPools; } }
         public PoolMetaData metaData { get { return _metaData; } }
         public int count { get { return _entities.Count; } }
         public int reusableEntitiesCount { get { return _reusableEntities.Count; } }
@@ -26,6 +27,7 @@ namespace Entitas {
         readonly HashSet<Entity> _retainedEntities = new HashSet<Entity>();
 
         readonly int _totalComponents;
+        readonly Stack<IComponent>[] _componentPools;
         int _creationIndex;
         readonly PoolMetaData _metaData;
 
@@ -41,6 +43,7 @@ namespace Entitas {
 
         public Pool(int totalComponents, int startCreationIndex, PoolMetaData metaData) {
             _totalComponents = totalComponents;
+            _componentPools = new Stack<IComponent>[totalComponents];
             _creationIndex = startCreationIndex;
 
             if (metaData != null) {
@@ -67,7 +70,7 @@ namespace Entitas {
         }
 
         public virtual Entity CreateEntity() {
-            var entity = _reusableEntities.Count > 0 ? _reusableEntities.Pop() : new Entity(_totalComponents, _metaData);
+            var entity = _reusableEntities.Count > 0 ? _reusableEntities.Pop() : new Entity(_totalComponents, _componentPools, _metaData);
             entity._isEnabled = true;
             entity._creationIndex = _creationIndex++;
             entity.Retain(this);
@@ -233,28 +236,28 @@ namespace Entitas {
 
     public class PoolDoesNotContainEntityException : EntitasException {
         public PoolDoesNotContainEntityException(string message, string hint) :
-            base(message + "\nPool does not contain entity!", hint) {
+        base(message + "\nPool does not contain entity!", hint) {
         }
     }
 
     public class EntityIsNotDestroyedException : EntitasException {
         public EntityIsNotDestroyedException(string message) :
-            base(message + "\nEntity is not destroyed yet!",
-                "Did you manually call entity.Release(pool) yourself? If so, please don't :)") {
+        base(message + "\nEntity is not destroyed yet!",
+            "Did you manually call entity.Release(pool) yourself? If so, please don't :)") {
         }
     }
 
     public class PoolStillHasRetainedEntitiesException : EntitasException {
         public PoolStillHasRetainedEntitiesException(Pool pool) :
-            base("'" + pool + "' detected retained entities although all entities got destroyed!",
-                "Did you release all entities? Try calling pool.ClearGroups() and systems.ClearReactiveSystems() before calling pool.DestroyAllEntities() to avoid memory leaks.") {
+        base("'" + pool + "' detected retained entities although all entities got destroyed!",
+            "Did you release all entities? Try calling pool.ClearGroups() and systems.ClearReactiveSystems() before calling pool.DestroyAllEntities() to avoid memory leaks.") {
         }
     }
 
     public class PoolMetaDataException : EntitasException {
         public PoolMetaDataException(Pool pool, PoolMetaData poolMetaData) :
-            base("Invalid PoolMetaData for '" + pool + "'!\nExpected " + pool.totalComponents + " componentName(s) but got " + poolMetaData.componentNames.Length + ":",
-                string.Join("\n", poolMetaData.componentNames)) {
+        base("Invalid PoolMetaData for '" + pool + "'!\nExpected " + pool.totalComponents + " componentName(s) but got " + poolMetaData.componentNames.Length + ":",
+            string.Join("\n", poolMetaData.componentNames)) {
         }
     }
 
