@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Entitas.Migration</RootNamespace>
     <AssemblyName>Entitas.Migration</AssemblyName>
-    <ReleaseVersion>0.17.0</ReleaseVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
