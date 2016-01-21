@@ -29,7 +29,7 @@ class describe_ComponentsGenerator : nspec {
     void when_generating() {
         it["component without fields"] = () => generates(typeof(MovableComponent), MovableComponent.extensions);
         it["component with fields"] = () => generates(typeof(PersonComponent), PersonComponent.extensions);
-        it["single singleton component"] = () => generates(typeof(AnimatingComponent), AnimatingComponent.extensions);
+        it["single component without fields"] = () => generates(typeof(AnimatingComponent), AnimatingComponent.extensions);
         it["single component with fields"] = () => generates(typeof(UserComponent), UserComponent.extensions);
         it["component for custom pool"] = () => generates(typeof(OtherPoolComponent), OtherPoolComponent.extensions);
         it["ignores [DontGenerate]"] = () => {

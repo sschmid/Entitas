@@ -38,7 +38,7 @@ update_project_dependencies() {
   cp -r $SRC_DIR/{$ES,$CG,$ESU} $UCODEGEN_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$ESU,$UCG} $UVD_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$ESU,$UCG,$UVD} $UNITY_TESTS_LIBS_DIR
-  cp -r $SRC_DIR/{$ESU,$UCG,$UVD} $TESTS_LIBS_DIR
+  cp -r $SRC_DIR/{$ES,$CG,$ESU,$UCG,$UVD} $TESTS_LIBS_DIR
 
   echo "Updating project dependencies done."
 }

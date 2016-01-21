@@ -18,10 +18,9 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
@@ -142,6 +141,53 @@
     <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentsGenerator.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_SystemsGenerator.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentLookupGenerator.cs" />
+    <Compile Include="GenerateTestComponents.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\AnimatingComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\MovableComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\PersonComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\UserComponentGeneratedExtension.cs" />
+    <Compile Include="Libraries\Entitas\EntitasException.cs" />
+    <Compile Include="Libraries\Entitas\Entity.cs" />
+    <Compile Include="Libraries\Entitas\Group.cs" />
+    <Compile Include="Libraries\Entitas\GroupObserver.cs" />
+    <Compile Include="Libraries\Entitas\Pool.cs" />
+    <Compile Include="Libraries\Entitas\ReactiveSystem.cs" />
+    <Compile Include="Libraries\Entitas\Systems.cs" />
+    <Compile Include="Libraries\Entitas\Extensions\CollectionExtension.cs" />
+    <Compile Include="Libraries\Entitas\Extensions\GroupExtension.cs" />
+    <Compile Include="Libraries\Entitas\Extensions\IMatcherExtension.cs" />
+    <Compile Include="Libraries\Entitas\Extensions\PoolExtension.cs" />
+    <Compile Include="Libraries\Entitas\Interfaces\IComponent.cs" />
+    <Compile Include="Libraries\Entitas\Interfaces\IExecuteSystem.cs" />
+    <Compile Include="Libraries\Entitas\Interfaces\IInitializeSystem.cs" />
+    <Compile Include="Libraries\Entitas\Interfaces\IMatcher.cs" />
+    <Compile Include="Libraries\Entitas\Interfaces\IReactiveSystem.cs" />
+    <Compile Include="Libraries\Entitas\Interfaces\ISystem.cs" />
+    <Compile Include="Libraries\Entitas\Matcher\Matcher.cs" />
+    <Compile Include="Libraries\Entitas\Matcher\MatcherEquals.cs" />
+    <Compile Include="Libraries\Entitas\Matcher\MatcherInterfaces.cs" />
+    <Compile Include="Libraries\Entitas\Matcher\MatcherStatic.cs" />
+    <Compile Include="Libraries\Entitas\Matcher\MatcherToString.cs" />
+    <Compile Include="Libraries\Entitas\Matcher\TriggerOnEvent.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\ComponentIds.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\Pools.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\CodeGenFile.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\CodeGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\ICodeGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\IComponentCodeGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\IPoolCodeGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\ISystemCodeGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Attributes\PoolAttribute.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\ComponentLookupGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\ComponentsGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\PoolsGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\SystemsGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\TypeGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_GeneratedComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -161,6 +207,7 @@
     <Folder Include="Libraries\Entitas.Unity.CodeGenerator\" />
     <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Libraries\Entitas.Unity.VisualDebugging\DebugSystems\" />
+    <Folder Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />
@@ -169,16 +216,9 @@
     <None Include="Libraries\NSpec\NSpecRunner.exe" />
     <None Include="Libraries\NSpec\NSpecRunner.exe.config" />
     <None Include="Libraries\NSpec\NSpecRunner.exe.mdb" />
+    <None Include="Libraries\Entitas\entitas_version" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entitas\Entitas.csproj">
-      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
-      <Name>Entitas</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
-      <Project>{4D7C8232-6930-4F13-9D9A-3C32A340BB62}</Project>
-      <Name>Entitas.CodeGenerator</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj">
       <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
       <Name>Entitas.Migration</Name>
