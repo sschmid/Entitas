@@ -6,7 +6,7 @@ public class EntityAddComponent : IPerformanceTest {
     ComponentA _componentA;
 
     public void Before() {
-        _e = new Entity(CP.NumComponents);
+        _e = new Entity(CP.NumComponents, null);
         _componentA = new ComponentA();
     }
 

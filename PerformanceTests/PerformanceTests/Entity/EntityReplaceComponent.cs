@@ -27,7 +27,7 @@ public class EntityReplaceComponent : IPerformanceTest {
             CP.ComponentB,
             CP.ComponentC
         }));
-        _e = new Entity(CP.NumComponents);
+        _e = new Entity(CP.NumComponents, null);
         _e.AddComponent(CP.ComponentA, new ComponentA());
     }
 

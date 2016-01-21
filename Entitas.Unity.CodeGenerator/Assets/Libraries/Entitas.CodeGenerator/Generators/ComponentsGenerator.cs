@@ -32,8 +32,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addDefaultPoolCode(Type type) {
-            var code = addComponentPoolUsings(type);
-            code += addNamespace();
+            var code = addNamespace();
             code += addEntityMethods(type);
             if (isSingleEntity(type)) {
                 code += addPoolMethods(type);
@@ -44,8 +43,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addCustomPoolCode(Type type) {
-            var code = addComponentPoolUsings(type);
-            code += addUsings();
+            var code = addUsings();
             code += addNamespace();
             code += addEntityMethods(type);
             if (isSingleEntity(type)) {
@@ -54,12 +52,6 @@ namespace Entitas.CodeGenerator {
             code += closeNamespace();
             code += addMatcher(type);
             return code;
-        }
-
-        static string addComponentPoolUsings(Type type) {
-            return isSingletonComponent(type)
-                ? string.Empty
-                : "using System.Collections.Generic;\n\n";
         }
 
         static string addUsings() {
@@ -84,7 +76,6 @@ namespace Entitas.CodeGenerator {
             return addEntityClassHeader()
                     + addGetMethods(type)
                     + addHasMethods(type)
-                    + addComponentPoolMethods(type)
                     + addAddMethods(type)
                     + addReplaceMethods(type)
                     + addRemoveMethods(type)
@@ -127,20 +118,11 @@ namespace Entitas.CodeGenerator {
             return buildString(type, hasMethod);
         }
 
-        static string addComponentPoolMethods(Type type) {
-            return isSingletonComponent(type) ? string.Empty : buildString(type, @"
-        static readonly Stack<$Type> _$nameComponentPool = new Stack<$Type>();
-
-        public static void Clear$NameComponentPool() {
-            _$nameComponentPool.Clear();
-        }
-");
-        }
-
         static string addAddMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Add$Name($typedArgs) {
-            var component = _$nameComponentPool.Count > 0 ? _$nameComponentPool.Pop() : new $Type();
+            var componentPool = GetComponentPool($Ids.$Name);
+            var component = ($Type)(componentPool.Count > 0 ? componentPool.Pop() : new $Type());
 $assign
             return AddComponent($Ids.$Name, component);
         }
@@ -150,13 +132,10 @@ $assign
         static string addReplaceMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Replace$Name($typedArgs) {
-            var previousComponent = has$Name ? $name : null;
-            var component = _$nameComponentPool.Count > 0 ? _$nameComponentPool.Pop() : new $Type();
+            var componentPool = GetComponentPool($Ids.$Name);
+            var component = ($Type)(componentPool.Count > 0 ? componentPool.Pop() : new $Type());
 $assign
             ReplaceComponent($Ids.$Name, component);
-            if (previousComponent != null) {
-                _$nameComponentPool.Push(previousComponent);
-            }
             return this;
         }
 ");
@@ -165,10 +144,7 @@ $assign
         static string addRemoveMethods(Type type) {
             return isSingletonComponent(type) ? string.Empty : buildString(type, @"
         public Entity Remove$Name() {
-            var component = $name;
-            RemoveComponent($Ids.$Name);
-            _$nameComponentPool.Push(component);
-            return this;
+            return RemoveComponent($Ids.$Name);;
         }
 ");
         }

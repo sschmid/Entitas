@@ -13,7 +13,7 @@ public class PoolHasEntity : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            _pool.HasEntity(new Entity(CP.NumComponents));
+            _pool.HasEntity(new Entity(CP.NumComponents, null));
         }
     }
 }

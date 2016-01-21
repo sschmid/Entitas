@@ -11,7 +11,7 @@ public class OrderedDictionaryAdd : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            _dict.Add(i, new Entity(CP.NumComponents));
+            _dict.Add(i, new Entity(CP.NumComponents, null));
         }
     }
 }

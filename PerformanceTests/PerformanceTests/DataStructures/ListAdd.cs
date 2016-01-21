@@ -11,7 +11,7 @@ public class ListAdd : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            _l.Add(new Entity(CP.NumComponents));
+            _l.Add(new Entity(CP.NumComponents, null));
         }
     }
 }
