@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using System.Collections.Generic;
 
 public class EntityReplaceComponent : IPerformanceTest {
     const int n = 1000000;
@@ -6,7 +7,7 @@ public class EntityReplaceComponent : IPerformanceTest {
     Entity _e;
 
     public void Before() {
-        _pool = new Pool(CP.NumComponents);
+        _pool = Helper.CreatePool();
         _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
         _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentB }));
         _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentC }));
@@ -27,7 +28,7 @@ public class EntityReplaceComponent : IPerformanceTest {
             CP.ComponentB,
             CP.ComponentC
         }));
-        _e = new Entity(CP.NumComponents, null);
+        _e = _pool.CreateEntity();
         _e.AddComponent(CP.ComponentA, new ComponentA());
     }
 

@@ -3,17 +3,19 @@
 public class PoolHasEntity : IPerformanceTest {
     const int n = 100000;
     Pool _pool;
+    Entity _e;
 
     public void Before() {
-        _pool = new Pool(CP.NumComponents);
+        _pool = Helper.CreatePool();
         for (int i = 0; i < n; i++) {
             _pool.CreateEntity();
         }
+        _e = _pool.CreateEntity();
     }
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            _pool.HasEntity(new Entity(CP.NumComponents, null));
+            _pool.HasEntity(_e);
         }
     }
 }
