@@ -10,7 +10,7 @@ public class ListRemove : IPerformanceTest {
         _l = new List<Entity>();
         _lookup = new Entity[n];
         for (int i = 0; i < n; i++) {
-            var e = new Entity(CP.NumComponents);
+            var e = new Entity(CP.NumComponents, null);
             _l.Add(e);
             _lookup[i] = e;
         }

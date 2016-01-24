@@ -5,7 +5,7 @@ public class PoolGetGroup : IPerformanceTest {
     Pool _pool;
 
     public void Before() {
-        _pool = new Pool(CP.NumComponents);
+        _pool = Helper.CreatePool();
     }
 
     public void Run() {

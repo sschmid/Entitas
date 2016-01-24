@@ -86,10 +86,10 @@ class describe_GeneratedComponent : nspec {
             int index = ComponentIds.Person;
             before = () => {
                 e = pool.CreateEntity();
-                e.AddPerson(42, "Max");
             };
 
             it["adds component"] = () => {
+                e.AddPerson(42, "Max");
                 e.HasComponent(index).should_be_true();
                 e.hasPerson.should_be_true();
 
@@ -98,6 +98,7 @@ class describe_GeneratedComponent : nspec {
             };
 
             it["removes component"] = () => {
+                e.AddPerson(42, "Max");
                 e.RemovePerson();
 
                 e.HasComponent(index).should_be_false();
@@ -105,6 +106,7 @@ class describe_GeneratedComponent : nspec {
             };
 
             it["replaces component"] = () => {
+                e.AddPerson(42, "Max");
                 e.ReplacePerson(24, "John");
 
                 e.person.age.should_be(24);
@@ -112,7 +114,6 @@ class describe_GeneratedComponent : nspec {
             };
 
             it["adds component when using replace component doesn't exist"] = () => {
-                e.RemovePerson();
                 e.ReplacePerson(24, "John");
 
                 e.person.age.should_be(24);
@@ -123,7 +124,7 @@ class describe_GeneratedComponent : nspec {
                 
                 PersonComponent person = null;
                 before = () => {
-                    person = e.person;
+                    person = e.AddPerson(42, "Max").person;
                 };
 
                 it["reuses component when remove"] = () => {
@@ -147,13 +148,13 @@ class describe_GeneratedComponent : nspec {
                     e.person.name.should_be("Jack");
                 };
 
-                it["clears component pool"] = () => {
-                    e.RemovePerson();
-                    Entity.ClearPersonComponentPool();
+                it["reuses component when destroying entity"] = () => {
+                    pool.DestroyEntity(e);
 
+                    e = pool.CreateEntity();
                     e.AddPerson(24, "John");
 
-                    e.person.should_not_be_same(person);
+                    e.person.should_be_same(person);
                     e.person.age.should_be(24);
                     e.person.name.should_be("John");
                 };
@@ -324,10 +325,10 @@ class describe_GeneratedComponent : nspec {
                 Entity e = null;
                 before = () => {
                     e = pool.CreateEntity();
-                    e.AddUser(date1, false);
                 };
 
                 it["adds component"] = () => {
+                    e.AddUser(date1, false);
                     e.HasComponent(index).should_be_true();
                     e.hasUser.should_be_true();
 
@@ -336,6 +337,7 @@ class describe_GeneratedComponent : nspec {
                 };
 
                 it["removes component"] = () => {
+                    e.AddUser(date1, false);
                     e.RemoveUser();
 
                     e.HasComponent(index).should_be_false();
@@ -343,6 +345,7 @@ class describe_GeneratedComponent : nspec {
                 };
 
                 it["replaces component"] = () => {
+                    e.AddUser(date1, false);
                     e.ReplaceUser(date2, true);
 
                     e.user.timestamp.should_be(date2);
@@ -350,7 +353,6 @@ class describe_GeneratedComponent : nspec {
                 };
 
                 it["adds component when using replace component doesn't exist"] = () => {
-                    e.RemoveUser();
                     e.ReplaceUser(date2, true);
 
                     e.user.timestamp.should_be(date2);
@@ -361,7 +363,7 @@ class describe_GeneratedComponent : nspec {
 
                     UserComponent user = null;
                     before = () => {
-                        user = e.user;
+                        user = e.AddUser(date1, false).user;
                     };
 
                     it["reuses component when remove"] = () => {
@@ -385,13 +387,13 @@ class describe_GeneratedComponent : nspec {
                         e.user.isLoggedIn.should_be_false();
                     };
 
-                    it["clears component pool"] = () => {
-                        e.RemoveUser();
-                        Entity.ClearUserComponentPool();
+                    it["reuses component when destroying entity"] = () => {
+                        pool.DestroyEntity(e);
 
+                        e = pool.CreateEntity();
                         e.AddUser(date2, true);
 
-                        e.user.should_not_be_same(user);
+                        e.user.should_be_same(user);
                         e.user.timestamp.should_be(date2);
                         e.user.isLoggedIn.should_be_true();
                     };

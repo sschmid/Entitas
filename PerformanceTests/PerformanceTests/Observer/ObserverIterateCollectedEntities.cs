@@ -5,7 +5,7 @@ public class ObserverIterateCollectedEntities : IPerformanceTest {
     GroupObserver _observer;
 
     public void Before() {
-        var pool = new Pool(CP.NumComponents);
+        var pool = Helper.CreatePool();
         var group = pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
         _observer = group.CreateObserver();
 

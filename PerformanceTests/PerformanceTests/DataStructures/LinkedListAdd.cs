@@ -11,7 +11,7 @@ public class LinkedListAdd : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            _ll.AddLast(new Entity(CP.NumComponents));
+            _ll.AddLast(new Entity(CP.NumComponents, null));
         }
     }
 }
