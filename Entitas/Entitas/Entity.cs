@@ -5,7 +5,7 @@ using System.Text;
 namespace Entitas {
 
     /// Use pool.CreateEntity() to create a new entity and pool.DestroyEntity() to destroy it.
-    /// You can add, replace and remove IComponents to an entity.
+    /// You can add, replace and remove IComponent to an entity.
     public partial class Entity {
 
         /// Occurs when a component gets added. All event handlers will be removed when the entity gets destroyed by the pool.
@@ -23,6 +23,9 @@ namespace Entitas {
         /// Each entity has its own unique creationIndex which will be set by the pool when you create the entity.
         public int creationIndex { get { return _creationIndex; } }
 
+        /// componentPools is set by the pool which created the entity and is used to reuse removed components.
+        /// The componentPools are managed by the generated methods from the code generator.
+        /// Use entity.GetComponentPool(index) to get a componentPool for a specific component index.
         public Stack<IComponent>[] componentPools { get { return _componentPools; } }
 
         /// The poolMetaData is set by the pool which created the entity and contains information about the pool.
@@ -40,6 +43,7 @@ namespace Entitas {
         int[] _componentIndicesCache;
         string _toStringCache;
 
+        /// Use pool.CreateEntity() to create a new entity and pool.DestroyEntity() to destroy it.
         public Entity(int totalComponents, Stack<IComponent>[] componentPools, PoolMetaData poolMetaData = null) {
             _components = new IComponent[totalComponents];
             _componentPools = componentPools;
@@ -226,6 +230,9 @@ namespace Entitas {
             }
         }
 
+        /// Returns the componentPool for the specified component index.
+        /// componentPools is set by the pool which created the entity and is used to reuse removed components.
+        /// The componentPools are managed by the generated methods from the code generator.
         public Stack<IComponent> GetComponentPool(int index) {
             var componentPool = _componentPools[index];
             if (componentPool == null) {
