@@ -278,23 +278,52 @@ namespace Entitas {
         public event EntityReleased OnEntityReleased;
         public delegate void EntityReleased(Entity entity);
 
+        #if ENTITAS_FAST_AND_UNSAFE
+
+        public int retainCount { get { return _retainCount; } }
+        int _retainCount;
+
+        #else
+
         public int retainCount { get { return owners.Count; } }
         public readonly HashSet<object> owners = new HashSet<object>();
 
+        #endif
+
         public Entity Retain(object owner) {
+
+            #if ENTITAS_FAST_AND_UNSAFE
+
+            _retainCount += 1;
+
+            #else
+
             if (!owners.Add(owner)) {
                 throw new EntityIsAlreadyRetainedByOwnerException(this, owner);
             }
+
+            #endif
 
             return this;
         }
 
         public void Release(object owner) {
+
+            #if ENTITAS_FAST_AND_UNSAFE
+
+            _retainCount -= 1;
+            if (_retainCount == 0) {
+
+            #else
+
             if (!owners.Remove(owner)) {
                 throw new EntityIsNotRetainedByOwnerException(this, owner);
             }
 
             if (owners.Count == 0) {
+
+            #endif
+
                 if (OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }
