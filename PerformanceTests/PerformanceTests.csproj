@@ -8,7 +8,7 @@
     <RootNamespace>PerformanceTests</RootNamespace>
     <AssemblyName>PerformanceTests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <ReleaseVersion>0.17.0</ReleaseVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -75,6 +75,7 @@
     <Compile Include="PerformanceTests\Pool\PoolDestroyAllEntities.cs" />
     <Compile Include="PerformanceTests\Pool\PoolDestroyEntity.cs" />
     <Compile Include="PerformanceTests\DataStructures\HashSetContainsAdd.cs" />
+    <Compile Include="PerformanceTests\Helper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

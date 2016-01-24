@@ -12,20 +12,23 @@ namespace Entitas {
         public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
         public int creationIndex { get { return _creationIndex; } }
+        public Stack<IComponent>[] componentPools { get { return _componentPools; } }
         public PoolMetaData poolMetaData { get { return _poolMetaData; } }
 
         internal int _creationIndex;
         internal bool _isEnabled = true;
 
         readonly IComponent[] _components;
+        readonly Stack<IComponent>[] _componentPools;
         readonly PoolMetaData _poolMetaData;
 
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
         string _toStringCache;
 
-        public Entity(int totalComponents, PoolMetaData poolMetaData = null) {
+        public Entity(int totalComponents, Stack<IComponent>[] componentPools, PoolMetaData poolMetaData = null) {
             _components = new IComponent[totalComponents];
+            _componentPools = componentPools;
 
             if (poolMetaData != null) {
                 _poolMetaData = poolMetaData;
@@ -103,6 +106,7 @@ namespace Entitas {
             } else {
                 _components[index] = replacement;
                 _componentsCache = null;
+                GetComponentPool(index).Push(previousComponent);
                 if (replacement == null) {
                     _componentIndicesCache = null;
                     _toStringCache = null;
@@ -193,6 +197,16 @@ namespace Entitas {
             }
         }
 
+        public Stack<IComponent> GetComponentPool(int index) {
+            var componentPool = _componentPools[index];
+            if (componentPool == null) {
+                componentPool = new Stack<IComponent>();
+                _componentPools[index] = componentPool;
+            }
+
+            return componentPool;
+        }
+
         internal void destroy() {
             RemoveAllComponents();
             OnComponentAdded = null;
@@ -231,19 +245,19 @@ namespace Entitas {
 
     public class EntityAlreadyHasComponentException : EntitasException {
         public EntityAlreadyHasComponentException(int index, string message, string hint) :
-            base(message + "\nEntity already has a component at index " + index + "!", hint) {
+        base(message + "\nEntity already has a component at index " + index + "!", hint) {
         }
     }
 
     public class EntityDoesNotHaveComponentException : EntitasException {
         public EntityDoesNotHaveComponentException(int index, string message, string hint) :
-            base(message + "\nEntity does not have a component at index " + index + "!", hint) {
+        base(message + "\nEntity does not have a component at index " + index + "!", hint) {
         }
     }
 
     public class EntityIsNotEnabledException : EntitasException {
         public EntityIsNotEnabledException(string message) :
-            base(message + "\nEntity is not enabled!", "The entity has already been destroyed. You cannot modify destroyed entities.") {
+        base(message + "\nEntity is not enabled!", "The entity has already been destroyed. You cannot modify destroyed entities.") {
         }
     }
 
@@ -264,23 +278,52 @@ namespace Entitas {
         public event EntityReleased OnEntityReleased;
         public delegate void EntityReleased(Entity entity);
 
+        #if ENTITAS_FAST_AND_UNSAFE
+
+        public int retainCount { get { return _retainCount; } }
+        int _retainCount;
+
+        #else
+
         public int retainCount { get { return owners.Count; } }
         public readonly HashSet<object> owners = new HashSet<object>();
 
+        #endif
+
         public Entity Retain(object owner) {
+
+            #if ENTITAS_FAST_AND_UNSAFE
+
+            _retainCount += 1;
+
+            #else
+
             if (!owners.Add(owner)) {
                 throw new EntityIsAlreadyRetainedByOwnerException(this, owner);
             }
+
+            #endif
 
             return this;
         }
 
         public void Release(object owner) {
+
+            #if ENTITAS_FAST_AND_UNSAFE
+
+            _retainCount -= 1;
+            if (_retainCount == 0) {
+
+            #else
+
             if (!owners.Remove(owner)) {
                 throw new EntityIsNotRetainedByOwnerException(this, owner);
             }
 
             if (owners.Count == 0) {
+
+            #endif
+
                 if (OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }
@@ -290,15 +333,15 @@ namespace Entitas {
 
     public class EntityIsAlreadyRetainedByOwnerException : EntitasException {
         public EntityIsAlreadyRetainedByOwnerException(Entity entity, object owner) :
-            base("'" + owner + "' cannot retain " + entity + "!\nEntity is already retained by this object!",
-                "The entity must be released by this object first.") {
+        base("'" + owner + "' cannot retain " + entity + "!\nEntity is already retained by this object!",
+            "The entity must be released by this object first.") {
         }
     }
 
     public class EntityIsNotRetainedByOwnerException : EntitasException {
         public EntityIsNotRetainedByOwnerException(Entity entity, object owner) :
-            base("'" + owner + "' cannot release " + entity + "!\nEntity is not retained by this object!",
-                "An entity can only be released from objects that retain it.") {
+        base("'" + owner + "' cannot release " + entity + "!\nEntity is not retained by this object!",
+            "An entity can only be released from objects that retain it.") {
         }
     }
 
@@ -308,7 +351,7 @@ namespace Entitas {
         public static string RemoveComponentSuffix(this Type type) {
             return type.Name.EndsWith(COMPONENT_SUFFIX)
                 ? type.Name.Substring(0, type.Name.Length - COMPONENT_SUFFIX.Length)
-                : type.Name;
+                    : type.Name;
         }
     }
 }

@@ -5,7 +5,7 @@ public class PoolGetEntities : IPerformanceTest {
     Pool _pool;
 
     public void Before() {
-        _pool = new Pool(CP.NumComponents);
+        _pool = Helper.CreatePool();
         for (int i = 0; i < n; i++) {
             _pool.CreateEntity();
         }

@@ -11,7 +11,7 @@ public class ArrayGetItem : IPerformanceTest {
         random = new Random();
         _array = new Entity[elements];
         for (int i = 0; i < elements; i++) {
-            _array[i] = new Entity(CP.NumComponents);
+            _array[i] = new Entity(CP.NumComponents, null);
         }
     }
 

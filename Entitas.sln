@@ -240,6 +240,6 @@ Global
 		$26.NamingStyle = CamelCase
 		$26.IncludeInstanceMembers = True
 		$26.IncludeStaticEntities = True
-		version = 0.17.0
+		version = 1.0.0
 	EndGlobalSection
 EndGlobal

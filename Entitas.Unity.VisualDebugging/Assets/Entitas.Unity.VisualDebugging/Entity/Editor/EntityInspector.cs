@@ -83,6 +83,9 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Retained by (" + entity.retainCount + ")", EditorStyles.boldLabel);
+
+                #if !ENTITAS_FAST_AND_UNSAFE
+
                 EditorGUILayout.BeginVertical(GUI.skin.box);
                 {
                     foreach (var owner in entity.owners.ToArray()) {
@@ -95,6 +98,8 @@ namespace Entitas.Unity.VisualDebugging {
                     }
                 }
                 EditorGUILayout.EndVertical();
+
+                #endif
             }
             EditorGUILayout.EndVertical();
         }

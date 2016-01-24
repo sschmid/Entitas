@@ -40,6 +40,16 @@ class describe_Pool : nspec {
             }
         };
 
+        it["creates component pools"] = () => {
+            pool.componentPools.should_not_be_null();
+            pool.componentPools.Length.should_be(CID.NumComponents);
+        };
+
+        it["creates entity with component pools"] = () => {
+            var e = pool.CreateEntity();
+            e.componentPools.should_be_same(pool.componentPools);
+        };
+
         it["can ToString"] = () => {
             pool.ToString().should_be("Unnamed Pool");
         };

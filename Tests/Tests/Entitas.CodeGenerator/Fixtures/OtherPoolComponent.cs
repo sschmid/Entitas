@@ -7,9 +7,7 @@ public class OtherPoolComponent : IComponent {
     public DateTime timestamp;
     public bool isLoggedIn;
     public static string extensions =
-        @"using System.Collections.Generic;
-
-using Entitas;
+        @"using Entitas;
 
 namespace Entitas {
     public partial class Entity {
@@ -17,36 +15,25 @@ namespace Entitas {
 
         public bool hasOtherPool { get { return HasComponent(OtherComponentIds.OtherPool); } }
 
-        static readonly Stack<OtherPoolComponent> _otherPoolComponentPool = new Stack<OtherPoolComponent>();
-
-        public static void ClearOtherPoolComponentPool() {
-            _otherPoolComponentPool.Clear();
-        }
-
         public Entity AddOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var component = _otherPoolComponentPool.Count > 0 ? _otherPoolComponentPool.Pop() : new OtherPoolComponent();
+            var componentPool = GetComponentPool(OtherComponentIds.OtherPool);
+            var component = (OtherPoolComponent)(componentPool.Count > 0 ? componentPool.Pop() : new OtherPoolComponent());
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             return AddComponent(OtherComponentIds.OtherPool, component);
         }
 
         public Entity ReplaceOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var previousComponent = hasOtherPool ? otherPool : null;
-            var component = _otherPoolComponentPool.Count > 0 ? _otherPoolComponentPool.Pop() : new OtherPoolComponent();
+            var componentPool = GetComponentPool(OtherComponentIds.OtherPool);
+            var component = (OtherPoolComponent)(componentPool.Count > 0 ? componentPool.Pop() : new OtherPoolComponent());
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             ReplaceComponent(OtherComponentIds.OtherPool, component);
-            if (previousComponent != null) {
-                _otherPoolComponentPool.Push(previousComponent);
-            }
             return this;
         }
 
         public Entity RemoveOtherPool() {
-            var component = otherPool;
-            RemoveComponent(OtherComponentIds.OtherPool);
-            _otherPoolComponentPool.Push(component);
-            return this;
+            return RemoveComponent(OtherComponentIds.OtherPool);;
         }
     }
 
