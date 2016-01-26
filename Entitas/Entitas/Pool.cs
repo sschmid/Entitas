@@ -227,6 +227,7 @@ namespace Entitas {
             _creationIndex = 0;
         }
 
+        /// Clears the componentPool at the specified index.
         public void ClearComponentPool(int index) {
             var componentPool = _componentPools[index];
             if (componentPool != null) {
@@ -234,6 +235,7 @@ namespace Entitas {
             }
         }
 
+        /// Clears all componentPools.
         public void ClearComponentPools() {
             for (int i = 0, componentPoolsLength = _componentPools.Length; i < componentPoolsLength; i++) {
                 ClearComponentPool(i);
