@@ -227,6 +227,19 @@ namespace Entitas {
             _creationIndex = 0;
         }
 
+        public void ClearComponentPool(int index) {
+            var componentPool = _componentPools[index];
+            if (componentPool != null) {
+                componentPool.Clear();
+            }
+        }
+
+        public void ClearComponentPools() {
+            for (int i = 0, componentPoolsLength = _componentPools.Length; i < componentPoolsLength; i++) {
+                ClearComponentPool(i);
+            }
+        }
+
         /// Resets the pool (clears all groups, destroys all entities and resets creationIndex back to 0).
         public void Reset() {
             ClearGroups();

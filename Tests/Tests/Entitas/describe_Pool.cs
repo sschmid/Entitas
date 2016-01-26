@@ -579,6 +579,38 @@ class describe_Pool : nspec {
                     pool.CreateEntity().creationIndex.should_be(0);
                 };
             };
+
+            context["component pools"] = () => {
+
+                before = () => {
+                    var entity = pool.CreateEntity();
+                    entity.AddComponentA();
+                    entity.AddComponentB();
+                    entity.RemoveComponentA();
+                    entity.RemoveComponentB();
+                };
+
+                it["clears all component pools"] = () => {
+                    pool.componentPools[CID.ComponentA].Count.should_be(1);
+                    pool.componentPools[CID.ComponentB].Count.should_be(1);
+
+                    pool.ClearComponentPools();
+
+                    pool.componentPools[CID.ComponentA].Count.should_be(0);
+                    pool.componentPools[CID.ComponentB].Count.should_be(0);
+                };
+
+                it["clears a specific component pool"] = () => {
+                    pool.ClearComponentPool(CID.ComponentB);
+
+                    pool.componentPools[CID.ComponentA].Count.should_be(1);
+                    pool.componentPools[CID.ComponentB].Count.should_be(0);
+                };
+
+                it["only clears existing component pool"] = () => {
+                    pool.ClearComponentPool(CID.ComponentC);
+                };
+            };
         };
     }
 }
