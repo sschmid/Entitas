@@ -146,7 +146,7 @@ namespace Entitas {
             }
         }
 
-        /// Gets a component at a certain index. You can only get a component at an index if it exists.
+        /// Returns a component at a certain index. You can only get a component at an index if it exists.
         /// The prefered way is to use the generated methods from the code generator.
         public IComponent GetComponent(int index) {
             if (!HasComponent(index)) {
@@ -160,7 +160,7 @@ namespace Entitas {
             return _components[index];
         }
 
-        /// Gets all added components.
+        /// Returns all added components.
         public IComponent[] GetComponents() {
             if (_componentsCache == null) {
                 var components = new List<IComponent>(16);
@@ -177,7 +177,7 @@ namespace Entitas {
             return _componentsCache;
         }
 
-        /// Gets all indices of added components.
+        /// Returns all indices of added components.
         public int[] GetComponentIndices() {
             if (_componentIndicesCache == null) {
                 var indices = new List<int>(16);
@@ -319,21 +319,22 @@ namespace Entitas {
 
         #if ENTITAS_FAST_AND_UNSAFE
 
-        /// Gets the count of objects that retain this entity.
+        /// Returns the number of objects that retain this entity.
         public int retainCount { get { return _retainCount; } }
         int _retainCount;
 
         #else
 
-        /// Gets the count of objects that retain this entity.
+        /// Returns the number of objects that retain this entity.
         public int retainCount { get { return owners.Count; } }
 
-        /// Gets all the objects that retain this entity.
+        /// Returns all the objects that retain this entity.
         public readonly HashSet<object> owners = new HashSet<object>();
 
         #endif
 
-        /// Retains the entity. An owner can only retain the same entity once. Retain/Release is used internally and usually you don't use it manually.
+        /// Retains the entity. An owner can only retain the same entity once.
+        /// Retain/Release is part of AERC (Automatic Entity Reference Counting) and is used internally to prevent pooling retained entities.
         /// If you use retain manually you also have to release it manually at some point.
         public Entity Retain(object owner) {
 
@@ -352,7 +353,8 @@ namespace Entitas {
             return this;
         }
 
-        /// Releases the entity. An owner can only release an entity if it retains it. Retain/Release is used internally and usually you don't use it manually.
+        /// Releases the entity. An owner can only release an entity if it retains it.
+        /// Retain/Release is part of AERC (Automatic Entity Reference Counting) and is used internally to prevent pooling retained entities.
         /// If you use retain manually you also have to release it manually at some point.
         public void Release(object owner) {
 

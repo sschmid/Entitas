@@ -16,12 +16,12 @@ namespace Entitas {
             _executeSystems = new List<IExecuteSystem>();
         }
 
-        /// Creates a new instance of the specified type and add it to the systems list.
+        /// Creates a new instance of the specified type and adds it to the systems list.
         public virtual Systems Add<T>() {
             return Add(typeof(T));
         }
 
-        /// Creates a new instance of the specified type and add it to the systems list.
+        /// Creates a new instance of the specified type and adds it to the systems list.
         public virtual Systems Add(Type systemType) {
             return Add((ISystem)Activator.CreateInstance(systemType));
         }

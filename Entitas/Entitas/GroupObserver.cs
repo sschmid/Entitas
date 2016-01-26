@@ -10,7 +10,7 @@ namespace Entitas {
         OnEntityAddedOrRemoved
     }
 
-    /// A GroupObserver can observe one or more groups and collects entities based on the specified eventType.
+    /// A GroupObserver can observe one or more groups and collects changed entities based on the specified eventType.
     public class GroupObserver {
 
         /// Returns all collected entities. Call observer.ClearCollectedEntities() once you processed all entities.
@@ -22,12 +22,12 @@ namespace Entitas {
         Group.GroupChanged _addEntityCache;
         string _toStringCache;
 
-        /// Creates a GroupObserver and will collect entities based on the specified eventType. 
+        /// Creates a GroupObserver and will collect changed entities based on the specified eventType. 
         public GroupObserver(Group group, GroupEventType eventType)
             : this(new [] { group }, new [] { eventType }) {
         }
 
-        /// Creates a GroupObserver and will collect entities based on the specified eventTypes. 
+        /// Creates a GroupObserver and will collect changed entities based on the specified eventTypes. 
         public GroupObserver(Group[] groups, GroupEventType[] eventTypes) {
             if (groups.Length != eventTypes.Length) {
                 throw new GroupObserverException("Unbalanced count with groups (" + groups.Length +
@@ -42,7 +42,7 @@ namespace Entitas {
             Activate();
         }
 
-        /// Activates the GroupObserver (GroupObserver are activated by default).
+        /// Activates the GroupObserver (GroupObserver are activated by default) and will start collecting changed entities.
         public void Activate() {
             for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
                 var group = _groups[i];
@@ -63,6 +63,7 @@ namespace Entitas {
         }
 
         /// Deactivates the GroupObserver (GroupObserver are activated by default).
+        /// This will also clear all collected entities.
         public void Deactivate() {
             for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
                 var group = _groups[i];

@@ -25,7 +25,7 @@ namespace Entitas {
         /// Returns the number of entities in the group.
         public int count { get { return _entities.Count; } }
 
-        /// Returns the matcher which was used to create the group.
+        /// Returns the matcher which was used to create this group.
         public IMatcher matcher { get { return _matcher; } }
 
         readonly IMatcher _matcher;
@@ -40,7 +40,7 @@ namespace Entitas {
             _matcher = matcher;
         }
 
-        /// Is used by the pool to manage the group.
+        /// This is used by the pool to manage the group.
         public void HandleEntitySilently(Entity entity) {
             if (_matcher.Matches(entity)) {
                 addEntitySilently(entity);
@@ -49,7 +49,7 @@ namespace Entitas {
             }
         }
 
-        /// Is used by the pool to manage the group.
+        /// This is used by the pool to manage the group.
         public void HandleEntity(Entity entity, int index, IComponent component) {
             if (_matcher.Matches(entity)) {
                 addEntity(entity, index, component);
@@ -64,7 +64,7 @@ namespace Entitas {
                         : removeEntity(entity);
         }
 
-        /// Is used by the pool to manage the group.
+        /// This is used by the pool to manage the group.
         public void UpdateEntity(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             if (_entities.Contains(entity)) {
                 if (OnEntityRemoved != null) {
