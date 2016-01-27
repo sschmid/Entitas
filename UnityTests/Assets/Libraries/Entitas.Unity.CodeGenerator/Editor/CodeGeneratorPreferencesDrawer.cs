@@ -8,67 +8,70 @@ using UnityEngine;
 
 namespace Entitas.Unity.CodeGenerator {
     public class CodeGeneratorPreferencesDrawer : IEntitasPreferencesDrawer {
+
+        Type[] _codeGenerators;
+        CodeGeneratorConfig _codeGeneratorConfig;
+        List<string> _pools;
+        UnityEditorInternal.ReorderableList _poolList;
+
+        public void Initialize(EntitasPreferencesConfig config) {
+            _codeGenerators = CodeGenerator.GetCodeGenerators();
+            var codeGeneratorNames = _codeGenerators.Select(cg => cg.Name).ToArray();
+            _codeGeneratorConfig = new CodeGeneratorConfig(config, codeGeneratorNames);
+
+            _pools = new List<string>(_codeGeneratorConfig.pools);
+
+            _poolList = new UnityEditorInternal.ReorderableList(_pools, typeof(string), true, true, true, true);
+            _poolList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Custom Pools");;
+            _poolList.drawElementCallback = (rect, index, isActive, isFocused) => {
+                rect.width -= 20;
+                _pools[index] = EditorGUI.TextField(rect, _pools[index]);
+            };
+            _poolList.onAddCallback = list => list.list.Add("New Pool");
+            _poolList.onCanRemoveCallback = list => true;
+            _poolList.onChangedCallback = list => GUI.changed = true;
+        }
+
         public void Draw(EntitasPreferencesConfig config) {
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            EditorGUILayout.LabelField("CodeGenerator", EditorStyles.boldLabel);
+            {
+                EditorGUILayout.LabelField("CodeGenerator", EditorStyles.boldLabel);
 
-            var codeGenerators = CodeGenerator.GetCodeGenerators();
-            var codeGeneratorNames = codeGenerators.Select(cg => cg.Name).ToArray();
-            var codeGeneratorConfig = new CodeGeneratorConfig(config, codeGeneratorNames);
-            drawGeneratedFolderPath(codeGeneratorConfig);
-            drawPools(codeGeneratorConfig);
-            drawCodeGenerators(codeGeneratorConfig, codeGenerators);
-            drawGenerateButton();
-
+                drawGeneratedFolderPath();
+                drawPools();
+                drawCodeGenerators();
+                drawGenerateButton();
+            }
             EditorGUILayout.EndVertical();
         }
 
-        static void drawGeneratedFolderPath(CodeGeneratorConfig codeGeneratorConfig) {
-            codeGeneratorConfig.generatedFolderPath = EditorGUILayout.TextField("Generated Folder", codeGeneratorConfig.generatedFolderPath);
+        void drawGeneratedFolderPath() {
+            _codeGeneratorConfig.generatedFolderPath = EditorGUILayout.TextField("Generated Folder", _codeGeneratorConfig.generatedFolderPath);
         }
 
-        static void drawPools(CodeGeneratorConfig codeGeneratorConfig) {
+        void drawPools() {
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Pools");
-            
-            var pools = new List<string>(codeGeneratorConfig.pools);
-            if (pools.Count == 0) {
-                EditorGUI.BeginDisabledGroup(true);
-                EditorGUILayout.TextField("Pool");
-                EditorGUI.EndDisabledGroup();
-            }
 
-            for (int i = 0; i < pools.Count; i++) {
-                EditorGUILayout.BeginHorizontal();
-                pools[i] = EditorGUILayout.TextField(pools[i]);
-                if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
-                    pools[i] = string.Empty;
-                }
-                EditorGUILayout.EndHorizontal();
-            }
+            _poolList.DoLayoutList();
 
-            if (GUILayout.Button("Add pool")) {
-                pools.Add("PoolName");
-            }
-
-            if (pools.Count == 0) {
+            if (_pools.Count == 0) {
                 EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple pools. " +
-                    "The code generator generates subclasses of PoolAttribute for each pool name. " +
-                    "You can assign components to a specific pool with the generated attribute, e.g. [UI] or [MetaGame], " +
-                    "otherwise they are assigned to the default pool.", MessageType.Info);
+                "The code generator generates subclasses of PoolAttribute for each pool name. " +
+                "You can assign components to a specific pool with the generated attribute, e.g. [UI] or [MetaGame], " +
+                "otherwise they are assigned to the default pool.", MessageType.Info);
             }
 
-            codeGeneratorConfig.pools = pools.ToArray();
+            _codeGeneratorConfig.pools = _pools.ToArray();
         }
 
-        static void drawCodeGenerators(CodeGeneratorConfig codeGeneratorConfig, Type[] codeGenerators) {
+        void drawCodeGenerators() {
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Code Generators", EditorStyles.boldLabel);
 
-            var enabledCodeGenerators = new HashSet<string>(codeGeneratorConfig.enabledCodeGenerators);
+            var enabledCodeGenerators = new HashSet<string>(_codeGeneratorConfig.enabledCodeGenerators);
 
             var availableGeneratorNames = new HashSet<string>();
-            foreach (var codeGenerator in codeGenerators) {
+            foreach (var codeGenerator in _codeGenerators) {
                 availableGeneratorNames.Add(codeGenerator.Name);
                 var isEnabled = enabledCodeGenerators.Contains(codeGenerator.Name);
                 isEnabled = EditorGUILayout.Toggle(codeGenerator.Name, isEnabled);
@@ -79,7 +82,7 @@ namespace Entitas.Unity.CodeGenerator {
                 }
             }
 
-            foreach (var generatorName in codeGeneratorConfig.enabledCodeGenerators.ToArray()) {
+            foreach (var generatorName in _codeGeneratorConfig.enabledCodeGenerators.ToArray()) {
                 if (!availableGeneratorNames.Contains(generatorName)) {
                     enabledCodeGenerators.Remove(generatorName);
                 }
@@ -87,7 +90,7 @@ namespace Entitas.Unity.CodeGenerator {
 
             var sortedCodeGenerators = enabledCodeGenerators.ToArray();
             Array.Sort(sortedCodeGenerators);
-            codeGeneratorConfig.enabledCodeGenerators = sortedCodeGenerators;
+            _codeGeneratorConfig.enabledCodeGenerators = sortedCodeGenerators;
         }
 
         static void drawGenerateButton() {

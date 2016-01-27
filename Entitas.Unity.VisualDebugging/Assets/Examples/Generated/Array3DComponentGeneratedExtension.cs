@@ -1,0 +1,42 @@
+namespace Entitas {
+    public partial class Entity {
+        public Array3DComponent array3D { get { return (Array3DComponent)GetComponent(ComponentIds.Array3D); } }
+
+        public bool hasArray3D { get { return HasComponent(ComponentIds.Array3D); } }
+
+        public Entity AddArray3D(int[,,] newArray3d) {
+            var componentPool = GetComponentPool(ComponentIds.Array3D);
+            var component = (Array3DComponent)(componentPool.Count > 0 ? componentPool.Pop() : new Array3DComponent());
+            component.array3d = newArray3d;
+            return AddComponent(ComponentIds.Array3D, component);
+        }
+
+        public Entity ReplaceArray3D(int[,,] newArray3d) {
+            var componentPool = GetComponentPool(ComponentIds.Array3D);
+            var component = (Array3DComponent)(componentPool.Count > 0 ? componentPool.Pop() : new Array3DComponent());
+            component.array3d = newArray3d;
+            ReplaceComponent(ComponentIds.Array3D, component);
+            return this;
+        }
+
+        public Entity RemoveArray3D() {
+            return RemoveComponent(ComponentIds.Array3D);;
+        }
+    }
+
+    public partial class Matcher {
+        static IMatcher _matcherArray3D;
+
+        public static IMatcher Array3D {
+            get {
+                if (_matcherArray3D == null) {
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Array3D);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherArray3D = matcher;
+                }
+
+                return _matcherArray3D;
+            }
+        }
+    }
+}
