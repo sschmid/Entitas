@@ -16,10 +16,12 @@ class check_namespaces : nspec {
             .Where(p => !p.Contains("Generated" + Path.DirectorySeparatorChar) &&
                 !p.Contains("Libraries" + Path.DirectorySeparatorChar) &&
                 !p.Contains("Tests" + Path.DirectorySeparatorChar) &&
+                !p.Contains("Examples" + Path.DirectorySeparatorChar) &&
                 !p.Contains("Readme" + Path.DirectorySeparatorChar) &&
                 !p.Contains("bin" + Path.DirectorySeparatorChar) &&
                 !p.Contains("obj" + Path.DirectorySeparatorChar) &&
                 !p.Contains("AssemblyInfo.cs") &&
+                !p.Contains("Commands.cs") &&
                 !p.Contains("Program.cs"))
             .ToDictionary(p => p, p => File.ReadAllText(p));
     }
