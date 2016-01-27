@@ -1,0 +1,42 @@
+namespace Entitas {
+    public partial class Entity {
+        public BoundsComponent bounds { get { return (BoundsComponent)GetComponent(ComponentIds.Bounds); } }
+
+        public bool hasBounds { get { return HasComponent(ComponentIds.Bounds); } }
+
+        public Entity AddBounds(UnityEngine.Bounds newBounds) {
+            var componentPool = GetComponentPool(ComponentIds.Bounds);
+            var component = (BoundsComponent)(componentPool.Count > 0 ? componentPool.Pop() : new BoundsComponent());
+            component.bounds = newBounds;
+            return AddComponent(ComponentIds.Bounds, component);
+        }
+
+        public Entity ReplaceBounds(UnityEngine.Bounds newBounds) {
+            var componentPool = GetComponentPool(ComponentIds.Bounds);
+            var component = (BoundsComponent)(componentPool.Count > 0 ? componentPool.Pop() : new BoundsComponent());
+            component.bounds = newBounds;
+            ReplaceComponent(ComponentIds.Bounds, component);
+            return this;
+        }
+
+        public Entity RemoveBounds() {
+            return RemoveComponent(ComponentIds.Bounds);;
+        }
+    }
+
+    public partial class Matcher {
+        static IMatcher _matcherBounds;
+
+        public static IMatcher Bounds {
+            get {
+                if (_matcherBounds == null) {
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Bounds);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherBounds = matcher;
+                }
+
+                return _matcherBounds;
+            }
+        }
+    }
+}

@@ -2,6 +2,7 @@
 
 namespace Entitas.Unity {
     public interface IEntitasPreferencesDrawer {
+        void Initialize(EntitasPreferencesConfig config);
         void Draw(EntitasPreferencesConfig config);
     }
 
