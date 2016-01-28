@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
-    public static class TypeGenerator {
+    public static class TypeToCompilableStringExtension {
 
         static readonly Dictionary<string, string> _builtInTypes = new Dictionary<string, string>() {
             { "System.Boolean", "bool" },
@@ -23,7 +23,7 @@ namespace Entitas.CodeGenerator {
             { "System.String", "string" }
         };
 
-        public static string Generate(Type type) {
+        public static string ToCompilableString(this Type type) {
             if (_builtInTypes.ContainsKey(type.FullName)) {
                 return _builtInTypes[type.FullName];
             }
@@ -43,7 +43,7 @@ namespace Entitas.CodeGenerator {
         static string generateGenericTypeString(Type type) {
             var genericMainType = type.FullName.Split('`')[0];
             var genericArguments = type.GetGenericArguments()
-                .Select(arg => Generate(arg)).ToArray();
+                .Select(argType => argType.ToCompilableString()).ToArray();
 
             return genericMainType + "<" + string.Join(", ", genericArguments) + ">";
         }
@@ -54,7 +54,7 @@ namespace Entitas.CodeGenerator {
                 rankString += ",";
             }
 
-            return Generate(type.GetElementType()) + "[" + rankString + "]";
+            return type.GetElementType().ToCompilableString() + "[" + rankString + "]";
         }
     }
 }

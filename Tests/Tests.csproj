@@ -49,7 +49,6 @@
     <Compile Include="Tests\Entitas\describe_Pool.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_PoolAttributeGenerator.cs" />
     <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_TypeGenerator.cs" />
     <Compile Include="Tests\Entitas\Fixtures\EntityEmittingSubSystem.cs" />
     <Compile Include="Tests\Entitas\Fixtures\ReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\AnimatingComponent.cs" />
@@ -139,7 +138,6 @@
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestMultiReactiveSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentsGenerator.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_SystemsGenerator.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentLookupGenerator.cs" />
     <Compile Include="GenerateTestComponents.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\AnimatingComponentGeneratedExtension.cs" />
@@ -171,23 +169,27 @@
     <Compile Include="Libraries\Entitas\Matcher\TriggerOnEvent.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\ComponentIds.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\Pools.cs" />
-    <Compile Include="Libraries\Entitas.CodeGenerator\CodeGenFile.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\CodeGenerator.cs" />
-    <Compile Include="Libraries\Entitas.CodeGenerator\ICodeGenerator.cs" />
-    <Compile Include="Libraries\Entitas.CodeGenerator\IComponentCodeGenerator.cs" />
-    <Compile Include="Libraries\Entitas.CodeGenerator\IPoolCodeGenerator.cs" />
-    <Compile Include="Libraries\Entitas.CodeGenerator\ISystemCodeGenerator.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Attributes\PoolAttribute.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs" />
-    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\ComponentLookupGenerator.cs" />
-    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\ComponentsGenerator.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Generators\PoolsGenerator.cs" />
-    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\SystemsGenerator.cs" />
-    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\TypeGenerator.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_GeneratedComponent.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\TypeToCompilableStringExtension.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\ComponentsGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Generators\ComponentIndicesGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_TypeToCompilableStringExtension.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Intermediate\CodeGenFile.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Intermediate\ComponentInfo.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Interfaces\ICodeGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Interfaces\IComponentCodeGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Interfaces\IPoolCodeGenerator.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Interfaces\ICodeGeneratorDataProvider.cs" />
+    <Compile Include="Libraries\Entitas.CodeGenerator\Providers\TypeReflectionProvider.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_TypeReflectionProvider.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestPoolAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -208,6 +210,9 @@
     <Folder Include="Libraries\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Libraries\Entitas.Unity.VisualDebugging\DebugSystems\" />
     <Folder Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\" />
+    <Folder Include="Libraries\Entitas.CodeGenerator\Intermediate\" />
+    <Folder Include="Libraries\Entitas.CodeGenerator\Interfaces\" />
+    <Folder Include="Libraries\Entitas.CodeGenerator\Providers\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

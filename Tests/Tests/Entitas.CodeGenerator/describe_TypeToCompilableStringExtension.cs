@@ -3,10 +3,10 @@ using Entitas.CodeGenerator;
 using System.Collections.Generic;
 using Entitas;
 
-class describe_TypeGenerator : nspec {
+class describe_TypeToCompilableStringExtension : nspec {
 
-    string generate<T>() {
-        return TypeGenerator.Generate(typeof(T));
+    static string generate<T>() {
+        return typeof(T).ToCompilableString();
     }
 
     void when_generating() {
