@@ -6,6 +6,7 @@ namespace Entitas.CodeGenerator {
     public class ComponentIndicesGenerator : IPoolCodeGenerator, IComponentCodeGenerator {
 
         // Important: This method should be called before Generate(componentInfos)
+        // This will generate empty lookups for all pools.
         public CodeGenFile[] Generate(string[] poolNames) {
             var emptyInfos = new ComponentInfo[0];
             if (poolNames.Length == 0) {
@@ -23,6 +24,7 @@ namespace Entitas.CodeGenerator {
         }
 
         // Important: This method should be called after Generate(poolNames)
+        // This will overwrite the empty lookups with the actual content.
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
             var orderedComponentInfos = componentInfos.OrderBy(info => info.type).ToArray();
             var lookupTagToComponentInfosMap = getLookupTagToComponentInfosMap(orderedComponentInfos);

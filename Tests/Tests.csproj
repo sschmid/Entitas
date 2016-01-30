@@ -138,7 +138,6 @@
     <Compile Include="Libraries\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestMultiReactiveSystem.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentsGenerator.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentLookupGenerator.cs" />
     <Compile Include="GenerateTestComponents.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\AnimatingComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\Generated\MovableComponentGeneratedExtension.cs" />
@@ -190,6 +189,7 @@
     <Compile Include="Libraries\Entitas.CodeGenerator\Providers\TypeReflectionProvider.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_TypeReflectionProvider.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestPoolAttribute.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentIndicesGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

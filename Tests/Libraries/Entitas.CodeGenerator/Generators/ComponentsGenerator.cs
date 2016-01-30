@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace Entitas.CodeGenerator {
     public class ComponentsGenerator : IComponentCodeGenerator {
@@ -278,7 +277,9 @@ $assign
         static string buildString(ComponentInfo componentInfo, string format) {
             format = createFormatString(format);
             var a0_type = componentInfo.type;
-            var a1_name = componentInfo.type.RemoveComponentSuffix();
+            // Might contain namespace, e.g. MyNamespace.MyComponent
+            var nameSplit = componentInfo.type.RemoveComponentSuffix().Split('.');
+            var a1_name = nameSplit[nameSplit.Length - 1];
             var a2_lowercaseName = a1_name.LowercaseFirst();
             var poolNames = componentInfo.pools;
             var a3_tag = poolNames.Length == 0 ? string.Empty : poolNames[0];

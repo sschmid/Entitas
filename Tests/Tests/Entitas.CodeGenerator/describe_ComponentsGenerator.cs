@@ -1,18 +1,18 @@
-﻿using NSpec;
+﻿using System;
 using Entitas.CodeGenerator;
-using System;
 using My.Namespace;
+using NSpec;
 
 class describe_ComponentsGenerator : nspec {
 
-    bool logResults = false;
+    bool logResults = !false;
 
     const string classSuffix = "GeneratedExtension";
 
-    void generates(Type type, string expectedFileContent) {
+    void generates(ComponentInfo componentInfo, string expectedFileContent) {
         expectedFileContent = expectedFileContent.ToUnixLineEndings();
-        var files = new ComponentsGenerator().Generate(new[] { type });
-        var expectedFilePath = type + classSuffix;
+        var files = new ComponentsGenerator().Generate(new[] { componentInfo });
+        var expectedFilePath = componentInfo.type + classSuffix;
 
         files.Length.should_be(1);
         var file = files[0];
@@ -27,20 +27,20 @@ class describe_ComponentsGenerator : nspec {
     }
 
     void when_generating() {
-        it["component without fields"] = () => generates(typeof(MovableComponent), MovableComponent.extensions);
-        it["component with fields"] = () => generates(typeof(PersonComponent), PersonComponent.extensions);
-        it["single component without fields"] = () => generates(typeof(AnimatingComponent), AnimatingComponent.extensions);
-        it["single component with fields"] = () => generates(typeof(UserComponent), UserComponent.extensions);
-        it["component for custom pool"] = () => generates(typeof(OtherPoolComponent), OtherPoolComponent.extensions);
+        it["component without fields"] = () => generates(MovableComponent.componentInfo, MovableComponent.extensions);
+        it["component with fields"] = () => generates(PersonComponent.componentInfo, PersonComponent.extensions);
+        it["single component without fields"] = () => generates(AnimatingComponent.componentInfo, AnimatingComponent.extensions);
+        it["single component with fields"] = () => generates(UserComponent.componentInfo, UserComponent.extensions);
+        it["component for custom pool"] = () => generates(OtherPoolComponent.componentInfo, OtherPoolComponent.extensions);
         it["ignores [DontGenerate]"] = () => {
-            var type = typeof(DontGenerateComponent);
-            var files = new ComponentsGenerator().Generate(new[] { type });
+            var componentInfo = DontGenerateComponent.componentInfo;
+            var files = new ComponentsGenerator().Generate(new[] { componentInfo });
             files.Length.should_be(0);
         };
 
-        it["works with namespaces"] = () => generates(typeof(NamespaceComponent), NamespaceComponent.extensions);
-        it["generates matchers for each pool"] = () => generates(typeof(CComponent), CComponent.extensions);
-        it["generates custom prefix"] = () => generates(typeof(CustomPrefixComponent), CustomPrefixComponent.extensions);
+        it["works with namespaces"] = () => generates(NamespaceComponent.componentInfo, NamespaceComponent.extensions);
+        it["generates matchers for each pool"] = () => generates(CComponent.componentInfo, CComponent.extensions);
+        it["generates custom prefix"] = () => generates(CustomPrefixComponent.componentInfo, CustomPrefixComponent.extensions);
     }
 }
 

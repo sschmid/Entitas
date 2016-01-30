@@ -3,6 +3,20 @@ using Entitas;
 
 [SingleEntity]
 public class AnimatingComponent : IComponent {
+    public static ComponentInfo componentInfo { 
+        get {
+            return new ComponentInfo(
+                typeof(AnimatingComponent).ToCompilableString(),
+                new ComponentFieldInfo[0],
+                new string[0],
+                true,
+                "is",
+                true,
+                true
+            );
+        }
+    }
+
     public static string extensions =
         @"namespace Entitas {
     public partial class Entity {
