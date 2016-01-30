@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Entitas.CodeGenerator {
     public class TypeReflectionProvider : ICodeGeneratorDataProvider {
@@ -25,14 +25,9 @@ namespace Entitas.CodeGenerator {
         }
 
         static ComponentInfo[] getComponentInfos(Type[] types) {
-            return getComponents(types)
-                .Select(createComponentInfo)
-                .ToArray();
-        }
-
-        static Type[] getComponents(Type[] types) {
             return types
                 .Where(type => type.GetInterfaces().Contains(typeof(IComponent)))
+                .Select(createComponentInfo)
                 .ToArray();
         }
 
@@ -49,31 +44,43 @@ namespace Entitas.CodeGenerator {
         }
 
         static ComponentFieldInfo[] getFieldInfos(Type type) {
-            return new ComponentFieldInfo[0];
+            return type.GetFields(BindingFlags.Instance | BindingFlags.Public)
+                .Select(field => new ComponentFieldInfo(field.FieldType.ToCompilableString(), field.Name))
+                .ToArray();
         }
 
         static string[] getPools(Type type) {
             return Attribute.GetCustomAttributes(type)
-                .Where(attr => attr is PoolAttribute)
-                .Select(attr => ((PoolAttribute)attr).poolName)
+                .OfType<PoolAttribute>()
+                .Select(attr => attr.poolName)
                 .OrderBy(poolName => poolName)
                 .ToArray();
         }
 
         static bool getIsSingleEntity(Type type) {
-            return false;
+            return Attribute.GetCustomAttributes(type)
+                .Any(attr => attr is SingleEntityAttribute);
         }
 
         static string getSingleComponentPrefix(Type type) {
-            return "is";
+            var attr = Attribute.GetCustomAttributes(type)
+                .OfType<CustomPrefixAttribute>()
+                .SingleOrDefault();
+
+            return attr == null ? "is" : attr.prefix;
         }
 
         static bool getGenerateMethods(Type type) {
-            return true;
+            return !Attribute.GetCustomAttributes(type)
+                .Any(attr => attr is DontGenerateAttribute);
         }
 
         static bool getGenerateIndex(Type type) {
-            return true;
+            var attr = Attribute.GetCustomAttributes(type)
+                .OfType<DontGenerateAttribute>()
+                .SingleOrDefault();
+
+            return attr == null || attr.generateIndex;
         }
     }
 }
