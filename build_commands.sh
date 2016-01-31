@@ -9,7 +9,7 @@ UCG="$ESU.CodeGenerator"
 UVD="$ESU.VisualDebugging"
 MIG="$ES.Migration"
 UMIG="$ESU.Migration"
-UNITY_TESTS="$UnityTests"
+UNITY_TESTS="UnityTests"
 
 collect_sources() {
   echo "Collecting sources..."
