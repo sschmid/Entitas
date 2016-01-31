@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
     public static class CodeGenerator {
+        public const string COMPONENT_SUFFIX = "Component";
         public const string DEFAULT_COMPONENT_LOOKUP_TAG = "ComponentIds";
 
         public static void Generate(ICodeGeneratorDataProvider provider, string directory, ICodeGenerator[] codeGenerators) {
@@ -58,6 +59,12 @@ namespace Entitas.CodeGenerator {
     }
 
     public static class CodeGeneratorExtensions {
+
+        public static string RemoveComponentSuffix(this string componentName) {
+            return componentName.EndsWith(CodeGenerator.COMPONENT_SUFFIX, StringComparison.Ordinal)
+                    ? componentName.Substring(0, componentName.Length - CodeGenerator.COMPONENT_SUFFIX.Length)
+                    : componentName;
+        }
 
         public static string[] ComponentLookupTags(this ComponentInfo componentInfo) {
             if (componentInfo.pools.Length == 0) {

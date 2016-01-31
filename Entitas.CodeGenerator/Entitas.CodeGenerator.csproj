@@ -56,10 +56,4 @@
     <Folder Include="Entitas.CodeGenerator\Generators\" />
     <Folder Include="Entitas.CodeGenerator\Attributes\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entitas\Entitas.csproj">
-      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
-      <Name>Entitas</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
