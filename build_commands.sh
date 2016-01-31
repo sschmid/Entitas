@@ -26,15 +26,13 @@ collect_sources() {
 update_project_dependencies() {
   echo "Updating project dependencies..."
 
-  ESU_LIBS_DIR="$ESU/Assets/Libraries"
   UCODEGEN_LIBS_DIR="$UCG/Assets/Libraries"
   UVD_LIBS_DIR="$UVD/Assets/Libraries"
   UMIG_LIBS_DIR="$UMIG/Assets/Libraries"
   UNITY_TESTS_LIBS_DIR="UnityTests/Assets/Libraries"
 
-  find $ESU_LIBS_DIR $UCODEGEN_LIBS_DIR $UVD_LIBS_DIR $UMIG_LIBS_DIR $UNITY_TESTS_LIBS_DIR -type f -name "*.cs" -delete
+  find $UCODEGEN_LIBS_DIR $UVD_LIBS_DIR $UMIG_LIBS_DIR $UNITY_TESTS_LIBS_DIR -type f -name "*.cs" -delete
 
-  cp -r $SRC_DIR/$ES $ESU_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$ESU} $UCODEGEN_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$ESU,$UCG} $UVD_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$MIG,$ESU,$UCG,$UVD} $UMIG_LIBS_DIR
