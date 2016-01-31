@@ -31,6 +31,7 @@ update_project_dependencies() {
   UMIG_LIBS_DIR="$UMIG/Assets/Libraries"
   UNITY_TESTS_LIBS_DIR="UnityTests/Assets/Libraries"
 
+  mkdir -p {$UCODEGEN_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
   find $UCODEGEN_LIBS_DIR $UVD_LIBS_DIR $UMIG_LIBS_DIR $UNITY_TESTS_LIBS_DIR -type f -name "*.cs" -delete
 
   cp -r $SRC_DIR/{$ES,$CG,$ESU} $UCODEGEN_LIBS_DIR
