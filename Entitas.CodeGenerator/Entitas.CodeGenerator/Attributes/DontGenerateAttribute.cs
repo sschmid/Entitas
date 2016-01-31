@@ -4,12 +4,10 @@ namespace Entitas.CodeGenerator {
 
     [AttributeUsage(AttributeTargets.Class)]
     public class DontGenerateAttribute : Attribute {
-        public bool generateIndex { get { return _generateIndex; } }
-
-        readonly bool _generateIndex;
+        public readonly bool generateIndex;
 
         public DontGenerateAttribute(bool generateIndex = true) {
-            _generateIndex = generateIndex;
+            this.generateIndex = generateIndex;
         }
     }
 }

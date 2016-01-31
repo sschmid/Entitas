@@ -18,9 +18,10 @@ namespace Entitas.CodeGenerator {
 
         public static string[] GetPoolNames(Type[] types) {
             return types
-                .Where(type => type.IsSubclassOf(typeof(PoolAttribute)))
+                .Where(type => type.BaseType != null)
+                .Where(type => hasBaseType(type, "Entitas.CodeGenerator.PoolAttribute"))
                 .Select(type => type.Name)
-                .Select(name => name.Replace(typeof(PoolAttribute).Name, string.Empty))
+                .Select(name => name.Replace("PoolAttribute", string.Empty))
                 .ToArray();
         }
 
@@ -51,36 +52,62 @@ namespace Entitas.CodeGenerator {
 
         public static string[] GetPools(Type type) {
             return Attribute.GetCustomAttributes(type)
-                .OfType<PoolAttribute>()
-                .Select(attr => attr.poolName)
+                .Where(attr => isTypeOrHasBaseType(attr.GetType(), "Entitas.CodeGenerator.PoolAttribute"))
+                .Select(attr => attr.GetType().GetField("poolName").GetValue(attr) as string)
                 .OrderBy(poolName => poolName)
                 .ToArray();
         }
 
         public static bool GetIsSingleEntity(Type type) {
             return Attribute.GetCustomAttributes(type)
-                .Any(attr => attr is SingleEntityAttribute);
+                .Any(attr => attr.GetType().FullName == "Entitas.CodeGenerator.SingleEntityAttribute");
         }
 
         public static string GetSingleComponentPrefix(Type type) {
             var attr = Attribute.GetCustomAttributes(type)
-                .OfType<CustomPrefixAttribute>()
-                .SingleOrDefault();
+                .SingleOrDefault(a => isTypeOrHasBaseType(a.GetType(), "Entitas.CodeGenerator.CustomPrefixAttribute"));
 
-            return attr == null ? "is" : attr.prefix;
+            return attr == null ? "is" : (string)attr.GetType().GetField("prefix").GetValue(attr);
         }
 
         public static bool GetGenerateMethods(Type type) {
-            return !Attribute.GetCustomAttributes(type)
-                .Any(attr => attr is DontGenerateAttribute);
+            return Attribute.GetCustomAttributes(type)
+                .All(attr => attr.GetType().FullName != "Entitas.CodeGenerator.DontGenerateAttribute");
         }
 
         public static bool GetGenerateIndex(Type type) {
             var attr = Attribute.GetCustomAttributes(type)
-                .OfType<DontGenerateAttribute>()
-                .SingleOrDefault();
+                .SingleOrDefault(a => isTypeOrHasBaseType(a.GetType(), "Entitas.CodeGenerator.DontGenerateAttribute"));
 
-            return attr == null || attr.generateIndex;
+            return attr == null || (bool)attr.GetType().GetField("generateIndex").GetValue(attr);
+        }
+
+        static bool hasBaseType(Type type, string fullTypeName) {
+            if (type.FullName == fullTypeName) {
+                return false;
+            }
+
+            var t = type;
+            while (t != null) {
+                if (t.FullName == fullTypeName) {
+                    return true;
+                }
+                t = t.BaseType;
+            }
+
+            return false;
+        }
+
+        static bool isTypeOrHasBaseType(Type type, string fullTypeName) {
+            var t = type;
+            while (t != null) {
+                if (t.FullName == fullTypeName) {
+                    return true;
+                }
+                t = t.BaseType;
+            }
+
+            return false;
         }
     }
 }
