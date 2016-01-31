@@ -15,7 +15,7 @@ namespace Entitas.Unity.CodeGenerator {
         UnityEditorInternal.ReorderableList _poolList;
 
         public void Initialize(EntitasPreferencesConfig config) {
-            _codeGenerators = CodeGenerator.GetCodeGenerators();
+            _codeGenerators = UnityCodeGenerator.GetCodeGenerators();
             var codeGeneratorNames = _codeGenerators.Select(cg => cg.Name).ToArray();
             _codeGeneratorConfig = new CodeGeneratorConfig(config, codeGeneratorNames);
 
@@ -96,7 +96,7 @@ namespace Entitas.Unity.CodeGenerator {
         static void drawGenerateButton() {
             EditorGUILayout.Space();
             if (GUILayout.Button("Generate")) {
-                CodeGenerator.Generate();
+                UnityCodeGenerator.Generate();
             }
         }
     }

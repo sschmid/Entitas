@@ -40,7 +40,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         static Dictionary<string, int> getPools(Type[] components) {
             return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
-                var lookupTags = type.PoolNames();
+                var lookupTags = TypeReflectionProvider.GetPools(type);
                 if (lookupTags.Length == 0) {
                     lookupTags = new [] { "Pool" };
                 }

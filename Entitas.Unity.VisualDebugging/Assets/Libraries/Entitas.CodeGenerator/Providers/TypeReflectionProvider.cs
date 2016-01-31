@@ -12,11 +12,11 @@ namespace Entitas.CodeGenerator {
         readonly ComponentInfo[] _componentInfos;
 
         public TypeReflectionProvider(Type[] types) {
-            _poolNames = getPoolNames(types);
-            _componentInfos = getComponentInfos(types);
+            _poolNames = GetPoolNames(types);
+            _componentInfos = GetComponentInfos(types);
         }
 
-        static string[] getPoolNames(Type[] types) {
+        public static string[] GetPoolNames(Type[] types) {
             return types
                 .Where(type => type.IsSubclassOf(typeof(PoolAttribute)))
                 .Select(type => type.Name)
@@ -24,32 +24,32 @@ namespace Entitas.CodeGenerator {
                 .ToArray();
         }
 
-        static ComponentInfo[] getComponentInfos(Type[] types) {
+        public static ComponentInfo[] GetComponentInfos(Type[] types) {
             return types
                 .Where(type => type.GetInterfaces().Contains(typeof(IComponent)))
-                .Select(createComponentInfo)
+                .Select(type => CreateComponentInfo(type))
                 .ToArray();
         }
 
-        static ComponentInfo createComponentInfo(Type type) {
+        public static ComponentInfo CreateComponentInfo(Type type) {
             return new ComponentInfo(
                 type.ToCompilableString(),
-                getFieldInfos(type),
-                getPools(type),
-                getIsSingleEntity(type),
-                getSingleComponentPrefix(type),
-                getGenerateMethods(type),
-                getGenerateIndex(type)
+                GetFieldInfos(type),
+                GetPools(type),
+                GetIsSingleEntity(type),
+                GetSingleComponentPrefix(type),
+                GetGenerateMethods(type),
+                GetGenerateIndex(type)
             );
         }
 
-        static ComponentFieldInfo[] getFieldInfos(Type type) {
+        public static ComponentFieldInfo[] GetFieldInfos(Type type) {
             return type.GetFields(BindingFlags.Instance | BindingFlags.Public)
                 .Select(field => new ComponentFieldInfo(field.FieldType.ToCompilableString(), field.Name))
                 .ToArray();
         }
 
-        static string[] getPools(Type type) {
+        public static string[] GetPools(Type type) {
             return Attribute.GetCustomAttributes(type)
                 .OfType<PoolAttribute>()
                 .Select(attr => attr.poolName)
@@ -57,12 +57,12 @@ namespace Entitas.CodeGenerator {
                 .ToArray();
         }
 
-        static bool getIsSingleEntity(Type type) {
+        public static bool GetIsSingleEntity(Type type) {
             return Attribute.GetCustomAttributes(type)
                 .Any(attr => attr is SingleEntityAttribute);
         }
 
-        static string getSingleComponentPrefix(Type type) {
+        public static string GetSingleComponentPrefix(Type type) {
             var attr = Attribute.GetCustomAttributes(type)
                 .OfType<CustomPrefixAttribute>()
                 .SingleOrDefault();
@@ -70,12 +70,12 @@ namespace Entitas.CodeGenerator {
             return attr == null ? "is" : attr.prefix;
         }
 
-        static bool getGenerateMethods(Type type) {
+        public static bool GetGenerateMethods(Type type) {
             return !Attribute.GetCustomAttributes(type)
                 .Any(attr => attr is DontGenerateAttribute);
         }
 
-        static bool getGenerateIndex(Type type) {
+        public static bool GetGenerateIndex(Type type) {
             var attr = Attribute.GetCustomAttributes(type)
                 .OfType<DontGenerateAttribute>()
                 .SingleOrDefault();
