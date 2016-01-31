@@ -5,14 +5,14 @@ using NSpec;
 
 class describe_ComponentsGenerator : nspec {
 
-    bool logResults = !false;
+    const bool logResults = false;
 
     const string classSuffix = "GeneratedExtension";
 
     void generates(ComponentInfo componentInfo, string expectedFileContent) {
         expectedFileContent = expectedFileContent.ToUnixLineEndings();
         var files = new ComponentsGenerator().Generate(new[] { componentInfo });
-        var expectedFilePath = componentInfo.type + classSuffix;
+        var expectedFilePath = componentInfo.fullTypeName + classSuffix;
 
         files.Length.should_be(1);
         var file = files[0];

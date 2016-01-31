@@ -50,6 +50,12 @@ class describe_Pool : nspec {
             e.componentPools.should_be_same(pool.componentPools);
         };
 
+        it["throws when destroying an entity the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {
+            var e = pool.CreateEntity();
+            pool.DestroyEntity(e);
+            pool.DestroyEntity(e);
+        });
+
         it["can ToString"] = () => {
             pool.ToString().should_be("Unnamed Pool");
         };
@@ -67,7 +73,7 @@ class describe_Pool : nspec {
                 pool.metaData.should_be_same(metaData);
             };
 
-            it["creates entity with PoolMetaData"] = () => {
+            it["creates entity with same PoolMetaData"] = () => {
                 pool.CreateEntity().poolMetaData.should_be_same(metaData);
             };
 
@@ -160,7 +166,7 @@ class describe_Pool : nspec {
                 }
             };
 
-            it["throws when destroying all entities and there are stille entities retained"] = expect<PoolStillHasRetainedEntitiesException>(() => {
+            it["throws when destroying all entities and there are still entities retained"] = expect<PoolStillHasRetainedEntitiesException>(() => {
                 pool.CreateEntity().Retain(new object());
                 pool.DestroyAllEntities();
             });
@@ -428,11 +434,6 @@ class describe_Pool : nspec {
                     g.GetEntities().should_not_contain(eAB1);
                 };
 
-                it["throws when destroying an entity the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {
-                    var e = pool.CreateEntity();
-                    pool.DestroyEntity(e);
-                    pool.DestroyEntity(e);
-                });
 
                 it["group dispatches OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
                     var g = pool.GetGroup(matcherAB);

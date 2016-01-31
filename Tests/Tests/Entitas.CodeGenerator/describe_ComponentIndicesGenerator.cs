@@ -2,20 +2,21 @@
 using Entitas.CodeGenerator;
 using System;
 using System.Linq;
+using My.Namespace;
 
 class describe_ComponentIndicesGenerator : nspec {
 
     const bool logResults = false;
 
-    void generates(ComponentInfo componentInfo, string lookupName, string lookupCode) {
+    static void generates(ComponentInfo componentInfo, string lookupName, string lookupCode) {
         generates(new [] { componentInfo }, lookupName, lookupCode);
     }
 
-    void generates(ComponentInfo[] componentInfos, string lookupName, string lookupCode) {
+    static void generates(ComponentInfo[] componentInfos, string lookupName, string lookupCode) {
         generates(componentInfos, new [] { lookupName }, new [] { lookupCode });
     }
 
-    void generates(ComponentInfo[] componentInfos, string[] lookupNames, string[] lookupCodes) {
+    static void generates(ComponentInfo[] componentInfos, string[] lookupNames, string[] lookupCodes) {
         var files = new ComponentIndicesGenerator().Generate(componentInfos);
         files.Length.should_be(lookupNames.Length);
 
@@ -32,7 +33,7 @@ class describe_ComponentIndicesGenerator : nspec {
         }
     }
 
-    void generatesEmptyLookup(string[] poolNames, string[] lookupNames, string[] lookupCodes) {
+    static void generatesEmptyLookup(string[] poolNames, string[] lookupNames, string[] lookupCodes) {
         var files = new ComponentIndicesGenerator().Generate(poolNames);
         files.Length.should_be(poolNames.Length == 0 ? 1 : poolNames.Length);
 
@@ -64,6 +65,25 @@ class describe_ComponentIndicesGenerator : nspec {
 
     public static readonly System.Type[] componentTypes = {
         typeof(SomeComponent)
+    };
+}");
+        };
+
+
+
+        it["generates compatible field names for components with namespace"] = () => {
+            generates(NamespaceComponent.componentInfo, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
+                @"public static class ComponentIds {
+    public const int Namespace = 0;
+
+    public const int TotalComponents = 1;
+
+    public static readonly string[] componentNames = {
+        ""Namespace""
+    };
+
+    public static readonly System.Type[] componentTypes = {
+        typeof(My.Namespace.NamespaceComponent)
     };
 }");
         };

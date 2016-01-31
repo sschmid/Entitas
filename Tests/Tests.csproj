@@ -25,7 +25,7 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -175,7 +175,6 @@
     <Compile Include="Libraries\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Generators\PoolsGenerator.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_GeneratedComponent.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Generators\TypeToCompilableStringExtension.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Generators\ComponentsGenerator.cs" />
     <Compile Include="Libraries\Entitas.CodeGenerator\Generators\ComponentIndicesGenerator.cs" />
@@ -190,6 +189,7 @@
     <Compile Include="Tests\Entitas.CodeGenerator\describe_TypeReflectionProvider.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Fixtures\TestPoolAttribute.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_ComponentIndicesGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_GeneratedComponents.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

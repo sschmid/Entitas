@@ -26,7 +26,7 @@ namespace Entitas.CodeGenerator {
         // Important: This method should be called after Generate(poolNames)
         // This will overwrite the empty lookups with the actual content.
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
-            var orderedComponentInfos = componentInfos.OrderBy(info => info.type).ToArray();
+            var orderedComponentInfos = componentInfos.OrderBy(info => info.typeName).ToArray();
             var lookupTagToComponentInfosMap = getLookupTagToComponentInfosMap(orderedComponentInfos);
             return lookupTagToComponentInfosMap
                 .Aggregate(new List<CodeGenFile>(), (files, kv) => {
@@ -101,7 +101,7 @@ namespace Entitas.CodeGenerator {
             for (int i = 0; i < componentInfos.Length; i++) {
                 var info = componentInfos[i];
                 if (info != null) {
-                    code += string.Format(fieldFormat, info.type.RemoveComponentSuffix(), i);
+                    code += string.Format(fieldFormat, info.typeName.RemoveComponentSuffix(), i);
                 }
             }
 
@@ -115,7 +115,7 @@ namespace Entitas.CodeGenerator {
             for (int i = 0; i < componentInfos.Length; i++) {
                 var info = componentInfos[i];
                 if (info != null) {
-                    code += string.Format(format, i, info.type.RemoveComponentSuffix());
+                    code += string.Format(format, i, info.typeName.RemoveComponentSuffix());
                 }
             }
             if (code.EndsWith(",\n")) {
@@ -134,7 +134,7 @@ namespace Entitas.CodeGenerator {
             for (int i = 0; i < componentInfos.Length; i++) {
                 var info = componentInfos[i];
                 if (info != null) {
-                    code += string.Format(format, i, info.type);
+                    code += string.Format(format, i, info.fullTypeName);
                 }
             }
             if (code.EndsWith(",\n")) {

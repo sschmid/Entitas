@@ -31,34 +31,34 @@ class describe_TypeToCompilableStringExtension : nspec {
         };
 
         context["custom types"] = () => {
-            it["generates Entitas.Entity"] = () => generate<Entity>().should_be("Entitas.Entity");
+            it["generates type string with namespace"] = () => generate<Entity>().should_be("Entitas.Entity");
         };
 
         context["array"] = () => {
-            it["generates int[]"] = () => generate<int[]>().should_be("int[]");
-            it["generates int[,]"] = () => generate<int[,]>().should_be("int[,]");
-            it["generates int[,,]"] = () => generate<int[,,]>().should_be("int[,,]");
-            it["generates int[][]"] = () => generate<int[][]>().should_be("int[][]");
+            it["generates array rank 1"] = () => generate<int[]>().should_be("int[]");
+            it["generates array rank 2"] = () => generate<int[,]>().should_be("int[,]");
+            it["generates array rank 3"] = () => generate<int[,,]>().should_be("int[,,]");
+            it["generates array of arrays"] = () => generate<int[][]>().should_be("int[][]");
         };
 
         context["generics"] = () => {
-            it["generates List<int>"] = () => generate<List<int>>().should_be("System.Collections.Generic.List<int>");
-            it["generates HashSet<Entity>"] = () => generate<HashSet<Entity>>().should_be("System.Collections.Generic.HashSet<Entitas.Entity>");
-            it["generates Dictionary<string, Entity>"] = () => generate<Dictionary<string, Entity>>().should_be("System.Collections.Generic.Dictionary<string, Entitas.Entity>");
+            it["generates List<T>"] = () => generate<List<int>>().should_be("System.Collections.Generic.List<int>");
+            it["generates HashSet<T>"] = () => generate<HashSet<Entity>>().should_be("System.Collections.Generic.HashSet<Entitas.Entity>");
+            it["generates Dictionary<T1, T2>"] = () => generate<Dictionary<string, Entity>>().should_be("System.Collections.Generic.Dictionary<string, Entitas.Entity>");
         };
 
         context["enum"] = () => {
-            it["generates TestEnum"] = () => generate<TestEnum>().should_be("TestEnum");
-            it["generates NestedTest.NestedTestEnum"] = () => generate<NestedTest.NestedTestEnum>().should_be("NestedTest.NestedTestEnum");
+            it["generates enum"] = () => generate<TestEnum>().should_be("TestEnum");
+            it["generates nested enum"] = () => generate<NestedTest.NestedTestEnum>().should_be("NestedTest.NestedTestEnum");
         };
 
         context["nested"] = () => {
-            it["generates NestedClass.InnerClass"] = () => generate<NestedClass.InnerClass>().should_be("NestedClass.InnerClass");
+            it["generates nested class"] = () => generate<NestedClass.InnerClass>().should_be("NestedClass.InnerClass");
         };
 
         context["mixed"] = () => {
-            it["generates List<int>[,]"] = () => generate<List<int>[,]>().should_be("System.Collections.Generic.List<int>[,]");
-            it["generates Dictionary<List<NestedTest.NestedTestEnum>[,], Entity>[]"] = () => generate<Dictionary<List<NestedTest.NestedTestEnum>[,], Entity>[]>().should_be("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest.NestedTestEnum>[,], Entitas.Entity>[]");
+            it["generates List<T>[,]"] = () => generate<List<int>[,]>().should_be("System.Collections.Generic.List<int>[,]");
+            it["generates Dictionary<List<T>[,], T2>[]"] = () => generate<Dictionary<List<NestedTest.NestedTestEnum>[,], Entity>[]>().should_be("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest.NestedTestEnum>[,], Entitas.Entity>[]");
         };
     }
 }

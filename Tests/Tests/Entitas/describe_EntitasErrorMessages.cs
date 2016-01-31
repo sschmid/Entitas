@@ -3,7 +3,7 @@ using Entitas;
 using System;
 
 class describe_EntitasErrorMessages : nspec {
-    void printErrorMessage(Action action) {
+    static void printErrorMessage(Action action) {
         try {
             action();
         } catch (Exception exception) {
@@ -108,7 +108,7 @@ class describe_EntitasErrorMessages : nspec {
 
         context["Pool"] = () => {
 
-            it["wrong MetaData"] = () => printErrorMessage(() => {
+            it["wrong PoolMetaData componentNames count"] = () => printErrorMessage(() => {
                 var componentNames = new [] { "Health", "Position", "View" };
                 var metaData = new PoolMetaData("My Pool", componentNames);
                 new Pool(1, 0, metaData);
@@ -130,7 +130,7 @@ class describe_EntitasErrorMessages : nspec {
 
         context["CollectionExtension"] = () => {
             
-            it["more than one entity"] = () => printErrorMessage(() => {
+            it["get single entity when more than one exist"] = () => printErrorMessage(() => {
                 new Entity[2].SingleEntity();
             });
         };

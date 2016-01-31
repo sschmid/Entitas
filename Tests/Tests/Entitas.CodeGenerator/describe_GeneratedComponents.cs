@@ -2,7 +2,7 @@
 using Entitas;
 using System;
 
-class describe_GeneratedComponent : nspec {
+class describe_GeneratedComponents : nspec {
     void when_generated() {
 
         Pool pool = null;

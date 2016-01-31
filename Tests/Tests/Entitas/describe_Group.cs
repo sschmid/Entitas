@@ -95,7 +95,7 @@ class describe_Group : nspec {
             _groupA.GetSingleEntity();
         });
 
-        it["reset removes all event handlers"] = () => {
+        it["removes all event handlers"] = () => {
             _groupA.OnEntityAdded += (group, entity, index, component) => this.Fail();
             _groupA.OnEntityRemoved += (group, entity, index, component) => this.Fail();
             _groupA.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => this.Fail();

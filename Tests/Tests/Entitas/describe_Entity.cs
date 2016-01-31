@@ -56,7 +56,7 @@ class describe_Entity : nspec {
                 e.poolMetaData.should_be_same(poolMetaData);
             };
 
-            it["throws when attempting to get component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
+            it["throws when attempting to get component at index which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
                 e.GetComponentA();
             });
 
@@ -68,15 +68,15 @@ class describe_Entity : nspec {
                 e.GetComponentIndices().should_be_empty();
             };
 
-            it["doesn't have component of type when no component of that type was added"] = () => {
+            it["doesn't have component at index when no component was added"] = () => {
                 e.HasComponentA().should_be_false();
             };
 
-            it["doesn't have components of types when no components of these types were added"] = () => {
+            it["doesn't have components at indices when no components were added"] = () => {
                 e.HasComponents(_indicesA).should_be_false();
             };
 
-            it["doesn't have any components of types when no components of these types were added"] = () => {
+            it["doesn't have any components at indices when no components were added"] = () => {
                 e.HasAnyComponent(_indicesA).should_be_false();
             };
 
@@ -89,7 +89,7 @@ class describe_Entity : nspec {
                 assertHasComponentA(e);
             };
 
-            it["throws when attempting to remove a component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
+            it["throws when attempting to remove a component at index which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
                 e.RemoveComponentA();
             });
 
@@ -113,7 +113,7 @@ class describe_Entity : nspec {
                 e.AddComponentA();
             };
 
-            it["throws when adding a component of the same type twice"] = expect<EntityAlreadyHasComponentException>(() => {
+            it["throws when adding a component at the same index twice"] = expect<EntityAlreadyHasComponentException>(() => {
                 e.AddComponentA();
                 e.AddComponentA();
             });
@@ -122,7 +122,7 @@ class describe_Entity : nspec {
                 e.RemoveComponent(CID.ComponentA).should_be_same(e);
             };
 
-            it["removes a component of type"] = () => {
+            it["removes a component at index"] = () => {
                 e.RemoveComponentA();
                 assertHasNotComponentA(e);
             };
@@ -137,11 +137,11 @@ class describe_Entity : nspec {
                 assertHasComponentA(e, newComponentA);
             };
 
-            it["doesn't have components of types when not all components of these types were added"] = () => {
+            it["doesn't have components at indices when not all components were added"] = () => {
                 e.HasComponents(_indicesAB).should_be_false();
             };
 
-            it["has any components of types when any component of these types was added"] = () => {
+            it["has any components at indices when any component was added"] = () => {
                 e.HasAnyComponent(_indicesAB).should_be_true();
             };
 
@@ -168,7 +168,7 @@ class describe_Entity : nspec {
                     e.HasComponentB().should_be_true();
                 };
 
-                it["has components of types when all components of these types were added"] = () => {
+                it["has components at indices when all components were added"] = () => {
                     e.HasComponents(_indicesAB).should_be_true();
                 };
 

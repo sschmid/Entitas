@@ -12,7 +12,7 @@ namespace Entitas.CodeGenerator {
                 .Where(info => info.generateMethods)
                 .Aggregate(new List<CodeGenFile>(), (files, info) => {
                     files.Add(new CodeGenFile {
-                        fileName = info.type + CLASS_SUFFIX,
+                        fileName = info.fullTypeName + CLASS_SUFFIX,
                         fileContent = generateComponentExtension(info).ToUnixLineEndings()
                     });
                     return files;
@@ -276,10 +276,8 @@ $assign
 
         static string buildString(ComponentInfo componentInfo, string format) {
             format = createFormatString(format);
-            var a0_type = componentInfo.type;
-            // Might contain namespace, e.g. MyNamespace.MyComponent
-            var nameSplit = componentInfo.type.RemoveComponentSuffix().Split('.');
-            var a1_name = nameSplit[nameSplit.Length - 1];
+            var a0_type = componentInfo.fullTypeName;
+            var a1_name = componentInfo.typeName.RemoveComponentSuffix();
             var a2_lowercaseName = a1_name.LowercaseFirst();
             var poolNames = componentInfo.pools;
             var a3_tag = poolNames.Length == 0 ? string.Empty : poolNames[0];

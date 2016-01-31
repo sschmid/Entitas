@@ -90,7 +90,7 @@ class describe_Matcher : nspec {
 
             it["can ToString"] = () => m.ToString().should_be("AllOf(1, 2)");
 
-            it["resolves index when componentNames is set"] = () => {
+            it["uses componentNames when set"] = () => {
                 var matcher = (Matcher)m;
                 matcher.componentNames = new [] { "one", "two", "three" };
                 matcher.ToString().should_be("AllOf(two, three)");
@@ -219,7 +219,7 @@ class describe_Matcher : nspec {
 
             it["can ToString"] = () => m.ToString().should_be("AllOf(1, 2).NoneOf(3, 4)");
 
-            it["resolves index when componentNames is set"] = () => {
+            it["uses componentNames when componentNames set"] = () => {
                 var matcher = (Matcher)m;
                 matcher.componentNames = new [] { "one", "two", "three", "four", "five" };
                 matcher.ToString().should_be("AllOf(two, three).NoneOf(four, five)");
