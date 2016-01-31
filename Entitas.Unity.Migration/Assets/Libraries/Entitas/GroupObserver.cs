@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Entitas {
-
     public enum GroupEventType : byte {
         OnEntityAdded,
         OnEntityRemoved,
         OnEntityAddedOrRemoved
     }
 
-    /// A GroupObserver can observe one or more groups and collects changed entities based on the specified eventType.
     public class GroupObserver {
-
-        /// Returns all collected entities. Call observer.ClearCollectedEntities() once you processed all entities.
         public HashSet<Entity> collectedEntities { get { return _collectedEntities; } }
 
         readonly HashSet<Entity> _collectedEntities;
@@ -22,12 +18,10 @@ namespace Entitas {
         Group.GroupChanged _addEntityCache;
         string _toStringCache;
 
-        /// Creates a GroupObserver and will collect changed entities based on the specified eventType. 
         public GroupObserver(Group group, GroupEventType eventType)
             : this(new [] { group }, new [] { eventType }) {
         }
 
-        /// Creates a GroupObserver and will collect changed entities based on the specified eventTypes. 
         public GroupObserver(Group[] groups, GroupEventType[] eventTypes) {
             if (groups.Length != eventTypes.Length) {
                 throw new GroupObserverException("Unbalanced count with groups (" + groups.Length +
@@ -42,7 +36,6 @@ namespace Entitas {
             Activate();
         }
 
-        /// Activates the GroupObserver (GroupObserver are activated by default) and will start collecting changed entities.
         public void Activate() {
             for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
                 var group = _groups[i];
@@ -62,8 +55,6 @@ namespace Entitas {
             }
         }
 
-        /// Deactivates the GroupObserver (GroupObserver are activated by default).
-        /// This will also clear all collected entities.
         public void Deactivate() {
             for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
                 var group = _groups[i];
@@ -73,7 +64,6 @@ namespace Entitas {
             ClearCollectedEntities();
         }
 
-        /// Clears all collected entities.
         public void ClearCollectedEntities() {
             foreach (var entity in _collectedEntities) {
                 entity.Release(this);

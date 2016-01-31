@@ -3,33 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Entitas {
-
-    /// Use pool.CreateEntity() to create a new entity and pool.DestroyEntity() to destroy it.
-    /// You can add, replace and remove IComponent to an entity.
     public partial class Entity {
-
-        /// Occurs when a component gets added. All event handlers will be removed when the entity gets destroyed by the pool.
         public event EntityChanged OnComponentAdded;
-
-        /// Occurs when a component gets removed. All event handlers will be removed when the entity gets destroyed by the pool.
         public event EntityChanged OnComponentRemoved;
-
-        /// Occurs when a component gets replaced. All event handlers will be removed when the entity gets destroyed by the pool.
         public event ComponentReplaced OnComponentReplaced;
 
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
         public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
-        /// Each entity has its own unique creationIndex which will be set by the pool when you create the entity.
         public int creationIndex { get { return _creationIndex; } }
-
-        /// componentPools is set by the pool which created the entity and is used to reuse removed components.
-        /// The componentPools are managed by the generated methods from the code generator.
-        /// Use entity.GetComponentPool(index) to get a componentPool for a specific component index.
         public Stack<IComponent>[] componentPools { get { return _componentPools; } }
-
-        /// The poolMetaData is set by the pool which created the entity and contains information about the pool.
-        /// It's used to provide better error messages.
         public PoolMetaData poolMetaData { get { return _poolMetaData; } }
 
         internal int _creationIndex;
@@ -43,7 +26,6 @@ namespace Entitas {
         int[] _componentIndicesCache;
         string _toStringCache;
 
-        /// Use pool.CreateEntity() to create a new entity and pool.DestroyEntity() to destroy it.
         public Entity(int totalComponents, Stack<IComponent>[] componentPools, PoolMetaData poolMetaData = null) {
             _components = new IComponent[totalComponents];
             _componentPools = componentPools;
@@ -59,9 +41,6 @@ namespace Entitas {
             }
         }
 
-        /// Adds a component at a certain index. You can only have one component at an index.
-        /// Each component type must have its own constant index.
-        /// The prefered way is to use the generated methods from the code generator.
         public Entity AddComponent(int index, IComponent component) {
             if (!_isEnabled) {
                 throw new EntityIsNotEnabledException("Cannot add component '" + _poolMetaData.componentNames[index] + "' to " + this + "!");
@@ -86,8 +65,6 @@ namespace Entitas {
             return this;
         }
 
-        /// Removes a component at a certain index. You can only remove a component at an index if it exists.
-        /// The prefered way is to use the generated methods from the code generator.
         public Entity RemoveComponent(int index) {
             if (!_isEnabled) {
                 throw new EntityIsNotEnabledException("Cannot remove component '" + _poolMetaData.componentNames[index] + "' from " + this + "!");
@@ -106,8 +83,6 @@ namespace Entitas {
             return this;
         }
 
-        /// Replaces an existing component at a certain index or adds it if it doesn't exist yet.
-        /// The prefered way is to use the generated methods from the code generator.
         public Entity ReplaceComponent(int index, IComponent component) {
             if (!_isEnabled) {
                 throw new EntityIsNotEnabledException("Cannot replace component '" + _poolMetaData.componentNames[index] + "' on " + this + "!");
@@ -146,8 +121,6 @@ namespace Entitas {
             }
         }
 
-        /// Returns a component at a certain index. You can only get a component at an index if it exists.
-        /// The prefered way is to use the generated methods from the code generator.
         public IComponent GetComponent(int index) {
             if (!HasComponent(index)) {
                 throw new EntityDoesNotHaveComponentException(
@@ -160,7 +133,6 @@ namespace Entitas {
             return _components[index];
         }
 
-        /// Returns all added components.
         public IComponent[] GetComponents() {
             if (_componentsCache == null) {
                 var components = new List<IComponent>(16);
@@ -177,7 +149,6 @@ namespace Entitas {
             return _componentsCache;
         }
 
-        /// Returns all indices of added components.
         public int[] GetComponentIndices() {
             if (_componentIndicesCache == null) {
                 var indices = new List<int>(16);
@@ -193,12 +164,10 @@ namespace Entitas {
             return _componentIndicesCache;
         }
 
-        /// Determines whether this entity has a component at the specified index.
         public bool HasComponent(int index) {
             return _components[index] != null;
         }
 
-        /// Determines whether this entity has components at all the specified indices.
         public bool HasComponents(int[] indices) {
             for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
                 if (_components[indices[i]] == null) {
@@ -209,7 +178,6 @@ namespace Entitas {
             return true;
         }
 
-        /// Determines whether this entity has a component at any of the specified indices.
         public bool HasAnyComponent(int[] indices) {
             for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
                 if (_components[indices[i]] != null) {
@@ -220,7 +188,6 @@ namespace Entitas {
             return false;
         }
 
-        /// Removes all components.
         public void RemoveAllComponents() {
             _toStringCache = null;
             for (int i = 0, componentsLength = _components.Length; i < componentsLength; i++) {
@@ -230,9 +197,6 @@ namespace Entitas {
             }
         }
 
-        /// Returns the componentPool for the specified component index.
-        /// componentPools is set by the pool which created the entity and is used to reuse removed components.
-        /// The componentPools are managed by the generated methods from the code generator.
         public Stack<IComponent> GetComponentPool(int index) {
             var componentPool = _componentPools[index];
             if (componentPool == null) {
@@ -265,7 +229,7 @@ namespace Entitas {
                 var components = GetComponents();
                 var lastSeparator = components.Length - 1;
                 for (int i = 0, componentsLength = components.Length; i < componentsLength; i++) {
-                    sb.Append(components[i].GetType().RemoveComponentSuffix());
+                    sb.Append(components[i].GetType().Name.RemoveComponentSuffix());
                     if (i < lastSeparator) {
                         sb.Append(separator);
                     }
@@ -311,31 +275,21 @@ namespace Entitas {
     }
 
     public partial class Entity {
-
-        /// Occurs when an entity gets released and is not retained by any object anymore.
         public event EntityReleased OnEntityReleased;
-
         public delegate void EntityReleased(Entity entity);
 
         #if ENTITAS_FAST_AND_UNSAFE
 
-        /// Returns the number of objects that retain this entity.
         public int retainCount { get { return _retainCount; } }
         int _retainCount;
 
         #else
 
-        /// Returns the number of objects that retain this entity.
         public int retainCount { get { return owners.Count; } }
-
-        /// Returns all the objects that retain this entity.
         public readonly HashSet<object> owners = new HashSet<object>();
 
         #endif
 
-        /// Retains the entity. An owner can only retain the same entity once.
-        /// Retain/Release is part of AERC (Automatic Entity Reference Counting) and is used internally to prevent pooling retained entities.
-        /// If you use retain manually you also have to release it manually at some point.
         public Entity Retain(object owner) {
 
             #if ENTITAS_FAST_AND_UNSAFE
@@ -353,9 +307,6 @@ namespace Entitas {
             return this;
         }
 
-        /// Releases the entity. An owner can only release an entity if it retains it.
-        /// Retain/Release is part of AERC (Automatic Entity Reference Counting) and is used internally to prevent pooling retained entities.
-        /// If you use retain manually you also have to release it manually at some point.
         public void Release(object owner) {
 
             #if ENTITAS_FAST_AND_UNSAFE
@@ -397,10 +348,10 @@ namespace Entitas {
     public static class EntityExtension {
         public const string COMPONENT_SUFFIX = "Component";
 
-        public static string RemoveComponentSuffix(this Type type) {
-            return type.Name.EndsWith(COMPONENT_SUFFIX)
-                ? type.Name.Substring(0, type.Name.Length - COMPONENT_SUFFIX.Length)
-                    : type.Name;
+        public static string RemoveComponentSuffix(this string componentName) {
+            return componentName.EndsWith(COMPONENT_SUFFIX)
+                    ? componentName.Substring(0, componentName.Length - COMPONENT_SUFFIX.Length)
+                    : componentName;
         }
     }
 }

@@ -1,41 +1,28 @@
-using System.Collections.Generic;
-
 namespace Entitas {
     public partial class Entity {
         public UserComponent user { get { return (UserComponent)GetComponent(ComponentIds.User); } }
 
         public bool hasUser { get { return HasComponent(ComponentIds.User); } }
 
-        static readonly Stack<UserComponent> _userComponentPool = new Stack<UserComponent>();
-
-        public static void ClearUserComponentPool() {
-            _userComponentPool.Clear();
-        }
-
         public Entity AddUser(string newName, int newAge) {
-            var component = _userComponentPool.Count > 0 ? _userComponentPool.Pop() : new UserComponent();
+            var componentPool = GetComponentPool(ComponentIds.User);
+            var component = (UserComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UserComponent());
             component.name = newName;
             component.age = newAge;
             return AddComponent(ComponentIds.User, component);
         }
 
         public Entity ReplaceUser(string newName, int newAge) {
-            var previousComponent = hasUser ? user : null;
-            var component = _userComponentPool.Count > 0 ? _userComponentPool.Pop() : new UserComponent();
+            var componentPool = GetComponentPool(ComponentIds.User);
+            var component = (UserComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UserComponent());
             component.name = newName;
             component.age = newAge;
             ReplaceComponent(ComponentIds.User, component);
-            if (previousComponent != null) {
-                _userComponentPool.Push(previousComponent);
-            }
             return this;
         }
 
         public Entity RemoveUser() {
-            var component = user;
-            RemoveComponent(ComponentIds.User);
-            _userComponentPool.Push(component);
-            return this;
+            return RemoveComponent(ComponentIds.User);;
         }
     }
 
