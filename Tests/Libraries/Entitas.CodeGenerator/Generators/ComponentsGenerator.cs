@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
@@ -10,12 +9,9 @@ namespace Entitas.CodeGenerator {
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
             return componentInfos
                 .Where(info => info.generateMethods)
-                .Aggregate(new List<CodeGenFile>(), (files, info) => {
-                    files.Add(new CodeGenFile {
-                        fileName = info.fullTypeName + CLASS_SUFFIX,
-                        fileContent = generateComponentExtension(info).ToUnixLineEndings()
-                    });
-                    return files;
+                .Select(info => new CodeGenFile {
+                    fileName = info.fullTypeName + CLASS_SUFFIX,
+                    fileContent = generateComponentExtension(info).ToUnixLineEndings()
                 }).ToArray();
         }
 

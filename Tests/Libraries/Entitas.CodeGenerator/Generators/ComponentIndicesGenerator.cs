@@ -13,13 +13,10 @@ namespace Entitas.CodeGenerator {
                 poolNames = new [] { string.Empty };
             }
             return poolNames
-                .Aggregate(new List<CodeGenFile>(), (files, poolName) => {
-                    var lookupTag = poolName + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG;
-                    files.Add(new CodeGenFile {
-                        fileName = lookupTag,
-                        fileContent = generateIndicesLookup(lookupTag, emptyInfos).ToUnixLineEndings()
-                    });
-                    return files;
+                .Select(poolName => poolName + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
+                .Select(lookupTag => new CodeGenFile {
+                    fileName = lookupTag,
+                    fileContent = generateIndicesLookup(lookupTag, emptyInfos).ToUnixLineEndings()
                 }).ToArray();
         }
 
@@ -29,14 +26,9 @@ namespace Entitas.CodeGenerator {
             var orderedComponentInfos = componentInfos.OrderBy(info => info.typeName).ToArray();
             var lookupTagToComponentInfosMap = getLookupTagToComponentInfosMap(orderedComponentInfos);
             return lookupTagToComponentInfosMap
-                .Aggregate(new List<CodeGenFile>(), (files, kv) => {
-                    var lookupTag = kv.Key;
-                    var infos = kv.Value.ToArray();
-                    files.Add(new CodeGenFile {
-                        fileName = lookupTag,
-                        fileContent = generateIndicesLookup(lookupTag, infos).ToUnixLineEndings()
-                    });
-                    return files;
+                .Select(kv => new CodeGenFile {
+                    fileName = kv.Key,
+                    fileContent = generateIndicesLookup(kv.Key, kv.Value.ToArray()).ToUnixLineEndings()
                 }).ToArray();
         }
 
@@ -44,10 +36,7 @@ namespace Entitas.CodeGenerator {
             var currentIndex = 0;
             var orderedComponentInfoToLookupTagsMap = componentInfos
                 .Where(info => info.generateIndex)
-                .Aggregate(new Dictionary<ComponentInfo, string[]>(), (map, info) => {
-                    map.Add(info, info.ComponentLookupTags());
-                    return map;
-                })
+                .ToDictionary(info => info, info => info.ComponentLookupTags())
                 .OrderByDescending(kv => kv.Value.Length);
 
             return orderedComponentInfoToLookupTagsMap
