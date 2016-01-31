@@ -27,7 +27,7 @@ namespace Entitas.CodeGenerator {
         static ComponentInfo[] getComponentInfos(Type[] types) {
             return types
                 .Where(type => type.GetInterfaces().Contains(typeof(IComponent)))
-                .Select(createComponentInfo)
+                .Select(type => createComponentInfo(type))
                 .ToArray();
         }
 
