@@ -126,6 +126,7 @@ public static class Pools {
         var files = new PoolsGenerator().Generate(poolNames);
         files.Length.should_be(1);
         var file = files[0];
+        #pragma warning disable
         if (logResults) {
             Console.WriteLine("should:\n" + fileContent);
             Console.WriteLine("was:\n" + file.fileContent);

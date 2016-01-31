@@ -25,6 +25,7 @@ class describe_ComponentIndicesGenerator : nspec {
             var expectedLookupCode = lookupCodes[i].ToUnixLineEndings();;
             files.Any(f => f.fileName == lookupName).should_be_true();
             var file = files.Single(f => f.fileName == lookupName);
+            #pragma warning disable
             if (logResults) {
                 Console.WriteLine("should:\n" + expectedLookupCode);
                 Console.WriteLine("was:\n" + file.fileContent);

@@ -17,6 +17,7 @@ class describe_ComponentsGenerator : nspec {
         files.Length.should_be(1);
         var file = files[0];
 
+        #pragma warning disable
         if (logResults) {
             Console.WriteLine("should:\n" + expectedFileContent);
             Console.WriteLine("was:\n" + file.fileContent);

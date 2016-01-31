@@ -14,6 +14,7 @@ public static class Pools {
         }
     }
 
+    #pragma warning disable
     static Pool _test;
 
     public static Pool test {
