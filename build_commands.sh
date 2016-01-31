@@ -9,6 +9,7 @@ UCG="$ESU.CodeGenerator"
 UVD="$ESU.VisualDebugging"
 MIG="$ES.Migration"
 UMIG="$ESU.Migration"
+UNITY_TESTS="$UnityTests"
 
 collect_sources() {
   echo "Collecting sources..."
@@ -18,7 +19,6 @@ collect_sources() {
 
   cp -r {"$ES/$ES","$CG/$CG","$MIG/$MIG","$ESU/Assets/$ESU","$UCG/Assets/$UCG","$UVD/Assets/$UVD","$UMIG/Assets/$UMIG"} $SRC_DIR
   find "./$SRC_DIR" -name "*.meta" -type f -delete
-  find "./$SRC_DIR" -name "*.DS_Store" -type f -delete
 
   echo "Collecting sources done."
 }
@@ -26,15 +26,15 @@ collect_sources() {
 update_project_dependencies() {
   echo "Updating project dependencies..."
 
-  UCODEGEN_LIBS_DIR="$UCG/Assets/Libraries"
+  UCG_LIBS_DIR="$UCG/Assets/Libraries"
   UVD_LIBS_DIR="$UVD/Assets/Libraries"
   UMIG_LIBS_DIR="$UMIG/Assets/Libraries"
   UNITY_TESTS_LIBS_DIR="UnityTests/Assets/Libraries"
 
-  mkdir -p {$UCODEGEN_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
-  find $UCODEGEN_LIBS_DIR $UVD_LIBS_DIR $UMIG_LIBS_DIR $UNITY_TESTS_LIBS_DIR -type f -name "*.cs" -delete
+  rm -rf {$UCG_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
+  mkdir {$UCG_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
 
-  cp -r $SRC_DIR/{$ES,$CG,$ESU} $UCODEGEN_LIBS_DIR
+  cp -r $SRC_DIR/{$ES,$CG,$ESU} $UCG_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$ESU,$UCG} $UVD_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$MIG,$ESU,$UCG,$UVD} $UMIG_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$ESU,$UCG,$UVD} $UNITY_TESTS_LIBS_DIR
@@ -50,6 +50,8 @@ generateProjectFiles() {
   /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath $PWD/$UCG -executeMethod Commands.GenerateProjectFiles
   /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath $PWD/$UVD -executeMethod Commands.GenerateProjectFiles
   /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath $PWD/$UMIG -executeMethod Commands.GenerateProjectFiles
+  /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath $PWD/$UNITY_TESTS -executeMethod Commands.GenerateProjectFiles
+
   echo "Generating project files done."
 }
 
