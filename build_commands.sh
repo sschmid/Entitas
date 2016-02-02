@@ -2,12 +2,18 @@
 BIN_DIR="bin"
 SRC_DIR="$BIN_DIR/Sources"
 
+# csharp
 ES="Entitas"
 CG="$ES.CodeGenerator"
+MIG="$ES.Migration"
+
+# Code Generators
+CG_TR="$CG.TypeReflection"
+
+# Unity
 ESU="$ES.Unity"
 UCG="$ESU.CodeGenerator"
 UVD="$ESU.VisualDebugging"
-MIG="$ES.Migration"
 UMIG="$ESU.Migration"
 UNITY_TESTS="UnityTests"
 
@@ -17,7 +23,7 @@ collect_sources() {
   rm -rf $BIN_DIR
   mkdir $BIN_DIR $SRC_DIR
 
-  cp -r {"$ES/$ES","$CG/$CG","$MIG/$MIG","$ESU/Assets/$ESU","$UCG/Assets/$UCG","$UVD/Assets/$UVD","$UMIG/Assets/$UMIG"} $SRC_DIR
+  cp -r {"$ES/$ES","$CG/$CG","$MIG/$MIG","$CG_TR/$CG_TR","$ESU/Assets/$ESU","$UCG/Assets/$UCG","$UVD/Assets/$UVD","$UMIG/Assets/$UMIG"} $SRC_DIR
   find "./$SRC_DIR" -name "*.meta" -type f -delete
 
   echo "Collecting sources done."
@@ -34,10 +40,10 @@ update_project_dependencies() {
   rm -rf {$UCG_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
   mkdir {$UCG_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
 
-  cp -r $SRC_DIR/{$ES,$CG,$ESU} $UCG_LIBS_DIR
-  cp -r $SRC_DIR/{$ES,$CG,$ESU,$UCG} $UVD_LIBS_DIR
-  cp -r $SRC_DIR/{$ES,$CG,$MIG,$ESU,$UCG,$UVD} $UMIG_LIBS_DIR
-  cp -r $SRC_DIR/{$ES,$CG,$ESU,$UCG,$UVD} $UNITY_TESTS_LIBS_DIR
+  cp -r $SRC_DIR/{$ES,$CG,$CG_TR,$ESU} $UCG_LIBS_DIR
+  cp -r $SRC_DIR/{$ES,$CG,$CG_TR,$ESU,$UCG} $UVD_LIBS_DIR
+  cp -r $SRC_DIR/{$ES,$CG,$CG_TR,$MIG,$ESU,$UCG,$UVD} $UMIG_LIBS_DIR
+  cp -r $SRC_DIR/{$ES,$CG,$CG_TR,$ESU,$UCG,$UVD} $UNITY_TESTS_LIBS_DIR
 
   echo "Updating project dependencies done."
 }
