@@ -111,6 +111,14 @@ create_zip() {
   mv "$TMP_DIR/$CG/"* $tmp_editor_dir
   mv {"$tmp_editor_dir/Attributes",$tmp_editor_dir} "$TMP_DIR/$CG"
 
+  mkdir $tmp_editor_dir
+  mv "$TMP_DIR/$MIG/"* $tmp_editor_dir
+  mv $tmp_editor_dir "$TMP_DIR/$MIG"
+
+  mkdir $tmp_editor_dir
+  mv "$TMP_DIR/$CG_TR/"* $tmp_editor_dir
+  mv $tmp_editor_dir "$TMP_DIR/$CG_TR"
+
   pushd $TMP_DIR > /dev/null
     zip -rq ../Entitas-Unity.zip ./
   popd > /dev/null
