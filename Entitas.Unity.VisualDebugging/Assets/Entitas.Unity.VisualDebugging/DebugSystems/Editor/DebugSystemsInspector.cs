@@ -211,7 +211,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         static GUIStyle getSystemStyle(SystemInfo systemInfo) {
             var style = new GUIStyle(GUI.skin.label);
-            var color = systemInfo.isReactiveSystems
+            var color = systemInfo.isReactiveSystems && EditorGUIUtility.isProSkin
                             ? Color.white
                             : style.normal.textColor;
 
