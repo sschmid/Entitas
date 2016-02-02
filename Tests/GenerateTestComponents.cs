@@ -19,7 +19,7 @@ class GenerateTestComponents {
             new PoolsGenerator()
         };
 
-        var provider = new TypeReflectionProvider(assembly.GetTypes());
+        var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0]);
         CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
 
         Console.WriteLine("Done. Press any key...");

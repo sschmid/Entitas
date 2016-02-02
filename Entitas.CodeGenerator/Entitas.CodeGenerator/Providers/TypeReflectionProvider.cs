@@ -11,18 +11,9 @@ namespace Entitas.CodeGenerator {
         readonly string[] _poolNames;
         readonly ComponentInfo[] _componentInfos;
 
-        public TypeReflectionProvider(Type[] types) {
-            _poolNames = GetPoolNames(types);
+        public TypeReflectionProvider(Type[] types, string[] poolNames) {
+            _poolNames = poolNames;
             _componentInfos = GetComponentInfos(types);
-        }
-
-        public static string[] GetPoolNames(Type[] types) {
-            return types
-                .Where(type => type.BaseType != null)
-                .Where(type => hasBaseType(type, "Entitas.CodeGenerator.PoolAttribute"))
-                .Select(type => type.Name)
-                .Select(name => name.Replace("PoolAttribute", string.Empty))
-                .ToArray();
         }
 
         public static ComponentInfo[] GetComponentInfos(Type[] types) {

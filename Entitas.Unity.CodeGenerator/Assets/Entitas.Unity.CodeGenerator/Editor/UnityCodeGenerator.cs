@@ -24,7 +24,7 @@ namespace Entitas.Unity.CodeGenerator {
                 .ToArray();
 
             var assembly = Assembly.GetAssembly(typeof(Entity));
-            TypeReflectionCodeGenerator.Generate(assembly, config.generatedFolderPath, enabledCodeGenerators);
+            TypeReflectionCodeGenerator.Generate(assembly, config.pools, config.generatedFolderPath, enabledCodeGenerators);
 
             AssetDatabase.Refresh();
         }

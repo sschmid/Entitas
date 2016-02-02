@@ -7,37 +7,36 @@ class describe_TypeReflectionProvider : nspec {
     void when_providing() {
 
         context["pool names"] = () => {
-            it["finds no pool names if there are no types which subclass PoolAttribute"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(object) });
+            it["has no pool names if empty"] = () => {
+                var provider = new TypeReflectionProvider(new [] { typeof(object) }, new string[0]);
                 provider.poolNames.should_be_empty();
             };
 
-            it["finds no pool names and ignores PoolAttribute itself"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(PoolAttribute) });
-                provider.poolNames.should_be_empty();
-            };
-
-            it["finds pool names if there are types which inherit from PoolAttribute"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(TestPoolAttribute) });
-                provider.poolNames.Length.should_be(1);
-                provider.poolNames[0].should_be("Test");
+            it["has pool names if set"] = () => {
+                var provider = new TypeReflectionProvider(
+                                   new [] { typeof(TestPoolAttribute) },
+                                   new [] { "Pool1", "Pool2" }
+                               );
+                provider.poolNames.Length.should_be(2);
+                provider.poolNames[0].should_be("Pool1");
+                provider.poolNames[1].should_be("Pool2");
             };
         };
 
         context["component infos"] = () => {
 
             it["finds no components if there are no types which implement IComponent"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(object) });
+                var provider = new TypeReflectionProvider(new [] { typeof(object) }, new string[0]);
                 provider.componentInfos.should_be_empty();
             };
 
             it["finds no components and ignores IComponent itself"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(IComponent) });
+                var provider = new TypeReflectionProvider(new [] { typeof(IComponent) }, new string[0]);
                 provider.componentInfos.should_be_empty();
             };
 
             it["creates component info from found component"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(ComponentA) });
+                var provider = new TypeReflectionProvider(new [] { typeof(ComponentA) }, new string[0]);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -53,7 +52,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["creates component info from found component with namespace"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(NamespaceComponent) });
+                var provider = new TypeReflectionProvider(new [] { typeof(NamespaceComponent) }, new string[0]);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -69,7 +68,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects PoolAttribure"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(CComponent) });
+                var provider = new TypeReflectionProvider(new [] { typeof(CComponent) }, new string[0]);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -90,7 +89,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects SingleEntityAttribute "] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(AnimatingComponent) });
+                var provider = new TypeReflectionProvider(new [] { typeof(AnimatingComponent) }, new string[0]);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -106,7 +105,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects DontGenerateAttribute "] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(DontGenerateComponent) });
+                var provider = new TypeReflectionProvider(new [] { typeof(DontGenerateComponent) }, new string[0]);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -122,7 +121,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects DontGenerateAttribute and don't generate index"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(DontGenerateIndexComponent) });
+                var provider = new TypeReflectionProvider(new [] { typeof(DontGenerateIndexComponent) }, new string[0]);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -138,7 +137,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects CustomPrefixAttribute"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(CustomPrefixComponent) });
+                var provider = new TypeReflectionProvider(new [] { typeof(CustomPrefixComponent) }, new string[0]);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -154,7 +153,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["sets fields"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(PersonComponent) });
+                var provider = new TypeReflectionProvider(new [] { typeof(PersonComponent) }, new string[0]);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -177,7 +176,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["gets multiple component infos"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(ComponentA), typeof(ComponentB) });
+                var provider = new TypeReflectionProvider(new [] { typeof(ComponentA), typeof(ComponentB) }, new string[0]);
                 provider.componentInfos.Length.should_be(2);
                 provider.componentInfos[0].fullTypeName.should_be("ComponentA");
                 provider.componentInfos[1].fullTypeName.should_be("ComponentB");
