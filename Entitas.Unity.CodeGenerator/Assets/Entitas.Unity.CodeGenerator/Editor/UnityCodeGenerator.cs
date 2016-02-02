@@ -4,6 +4,7 @@ using System.Reflection;
 using Entitas;
 using Entitas.CodeGenerator;
 using UnityEditor;
+using Entitas.CodeGenerator.TypeReflection;
 
 namespace Entitas.Unity.CodeGenerator {
     public static class UnityCodeGenerator {
@@ -22,10 +23,8 @@ namespace Entitas.Unity.CodeGenerator {
                 .Select(type => (ICodeGenerator)Activator.CreateInstance(type))
                 .ToArray();
 
-            var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
-            var provider = new TypeReflectionProvider(types);
-
-            Entitas.CodeGenerator.CodeGenerator.Generate(provider, config.generatedFolderPath, enabledCodeGenerators);
+            var assembly = Assembly.GetAssembly(typeof(Entity));
+            TypeReflectionCodeGenerator.Generate(assembly, config.generatedFolderPath, enabledCodeGenerators);
 
             AssetDatabase.Refresh();
         }
