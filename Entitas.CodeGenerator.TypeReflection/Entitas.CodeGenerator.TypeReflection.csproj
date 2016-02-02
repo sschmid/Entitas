@@ -31,7 +31,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TypeReflectionCodeGenerator.cs" />
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CodeGenerator.cs">
       <Link>Linked Libraries\Entitas.CodeGenerator\CodeGenerator.cs</Link>
     </Compile>
@@ -71,9 +70,11 @@
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Providers\TypeReflectionProvider.cs">
       <Link>Linked Libraries\Entitas.CodeGenerator\Providers\TypeReflectionProvider.cs</Link>
     </Compile>
+    <Compile Include="Entitas.CodeGenerator.TypeReflection\TypeReflectionCodeGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Linked Libraries\" />
+    <Folder Include="Entitas.CodeGenerator.TypeReflection\" />
   </ItemGroup>
 </Project>
