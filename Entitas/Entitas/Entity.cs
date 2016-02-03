@@ -265,7 +265,7 @@ namespace Entitas {
                 var components = GetComponents();
                 var lastSeparator = components.Length - 1;
                 for (int i = 0, componentsLength = components.Length; i < componentsLength; i++) {
-                    sb.Append(components[i].GetType().RemoveComponentSuffix());
+                    sb.Append(components[i].GetType().Name.RemoveComponentSuffix());
                     if (i < lastSeparator) {
                         sb.Append(separator);
                     }
@@ -397,10 +397,10 @@ namespace Entitas {
     public static class EntityExtension {
         public const string COMPONENT_SUFFIX = "Component";
 
-        public static string RemoveComponentSuffix(this Type type) {
-            return type.Name.EndsWith(COMPONENT_SUFFIX)
-                ? type.Name.Substring(0, type.Name.Length - COMPONENT_SUFFIX.Length)
-                    : type.Name;
+        public static string RemoveComponentSuffix(this string componentName) {
+            return componentName.EndsWith(COMPONENT_SUFFIX)
+                    ? componentName.Substring(0, componentName.Length - COMPONENT_SUFFIX.Length)
+                    : componentName;
         }
     }
 }

@@ -32,7 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Readme\ReadmeSnippets.cs" />
     <Compile Include="Readme\Components\AnimatingComponent.cs" />
     <Compile Include="Readme\Components\CoinsComponent.cs" />
@@ -60,130 +59,131 @@
     <Compile Include="Readme\Generated\UIComponentIds.cs" />
     <Compile Include="Readme\Generated\UIPositionComponentGeneratedExtension.cs" />
     <Compile Include="Readme\Generated\UserComponentGeneratedExtension.cs" />
+    <Compile Include="..\Entitas\Entitas\EntitasException.cs">
+      <Link>Linked Libraries\Entitas\EntitasException.cs</Link>
+    </Compile>
     <Compile Include="..\Entitas\Entitas\Entity.cs">
-      <Link>Libraries\Entitas\Entity.cs</Link>
+      <Link>Linked Libraries\Entitas\Entity.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Group.cs">
-      <Link>Libraries\Entitas\Group.cs</Link>
+      <Link>Linked Libraries\Entitas\Group.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\GroupObserver.cs">
-      <Link>Libraries\Entitas\GroupObserver.cs</Link>
+      <Link>Linked Libraries\Entitas\GroupObserver.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Pool.cs">
-      <Link>Libraries\Entitas\Pool.cs</Link>
+      <Link>Linked Libraries\Entitas\Pool.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\ReactiveSystem.cs">
-      <Link>Libraries\Entitas\ReactiveSystem.cs</Link>
+      <Link>Linked Libraries\Entitas\ReactiveSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Systems.cs">
-      <Link>Libraries\Entitas\Systems.cs</Link>
+      <Link>Linked Libraries\Entitas\Systems.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\CollectionExtension.cs">
-      <Link>Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
+      <Link>Linked Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\GroupExtension.cs">
-      <Link>Libraries\Entitas\Extensions\GroupExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\PoolExtension.cs">
-      <Link>Libraries\Entitas\Extensions\PoolExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
-      <Link>Libraries\Entitas\Interfaces\IComponent.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IExecuteSystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IExecuteSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IInitializeSystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IInitializeSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
-      <Link>Libraries\Entitas\Interfaces\IMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
-      <Link>Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
-      <Link>Libraries\Entitas\Interfaces\ISystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CodeGenFile.cs">
-      <Link>Libraries\Entitas.CodeGenerator\CodeGenFile.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CodeGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\CodeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\ICodeGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\ICodeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\IComponentCodeGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\IComponentCodeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\IPoolCodeGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\IPoolCodeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\ISystemCodeGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\ISystemCodeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\PoolAttribute.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Attributes\PoolAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\PoolsGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Generators\PoolsGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\TypeGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Generators\TypeGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\TriggerOnEvent.cs">
-      <Link>Libraries\Entitas\Matcher\TriggerOnEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
-      <Link>Libraries\Entitas\Matcher\Matcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherEquals.cs">
-      <Link>Libraries\Entitas\Matcher\MatcherEquals.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherInterfaces.cs">
-      <Link>Libraries\Entitas\Matcher\MatcherInterfaces.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherStatic.cs">
-      <Link>Libraries\Entitas\Matcher\MatcherStatic.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherToString.cs">
-      <Link>Libraries\Entitas\Matcher\MatcherToString.cs</Link>
+      <Link>Linked Libraries\Entitas\Extensions\GroupExtension.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\IMatcherExtension.cs">
-      <Link>Libraries\Entitas\Extensions\IMatcherExtension.cs</Link>
+      <Link>Linked Libraries\Entitas\Extensions\IMatcherExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\EntitasException.cs">
-      <Link>Libraries\Entitas\EntitasException.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Extensions\PoolExtension.cs">
+      <Link>Linked Libraries\Entitas\Extensions\PoolExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\IComponent.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IExecuteSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\IExecuteSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IInitializeSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\IInitializeSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\IMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\ISystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
+      <Link>Linked Libraries\Entitas\Matcher\Matcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\MatcherEquals.cs">
+      <Link>Linked Libraries\Entitas\Matcher\MatcherEquals.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\MatcherInterfaces.cs">
+      <Link>Linked Libraries\Entitas\Matcher\MatcherInterfaces.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\MatcherStatic.cs">
+      <Link>Linked Libraries\Entitas\Matcher\MatcherStatic.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\MatcherToString.cs">
+      <Link>Linked Libraries\Entitas\Matcher\MatcherToString.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\TriggerOnEvent.cs">
+      <Link>Linked Libraries\Entitas\Matcher\TriggerOnEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CodeGenerator.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CodeGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs</Link>
+      <Link>Linked Libraries\Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\PoolAttribute.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Attributes\PoolAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\ComponentIndicesGenerator.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Generators\ComponentIndicesGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\ComponentsGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Generators\ComponentsGenerator.cs</Link>
+      <Link>Linked Libraries\Entitas.CodeGenerator\Generators\ComponentsGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\SystemsGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Generators\SystemsGenerator.cs</Link>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\ComponentLookupGenerator.cs">
-      <Link>Libraries\Entitas.CodeGenerator\Generators\ComponentLookupGenerator.cs</Link>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\PoolsGenerator.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Generators\PoolsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\TypeToCompilableStringExtension.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Generators\TypeToCompilableStringExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Interfaces\ICodeGenerator.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Interfaces\ICodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Interfaces\ICodeGeneratorDataProvider.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Interfaces\ICodeGeneratorDataProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Interfaces\IComponentCodeGenerator.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Interfaces\IComponentCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Interfaces\IPoolCodeGenerator.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Interfaces\IPoolCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Intermediate\CodeGenFile.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Intermediate\CodeGenFile.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Intermediate\ComponentInfo.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Intermediate\ComponentInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Providers\TypeReflectionProvider.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Providers\TypeReflectionProvider.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="Libraries\" />
     <Folder Include="Readme\" />
     <Folder Include="Readme\Generated\" />
-    <Folder Include="Libraries\Entitas\" />
-    <Folder Include="Libraries\Entitas.CodeGenerator\" />
+    <Folder Include="Linked Libraries\" />
   </ItemGroup>
 </Project>

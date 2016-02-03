@@ -1,7 +1,22 @@
 ﻿using Entitas;
+using Entitas.CodeGenerator;
 
 namespace My.Namespace {
     public class NamespaceComponent : IComponent {
+        public static ComponentInfo componentInfo { 
+            get {
+                return new ComponentInfo(
+                    typeof(NamespaceComponent).ToCompilableString(),
+                    new ComponentFieldInfo[0],
+                    new string[0],
+                    false,
+                    "is",
+                    true,
+                    true
+                );
+            }
+        }
+
         public static string extensions =
             @"namespace Entitas {
     public partial class Entity {

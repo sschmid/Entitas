@@ -3,6 +3,20 @@ using Entitas;
 
 [SingleEntity, CustomPrefix("My")]
 public class CustomPrefixComponent : IComponent {
+    public static ComponentInfo componentInfo { 
+        get {
+            return new ComponentInfo(
+                typeof(CustomPrefixComponent).ToCompilableString(),
+                new ComponentFieldInfo[0],
+                new string[0],
+                true,
+                "My",
+                true,
+                true
+            );
+        }
+    }
+
     public static string extensions =
         @"namespace Entitas {
     public partial class Entity {

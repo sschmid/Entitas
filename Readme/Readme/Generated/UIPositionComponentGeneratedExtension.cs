@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 using Entitas;
 
 namespace Entitas {
@@ -8,36 +6,25 @@ namespace Entitas {
 
         public bool hasUIPosition { get { return HasComponent(UIComponentIds.UIPosition); } }
 
-        static readonly Stack<UIPositionComponent> _uIPositionComponentPool = new Stack<UIPositionComponent>();
-
-        public static void ClearUIPositionComponentPool() {
-            _uIPositionComponentPool.Clear();
-        }
-
         public Entity AddUIPosition(int newX, int newY) {
-            var component = _uIPositionComponentPool.Count > 0 ? _uIPositionComponentPool.Pop() : new UIPositionComponent();
+            var componentPool = GetComponentPool(UIComponentIds.UIPosition);
+            var component = (UIPositionComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UIPositionComponent());
             component.x = newX;
             component.y = newY;
             return AddComponent(UIComponentIds.UIPosition, component);
         }
 
         public Entity ReplaceUIPosition(int newX, int newY) {
-            var previousComponent = hasUIPosition ? uIPosition : null;
-            var component = _uIPositionComponentPool.Count > 0 ? _uIPositionComponentPool.Pop() : new UIPositionComponent();
+            var componentPool = GetComponentPool(UIComponentIds.UIPosition);
+            var component = (UIPositionComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UIPositionComponent());
             component.x = newX;
             component.y = newY;
             ReplaceComponent(UIComponentIds.UIPosition, component);
-            if (previousComponent != null) {
-                _uIPositionComponentPool.Push(previousComponent);
-            }
             return this;
         }
 
         public Entity RemoveUIPosition() {
-            var component = uIPosition;
-            RemoveComponent(UIComponentIds.UIPosition);
-            _uIPositionComponentPool.Push(component);
-            return this;
+            return RemoveComponent(UIComponentIds.UIPosition);;
         }
     }
 }

@@ -22,11 +22,11 @@ public class SystemsController : MonoBehaviour {
 
     Systems createAllSystemCombinations() {
         return new DebugSystems("All System Combinations")
-            .Add(_pool.CreateSomeInitializeSystem())
-            .Add(_pool.CreateSomeExecuteSystem())
-            .Add(_pool.CreateSomeReactiveSystem())
-            .Add(_pool.CreateSomeInitializeExecuteSystem())
-            .Add(_pool.CreateSomeInitializeReactiveSystem());
+            .Add(_pool.CreateSystem<SomeInitializeSystem>())
+            .Add(_pool.CreateSystem<SomeExecuteSystem>())
+            .Add(_pool.CreateSystem<SomeReactiveSystem>())
+            .Add(_pool.CreateSystem<SomeInitializeExecuteSystem>())
+            .Add(_pool.CreateSystem<SomeInitializeReactiveSystem>());
     }
 
     Systems createSubSystems() {
@@ -75,13 +75,13 @@ public class SystemsController : MonoBehaviour {
 
     Systems createSomeSystems() {
         return new DebugSystems("Some Systems")
-            .Add(_pool.CreateSlowInitializeSystem())
-            .Add(_pool.CreateSlowInitializeExecuteSystem())
-            .Add(_pool.CreateFastSystem())
-            .Add(_pool.CreateSlowSystem())
-            .Add(_pool.CreateRandomDurationSystem())
-            .Add(_pool.CreateAReactiveSystem())
-            .Add(_pool.CreateRandomValueSystem())
-            .Add(_pool.CreateProcessRandomValueSystem());
+            .Add(_pool.CreateSystem<SlowInitializeSystem>())
+            .Add(_pool.CreateSystem<SlowInitializeExecuteSystem>())
+            .Add(_pool.CreateSystem<FastSystem>())
+            .Add(_pool.CreateSystem<SlowSystem>())
+            .Add(_pool.CreateSystem<RandomDurationSystem>())
+            .Add(_pool.CreateSystem<AReactiveSystem>())
+            .Add(_pool.CreateSystem<RandomValueSystem>())
+            .Add(_pool.CreateSystem<ProcessRandomValueSystem>());
     }
 }

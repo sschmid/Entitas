@@ -4,6 +4,23 @@ using Entitas.CodeGenerator;
 
 [SingleEntity, Pool("Other")]
 public class OtherPoolComponent : IComponent {
+    public static ComponentInfo componentInfo { 
+        get {
+            return new ComponentInfo(
+                typeof(OtherPoolComponent).ToCompilableString(),
+                new [] {
+                    new ComponentFieldInfo("System.DateTime", "timestamp"),
+                    new ComponentFieldInfo("bool", "isLoggedIn")
+                },
+                new [] { "Other" },
+                true,
+                "is",
+                true,
+                true
+            );
+        }
+    }
+
     public DateTime timestamp;
     public bool isLoggedIn;
     public static string extensions =

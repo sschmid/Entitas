@@ -3,6 +3,20 @@ using Entitas;
 
 [Pool("PoolA"), Pool("PoolB"), Pool("PoolC")]
 public class CComponent : IComponent {
+    public static ComponentInfo componentInfo { 
+        get {
+            return new ComponentInfo(
+                typeof(CComponent).ToCompilableString(),
+                new ComponentFieldInfo[0],
+                new [] { "PoolA", "PoolB", "PoolC" },
+                false,
+                "is",
+                true,
+                true
+            );
+        }
+    }
+
     public static string extensions =
         @"using Entitas;
 

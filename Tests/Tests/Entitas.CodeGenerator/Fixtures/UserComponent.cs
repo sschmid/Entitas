@@ -4,6 +4,23 @@ using System;
 
 [SingleEntity]
 public class UserComponent : IComponent {
+    public static ComponentInfo componentInfo { 
+        get {
+            return new ComponentInfo(
+                typeof(UserComponent).ToCompilableString(),
+                new [] {
+                    new ComponentFieldInfo("System.DateTime", "timestamp"),
+                    new ComponentFieldInfo("bool", "isLoggedIn")
+                },
+                new string[0],
+                true,
+                "is",
+                true,
+                true
+            );
+        }
+    }
+
     public DateTime timestamp;
     public bool isLoggedIn;
     public static string extensions =

@@ -1,6 +1,21 @@
 using Entitas;
+using Entitas.CodeGenerator;
 
 public class MovableComponent : IComponent {
+    public static ComponentInfo componentInfo { 
+        get {
+            return new ComponentInfo(
+                typeof(MovableComponent).ToCompilableString(),
+                new ComponentFieldInfo[0],
+                new string[0],
+                false,
+                "is",
+                true,
+                true
+            );
+        }
+    }
+
     public static string extensions =
         @"namespace Entitas {
     public partial class Entity {

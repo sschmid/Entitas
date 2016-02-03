@@ -1,6 +1,24 @@
 using Entitas;
+using Entitas.CodeGenerator;
 
 public class PersonComponent : IComponent {
+    public static ComponentInfo componentInfo { 
+        get {
+            return new ComponentInfo(
+                typeof(PersonComponent).ToCompilableString(),
+                new [] {
+                    new ComponentFieldInfo("int", "age"),
+                    new ComponentFieldInfo("string", "name")
+                },
+                new string[0],
+                false,
+                "is",
+                true,
+                true
+            );
+        }
+    }
+
     public int age;
     public string name;
     public static string extensions =

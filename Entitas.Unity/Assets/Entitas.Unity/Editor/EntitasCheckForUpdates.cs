@@ -17,7 +17,7 @@ namespace Entitas.Unity {
         public static void CheckForUpdates() {
             var response = requestLatestRelease();
             var remoteVersion = parseVersion(response);
-            var localVersion = getLocalVersion();
+            var localVersion = GetLocalVersion();
 
             displayUpdateInfo(remoteVersion, localVersion);
         }
@@ -41,7 +41,7 @@ namespace Entitas.Unity {
             return Regex.Match(response, versionPattern).Value;
         }
 
-        static string getLocalVersion() {
+        public static string GetLocalVersion() {
             var files = Directory.GetFiles(Application.dataPath, "entitas_version", SearchOption.AllDirectories);
             if (files.Length != 1) {
                 Debug.Log("Couldn't locate file entitas_version");

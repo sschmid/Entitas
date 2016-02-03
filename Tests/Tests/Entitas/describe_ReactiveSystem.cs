@@ -70,7 +70,7 @@ class describe_ReactiveSystem : nspec {
                 subSystem.entities.should_be_null();
             };
 
-            it["deactivates"] = () => {
+            it["deactivates and will not be triggered"] = () => {
                 reactiveSystem.Deactivate();
                 var e = pool.CreateEntity();
                 e.AddComponentA();
@@ -81,7 +81,7 @@ class describe_ReactiveSystem : nspec {
                 subSystem.entities.should_be_null();
             };
 
-            it["activates"] = () => {
+            it["activates and will be triggered again"] = () => {
                 reactiveSystem.Deactivate();
                 reactiveSystem.Activate();
                 var e = pool.CreateEntity();

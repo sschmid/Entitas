@@ -33,7 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PerformanceTests\IPerformanceTest.cs" />
     <Compile Include="PerformanceTestRunner.cs" />
     <Compile Include="PerformanceTests\EmptyTest.cs" />
