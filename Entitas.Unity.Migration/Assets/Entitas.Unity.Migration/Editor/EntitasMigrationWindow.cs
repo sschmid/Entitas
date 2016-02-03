@@ -10,13 +10,22 @@ namespace Entitas.Unity.Migration {
 
         [MenuItem("Entitas/Migrate...", false, 300)]
         public static void OpenMigrate() {
-            EditorWindow.GetWindow<EntitasMigrationWindow>("Entitas Migration").Show();
+            var window = EditorWindow.GetWindow<EntitasMigrationWindow>(true, "Entitas Migration");
+            window.minSize = window.maxSize = new Vector2(415f, 520f);
+            window.Show();
         }
 
+        Texture2D _headerTexture;
         IMigration[] _migrations;
         Vector2 _scrollViewPosition;
 
         void OnEnable() {
+            var guid = AssetDatabase.FindAssets("l:Entitas-Migration-Header")[0];
+            if (guid != null) {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                _headerTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            }
+
             _migrations = getMigrations();
         }
 
@@ -31,6 +40,9 @@ namespace Entitas.Unity.Migration {
         void OnGUI() {
             _scrollViewPosition = EditorGUILayout.BeginScrollView(_scrollViewPosition);
             {
+                var offsetY = drawHeaderTexture();
+                GUILayout.Space(offsetY + 5);
+
                 var descriptionStyle = new GUIStyle(GUI.skin.label);
                 descriptionStyle.wordWrap = true;
                 foreach (var migration in _migrations) {
@@ -49,7 +61,16 @@ namespace Entitas.Unity.Migration {
             EditorGUILayout.EndScrollView();
         }
 
-        void migrate(IMigration migration) {
+        float drawHeaderTexture() {
+            var ratio = _headerTexture.width / _headerTexture.height;
+            var width = position.width - 10;
+            var height = width / ratio;
+            GUI.DrawTexture(new Rect(5, 5, width, height), _headerTexture, ScaleMode.ScaleToFit);
+
+            return height;
+        }
+
+        static void migrate(IMigration migration) {
             var shouldMigrate = EditorUtility.DisplayDialog("Migrate",
                                     "You are about to migrate your source files. " +
                                     "Make sure that you have committed your current project or that you have a backup of your project before you proceed.",
