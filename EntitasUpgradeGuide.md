@@ -1,3 +1,13 @@
+# Entitas 0.28.0 upgrade guide
+
+If you're using Entitas with Unity, please open the Entitas preferences and make
+sure that all your desired code generators are activated.
+Due to some code generator renamings the ComponentIndicesGeneratoris inactive.
+
+The SystemsGenerator has been removed. Please use `pool.CreateSystem<MySystem>()` instead.
+
+
+
 # Entitas 0.27.0 upgrade guide
 
 If you're using Entitas with Unity, please open the Entitas preferences and make
