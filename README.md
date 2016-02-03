@@ -12,6 +12,9 @@
     <a href="https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Fsschmid%2FEntitas-CSharp&screen_name=s_schmid&tw_p=followbutton">
         <img src="https://img.shields.io/badge/twitter-follow%20%40s__schmid-blue.svg" alt="Twitter Follow Me"></a>
 
+    <a href="https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Fsschmid%2FEntitas-CSharp&screen_name=entitas_csharp&tw_p=followbutton">
+        <img src="https://img.shields.io/badge/twitter-follow%20%40entitas__csharp-blue.svg" alt="Twitter Follow Me"></a>
+
     <a href="https://travis-ci.org/sschmid/Entitas-CSharp">
         <img src="https://travis-ci.org/sschmid/Entitas-CSharp.svg?branch=master" alt="Build Status"></a>
 
@@ -164,7 +167,7 @@ Big shout out to [@mzaks][github-mzaks], [@cloudjubei][github-cloudjubei] and [@
 Maintainer(s)
 =============
 
-- [@sschmid][github-sschmid] | Twitter: [@s_schmid][twitter-sschmid]
+- [@sschmid][github-sschmid] | [@s_schmid][twitter-sschmid] | [@entitas_csharp][twitter-entitas_csharp]
 
 
 Different language?
@@ -199,6 +202,7 @@ Entitas is also available in
 [pulls]: https://github.com/sschmid/Entitas-CSharp/pulls "Pull Requests"
 
 [twitter-sschmid]: https://twitter.com/s_schmid "s_schmid on Twitter"
+[twitter-entitas_csharp]: https://twitter.com/entitas_csharp "entitas_csharp on Twitter"
 
 [github-sschmid]: https://github.com/sschmid "@sschmid"
 [github-mzaks]: https://github.com/mzaks "@mzaks"
