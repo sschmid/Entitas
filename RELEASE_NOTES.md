@@ -34,7 +34,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 ##### Entitas.Unity.VisualDebugging
 - Added system search field to DebugSystemsInspector
 - UI tweaks and performance optimizations
-- Fixed logging wron system stats
+- Fixed logging wrong system stats
 - Added header image and current version label to Entitas Preferences Window
 
 ![Entitas.Unity.Visualdebugging-preferences](https://cloud.githubusercontent.com/assets/233700/12795069/a13e5b6e-cab8-11e5-937d-870790e2bfe1.png)
