@@ -16,6 +16,7 @@ namespace Entitas.Unity.Migration {
         }
 
         Texture2D _headerTexture;
+        string _localVersion;
         IMigration[] _migrations;
         Vector2 _scrollViewPosition;
 
@@ -25,6 +26,8 @@ namespace Entitas.Unity.Migration {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 _headerTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             }
+
+            _localVersion = EntitasCheckForUpdates.GetLocalVersion();
 
             _migrations = getMigrations();
         }
@@ -41,7 +44,9 @@ namespace Entitas.Unity.Migration {
             _scrollViewPosition = EditorGUILayout.BeginScrollView(_scrollViewPosition);
             {
                 var offsetY = drawHeaderTexture();
-                GUILayout.Space(offsetY + 5);
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("Version: " + _localVersion);
+                GUILayout.Space(offsetY - 21);
 
                 var descriptionStyle = new GUIStyle(GUI.skin.label);
                 descriptionStyle.wordWrap = true;
