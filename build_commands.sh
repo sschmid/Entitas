@@ -26,6 +26,15 @@ collect_sources() {
   cp -r {"$ES/$ES","$CG/$CG","$MIG/$MIG","$CG_TR/$CG_TR","$ESU/Assets/$ESU","$UCG/Assets/$UCG","$UVD/Assets/$UVD","$UMIG/Assets/$UMIG"} $SRC_DIR
   find "./$SRC_DIR" -name "*.meta" -type f -delete
 
+  header_meta="$ESU/Editor/Entitas-Header.png.meta"
+  cp "$ESU/Assets/$header_meta" "$SRC_DIR/$header_meta"
+
+  icon_meta="$UVD/Editor/EntitasHierarchyIcon.png.meta"
+  cp "$UVD/Assets/$icon_meta" "$SRC_DIR/$icon_meta"
+
+  migration_header_meta="$UMIG/Editor/Entitas-Migration-Header.png.meta"
+  cp "$UMIG/Assets/$migration_header_meta" "$SRC_DIR/$migration_header_meta"
+
   echo "Collecting sources done."
 }
 
@@ -80,9 +89,6 @@ collect_misc_files() {
   cp RELEASE_NOTES.md "$SRC_DIR/RELEASE_NOTES.md"
   cp EntitasUpgradeGuide.md "$SRC_DIR/EntitasUpgradeGuide.md"
   cp LICENSE.txt "$SRC_DIR/LICENSE.txt"
-
-  icon_meta="$UVD/Editor/EntitasHierarchyIcon.png.meta"
-  cp "$UVD/Assets/$icon_meta" "$SRC_DIR/$icon_meta"
 
   echo "Collecting misc files done."
 }
