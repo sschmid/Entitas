@@ -15,6 +15,7 @@ namespace Entitas.Unity {
         }
 
         Texture2D _headerTexture;
+        string _localVersion;
         EntitasPreferencesConfig _config;
         IEntitasPreferencesDrawer[] _preferencesDrawers;
         Vector2 _scrollViewPosition;
@@ -26,6 +27,8 @@ namespace Entitas.Unity {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 _headerTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
             }
+
+            _localVersion = EntitasCheckForUpdates.GetLocalVersion();
 
             _config = EntitasPreferences.LoadConfig();
             _preferencesDrawers = Assembly.GetAssembly(typeof(IEntitasPreferencesDrawer)).GetTypes()
@@ -43,7 +46,9 @@ namespace Entitas.Unity {
             _scrollViewPosition = EditorGUILayout.BeginScrollView(_scrollViewPosition);
             {
                 var offsetY = drawHeaderTexture();
-                GUILayout.Space(offsetY + 5);
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("Version: " + _localVersion);
+                GUILayout.Space(offsetY - 21);
 
                 foreach (var drawer in _preferencesDrawers) {
                     drawer.Draw(_config);
