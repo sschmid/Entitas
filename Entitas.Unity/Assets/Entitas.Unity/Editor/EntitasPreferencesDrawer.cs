@@ -5,7 +5,7 @@ using Entitas.Unity;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.Unity.CodeGenerator {
+namespace Entitas.Unity {
     public class EntitasPreferencesDrawer : IEntitasPreferencesDrawer {
         public int priority { get { return 0; } }
 
