@@ -1,14 +1,13 @@
 # 0.28.1
 
 ##### Entitas.Unity
+- Added "Script Call Optimization" to Entitas Preferences Window
 - Added priority to IEntitasPreferencesDrawer
 - Tweaked UI
 
 ![Entitas.Unity-ScriptCallOptimization](https://cloud.githubusercontent.com/assets/233700/12832387/e893b3ec-cb99-11e5-8ccb-d3478ca0c6dc.png)
 
-
 ##### Entitas.Unity.VisualDebugging
-- Added "Script Call Optimization" to Entitas Preferences Window
 - Added toggle to Entitas Preferences to enable or disable Visual Debugging
 - Tweaked UI
 
