@@ -42,7 +42,6 @@ namespace Entitas.Unity.CodeGenerator {
                 drawGeneratedFolderPath();
                 drawPools();
                 drawCodeGenerators();
-                drawGenerateButton();
             }
             EditorGUILayout.EndVertical();
         }
@@ -73,17 +72,31 @@ namespace Entitas.Unity.CodeGenerator {
             var enabledCodeGenerators = new HashSet<string>(_codeGeneratorConfig.enabledCodeGenerators);
 
             var availableGeneratorNames = new HashSet<string>();
-            foreach (var codeGenerator in _codeGenerators) {
-                availableGeneratorNames.Add(codeGenerator.Name);
-                var isEnabled = enabledCodeGenerators.Contains(codeGenerator.Name);
-                isEnabled = EditorGUILayout.Toggle(codeGenerator.Name, isEnabled);
-                if (isEnabled) {
-                    enabledCodeGenerators.Add(codeGenerator.Name);
-                } else {
-                    enabledCodeGenerators.Remove(codeGenerator.Name);
-                }
-            }
 
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.BeginVertical();
+                {
+                    foreach (var codeGenerator in _codeGenerators) {
+                        availableGeneratorNames.Add(codeGenerator.Name);
+                        var isEnabled = enabledCodeGenerators.Contains(codeGenerator.Name);
+                        isEnabled = EditorGUILayout.Toggle(codeGenerator.Name, isEnabled);
+                        if (isEnabled) {
+                            enabledCodeGenerators.Add(codeGenerator.Name);
+                        } else {
+                            enabledCodeGenerators.Remove(codeGenerator.Name);
+                        }
+                    }
+                }
+                EditorGUILayout.EndVertical();
+
+                if (GUILayout.Button("Generate", GUILayout.Width(200), GUILayout.Height(68))) {
+                    UnityCodeGenerator.Generate();
+                }
+
+            }
+            EditorGUILayout.EndHorizontal();
+            
             foreach (var generatorName in _codeGeneratorConfig.enabledCodeGenerators.ToArray()) {
                 if (!availableGeneratorNames.Contains(generatorName)) {
                     enabledCodeGenerators.Remove(generatorName);
@@ -93,13 +106,6 @@ namespace Entitas.Unity.CodeGenerator {
             var sortedCodeGenerators = enabledCodeGenerators.ToArray();
             Array.Sort(sortedCodeGenerators);
             _codeGeneratorConfig.enabledCodeGenerators = sortedCodeGenerators;
-        }
-
-        static void drawGenerateButton() {
-            EditorGUILayout.Space();
-            if (GUILayout.Button("Generate")) {
-                UnityCodeGenerator.Generate();
-            }
         }
     }
 }
