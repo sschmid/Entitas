@@ -31,6 +31,7 @@ Entitas.Unity.Migration/Entitas.Unity.Migration.sln
 UnityTests/UnityTests.sln
 
 Entitas.Unity/Assets/Libraries
+Entitas.Unity/Assets/Libraries.meta
 
 Entitas.Unity.CodeGenerator/Assets/Libraries
 Entitas.Unity.CodeGenerator/Assets/Libraries.meta
