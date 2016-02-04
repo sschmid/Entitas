@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Entitas.Unity.CodeGenerator {
     public class EntitasPreferencesDrawer : IEntitasPreferencesDrawer {
+        public int priority { get { return 0; } }
 
         const string ENTITAS_FAST_AND_UNSAFE = "ENTITAS_FAST_AND_UNSAFE";
 

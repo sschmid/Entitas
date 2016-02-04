@@ -3,6 +3,8 @@ using UnityEditor;
 
 public class TestPreferencesDrawer : IEntitasPreferencesDrawer {
 
+    public int priority { get { return 1; } }
+
     object _someObject;
 
     public void Initialize(EntitasPreferencesConfig config) {

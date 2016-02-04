@@ -9,6 +9,8 @@ using UnityEngine;
 namespace Entitas.Unity.CodeGenerator {
     public class CodeGeneratorPreferencesDrawer : IEntitasPreferencesDrawer {
 
+        public int priority { get { return 10; } }
+
         Type[] _codeGenerators;
         CodeGeneratorConfig _codeGeneratorConfig;
         List<string> _pools;

@@ -5,6 +5,8 @@ using UnityEngine;
 namespace Entitas.Unity.VisualDebugging {
     public class VisualDebuggingPreferencesDrawer : IEntitasPreferencesDrawer {
 
+        public int priority { get { return 20; } }
+
         VisualDebuggingConfig _visualDebuggingConfig;
 
         public void Initialize(EntitasPreferencesConfig config) {

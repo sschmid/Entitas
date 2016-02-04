@@ -33,8 +33,8 @@ namespace Entitas.Unity {
             _config = EntitasPreferences.LoadConfig();
             _preferencesDrawers = Assembly.GetAssembly(typeof(IEntitasPreferencesDrawer)).GetTypes()
                 .Where(type => type.GetInterfaces().Contains(typeof(IEntitasPreferencesDrawer)))
-                .OrderBy(type => type.FullName)
                 .Select(type => (IEntitasPreferencesDrawer)Activator.CreateInstance(type))
+                .OrderBy(drawer => drawer.priority)
                 .ToArray();
 
             foreach (var drawer in _preferencesDrawers) {
