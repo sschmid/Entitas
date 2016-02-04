@@ -1,3 +1,20 @@
+# 0.28.1
+
+##### Entitas.Unity
+- Added priority to IEntitasPreferencesDrawer
+- Tweaked UI
+
+![Entitas.Unity-ScriptCallOptimization](https://cloud.githubusercontent.com/assets/233700/12832387/e893b3ec-cb99-11e5-8ccb-d3478ca0c6dc.png)
+
+
+##### Entitas.Unity.VisualDebugging
+- Added "Script Call Optimization" to Entitas Preferences Window
+- Added toggle to Entitas Preferences to enable or disable Visual Debugging
+- Tweaked UI
+
+![Entitas.Unity.VisualDebugging-Toggle](https://cloud.githubusercontent.com/assets/233700/12832391/ec74d2e8-cb99-11e5-87b3-f76e2e9ea58d.png)
+
+
 # 0.28.0
 
 ##### Breaking changes
@@ -25,12 +42,6 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 ##### Entitas.Unity
 - Added `keys` and `values` getter to Properties
 
-##### Entitas.Unity.Migration
-- Added Entitas.Unity.Migration which provides an easy way to migrate source files
-- Added header image and current version label to Entitas Migration Window
-
-![Entitas.Unity.Migration](https://cloud.githubusercontent.com/assets/233700/12795026/6acf24b4-cab8-11e5-90e3-98a103676d50.png)
-
 ##### Entitas.Unity.VisualDebugging
 - Added system search field to DebugSystemsInspector
 - UI tweaks and performance optimizations
@@ -38,6 +49,12 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 - Added header image and current version label to Entitas Preferences Window
 
 ![Entitas.Unity.Visualdebugging-preferences](https://cloud.githubusercontent.com/assets/233700/12795069/a13e5b6e-cab8-11e5-937d-870790e2bfe1.png)
+
+##### Entitas.Unity.Migration
+- Added Entitas.Unity.Migration which provides an easy way to migrate source files
+- Added header image and current version label to Entitas Migration Window
+
+![Entitas.Unity.Migration](https://cloud.githubusercontent.com/assets/233700/12795026/6acf24b4-cab8-11e5-90e3-98a103676d50.png)
 
 ##### Other
 - Removed redundant files and gitignored Entitas in all Unity projects (#63)
