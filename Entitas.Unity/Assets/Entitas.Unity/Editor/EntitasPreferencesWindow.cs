@@ -48,7 +48,7 @@ namespace Entitas.Unity {
                 var offsetY = drawHeaderTexture();
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Version: " + _localVersion);
-                GUILayout.Space(offsetY - 21);
+                GUILayout.Space(offsetY - 24);
 
                 foreach (var drawer in _preferencesDrawers) {
                     drawer.Draw(_config);
@@ -63,10 +63,11 @@ namespace Entitas.Unity {
         }
 
         float drawHeaderTexture() {
+            const int scollBarWidth = 15;
             var ratio = _headerTexture.width / _headerTexture.height;
-            var width = position.width - 10;
+            var width = position.width - 8 - scollBarWidth;
             var height = width / ratio;
-            GUI.DrawTexture(new Rect(5, 5, width, height), _headerTexture, ScaleMode.ScaleToFit);
+            GUI.DrawTexture(new Rect(4, 2, width, height), _headerTexture, ScaleMode.ScaleToFit);
             
             return height;
         }

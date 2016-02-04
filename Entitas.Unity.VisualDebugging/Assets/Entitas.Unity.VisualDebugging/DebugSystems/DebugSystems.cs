@@ -59,7 +59,6 @@ namespace Entitas.Unity.VisualDebugging {
 
         public bool paused;
 
-
         readonly string _name;
 
         readonly List<ISystem> _systems;

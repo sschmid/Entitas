@@ -46,12 +46,11 @@ namespace Entitas.Unity.Migration {
                 var offsetY = drawHeaderTexture();
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Version: " + _localVersion);
-                GUILayout.Space(offsetY - 21);
+                GUILayout.Space(offsetY - 24);
 
                 var descriptionStyle = new GUIStyle(GUI.skin.label);
                 descriptionStyle.wordWrap = true;
                 foreach (var migration in _migrations) {
-                    EditorGUILayout.Space();
                     EditorGUILayout.BeginVertical(GUI.skin.box);
                     {
                         EditorGUILayout.LabelField(migration.version, EditorStyles.boldLabel);
@@ -67,10 +66,12 @@ namespace Entitas.Unity.Migration {
         }
 
         float drawHeaderTexture() {
+            // const int scollBarWidth = 15;
+            const int scollBarWidth = 0;
             var ratio = _headerTexture.width / _headerTexture.height;
-            var width = position.width - 10;
+            var width = position.width - 8 - scollBarWidth;
             var height = width / ratio;
-            GUI.DrawTexture(new Rect(5, 5, width, height), _headerTexture, ScaleMode.ScaleToFit);
+            GUI.DrawTexture(new Rect(4, 2, width, height), _headerTexture, ScaleMode.ScaleToFit);
 
             return height;
         }

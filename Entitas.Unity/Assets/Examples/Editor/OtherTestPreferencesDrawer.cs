@@ -1,5 +1,6 @@
 ﻿using Entitas.Unity;
 using UnityEditor;
+using UnityEngine;
 
 public class OtherTestPreferencesDrawer : IEntitasPreferencesDrawer {
 
@@ -13,5 +14,6 @@ public class OtherTestPreferencesDrawer : IEntitasPreferencesDrawer {
 
     public void Draw(EntitasPreferencesConfig config) {
         EditorGUILayout.LabelField("Other Test " + _someObject.GetHashCode());
+        GUILayout.Space(500);
     }
 }
