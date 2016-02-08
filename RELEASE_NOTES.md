@@ -1,3 +1,17 @@
+# 0.28.2
+
+##### Entitas
+- Added ReactiveSystem destructor to prevent memory leaks
+- Added GroupObserver destructor to prevent memory leaks
+
+##### Entitas.Unity.VisualDebugging
+- EntityInspector now supports dropping Unity.Object into fields that are null
+
+![Entitas.Unity.VisualDebugging-DefaultInstanceCreator](https://cloud.githubusercontent.com/assets/233700/12884636/ea8c468c-ce5f-11e5-91a9-0fdf83de7252.png)
+
+- UI tweaks
+
+
 # 0.28.1
 
 ##### Entitas.Unity
