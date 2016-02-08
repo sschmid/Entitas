@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entitas;
+using UnityEngine;
 
 public class CustomObject {
     public string name;
@@ -10,12 +11,19 @@ public class CustomObject {
     }
 }
 
+public class MonoBehaviourSubClass : MonoBehaviour {
+}
+
+public class MonoBehaviourSubClassComponent : IComponent {
+    public MonoBehaviourSubClass monoBehaviour;
+}
+
 public class CustomObjectComponent : IComponent {
     public CustomObject customObject;
 }
 
 public class SystemObjectComponent : IComponent {
-    public Object systemObject;
+    public System.Object systemObject;
 }
 
 public class DateTimeComponent : IComponent {

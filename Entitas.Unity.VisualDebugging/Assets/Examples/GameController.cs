@@ -39,6 +39,7 @@ public class GameController : MonoBehaviour {
             e.AddGameObject(new GameObject("Player"));
 
             // Custom
+            e.AddMonoBehaviourSubClass(new GameObject().AddComponent<MonoBehaviourSubClass>());
             e.AddCustomObject(new CustomObject("Custom Object"));
             e.AddSystemObject(new object());
             e.AddDateTime(DateTime.Now);
@@ -94,6 +95,8 @@ public class GameController : MonoBehaviour {
         e.AddGameObject(go);
 
         // Custom
+        MonoBehaviourSubClass monoBehaviourSubClass = null;
+        e.AddMonoBehaviourSubClass(monoBehaviourSubClass);
         CustomObject customObject = null;
         e.AddCustomObject(customObject);
         object systemObject = null;

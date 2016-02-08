@@ -200,9 +200,15 @@ namespace Entitas.Unity.VisualDebugging {
 
         public static object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
             if (value == null) {
+                var isUnityObject = type == typeof(UnityEngine.Object) || type.IsSubclassOf(typeof(UnityEngine.Object));
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EditorGUILayout.LabelField(fieldName, "null");
+                    if (isUnityObject) {
+                        value = EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, type, true);
+                    } else {
+                        EditorGUILayout.LabelField(fieldName, "null");
+                    }
+
                     if (GUILayout.Button("Create", GUILayout.Height(14))) {
                         object defaultValue;
                         if (CreateDefault(type, out defaultValue)) {
