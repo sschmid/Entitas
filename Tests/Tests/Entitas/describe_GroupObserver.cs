@@ -97,9 +97,11 @@ class describe_GroupObserver : nspec {
                 it["retains entity even after destroy"] = () => {
                     var e = pool.CreateEntity();
                     e.AddComponentA();
-                    e.OnEntityReleased += entity => this.Fail();
+                    var didRelease = 0;
+                    e.OnEntityReleased += entity => didRelease += 1;
                     pool.DestroyEntity(e);
                     e.retainCount.should_be(1);
+                    didRelease.should_be(0);
                 };
                 
                 it["releases entity when clearing collected entities"] = () => {

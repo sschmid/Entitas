@@ -22,22 +22,23 @@ namespace Entitas {
         Group.GroupChanged _addEntityCache;
         string _toStringCache;
 
-        /// Creates a GroupObserver and will collect changed entities based on the specified eventType. 
+        /// Creates a GroupObserver and will collect changed entities based on the specified eventType.
         public GroupObserver(Group group, GroupEventType eventType)
             : this(new [] { group }, new [] { eventType }) {
         }
 
-        /// Creates a GroupObserver and will collect changed entities based on the specified eventTypes. 
+        /// Creates a GroupObserver and will collect changed entities based on the specified eventTypes.
         public GroupObserver(Group[] groups, GroupEventType[] eventTypes) {
+            _groups = groups;
+            _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
+            _eventTypes = eventTypes;
+
             if (groups.Length != eventTypes.Length) {
                 throw new GroupObserverException("Unbalanced count with groups (" + groups.Length +
                     ") and event types (" + eventTypes.Length + ").",
                     "Group and event type count must be equal.");
             }
 
-            _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
-            _groups = groups;
-            _eventTypes = eventTypes;
             _addEntityCache = addEntity;
             Activate();
         }
@@ -106,6 +107,10 @@ namespace Entitas {
             }
 
             return _toStringCache;
+        }
+
+        ~GroupObserver () {
+            Deactivate();
         }
     }
 
