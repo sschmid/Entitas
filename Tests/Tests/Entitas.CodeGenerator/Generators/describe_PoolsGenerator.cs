@@ -4,15 +4,10 @@ using NSpec;
 
 class describe_PoolsGenerator : nspec {
 
-    const bool logResults = false;
+    const bool logResults = !false;
 
-    const string defaultPool = @"using Entitas;
-
-public static class Pools {
-
-    static Pool[] _allPools;
-
-    public static Pool[] allPools {
+    const string defaultPool = @"public static class Pools {
+    public static Entitas.Pool[] allPools {
         get {
             if (_allPools == null) {
                 _allPools = new [] { pool };
@@ -21,13 +16,10 @@ public static class Pools {
             return _allPools;
         }
     }
-
-    static Pool _pool;
-
-    public static Pool pool {
+    public static Entitas.Pool pool {
         get {
             if (_pool == null) {
-                _pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData(""Pool"", ComponentIds.componentNames));
+                _pool = new Entitas.Pool(ComponentIds.TotalComponents, 0, new Entitas.PoolMetaData(""Pool"", ComponentIds.componentNames));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool, ComponentIds.componentTypes);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
@@ -37,15 +29,13 @@ public static class Pools {
             return _pool;
         }
     }
+
+    static Entitas.Pool[] _allPools;
+    static Entitas.Pool _pool;
 }";
 
-    const string metaPool = @"using Entitas;
-
-public static class Pools {
-
-    static Pool[] _allPools;
-
-    public static Pool[] allPools {
+    const string metaPool = @"public static class Pools {
+    public static Entitas.Pool[] allPools {
         get {
             if (_allPools == null) {
                 _allPools = new [] { meta };
@@ -54,13 +44,10 @@ public static class Pools {
             return _allPools;
         }
     }
-
-    static Pool _meta;
-
-    public static Pool meta {
+    public static Entitas.Pool meta {
         get {
             if (_meta == null) {
-                _meta = new Pool(MetaComponentIds.TotalComponents, 0, new PoolMetaData(""Meta Pool"", MetaComponentIds.componentNames));
+                _meta = new Entitas.Pool(MetaComponentIds.TotalComponents, 0, new Entitas.PoolMetaData(""Meta Pool"", MetaComponentIds.componentNames));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, MetaComponentIds.componentTypes);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
@@ -70,15 +57,13 @@ public static class Pools {
             return _meta;
         }
     }
+
+    static Entitas.Pool[] _allPools;
+    static Entitas.Pool _meta;
 }";
 
-    const string metaCorePool = @"using Entitas;
-
-public static class Pools {
-
-    static Pool[] _allPools;
-
-    public static Pool[] allPools {
+    const string metaCorePool = @"public static class Pools {
+    public static Entitas.Pool[] allPools {
         get {
             if (_allPools == null) {
                 _allPools = new [] { meta, core };
@@ -87,13 +72,10 @@ public static class Pools {
             return _allPools;
         }
     }
-
-    static Pool _meta;
-
-    public static Pool meta {
+    public static Entitas.Pool meta {
         get {
             if (_meta == null) {
-                _meta = new Pool(MetaComponentIds.TotalComponents, 0, new PoolMetaData(""Meta Pool"", MetaComponentIds.componentNames));
+                _meta = new Entitas.Pool(MetaComponentIds.TotalComponents, 0, new Entitas.PoolMetaData(""Meta Pool"", MetaComponentIds.componentNames));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, MetaComponentIds.componentTypes);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
@@ -103,13 +85,10 @@ public static class Pools {
             return _meta;
         }
     }
-
-    static Pool _core;
-
-    public static Pool core {
+    public static Entitas.Pool core {
         get {
             if (_core == null) {
-                _core = new Pool(CoreComponentIds.TotalComponents, 0, new PoolMetaData(""Core Pool"", CoreComponentIds.componentNames));
+                _core = new Entitas.Pool(CoreComponentIds.TotalComponents, 0, new Entitas.PoolMetaData(""Core Pool"", CoreComponentIds.componentNames));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_core, CoreComponentIds.componentTypes);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
@@ -119,6 +98,10 @@ public static class Pools {
             return _core;
         }
     }
+
+    static Entitas.Pool[] _allPools;
+    static Entitas.Pool _meta;
+    static Entitas.Pool _core;
 }";
 
     void generates(string[] poolNames, string fileContent) {

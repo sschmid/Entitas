@@ -57,9 +57,8 @@ namespace Entitas.CodeGenerator {
             return propertyDescription;
         }
 
-        public ClassDescription AddBackingField(PropertyDescription pd) {
-            AddField(pd.type, "_" + pd.name);
-            return this;
+        public FieldDescription AddBackingField(PropertyDescription pd) {
+            return AddField(pd.type, "_" + pd.name);
         }
 
         public FieldDescription AddField(string type, string name) {
