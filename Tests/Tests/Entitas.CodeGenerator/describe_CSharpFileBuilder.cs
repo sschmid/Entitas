@@ -378,6 +378,23 @@ System.Console.WriteLine(str);");
 }");
                     };
 
+                    it["creates backing field"] = () => {
+                        pd.SetSetter("var newAge = value;\n_age = newAge;");
+                        cd.AddBackingField(pd);
+                        generates(cb, @"namespace MyNamespace {
+    class MyClass {
+        int age {
+            set {
+                var newAge = value;
+                _age = newAge;
+            }
+        }
+
+        int _age;
+    }
+}");
+                    };
+
                     it["adds a field"] = () => {
                         cd.AddField(typeof(string).ToCompilableString(), "_name");
                         generates(cb, @"namespace MyNamespace {
