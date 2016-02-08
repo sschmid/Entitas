@@ -28,6 +28,7 @@ class describe_TypeToCompilableStringExtension : nspec {
             it["generates short"] = () => generate<short>().should_be("short");
             it["generates ushort"] = () => generate<ushort>().should_be("ushort");
             it["generates string"] = () => generate<string>().should_be("string");
+            it["generates void"] = () => typeof(void).ToCompilableString().should_be("void");
         };
 
         context["custom types"] = () => {

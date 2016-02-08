@@ -20,7 +20,8 @@ namespace Entitas.CodeGenerator {
             { "System.Object", "object" },
             { "System.Int16", "short" },
             { "System.UInt16", "ushort" },
-            { "System.String", "string" }
+            { "System.String", "string" },
+            { "System.Void", "void" }
         };
 
         public static string ToCompilableString(this Type type) {
