@@ -31,8 +31,57 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entitas.CodeGenerator.TypeReflection\TypeReflectionCodeGenerator.cs" />
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CodeGenerator.cs">
       <Link>Linked Libraries\Entitas.CodeGenerator\CodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\PoolAttribute.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Attributes\PoolAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\CSharpFileBuilder.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\CSharpFileBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\CSharpFileBuilderToString.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\CSharpFileBuilderToString.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\ClassDescription.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\ClassDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\ConstructorDescription.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\ConstructorDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\FieldDescription.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\FieldDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\MethodDescription.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\MethodDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\MethodParameterDescription.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\MethodParameterDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\NamespaceDescription.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\NamespaceDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\PropertyDescription.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\PropertyDescription.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Keywords\AccessModifiers.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Keywords\AccessModifiers.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Keywords\MethodParameterKeyword.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Keywords\MethodParameterKeyword.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\CSharpFileBuilder\Keywords\Modifiers.cs">
+      <Link>Linked Libraries\Entitas.CodeGenerator\CSharpFileBuilder\Keywords\Modifiers.cs</Link>
     </Compile>
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Generators\ComponentIndicesGenerator.cs">
       <Link>Linked Libraries\Entitas.CodeGenerator\Generators\ComponentIndicesGenerator.cs</Link>
@@ -70,7 +119,6 @@
     <Compile Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator\Providers\TypeReflectionProvider.cs">
       <Link>Linked Libraries\Entitas.CodeGenerator\Providers\TypeReflectionProvider.cs</Link>
     </Compile>
-    <Compile Include="Entitas.CodeGenerator.TypeReflection\TypeReflectionCodeGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
