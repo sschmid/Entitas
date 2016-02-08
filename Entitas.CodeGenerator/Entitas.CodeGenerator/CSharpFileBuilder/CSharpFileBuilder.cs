@@ -3,6 +3,7 @@
 namespace Entitas.CodeGenerator {
     public partial class CSharpFileBuilder {
 
+        #pragma warning disable
         readonly new List<string> _usings;
         readonly List<NamespaceDescription> _namespaceDescriptions;
 
