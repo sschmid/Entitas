@@ -1,8 +1,11 @@
-﻿using NSpec;
-using Entitas.CodeGenerator;
+﻿using System;
 using System.Linq;
+using Entitas.CodeGenerator;
+using NSpec;
 
 class describe_PoolAttributeGenerator : nspec {
+
+    const bool logResults = false;
 
     void when_generating() {
         it["generates nothing input is empty"] = () => new PoolAttributeGenerator().Generate(new string[0]).Length.should_be(0);
@@ -11,14 +14,18 @@ class describe_PoolAttributeGenerator : nspec {
             files.Length.should_be(1);
             files.Any(f => f.fileName == "MetaGameAttribute").should_be_true();
             var file = files.First(f => f.fileName == "MetaGameAttribute");
-            file.fileContent.should_be(@"using Entitas.CodeGenerator;
-
-public class MetaGameAttribute : PoolAttribute {
+            const string expectedFileContent = @"public class MetaGameAttribute : Entitas.CodeGenerator.PoolAttribute {
     public MetaGameAttribute() : base(""MetaGame"") {
     }
-}
+}";
 
-".ToUnixLineEndings());
+            #pragma warning disable
+            if (logResults) {
+                Console.WriteLine("should:\n'" + expectedFileContent + "'");
+                Console.WriteLine("was:\n'" + file.fileContent + "'");
+            }
+
+            file.fileContent.should_be(expectedFileContent.ToUnixLineEndings());
         };
 
 
@@ -28,16 +35,20 @@ public class MetaGameAttribute : PoolAttribute {
 
             files.Any(f => f.fileName == "MetaGameAttribute").should_be_true();
             files.Any(f => f.fileName == "UIAttribute").should_be_true();
-            
-            var file = files.First(f => f.fileName == "UIAttribute");
-            file.fileContent.should_be(@"using Entitas.CodeGenerator;
 
-public class UIAttribute : PoolAttribute {
+            var file = files.First(f => f.fileName == "UIAttribute");
+            const string expectedFileContent = @"public class UIAttribute : Entitas.CodeGenerator.PoolAttribute {
     public UIAttribute() : base(""UI"") {
     }
-}
+}";
+ 
+            #pragma warning disable
+            if (logResults) {
+                Console.WriteLine("should:\n'" + expectedFileContent + "'");
+                Console.WriteLine("was:\n'" + file.fileContent + "'");
+            }
 
-".ToUnixLineEndings());
+            file.fileContent.should_be(expectedFileContent.ToUnixLineEndings());
         };
     }
 }

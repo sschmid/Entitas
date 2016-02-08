@@ -61,6 +61,11 @@ class describe_TypeToCompilableStringExtension : nspec {
             it["generates List<T>[,]"] = () => generate<List<int>[,]>().should_be("System.Collections.Generic.List<int>[,]");
             it["generates Dictionary<List<T>[,], T2>[]"] = () => generate<Dictionary<List<NestedTest.NestedTestEnum>[,], Entity>[]>().should_be("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest.NestedTestEnum>[,], Entitas.Entity>[]");
         };
+
+        context["short type name"] = () => {
+            it["gets short type name from full type name"] = () => "Entitas.Entity".ShortTypeName().should_be("Entity");
+            it["gets short type name from short type name"] = () => "Entity".ShortTypeName().should_be("Entity");
+        };
     }
 }
 

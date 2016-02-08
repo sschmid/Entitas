@@ -33,9 +33,7 @@
             _generateMethods = generateMethods;
             _generateIndex = generateIndex;
 
-            var nameSplit = fullTypeName.Split('.');
-            _typeName = nameSplit[nameSplit.Length - 1];
-
+            _typeName = fullTypeName.ShortTypeName();
             _isSingletonComponent = fieldInfos.Length == 0;
         }
     }

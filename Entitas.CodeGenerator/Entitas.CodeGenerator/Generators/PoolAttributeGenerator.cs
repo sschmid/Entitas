@@ -11,14 +11,12 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generatePoolAttributes(string poolName) {
-            return string.Format(@"using Entitas.CodeGenerator;
+            var fileContent = new CSharpFileBuilder();
+            var classDesc = fileContent.NoNamespace().AddClass(poolName + "Attribute").AddModifier(AccessModifiers.Public);
+            classDesc.SetBaseClass("Entitas.CodeGenerator.PoolAttribute");
+            classDesc.AddConstructor().AddModifier(AccessModifiers.Public).CallBase("\"" + poolName + "\"");
 
-public class {0}Attribute : PoolAttribute {{
-    public {0}Attribute() : base(""{0}"") {{
-    }}
-}}
-
-", poolName);
+            return fileContent.ToString();
         }
     }
 }

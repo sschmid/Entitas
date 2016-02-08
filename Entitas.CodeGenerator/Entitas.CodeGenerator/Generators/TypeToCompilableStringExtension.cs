@@ -41,6 +41,11 @@ namespace Entitas.CodeGenerator {
             return type.FullName;
         }
 
+        public static string ShortTypeName(this string fullTypeName) {
+            var nameSplit = fullTypeName.Split('.');
+            return nameSplit[nameSplit.Length - 1];
+        }
+
         static string generateGenericTypeString(Type type) {
             var genericMainType = type.FullName.Split('`')[0];
             var genericArguments = type.GetGenericArguments()
