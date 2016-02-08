@@ -48,6 +48,18 @@
     <Compile Include="Entitas.CodeGenerator\Intermediate\CodeGenFile.cs" />
     <Compile Include="Entitas.CodeGenerator\Intermediate\ComponentInfo.cs" />
     <Compile Include="Entitas.CodeGenerator\Providers\TypeReflectionProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\CSharpFileBuilder.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\CSharpFileBuilderToString.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\ClassDescription.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\ConstructorDescription.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\FieldDescription.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\MethodDescription.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\MethodParameterDescription.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\NamespaceDescription.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Descriptions\PropertyDescription.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Keywords\AccessModifiers.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Keywords\MethodParameterKeyword.cs" />
+    <Compile Include="Entitas.CodeGenerator\CSharpFileBuilder\Keywords\Modifiers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
