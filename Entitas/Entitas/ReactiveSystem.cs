@@ -120,6 +120,10 @@ namespace Entitas {
 
             return _toStringCache;
         }
+
+        ~ReactiveSystem () {
+            Deactivate();
+        }
     }
 }
 
