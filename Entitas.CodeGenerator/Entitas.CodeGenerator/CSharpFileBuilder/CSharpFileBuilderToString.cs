@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -76,17 +75,13 @@ namespace Entitas.CodeGenerator {
         }
 
         static string getInheritance(ClassDescription cd) {
-            var inheritedTypes = new List<Type>();
+            var inheritedTypes = new List<string>();
             if (cd.baseClass != null) {
                 inheritedTypes.Add(cd.baseClass);
             }
             inheritedTypes.AddRange(cd.interfaces);
 
-            var inheritance = inheritedTypes
-                .Select(type => type.ToCompilableString())
-                .ToArray();
-
-            return string.Join(", ", inheritance);
+            return string.Join(", ", inheritedTypes.ToArray());
         }
 
         static string getConstructors(ClassDescription cd) {
@@ -119,8 +114,7 @@ namespace Entitas.CodeGenerator {
 
             var properties = cd.propertyDescriptions
                 .Select(pd => {
-                    var type = pd.type.ToCompilableString();
-                    var prop = string.Format(format, getModifiers(pd.modifiers), type, pd.name);
+                    var prop = string.Format(format, getModifiers(pd.modifiers), pd.type, pd.name);
                     if (!string.IsNullOrEmpty(pd.getter)) {
                         return !string.IsNullOrEmpty(pd.setter)
                             ? codeBlock(prop, codeBlock("get", pd.getter) + "\n" + codeBlock("set", pd.setter))
@@ -129,7 +123,7 @@ namespace Entitas.CodeGenerator {
 
                     return !string.IsNullOrEmpty(pd.setter)
                         ? codeBlock(prop, codeBlock("set", pd.setter))
-                        : string.Format(defaultFormat, getModifiers(pd.modifiers), type, pd.name);
+                        : string.Format(defaultFormat, getModifiers(pd.modifiers), pd.type, pd.name);
                 }).ToArray();
 
             return string.Join("\n", properties);
@@ -144,10 +138,9 @@ namespace Entitas.CodeGenerator {
             const string formatWithValue = "{0}{1} {2} = {3};";
             var fields = cd.fieldDescriptions
                 .Select(fd => {
-                    var type = fd.type.ToCompilableString();
                     return string.IsNullOrEmpty(fd.value)
-                        ? string.Format(format, getModifiers(fd.modifiers), type, fd.name)
-                        : string.Format(formatWithValue, getModifiers(fd.modifiers), type, fd.name, fd.value);
+                        ? string.Format(format, getModifiers(fd.modifiers), fd.type, fd.name)
+                        : string.Format(formatWithValue, getModifiers(fd.modifiers), fd.type, fd.name, fd.value);
                 }).ToArray();
 
             return string.Join("\n", fields);
@@ -160,13 +153,8 @@ namespace Entitas.CodeGenerator {
 
             const string format = "{0}{1} {2}({3})";
             var methods = cd.methodDescriptions
-                .Select(md => {
-                    var returnType = md.returnType == null
-                        ? typeof(void).ToCompilableString()
-                        : md.returnType.ToCompilableString();
-
-                    return codeBlock(string.Format(format, getModifiers(md.modifiers), returnType, md.name, getParameters(md.parameters)), md.body);
-                }).ToArray();
+                .Select(md => codeBlock(string.Format(format, getModifiers(md.modifiers),
+                    md.returnType ?? "void", md.name, getParameters(md.parameters)), md.body)).ToArray();
 
             return string.Join("\n\n", methods);
         }
@@ -185,8 +173,8 @@ namespace Entitas.CodeGenerator {
                         : p.keyword + " ";
 
                     return string.IsNullOrEmpty(p.defaultValue)
-                        ? string.Format(format, keyword, p.type.ToCompilableString(), p.name)
-                        : string.Format(defaultValueFormat, keyword, p.type.ToCompilableString(), p.name, p.defaultValue);
+                        ? string.Format(format, keyword, p.type, p.name)
+                        : string.Format(defaultValueFormat, keyword, p.type, p.name, p.defaultValue);
                 }).ToArray();
 
             return string.Join(", ", methods);

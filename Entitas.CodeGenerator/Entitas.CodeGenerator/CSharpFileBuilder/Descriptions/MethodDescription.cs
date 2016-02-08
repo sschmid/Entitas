@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas.CodeGenerator {
     public class MethodDescription {
         public string name { get { return _name; } }
         public string body { get { return _body; } }
         public string[] modifiers { get { return _modifiers.ToArray(); } }
-        public Type returnType { get { return _returnType; } }
+        public string returnType { get { return _returnType; } }
         public MethodParameterDescription[] parameters { get { return _parameters.ToArray(); } }
 
         readonly string _name;
         readonly string _body;
         readonly List<string> _modifiers;
-        Type _returnType;
+        string _returnType;
         readonly List<MethodParameterDescription> _parameters;
 
         public MethodDescription(string name, string body) {
@@ -27,7 +26,7 @@ namespace Entitas.CodeGenerator {
             return this;
         }
 
-        public MethodDescription SetReturnType(Type type) {
+        public MethodDescription SetReturnType(string type) {
             _returnType = type;
             return this;
         }

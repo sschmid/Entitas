@@ -10,6 +10,7 @@ class describe_CSharpFileBuilder : nspec {
     void generates(CSharpFileBuilder cb, string expectedCode) {
         expectedCode = expectedCode.ToUnixLineEndings();
         var result = cb.ToString();
+        #pragma warning disable
         if (logResults) {
             Console.WriteLine("should:\n'" + expectedCode + "'");
             Console.WriteLine("was:\n'" + result + "'");
@@ -110,7 +111,7 @@ namespace MyNamespace {
                 };
 
                 it["sets base class"] = () => {
-                    cd.SetBaseClass(typeof(PoolAttribute));
+                    cd.SetBaseClass(typeof(PoolAttribute).ToCompilableString());
                     generates(cb, @"namespace MyNamespace {
     class MyClass : Entitas.CodeGenerator.PoolAttribute {
     }
@@ -118,7 +119,7 @@ namespace MyNamespace {
                 };
 
                 it["adds an interface"] = () => {
-                    cd.AddInterface(typeof(ISystem));
+                    cd.AddInterface(typeof(ISystem).ToCompilableString());
                     generates(cb, @"namespace MyNamespace {
     class MyClass : Entitas.ISystem {
     }
@@ -126,8 +127,8 @@ namespace MyNamespace {
                 };
 
                 it["adds multiple interfaces"] = () => {
-                    cd.AddInterface(typeof(ISystem));
-                    cd.AddInterface(typeof(IExecuteSystem));
+                    cd.AddInterface(typeof(ISystem).ToCompilableString());
+                    cd.AddInterface(typeof(IExecuteSystem).ToCompilableString());
                     generates(cb, @"namespace MyNamespace {
     class MyClass : Entitas.ISystem, Entitas.IExecuteSystem {
     }
@@ -135,9 +136,9 @@ namespace MyNamespace {
                 };
 
                 it["adds base class and interfaces"] = () => {
-                    cd.SetBaseClass(typeof(PoolAttribute));
-                    cd.AddInterface(typeof(ISystem));
-                    cd.AddInterface(typeof(IExecuteSystem));
+                    cd.SetBaseClass(typeof(PoolAttribute).ToCompilableString());
+                    cd.AddInterface(typeof(ISystem).ToCompilableString());
+                    cd.AddInterface(typeof(IExecuteSystem).ToCompilableString());
                     generates(cb, @"namespace MyNamespace {
     class MyClass : Entitas.CodeGenerator.PoolAttribute, Entitas.ISystem, Entitas.IExecuteSystem {
     }
@@ -169,7 +170,7 @@ namespace MyNamespace {
                 };
 
                 it["adds a property"] = () => {
-                    cd.AddProperty(typeof(string), "name");
+                    cd.AddProperty(typeof(string).ToCompilableString(), "name");
                     generates(cb, @"namespace MyNamespace {
     class MyClass {
         string name { get; set; }
@@ -190,8 +191,8 @@ namespace MyNamespace {
                 };
 
                 it["adds multiple properties"] = () => {
-                    cd.AddProperty(typeof(string), "name");
-                    cd.AddProperty(typeof(int), "age");
+                    cd.AddProperty(typeof(string).ToCompilableString(), "name");
+                    cd.AddProperty(typeof(int).ToCompilableString(), "age");
                     generates(cb, @"namespace MyNamespace {
     class MyClass {
         string name { get; set; }
@@ -201,7 +202,7 @@ namespace MyNamespace {
                 };
 
                 it["adds a field of type"] = () => {
-                    cd.AddField(typeof(string), "_name");
+                    cd.AddField(typeof(string).ToCompilableString(), "_name");
                     generates(cb, @"namespace MyNamespace {
     class MyClass {
         string _name;
@@ -210,8 +211,8 @@ namespace MyNamespace {
                 };
 
                 it["adds multiple fields of type"] = () => {
-                    cd.AddField(typeof(string), "_name");
-                    cd.AddField(typeof(int), "_age");
+                    cd.AddField(typeof(string).ToCompilableString(), "_name");
+                    cd.AddField(typeof(int).ToCompilableString(), "_age");
                     generates(cb, @"namespace MyNamespace {
     class MyClass {
         string _name;
@@ -276,7 +277,7 @@ System.Console.WriteLine(str);");
                     };
 
                     it["adds a parameter"] = () => {
-                        ctor.AddParameter(new MethodParameterDescription(typeof(string), "name"));
+                        ctor.AddParameter(new MethodParameterDescription(typeof(string).ToCompilableString(), "name"));
                         generates(cb, @"namespace MyNamespace {
     class MyClass {
         MyClass(string name) {
@@ -288,8 +289,8 @@ System.Console.WriteLine(str);");
                     };
 
                     it["adds parameters"] = () => {
-                        ctor.AddParameter(new MethodParameterDescription(typeof(string), "name"))
-                            .AddParameter(new MethodParameterDescription(typeof(int), "age"));
+                        ctor.AddParameter(new MethodParameterDescription(typeof(string).ToCompilableString(), "name"))
+                            .AddParameter(new MethodParameterDescription(typeof(int).ToCompilableString(), "age"));
                         generates(cb, @"namespace MyNamespace {
     class MyClass {
         MyClass(string name, int age) {
@@ -317,7 +318,7 @@ System.Console.WriteLine(str);");
 
                     PropertyDescription pd = null;
                     before = () => {
-                        pd = cd.AddProperty(typeof(int), "age");
+                        pd = cd.AddProperty(typeof(int).ToCompilableString(), "age");
                     };
 
                     it["adds modifiers"] = () => {
@@ -378,7 +379,7 @@ System.Console.WriteLine(str);");
                     };
 
                     it["adds a field"] = () => {
-                        cd.AddField(typeof(string), "_name");
+                        cd.AddField(typeof(string).ToCompilableString(), "_name");
                         generates(cb, @"namespace MyNamespace {
     class MyClass {
         int age { get; set; }
@@ -409,7 +410,7 @@ System.Console.WriteLine(str);");
 
                     FieldDescription fd = null;
                     before = () => {
-                        fd = cd.AddField(typeof(string), "version");
+                        fd = cd.AddField(typeof(string).ToCompilableString(), "version");
                     };
 
                     it["adds modifiers"] = () => {
@@ -467,7 +468,7 @@ System.Console.WriteLine(str);");
                     };
 
                     it["sets returnType"] = () => {
-                        md.SetReturnType(typeof(char[]));
+                        md.SetReturnType(typeof(char[]).ToCompilableString());
                         generates(cb, @"namespace MyNamespace {
     class MyClass {
         char[] MyMethod() {
@@ -479,8 +480,8 @@ System.Console.WriteLine(str);");
                     };
 
                     it["adds parameters"] = () => {
-                        md.AddParameter(new MethodParameterDescription(typeof(string), "name"))
-                            .AddParameter(new MethodParameterDescription(typeof(int), "age"));
+                        md.AddParameter(new MethodParameterDescription(typeof(string).ToCompilableString(), "name"))
+                            .AddParameter(new MethodParameterDescription(typeof(int).ToCompilableString(), "age"));
 
                         generates(cb, @"namespace MyNamespace {
     class MyClass {
@@ -493,8 +494,8 @@ System.Console.WriteLine(str);");
                     };
 
                     it["adds parameters with keyword"] = () => {
-                        md.AddParameter(new MethodParameterDescription(typeof(string), "name"))
-                            .AddParameter(new MethodParameterDescription(typeof(int), "age").SetKeyword(MethodParameterKeyword.Out));
+                        md.AddParameter(new MethodParameterDescription(typeof(string).ToCompilableString(), "name"))
+                            .AddParameter(new MethodParameterDescription(typeof(int).ToCompilableString(), "age").SetKeyword(MethodParameterKeyword.Out));
 
                         generates(cb, @"namespace MyNamespace {
     class MyClass {
@@ -507,8 +508,8 @@ System.Console.WriteLine(str);");
                     };
 
                     it["sets default value"] = () => {
-                        md.AddParameter(new MethodParameterDescription(typeof(string), "name"))
-                            .AddParameter(new MethodParameterDescription(typeof(int), "age").SetDefaultValue("42"));
+                        md.AddParameter(new MethodParameterDescription(typeof(string).ToCompilableString(), "name"))
+                            .AddParameter(new MethodParameterDescription(typeof(int).ToCompilableString(), "age").SetDefaultValue("42"));
 
                         generates(cb, @"namespace MyNamespace {
     class MyClass {
