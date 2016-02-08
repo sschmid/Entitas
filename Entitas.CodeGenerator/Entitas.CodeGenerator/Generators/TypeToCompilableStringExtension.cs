@@ -50,12 +50,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateArrayString(Type type) {
-            var rankString = string.Empty;
-            for (int i = 0; i < type.GetArrayRank() - 1; i++) {
-                rankString += ",";
-            }
-
-            return type.GetElementType().ToCompilableString() + "[" + rankString + "]";
+            return type.GetElementType().ToCompilableString() + "[" + new string(',', type.GetArrayRank() - 1) + "]";
         }
     }
 }
