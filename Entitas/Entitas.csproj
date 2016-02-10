@@ -54,6 +54,9 @@
     <Compile Include="Entitas\Matcher\MatcherInterfaces.cs" />
     <Compile Include="Entitas\Extensions\IMatcherExtension.cs" />
     <Compile Include="Entitas\EntitasException.cs" />
+    <Compile Include="Entitas\Blueprints\Blueprint.cs" />
+    <Compile Include="Entitas\Blueprints\ComponentBlueprint.cs" />
+    <Compile Include="Entitas\Blueprints\PoolBlueprintExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -61,5 +64,6 @@
     <Folder Include="Entitas\Extensions\" />
     <Folder Include="Entitas\Interfaces\" />
     <Folder Include="Entitas\Matcher\" />
+    <Folder Include="Entitas\Blueprints\" />
   </ItemGroup>
 </Project>

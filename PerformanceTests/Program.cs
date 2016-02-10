@@ -8,6 +8,7 @@ namespace PerformanceTests {
             Thread.Sleep(1500);
 
             run<PoolCreateEntity>();
+            run<PoolCreateBlueprint>();
             run<PoolDestroyEntity>();
             run<PoolDestroyAllEntities>();
             run<PoolGetGroup>();
@@ -58,6 +59,7 @@ namespace PerformanceTests {
 
         //        Running performance tests...
         //        PoolCreateEntity:                       30 ms
+        //        PoolCreateBlueprint:                    227 ms
         //        PoolDestroyEntity:                      29 ms
         //        PoolDestroyAllEntities:                 25 ms
         //        PoolGetGroup:                           5 ms

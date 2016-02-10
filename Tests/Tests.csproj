@@ -283,6 +283,16 @@
     <Compile Include="Tests\Entitas.CodeGenerator\Generators\describe_PoolAttributeGenerator.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Generators\describe_PoolsGenerator.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\Providers\describe_TypeReflectionProvider.cs" />
+    <Compile Include="Tests\Entitas\describe_Blueprints.cs" />
+    <Compile Include="..\Entitas\Entitas\Blueprints\Blueprint.cs">
+      <Link>Linked Libraries\Entitas\Blueprints\Blueprint.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Blueprints\ComponentBlueprint.cs">
+      <Link>Linked Libraries\Entitas\Blueprints\ComponentBlueprint.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Blueprints\PoolBlueprintExtension.cs">
+      <Link>Linked Libraries\Entitas\Blueprints\PoolBlueprintExtension.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

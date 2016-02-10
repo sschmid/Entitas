@@ -11,6 +11,11 @@ public class ComponentD : IComponent {}
 public class ComponentE : IComponent {}
 public class ComponentF : IComponent {}
 
+public class NameAgeComponent : IComponent {
+    public string name;
+    public int age;
+}
+
 public static class Component {
     public static readonly ComponentA A = new ComponentA();
     public static readonly ComponentB B = new ComponentB();
@@ -28,7 +33,8 @@ public static class CID {
     public const int ComponentD = 4;
     public const int ComponentE = 5;
     public const int ComponentF = 6;
+    public const int NameAgeComponent = 7;
 
-    public const int NumComponents = 7;
+    public const int NumComponents = 8;
 }
 
