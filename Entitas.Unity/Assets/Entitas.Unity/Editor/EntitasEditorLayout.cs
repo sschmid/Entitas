@@ -21,7 +21,7 @@ namespace Entitas.Unity {
         }
 
         public static void BeginVertical() {
-            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EditorGUILayout.BeginVertical();
         }
 
         public static void BeginVerticalBox() {
@@ -30,6 +30,14 @@ namespace Entitas.Unity {
 
         public static void EndVertical() {
             EditorGUILayout.EndVertical();
+        }
+
+        public static void BeginHorizontal() {
+            EditorGUILayout.BeginHorizontal();
+        }
+
+        public static void EndHorizontal() {
+            EditorGUILayout.EndHorizontal();
         }
     }
 }

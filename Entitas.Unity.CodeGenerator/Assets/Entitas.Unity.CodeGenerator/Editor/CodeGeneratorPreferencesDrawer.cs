@@ -35,7 +35,7 @@ namespace Entitas.Unity.CodeGenerator {
         }
 
         public void Draw(EntitasPreferencesConfig config) {
-            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EntitasEditorLayout.BeginVerticalBox();
             {
                 EditorGUILayout.LabelField("CodeGenerator", EditorStyles.boldLabel);
 
@@ -43,7 +43,7 @@ namespace Entitas.Unity.CodeGenerator {
                 drawPools();
                 drawCodeGenerators();
             }
-            EditorGUILayout.EndVertical();
+            EntitasEditorLayout.EndVertical();
         }
 
         void drawGeneratedFolderPath() {
@@ -73,9 +73,9 @@ namespace Entitas.Unity.CodeGenerator {
 
             var availableGeneratorNames = new HashSet<string>();
 
-            EditorGUILayout.BeginHorizontal();
+            EntitasEditorLayout.BeginHorizontal();
             {
-                EditorGUILayout.BeginVertical();
+                EntitasEditorLayout.BeginVertical();
                 {
                     foreach (var codeGenerator in _codeGenerators) {
                         availableGeneratorNames.Add(codeGenerator.Name);
@@ -88,14 +88,14 @@ namespace Entitas.Unity.CodeGenerator {
                         }
                     }
                 }
-                EditorGUILayout.EndVertical();
+                EntitasEditorLayout.EndVertical();
 
                 if (GUILayout.Button("Generate", GUILayout.Width(200), GUILayout.Height(68))) {
                     UnityCodeGenerator.Generate();
                 }
 
             }
-            EditorGUILayout.EndHorizontal();
+            EntitasEditorLayout.EndHorizontal();
             
             foreach (var generatorName in _codeGeneratorConfig.enabledCodeGenerators.ToArray()) {
                 if (!availableGeneratorNames.Contains(generatorName)) {
