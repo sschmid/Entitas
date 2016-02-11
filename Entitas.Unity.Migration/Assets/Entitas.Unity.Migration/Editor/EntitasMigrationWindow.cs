@@ -10,9 +10,7 @@ namespace Entitas.Unity.Migration {
 
         [MenuItem("Entitas/Migrate...", false, 300)]
         public static void OpenMigrate() {
-            var window = EditorWindow.GetWindow<EntitasMigrationWindow>(true, "Entitas Migration");
-            window.minSize = window.maxSize = new Vector2(415f, 520f);
-            window.Show();
+            EntitasEditorLayout.ShowWindow<EntitasMigrationWindow>("Entitas Migration");
         }
 
         Texture2D _headerTexture;
@@ -21,14 +19,8 @@ namespace Entitas.Unity.Migration {
         Vector2 _scrollViewPosition;
 
         void OnEnable() {
-            var guid = AssetDatabase.FindAssets("l:Entitas-Migration-Header")[0];
-            if (guid != null) {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                _headerTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-            }
-
+            _headerTexture = EntitasEditorLayout.LoadTexture("l:Entitas-Migration-Header");
             _localVersion = EntitasCheckForUpdates.GetLocalVersion();
-
             _migrations = getMigrations();
         }
 
@@ -43,7 +35,7 @@ namespace Entitas.Unity.Migration {
         void OnGUI() {
             _scrollViewPosition = EditorGUILayout.BeginScrollView(_scrollViewPosition);
             {
-                var offsetY = drawHeaderTexture();
+                var offsetY = EntitasEditorLayout.DrawHeaderTexture(this, _headerTexture);
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField("Version: " + _localVersion);
                 GUILayout.Space(offsetY - 24);
@@ -51,7 +43,7 @@ namespace Entitas.Unity.Migration {
                 var descriptionStyle = new GUIStyle(GUI.skin.label);
                 descriptionStyle.wordWrap = true;
                 foreach (var migration in _migrations) {
-                    EditorGUILayout.BeginVertical(GUI.skin.box);
+                    EntitasEditorLayout.BeginVerticalBox();
                     {
                         EditorGUILayout.LabelField(migration.version, EditorStyles.boldLabel);
                         EditorGUILayout.LabelField(migration.description, descriptionStyle);
@@ -59,21 +51,10 @@ namespace Entitas.Unity.Migration {
                             migrate(migration);
                         }
                     }
-                    EditorGUILayout.EndVertical();
+                    EntitasEditorLayout.EndVertical();
                 }
             }
             EditorGUILayout.EndScrollView();
-        }
-
-        float drawHeaderTexture() {
-            // const int scollBarWidth = 15;
-            const int scollBarWidth = 0;
-            var ratio = _headerTexture.width / _headerTexture.height;
-            var width = position.width - 8 - scollBarWidth;
-            var height = width / ratio;
-            GUI.DrawTexture(new Rect(4, 2, width, height), _headerTexture, ScaleMode.ScaleToFit);
-
-            return height;
         }
 
         static void migrate(IMigration migration) {
