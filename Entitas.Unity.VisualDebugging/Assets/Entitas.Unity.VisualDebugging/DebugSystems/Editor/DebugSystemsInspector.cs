@@ -23,7 +23,6 @@ namespace Entitas.Unity.VisualDebugging {
             var systems = debugSystemsBehaviour.systems;
 
             drawSystemsOverview(systems);
-            drawStepper(systems);
             drawSystemsMonitor(systems);
             drawSystemList(systems);
 
@@ -41,32 +40,6 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.EndVertical();
         }
 
-        void drawStepper(DebugSystems systems) {
-            EditorGUILayout.BeginVertical(GUI.skin.box);
-            {
-                EditorGUILayout.LabelField("Step Mode", EditorStyles.boldLabel);
-                EditorGUILayout.BeginHorizontal();
-                {
-                    var buttonStyle = new GUIStyle(GUI.skin.button);
-                    if (systems.paused) {
-                        buttonStyle.normal = GUI.skin.button.active;
-                    }
-                    if (GUILayout.Button("▌▌", buttonStyle, GUILayout.Width(50))) {
-                        systems.paused = !systems.paused;
-                    }
-                    if (GUILayout.Button("Step", GUILayout.Width(100))) {
-                        systems.paused = true;
-                        systems.Step();
-                        addDuration((float)systems.totalDuration);
-                        _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
-                    }
-                    GUILayout.FlexibleSpace();
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-            EditorGUILayout.EndVertical();
-        }
-
         void drawSystemsMonitor(DebugSystems systems) {
             if (_systemsMonitor == null) {
                 _systemsMonitor = new SystemsMonitor(SYSTEM_MONITOR_DATA_LENGTH);
@@ -79,8 +52,26 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.BeginVertical(GUI.skin.box);
             {
                 EditorGUILayout.LabelField("Execution duration", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Total", systems.totalDuration.ToString());
-                EditorGUILayout.Space();
+
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Total", systems.totalDuration.ToString());
+
+                    var buttonStyle = new GUIStyle(GUI.skin.button);
+                    if (systems.paused) {
+                        buttonStyle.normal = GUI.skin.button.active;
+                    }
+                    if (GUILayout.Button("▌▌", buttonStyle, GUILayout.Width(50))) {
+                        systems.paused = !systems.paused;
+                    }
+                    if (GUILayout.Button("Step", GUILayout.Width(50))) {
+                        systems.paused = true;
+                        systems.Step();
+                        addDuration((float)systems.totalDuration);
+                        _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
 
                 if (!EditorApplication.isPaused && !systems.paused) {
                     addDuration((float)systems.totalDuration);
