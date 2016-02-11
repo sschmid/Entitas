@@ -26,14 +26,8 @@ namespace Entitas.Unity {
         Vector2 _scrollViewPosition;
 
         void OnEnable() {
-            var guid = AssetDatabase.FindAssets("l:Entitas-Header")[0];
-            if (guid != null) {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                _headerTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-            }
-
+            _headerTexture = EntitasEditorLayout.LoadTexture("l:Entitas-Header");
             _localVersion = EntitasCheckForUpdates.GetLocalVersion();
-
             _config = EntitasPreferences.LoadConfig();
             _preferencesDrawers = Assembly.GetAssembly(typeof(IEntitasPreferencesDrawer)).GetTypes()
                 .Where(type => type.GetInterfaces().Contains(typeof(IEntitasPreferencesDrawer)))

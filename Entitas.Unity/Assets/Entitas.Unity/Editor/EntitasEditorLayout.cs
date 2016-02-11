@@ -10,6 +10,15 @@ namespace Entitas.Unity {
             window.Show();
         }
 
+        public static Texture2D LoadTexture(string label) {
+            var guid = AssetDatabase.FindAssets(label)[0];
+            if (guid != null) {
+                var path = AssetDatabase.GUIDToAssetPath(guid);
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            }
+            return null;
+        }
+
         public static float DrawHeaderTexture(EditorWindow window, Texture2D texture) {
             const int scollBarWidth = 15;
             var ratio = texture.width / texture.height;

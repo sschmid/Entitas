@@ -50,9 +50,9 @@ namespace Entitas.Unity.VisualDebugging {
                 pool.DestroyEntity(entity);
             }
 
-            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EntitasEditorLayout.BeginVerticalBox();
             {
-                EditorGUILayout.BeginHorizontal();
+                EntitasEditorLayout.BeginHorizontal();
                 {
                     EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
                     if (GUILayout.Button("▸", GUILayout.Width(21), GUILayout.Height(14))) {
@@ -62,7 +62,7 @@ namespace Entitas.Unity.VisualDebugging {
                         entityBehaviour.UnfoldAllComponents();
                     }
                 }
-                EditorGUILayout.EndHorizontal();
+                EntitasEditorLayout.EndHorizontal();
 
                 EditorGUILayout.Space();
                 entityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", entityBehaviour.componentToAdd, entityBehaviour.entity.poolMetaData.componentNames);
@@ -86,27 +86,29 @@ namespace Entitas.Unity.VisualDebugging {
 
                 #if !ENTITAS_FAST_AND_UNSAFE
 
-                EditorGUILayout.BeginVertical(GUI.skin.box);
+                EntitasEditorLayout.BeginVerticalBox();
                 {
                     foreach (var owner in entity.owners.ToArray()) {
-                        EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.LabelField(owner.ToString());
-                        if (GUILayout.Button("Release", GUILayout.Width(88), GUILayout.Height(14))) {
-                            entity.Release(owner);
+                        EntitasEditorLayout.BeginHorizontal();
+                        {
+                            EditorGUILayout.LabelField(owner.ToString());
+                            if (GUILayout.Button("Release", GUILayout.Width(88), GUILayout.Height(14))) {
+                                entity.Release(owner);
+                            }
+                            EntitasEditorLayout.EndHorizontal();
                         }
-                        EditorGUILayout.EndHorizontal();
                     }
                 }
-                EditorGUILayout.EndVertical();
+                EntitasEditorLayout.EndVertical();
 
                 #endif
             }
-            EditorGUILayout.EndVertical();
+            EntitasEditorLayout.EndVertical();
         }
 
         void drawMultiTargets() {
             EditorGUILayout.Space();
-            EditorGUILayout.BeginHorizontal();
+            EntitasEditorLayout.BeginHorizontal();
             {
                 var aEntityBehaviour = (EntityBehaviour)targets[0];
                 aEntityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", aEntityBehaviour.componentToAdd, aEntityBehaviour.entity.poolMetaData.componentNames);
@@ -121,7 +123,7 @@ namespace Entitas.Unity.VisualDebugging {
                     }
                 }
             }
-            EditorGUILayout.EndHorizontal();
+            EntitasEditorLayout.EndHorizontal();
 
             EditorGUILayout.Space();
             if (GUILayout.Button("Destroy selected entities")) {
@@ -141,7 +143,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var pool = entityBehaviour.pool;
                 var entity = entityBehaviour.entity;
 
-                EditorGUILayout.BeginHorizontal();
+                EntitasEditorLayout.BeginHorizontal();
                 {
                     EditorGUILayout.LabelField(entity.ToString());
                     if (GUILayout.Button("Destroy Entity")) {
@@ -149,7 +151,7 @@ namespace Entitas.Unity.VisualDebugging {
                         pool.DestroyEntity(entity);
                     }
                 }
-                EditorGUILayout.EndHorizontal();
+                EntitasEditorLayout.EndHorizontal();
             }
         }
 
@@ -157,9 +159,9 @@ namespace Entitas.Unity.VisualDebugging {
             var componentType = component.GetType();
             var fields = componentType.GetFields(BindingFlags.Public | BindingFlags.Instance);
 
-            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EntitasEditorLayout.BeginVerticalBox();
             {
-                EditorGUILayout.BeginHorizontal();
+                EntitasEditorLayout.BeginHorizontal();
                 {
                     if (fields.Length == 0) {
                         EditorGUILayout.LabelField(componentType.Name.RemoveComponentSuffix(), EditorStyles.boldLabel);
@@ -170,7 +172,7 @@ namespace Entitas.Unity.VisualDebugging {
                         entity.RemoveComponent(index);
                     }
                 }
-                EditorGUILayout.EndHorizontal();
+                EntitasEditorLayout.EndHorizontal();
 
                 if (entityBehaviour.unfoldedComponents[index]) {
                     foreach (var field in fields) {
@@ -180,7 +182,7 @@ namespace Entitas.Unity.VisualDebugging {
                     }
                 }
             }
-            EditorGUILayout.EndVertical();
+            EntitasEditorLayout.EndVertical();
         }
 
         public static void DrawAndSetElement(Type type, string fieldName, object value, Entity entity, int index, IComponent component, Action<object> setValue) {
@@ -201,7 +203,7 @@ namespace Entitas.Unity.VisualDebugging {
         public static object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
             if (value == null) {
                 var isUnityObject = type == typeof(UnityEngine.Object) || type.IsSubclassOf(typeof(UnityEngine.Object));
-                EditorGUILayout.BeginHorizontal();
+                EntitasEditorLayout.BeginHorizontal();
                 {
                     if (isUnityObject) {
                         value = EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, type, true);
@@ -216,13 +218,13 @@ namespace Entitas.Unity.VisualDebugging {
                         }
                     }
                 }
-                EditorGUILayout.EndHorizontal();
+                EntitasEditorLayout.EndHorizontal();
                 return value;
             }
 
             if (!type.IsValueType) {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.BeginVertical();
+                EntitasEditorLayout.BeginHorizontal();
+                EntitasEditorLayout.BeginVertical();
             }
 
             var typeDrawer = getTypeDrawer(type);
@@ -233,11 +235,11 @@ namespace Entitas.Unity.VisualDebugging {
             }
 
             if (!type.IsValueType) {
-                EditorGUILayout.EndVertical();
+                EntitasEditorLayout.EndVertical();
                 if (GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
                     value = null;
                 }
-                EditorGUILayout.EndHorizontal();
+                EntitasEditorLayout.EndHorizontal();
             }
 
             return value;
@@ -254,7 +256,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static void drawUnsupportedType(Type type, string fieldName, object value) {
-            EditorGUILayout.BeginHorizontal();
+            EntitasEditorLayout.BeginHorizontal();
             {
                 EditorGUILayout.LabelField(fieldName, value.ToString());
                 if (GUILayout.Button("Missing ITypeDrawer", GUILayout.Height(14))) {
@@ -271,7 +273,7 @@ namespace Entitas.Unity.VisualDebugging {
                     }
                 }
             }
-            EditorGUILayout.EndHorizontal();
+            EntitasEditorLayout.EndHorizontal();
         }
 
         public static bool CreateDefault(Type type, out object defaultValue) {
