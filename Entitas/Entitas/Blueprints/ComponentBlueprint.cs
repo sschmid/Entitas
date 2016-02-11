@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Entitas;
 
@@ -23,6 +24,12 @@ namespace Entitas {
             _fullTypeName = fullTypeName;
             _fields = fields;
             _type = getComponentType(fullTypeName);
+
+            if (!_type.GetInterfaces().Contains(typeof(IComponent))) {
+
+                // TODO
+                throw new ComponentBlueprintException();
+            }
 
             cacheFieldInfos();
         }
@@ -50,7 +57,8 @@ namespace Entitas {
                 }
             }
 
-            return null;
+            // TODO
+            throw new ComponentBlueprintException();
         }
 
         void cacheFieldInfos() {
@@ -59,6 +67,8 @@ namespace Entitas {
                 foreach (var kv in _fields) {
                     var field = _type.GetField(kv.Key, BindingFlags.Instance | BindingFlags.Public);
                     if (field == null) {
+
+                        // TODO
                         throw new ComponentBlueprintException();
                     }
                     _cachedFields.Add(kv.Key, field);

@@ -6,9 +6,10 @@ using System;
 class describe_Blueprints : nspec {
 
     void when_creating_component_blueprints() {
+
         it["creates componentBlueprint"] = () => {
             var fields = new Dictionary<string, object>();
-            var type = typeof(object).FullName;
+            var type = typeof(ComponentA).FullName;
             var componentBlueprint = new ComponentBlueprint(0, type, fields);
             componentBlueprint.index.should_be(0);
             componentBlueprint.fullTypeName.should_be(type);
@@ -34,6 +35,16 @@ class describe_Blueprints : nspec {
             component.name.should_be("Max");
             component.age.should_be(42);
         };
+
+        it["throws when unknown type"] = expect<ComponentBlueprintException>(() => {
+            var componentBlueprint = new ComponentBlueprint(0, "unknown", null);
+            componentBlueprint.CreateComponent();
+        });
+
+        it["throws when type is doesn't implement IComponent"] = expect<ComponentBlueprintException>(() => {
+            var componentBlueprint = new ComponentBlueprint(0, typeof(object).FullName, null);
+            componentBlueprint.CreateComponent();
+        });
 
         it["throws when invlaid field name"] = expect<ComponentBlueprintException>(() => {
             var fields = new Dictionary<string, object> {
