@@ -7,11 +7,13 @@ namespace Entitas.CodeGenerator {
         const string CLASS_SUFFIX = "GeneratedExtension";
 
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
+            var generatorName = typeof(ComponentsGenerator).FullName;
             return componentInfos
                 .Where(info => info.generateMethods)
                 .Select(info => new CodeGenFile {
                     fileName = info.fullTypeName + CLASS_SUFFIX,
-                    fileContent = generateComponentExtension(info).ToUnixLineEndings()
+                    fileContent = generateComponentExtension(info).ToUnixLineEndings(),
+                    generatorName = generatorName
                 }).ToArray();
         }
 

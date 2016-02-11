@@ -12,11 +12,13 @@ namespace Entitas.CodeGenerator {
             if (poolNames.Length == 0) {
                 poolNames = new [] { string.Empty };
             }
+            var generatorName = typeof(ComponentIndicesGenerator).FullName;
             return poolNames
                 .Select(poolName => poolName + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
                 .Select(lookupTag => new CodeGenFile {
                     fileName = lookupTag,
-                    fileContent = generateIndicesLookup(lookupTag, emptyInfos).ToUnixLineEndings()
+                    fileContent = generateIndicesLookup(lookupTag, emptyInfos).ToUnixLineEndings(),
+                    generatorName = generatorName
                 }).ToArray();
         }
 
@@ -25,10 +27,12 @@ namespace Entitas.CodeGenerator {
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
             var orderedComponentInfos = componentInfos.OrderBy(info => info.typeName).ToArray();
             var lookupTagToComponentInfosMap = getLookupTagToComponentInfosMap(orderedComponentInfos);
+            var generatorName = typeof(ComponentIndicesGenerator).FullName;
             return lookupTagToComponentInfosMap
                 .Select(kv => new CodeGenFile {
                     fileName = kv.Key,
-                    fileContent = generateIndicesLookup(kv.Key, kv.Value.ToArray()).ToUnixLineEndings()
+                    fileContent = generateIndicesLookup(kv.Key, kv.Value.ToArray()).ToUnixLineEndings(),
+                    generatorName = generatorName
                 }).ToArray();
         }
 

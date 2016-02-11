@@ -4,9 +4,11 @@ namespace Entitas.CodeGenerator {
     public class PoolAttributeGenerator : IPoolCodeGenerator {
 
         public CodeGenFile[] Generate(string[] poolNames) {
+            var generatorName = typeof(PoolAttributeGenerator).FullName;
             return poolNames.Select(poolName => new CodeGenFile {
                 fileName = poolName + "Attribute",
-                fileContent = generatePoolAttributes(poolName).ToUnixLineEndings()
+                fileContent = generatePoolAttributes(poolName).ToUnixLineEndings(),
+                generatorName = generatorName
             }).ToArray();
         }
 
