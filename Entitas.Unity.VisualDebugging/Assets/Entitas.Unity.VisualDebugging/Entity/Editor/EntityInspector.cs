@@ -45,10 +45,13 @@ namespace Entitas.Unity.VisualDebugging {
             var pool = entityBehaviour.pool;
             var entity = entityBehaviour.entity;
 
+            var bgColor = GUI.backgroundColor;
+            GUI.backgroundColor = Color.red;
             if (GUILayout.Button("Destroy Entity")) {
                 entityBehaviour.DestroyBehaviour();
                 pool.DestroyEntity(entity);
             }
+            GUI.backgroundColor = bgColor;
 
             EntitasEditorLayout.BeginVerticalBox();
             {
@@ -159,7 +162,10 @@ namespace Entitas.Unity.VisualDebugging {
             var componentType = component.GetType();
             var fields = componentType.GetFields(BindingFlags.Public | BindingFlags.Instance);
 
-            EntitasEditorLayout.BeginVerticalBox();
+            var hue = (float)index / (float)entity.totalComponents;
+            var componentColor = Color.HSVToRGB(hue, 0.7f, 1f);
+
+            EntitasEditorLayout.BeginVerticalBox(componentColor);
             {
                 EntitasEditorLayout.BeginHorizontal();
                 {

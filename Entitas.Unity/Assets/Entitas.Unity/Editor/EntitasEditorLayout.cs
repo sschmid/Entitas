@@ -29,12 +29,30 @@ namespace Entitas.Unity {
             return height;
         }
 
+        public static Texture2D CreateTexture(int width, int height, Color color) {
+            var pixels = new Color[width * height];
+            for (int i = 0; i < pixels.Length; ++i) {
+                pixels[i] = color;
+            }
+            var result = new Texture2D(width, height);
+            result.SetPixels(pixels);
+            result.Apply();
+            return result;
+        }
+
         public static void BeginVertical() {
             EditorGUILayout.BeginVertical();
         }
 
         public static void BeginVerticalBox() {
             EditorGUILayout.BeginVertical(GUI.skin.box);
+        }
+
+        public static void BeginVerticalBox(Color color) {
+            color.a = 0.15f;
+            var style = new GUIStyle(GUI.skin.box);
+            style.normal.background = CreateTexture(2, 2, color);
+            EditorGUILayout.BeginVertical(style);
         }
 
         public static void EndVertical() {
