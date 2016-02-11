@@ -50,7 +50,7 @@ namespace Entitas {
         }
 
         public Entity RemoveOtherPool() {
-            return RemoveComponent(OtherComponentIds.OtherPool);;
+            return RemoveComponent(OtherComponentIds.OtherPool);
         }
     }
 

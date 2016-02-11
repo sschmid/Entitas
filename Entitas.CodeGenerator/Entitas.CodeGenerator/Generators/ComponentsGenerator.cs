@@ -135,7 +135,7 @@ $assign
         static string addRemoveMethods(ComponentInfo componentInfo) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
         public Entity Remove$Name() {
-            return RemoveComponent($Ids.$Name);;
+            return RemoveComponent($Ids.$Name);
         }
 ");
         }

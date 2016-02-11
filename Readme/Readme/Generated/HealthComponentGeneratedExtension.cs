@@ -20,7 +20,7 @@ namespace Entitas {
         }
 
         public Entity RemoveHealth() {
-            return RemoveComponent(ComponentIds.Health);;
+            return RemoveComponent(ComponentIds.Health);
         }
     }
 

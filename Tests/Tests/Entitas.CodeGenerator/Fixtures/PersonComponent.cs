@@ -46,7 +46,7 @@ public class PersonComponent : IComponent {
         }
 
         public Entity RemovePerson() {
-            return RemoveComponent(ComponentIds.Person);;
+            return RemoveComponent(ComponentIds.Person);
         }
     }
 

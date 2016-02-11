@@ -24,7 +24,7 @@ namespace Entitas {
         }
 
         public Entity RemoveUIPosition() {
-            return RemoveComponent(UIComponentIds.UIPosition);;
+            return RemoveComponent(UIComponentIds.UIPosition);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Entitas {
         }
 
         public Entity RemoveCoins() {
-            return RemoveComponent(MetaComponentIds.Coins);;
+            return RemoveComponent(MetaComponentIds.Coins);
         }
     }
 

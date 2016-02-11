@@ -20,7 +20,7 @@ namespace Entitas {
         }
 
         public Entity RemoveResource() {
-            return RemoveComponent(ComponentIds.Resource);;
+            return RemoveComponent(ComponentIds.Resource);
         }
     }
 
