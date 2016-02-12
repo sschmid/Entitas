@@ -8,11 +8,14 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     [CustomEditor(typeof(EntityBehaviour)), CanEditMultipleObjects]
     public class EntityInspector : Editor {
+
         GUIStyle _foldoutStyle;
         static IDefaultInstanceCreator[] _defaultInstanceCreators;
         static ITypeDrawer[] _typeDrawers;
+        static string _componentNameSearchTerm = string.Empty;
 
         void Awake() {
             _foldoutStyle = new GUIStyle(EditorStyles.foldout);
@@ -78,6 +81,11 @@ namespace Entitas.Unity.VisualDebugging {
                 }
 
                 EditorGUILayout.Space();
+
+                _componentNameSearchTerm = EditorGUILayout.TextField("Search", _componentNameSearchTerm);
+
+                EditorGUILayout.Space();
+
                 var indices = entity.GetComponentIndices();
                 var components = entity.GetComponents();
                 for (int i = 0; i < components.Length; i++) {
@@ -160,35 +168,38 @@ namespace Entitas.Unity.VisualDebugging {
 
         void drawComponent(EntityBehaviour entityBehaviour, Entity entity, int index, IComponent component) {
             var componentType = component.GetType();
-            var fields = componentType.GetFields(BindingFlags.Public | BindingFlags.Instance);
 
-            var hue = (float)index / (float)entity.totalComponents;
-            var componentColor = Color.HSVToRGB(hue, 0.7f, 1f);
+            if (componentType.Name.RemoveComponentSuffix().ToLower().Contains(_componentNameSearchTerm.ToLower())) {
+                var fields = componentType.GetFields(BindingFlags.Public | BindingFlags.Instance);
 
-            EntitasEditorLayout.BeginVerticalBox(componentColor);
-            {
-                EntitasEditorLayout.BeginHorizontal();
+                var hue = (float)index / (float)entity.totalComponents;
+                var componentColor = Color.HSVToRGB(hue, 0.7f, 1f);
+
+                EntitasEditorLayout.BeginVerticalBox(componentColor);
                 {
-                    if (fields.Length == 0) {
-                        EditorGUILayout.LabelField(componentType.Name.RemoveComponentSuffix(), EditorStyles.boldLabel);
-                    } else {
-                        entityBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(entityBehaviour.unfoldedComponents[index], componentType.Name.RemoveComponentSuffix(), _foldoutStyle);
+                    EntitasEditorLayout.BeginHorizontal();
+                    {
+                        if (fields.Length == 0) {
+                            EditorGUILayout.LabelField(componentType.Name.RemoveComponentSuffix(), EditorStyles.boldLabel);
+                        } else {
+                            entityBehaviour.unfoldedComponents[index] = EditorGUILayout.Foldout(entityBehaviour.unfoldedComponents[index], componentType.Name.RemoveComponentSuffix(), _foldoutStyle);
+                        }
+                        if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
+                            entity.RemoveComponent(index);
+                        }
                     }
-                    if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
-                        entity.RemoveComponent(index);
-                    }
-                }
-                EntitasEditorLayout.EndHorizontal();
+                    EntitasEditorLayout.EndHorizontal();
 
-                if (entityBehaviour.unfoldedComponents[index]) {
-                    foreach (var field in fields) {
-                        var value = field.GetValue(component);
-                        DrawAndSetElement(field.FieldType, field.Name, value,
-                            entity, index, component, newValue => field.SetValue(component, newValue));
+                    if (entityBehaviour.unfoldedComponents[index]) {
+                        foreach (var field in fields) {
+                            var value = field.GetValue(component);
+                            DrawAndSetElement(field.FieldType, field.Name, value,
+                                entity, index, component, newValue => field.SetValue(component, newValue));
+                        }
                     }
                 }
+                EntitasEditorLayout.EndVertical();
             }
-            EntitasEditorLayout.EndVertical();
         }
 
         public static void DrawAndSetElement(Type type, string fieldName, object value, Entity entity, int index, IComponent component, Action<object> setValue) {
