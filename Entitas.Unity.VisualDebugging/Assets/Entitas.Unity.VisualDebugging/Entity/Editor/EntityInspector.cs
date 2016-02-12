@@ -6,6 +6,7 @@ using Entitas;
 using Entitas.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Entitas.Unity.VisualDebugging {
 
@@ -16,6 +17,7 @@ namespace Entitas.Unity.VisualDebugging {
         static IDefaultInstanceCreator[] _defaultInstanceCreators;
         static ITypeDrawer[] _typeDrawers;
         static string _componentNameSearchTerm = string.Empty;
+        static Dictionary<int, GUIStyle[]> _coloredBoxStyles;
 
         void Awake() {
             _foldoutStyle = new GUIStyle(EditorStyles.foldout);
@@ -172,10 +174,8 @@ namespace Entitas.Unity.VisualDebugging {
             if (componentType.Name.RemoveComponentSuffix().ToLower().Contains(_componentNameSearchTerm.ToLower())) {
                 var fields = componentType.GetFields(BindingFlags.Public | BindingFlags.Instance);
 
-                var hue = (float)index / (float)entity.totalComponents;
-                var componentColor = Color.HSVToRGB(hue, 0.7f, 1f);
-
-                EntitasEditorLayout.BeginVerticalBox(componentColor);
+                var boxStyle = getColoredBoxStyle(entity.totalComponents, index);
+                EntitasEditorLayout.BeginVerticalBox(boxStyle);
                 {
                     EntitasEditorLayout.BeginHorizontal();
                     {
@@ -200,6 +200,39 @@ namespace Entitas.Unity.VisualDebugging {
                 }
                 EntitasEditorLayout.EndVertical();
             }
+        }
+
+        static GUIStyle getColoredBoxStyle(int totalComponents, int index) {
+            if (_coloredBoxStyles == null) {
+                _coloredBoxStyles = new Dictionary<int, GUIStyle[]>();
+            }
+
+            GUIStyle[] styles;
+            if (!_coloredBoxStyles.TryGetValue(totalComponents, out styles)) {
+                styles = new GUIStyle[totalComponents];
+                for (int i = 0; i < styles.Length; i++) {
+                    var hue = (float)i / (float)totalComponents;
+                    var componentColor = Color.HSVToRGB(hue, 0.7f, 1f);
+                    componentColor.a = 0.15f;
+                    var style = new GUIStyle(GUI.skin.box);
+                    style.normal.background = createTexture(2, 2, componentColor);
+                    styles[i] = style;
+                }
+                _coloredBoxStyles[totalComponents] = styles;
+            }
+
+            return styles[index];
+        }
+
+        static Texture2D createTexture(int width, int height, Color color) {
+            var pixels = new Color[width * height];
+            for (int i = 0; i < pixels.Length; ++i) {
+                pixels[i] = color;
+            }
+            var result = new Texture2D(width, height);
+            result.SetPixels(pixels);
+            result.Apply();
+            return result;
         }
 
         public static void DrawAndSetElement(Type type, string fieldName, object value, Entity entity, int index, IComponent component, Action<object> setValue) {
