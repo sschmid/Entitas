@@ -280,7 +280,7 @@ namespace Entitas {
 
         protected void onEntityReleased(Entity entity) {
             if (entity._isEnabled) {
-                throw new EntityIsNotDestroyedException("Cannot release entity!");
+                throw new EntityIsNotDestroyedException("Cannot release " + entity + "!");
             }
             entity.OnEntityReleased -= _cachedOnEntityReleased;
             _retainedEntities.Remove(entity);
