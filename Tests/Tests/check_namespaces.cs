@@ -31,8 +31,8 @@ class check_namespaces : nspec {
             var entitasDir = getEntitasProjectDir();
             var sourceFiles = getSourceFiles(entitasDir);
 
-            sourceFiles.Count.should_be_greater_than(60);
-            sourceFiles.Count.should_be_less_than(100);
+            sourceFiles.Count.should_be_greater_than(80);
+            sourceFiles.Count.should_be_less_than(150);
 
             const string namespacePattern = @"(?:^namespace)\s.*\b";
             string expectedNamespacePattern = string.Format(@".+?[^\{0}]*", Path.DirectorySeparatorChar);
