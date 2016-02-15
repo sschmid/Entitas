@@ -37,13 +37,8 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public void DestroyBehaviour() {
-            _entity.OnEntityReleased -= onEntityReleased;
-            Destroy(gameObject);
-        }
-
         void onEntityReleased(Entity e) {
-            DestroyBehaviour();
+            Destroy(gameObject);
         }
 
         void Update() {

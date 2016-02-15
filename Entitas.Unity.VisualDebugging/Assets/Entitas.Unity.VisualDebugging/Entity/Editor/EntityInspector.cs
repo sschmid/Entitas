@@ -60,7 +60,6 @@ namespace Entitas.Unity.VisualDebugging {
             var bgColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.red;
             if (GUILayout.Button("Destroy Entity")) {
-                entityBehaviour.DestroyBehaviour();
                 pool.DestroyEntity(entity);
             }
             GUI.backgroundColor = bgColor;
@@ -151,7 +150,6 @@ namespace Entitas.Unity.VisualDebugging {
                 foreach (var eb in entityBehaviours) {
                     var pool = eb.pool;
                     var entity = eb.entity;
-                    eb.DestroyBehaviour();
                     pool.DestroyEntity(entity);
                 }
             }
@@ -172,7 +170,6 @@ namespace Entitas.Unity.VisualDebugging {
                     GUI.backgroundColor = Color.red;
 
                     if (GUILayout.Button("Destroy Entity")) {
-                        eb.DestroyBehaviour();
                         pool.DestroyEntity(entity);
                     }
                     
