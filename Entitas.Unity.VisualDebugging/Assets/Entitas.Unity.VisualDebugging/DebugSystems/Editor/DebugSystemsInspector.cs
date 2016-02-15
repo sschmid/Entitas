@@ -23,7 +23,6 @@ namespace Entitas.Unity.VisualDebugging {
             var systems = debugSystemsBehaviour.systems;
 
             drawSystemsOverview(systems);
-            drawStepper(systems);
             drawSystemsMonitor(systems);
             drawSystemList(systems);
 
@@ -31,40 +30,14 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static void drawSystemsOverview(DebugSystems systems) {
-            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EntitasEditorLayout.BeginVerticalBox();
             {
                 EditorGUILayout.LabelField(systems.name, EditorStyles.boldLabel);
                 EditorGUILayout.LabelField("Initialize Systems", systems.initializeSystemsCount.ToString());
                 EditorGUILayout.LabelField("Execute Systems", systems.executeSystemsCount.ToString());
                 EditorGUILayout.LabelField("Total Systems", systems.totalSystemsCount.ToString());
             }
-            EditorGUILayout.EndVertical();
-        }
-
-        void drawStepper(DebugSystems systems) {
-            EditorGUILayout.BeginVertical(GUI.skin.box);
-            {
-                EditorGUILayout.LabelField("Step Mode", EditorStyles.boldLabel);
-                EditorGUILayout.BeginHorizontal();
-                {
-                    var buttonStyle = new GUIStyle(GUI.skin.button);
-                    if (systems.paused) {
-                        buttonStyle.normal = GUI.skin.button.active;
-                    }
-                    if (GUILayout.Button("▌▌", buttonStyle, GUILayout.Width(50))) {
-                        systems.paused = !systems.paused;
-                    }
-                    if (GUILayout.Button("Step", GUILayout.Width(100))) {
-                        systems.paused = true;
-                        systems.Step();
-                        addDuration((float)systems.totalDuration);
-                        _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
-                    }
-                    GUILayout.FlexibleSpace();
-                }
-                EditorGUILayout.EndHorizontal();
-            }
-            EditorGUILayout.EndVertical();
+            EntitasEditorLayout.EndVertical();
         }
 
         void drawSystemsMonitor(DebugSystems systems) {
@@ -76,31 +49,49 @@ namespace Entitas.Unity.VisualDebugging {
                 }
             }
 
-            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EntitasEditorLayout.BeginVerticalBox();
             {
                 EditorGUILayout.LabelField("Execution duration", EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Total", systems.totalDuration.ToString());
-                EditorGUILayout.Space();
+
+                EntitasEditorLayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Total", systems.totalDuration.ToString());
+
+                    var buttonStyle = new GUIStyle(GUI.skin.button);
+                    if (systems.paused) {
+                        buttonStyle.normal = GUI.skin.button.active;
+                    }
+                    if (GUILayout.Button("▌▌", buttonStyle, GUILayout.Width(50))) {
+                        systems.paused = !systems.paused;
+                    }
+                    if (GUILayout.Button("Step", GUILayout.Width(50))) {
+                        systems.paused = true;
+                        systems.Step();
+                        addDuration((float)systems.totalDuration);
+                        _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
+                    }
+                }
+                EntitasEditorLayout.EndHorizontal();
 
                 if (!EditorApplication.isPaused && !systems.paused) {
                     addDuration((float)systems.totalDuration);
                 }
                 _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
             }
-            EditorGUILayout.EndVertical();
+            EntitasEditorLayout.EndVertical();
         }
 
         void drawSystemList(DebugSystems systems) {
-            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EntitasEditorLayout.BeginVerticalBox();
             {
-                EditorGUILayout.BeginHorizontal();
+                EntitasEditorLayout.BeginHorizontal();
                 {
                     DebugSystems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", DebugSystems.avgResetInterval);
                     if (GUILayout.Button("Reset Ø now", GUILayout.Width(88), GUILayout.Height(14))) {
                         systems.ResetDurations();
                     }
                 }
-                EditorGUILayout.EndHorizontal();
+                EntitasEditorLayout.EndHorizontal();
 
                 _threshold = EditorGUILayout.Slider("Threshold Ø ms", _threshold, 0f, 33f);
                 _sortSystemInfos = EditorGUILayout.Toggle("Sort by execution duration", _sortSystemInfos);
@@ -111,29 +102,29 @@ namespace Entitas.Unity.VisualDebugging {
 
                 _showInitializeSystems = EditorGUILayout.Foldout(_showInitializeSystems, "Initialize Systems");
                 if (_showInitializeSystems && shouldShowSystems(systems, true)) {
-                    EditorGUILayout.BeginVertical(GUI.skin.box);
+                    EntitasEditorLayout.BeginVerticalBox();
                     {
                         var systemsDrawn = drawSystemInfos(systems, true, false);
                         if (systemsDrawn == 0) {
                             EditorGUILayout.LabelField(string.Empty);
                         }
                     }
-                    EditorGUILayout.EndVertical();
+                    EntitasEditorLayout.EndVertical();
                 }
 
                 _showExecuteSystems = EditorGUILayout.Foldout(_showExecuteSystems, "Execute Systems");
                 if (_showExecuteSystems && shouldShowSystems(systems, false)) {
-                    EditorGUILayout.BeginVertical(GUI.skin.box);
+                    EntitasEditorLayout.BeginVerticalBox();
                     {
                         var systemsDrawn = drawSystemInfos(systems, false, false);
                         if (systemsDrawn == 0) {
                             EditorGUILayout.LabelField(string.Empty);
                         }
                     }
-                    EditorGUILayout.EndVertical();
+                    EntitasEditorLayout.EndVertical();
                 }
             }
-            EditorGUILayout.EndVertical();
+            EntitasEditorLayout.EndVertical();
         }
 
         int drawSystemInfos(DebugSystems systems, bool initOnly, bool isChildSysem) {
@@ -158,7 +149,7 @@ namespace Entitas.Unity.VisualDebugging {
                 }
 
                 if (systemInfo.systemName.ToLower().Contains(_systemNameSearchTerm.ToLower())) {
-                    EditorGUILayout.BeginHorizontal();
+                    EntitasEditorLayout.BeginHorizontal();
                     {
                         EditorGUI.BeginDisabledGroup(isChildSysem);
                         {
@@ -180,7 +171,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                         EditorGUILayout.LabelField(systemInfo.systemName, avg + "\t" + min + "\t" + max, getSystemStyle(systemInfo));
                     }
-                    EditorGUILayout.EndHorizontal();
+                    EntitasEditorLayout.EndHorizontal();
 
                     systemsDrawn += 1;
                 }

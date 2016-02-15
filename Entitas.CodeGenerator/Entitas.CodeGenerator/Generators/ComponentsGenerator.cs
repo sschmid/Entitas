@@ -7,11 +7,13 @@ namespace Entitas.CodeGenerator {
         const string CLASS_SUFFIX = "GeneratedExtension";
 
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
+            var generatorName = typeof(ComponentsGenerator).FullName;
             return componentInfos
                 .Where(info => info.generateMethods)
                 .Select(info => new CodeGenFile {
                     fileName = info.fullTypeName + CLASS_SUFFIX,
-                    fileContent = generateComponentExtension(info).ToUnixLineEndings()
+                    fileContent = generateComponentExtension(info).ToUnixLineEndings(),
+                    generatorName = generatorName
                 }).ToArray();
         }
 
@@ -135,7 +137,7 @@ $assign
         static string addRemoveMethods(ComponentInfo componentInfo) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
         public Entity Remove$Name() {
-            return RemoveComponent($Ids.$Name);;
+            return RemoveComponent($Ids.$Name);
         }
 ");
         }

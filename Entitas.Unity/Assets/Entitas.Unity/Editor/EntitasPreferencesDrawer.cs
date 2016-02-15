@@ -2,7 +2,6 @@
 using System.Linq;
 using Entitas.Unity;
 using UnityEditor;
-using UnityEngine;
 
 namespace Entitas.Unity {
     public class EntitasPreferencesDrawer : IEntitasPreferencesDrawer {
@@ -29,14 +28,14 @@ namespace Entitas.Unity {
         public void Draw(EntitasPreferencesConfig config) {
             EditorGUI.BeginChangeCheck();
             {
-                EditorGUILayout.BeginVertical(GUI.skin.box);
+                EntitasEditorLayout.BeginVerticalBox();
                 {
                     EditorGUILayout.LabelField("Entitas", EditorStyles.boldLabel);
 
                     _scriptCallOptimization = (ScriptCallOptimization)EditorGUILayout
                         .EnumPopup("Script Call Optimization", _scriptCallOptimization);
                 }
-                EditorGUILayout.EndVertical();
+                EntitasEditorLayout.EndVertical();
             }
             var changed = EditorGUI.EndChangeCheck();
 

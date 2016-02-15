@@ -20,6 +20,9 @@ namespace Entitas {
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
         public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
 
+        /// The total amount of components an entity can possibly have.
+        public int totalComponents { get { return _totalComponents; } }
+
         /// Each entity has its own unique creationIndex which will be set by the pool when you create the entity.
         public int creationIndex { get { return _creationIndex; } }
 
@@ -35,6 +38,7 @@ namespace Entitas {
         internal int _creationIndex;
         internal bool _isEnabled = true;
 
+        readonly int _totalComponents;
         readonly IComponent[] _components;
         readonly Stack<IComponent>[] _componentPools;
         readonly PoolMetaData _poolMetaData;
@@ -45,6 +49,7 @@ namespace Entitas {
 
         /// Use pool.CreateEntity() to create a new entity and pool.DestroyEntity() to destroy it.
         public Entity(int totalComponents, Stack<IComponent>[] componentPools, PoolMetaData poolMetaData = null) {
+            _totalComponents = totalComponents;
             _components = new IComponent[totalComponents];
             _componentPools = componentPools;
 

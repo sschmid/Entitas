@@ -60,6 +60,10 @@ class describe_Entity : nspec {
                 e.GetComponentA();
             });
 
+            it["gets total components count"] = () => {
+                e.totalComponents.should_be(CID.NumComponents);
+            };
+
             it["gets empty array of components when no components were added"] = () => {
                 e.GetComponents().should_be_empty();
             };

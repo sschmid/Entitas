@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Entitas.Unity;
 using UnityEditor;
-using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
     public class VisualDebuggingPreferencesDrawer : IEntitasPreferencesDrawer {
@@ -23,7 +22,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public void Draw(EntitasPreferencesConfig config) {
-            EditorGUILayout.BeginVertical(GUI.skin.box);
+            EntitasEditorLayout.BeginVerticalBox();
             {
                 EditorGUILayout.LabelField("VisualDebugging", EditorStyles.boldLabel);
 
@@ -49,7 +48,7 @@ namespace Entitas.Unity.VisualDebugging {
                 _visualDebuggingConfig.typeDrawerFolderPath =
                     EditorGUILayout.TextField("TypeDrawer Folder", _visualDebuggingConfig.typeDrawerFolderPath);
             }
-            EditorGUILayout.EndVertical();
+            EntitasEditorLayout.EndVertical();
         }
     }
 }
