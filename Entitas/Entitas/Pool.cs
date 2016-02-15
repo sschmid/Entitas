@@ -138,12 +138,15 @@ namespace Entitas {
             }
 
             if (entity.retainCount == 1) {
+                // Can be released immediately without going to _retainedEntities
                 entity.OnEntityReleased -= _cachedOnEntityReleased;
                 _reusableEntities.Push(entity);
+                entity.Release(this);
+                entity.removeAllOnEntityReleasedHandlers();
             } else {
                 _retainedEntities.Add(entity);
+                entity.Release(this);
             }
-            entity.Release(this);
         }
 
         /// Destroys all entities in the pool.
@@ -282,7 +285,7 @@ namespace Entitas {
             if (entity._isEnabled) {
                 throw new EntityIsNotDestroyedException("Cannot release " + entity + "!");
             }
-            entity.OnEntityReleased -= _cachedOnEntityReleased;
+            entity.removeAllOnEntityReleasedHandlers();
             _retainedEntities.Remove(entity);
             _reusableEntities.Push(entity);
         }

@@ -256,6 +256,10 @@ namespace Entitas {
             _isEnabled = false;
         }
 
+        internal void removeAllOnEntityReleasedHandlers() {
+            OnEntityReleased = null;
+        }
+
         public override string ToString() {
             if (_toStringCache == null) {
                 var sb = new StringBuilder()
