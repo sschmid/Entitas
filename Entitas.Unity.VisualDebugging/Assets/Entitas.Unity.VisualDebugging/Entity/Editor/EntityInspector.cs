@@ -13,15 +13,17 @@ namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(EntityBehaviour)), CanEditMultipleObjects]
     public class EntityInspector : Editor {
 
-        GUIStyle _foldoutStyle;
+        static GUIStyle _foldoutStyle;
         static IDefaultInstanceCreator[] _defaultInstanceCreators;
         static ITypeDrawer[] _typeDrawers;
         static string _componentNameSearchTerm = string.Empty;
         static Dictionary<int, GUIStyle[]> _coloredBoxStyles;
 
         void Awake() {
-            _foldoutStyle = new GUIStyle(EditorStyles.foldout);
-            _foldoutStyle.fontStyle = FontStyle.Bold;
+            if (_foldoutStyle == null) {
+                _foldoutStyle = new GUIStyle(EditorStyles.foldout);
+                _foldoutStyle.fontStyle = FontStyle.Bold;
+            }
 
             var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
 
@@ -37,16 +39,21 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public override void OnInspectorGUI() {
-            if (targets.Length == 1) {
-                drawSingleTarget();
-            } else {
-                drawMultiTargets();
+            EditorGUI.BeginChangeCheck();
+            {
+                if (targets.Length == 1) {
+                    drawSingleTarget((EntityBehaviour)target);
+                } else {
+                    drawMultiTargets(targets.Cast<EntityBehaviour>().ToArray());
+                }
             }
-            EditorUtility.SetDirty(target);
+            var changed = EditorGUI.EndChangeCheck();
+            if (changed) {
+                EditorUtility.SetDirty(target);
+            }
         }
 
-        void drawSingleTarget() {
-            var entityBehaviour = (EntityBehaviour)target;
+        static void drawSingleTarget(EntityBehaviour entityBehaviour) {
             var pool = entityBehaviour.pool;
             var entity = entityBehaviour.entity;
 
@@ -73,10 +80,9 @@ namespace Entitas.Unity.VisualDebugging {
                 EntitasEditorLayout.EndHorizontal();
 
                 EditorGUILayout.Space();
-                entityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", entityBehaviour.componentToAdd, entityBehaviour.entity.poolMetaData.componentNames);
-                if (entityBehaviour.componentToAdd >= 0) {
-                    var index = entityBehaviour.componentToAdd;
-                    entityBehaviour.componentToAdd = -1;
+                var componentNames = entityBehaviour.entity.poolMetaData.componentNames;
+                var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+                if (index >= 0) {
                     var componentType = entityBehaviour.componentTypes[index];
                     var component = (IComponent)Activator.CreateInstance(componentType);
                     entity.AddComponent(index, component);
@@ -119,20 +125,18 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
         }
 
-        void drawMultiTargets() {
+        static void drawMultiTargets(EntityBehaviour[] entityBehaviours) {
             EditorGUILayout.Space();
             EntitasEditorLayout.BeginHorizontal();
             {
-                var aEntityBehaviour = (EntityBehaviour)targets[0];
-                aEntityBehaviour.componentToAdd = EditorGUILayout.Popup("Add Component", aEntityBehaviour.componentToAdd, aEntityBehaviour.entity.poolMetaData.componentNames);
-                if (aEntityBehaviour.componentToAdd >= 0) {
-                    var index = aEntityBehaviour.componentToAdd;
-                    aEntityBehaviour.componentToAdd = -1;
+                var aEntityBehaviour = entityBehaviours[0];
+                var componentNames = aEntityBehaviour.entity.poolMetaData.componentNames;
+                var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+                if (index >= 0) {
                     var componentType = aEntityBehaviour.componentTypes[index];
-                    foreach (var t in targets) {
-                        var entity = ((EntityBehaviour)t).entity;
+                    foreach (var eb in entityBehaviours) {
                         var component = (IComponent)Activator.CreateInstance(componentType);
-                        entity.AddComponent(index, component);
+                        eb.entity.AddComponent(index, component);
                     }
                 }
             }
@@ -144,11 +148,10 @@ namespace Entitas.Unity.VisualDebugging {
             GUI.backgroundColor = Color.red;
 
             if (GUILayout.Button("Destroy selected entities")) {
-                foreach (var t in targets) {
-                    var entityBehaviour = (EntityBehaviour)t;
-                    var pool = entityBehaviour.pool;
-                    var entity = entityBehaviour.entity;
-                    entityBehaviour.DestroyBehaviour();
+                foreach (var eb in entityBehaviours) {
+                    var pool = eb.pool;
+                    var entity = eb.entity;
+                    eb.DestroyBehaviour();
                     pool.DestroyEntity(entity);
                 }
             }
@@ -157,10 +160,9 @@ namespace Entitas.Unity.VisualDebugging {
 
             EditorGUILayout.Space();
 
-            foreach (var t in targets) {
-                var entityBehaviour = (EntityBehaviour)t;
-                var pool = entityBehaviour.pool;
-                var entity = entityBehaviour.entity;
+            foreach (var eb in entityBehaviours) {
+                var pool = eb.pool;
+                var entity = eb.entity;
 
                 EntitasEditorLayout.BeginHorizontal();
                 {
@@ -170,7 +172,7 @@ namespace Entitas.Unity.VisualDebugging {
                     GUI.backgroundColor = Color.red;
 
                     if (GUILayout.Button("Destroy Entity")) {
-                        entityBehaviour.DestroyBehaviour();
+                        eb.DestroyBehaviour();
                         pool.DestroyEntity(entity);
                     }
                     
@@ -180,7 +182,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        void drawComponent(EntityBehaviour entityBehaviour, Entity entity, int index, IComponent component) {
+        static void drawComponent(EntityBehaviour entityBehaviour, Entity entity, int index, IComponent component) {
             var componentType = component.GetType();
 
             if (componentType.Name.RemoveComponentSuffix().ToLower().Contains(_componentNameSearchTerm.ToLower())) {

@@ -9,8 +9,6 @@ namespace Entitas.Unity.VisualDebugging {
         public Type[] componentTypes { get { return _componentTypes; } }
         public bool[] unfoldedComponents { get { return _unfoldedComponents; } }
 
-        public int componentToAdd;
-
         Pool _pool;
         Entity _entity;
         Type[] _componentTypes;
@@ -20,7 +18,6 @@ namespace Entitas.Unity.VisualDebugging {
             _pool = pool;
             _entity = entity;
             _componentTypes = componentTypes;
-            componentToAdd = -1;
             _unfoldedComponents = new bool[_pool.totalComponents];
             _entity.OnEntityReleased += onEntityReleased;
             Update();
