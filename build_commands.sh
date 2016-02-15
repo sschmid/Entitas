@@ -41,14 +41,16 @@ collect_sources() {
 update_project_dependencies() {
   echo "Updating project dependencies..."
 
+  ESU_LIBS_DIR="$ESU/Assets/Libraries"
   UCG_LIBS_DIR="$UCG/Assets/Libraries"
   UVD_LIBS_DIR="$UVD/Assets/Libraries"
   UMIG_LIBS_DIR="$UMIG/Assets/Libraries"
   UNITY_TESTS_LIBS_DIR="UnityTests/Assets/Libraries"
 
-  rm -rf {$UCG_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
-  mkdir {$UCG_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
+  rm -rf {$ESU_LIBS_DIR,$UCG_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
+  mkdir {$ESU_LIBS_DIR,$UCG_LIBS_DIR,$UVD_LIBS_DIR,$UMIG_LIBS_DIR,$UNITY_TESTS_LIBS_DIR}
 
+  cp -r $SRC_DIR/$ES $ESU_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$CG_TR,$ESU} $UCG_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$CG_TR,$ESU,$UCG} $UVD_LIBS_DIR
   cp -r $SRC_DIR/{$ES,$CG,$CG_TR,$MIG,$ESU,$UCG,$UVD} $UMIG_LIBS_DIR
