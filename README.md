@@ -173,13 +173,17 @@ Maintainer(s)
 Different language?
 ===================
 
-Entitas is also available in
+Entitas is available in
+- [C#](https://github.com/sschmid/Entitas-CSharp)
 - [Swift](https://github.com/mzaks/Entitas-Swift)
 - [Objective-C](https://github.com/wooga/entitas)
 - [Go](https://github.com/wooga/go-entitas)
-- [Clojure](https://github.com/mhaemmerle/entitas-clj)
+- [F#](https://github.com/darkoverlordofdata/Bosco.ECS)
+- [TypeScript](https://github.com/darkoverlordofdata/entitas-ts)
+- [Java](https://github.com/Rubentxu/entitas-java)
 - [Haskell](https://github.com/mhaemmerle/entitas-haskell)
 - [Erlang](https://github.com/mhaemmerle/entitas_erl)
+- [Clojure](https://github.com/mhaemmerle/entitas-clj)
 
 
 [clean-coders]: https://cleancoders.com "Clean Coders"
