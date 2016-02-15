@@ -57,6 +57,7 @@
     <Compile Include="Entitas\Blueprints\Blueprint.cs" />
     <Compile Include="Entitas\Blueprints\ComponentBlueprint.cs" />
     <Compile Include="Entitas\Blueprints\PoolBlueprintExtension.cs" />
+    <Compile Include="Entitas\Extensions\TypeExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

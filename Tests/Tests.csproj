@@ -293,6 +293,10 @@
     <Compile Include="..\Entitas\Entitas\Blueprints\PoolBlueprintExtension.cs">
       <Link>Linked Libraries\Entitas\Blueprints\PoolBlueprintExtension.cs</Link>
     </Compile>
+    <Compile Include="Tests\Entitas\describe_TypeExtension.cs" />
+    <Compile Include="..\Entitas\Entitas\Extensions\TypeExtension.cs">
+      <Link>Linked Libraries\Entitas\Extensions\TypeExtension.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
