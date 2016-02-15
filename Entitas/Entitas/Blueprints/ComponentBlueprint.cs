@@ -25,7 +25,7 @@ namespace Entitas {
             _fields = fields;
             _type = getComponentType(fullTypeName);
 
-            if (!_type.GetInterfaces().Contains(typeof(IComponent))) {
+            if (!_type.ImplementsInterface<IComponent>()) {
 
                 // TODO
                 throw new ComponentBlueprintException();
