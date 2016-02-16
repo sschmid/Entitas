@@ -16,17 +16,25 @@ namespace Entitas.CodeGenerator {
 //------------------------------------------------------------------------------
 ";
 
-        public static void Generate(ICodeGeneratorDataProvider provider, string directory, ICodeGenerator[] codeGenerators) {
+        public static int Generate(ICodeGeneratorDataProvider provider, string directory, ICodeGenerator[] codeGenerators) {
             directory = GetSafeDir(directory);
             CleanDir(directory);
-            
+
+            var totalFilesGenerated = 0;
+
             foreach (var generator in codeGenerators.OfType<IPoolCodeGenerator>()) {
-                writeFiles(directory, generator.Generate(provider.poolNames));
+                var files = generator.Generate(provider.poolNames);
+                totalFilesGenerated += files.Length;
+                writeFiles(directory, files);
             }
 
             foreach (var generator in codeGenerators.OfType<IComponentCodeGenerator>()) {
-                writeFiles(directory, generator.Generate(provider.componentInfos));
+                var files = generator.Generate(provider.componentInfos);
+                totalFilesGenerated += files.Length;
+                writeFiles(directory, files);
             }
+
+            return totalFilesGenerated;
         }
 
         public static string GetSafeDir(string directory) {

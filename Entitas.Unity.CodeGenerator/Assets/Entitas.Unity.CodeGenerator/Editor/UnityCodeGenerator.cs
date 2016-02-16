@@ -3,15 +3,18 @@ using System.Linq;
 using System.Reflection;
 using Entitas;
 using Entitas.CodeGenerator;
-using UnityEditor;
 using Entitas.CodeGenerator.TypeReflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace Entitas.Unity.CodeGenerator {
     public static class UnityCodeGenerator {
 
-        [MenuItem("Entitas/Generate", false, 100)]
+        [MenuItem("Entitas/Generate #%g", false, 100)]
         public static void Generate() {
             assertCanGenerate();
+
+            Debug.Log("Generating...");
 
             var codeGenerators = GetCodeGenerators();
             var codeGeneratorNames = codeGenerators.Select(cg => cg.Name).ToArray();
@@ -24,9 +27,11 @@ namespace Entitas.Unity.CodeGenerator {
                 .ToArray();
 
             var assembly = Assembly.GetAssembly(typeof(Entity));
-            TypeReflectionCodeGenerator.Generate(assembly, config.pools, config.generatedFolderPath, enabledCodeGenerators);
+            var totalFilesGenerated = TypeReflectionCodeGenerator.Generate(assembly, config.pools, config.generatedFolderPath, enabledCodeGenerators);
 
             AssetDatabase.Refresh();
+
+            Debug.Log("Generated " + totalFilesGenerated + " files.");
         }
 
         public static Type[] GetCodeGenerators() {

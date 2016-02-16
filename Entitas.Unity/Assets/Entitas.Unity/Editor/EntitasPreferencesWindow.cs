@@ -14,7 +14,7 @@ namespace Entitas.Unity {
 
     public class EntitasPreferencesWindow : EditorWindow {
 
-        [MenuItem("Entitas/Preferences...", false, 1)]
+        [MenuItem("Entitas/Preferences... #%e", false, 1)]
         public static void OpenPreferences() {
             EntitasEditorLayout.ShowWindow<EntitasPreferencesWindow>("Entitas Preferences");
         }
