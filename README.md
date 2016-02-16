@@ -23,10 +23,10 @@
 </p>
 
 
-The Entity Component System for C# and Unity
-============================================
+Entitas - The Entity Component System Framework for C# and Unity
+================================================================
 
-Entitas is a super fast Entity Component System (ECS) specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions have been made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.][clean-coders]
+Entitas is a super fast Entity Component System Framework (ECS) specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions have been made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.][clean-coders]
 
 <p align="left">
     <a href="https://dev.windows.com">
