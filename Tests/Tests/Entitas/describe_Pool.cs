@@ -65,7 +65,8 @@ class describe_Pool : nspec {
             PoolMetaData metaData = null;
             before = () => {
                 var componentNames = new [] { "Health", "Position", "View" };
-                metaData = new PoolMetaData("My Pool", componentNames);
+                var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
+                metaData = new PoolMetaData("My Pool", componentNames, componentTypes);
                 pool = new Pool(componentNames.Length, 0, metaData);
             };
 

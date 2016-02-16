@@ -60,7 +60,7 @@ namespace Entitas {
                 for (int i = 0, componentNamesLength = componentNames.Length; i < componentNamesLength; i++) {
                     componentNames[i] = i.ToString();
                 }
-                _poolMetaData = new PoolMetaData("No Pool", componentNames);
+                _poolMetaData = new PoolMetaData("No Pool", componentNames, null);
             }
         }
 

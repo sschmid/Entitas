@@ -23,7 +23,7 @@ class describe_EntitasErrorMessages : nspec {
         Entity entity = null;
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
-            var metaData = new PoolMetaData("My Pool", componentNames);
+            var metaData = new PoolMetaData("My Pool", componentNames, null);
             pool = new Pool(componentNames.Length, 42, metaData);
             entity = pool.CreateEntity();
         };
@@ -110,7 +110,7 @@ class describe_EntitasErrorMessages : nspec {
 
             it["wrong PoolMetaData componentNames count"] = () => printErrorMessage(() => {
                 var componentNames = new [] { "Health", "Position", "View" };
-                var metaData = new PoolMetaData("My Pool", componentNames);
+                var metaData = new PoolMetaData("My Pool", componentNames, null);
                 new Pool(1, 0, metaData);
             });
 

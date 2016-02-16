@@ -87,7 +87,7 @@ namespace Entitas {
                 for (int i = 0, componentNamesLength = componentNames.Length; i < componentNamesLength; i++) {
                     componentNames[i] = prefix + i;
                 }
-                _metaData = new PoolMetaData("Unnamed Pool", componentNames);
+                _metaData = new PoolMetaData("Unnamed Pool", componentNames, null);
             }
 
             _groupsForIndex = new List<Group>[totalComponents];
@@ -322,13 +322,16 @@ namespace Entitas {
 
         public string poolName { get { return _poolName; } }
         public string[] componentNames { get { return _componentNames; } }
+        public Type[] componentTypes { get { return _componentTypes; } }
 
         readonly string _poolName;
         readonly string[] _componentNames;
+        readonly Type[] _componentTypes;
 
-        public PoolMetaData(string poolName, string[] componentNames) {
+        public PoolMetaData(string poolName, string[] componentNames, Type[] componentTypes) {
             _poolName = poolName;
             _componentNames = componentNames;
+            _componentTypes = componentTypes;
         }
     }
 }
