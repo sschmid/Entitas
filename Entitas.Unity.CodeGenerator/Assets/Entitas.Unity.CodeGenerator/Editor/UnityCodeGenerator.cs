@@ -31,10 +31,7 @@ namespace Entitas.Unity.CodeGenerator {
 
         public static Type[] GetCodeGenerators() {
             return Assembly.GetAssembly(typeof(ICodeGenerator)).GetTypes()
-                .Where(type => type.GetInterfaces().Contains(typeof(ICodeGenerator))
-                    && type != typeof(ICodeGenerator)
-                    && type != typeof(IPoolCodeGenerator)
-                    && type != typeof(IComponentCodeGenerator))
+                .Where(type => type.ImplementsInterface<ICodeGenerator>())
                 .OrderBy(type => type.FullName)
                 .ToArray();
         }

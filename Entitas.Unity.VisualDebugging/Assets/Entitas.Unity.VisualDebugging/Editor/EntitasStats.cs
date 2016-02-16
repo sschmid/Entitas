@@ -18,7 +18,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         public static Dictionary<string, int> GetStats() {
             var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
-            var components = types.Where(implementsComponent).ToArray();
+            var components = types.Where(type => type.ImplementsInterface<IComponent>()).ToArray();
             var pools = getPools(components);
 
             var stats = new Dictionary<string, int> {
@@ -31,11 +31,6 @@ namespace Entitas.Unity.VisualDebugging {
             }
 
             return stats;
-        }
-
-        static bool implementsComponent(Type type) {
-            return type.GetInterfaces().Contains(typeof(IComponent))
-                && type != typeof(IComponent);
         }
 
         static Dictionary<string, int> getPools(Type[] components) {
@@ -56,8 +51,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static bool implementsSystem(Type type) {
-            return type.GetInterfaces().Contains(typeof(ISystem))
-                && !type.IsInterface
+            return type.ImplementsInterface<ISystem>()
                 && type != typeof(ReactiveSystem)
                 && type != typeof(Systems)
                 && type != typeof(DebugSystems);

@@ -28,12 +28,12 @@ namespace Entitas.Unity.VisualDebugging {
             var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
 
             _defaultInstanceCreators = types
-                .Where(type => type.GetInterfaces().Contains(typeof(IDefaultInstanceCreator)))
+                .Where(type => type.ImplementsInterface<IDefaultInstanceCreator>())
                 .Select(type => (IDefaultInstanceCreator)Activator.CreateInstance(type))
                 .ToArray();
 
             _typeDrawers = types
-                .Where(type => type.GetInterfaces().Contains(typeof(ITypeDrawer)))
+                .Where(type => type.ImplementsInterface<ITypeDrawer>())
                 .Select(type => (ITypeDrawer)Activator.CreateInstance(type))
                 .ToArray();
         }
