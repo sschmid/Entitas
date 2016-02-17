@@ -19,7 +19,7 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.LabelField(fieldName);
                     if (GUILayout.Button("Add element", GUILayout.Height(14))) {
                         object defaultValue;
-                        if (EntityInspector.CreateDefault(elementType, out defaultValue)) {
+                        if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                             var newArray = Array.CreateInstance(elementType, 1);
                             newArray.SetValue(defaultValue, 0);
                             array = newArray;
@@ -34,7 +34,7 @@ namespace Entitas.Unity.VisualDebugging {
                 Func<Array> editAction = null;
                 for (int i = 0; i < array.GetLength(0); i++) {
                     EditorGUILayout.BeginHorizontal();
-                    EntityInspector.DrawAndSetElement(elementType, fieldName + "[" + i + "]", array.GetValue(i),
+                    EntityDrawer.DrawAndSetElement(elementType, fieldName + "[" + i + "]", array.GetValue(i),
                         entity, index, component, newValue => array.SetValue(newValue, i));
 
                     var localIndex = i;
@@ -52,7 +52,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.LabelField(fieldName);
                 for (int i = 0; i < array.GetLength(0); i++) {
                     for (int j = 0; j < array.GetLength(1); j++) {
-                        EntityInspector.DrawAndSetElement(elementType, fieldName + "[" + i + ", " + j + "]", array.GetValue(i, j),
+                        EntityDrawer.DrawAndSetElement(elementType, fieldName + "[" + i + ", " + j + "]", array.GetValue(i, j),
                             entity, index, component, newValue => array.SetValue(newValue, i, j));
                     }
                     EditorGUILayout.Space();
@@ -62,7 +62,7 @@ namespace Entitas.Unity.VisualDebugging {
                 for (int i = 0; i < array.GetLength(0); i++) {
                     for (int j = 0; j < array.GetLength(1); j++) {
                         for (int k = 0; k < array.GetLength(2); k++) {
-                            EntityInspector.DrawAndSetElement(elementType, fieldName + "[" + i + ", " + j + " ," + k + "]", array.GetValue(i, j, k),
+                            EntityDrawer.DrawAndSetElement(elementType, fieldName + "[" + i + ", " + j + " ," + k + "]", array.GetValue(i, j, k),
                                 entity, index, component, newValue => array.SetValue(newValue, i, j, k));
                         }
                         EditorGUILayout.Space();
@@ -82,13 +82,13 @@ namespace Entitas.Unity.VisualDebugging {
             }
             if (GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
                 object defaultValue;
-                if (EntityInspector.CreateDefault(elementType, out defaultValue)) {
+                if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                     return () => arrayInsertAt(array, elementType, defaultValue, index);
                 }
             }
             if (GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
                 object defaultValue;
-                if (EntityInspector.CreateDefault(elementType, out defaultValue)) {
+                if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                     return () => arrayInsertAt(array, elementType, defaultValue, index + 1);
                 }
             }

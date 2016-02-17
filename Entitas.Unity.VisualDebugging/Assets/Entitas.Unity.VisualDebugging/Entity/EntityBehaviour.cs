@@ -1,40 +1,19 @@
-﻿using System;
-using Entitas;
+﻿using Entitas;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
     public class EntityBehaviour : MonoBehaviour {
         public Pool pool { get { return _pool; } }
         public Entity entity { get { return _entity; } }
-        public Type[] componentTypes { get { return _componentTypes; } }
-        public bool[] unfoldedComponents { get { return _unfoldedComponents; } }
 
         Pool _pool;
         Entity _entity;
-        Type[] _componentTypes;
-        bool[] _unfoldedComponents;
 
-        public void Init(Pool pool, Entity entity, Type[] componentTypes) {
+        public void Init(Pool pool, Entity entity) {
             _pool = pool;
             _entity = entity;
-            _componentTypes = componentTypes;
-            _unfoldedComponents = new bool[_pool.totalComponents];
             _entity.OnEntityReleased += onEntityReleased;
             Update();
-
-            UnfoldAllComponents();
-        }
-
-        public void UnfoldAllComponents() {
-            for (int i = 0; i < _unfoldedComponents.Length; i++) {
-                _unfoldedComponents[i] = true;
-            }
-        }
-
-        public void FoldAllComponents() {
-            for (int i = 0; i < _unfoldedComponents.Length; i++) {
-                _unfoldedComponents[i] = false;
-            }
         }
 
         void onEntityReleased(Entity e) {

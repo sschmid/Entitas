@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
@@ -9,13 +8,11 @@ namespace Entitas.Unity.VisualDebugging {
         public GameObject entitiesContainer { get { return _entitiesContainer.gameObject; } }
 
         readonly Pool _pool;
-        readonly Type[] _componentTypes;
         readonly List<Group> _groups;
         readonly Transform _entitiesContainer;
 
-        public PoolObserver(Pool pool, Type[] componentTypes) {
+        public PoolObserver(Pool pool) {
             _pool = pool;
-            _componentTypes = componentTypes;
             _groups = new List<Group>();
             _entitiesContainer = new GameObject().transform;
             _entitiesContainer.gameObject.AddComponent<PoolObserverBehaviour>().Init(this);
@@ -27,7 +24,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         void onEntityCreated(Pool pool, Entity entity) {
             var entityBehaviour = new GameObject().AddComponent<EntityBehaviour>();
-            entityBehaviour.Init(_pool, entity, _componentTypes);
+            entityBehaviour.Init(pool, entity);
             entityBehaviour.transform.SetParent(_entitiesContainer, false);
         }
 
