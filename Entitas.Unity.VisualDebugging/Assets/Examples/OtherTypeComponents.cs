@@ -35,11 +35,11 @@ public class AnArrayComponent : IComponent {
 }
 
 public class Array2DComponent : IComponent {
-    public int[,] array2d;
+    public string[,] array2d;
 }
 
 public class Array3DComponent : IComponent {
-    public int[,,] array3d;
+    public string[,,] array3d;
 }
 
 public class JaggedArrayComponent : IComponent {

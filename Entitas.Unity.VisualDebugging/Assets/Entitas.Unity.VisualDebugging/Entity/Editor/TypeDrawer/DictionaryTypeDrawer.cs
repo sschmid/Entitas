@@ -16,20 +16,26 @@ namespace Entitas.Unity.VisualDebugging {
             var valueType = type.GetGenericArguments()[1];
 
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(fieldName);
-            if (GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
-                object defaultKey;
-                if (EntityDrawer.CreateDefault(keyType, out defaultKey)) {
-                    object defaultValue;
-                    if (EntityDrawer.CreateDefault(valueType, out defaultValue)) {
-                        dictionary[defaultKey] = defaultValue;
+            {
+                if (dictionary.Count == 0) {
+                    EditorGUILayout.LabelField(fieldName, "empty");
+                } else {
+                    EditorGUILayout.LabelField(fieldName);
+                }
+                if (GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
+                    object defaultKey;
+                    if (EntityDrawer.CreateDefault(keyType, out defaultKey)) {
+                        object defaultValue;
+                        if (EntityDrawer.CreateDefault(valueType, out defaultValue)) {
+                            dictionary[defaultKey] = defaultValue;
+                        }
                     }
                 }
             }
             EditorGUILayout.EndHorizontal();
-            EditorGUILayout.Space();
 
             if (dictionary.Count > 0) {
+                EditorGUILayout.Space();
                 var indent = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = indent + 1;
 
