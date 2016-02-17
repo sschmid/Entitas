@@ -27,11 +27,16 @@ namespace Entitas.Unity.CodeGenerator {
                 .ToArray();
 
             var assembly = Assembly.GetAssembly(typeof(Entity));
-            var totalFilesGenerated = TypeReflectionCodeGenerator.Generate(assembly, config.pools, config.generatedFolderPath, enabledCodeGenerators);
+            var generatedFiles = TypeReflectionCodeGenerator.Generate(assembly, config.pools, config.generatedFolderPath, enabledCodeGenerators);
 
             AssetDatabase.Refresh();
 
-            Debug.Log("Generated " + totalFilesGenerated + " files.");
+            foreach (var file in generatedFiles) {
+                Debug.Log(file.generatorName + ": " + file.fileName);
+            }
+
+            var totalGeneratedFiles = generatedFiles.Select(file => file.fileName).Distinct().Count();
+            Debug.Log("Generated " + totalGeneratedFiles + " files.");
         }
 
         public static Type[] GetCodeGenerators() {

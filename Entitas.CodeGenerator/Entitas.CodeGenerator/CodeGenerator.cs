@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -16,25 +17,25 @@ namespace Entitas.CodeGenerator {
 //------------------------------------------------------------------------------
 ";
 
-        public static int Generate(ICodeGeneratorDataProvider provider, string directory, ICodeGenerator[] codeGenerators) {
+        public static CodeGenFile[] Generate(ICodeGeneratorDataProvider provider, string directory, ICodeGenerator[] codeGenerators) {
             directory = GetSafeDir(directory);
             CleanDir(directory);
 
-            var totalFilesGenerated = 0;
+            var generatedFiles = new List<CodeGenFile>();
 
             foreach (var generator in codeGenerators.OfType<IPoolCodeGenerator>()) {
                 var files = generator.Generate(provider.poolNames);
-                totalFilesGenerated += files.Length;
+                generatedFiles.AddRange(files);
                 writeFiles(directory, files);
             }
 
             foreach (var generator in codeGenerators.OfType<IComponentCodeGenerator>()) {
                 var files = generator.Generate(provider.componentInfos);
-                totalFilesGenerated += files.Length;
+                generatedFiles.AddRange(files);
                 writeFiles(directory, files);
             }
 
-            return totalFilesGenerated;
+            return generatedFiles.ToArray();
         }
 
         public static string GetSafeDir(string directory) {
