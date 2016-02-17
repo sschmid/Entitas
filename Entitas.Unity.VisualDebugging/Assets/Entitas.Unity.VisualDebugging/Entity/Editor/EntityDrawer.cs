@@ -12,9 +12,10 @@ using UnityEngine;
 
 public static class EntityDrawer {
 
+    static Dictionary<Pool, bool[]> _poolToUnfoldedComponents;
     static GUIStyle _foldoutStyle;
-    static Dictionary<Pool, bool[]> _poolToFoldedComponents;
     static Dictionary<int, GUIStyle[]> _coloredBoxStyles;
+
     static IDefaultInstanceCreator[] _defaultInstanceCreators;
     static ITypeDrawer[] _typeDrawers;
     static string _componentNameSearchTerm = string.Empty;
@@ -25,15 +26,9 @@ public static class EntityDrawer {
         if (!_isInitialized) {
             _isInitialized = true;
 
-            _foldoutStyle = new GUIStyle(EditorStyles.foldout);
-            _foldoutStyle.fontStyle = FontStyle.Bold;
-
-            _poolToFoldedComponents = new Dictionary<Pool, bool[]>();
-
-            _coloredBoxStyles = new Dictionary<int, GUIStyle[]>();
+            _poolToUnfoldedComponents = new Dictionary<Pool, bool[]>();
 
             var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
-
             _defaultInstanceCreators = types
                 .Where(type => type.ImplementsInterface<IDefaultInstanceCreator>())
                 .Select(type => (IDefaultInstanceCreator)Activator.CreateInstance(type))
@@ -44,6 +39,16 @@ public static class EntityDrawer {
                 .Select(type => (ITypeDrawer)Activator.CreateInstance(type))
                 .ToArray();
         }
+
+        // Unity bug
+        // NullReferenceException at EditorStyles.cs:136 when entering play-mode
+        try {
+            _foldoutStyle = new GUIStyle(EditorStyles.foldout);
+            _foldoutStyle.fontStyle = FontStyle.Bold;
+        } catch (Exception ex) {
+        }
+
+        _coloredBoxStyles = new Dictionary<int, GUIStyle[]>();
     }
 
     public static void DrawEntity(Pool pool, Entity entity) {
@@ -55,12 +60,12 @@ public static class EntityDrawer {
         GUI.backgroundColor = bgColor;
 
         bool[] unfoldedComponents;
-        if (!_poolToFoldedComponents.TryGetValue(pool, out unfoldedComponents)) {
+        if (!_poolToUnfoldedComponents.TryGetValue(pool, out unfoldedComponents)) {
             unfoldedComponents = new bool[pool.totalComponents];
             for (int i = 0; i < unfoldedComponents.Length; i++) {
                 unfoldedComponents[i] = true;
             }
-            _poolToFoldedComponents.Add(pool, unfoldedComponents);
+            _poolToUnfoldedComponents.Add(pool, unfoldedComponents);
         }
 
         EntitasEditorLayout.BeginVerticalBox();
@@ -224,10 +229,9 @@ public static class EntityDrawer {
     }
 
     public static bool DidValueChange(object value, object newValue) {
-        return (value == null && newValue != null) ||
-            (value != null && newValue == null) ||
-            ((value != null && newValue != null &&
-            !newValue.Equals(value)));
+        return (value == null && newValue != null)
+            || (value != null && newValue == null)
+            || ((value != null && newValue != null && !newValue.Equals(value)));
     }
 
     public static object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
