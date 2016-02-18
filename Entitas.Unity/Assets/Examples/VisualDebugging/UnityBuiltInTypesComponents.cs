@@ -63,4 +63,10 @@ public class GameObjectComponent : IComponent {
     public GameObject gameObject;
 }
 
+public class TextureComponent : IComponent {
+    public Texture texture;
+}
 
+public class Texture2DComponent : IComponent {
+    public Texture2D texture2D;
+}

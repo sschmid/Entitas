@@ -37,6 +37,8 @@ public class GameController : MonoBehaviour {
             e.AddMyBool(true);
             e.AddUnityObject(new UnityEngine.Object());
             e.AddGameObject(new GameObject("Player"));
+            e.AddTexture(new Texture());
+            e.AddTexture2D(new Texture2D(2, 2));
 
             // Custom
             e.AddMonoBehaviourSubClass(new GameObject().AddComponent<MonoBehaviourSubClass>());
@@ -93,6 +95,10 @@ public class GameController : MonoBehaviour {
         e.AddUnityObject(unityObject);
         GameObject go = null;
         e.AddGameObject(go);
+        Texture texture = null;
+        e.AddTexture(texture);
+        Texture2D texture2D = null;
+        e.AddTexture2D(texture2D);
 
         // Custom
         MonoBehaviourSubClass monoBehaviourSubClass = null;
