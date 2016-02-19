@@ -4,6 +4,7 @@ using System.Reflection;
 using Entitas;
 
 namespace Entitas {
+
     public class ComponentBlueprint {
 
         public int index { get { return _index; } }
@@ -25,9 +26,8 @@ namespace Entitas {
             _type = getComponentType(fullTypeName);
 
             if (!_type.ImplementsInterface<IComponent>()) {
-
-                // TODO
-                throw new ComponentBlueprintException();
+                throw new ComponentBlueprintException("Type '" + _type.FullName + "' doesn't implement IComponent!",
+                    "The specified Type has to implement IComponent in order to create a " + typeof(ComponentBlueprint).Name + "" + ".");
             }
 
             cacheFieldInfos();
@@ -56,8 +56,8 @@ namespace Entitas {
                 }
             }
 
-            // TODO
-            throw new ComponentBlueprintException();
+            throw new ComponentBlueprintException("Type '" + fullTypeName + "' doesn't exist in any assembly!",
+                "Please check the full type name.");
         }
 
         void cacheFieldInfos() {
@@ -66,9 +66,8 @@ namespace Entitas {
                 foreach (var kv in _fields) {
                     var field = _type.GetField(kv.Key, BindingFlags.Instance | BindingFlags.Public);
                     if (field == null) {
-
-                        // TODO
-                        throw new ComponentBlueprintException();
+                        throw new ComponentBlueprintException("Could not find field '" + kv.Key + "' in Type '" + _type.FullName + "'!",
+                            "Only non-static public fields are supported.");
                     }
                     _cachedFields.Add(kv.Key, field);
                 }
@@ -76,7 +75,8 @@ namespace Entitas {
         }
     }
 
-    public class ComponentBlueprintException : Exception {
-
+    public class ComponentBlueprintException : EntitasException {
+        public ComponentBlueprintException(string message, string hint) : base(message, hint) {
+        }
     }
 }

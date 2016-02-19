@@ -1,6 +1,7 @@
 ﻿using NSpec;
 using Entitas;
 using System;
+using System.Collections.Generic;
 
 class describe_EntitasErrorMessages : nspec {
     static void printErrorMessage(Action action) {
@@ -9,7 +10,7 @@ class describe_EntitasErrorMessages : nspec {
         } catch (Exception exception) {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("================================================================================");
-            Console.WriteLine(exception.GetType());
+            Console.WriteLine("Exception preview for: " + exception.GetType());
             Console.WriteLine("--------------------------------------------------------------------------------");
             Console.WriteLine(exception.Message);
             Console.WriteLine("================================================================================");
@@ -132,6 +133,23 @@ class describe_EntitasErrorMessages : nspec {
             
             it["get single entity when more than one exist"] = () => printErrorMessage(() => {
                 new Entity[2].SingleEntity();
+            });
+        };
+
+        context["ComponentBlueprint"] = () => {
+
+            it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
+                new ComponentBlueprint(42, typeof(FakeComponent).FullName, null);
+            });
+
+            it["type doesn't exist"] = () => printErrorMessage(() => {
+                new ComponentBlueprint(42, "UnknownType", null);
+            });
+
+            it["invalid field name"] = () => printErrorMessage(() => {
+                new ComponentBlueprint(42, typeof(ComponentA).FullName, new Dictionary<string, object> {
+                    { "unknownField", 42 }
+                });
             });
         };
     }
