@@ -1,6 +1,5 @@
 ﻿using NSpec;
 using Entitas;
-using System.Collections.Generic;
 using System;
 
 class describe_Blueprints : nspec {
@@ -8,7 +7,7 @@ class describe_Blueprints : nspec {
     void when_creating_component_blueprints() {
 
         it["creates componentBlueprint"] = () => {
-            var fields = new Dictionary<string, object>();
+            var fields = new SerializableField[0];
             var type = typeof(ComponentA).FullName;
             var componentBlueprint = new ComponentBlueprint(0, type, fields);
             componentBlueprint.index.should_be(0);
@@ -24,9 +23,9 @@ class describe_Blueprints : nspec {
         };
 
         it["creates a component with fields values set"] = () => {
-            var fields = new Dictionary<string, object> {
-                { "name", "Max" },
-                { "age", 42 }
+            var fields = new [] {
+                new SerializableField { fieldName = "name", value = "Max" },
+                new SerializableField { fieldName = "age", value = 42 }
             };
             var componentBlueprint = new ComponentBlueprint(0, typeof(NameAgeComponent).FullName, fields);
             var component = (NameAgeComponent)componentBlueprint.CreateComponent();
@@ -47,10 +46,11 @@ class describe_Blueprints : nspec {
         });
 
         it["throws when invlaid field name"] = expect<ComponentBlueprintException>(() => {
-            var fields = new Dictionary<string, object> {
-                { "nameXXX", "Max" },
-                { "age", 42 }
+            var fields = new [] {
+                new SerializableField { fieldName = "nameXXX", value = "Max" },
+                new SerializableField { fieldName = "age", value = 42 }
             };
+
             var componentBlueprint = new ComponentBlueprint(0, typeof(NameAgeComponent).FullName, fields);
             componentBlueprint.CreateComponent();
         });

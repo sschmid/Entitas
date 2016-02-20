@@ -58,6 +58,8 @@
     <Compile Include="Entitas\Blueprints\ComponentBlueprint.cs" />
     <Compile Include="Entitas\Blueprints\PoolBlueprintExtension.cs" />
     <Compile Include="Entitas\Extensions\TypeExtension.cs" />
+    <Compile Include="Entitas\Blueprints\Serialization\BinaryBlueprintSerializer.cs" />
+    <Compile Include="Entitas\Blueprints\Serialization\IBlueprintSerializer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -66,5 +68,6 @@
     <Folder Include="Entitas\Interfaces\" />
     <Folder Include="Entitas\Matcher\" />
     <Folder Include="Entitas\Blueprints\" />
+    <Folder Include="Entitas\Blueprints\Serialization\" />
   </ItemGroup>
 </Project>

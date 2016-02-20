@@ -38,6 +38,7 @@
     <Reference Include="UnityEngine">
       <HintPath>Libraries\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGenerator.cs" />
@@ -275,6 +276,13 @@
     </Compile>
     <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs">
       <Link>Linked Libraries\Entitas.Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\describe_BinaryBlueprintSerializer.cs" />
+    <Compile Include="..\Entitas\Entitas\Blueprints\Serialization\BinaryBlueprintSerializer.cs">
+      <Link>Linked Libraries\Entitas\Blueprints\Serialization\BinaryBlueprintSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Blueprints\Serialization\IBlueprintSerializer.cs">
+      <Link>Linked Libraries\Entitas\Blueprints\Serialization\IBlueprintSerializer.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

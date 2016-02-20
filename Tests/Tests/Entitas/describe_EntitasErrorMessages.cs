@@ -1,7 +1,6 @@
 ﻿using NSpec;
 using Entitas;
 using System;
-using System.Collections.Generic;
 
 class describe_EntitasErrorMessages : nspec {
     static void printErrorMessage(Action action) {
@@ -147,8 +146,9 @@ class describe_EntitasErrorMessages : nspec {
             });
 
             it["invalid field name"] = () => printErrorMessage(() => {
-                new ComponentBlueprint(42, typeof(ComponentA).FullName, new Dictionary<string, object> {
-                    { "unknownField", 42 }
+                new ComponentBlueprint(42, typeof(ComponentA).FullName, new SerializableField {
+                    fieldName = "unknownField",
+                    value = 42
                 });
             });
         };

@@ -1,28 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.Serialization;
 using Entitas;
 
 namespace Entitas {
 
-    public class ComponentBlueprint {
+    [Serializable]
+    public class SerializableField {
+        public string fieldName;
+        public object value;
+    }
+
+    [Serializable]
+    public class ComponentBlueprint : ISerializable {
 
         public int index { get { return _index; } }
         public string fullTypeName { get { return _fullTypeName; } }
-        public Dictionary<string, object> fields { get { return _fields; } }
+        public SerializableField[] fields { get { return _fields; } }
         public Type type { get { return _type; } }
 
         readonly int _index;
         readonly string _fullTypeName;
-        readonly Dictionary<string, object> _fields;
+        readonly SerializableField[] _fields;
+
+        const string FIELD_INDEX = "_index";
+        const string FIELD_FULLTYPENAME = "_fullTypeName";
+        const string FIELD_FIELDS = "_fields";
+
         readonly Type _type;
 
         Dictionary<string, FieldInfo> _cachedFields;
 
-        public ComponentBlueprint(int index, string fullTypeName, Dictionary<string, object> fields) {
+        public ComponentBlueprint(int index, string fullTypeName, params SerializableField[] fields) {
             _index = index;
             _fullTypeName = fullTypeName;
             _fields = fields;
+
             _type = getComponentType(fullTypeName);
 
             if (!_type.ImplementsInterface<IComponent>()) {
@@ -33,11 +47,26 @@ namespace Entitas {
             cacheFieldInfos();
         }
 
+        ComponentBlueprint(SerializationInfo info, StreamingContext context)
+            : this(
+                info.GetInt32(FIELD_INDEX),
+                info.GetString(FIELD_FULLTYPENAME),
+                (SerializableField[])info.GetValue(FIELD_FIELDS, typeof(SerializableField[]))
+            ) {
+        }
+
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context) {
+            info.AddValue(FIELD_INDEX, _index);
+            info.AddValue(FIELD_FULLTYPENAME, _fullTypeName);
+            info.AddValue(FIELD_FIELDS, _fields);
+        }
+
         public IComponent CreateComponent() {
             var component = (IComponent)Activator.CreateInstance(_type);
             if (_fields != null) {
-                foreach (var kv in _fields) {
-                    _cachedFields[kv.Key].SetValue(component, kv.Value);
+                for (int i = 0, fieldsLength = _fields.Length; i < fieldsLength; i++) {
+                    var field = _fields[i];
+                    _cachedFields[field.fieldName].SetValue(component, field.value);
                 }
             }
 
@@ -63,13 +92,13 @@ namespace Entitas {
         void cacheFieldInfos() {
             if (_fields != null) {
                 _cachedFields = new Dictionary<string, FieldInfo>();
-                foreach (var kv in _fields) {
-                    var field = _type.GetField(kv.Key, BindingFlags.Instance | BindingFlags.Public);
-                    if (field == null) {
-                        throw new ComponentBlueprintException("Could not find field '" + kv.Key + "' in Type '" + _type.FullName + "'!",
-                            "Only non-static public fields are supported.");
+                for (int i = 0, fieldsLength = _fields.Length; i < fieldsLength; i++) {
+                    var field = _fields[i];
+                    var fieldInfo = _type.GetField(field.fieldName, BindingFlags.Instance | BindingFlags.Public);
+                    if (fieldInfo == null) {
+                        throw new ComponentBlueprintException("Could not find field '" + field.fieldName + "' in Type '" + _type.FullName + "'!", "Only non-static public fields are supported.");
                     }
-                    _cachedFields.Add(kv.Key, field);
+                    _cachedFields.Add(field.fieldName, fieldInfo);
                 }
             }
         }

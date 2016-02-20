@@ -1,5 +1,4 @@
 ﻿using Entitas;
-using System.Collections.Generic;
 
 public class PoolCreateBlueprint : IPerformanceTest {
     const int n = 100000;
@@ -8,9 +7,9 @@ public class PoolCreateBlueprint : IPerformanceTest {
 
     public void Before() {
         _pool = Helper.CreatePool();
-        var fields = new Dictionary<string, object> {
-            { "name", "Max" },
-            { "age", 42 }
+        var fields = new [] {
+            new SerializableField { fieldName = "name", value = "Max" },
+            new SerializableField { fieldName = "age", value = 42 }
         };
         var componentBlueprint = new ComponentBlueprint(0, typeof(NameAgeComponent).FullName, fields);
         var components = new [] {
