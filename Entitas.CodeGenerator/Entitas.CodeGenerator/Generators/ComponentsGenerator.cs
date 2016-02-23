@@ -259,8 +259,9 @@ $assign
                 return buildString(componentInfo, matcherFormat);
             }
 
+            var poolIndex = 0;
             var matchers = componentInfo.pools.Aggregate(string.Empty, (acc, poolName) => {
-                return acc + buildString(componentInfo, matcherFormat.Replace("$Tag", poolName));
+                return acc + buildString(componentInfo, matcherFormat, poolIndex++);
             });
 
             return buildString(componentInfo, matchers);
@@ -272,15 +273,15 @@ $assign
          *
          */
 
-        static string buildString(ComponentInfo componentInfo, string format) {
+        static string buildString(ComponentInfo componentInfo, string format, int poolIndex = 0) {
             format = createFormatString(format);
             var a0_type = componentInfo.fullTypeName;
             var a1_name = componentInfo.typeName.RemoveComponentSuffix();
             var a2_lowercaseName = a1_name.LowercaseFirst();
             var poolNames = componentInfo.pools;
-            var a3_tag = poolNames.Length == 0 ? string.Empty : poolNames[0];
+            var a3_tag = poolNames.Length == 0 ? string.Empty : poolNames[poolIndex];
             var lookupTags = componentInfo.ComponentLookupTags();
-            var a4_ids = lookupTags.Length == 0 ? string.Empty : lookupTags[0];
+            var a4_ids = lookupTags.Length == 0 ? string.Empty : lookupTags[poolIndex];
             var fieldInfos = componentInfo.fieldInfos;
             var a5_fieldNamesWithType = fieldNamesWithType(fieldInfos);
             var a6_fieldAssigns = fieldAssignments(fieldInfos);
