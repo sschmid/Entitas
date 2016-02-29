@@ -87,7 +87,7 @@ namespace Entitas {
                 for (int i = 0, componentNamesLength = componentNames.Length; i < componentNamesLength; i++) {
                     componentNames[i] = prefix + i;
                 }
-                _metaData = new PoolMetaData("Unnamed Pool", componentNames);
+                _metaData = new PoolMetaData("Unnamed Pool", componentNames, null);
             }
 
             _groupsForIndex = new List<Group>[totalComponents];
@@ -138,12 +138,15 @@ namespace Entitas {
             }
 
             if (entity.retainCount == 1) {
+                // Can be released immediately without going to _retainedEntities
                 entity.OnEntityReleased -= _cachedOnEntityReleased;
                 _reusableEntities.Push(entity);
+                entity.Release(this);
+                entity.removeAllOnEntityReleasedHandlers();
             } else {
                 _retainedEntities.Add(entity);
+                entity.Release(this);
             }
-            entity.Release(this);
         }
 
         /// Destroys all entities in the pool.
@@ -282,7 +285,7 @@ namespace Entitas {
             if (entity._isEnabled) {
                 throw new EntityIsNotDestroyedException("Cannot release " + entity + "!");
             }
-            entity.OnEntityReleased -= _cachedOnEntityReleased;
+            entity.removeAllOnEntityReleasedHandlers();
             _retainedEntities.Remove(entity);
             _reusableEntities.Push(entity);
         }
@@ -319,13 +322,16 @@ namespace Entitas {
 
         public string poolName { get { return _poolName; } }
         public string[] componentNames { get { return _componentNames; } }
+        public Type[] componentTypes { get { return _componentTypes; } }
 
         readonly string _poolName;
         readonly string[] _componentNames;
+        readonly Type[] _componentTypes;
 
-        public PoolMetaData(string poolName, string[] componentNames) {
+        public PoolMetaData(string poolName, string[] componentNames, Type[] componentTypes) {
             _poolName = poolName;
             _componentNames = componentNames;
+            _componentTypes = componentTypes;
         }
     }
 }

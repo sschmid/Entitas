@@ -65,7 +65,8 @@ class describe_Pool : nspec {
             PoolMetaData metaData = null;
             before = () => {
                 var componentNames = new [] { "Health", "Position", "View" };
-                metaData = new PoolMetaData("My Pool", componentNames);
+                var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
+                metaData = new PoolMetaData("My Pool", componentNames, componentTypes);
                 pool = new Pool(componentNames.Length, 0, metaData);
             };
 
@@ -305,6 +306,39 @@ class describe_Pool : nspec {
                 e2.AddComponentA();
                 e2.ReplaceComponentA(Component.A);
                 e2.RemoveComponentA();
+            };
+
+            it["will not remove external delegates for OnEntityReleased"] = () => {
+                var e = pool.CreateEntity();
+                var didRelease = 0;
+                e.OnEntityReleased += entity => didRelease += 1;
+                pool.DestroyEntity(e);
+                didRelease.should_be(1);
+            };
+
+            it["removes all external delegates from OnEntityReleased when after being dispatched"] = () => {
+                var e = pool.CreateEntity();
+                var didRelease = 0;
+                e.OnEntityReleased += entity => didRelease += 1;
+                pool.DestroyEntity(e);
+                e.Retain(this);
+                e.Release(this);
+                didRelease.should_be(1);
+            };
+
+            it["removes all external delegates from OnEntityReleased after being dispatched (when delayed release)"] = () => {
+                var e = pool.CreateEntity();
+                var didRelease = 0;
+                e.OnEntityReleased += entity => didRelease += 1;
+                e.Retain(this);
+                pool.DestroyEntity(e);
+                didRelease.should_be(0);
+                e.Release(this);
+                didRelease.should_be(1);
+
+                e.Retain(this);
+                e.Release(this);
+                didRelease.should_be(1);
             };
         };
 

@@ -9,7 +9,7 @@ class describe_EntitasErrorMessages : nspec {
         } catch (Exception exception) {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("================================================================================");
-            Console.WriteLine(exception.GetType());
+            Console.WriteLine("Exception preview for: " + exception.GetType());
             Console.WriteLine("--------------------------------------------------------------------------------");
             Console.WriteLine(exception.Message);
             Console.WriteLine("================================================================================");
@@ -23,7 +23,7 @@ class describe_EntitasErrorMessages : nspec {
         Entity entity = null;
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
-            var metaData = new PoolMetaData("My Pool", componentNames);
+            var metaData = new PoolMetaData("My Pool", componentNames, null);
             pool = new Pool(componentNames.Length, 42, metaData);
             entity = pool.CreateEntity();
         };
@@ -110,7 +110,7 @@ class describe_EntitasErrorMessages : nspec {
 
             it["wrong PoolMetaData componentNames count"] = () => printErrorMessage(() => {
                 var componentNames = new [] { "Health", "Position", "View" };
-                var metaData = new PoolMetaData("My Pool", componentNames);
+                var metaData = new PoolMetaData("My Pool", componentNames, null);
                 new Pool(1, 0, metaData);
             });
 
@@ -132,6 +132,24 @@ class describe_EntitasErrorMessages : nspec {
             
             it["get single entity when more than one exist"] = () => printErrorMessage(() => {
                 new Entity[2].SingleEntity();
+            });
+        };
+
+        context["ComponentBlueprint"] = () => {
+
+            it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
+                new ComponentBlueprint(42, typeof(FakeComponent).FullName, null);
+            });
+
+            it["type doesn't exist"] = () => printErrorMessage(() => {
+                new ComponentBlueprint(42, "UnknownType", null);
+            });
+
+            it["invalid field name"] = () => printErrorMessage(() => {
+                new ComponentBlueprint(42, typeof(ComponentA).FullName, new SerializableField {
+                    fieldName = "unknownField",
+                    value = 42
+                });
             });
         };
     }

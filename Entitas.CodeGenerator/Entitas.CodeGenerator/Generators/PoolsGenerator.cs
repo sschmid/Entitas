@@ -31,9 +31,10 @@ public static class Pools {{{0}{1}
     public static Pool {0} {{
         get {{
             if (_{0} == null) {{
-                _{0} = new Pool({1}" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG + @".TotalComponents, 0, new PoolMetaData(""{2}Pool"", {1}" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG + @".componentNames));
+                _{0} = new Pool({1}" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG + @".TotalComponents, 0, new PoolMetaData(""{2}Pool"", {1}" +
+                    CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG + @".componentNames, {1}" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG + @".componentTypes));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_{0}, {1}" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG + @".componentTypes);
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_{0});
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }}

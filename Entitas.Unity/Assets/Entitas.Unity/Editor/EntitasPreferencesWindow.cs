@@ -14,7 +14,7 @@ namespace Entitas.Unity {
 
     public class EntitasPreferencesWindow : EditorWindow {
 
-        [MenuItem("Entitas/Preferences...", false, 1)]
+        [MenuItem("Entitas/Preferences... #%e", false, 1)]
         public static void OpenPreferences() {
             EntitasEditorLayout.ShowWindow<EntitasPreferencesWindow>("Entitas Preferences");
         }
@@ -30,7 +30,7 @@ namespace Entitas.Unity {
             _localVersion = EntitasCheckForUpdates.GetLocalVersion();
             _config = EntitasPreferences.LoadConfig();
             _preferencesDrawers = Assembly.GetAssembly(typeof(IEntitasPreferencesDrawer)).GetTypes()
-                .Where(type => type.GetInterfaces().Contains(typeof(IEntitasPreferencesDrawer)))
+                .Where(type => type.ImplementsInterface<IEntitasPreferencesDrawer>())
                 .Select(type => (IEntitasPreferencesDrawer)Activator.CreateInstance(type))
                 .OrderBy(drawer => drawer.priority)
                 .ToArray();

@@ -2,9 +2,9 @@
 
 namespace Entitas.CodeGenerator.TypeReflection {
     public static class TypeReflectionCodeGenerator {
-        public static void Generate(Assembly assembly, string[] poolNames, string directory, ICodeGenerator[] codeGenerators) {
+        public static CodeGenFile[] Generate(Assembly assembly, string[] poolNames, string directory, ICodeGenerator[] codeGenerators) {
             var provider = new TypeReflectionProvider(assembly.GetTypes(), poolNames);
-            CodeGenerator.Generate(provider, directory, codeGenerators);
+            return CodeGenerator.Generate(provider, directory, codeGenerators);
         }
     }
 }
