@@ -11,7 +11,7 @@ namespace Entitas.Unity.CodeGenerator {
 
         [MenuItem("Entitas/Generate #%g", false, 100)]
         public static void Generate() {
-            assertCanGenerate();
+            checkCanGenerate();
 
             Debug.Log("Generating...");
 
@@ -45,7 +45,7 @@ namespace Entitas.Unity.CodeGenerator {
                 .ToArray();
         }
 
-        static void assertCanGenerate() {
+        static void checkCanGenerate() {
             if (EditorApplication.isCompiling) {
                 throw new Exception("Cannot generate because Unity is still compiling. Please wait...");
             }
@@ -55,7 +55,7 @@ namespace Entitas.Unity.CodeGenerator {
             logEntries.GetMethod("Clear").Invoke(new object(), null);
             var canCompile = (int)logEntries.GetMethod("GetCount").Invoke(new object(), null) == 0;
             if (!canCompile) {
-                throw new Exception("Cannot generate because there are compile errors!");
+                Debug.Log("There are compile errors! Generated code will be based on last compiled executable.");
             }
         }
     }
