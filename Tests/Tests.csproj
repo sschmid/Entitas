@@ -262,6 +262,7 @@
       <Link>Linked Libraries\Entitas\Matcher\TriggerOnEvent.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\Providers\describe_TypeToStringExtension.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\AnotherComponentInterface.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

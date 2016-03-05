@@ -21,5 +21,3 @@ class describe_TypeExtension : nspec {
         };
     }
 }
-
-interface AnotherComponentInterface : IComponent {}
