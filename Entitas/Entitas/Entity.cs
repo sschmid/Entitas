@@ -248,6 +248,11 @@ namespace Entitas {
             return componentPool;
         }
 
+        public IComponent CreateComponent(int index, Type type) {
+            var componentPool = GetComponentPool(index);
+            return (IComponent)(componentPool.Count > 0 ? componentPool.Pop() : Activator.CreateInstance(type));;
+        }
+
         internal void destroy() {
             RemoveAllComponents();
             OnComponentAdded = null;
@@ -260,12 +265,14 @@ namespace Entitas {
             OnEntityReleased = null;
         }
 
+        /// Returns a cached string to describe the entity with following format:
+        /// Entity_{creationIndex}(*{retainCount})({list of components})
         public override string ToString() {
             if (_toStringCache == null) {
                 var sb = new StringBuilder()
                     .Append("Entity_")
                     .Append(_creationIndex)
-                    .Append("(")
+                    .Append("(*")
                     .Append(retainCount)
                     .Append(")")
                     .Append("(");

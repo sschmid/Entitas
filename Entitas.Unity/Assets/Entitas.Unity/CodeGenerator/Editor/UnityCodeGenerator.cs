@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using Entitas;
 using Entitas.CodeGenerator;
-using Entitas.CodeGenerator.TypeReflection;
 using UnityEditor;
 using UnityEngine;
 

@@ -50,7 +50,7 @@ class describe_Pool : nspec {
             e.componentPools.should_be_same(pool.componentPools);
         };
 
-        it["throws when destroying an entity the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {
+        it["throws when destroying an entity which the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {
             var e = pool.CreateEntity();
             pool.DestroyEntity(e);
             pool.DestroyEntity(e);
@@ -276,7 +276,7 @@ class describe_Pool : nspec {
 
             it["doesn't dispatch OnGroupCreated when group alredy exists"] = () => {
                 pool.GetGroup(Matcher.AllOf(0));
-                pool.OnGroupCreated += (p, g) => this.Fail();
+                pool.OnGroupCreated += delegate { this.Fail(); };
                 pool.GetGroup(Matcher.AllOf(0));
             };
 
@@ -297,9 +297,9 @@ class describe_Pool : nspec {
 
             it["removes all external delegates when destroying an entity"] = () => {
                 var e = pool.CreateEntity();
-                e.OnComponentAdded += (entity, index, component) => this.Fail();
-                e.OnComponentRemoved += (entity, index, component) => this.Fail();
-                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
+                e.OnComponentAdded += delegate { this.Fail(); };
+                e.OnComponentRemoved += delegate { this.Fail(); };
+                e.OnComponentReplaced += delegate { this.Fail(); };
                 pool.DestroyEntity(e);
                 var e2 = pool.CreateEntity();
                 e2.should_be_same(e);
@@ -583,7 +583,7 @@ class describe_Pool : nspec {
                     var m = Matcher.AllOf(CID.ComponentA);
                     var group = pool.GetGroup(m);
 
-                    group.OnEntityAdded += (g, entity, index, component) => this.Fail();
+                    group.OnEntityAdded += delegate { this.Fail(); };
 
                     pool.ClearGroups();
 

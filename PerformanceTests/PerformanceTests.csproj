@@ -75,7 +75,6 @@
     <Compile Include="PerformanceTests\Pool\PoolDestroyEntity.cs" />
     <Compile Include="PerformanceTests\DataStructures\HashSetContainsAdd.cs" />
     <Compile Include="PerformanceTests\Helper.cs" />
-    <Compile Include="PerformanceTests\Pool\PoolCreateBlueprint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

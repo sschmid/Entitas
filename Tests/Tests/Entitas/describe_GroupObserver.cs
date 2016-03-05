@@ -3,17 +3,18 @@ using Entitas;
 
 class describe_GroupObserver : nspec {
 
+    Pool _pool;
+
     void when_created() {
 
-        Pool pool = null;
         Group groupA = null;
         GroupObserver observerA = null;
 
-        IMatcher mactherA = Matcher.AllOf(new[] { CID.ComponentA });
+        IMatcher matcherA = Matcher.AllOf(new[] { CID.ComponentA });
 
         before = () => {
-            pool = new Pool(CID.NumComponents);
-            groupA = pool.GetGroup(mactherA);
+            _pool = new Pool(CID.NumComponents);
+            groupA = _pool.GetGroup(matcherA);
         };
 
         context["when observing with eventType OnEntityAdded"] = () => {
@@ -28,8 +29,7 @@ class describe_GroupObserver : nspec {
             context["when entity collected"] = () => {
                 Entity e = null;
                 before = () => {
-                    e = pool.CreateEntity();
-                    e.AddComponentA();
+                    e = createEA();
                 };
 
                 it["returns collected entities"] = () => {
@@ -39,8 +39,7 @@ class describe_GroupObserver : nspec {
                 };
 
                 it["only collects matching entities"] = () => {
-                    var e2 = pool.CreateEntity();
-                    e2.AddComponentB();
+                    createEB();
                 
                     var entities = observerA.collectedEntities;
                     entities.Count.should_be(1);
@@ -63,20 +62,17 @@ class describe_GroupObserver : nspec {
 
                 it["doesn't collect entities when deactivated"] = () => {
                     observerA.Deactivate();
-                    var e2 = pool.CreateEntity();
-                    e2.AddComponentA();
+                    createEA();
                     observerA.collectedEntities.should_be_empty();
                 };
                 
                 it["continues collecting when activated"] = () => {
                     observerA.Deactivate();
-                    var e1 = pool.CreateEntity();
-                    e1.AddComponentA();
+                    createEA();
 
                     observerA.Activate();
 
-                    var e2 = pool.CreateEntity();
-                    e2.AddComponentA();
+                    var e2 = createEA();
 
                     var entities = observerA.collectedEntities;
                     entities.Count.should_be(1);
@@ -94,29 +90,28 @@ class describe_GroupObserver : nspec {
             };
 
             context["reference counting"] = () => {
+                Entity e = null;
+                before = () => {
+                    e = createEA();
+                };
+
                 it["retains entity even after destroy"] = () => {
-                    var e = pool.CreateEntity();
-                    e.AddComponentA();
-                    var didRelease = 0;
-                    e.OnEntityReleased += entity => didRelease += 1;
-                    pool.DestroyEntity(e);
+                    var didExecute = 0;
+                    e.OnEntityReleased += delegate { didExecute += 1; };
+                    _pool.DestroyEntity(e);
                     e.retainCount.should_be(1);
-                    didRelease.should_be(0);
+                    didExecute.should_be(0);
                 };
                 
                 it["releases entity when clearing collected entities"] = () => {
-                    var e = pool.CreateEntity();
-                    e.AddComponentA();
-                    pool.DestroyEntity(e);
+                    _pool.DestroyEntity(e);
                     observerA.ClearCollectedEntities();
                     e.retainCount.should_be(0);
                 };
 
                 it["retains entities only once"] = () => {
-                    var e = pool.CreateEntity();
-                    e.AddComponentA();
                     e.ReplaceComponentA(new ComponentA());
-                    pool.DestroyEntity(e);
+                    _pool.DestroyEntity(e);
                     e.retainCount.should_be(1);
                 };
             };
@@ -128,8 +123,7 @@ class describe_GroupObserver : nspec {
             };
 
             it["returns collected entities"] = () => {
-                var e = pool.CreateEntity();
-                e.AddComponentA();
+                var e = createEA();
                 observerA.collectedEntities.should_be_empty();
 
                 e.RemoveComponentA();
@@ -145,8 +139,7 @@ class describe_GroupObserver : nspec {
             };
 
             it["returns collected entities"] = () => {
-                var e = pool.CreateEntity();
-                e.AddComponentA();
+                var e = createEA();
                 var entities = observerA.collectedEntities;
                 entities.Count.should_be(1);
                 entities.should_contain(e);
@@ -163,7 +156,7 @@ class describe_GroupObserver : nspec {
 
             Group groupB = null;
             before = () => {
-                groupB = pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentB }));
+                groupB = _pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentB }));
             };
 
             it["throws when group count != eventType count"] = expect<GroupObserverException>(() => {
@@ -187,10 +180,8 @@ class describe_GroupObserver : nspec {
                     );
                 };
                 it["returns collected entities"] = () => {
-                    var eA = pool.CreateEntity();
-                    eA.AddComponentA();
-                    var eB = pool.CreateEntity();
-                    eB.AddComponentB();
+                    var eA = createEA();
+                    var eB = createEB();
 
                     var entities = observerA.collectedEntities;
                     entities.Count.should_be(2);
@@ -214,10 +205,8 @@ class describe_GroupObserver : nspec {
                     );
                 };
                 it["returns collected entities"] = () => {
-                    var eA = pool.CreateEntity();
-                    eA.AddComponentA();
-                    var eB = pool.CreateEntity();
-                    eB.AddComponentB();
+                    var eA = createEA();
+                    var eB = createEB();
                     observerA.collectedEntities.should_be_empty();
 
                     eA.RemoveComponentA();
@@ -240,10 +229,8 @@ class describe_GroupObserver : nspec {
                     );
                 };
                 it["returns collected entities"] = () => {
-                    var eA = pool.CreateEntity();
-                    eA.AddComponentA();
-                    var eB = pool.CreateEntity();
-                    eB.AddComponentB();
+                    var eA = createEA();
+                    var eB = createEB();
                     var entities = observerA.collectedEntities;
                     entities.Count.should_be(2);
                     entities.should_contain(eA);
@@ -270,10 +257,8 @@ class describe_GroupObserver : nspec {
                     );
                 };
                 it["returns collected entities"] = () => {
-                    var eA = pool.CreateEntity();
-                    eA.AddComponentA();
-                    var eB = pool.CreateEntity();
-                    eB.AddComponentB();
+                    var eA = createEA();
+                    var eB = createEB();
                     var entities = observerA.collectedEntities;
                     entities.Count.should_be(1);
                     entities.should_contain(eA);
@@ -287,6 +272,18 @@ class describe_GroupObserver : nspec {
                 };
             };
         };
+    }
+
+    Entity createEA() {
+        var e = _pool.CreateEntity();
+        e.AddComponentA();
+        return e;
+    }
+
+    Entity createEB() {
+        var e = _pool.CreateEntity();
+        e.AddComponentB();
+        return e;
     }
 }
 

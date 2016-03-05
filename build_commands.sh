@@ -17,7 +17,7 @@ collect_sources() {
   rm -rf $BIN_DIR
   mkdir $BIN_DIR $SRC_DIR
 
-  cp -r {"$ES/$ES","$CG/$CG","$MIG/$MIG","$CG_TR/$CG_TR","$ESU_ASSETS/$ESU"} $SRC_DIR
+  cp -r {"$ES/$ES","$MIG/$MIG","$ESU_ASSETS/$ESU"} $SRC_DIR
   find "./$SRC_DIR" -name "*.meta" -type f -delete
 
   header_meta="$ESU/Editor/Entitas-Header.png.meta"
@@ -40,7 +40,7 @@ update_project_dependencies() {
   rm -rf $ESU_LIBS_DIR
   mkdir $ESU_LIBS_DIR
 
-  cp -r $SRC_DIR/{$ES,$CG,$CG_TR,$MIG} $ESU_LIBS_DIR
+  cp -r $SRC_DIR/{$ES,$MIG} $ESU_LIBS_DIR
 
   echo "Updating project dependencies done."
 }
@@ -85,7 +85,7 @@ create_zip() {
 
   echo "Creating Entitas-CSharp.zip..."
   mkdir $TMP_DIR
-  cp -r {"$SRC_DIR/$ES","$SRC_DIR/$CG"} $TMP_DIR
+  cp -r $SRC_DIR/$ES $TMP_DIR
   cp "$SRC_DIR/"* $TMP_DIR || true
 
   pushd $TMP_DIR > /dev/null
@@ -99,16 +99,12 @@ create_zip() {
 
   tmp_editor_dir="$TMP_DIR/Editor"
   mkdir $tmp_editor_dir
-  mv "$TMP_DIR/$CG/"* $tmp_editor_dir
-  mv {"$tmp_editor_dir/Attributes",$tmp_editor_dir} "$TMP_DIR/$CG"
+  mv "$TMP_DIR/Entitas/CodeGenerator/"* $tmp_editor_dir
+  mv {"$tmp_editor_dir/Attributes",$tmp_editor_dir} "$TMP_DIR/Entitas/CodeGenerator"
 
   mkdir $tmp_editor_dir
   mv "$TMP_DIR/$MIG/"* $tmp_editor_dir
   mv $tmp_editor_dir "$TMP_DIR/$MIG"
-
-  mkdir $tmp_editor_dir
-  mv "$TMP_DIR/$CG_TR/"* $tmp_editor_dir
-  mv $tmp_editor_dir "$TMP_DIR/$CG_TR"
 
   pushd $TMP_DIR > /dev/null
     zip -rq ../Entitas-Unity.zip ./

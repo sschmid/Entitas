@@ -135,23 +135,29 @@ class describe_EntitasErrorMessages : nspec {
             });
         };
 
-        context["ComponentBlueprint"] = () => {
 
-            it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
-                new ComponentBlueprint(42, typeof(FakeComponent).FullName, null);
-            });
-
-            it["type doesn't exist"] = () => printErrorMessage(() => {
-                new ComponentBlueprint(42, "UnknownType", null);
-            });
-
-            it["invalid field name"] = () => printErrorMessage(() => {
-                new ComponentBlueprint(42, typeof(ComponentA).FullName, new SerializableField {
-                    fieldName = "unknownField",
-                    value = 42
-                });
-            });
-        };
+        // TODO
+//        context["ComponentBlueprint"] = () => {
+//
+//            it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
+//                new ComponentBlueprint(42, typeof(FakeComponent).FullName, null);
+//            });
+//
+//            it["type doesn't exist"] = () => printErrorMessage(() => {
+//                new ComponentBlueprint(42, "UnknownType", null);
+//            });
+//
+//            it["invalid field name"] = () => printErrorMessage(() => {
+//                new ComponentBlueprint(42, typeof(ComponentA).FullName, new SerializableField {
+//                    fieldName = "unknownField",
+//                    value = 42
+//                });
+//            });
+//
+//            it["mssing [SerializableAttribute]"] = () => printErrorMessage(() => {
+//                new ComponentBlueprint(1, new ComponentA());
+//            });
+//        };
     }
 }
 
