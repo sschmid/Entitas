@@ -36,7 +36,10 @@ namespace Entitas {
         /// It will inject the pool if ISetPool is implemented
         /// and will automatically create a ReactiveSystem if it is a IReactiveSystem or IMultiReactiveSystem.
         public static ISystem CreateSystem(this Pool pool, ISystem system) {
-            setPool(system, pool);
+            var poolSystem = system as ISetPool;
+            if (poolSystem != null) {
+                poolSystem.SetPool(pool);
+            }
             var reactiveSystem = system as IReactiveSystem;
             if (reactiveSystem != null) {
                 return new ReactiveSystem(pool, reactiveSystem);
@@ -47,13 +50,6 @@ namespace Entitas {
             }
 
             return system;
-        }
-
-        static void setPool(ISystem system, Pool pool) {
-            var poolSystem = system as ISetPool;
-            if (poolSystem != null) {
-                poolSystem.SetPool(pool);
-            }
         }
     }
 }

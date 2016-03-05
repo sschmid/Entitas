@@ -27,6 +27,7 @@ namespace Entitas {
 
     /// Implement this interface in combination with IReactiveSystem or IMultiReactiveSystem.
     /// It will exclude all entities which match the specified matcher.
+    /// To exclude multiple components use Matcher.AnyOf(ComponentX, ComponentY, ComponentZ).
     public interface IExcludeComponents {
         IMatcher excludeComponents { get; }
     }

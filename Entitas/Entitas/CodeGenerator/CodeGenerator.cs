@@ -79,12 +79,6 @@ namespace Entitas.CodeGenerator {
 
     public static class CodeGeneratorExtensions {
 
-        public static string RemoveComponentSuffix(this string componentName) {
-            return componentName.EndsWith(CodeGenerator.COMPONENT_SUFFIX, StringComparison.Ordinal)
-                    ? componentName.Substring(0, componentName.Length - CodeGenerator.COMPONENT_SUFFIX.Length)
-                    : componentName;
-        }
-
         public static string[] ComponentLookupTags(this ComponentInfo componentInfo) {
             if (componentInfo.pools.Length == 0) {
                 return new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG };

@@ -6,6 +6,7 @@
     /// E.g. pool.isAnimating = true or pool.SetResources();
     /// [MyPoolName, MyOtherPoolName]: You can make this component to be available only in the specified pools.
     /// The code generator can generate these attributes for you.
+    /// More available Attributes can be found in CodeGenerator/Attributes.
     public interface IComponent {
     }
 }

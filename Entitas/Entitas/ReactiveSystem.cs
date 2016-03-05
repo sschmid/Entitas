@@ -4,7 +4,7 @@ namespace Entitas {
 
     /// A ReactiveSystem manages your implementation of a IReactiveSystem or a IMultiReactiveSystem subsystem.
     /// It will only call subsystem.Execute() if there were changes based on the triggers and eventTypes specified by your subsystem
-    /// and will only pass in changed entities. A common use case is to react to changes,
+    /// and will only pass in changed entities. A common use-case is to react to changes,
     /// e.g. a change of the position of an entity to update the gameObject.transform.position of the related gameObject.
     /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
     public class ReactiveSystem : IExecuteSystem {
@@ -55,12 +55,15 @@ namespace Entitas {
             _buffer = new List<Entity>();
         }
 
-        /// Activates the ReactiveSystem (ReactiveSystem are activated by default) and starts observing changes based on the triggers and eventTypes specified by the subsystem.
+        /// Activates the ReactiveSystem (ReactiveSystem are activated by default) and starts observing changes
+        /// based on the triggers and eventTypes specified by the subsystem.
         public void Activate() {
             _observer.Activate();
         }
 
-        /// Deactivates the ReactiveSystem (ReactiveSystem are activated by default). No changes will be tracked while deactivated.
+        /// Deactivates the ReactiveSystem (ReactiveSystem are activated by default).
+        /// No changes will be tracked while deactivated.
+        /// This will also clear the ReactiveSystems.
         public void Deactivate() {
             _observer.Deactivate();
         }
