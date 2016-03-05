@@ -33,7 +33,7 @@ namespace Entitas.Unity {
                     EditorGUILayout.LabelField("Entitas", EditorStyles.boldLabel);
 
                     _scriptCallOptimization = (ScriptCallOptimization)EditorGUILayout
-                        .EnumPopup("Script Call Optimization", _scriptCallOptimization);
+                        .EnumPopup("Optimizations", _scriptCallOptimization);
                 }
                 EntitasEditorLayout.EndVertical();
             }
