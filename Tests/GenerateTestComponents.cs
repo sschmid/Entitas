@@ -20,7 +20,11 @@ class GenerateTestComponents {
         };
 
         var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0]);
-        CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
+        var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
+
+        foreach (var file in files) {
+            Console.WriteLine("Generated: " + file.fileName);
+        }
 
         Console.WriteLine("Done. Press any key...");
         Console.Read();
