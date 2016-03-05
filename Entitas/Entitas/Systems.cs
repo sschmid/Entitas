@@ -60,7 +60,7 @@ namespace Entitas {
         }
 
         /// Activates all ReactiveSystems in the systems list.
-        public void ActivateReactiveSystems() {
+        public virtual void ActivateReactiveSystems() {
             for (int i = 0, exeSysCount = _executeSystems.Count; i < exeSysCount; i++) {
                 var reactiveSystem = _executeSystems[i] as ReactiveSystem;
                 if (reactiveSystem != null) {
@@ -76,7 +76,7 @@ namespace Entitas {
 
         /// Deactivates all ReactiveSystems in the systems list. This will also clear all ReactiveSystems.
         /// This is useful when you want to soft-restart your application and want to reuse your existing system instances.
-        public void DeactivateReactiveSystems() {
+        public virtual void DeactivateReactiveSystems() {
             for (int i = 0, exeSysCount = _executeSystems.Count; i < exeSysCount; i++) {
                 var reactiveSystem = _executeSystems[i] as ReactiveSystem;
                 if (reactiveSystem != null) {
