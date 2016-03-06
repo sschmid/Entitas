@@ -9,6 +9,6 @@ public class ComponentWithProperties : IComponent {
     bool _privateProperty { get; set; }
     static bool _privateStaticProperty { get; set; }
 
-    public string publicPropertyGet { get; }
-    public string publicPropertySet { get; }
+    public string publicPropertyGet { get { return null; } }
+    public string publicPropertySet { set { } }
 }
