@@ -1,5 +1,6 @@
 using Entitas;
 
+#pragma warning disable
 public class ComponentWithFieldsAndProperties : IComponent {
 
     // Has one public field
