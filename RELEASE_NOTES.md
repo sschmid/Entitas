@@ -37,6 +37,7 @@
 
 ##### Entitas.Unity.CodeGenerator
 - Compile errors won't block code generation anymore
+- Printing total generated file count when generating
 
 ##### Entitas.Unity.VisualDebugging
 - Destroying EntityBahviour when entity got released
@@ -50,7 +51,6 @@
 - Simplified EntityInspector and made methods static
 - Unfolded components info is now shared between entities within same pool
 - Added shortcuts to Entitas Preferences and Generate
-- Printing total generated file count when generating
 - Improved TypeDrawers
 - Stepper UI tweaks
 
