@@ -24,20 +24,49 @@ namespace Entitas.Serialization {
         }
     }
 
-    public static class ComponentMemberInfoExtension {
+    public static class PublicMemberInfoExtension {
 
-        public static PublicMemberInfo[] GetPublicMemberInfos(this Type componentType) {
-            var bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+        const BindingFlags BINDING_FLAGS = BindingFlags.Instance | BindingFlags.Public;
 
-            var fieldInfos = componentType.GetFields(bindingFlags)
-                .Select(fieldInfo => new PublicMemberInfo(fieldInfo.FieldType.FullName, fieldInfo.Name, PublicMemberInfo.MemberType.Field));
+        public static PublicMemberInfo[] GetPublicMemberInfos(this Type type) {
 
-            var propertyInfos = componentType
-                .GetProperties(bindingFlags)
-                .Where(propertyInfo  => propertyInfo.CanRead && propertyInfo.CanWrite)
-                .Select(propertyInfo => new PublicMemberInfo(propertyInfo.PropertyType.FullName, propertyInfo.Name, PublicMemberInfo.MemberType.Property));
+            var fieldInfos = getFieldInfos(type)
+                .Select(info => new PublicMemberInfo(info.FieldType.FullName, info.Name, PublicMemberInfo.MemberType.Field));
+
+            var propertyInfos = getPropertyInfos(type)
+                .Select(info => new PublicMemberInfo(info.PropertyType.FullName, info.Name, PublicMemberInfo.MemberType.Property));
 
             return fieldInfos.Concat(propertyInfos).ToArray();
+        }
+
+        public static object PublicMemberClone(this object obj) {
+            var type = obj.GetType();
+            var clone = Activator.CreateInstance(type);
+
+            var fieldInfos = getFieldInfos(type);
+            for (int i = 0, fieldInfosLength = fieldInfos.Length; i < fieldInfosLength; i++) {
+                var info = fieldInfos[i];
+                info.SetValue(clone, info.GetValue(obj));
+            }
+
+            var propertyInfos = getPropertyInfos(type);
+            for (int i = 0, fieldInfosLength = fieldInfos.Length; i < fieldInfosLength; i++) {
+                var info = fieldInfos[i];
+                info.SetValue(clone, info.GetValue(obj));
+            }
+
+            return clone;
+        }
+
+        static FieldInfo[] getFieldInfos(Type type) {
+            return type.GetFields(BINDING_FLAGS);
+        }
+
+        static PropertyInfo[] getPropertyInfos(Type type) {
+            return type
+                .GetProperties(BINDING_FLAGS)
+                .Where(info => info.CanRead && info.CanWrite)
+                .ToArray();
         }
     }
 }
