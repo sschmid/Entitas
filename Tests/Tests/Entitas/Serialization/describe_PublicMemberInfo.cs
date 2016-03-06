@@ -48,16 +48,28 @@ class describe_PublicMemberInfo : nspec {
 
         context["when cloning object"] = () => {
 
+            ComponentWithFieldsAndProperties component = null;
+            before = () => {
+                component = new ComponentWithFieldsAndProperties();
+                component.publicField = "field";
+                component.publicProperty = "property";
+            };
+
             it["clones object and sets public members"] = () => {
-                var nameAgeComponent = new NameAgeComponent();
-                nameAgeComponent.name = "Max";
-                nameAgeComponent.age = 42;
+                var clone = (ComponentWithFieldsAndProperties)component.PublicMemberClone();
 
-                var clone = (NameAgeComponent)nameAgeComponent.PublicMemberClone();
+                clone.should_not_be_same(component);
+                clone.publicField.should_be(component.publicField);
+                clone.publicProperty.should_be(component.publicProperty);
+            };
 
-                clone.should_not_be_same(nameAgeComponent);
-                clone.name.should_be(nameAgeComponent.name);
-                clone.age.should_be(nameAgeComponent.age);
+            it["copies public members to other obj"] = () => {
+                var newComponent = new ComponentWithFieldsAndProperties();
+
+                component.CopyPublicMemberValues(newComponent);
+
+                newComponent.publicField.should_be(component.publicField);
+                newComponent.publicProperty.should_be(component.publicProperty);
             };
         };
     }

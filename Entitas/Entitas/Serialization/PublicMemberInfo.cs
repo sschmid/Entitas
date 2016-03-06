@@ -40,22 +40,24 @@ namespace Entitas.Serialization {
         }
 
         public static object PublicMemberClone(this object obj) {
-            var type = obj.GetType();
-            var clone = Activator.CreateInstance(type);
+            var clone = Activator.CreateInstance(obj.GetType());
+            CopyPublicMemberValues(obj, clone);
+            return clone;
+        }
 
+        public static void CopyPublicMemberValues(this object obj, object target) {
+            var type = obj.GetType();
             var fieldInfos = getFieldInfos(type);
             for (int i = 0, fieldInfosLength = fieldInfos.Length; i < fieldInfosLength; i++) {
                 var info = fieldInfos[i];
-                info.SetValue(clone, info.GetValue(obj));
+                info.SetValue(target, info.GetValue(obj));
             }
 
             var propertyInfos = getPropertyInfos(type);
-            for (int i = 0, fieldInfosLength = fieldInfos.Length; i < fieldInfosLength; i++) {
-                var info = fieldInfos[i];
-                info.SetValue(clone, info.GetValue(obj));
+            for (int i = 0, propertyInfosLength = propertyInfos.Length; i < propertyInfosLength; i++) {
+                var info = propertyInfos[i];
+                info.SetValue(target, info.GetValue(obj, null), null);
             }
-
-            return clone;
         }
 
         static FieldInfo[] getFieldInfos(Type type) {
