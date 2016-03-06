@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasDictionary { get { return HasComponent(ComponentIds.Dictionary); } }
 
         public Entity AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
-            var componentPool = GetComponentPool(ComponentIds.Dictionary);
-            var component = (DictionaryComponent)(componentPool.Count > 0 ? componentPool.Pop() : new DictionaryComponent());
+            var component = CreateComponent<DictionaryComponent>(ComponentIds.Dictionary);
             component.dict = newDict;
             return AddComponent(ComponentIds.Dictionary, component);
         }
 
         public Entity ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
-            var componentPool = GetComponentPool(ComponentIds.Dictionary);
-            var component = (DictionaryComponent)(componentPool.Count > 0 ? componentPool.Pop() : new DictionaryComponent());
+            var component = CreateComponent<DictionaryComponent>(ComponentIds.Dictionary);
             component.dict = newDict;
             ReplaceComponent(ComponentIds.Dictionary, component);
             return this;

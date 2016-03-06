@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasHashSet { get { return HasComponent(ComponentIds.HashSet); } }
 
         public Entity AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
-            var componentPool = GetComponentPool(ComponentIds.HashSet);
-            var component = (HashSetComponent)(componentPool.Count > 0 ? componentPool.Pop() : new HashSetComponent());
+            var component = CreateComponent<HashSetComponent>(ComponentIds.HashSet);
             component.hashset = newHashset;
             return AddComponent(ComponentIds.HashSet, component);
         }
 
         public Entity ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
-            var componentPool = GetComponentPool(ComponentIds.HashSet);
-            var component = (HashSetComponent)(componentPool.Count > 0 ? componentPool.Pop() : new HashSetComponent());
+            var component = CreateComponent<HashSetComponent>(ComponentIds.HashSet);
             component.hashset = newHashset;
             ReplaceComponent(ComponentIds.HashSet, component);
             return this;

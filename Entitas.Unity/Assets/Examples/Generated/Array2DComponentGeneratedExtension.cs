@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasArray2D { get { return HasComponent(ComponentIds.Array2D); } }
 
         public Entity AddArray2D(string[,] newArray2d) {
-            var componentPool = GetComponentPool(ComponentIds.Array2D);
-            var component = (Array2DComponent)(componentPool.Count > 0 ? componentPool.Pop() : new Array2DComponent());
+            var component = CreateComponent<Array2DComponent>(ComponentIds.Array2D);
             component.array2d = newArray2d;
             return AddComponent(ComponentIds.Array2D, component);
         }
 
         public Entity ReplaceArray2D(string[,] newArray2d) {
-            var componentPool = GetComponentPool(ComponentIds.Array2D);
-            var component = (Array2DComponent)(componentPool.Count > 0 ? componentPool.Pop() : new Array2DComponent());
+            var component = CreateComponent<Array2DComponent>(ComponentIds.Array2D);
             component.array2d = newArray2d;
             ReplaceComponent(ComponentIds.Array2D, component);
             return this;

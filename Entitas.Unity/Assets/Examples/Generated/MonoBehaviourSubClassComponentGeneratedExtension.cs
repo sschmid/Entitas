@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasMonoBehaviourSubClass { get { return HasComponent(ComponentIds.MonoBehaviourSubClass); } }
 
         public Entity AddMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
-            var componentPool = GetComponentPool(ComponentIds.MonoBehaviourSubClass);
-            var component = (MonoBehaviourSubClassComponent)(componentPool.Count > 0 ? componentPool.Pop() : new MonoBehaviourSubClassComponent());
+            var component = CreateComponent<MonoBehaviourSubClassComponent>(ComponentIds.MonoBehaviourSubClass);
             component.monoBehaviour = newMonoBehaviour;
             return AddComponent(ComponentIds.MonoBehaviourSubClass, component);
         }
 
         public Entity ReplaceMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
-            var componentPool = GetComponentPool(ComponentIds.MonoBehaviourSubClass);
-            var component = (MonoBehaviourSubClassComponent)(componentPool.Count > 0 ? componentPool.Pop() : new MonoBehaviourSubClassComponent());
+            var component = CreateComponent<MonoBehaviourSubClassComponent>(ComponentIds.MonoBehaviourSubClass);
             component.monoBehaviour = newMonoBehaviour;
             ReplaceComponent(ComponentIds.MonoBehaviourSubClass, component);
             return this;

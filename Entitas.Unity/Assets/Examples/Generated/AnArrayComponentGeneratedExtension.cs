@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasAnArray { get { return HasComponent(ComponentIds.AnArray); } }
 
         public Entity AddAnArray(string[] newArray) {
-            var componentPool = GetComponentPool(ComponentIds.AnArray);
-            var component = (AnArrayComponent)(componentPool.Count > 0 ? componentPool.Pop() : new AnArrayComponent());
+            var component = CreateComponent<AnArrayComponent>(ComponentIds.AnArray);
             component.array = newArray;
             return AddComponent(ComponentIds.AnArray, component);
         }
 
         public Entity ReplaceAnArray(string[] newArray) {
-            var componentPool = GetComponentPool(ComponentIds.AnArray);
-            var component = (AnArrayComponent)(componentPool.Count > 0 ? componentPool.Pop() : new AnArrayComponent());
+            var component = CreateComponent<AnArrayComponent>(ComponentIds.AnArray);
             component.array = newArray;
             ReplaceComponent(ComponentIds.AnArray, component);
             return this;

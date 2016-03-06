@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasJaggedArray { get { return HasComponent(ComponentIds.JaggedArray); } }
 
         public Entity AddJaggedArray(string[][] newJaggedArray) {
-            var componentPool = GetComponentPool(ComponentIds.JaggedArray);
-            var component = (JaggedArrayComponent)(componentPool.Count > 0 ? componentPool.Pop() : new JaggedArrayComponent());
+            var component = CreateComponent<JaggedArrayComponent>(ComponentIds.JaggedArray);
             component.jaggedArray = newJaggedArray;
             return AddComponent(ComponentIds.JaggedArray, component);
         }
 
         public Entity ReplaceJaggedArray(string[][] newJaggedArray) {
-            var componentPool = GetComponentPool(ComponentIds.JaggedArray);
-            var component = (JaggedArrayComponent)(componentPool.Count > 0 ? componentPool.Pop() : new JaggedArrayComponent());
+            var component = CreateComponent<JaggedArrayComponent>(ComponentIds.JaggedArray);
             component.jaggedArray = newJaggedArray;
             ReplaceComponent(ComponentIds.JaggedArray, component);
             return this;

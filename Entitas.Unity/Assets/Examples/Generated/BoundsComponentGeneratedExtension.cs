@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasBounds { get { return HasComponent(ComponentIds.Bounds); } }
 
         public Entity AddBounds(UnityEngine.Bounds newBounds) {
-            var componentPool = GetComponentPool(ComponentIds.Bounds);
-            var component = (BoundsComponent)(componentPool.Count > 0 ? componentPool.Pop() : new BoundsComponent());
+            var component = CreateComponent<BoundsComponent>(ComponentIds.Bounds);
             component.bounds = newBounds;
             return AddComponent(ComponentIds.Bounds, component);
         }
 
         public Entity ReplaceBounds(UnityEngine.Bounds newBounds) {
-            var componentPool = GetComponentPool(ComponentIds.Bounds);
-            var component = (BoundsComponent)(componentPool.Count > 0 ? componentPool.Pop() : new BoundsComponent());
+            var component = CreateComponent<BoundsComponent>(ComponentIds.Bounds);
             component.bounds = newBounds;
             ReplaceComponent(ComponentIds.Bounds, component);
             return this;

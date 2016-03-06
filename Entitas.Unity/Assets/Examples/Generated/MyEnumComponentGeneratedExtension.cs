@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasMyEnum { get { return HasComponent(ComponentIds.MyEnum); } }
 
         public Entity AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
-            var componentPool = GetComponentPool(ComponentIds.MyEnum);
-            var component = (MyEnumComponent)(componentPool.Count > 0 ? componentPool.Pop() : new MyEnumComponent());
+            var component = CreateComponent<MyEnumComponent>(ComponentIds.MyEnum);
             component.myEnum = newMyEnum;
             return AddComponent(ComponentIds.MyEnum, component);
         }
 
         public Entity ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
-            var componentPool = GetComponentPool(ComponentIds.MyEnum);
-            var component = (MyEnumComponent)(componentPool.Count > 0 ? componentPool.Pop() : new MyEnumComponent());
+            var component = CreateComponent<MyEnumComponent>(ComponentIds.MyEnum);
             component.myEnum = newMyEnum;
             ReplaceComponent(ComponentIds.MyEnum, component);
             return this;

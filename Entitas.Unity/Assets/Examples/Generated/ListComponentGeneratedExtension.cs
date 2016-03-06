@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasList { get { return HasComponent(ComponentIds.List); } }
 
         public Entity AddList(System.Collections.Generic.List<string> newList) {
-            var componentPool = GetComponentPool(ComponentIds.List);
-            var component = (ListComponent)(componentPool.Count > 0 ? componentPool.Pop() : new ListComponent());
+            var component = CreateComponent<ListComponent>(ComponentIds.List);
             component.list = newList;
             return AddComponent(ComponentIds.List, component);
         }
 
         public Entity ReplaceList(System.Collections.Generic.List<string> newList) {
-            var componentPool = GetComponentPool(ComponentIds.List);
-            var component = (ListComponent)(componentPool.Count > 0 ? componentPool.Pop() : new ListComponent());
+            var component = CreateComponent<ListComponent>(ComponentIds.List);
             component.list = newList;
             ReplaceComponent(ComponentIds.List, component);
             return this;

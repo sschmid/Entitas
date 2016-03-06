@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasColor { get { return HasComponent(ComponentIds.Color); } }
 
         public Entity AddColor(UnityEngine.Color newColor) {
-            var componentPool = GetComponentPool(ComponentIds.Color);
-            var component = (ColorComponent)(componentPool.Count > 0 ? componentPool.Pop() : new ColorComponent());
+            var component = CreateComponent<ColorComponent>(ComponentIds.Color);
             component.color = newColor;
             return AddComponent(ComponentIds.Color, component);
         }
 
         public Entity ReplaceColor(UnityEngine.Color newColor) {
-            var componentPool = GetComponentPool(ComponentIds.Color);
-            var component = (ColorComponent)(componentPool.Count > 0 ? componentPool.Pop() : new ColorComponent());
+            var component = CreateComponent<ColorComponent>(ComponentIds.Color);
             component.color = newColor;
             ReplaceComponent(ComponentIds.Color, component);
             return this;

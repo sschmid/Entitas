@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasVector4 { get { return HasComponent(ComponentIds.Vector4); } }
 
         public Entity AddVector4(UnityEngine.Vector4 newVector4) {
-            var componentPool = GetComponentPool(ComponentIds.Vector4);
-            var component = (Vector4Component)(componentPool.Count > 0 ? componentPool.Pop() : new Vector4Component());
+            var component = CreateComponent<Vector4Component>(ComponentIds.Vector4);
             component.vector4 = newVector4;
             return AddComponent(ComponentIds.Vector4, component);
         }
 
         public Entity ReplaceVector4(UnityEngine.Vector4 newVector4) {
-            var componentPool = GetComponentPool(ComponentIds.Vector4);
-            var component = (Vector4Component)(componentPool.Count > 0 ? componentPool.Pop() : new Vector4Component());
+            var component = CreateComponent<Vector4Component>(ComponentIds.Vector4);
             component.vector4 = newVector4;
             ReplaceComponent(ComponentIds.Vector4, component);
             return this;

@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasUnsupportedObject { get { return HasComponent(ComponentIds.UnsupportedObject); } }
 
         public Entity AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
-            var componentPool = GetComponentPool(ComponentIds.UnsupportedObject);
-            var component = (UnsupportedObjectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UnsupportedObjectComponent());
+            var component = CreateComponent<UnsupportedObjectComponent>(ComponentIds.UnsupportedObject);
             component.unsupportedObject = newUnsupportedObject;
             return AddComponent(ComponentIds.UnsupportedObject, component);
         }
 
         public Entity ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
-            var componentPool = GetComponentPool(ComponentIds.UnsupportedObject);
-            var component = (UnsupportedObjectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UnsupportedObjectComponent());
+            var component = CreateComponent<UnsupportedObjectComponent>(ComponentIds.UnsupportedObject);
             component.unsupportedObject = newUnsupportedObject;
             ReplaceComponent(ComponentIds.UnsupportedObject, component);
             return this;

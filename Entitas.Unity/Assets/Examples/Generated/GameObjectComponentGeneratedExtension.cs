@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasGameObject { get { return HasComponent(ComponentIds.GameObject); } }
 
         public Entity AddGameObject(UnityEngine.GameObject newGameObject) {
-            var componentPool = GetComponentPool(ComponentIds.GameObject);
-            var component = (GameObjectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new GameObjectComponent());
+            var component = CreateComponent<GameObjectComponent>(ComponentIds.GameObject);
             component.gameObject = newGameObject;
             return AddComponent(ComponentIds.GameObject, component);
         }
 
         public Entity ReplaceGameObject(UnityEngine.GameObject newGameObject) {
-            var componentPool = GetComponentPool(ComponentIds.GameObject);
-            var component = (GameObjectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new GameObjectComponent());
+            var component = CreateComponent<GameObjectComponent>(ComponentIds.GameObject);
             component.gameObject = newGameObject;
             ReplaceComponent(ComponentIds.GameObject, component);
             return this;

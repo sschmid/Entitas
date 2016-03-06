@@ -10,7 +10,7 @@ class GenerateTestComponents {
 
     static void generate() {
         var assembly = Assembly.GetAssembly(typeof(SomeComponent));
-        var generatedFolder = getEntitasProjectDir() + "/Tests/Tests/Entitas.CodeGenerator/Fixtures/Generated/";
+        var generatedFolder = getEntitasProjectDir() + "/Tests/Tests/Entitas/CodeGenerator/Fixtures/Generated/";
 
         var codeGenerators = new ICodeGenerator[] {
             new ComponentsGenerator(),

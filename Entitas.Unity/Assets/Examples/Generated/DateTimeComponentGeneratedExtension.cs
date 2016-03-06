@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasDateTime { get { return HasComponent(ComponentIds.DateTime); } }
 
         public Entity AddDateTime(System.DateTime newDate) {
-            var componentPool = GetComponentPool(ComponentIds.DateTime);
-            var component = (DateTimeComponent)(componentPool.Count > 0 ? componentPool.Pop() : new DateTimeComponent());
+            var component = CreateComponent<DateTimeComponent>(ComponentIds.DateTime);
             component.date = newDate;
             return AddComponent(ComponentIds.DateTime, component);
         }
 
         public Entity ReplaceDateTime(System.DateTime newDate) {
-            var componentPool = GetComponentPool(ComponentIds.DateTime);
-            var component = (DateTimeComponent)(componentPool.Count > 0 ? componentPool.Pop() : new DateTimeComponent());
+            var component = CreateComponent<DateTimeComponent>(ComponentIds.DateTime);
             component.date = newDate;
             ReplaceComponent(ComponentIds.DateTime, component);
             return this;

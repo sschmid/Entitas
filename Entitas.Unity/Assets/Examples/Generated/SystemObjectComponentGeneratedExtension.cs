@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasSystemObject { get { return HasComponent(ComponentIds.SystemObject); } }
 
         public Entity AddSystemObject(object newSystemObject) {
-            var componentPool = GetComponentPool(ComponentIds.SystemObject);
-            var component = (SystemObjectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new SystemObjectComponent());
+            var component = CreateComponent<SystemObjectComponent>(ComponentIds.SystemObject);
             component.systemObject = newSystemObject;
             return AddComponent(ComponentIds.SystemObject, component);
         }
 
         public Entity ReplaceSystemObject(object newSystemObject) {
-            var componentPool = GetComponentPool(ComponentIds.SystemObject);
-            var component = (SystemObjectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new SystemObjectComponent());
+            var component = CreateComponent<SystemObjectComponent>(ComponentIds.SystemObject);
             component.systemObject = newSystemObject;
             ReplaceComponent(ComponentIds.SystemObject, component);
             return this;

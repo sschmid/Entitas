@@ -13,16 +13,14 @@ namespace Entitas {
         public bool hasDictArray { get { return HasComponent(ComponentIds.DictArray); } }
 
         public Entity AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
-            var componentPool = GetComponentPool(ComponentIds.DictArray);
-            var component = (DictArrayComponent)(componentPool.Count > 0 ? componentPool.Pop() : new DictArrayComponent());
+            var component = CreateComponent<DictArrayComponent>(ComponentIds.DictArray);
             component.dict = newDict;
             component.dictArray = newDictArray;
             return AddComponent(ComponentIds.DictArray, component);
         }
 
         public Entity ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
-            var componentPool = GetComponentPool(ComponentIds.DictArray);
-            var component = (DictArrayComponent)(componentPool.Count > 0 ? componentPool.Pop() : new DictArrayComponent());
+            var component = CreateComponent<DictArrayComponent>(ComponentIds.DictArray);
             component.dict = newDict;
             component.dictArray = newDictArray;
             ReplaceComponent(ComponentIds.DictArray, component);

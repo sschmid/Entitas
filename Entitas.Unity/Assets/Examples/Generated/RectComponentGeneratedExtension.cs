@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasRect { get { return HasComponent(ComponentIds.Rect); } }
 
         public Entity AddRect(UnityEngine.Rect newRect) {
-            var componentPool = GetComponentPool(ComponentIds.Rect);
-            var component = (RectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new RectComponent());
+            var component = CreateComponent<RectComponent>(ComponentIds.Rect);
             component.rect = newRect;
             return AddComponent(ComponentIds.Rect, component);
         }
 
         public Entity ReplaceRect(UnityEngine.Rect newRect) {
-            var componentPool = GetComponentPool(ComponentIds.Rect);
-            var component = (RectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new RectComponent());
+            var component = CreateComponent<RectComponent>(ComponentIds.Rect);
             component.rect = newRect;
             ReplaceComponent(ComponentIds.Rect, component);
             return this;

@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasAnimationCurve { get { return HasComponent(ComponentIds.AnimationCurve); } }
 
         public Entity AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
-            var componentPool = GetComponentPool(ComponentIds.AnimationCurve);
-            var component = (AnimationCurveComponent)(componentPool.Count > 0 ? componentPool.Pop() : new AnimationCurveComponent());
+            var component = CreateComponent<AnimationCurveComponent>(ComponentIds.AnimationCurve);
             component.animationCurve = newAnimationCurve;
             return AddComponent(ComponentIds.AnimationCurve, component);
         }
 
         public Entity ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
-            var componentPool = GetComponentPool(ComponentIds.AnimationCurve);
-            var component = (AnimationCurveComponent)(componentPool.Count > 0 ? componentPool.Pop() : new AnimationCurveComponent());
+            var component = CreateComponent<AnimationCurveComponent>(ComponentIds.AnimationCurve);
             component.animationCurve = newAnimationCurve;
             ReplaceComponent(ComponentIds.AnimationCurve, component);
             return this;

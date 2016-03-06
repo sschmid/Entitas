@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasUnityObject { get { return HasComponent(ComponentIds.UnityObject); } }
 
         public Entity AddUnityObject(UnityEngine.Object newUnityObject) {
-            var componentPool = GetComponentPool(ComponentIds.UnityObject);
-            var component = (UnityObjectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UnityObjectComponent());
+            var component = CreateComponent<UnityObjectComponent>(ComponentIds.UnityObject);
             component.unityObject = newUnityObject;
             return AddComponent(ComponentIds.UnityObject, component);
         }
 
         public Entity ReplaceUnityObject(UnityEngine.Object newUnityObject) {
-            var componentPool = GetComponentPool(ComponentIds.UnityObject);
-            var component = (UnityObjectComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UnityObjectComponent());
+            var component = CreateComponent<UnityObjectComponent>(ComponentIds.UnityObject);
             component.unityObject = newUnityObject;
             ReplaceComponent(ComponentIds.UnityObject, component);
             return this;

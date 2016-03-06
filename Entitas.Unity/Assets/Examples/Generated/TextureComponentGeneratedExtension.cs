@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasTexture { get { return HasComponent(ComponentIds.Texture); } }
 
         public Entity AddTexture(UnityEngine.Texture newTexture) {
-            var componentPool = GetComponentPool(ComponentIds.Texture);
-            var component = (TextureComponent)(componentPool.Count > 0 ? componentPool.Pop() : new TextureComponent());
+            var component = CreateComponent<TextureComponent>(ComponentIds.Texture);
             component.texture = newTexture;
             return AddComponent(ComponentIds.Texture, component);
         }
 
         public Entity ReplaceTexture(UnityEngine.Texture newTexture) {
-            var componentPool = GetComponentPool(ComponentIds.Texture);
-            var component = (TextureComponent)(componentPool.Count > 0 ? componentPool.Pop() : new TextureComponent());
+            var component = CreateComponent<TextureComponent>(ComponentIds.Texture);
             component.texture = newTexture;
             ReplaceComponent(ComponentIds.Texture, component);
             return this;
