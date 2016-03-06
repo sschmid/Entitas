@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using Entitas.CodeGenerator;
+using Entitas.Serialization;
 
 namespace My.Namespace {
     public class NamespaceComponent : IComponent {

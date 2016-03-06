@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using Entitas.CodeGenerator;
+using Entitas.Serialization;
 
 [Pool("PoolA"), Pool("PoolB"), Pool("PoolC")]
 public class CComponent : IComponent {

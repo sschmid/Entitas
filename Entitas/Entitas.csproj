@@ -72,7 +72,8 @@
     <Compile Include="Entitas\CodeGenerator\CodeGenerator.cs" />
     <Compile Include="Entitas\Extensions\TypeExtension.cs" />
     <Compile Include="Entitas\CodeGenerator\TypeReflectionCodeGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Providers\TypeExtension.cs" />
+    <Compile Include="Entitas\Serialization\PublicMemberInfo.cs" />
+    <Compile Include="Entitas\Serialization\TypeSerializationExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

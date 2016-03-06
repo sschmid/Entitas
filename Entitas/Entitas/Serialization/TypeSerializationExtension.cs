@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.Serialization {
 
-    public static class TypeExtension {
+    public static class TypeSerializationExtension {
 
         /// Generates a simplified type string for the specified type that can be compiled.
         /// This is useful for code generation that will produce compilable source code.

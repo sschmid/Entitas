@@ -1,6 +1,7 @@
 using System;
 using Entitas;
 using Entitas.CodeGenerator;
+using Entitas.Serialization;
 
 [SingleEntity]
 public class UserComponent : IComponent {

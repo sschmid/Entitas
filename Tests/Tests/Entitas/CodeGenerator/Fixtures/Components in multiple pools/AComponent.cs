@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using Entitas.CodeGenerator;
+using Entitas.Serialization;
 
 [Pool("PoolA")]
 public class AComponent : IComponent {

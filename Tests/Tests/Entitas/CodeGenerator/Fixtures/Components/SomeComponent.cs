@@ -1,5 +1,6 @@
 using Entitas;
 using Entitas.CodeGenerator;
+using Entitas.Serialization;
 
 public class SomeComponent : IComponent {
     public static ComponentInfo componentInfo { 

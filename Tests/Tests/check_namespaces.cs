@@ -51,6 +51,7 @@ class check_namespaces : nspec {
                 .Replace(entitasUnityDir + _dirChar, string.Empty)
 
                 .Replace("Entitas" + _dirChar + "Entitas" + _dirChar + "CodeGenerator", "Entitas.CodeGenerator")
+                .Replace("Entitas" + _dirChar + "Entitas" + _dirChar + "Serialization", "Entitas.Serialization")
 
                 .Replace("Entitas.Unity" + _dirChar + "CodeGenerator", "Entitas.Unity.CodeGenerator")
                 .Replace("Entitas.Unity" + _dirChar + "VisualDebugging", "Entitas.Unity.VisualDebugging")

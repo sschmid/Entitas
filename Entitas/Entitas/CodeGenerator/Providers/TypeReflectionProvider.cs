@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using Entitas.Serialization;
 
 namespace Entitas.CodeGenerator {
     public class TypeReflectionProvider : ICodeGeneratorDataProvider {

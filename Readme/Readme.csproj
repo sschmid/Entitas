@@ -128,9 +128,6 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Intermediate\ComponentInfo.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Intermediate\ComponentInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Providers\TypeExtension.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Providers\TypeExtension.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs</Link>
     </Compile>
@@ -184,6 +181,12 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\TriggerOnEvent.cs">
       <Link>Linked Libraries\Entitas\Matcher\TriggerOnEvent.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\PublicMemberInfo.cs">
+      <Link>Linked Libraries\Entitas\Serialization\PublicMemberInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\TypeSerializationExtension.cs">
+      <Link>Linked Libraries\Entitas\Serialization\TypeSerializationExtension.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,6 @@
 using Entitas;
 using Entitas.CodeGenerator;
+using Entitas.Serialization;
 
 [SingleEntity]
 public class AnimatingComponent : IComponent {

@@ -38,7 +38,6 @@
     <Reference Include="UnityEngine">
       <HintPath>Libraries\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests\Entitas\describe_Entity.cs" />
@@ -133,8 +132,6 @@
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestExecuteSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestMultiReactiveSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestReactiveSystem.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\NestedClass.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\TestEnum.cs" />
     <Compile Include="..\Entitas\Entitas\EntitasException.cs">
       <Link>Linked Libraries\Entitas\EntitasException.cs</Link>
     </Compile>
@@ -204,9 +201,6 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Intermediate\ComponentInfo.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Intermediate\ComponentInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Providers\TypeExtension.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Providers\TypeExtension.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs</Link>
     </Compile>
@@ -261,8 +255,20 @@
     <Compile Include="..\Entitas\Entitas\Matcher\TriggerOnEvent.cs">
       <Link>Linked Libraries\Entitas\Matcher\TriggerOnEvent.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Providers\describe_TypeToStringExtension.cs" />
     <Compile Include="Tests\Entitas\Fixtures\AnotherComponentInterface.cs" />
+    <Compile Include="..\Entitas\Entitas\Serialization\PublicMemberInfo.cs">
+      <Link>Linked Libraries\Entitas\Serialization\PublicMemberInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\TypeSerializationExtension.cs">
+      <Link>Linked Libraries\Entitas\Serialization\TypeSerializationExtension.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\Serialization\describe_TypeSerializationExtension.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithFields.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithFieldsAndProperties.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithProperties.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\NestedClass.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\TestEnum.cs" />
+    <Compile Include="Tests\Entitas\Serialization\describe_PublicMemberInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -281,6 +287,7 @@
     <Folder Include="Tests\Entitas\Fixtures\Components\" />
     <Folder Include="Tests\Entitas\CodeGenerator\Fixtures\Components\" />
     <Folder Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\" />
+    <Folder Include="Tests\Entitas\Serialization\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

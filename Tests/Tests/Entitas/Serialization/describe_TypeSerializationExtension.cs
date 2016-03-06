@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entitas;
-using Entitas.CodeGenerator;
+using Entitas.Serialization;
 using NSpec;
 
-class describe_TypeToStringExtension : nspec {
+class describe_TypeSerializationExtension : nspec {
 
     static string toCompilable<T>() {
         return typeof(T).ToCompilableString();
@@ -21,7 +21,7 @@ class describe_TypeToStringExtension : nspec {
     void when_generating() {
 
         context["when generating compilable string from type"] = () => {
-
+            
             context["built-in types"] = () => {
                 // https://msdn.microsoft.com/en-us/library/ya5y69ds.aspx
                 it["generates bool"] = () => toCompilable<bool>().should_be("bool");
