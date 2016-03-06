@@ -15,16 +15,14 @@ namespace Entitas {
         public bool hasOtherPool { get { return HasComponent(OtherComponentIds.OtherPool); } }
 
         public Entity AddOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var componentPool = GetComponentPool(OtherComponentIds.OtherPool);
-            var component = (OtherPoolComponent)(componentPool.Count > 0 ? componentPool.Pop() : new OtherPoolComponent());
+            var component = CreateComponent<OtherPoolComponent>(OtherComponentIds.OtherPool);
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             return AddComponent(OtherComponentIds.OtherPool, component);
         }
 
         public Entity ReplaceOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var componentPool = GetComponentPool(OtherComponentIds.OtherPool);
-            var component = (OtherPoolComponent)(componentPool.Count > 0 ? componentPool.Pop() : new OtherPoolComponent());
+            var component = CreateComponent<OtherPoolComponent>(OtherComponentIds.OtherPool);
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             ReplaceComponent(OtherComponentIds.OtherPool, component);

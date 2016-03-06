@@ -71,6 +71,12 @@ namespace Entitas.Serialization {
             return clone;
         }
 
+        public static T PublicMemberClone<T>(this object obj) where T : new() {
+            var clone = new T();
+            CopyPublicMemberValues(obj, clone);
+            return clone;
+        }
+
         public static void CopyPublicMemberValues(this object obj, object target) {
             var type = obj.GetType();
             var fieldInfos = getFieldInfos(type);

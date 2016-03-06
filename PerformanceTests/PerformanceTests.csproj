@@ -75,6 +75,8 @@
     <Compile Include="PerformanceTests\Pool\PoolDestroyEntity.cs" />
     <Compile Include="PerformanceTests\DataStructures\HashSetContainsAdd.cs" />
     <Compile Include="PerformanceTests\Helper.cs" />
+    <Compile Include="PerformanceTests\Misc\NewInstanceT.cs" />
+    <Compile Include="PerformanceTests\Misc\NewInstanceActivator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -86,6 +88,7 @@
     <Folder Include="PerformanceTests\Observer\" />
     <Folder Include="PerformanceTests\Properties\" />
     <Folder Include="PerformanceTests\Pool\" />
+    <Folder Include="PerformanceTests\Misc\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas\Entitas.csproj">

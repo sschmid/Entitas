@@ -30,16 +30,14 @@ public class PersonComponent : IComponent {
         public bool hasPerson { get { return HasComponent(ComponentIds.Person); } }
 
         public Entity AddPerson(int newAge, string newName) {
-            var componentPool = GetComponentPool(ComponentIds.Person);
-            var component = (PersonComponent)(componentPool.Count > 0 ? componentPool.Pop() : new PersonComponent());
+            var component = CreateComponent<PersonComponent>(ComponentIds.Person);
             component.age = newAge;
             component.name = newName;
             return AddComponent(ComponentIds.Person, component);
         }
 
         public Entity ReplacePerson(int newAge, string newName) {
-            var componentPool = GetComponentPool(ComponentIds.Person);
-            var component = (PersonComponent)(componentPool.Count > 0 ? componentPool.Pop() : new PersonComponent());
+            var component = CreateComponent<PersonComponent>(ComponentIds.Person);
             component.age = newAge;
             component.name = newName;
             ReplaceComponent(ComponentIds.Person, component);

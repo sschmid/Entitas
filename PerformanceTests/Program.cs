@@ -26,6 +26,9 @@ namespace PerformanceTests {
 
             run<MatcherEquals>();
             run<MatcherGetHashCode>();
+
+//            run<NewInstanceT>();
+//            run<NewInstanceActivator>();
 //            run<EmptyTest>();
 //
 //            run<IterateHashetToArray>();
@@ -75,6 +78,8 @@ namespace PerformanceTests {
         //        MatcherEquals:                          171 ms
         //        MatcherGetHashCode:                     17 ms
         //
+        //        NewInstanceT:                           393 ms
+        //        NewInstanceActivator:                   542 ms
         //        IterateHashetToArray:                   456 ms
         //        IterateHashSet:                         774 ms
         //

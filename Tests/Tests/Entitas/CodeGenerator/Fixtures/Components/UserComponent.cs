@@ -5,7 +5,7 @@ using Entitas.Serialization;
 
 [SingleEntity]
 public class UserComponent : IComponent {
-    public static ComponentInfo componentInfo { 
+    public static ComponentInfo componentInfo {
         get {
             return new ComponentInfo(
                 typeof(UserComponent).ToCompilableString(),
@@ -32,16 +32,14 @@ public class UserComponent : IComponent {
         public bool hasUser { get { return HasComponent(ComponentIds.User); } }
 
         public Entity AddUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var componentPool = GetComponentPool(ComponentIds.User);
-            var component = (UserComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UserComponent());
+            var component = CreateComponent<UserComponent>(ComponentIds.User);
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             return AddComponent(ComponentIds.User, component);
         }
 
         public Entity ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var componentPool = GetComponentPool(ComponentIds.User);
-            var component = (UserComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UserComponent());
+            var component = CreateComponent<UserComponent>(ComponentIds.User);
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             ReplaceComponent(ComponentIds.User, component);

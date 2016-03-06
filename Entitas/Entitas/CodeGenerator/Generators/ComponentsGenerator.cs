@@ -115,8 +115,7 @@ namespace Entitas.CodeGenerator {
         static string addAddMethods(ComponentInfo componentInfo) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
         public Entity Add$Name($typedArgs) {
-            var componentPool = GetComponentPool($Ids.$Name);
-            var component = ($Type)(componentPool.Count > 0 ? componentPool.Pop() : new $Type());
+            var component = CreateComponent<$Type>($Ids.$Name);
 $assign
             return AddComponent($Ids.$Name, component);
         }
@@ -126,8 +125,7 @@ $assign
         static string addReplaceMethods(ComponentInfo componentInfo) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
         public Entity Replace$Name($typedArgs) {
-            var componentPool = GetComponentPool($Ids.$Name);
-            var component = ($Type)(componentPool.Count > 0 ? componentPool.Pop() : new $Type());
+            var component = CreateComponent<$Type>($Ids.$Name);
 $assign
             ReplaceComponent($Ids.$Name, component);
             return this;

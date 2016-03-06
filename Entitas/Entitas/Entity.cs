@@ -257,7 +257,13 @@ namespace Entitas {
         /// Returns a new or reusable component from the componentPool for the specified component index.
         public IComponent CreateComponent(int index, Type type) {
             var componentPool = GetComponentPool(index);
-            return (IComponent)(componentPool.Count > 0 ? componentPool.Pop() : Activator.CreateInstance(type));;
+            return (IComponent)(componentPool.Count > 0 ? componentPool.Pop() : Activator.CreateInstance(type));
+        }
+
+        /// Returns a new or reusable component from the componentPool for the specified component index.
+        public T CreateComponent<T>(int index) where T : new() {
+            var componentPool = GetComponentPool(index);
+            return componentPool.Count > 0 ? (T)componentPool.Pop() : new T();
         }
 
         internal void destroy() {
