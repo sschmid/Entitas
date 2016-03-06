@@ -36,7 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.BeginHorizontal();
                 {
                     EntityDrawer.DrawAndSetElement(elementType, fieldName + "[" + i + "]", list[i],
-                        entity, index, component, newValue => list[i] = newValue);
+                        entity, index, component, (newComponent, newValue) => list[i] = newValue);
 
                     if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                         var removeAt = i;

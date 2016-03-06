@@ -15,7 +15,7 @@ public class CustomObjectTypeDrawer : ITypeDrawer, IDefaultInstanceCreator {
         var myObject = (CustomObject)value;
         var fieldType = myObject.GetType().GetField("name").FieldType;
         EntityDrawer.DrawAndSetElement(fieldType, "customObject.name", myObject.name,
-            entity, index, component, newValue => myObject.name = (string)newValue);
+            entity, index, component, (newComponent, newValue) => myObject.name = (string)newValue);
         return myObject;
     }
 }

@@ -40,7 +40,7 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.BeginHorizontal();
                     {
                         EntityDrawer.DrawAndSetElement(elementType, fieldName + "[" + localIndex + "]", array.GetValue(localIndex),
-                            entity, index, component, newValue => array.SetValue(newValue, localIndex));
+                            entity, index, component, (newComponent, newValue) => array.SetValue(newValue, localIndex));
 
                         var action = drawEditActions(array, elementType, localIndex);
                         if (action != null) {
@@ -60,7 +60,7 @@ namespace Entitas.Unity.VisualDebugging {
                     for (int j = 0; j < array.GetLength(1); j++) {
                         var localIndex2 = j;
                         EntityDrawer.DrawAndSetElement(elementType, fieldName + "[" + localIndex1 + ", " + localIndex2 + "]", array.GetValue(localIndex1, localIndex2),
-                            entity, index, component, newValue => array.SetValue(newValue, localIndex1, localIndex2));
+                            entity, index, component, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2));
                     }
                     EditorGUILayout.Space();
                 }
@@ -73,7 +73,7 @@ namespace Entitas.Unity.VisualDebugging {
                         for (int k = 0; k < array.GetLength(2); k++) {
                             var localIndex3 = k;
                             EntityDrawer.DrawAndSetElement(elementType, fieldName + "[" + localIndex1 + ", " + localIndex2 + " ," + localIndex3 + "]", array.GetValue(localIndex1, localIndex2, localIndex3),
-                                entity, index, component, newValue => array.SetValue(newValue, localIndex1, localIndex2, localIndex3));
+                                entity, index, component, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2, localIndex3));
                         }
                         EditorGUILayout.Space();
                     }

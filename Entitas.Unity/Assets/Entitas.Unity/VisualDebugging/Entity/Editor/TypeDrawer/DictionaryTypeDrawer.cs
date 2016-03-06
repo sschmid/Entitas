@@ -43,7 +43,7 @@ namespace Entitas.Unity.VisualDebugging {
                 for (int i = 0; i < keys.Count; i++) {
                     var key = keys[i];
                     EntityDrawer.DrawAndSetElement(keyType, "key", key,
-                        entity, index, component, newValue => {
+                        entity, index, component, (newComponent, newValue) => {
                         var tmpValue = dictionary[key];
                         dictionary.Remove(key);
                         if (newValue != null) {
@@ -52,7 +52,7 @@ namespace Entitas.Unity.VisualDebugging {
                     });
 
                     EntityDrawer.DrawAndSetElement(valueType, "value", dictionary[key],
-                        entity, index, component, newValue => dictionary[key] = newValue);
+                        entity, index, component, (newComponent, newValue) => dictionary[key] = newValue);
 
                     EditorGUILayout.Space();
                 }

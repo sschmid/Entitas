@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Entitas;
-using Entitas.CodeGenerator;
+using Entitas.Serialization;
 using Entitas.Unity;
 using Entitas.Unity.VisualDebugging;
 using UnityEditor;
@@ -213,7 +213,7 @@ namespace Entitas.Unity.VisualDebugging {
                         foreach (var field in fields) {
                             var value = field.GetValue(component);
                             DrawAndSetElement(field.FieldType, field.Name, value,
-                                entity, index, component, newValue => field.SetValue(component, newValue));
+                                entity, index, component, field.SetValue);
                         }
                     }
                 }
@@ -221,11 +221,13 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public static void DrawAndSetElement(Type type, string fieldName, object value, Entity entity, int index, IComponent component, Action<object> setValue) {
+        public static void DrawAndSetElement(Type type, string fieldName, object value, Entity entity, int index, IComponent component, Action<IComponent, object> setValue) {
             var newValue = DrawAndGetNewValue(type, fieldName, value, entity, index, component);
             if (DidValueChange(value, newValue)) {
-                setValue(newValue);
-                entity.ReplaceComponent(index, component);
+                var newComponent = entity.CreateComponent(index, component.GetType());
+                component.CopyPublicMemberValues(newComponent);
+                setValue(newComponent, newValue);
+                entity.ReplaceComponent(index, newComponent);
             }
         }
 
