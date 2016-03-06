@@ -1,7 +1,7 @@
 # 0.29.0
 
 ##### Obsolete
-- Marked old PoolMetaData constructor obsolete (will be updated when generating)
+Marked old PoolMetaData constructor obsolete. If you encounter compile errors please apply Migration 0.26.0, open C# project and generate again.
 
 ##### General
 - Unified Entitas sub projects into a single project
