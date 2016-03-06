@@ -10,8 +10,8 @@ public class UserComponent : IComponent {
             return new ComponentInfo(
                 typeof(UserComponent).ToCompilableString(),
                 new [] {
-                    new ComponentFieldInfo("System.DateTime", "timestamp"),
-                    new ComponentFieldInfo("bool", "isLoggedIn")
+                    new PublicMemberInfo("System.DateTime", "timestamp", PublicMemberInfo.MemberType.Field),
+                    new PublicMemberInfo("bool", "isLoggedIn", PublicMemberInfo.MemberType.Field)
                 },
                 new string[0],
                 true,

@@ -8,7 +8,7 @@ namespace My.Namespace {
             get {
                 return new ComponentInfo(
                     typeof(NamespaceComponent).ToCompilableString(),
-                    new ComponentFieldInfo[0],
+                    new PublicMemberInfo[0],
                     new string[0],
                     false,
                     "is",

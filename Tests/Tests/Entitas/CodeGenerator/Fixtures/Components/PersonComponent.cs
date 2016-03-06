@@ -8,8 +8,8 @@ public class PersonComponent : IComponent {
             return new ComponentInfo(
                 typeof(PersonComponent).ToCompilableString(),
                 new [] {
-                    new ComponentFieldInfo("int", "age"),
-                    new ComponentFieldInfo("string", "name")
+                    new PublicMemberInfo("int", "age", PublicMemberInfo.MemberType.Field),
+                    new PublicMemberInfo("string", "name", PublicMemberInfo.MemberType.Field)
                 },
                 new string[0],
                 false,

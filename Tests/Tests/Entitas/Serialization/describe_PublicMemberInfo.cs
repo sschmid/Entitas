@@ -44,6 +44,49 @@ class describe_PublicMemberInfo : nspec {
                 mi2.name.should_be("publicProperty");
                 mi2.memberType.should_be(PublicMemberInfo.MemberType.Property);
             };
+
+            it["creates member info with compilable type string"] = () => {
+                var infos = typeof(ComponentWithFieldsAndProperties).GetPublicMemberInfos(true);
+                var mi1 = infos[0];
+                var mi2 = infos[1];
+
+                mi1.fullTypeName.should_be(typeof(string).ToCompilableString());
+                mi2.fullTypeName.should_be(typeof(string).ToCompilableString());
+            };
+        };
+
+        context["when getting public member infos with value"] = () => {
+
+            it["creates member infos for fields and properties"] = () => {
+                var component = new ComponentWithFieldsAndProperties();
+                component.publicField = "publicFieldValue";
+                component.publicProperty = "publicPropertyValue";
+
+                var infos = component.GetPublicMemberInfos();
+                infos.Length.should_be(2);
+                var mi1 = infos[0];
+                var mi2 = infos[1];
+
+                mi1.fullTypeName.should_be(typeof(string).FullName);
+                mi1.name.should_be("publicField");
+                mi1.memberType.should_be(PublicMemberInfo.MemberType.Field);
+                mi1.value.should_be("publicFieldValue");
+
+                mi2.fullTypeName.should_be(typeof(string).FullName);
+                mi2.name.should_be("publicProperty");
+                mi2.memberType.should_be(PublicMemberInfo.MemberType.Property);
+                mi2.value.should_be("publicPropertyValue");
+            };
+
+            it["creates member info with compilable type string"] = () => {
+                var component = new ComponentWithFieldsAndProperties();
+                var infos = component.GetPublicMemberInfos(true);
+                var mi1 = infos[0];
+                var mi2 = infos[1];
+
+                mi1.fullTypeName.should_be(typeof(string).ToCompilableString());
+                mi2.fullTypeName.should_be(typeof(string).ToCompilableString());
+            };
         };
 
         context["when cloning object"] = () => {

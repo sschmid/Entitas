@@ -8,7 +8,7 @@ public class BComponent : IComponent {
         get {
             return new ComponentInfo(
                 typeof(BComponent).ToCompilableString(),
-                new ComponentFieldInfo[0],
+                new PublicMemberInfo[0],
                 new [] { "PoolA", "PoolB" },
                 false,
                 "is",

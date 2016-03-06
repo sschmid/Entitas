@@ -264,11 +264,11 @@
     </Compile>
     <Compile Include="Tests\Entitas\Serialization\describe_TypeSerializationExtension.cs" />
     <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithFields.cs" />
-    <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithFieldsAndProperties.cs" />
     <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithProperties.cs" />
     <Compile Include="Tests\Entitas\Serialization\Fixtures\NestedClass.cs" />
     <Compile Include="Tests\Entitas\Serialization\Fixtures\TestEnum.cs" />
     <Compile Include="Tests\Entitas\Serialization\describe_PublicMemberInfo.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -47,7 +47,7 @@ class describe_TypeReflectionProvider : nspec {
 
                 info.fullTypeName.should_be("ComponentA");
                 info.typeName.should_be("ComponentA");
-                info.fieldInfos.should_be_empty();
+                info.memberInfos.should_be_empty();
                 info.pools.should_be_empty();
                 info.isSingleEntity.should_be_false();
                 info.singleComponentPrefix.should_be("is");
@@ -63,7 +63,7 @@ class describe_TypeReflectionProvider : nspec {
 
                 info.fullTypeName.should_be("My.Namespace.NamespaceComponent");
                 info.typeName.should_be("NamespaceComponent");
-                info.fieldInfos.should_be_empty();
+                info.memberInfos.should_be_empty();
                 info.pools.should_be_empty();
                 info.isSingleEntity.should_be_false();
                 info.singleComponentPrefix.should_be("is");
@@ -79,7 +79,7 @@ class describe_TypeReflectionProvider : nspec {
 
                 info.fullTypeName.should_be("CComponent");
                 info.typeName.should_be("CComponent");
-                info.fieldInfos.should_be_empty();
+                info.memberInfos.should_be_empty();
                 info.pools.Length.should_be(3);
 
                 info.pools.should_contain("PoolA");
@@ -100,7 +100,7 @@ class describe_TypeReflectionProvider : nspec {
 
                 info.fullTypeName.should_be("AnimatingComponent");
                 info.typeName.should_be("AnimatingComponent");
-                info.fieldInfos.should_be_empty();
+                info.memberInfos.should_be_empty();
                 info.pools.Length.should_be(0);
                 info.isSingleEntity.should_be_true();
                 info.singleComponentPrefix.should_be("is");
@@ -116,7 +116,7 @@ class describe_TypeReflectionProvider : nspec {
 
                 info.fullTypeName.should_be("DontGenerateComponent");
                 info.typeName.should_be("DontGenerateComponent");
-                info.fieldInfos.should_be_empty();
+                info.memberInfos.should_be_empty();
                 info.pools.Length.should_be(0);
                 info.isSingleEntity.should_be_false();
                 info.singleComponentPrefix.should_be("is");
@@ -132,7 +132,7 @@ class describe_TypeReflectionProvider : nspec {
 
                 info.fullTypeName.should_be("DontGenerateIndexComponent");
                 info.typeName.should_be("DontGenerateIndexComponent");
-                info.fieldInfos.should_be_empty();
+                info.memberInfos.should_be_empty();
                 info.pools.Length.should_be(0);
                 info.isSingleEntity.should_be_false();
                 info.singleComponentPrefix.should_be("is");
@@ -148,7 +148,7 @@ class describe_TypeReflectionProvider : nspec {
 
                 info.fullTypeName.should_be("CustomPrefixComponent");
                 info.typeName.should_be("CustomPrefixComponent");
-                info.fieldInfos.should_be_empty();
+                info.memberInfos.should_be_empty();
                 info.pools.Length.should_be(0);
                 info.isSingleEntity.should_be_true();
                 info.singleComponentPrefix.should_be("My");
@@ -158,19 +158,20 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["sets fields"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(PersonComponent) }, new string[0]);
+                var type = typeof(ComponentWithFieldsAndProperties);
+                var provider = new TypeReflectionProvider(new [] { type }, new string[0]);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
-                info.fullTypeName.should_be("PersonComponent");
-                info.typeName.should_be("PersonComponent");
-                info.fieldInfos.Length.should_be(2);
+                info.fullTypeName.should_be(type.FullName);
+                info.typeName.should_be(type.FullName);
+                info.memberInfos.Length.should_be(2);
 
-                info.fieldInfos[0].type.should_be("int");
-                info.fieldInfos[0].name.should_be("age");
+                info.memberInfos[0].fullTypeName.should_be("string");
+                info.memberInfos[0].name.should_be("publicField");
 
-                info.fieldInfos[1].type.should_be("string");
-                info.fieldInfos[1].name.should_be("name");
+                info.memberInfos[1].fullTypeName.should_be("string");
+                info.memberInfos[1].name.should_be("publicProperty");
 
                 info.pools.Length.should_be(0);
                 info.isSingleEntity.should_be_false();

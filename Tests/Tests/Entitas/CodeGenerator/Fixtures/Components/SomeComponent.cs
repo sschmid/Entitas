@@ -7,7 +7,7 @@ public class SomeComponent : IComponent {
         get {
             return new ComponentInfo(
                 typeof(SomeComponent).ToCompilableString(),
-                new ComponentFieldInfo[0],
+                new PublicMemberInfo[0],
                 new string[0],
                 false,
                 "is",

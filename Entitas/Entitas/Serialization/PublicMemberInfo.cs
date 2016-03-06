@@ -16,11 +16,13 @@ namespace Entitas.Serialization {
         public readonly string fullTypeName;
         public readonly string name;
         public readonly MemberType memberType;
+        public readonly object value;
 
-        public PublicMemberInfo(string fullTypeName, string name, MemberType memberType) {
+        public PublicMemberInfo(string fullTypeName, string name, MemberType memberType, object value = null) {
             this.fullTypeName = fullTypeName;
             this.name = name;
             this.memberType = memberType;
+            this.value = value;
         }
     }
 
@@ -28,13 +30,37 @@ namespace Entitas.Serialization {
 
         const BindingFlags BINDING_FLAGS = BindingFlags.Instance | BindingFlags.Public;
 
-        public static PublicMemberInfo[] GetPublicMemberInfos(this Type type) {
+        public static PublicMemberInfo[] GetPublicMemberInfos(this Type type, bool typeToCompilableString = false) {
 
             var fieldInfos = getFieldInfos(type)
-                .Select(info => new PublicMemberInfo(info.FieldType.FullName, info.Name, PublicMemberInfo.MemberType.Field));
+                .Select(info => new PublicMemberInfo(
+                    typeToCompilableString ? info.FieldType.ToCompilableString() : info.FieldType.FullName,
+                    info.Name, PublicMemberInfo.MemberType.Field
+                ));
 
             var propertyInfos = getPropertyInfos(type)
-                .Select(info => new PublicMemberInfo(info.PropertyType.FullName, info.Name, PublicMemberInfo.MemberType.Property));
+                .Select(info => new PublicMemberInfo(
+                    typeToCompilableString ? info.PropertyType.ToCompilableString() : info.PropertyType.FullName,
+                    info.Name, PublicMemberInfo.MemberType.Property));
+
+            return fieldInfos.Concat(propertyInfos).ToArray();
+        }
+
+        public static PublicMemberInfo[] GetPublicMemberInfos(this object obj, bool typeToCompilableString = false) {
+            var type = obj.GetType();
+            var fieldInfos = getFieldInfos(type)
+                .Select(info => new PublicMemberInfo(
+                    typeToCompilableString ? info.FieldType.ToCompilableString() : info.FieldType.FullName,
+                    info.Name, PublicMemberInfo.MemberType.Field,
+                    info.GetValue(obj)
+                ));
+
+            var propertyInfos = getPropertyInfos(type)
+                .Select(info => new PublicMemberInfo(
+                    typeToCompilableString ? info.PropertyType.ToCompilableString() : info.PropertyType.FullName,
+                    info.Name, PublicMemberInfo.MemberType.Property,
+                    info.GetValue(obj, null)
+                ));
 
             return fieldInfos.Concat(propertyInfos).ToArray();
         }

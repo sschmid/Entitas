@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Entitas.Serialization;
 
 namespace Entitas.CodeGenerator {
     public class ComponentsGenerator : IComponentCodeGenerator {
@@ -282,16 +283,16 @@ $assign
             var a3_tag = poolNames.Length == 0 ? string.Empty : poolNames[poolIndex];
             var lookupTags = componentInfo.ComponentLookupTags();
             var a4_ids = lookupTags.Length == 0 ? string.Empty : lookupTags[poolIndex];
-            var fieldInfos = componentInfo.fieldInfos;
-            var a5_fieldNamesWithType = fieldNamesWithType(fieldInfos);
-            var a6_fieldAssigns = fieldAssignments(fieldInfos);
-            var a7_fieldNames = fieldNames(fieldInfos);
+            var memberInfos = componentInfo.memberInfos;
+            var a5_memberNamesWithType = memberNamesWithType(memberInfos);
+            var a6_memberAssigns = memberAssignments(memberInfos);
+            var a7_memberNames = memberNames(memberInfos);
             var prefix = componentInfo.singleComponentPrefix;
             var a8_prefix = prefix.UppercaseFirst();
             var a9_lowercasePrefix = prefix.LowercaseFirst();
 
             return string.Format(format, a0_type, a1_name, a2_lowercaseName,
-                a3_tag, a4_ids, a5_fieldNamesWithType, a6_fieldAssigns, a7_fieldNames,
+                a3_tag, a4_ids, a5_memberNamesWithType, a6_memberAssigns, a7_memberNames,
                 a8_prefix, a9_lowercasePrefix);
         }
 
@@ -310,17 +311,17 @@ $assign
                         .Replace("$prefix", "{9}");
         }
 
-        static string fieldNamesWithType(ComponentFieldInfo[] fieldInfos) {
-            var typedArgs = fieldInfos
-                .Select(info => info.type + " new" + info.name.UppercaseFirst())
+        static string memberNamesWithType(PublicMemberInfo[] memberInfos) {
+            var typedArgs = memberInfos
+                .Select(info => info.fullTypeName + " new" + info.name.UppercaseFirst())
                 .ToArray();
 
             return string.Join(", ", typedArgs);
         }
 
-        static string fieldAssignments(ComponentFieldInfo[] fieldInfos) {
+        static string memberAssignments(PublicMemberInfo[] memberInfos) {
             const string format = "            component.{0} = {1};";
-            var assignments = fieldInfos.Select(info => {
+            var assignments = memberInfos.Select(info => {
                 var newArg = "new" + info.name.UppercaseFirst();
                 return string.Format(format, info.name, newArg);
             }).ToArray();
@@ -328,8 +329,8 @@ $assign
             return string.Join("\n", assignments);
         }
 
-        static string fieldNames(ComponentFieldInfo[] fieldInfos) {
-            var args = fieldInfos.Select(info => "new" + info.name.UppercaseFirst()).ToArray();
+        static string memberNames(PublicMemberInfo[] memberInfos) {
+            var args = memberInfos.Select(info => "new" + info.name.UppercaseFirst()).ToArray();
             return string.Join(", ", args);
         }
 

@@ -1,8 +1,10 @@
-﻿namespace Entitas.CodeGenerator {
+﻿using Entitas.Serialization;
+
+namespace Entitas.CodeGenerator {
     public class ComponentInfo {
 
         public string fullTypeName { get { return _fullTypeName; } }
-        public ComponentFieldInfo[] fieldInfos { get { return _fieldInfos; } }
+        public PublicMemberInfo[] memberInfos { get { return _memberInfos; } }
         public string[] pools { get { return _pools; } }
         public bool isSingleEntity { get { return _isSingleEntity; } }
         public string singleComponentPrefix { get { return _singleComponentPrefix; } }
@@ -13,7 +15,7 @@
         public string typeName { get { return _typeName; } }
 
         readonly string _fullTypeName;
-        readonly ComponentFieldInfo[] _fieldInfos;
+        readonly PublicMemberInfo[] _memberInfos;
         readonly string[] _pools;
         readonly bool _isSingleEntity;
         readonly string _singleComponentPrefix;
@@ -23,10 +25,10 @@
         readonly string _typeName;
         readonly bool _isSingletonComponent;
 
-        public ComponentInfo(string fullTypeName, ComponentFieldInfo[] fieldInfos, string[] pools,
+        public ComponentInfo(string fullTypeName, PublicMemberInfo[] memberInfos, string[] pools,
             bool isSingleEntity, string singleComponentPrefix, bool generateMethods, bool generateIndex) {
             _fullTypeName = fullTypeName;
-            _fieldInfos = fieldInfos;
+            _memberInfos = memberInfos;
             _pools = pools;
             _isSingleEntity = isSingleEntity;
             _singleComponentPrefix = singleComponentPrefix;
@@ -36,21 +38,7 @@
             var nameSplit = fullTypeName.Split('.');
             _typeName = nameSplit[nameSplit.Length - 1];
 
-            _isSingletonComponent = fieldInfos.Length == 0;
-        }
-    }
-
-    public class ComponentFieldInfo {
-
-        public string type { get { return _type; } }
-        public string name { get { return _name; } }
-
-        readonly string _type;
-        readonly string _name;
-
-        public ComponentFieldInfo(string type, string name) {
-            _type = type;
-            _name = name;
+            _isSingletonComponent = memberInfos.Length == 0;
         }
     }
 }

@@ -10,8 +10,8 @@ public class OtherPoolComponent : IComponent {
             return new ComponentInfo(
                 typeof(OtherPoolComponent).ToCompilableString(),
                 new [] {
-                    new ComponentFieldInfo("System.DateTime", "timestamp"),
-                    new ComponentFieldInfo("bool", "isLoggedIn")
+                    new PublicMemberInfo("System.DateTime", "timestamp", PublicMemberInfo.MemberType.Field),
+                    new PublicMemberInfo("bool", "isLoggedIn", PublicMemberInfo.MemberType.Field)
                 },
                 new [] { "Other" },
                 true,

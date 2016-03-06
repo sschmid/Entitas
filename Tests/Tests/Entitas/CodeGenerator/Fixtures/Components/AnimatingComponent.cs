@@ -8,7 +8,7 @@ public class AnimatingComponent : IComponent {
         get {
             return new ComponentInfo(
                 typeof(AnimatingComponent).ToCompilableString(),
-                new ComponentFieldInfo[0],
+                new PublicMemberInfo[0],
                 new string[0],
                 true,
                 "is",

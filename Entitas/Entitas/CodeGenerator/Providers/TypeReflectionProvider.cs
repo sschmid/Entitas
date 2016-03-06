@@ -28,7 +28,7 @@ namespace Entitas.CodeGenerator {
         public static ComponentInfo CreateComponentInfo(Type type) {
             return new ComponentInfo(
                 type.ToCompilableString(),
-                GetFieldInfos(type),
+                GetPublicMemberInfo(type),
                 GetPools(type),
                 GetIsSingleEntity(type),
                 GetSingleComponentPrefix(type),
@@ -37,10 +37,8 @@ namespace Entitas.CodeGenerator {
             );
         }
 
-        public static ComponentFieldInfo[] GetFieldInfos(Type type) {
-            return type.GetFields(BindingFlags.Instance | BindingFlags.Public)
-                .Select(field => new ComponentFieldInfo(field.FieldType.ToCompilableString(), field.Name))
-                .ToArray();
+        public static PublicMemberInfo[] GetPublicMemberInfo(Type type) {
+            return type.GetPublicMemberInfos(true);
         }
 
         public static string[] GetPools(Type type) {

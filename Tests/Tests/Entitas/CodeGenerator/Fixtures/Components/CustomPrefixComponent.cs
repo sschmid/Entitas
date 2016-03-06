@@ -8,7 +8,7 @@ public class CustomPrefixComponent : IComponent {
         get {
             return new ComponentInfo(
                 typeof(CustomPrefixComponent).ToCompilableString(),
-                new ComponentFieldInfo[0],
+                new PublicMemberInfo[0],
                 new string[0],
                 true,
                 "My",
