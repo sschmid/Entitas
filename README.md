@@ -32,7 +32,7 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
     <a href="https://dev.windows.com">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/csharp.png" alt="CSharp" height="64"></a>
     <a href="http://unity3d.com">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/WorksWithUnity.png" alt="Unity3d" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/MadeForUnity.png" alt="Unity3d" height="64"></a>
     <a href="http://unity3d.com/unite/archive/2015">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope2015.png" alt="Unite Europe 2015" height="64"></a>
     <a href="http://unity3d.com/unite/archive/2015">
