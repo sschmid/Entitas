@@ -10,3 +10,4 @@ build
 runTests
 collect_misc_files
 create_zip
+create_tree_overview

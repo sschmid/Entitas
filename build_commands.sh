@@ -113,3 +113,10 @@ create_zip() {
 
   echo "Creating zip files done."
 }
+
+create_tree_overview() {
+  echo "Creating tree overview..."
+  tree -I 'bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties' --noreport -d > tree.txt
+  tree -I 'bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties' --noreport --dirsfirst >> tree.txt
+  echo "Creating tree overview done."
+}
