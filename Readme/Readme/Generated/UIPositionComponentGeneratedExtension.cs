@@ -15,16 +15,14 @@ namespace Entitas {
         public bool hasUIPosition { get { return HasComponent(UIComponentIds.UIPosition); } }
 
         public Entity AddUIPosition(int newX, int newY) {
-            var componentPool = GetComponentPool(UIComponentIds.UIPosition);
-            var component = (UIPositionComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UIPositionComponent());
+            var component = CreateComponent<UIPositionComponent>(UIComponentIds.UIPosition);
             component.x = newX;
             component.y = newY;
             return AddComponent(UIComponentIds.UIPosition, component);
         }
 
         public Entity ReplaceUIPosition(int newX, int newY) {
-            var componentPool = GetComponentPool(UIComponentIds.UIPosition);
-            var component = (UIPositionComponent)(componentPool.Count > 0 ? componentPool.Pop() : new UIPositionComponent());
+            var component = CreateComponent<UIPositionComponent>(UIComponentIds.UIPosition);
             component.x = newX;
             component.y = newY;
             ReplaceComponent(UIComponentIds.UIPosition, component);

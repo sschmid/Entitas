@@ -15,15 +15,13 @@ namespace Entitas {
         public bool hasCoins { get { return HasComponent(MetaComponentIds.Coins); } }
 
         public Entity AddCoins(int newCount) {
-            var componentPool = GetComponentPool(MetaComponentIds.Coins);
-            var component = (CoinsComponent)(componentPool.Count > 0 ? componentPool.Pop() : new CoinsComponent());
+            var component = CreateComponent<CoinsComponent>(MetaComponentIds.Coins);
             component.count = newCount;
             return AddComponent(MetaComponentIds.Coins, component);
         }
 
         public Entity ReplaceCoins(int newCount) {
-            var componentPool = GetComponentPool(MetaComponentIds.Coins);
-            var component = (CoinsComponent)(componentPool.Count > 0 ? componentPool.Pop() : new CoinsComponent());
+            var component = CreateComponent<CoinsComponent>(MetaComponentIds.Coins);
             component.count = newCount;
             ReplaceComponent(MetaComponentIds.Coins, component);
             return this;

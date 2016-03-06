@@ -13,15 +13,13 @@ namespace Entitas {
         public bool hasResource { get { return HasComponent(ComponentIds.Resource); } }
 
         public Entity AddResource(string newName) {
-            var componentPool = GetComponentPool(ComponentIds.Resource);
-            var component = (ResourceComponent)(componentPool.Count > 0 ? componentPool.Pop() : new ResourceComponent());
+            var component = CreateComponent<ResourceComponent>(ComponentIds.Resource);
             component.name = newName;
             return AddComponent(ComponentIds.Resource, component);
         }
 
         public Entity ReplaceResource(string newName) {
-            var componentPool = GetComponentPool(ComponentIds.Resource);
-            var component = (ResourceComponent)(componentPool.Count > 0 ? componentPool.Pop() : new ResourceComponent());
+            var component = CreateComponent<ResourceComponent>(ComponentIds.Resource);
             component.name = newName;
             ReplaceComponent(ComponentIds.Resource, component);
             return this;
