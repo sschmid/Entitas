@@ -127,15 +127,8 @@ Download Entitas
 Each release is published with zip files attached containing all source files you need.
 
 [**Entitas-CSharp.zip**][entitas-csharp-zip]
-- Entitas
-- Entitas.CodeGenerator
 
 [**Entitas-Unity.zip**][entitas-unity-zip]
-- Entitas
-- Entitas.CodeGenerator
-- Entitas.Unity
-- Entitas.Unity.CodeGenerator
-- Entitas.Unity.VisualDebugging
 
 [Show releases][releases]
 
