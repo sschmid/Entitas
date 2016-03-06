@@ -1,8 +1,20 @@
-# 0.28.3
+# 0.29.0
+
+##### Obsolete
+- Marked old PoolMetaData constructor obsolete (will be updated when generating)
+
+##### General
+- Unified Entitas sub projects into a single project
+- Unified all Unity projects into a single project
+- Documentation maintenance
 
 ##### Entitas
-- Added auto generated header to generated files
+- Removing all event handler for entity.OnEntityReleased after event got dispatched
 - Printing entity in EntityIsNotDestroyedException
+- Added TypeExtension.ImplementsInterface()
+- Added component types to PoolMetaData
+- Made all methods in Systems virtual
+- Added auto generated header to generated files
 
 ```
 //------------------------------------------------------------------------------
@@ -15,16 +27,36 @@
 //------------------------------------------------------------------------------
 ```
 
+##### Entitas.CodeGenerator
+- Using pool specific componentIds lookup when generating matchers for components with multiple pools
+- TypeReflectionProvider ignores interfaces
+
+##### Entitas.Serialization
+- Added Entitas.Serialization
+- Added PublicMemberInfo
+
+##### Entitas.Unity.CodeGenerator
+- Compile errors won't block code generation anymore
+
 ##### Entitas.Unity.VisualDebugging
+- Destroying EntityBahviour when entity got released
+- Using entity component pool and providing correct previous and new component
 - Added unique color for each component in EntityInspector
 - Added component search field in EntityInspector
+
+<img alt="Entitas-Component-Search" src="https://cloud.githubusercontent.com/assets/233700/13554841/98141fac-e3b2-11e5-81ef-4ef39cf2bb4c.gif" width="417" />
+
 - 'Destroy Entity' Buttons are now red
-
-
-Add screenshot
-
-
+- Simplified EntityInspector and made methods static
+- Unfolded components info is now shared between entities within same pool
+- Added shortcuts to Entitas Preferences and Generate
+- Printing total generated file count when generating
+- Improved TypeDrawers
 - Stepper UI tweaks
+
+![Entitas.Unity.VisualDebugging-Systems](https://cloud.githubusercontent.com/assets/233700/13554882/9c0bd7c0-e3b3-11e5-89ec-65fa888f0a48.png)
+
+- Renamed 'Script Call Optimization' to 'Optimizations'
 - Added EntitasEditorLayout
 
 
