@@ -28,18 +28,19 @@ public static class ComponentIds {
     public const int MyFloat = 18;
     public const int MyInt = 19;
     public const int MyString = 20;
-    public const int Rect = 21;
-    public const int SystemObject = 22;
-    public const int Test = 23;
-    public const int Texture2D = 24;
-    public const int Texture = 25;
-    public const int UnityObject = 26;
-    public const int UnsupportedObject = 27;
-    public const int Vector2 = 28;
-    public const int Vector3 = 29;
-    public const int Vector4 = 30;
+    public const int Property = 21;
+    public const int Rect = 22;
+    public const int SystemObject = 23;
+    public const int Test = 24;
+    public const int Texture2D = 25;
+    public const int Texture = 26;
+    public const int UnityObject = 27;
+    public const int UnsupportedObject = 28;
+    public const int Vector2 = 29;
+    public const int Vector3 = 30;
+    public const int Vector4 = 31;
 
-    public const int TotalComponents = 31;
+    public const int TotalComponents = 32;
 
     public static readonly string[] componentNames = {
         "AnArray",
@@ -63,6 +64,7 @@ public static class ComponentIds {
         "MyFloat",
         "MyInt",
         "MyString",
+        "Property",
         "Rect",
         "SystemObject",
         "Test",
@@ -97,6 +99,7 @@ public static class ComponentIds {
         typeof(MyFloatComponent),
         typeof(MyIntComponent),
         typeof(MyStringComponent),
+        typeof(PropertyComponent),
         typeof(RectComponent),
         typeof(SystemObjectComponent),
         typeof(TestComponent),

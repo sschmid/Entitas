@@ -7,10 +7,7 @@ public class PersonComponent : IComponent {
         get {
             return new ComponentInfo(
                 typeof(PersonComponent).ToCompilableString(),
-                new [] {
-                    new PublicMemberInfo("int", "age", PublicMemberInfo.MemberType.Field),
-                    new PublicMemberInfo("string", "name", PublicMemberInfo.MemberType.Field)
-                },
+                typeof(PersonComponent).GetPublicMemberInfos(),
                 new string[0],
                 false,
                 "is",

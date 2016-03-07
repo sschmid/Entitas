@@ -31,14 +31,14 @@ namespace Entitas.Unity.VisualDebugging {
 
                 var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
                 _defaultInstanceCreators = types
-                .Where(type => type.ImplementsInterface<IDefaultInstanceCreator>())
-                .Select(type => (IDefaultInstanceCreator)Activator.CreateInstance(type))
-                .ToArray();
+                    .Where(type => type.ImplementsInterface<IDefaultInstanceCreator>())
+                    .Select(type => (IDefaultInstanceCreator)Activator.CreateInstance(type))
+                    .ToArray();
 
                 _typeDrawers = types
-                .Where(type => type.ImplementsInterface<ITypeDrawer>())
-                .Select(type => (ITypeDrawer)Activator.CreateInstance(type))
-                .ToArray();
+                    .Where(type => type.ImplementsInterface<ITypeDrawer>())
+                    .Select(type => (ITypeDrawer)Activator.CreateInstance(type))
+                    .ToArray();
             }
 
             // Unity bug
@@ -189,16 +189,16 @@ namespace Entitas.Unity.VisualDebugging {
         public static void DrawComponent(bool[] unfoldedComponents, Entity entity, int index, IComponent component) {
             var componentType = component.GetType();
 
-            var componentName = EntityExtension.RemoveComponentSuffix(componentType.Name);
+            var componentName = componentType.Name.RemoveComponentSuffix();
             if (componentName.ToLower().Contains(_componentNameSearchTerm.ToLower())) {
-                var fields = componentType.GetFields(BindingFlags.Public | BindingFlags.Instance);
+                var memberInfos = componentType.GetPublicMemberInfos();
 
                 var boxStyle = getColoredBoxStyle(entity.totalComponents, index);
                 EntitasEditorLayout.BeginVerticalBox(boxStyle);
                 {
                     EntitasEditorLayout.BeginHorizontal();
                     {
-                        if (fields.Length == 0) {
+                        if (memberInfos.Length == 0) {
                             EditorGUILayout.LabelField(componentName, EditorStyles.boldLabel);
                         } else {
                             unfoldedComponents[index] = EditorGUILayout.Foldout(unfoldedComponents[index], componentName, _foldoutStyle);
@@ -210,10 +210,9 @@ namespace Entitas.Unity.VisualDebugging {
                     EntitasEditorLayout.EndHorizontal();
 
                     if (unfoldedComponents[index]) {
-                        foreach (var field in fields) {
-                            var value = field.GetValue(component);
-                            DrawAndSetElement(field.FieldType, field.Name, value,
-                                entity, index, component, field.SetValue);
+                        foreach (var info in memberInfos) {
+                            DrawAndSetElement(info.type, info.name, info.GetValue(component),
+                                entity, index, component, info.SetValue);
                         }
                     }
                 }
@@ -221,8 +220,8 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public static void DrawAndSetElement(Type type, string fieldName, object value, Entity entity, int index, IComponent component, Action<IComponent, object> setValue) {
-            var newValue = DrawAndGetNewValue(type, fieldName, value, entity, index, component);
+        public static void DrawAndSetElement(Type memberType, string memberName, object value, Entity entity, int index, IComponent component, Action<IComponent, object> setValue) {
+            var newValue = DrawAndGetNewValue(memberType, memberName, value, entity, index, component);
             if (DidValueChange(value, newValue)) {
                 var newComponent = entity.CreateComponent(index, component.GetType());
                 component.CopyPublicMemberValues(newComponent);
@@ -237,20 +236,20 @@ namespace Entitas.Unity.VisualDebugging {
                 || ((value != null && newValue != null && !newValue.Equals(value)));
         }
 
-        public static object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
+        public static object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
             if (value == null) {
-                var isUnityObject = type == typeof(UnityEngine.Object) || type.IsSubclassOf(typeof(UnityEngine.Object));
+                var isUnityObject = memberType == typeof(UnityEngine.Object) || memberType.IsSubclassOf(typeof(UnityEngine.Object));
                 EntitasEditorLayout.BeginHorizontal();
                 {
                     if (isUnityObject) {
-                        value = EditorGUILayout.ObjectField(fieldName, (UnityEngine.Object)value, type, true);
+                        value = EditorGUILayout.ObjectField(memberName, (UnityEngine.Object)value, memberType, true);
                     } else {
-                        EditorGUILayout.LabelField(fieldName, "null");
+                        EditorGUILayout.LabelField(memberName, "null");
                     }
 
                     if (GUILayout.Button("Create", GUILayout.Height(14))) {
                         object defaultValue;
-                        if (CreateDefault(type, out defaultValue)) {
+                        if (CreateDefault(memberType, out defaultValue)) {
                             value = defaultValue;
                         }
                     }
@@ -259,19 +258,19 @@ namespace Entitas.Unity.VisualDebugging {
                 return value;
             }
 
-            if (!type.IsValueType) {
+            if (!memberType.IsValueType) {
                 EntitasEditorLayout.BeginHorizontal();
                 EntitasEditorLayout.BeginVertical();
             }
 
-            var typeDrawer = getTypeDrawer(type);
+            var typeDrawer = getTypeDrawer(memberType);
             if (typeDrawer != null) {
-                value = typeDrawer.DrawAndGetNewValue(type, fieldName, value, entity, index, component);
+                value = typeDrawer.DrawAndGetNewValue(memberType, memberName, value, entity, index, component);
             } else {
-                drawUnsupportedType(type, fieldName, value);
+                drawUnsupportedType(memberType, memberName, value);
             }
 
-            if (!type.IsValueType) {
+            if (!memberType.IsValueType) {
                 EntitasEditorLayout.EndVertical();
                 if (GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
                     value = null;
@@ -350,12 +349,12 @@ namespace Entitas.Unity.VisualDebugging {
             return null;
         }
 
-        static void drawUnsupportedType(Type type, string fieldName, object value) {
+        static void drawUnsupportedType(Type memberType, string memberName, object value) {
             EntitasEditorLayout.BeginHorizontal();
             {
-                EditorGUILayout.LabelField(fieldName, value.ToString());
+                EditorGUILayout.LabelField(memberName, value.ToString());
                 if (GUILayout.Button("Missing ITypeDrawer", GUILayout.Height(14))) {
-                    var typeName = type.ToCompilableString();
+                    var typeName = memberType.ToCompilableString();
                     if (EditorUtility.DisplayDialog(
                             "No ITypeDrawer found",
                             "There's no ITypeDrawer implementation to handle the type '" + typeName + "'.\n" +
@@ -422,7 +421,7 @@ public class Type_TypeDrawer : ITypeDrawer {{
         return type == typeof({0});
     }}
 
-    public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {{
+    public object DrawAndGetNewValue(Type type, string memberName, object value, Entity entity, int index, IComponent component) {{
         // return your implementation to draw the type {0}
         throw new NotImplementedException();
     }}

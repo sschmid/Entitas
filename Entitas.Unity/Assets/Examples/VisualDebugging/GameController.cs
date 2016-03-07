@@ -80,6 +80,7 @@ public class GameController : MonoBehaviour {
             e.AddDictArray(dict2, dictArray);
             e.AddHashSet(new HashSet<string> { "One", "Two", "Three" });
             e.AddUnsupportedObject(new UnsupportedObject("Unsupported Object"));
+            e.AddProperty("My Property");
         }
     }
 
@@ -89,7 +90,7 @@ public class GameController : MonoBehaviour {
         // Unity's builtIn
         AnimationCurve animationCurve = null;
         e.AddAnimationCurve(animationCurve);
-        String myString = null;
+        string myString = null;
         e.AddMyString(myString);
         UnityEngine.Object unityObject = null;
         e.AddUnityObject(unityObject);
@@ -128,6 +129,7 @@ public class GameController : MonoBehaviour {
         e.AddHashSet(hashset);
         UnsupportedObject unsupportedObject = null;
         e.AddUnsupportedObject(unsupportedObject);
+        e.AddProperty(myString);
     }
 }
 

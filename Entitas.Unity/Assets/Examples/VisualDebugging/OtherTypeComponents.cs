@@ -78,3 +78,8 @@ public class UnsupportedObject {
 public class UnsupportedObjectComponent : IComponent {
     public UnsupportedObject unsupportedObject;
 }
+
+public class PropertyComponent : IComponent {
+    public string value { get; set; }
+}
+

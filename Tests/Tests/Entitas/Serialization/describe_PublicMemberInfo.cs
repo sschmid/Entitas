@@ -16,18 +16,16 @@ class describe_PublicMemberInfo : nspec {
                 var infos = typeof(ComponentWithFields).GetPublicMemberInfos();
                 infos.Length.should_be(1);
                 var mi = infos[0];
-                mi.fullTypeName.should_be(typeof(string).FullName);
+                mi.type.should_be(typeof(string));
                 mi.name.should_be("publicField");
-                mi.memberType.should_be(PublicMemberInfo.MemberType.Field);
             };
 
             it["creates member infos for public properties (read & write)"] = () => {
                 var infos = typeof(ComponentWithProperties).GetPublicMemberInfos();
                 infos.Length.should_be(1);
                 var mi = infos[0];
-                mi.fullTypeName.should_be(typeof(string).FullName);
+                mi.type.should_be(typeof(string));
                 mi.name.should_be("publicProperty");
-                mi.memberType.should_be(PublicMemberInfo.MemberType.Property);
             };
 
             it["creates member infos for fields and properties"] = () => {
@@ -36,56 +34,38 @@ class describe_PublicMemberInfo : nspec {
                 var mi1 = infos[0];
                 var mi2 = infos[1];
 
-                mi1.fullTypeName.should_be(typeof(string).FullName);
+                mi1.type.should_be(typeof(string));
                 mi1.name.should_be("publicField");
-                mi1.memberType.should_be(PublicMemberInfo.MemberType.Field);
 
-                mi2.fullTypeName.should_be(typeof(string).FullName);
+                mi2.type.should_be(typeof(string));
                 mi2.name.should_be("publicProperty");
-                mi2.memberType.should_be(PublicMemberInfo.MemberType.Property);
             };
 
-            it["creates member info with compilable type string"] = () => {
-                var infos = typeof(ComponentWithFieldsAndProperties).GetPublicMemberInfos(true);
-                var mi1 = infos[0];
-                var mi2 = infos[1];
-
-                mi1.fullTypeName.should_be(typeof(string).ToCompilableString());
-                mi2.fullTypeName.should_be(typeof(string).ToCompilableString());
-            };
-        };
-
-        context["when getting public member infos with value"] = () => {
-
-            it["creates member infos for fields and properties"] = () => {
+            it["gets values for fields and properties"] = () => {
                 var component = new ComponentWithFieldsAndProperties();
                 component.publicField = "publicFieldValue";
                 component.publicProperty = "publicPropertyValue";
 
-                var infos = component.GetPublicMemberInfos();
-                infos.Length.should_be(2);
+                var infos = component.GetType().GetPublicMemberInfos();
                 var mi1 = infos[0];
                 var mi2 = infos[1];
 
-                mi1.fullTypeName.should_be(typeof(string).FullName);
-                mi1.name.should_be("publicField");
-                mi1.memberType.should_be(PublicMemberInfo.MemberType.Field);
-                mi1.value.should_be("publicFieldValue");
-
-                mi2.fullTypeName.should_be(typeof(string).FullName);
-                mi2.name.should_be("publicProperty");
-                mi2.memberType.should_be(PublicMemberInfo.MemberType.Property);
-                mi2.value.should_be("publicPropertyValue");
+                mi1.GetValue(component).should_be("publicFieldValue");
+                mi2.GetValue(component).should_be("publicPropertyValue");
             };
 
-            it["creates member info with compilable type string"] = () => {
+            it["sets values for fields and properties"] = () => {
                 var component = new ComponentWithFieldsAndProperties();
-                var infos = component.GetPublicMemberInfos(true);
+
+                var infos = component.GetType().GetPublicMemberInfos();
                 var mi1 = infos[0];
                 var mi2 = infos[1];
 
-                mi1.fullTypeName.should_be(typeof(string).ToCompilableString());
-                mi2.fullTypeName.should_be(typeof(string).ToCompilableString());
+                mi1.SetValue(component, "publicFieldValue");
+                mi2.SetValue(component, "publicPropertyValue");
+
+                component.publicField.should_be("publicFieldValue");
+                component.publicProperty.should_be("publicPropertyValue");
             };
         };
 

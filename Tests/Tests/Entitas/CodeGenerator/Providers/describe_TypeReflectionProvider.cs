@@ -167,10 +167,10 @@ class describe_TypeReflectionProvider : nspec {
                 info.typeName.should_be(type.FullName);
                 info.memberInfos.Length.should_be(2);
 
-                info.memberInfos[0].fullTypeName.should_be("string");
+                info.memberInfos[0].type.should_be(typeof(string));
                 info.memberInfos[0].name.should_be("publicField");
 
-                info.memberInfos[1].fullTypeName.should_be("string");
+                info.memberInfos[1].type.should_be(typeof(string));
                 info.memberInfos[1].name.should_be("publicProperty");
 
                 info.pools.Length.should_be(0);

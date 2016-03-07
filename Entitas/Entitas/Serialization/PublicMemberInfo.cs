@@ -7,60 +7,58 @@ namespace Entitas.Serialization {
 
     public struct PublicMemberInfo {
 
-        public enum MemberType {
-            Undefined,
-            Field,
-            Property
+        public Type type {
+            get {
+                return _fieldInfo != null
+                    ? _fieldInfo.FieldType
+                    : _propertyInfo.PropertyType;
+            }
         }
 
-        public readonly string fullTypeName;
-        public readonly string name;
-        public readonly MemberType memberType;
-        public readonly object value;
+        public string name {
+            get {
+                return _fieldInfo != null
+                    ? _fieldInfo.Name
+                    : _propertyInfo.Name;
+            }
+        }
 
-        public PublicMemberInfo(string fullTypeName, string name, MemberType memberType, object value = null) {
-            this.fullTypeName = fullTypeName;
-            this.name = name;
-            this.memberType = memberType;
-            this.value = value;
+        readonly FieldInfo _fieldInfo;
+        readonly PropertyInfo _propertyInfo;
+
+        public PublicMemberInfo(FieldInfo info) {
+            _fieldInfo = info;
+            _propertyInfo = null;
+        }
+
+        public PublicMemberInfo(PropertyInfo info) {
+            _fieldInfo = null;
+            _propertyInfo = info;
+        }
+
+        public object GetValue(object obj) {
+            return _fieldInfo != null
+                ? _fieldInfo.GetValue(obj)
+                : _propertyInfo.GetValue(obj, null);
+        }
+
+        public void SetValue(object obj, object value) {
+            if (_fieldInfo != null) {
+                _fieldInfo.SetValue(obj, value);
+            } else {
+                _propertyInfo.SetValue(obj, value, null);                
+            }
         }
     }
 
     public static class PublicMemberInfoExtension {
 
-        const BindingFlags BINDING_FLAGS = BindingFlags.Instance | BindingFlags.Public;
-
-        public static PublicMemberInfo[] GetPublicMemberInfos(this Type type, bool typeToCompilableString = false) {
-
-            var fieldInfos = getFieldInfos(type)
-                .Select(info => new PublicMemberInfo(
-                    typeToCompilableString ? info.FieldType.ToCompilableString() : info.FieldType.FullName,
-                    info.Name, PublicMemberInfo.MemberType.Field
-                ));
-
-            var propertyInfos = getPropertyInfos(type)
-                .Select(info => new PublicMemberInfo(
-                    typeToCompilableString ? info.PropertyType.ToCompilableString() : info.PropertyType.FullName,
-                    info.Name, PublicMemberInfo.MemberType.Property));
-
-            return fieldInfos.Concat(propertyInfos).ToArray();
-        }
-
-        public static PublicMemberInfo[] GetPublicMemberInfos(this object obj, bool typeToCompilableString = false) {
-            var type = obj.GetType();
-            var fieldInfos = getFieldInfos(type)
-                .Select(info => new PublicMemberInfo(
-                    typeToCompilableString ? info.FieldType.ToCompilableString() : info.FieldType.FullName,
-                    info.Name, PublicMemberInfo.MemberType.Field,
-                    info.GetValue(obj)
-                ));
-
-            var propertyInfos = getPropertyInfos(type)
-                .Select(info => new PublicMemberInfo(
-                    typeToCompilableString ? info.PropertyType.ToCompilableString() : info.PropertyType.FullName,
-                    info.Name, PublicMemberInfo.MemberType.Property,
-                    info.GetValue(obj, null)
-                ));
+        public static PublicMemberInfo[] GetPublicMemberInfos(this Type type) {
+            const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+            var fieldInfos = type.GetFields(bindingFlags).Select(info => new PublicMemberInfo(info));
+            var propertyInfos = type.GetProperties(bindingFlags)
+                .Where(info => info.CanRead && info.CanWrite)
+                .Select(info => new PublicMemberInfo(info));
 
             return fieldInfos.Concat(propertyInfos).ToArray();
         }
@@ -77,30 +75,12 @@ namespace Entitas.Serialization {
             return clone;
         }
 
-        public static void CopyPublicMemberValues(this object obj, object target) {
-            var type = obj.GetType();
-            var fieldInfos = getFieldInfos(type);
-            for (int i = 0, fieldInfosLength = fieldInfos.Length; i < fieldInfosLength; i++) {
-                var info = fieldInfos[i];
-                info.SetValue(target, info.GetValue(obj));
+        public static void CopyPublicMemberValues(this object source, object target) {
+            var memberInfos = source.GetType().GetPublicMemberInfos();
+            for (int i = 0, memberInfosLength = memberInfos.Length; i < memberInfosLength; i++) {
+                var info = memberInfos[i];
+                info.SetValue(target, info.GetValue(source));
             }
-
-            var propertyInfos = getPropertyInfos(type);
-            for (int i = 0, propertyInfosLength = propertyInfos.Length; i < propertyInfosLength; i++) {
-                var info = propertyInfos[i];
-                info.SetValue(target, info.GetValue(obj, null), null);
-            }
-        }
-
-        static FieldInfo[] getFieldInfos(Type type) {
-            return type.GetFields(BINDING_FLAGS);
-        }
-
-        static PropertyInfo[] getPropertyInfos(Type type) {
-            return type
-                .GetProperties(BINDING_FLAGS)
-                .Where(info => info.CanRead && info.CanWrite)
-                .ToArray();
         }
     }
 }

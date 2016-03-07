@@ -38,7 +38,7 @@ namespace Entitas.CodeGenerator {
         }
 
         public static PublicMemberInfo[] GetPublicMemberInfo(Type type) {
-            return type.GetPublicMemberInfos(true);
+            return type.GetPublicMemberInfos();
         }
 
         public static string[] GetPools(Type type) {

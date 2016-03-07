@@ -9,10 +9,7 @@ public class UserComponent : IComponent {
         get {
             return new ComponentInfo(
                 typeof(UserComponent).ToCompilableString(),
-                new [] {
-                    new PublicMemberInfo("System.DateTime", "timestamp", PublicMemberInfo.MemberType.Field),
-                    new PublicMemberInfo("bool", "isLoggedIn", PublicMemberInfo.MemberType.Field)
-                },
+                typeof(UserComponent).GetPublicMemberInfos(),
                 new string[0],
                 true,
                 "is",
