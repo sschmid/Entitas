@@ -1,3 +1,13 @@
+# 0.29.1
+
+##### Entitas.CodeGenerator
+- Added missing support for components with properties
+- Updated ComponentsGenerator to use entity.CreateComponent()
+
+##### Entitas.Unity.CodeGenerator
+- Added missing support for components with properties
+
+
 # 0.29.0
 
 ##### Obsolete
