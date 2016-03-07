@@ -33,6 +33,7 @@ class describe_ComponentsGenerator : nspec {
         it["single component without fields"] = () => generates(AnimatingComponent.componentInfo, AnimatingComponent.extensions);
         it["single component with fields"] = () => generates(UserComponent.componentInfo, UserComponent.extensions);
         it["component for custom pool"] = () => generates(OtherPoolComponent.componentInfo, OtherPoolComponent.extensions);
+        it["supports properties"] = () => generates(ComponentWithFieldsAndProperties.componentInfo, ComponentWithFieldsAndProperties.extensions);
         it["ignores [DontGenerate]"] = () => {
             var componentInfo = DontGenerateComponent.componentInfo;
             var files = new ComponentsGenerator().Generate(new[] { componentInfo });
