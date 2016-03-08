@@ -98,7 +98,18 @@ namespace Entitas.Unity.VisualDebugging {
                 _hideEmptySystems = EditorGUILayout.Toggle("Hide empty systems", _hideEmptySystems);
                 EditorGUILayout.Space();
 
-                _systemNameSearchTerm = EditorGUILayout.TextField("Search", _systemNameSearchTerm);
+                EntitasEditorLayout.BeginHorizontal();
+                {
+                    _systemNameSearchTerm = EditorGUILayout.TextField("Search", _systemNameSearchTerm);
+
+                    const string clearButtonControlName = "Clear Button";
+                    GUI.SetNextControlName(clearButtonControlName);
+                    if (GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
+                        _systemNameSearchTerm = string.Empty;
+                        GUI.FocusControl(clearButtonControlName);
+                    }
+                }
+                EntitasEditorLayout.EndHorizontal();
 
                 _showInitializeSystems = EditorGUILayout.Foldout(_showInitializeSystems, "Initialize Systems");
                 if (_showInitializeSystems && shouldShowSystems(systems, true)) {

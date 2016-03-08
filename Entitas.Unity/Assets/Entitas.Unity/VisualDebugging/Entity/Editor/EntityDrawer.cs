@@ -99,7 +99,18 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                _componentNameSearchTerm = EditorGUILayout.TextField("Search", _componentNameSearchTerm);
+                EntitasEditorLayout.BeginHorizontal();
+                {
+                    _componentNameSearchTerm = EditorGUILayout.TextField("Search", _componentNameSearchTerm);
+
+                    const string clearButtonControlName = "Clear Button";
+                    GUI.SetNextControlName(clearButtonControlName);
+                    if (GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
+                        _componentNameSearchTerm = string.Empty;
+                        GUI.FocusControl(clearButtonControlName);
+                    }
+                }
+                EntitasEditorLayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
