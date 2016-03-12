@@ -22,8 +22,13 @@ class describe_M0300 : nspec {
 
         it["updates Entitas.properties"] = () => {
             var updatedFiles = m.Migrate(dir);
-            updatedFiles[0].fileContent.Contains("ComponentsGenerator").should_be_false();
-            updatedFiles[0].fileContent.Contains("ComponentExtensionsGenerator").should_be_true();
+            var file = updatedFiles[0];
+
+            file.fileContent.Contains("ComponentsGenerator").should_be_false();
+            file.fileContent.Contains("ComponentExtensionsGenerator").should_be_true();
+
+            file.fileContent.Contains("PoolAttributeGenerator").should_be_false();
+            file.fileContent.Contains("PoolAttributesGenerator").should_be_true();
         };
     }
 }
