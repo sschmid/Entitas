@@ -16,7 +16,7 @@ namespace Entitas.Migration {
         const string REPLACEMENT = @"//";
 
         public MigrationFile[] Migrate(string path) {
-            var files = MigrationUtils.GetSourceFiles(path)
+            var files = MigrationUtils.GetFiles(path)
                 .Where(file => file.fileContent.Contains(POOL_PATTERN_1) || file.fileContent.Contains(COMPONENT_PATTERN))
                 .ToArray();
 

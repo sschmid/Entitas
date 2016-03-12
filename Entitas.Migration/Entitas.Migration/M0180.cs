@@ -20,7 +20,7 @@ namespace Entitas.Migration {
         const string EVENT_TYPE_REPLACEMENT = "public GroupEventType eventType { get { ";
 
         public MigrationFile[] Migrate(string path) {
-            var files = MigrationUtils.GetSourceFiles(path)
+            var files = MigrationUtils.GetFiles(path)
                 .Where(file => Regex.IsMatch(file.fileContent, TRIGGER_PATTERN) || Regex.IsMatch(file.fileContent, EVENT_TYPE_PATTERN))
                 .ToArray();
 

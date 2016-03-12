@@ -14,7 +14,7 @@ namespace Entitas.Migration {
         const string EXECUTE_REPLACEMENT = "public void Execute(System.Collections.Generic.List<Entity> entities)";
 
         public MigrationFile[] Migrate(string path) {
-            var files = MigrationUtils.GetSourceFiles(path)
+            var files = MigrationUtils.GetFiles(path)
                 .Where(file => Regex.IsMatch(file.fileContent, EXECUTE_PATTERN))
                 .ToArray();
 

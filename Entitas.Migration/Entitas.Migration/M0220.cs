@@ -16,7 +16,7 @@ namespace Entitas.Migration {
         const string TRIGGER_REPLACEMENT_FORMAT = @"public TriggerOnEvent trigger {{ get {{ return {0}.{1}(); }} }}";
 
         public MigrationFile[] Migrate(string path) {
-            var files = MigrationUtils.GetSourceFiles(path)
+            var files = MigrationUtils.GetFiles(path)
                 .Where(file => Regex.IsMatch(file.fileContent, TRIGGER_PATTERN))
                 .ToArray();
 
