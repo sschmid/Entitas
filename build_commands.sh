@@ -104,11 +104,10 @@ create_zip() {
   mv "$TMP_DIR/Entitas/CodeGenerator/"* $tmp_editor_dir
   mv {"$tmp_editor_dir/Attributes",$tmp_editor_dir} "$TMP_DIR/Entitas/CodeGenerator"
 
-  mkdir $tmp_editor_dir
-  mv "$TMP_DIR/$MIG/"* $tmp_editor_dir
-  mv $tmp_editor_dir "$TMP_DIR/$MIG"
+  mkdir "$TMP_DIR/$ES/Migration/"
+  mv "$TMP_DIR/$MIG/" "$TMP_DIR/$ES/Migration/Editor/"
 
-  mv "$TMP_DIR/$ESU/" "$TMP_DIR/$ES/Unity/" 
+  mv "$TMP_DIR/$ESU/" "$TMP_DIR/$ES/Unity/"
 
   pushd $TMP_DIR > /dev/null
     zip -rq ../Entitas-Unity.zip ./
