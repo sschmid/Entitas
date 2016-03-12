@@ -29,20 +29,20 @@ namespace Entitas.Unity {
             return height;
         }
 
-        public static void BeginVertical() {
-            EditorGUILayout.BeginVertical();
+        public static Rect BeginVertical() {
+            return EditorGUILayout.BeginVertical();
         }
 
-        public static void BeginVerticalBox(GUIStyle style = null) {
-            EditorGUILayout.BeginVertical(style ?? GUI.skin.box);
+        public static Rect BeginVerticalBox(GUIStyle style = null) {
+            return EditorGUILayout.BeginVertical(style ?? GUI.skin.box);
         }
 
         public static void EndVertical() {
             EditorGUILayout.EndVertical();
         }
 
-        public static void BeginHorizontal() {
-            EditorGUILayout.BeginHorizontal();
+        public static Rect BeginHorizontal() {
+            return EditorGUILayout.BeginHorizontal();
         }
 
         public static void EndHorizontal() {

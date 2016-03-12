@@ -16,6 +16,8 @@ namespace Entitas.Unity.CodeGenerator {
         List<string> _pools;
         UnityEditorInternal.ReorderableList _poolList;
 
+        static float _generatorsRectHeight = 68;
+
         public void Initialize(EntitasPreferencesConfig config) {
             _codeGenerators = UnityCodeGenerator.GetCodeGenerators();
             var codeGeneratorNames = _codeGenerators.Select(cg => cg.Name).ToArray();
@@ -24,7 +26,7 @@ namespace Entitas.Unity.CodeGenerator {
             _pools = new List<string>(_codeGeneratorConfig.pools);
 
             _poolList = new UnityEditorInternal.ReorderableList(_pools, typeof(string), true, true, true, true);
-            _poolList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Custom Pools");;
+            _poolList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Custom Pools");
             _poolList.drawElementCallback = (rect, index, isActive, isFocused) => {
                 rect.width -= 20;
                 _pools[index] = EditorGUI.TextField(rect, _pools[index]);
@@ -75,7 +77,10 @@ namespace Entitas.Unity.CodeGenerator {
 
             EntitasEditorLayout.BeginHorizontal();
             {
-                EntitasEditorLayout.BeginVertical();
+                var rect = EntitasEditorLayout.BeginVertical();
+                if (rect.height > 0) {
+                    _generatorsRectHeight = rect.height - 2;
+                }
                 {
                     foreach (var codeGenerator in _codeGenerators) {
                         availableGeneratorNames.Add(codeGenerator.Name);
@@ -90,9 +95,12 @@ namespace Entitas.Unity.CodeGenerator {
                 }
                 EntitasEditorLayout.EndVertical();
 
-                if (GUILayout.Button("Generate", GUILayout.Width(200), GUILayout.Height(68))) {
+                var bgColor = GUI.backgroundColor;
+                GUI.backgroundColor = Color.green;
+                if (GUILayout.Button("Generate", GUILayout.Width(200), GUILayout.Height(_generatorsRectHeight))) {
                     UnityCodeGenerator.Generate();
                 }
+                GUI.backgroundColor = bgColor;
             }
             EntitasEditorLayout.EndHorizontal();
             
