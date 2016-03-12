@@ -30,11 +30,12 @@ class check_namespaces : nspec {
     }
 
     void when_checking_namespaces() {
-        var entitasDir = getEntitasProjectDir();
-        const string entitasUnity = "Entitas.Unity";
-        var entitasUnityDir = entitasUnity + _dirChar + "Assets";
+        var entitasProjectDir = getEntitasProjectDir();
 
-        var sourceFiles = getSourceFiles(entitasDir);
+        var entitasSourceDir = "Entitas" + _dirChar + "Entitas" + _dirChar;
+        var entitasUnitySourceDir = "Entitas.Unity" + _dirChar + "Assets" + _dirChar + "Entitas" + _dirChar + "Unity" + _dirChar;
+
+        var sourceFiles = getSourceFiles(entitasProjectDir);
 
         sourceFiles.Count.should_be_greater_than(80);
         sourceFiles.Count.should_be_less_than(150);
@@ -47,16 +48,14 @@ class check_namespaces : nspec {
         foreach (var file in sourceFiles) {
 
             var fileName = file.Key
-                .Replace(entitasDir + _dirChar, string.Empty)
-                .Replace(entitasUnityDir + _dirChar, string.Empty)
+                .Replace(entitasProjectDir + _dirChar, string.Empty)
 
-                .Replace("Entitas" + _dirChar + "Entitas" + _dirChar + "CodeGenerator", "Entitas.CodeGenerator")
-                .Replace("Entitas" + _dirChar + "Entitas" + _dirChar + "Serialization", "Entitas.Serialization")
+                .Replace(entitasSourceDir + "CodeGenerator", "Entitas.CodeGenerator")
+                .Replace(entitasSourceDir + "Serialization", "Entitas.Serialization")
 
-                .Replace("Entitas.Unity" + _dirChar + "CodeGenerator", "Entitas.Unity.CodeGenerator")
-                .Replace("Entitas.Unity" + _dirChar + "VisualDebugging", "Entitas.Unity.VisualDebugging")
-                .Replace("Entitas.Unity" + _dirChar + "Migration", "Entitas.Unity.Migration")
-                .Replace("Entitas.Unity" + _dirChar + "Blueprints", "Entitas.Unity.Blueprints");
+                .Replace(entitasUnitySourceDir + "CodeGenerator", "Entitas.Unity.CodeGenerator")
+                .Replace(entitasUnitySourceDir + "VisualDebugging", "Entitas.Unity.VisualDebugging")
+                .Replace(entitasUnitySourceDir + "Migration", "Entitas.Unity.Migration");
 
             var expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
                 .ToString()

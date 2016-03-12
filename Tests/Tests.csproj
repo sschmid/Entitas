@@ -59,27 +59,6 @@
     <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0260.cs" />
     <Compile Include="GenerateTestComponents.cs" />
-    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\Properties.cs">
-      <Link>Linked Libraries\Entitas.Unity\Properties.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\CodeGenerator\Editor\CodeGeneratorConfig.cs">
-      <Link>Linked Libraries\Entitas.Unity\CodeGenerator\Editor\CodeGeneratorConfig.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\Editor\EntitasPreferencesConfig.cs">
-      <Link>Linked Libraries\Entitas.Unity\Editor\EntitasPreferencesConfig.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\VisualDebugging\DebugSystems\DebugSystems.cs">
-      <Link>Linked Libraries\Entitas.Unity\VisualDebugging\DebugSystems\DebugSystems.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
-      <Link>Linked Libraries\Entitas.Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\VisualDebugging\DebugSystems\SystemInfo.cs">
-      <Link>Linked Libraries\Entitas.Unity\VisualDebugging\DebugSystems\SystemInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity\Assets\Entitas.Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs">
-      <Link>Linked Libraries\Entitas.Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
-    </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\describe_CodeGenerator.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\describe_GeneratedComponents.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple pools\AComponent.cs" />
@@ -269,6 +248,27 @@
     <Compile Include="Tests\Entitas\Serialization\Fixtures\TestEnum.cs" />
     <Compile Include="Tests\Entitas\Serialization\describe_PublicMemberInfo.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\Properties.cs">
+      <Link>Linked Libraries\Unity\Properties.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\CodeGenerator\Editor\CodeGeneratorConfig.cs">
+      <Link>Linked Libraries\Unity\CodeGenerator\Editor\CodeGeneratorConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\Editor\EntitasPreferencesConfig.cs">
+      <Link>Linked Libraries\Unity\Editor\EntitasPreferencesConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystems.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystems.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\SystemInfo.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\SystemInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
