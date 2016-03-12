@@ -41,6 +41,7 @@ namespace Entitas.Unity.CodeGenerator {
         public static Type[] GetCodeGenerators() {
             return Assembly.GetAssembly(typeof(ICodeGenerator)).GetTypes()
                 .Where(type => type.ImplementsInterface<ICodeGenerator>())
+                .Where(type => type.GetCustomAttributes(typeof(ObsoleteAttribute), false).Length == 0)
                 .OrderBy(type => type.FullName)
                 .ToArray();
         }

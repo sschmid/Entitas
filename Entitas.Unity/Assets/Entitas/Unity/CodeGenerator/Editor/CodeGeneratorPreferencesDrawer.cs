@@ -80,7 +80,7 @@ namespace Entitas.Unity.CodeGenerator {
                     foreach (var codeGenerator in _codeGenerators) {
                         availableGeneratorNames.Add(codeGenerator.Name);
                         var isEnabled = enabledCodeGenerators.Contains(codeGenerator.Name);
-                        isEnabled = EditorGUILayout.Toggle(codeGenerator.Name, isEnabled);
+                        isEnabled = EditorGUILayout.Toggle(codeGenerator.Name.Replace("Generator", string.Empty), isEnabled);
                         if (isEnabled) {
                             enabledCodeGenerators.Add(codeGenerator.Name);
                         } else {
@@ -93,7 +93,6 @@ namespace Entitas.Unity.CodeGenerator {
                 if (GUILayout.Button("Generate", GUILayout.Width(200), GUILayout.Height(68))) {
                     UnityCodeGenerator.Generate();
                 }
-
             }
             EntitasEditorLayout.EndHorizontal();
             
