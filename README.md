@@ -169,6 +169,7 @@ Different language?
 Entitas is available in
 - [C#](https://github.com/sschmid/Entitas-CSharp)
 - [Swift](https://github.com/mzaks/Entitas-Swift)
+- [C++](https://github.com/JuDelCo/Entitas-Cpp)
 - [Objective-C](https://github.com/wooga/entitas)
 - [Go](https://github.com/wooga/go-entitas)
 - [F#](https://github.com/darkoverlordofdata/Bosco.ECS)
