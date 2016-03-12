@@ -15,7 +15,7 @@ class GenerateTestComponents {
         var codeGenerators = new ICodeGenerator[] {
             new ComponentExtensionsGenerator(),
             new ComponentIndicesGenerator(),
-            new PoolAttributeGenerator(),
+            new PoolAttributesGenerator(),
             new PoolsGenerator()
         };
 

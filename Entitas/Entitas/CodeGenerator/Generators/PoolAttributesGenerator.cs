@@ -1,10 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Entitas.CodeGenerator {
-    public class PoolAttributeGenerator : IPoolCodeGenerator {
+
+    [Obsolete("Deprecated since 0.30.0. Use PoolAttributesGenerator")]
+    public class PoolAttributeGenerator : PoolAttributesGenerator {}
+
+    public class PoolAttributesGenerator : IPoolCodeGenerator {
 
         public CodeGenFile[] Generate(string[] poolNames) {
-            var generatorName = typeof(PoolAttributeGenerator).FullName;
+            var generatorName = typeof(PoolAttributesGenerator).FullName;
             return poolNames.Select(poolName => new CodeGenFile {
                 fileName = poolName + "Attribute",
                 fileContent = generatePoolAttributes(poolName).ToUnixLineEndings(),

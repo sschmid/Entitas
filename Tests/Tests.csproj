@@ -75,7 +75,6 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\UserComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\TestPoolAttribute.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ComponentIndicesGenerator.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_PoolAttributeGenerator.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_PoolsGenerator.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Providers\describe_TypeReflectionProvider.cs" />
     <Compile Include="Tests\Entitas.Unity\CodeGenerator\describe_CodeGeneratorConfig.cs" />
@@ -151,9 +150,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\PoolAttributeGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\PoolsGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\PoolsGenerator.cs</Link>
@@ -270,6 +266,10 @@
     </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ComponentExtensionsGenerator.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0300.cs" />
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\PoolAttributesGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\PoolAttributesGenerator.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_PoolAttributesGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
