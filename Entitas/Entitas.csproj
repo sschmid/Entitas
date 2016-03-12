@@ -59,7 +59,6 @@
     <Compile Include="Entitas\CodeGenerator\Attributes\PoolAttribute.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\SingleEntityAttribute.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Generators\ComponentsGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\PoolAttributeGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\PoolsGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Interfaces\ICodeGenerator.cs" />
@@ -74,6 +73,7 @@
     <Compile Include="Entitas\CodeGenerator\TypeReflectionCodeGenerator.cs" />
     <Compile Include="Entitas\Serialization\PublicMemberInfo.cs" />
     <Compile Include="Entitas\Serialization\TypeSerializationExtension.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

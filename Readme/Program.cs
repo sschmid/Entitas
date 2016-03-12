@@ -13,7 +13,7 @@ namespace Readme {
             var generatedFolder = getEntitasProjectDir() + "/Readme/Readme/Generated/";
 
             var codeGenerators = new ICodeGenerator[] {
-                new ComponentsGenerator(),
+                new ComponentExtensionsGenerator(),
                 new ComponentIndicesGenerator(),
                 new PoolAttributeGenerator(),
                 new PoolsGenerator()

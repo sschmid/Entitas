@@ -3,12 +3,16 @@ using System.Linq;
 using Entitas.Serialization;
 
 namespace Entitas.CodeGenerator {
-    public class ComponentsGenerator : IComponentCodeGenerator {
+
+    [Obsolete("Deprecated since 0.30.0. Use ComponentExtensionsGenerator")]
+    public class ComponentsGenerator : ComponentExtensionsGenerator {}
+
+    public class ComponentExtensionsGenerator : IComponentCodeGenerator {
 
         const string CLASS_SUFFIX = "GeneratedExtension";
 
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
-            var generatorName = typeof(ComponentsGenerator).FullName;
+            var generatorName = typeof(ComponentExtensionsGenerator).FullName;
             return componentInfos
                 .Where(info => info.generateMethods)
                 .Select(info => new CodeGenFile {

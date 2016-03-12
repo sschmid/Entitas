@@ -101,9 +101,6 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentsGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentsGenerator.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\PoolAttributeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
     </Compile>
@@ -187,6 +184,9 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Serialization\TypeSerializationExtension.cs">
       <Link>Linked Libraries\Entitas\Serialization\TypeSerializationExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

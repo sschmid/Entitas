@@ -13,7 +13,7 @@ class GenerateTestComponents {
         var generatedFolder = getEntitasProjectDir() + "/Tests/Tests/Entitas/CodeGenerator/Fixtures/Generated/";
 
         var codeGenerators = new ICodeGenerator[] {
-            new ComponentsGenerator(),
+            new ComponentExtensionsGenerator(),
             new ComponentIndicesGenerator(),
             new PoolAttributeGenerator(),
             new PoolsGenerator()

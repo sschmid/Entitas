@@ -75,7 +75,6 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\UserComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\TestPoolAttribute.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ComponentIndicesGenerator.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ComponentsGenerator.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_PoolAttributeGenerator.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_PoolsGenerator.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Providers\describe_TypeReflectionProvider.cs" />
@@ -152,9 +151,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentsGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentsGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\PoolAttributeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\PoolAttributeGenerator.cs</Link>
@@ -269,6 +265,10 @@
     <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs">
       <Link>Linked Libraries\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ComponentExtensionsGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

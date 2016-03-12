@@ -3,7 +3,7 @@ using Entitas.CodeGenerator;
 using My.Namespace;
 using NSpec;
 
-class describe_ComponentsGenerator : nspec {
+class describe_ComponentExtensionsGenerator : nspec {
 
     const bool logResults = false;
 
@@ -11,7 +11,7 @@ class describe_ComponentsGenerator : nspec {
 
     void generates(ComponentInfo componentInfo, string expectedFileContent) {
         expectedFileContent = expectedFileContent.ToUnixLineEndings();
-        var files = new ComponentsGenerator().Generate(new[] { componentInfo });
+        var files = new ComponentExtensionsGenerator().Generate(new[] { componentInfo });
         var expectedFilePath = componentInfo.fullTypeName + classSuffix;
 
         files.Length.should_be(1);
@@ -36,7 +36,7 @@ class describe_ComponentsGenerator : nspec {
         it["supports properties"] = () => generates(ComponentWithFieldsAndProperties.componentInfo, ComponentWithFieldsAndProperties.extensions);
         it["ignores [DontGenerate]"] = () => {
             var componentInfo = DontGenerateComponent.componentInfo;
-            var files = new ComponentsGenerator().Generate(new[] { componentInfo });
+            var files = new ComponentExtensionsGenerator().Generate(new[] { componentInfo });
             files.Length.should_be(0);
         };
 
