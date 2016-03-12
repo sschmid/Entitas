@@ -15,19 +15,20 @@ collect_sources() {
   echo "Collecting sources..."
 
   rm -rf $BIN_DIR
-  mkdir $BIN_DIR $SRC_DIR
+  mkdir $BIN_DIR $SRC_DIR $SRC_DIR/$ESU
 
-  cp -r {"$ES/$ES","$MIG/$MIG","$ESU_ASSETS/$ESU"} $SRC_DIR
+  cp -r {"$ES/$ES","$MIG/$MIG"} $SRC_DIR
+  cp -r "$ESU_ASSETS/$ES/Unity/" $SRC_DIR/$ESU
   find "./$SRC_DIR" -name "*.meta" -type f -delete
 
-  header_meta="$ESU/Editor/Entitas-Header.png.meta"
-  cp "$ESU_ASSETS/$header_meta" "$SRC_DIR/$header_meta"
+  header_meta="Editor/Entitas-Header.png.meta"
+  cp "$ESU_ASSETS/$ES/Unity/$header_meta" "$SRC_DIR/$ESU/$header_meta"
 
-  icon_meta="$ESU/VisualDebugging/Editor/EntitasHierarchyIcon.png.meta"
-  cp "$ESU_ASSETS/$icon_meta" "$SRC_DIR/$icon_meta"
+  icon_meta="Editor/EntitasHierarchyIcon.png.meta"
+  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$icon_meta" "$SRC_DIR/$ESU/$icon_meta"
 
-  migration_header_meta="$ESU/Migration/Editor/Entitas-Migration-Header.png.meta"
-  cp "$ESU_ASSETS/$migration_header_meta" "$SRC_DIR/$migration_header_meta"
+  migration_header_meta="Editor/Entitas-Migration-Header.png.meta"
+  cp "$ESU_ASSETS/$ES/Unity/Migration/$migration_header_meta" "$SRC_DIR/$ESU/$migration_header_meta"
 
   echo "Collecting sources done."
 }
@@ -51,6 +52,7 @@ generateProjectFiles() {
 
   # Unity bug: https://support.unity3d.com/hc/en-us/requests/36273
   # /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath "$PWD/$ESU" -executeMethod Commands.GenerateProjectFiles
+  echo "  SKIPPING"
 
   echo "Generating project files done."
 }
@@ -105,6 +107,8 @@ create_zip() {
   mkdir $tmp_editor_dir
   mv "$TMP_DIR/$MIG/"* $tmp_editor_dir
   mv $tmp_editor_dir "$TMP_DIR/$MIG"
+
+  mv "$TMP_DIR/$ESU/" "$TMP_DIR/$ES/Unity/" 
 
   pushd $TMP_DIR > /dev/null
     zip -rq ../Entitas-Unity.zip ./
