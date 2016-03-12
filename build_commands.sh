@@ -25,10 +25,10 @@ collect_sources() {
   cp "$ESU_ASSETS/$ES/Unity/$header_meta" "$SRC_DIR/$ESU/$header_meta"
 
   icon_meta="Editor/EntitasHierarchyIcon.png.meta"
-  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$icon_meta" "$SRC_DIR/$ESU/$icon_meta"
+  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$icon_meta"
 
   migration_header_meta="Editor/Entitas-Migration-Header.png.meta"
-  cp "$ESU_ASSETS/$ES/Unity/Migration/$migration_header_meta" "$SRC_DIR/$ESU/$migration_header_meta"
+  cp "$ESU_ASSETS/$ES/Unity/Migration/$migration_header_meta" "$SRC_DIR/$ESU/Migration/$migration_header_meta"
 
   echo "Collecting sources done."
 }
