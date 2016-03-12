@@ -5,7 +5,7 @@
 
         public string workingDirectory { get { return "project root"; } }
 
-        public string description { get { return "Updates Entitas.properties to use renamed ComponentExtensionsGenerator"; } }
+        public string description { get { return "Updates Entitas.properties to use renamed code generators"; } }
 
         public MigrationFile[] Migrate(string path) {
             var files = MigrationUtils.GetFiles(path, "Entitas.properties");

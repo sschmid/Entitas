@@ -69,7 +69,7 @@ namespace Entitas.Unity {
                     break;
                 case 0:
                     EditorUtility.DisplayDialog("Entitas Update",
-                        "Entitas is up to date (" + localVersionString + ")",
+                        "Entitas is up to date (" + localVersion + ")",
                         "Ok"
                     );
                     break;
