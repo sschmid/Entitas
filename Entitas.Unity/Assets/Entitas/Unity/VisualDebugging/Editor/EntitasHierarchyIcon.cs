@@ -50,11 +50,9 @@ namespace Entitas.Unity.VisualDebugging {
 
                 if (gameObject.GetComponent<PoolObserverBehaviour>() != null) {
                     GUI.DrawTexture(rect, poolHierarchyIcon);
-                }
-                if (gameObject.GetComponent<EntityBehaviour>() != null) {
+                } else if (gameObject.GetComponent<EntityBehaviour>() != null) {
                     GUI.DrawTexture(rect, entityHierarchyIcon);
-                }
-                if (gameObject.GetComponent<DebugSystemsBehaviour>() != null) {
+                } else if (gameObject.GetComponent<DebugSystemsBehaviour>() != null) {
                     GUI.DrawTexture(rect, systemsHierarchyIcon);
                 }
             }

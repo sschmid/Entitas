@@ -24,7 +24,7 @@ namespace Entitas.Unity.VisualDebugging {
         public void Draw(EntitasPreferencesConfig config) {
             EntitasEditorLayout.BeginVerticalBox();
             {
-                EditorGUILayout.LabelField("VisualDebugging", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Visual Debugging", EditorStyles.boldLabel);
 
                 EditorGUI.BeginChangeCheck();
                 {

@@ -39,7 +39,7 @@ namespace Entitas.Unity.CodeGenerator {
         public void Draw(EntitasPreferencesConfig config) {
             EntitasEditorLayout.BeginVerticalBox();
             {
-                EditorGUILayout.LabelField("CodeGenerator", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Code Generator", EditorStyles.boldLabel);
 
                 drawGeneratedFolderPath();
                 drawPools();
