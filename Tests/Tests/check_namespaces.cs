@@ -6,34 +6,37 @@ using System.Text.RegularExpressions;
 using NSpec;
 
 class check_namespaces : nspec {
-    static char _dirChar = Path.DirectorySeparatorChar;
 
     static string getEntitasProjectDir() {
         var dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
         return dirInfo.FullName;
     }
 
+    static string dir(params string[] paths) {
+        return paths.Aggregate(string.Empty, (pathString, p) => pathString + p + Path.DirectorySeparatorChar);
+    }
+
     static Dictionary<string, string> getSourceFiles(string path) {
         return Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories)
-            .Where(p => !p.Contains("Generated" + _dirChar) &&
-                !p.Contains("Libraries" + _dirChar) &&
-                !p.Contains("Tests" + _dirChar) &&
-                !p.Contains("Examples" + _dirChar) &&
-                !p.Contains("Readme" + _dirChar) &&
-                !p.Contains("bin" + _dirChar) &&
-                !p.Contains("obj" + _dirChar) &&
-                !p.Contains("AssemblyInfo.cs") &&
-                !p.Contains("Commands.cs") &&
-                !p.Contains("Program.cs")
-            )
+            .Where(p => !p.Contains(dir("Generated")) &&
+        !p.Contains(dir("Libraries")) &&
+        !p.Contains(dir("Tests")) &&
+        !p.Contains(dir("Examples")) &&
+        !p.Contains(dir("Readme")) &&
+        !p.Contains(dir("bin")) &&
+        !p.Contains(dir("obj")) &&
+        !p.Contains("AssemblyInfo.cs") &&
+        !p.Contains("Commands.cs") &&
+        !p.Contains("Program.cs")
+        )
             .ToDictionary(p => p, p => File.ReadAllText(p));
     }
 
     void when_checking_namespaces() {
         var entitasProjectDir = getEntitasProjectDir();
 
-        var entitasSourceDir = "Entitas" + _dirChar + "Entitas" + _dirChar;
-        var entitasUnitySourceDir = "Entitas.Unity" + _dirChar + "Assets" + _dirChar + "Entitas" + _dirChar + "Unity" + _dirChar;
+        var entitasSourceDir = dir("Entitas", "Entitas");
+        var entitasUnitySourceDir = dir("Entitas.Unity", "Assets", "Entitas", "Unity");
 
         var sourceFiles = getSourceFiles(entitasProjectDir);
 
@@ -41,15 +44,16 @@ class check_namespaces : nspec {
         sourceFiles.Count.should_be_less_than(150);
 
         const string namespacePattern = @"(?:^namespace)\s.*\b";
-        string expectedNamespacePattern = string.Format(@"[^\{0}]*", _dirChar);
+        string expectedNamespacePattern = string.Format(@"[^\{0}]*", Path.DirectorySeparatorChar);
 
         var each = new Each<string, string, string>();
 
         foreach (var file in sourceFiles) {
 
-            var fileName = file.Key
-                .Replace(entitasProjectDir + _dirChar, string.Empty)
+            string expectedNamespace;
 
+            var fileName = file.Key
+                .Replace(dir(entitasProjectDir), string.Empty)
                 .Replace(entitasSourceDir + "CodeGenerator", "Entitas.CodeGenerator")
                 .Replace(entitasSourceDir + "Serialization", "Entitas.Serialization")
 
@@ -57,10 +61,14 @@ class check_namespaces : nspec {
                 .Replace(entitasUnitySourceDir + "VisualDebugging", "Entitas.Unity.VisualDebugging")
                 .Replace(entitasUnitySourceDir + "Migration", "Entitas.Unity.Migration");
 
-            var expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
-                .ToString()
-                .Replace("namespace ", string.Empty)
-                .Trim();
+            if (file.Key.Contains(typeof(Entitas.Feature).Name)) {
+                expectedNamespace = "Entitas";
+            } else {
+                expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
+                    .ToString()
+                    .Replace("namespace ", string.Empty)
+                    .Trim();
+            }
 
             var foundNamespace = Regex.Match(file.Value, namespacePattern, RegexOptions.Multiline)
                 .ToString()
