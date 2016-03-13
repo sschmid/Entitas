@@ -24,8 +24,12 @@ collect_sources() {
   header_meta="Editor/Entitas-Header.png.meta"
   cp "$ESU_ASSETS/$ES/Unity/$header_meta" "$SRC_DIR/$ESU/$header_meta"
 
-  icon_meta="Editor/EntitasHierarchyIcon.png.meta"
-  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$icon_meta"
+  entity_icon_meta="Editor/EntitasEntityHierarchyIcon.png.meta"
+  pool_icon_meta="Editor/EntitasPoolHierarchyIcon.png.meta"
+  systems_icon_meta="Editor/EntitasSystemsHierarchyIcon.png.meta"
+  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$entity_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$entity_icon_meta"
+  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$pool_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$pool_icon_meta"
+  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$systems_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$systems_icon_meta"
 
   migration_header_meta="Editor/Entitas-Migration-Header.png.meta"
   cp "$ESU_ASSETS/$ES/Unity/Migration/$migration_header_meta" "$SRC_DIR/$ESU/Migration/$migration_header_meta"
