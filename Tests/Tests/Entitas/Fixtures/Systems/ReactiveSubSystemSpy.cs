@@ -2,16 +2,16 @@
 using Entitas;
 
 public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
+
     public int didExecute { get { return _didExecute; } }
-
     public bool initialized { get { return _initialized; } }
-
     public Entity[] entities { get { return _entities; } }
 
     public bool replaceComponentAOnExecute;
 
     readonly IMatcher _matcher;
     readonly GroupEventType _eventType;
+
     int _didExecute;
     bool _initialized;
     Entity[] _entities;
@@ -28,6 +28,7 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
     }
 
     public System.Action<List<Entity>> executeAction;
+
     public void Execute(List<Entity> entities) {
 	    if(executeAction == null) {
 			_didExecute++;

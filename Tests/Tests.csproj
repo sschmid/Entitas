@@ -273,6 +273,7 @@
     <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\Feature.cs">
       <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\Feature.cs</Link>
     </Compile>
+    <Compile Include="Tests\Entitas\Fixtures\Systems\GroupObserverSubSystemSpy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

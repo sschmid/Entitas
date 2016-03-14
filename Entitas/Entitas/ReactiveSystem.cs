@@ -22,15 +22,20 @@ namespace Entitas {
 
         /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
         public ReactiveSystem(Pool pool, IReactiveSystem subSystem) :
-            this(pool, subSystem, new [] { subSystem.trigger }) {
+            this(subSystem, createGroupObserver(pool, new [] { subSystem.trigger })) {
         }
 
         /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
         public ReactiveSystem(Pool pool, IMultiReactiveSystem subSystem) :
-            this(pool, subSystem, subSystem.triggers) {
+            this(subSystem, createGroupObserver(pool, subSystem.triggers)) {
         }
 
-        ReactiveSystem(Pool pool, IReactiveExecuteSystem subSystem, TriggerOnEvent[] triggers) {
+        /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
+        public ReactiveSystem(IGroupObserverSystem subSystem) :
+            this(subSystem, subSystem.groupObserver) {
+        }
+
+        ReactiveSystem(IReactiveExecuteSystem subSystem, GroupObserver groupObserver) {
             _subsystem = subSystem;
             var ensureComponents = subSystem as IEnsureComponents;
             if (ensureComponents != null) {
@@ -43,6 +48,11 @@ namespace Entitas {
 
             _clearAfterExecute = (subSystem as IClearReactiveSystem) != null;
 
+            _observer = groupObserver;
+            _buffer = new List<Entity>();
+        }
+
+        static GroupObserver createGroupObserver(Pool pool, TriggerOnEvent[] triggers) {
             var triggersLength = triggers.Length;
             var groups = new Group[triggersLength];
             var eventTypes = new GroupEventType[triggersLength];
@@ -51,8 +61,8 @@ namespace Entitas {
                 groups[i] = pool.GetGroup(trigger.trigger);
                 eventTypes[i] = trigger.eventType;
             }
-            _observer = new GroupObserver(groups, eventTypes);
-            _buffer = new List<Entity>();
+
+            return new GroupObserver(groups, eventTypes);
         }
 
         /// Activates the ReactiveSystem (ReactiveSystem are activated by default) and starts observing changes

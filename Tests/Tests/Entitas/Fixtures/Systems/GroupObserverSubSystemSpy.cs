@@ -1,22 +1,23 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 
-public class MultiReactiveSubSystemSpy : IInitializeSystem, IMultiReactiveSystem {
+public class GroupObserverSubSystemSpy : IInitializeSystem, IGroupObserverSystem {
 
     public int didExecute { get { return _didExecute; } }
     public bool initialized { get { return _initialized; } }
     public Entity[] entities { get { return _entities; } }
 
-    readonly TriggerOnEvent[] _triggers;
+    readonly GroupObserver _groupObserver;
+
     int _didExecute;
     bool _initialized;
     Entity[] _entities;
 
-    public MultiReactiveSubSystemSpy(TriggerOnEvent[] triggers) {
-        _triggers = triggers;
+    public GroupObserverSubSystemSpy(GroupObserver groupObserver) {
+        _groupObserver = groupObserver;
     }
 
-    public TriggerOnEvent[] triggers { get { return _triggers; } }
+    public GroupObserver groupObserver { get { return _groupObserver; } }
 
     public void Initialize() {
         _initialized = true;
