@@ -9,8 +9,8 @@ namespace Entitas.Unity.VisualDebugging {
             return type == typeof(Rect);
         }
 
-        public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
-            return EditorGUILayout.RectField(fieldName, (Rect)value);
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+            return EditorGUILayout.RectField(memberName, (Rect)value);
         }
     }
 }

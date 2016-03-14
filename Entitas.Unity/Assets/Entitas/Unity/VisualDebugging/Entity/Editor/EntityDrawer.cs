@@ -432,7 +432,7 @@ public class Type_TypeDrawer : ITypeDrawer {{
         return type == typeof({0});
     }}
 
-    public object DrawAndGetNewValue(Type type, string memberName, object value, Entity entity, int index, IComponent component) {{
+    public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {{
         // return your implementation to draw the type {0}
         throw new NotImplementedException();
     }}

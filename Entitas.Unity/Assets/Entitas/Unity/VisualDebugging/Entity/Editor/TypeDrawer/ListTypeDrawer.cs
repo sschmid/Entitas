@@ -10,13 +10,13 @@ namespace Entitas.Unity.VisualDebugging {
             return type.GetInterfaces().Contains(typeof(IList));
         }
 
-        public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
             var list = (IList)value;
-            var elementType = type.GetGenericArguments()[0];
+            var elementType = memberType.GetGenericArguments()[0];
             if (list.Count == 0) {
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EditorGUILayout.LabelField(fieldName, "empty");
+                    EditorGUILayout.LabelField(memberName, "empty");
                     if (GUILayout.Button("Add element", GUILayout.Height(14))) {
                         object defaultValue;
                         if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
@@ -26,7 +26,7 @@ namespace Entitas.Unity.VisualDebugging {
                 }
                 EditorGUILayout.EndHorizontal();
             } else {
-                EditorGUILayout.LabelField(fieldName);
+                EditorGUILayout.LabelField(memberName);
             }
 
             var indent = EditorGUI.indentLevel;
@@ -35,7 +35,7 @@ namespace Entitas.Unity.VisualDebugging {
             for (int i = 0; i < list.Count; i++) {
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EntityDrawer.DrawAndSetElement(elementType, fieldName + "[" + i + "]", list[i],
+                    EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + i + "]", list[i],
                         entity, index, component, (newComponent, newValue) => list[i] = newValue);
 
                     if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {

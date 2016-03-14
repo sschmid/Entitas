@@ -8,8 +8,8 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsEnum;
         }
 
-        public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
-            return EditorGUILayout.EnumPopup(fieldName, (Enum)value);
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+            return EditorGUILayout.EnumPopup(memberName, (Enum)value);
         }
     }
 }

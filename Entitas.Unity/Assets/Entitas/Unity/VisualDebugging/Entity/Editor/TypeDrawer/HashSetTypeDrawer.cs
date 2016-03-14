@@ -12,8 +12,8 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(HashSet<>);
         }
 
-        public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
-            var elementType = type.GetGenericArguments()[0];
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+            var elementType = memberType.GetGenericArguments()[0];
             var itemsToRemove = new ArrayList();
             var itemsToAdd = new ArrayList();
             var isEmpty = !((IEnumerable)value).GetEnumerator().MoveNext();
@@ -21,9 +21,9 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.BeginHorizontal();
             {
                 if (isEmpty) {
-                    EditorGUILayout.LabelField(fieldName, "empty");
+                    EditorGUILayout.LabelField(memberName, "empty");
                 } else {
-                    EditorGUILayout.LabelField(fieldName);
+                    EditorGUILayout.LabelField(memberName);
                 }
 
                 if (GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
@@ -59,11 +59,11 @@ namespace Entitas.Unity.VisualDebugging {
             }
 
             foreach (var item in itemsToRemove) {
-                type.GetMethod("Remove").Invoke(value, new [] { item });
+                memberType.GetMethod("Remove").Invoke(value, new [] { item });
             }
 
             foreach (var item in itemsToAdd) {
-                type.GetMethod("Add").Invoke(value, new [] { item });
+                memberType.GetMethod("Add").Invoke(value, new [] { item });
             }
 
             return value;

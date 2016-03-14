@@ -9,8 +9,8 @@ namespace Entitas.Unity.VisualDebugging {
             return type == typeof(Color);
         }
 
-        public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
-            return EditorGUILayout.ColorField(fieldName, (Color)value);
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+            return EditorGUILayout.ColorField(memberName, (Color)value);
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Entitas.Unity.VisualDebugging {
             return type == typeof(int);
         }
 
-        public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
-            return EditorGUILayout.IntField(fieldName, (int)value);
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+            return EditorGUILayout.IntField(memberName, (int)value);
         }
     }
 }

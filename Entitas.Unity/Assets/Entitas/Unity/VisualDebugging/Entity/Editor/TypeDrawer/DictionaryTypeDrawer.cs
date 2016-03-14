@@ -10,17 +10,17 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>);
         }
 
-        public object DrawAndGetNewValue(Type type, string fieldName, object value, Entity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
             var dictionary = (IDictionary)value;
-            var keyType = type.GetGenericArguments()[0];
-            var valueType = type.GetGenericArguments()[1];
+            var keyType = memberType.GetGenericArguments()[0];
+            var valueType = memberType.GetGenericArguments()[1];
 
             EditorGUILayout.BeginHorizontal();
             {
                 if (dictionary.Count == 0) {
-                    EditorGUILayout.LabelField(fieldName, "empty");
+                    EditorGUILayout.LabelField(memberName, "empty");
                 } else {
-                    EditorGUILayout.LabelField(fieldName);
+                    EditorGUILayout.LabelField(memberName);
                 }
                 if (GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
                     object defaultKey;
