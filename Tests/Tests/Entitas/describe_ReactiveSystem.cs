@@ -254,11 +254,6 @@ class describe_ReactiveSystem : nspec {
             Pool pool2 = null;
 
             before = () => {
-                var triggers = new [] {
-                    Matcher.AllOf(new [] { CID.ComponentA }).OnEntityAdded(),
-                    Matcher.AllOf(new [] { CID.ComponentB }).OnEntityRemoved()
-                };
-
                 pool1 = new Pool(CID.NumComponents);
                 pool2 = new Pool(CID.NumComponents);
 

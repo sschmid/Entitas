@@ -51,6 +51,18 @@ namespace Entitas {
 
             return system;
         }
+
+        public static GroupObserver CreateGroupObserver(this Pool[] pools, IMatcher matcher, GroupEventType eventType = GroupEventType.OnEntityAdded) {
+            var groups = new Group[pools.Length];
+            var eventTypes = new GroupEventType[pools.Length];
+
+            for (int i = 0, poolsLength = pools.Length; i < poolsLength; i++) {
+                groups[i] = pools[i].GetGroup(matcher);
+                eventTypes[i] = eventType;
+            }
+
+            return new GroupObserver(groups, eventTypes);
+        }
     }
 }
 
