@@ -4,11 +4,11 @@ namespace Entitas.Serialization.Blueprints {
 
     [Serializable]
     public struct SerializableMember {
-        public string fieldName;
+        public string name;
         public object value;
 
-        public SerializableMember(string fieldName, object value) {
-            this.fieldName = fieldName;
+        public SerializableMember(string name, object value) {
+            this.name = name;
             this.value = value;
         }
     }

@@ -31,12 +31,37 @@ class describe_Blueprints : nspec {
                 componentBlueprint.fullTypeName.should_be(component.GetType().FullName);
                 componentBlueprint.members.Length.should_be(2);
 
-                componentBlueprint.members[0].fieldName.should_be("name");
+                componentBlueprint.members[0].name.should_be("name");
                 componentBlueprint.members[0].value.should_be(component.name);
 
-                componentBlueprint.members[1].fieldName.should_be("age");
+                componentBlueprint.members[1].name.should_be("age");
                 componentBlueprint.members[1].value.should_be(component.age);
             };
+
+            it["creates a component with and sets members values"] = () => {
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.fullTypeName = typeof(ComponentWithFieldsAndProperties).FullName;
+                componentBlueprint.index = CID.ComponentB;
+                componentBlueprint.members = new [] {
+                    new SerializableMember("publicField", "publicFieldValue"),
+                    new SerializableMember("publicProperty", "publicPropertyValue")
+                };
+
+                var component = (ComponentWithFieldsAndProperties)componentBlueprint.CreateComponent();
+                component.publicField.should_be("publicFieldValue");
+                component.publicProperty.should_be("publicPropertyValue");
+            };
+
+            it["throws when invalid member name"] = expect<ComponentBlueprintException>(() => {
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.index = 0;
+                componentBlueprint.fullTypeName = typeof(NameAgeComponent).FullName;
+                componentBlueprint.members = new [] {
+                    new SerializableMember("xxx", "publicFieldValue"),
+                    new SerializableMember("publicProperty", "publicPropertyValue")
+                };
+                componentBlueprint.CreateComponent();
+            });
         };
 
         context["Blueprint"] = () => {
@@ -62,38 +87,41 @@ class describe_Blueprints : nspec {
                 blueprint.components[1].index.should_be(CID.ComponentB);
                 blueprint.components[1].fullTypeName.should_be(component.GetType().FullName);
             };
+
+            it["applies blueprint to entity"] = () => {
+
+                var component1 = new ComponentBlueprint();
+                component1.index = CID.ComponentA;
+                component1.fullTypeName = typeof(ComponentA).FullName;
+                component1.members = new SerializableMember[0];
+
+                var component2 = new ComponentBlueprint();
+                component2.index = CID.ComponentB;
+                component2.fullTypeName = typeof(NameAgeComponent).FullName;
+                component2.members = new [] {
+                    new SerializableMember("name", "Max"),
+                    new SerializableMember("age", 42)
+                };
+
+                var blueprint = new Blueprint();
+                blueprint.name = "Hero";
+                blueprint.components = new [] { component1, component2 };
+
+                var pool = new Pool(CID.NumComponents);
+                var e = pool.CreateEntity();
+
+                e.ApplyBlueprint(blueprint);
+
+                e.GetComponents().Length.should_be(2);
+
+                e.GetComponent(CID.ComponentA).GetType().should_be(typeof(ComponentA));
+
+                var nameAgeComponent = (NameAgeComponent)e.GetComponent(CID.ComponentB);
+                nameAgeComponent.GetType().should_be(typeof(NameAgeComponent));
+                nameAgeComponent.name.should_be("Max");
+                nameAgeComponent.age.should_be(42);
+            };
         };
     }
 }
 
-//Hero:
-//  PositionComponent:
-//  index: 42
-//    fields:
-//      x: 1
-//      y: 2
-//      z: 3
-//  ResourceComponent:
-//    index: 24
-//    fields:
-//      name: "Gem0"
-
-
-//{
-//    "Hero": {
-//        "ResourceComponent": {
-//            "index": 24,
-//            "members": {
-//                "name": "Hero"
-//            }
-//        },
-//        "PositionComponent": {
-//            "index": 42,
-//            "members": {
-//                "y": 2,
-//                "x": 1,
-//                "z": 3
-//            }
-//        }
-//    }
-//}
