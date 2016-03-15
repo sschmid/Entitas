@@ -19,16 +19,16 @@ class check_namespaces : nspec {
     static Dictionary<string, string> getSourceFiles(string path) {
         return Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories)
             .Where(p => !p.Contains(dir("Generated")) &&
-        !p.Contains(dir("Libraries")) &&
-        !p.Contains(dir("Tests")) &&
-        !p.Contains(dir("Examples")) &&
-        !p.Contains(dir("Readme")) &&
-        !p.Contains(dir("bin")) &&
-        !p.Contains(dir("obj")) &&
-        !p.Contains("AssemblyInfo.cs") &&
-        !p.Contains("Commands.cs") &&
-        !p.Contains("Program.cs")
-        )
+                !p.Contains(dir("Libraries")) &&
+                !p.Contains(dir("Tests")) &&
+                !p.Contains(dir("Examples")) &&
+                !p.Contains(dir("Readme")) &&
+                !p.Contains(dir("bin")) &&
+                !p.Contains(dir("obj")) &&
+                !p.Contains("AssemblyInfo.cs") &&
+                !p.Contains("Commands.cs") &&
+                !p.Contains("Program.cs")
+            )
             .ToDictionary(p => p, p => File.ReadAllText(p));
     }
 
@@ -55,6 +55,7 @@ class check_namespaces : nspec {
             var fileName = file.Key
                 .Replace(dir(entitasProjectDir), string.Empty)
                 .Replace(entitasSourceDir + "CodeGenerator", "Entitas.CodeGenerator")
+                .Replace(entitasSourceDir + dir("Serialization", "Blueprints"), "Entitas.Serialization.Blueprints/")
                 .Replace(entitasSourceDir + "Serialization", "Entitas.Serialization")
 
                 .Replace(entitasUnitySourceDir + "CodeGenerator", "Entitas.Unity.CodeGenerator")

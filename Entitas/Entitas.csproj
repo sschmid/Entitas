@@ -74,6 +74,9 @@
     <Compile Include="Entitas\Serialization\TypeSerializationExtension.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\PoolAttributesGenerator.cs" />
+    <Compile Include="Entitas\Serialization\Blueprints\Blueprint.cs" />
+    <Compile Include="Entitas\Serialization\Blueprints\ComponentBlueprint.cs" />
+    <Compile Include="Entitas\Serialization\Blueprints\SerializableMember.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -87,5 +90,6 @@
     <Folder Include="Entitas\CodeGenerator\Interfaces\" />
     <Folder Include="Entitas\CodeGenerator\Intermediate\" />
     <Folder Include="Entitas\CodeGenerator\Providers\" />
+    <Folder Include="Entitas\Serialization\Blueprints\" />
   </ItemGroup>
 </Project>
