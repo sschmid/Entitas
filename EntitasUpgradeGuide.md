@@ -40,7 +40,7 @@ $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/Generated/
 Some code generators got renamed. Apply Migration 0.30.0
 
 
-# Entitas 0.29.0
+# Entitas 0.29.0 upgrade guide
 Marked old PoolMetaData constructor obsolete. If you encounter compile errors
 please apply Migration 0.26.0, open C# project and generate again.
 
