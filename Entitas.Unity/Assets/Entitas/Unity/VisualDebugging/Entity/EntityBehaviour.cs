@@ -23,5 +23,9 @@ namespace Entitas.Unity.VisualDebugging {
         void Update() {
             name = _entity.ToString();
         }
+
+        void OnDestroy() {
+            _entity.OnEntityReleased -= onEntityReleased;
+        }
     }
 }
