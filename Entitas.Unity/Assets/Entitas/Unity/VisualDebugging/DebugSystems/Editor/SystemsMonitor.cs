@@ -7,7 +7,7 @@ namespace Entitas.Unity.VisualDebugging {
     public class SystemsMonitor {
         public float xBorder = 48;
         public float yBorder = 20;
-        public int rightLinePadding = 10;
+        public int rightLinePadding = -15;
         public string labelFormat = "{0:0.0}";
         public string axisFormat = "{0:0.0}";
         public int gridLines = 1;
@@ -36,7 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public void Draw(float[] data, float height) {
-            var rect = GUILayoutUtility.GetRect(Screen.width, height);
+            var rect = GUILayoutUtility.GetRect(EditorGUILayout.GetControlRect().width, height);
             var top = rect.y + yBorder;
             var floor = rect.y + rect.height - yBorder;
             var availableHeight = floor - top;
@@ -45,11 +45,11 @@ namespace Entitas.Unity.VisualDebugging {
                 max = max + axisRounding - (max % axisRounding);
             }
 
-            drawGridLines(top, availableHeight, max);
-            drawLine(data, floor, availableHeight, max);
+            drawGridLines(top, rect.width, availableHeight, max);
+            drawLine(data, floor, rect.width, availableHeight, max);
         }
 
-        void drawGridLines(float top, float availableHeight, float max) {
+        void drawGridLines(float top, float width, float availableHeight, float max) {
             var handleColor = Handles.color;
             Handles.color = Color.grey;
             var n = gridLines + 1;
@@ -58,7 +58,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var lineY = top + (lineSpacing * i);
                 Handles.DrawLine(
                     new Vector2(xBorder, lineY),
-                    new Vector2(Screen.width - rightLinePadding, lineY)
+                    new Vector2(width - rightLinePadding, lineY)
                 );
                 GUI.Label(
                     new Rect(0, lineY - 8, xBorder - 2, 50),
@@ -69,8 +69,8 @@ namespace Entitas.Unity.VisualDebugging {
             Handles.color = handleColor;
         }
 
-        void drawLine(float[] data, float floor, float availableHeight, float max) {
-            var lineWidth = (float)(Screen.width - xBorder - rightLinePadding) / data.Length;
+        void drawLine(float[] data, float floor, float width, float availableHeight, float max) {
+            var lineWidth = (float)(width - xBorder - rightLinePadding) / data.Length;
             var handleColor = Handles.color;
             var labelRect = new Rect();
             Vector2 newLine;
