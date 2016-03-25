@@ -40,6 +40,11 @@ class describe_TypeReflectionProvider : nspec {
                 provider.componentInfos.should_be_empty();
             };
 
+            it["finds no components and ignores abstract classes"] = () => {
+                var provider = new TypeReflectionProvider(new [] { typeof(AbstractComponent) }, new string[0]);
+                provider.componentInfos.should_be_empty();
+            };
+
             it["creates component info from found component"] = () => {
                 var provider = new TypeReflectionProvider(new [] { typeof(ComponentA) }, new string[0]);
                 provider.componentInfos.Length.should_be(1);

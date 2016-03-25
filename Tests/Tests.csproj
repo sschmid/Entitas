@@ -274,6 +274,7 @@
       <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\Feature.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\Fixtures\Systems\GroupObserverSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\AbstractComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
