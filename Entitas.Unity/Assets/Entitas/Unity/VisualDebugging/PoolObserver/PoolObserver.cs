@@ -38,11 +38,19 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public override string ToString() {
+            if (_pool.retainedEntitiesCount != 0) {
+                return _entitiesContainer.name = 
+                    _pool.metaData.poolName + " (" +
+                    _pool.count + " entities, " +
+                    _pool.reusableEntitiesCount + " reusable, " +
+                    _pool.retainedEntitiesCount + " retained, " +
+                    _groups.Count + " groups)";
+            }
+
             return _entitiesContainer.name = 
                 _pool.metaData.poolName + " (" +
                 _pool.count + " entities, " +
                 _pool.reusableEntitiesCount + " reusable, " +
-                _pool.retainedEntitiesCount + " retained, " +
                 _groups.Count + " groups)";
         }
     }
