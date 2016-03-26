@@ -55,7 +55,8 @@ generateProjectFiles() {
   PWD=$(pwd)
 
   # Unity bug: https://support.unity3d.com/hc/en-us/requests/36273
-  # /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath "$PWD/$ESU" -executeMethod Commands.GenerateProjectFiles
+  # Fixed in 5.3.4p1
+  /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath "$PWD/$ESU/Assets/../" -executeMethod Commands.GenerateProjectFiles
   echo "  SKIPPING"
 
   echo "Generating project files done."
