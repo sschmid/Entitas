@@ -60,6 +60,33 @@ namespace Entitas.Unity.VisualDebugging {
             }
             GUI.backgroundColor = bgColor;
 
+            DrawComponents(pool, entity);
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.LabelField("Retained by (" + entity.retainCount + ")", EditorStyles.boldLabel);
+
+            #if !ENTITAS_FAST_AND_UNSAFE
+
+            EntitasEditorLayout.BeginVerticalBox();
+            {
+                foreach (var owner in entity.owners.ToArray()) {
+                    EntitasEditorLayout.BeginHorizontal();
+                    {
+                        EditorGUILayout.LabelField(owner.ToString());
+                        if (GUILayout.Button("Release", GUILayout.Width(88), GUILayout.Height(14))) {
+                            entity.Release(owner);
+                        }
+                        EntitasEditorLayout.EndHorizontal();
+                    }
+                }
+            }
+            EntitasEditorLayout.EndVertical();
+
+            #endif
+        }
+
+        public static void DrawComponents(Pool pool, Entity entity) {
             bool[] unfoldedComponents;
             if (!_poolToUnfoldedComponents.TryGetValue(pool, out unfoldedComponents)) {
                 unfoldedComponents = new bool[pool.totalComponents];
@@ -119,29 +146,6 @@ namespace Entitas.Unity.VisualDebugging {
                 for (int i = 0; i < components.Length; i++) {
                     DrawComponent(unfoldedComponents, entity, indices[i], components[i]);
                 }
-
-                EditorGUILayout.Space();
-
-                EditorGUILayout.LabelField("Retained by (" + entity.retainCount + ")", EditorStyles.boldLabel);
-
-                #if !ENTITAS_FAST_AND_UNSAFE
-
-                EntitasEditorLayout.BeginVerticalBox();
-                {
-                    foreach (var owner in entity.owners.ToArray()) {
-                        EntitasEditorLayout.BeginHorizontal();
-                        {
-                            EditorGUILayout.LabelField(owner.ToString());
-                            if (GUILayout.Button("Release", GUILayout.Width(88), GUILayout.Height(14))) {
-                                entity.Release(owner);
-                            }
-                            EntitasEditorLayout.EndHorizontal();
-                        }
-                    }
-                }
-                EntitasEditorLayout.EndVertical();
-
-                #endif
             }
             EntitasEditorLayout.EndVertical();
         }

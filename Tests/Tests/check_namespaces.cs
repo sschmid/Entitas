@@ -60,6 +60,7 @@ class check_namespaces : nspec {
 
                 .Replace(entitasUnitySourceDir + "CodeGenerator", "Entitas.Unity.CodeGenerator")
                 .Replace(entitasUnitySourceDir + "VisualDebugging", "Entitas.Unity.VisualDebugging")
+                .Replace(entitasUnitySourceDir + dir("Serialization", "Blueprints"), "Entitas.Unity.Serialization.Blueprints/")
                 .Replace(entitasUnitySourceDir + "Migration", "Entitas.Unity.Migration");
 
             if (file.Key.Contains(typeof(Entitas.Feature).Name) ||
