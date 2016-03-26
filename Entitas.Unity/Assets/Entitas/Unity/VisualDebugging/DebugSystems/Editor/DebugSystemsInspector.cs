@@ -176,11 +176,11 @@ namespace Entitas.Unity.VisualDebugging {
                             }
                         }
 
-                        var avg = string.Format("Ø {0:0.000}", systemInfo.averageExecutionDuration).PadRight(9);
-                        var min = string.Format("min {0:0.000}", systemInfo.minExecutionDuration).PadRight(11);
-                        var max = string.Format("max {0:0.000}", systemInfo.maxExecutionDuration);
+                        var avg = string.Format("Ø {0:00.000}", systemInfo.averageExecutionDuration).PadRight(12);
+                        var min = string.Format("▼ {0:00.000}", systemInfo.minExecutionDuration).PadRight(12);
+                        var max = string.Format("▲ {0:00.000}", systemInfo.maxExecutionDuration);
 
-                        EditorGUILayout.LabelField(systemInfo.systemName, avg + "\t" + min + "\t" + max, getSystemStyle(systemInfo));
+                        EditorGUILayout.LabelField(systemInfo.systemName, avg + min + max, getSystemStyle(systemInfo));
                     }
                     EntitasEditorLayout.EndHorizontal();
 

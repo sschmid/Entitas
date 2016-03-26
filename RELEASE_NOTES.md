@@ -1,3 +1,39 @@
+# 0.30.0
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+##### Entitas
+- Added IGroupObserverSystem which allows ReactiveSystems to observe multiple pools
+- Added pools.CreateGroupObserver() to simplify creating a GroupObserver for multiple pools
+
+##### Entitas.CodeGenerator
+- TypeReflectionProvider ignores abstract IComponents (#88)
+- Renamed ComponentsGenerator to ComponentExtensionsGenerator
+- Renamed PoolAttributeGenerator to PoolAttributesGenerator
+
+##### Entitas.Unity
+- Moved Assets/Entitas.Unity to Assets/Entitas/Unity
+- Simplified folder structure in Entitas-Unity.zip
+
+##### Entitas.Unity.CodeGenerator
+- Ignoring obsolete code generators
+- Generate button changes size depending on generators list height
+
+##### Entitas.Unity.VisualDebugging
+- Added Feature class which inherits from Systems or DebugSystems for you, so you don't have to care anymore
+- Fixed MissingReferenceException occurring occasionally when stopping game (#71)
+- Added support for editing entities in EditorMode (non-playing mode)
+- Fixed bug when components are added on entity creation (#87)
+- Added clear buttons to search textfields
+- Improved DateTimeTypeDrawer
+- Added new hierarchy icons for pool and systems
+
+##### Entitas.Migration
+- Added M0300
+- Moving Entitas.Migration into Entitas/Migration/Editor when creating Entitas-Unity.zip
+
+
 # 0.29.1
 
 ##### Entitas.CodeGenerator

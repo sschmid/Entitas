@@ -27,7 +27,7 @@ namespace Entitas.Unity.VisualDebugging {
                 }
             }
             var changed = EditorGUI.EndChangeCheck();
-            if (changed) {
+            if (changed && target != null) {
                 EditorUtility.SetDirty(target);
             }
         }

@@ -15,6 +15,15 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
+        static Texture2D poolErrorHierarchyIcon {
+            get {
+                if (_poolErrorHierarchyIcon == null) {
+                    _poolErrorHierarchyIcon = EntitasEditorLayout.LoadTexture("l:PoolErrorHierarchyIcon");
+                }
+                return _poolErrorHierarchyIcon;
+            }
+        }
+
         static Texture2D entityHierarchyIcon {
             get {
                 if (_entityhierarchyIcon == null) {
@@ -34,6 +43,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static Texture2D _poolHierarchyIcon;
+        static Texture2D _poolErrorHierarchyIcon;
         static Texture2D _entityhierarchyIcon;
         static Texture2D _systemsHierarchyIcon;
 
@@ -48,8 +58,13 @@ namespace Entitas.Unity.VisualDebugging {
                 const float iconOffset = iconSize + 2f;
                 var rect = new Rect(selectionRect.x + selectionRect.width - iconOffset, selectionRect.y, iconSize, iconSize);
 
-                if (gameObject.GetComponent<PoolObserverBehaviour>() != null) {
-                    GUI.DrawTexture(rect, poolHierarchyIcon);
+                var poolObserver = gameObject.GetComponent<PoolObserverBehaviour>();
+                if (poolObserver != null) {
+                    if (poolObserver.poolObserver.pool.retainedEntitiesCount != 0) {
+                        GUI.DrawTexture(rect, poolErrorHierarchyIcon);
+                    } else {
+                        GUI.DrawTexture(rect, poolHierarchyIcon);
+                    }
                 } else if (gameObject.GetComponent<EntityBehaviour>() != null) {
                     GUI.DrawTexture(rect, entityHierarchyIcon);
                 } else if (gameObject.GetComponent<DebugSystemsBehaviour>() != null) {

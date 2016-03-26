@@ -23,8 +23,6 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.LabelField("Retained entities", retainedEntitiesCount.ToString());
                     GUI.color = c;
                     EditorGUILayout.HelpBox("WARNING: There are retained entities.\nDid you call entity.Retain(owner) and forgot to call entity.Release(owner)?", MessageType.Warning);
-                } else {
-                    EditorGUILayout.LabelField("Retained entities", retainedEntitiesCount.ToString());
                 }
 
                 EntitasEditorLayout.BeginHorizontal();
@@ -32,7 +30,7 @@ namespace Entitas.Unity.VisualDebugging {
                     if (GUILayout.Button("Create Entity")) {
                         var entity = poolObserver.pool.CreateEntity();
                         var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
-                                                    .Single(eb => eb.name == entity.ToString());
+                                                    .Single(eb => eb.entity == entity);
 
                         Selection.activeGameObject = entityBehaviour.gameObject;
                     }
