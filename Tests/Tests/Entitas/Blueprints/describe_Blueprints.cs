@@ -19,6 +19,18 @@ class describe_Blueprints : nspec {
                 componentBlueprint.members.Length.should_be(0);
             };
 
+            it["throws when unknown type"] = expect<ComponentBlueprintException>(() => {
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.fullTypeName = "UnknownType";
+                componentBlueprint.CreateComponent();
+            });
+
+            it["throws when type doesn't implement IComponent"] = expect<ComponentBlueprintException>(() => {
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.fullTypeName = "string";
+                componentBlueprint.CreateComponent();
+            });
+
             it["creates a component blueprint from a component with members"] = () => {
                 var component = new NameAgeComponent();
                 component.name = "Max";

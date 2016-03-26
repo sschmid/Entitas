@@ -11,12 +11,14 @@ namespace Entitas.Serialization.Blueprints {
         public string fullTypeName;
         public SerializableMember[] members;
 
-        public ComponentBlueprint(int index, IComponent component) {
-            var type = component.GetType();
-            this.index = index;
-            this.fullTypeName = type.FullName;
+        Type _type;
 
-            var memberInfos = type.GetPublicMemberInfos();
+        public ComponentBlueprint(int index, IComponent component) {
+            _type = component.GetType();
+            this.index = index;
+            this.fullTypeName = _type.FullName;
+
+            var memberInfos = _type.GetPublicMemberInfos();
             members = new SerializableMember[memberInfos.Length];
             for (int i = 0, memberInfosLength = memberInfos.Length; i < memberInfosLength; i++) {
                 var info = memberInfos[i];
@@ -25,38 +27,35 @@ namespace Entitas.Serialization.Blueprints {
         }
 
         public IComponent CreateComponent() {
-            var type = getComponentType(fullTypeName);
-            var component = (IComponent)Activator.CreateInstance(type);
-            var componentMembers = type.GetPublicMemberInfos().ToDictionary(info => info.name);
+            if (_type == null) {
+                _type = fullTypeName.ToType();
+
+                if (_type == null) {
+                    throw new ComponentBlueprintException("Type '" + fullTypeName + "' doesn't exist in any assembly!",
+                        "Please check the full type name.");
+                }
+                
+                if (!_type.ImplementsInterface<IComponent>()) {
+                    throw new ComponentBlueprintException("Type '" + fullTypeName + "' doesn't implement IComponent!",
+                        typeof(ComponentBlueprint).Name + " only supports IComponent.");
+                }
+            }
+
+            var component = (IComponent)Activator.CreateInstance(_type);
+            var componentMembers = _type.GetPublicMemberInfos().ToDictionary(info => info.name);
 
             for (int i = 0, membersLength = members.Length; i < membersLength; i++) {
                 var member = members[i];
 
                 PublicMemberInfo memberInfo;
                 if (!componentMembers.TryGetValue(member.name, out memberInfo)) {
-                    throw new ComponentBlueprintException("Could not find member '" + member.name + "' in Type '" + type.FullName + "'!", "Only non-static public members are supported.");
+                    throw new ComponentBlueprintException("Could not find member '" + member.name + "' in type '" + _type.FullName + "'!", "Only non-static public members are supported.");
                 }
 
                 memberInfo.SetValue(component, member.value);
             }
 
             return component;
-        }
-
-        static Type getComponentType(string fullTypeName) {
-            var componentType = Type.GetType(fullTypeName);
-            if (componentType != null) {
-                return componentType;
-            }
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-                componentType = assembly.GetType(fullTypeName);
-                if (componentType != null) {
-                    return componentType;
-                }
-            }
-
-            throw new ComponentBlueprintException("Type '" + fullTypeName + "' doesn't exist in any assembly!",
-                "Please check the full type name.");
         }
     }
 

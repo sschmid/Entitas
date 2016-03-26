@@ -1,6 +1,7 @@
-﻿using NSpec;
+﻿using System;
 using Entitas;
-using System;
+using Entitas.Serialization.Blueprints;
+using NSpec;
 
 class describe_EntitasErrorMessages : nspec {
     static void printErrorMessage(Action action) {
@@ -135,29 +136,31 @@ class describe_EntitasErrorMessages : nspec {
             });
         };
 
+        context["ComponentBlueprint"] = () => {
 
-        // TODO
-//        context["ComponentBlueprint"] = () => {
-//
-//            it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
-//                new ComponentBlueprint(42, typeof(FakeComponent).FullName, null);
-//            });
-//
-//            it["type doesn't exist"] = () => printErrorMessage(() => {
-//                new ComponentBlueprint(42, "UnknownType", null);
-//            });
-//
-//            it["invalid field name"] = () => printErrorMessage(() => {
-//                new ComponentBlueprint(42, typeof(ComponentA).FullName, new SerializableField {
-//                    fieldName = "unknownField",
-//                    value = 42
-//                });
-//            });
+            it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
+                new ComponentBlueprint {fullTypeName = "string", index = 42, members = null}.CreateComponent();
+            });
+
+            it["type doesn't exist"] = () => printErrorMessage(() => {
+                new ComponentBlueprint {fullTypeName = "UnknownType", index = 42, members = null}.CreateComponent();
+            });
+
+            it["invalid field name"] = () => printErrorMessage(() => {
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.index = 0;
+                componentBlueprint.fullTypeName = typeof(NameAgeComponent).FullName;
+                componentBlueprint.members = new [] {
+                    new SerializableMember("xxx", "publicFieldValue"),
+                    new SerializableMember("publicProperty", "publicPropertyValue")
+                };
+                componentBlueprint.CreateComponent();
+            });
 //
 //            it["mssing [SerializableAttribute]"] = () => printErrorMessage(() => {
 //                new ComponentBlueprint(1, new ComponentA());
 //            });
-//        };
+        };
     }
 }
 
