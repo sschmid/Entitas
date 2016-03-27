@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Entitas.Serialization;
 
 namespace Entitas.CodeGenerator {
@@ -38,7 +38,7 @@ namespace Entitas.CodeGenerator {
             );
         }
 
-        public static PublicMemberInfo[] GetPublicMemberInfo(Type type) {
+        public static List<PublicMemberInfo> GetPublicMemberInfo(Type type) {
             return type.GetPublicMemberInfos();
         }
 

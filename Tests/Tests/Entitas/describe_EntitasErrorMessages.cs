@@ -139,11 +139,16 @@ class describe_EntitasErrorMessages : nspec {
         context["ComponentBlueprint"] = () => {
 
             it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
-                new ComponentBlueprint {fullTypeName = "string", index = 42, members = null}.CreateComponent(entity);
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.fullTypeName = "string";
+                componentBlueprint.CreateComponent(entity);
             });
 
             it["type doesn't exist"] = () => printErrorMessage(() => {
-                new ComponentBlueprint {fullTypeName = "UnknownType", index = 42, members = null}.CreateComponent(entity);
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.fullTypeName = "UnknownType";
+                componentBlueprint.CreateComponent(entity);
+                componentBlueprint.CreateComponent(entity);
             });
 
             it["invalid field name"] = () => printErrorMessage(() => {

@@ -8,7 +8,7 @@ public class DontGenerateComponent : IComponent {
         get {
             return new ComponentInfo(
                 typeof(DontGenerateComponent).ToCompilableString(),
-                new PublicMemberInfo[0],
+                new System.Collections.Generic.List<PublicMemberInfo>(),
                 new string[0],
                 false,
                 "is",

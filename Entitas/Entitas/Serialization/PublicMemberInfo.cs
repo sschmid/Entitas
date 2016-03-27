@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 
 namespace Entitas.Serialization {
 
-    public struct PublicMemberInfo {
+    public class PublicMemberInfo {
 
         public Type type {
             get {
@@ -53,14 +52,25 @@ namespace Entitas.Serialization {
 
     public static class PublicMemberInfoExtension {
 
-        public static PublicMemberInfo[] GetPublicMemberInfos(this Type type) {
+        public static List<PublicMemberInfo> GetPublicMemberInfos(this Type type) {
             const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
-            var fieldInfos = type.GetFields(bindingFlags).Select(info => new PublicMemberInfo(info));
-            var propertyInfos = type.GetProperties(bindingFlags)
-                .Where(info => info.CanRead && info.CanWrite)
-                .Select(info => new PublicMemberInfo(info));
 
-            return fieldInfos.Concat(propertyInfos).ToArray();
+            var fieldInfos = type.GetFields(bindingFlags);
+            var propertyInfos = type.GetProperties(bindingFlags);
+            var memberInfos = new List<PublicMemberInfo>(fieldInfos.Length + propertyInfos.Length);
+
+            for (int i = 0, fieldInfosLength = fieldInfos.Length; i < fieldInfosLength; i++) {
+                memberInfos.Add(new PublicMemberInfo(fieldInfos[i]));
+            }
+
+            for (int i = 0, propertyInfosLength = propertyInfos.Length; i < propertyInfosLength; i++) {
+                var info = propertyInfos[i];
+                if (info.CanRead && info.CanWrite) {
+                    memberInfos.Add(new PublicMemberInfo(info));
+                }
+            }
+
+            return memberInfos;
         }
 
         public static object PublicMemberClone(this object obj) {
@@ -77,7 +87,7 @@ namespace Entitas.Serialization {
 
         public static void CopyPublicMemberValues(this object source, object target) {
             var memberInfos = source.GetType().GetPublicMemberInfos();
-            for (int i = 0, memberInfosLength = memberInfos.Length; i < memberInfosLength; i++) {
+            for (int i = 0, memberInfosLength = memberInfos.Count; i < memberInfosLength; i++) {
                 var info = memberInfos[i];
                 info.SetValue(target, info.GetValue(source));
             }

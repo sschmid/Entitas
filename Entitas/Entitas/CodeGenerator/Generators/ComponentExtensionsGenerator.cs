@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Serialization;
 
@@ -313,7 +314,7 @@ $assign
                         .Replace("$prefix", "{9}");
         }
 
-        static string memberNamesWithType(PublicMemberInfo[] memberInfos) {
+        static string memberNamesWithType(List<PublicMemberInfo> memberInfos) {
             var typedArgs = memberInfos
                 .Select(info => info.type.ToCompilableString() + " new" + info.name.UppercaseFirst())
                 .ToArray();
@@ -321,7 +322,7 @@ $assign
             return string.Join(", ", typedArgs);
         }
 
-        static string memberAssignments(PublicMemberInfo[] memberInfos) {
+        static string memberAssignments(List<PublicMemberInfo> memberInfos) {
             const string format = "            component.{0} = {1};";
             var assignments = memberInfos.Select(info => {
                 var newArg = "new" + info.name.UppercaseFirst();
@@ -331,7 +332,7 @@ $assign
             return string.Join("\n", assignments);
         }
 
-        static string memberNames(PublicMemberInfo[] memberInfos) {
+        static string memberNames(List<PublicMemberInfo> memberInfos) {
             var args = memberInfos.Select(info => "new" + info.name.UppercaseFirst()).ToArray();
             return string.Join(", ", args);
         }

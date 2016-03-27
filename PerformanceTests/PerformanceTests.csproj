@@ -63,7 +63,6 @@
     <Compile Include="PerformanceTests\Entity\EntityAddComponent.cs" />
     <Compile Include="PerformanceTests\Entity\ObjectGetProperty.cs" />
     <Compile Include="PerformanceTests\Observer\ObserverIterateCollectedEntities.cs" />
-    <Compile Include="PerformanceTests\Properties\PropertiesCreate.cs" />
     <Compile Include="PerformanceTests\DataStructures\QueueDequeue.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListQueue.cs" />
     <Compile Include="PerformanceTests\Pool\PoolCreateEntity.cs" />
@@ -77,6 +76,7 @@
     <Compile Include="PerformanceTests\Helper.cs" />
     <Compile Include="PerformanceTests\Misc\NewInstanceT.cs" />
     <Compile Include="PerformanceTests\Misc\NewInstanceActivator.cs" />
+    <Compile Include="PerformanceTests\Pool\PoolCreateBlueprint.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -86,7 +86,6 @@
     <Folder Include="PerformanceTests\EntityMatcher\" />
     <Folder Include="PerformanceTests\DataStructures\" />
     <Folder Include="PerformanceTests\Observer\" />
-    <Folder Include="PerformanceTests\Properties\" />
     <Folder Include="PerformanceTests\Pool\" />
     <Folder Include="PerformanceTests\Misc\" />
   </ItemGroup>

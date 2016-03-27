@@ -7,7 +7,7 @@ public class SomeComponent : IComponent {
         get {
             return new ComponentInfo(
                 typeof(SomeComponent).ToCompilableString(),
-                new PublicMemberInfo[0],
+                new System.Collections.Generic.List<PublicMemberInfo>(),
                 new string[0],
                 false,
                 "is",

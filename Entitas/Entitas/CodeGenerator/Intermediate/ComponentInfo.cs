@@ -1,10 +1,11 @@
-﻿using Entitas.Serialization;
+﻿using System.Collections.Generic;
+using Entitas.Serialization;
 
 namespace Entitas.CodeGenerator {
     public class ComponentInfo {
 
         public string fullTypeName { get { return _fullTypeName; } }
-        public PublicMemberInfo[] memberInfos { get { return _memberInfos; } }
+        public List<PublicMemberInfo> memberInfos { get { return _memberInfos; } }
         public string[] pools { get { return _pools; } }
         public bool isSingleEntity { get { return _isSingleEntity; } }
         public string singleComponentPrefix { get { return _singleComponentPrefix; } }
@@ -15,7 +16,7 @@ namespace Entitas.CodeGenerator {
         public string typeName { get { return _typeName; } }
 
         readonly string _fullTypeName;
-        readonly PublicMemberInfo[] _memberInfos;
+        readonly List<PublicMemberInfo> _memberInfos;
         readonly string[] _pools;
         readonly bool _isSingleEntity;
         readonly string _singleComponentPrefix;
@@ -25,7 +26,7 @@ namespace Entitas.CodeGenerator {
         readonly string _typeName;
         readonly bool _isSingletonComponent;
 
-        public ComponentInfo(string fullTypeName, PublicMemberInfo[] memberInfos, string[] pools,
+        public ComponentInfo(string fullTypeName, List<PublicMemberInfo> memberInfos, string[] pools,
             bool isSingleEntity, string singleComponentPrefix, bool generateMethods, bool generateIndex) {
             _fullTypeName = fullTypeName;
             _memberInfos = memberInfos;
@@ -38,7 +39,7 @@ namespace Entitas.CodeGenerator {
             var nameSplit = fullTypeName.Split('.');
             _typeName = nameSplit[nameSplit.Length - 1];
 
-            _isSingletonComponent = memberInfos.Length == 0;
+            _isSingletonComponent = memberInfos.Count == 0;
         }
     }
 }

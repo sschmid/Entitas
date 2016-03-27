@@ -3,9 +3,12 @@
 namespace Entitas.Serialization.Blueprints {
 
     [Serializable]
-    public struct Blueprint {
+    public class Blueprint {
         public string name;
         public ComponentBlueprint[] components;
+
+        public Blueprint() {
+        }
 
         public Blueprint(string name, Entity entity) {
             this.name = name;

@@ -213,7 +213,7 @@ namespace Entitas.Unity.VisualDebugging {
                 {
                     EntitasEditorLayout.BeginHorizontal();
                     {
-                        if (memberInfos.Length == 0) {
+                        if (memberInfos.Count == 0) {
                             EditorGUILayout.LabelField(componentName, EditorStyles.boldLabel);
                         } else {
                             unfoldedComponents[index] = EditorGUILayout.Foldout(unfoldedComponents[index], componentName, _foldoutStyle);

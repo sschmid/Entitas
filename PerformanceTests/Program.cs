@@ -27,8 +27,10 @@ namespace PerformanceTests {
             run<MatcherEquals>();
             run<MatcherGetHashCode>();
 
-//            run<NewInstanceT>();
-//            run<NewInstanceActivator>();
+            run<PoolCreateBlueprint>();
+
+            run<NewInstanceT>();
+            run<NewInstanceActivator>();
 //            run<EmptyTest>();
 //
 //            run<IterateHashetToArray>();
@@ -38,7 +40,6 @@ namespace PerformanceTests {
 //            run<ObjectGetProperty>();
 //            run<EmptyTest>();
 //            run<ObserverIterateCollectedEntities>();
-//            run<PropertiesCreate>();
 //
 //            run<HashSetContainsAdd>();
 //            run<ArrayGetItem>();
@@ -77,6 +78,8 @@ namespace PerformanceTests {
         //
         //        MatcherEquals:                          171 ms
         //        MatcherGetHashCode:                     17 ms
+        //
+        //        PoolCreateBlueprint:                    256 ms
         //
         //        NewInstanceT:                           393 ms
         //        NewInstanceActivator:                   542 ms

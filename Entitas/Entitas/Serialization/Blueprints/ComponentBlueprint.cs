@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Entitas.Serialization;
 
 namespace Entitas.Serialization.Blueprints {
 
     [Serializable]
-    public struct ComponentBlueprint {
+    public class ComponentBlueprint {
         public int index;
         public string fullTypeName;
         public SerializableMember[] members;
 
         Type _type;
+        Dictionary<string, PublicMemberInfo> _componentMembers;
+
+        public ComponentBlueprint() {
+        }
 
         public ComponentBlueprint(int index, IComponent component) {
             _type = component.GetType();
+            _componentMembers = null;
 
             this.index = index;
             this.fullTypeName = _type.FullName;
 
             var memberInfos = _type.GetPublicMemberInfos();
-            members = new SerializableMember[memberInfos.Length];
-            for (int i = 0, memberInfosLength = memberInfos.Length; i < memberInfosLength; i++) {
+            members = new SerializableMember[memberInfos.Count];
+            for (int i = 0, memberInfosLength = memberInfos.Count; i < memberInfosLength; i++) {
                 var info = memberInfos[i];
                 members[i] = new SerializableMember(info.name, info.GetValue(component));
             }
@@ -43,13 +47,21 @@ namespace Entitas.Serialization.Blueprints {
             }
 
             var component = entity.CreateComponent(index, _type);
-            var componentMembers = _type.GetPublicMemberInfos().ToDictionary(info => info.name);
+
+            if (_componentMembers == null) {
+                var memberInfos = _type.GetPublicMemberInfos();
+                _componentMembers = new Dictionary<string, PublicMemberInfo>(memberInfos.Count);
+                for (int i = 0, memberInfosLength = memberInfos.Count; i < memberInfosLength; i++) {
+                    var info = memberInfos[i];
+                    _componentMembers.Add(info.name, info);
+                }
+            }
 
             for (int i = 0, membersLength = members.Length; i < membersLength; i++) {
                 var member = members[i];
 
                 PublicMemberInfo memberInfo;
-                if (!componentMembers.TryGetValue(member.name, out memberInfo)) {
+                if (!_componentMembers.TryGetValue(member.name, out memberInfo)) {
                     throw new ComponentBlueprintException("Could not find member '" + member.name + "' in type '" + _type.FullName + "'!",
                         "Only non-static public members are supported.");
                 }

@@ -7,7 +7,7 @@ public class MovableComponent : IComponent {
         get {
             return new ComponentInfo(
                 typeof(MovableComponent).ToCompilableString(),
-                new PublicMemberInfo[0],
+                new System.Collections.Generic.List<PublicMemberInfo>(),
                 new string[0],
                 false,
                 "is",

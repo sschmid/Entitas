@@ -14,7 +14,7 @@ class describe_PublicMemberInfo : nspec {
 
             it["creates member infos for public fields"] = () => {
                 var infos = typeof(ComponentWithFields).GetPublicMemberInfos();
-                infos.Length.should_be(1);
+                infos.Count.should_be(1);
                 var mi = infos[0];
                 mi.type.should_be(typeof(string));
                 mi.name.should_be("publicField");
@@ -22,7 +22,7 @@ class describe_PublicMemberInfo : nspec {
 
             it["creates member infos for public properties (read & write)"] = () => {
                 var infos = typeof(ComponentWithProperties).GetPublicMemberInfos();
-                infos.Length.should_be(1);
+                infos.Count.should_be(1);
                 var mi = infos[0];
                 mi.type.should_be(typeof(string));
                 mi.name.should_be("publicProperty");
@@ -30,7 +30,7 @@ class describe_PublicMemberInfo : nspec {
 
             it["creates member infos for fields and properties"] = () => {
                 var infos = typeof(ComponentWithFieldsAndProperties).GetPublicMemberInfos();
-                infos.Length.should_be(2);
+                infos.Count.should_be(2);
                 var mi1 = infos[0];
                 var mi2 = infos[1];
 
