@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public MyEnumComponent myEnum { get { return (MyEnumComponent)GetComponent(ComponentIds.MyEnum); } }
+        public MyEnumComponent myEnum { get { return (MyEnumComponent)GetComponent(VisualDebuggingComponentIds.MyEnum); } }
 
-        public bool hasMyEnum { get { return HasComponent(ComponentIds.MyEnum); } }
+        public bool hasMyEnum { get { return HasComponent(VisualDebuggingComponentIds.MyEnum); } }
 
         public Entity AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
-            var component = CreateComponent<MyEnumComponent>(ComponentIds.MyEnum);
+            var component = CreateComponent<MyEnumComponent>(VisualDebuggingComponentIds.MyEnum);
             component.myEnum = newMyEnum;
-            return AddComponent(ComponentIds.MyEnum, component);
+            return AddComponent(VisualDebuggingComponentIds.MyEnum, component);
         }
 
         public Entity ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
-            var component = CreateComponent<MyEnumComponent>(ComponentIds.MyEnum);
+            var component = CreateComponent<MyEnumComponent>(VisualDebuggingComponentIds.MyEnum);
             component.myEnum = newMyEnum;
-            ReplaceComponent(ComponentIds.MyEnum, component);
+            ReplaceComponent(VisualDebuggingComponentIds.MyEnum, component);
             return this;
         }
 
         public Entity RemoveMyEnum() {
-            return RemoveComponent(ComponentIds.MyEnum);
+            return RemoveComponent(VisualDebuggingComponentIds.MyEnum);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherMyEnum;
 
         public static IMatcher MyEnum {
             get {
                 if (_matcherMyEnum == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MyEnum);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.MyEnum);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherMyEnum = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

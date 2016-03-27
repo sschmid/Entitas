@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public UnityObjectComponent unityObject { get { return (UnityObjectComponent)GetComponent(ComponentIds.UnityObject); } }
+        public UnityObjectComponent unityObject { get { return (UnityObjectComponent)GetComponent(VisualDebuggingComponentIds.UnityObject); } }
 
-        public bool hasUnityObject { get { return HasComponent(ComponentIds.UnityObject); } }
+        public bool hasUnityObject { get { return HasComponent(VisualDebuggingComponentIds.UnityObject); } }
 
         public Entity AddUnityObject(UnityEngine.Object newUnityObject) {
-            var component = CreateComponent<UnityObjectComponent>(ComponentIds.UnityObject);
+            var component = CreateComponent<UnityObjectComponent>(VisualDebuggingComponentIds.UnityObject);
             component.unityObject = newUnityObject;
-            return AddComponent(ComponentIds.UnityObject, component);
+            return AddComponent(VisualDebuggingComponentIds.UnityObject, component);
         }
 
         public Entity ReplaceUnityObject(UnityEngine.Object newUnityObject) {
-            var component = CreateComponent<UnityObjectComponent>(ComponentIds.UnityObject);
+            var component = CreateComponent<UnityObjectComponent>(VisualDebuggingComponentIds.UnityObject);
             component.unityObject = newUnityObject;
-            ReplaceComponent(ComponentIds.UnityObject, component);
+            ReplaceComponent(VisualDebuggingComponentIds.UnityObject, component);
             return this;
         }
 
         public Entity RemoveUnityObject() {
-            return RemoveComponent(ComponentIds.UnityObject);
+            return RemoveComponent(VisualDebuggingComponentIds.UnityObject);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherUnityObject;
 
         public static IMatcher UnityObject {
             get {
                 if (_matcherUnityObject == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.UnityObject);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.UnityObject);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherUnityObject = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

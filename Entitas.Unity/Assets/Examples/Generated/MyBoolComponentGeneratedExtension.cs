@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public MyBoolComponent myBool { get { return (MyBoolComponent)GetComponent(ComponentIds.MyBool); } }
+        public MyBoolComponent myBool { get { return (MyBoolComponent)GetComponent(VisualDebuggingComponentIds.MyBool); } }
 
-        public bool hasMyBool { get { return HasComponent(ComponentIds.MyBool); } }
+        public bool hasMyBool { get { return HasComponent(VisualDebuggingComponentIds.MyBool); } }
 
         public Entity AddMyBool(bool newMyBool) {
-            var component = CreateComponent<MyBoolComponent>(ComponentIds.MyBool);
+            var component = CreateComponent<MyBoolComponent>(VisualDebuggingComponentIds.MyBool);
             component.myBool = newMyBool;
-            return AddComponent(ComponentIds.MyBool, component);
+            return AddComponent(VisualDebuggingComponentIds.MyBool, component);
         }
 
         public Entity ReplaceMyBool(bool newMyBool) {
-            var component = CreateComponent<MyBoolComponent>(ComponentIds.MyBool);
+            var component = CreateComponent<MyBoolComponent>(VisualDebuggingComponentIds.MyBool);
             component.myBool = newMyBool;
-            ReplaceComponent(ComponentIds.MyBool, component);
+            ReplaceComponent(VisualDebuggingComponentIds.MyBool, component);
             return this;
         }
 
         public Entity RemoveMyBool() {
-            return RemoveComponent(ComponentIds.MyBool);
+            return RemoveComponent(VisualDebuggingComponentIds.MyBool);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherMyBool;
 
         public static IMatcher MyBool {
             get {
                 if (_matcherMyBool == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MyBool);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.MyBool);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherMyBool = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

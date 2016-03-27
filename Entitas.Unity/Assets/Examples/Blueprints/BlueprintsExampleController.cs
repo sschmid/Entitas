@@ -13,7 +13,7 @@ public class BlueprintsExampleController : MonoBehaviour {
     }
 
     void Update() {
-        var pool = Pools.pool;
+        var pool = Pools.blueprints;
         for (int i = 0; i < 1; i++) {
             var entity = pool.CreateEntity();
             entity.ApplyBlueprint(_blueprint);

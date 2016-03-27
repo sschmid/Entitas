@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public Texture2DComponent texture2D { get { return (Texture2DComponent)GetComponent(ComponentIds.Texture2D); } }
+        public Texture2DComponent texture2D { get { return (Texture2DComponent)GetComponent(VisualDebuggingComponentIds.Texture2D); } }
 
-        public bool hasTexture2D { get { return HasComponent(ComponentIds.Texture2D); } }
+        public bool hasTexture2D { get { return HasComponent(VisualDebuggingComponentIds.Texture2D); } }
 
         public Entity AddTexture2D(UnityEngine.Texture2D newTexture2D) {
-            var component = CreateComponent<Texture2DComponent>(ComponentIds.Texture2D);
+            var component = CreateComponent<Texture2DComponent>(VisualDebuggingComponentIds.Texture2D);
             component.texture2D = newTexture2D;
-            return AddComponent(ComponentIds.Texture2D, component);
+            return AddComponent(VisualDebuggingComponentIds.Texture2D, component);
         }
 
         public Entity ReplaceTexture2D(UnityEngine.Texture2D newTexture2D) {
-            var component = CreateComponent<Texture2DComponent>(ComponentIds.Texture2D);
+            var component = CreateComponent<Texture2DComponent>(VisualDebuggingComponentIds.Texture2D);
             component.texture2D = newTexture2D;
-            ReplaceComponent(ComponentIds.Texture2D, component);
+            ReplaceComponent(VisualDebuggingComponentIds.Texture2D, component);
             return this;
         }
 
         public Entity RemoveTexture2D() {
-            return RemoveComponent(ComponentIds.Texture2D);
+            return RemoveComponent(VisualDebuggingComponentIds.Texture2D);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherTexture2D;
 
         public static IMatcher Texture2D {
             get {
                 if (_matcherTexture2D == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Texture2D);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Texture2D);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherTexture2D = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public ListArrayComponent listArray { get { return (ListArrayComponent)GetComponent(ComponentIds.ListArray); } }
+        public ListArrayComponent listArray { get { return (ListArrayComponent)GetComponent(VisualDebuggingComponentIds.ListArray); } }
 
-        public bool hasListArray { get { return HasComponent(ComponentIds.ListArray); } }
+        public bool hasListArray { get { return HasComponent(VisualDebuggingComponentIds.ListArray); } }
 
         public Entity AddListArray(System.Collections.Generic.List<string>[] newListArray) {
-            var component = CreateComponent<ListArrayComponent>(ComponentIds.ListArray);
+            var component = CreateComponent<ListArrayComponent>(VisualDebuggingComponentIds.ListArray);
             component.listArray = newListArray;
-            return AddComponent(ComponentIds.ListArray, component);
+            return AddComponent(VisualDebuggingComponentIds.ListArray, component);
         }
 
         public Entity ReplaceListArray(System.Collections.Generic.List<string>[] newListArray) {
-            var component = CreateComponent<ListArrayComponent>(ComponentIds.ListArray);
+            var component = CreateComponent<ListArrayComponent>(VisualDebuggingComponentIds.ListArray);
             component.listArray = newListArray;
-            ReplaceComponent(ComponentIds.ListArray, component);
+            ReplaceComponent(VisualDebuggingComponentIds.ListArray, component);
             return this;
         }
 
         public Entity RemoveListArray() {
-            return RemoveComponent(ComponentIds.ListArray);
+            return RemoveComponent(VisualDebuggingComponentIds.ListArray);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherListArray;
 
         public static IMatcher ListArray {
             get {
                 if (_matcherListArray == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.ListArray);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.ListArray);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherListArray = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

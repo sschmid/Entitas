@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public ListComponent list { get { return (ListComponent)GetComponent(ComponentIds.List); } }
+        public ListComponent list { get { return (ListComponent)GetComponent(VisualDebuggingComponentIds.List); } }
 
-        public bool hasList { get { return HasComponent(ComponentIds.List); } }
+        public bool hasList { get { return HasComponent(VisualDebuggingComponentIds.List); } }
 
         public Entity AddList(System.Collections.Generic.List<string> newList) {
-            var component = CreateComponent<ListComponent>(ComponentIds.List);
+            var component = CreateComponent<ListComponent>(VisualDebuggingComponentIds.List);
             component.list = newList;
-            return AddComponent(ComponentIds.List, component);
+            return AddComponent(VisualDebuggingComponentIds.List, component);
         }
 
         public Entity ReplaceList(System.Collections.Generic.List<string> newList) {
-            var component = CreateComponent<ListComponent>(ComponentIds.List);
+            var component = CreateComponent<ListComponent>(VisualDebuggingComponentIds.List);
             component.list = newList;
-            ReplaceComponent(ComponentIds.List, component);
+            ReplaceComponent(VisualDebuggingComponentIds.List, component);
             return this;
         }
 
         public Entity RemoveList() {
-            return RemoveComponent(ComponentIds.List);
+            return RemoveComponent(VisualDebuggingComponentIds.List);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherList;
 
         public static IMatcher List {
             get {
                 if (_matcherList == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.List);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.List);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherList = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

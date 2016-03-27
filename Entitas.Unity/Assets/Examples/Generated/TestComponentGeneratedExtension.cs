@@ -6,18 +6,20 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
         static readonly TestComponent testComponent = new TestComponent();
 
         public bool isTest {
-            get { return HasComponent(ComponentIds.Test); }
+            get { return HasComponent(VisualDebuggingComponentIds.Test); }
             set {
                 if (value != isTest) {
                     if (value) {
-                        AddComponent(ComponentIds.Test, testComponent);
+                        AddComponent(VisualDebuggingComponentIds.Test, testComponent);
                     } else {
-                        RemoveComponent(ComponentIds.Test);
+                        RemoveComponent(VisualDebuggingComponentIds.Test);
                     }
                 }
             }
@@ -28,15 +30,16 @@ namespace Entitas {
             return this;
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherTest;
 
         public static IMatcher Test {
             get {
                 if (_matcherTest == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Test);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Test);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherTest = matcher;
                 }
 
@@ -44,4 +47,3 @@ namespace Entitas {
             }
         }
     }
-}

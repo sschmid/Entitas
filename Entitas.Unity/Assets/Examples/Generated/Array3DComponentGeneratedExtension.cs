@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public Array3DComponent array3D { get { return (Array3DComponent)GetComponent(ComponentIds.Array3D); } }
+        public Array3DComponent array3D { get { return (Array3DComponent)GetComponent(VisualDebuggingComponentIds.Array3D); } }
 
-        public bool hasArray3D { get { return HasComponent(ComponentIds.Array3D); } }
+        public bool hasArray3D { get { return HasComponent(VisualDebuggingComponentIds.Array3D); } }
 
         public Entity AddArray3D(string[,,] newArray3d) {
-            var component = CreateComponent<Array3DComponent>(ComponentIds.Array3D);
+            var component = CreateComponent<Array3DComponent>(VisualDebuggingComponentIds.Array3D);
             component.array3d = newArray3d;
-            return AddComponent(ComponentIds.Array3D, component);
+            return AddComponent(VisualDebuggingComponentIds.Array3D, component);
         }
 
         public Entity ReplaceArray3D(string[,,] newArray3d) {
-            var component = CreateComponent<Array3DComponent>(ComponentIds.Array3D);
+            var component = CreateComponent<Array3DComponent>(VisualDebuggingComponentIds.Array3D);
             component.array3d = newArray3d;
-            ReplaceComponent(ComponentIds.Array3D, component);
+            ReplaceComponent(VisualDebuggingComponentIds.Array3D, component);
             return this;
         }
 
         public Entity RemoveArray3D() {
-            return RemoveComponent(ComponentIds.Array3D);
+            return RemoveComponent(VisualDebuggingComponentIds.Array3D);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherArray3D;
 
         public static IMatcher Array3D {
             get {
                 if (_matcherArray3D == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Array3D);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Array3D);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherArray3D = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

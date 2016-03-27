@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public AnimationCurveComponent animationCurve { get { return (AnimationCurveComponent)GetComponent(ComponentIds.AnimationCurve); } }
+        public AnimationCurveComponent animationCurve { get { return (AnimationCurveComponent)GetComponent(VisualDebuggingComponentIds.AnimationCurve); } }
 
-        public bool hasAnimationCurve { get { return HasComponent(ComponentIds.AnimationCurve); } }
+        public bool hasAnimationCurve { get { return HasComponent(VisualDebuggingComponentIds.AnimationCurve); } }
 
         public Entity AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
-            var component = CreateComponent<AnimationCurveComponent>(ComponentIds.AnimationCurve);
+            var component = CreateComponent<AnimationCurveComponent>(VisualDebuggingComponentIds.AnimationCurve);
             component.animationCurve = newAnimationCurve;
-            return AddComponent(ComponentIds.AnimationCurve, component);
+            return AddComponent(VisualDebuggingComponentIds.AnimationCurve, component);
         }
 
         public Entity ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
-            var component = CreateComponent<AnimationCurveComponent>(ComponentIds.AnimationCurve);
+            var component = CreateComponent<AnimationCurveComponent>(VisualDebuggingComponentIds.AnimationCurve);
             component.animationCurve = newAnimationCurve;
-            ReplaceComponent(ComponentIds.AnimationCurve, component);
+            ReplaceComponent(VisualDebuggingComponentIds.AnimationCurve, component);
             return this;
         }
 
         public Entity RemoveAnimationCurve() {
-            return RemoveComponent(ComponentIds.AnimationCurve);
+            return RemoveComponent(VisualDebuggingComponentIds.AnimationCurve);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherAnimationCurve;
 
         public static IMatcher AnimationCurve {
             get {
                 if (_matcherAnimationCurve == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.AnimationCurve);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.AnimationCurve);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherAnimationCurve = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

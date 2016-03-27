@@ -8,10 +8,10 @@ public class MultiplePoolsController : MonoBehaviour {
 
 	void Start () {
 	
-        _poolA = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData("Pool A", ComponentIds.componentNames, ComponentIds.componentTypes));
+        _poolA = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("Pool A", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
         new Entitas.Unity.VisualDebugging.PoolObserver(_poolA);
 
-        _poolB = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData("Pool B", ComponentIds.componentNames, ComponentIds.componentTypes));
+        _poolB = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("Pool B", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
         new Entitas.Unity.VisualDebugging.PoolObserver(_poolB);
 
 

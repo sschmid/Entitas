@@ -6,40 +6,43 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public DictArrayComponent dictArray { get { return (DictArrayComponent)GetComponent(ComponentIds.DictArray); } }
+        public DictArrayComponent dictArray { get { return (DictArrayComponent)GetComponent(VisualDebuggingComponentIds.DictArray); } }
 
-        public bool hasDictArray { get { return HasComponent(ComponentIds.DictArray); } }
+        public bool hasDictArray { get { return HasComponent(VisualDebuggingComponentIds.DictArray); } }
 
         public Entity AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
-            var component = CreateComponent<DictArrayComponent>(ComponentIds.DictArray);
+            var component = CreateComponent<DictArrayComponent>(VisualDebuggingComponentIds.DictArray);
             component.dict = newDict;
             component.dictArray = newDictArray;
-            return AddComponent(ComponentIds.DictArray, component);
+            return AddComponent(VisualDebuggingComponentIds.DictArray, component);
         }
 
         public Entity ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
-            var component = CreateComponent<DictArrayComponent>(ComponentIds.DictArray);
+            var component = CreateComponent<DictArrayComponent>(VisualDebuggingComponentIds.DictArray);
             component.dict = newDict;
             component.dictArray = newDictArray;
-            ReplaceComponent(ComponentIds.DictArray, component);
+            ReplaceComponent(VisualDebuggingComponentIds.DictArray, component);
             return this;
         }
 
         public Entity RemoveDictArray() {
-            return RemoveComponent(ComponentIds.DictArray);
+            return RemoveComponent(VisualDebuggingComponentIds.DictArray);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherDictArray;
 
         public static IMatcher DictArray {
             get {
                 if (_matcherDictArray == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.DictArray);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.DictArray);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherDictArray = matcher;
                 }
 
@@ -47,4 +50,3 @@ namespace Entitas {
             }
         }
     }
-}

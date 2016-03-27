@@ -5,16 +5,18 @@ public class ObserverDestructorController : MonoBehaviour {
     Entity _initialEntity;
 
     void Start() {
-        Pools.pool.GetGroup(Matcher.Test).CreateObserver();
-        _initialEntity = Pools.pool.CreateEntity();
+        var pool = Pools.visualDebugging;
+        pool.GetGroup(VisualDebuggingMatcher.Test).CreateObserver();
+        _initialEntity = pool.CreateEntity();
         _initialEntity.isTest = true;
-        Pools.pool.DestroyEntity(_initialEntity);
-        Pools.pool.ClearGroups();
+        pool.DestroyEntity(_initialEntity);
+        pool.ClearGroups();
     }
 	
     void Update() {
+        var pool = Pools.visualDebugging;
         for (int i = 0; i < 5000; i++) {
-            var e = Pools.pool.CreateEntity();
+            var e = pool.CreateEntity();
             if (e == _initialEntity) {
                 Debug.Log("Reusing entity!");
             }

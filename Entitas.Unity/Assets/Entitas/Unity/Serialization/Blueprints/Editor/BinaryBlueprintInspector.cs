@@ -18,7 +18,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
             AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(target), blueprint.name);
 
             EntityDrawer.Initialize();
-            _pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData("Pool", ComponentIds.componentNames, ComponentIds.componentTypes));
+            _pool = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("Pool", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
             _entity = _pool.CreateEntity();
             _entity.ApplyBlueprint(blueprint);
         }

@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public JaggedArrayComponent jaggedArray { get { return (JaggedArrayComponent)GetComponent(ComponentIds.JaggedArray); } }
+        public JaggedArrayComponent jaggedArray { get { return (JaggedArrayComponent)GetComponent(VisualDebuggingComponentIds.JaggedArray); } }
 
-        public bool hasJaggedArray { get { return HasComponent(ComponentIds.JaggedArray); } }
+        public bool hasJaggedArray { get { return HasComponent(VisualDebuggingComponentIds.JaggedArray); } }
 
         public Entity AddJaggedArray(string[][] newJaggedArray) {
-            var component = CreateComponent<JaggedArrayComponent>(ComponentIds.JaggedArray);
+            var component = CreateComponent<JaggedArrayComponent>(VisualDebuggingComponentIds.JaggedArray);
             component.jaggedArray = newJaggedArray;
-            return AddComponent(ComponentIds.JaggedArray, component);
+            return AddComponent(VisualDebuggingComponentIds.JaggedArray, component);
         }
 
         public Entity ReplaceJaggedArray(string[][] newJaggedArray) {
-            var component = CreateComponent<JaggedArrayComponent>(ComponentIds.JaggedArray);
+            var component = CreateComponent<JaggedArrayComponent>(VisualDebuggingComponentIds.JaggedArray);
             component.jaggedArray = newJaggedArray;
-            ReplaceComponent(ComponentIds.JaggedArray, component);
+            ReplaceComponent(VisualDebuggingComponentIds.JaggedArray, component);
             return this;
         }
 
         public Entity RemoveJaggedArray() {
-            return RemoveComponent(ComponentIds.JaggedArray);
+            return RemoveComponent(VisualDebuggingComponentIds.JaggedArray);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherJaggedArray;
 
         public static IMatcher JaggedArray {
             get {
                 if (_matcherJaggedArray == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.JaggedArray);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.JaggedArray);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherJaggedArray = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

@@ -8,7 +8,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
     Pool _pool;
 
     void Start() {
-        _pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData("Systems Pool", ComponentIds.componentNames, ComponentIds.componentTypes));
+        _pool = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("Systems Pool", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
         #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
         new PoolObserver(_pool);
         #endif
@@ -18,7 +18,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
     }
 
     void Update() {
-        _pool.GetGroup(Matcher.MyString).GetSingleEntity().ReplaceMyString("");
+        _pool.GetGroup(VisualDebuggingMatcher.MyString).GetSingleEntity().ReplaceMyString("");
         _systems.Execute();
     }
 

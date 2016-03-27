@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public PropertyComponent property { get { return (PropertyComponent)GetComponent(ComponentIds.Property); } }
+        public PropertyComponent property { get { return (PropertyComponent)GetComponent(VisualDebuggingComponentIds.Property); } }
 
-        public bool hasProperty { get { return HasComponent(ComponentIds.Property); } }
+        public bool hasProperty { get { return HasComponent(VisualDebuggingComponentIds.Property); } }
 
         public Entity AddProperty(string newValue) {
-            var component = CreateComponent<PropertyComponent>(ComponentIds.Property);
+            var component = CreateComponent<PropertyComponent>(VisualDebuggingComponentIds.Property);
             component.value = newValue;
-            return AddComponent(ComponentIds.Property, component);
+            return AddComponent(VisualDebuggingComponentIds.Property, component);
         }
 
         public Entity ReplaceProperty(string newValue) {
-            var component = CreateComponent<PropertyComponent>(ComponentIds.Property);
+            var component = CreateComponent<PropertyComponent>(VisualDebuggingComponentIds.Property);
             component.value = newValue;
-            ReplaceComponent(ComponentIds.Property, component);
+            ReplaceComponent(VisualDebuggingComponentIds.Property, component);
             return this;
         }
 
         public Entity RemoveProperty() {
-            return RemoveComponent(ComponentIds.Property);
+            return RemoveComponent(VisualDebuggingComponentIds.Property);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherProperty;
 
         public static IMatcher Property {
             get {
                 if (_matcherProperty == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Property);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Property);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherProperty = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public MyFloatComponent myFloat { get { return (MyFloatComponent)GetComponent(ComponentIds.MyFloat); } }
+        public MyFloatComponent myFloat { get { return (MyFloatComponent)GetComponent(VisualDebuggingComponentIds.MyFloat); } }
 
-        public bool hasMyFloat { get { return HasComponent(ComponentIds.MyFloat); } }
+        public bool hasMyFloat { get { return HasComponent(VisualDebuggingComponentIds.MyFloat); } }
 
         public Entity AddMyFloat(float newMyFloat) {
-            var component = CreateComponent<MyFloatComponent>(ComponentIds.MyFloat);
+            var component = CreateComponent<MyFloatComponent>(VisualDebuggingComponentIds.MyFloat);
             component.myFloat = newMyFloat;
-            return AddComponent(ComponentIds.MyFloat, component);
+            return AddComponent(VisualDebuggingComponentIds.MyFloat, component);
         }
 
         public Entity ReplaceMyFloat(float newMyFloat) {
-            var component = CreateComponent<MyFloatComponent>(ComponentIds.MyFloat);
+            var component = CreateComponent<MyFloatComponent>(VisualDebuggingComponentIds.MyFloat);
             component.myFloat = newMyFloat;
-            ReplaceComponent(ComponentIds.MyFloat, component);
+            ReplaceComponent(VisualDebuggingComponentIds.MyFloat, component);
             return this;
         }
 
         public Entity RemoveMyFloat() {
-            return RemoveComponent(ComponentIds.MyFloat);
+            return RemoveComponent(VisualDebuggingComponentIds.MyFloat);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherMyFloat;
 
         public static IMatcher MyFloat {
             get {
                 if (_matcherMyFloat == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MyFloat);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.MyFloat);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherMyFloat = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

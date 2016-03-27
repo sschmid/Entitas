@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public AnArrayComponent anArray { get { return (AnArrayComponent)GetComponent(ComponentIds.AnArray); } }
+        public AnArrayComponent anArray { get { return (AnArrayComponent)GetComponent(VisualDebuggingComponentIds.AnArray); } }
 
-        public bool hasAnArray { get { return HasComponent(ComponentIds.AnArray); } }
+        public bool hasAnArray { get { return HasComponent(VisualDebuggingComponentIds.AnArray); } }
 
         public Entity AddAnArray(string[] newArray) {
-            var component = CreateComponent<AnArrayComponent>(ComponentIds.AnArray);
+            var component = CreateComponent<AnArrayComponent>(VisualDebuggingComponentIds.AnArray);
             component.array = newArray;
-            return AddComponent(ComponentIds.AnArray, component);
+            return AddComponent(VisualDebuggingComponentIds.AnArray, component);
         }
 
         public Entity ReplaceAnArray(string[] newArray) {
-            var component = CreateComponent<AnArrayComponent>(ComponentIds.AnArray);
+            var component = CreateComponent<AnArrayComponent>(VisualDebuggingComponentIds.AnArray);
             component.array = newArray;
-            ReplaceComponent(ComponentIds.AnArray, component);
+            ReplaceComponent(VisualDebuggingComponentIds.AnArray, component);
             return this;
         }
 
         public Entity RemoveAnArray() {
-            return RemoveComponent(ComponentIds.AnArray);
+            return RemoveComponent(VisualDebuggingComponentIds.AnArray);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherAnArray;
 
         public static IMatcher AnArray {
             get {
                 if (_matcherAnArray == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.AnArray);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.AnArray);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherAnArray = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

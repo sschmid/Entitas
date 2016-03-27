@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public SystemObjectComponent systemObject { get { return (SystemObjectComponent)GetComponent(ComponentIds.SystemObject); } }
+        public SystemObjectComponent systemObject { get { return (SystemObjectComponent)GetComponent(VisualDebuggingComponentIds.SystemObject); } }
 
-        public bool hasSystemObject { get { return HasComponent(ComponentIds.SystemObject); } }
+        public bool hasSystemObject { get { return HasComponent(VisualDebuggingComponentIds.SystemObject); } }
 
         public Entity AddSystemObject(object newSystemObject) {
-            var component = CreateComponent<SystemObjectComponent>(ComponentIds.SystemObject);
+            var component = CreateComponent<SystemObjectComponent>(VisualDebuggingComponentIds.SystemObject);
             component.systemObject = newSystemObject;
-            return AddComponent(ComponentIds.SystemObject, component);
+            return AddComponent(VisualDebuggingComponentIds.SystemObject, component);
         }
 
         public Entity ReplaceSystemObject(object newSystemObject) {
-            var component = CreateComponent<SystemObjectComponent>(ComponentIds.SystemObject);
+            var component = CreateComponent<SystemObjectComponent>(VisualDebuggingComponentIds.SystemObject);
             component.systemObject = newSystemObject;
-            ReplaceComponent(ComponentIds.SystemObject, component);
+            ReplaceComponent(VisualDebuggingComponentIds.SystemObject, component);
             return this;
         }
 
         public Entity RemoveSystemObject() {
-            return RemoveComponent(ComponentIds.SystemObject);
+            return RemoveComponent(VisualDebuggingComponentIds.SystemObject);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherSystemObject;
 
         public static IMatcher SystemObject {
             get {
                 if (_matcherSystemObject == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.SystemObject);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.SystemObject);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherSystemObject = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

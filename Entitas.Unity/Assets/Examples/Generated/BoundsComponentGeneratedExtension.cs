@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public BoundsComponent bounds { get { return (BoundsComponent)GetComponent(ComponentIds.Bounds); } }
+        public BoundsComponent bounds { get { return (BoundsComponent)GetComponent(VisualDebuggingComponentIds.Bounds); } }
 
-        public bool hasBounds { get { return HasComponent(ComponentIds.Bounds); } }
+        public bool hasBounds { get { return HasComponent(VisualDebuggingComponentIds.Bounds); } }
 
         public Entity AddBounds(UnityEngine.Bounds newBounds) {
-            var component = CreateComponent<BoundsComponent>(ComponentIds.Bounds);
+            var component = CreateComponent<BoundsComponent>(VisualDebuggingComponentIds.Bounds);
             component.bounds = newBounds;
-            return AddComponent(ComponentIds.Bounds, component);
+            return AddComponent(VisualDebuggingComponentIds.Bounds, component);
         }
 
         public Entity ReplaceBounds(UnityEngine.Bounds newBounds) {
-            var component = CreateComponent<BoundsComponent>(ComponentIds.Bounds);
+            var component = CreateComponent<BoundsComponent>(VisualDebuggingComponentIds.Bounds);
             component.bounds = newBounds;
-            ReplaceComponent(ComponentIds.Bounds, component);
+            ReplaceComponent(VisualDebuggingComponentIds.Bounds, component);
             return this;
         }
 
         public Entity RemoveBounds() {
-            return RemoveComponent(ComponentIds.Bounds);
+            return RemoveComponent(VisualDebuggingComponentIds.Bounds);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherBounds;
 
         public static IMatcher Bounds {
             get {
                 if (_matcherBounds == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Bounds);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Bounds);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherBounds = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

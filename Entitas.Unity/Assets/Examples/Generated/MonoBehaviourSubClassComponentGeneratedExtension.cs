@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public MonoBehaviourSubClassComponent monoBehaviourSubClass { get { return (MonoBehaviourSubClassComponent)GetComponent(ComponentIds.MonoBehaviourSubClass); } }
+        public MonoBehaviourSubClassComponent monoBehaviourSubClass { get { return (MonoBehaviourSubClassComponent)GetComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass); } }
 
-        public bool hasMonoBehaviourSubClass { get { return HasComponent(ComponentIds.MonoBehaviourSubClass); } }
+        public bool hasMonoBehaviourSubClass { get { return HasComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass); } }
 
         public Entity AddMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
-            var component = CreateComponent<MonoBehaviourSubClassComponent>(ComponentIds.MonoBehaviourSubClass);
+            var component = CreateComponent<MonoBehaviourSubClassComponent>(VisualDebuggingComponentIds.MonoBehaviourSubClass);
             component.monoBehaviour = newMonoBehaviour;
-            return AddComponent(ComponentIds.MonoBehaviourSubClass, component);
+            return AddComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass, component);
         }
 
         public Entity ReplaceMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
-            var component = CreateComponent<MonoBehaviourSubClassComponent>(ComponentIds.MonoBehaviourSubClass);
+            var component = CreateComponent<MonoBehaviourSubClassComponent>(VisualDebuggingComponentIds.MonoBehaviourSubClass);
             component.monoBehaviour = newMonoBehaviour;
-            ReplaceComponent(ComponentIds.MonoBehaviourSubClass, component);
+            ReplaceComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass, component);
             return this;
         }
 
         public Entity RemoveMonoBehaviourSubClass() {
-            return RemoveComponent(ComponentIds.MonoBehaviourSubClass);
+            return RemoveComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherMonoBehaviourSubClass;
 
         public static IMatcher MonoBehaviourSubClass {
             get {
                 if (_matcherMonoBehaviourSubClass == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MonoBehaviourSubClass);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.MonoBehaviourSubClass);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherMonoBehaviourSubClass = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

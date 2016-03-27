@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public Vector3Component vector3 { get { return (Vector3Component)GetComponent(ComponentIds.Vector3); } }
+        public Vector3Component vector3 { get { return (Vector3Component)GetComponent(VisualDebuggingComponentIds.Vector3); } }
 
-        public bool hasVector3 { get { return HasComponent(ComponentIds.Vector3); } }
+        public bool hasVector3 { get { return HasComponent(VisualDebuggingComponentIds.Vector3); } }
 
         public Entity AddVector3(UnityEngine.Vector3 newVector3) {
-            var component = CreateComponent<Vector3Component>(ComponentIds.Vector3);
+            var component = CreateComponent<Vector3Component>(VisualDebuggingComponentIds.Vector3);
             component.vector3 = newVector3;
-            return AddComponent(ComponentIds.Vector3, component);
+            return AddComponent(VisualDebuggingComponentIds.Vector3, component);
         }
 
         public Entity ReplaceVector3(UnityEngine.Vector3 newVector3) {
-            var component = CreateComponent<Vector3Component>(ComponentIds.Vector3);
+            var component = CreateComponent<Vector3Component>(VisualDebuggingComponentIds.Vector3);
             component.vector3 = newVector3;
-            ReplaceComponent(ComponentIds.Vector3, component);
+            ReplaceComponent(VisualDebuggingComponentIds.Vector3, component);
             return this;
         }
 
         public Entity RemoveVector3() {
-            return RemoveComponent(ComponentIds.Vector3);
+            return RemoveComponent(VisualDebuggingComponentIds.Vector3);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherVector3;
 
         public static IMatcher Vector3 {
             get {
                 if (_matcherVector3 == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Vector3);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Vector3);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherVector3 = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

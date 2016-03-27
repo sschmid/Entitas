@@ -15,26 +15,42 @@ public static class Pools {
     public static Pool[] allPools {
         get {
             if (_allPools == null) {
-                _allPools = new [] { pool };
+                _allPools = new [] { visualDebugging, blueprints };
             }
 
             return _allPools;
         }
     }
 
-    static Pool _pool;
+    static Pool _visualDebugging;
 
-    public static Pool pool {
+    public static Pool visualDebugging {
         get {
-            if (_pool == null) {
-                _pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData("Pool", ComponentIds.componentNames, ComponentIds.componentTypes));
+            if (_visualDebugging == null) {
+                _visualDebugging = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("VisualDebugging Pool", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool);
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_visualDebugging);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
             }
 
-            return _pool;
+            return _visualDebugging;
+        }
+    }
+
+    static Pool _blueprints;
+
+    public static Pool blueprints {
+        get {
+            if (_blueprints == null) {
+                _blueprints = new Pool(BlueprintsComponentIds.TotalComponents, 0, new PoolMetaData("Blueprints Pool", BlueprintsComponentIds.componentNames, BlueprintsComponentIds.componentTypes));
+                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_blueprints);
+                UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
+                #endif
+            }
+
+            return _blueprints;
         }
     }
 }

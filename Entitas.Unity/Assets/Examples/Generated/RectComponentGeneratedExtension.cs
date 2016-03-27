@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public RectComponent rect { get { return (RectComponent)GetComponent(ComponentIds.Rect); } }
+        public RectComponent rect { get { return (RectComponent)GetComponent(VisualDebuggingComponentIds.Rect); } }
 
-        public bool hasRect { get { return HasComponent(ComponentIds.Rect); } }
+        public bool hasRect { get { return HasComponent(VisualDebuggingComponentIds.Rect); } }
 
         public Entity AddRect(UnityEngine.Rect newRect) {
-            var component = CreateComponent<RectComponent>(ComponentIds.Rect);
+            var component = CreateComponent<RectComponent>(VisualDebuggingComponentIds.Rect);
             component.rect = newRect;
-            return AddComponent(ComponentIds.Rect, component);
+            return AddComponent(VisualDebuggingComponentIds.Rect, component);
         }
 
         public Entity ReplaceRect(UnityEngine.Rect newRect) {
-            var component = CreateComponent<RectComponent>(ComponentIds.Rect);
+            var component = CreateComponent<RectComponent>(VisualDebuggingComponentIds.Rect);
             component.rect = newRect;
-            ReplaceComponent(ComponentIds.Rect, component);
+            ReplaceComponent(VisualDebuggingComponentIds.Rect, component);
             return this;
         }
 
         public Entity RemoveRect() {
-            return RemoveComponent(ComponentIds.Rect);
+            return RemoveComponent(VisualDebuggingComponentIds.Rect);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherRect;
 
         public static IMatcher Rect {
             get {
                 if (_matcherRect == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Rect);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Rect);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherRect = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

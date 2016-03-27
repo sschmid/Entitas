@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public HashSetComponent hashSet { get { return (HashSetComponent)GetComponent(ComponentIds.HashSet); } }
+        public HashSetComponent hashSet { get { return (HashSetComponent)GetComponent(VisualDebuggingComponentIds.HashSet); } }
 
-        public bool hasHashSet { get { return HasComponent(ComponentIds.HashSet); } }
+        public bool hasHashSet { get { return HasComponent(VisualDebuggingComponentIds.HashSet); } }
 
         public Entity AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
-            var component = CreateComponent<HashSetComponent>(ComponentIds.HashSet);
+            var component = CreateComponent<HashSetComponent>(VisualDebuggingComponentIds.HashSet);
             component.hashset = newHashset;
-            return AddComponent(ComponentIds.HashSet, component);
+            return AddComponent(VisualDebuggingComponentIds.HashSet, component);
         }
 
         public Entity ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
-            var component = CreateComponent<HashSetComponent>(ComponentIds.HashSet);
+            var component = CreateComponent<HashSetComponent>(VisualDebuggingComponentIds.HashSet);
             component.hashset = newHashset;
-            ReplaceComponent(ComponentIds.HashSet, component);
+            ReplaceComponent(VisualDebuggingComponentIds.HashSet, component);
             return this;
         }
 
         public Entity RemoveHashSet() {
-            return RemoveComponent(ComponentIds.HashSet);
+            return RemoveComponent(VisualDebuggingComponentIds.HashSet);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherHashSet;
 
         public static IMatcher HashSet {
             get {
                 if (_matcherHashSet == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.HashSet);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.HashSet);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherHashSet = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

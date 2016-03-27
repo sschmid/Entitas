@@ -6,11 +6,11 @@ using UnityEngine;
 public class VisualDebuggingExampleController : MonoBehaviour {
 
     void Start() {
-        var pool = Pools.pool;
-        pool.GetGroup(Matcher.Vector3);
-        pool.GetGroup(Matcher.GameObject);
-        pool.GetGroup(Matcher.AllOf(Matcher.GameObject, Matcher.Vector3));
-        pool.GetGroup(Matcher.AllOf(Matcher.GameObject, Matcher.Vector3));
+        var pool = Pools.visualDebugging;
+        pool.GetGroup(VisualDebuggingMatcher.Vector3);
+        pool.GetGroup(VisualDebuggingMatcher.GameObject);
+        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
+        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
 
         createTestEntities(pool);
         createTestEntityWithNullValues(pool);

@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public GameObjectComponent gameObject { get { return (GameObjectComponent)GetComponent(ComponentIds.GameObject); } }
+        public GameObjectComponent gameObject { get { return (GameObjectComponent)GetComponent(VisualDebuggingComponentIds.GameObject); } }
 
-        public bool hasGameObject { get { return HasComponent(ComponentIds.GameObject); } }
+        public bool hasGameObject { get { return HasComponent(VisualDebuggingComponentIds.GameObject); } }
 
         public Entity AddGameObject(UnityEngine.GameObject newGameObject) {
-            var component = CreateComponent<GameObjectComponent>(ComponentIds.GameObject);
+            var component = CreateComponent<GameObjectComponent>(VisualDebuggingComponentIds.GameObject);
             component.gameObject = newGameObject;
-            return AddComponent(ComponentIds.GameObject, component);
+            return AddComponent(VisualDebuggingComponentIds.GameObject, component);
         }
 
         public Entity ReplaceGameObject(UnityEngine.GameObject newGameObject) {
-            var component = CreateComponent<GameObjectComponent>(ComponentIds.GameObject);
+            var component = CreateComponent<GameObjectComponent>(VisualDebuggingComponentIds.GameObject);
             component.gameObject = newGameObject;
-            ReplaceComponent(ComponentIds.GameObject, component);
+            ReplaceComponent(VisualDebuggingComponentIds.GameObject, component);
             return this;
         }
 
         public Entity RemoveGameObject() {
-            return RemoveComponent(ComponentIds.GameObject);
+            return RemoveComponent(VisualDebuggingComponentIds.GameObject);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherGameObject;
 
         public static IMatcher GameObject {
             get {
                 if (_matcherGameObject == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.GameObject);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.GameObject);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherGameObject = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

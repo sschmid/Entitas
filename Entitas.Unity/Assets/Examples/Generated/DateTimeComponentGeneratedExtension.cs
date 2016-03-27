@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public DateTimeComponent dateTime { get { return (DateTimeComponent)GetComponent(ComponentIds.DateTime); } }
+        public DateTimeComponent dateTime { get { return (DateTimeComponent)GetComponent(VisualDebuggingComponentIds.DateTime); } }
 
-        public bool hasDateTime { get { return HasComponent(ComponentIds.DateTime); } }
+        public bool hasDateTime { get { return HasComponent(VisualDebuggingComponentIds.DateTime); } }
 
         public Entity AddDateTime(System.DateTime newDate) {
-            var component = CreateComponent<DateTimeComponent>(ComponentIds.DateTime);
+            var component = CreateComponent<DateTimeComponent>(VisualDebuggingComponentIds.DateTime);
             component.date = newDate;
-            return AddComponent(ComponentIds.DateTime, component);
+            return AddComponent(VisualDebuggingComponentIds.DateTime, component);
         }
 
         public Entity ReplaceDateTime(System.DateTime newDate) {
-            var component = CreateComponent<DateTimeComponent>(ComponentIds.DateTime);
+            var component = CreateComponent<DateTimeComponent>(VisualDebuggingComponentIds.DateTime);
             component.date = newDate;
-            ReplaceComponent(ComponentIds.DateTime, component);
+            ReplaceComponent(VisualDebuggingComponentIds.DateTime, component);
             return this;
         }
 
         public Entity RemoveDateTime() {
-            return RemoveComponent(ComponentIds.DateTime);
+            return RemoveComponent(VisualDebuggingComponentIds.DateTime);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherDateTime;
 
         public static IMatcher DateTime {
             get {
                 if (_matcherDateTime == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.DateTime);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.DateTime);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherDateTime = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public DictionaryComponent dictionary { get { return (DictionaryComponent)GetComponent(ComponentIds.Dictionary); } }
+        public DictionaryComponent dictionary { get { return (DictionaryComponent)GetComponent(VisualDebuggingComponentIds.Dictionary); } }
 
-        public bool hasDictionary { get { return HasComponent(ComponentIds.Dictionary); } }
+        public bool hasDictionary { get { return HasComponent(VisualDebuggingComponentIds.Dictionary); } }
 
         public Entity AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
-            var component = CreateComponent<DictionaryComponent>(ComponentIds.Dictionary);
+            var component = CreateComponent<DictionaryComponent>(VisualDebuggingComponentIds.Dictionary);
             component.dict = newDict;
-            return AddComponent(ComponentIds.Dictionary, component);
+            return AddComponent(VisualDebuggingComponentIds.Dictionary, component);
         }
 
         public Entity ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
-            var component = CreateComponent<DictionaryComponent>(ComponentIds.Dictionary);
+            var component = CreateComponent<DictionaryComponent>(VisualDebuggingComponentIds.Dictionary);
             component.dict = newDict;
-            ReplaceComponent(ComponentIds.Dictionary, component);
+            ReplaceComponent(VisualDebuggingComponentIds.Dictionary, component);
             return this;
         }
 
         public Entity RemoveDictionary() {
-            return RemoveComponent(ComponentIds.Dictionary);
+            return RemoveComponent(VisualDebuggingComponentIds.Dictionary);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherDictionary;
 
         public static IMatcher Dictionary {
             get {
                 if (_matcherDictionary == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Dictionary);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Dictionary);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherDictionary = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public UnsupportedObjectComponent unsupportedObject { get { return (UnsupportedObjectComponent)GetComponent(ComponentIds.UnsupportedObject); } }
+        public UnsupportedObjectComponent unsupportedObject { get { return (UnsupportedObjectComponent)GetComponent(VisualDebuggingComponentIds.UnsupportedObject); } }
 
-        public bool hasUnsupportedObject { get { return HasComponent(ComponentIds.UnsupportedObject); } }
+        public bool hasUnsupportedObject { get { return HasComponent(VisualDebuggingComponentIds.UnsupportedObject); } }
 
         public Entity AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
-            var component = CreateComponent<UnsupportedObjectComponent>(ComponentIds.UnsupportedObject);
+            var component = CreateComponent<UnsupportedObjectComponent>(VisualDebuggingComponentIds.UnsupportedObject);
             component.unsupportedObject = newUnsupportedObject;
-            return AddComponent(ComponentIds.UnsupportedObject, component);
+            return AddComponent(VisualDebuggingComponentIds.UnsupportedObject, component);
         }
 
         public Entity ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
-            var component = CreateComponent<UnsupportedObjectComponent>(ComponentIds.UnsupportedObject);
+            var component = CreateComponent<UnsupportedObjectComponent>(VisualDebuggingComponentIds.UnsupportedObject);
             component.unsupportedObject = newUnsupportedObject;
-            ReplaceComponent(ComponentIds.UnsupportedObject, component);
+            ReplaceComponent(VisualDebuggingComponentIds.UnsupportedObject, component);
             return this;
         }
 
         public Entity RemoveUnsupportedObject() {
-            return RemoveComponent(ComponentIds.UnsupportedObject);
+            return RemoveComponent(VisualDebuggingComponentIds.UnsupportedObject);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherUnsupportedObject;
 
         public static IMatcher UnsupportedObject {
             get {
                 if (_matcherUnsupportedObject == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.UnsupportedObject);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.UnsupportedObject);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherUnsupportedObject = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

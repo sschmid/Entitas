@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public MyIntComponent myInt { get { return (MyIntComponent)GetComponent(ComponentIds.MyInt); } }
+        public MyIntComponent myInt { get { return (MyIntComponent)GetComponent(VisualDebuggingComponentIds.MyInt); } }
 
-        public bool hasMyInt { get { return HasComponent(ComponentIds.MyInt); } }
+        public bool hasMyInt { get { return HasComponent(VisualDebuggingComponentIds.MyInt); } }
 
         public Entity AddMyInt(int newMyInt) {
-            var component = CreateComponent<MyIntComponent>(ComponentIds.MyInt);
+            var component = CreateComponent<MyIntComponent>(VisualDebuggingComponentIds.MyInt);
             component.myInt = newMyInt;
-            return AddComponent(ComponentIds.MyInt, component);
+            return AddComponent(VisualDebuggingComponentIds.MyInt, component);
         }
 
         public Entity ReplaceMyInt(int newMyInt) {
-            var component = CreateComponent<MyIntComponent>(ComponentIds.MyInt);
+            var component = CreateComponent<MyIntComponent>(VisualDebuggingComponentIds.MyInt);
             component.myInt = newMyInt;
-            ReplaceComponent(ComponentIds.MyInt, component);
+            ReplaceComponent(VisualDebuggingComponentIds.MyInt, component);
             return this;
         }
 
         public Entity RemoveMyInt() {
-            return RemoveComponent(ComponentIds.MyInt);
+            return RemoveComponent(VisualDebuggingComponentIds.MyInt);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherMyInt;
 
         public static IMatcher MyInt {
             get {
                 if (_matcherMyInt == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MyInt);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.MyInt);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherMyInt = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

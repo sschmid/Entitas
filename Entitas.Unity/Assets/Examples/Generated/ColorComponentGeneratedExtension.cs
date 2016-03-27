@@ -6,38 +6,41 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using Entitas;
+
 namespace Entitas {
     public partial class Entity {
-        public ColorComponent color { get { return (ColorComponent)GetComponent(ComponentIds.Color); } }
+        public ColorComponent color { get { return (ColorComponent)GetComponent(VisualDebuggingComponentIds.Color); } }
 
-        public bool hasColor { get { return HasComponent(ComponentIds.Color); } }
+        public bool hasColor { get { return HasComponent(VisualDebuggingComponentIds.Color); } }
 
         public Entity AddColor(UnityEngine.Color newColor) {
-            var component = CreateComponent<ColorComponent>(ComponentIds.Color);
+            var component = CreateComponent<ColorComponent>(VisualDebuggingComponentIds.Color);
             component.color = newColor;
-            return AddComponent(ComponentIds.Color, component);
+            return AddComponent(VisualDebuggingComponentIds.Color, component);
         }
 
         public Entity ReplaceColor(UnityEngine.Color newColor) {
-            var component = CreateComponent<ColorComponent>(ComponentIds.Color);
+            var component = CreateComponent<ColorComponent>(VisualDebuggingComponentIds.Color);
             component.color = newColor;
-            ReplaceComponent(ComponentIds.Color, component);
+            ReplaceComponent(VisualDebuggingComponentIds.Color, component);
             return this;
         }
 
         public Entity RemoveColor() {
-            return RemoveComponent(ComponentIds.Color);
+            return RemoveComponent(VisualDebuggingComponentIds.Color);
         }
     }
+}
 
-    public partial class Matcher {
+    public partial class VisualDebuggingMatcher {
         static IMatcher _matcherColor;
 
         public static IMatcher Color {
             get {
                 if (_matcherColor == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Color);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Color);
+                    matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherColor = matcher;
                 }
 
@@ -45,4 +48,3 @@ namespace Entitas {
             }
         }
     }
-}

@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class ComponentIds {
+public static class VisualDebuggingComponentIds {
     public const int AnArray = 0;
     public const int AnimationCurve = 1;
     public const int Array2D = 2;
