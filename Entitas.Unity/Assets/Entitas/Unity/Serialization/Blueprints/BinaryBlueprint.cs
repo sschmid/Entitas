@@ -9,7 +9,6 @@ namespace Entitas.Unity.Serialization.Blueprints {
     [CreateAssetMenu(menuName = "Entitas/Blueprint", fileName = "Assets/New Blueprint.asset")]
     public class BinaryBlueprint : ScriptableObject {
 
-        public string blueprintName;
         public byte[] blueprintData;
 
         readonly BinaryFormatter _serializer = new BinaryFormatter();
@@ -18,7 +17,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
             if (blueprintData != null && blueprintData.Length > 0) {
                 using (var stream = new MemoryStream(blueprintData)) {
                     var blueprint = (Blueprint)_serializer.Deserialize(stream);
-                    blueprintName = blueprint.name;
+                    name = blueprint.name;
                     return blueprint;
                 }
             }
@@ -27,7 +26,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
         }
 
         public void Serialize(Entity entity) {
-            var blueprint = new Blueprint(blueprintName, entity);
+            var blueprint = new Blueprint(name, entity);
             using (var stream = new MemoryStream()) {
                 _serializer.Serialize(stream, blueprint);
                 blueprintData = stream.ToArray();
