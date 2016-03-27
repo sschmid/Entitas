@@ -2,7 +2,7 @@
 using UnityEngine;
 using Entitas.Unity.VisualDebugging;
 
-public class SystemsController : MonoBehaviour {
+public class VisualDebuggingExampleSystemsController : MonoBehaviour {
     Systems _systems;
 
     Pool _pool;

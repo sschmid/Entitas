@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
 
-public class GameController : MonoBehaviour {
+public class VisualDebuggingExampleController : MonoBehaviour {
 
     void Start() {
         var pool = Pools.pool;
