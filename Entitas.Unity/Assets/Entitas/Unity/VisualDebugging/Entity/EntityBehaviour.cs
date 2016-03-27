@@ -11,6 +11,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         Pool _pool;
         Entity _entity;
+        string _cachedName;
 
         public void Init(Pool pool, Entity entity) {
             _pool = pool;
@@ -24,8 +25,8 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void Update() {
-            if (_entity != null) {
-                name = _entity.ToString();
+            if (_entity != null && _cachedName != _entity.ToString()) {
+                name = _cachedName = _entity.ToString();
             }
         }
 
