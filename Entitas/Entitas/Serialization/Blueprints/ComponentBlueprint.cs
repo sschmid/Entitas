@@ -15,6 +15,7 @@ namespace Entitas.Serialization.Blueprints {
 
         public ComponentBlueprint(int index, IComponent component) {
             _type = component.GetType();
+
             this.index = index;
             this.fullTypeName = _type.FullName;
 
@@ -26,7 +27,7 @@ namespace Entitas.Serialization.Blueprints {
             }
         }
 
-        public IComponent CreateComponent() {
+        public IComponent CreateComponent(Entity entity) {
             if (_type == null) {
                 _type = fullTypeName.ToType();
 
@@ -34,14 +35,14 @@ namespace Entitas.Serialization.Blueprints {
                     throw new ComponentBlueprintException("Type '" + fullTypeName + "' doesn't exist in any assembly!",
                         "Please check the full type name.");
                 }
-                
+
                 if (!_type.ImplementsInterface<IComponent>()) {
                     throw new ComponentBlueprintException("Type '" + fullTypeName + "' doesn't implement IComponent!",
                         typeof(ComponentBlueprint).Name + " only supports IComponent.");
                 }
             }
 
-            var component = (IComponent)Activator.CreateInstance(_type);
+            var component = entity.CreateComponent(index, _type);
             var componentMembers = _type.GetPublicMemberInfos().ToDictionary(info => info.name);
 
             for (int i = 0, membersLength = members.Length; i < membersLength; i++) {
@@ -49,7 +50,8 @@ namespace Entitas.Serialization.Blueprints {
 
                 PublicMemberInfo memberInfo;
                 if (!componentMembers.TryGetValue(member.name, out memberInfo)) {
-                    throw new ComponentBlueprintException("Could not find member '" + member.name + "' in type '" + _type.FullName + "'!", "Only non-static public members are supported.");
+                    throw new ComponentBlueprintException("Could not find member '" + member.name + "' in type '" + _type.FullName + "'!",
+                        "Only non-static public members are supported.");
                 }
 
                 memberInfo.SetValue(component, member.value);

@@ -275,6 +275,19 @@
     </Compile>
     <Compile Include="Tests\Entitas\Fixtures\Systems\GroupObserverSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\AbstractComponent.cs" />
+    <Compile Include="Tests\Entitas\Blueprints\describe_Blueprints.cs" />
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\Blueprint.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\Blueprint.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\ComponentBlueprint.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\ComponentBlueprint.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\SerializableMember.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\SerializableMember.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -294,6 +307,7 @@
     <Folder Include="Tests\Entitas\CodeGenerator\Fixtures\Components\" />
     <Folder Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\" />
     <Folder Include="Tests\Entitas\Serialization\" />
+    <Folder Include="Tests\Entitas\Blueprints\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

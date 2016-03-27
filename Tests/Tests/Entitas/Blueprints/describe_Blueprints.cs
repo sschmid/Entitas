@@ -6,6 +6,14 @@ class describe_Blueprints : nspec {
 
     void when_creating() {
 
+        Pool pool = null;
+        Entity entity = null;
+
+        before = () => {
+            pool = new Pool(CID.NumComponents);
+            entity = pool.CreateEntity();
+        };
+
         context["ComponentBlueprint"] = () => {
             
             it["creates a component blueprint from a component without members"] = () => {
@@ -22,13 +30,13 @@ class describe_Blueprints : nspec {
             it["throws when unknown type"] = expect<ComponentBlueprintException>(() => {
                 var componentBlueprint = new ComponentBlueprint();
                 componentBlueprint.fullTypeName = "UnknownType";
-                componentBlueprint.CreateComponent();
+                componentBlueprint.CreateComponent(null);
             });
 
             it["throws when type doesn't implement IComponent"] = expect<ComponentBlueprintException>(() => {
                 var componentBlueprint = new ComponentBlueprint();
                 componentBlueprint.fullTypeName = "string";
-                componentBlueprint.CreateComponent();
+                componentBlueprint.CreateComponent(null);
             });
 
             it["creates a component blueprint from a component with members"] = () => {
@@ -59,7 +67,7 @@ class describe_Blueprints : nspec {
                     new SerializableMember("publicProperty", "publicPropertyValue")
                 };
 
-                var component = (ComponentWithFieldsAndProperties)componentBlueprint.CreateComponent();
+                var component = (ComponentWithFieldsAndProperties)componentBlueprint.CreateComponent(entity);
                 component.publicField.should_be("publicFieldValue");
                 component.publicProperty.should_be("publicPropertyValue");
             };
@@ -72,24 +80,22 @@ class describe_Blueprints : nspec {
                     new SerializableMember("xxx", "publicFieldValue"),
                     new SerializableMember("publicProperty", "publicPropertyValue")
                 };
-                componentBlueprint.CreateComponent();
+                componentBlueprint.CreateComponent(entity);
             });
         };
 
         context["Blueprint"] = () => {
 
             it["creates a blueprint from an entity"] = () => {
-                var pool = new Pool(CID.NumComponents);
-                var e = pool.CreateEntity();
-                e.AddComponentA();
+                entity.AddComponentA();
 
                 var component = new NameAgeComponent();
                 component.name = "Max";
                 component.age = 42;
 
-                e.AddComponent(CID.ComponentB, component);
+                entity.AddComponent(CID.ComponentB, component);
 
-                var blueprint = new Blueprint("Hero", e);
+                var blueprint = new Blueprint("Hero", entity);
                 blueprint.name.should_be("Hero");
                 blueprint.components.Length.should_be(2);
 
@@ -101,7 +107,6 @@ class describe_Blueprints : nspec {
             };
 
             it["applies blueprint to entity"] = () => {
-
                 var component1 = new ComponentBlueprint();
                 component1.index = CID.ComponentA;
                 component1.fullTypeName = typeof(ComponentA).FullName;
@@ -119,19 +124,35 @@ class describe_Blueprints : nspec {
                 blueprint.name = "Hero";
                 blueprint.components = new [] { component1, component2 };
 
-                var pool = new Pool(CID.NumComponents);
-                var e = pool.CreateEntity();
+                entity.ApplyBlueprint(blueprint);
 
-                e.ApplyBlueprint(blueprint);
+                entity.GetComponents().Length.should_be(2);
 
-                e.GetComponents().Length.should_be(2);
+                entity.GetComponent(CID.ComponentA).GetType().should_be(typeof(ComponentA));
 
-                e.GetComponent(CID.ComponentA).GetType().should_be(typeof(ComponentA));
-
-                var nameAgeComponent = (NameAgeComponent)e.GetComponent(CID.ComponentB);
+                var nameAgeComponent = (NameAgeComponent)entity.GetComponent(CID.ComponentB);
                 nameAgeComponent.GetType().should_be(typeof(NameAgeComponent));
                 nameAgeComponent.name.should_be("Max");
                 nameAgeComponent.age.should_be(42);
+            };
+
+            it["uses component from componentPool"] = () => {
+                var component = new ComponentBlueprint();
+                component.index = CID.ComponentA;
+                component.fullTypeName = typeof(ComponentA).FullName;
+                component.members = new SerializableMember[0];
+
+                var blueprint = new Blueprint();
+                blueprint.name = "Hero";
+                blueprint.components = new [] { component };
+
+                var componentA = entity.CreateComponent<ComponentA>(CID.ComponentA);
+                entity.AddComponent(CID.ComponentA, componentA);
+                entity.RemoveComponentA();
+
+                entity.ApplyBlueprint(blueprint);
+
+                entity.GetComponentA().should_be_same(componentA);
             };
         };
     }

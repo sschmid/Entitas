@@ -139,11 +139,11 @@ class describe_EntitasErrorMessages : nspec {
         context["ComponentBlueprint"] = () => {
 
             it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
-                new ComponentBlueprint {fullTypeName = "string", index = 42, members = null}.CreateComponent();
+                new ComponentBlueprint {fullTypeName = "string", index = 42, members = null}.CreateComponent(entity);
             });
 
             it["type doesn't exist"] = () => printErrorMessage(() => {
-                new ComponentBlueprint {fullTypeName = "UnknownType", index = 42, members = null}.CreateComponent();
+                new ComponentBlueprint {fullTypeName = "UnknownType", index = 42, members = null}.CreateComponent(entity);
             });
 
             it["invalid field name"] = () => printErrorMessage(() => {
@@ -154,12 +154,8 @@ class describe_EntitasErrorMessages : nspec {
                     new SerializableMember("xxx", "publicFieldValue"),
                     new SerializableMember("publicProperty", "publicPropertyValue")
                 };
-                componentBlueprint.CreateComponent();
+                componentBlueprint.CreateComponent(entity);
             });
-//
-//            it["mssing [SerializableAttribute]"] = () => printErrorMessage(() => {
-//                new ComponentBlueprint(1, new ComponentA());
-//            });
         };
     }
 }
