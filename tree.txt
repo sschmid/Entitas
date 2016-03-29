@@ -138,6 +138,7 @@
 │               │   ├── Editor
 │               │   │   ├── EntitasEntityHierarchyIcon.png
 │               │   │   ├── EntitasHierarchyIcon.cs
+│               │   │   ├── EntitasPoolErrorHierarchyIcon.png
 │               │   │   ├── EntitasPoolHierarchyIcon.png
 │               │   │   ├── EntitasStats.cs
 │               │   │   ├── EntitasSystemsHierarchyIcon.png

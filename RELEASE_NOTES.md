@@ -1,3 +1,15 @@
+# 0.30.1
+
+##### Entitas.Unity.VisualDebugging
+- Fixed GameObjectDestroyExtension.DestroyGameObject() compile time error (#91)
+- Improved SystemsMonitor.Draw() to use correct available width even with scrollbars
+- Tweaked drawing systems list
+- Added EntitasPoolErrorHierarchyIcon to visualize when there are erros
+
+##### Other
+- Updated build_commands.sh to generate C# project from Unity
+
+
 # 0.30.0
 
 ##### Breaking changes
