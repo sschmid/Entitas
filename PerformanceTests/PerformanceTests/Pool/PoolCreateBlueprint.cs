@@ -15,7 +15,7 @@ public class PoolCreateBlueprint : IPerformanceTest {
         component.age = 42;
         e.AddComponent(CP.ComponentA, component);
 
-        _blueprint = new Blueprint(string.Empty, e);
+        _blueprint = new Blueprint(string.Empty, string.Empty, e);
     }
 
     public void Run() {

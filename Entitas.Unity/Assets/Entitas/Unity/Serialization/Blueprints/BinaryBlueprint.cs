@@ -21,11 +21,11 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 }
             }
 
-            return new Blueprint(string.Empty, new Entity(0, null, null));
+            return new Blueprint(string.Empty, string.Empty, new Entity(0, null, null));
         }
 
         public void Serialize(Entity entity) {
-            var blueprint = new Blueprint(name, entity);
+            var blueprint = new Blueprint(entity.poolMetaData.poolName, name, entity);
             using (var stream = new MemoryStream()) {
                 _serializer.Serialize(stream, blueprint);
                 blueprintData = stream.ToArray();

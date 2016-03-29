@@ -95,7 +95,8 @@ class describe_Blueprints : nspec {
 
                 entity.AddComponent(CID.ComponentB, component);
 
-                var blueprint = new Blueprint("Hero", entity);
+                var blueprint = new Blueprint("My Pool", "Hero", entity);
+                blueprint.poolIdentifier.should_be("My Pool");
                 blueprint.name.should_be("Hero");
                 blueprint.components.Length.should_be(2);
 
