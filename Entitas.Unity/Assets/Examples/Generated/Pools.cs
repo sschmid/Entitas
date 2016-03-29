@@ -29,8 +29,10 @@ public static class Pools {
             if (_visualDebugging == null) {
                 _visualDebugging = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("VisualDebugging Pool", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_visualDebugging);
-                UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
+                if (UnityEngine.Application.isPlaying) {
+                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_visualDebugging);
+                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
+                }
                 #endif
             }
 
@@ -45,8 +47,10 @@ public static class Pools {
             if (_blueprints == null) {
                 _blueprints = new Pool(BlueprintsComponentIds.TotalComponents, 0, new PoolMetaData("Blueprints Pool", BlueprintsComponentIds.componentNames, BlueprintsComponentIds.componentTypes));
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_blueprints);
-                UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
+                if (UnityEngine.Application.isPlaying) {
+                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_blueprints);
+                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
+                }
                 #endif
             }
 
