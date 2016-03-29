@@ -16,7 +16,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             #else
 
-        Destroy(gameObject);
+            Object.Destroy(gameObject);
 
             #endif
         }
