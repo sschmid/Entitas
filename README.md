@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/sschmid/Entitas-CSharp.png?label=ready&title=Ready)](https://waffle.io/sschmid/Entitas-CSharp)
 <p align="center">
     <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas-Header.png" alt="Entitas">
 </p>
