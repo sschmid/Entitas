@@ -1,4 +1,5 @@
 .
+├── Build
 ├── Entitas
 │   └── Entitas
 │       ├── CodeGenerator
@@ -34,6 +35,12 @@
                     └── PoolObserver
                         └── Editor
 .
+├── Build
+│   ├── build.sh
+│   ├── build_commands.sh
+│   ├── runTests.bat
+│   ├── runTests.sh
+│   └── update_project_dependencies.sh
 ├── Entitas
 │   └── Entitas
 │       ├── CodeGenerator
@@ -184,10 +191,5 @@
 ├── LICENSE.txt
 ├── README.md
 ├── RELEASE_NOTES.md
-├── build.sh
-├── build_commands.sh
 ├── policy.mdpolicy
-├── runTests.bat
-├── runTests.sh
-├── tree.txt
-└── update_project_dependencies.sh
+└── tree.txt
