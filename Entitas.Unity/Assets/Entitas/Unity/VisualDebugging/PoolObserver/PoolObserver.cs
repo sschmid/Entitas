@@ -23,6 +23,12 @@ namespace Entitas.Unity.VisualDebugging {
             _pool.OnGroupCleared += onGroupCleared;
         }
 
+        public void Deactivate() {
+            _pool.OnEntityCreated -= onEntityCreated;
+            _pool.OnGroupCreated -= onGroupCreated;
+            _pool.OnGroupCleared -= onGroupCleared;
+        }
+
         void onEntityCreated(Pool pool, Entity entity) {
             var entityBehaviour = new GameObject().AddComponent<EntityBehaviour>();
             entityBehaviour.Init(pool, entity);

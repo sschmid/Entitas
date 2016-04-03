@@ -20,5 +20,9 @@ namespace Entitas.Unity.VisualDebugging {
                 _poolObserver.entitiesContainer.name = _poolObserver.ToString();
             }
         }
+
+        void OnDestroy() {
+            _poolObserver.Deactivate();
+        }
     }
 }
