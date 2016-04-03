@@ -1,19 +1,21 @@
-﻿using Entitas.Serialization.Blueprints;
-using Entitas.Unity.Serialization.Blueprints;
+﻿using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
 
 public class BlueprintsExampleController : MonoBehaviour {
 
-    public BinaryBlueprint binaryBlueprint;
-
-    Blueprint _blueprint;
+    public Blueprints blueprints;
 
     void Start() {
-        _blueprint = binaryBlueprint.Deserialize();
-        var entity = Pools.blueprints.CreateEntity();
-        entity.ApplyBlueprint(_blueprint);
+        var max = Pools.blueprints
+            .CreateEntity()
+            .ApplyBlueprint(blueprints.GetBlueprint("Max"));
 
-        Debug.Log("name: " + entity.name.value);
-        Debug.Log("age: " + entity.age.value);
+        Debug.Log("max: " + max);
+
+        var jack = Pools.blueprints
+            .CreateEntity()
+            .ApplyBlueprint(blueprints.GetBlueprint("Jack"));
+
+        Debug.Log("jack: " + jack);
     }
 }

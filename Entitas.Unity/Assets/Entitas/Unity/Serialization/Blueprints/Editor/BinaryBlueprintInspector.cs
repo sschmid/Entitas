@@ -94,6 +94,9 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
             EditorGUI.BeginChangeCheck();
             {
+                EditorGUILayout.LabelField("Blueprint", EditorStyles.boldLabel);
+                binaryBlueprint.name = EditorGUILayout.TextField("Name", binaryBlueprint.name);
+
                 EntitasEditorLayout.BeginHorizontal();
                 {
                     _poolIndex = EditorGUILayout.Popup(_poolIndex, _allPoolNames);
@@ -104,8 +107,6 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 }
                 EntitasEditorLayout.EndHorizontal();
 
-                EditorGUILayout.LabelField("Blueprint", EditorStyles.boldLabel);
-                binaryBlueprint.name = EditorGUILayout.TextField("Name", binaryBlueprint.name);
                 EntityDrawer.DrawComponents(_pool, _entity);
             }
             var changed = EditorGUI.EndChangeCheck();
