@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Entitas.Unity.Migration {
     public class EntitasMigrationWindow : EditorWindow {
 
-        [MenuItem("Entitas/Migrate...", false, 300)]
+        [MenuItem("Entitas/Migrate...", false, 1000)]
         public static void OpenMigrate() {
             EntitasEditorLayout.ShowWindow<EntitasMigrationWindow>("Entitas Migration");
         }
