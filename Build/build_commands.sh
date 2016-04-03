@@ -26,9 +26,11 @@ collect_sources() {
 
   entity_icon_meta="Editor/EntitasEntityHierarchyIcon.png.meta"
   pool_icon_meta="Editor/EntitasPoolHierarchyIcon.png.meta"
+  poolError_icon_meta="Editor/EntitasPoolErrorHierarchyIcon.png.meta"
   systems_icon_meta="Editor/EntitasSystemsHierarchyIcon.png.meta"
   cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$entity_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$entity_icon_meta"
   cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$pool_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$pool_icon_meta"
+  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$poolError_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$poolError_icon_meta"
   cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$systems_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$systems_icon_meta"
 
   migration_header_meta="Editor/Entitas-Migration-Header.png.meta"
