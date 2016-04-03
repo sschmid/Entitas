@@ -125,7 +125,7 @@ class describe_Blueprints : nspec {
                 blueprint.name = "Hero";
                 blueprint.components = new [] { component1, component2 };
 
-                entity.ApplyBlueprint(blueprint);
+                entity.ApplyBlueprint(blueprint).should_be(entity);
 
                 entity.GetComponents().Length.should_be(2);
 
