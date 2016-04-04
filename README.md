@@ -2,10 +2,20 @@
     <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas-Header.png" alt="Entitas">
 </p>
 
+---
+
 <p align="center">
+
+    <a>Entitas turned 2 years old! :heart::heart::heart:<br />Share the love and use #madeWithEntitas in your Tweets to share what you've created with Entitas.<br /><br />If you love Entitas as much as we do<br />consider pressing this button ---></a>
+
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9HGYPFMLG2W4">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Donate-PayPal.gif" alt="Thank you!"></a>
 
+</p>
+
+---
+
+<p align="center">
     <a href="https://gitter.im/sschmid/Entitas-CSharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
         <img src="https://img.shields.io/badge/gitter-join%20chat-brightgreen.svg" alt="Join the chat at https://gitter.im/sschmid/Entitas-CSharp"></a>
 
