@@ -20,6 +20,12 @@ namespace Entitas.Unity {
         }
 
         public static float DrawHeaderTexture(EditorWindow window, Texture2D texture) {
+
+            // For unknown reasons OnGUI is called twice and and so is this method.
+            // var rect = GUILayoutUtility.GetRect(EditorGUILayout.GetControlRect().width, height);
+            // will return wrong width and height (1, 1) every other call
+            // workaround: hardcode scrollBarWidth
+
             const int scollBarWidth = 15;
             var ratio = texture.width / texture.height;
             var width = window.position.width - 8 - scollBarWidth;
