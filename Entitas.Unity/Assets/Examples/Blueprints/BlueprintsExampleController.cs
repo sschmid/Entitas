@@ -8,13 +8,13 @@ public class BlueprintsExampleController : MonoBehaviour {
     void Start() {
         var max = Pools.blueprints
             .CreateEntity()
-            .ApplyBlueprint(blueprints.GetBlueprint("Max"));
+            .ApplyBlueprint(blueprints.Max);
 
         Debug.Log("max: " + max);
 
         var jack = Pools.blueprints
             .CreateEntity()
-            .ApplyBlueprint(blueprints.GetBlueprint("Jack"));
+            .ApplyBlueprint(blueprints.Jack);
 
         Debug.Log("jack: " + jack);
     }

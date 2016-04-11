@@ -1,5 +1,4 @@
 ﻿using Entitas;
-using System.Collections.Generic;
 
 public class EntityAddComponent : IPerformanceTest {
     const int n = 10000000;
@@ -14,9 +13,7 @@ public class EntityAddComponent : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            var componentPool = _e.GetComponentPool(CP.ComponentA);
-            var component = componentPool.Count > 0 ? componentPool.Pop() : _componentA;
-            _e.AddComponent(CP.ComponentA, component);
+            _e.AddComponent(CP.ComponentA, _e.CreateComponent<ComponentA>(CP.ComponentA));
             _e.RemoveComponent(CP.ComponentA);
         }
     }

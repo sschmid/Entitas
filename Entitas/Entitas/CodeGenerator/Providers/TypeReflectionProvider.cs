@@ -8,13 +8,16 @@ namespace Entitas.CodeGenerator {
 
         public string[] poolNames { get { return _poolNames; } }
         public ComponentInfo[] componentInfos { get { return _componentInfos; } }
+        public string[] blueprintNames { get { return _blueprintNames; } }
 
         readonly string[] _poolNames;
         readonly ComponentInfo[] _componentInfos;
+        readonly string[] _blueprintNames;
 
-        public TypeReflectionProvider(Type[] types, string[] poolNames) {
+        public TypeReflectionProvider(Type[] types, string[] poolNames, string[] blueprintNames) {
             _poolNames = poolNames;
             _componentInfos = GetComponentInfos(types);
+            _blueprintNames = blueprintNames;
         }
 
         public static ComponentInfo[] GetComponentInfos(Type[] types) {

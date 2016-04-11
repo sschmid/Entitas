@@ -36,9 +36,7 @@ public class EntityRemoveAddComponent : IPerformanceTest {
     public void Run() {
         for (int i = 0; i < n; i++) {
             _e.RemoveComponent(CP.ComponentA);
-            var componentPool = _e.GetComponentPool(CP.ComponentA);
-            var component = componentPool.Count > 0 ? componentPool.Pop() : _componentA;
-            _e.AddComponent(CP.ComponentA, component);
+            _e.AddComponent(CP.ComponentA, _e.CreateComponent<ComponentA>(CP.ComponentA));
         }    
     }
 }

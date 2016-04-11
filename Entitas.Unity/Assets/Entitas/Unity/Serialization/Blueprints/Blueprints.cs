@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Entitas.Unity.Serialization.Blueprints {
     
     [CreateAssetMenu(menuName = "Entitas/Blueprints", fileName = "Assets/Blueprints.asset")]
-    public class Blueprints : ScriptableObject {
+    public partial class Blueprints : ScriptableObject {
 
         public BinaryBlueprint[] blueprints;
 
@@ -14,13 +14,23 @@ namespace Entitas.Unity.Serialization.Blueprints {
         Dictionary<string, Blueprint> _blueprintsMap;
 
         void OnEnable() {
+            if (blueprints == null) {
+                blueprints = FindAllBlueprints();
+            }
+
             _binaryBlueprintsMap = new Dictionary<string, BinaryBlueprint>(blueprints.Length);
             _blueprintsMap = new Dictionary<string, Blueprint>(blueprints.Length);
 
             for (int i = 0, blueprintsLength = blueprints.Length; i < blueprintsLength; i++) {
                 var blueprint = blueprints[i];
-                _binaryBlueprintsMap.Add(blueprint.name, blueprint);
+                if (blueprint != null) {
+                    _binaryBlueprintsMap.Add(blueprint.name, blueprint);
+                }
             }
+        }
+
+        public BinaryBlueprint[] FindAllBlueprints() {
+            return Resources.FindObjectsOfTypeAll<BinaryBlueprint>();
         }
 
         public Blueprint GetBlueprint(string name) {

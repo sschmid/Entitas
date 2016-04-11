@@ -78,6 +78,8 @@
     <Compile Include="Entitas\Serialization\Blueprints\ComponentBlueprint.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\SerializableMember.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

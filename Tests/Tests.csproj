@@ -288,6 +288,13 @@
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs">
       <Link>Linked Libraries\Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs</Link>
     </Compile>
+    <Compile Include="Tests\Entitas.Unity\Blueprints\describe_BlueprintsGenerator.cs" />
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -308,6 +315,7 @@
     <Folder Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\" />
     <Folder Include="Tests\Entitas\Serialization\" />
     <Folder Include="Tests\Entitas\Blueprints\" />
+    <Folder Include="Tests\Entitas.Unity\Blueprints\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

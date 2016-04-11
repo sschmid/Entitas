@@ -35,6 +35,12 @@ namespace Entitas.CodeGenerator {
                 writeFiles(directory, files);
             }
 
+            foreach (var generator in codeGenerators.OfType<IBlueprintsCodeGenerator>()) {
+                var files = generator.Generate(provider.blueprintNames);
+                generatedFiles.AddRange(files);
+                writeFiles(directory, files);
+            }
+
             return generatedFiles.ToArray();
         }
 

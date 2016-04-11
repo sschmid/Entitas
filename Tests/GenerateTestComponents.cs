@@ -19,7 +19,7 @@ class GenerateTestComponents {
             new PoolsGenerator()
         };
 
-        var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0]);
+        var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
         var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
 
         foreach (var file in files) {

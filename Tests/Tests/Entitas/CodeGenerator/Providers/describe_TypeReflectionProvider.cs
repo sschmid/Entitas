@@ -1,22 +1,33 @@
-﻿using Entitas.CodeGenerator;
-using NSpec;
+﻿using System;
 using Entitas;
+using Entitas.CodeGenerator;
 using My.Namespace;
+using NSpec;
 
 class describe_TypeReflectionProvider : nspec {
+
+    TypeReflectionProvider createProviderWithTypes(params Type[] types) {
+        return new TypeReflectionProvider(types, new string[0], new string[0]);
+    }
+
+    TypeReflectionProvider createProviderWithPoolName(params string[] poolNames) {
+        return new TypeReflectionProvider(new [] { typeof(object) }, poolNames, new string[0]);
+    }
+
+    TypeReflectionProvider createProviderWithBlueprintNames(params string[] blueprintNames) {
+        return new TypeReflectionProvider(new [] { typeof(object) }, new string[0], blueprintNames);
+    }
+
     void when_providing() {
 
         context["pool names"] = () => {
             it["has no pool names if empty"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(object) }, new string[0]);
+                var provider = createProviderWithPoolName();
                 provider.poolNames.should_be_empty();
             };
 
             it["has pool names if set"] = () => {
-                var provider = new TypeReflectionProvider(
-                                   new [] { typeof(TestPoolAttribute) },
-                                   new [] { "Pool1", "Pool2" }
-                               );
+                var provider = createProviderWithPoolName("Pool1", "Pool2");
                 provider.poolNames.Length.should_be(2);
                 provider.poolNames[0].should_be("Pool1");
                 provider.poolNames[1].should_be("Pool2");
@@ -26,27 +37,27 @@ class describe_TypeReflectionProvider : nspec {
         context["component infos"] = () => {
 
             it["finds no components if there are no types which implement IComponent"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(object) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(object));
                 provider.componentInfos.should_be_empty();
             };
 
             it["finds no components and ignores IComponent itself"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(IComponent) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(IComponent));
                 provider.componentInfos.should_be_empty();
             };
 
             it["finds no components and ignores interfaces"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(AnotherComponentInterface) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(AnotherComponentInterface));
                 provider.componentInfos.should_be_empty();
             };
 
             it["finds no components and ignores abstract classes"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(AbstractComponent) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(AbstractComponent));
                 provider.componentInfos.should_be_empty();
             };
 
             it["creates component info from found component"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(ComponentA) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(ComponentA));
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -62,7 +73,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["creates component info from found component with namespace"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(NamespaceComponent) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(NamespaceComponent));
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -78,7 +89,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects PoolAttribure"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(CComponent) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(CComponent));
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -99,7 +110,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects SingleEntityAttribute "] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(AnimatingComponent) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(AnimatingComponent));
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -115,7 +126,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects DontGenerateAttribute "] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(DontGenerateComponent) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(DontGenerateComponent));
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -131,7 +142,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects DontGenerateAttribute and don't generate index"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(DontGenerateIndexComponent) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(DontGenerateIndexComponent));
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -147,7 +158,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["detects CustomPrefixAttribute"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(CustomPrefixComponent) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(CustomPrefixComponent));
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -164,7 +175,7 @@ class describe_TypeReflectionProvider : nspec {
 
             it["sets fields"] = () => {
                 var type = typeof(ComponentWithFieldsAndProperties);
-                var provider = new TypeReflectionProvider(new [] { type }, new string[0]);
+                var provider = createProviderWithTypes(type);
                 provider.componentInfos.Length.should_be(1);
                 var info = provider.componentInfos[0];
 
@@ -187,10 +198,24 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             it["gets multiple component infos"] = () => {
-                var provider = new TypeReflectionProvider(new [] { typeof(ComponentA), typeof(ComponentB) }, new string[0]);
+                var provider = createProviderWithTypes(typeof(ComponentA), typeof(ComponentB));
                 provider.componentInfos.Length.should_be(2);
                 provider.componentInfos[0].fullTypeName.should_be("ComponentA");
                 provider.componentInfos[1].fullTypeName.should_be("ComponentB");
+            };
+        };
+
+        context["blueprint names"] = () => {
+            it["has no blueprint names if empty"] = () => {
+                var provider = createProviderWithBlueprintNames();
+                provider.blueprintNames.should_be_empty();
+            };
+
+            it["has blueprint names if set"] = () => {
+                var provider = createProviderWithBlueprintNames("My Blueprint1", "My Blueprint2");
+                provider.blueprintNames.Length.should_be(2);
+                provider.blueprintNames[0].should_be("My Blueprint1");
+                provider.blueprintNames[1].should_be("My Blueprint2");
             };
         };
     }

@@ -107,53 +107,74 @@ class describe_Blueprints : nspec {
                 blueprint.components[1].fullTypeName.should_be(component.GetType().FullName);
             };
 
-            it["applies blueprint to entity"] = () => {
-                var component1 = new ComponentBlueprint();
-                component1.index = CID.ComponentA;
-                component1.fullTypeName = typeof(ComponentA).FullName;
-                component1.members = new SerializableMember[0];
+            context["when applying blueprint"] = () => {
 
-                var component2 = new ComponentBlueprint();
-                component2.index = CID.ComponentB;
-                component2.fullTypeName = typeof(NameAgeComponent).FullName;
-                component2.members = new [] {
-                    new SerializableMember("name", "Max"),
-                    new SerializableMember("age", 42)
+                Blueprint blueprint = null;
+                before = () => {
+                    var component1 = new ComponentBlueprint();
+                    component1.index = CID.ComponentA;
+                    component1.fullTypeName = typeof(ComponentA).FullName;
+                    component1.members = new SerializableMember[0];
+
+                    var component2 = new ComponentBlueprint();
+                    component2.index = CID.ComponentB;
+                    component2.fullTypeName = typeof(NameAgeComponent).FullName;
+                    component2.members = new [] {
+                        new SerializableMember("name", "Max"),
+                        new SerializableMember("age", 42)
+                    };
+
+                    blueprint = new Blueprint();
+                    blueprint.name = "Hero";
+                    blueprint.components = new [] { component1, component2 };
                 };
 
-                var blueprint = new Blueprint();
-                blueprint.name = "Hero";
-                blueprint.components = new [] { component1, component2 };
+                it["applies blueprint to entity"] = () => {
+                    entity.ApplyBlueprint(blueprint).should_be(entity);
 
-                entity.ApplyBlueprint(blueprint).should_be(entity);
+                    entity.GetComponents().Length.should_be(2);
 
-                entity.GetComponents().Length.should_be(2);
+                    entity.GetComponent(CID.ComponentA).GetType().should_be(typeof(ComponentA));
 
-                entity.GetComponent(CID.ComponentA).GetType().should_be(typeof(ComponentA));
+                    var nameAgeComponent = (NameAgeComponent)entity.GetComponent(CID.ComponentB);
+                    nameAgeComponent.GetType().should_be(typeof(NameAgeComponent));
+                    nameAgeComponent.name.should_be("Max");
+                    nameAgeComponent.age.should_be(42);
+                };
 
-                var nameAgeComponent = (NameAgeComponent)entity.GetComponent(CID.ComponentB);
-                nameAgeComponent.GetType().should_be(typeof(NameAgeComponent));
-                nameAgeComponent.name.should_be("Max");
-                nameAgeComponent.age.should_be(42);
-            };
+                it["throws when entity already has a component which should be added from blueprint"] = expect<EntityAlreadyHasComponentException>(() => {
+                    entity.AddComponentA();
+                    entity.ApplyBlueprint(blueprint);
+                });
 
-            it["uses component from componentPool"] = () => {
-                var component = new ComponentBlueprint();
-                component.index = CID.ComponentA;
-                component.fullTypeName = typeof(ComponentA).FullName;
-                component.members = new SerializableMember[0];
+                it["can overwrite existing components"] = () => {
+                    var nameAgeComponent = new NameAgeComponent();
+                    nameAgeComponent.name = "Jack";
+                    nameAgeComponent.age = 24;
+                    entity.AddComponent(CID.ComponentB, nameAgeComponent);
 
-                var blueprint = new Blueprint();
-                blueprint.name = "Hero";
-                blueprint.components = new [] { component };
+                    entity.ApplyBlueprint(blueprint, true);
 
-                var componentA = entity.CreateComponent<ComponentA>(CID.ComponentA);
-                entity.AddComponent(CID.ComponentA, componentA);
-                entity.RemoveComponentA();
+                };
 
-                entity.ApplyBlueprint(blueprint);
+                it["uses component from componentPool"] = () => {
+                    var component = new ComponentBlueprint();
+                    component.index = CID.ComponentA;
+                    component.fullTypeName = typeof(ComponentA).FullName;
+                    component.members = new SerializableMember[0];
 
-                entity.GetComponentA().should_be_same(componentA);
+                    blueprint = new Blueprint();
+                    blueprint.name = "Hero";
+                    blueprint.components = new [] { component };
+
+                    var componentA = entity.CreateComponent<ComponentA>(CID.ComponentA);
+                    entity.AddComponent(CID.ComponentA, componentA);
+                    entity.RemoveComponentA();
+
+                    entity.ApplyBlueprint(blueprint);
+
+                    entity.GetComponentA().should_be_same(componentA);
+                };
             };
         };
     }

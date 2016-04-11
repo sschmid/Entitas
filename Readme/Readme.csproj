@@ -188,6 +188,24 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\PoolAttributesGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\PoolAttributesGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\Blueprint.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\Blueprint.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\ComponentBlueprint.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\ComponentBlueprint.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\SerializableMember.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\SerializableMember.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
