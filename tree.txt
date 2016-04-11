@@ -12,6 +12,7 @@
 │       ├── Interfaces
 │       ├── Matcher
 │       └── Serialization
+│           └── Blueprints
 ├── Entitas.Migration
 │   └── Entitas.Migration
 └── Entitas.Unity
@@ -24,6 +25,9 @@
                 ├── Editor
                 ├── Migration
                 │   └── Editor
+                ├── Serialization
+                │   └── Blueprints
+                │       └── Editor
                 └── VisualDebugging
                     ├── DebugSystems
                     │   └── Editor
@@ -50,11 +54,13 @@
 │       │   │   ├── PoolAttribute.cs
 │       │   │   └── SingleEntityAttribute.cs
 │       │   ├── Generators
+│       │   │   ├── BlueprintsGenerator.cs
 │       │   │   ├── ComponentExtensionsGenerator.cs
 │       │   │   ├── ComponentIndicesGenerator.cs
 │       │   │   ├── PoolAttributesGenerator.cs
 │       │   │   └── PoolsGenerator.cs
 │       │   ├── Interfaces
+│       │   │   ├── IBlueprintsCodeGenerator.cs
 │       │   │   ├── ICodeGenerator.cs
 │       │   │   ├── ICodeGeneratorDataProvider.cs
 │       │   │   ├── IComponentCodeGenerator.cs
@@ -87,6 +93,11 @@
 │       │   ├── MatcherToString.cs
 │       │   └── TriggerOnEvent.cs
 │       ├── Serialization
+│       │   ├── Blueprints
+│       │   │   ├── Blueprint.cs
+│       │   │   ├── BlueprintEntityExtension.cs
+│       │   │   ├── ComponentBlueprint.cs
+│       │   │   └── SerializableMember.cs
 │       │   ├── PublicMemberInfo.cs
 │       │   └── TypeSerializationExtension.cs
 │       ├── EntitasException.cs
@@ -133,6 +144,13 @@
 │               │   └── Editor
 │               │       ├── Entitas-Migration-Header.png
 │               │       └── EntitasMigrationWindow.cs
+│               ├── Serialization
+│               │   └── Blueprints
+│               │       ├── Editor
+│               │       │   ├── BinaryBlueprintInspector.cs
+│               │       │   └── BlueprintsInspector.cs
+│               │       ├── BinaryBlueprint.cs
+│               │       └── Blueprints.cs
 │               ├── VisualDebugging
 │               │   ├── DebugSystems
 │               │   │   ├── Editor
