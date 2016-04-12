@@ -5,6 +5,7 @@ using Entitas.Serialization;
 using Entitas.Serialization.Blueprints;
 using Entitas.Unity.VisualDebugging;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 namespace Entitas.Unity.Serialization.Blueprints {
@@ -12,7 +13,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
     [CustomEditor(typeof(BinaryBlueprint))]
     public class BinaryBlueprintInspector : Editor {
 
-        [MenuItem("Entitas/Blueprints/Update all Blueprints", false, 300)]
+        [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, 300)]
         public static void UpdateAllBinaryBlueprints() {
             var binaryBlueprints = Resources.FindObjectsOfTypeAll<BinaryBlueprint>();
             var allPoolNames = Pools.allPools.Select(pool => pool.metaData.poolName).ToArray();
@@ -24,7 +25,9 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 }
             }
 
-            Debug.Log("Validated " + binaryBlueprints.Length + " Blueprints. " + updated + " have been updated.");
+            if (updated > 0) {
+                Debug.Log("Validated " + binaryBlueprints.Length + " Blueprints, " + updated + " have been updated.");
+            }
         }
 
         public static bool UpdateBinaryBlueprint(BinaryBlueprint binaryBlueprint, string[] allPoolNames) {
@@ -46,7 +49,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
                 if (index != component.index) {
                     Debug.Log(string.Format(
-                        "Blueprint '{0}' has invalid or outdated component index for '{1}'. Index was {2} but should be {3}. This has been fixed now! Happy coding!",
+                        "Blueprint '{0}' has invalid or outdated component index for '{1}'. Index was {2} but should be {3}. This will be fixed now!",
                         blueprint.name, component.fullTypeName, component.index, index));
 
                     component.index = index;

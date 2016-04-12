@@ -34,14 +34,14 @@ namespace Entitas.Unity.CodeGenerator {
             var generatedFiles = TypeReflectionCodeGenerator.Generate(assembly, config.pools,
                 blueprintNames, config.generatedFolderPath, enabledCodeGenerators);
 
-            AssetDatabase.Refresh();
-
             foreach (var file in generatedFiles) {
                 Debug.Log(file.generatorName + ": " + file.fileName);
             }
 
             var totalGeneratedFiles = generatedFiles.Select(file => file.fileName).Distinct().Count();
             Debug.Log("Generated " + totalGeneratedFiles + " files.");
+
+            AssetDatabase.Refresh();
         }
 
         public static Type[] GetCodeGenerators() {
