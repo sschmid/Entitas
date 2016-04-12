@@ -12,11 +12,11 @@ class describe_BlueprintsGenerator : nspec {
             files.Length.should_be(0);
         };
 
-        it["adds getters for a blueprint to Blueprints"] = () => {
+        it["adds getters for a blueprint to Blueprints ordered by name"] = () => {
             var generator = new BlueprintsGenerator();
             const string name1 = "MyBlueprint1";
             const string name2 = "MyBlueprint2";
-            var blueprintNames = new [] { name1, name2 };
+            var blueprintNames = new [] { name2, name1 };
 
             var files = generator.Generate(blueprintNames);
             files.Length.should_be(1);

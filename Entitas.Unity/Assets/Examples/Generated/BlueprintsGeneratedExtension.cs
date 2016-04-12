@@ -10,7 +10,7 @@ using Entitas.Serialization.Blueprints;
 
 namespace Entitas.Unity.Serialization.Blueprints {
     public partial class Blueprints {
-        public Blueprint Max { get { return GetBlueprint("Max"); } }
         public Blueprint Jack { get { return GetBlueprint("Jack"); } }
+        public Blueprint Max { get { return GetBlueprint("Max"); } }
     }
 }

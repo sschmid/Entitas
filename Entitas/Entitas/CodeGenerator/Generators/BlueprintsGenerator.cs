@@ -24,10 +24,11 @@ namespace Entitas.Unity.Serialization.Blueprints {{
             }
 
             var generatorName = typeof(BlueprintsGenerator).FullName;
+            var orderedBlueprintNames = blueprintNames.OrderBy(name => name).ToArray();
             var file = new CodeGenFile {
                 fileName = FILE_NAME,
                 fileContent = string
-                    .Format(CLASS_FORMAT, generateBlueprintGetters(blueprintNames))
+                    .Format(CLASS_FORMAT, generateBlueprintGetters(orderedBlueprintNames))
                     .ToUnixLineEndings(),
                 generatorName = generatorName
             };
