@@ -16,7 +16,7 @@ namespace Entitas.Unity.Serialization.Blueprints {{
     }}
 }}
 ";
-        const string GETTER_FORMAT = "        public Blueprint {0} {{ get {{ return GetBlueprint(\"{0}\"); }} }}";
+        const string GETTER_FORMAT = "        public Blueprint {0} {{ get {{ return GetBlueprint(\"{1}\"); }} }}";
 
         public CodeGenFile[] Generate(string[] blueprintNames) {
             if (blueprintNames.Length == 0) {
@@ -38,7 +38,15 @@ namespace Entitas.Unity.Serialization.Blueprints {{
 
         string generateBlueprintGetters(string[] blueprintNames) {
             return string.Join("\n", blueprintNames
-                .Select(name => string.Format(GETTER_FORMAT, name)).ToArray());
+                .Select(name => string.Format(GETTER_FORMAT, validPropertyName(name), name)).ToArray());
+        }
+
+        string validPropertyName(string name) {
+            return name
+                .Replace(" ", string.Empty)
+                .Replace("-", string.Empty)
+                .Replace("(", string.Empty)
+                .Replace(")", string.Empty);
         }
     }
 }
