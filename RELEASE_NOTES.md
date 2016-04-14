@@ -1,3 +1,13 @@
+# 0.30.3
+
+##### Entitas.CodeGenerator
+- Added support for whitespace, '-' and braces in blueprint names
+
+##### Entitas.Unity.Serialization.Blueprints
+- Blueprints.FindAllBlueprints orders all blueprints by name
+- Fixed pool not shown in hierarchy
+
+
 # 0.30.2
 
 ##### Note
