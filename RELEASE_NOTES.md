@@ -1,3 +1,27 @@
+# 0.30.2
+
+##### Note
+This release introduces Blueprints for Entitas (Beta). Update if you want to
+use and play with Blueprints. [Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Blueprints-(Beta))
+
+##### Entitas.CodeGenerator
+- Only creating PoolObserver when Application.isPlaying
+- Added BlueprintsGenerator
+
+##### Entitas.Unity.VisualDebugging
+- Added more options for sorting systems in the inspector
+- Removing event handlers from pool observer when leaving play-mode
+
+##### Entitas.Serialization.Blueprints
+- Added Blueprints (and more)
+
+##### Entitas.Unity.Serialization.Blueprints
+- Added BlueprintInspector (and more)
+
+##### Other
+- Moved build scripts into a folder
+
+
 # 0.30.1
 
 ##### Entitas.Unity.VisualDebugging
