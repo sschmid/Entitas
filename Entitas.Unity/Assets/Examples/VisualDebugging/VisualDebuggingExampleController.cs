@@ -81,6 +81,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddHashSet(new HashSet<string> { "One", "Two", "Three" });
             e.AddUnsupportedObject(new UnsupportedObject("Unsupported Object"));
             e.AddProperty("My Property");
+            e.AddPerson("Max", "Male");
         }
     }
 
@@ -130,6 +131,9 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         UnsupportedObject unsupportedObject = null;
         e.AddUnsupportedObject(unsupportedObject);
         e.AddProperty(myString);
+        string personName = null;
+        string personGender = null;
+        e.AddPerson(personName, personGender);
     }
 }
 

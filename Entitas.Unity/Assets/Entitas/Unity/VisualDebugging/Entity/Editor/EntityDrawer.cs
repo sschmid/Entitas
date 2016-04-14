@@ -19,6 +19,8 @@ namespace Entitas.Unity.VisualDebugging {
 
         static IDefaultInstanceCreator[] _defaultInstanceCreators;
         static ITypeDrawer[] _typeDrawers;
+        static IComponentDrawer[] _componentDrawers;
+
         static string _componentNameSearchTerm = string.Empty;
 
         static bool _isInitialized;
@@ -38,6 +40,11 @@ namespace Entitas.Unity.VisualDebugging {
                 _typeDrawers = types
                     .Where(type => type.ImplementsInterface<ITypeDrawer>())
                     .Select(type => (ITypeDrawer)Activator.CreateInstance(type))
+                    .ToArray();
+
+                _componentDrawers = types
+                    .Where(type => type.ImplementsInterface<IComponentDrawer>())
+                    .Select(type => (IComponentDrawer)Activator.CreateInstance(type))
                     .ToArray();
             }
 
@@ -206,11 +213,11 @@ namespace Entitas.Unity.VisualDebugging {
 
             var componentName = componentType.Name.RemoveComponentSuffix();
             if (componentName.ToLower().Contains(_componentNameSearchTerm.ToLower())) {
-                var memberInfos = componentType.GetPublicMemberInfos();
 
                 var boxStyle = getColoredBoxStyle(entity.totalComponents, index);
                 EntitasEditorLayout.BeginVerticalBox(boxStyle);
                 {
+                    var memberInfos = componentType.GetPublicMemberInfos();
                     EntitasEditorLayout.BeginHorizontal();
                     {
                         if (memberInfos.Count == 0) {
@@ -225,9 +232,26 @@ namespace Entitas.Unity.VisualDebugging {
                     EntitasEditorLayout.EndHorizontal();
 
                     if (unfoldedComponents[index]) {
-                        foreach (var info in memberInfos) {
-                            DrawAndSetElement(info.type, info.name, info.GetValue(component),
-                                entity, index, component, info.SetValue);
+
+                        var componentDrawer = getComponentDrawer(componentType);
+                        if (componentDrawer != null) {
+                            var newComponent = entity.CreateComponent(index, componentType);
+                            component.CopyPublicMemberValues(newComponent);
+                            EditorGUI.BeginChangeCheck();
+                            {
+                                componentDrawer.DrawComponent(newComponent);
+                            }
+                            var changed = EditorGUI.EndChangeCheck();
+                            if (changed) {
+                                entity.ReplaceComponent(index, newComponent);
+                            } else {
+                                entity.GetComponentPool(index).Push(newComponent);
+                            }
+                        } else {
+                            foreach (var info in memberInfos) {
+                                DrawAndSetElement(info.type, info.name, info.GetValue(component),
+                                    entity, index, component, info.SetValue);
+                            }
                         }
                     }
                 }
@@ -356,6 +380,16 @@ namespace Entitas.Unity.VisualDebugging {
 
         static ITypeDrawer getTypeDrawer(Type type) {
             foreach (var drawer in _typeDrawers) {
+                if (drawer.HandlesType(type)) {
+                    return drawer;
+                }
+            }
+
+            return null;
+        }
+
+        static IComponentDrawer getComponentDrawer(Type type) {
+            foreach (var drawer in _componentDrawers) {
                 if (drawer.HandlesType(type)) {
                     return drawer;
                 }

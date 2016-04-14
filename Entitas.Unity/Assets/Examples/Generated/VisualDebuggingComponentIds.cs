@@ -28,19 +28,20 @@ public static class VisualDebuggingComponentIds {
     public const int MyFloat = 18;
     public const int MyInt = 19;
     public const int MyString = 20;
-    public const int Property = 21;
-    public const int Rect = 22;
-    public const int SystemObject = 23;
-    public const int Test = 24;
-    public const int Texture2D = 25;
-    public const int Texture = 26;
-    public const int UnityObject = 27;
-    public const int UnsupportedObject = 28;
-    public const int Vector2 = 29;
-    public const int Vector3 = 30;
-    public const int Vector4 = 31;
+    public const int Person = 21;
+    public const int Property = 22;
+    public const int Rect = 23;
+    public const int SystemObject = 24;
+    public const int Test = 25;
+    public const int Texture2D = 26;
+    public const int Texture = 27;
+    public const int UnityObject = 28;
+    public const int UnsupportedObject = 29;
+    public const int Vector2 = 30;
+    public const int Vector3 = 31;
+    public const int Vector4 = 32;
 
-    public const int TotalComponents = 32;
+    public const int TotalComponents = 33;
 
     public static readonly string[] componentNames = {
         "AnArray",
@@ -64,6 +65,7 @@ public static class VisualDebuggingComponentIds {
         "MyFloat",
         "MyInt",
         "MyString",
+        "Person",
         "Property",
         "Rect",
         "SystemObject",
@@ -99,6 +101,7 @@ public static class VisualDebuggingComponentIds {
         typeof(MyFloatComponent),
         typeof(MyIntComponent),
         typeof(MyStringComponent),
+        typeof(PersonComponent),
         typeof(PropertyComponent),
         typeof(RectComponent),
         typeof(SystemObjectComponent),

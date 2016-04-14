@@ -101,3 +101,8 @@ public class PropertyComponent : IComponent {
     public string value { get; set; }
 }
 
+[VisualDebugging]
+public class PersonComponent : IComponent {
+    public string name;
+    public string gender;
+}
