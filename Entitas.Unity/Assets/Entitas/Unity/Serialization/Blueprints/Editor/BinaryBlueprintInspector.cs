@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using Entitas;
 using Entitas.Serialization;
 using Entitas.Serialization.Blueprints;
@@ -15,8 +16,13 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
         [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, 300)]
         public static void UpdateAllBinaryBlueprints() {
+            var allPools = findAllPools();
+            if (allPools == null) {
+                return;
+            }
+
             var binaryBlueprints = Resources.FindObjectsOfTypeAll<BinaryBlueprint>();
-            var allPoolNames = Pools.allPools.Select(pool => pool.metaData.poolName).ToArray();
+            var allPoolNames = allPools.Select(pool => pool.metaData.poolName).ToArray();
             var updated = 0;
             foreach (var binaryBlueprint in binaryBlueprints) {
                 var didUpdate = UpdateBinaryBlueprint(binaryBlueprint, allPoolNames);
@@ -31,6 +37,11 @@ namespace Entitas.Unity.Serialization.Blueprints {
         }
 
         public static bool UpdateBinaryBlueprint(BinaryBlueprint binaryBlueprint, string[] allPoolNames) {
+            var allPools = findAllPools();
+            if (allPools == null) {
+                return false;
+            }
+
             var blueprint = binaryBlueprint.Deserialize();
             var needsUpdate = false;
 
@@ -40,7 +51,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 needsUpdate = true;
             }
 
-            var pool = Pools.allPools[poolIndex];
+            var pool = allPools[poolIndex];
             blueprint.poolIdentifier = pool.metaData.poolName;
 
             foreach (var component in blueprint.components) {
@@ -65,8 +76,22 @@ namespace Entitas.Unity.Serialization.Blueprints {
             return needsUpdate;
         }
 
+        static Pool[] findAllPools() {
+            var poolsType = Assembly.GetAssembly(typeof(Entity)).GetTypes().SingleOrDefault(type => type.FullName == "Pools");
+
+            if (poolsType != null) {
+                var allPools = poolsType.GetProperties(BindingFlags.Public | BindingFlags.Static)
+                    .Single(info => info.Name == "allPools");
+
+                return (Pool[])allPools.GetValue(poolsType, null);
+            }
+
+            return new Pool[0];
+        }
+
         Blueprint _blueprint;
 
+        Pool[] _allPools;
         string[] _allPoolNames;
         int _poolIndex;
 
@@ -74,9 +99,14 @@ namespace Entitas.Unity.Serialization.Blueprints {
         Entity _entity;
 
         void Awake() {
+            _allPools = findAllPools();
+            if (_allPools == null) {
+                return;
+            }
+
             var binaryBlueprint = ((BinaryBlueprint)target);
 
-            _allPoolNames = Pools.allPools.Select(pool => pool.metaData.poolName).ToArray();
+            _allPoolNames = _allPools.Select(pool => pool.metaData.poolName).ToArray();
 
             BinaryBlueprintInspector.UpdateBinaryBlueprint(binaryBlueprint, _allPoolNames);
 
@@ -124,7 +154,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
             if (_pool != null) {
                 _pool.Reset();
             }
-            _pool = Pools.allPools[_poolIndex];
+            _pool = _allPools[_poolIndex];
             _entity = _pool.CreateEntity();
         }
     }
