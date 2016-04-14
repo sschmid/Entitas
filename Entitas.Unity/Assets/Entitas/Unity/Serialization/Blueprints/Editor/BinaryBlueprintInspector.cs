@@ -16,23 +16,25 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
         [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, 300)]
         public static void UpdateAllBinaryBlueprints() {
-            var allPools = findAllPools();
-            if (allPools == null) {
-                return;
-            }
-
-            var binaryBlueprints = Resources.FindObjectsOfTypeAll<BinaryBlueprint>();
-            var allPoolNames = allPools.Select(pool => pool.metaData.poolName).ToArray();
-            var updated = 0;
-            foreach (var binaryBlueprint in binaryBlueprints) {
-                var didUpdate = UpdateBinaryBlueprint(binaryBlueprint, allPoolNames);
-                if (didUpdate) {
-                    updated += 1;
+            if (!EditorApplication.isPlayingOrWillChangePlaymode) {
+                var allPools = findAllPools();
+                if (allPools == null) {
+                    return;
                 }
-            }
 
-            if (updated > 0) {
-                Debug.Log("Validated " + binaryBlueprints.Length + " Blueprints, " + updated + " have been updated.");
+                var binaryBlueprints = Resources.FindObjectsOfTypeAll<BinaryBlueprint>();
+                var allPoolNames = allPools.Select(pool => pool.metaData.poolName).ToArray();
+                var updated = 0;
+                foreach (var binaryBlueprint in binaryBlueprints) {
+                    var didUpdate = UpdateBinaryBlueprint(binaryBlueprint, allPoolNames);
+                    if (didUpdate) {
+                        updated += 1;
+                    }
+                }
+
+                if (updated > 0) {
+                    Debug.Log("Validated " + binaryBlueprints.Length + " Blueprints, " + updated + " have been updated.");
+                }
             }
         }
 
