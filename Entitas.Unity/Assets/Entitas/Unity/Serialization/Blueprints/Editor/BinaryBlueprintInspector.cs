@@ -107,7 +107,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
         Pool _pool;
         Entity _entity;
 
-        void OnEnable() {
+        void Awake() {
             _allPools = findAllPools();
             if (_allPools == null) {
                 return;
@@ -132,7 +132,9 @@ namespace Entitas.Unity.Serialization.Blueprints {
         }
 
         void OnDisable() {
-            _pool.Reset();
+            if (_pool != null) {
+                _pool.Reset();
+            }
         }
 
         public override void OnInspectorGUI() {
