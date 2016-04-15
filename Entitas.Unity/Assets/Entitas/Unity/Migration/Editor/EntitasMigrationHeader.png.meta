@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 1e4ef37c57312405c81976a2b5801221
 labels:
-- Entitas-Migration-Header
+- EntitasMigrationHeader
 timeCreated: 1454526358
 licenseType: Pro
 TextureImporter:

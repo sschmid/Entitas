@@ -9,7 +9,7 @@ namespace Entitas.Unity.VisualDebugging {
         static Texture2D poolHierarchyIcon {
             get {
                 if (_poolHierarchyIcon == null) {
-                    _poolHierarchyIcon = EntitasEditorLayout.LoadTexture("l:PoolHierarchyIcon");
+                    _poolHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasPoolHierarchyIcon");
                 }
                 return _poolHierarchyIcon;
             }
@@ -18,7 +18,7 @@ namespace Entitas.Unity.VisualDebugging {
         static Texture2D poolErrorHierarchyIcon {
             get {
                 if (_poolErrorHierarchyIcon == null) {
-                    _poolErrorHierarchyIcon = EntitasEditorLayout.LoadTexture("l:PoolErrorHierarchyIcon");
+                    _poolErrorHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasPoolErrorHierarchyIcon");
                 }
                 return _poolErrorHierarchyIcon;
             }
@@ -27,7 +27,7 @@ namespace Entitas.Unity.VisualDebugging {
         static Texture2D entityHierarchyIcon {
             get {
                 if (_entityhierarchyIcon == null) {
-                    _entityhierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntityHierarchyIcon");
+                    _entityhierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasEntityHierarchyIcon");
                 }
                 return _entityhierarchyIcon;
             }
@@ -36,7 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
         static Texture2D systemsHierarchyIcon {
             get {
                 if (_systemsHierarchyIcon == null) {
-                    _systemsHierarchyIcon = EntitasEditorLayout.LoadTexture("l:SystemsHierarchyIcon");
+                    _systemsHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasSystemsHierarchyIcon");
                 }
                 return _systemsHierarchyIcon;
             }

@@ -19,7 +19,7 @@ namespace Entitas.Unity.Migration {
         Vector2 _scrollViewPosition;
 
         void OnEnable() {
-            _headerTexture = EntitasEditorLayout.LoadTexture("l:Entitas-Migration-Header");
+            _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasMigrationHeader");
             _localVersion = EntitasCheckForUpdates.GetLocalVersion();
             _migrations = getMigrations();
         }

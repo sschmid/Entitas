@@ -26,7 +26,7 @@ namespace Entitas.Unity {
         Vector2 _scrollViewPosition;
 
         void OnEnable() {
-            _headerTexture = EntitasEditorLayout.LoadTexture("l:Entitas-Header");
+            _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasHeader");
             _localVersion = EntitasCheckForUpdates.GetLocalVersion();
             _config = EntitasPreferences.LoadConfig();
             _preferencesDrawers = Assembly.GetAssembly(typeof(IEntitasPreferencesDrawer)).GetTypes()
