@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Entitas.Serialization.Blueprints;
 using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
@@ -16,7 +15,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
         void OnEnable() {
             if (blueprints == null) {
-                blueprints = FindAllBlueprints();
+                blueprints = new BinaryBlueprint[0];
             }
 
             _binaryBlueprintsMap = new Dictionary<string, BinaryBlueprint>(blueprints.Length);
@@ -28,12 +27,6 @@ namespace Entitas.Unity.Serialization.Blueprints {
                     _binaryBlueprintsMap.Add(blueprint.name, blueprint);
                 }
             }
-        }
-
-        public BinaryBlueprint[] FindAllBlueprints() {
-            return Resources.FindObjectsOfTypeAll<BinaryBlueprint>()
-                .OrderBy(blueprint => blueprint.name)
-                .ToArray();
         }
 
         public Blueprint GetBlueprint(string name) {

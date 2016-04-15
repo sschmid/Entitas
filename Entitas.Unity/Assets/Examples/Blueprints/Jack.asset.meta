@@ -1,6 +1,8 @@
 fileFormatVersion: 2
-guid: 9123ddfa043dd4f90a103874dcb0fb01
-timeCreated: 1459709370
+guid: 3b1dda1f74af3447891e2468350e75cd
+labels:
+- EntitasBinaryBlueprint
+timeCreated: 1460725580
 licenseType: Pro
 NativeFormatImporter:
   userData: 

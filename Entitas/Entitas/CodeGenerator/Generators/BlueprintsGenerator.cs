@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Entitas.CodeGenerator;
-using Entitas.Serialization.Blueprints;
 
 namespace Entitas.CodeGenerator {
     

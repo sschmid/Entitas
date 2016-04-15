@@ -26,7 +26,7 @@ namespace Entitas.Unity.CodeGenerator {
                 .Select(type => (ICodeGenerator)Activator.CreateInstance(type))
                 .ToArray();
 
-            var blueprintNames = Resources.FindObjectsOfTypeAll<BinaryBlueprint>()
+            var blueprintNames = BinaryBlueprintInspector.FindAllBlueprints()
                 .Select(b => b.Deserialize().name)
                 .ToArray();
 
