@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entitas.Serialization.Blueprints;
 using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
@@ -32,11 +33,22 @@ namespace Entitas.Unity.Serialization.Blueprints {
         public Blueprint GetBlueprint(string name) {
             Blueprint blueprint;
             if (!_blueprintsMap.TryGetValue(name, out blueprint)) {
-                blueprint = _binaryBlueprintsMap[name].Deserialize();
-                _blueprintsMap.Add(name, blueprint);
+                BinaryBlueprint binaryBlueprint;
+                if (_binaryBlueprintsMap.TryGetValue(name, out binaryBlueprint)) {
+                    blueprint = binaryBlueprint.Deserialize();
+                    _blueprintsMap.Add(name, blueprint);
+                } else {
+                    throw new BlueprintsNotFoundException(name);
+                }
             }
 
             return blueprint;
+        }
+    }
+
+    public class BlueprintsNotFoundException : EntitasException {
+        public BlueprintsNotFoundException(string blueprintName) :
+            base("'" + blueprintName + "' does not exist!", "Did you update the Blueprints ScriptableObject?") {
         }
     }
 }
