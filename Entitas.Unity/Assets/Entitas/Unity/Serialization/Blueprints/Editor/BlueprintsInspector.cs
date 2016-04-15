@@ -13,6 +13,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
             if (GUILayout.Button("Find all Blueprints")) {
                 var blueprints = ((Blueprints)target);
                 blueprints.blueprints = BinaryBlueprintInspector.FindAllBlueprints();
+                EditorUtility.SetDirty(blueprints);
             }
         }
     }

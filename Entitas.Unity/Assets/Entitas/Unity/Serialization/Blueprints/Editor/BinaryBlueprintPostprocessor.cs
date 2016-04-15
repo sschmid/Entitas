@@ -11,10 +11,12 @@ namespace Entitas.Unity.Serialization.Blueprints {
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromPath) {
             foreach (string assetPath in importedAssets) {
                 var asset = AssetDatabase.LoadAssetAtPath<BinaryBlueprint>(assetPath);
-                var labels = new List<string>(AssetDatabase.GetLabels(asset));
-                if (!labels.Contains(ASSET_LABEL)) {
-                    labels.Add(ASSET_LABEL);
-                    AssetDatabase.SetLabels(asset, labels.ToArray());
+                if (asset != null) {
+                    var labels = new List<string>(AssetDatabase.GetLabels(asset));
+                    if (!labels.Contains(ASSET_LABEL)) {
+                        labels.Add(ASSET_LABEL);
+                        AssetDatabase.SetLabels(asset, labels.ToArray());
+                    }
                 }
             }
         }
