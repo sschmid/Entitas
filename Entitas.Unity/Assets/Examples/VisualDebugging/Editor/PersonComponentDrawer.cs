@@ -14,6 +14,10 @@ public class PersonComponentDrawer : IComponentDrawer {
 
         person.name = EditorGUILayout.TextField("Name", person.name);
 
+        if (person.gender == null) {
+            person.gender = PersonGender.Male.ToString();
+        }
+
         var gender = (PersonGender)Enum.Parse(typeof(PersonGender), person.gender);
         gender = (PersonGender)EditorGUILayout.EnumPopup("Gender", gender);
         person.gender = gender.ToString();
