@@ -8,7 +8,7 @@
 
     <a>Entitas turned 2 years old! :heart::heart::heart:<br />Share the love and use #madeWithEntitas in your Tweets to share what you've created with Entitas.<br /><br />If you love Entitas as much as we do<br />consider pressing this button ---></a>
 
-    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y9HGYPFMLG2W4">
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Donate-PayPal.gif" alt="Thank you!"></a>
 
 </p>
