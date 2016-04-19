@@ -12,7 +12,7 @@ namespace Readme {
         static void generate() {
             var generatedFolder = getEntitasProjectDir() + "/Readme/Readme/Generated/";
 
-            var codeGenerators = new ICodeGenerator[] {
+            var codeGenerators = new ICodeGenerator [] {
                 new ComponentExtensionsGenerator(),
                 new ComponentIndicesGenerator(),
                 new PoolAttributesGenerator(),
@@ -21,8 +21,9 @@ namespace Readme {
 
             var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
 
-            var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
-            var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
+            var provider = new TypeReflectionProvider(assembly.GetTypes(), new string [0], new string [0]);
+            IWriter[] writers = { new Writer(generatedFolder) };
+            var files = CodeGenerator.Generate(provider, codeGenerators, null, writers);
 
             foreach (var file in files) {
                 Console.WriteLine("Generated: " + file.fileName);

@@ -12,15 +12,15 @@ class GenerateTestComponents {
         var assembly = Assembly.GetAssembly(typeof(SomeComponent));
         var generatedFolder = getEntitasProjectDir() + "/Tests/Tests/Entitas/CodeGenerator/Fixtures/Generated/";
 
-        var codeGenerators = new ICodeGenerator[] {
+        var codeGenerators = new ICodeGenerator [] {
             new ComponentExtensionsGenerator(),
             new ComponentIndicesGenerator(),
             new PoolAttributesGenerator(),
             new PoolsGenerator()
         };
 
-        var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
-        var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
+        var provider = new TypeReflectionProvider(assembly.GetTypes(), new string [0], new string [0]);
+        var files = CodeGenerator.Generate(provider, codeGenerators, null, null);
 
         foreach (var file in files) {
             Console.WriteLine("Generated: " + file.fileName);
