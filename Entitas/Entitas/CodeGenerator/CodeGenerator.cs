@@ -16,7 +16,7 @@ namespace Entitas.CodeGenerator {
 //------------------------------------------------------------------------------
 ";
 
-        public static CodeGenFile[] Generate(ICodeGeneratorDataProvider provider, ICodeGenerator[] codeGenerators, IPostProcessor[] postProcessors, IWriter[] writers) {
+        public static CodeGenFile[] Generate(ICodeGeneratorDataProvider provider, ICodeGenerator[] codeGenerators, IPostProcessor[] postProcessors) {
 
             var generatedFiles = new List<CodeGenFile>();
 
@@ -37,18 +37,8 @@ namespace Entitas.CodeGenerator {
 
             var codeGenFiles = generatedFiles.ToArray();
 
-            var success = true;
             foreach (var processor in postProcessors) {
-                success = processor.Process(codeGenFiles);
-                if (!success) {
-                    return null;
-                }
-            }
-
-            if (success) {
-                foreach (var writer in writers) {
-                    writer.Write(codeGenFiles);
-                }
+                processor.Process(codeGenFiles);
             }
 
             return codeGenFiles;

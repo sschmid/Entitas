@@ -3,14 +3,14 @@ using System.IO;
 using Entitas.CodeGenerator;
 
 namespace Entitas.CodeGenerator {
-    public class Writer : IWriter {
+    public class WriteToDirectoryProcessor : IPostProcessor {
         string directory;
 
-        public Writer(string outputDirectory) {
+        public WriteToDirectoryProcessor(string outputDirectory) {
             this.directory = outputDirectory;
         }
 
-        public void Write(CodeGenFile[] codegenFiles) {
+        public void Process(CodeGenFile[] codegenFiles) {
             CleanDir(directory);
 
             if (!Directory.Exists(directory)) {
