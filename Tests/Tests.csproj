@@ -297,10 +297,10 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IPostProcessor.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IPostProcessor.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Intermediate\describe_Writer.cs" />
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Intermediate\WriteToDirectoryProcessor.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Intermediate\WriteToDirectoryProcessor.cs</Link>
     </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\Intermediate\describe_WriteToDirectoryProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
