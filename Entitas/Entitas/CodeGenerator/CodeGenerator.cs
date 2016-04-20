@@ -16,21 +16,21 @@ namespace Entitas.CodeGenerator {
 //------------------------------------------------------------------------------
 ";
 
-        public static CodeGenFile [] Generate(ICodeGeneratorDataProvider provider, ICodeGenerator[] codeGenerators, IPostProcessor[] postProcessors, IWriter[] writers) {
+        public static CodeGenFile[] Generate(ICodeGeneratorDataProvider provider, ICodeGenerator[] codeGenerators, IPostProcessor[] postProcessors, IWriter[] writers) {
 
             var generatedFiles = new List<CodeGenFile>();
 
-            foreach (var generator in codeGenerators.OfType<IPoolCodeGenerator> ()) {
+            foreach (var generator in codeGenerators.OfType<IPoolCodeGenerator>()) {
                 var files = generator.Generate(provider.poolNames);
                 generatedFiles.AddRange(files);
             }
 
-            foreach (var generator in codeGenerators.OfType<IComponentCodeGenerator> ()) {
+            foreach (var generator in codeGenerators.OfType<IComponentCodeGenerator>()) {
                 var files = generator.Generate(provider.componentInfos);
                 generatedFiles.AddRange(files);
             }
 
-            foreach (var generator in codeGenerators.OfType<IBlueprintsCodeGenerator> ()) {
+            foreach (var generator in codeGenerators.OfType<IBlueprintsCodeGenerator>()) {
                 var files = generator.Generate(provider.blueprintNames);
                 generatedFiles.AddRange(files);
             }
@@ -57,9 +57,9 @@ namespace Entitas.CodeGenerator {
 
     public static class CodeGeneratorExtensions {
 
-        public static string [] ComponentLookupTags(this ComponentInfo componentInfo) {
+        public static string[] ComponentLookupTags(this ComponentInfo componentInfo) {
             if (componentInfo.pools.Length == 0) {
-                return new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG };
+                return new[] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG };
             }
 
             return componentInfo.pools
