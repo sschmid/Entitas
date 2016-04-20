@@ -297,10 +297,14 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IPostProcessor.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IPostProcessor.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Intermediate\WriteToDirectoryProcessor.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Intermediate\WriteToDirectoryProcessor.cs</Link>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\PostProcessors\AddHeaderToFileProcessor.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\PostProcessors\AddHeaderToFileProcessor.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Intermediate\describe_WriteToDirectoryProcessor.cs" />
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\PostProcessors\WriteToDirectoryProcessor.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\PostProcessors\WriteToDirectoryProcessor.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\PostProcessors\describe_WriteToDirectoryProcessor.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\PostProcessors\describe_AddHeaderToFileProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -322,7 +326,7 @@
     <Folder Include="Tests\Entitas\Serialization\" />
     <Folder Include="Tests\Entitas\Blueprints\" />
     <Folder Include="Tests\Entitas.Unity\Blueprints\" />
-    <Folder Include="Tests\Entitas\CodeGenerator\Intermediate\" />
+    <Folder Include="Tests\Entitas\CodeGenerator\PostProcessors\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

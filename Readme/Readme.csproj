@@ -209,8 +209,11 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IPostProcessor.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IPostProcessor.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Intermediate\WriteToDirectoryProcessor.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Intermediate\WriteToDirectoryProcessor.cs</Link>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\PostProcessors\AddHeaderToFileProcessor.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\PostProcessors\AddHeaderToFileProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\PostProcessors\WriteToDirectoryProcessor.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\PostProcessors\WriteToDirectoryProcessor.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

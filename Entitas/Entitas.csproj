@@ -81,7 +81,8 @@
     <Compile Include="Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Interfaces\IPostProcessor.cs" />
-    <Compile Include="Entitas\CodeGenerator\Intermediate\WriteToDirectoryProcessor.cs" />
+    <Compile Include="Entitas\CodeGenerator\PostProcessors\WriteToDirectoryProcessor.cs" />
+    <Compile Include="Entitas\CodeGenerator\PostProcessors\AddHeaderToFileProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -96,5 +97,6 @@
     <Folder Include="Entitas\CodeGenerator\Intermediate\" />
     <Folder Include="Entitas\CodeGenerator\Providers\" />
     <Folder Include="Entitas\Serialization\Blueprints\" />
+    <Folder Include="Entitas\CodeGenerator\PostProcessors\" />
   </ItemGroup>
 </Project>

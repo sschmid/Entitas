@@ -20,8 +20,7 @@ namespace Entitas.CodeGenerator {
             foreach (var file in codegenFiles) {
                 var fileName = directory + file.fileName + ".cs";
                 var fileContent = file.fileContent.Replace("\n", Environment.NewLine);
-                var header = string.Format(CodeGenerator.AUTO_GENERATED_HEADER_FORMAT, file.generatorName);
-                File.WriteAllText(fileName, header + fileContent);
+                File.WriteAllText(fileName, fileContent);
             }
         }
 

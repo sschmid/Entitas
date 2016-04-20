@@ -22,7 +22,11 @@ namespace Readme {
             var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
 
             var provider = new TypeReflectionProvider(assembly.GetTypes(), new string [0], new string [0]);
-            IPostProcessor[] postProcessors = { new WriteToDirectoryProcessor(generatedFolder) };
+            IPostProcessor[] postProcessors = {
+                new AddHeaderToFileProcessor(),
+                new WriteToDirectoryProcessor(generatedFolder)
+            };
+
             var files = CodeGenerator.Generate(provider, codeGenerators, postProcessors);
 
             foreach (var file in files) {
