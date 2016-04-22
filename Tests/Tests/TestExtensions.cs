@@ -4,10 +4,7 @@ using System.Collections.Generic;
 
 public static class EntityExtensions {
     public static bool IsEnabled(this Entity entity) {
-        return (bool)entity.GetType().GetField(
-            "_isEnabled", 
-            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance
-        ).GetValue(entity);
+        return entity.isEnabled;
     }
 }
 

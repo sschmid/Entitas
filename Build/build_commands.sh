@@ -21,19 +21,21 @@ collect_sources() {
   cp -r "$ESU_ASSETS/$ES/Unity/" $SRC_DIR/$ESU
   find "./$SRC_DIR" -name "*.meta" -type f -delete
 
-  header_meta="Editor/Entitas-Header.png.meta"
+  header_meta="Editor/EntitasHeader.png.meta"
   cp "$ESU_ASSETS/$ES/Unity/$header_meta" "$SRC_DIR/$ESU/$header_meta"
 
   entity_icon_meta="Editor/EntitasEntityHierarchyIcon.png.meta"
+  entityError_icon_meta="Editor/EntitasEntityErrorHierarchyIcon.png.meta"
   pool_icon_meta="Editor/EntitasPoolHierarchyIcon.png.meta"
   poolError_icon_meta="Editor/EntitasPoolErrorHierarchyIcon.png.meta"
   systems_icon_meta="Editor/EntitasSystemsHierarchyIcon.png.meta"
   cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$entity_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$entity_icon_meta"
+  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$entityError_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$entityError_icon_meta"
   cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$pool_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$pool_icon_meta"
   cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$poolError_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$poolError_icon_meta"
   cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$systems_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$systems_icon_meta"
 
-  migration_header_meta="Editor/Entitas-Migration-Header.png.meta"
+  migration_header_meta="Editor/EntitasMigrationHeader.png.meta"
   cp "$ESU_ASSETS/$ES/Unity/Migration/$migration_header_meta" "$SRC_DIR/$ESU/Migration/$migration_header_meta"
 
   echo "Collecting sources done."

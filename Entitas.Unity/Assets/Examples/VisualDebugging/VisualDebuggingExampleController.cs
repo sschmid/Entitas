@@ -15,7 +15,13 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         createTestEntities(pool);
         createTestEntityWithNullValues(pool);
 
+        createTestEntityError(pool);
+
         pool.CreateSystem<AReactiveSystem>();
+    }
+
+    void createTestEntityError(Pool pool) {
+        pool.DestroyEntity(pool.CreateEntity().Retain(this));
     }
 
     void createTestEntities(Pool pool) {

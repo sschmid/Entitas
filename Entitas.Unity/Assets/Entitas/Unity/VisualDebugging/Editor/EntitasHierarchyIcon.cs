@@ -26,10 +26,19 @@ namespace Entitas.Unity.VisualDebugging {
 
         static Texture2D entityHierarchyIcon {
             get {
-                if (_entityhierarchyIcon == null) {
-                    _entityhierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasEntityHierarchyIcon");
+                if (_entityHierarchyIcon == null) {
+                    _entityHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasEntityHierarchyIcon");
                 }
-                return _entityhierarchyIcon;
+                return _entityHierarchyIcon;
+            }
+        }
+
+        static Texture2D entityErrorHierarchyIcon {
+            get {
+                if (_entityErrorHierarchyIcon == null) {
+                    _entityErrorHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasEntityErrorHierarchyIcon");
+                }
+                return _entityErrorHierarchyIcon;
             }
         }
 
@@ -44,7 +53,8 @@ namespace Entitas.Unity.VisualDebugging {
 
         static Texture2D _poolHierarchyIcon;
         static Texture2D _poolErrorHierarchyIcon;
-        static Texture2D _entityhierarchyIcon;
+        static Texture2D _entityHierarchyIcon;
+        static Texture2D _entityErrorHierarchyIcon;
         static Texture2D _systemsHierarchyIcon;
 
         static EntitasHierarchyIcon() {
@@ -59,15 +69,22 @@ namespace Entitas.Unity.VisualDebugging {
                 var rect = new Rect(selectionRect.x + selectionRect.width - iconOffset, selectionRect.y, iconSize, iconSize);
 
                 var poolObserver = gameObject.GetComponent<PoolObserverBehaviour>();
+                var entityBehaviour = gameObject.GetComponent<EntityBehaviour>();
+                var debugSystemsBehaviour = gameObject.GetComponent<DebugSystemsBehaviour>();
+
                 if (poolObserver != null) {
                     if (poolObserver.poolObserver.pool.retainedEntitiesCount != 0) {
                         GUI.DrawTexture(rect, poolErrorHierarchyIcon);
                     } else {
                         GUI.DrawTexture(rect, poolHierarchyIcon);
                     }
-                } else if (gameObject.GetComponent<EntityBehaviour>() != null) {
-                    GUI.DrawTexture(rect, entityHierarchyIcon);
-                } else if (gameObject.GetComponent<DebugSystemsBehaviour>() != null) {
+                } else if (entityBehaviour != null) {
+                    if (entityBehaviour.entity.isEnabled) {
+                        GUI.DrawTexture(rect, entityHierarchyIcon);
+                    } else {
+                        GUI.DrawTexture(rect, entityErrorHierarchyIcon);
+                    }
+                } else if (debugSystemsBehaviour != null) {
                     GUI.DrawTexture(rect, systemsHierarchyIcon);
                 }
             }
