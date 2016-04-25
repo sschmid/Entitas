@@ -11,10 +11,13 @@ namespace Entitas.Unity {
         }
 
         public static Texture2D LoadTexture(string label) {
-            var guid = AssetDatabase.FindAssets(label)[0];
-            if (guid != null) {
-                var path = AssetDatabase.GUIDToAssetPath(guid);
-                return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            var assets = AssetDatabase.FindAssets(label);
+            if (assets.Length > 0) {
+                var guid = assets[0];
+                if (guid != null) {
+                    var path = AssetDatabase.GUIDToAssetPath(guid);
+                    return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+                }
             }
             return null;
         }
