@@ -59,7 +59,6 @@
     <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0260.cs" />
     <Compile Include="GenerateTestComponents.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\describe_CodeGenerator.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\describe_GeneratedComponents.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple pools\AComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple pools\BComponent.cs" />
@@ -295,6 +294,17 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IPostProcessor.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IPostProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\PostProcessors\AddHeaderToFileProcessor.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\PostProcessors\AddHeaderToFileProcessor.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\PostProcessors\WriteToDirectoryProcessor.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\PostProcessors\WriteToDirectoryProcessor.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\PostProcessors\describe_WriteToDirectoryProcessor.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\PostProcessors\describe_AddHeaderToFileProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -316,6 +326,7 @@
     <Folder Include="Tests\Entitas\Serialization\" />
     <Folder Include="Tests\Entitas\Blueprints\" />
     <Folder Include="Tests\Entitas.Unity\Blueprints\" />
+    <Folder Include="Tests\Entitas\CodeGenerator\PostProcessors\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />

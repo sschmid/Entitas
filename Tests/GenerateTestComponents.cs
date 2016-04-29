@@ -20,7 +20,12 @@ class GenerateTestComponents {
         };
 
         var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
-        var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
+        IPostProcessor[] postProcessors = {
+            new AddHeaderToFileProcessor(),
+            new WriteToDirectoryProcessor(generatedFolder)
+        };
+
+        var files = CodeGenerator.Generate(provider, codeGenerators, postProcessors);
 
         foreach (var file in files) {
             Console.WriteLine("Generated: " + file.fileName);
