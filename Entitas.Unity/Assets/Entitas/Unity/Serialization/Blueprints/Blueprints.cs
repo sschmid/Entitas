@@ -5,7 +5,7 @@ using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
 
 namespace Entitas.Unity.Serialization.Blueprints {
-    
+
     [CreateAssetMenu(menuName = "Entitas/Blueprints", fileName = "Assets/Blueprints.asset")]
     public partial class Blueprints : ScriptableObject {
 
@@ -30,6 +30,19 @@ namespace Entitas.Unity.Serialization.Blueprints {
             }
         }
 
+        #if (UNITY_EDITOR)
+
+        public Blueprint GetBlueprint(string name) {
+            BinaryBlueprint binaryBlueprint;
+            if (!_binaryBlueprintsMap.TryGetValue(name, out binaryBlueprint)) {
+                throw new BlueprintsNotFoundException(name);
+            }
+
+            return binaryBlueprint.Deserialize();
+        }
+
+        #else
+
         public Blueprint GetBlueprint(string name) {
             Blueprint blueprint;
             if (!_blueprintsMap.TryGetValue(name, out blueprint)) {
@@ -44,6 +57,8 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
             return blueprint;
         }
+
+        #endif
     }
 
     public class BlueprintsNotFoundException : EntitasException {
