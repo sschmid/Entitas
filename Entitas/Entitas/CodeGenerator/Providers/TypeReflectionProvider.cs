@@ -53,10 +53,8 @@ namespace Entitas.CodeGenerator {
         }
 
         public static ComponentInfo CreateComponentInfoForClass(Type type) {
-            var nameSplit = type.ToCompilableString().Split('.');
-            var componentName = nameSplit[nameSplit.Length - 1].AddComponentSuffix();
             return new ComponentInfo(
-                componentName,
+                GetComponentName(type),
                 new List<PublicMemberInfo> {
                     new PublicMemberInfo(type, "value")
                 },
@@ -93,6 +91,18 @@ namespace Entitas.CodeGenerator {
             return attr == null ? "is" : (string)attr.GetType().GetField("prefix").GetValue(attr);
         }
 
+        public static string GetComponentName(Type type) {
+            var attr = Attribute.GetCustomAttributes(type)
+                .SingleOrDefault(a => isTypeOrHasBaseType(a.GetType(), "Entitas.CodeGenerator.CustomComponentNameAttribute"));
+
+            if (attr == null) {
+                var nameSplit = type.ToCompilableString().Split('.');
+                return nameSplit[nameSplit.Length - 1].AddComponentSuffix();
+            }
+
+            return (string)attr.GetType().GetField("componentName").GetValue(attr);
+        }
+
         public static bool GetGenerateMethods(Type type) {
             return Attribute.GetCustomAttributes(type)
                 .All(attr => attr.GetType().FullName != "Entitas.CodeGenerator.DontGenerateAttribute");
@@ -126,4 +136,3 @@ namespace Entitas.CodeGenerator {
         }
     }
 }
-    

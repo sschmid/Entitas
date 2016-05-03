@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
+using Entitas.CodeGenerator;
 
 [VisualDebugging]
 public class SomeClass {
@@ -28,3 +29,12 @@ namespace SomeNamespace {
 public class SomeGenericClass<T> {
     public T value;
 }
+
+[VisualDebugging]
+public class ISomeInterface {
+}
+
+[VisualDebugging, CustomComponentName("CoolNameComponent")]
+public class BadName {
+}
+    

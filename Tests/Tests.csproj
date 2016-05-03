@@ -298,6 +298,11 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeClass.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeOtherClass.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeGenericClass.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\ISomeInterface.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomName.cs" />
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

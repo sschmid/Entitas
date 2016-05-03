@@ -13,37 +13,39 @@ public static class VisualDebuggingComponentIds {
     public const int Array3D = 3;
     public const int Bounds = 4;
     public const int Color = 5;
-    public const int CustomObject = 6;
-    public const int DateTime = 7;
-    public const int DictArray = 8;
-    public const int Dictionary = 9;
-    public const int GameObject = 10;
-    public const int HashSet = 11;
-    public const int JaggedArray = 12;
-    public const int ListArray = 13;
-    public const int List = 14;
-    public const int MonoBehaviourSubClass = 15;
-    public const int MyBool = 16;
-    public const int MyEnum = 17;
-    public const int MyFloat = 18;
-    public const int MyInt = 19;
-    public const int MyString = 20;
-    public const int Person = 21;
-    public const int Property = 22;
-    public const int Rect = 23;
-    public const int SomeClass = 24;
-    public const int SomeOtherClass = 25;
-    public const int SystemObject = 26;
-    public const int Test = 27;
-    public const int Texture2D = 28;
-    public const int Texture = 29;
-    public const int UnityObject = 30;
-    public const int UnsupportedObject = 31;
-    public const int Vector2 = 32;
-    public const int Vector3 = 33;
-    public const int Vector4 = 34;
+    public const int CoolName = 6;
+    public const int CustomObject = 7;
+    public const int DateTime = 8;
+    public const int DictArray = 9;
+    public const int Dictionary = 10;
+    public const int GameObject = 11;
+    public const int HashSet = 12;
+    public const int ISomeInterface = 13;
+    public const int JaggedArray = 14;
+    public const int ListArray = 15;
+    public const int List = 16;
+    public const int MonoBehaviourSubClass = 17;
+    public const int MyBool = 18;
+    public const int MyEnum = 19;
+    public const int MyFloat = 20;
+    public const int MyInt = 21;
+    public const int MyString = 22;
+    public const int Person = 23;
+    public const int Property = 24;
+    public const int Rect = 25;
+    public const int SomeClass = 26;
+    public const int SomeOtherClass = 27;
+    public const int SystemObject = 28;
+    public const int Test = 29;
+    public const int Texture2D = 30;
+    public const int Texture = 31;
+    public const int UnityObject = 32;
+    public const int UnsupportedObject = 33;
+    public const int Vector2 = 34;
+    public const int Vector3 = 35;
+    public const int Vector4 = 36;
 
-    public const int TotalComponents = 35;
+    public const int TotalComponents = 37;
 
     public static readonly string[] componentNames = {
         "AnArray",
@@ -52,12 +54,14 @@ public static class VisualDebuggingComponentIds {
         "Array3D",
         "Bounds",
         "Color",
+        "CoolName",
         "CustomObject",
         "DateTime",
         "DictArray",
         "Dictionary",
         "GameObject",
         "HashSet",
+        "ISomeInterface",
         "JaggedArray",
         "ListArray",
         "List",
@@ -90,12 +94,14 @@ public static class VisualDebuggingComponentIds {
         typeof(Array3DComponent),
         typeof(BoundsComponent),
         typeof(ColorComponent),
+        typeof(CoolNameComponent),
         typeof(CustomObjectComponent),
         typeof(DateTimeComponent),
         typeof(DictArrayComponent),
         typeof(DictionaryComponent),
         typeof(GameObjectComponent),
         typeof(HashSetComponent),
+        typeof(ISomeInterfaceComponent),
         typeof(JaggedArrayComponent),
         typeof(ListArrayComponent),
         typeof(ListComponent),

@@ -85,6 +85,50 @@ class describe_TypeReflectionProvider : nspec {
                     var provider = createProviderWithTypes(typeof(SomeGenericClass<int>));
                     provider.componentInfos.should_be_empty();
                 };
+
+                it["creates a component for an interface"] = () => {
+                    var provider = createProviderWithTypes(typeof(ISomeInterface));
+                    provider.componentInfos.Length.should_be(1);
+                    var info = provider.componentInfos[0];
+
+                    info.fullTypeName.should_be("ISomeInterfaceComponent");
+                    info.typeName.should_be("ISomeInterfaceComponent");
+
+                    info.memberInfos.Count.should_be(1);
+
+                    info.memberInfos[0].type.should_be(typeof(ISomeInterface));
+                    info.memberInfos[0].name.should_be("value");
+
+                    info.pools.should_contain("SomePool");
+                    info.isSingleEntity.should_be_false();
+                    info.singleComponentPrefix.should_be("is");
+                    info.generateComponent.should_be(true);
+                    info.generateMethods.should_be(true);
+                    info.generateIndex.should_be(true);
+                    info.isSingletonComponent.should_be(false);
+                };
+
+                it["creates a component with custom name"] = () => {
+                    var provider = createProviderWithTypes(typeof(CustomName));
+                    provider.componentInfos.Length.should_be(1);
+                    var info = provider.componentInfos[0];
+
+                    info.fullTypeName.should_be("SomeName");
+                    info.typeName.should_be("SomeName");
+
+                    info.memberInfos.Count.should_be(1);
+
+                    info.memberInfos[0].type.should_be(typeof(CustomName));
+                    info.memberInfos[0].name.should_be("value");
+
+                    info.pools.should_contain("SomePool");
+                    info.isSingleEntity.should_be_false();
+                    info.singleComponentPrefix.should_be("is");
+                    info.generateComponent.should_be(true);
+                    info.generateMethods.should_be(true);
+                    info.generateIndex.should_be(true);
+                    info.isSingletonComponent.should_be(false);
+                };
             };
 
             context["when type implements IComponent"] = () => {

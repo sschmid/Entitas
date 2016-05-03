@@ -2,7 +2,7 @@ using System;
 
 namespace Entitas.CodeGenerator {
 
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, AllowMultiple = true)]
     public class PoolAttribute : Attribute {
         public readonly string poolName;
 
