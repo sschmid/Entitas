@@ -129,6 +129,15 @@ class describe_TypeReflectionProvider : nspec {
                     info.generateIndex.should_be(true);
                     info.isSingletonComponent.should_be(false);
                 };
+
+                it["doesn't create a component for generated components"] = () => {
+                    var provider = createProviderWithTypes(typeof(SomeService), typeof(GeneratedService));
+                    provider.componentInfos.Length.should_be(1);
+                    var info = provider.componentInfos[0];
+
+                    info.fullTypeName.should_be("GeneratedService");
+                    info.generateComponent.should_be(true);
+                };
             };
 
             context["when type implements IComponent"] = () => {

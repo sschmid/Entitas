@@ -28,14 +28,17 @@ namespace Entitas.CodeGenerator {
                 .Where(type => type.GetInterfaces().Any(i => i.FullName == "Entitas.IComponent"))
                 .Select(type => CreateComponentInfo(type));
 
-            var infosForOtherTypes = types
+            var infosForNonComponents = types
                 .Where(type => !type.IsGenericType)
                 .Where(type => !type.GetInterfaces().Any(i => i.FullName == "Entitas.IComponent"))
                 .Where(type => GetPools(type).Length > 0)
                 .Select(type => CreateComponentInfoForClass(type));
 
+            var generatedComponentsLookup = infosForNonComponents.ToLookup(info => info.fullTypeName);
+
             return infosFromComponents
-                .Concat(infosForOtherTypes)
+                .Where(info => !generatedComponentsLookup.Contains(info.fullTypeName))
+                .Concat(infosForNonComponents)
                 .ToArray();
         }
 
