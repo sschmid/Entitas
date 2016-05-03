@@ -12,6 +12,7 @@ public class FComponent : IComponent {
                 new [] { "PoolC" },
                 false,
                 "is",
+                false,
                 true,
                 true
             );

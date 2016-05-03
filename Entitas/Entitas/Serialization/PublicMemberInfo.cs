@@ -6,33 +6,31 @@ namespace Entitas.Serialization {
 
     public class PublicMemberInfo {
 
-        public Type type {
-            get {
-                return _fieldInfo != null
-                    ? _fieldInfo.FieldType
-                    : _propertyInfo.PropertyType;
-            }
-        }
-
-        public string name {
-            get {
-                return _fieldInfo != null
-                    ? _fieldInfo.Name
-                    : _propertyInfo.Name;
-            }
-        }
+        public Type type { get { return _type; } }
+        public string name { get { return _name; } }
 
         readonly FieldInfo _fieldInfo;
         readonly PropertyInfo _propertyInfo;
+        readonly Type _type;
+        readonly string _name;
 
         public PublicMemberInfo(FieldInfo info) {
             _fieldInfo = info;
             _propertyInfo = null;
+            _type = _fieldInfo.FieldType;
+            _name = _fieldInfo.Name;
         }
 
         public PublicMemberInfo(PropertyInfo info) {
             _fieldInfo = null;
             _propertyInfo = info;
+            _type = _propertyInfo.PropertyType;
+            _name = _propertyInfo.Name;
+        }
+
+        public PublicMemberInfo(Type type, string name) {
+            _type = type;
+            _name = name;
         }
 
         public object GetValue(object obj) {

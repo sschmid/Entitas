@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.Serialization;
+using System.Reflection;
 
 namespace Entitas.CodeGenerator {
     public class TypeReflectionProvider : ICodeGeneratorDataProvider {
@@ -21,11 +22,20 @@ namespace Entitas.CodeGenerator {
         }
 
         public static ComponentInfo[] GetComponentInfos(Type[] types) {
-            return types
+            var infosFromComponents = types
                 .Where(type => !type.IsInterface)
                 .Where(type => !type.IsAbstract)
                 .Where(type => type.GetInterfaces().Any(i => i.FullName == "Entitas.IComponent"))
-                .Select(type => CreateComponentInfo(type))
+                .Select(type => CreateComponentInfo(type));
+
+            var infosForOtherTypes = types
+                .Where(type => !type.IsGenericType)
+                .Where(type => !type.GetInterfaces().Any(i => i.FullName == "Entitas.IComponent"))
+                .Where(type => GetPools(type).Length > 0)
+                .Select(type => CreateComponentInfoForClass(type));
+
+            return infosFromComponents
+                .Concat(infosForOtherTypes)
                 .ToArray();
         }
 
@@ -36,6 +46,24 @@ namespace Entitas.CodeGenerator {
                 GetPools(type),
                 GetIsSingleEntity(type),
                 GetSingleComponentPrefix(type),
+                false,
+                GetGenerateMethods(type),
+                GetGenerateIndex(type)
+            );
+        }
+
+        public static ComponentInfo CreateComponentInfoForClass(Type type) {
+            var nameSplit = type.ToCompilableString().Split('.');
+            var componentName = nameSplit[nameSplit.Length - 1].AddComponentSuffix();
+            return new ComponentInfo(
+                componentName,
+                new List<PublicMemberInfo> {
+                    new PublicMemberInfo(type, "value")
+                },
+                GetPools(type),
+                GetIsSingleEntity(type),
+                GetSingleComponentPrefix(type),
+                true,
                 GetGenerateMethods(type),
                 GetGenerateIndex(type)
             );
@@ -82,15 +110,7 @@ namespace Entitas.CodeGenerator {
                 return false;
             }
 
-            var t = type;
-            while (t != null) {
-                if (t.FullName == fullTypeName) {
-                    return true;
-                }
-                t = t.BaseType;
-            }
-
-            return false;
+            return isTypeOrHasBaseType(type, fullTypeName);
         }
 
         static bool isTypeOrHasBaseType(Type type, string fullTypeName) {

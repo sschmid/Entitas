@@ -12,6 +12,7 @@ public class DComponent : IComponent {
                 new [] { "PoolB", "PoolC" },
                 false,
                 "is",
+                false,
                 true,
                 true
             );

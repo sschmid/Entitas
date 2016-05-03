@@ -12,6 +12,7 @@ public class AnimatingComponent : IComponent {
                 new string[0],
                 true,
                 "is",
+                false,
                 true,
                 true
             );

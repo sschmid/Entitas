@@ -12,6 +12,7 @@ public class CComponent : IComponent {
                 new [] { "PoolA", "PoolB", "PoolC" },
                 false,
                 "is",
+                false,
                 true,
                 true
             );

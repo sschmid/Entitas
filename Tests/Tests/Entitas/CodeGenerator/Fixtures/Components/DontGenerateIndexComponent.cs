@@ -13,6 +13,7 @@ public class DontGenerateIndexComponent : IComponent {
                 false,
                 "is",
                 false,
+                false,
                 false
             );
         }

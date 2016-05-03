@@ -12,6 +12,7 @@ public class ComponentWithFieldsAndProperties : IComponent {
                 new string[0],
                 false,
                 "is",
+                false,
                 true,
                 true
             );

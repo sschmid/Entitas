@@ -24,9 +24,23 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateComponentExtension(ComponentInfo componentInfo) {
+            if (componentInfo.generateComponent) {
+                return addUsings() + generateComponent(componentInfo) + addCustomPoolCode(componentInfo);
+            }
+
             return componentInfo.pools.Length == 0
-                        ? addDefaultPoolCode(componentInfo)
-                        : addCustomPoolCode(componentInfo);
+                ? addDefaultPoolCode(componentInfo)
+                : addUsings() + addCustomPoolCode(componentInfo);
+        }
+
+        static string generateComponent(ComponentInfo componentInfo) {
+            const string componentFormat = @"public class {0} : IComponent {{
+    public {1} {2};
+}}
+
+";
+            var memberInfo = componentInfo.memberInfos[0];
+            return string.Format(componentFormat, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
         }
 
         static string addDefaultPoolCode(ComponentInfo componentInfo) {
@@ -41,8 +55,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addCustomPoolCode(ComponentInfo componentInfo) {
-            var code = addUsings();
-            code += addNamespace();
+            var code = addNamespace();
             code += addEntityMethods(componentInfo);
             if (componentInfo.isSingleEntity) {
                 code += addPoolMethods(componentInfo);

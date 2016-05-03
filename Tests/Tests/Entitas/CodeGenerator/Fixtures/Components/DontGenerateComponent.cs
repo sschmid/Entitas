@@ -13,6 +13,7 @@ public class DontGenerateComponent : IComponent {
                 false,
                 "is",
                 false,
+                false,
                 true
             );
         }

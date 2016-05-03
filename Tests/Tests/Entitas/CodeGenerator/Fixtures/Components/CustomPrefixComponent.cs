@@ -12,6 +12,7 @@ public class CustomPrefixComponent : IComponent {
                 new string[0],
                 true,
                 "My",
+                false,
                 true,
                 true
             );

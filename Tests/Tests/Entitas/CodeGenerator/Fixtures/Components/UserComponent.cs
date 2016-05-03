@@ -13,6 +13,7 @@ public class UserComponent : IComponent {
                 new string[0],
                 true,
                 "is",
+                false,
                 true,
                 true
             );

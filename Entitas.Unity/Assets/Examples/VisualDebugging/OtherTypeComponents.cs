@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
 
-[VisualDebugging]
 public class CustomObject {
     public string name;
 
@@ -12,7 +11,6 @@ public class CustomObject {
     }
 }
 
-[VisualDebugging]
 public class MonoBehaviourSubClass : MonoBehaviour {
 }
 
@@ -82,7 +80,6 @@ public class HashSetComponent : IComponent {
     public HashSet<string> hashset;
 }
 
-[VisualDebugging]
 public class UnsupportedObject {
     public string name;
 

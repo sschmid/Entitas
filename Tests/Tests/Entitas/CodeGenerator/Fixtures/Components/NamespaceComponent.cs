@@ -12,6 +12,7 @@ namespace My.Namespace {
                     new string[0],
                     false,
                     "is",
+                    false,
                     true,
                     true
                 );

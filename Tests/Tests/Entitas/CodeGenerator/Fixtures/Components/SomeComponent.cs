@@ -11,6 +11,7 @@ public class SomeComponent : IComponent {
                 new string[0],
                 false,
                 "is",
+                false,
                 true,
                 true
             );

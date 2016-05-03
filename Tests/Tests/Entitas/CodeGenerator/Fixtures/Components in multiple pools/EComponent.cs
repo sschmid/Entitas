@@ -12,6 +12,7 @@ public class EComponent : IComponent {
                 new [] { "PoolC" },
                 false,
                 "is",
+                false,
                 true,
                 true
             );

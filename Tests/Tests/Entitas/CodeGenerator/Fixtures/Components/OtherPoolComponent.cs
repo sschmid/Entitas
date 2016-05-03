@@ -13,6 +13,7 @@ public class OtherPoolComponent : IComponent {
                 new [] { "Other" },
                 true,
                 "is",
+                false,
                 true,
                 true
             );
