@@ -25,22 +25,29 @@ namespace Entitas.CodeGenerator {
 
         static string generateComponentExtension(ComponentInfo componentInfo) {
             if (componentInfo.generateComponent) {
-                return addUsings() + generateComponent(componentInfo) + addCustomPoolCode(componentInfo);
+                return addUsings("Entitas", "Entitas.CodeGenerator")
+                    + generateComponent(componentInfo)
+                    + addCustomPoolCode(componentInfo);
             }
 
             return componentInfo.pools.Length == 0
                 ? addDefaultPoolCode(componentInfo)
-                : addUsings() + addCustomPoolCode(componentInfo);
+                : addUsings("Entitas") + addCustomPoolCode(componentInfo);
         }
 
         static string generateComponent(ComponentInfo componentInfo) {
-            const string componentFormat = @"public class {0} : IComponent {{
-    public {1} {2};
+            const string componentFormat = @"[{0}]
+public class {1} : IComponent {{
+    public {2} {3};
 }}
 
 ";
             var memberInfo = componentInfo.memberInfos[0];
-            return string.Format(componentFormat, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
+            var poolAttributes = string.Join(", ", componentInfo.pools
+                .Select(name => "Pool(\"" + name + "\")")
+                .ToArray());
+
+            return string.Format(componentFormat, poolAttributes, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
         }
 
         static string addDefaultPoolCode(ComponentInfo componentInfo) {
@@ -65,8 +72,10 @@ namespace Entitas.CodeGenerator {
             return code;
         }
 
-        static string addUsings() {
-            return "using Entitas;\n\n";
+        static string addUsings(params string[] usings) {
+            return string.Join("\n", usings
+                .Select(name => "using " + name + ";")
+                .ToArray()) + "\n\n";
         }
 
         static string addNamespace() {

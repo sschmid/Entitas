@@ -35,17 +35,17 @@ public static class VisualDebuggingComponentIds {
     public const int Rect = 25;
     public const int SomeClass = 26;
     public const int SomeOtherClass = 27;
-    public const int SystemObject = 28;
-    public const int Test = 29;
-    public const int Texture2D = 30;
-    public const int Texture = 31;
-    public const int UnityObject = 32;
-    public const int UnsupportedObject = 33;
-    public const int Vector2 = 34;
-    public const int Vector3 = 35;
-    public const int Vector4 = 36;
+    public const int SystemObject = 29;
+    public const int Test = 30;
+    public const int Texture2D = 31;
+    public const int Texture = 32;
+    public const int UnityObject = 33;
+    public const int UnsupportedObject = 34;
+    public const int Vector2 = 35;
+    public const int Vector3 = 36;
+    public const int Vector4 = 37;
 
-    public const int TotalComponents = 37;
+    public const int TotalComponents = 38;
 
     public static readonly string[] componentNames = {
         "AnArray",
@@ -75,6 +75,7 @@ public static class VisualDebuggingComponentIds {
         "Property",
         "Rect",
         "SomeClass",
+        "SomeOtherClass",
         "SomeOtherClass",
         "SystemObject",
         "Test",
@@ -115,6 +116,7 @@ public static class VisualDebuggingComponentIds {
         typeof(PropertyComponent),
         typeof(RectComponent),
         typeof(SomeClassComponent),
+        typeof(SomeOtherClassComponent),
         typeof(SomeOtherClassComponent),
         typeof(SystemObjectComponent),
         typeof(TestComponent),

@@ -7,21 +7,21 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public static class ComponentIds {
-    public const int ISomeInterface = 0;
-    public const int SomeClass = 1;
-    public const int SomeOtherClass = 2;
+    public const int CoolName = 0;
+    public const int ISomeInterface = 1;
+    public const int SomeClass = 2;
 
     public const int TotalComponents = 3;
 
     public static readonly string[] componentNames = {
+        "CoolName",
         "ISomeInterface",
-        "SomeClass",
-        "SomeOtherClass"
+        "SomeClass"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(CoolNameComponent),
         typeof(ISomeInterfaceComponent),
-        typeof(SomeClassComponent),
-        typeof(SomeOtherClassComponent)
+        typeof(SomeClassComponent)
     };
 }

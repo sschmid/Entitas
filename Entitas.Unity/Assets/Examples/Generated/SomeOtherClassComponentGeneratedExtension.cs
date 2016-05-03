@@ -7,7 +7,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Entitas;
+using Entitas.CodeGenerator;
 
+[Pool("VisualDebugging")]
 public class SomeOtherClassComponent : IComponent {
     public SomeNamespace.SomeOtherClass value;
 }

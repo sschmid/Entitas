@@ -3,7 +3,7 @@ using Entitas;
 using Entitas.CodeGenerator;
 using Entitas.Serialization;
 
-[Pool("SomePool")]
+[Pool("SomePool"), Pool("SomeOtherPool")]
 public class SomeClass {
     public static ComponentInfo componentInfo {
         get {
@@ -12,7 +12,7 @@ public class SomeClass {
                 new List<PublicMemberInfo> {
                     new PublicMemberInfo(typeof(SomeClass), "value")
                 },
-                new [] { "SomePool" },
+                new [] { "SomePool", "SomeOtherPool" },
                 false,
                 "is",
                 true,
@@ -24,7 +24,9 @@ public class SomeClass {
 
     public static string extensions =
         @"using Entitas;
+using Entitas.CodeGenerator;
 
+[Pool(""SomePool""), Pool(""SomeOtherPool"")]
 public class SomeClassComponent : IComponent {
     public SomeClass value;
 }
@@ -62,6 +64,22 @@ namespace Entitas {
                 if (_matcherSomeClass == null) {
                     var matcher = (Matcher)Matcher.AllOf(SomePoolComponentIds.SomeClass);
                     matcher.componentNames = SomePoolComponentIds.componentNames;
+                    _matcherSomeClass = matcher;
+                }
+
+                return _matcherSomeClass;
+            }
+        }
+    }
+
+    public partial class SomeOtherPoolMatcher {
+        static IMatcher _matcherSomeClass;
+
+        public static IMatcher SomeClass {
+            get {
+                if (_matcherSomeClass == null) {
+                    var matcher = (Matcher)Matcher.AllOf(SomeOtherPoolComponentIds.SomeClass);
+                    matcher.componentNames = SomeOtherPoolComponentIds.componentNames;
                     _matcherSomeClass = matcher;
                 }
 
