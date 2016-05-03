@@ -85,6 +85,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             };
             e.AddDictArray(dict2, dictArray);
             e.AddHashSet(new HashSet<string> { "One", "Two", "Three" });
+            e.AddMyChar('c');
             e.AddUnsupportedObject(new UnsupportedObject("Unsupported Object"));
             e.AddProperty("My Property");
             e.AddPerson("Max", "Male");
@@ -134,6 +135,8 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         e.AddDictArray(dict2, dictArray);
         HashSet<string> hashset = null;
         e.AddHashSet(hashset);
+        char c = default(char);
+        e.AddMyChar(c);
         UnsupportedObject unsupportedObject = null;
         e.AddUnsupportedObject(unsupportedObject);
         e.AddProperty(myString);

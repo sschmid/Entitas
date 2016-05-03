@@ -26,26 +26,27 @@ public static class VisualDebuggingComponentIds {
     public const int List = 16;
     public const int MonoBehaviourSubClass = 17;
     public const int MyBool = 18;
-    public const int MyEnum = 19;
-    public const int MyFloat = 20;
-    public const int MyInt = 21;
-    public const int MyString = 22;
-    public const int Person = 23;
-    public const int Property = 24;
-    public const int Rect = 25;
-    public const int SomeClass = 26;
-    public const int SomeOtherClass = 27;
-    public const int SystemObject = 28;
-    public const int Test = 29;
-    public const int Texture2D = 30;
-    public const int Texture = 31;
-    public const int UnityObject = 32;
-    public const int UnsupportedObject = 33;
-    public const int Vector2 = 34;
-    public const int Vector3 = 35;
-    public const int Vector4 = 36;
+    public const int MyChar = 19;
+    public const int MyEnum = 20;
+    public const int MyFloat = 21;
+    public const int MyInt = 22;
+    public const int MyString = 23;
+    public const int Person = 24;
+    public const int Property = 25;
+    public const int Rect = 26;
+    public const int SomeClass = 27;
+    public const int SomeOtherClass = 28;
+    public const int SystemObject = 29;
+    public const int Test = 30;
+    public const int Texture2D = 31;
+    public const int Texture = 32;
+    public const int UnityObject = 33;
+    public const int UnsupportedObject = 34;
+    public const int Vector2 = 35;
+    public const int Vector3 = 36;
+    public const int Vector4 = 37;
 
-    public const int TotalComponents = 37;
+    public const int TotalComponents = 38;
 
     public static readonly string[] componentNames = {
         "AnArray",
@@ -67,6 +68,7 @@ public static class VisualDebuggingComponentIds {
         "List",
         "MonoBehaviourSubClass",
         "MyBool",
+        "MyChar",
         "MyEnum",
         "MyFloat",
         "MyInt",
@@ -107,6 +109,7 @@ public static class VisualDebuggingComponentIds {
         typeof(ListComponent),
         typeof(MonoBehaviourSubClassComponent),
         typeof(MyBoolComponent),
+        typeof(MyCharComponent),
         typeof(MyEnumComponent),
         typeof(MyFloatComponent),
         typeof(MyIntComponent),

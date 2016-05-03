@@ -80,6 +80,11 @@ public class HashSetComponent : IComponent {
     public HashSet<string> hashset;
 }
 
+[VisualDebugging]
+public class MyCharComponent : IComponent {
+    public char myChar;
+}
+
 public class UnsupportedObject {
     public string name;
 
