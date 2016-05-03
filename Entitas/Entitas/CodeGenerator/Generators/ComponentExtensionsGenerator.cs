@@ -5,9 +5,6 @@ using Entitas.Serialization;
 
 namespace Entitas.CodeGenerator {
 
-    [Obsolete("Deprecated since 0.30.0. Use ComponentExtensionsGenerator")]
-    public class ComponentsGenerator : ComponentExtensionsGenerator {}
-
     public class ComponentExtensionsGenerator : IComponentCodeGenerator {
 
         const string CLASS_SUFFIX = "GeneratedExtension";

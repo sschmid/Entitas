@@ -3,9 +3,6 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
-    [Obsolete("Deprecated since 0.30.0. Use PoolAttributesGenerator")]
-    public class PoolAttributeGenerator : PoolAttributesGenerator {}
-
     public class PoolAttributesGenerator : IPoolCodeGenerator {
 
         public CodeGenFile[] Generate(string[] poolNames) {

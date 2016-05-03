@@ -340,12 +340,5 @@ namespace Entitas {
             _componentNames = componentNames;
             _componentTypes = componentTypes;
         }
-
-        [Obsolete("Deprecated since 0.29.0. Use new PoolMetaData(poolName, componentNames, componentTypes);")]
-        public PoolMetaData(string poolName, string[] componentNames) {
-            _poolName = poolName;
-            _componentNames = componentNames;
-            _componentTypes = componentTypes;
-        }
     }
 }
