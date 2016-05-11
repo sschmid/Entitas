@@ -43,6 +43,8 @@ class describe_ComponentExtensionsGenerator : nspec {
         it["works with namespaces"] = () => generates(NamespaceComponent.componentInfo, NamespaceComponent.extensions);
         it["generates matchers for each pool"] = () => generates(CComponent.componentInfo, CComponent.extensions);
         it["generates custom prefix"] = () => generates(CustomPrefixComponent.componentInfo, CustomPrefixComponent.extensions);
+        it["generates component with default pool"] = () => generates(DefaultPoolComponent.componentInfo, DefaultPoolComponent.extensions);
+        it["generates component with default pool and others"] = () => generates(MultiplePoolAndDefaultPoolComponent.componentInfo, MultiplePoolAndDefaultPoolComponent.extensions);
 
         it["generates component for class"] = () => generates(SomeClass.componentInfo, SomeClass.extensions);
     }

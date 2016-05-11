@@ -6,7 +6,7 @@ namespace Entitas.CodeGenerator {
     public class PoolAttribute : Attribute {
         public readonly string poolName;
 
-        public PoolAttribute(string poolName) {
+        public PoolAttribute(string poolName = "") {
             this.poolName = poolName;
         }
     }

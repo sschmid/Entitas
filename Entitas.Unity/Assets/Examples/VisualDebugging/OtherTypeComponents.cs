@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
+using Entitas.CodeGenerator;
 
 public class CustomObject {
     public string name;
@@ -107,4 +108,8 @@ public class PropertyComponent : IComponent {
 public class PersonComponent : IComponent {
     public string name;
     public string gender;
+}
+
+[Pool]
+public class DefaultPoolComponent : IComponent {
 }

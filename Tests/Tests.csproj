@@ -304,6 +304,8 @@
       <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\GeneratedComponent.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\DefaultPoolComponent.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\MultiplePoolAndDefaultPoolComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

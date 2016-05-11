@@ -21,15 +21,33 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateComponentExtension(ComponentInfo componentInfo) {
-            if (componentInfo.generateComponent) {
-                return addUsings("Entitas", "Entitas.CodeGenerator")
-                    + generateComponent(componentInfo)
-                    + addCustomPoolCode(componentInfo);
+            var code = addNamespace();
+            code += addEntityMethods(componentInfo);
+            if (componentInfo.isSingleEntity) {
+                code += addPoolMethods(componentInfo);
             }
 
-            return componentInfo.pools.Length == 0
-                ? addDefaultPoolCode(componentInfo)
-                : addUsings("Entitas") + addCustomPoolCode(componentInfo);
+            if (componentInfo.generateComponent) {
+                code += closeNamespace();
+                code += addMatcher(componentInfo);
+                return addUsings("Entitas", "Entitas.CodeGenerator")
+                    + generateComponent(componentInfo)
+                    + code;
+            }
+
+            if (componentInfo.pools.Length == 0) {
+                code += addMatcher(componentInfo);
+                code += closeNamespace();
+            } else {
+                // Add default matcher
+                code += addMatcher(componentInfo, true);
+                code += closeNamespace();
+                // Add custom matchers
+                code += addMatcher(componentInfo);
+                code = addUsings("Entitas") + code;
+            }
+
+            return code;
         }
 
         static string generateComponent(ComponentInfo componentInfo) {
@@ -45,28 +63,6 @@ public class {1} : IComponent {{
                 .ToArray());
 
             return string.Format(componentFormat, poolAttributes, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
-        }
-
-        static string addDefaultPoolCode(ComponentInfo componentInfo) {
-            var code = addNamespace();
-            code += addEntityMethods(componentInfo);
-            if (componentInfo.isSingleEntity) {
-                code += addPoolMethods(componentInfo);
-            }
-            code += addMatcher(componentInfo);
-            code += closeNamespace();
-            return code;
-        }
-
-        static string addCustomPoolCode(ComponentInfo componentInfo) {
-            var code = addNamespace();
-            code += addEntityMethods(componentInfo);
-            if (componentInfo.isSingleEntity) {
-                code += addPoolMethods(componentInfo);
-            }
-            code += closeNamespace();
-            code += addMatcher(componentInfo);
-            return code;
         }
 
         static string addUsings(params string[] usings) {
@@ -260,7 +256,7 @@ $assign
         *
         */
 
-        static string addMatcher(ComponentInfo componentInfo) {
+       static string addMatcher(ComponentInfo componentInfo, bool onlyDefault = false) {
             const string matcherFormat = @"
     public partial class $TagMatcher {
         static IMatcher _matcher$Name;
@@ -278,16 +274,29 @@ $assign
         }
     }
 ";
-            if (componentInfo.pools.Length == 0) {
-                return buildString(componentInfo, matcherFormat);
+            if (onlyDefault) {
+                if (componentInfo.pools.Length == 0 || componentInfo.pools.Contains(string.Empty)) {
+                    return buildString(componentInfo, matcherFormat);
+                } else {
+                    return string.Empty;
+                }
+            } else {
+                if (componentInfo.pools.Length == 0) {
+                    return buildString(componentInfo, matcherFormat);
+                }
+
+                var poolIndex = 0;
+                var matchers = componentInfo.pools.Aggregate(string.Empty, (acc, poolName) => {
+                    if (poolName != string.Empty) {
+                        return acc + buildString(componentInfo, matcherFormat, poolIndex++);
+                    } else {
+                        poolIndex += 1;
+                        return acc;
+                    }
+                });
+
+                return buildString(componentInfo, matchers);
             }
-
-            var poolIndex = 0;
-            var matchers = componentInfo.pools.Aggregate(string.Empty, (acc, poolName) => {
-                return acc + buildString(componentInfo, matcherFormat, poolIndex++);
-            });
-
-            return buildString(componentInfo, matchers);
         }
 
         /*
