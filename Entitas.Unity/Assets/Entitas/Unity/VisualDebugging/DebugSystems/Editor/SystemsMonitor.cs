@@ -46,6 +46,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
 
             drawGridLines(top, rect.width, availableHeight, max);
+            drawAvg(data, top, floor, rect.width, availableHeight, max);
             drawLine(data, floor, rect.width, availableHeight, max);
         }
 
@@ -66,6 +67,19 @@ namespace Entitas.Unity.VisualDebugging {
                     _labelTextStyle
                 );
             }
+            Handles.color = handleColor;
+        }
+
+        void drawAvg(float[] data, float top, float floor, float width, float availableHeight, float max) {
+            var handleColor = Handles.color;
+            Handles.color = Color.yellow;
+
+            var avg = data.Average();
+            var lineY = floor - (availableHeight * (avg / max));
+            Handles.DrawLine(
+                new Vector2(xBorder, lineY),
+                new Vector2(width - rightLinePadding, lineY)
+            );
             Handles.color = handleColor;
         }
 
