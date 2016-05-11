@@ -18,7 +18,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
     }
 
     void Update() {
-        _pool.GetGroup(VisualDebuggingMatcher.MyString).GetSingleEntity().ReplaceMyString("");
+        _pool.GetGroup(VisualDebuggingMatcher.MyString).GetSingleEntity().ReplaceMyString(Random.value.ToString());
         _systems.Execute();
     }
 

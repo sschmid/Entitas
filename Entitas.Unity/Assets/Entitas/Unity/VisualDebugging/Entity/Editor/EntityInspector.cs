@@ -12,22 +12,19 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public override void OnInspectorGUI() {
-            EditorGUI.BeginChangeCheck();
-            {
-                if (targets.Length == 1) {
-                    var entityBehaviour = (EntityBehaviour)target;
-                    EntityDrawer.DrawEntity(entityBehaviour.pool, entityBehaviour.entity);
-                } else {
-                    var entityBehaviour = (EntityBehaviour)target;
-                    var entities = targets
+            if (targets.Length == 1) {
+                var entityBehaviour = (EntityBehaviour)target;
+                EntityDrawer.DrawEntity(entityBehaviour.pool, entityBehaviour.entity);
+            } else {
+                var entityBehaviour = (EntityBehaviour)target;
+                var entities = targets
                         .Select(t => ((EntityBehaviour)t).entity)
                         .ToArray();
 
-                    EntityDrawer.DrawMultipleEntities(entityBehaviour.pool, entities);
-                }
+                EntityDrawer.DrawMultipleEntities(entityBehaviour.pool, entities);
             }
-            var changed = EditorGUI.EndChangeCheck();
-            if (changed && target != null) {
+
+            if (target != null) {
                 EditorUtility.SetDirty(target);
             }
         }
