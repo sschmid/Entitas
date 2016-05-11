@@ -29,6 +29,8 @@ namespace Entitas.Unity.VisualDebugging {
         float _threshold;
         SortMethod _systemSortMethod;
 
+        int _lastRenderedFrameCount;
+
         public override void OnInspectorGUI() {
             var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
             var systems = debugSystemsBehaviour.systems;
@@ -38,6 +40,7 @@ namespace Entitas.Unity.VisualDebugging {
             drawSystemList(systems);
 
             EditorUtility.SetDirty(target);
+            Repaint();
         }
 
         static void drawSystemsOverview(DebugSystems systems) {
@@ -55,9 +58,6 @@ namespace Entitas.Unity.VisualDebugging {
             if (_systemsMonitor == null) {
                 _systemsMonitor = new SystemsMonitor(SYSTEM_MONITOR_DATA_LENGTH);
                 _systemMonitorData = new Queue<float>(new float[SYSTEM_MONITOR_DATA_LENGTH]);
-                if (EditorApplication.update != Repaint) {
-                    EditorApplication.update += Repaint;
-                }
             }
 
             EntitasEditorLayout.BeginVerticalBox();
@@ -256,11 +256,17 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void addDuration(float duration) {
-            if (_systemMonitorData.Count >= SYSTEM_MONITOR_DATA_LENGTH) {
-                _systemMonitorData.Dequeue();
-            }
 
-            _systemMonitorData.Enqueue(duration);
+            // OnInspectorGUI is called twice per frame - only add duration once
+            if (Time.renderedFrameCount != _lastRenderedFrameCount) {
+                _lastRenderedFrameCount = Time.renderedFrameCount;
+
+                if (_systemMonitorData.Count >= SYSTEM_MONITOR_DATA_LENGTH) {
+                    _systemMonitorData.Dequeue();
+                }
+
+                _systemMonitorData.Enqueue(duration);
+            }
         }
     }
 }
