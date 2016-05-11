@@ -49,6 +49,7 @@
 │   └── Entitas
 │       ├── CodeGenerator
 │       │   ├── Attributes
+│       │   │   ├── CustomComponentNameAttribute.cs
 │       │   │   ├── CustomPrefixAttribute.cs
 │       │   │   ├── DontGenerateAttribute.cs
 │       │   │   ├── PoolAttribute.cs
@@ -131,10 +132,10 @@
 │               │       ├── CodeGeneratorPreferencesDrawer.cs
 │               │       └── UnityCodeGenerator.cs
 │               ├── Editor
-│               │   ├── Entitas-Header.png
 │               │   ├── EntitasCheckForUpdates.cs
 │               │   ├── EntitasEditorLayout.cs
 │               │   ├── EntitasFeedback.cs
+│               │   ├── EntitasHeader.png
 │               │   ├── EntitasPreferences.cs
 │               │   ├── EntitasPreferencesConfig.cs
 │               │   ├── EntitasPreferencesDrawer.cs
@@ -142,12 +143,13 @@
 │               │   └── ScriptingDefineSymbols.cs
 │               ├── Migration
 │               │   └── Editor
-│               │       ├── Entitas-Migration-Header.png
+│               │       ├── EntitasMigrationHeader.png
 │               │       └── EntitasMigrationWindow.cs
 │               ├── Serialization
 │               │   └── Blueprints
 │               │       ├── Editor
 │               │       │   ├── BinaryBlueprintInspector.cs
+│               │       │   ├── BinaryBlueprintPostprocessor.cs
 │               │       │   └── BlueprintsInspector.cs
 │               │       ├── BinaryBlueprint.cs
 │               │       └── Blueprints.cs
@@ -161,6 +163,7 @@
 │               │   │   ├── Feature.cs
 │               │   │   └── SystemInfo.cs
 │               │   ├── Editor
+│               │   │   ├── EntitasEntityErrorHierarchyIcon.png
 │               │   │   ├── EntitasEntityHierarchyIcon.png
 │               │   │   ├── EntitasHierarchyIcon.cs
 │               │   │   ├── EntitasPoolErrorHierarchyIcon.png
@@ -180,6 +183,7 @@
 │               │   │   │   │   ├── ArrayTypeDrawer.cs
 │               │   │   │   │   ├── BoolTypeDrawer.cs
 │               │   │   │   │   ├── BoundsTypeDrawer.cs
+│               │   │   │   │   ├── CharTypeDrawer.cs
 │               │   │   │   │   ├── ColorTypeDrawer.cs
 │               │   │   │   │   ├── DateTimeTypeDrawer.cs
 │               │   │   │   │   ├── DictionaryTypeDrawer.cs
@@ -196,7 +200,8 @@
 │               │   │   │   │   ├── Vector3TypeDrawer.cs
 │               │   │   │   │   └── Vector4TypeDrawer.cs
 │               │   │   │   ├── EntityDrawer.cs
-│               │   │   │   └── EntityInspector.cs
+│               │   │   │   ├── EntityInspector.cs
+│               │   │   │   └── IComponentDrawer.cs
 │               │   │   └── EntityBehaviour.cs
 │               │   ├── PoolObserver
 │               │   │   ├── Editor

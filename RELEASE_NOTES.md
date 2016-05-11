@@ -1,3 +1,51 @@
+# 0.31.0
+
+##### General
+- Removed obsolete code
+
+##### Entitas.CodeGenerator
+- Generating components for attributed classes and interfaces
+
+```csharp
+// will automatically generate SomeClassComponent for you
+[Core]
+public class SomeClass {
+    public string name;
+
+    public SomeClass(string name) {
+        this.name = name;
+    }
+}
+```
+
+- Added support to add empty PoolAttribute to assign component to default pool
+
+```csharp
+// using [Pool] will also add this component to Pools.pool
+[Core, Pool]
+public class SomeComponent : IComponent {
+}
+```
+
+##### Entitas.Unity.VisualDebugging
+- Added IComponentDrawer which can draw the while component
+
+##### Entitas.Unity.VisualDebugging
+- Added EntitasEntityErrorHierarchyIcon to indicate retained entities in the hierarchy
+- Added CharTypeDrawer
+- Fixed components not updating in the inspector (#107)
+- Improved SystemsMonitor and added average line
+
+![Entitas-SystemsMonitor](https://cloud.githubusercontent.com/assets/233700/15198441/a515d764-17d7-11e6-965c-83c027fa89f7.png)
+
+##### Entitas.Unity.Serialization.Blueprints
+- Fixed finding all BinaryBlueprints even when not loaded
+- Correctly saving Blueprints when setting all BinaryBlueprints
+- Added BlueprintsNotFoundException
+- BinaryBlueprintInspector creates new pools instead of using one of Pools.allPools
+- Fixed pool not shown when entering play-mode while a blueprint was selected in the project view
+- Not caching blueprints when UNITY_EDITOR to enable live edit
+
 # 0.30.3
 
 ##### Entitas.CodeGenerator
