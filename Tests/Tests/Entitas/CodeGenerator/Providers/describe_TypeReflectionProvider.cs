@@ -130,6 +130,16 @@ class describe_TypeReflectionProvider : nspec {
                     info.isSingletonComponent.should_be(false);
                 };
 
+                it["creates multiple components with custom names"] = () => {
+                    var provider = createProviderWithTypes(typeof(CustomNames));
+                    provider.componentInfos.Length.should_be(2);
+                    var info1 = provider.componentInfos[0];
+                    var info2 = provider.componentInfos[1];
+
+                    info1.fullTypeName.should_be("SomeName");
+                    info2.fullTypeName.should_be("SomeOtherName");
+                };
+
                 it["doesn't create a component for generated components"] = () => {
                     var provider = createProviderWithTypes(typeof(SomeService), typeof(GeneratedService));
                     provider.componentInfos.Length.should_be(1);

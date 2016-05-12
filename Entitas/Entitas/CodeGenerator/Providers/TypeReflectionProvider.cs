@@ -31,7 +31,7 @@ namespace Entitas.CodeGenerator {
                 .Where(type => !type.IsGenericType)
                 .Where(type => !type.GetInterfaces().Any(i => i.FullName == "Entitas.IComponent"))
                 .Where(type => GetPools(type).Length > 0)
-                .Select(type => CreateComponentInfoForClass(type));
+                .SelectMany(type => CreateComponentInfosForClass(type));
 
             var generatedComponentsLookup = infosForNonComponents.ToLookup(info => info.fullTypeName);
 
@@ -54,19 +54,20 @@ namespace Entitas.CodeGenerator {
             );
         }
 
-        public static ComponentInfo CreateComponentInfoForClass(Type type) {
-            return new ComponentInfo(
-                GetComponentName(type),
-                new List<PublicMemberInfo> {
-                    new PublicMemberInfo(type, "value")
-                },
-                GetPools(type),
-                GetIsSingleEntity(type),
-                GetSingleComponentPrefix(type),
-                true,
-                GetGenerateMethods(type),
-                GetGenerateIndex(type)
-            );
+        public static ComponentInfo[] CreateComponentInfosForClass(Type type) {
+            return GetComponentNames(type)
+                .Select(componentName => new ComponentInfo(
+                    componentName,
+                    new List<PublicMemberInfo> {
+                        new PublicMemberInfo(type, "value")
+                    },
+                    GetPools(type),
+                    GetIsSingleEntity(type),
+                    GetSingleComponentPrefix(type),
+                    true,
+                    GetGenerateMethods(type),
+                    GetGenerateIndex(type)
+                )).ToArray();
         }
 
         public static List<PublicMemberInfo> GetPublicMemberInfo(Type type) {
@@ -93,16 +94,17 @@ namespace Entitas.CodeGenerator {
             return attr == null ? "is" : (string)attr.GetType().GetField("prefix").GetValue(attr);
         }
 
-        public static string GetComponentName(Type type) {
+        public static string[] GetComponentNames(Type type) {
             var attr = Attribute.GetCustomAttributes(type)
                 .SingleOrDefault(a => isTypeOrHasBaseType(a.GetType(), "Entitas.CodeGenerator.CustomComponentNameAttribute"));
 
             if (attr == null) {
                 var nameSplit = type.ToCompilableString().Split('.');
-                return nameSplit[nameSplit.Length - 1].AddComponentSuffix();
+                var componentName = nameSplit[nameSplit.Length - 1].AddComponentSuffix();
+                return new [] { componentName };
             }
 
-            return (string)attr.GetType().GetField("componentName").GetValue(attr);
+            return (string[])attr.GetType().GetField("componentNames").GetValue(attr);
         }
 
         public static bool GetGenerateMethods(Type type) {

@@ -60,10 +60,6 @@ namespace Entitas.CodeGenerator {
 
 ";
             var memberInfo = componentInfo.memberInfos[0];
-            var poolAttributes = string.Join(", ", componentInfo.pools
-                .Select(name => "Pool(\"" + name + "\")")
-                .ToArray());
-
             return string.Format(componentFormat, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
         }
 

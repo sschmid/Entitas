@@ -4,10 +4,10 @@ namespace Entitas.CodeGenerator {
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public class CustomComponentNameAttribute : Attribute {
-        public readonly string componentName;
+        public readonly string[] componentNames;
 
-        public CustomComponentNameAttribute(string componentName) {
-            this.componentName = componentName;
+        public CustomComponentNameAttribute(params string[] componentNames) {
+            this.componentNames = componentNames;
         }
     }
 }
