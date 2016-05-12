@@ -1,3 +1,21 @@
+# 0.31.1
+
+##### Entitas.CodeGenerator
+- Improved component generation for classes and interfaces and added support for default pool [Pool]
+- Added support to CustomComponentNameAttribute to generate multiple components with different names for one class or interface
+
+```csharp
+// This will automatically generate PositionComponent and VelocityComponent for you
+[Pool, CustomComponentName("Position", "Velocity")]
+public struct IntVector2 {
+  public int x;
+  public int y;
+}
+```
+
+- Added support for generating components for structs
+- Not generating obsolete pool attributes for generated classes
+
 # 0.31.0
 
 ##### General
