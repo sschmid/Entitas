@@ -30,7 +30,7 @@ namespace Entitas.CodeGenerator {
             if (componentInfo.generateComponent) {
                 code += closeNamespace();
                 code += addMatcher(componentInfo);
-                return addUsings("Entitas", "Entitas.CodeGenerator")
+                return addUsings("Entitas")
                     + generateComponent(componentInfo)
                     + code;
             }
@@ -51,9 +51,8 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateComponent(ComponentInfo componentInfo) {
-            const string componentFormat = @"[{0}]
-public class {1} : IComponent {{
-    public {2} {3};
+            const string componentFormat = @"public class {0} : IComponent {{
+    public {1} {2};
 }}
 
 ";
@@ -62,7 +61,7 @@ public class {1} : IComponent {{
                 .Select(name => "Pool(\"" + name + "\")")
                 .ToArray());
 
-            return string.Format(componentFormat, poolAttributes, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
+            return string.Format(componentFormat, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
         }
 
         static string addUsings(params string[] usings) {

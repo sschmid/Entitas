@@ -24,9 +24,7 @@ public class SomeClass {
 
     public static string extensions =
         @"using Entitas;
-using Entitas.CodeGenerator;
 
-[Pool(""SomePool""), Pool(""SomeOtherPool"")]
 public class SomeClassComponent : IComponent {
     public SomeClass value;
 }

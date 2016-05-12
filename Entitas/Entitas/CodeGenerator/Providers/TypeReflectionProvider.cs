@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.Serialization;
-using System.Reflection;
 
 namespace Entitas.CodeGenerator {
     public class TypeReflectionProvider : ICodeGeneratorDataProvider {
