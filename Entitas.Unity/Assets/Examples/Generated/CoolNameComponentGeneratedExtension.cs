@@ -7,9 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Entitas;
-using Entitas.CodeGenerator;
 
-[Pool("VisualDebugging")]
 public class CoolNameComponent : IComponent {
     public BadName value;
 }

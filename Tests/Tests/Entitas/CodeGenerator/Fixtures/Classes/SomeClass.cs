@@ -12,7 +12,7 @@ public class SomeClass {
                 new List<PublicMemberInfo> {
                     new PublicMemberInfo(typeof(SomeClass), "value")
                 },
-                new [] { "SomePool", "SomeOtherPool" },
+                new [] { "", "SomePool", "SomeOtherPool" },
                 false,
                 "is",
                 true,
@@ -31,25 +31,41 @@ public class SomeClassComponent : IComponent {
 
 namespace Entitas {
     public partial class Entity {
-        public SomeClassComponent someClass { get { return (SomeClassComponent)GetComponent(SomePoolComponentIds.SomeClass); } }
+        public SomeClassComponent someClass { get { return (SomeClassComponent)GetComponent(ComponentIds.SomeClass); } }
 
-        public bool hasSomeClass { get { return HasComponent(SomePoolComponentIds.SomeClass); } }
+        public bool hasSomeClass { get { return HasComponent(ComponentIds.SomeClass); } }
 
         public Entity AddSomeClass(SomeClass newValue) {
-            var component = CreateComponent<SomeClassComponent>(SomePoolComponentIds.SomeClass);
+            var component = CreateComponent<SomeClassComponent>(ComponentIds.SomeClass);
             component.value = newValue;
-            return AddComponent(SomePoolComponentIds.SomeClass, component);
+            return AddComponent(ComponentIds.SomeClass, component);
         }
 
         public Entity ReplaceSomeClass(SomeClass newValue) {
-            var component = CreateComponent<SomeClassComponent>(SomePoolComponentIds.SomeClass);
+            var component = CreateComponent<SomeClassComponent>(ComponentIds.SomeClass);
             component.value = newValue;
-            ReplaceComponent(SomePoolComponentIds.SomeClass, component);
+            ReplaceComponent(ComponentIds.SomeClass, component);
             return this;
         }
 
         public Entity RemoveSomeClass() {
-            return RemoveComponent(SomePoolComponentIds.SomeClass);
+            return RemoveComponent(ComponentIds.SomeClass);
+        }
+    }
+
+    public partial class Matcher {
+        static IMatcher _matcherSomeClass;
+
+        public static IMatcher SomeClass {
+            get {
+                if (_matcherSomeClass == null) {
+                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.SomeClass);
+                    matcher.componentNames = ComponentIds.componentNames;
+                    _matcherSomeClass = matcher;
+                }
+
+                return _matcherSomeClass;
+            }
         }
     }
 }

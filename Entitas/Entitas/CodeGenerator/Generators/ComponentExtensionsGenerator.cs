@@ -28,7 +28,10 @@ namespace Entitas.CodeGenerator {
             }
 
             if (componentInfo.generateComponent) {
+                // Add default matcher
+                code += addMatcher(componentInfo, true);
                 code += closeNamespace();
+                // Add custom matchers
                 code += addMatcher(componentInfo);
                 return addUsings("Entitas")
                     + generateComponent(componentInfo)

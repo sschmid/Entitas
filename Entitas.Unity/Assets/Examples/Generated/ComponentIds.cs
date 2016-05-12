@@ -8,14 +8,17 @@
 //------------------------------------------------------------------------------
 public static class ComponentIds {
     public const int DefaultPool = 0;
+    public const int SomeClass = 1;
 
-    public const int TotalComponents = 1;
+    public const int TotalComponents = 2;
 
     public static readonly string[] componentNames = {
-        "DefaultPool"
+        "DefaultPool",
+        "SomeClass"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(DefaultPoolComponent)
+        typeof(DefaultPoolComponent),
+        typeof(SomeClassComponent)
     };
 }

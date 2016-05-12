@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Entitas;
-using UnityEngine;
-using Entitas.CodeGenerator;
+﻿using Entitas.CodeGenerator;
 
-[VisualDebugging]
+[Pool]
 public class SomeClass {
     public string name;
 
@@ -30,7 +26,7 @@ public class SomeGenericClass<T> {
     public T value;
 }
 
-[VisualDebugging]
+[VisualDebugging, SingleEntity]
 public class ISomeInterface {
 }
 

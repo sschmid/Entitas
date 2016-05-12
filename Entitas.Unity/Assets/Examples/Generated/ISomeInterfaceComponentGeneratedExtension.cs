@@ -7,9 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Entitas;
-using Entitas.CodeGenerator;
 
-[Pool("VisualDebugging")]
 public class ISomeInterfaceComponent : IComponent {
     public ISomeInterface value;
 }
@@ -35,6 +33,39 @@ namespace Entitas {
 
         public Entity RemoveISomeInterface() {
             return RemoveComponent(VisualDebuggingComponentIds.ISomeInterface);
+        }
+    }
+
+    public partial class Pool {
+        public Entity iSomeInterfaceEntity { get { return GetGroup(VisualDebuggingMatcher.ISomeInterface).GetSingleEntity(); } }
+
+        public ISomeInterfaceComponent iSomeInterface { get { return iSomeInterfaceEntity.iSomeInterface; } }
+
+        public bool hasISomeInterface { get { return iSomeInterfaceEntity != null; } }
+
+        public Entity SetISomeInterface(ISomeInterface newValue) {
+            if (hasISomeInterface) {
+                throw new EntitasException("Could not set iSomeInterface!\n" + this + " already has an entity with ISomeInterfaceComponent!",
+                    "You should check if the pool already has a iSomeInterfaceEntity before setting it or use pool.ReplaceISomeInterface().");
+            }
+            var entity = CreateEntity();
+            entity.AddISomeInterface(newValue);
+            return entity;
+        }
+
+        public Entity ReplaceISomeInterface(ISomeInterface newValue) {
+            var entity = iSomeInterfaceEntity;
+            if (entity == null) {
+                entity = SetISomeInterface(newValue);
+            } else {
+                entity.ReplaceISomeInterface(newValue);
+            }
+
+            return entity;
+        }
+
+        public void RemoveISomeInterface() {
+            DestroyEntity(iSomeInterfaceEntity);
         }
     }
 }
