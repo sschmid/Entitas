@@ -7,19 +7,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public static class ComponentIds {
-    public const int DefaultPool = 0;
-    public const int SomeClass = 1;
-    public const int SomeStruct = 2;
+    public const int Position = 0;
+    public const int Velocity = 1;
+    public const int DefaultPool = 2;
+    public const int SomeClass = 3;
+    public const int SomeStruct = 4;
 
-    public const int TotalComponents = 3;
+    public const int TotalComponents = 5;
 
     public static readonly string[] componentNames = {
+        "Position",
+        "Velocity",
         "DefaultPool",
         "SomeClass",
         "SomeStruct"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(PositionComponent),
+        typeof(VelocityComponent),
         typeof(DefaultPoolComponent),
         typeof(SomeClassComponent),
         typeof(SomeStructComponent)

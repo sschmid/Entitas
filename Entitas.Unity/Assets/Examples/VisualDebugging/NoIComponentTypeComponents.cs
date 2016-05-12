@@ -42,3 +42,9 @@ public struct SomeStruct {
         this.name = name;
     }
 }
+
+[Pool, VisualDebugging, CustomComponentName("PositionComponent", "VelocityComponent")]
+public struct IntVector2 {
+    public int x;
+    public int y;
+}
