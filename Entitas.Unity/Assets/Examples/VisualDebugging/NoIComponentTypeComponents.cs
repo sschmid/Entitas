@@ -1,4 +1,5 @@
-﻿using Entitas.CodeGenerator;
+﻿using System;
+using Entitas.CodeGenerator;
 
 [Pool]
 public class SomeClass {
@@ -43,7 +44,7 @@ public struct SomeStruct {
     }
 }
 
-[Pool, VisualDebugging, CustomComponentName("PositionComponent", "VelocityComponent")]
+[Serializable, Pool, VisualDebugging, CustomComponentName("PositionComponent", "VelocityComponent")]
 public struct IntVector2 {
     public int x;
     public int y;

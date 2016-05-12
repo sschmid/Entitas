@@ -16,7 +16,7 @@ namespace Entitas.Unity.CodeGenerator {
         List<string> _pools;
         UnityEditorInternal.ReorderableList _poolList;
 
-        static float _generatorsRectHeight = 68;
+        static float _generatorsRectHeight = 86;
 
         public void Initialize(EntitasPreferencesConfig config) {
             _codeGenerators = UnityCodeGenerator.GetCodeGenerators();

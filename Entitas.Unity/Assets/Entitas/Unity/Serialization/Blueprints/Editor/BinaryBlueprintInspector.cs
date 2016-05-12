@@ -33,7 +33,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 var allPoolNames = allPools.Select(pool => pool.metaData.poolName).ToArray();
                 var updated = 0;
                 foreach (var binaryBlueprint in binaryBlueprints) {
-                    var didUpdate = UpdateBinaryBlueprint(binaryBlueprint, allPoolNames);
+                    var didUpdate = UpdateBinaryBlueprint(binaryBlueprint, allPools, allPoolNames);
                     if (didUpdate) {
                         updated += 1;
                     }
@@ -45,12 +45,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
             }
         }
 
-        public static bool UpdateBinaryBlueprint(BinaryBlueprint binaryBlueprint, string[] allPoolNames) {
-            var allPools = findAllPools();
-            if (allPools == null) {
-                return false;
-            }
-
+        public static bool UpdateBinaryBlueprint(BinaryBlueprint binaryBlueprint, Pool[] allPools, string[] allPoolNames) {
             var blueprint = binaryBlueprint.Deserialize();
             var needsUpdate = false;
 
@@ -86,6 +81,9 @@ namespace Entitas.Unity.Serialization.Blueprints {
         }
 
         static Pool[] findAllPools() {
+            
+            // Use reflection because there is no generated Pools.cs when you create a new emtpy project.
+
             var poolsType = Assembly.GetAssembly(typeof(Entity)).GetTypes().SingleOrDefault(type => type.FullName == "Pools");
 
             if (poolsType != null) {
@@ -117,7 +115,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
             _allPoolNames = _allPools.Select(pool => pool.metaData.poolName).ToArray();
 
-            BinaryBlueprintInspector.UpdateBinaryBlueprint(binaryBlueprint, _allPoolNames);
+            BinaryBlueprintInspector.UpdateBinaryBlueprint(binaryBlueprint, _allPools, _allPoolNames);
 
             _blueprint = binaryBlueprint.Deserialize();
 

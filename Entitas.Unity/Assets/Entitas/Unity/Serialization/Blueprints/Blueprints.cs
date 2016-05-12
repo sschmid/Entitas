@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Entitas.Serialization.Blueprints;
 using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
