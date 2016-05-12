@@ -34,3 +34,11 @@ public class ISomeInterface {
 public class BadName {
 }
     
+[Pool]
+public struct SomeStruct {
+    public string name;
+
+    public SomeStruct(string name) {
+        this.name = name;
+    }
+}

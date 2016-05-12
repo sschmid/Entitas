@@ -47,6 +47,7 @@ class describe_ComponentExtensionsGenerator : nspec {
         it["generates component with default pool and others"] = () => generates(MultiplePoolAndDefaultPoolComponent.componentInfo, MultiplePoolAndDefaultPoolComponent.extensions);
 
         it["generates component for class"] = () => generates(SomeClass.componentInfo, SomeClass.extensions);
+        it["generates component for struct"] = () => generates(SomeStruct.componentInfo, SomeStruct.extensions);
     }
 }
 

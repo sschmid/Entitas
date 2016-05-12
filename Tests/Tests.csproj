@@ -307,6 +307,7 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\DefaultPoolComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\MultiplePoolAndDefaultPoolComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomNames.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeStruct.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

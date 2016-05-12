@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Entitas;
 using Entitas.CodeGenerator;
 using Entitas.Serialization;
 

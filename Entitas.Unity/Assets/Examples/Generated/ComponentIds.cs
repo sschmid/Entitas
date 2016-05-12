@@ -9,16 +9,19 @@
 public static class ComponentIds {
     public const int DefaultPool = 0;
     public const int SomeClass = 1;
+    public const int SomeStruct = 2;
 
-    public const int TotalComponents = 2;
+    public const int TotalComponents = 3;
 
     public static readonly string[] componentNames = {
         "DefaultPool",
-        "SomeClass"
+        "SomeClass",
+        "SomeStruct"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(DefaultPoolComponent),
-        typeof(SomeClassComponent)
+        typeof(SomeClassComponent),
+        typeof(SomeStructComponent)
     };
 }
