@@ -2,7 +2,7 @@
 
 namespace Entitas.CodeGenerator {
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct)]
     public class SingleEntityAttribute : Attribute {
     }
 }
