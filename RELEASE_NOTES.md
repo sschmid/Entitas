@@ -28,7 +28,7 @@ public class SomeComponent : IComponent {
 ```
 
 ##### Entitas.Unity.VisualDebugging
-- Added IComponentDrawer which can draw the while component
+- Added IComponentDrawer which can draw the whole component
 
 ##### Entitas.Unity.VisualDebugging
 - Added EntitasEntityErrorHierarchyIcon to indicate retained entities in the hierarchy
