@@ -1,3 +1,9 @@
+# 0.31.2
+
+##### Entitas.CodeGenerator
+- All attributes can now be used for classes, interfaces and structs
+
+
 # 0.31.1
 
 ##### Entitas.CodeGenerator
@@ -15,6 +21,7 @@ public struct IntVector2 {
 
 - Added support for generating components for structs
 - Not generating obsolete pool attributes for generated classes
+
 
 # 0.31.0
 
