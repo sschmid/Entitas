@@ -162,6 +162,14 @@ class describe_EntitasErrorMessages : nspec {
                 componentBlueprint.CreateComponent(entity);
             });
         };
+
+        context["EntityIndex"] = () => {
+
+            it["no entity with key"] = () => printErrorMessage(() => {
+                var index = new EntityIndex<string>(pool.GetGroup(Matcher.AllOf(1)), null);
+                index.GetEntity("unknownKey");
+            });
+        };
     }
 }
 

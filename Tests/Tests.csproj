@@ -308,6 +308,10 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\MultiplePoolAndDefaultPoolComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomNames.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeStruct.cs" />
+    <Compile Include="Tests\Entitas\describe_EntityIndex.cs" />
+    <Compile Include="..\Entitas\Entitas\EntityIndex.cs">
+      <Link>Linked Libraries\Entitas\EntityIndex.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

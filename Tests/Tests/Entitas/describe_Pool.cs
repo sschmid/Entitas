@@ -551,6 +551,20 @@ class describe_Pool : nspec {
             };
         };
 
+        context["EntityIndex"] = () => {
+
+            it["returns null if EntityIndex doesn't exist"] = () => {
+                pool.GetEntityIndex(1).should_be_null();
+            };
+
+            it["adds and EntityIndex"] = () => {
+                const int componentIndex = 1;
+                var entityIndex = new EntityIndex<string>(pool.GetGroup(Matcher.AllOf(componentIndex)), null);
+                pool.AddEntityIndex(componentIndex, entityIndex);
+                pool.GetEntityIndex(1).should_be_same(entityIndex);
+            };
+        };
+
         context["reset"] = () => {
 
             context["groups"] = () => {
@@ -644,6 +658,25 @@ class describe_Pool : nspec {
 
                 it["only clears existing component pool"] = () => {
                     pool.ClearComponentPool(CID.ComponentC);
+                };
+            };
+
+            context["EntityIndex"] = () => {
+
+                EntityIndex<string> entityIndex = null;
+                before = () => {
+                    entityIndex = new EntityIndex<string>(pool.GetGroup(Matcher.AllOf(CID.ComponentA)),
+                        c => ((NameAgeComponent)(c)).name);
+                    pool.AddEntityIndex(CID.ComponentA, entityIndex);
+                };
+
+                it["deactivates EntityIndex"] = () => {
+                    var nameAgeComponent = new NameAgeComponent();
+                    nameAgeComponent.name = "Max";
+                    pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                    entityIndex.HasEntity("Max").should_be_true();
+                    pool.DeactivateEntityIndices();
+                    entityIndex.HasEntity("Max").should_be_false();
                 };
             };
         };
