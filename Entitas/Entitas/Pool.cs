@@ -52,7 +52,7 @@ namespace Entitas {
         protected readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
         protected readonly List<Group>[] _groupsForIndex;
         readonly Stack<Entity> _reusableEntities = new Stack<Entity>();
-        readonly HashSet<Entity> _retainedEntities = new HashSet<Entity>();
+        readonly HashSet<Entity> _retainedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
 
         readonly int _totalComponents;
         readonly Stack<IComponent>[] _componentPools;
