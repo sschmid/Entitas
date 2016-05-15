@@ -42,6 +42,10 @@ namespace Entitas {
         protected abstract void onEntityAdded(Group group, Entity entity, int index, IComponent component);
 
         protected abstract void onEntityRemoved(Group group, Entity entity, int index, IComponent component);
+
+        ~AbstractEntityIndex () {
+            Deactivate();
+        }
     }
 
     public class PrimaryEntityIndex<T> : AbstractEntityIndex<T> {

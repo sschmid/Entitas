@@ -92,11 +92,6 @@ class describe_EntityIndex : nspec {
                     index.HasEntity(name).should_be_false();
                 };
             };
-
-            // TODO
-            // Deconstructor Unity test
-            // Profile in Unity
-            // Multiple with same key, what happens? Single, Multiple possible?
         };
     }
 
