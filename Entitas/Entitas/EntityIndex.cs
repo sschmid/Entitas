@@ -25,6 +25,7 @@ namespace Entitas {
         public virtual void Deactivate() {
             _group.OnEntityAdded -= onEntityAdded;
             _group.OnEntityRemoved -= onEntityRemoved;
+            clear();
         }
 
         protected void indexEntities(Group group) {
@@ -35,6 +36,8 @@ namespace Entitas {
                 onEntityAdded(group, entity, index, entity.GetComponent(index));
             }
         }
+
+        protected abstract void clear();
 
         protected abstract void onEntityAdded(Group group, Entity entity, int index, IComponent component);
 
@@ -70,9 +73,7 @@ namespace Entitas {
             return entity;
         }
 
-        public override void Deactivate() {
-            base.Deactivate();
-
+        protected override void clear() {
             foreach (var entity in _index.Values) {
                 entity.Release(this);
             }
@@ -93,6 +94,46 @@ namespace Entitas {
 
         protected override void onEntityRemoved(Group group, Entity entity, int index, IComponent component) {
             _index.Remove(_getKey(component));
+            entity.Release(this);
+        }
+    }
+
+    public class EntityIndex<T> : AbstractEntityIndex<T> {
+
+        readonly Dictionary<T, HashSet<Entity>> _index;
+
+        public EntityIndex(Group group, Func<IComponent, T> getKey) : base(group, getKey) {
+            _index = new Dictionary<T, HashSet<Entity>>();
+            indexEntities(group);
+        }
+
+        public HashSet<Entity> GetEntities(T key) {
+            HashSet<Entity> entities;
+            if (!_index.TryGetValue(key, out entities)) {
+                entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
+                _index.Add(key, entities);
+            }
+
+            return entities;
+        }
+
+        protected override void clear() {
+            foreach (var entities in _index.Values) {
+                foreach (var entity in entities) {
+                    entity.Release(this);
+                }
+            }
+
+            _index.Clear();
+        }
+
+        protected override void onEntityAdded(Group group, Entity entity, int index, IComponent component) {
+            GetEntities(_getKey(component)).Add(entity);
+            entity.Retain(this);
+        }
+
+        protected override void onEntityRemoved(Group group, Entity entity, int index, IComponent component) {
+            GetEntities(_getKey(component)).Remove(entity);
             entity.Release(this);
         }
     }
