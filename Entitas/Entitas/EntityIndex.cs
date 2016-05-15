@@ -9,26 +9,45 @@ namespace Entitas {
         void Deactivate();
     }
 
-    public class EntityIndex<T> : IEntityIndex {
+    public abstract class AbstractEntityIndex<T> : IEntityIndex {
 
-        readonly Group _group;
-        readonly Func<IComponent, T> _getKey;
-        readonly Dictionary<T, Entity> _index;
+        protected readonly Group _group;
+        protected readonly Func<IComponent, T> _getKey;
 
-        public EntityIndex(Group group, Func<IComponent, T> getKey) {
+        protected AbstractEntityIndex(Group group, Func<IComponent, T> getKey) {
             _group = group;
             _getKey = getKey;
-            _index = new Dictionary<T, Entity>();
 
+            group.OnEntityAdded += onEntityAdded;
+            group.OnEntityRemoved += onEntityRemoved;
+        }
+
+        public virtual void Deactivate() {
+            _group.OnEntityAdded -= onEntityAdded;
+            _group.OnEntityRemoved -= onEntityRemoved;
+        }
+
+        protected void indexEntities(Group group) {
             var entities = group.GetEntities();
             var index = group.matcher.indices.Single();
             for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
                 var entity = entities[i];
                 onEntityAdded(group, entity, index, entity.GetComponent(index));
             }
+        }
 
-            group.OnEntityAdded += onEntityAdded;
-            group.OnEntityRemoved += onEntityRemoved;
+        protected abstract void onEntityAdded(Group group, Entity entity, int index, IComponent component);
+
+        protected abstract void onEntityRemoved(Group group, Entity entity, int index, IComponent component);
+    }
+
+    public class PrimaryEntityIndex<T> : AbstractEntityIndex<T> {
+
+        readonly Dictionary<T, Entity> _index;
+
+        public PrimaryEntityIndex(Group group, Func<IComponent, T> getKey) : base(group, getKey) {
+            _index = new Dictionary<T, Entity>();
+            indexEntities(group);
         }
 
         public bool HasEntity(T key) {
@@ -51,9 +70,8 @@ namespace Entitas {
             return entity;
         }
 
-        public void Deactivate() {
-            _group.OnEntityAdded -= onEntityAdded;
-            _group.OnEntityRemoved -= onEntityRemoved;
+        public override void Deactivate() {
+            base.Deactivate();
 
             foreach (var entity in _index.Values) {
                 entity.Release(this);
@@ -62,7 +80,7 @@ namespace Entitas {
             _index.Clear();
         }
 
-        void onEntityAdded(Group group, Entity entity, int index, IComponent component) {
+        protected override void onEntityAdded(Group group, Entity entity, int index, IComponent component) {
             var key = _getKey(component);
             if (_index.ContainsKey(key)) {
                 throw new EntityIndexException("Entity for key '" + key + "' already exists!",
@@ -73,7 +91,7 @@ namespace Entitas {
             entity.Retain(this);
         }
 
-        void onEntityRemoved(Group group, Entity entity, int index, IComponent component) {
+        protected override void onEntityRemoved(Group group, Entity entity, int index, IComponent component) {
             _index.Remove(_getKey(component));
             entity.Release(this);
         }

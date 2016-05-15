@@ -5,14 +5,14 @@ class describe_EntityIndex : nspec {
 
     void when_indexing() {
 
-        EntityIndex<string> index = null;
+        PrimaryEntityIndex<string> index = null;
         Pool pool = null;
         Group group = null;
 
         before = () => {
             pool = new Pool(CID.NumComponents);
             group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
-            index = new EntityIndex<string>(group, c => ((NameAgeComponent)c).name);
+            index = new PrimaryEntityIndex<string>(group, c => ((NameAgeComponent)c).name);
         };
 
         context["when entity with key doesn't exist"] = () => {
@@ -58,7 +58,7 @@ class describe_EntityIndex : nspec {
             };
 
             it["has existing entity"] = () => {
-                var newIndex = new EntityIndex<string>(group, c => ((NameAgeComponent)c).name);
+                var newIndex = new PrimaryEntityIndex<string>(group, c => ((NameAgeComponent)c).name);
                 newIndex.HasEntity(name).should_be_true();
             };
 

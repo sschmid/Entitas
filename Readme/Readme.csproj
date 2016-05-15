@@ -206,8 +206,8 @@
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\SerializableMember.cs">
       <Link>Linked Libraries\Entitas\Serialization\Blueprints\SerializableMember.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityIndex.cs">
-      <Link>Linked Libraries\Entitas\EntityIndex.cs</Link>
+    <Compile Include="..\Entitas\Entitas\EntityPrimaryIndex.cs">
+      <Link>Linked Libraries\Entitas\EntityPrimaryIndex.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

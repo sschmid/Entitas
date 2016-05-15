@@ -559,7 +559,7 @@ class describe_Pool : nspec {
 
             it["adds and EntityIndex"] = () => {
                 const int componentIndex = 1;
-                var entityIndex = new EntityIndex<string>(pool.GetGroup(Matcher.AllOf(componentIndex)), null);
+                var entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(componentIndex)), null);
                 pool.AddEntityIndex(componentIndex, entityIndex);
                 pool.GetEntityIndex(1).should_be_same(entityIndex);
             };
@@ -663,9 +663,9 @@ class describe_Pool : nspec {
 
             context["EntityIndex"] = () => {
 
-                EntityIndex<string> entityIndex = null;
+                PrimaryEntityIndex<string> entityIndex = null;
                 before = () => {
-                    entityIndex = new EntityIndex<string>(pool.GetGroup(Matcher.AllOf(CID.ComponentA)),
+                    entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(CID.ComponentA)),
                         c => ((NameAgeComponent)(c)).name);
                     pool.AddEntityIndex(CID.ComponentA, entityIndex);
                 };
