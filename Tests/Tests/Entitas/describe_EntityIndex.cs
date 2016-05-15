@@ -57,6 +57,11 @@ class describe_EntityIndex : nspec {
                 entity.retainCount.should_be(3); // Pool, Group, EntityIndex
             };
 
+            it["has existing entity"] = () => {
+                var newIndex = new EntityIndex<string>(group, c => ((NameAgeComponent)c).name);
+                newIndex.HasEntity(name).should_be_true();
+            };
+
             it["releases and removes entity from index when component gets removed"] = () => {
                 entity.RemoveComponent(CID.ComponentA);
                 index.HasEntity(name).should_be_false();

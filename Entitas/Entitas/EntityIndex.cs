@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Entitas;
 
 namespace Entitas {
@@ -18,6 +19,13 @@ namespace Entitas {
             _group = group;
             _getKey = getKey;
             _index = new Dictionary<T, Entity>();
+
+            var entities = group.GetEntities();
+            var index = group.matcher.indices.Single();
+            for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
+                var entity = entities[i];
+                onEntityAdded(group, entity, index, entity.GetComponent(index));
+            }
 
             group.OnEntityAdded += onEntityAdded;
             group.OnEntityRemoved += onEntityRemoved;
