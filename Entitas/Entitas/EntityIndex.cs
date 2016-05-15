@@ -38,7 +38,8 @@ namespace Entitas {
         public Entity GetEntity(T key) {
             var entity = TryGetEntity(key);
             if (entity == null) {
-                throw new EntityIndexException("Entity with key '" + key + "' doesn't exist!");
+                throw new EntityIndexException("Entity for key '" + key + "' doesn't exist!",
+                    "You should check if an entity with that key exists before getting it.");
             }
 
             return entity;
@@ -62,7 +63,13 @@ namespace Entitas {
         }
 
         void onEntityAdded(Group group, Entity entity, int index, IComponent component) {
-            _index.Add(_getKey(component), entity);
+            var key = _getKey(component);
+            if (_index.ContainsKey(key)) {
+                throw new EntityIndexException("Entity for key '" + key + "' already exists!",
+                    "Only one entity for a primary key is allowed.");
+            }
+
+            _index.Add(key, entity);
             entity.Retain(this);
         }
 
@@ -73,8 +80,8 @@ namespace Entitas {
     }
 
     public class EntityIndexException : EntitasException {
-        public EntityIndexException(string message) :
-            base(message, "You should check if an entity with that key exists before getting it.") {
+        public EntityIndexException(string message, string hint) :
+            base(message, hint) {
         }
     }
 }

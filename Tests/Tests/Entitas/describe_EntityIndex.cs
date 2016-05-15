@@ -7,7 +7,7 @@ class describe_EntityIndex : nspec {
 
         EntityIndex<string> index = null;
         Pool pool = null;
-        Group group = null;;
+        Group group = null;
 
         before = () => {
             pool = new Pool(CID.NumComponents);
@@ -68,6 +68,12 @@ class describe_EntityIndex : nspec {
                 entity.retainCount.should_be(1); // Pool
             };
 
+            it["throws when adding an entity with the same key"] = expect<EntityIndexException>(() => {
+                var nameAgeComponent = new NameAgeComponent();
+                nameAgeComponent.name = name;
+                entity = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+            });
+
             context["when deactivated"] = () => {
 
                 before = () => {
@@ -89,6 +95,7 @@ class describe_EntityIndex : nspec {
 
             // TODO
             // Deconstructor Unity test
+            // Profile in Unity
             // Multiple with same key, what happens? Single, Multiple possible?
         };
     }

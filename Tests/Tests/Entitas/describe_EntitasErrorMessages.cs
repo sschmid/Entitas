@@ -169,6 +169,16 @@ class describe_EntitasErrorMessages : nspec {
                 var index = new EntityIndex<string>(pool.GetGroup(Matcher.AllOf(1)), null);
                 index.GetEntity("unknownKey");
             });
+
+            it["multiple entities for primary key"] = () => printErrorMessage(() => {
+                new EntityIndex<string>(pool.GetGroup(Matcher.AllOf(CID.ComponentA)), c => ((NameAgeComponent)c).name);
+
+                const string name = "Max";
+                var nameAgeComponent = new NameAgeComponent();
+                nameAgeComponent.name = name;
+                pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+            });
         };
     }
 }
