@@ -61,7 +61,7 @@ public static class Pools {{{0}{1}
                 : poolNames.Aggregate(string.Empty, (acc, poolName) =>
                     acc + string.Format(GETTER, poolName.LowercaseFirst(), poolName, poolName + " ", getIndexKeys(poolName, infos)));
 
-            return new [] { new CodeGenFile(FILE_NAME, string.Format(CLASS_TEMPLATE, allPools, getters).ToUnixLineEndings(), GetType().FullName) };
+            return new [] { new CodeGenFile(FILE_NAME, string.Format(CLASS_TEMPLATE, allPools, getters), GetType().FullName) };
         }
 
         static string getIndexKeys(string poolName, ComponentInfo[] infos) {
