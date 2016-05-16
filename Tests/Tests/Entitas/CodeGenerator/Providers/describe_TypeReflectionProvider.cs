@@ -27,10 +27,9 @@ class describe_TypeReflectionProvider : nspec {
                 provider.poolNames[0].should_be(CodeGenerator.DEFAULT_POOL_NAME);
             };
 
-            it["adds pool names if set including default pool"] = () => {
+            it["adds pool names if set"] = () => {
                 var provider = createProviderWithPoolName("Pool1", "Pool2");
-                provider.poolNames.Length.should_be(3);
-                provider.poolNames.should_contain(CodeGenerator.DEFAULT_POOL_NAME);
+                provider.poolNames.Length.should_be(2);
                 provider.poolNames.should_contain("Pool1");
                 provider.poolNames.should_contain("Pool2");
             };

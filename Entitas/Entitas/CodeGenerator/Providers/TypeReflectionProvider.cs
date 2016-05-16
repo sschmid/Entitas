@@ -16,7 +16,9 @@ namespace Entitas.CodeGenerator {
 
         public TypeReflectionProvider(Type[] types, string[] poolNames, string[] blueprintNames) {
             var pools = new HashSet<string>(poolNames);
-            pools.Add(CodeGenerator.DEFAULT_POOL_NAME);
+            if (poolNames.Length == 0) {
+                pools.Add(CodeGenerator.DEFAULT_POOL_NAME);
+            }
             _poolNames = pools.OrderBy(poolName => poolName).ToArray();
             _componentInfos = GetComponentInfos(types);
             _blueprintNames = blueprintNames;
