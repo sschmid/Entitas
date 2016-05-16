@@ -6,31 +6,33 @@ namespace Entitas.Serialization {
 
     public class PublicMemberInfo {
 
-        public Type type { get { return _type; } }
-        public string name { get { return _name; } }
+        public readonly Type type;
+        public readonly string name;
+        public readonly AttributeInfo[] attributes;
 
         readonly FieldInfo _fieldInfo;
         readonly PropertyInfo _propertyInfo;
-        readonly Type _type;
-        readonly string _name;
 
         public PublicMemberInfo(FieldInfo info) {
             _fieldInfo = info;
             _propertyInfo = null;
-            _type = _fieldInfo.FieldType;
-            _name = _fieldInfo.Name;
+            type = _fieldInfo.FieldType;
+            name = _fieldInfo.Name;
+            attributes = getAttributes(_fieldInfo.GetCustomAttributes(false));
         }
 
         public PublicMemberInfo(PropertyInfo info) {
             _fieldInfo = null;
             _propertyInfo = info;
-            _type = _propertyInfo.PropertyType;
-            _name = _propertyInfo.Name;
+            type = _propertyInfo.PropertyType;
+            name = _propertyInfo.Name;
+            attributes = getAttributes(_propertyInfo.GetCustomAttributes(false));
         }
 
-        public PublicMemberInfo(Type type, string name) {
-            _type = type;
-            _name = name;
+        public PublicMemberInfo(Type type, string name, AttributeInfo[] attributes = null) {
+            this.type = type;
+            this.name = name;
+            this.attributes = attributes;
         }
 
         public object GetValue(object obj) {
@@ -45,6 +47,26 @@ namespace Entitas.Serialization {
             } else {
                 _propertyInfo.SetValue(obj, value, null);                
             }
+        }
+
+        static AttributeInfo[] getAttributes(object[] attributes) {
+            var infos = new AttributeInfo[attributes.Length];
+            for (int i = 0, attrsLength = attributes.Length; i < attrsLength; i++) {
+                var attr = attributes[i];
+                infos[i] = new AttributeInfo(attr, attr.GetType().GetPublicMemberInfos());
+            }
+
+            return infos;
+        }
+    }
+
+    public class AttributeInfo {
+        public readonly object attribute;
+        public readonly List<PublicMemberInfo> memberInfos;
+
+        public AttributeInfo(object attribute, List<PublicMemberInfo> memberInfos) {
+            this.attribute = attribute;
+            this.memberInfos = memberInfos;
         }
     }
 
@@ -62,9 +84,9 @@ namespace Entitas.Serialization {
             }
 
             for (int i = 0, propertyInfosLength = propertyInfos.Length; i < propertyInfosLength; i++) {
-                var info = propertyInfos[i];
-                if (info.CanRead && info.CanWrite) {
-                    memberInfos.Add(new PublicMemberInfo(info));
+                var propertyInfo = propertyInfos[i];
+                if (propertyInfo.CanRead && propertyInfo.CanWrite) {
+                    memberInfos.Add(new PublicMemberInfo(propertyInfo));
                 }
             }
 

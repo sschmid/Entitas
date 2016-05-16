@@ -5,7 +5,7 @@ namespace Entitas.CodeGenerator {
 
     public class PoolAttributesGenerator : IPoolCodeGenerator {
 
-        public CodeGenFile[] Generate(string[] poolNames) {
+        public CodeGenFile[] Generate(string[] poolNames, ComponentInfo[] componentInfos) {
             var generatorName = typeof(PoolAttributesGenerator).FullName;
             return poolNames.Select(poolName => new CodeGenFile {
                 fileName = poolName + "Attribute",

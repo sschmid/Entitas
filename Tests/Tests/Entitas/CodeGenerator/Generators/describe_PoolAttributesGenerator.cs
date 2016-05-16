@@ -5,9 +5,9 @@ using System.Linq;
 class describe_PoolAttributesGenerator : nspec {
 
     void when_generating() {
-        it["generates nothing input is empty"] = () => new PoolAttributesGenerator().Generate(new string[0]).Length.should_be(0);
+        it["generates nothing input is empty"] = () => new PoolAttributesGenerator().Generate(new string[0], new ComponentInfo[0]).Length.should_be(0);
         it["generates a PoolAttribute"] = () => {
-            var files = new PoolAttributesGenerator().Generate(new [] { "MetaGame" });
+            var files = new PoolAttributesGenerator().Generate(new [] { "MetaGame" }, new ComponentInfo[0]);
             files.Length.should_be(1);
             files.Any(f => f.fileName == "MetaGameAttribute").should_be_true();
             var file = files.First(f => f.fileName == "MetaGameAttribute");
@@ -23,7 +23,7 @@ public class MetaGameAttribute : PoolAttribute {
 
 
         it["generates multiple PoolAttributes"] = () => {
-            var files = new PoolAttributesGenerator().Generate(new [] { "MetaGame", "UI" });
+            var files = new PoolAttributesGenerator().Generate(new [] { "MetaGame", "UI" }, new ComponentInfo[0]);
             files.Length.should_be(2);
 
             files.Any(f => f.fileName == "MetaGameAttribute").should_be_true();

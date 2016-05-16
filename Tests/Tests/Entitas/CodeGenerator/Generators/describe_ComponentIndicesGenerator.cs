@@ -35,7 +35,7 @@ class describe_ComponentIndicesGenerator : nspec {
     }
 
     static void generatesEmptyLookup(string[] poolNames, string[] lookupNames, string[] lookupCodes) {
-        var files = new ComponentIndicesGenerator().Generate(poolNames);
+        var files = new ComponentIndicesGenerator().Generate(poolNames, new ComponentInfo[0]);
         files.Length.should_be(poolNames.Length == 0 ? 1 : poolNames.Length);
 
         for (int i = 0; i < lookupNames.Length; i++) {

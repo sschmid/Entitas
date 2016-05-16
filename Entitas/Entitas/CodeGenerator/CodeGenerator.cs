@@ -22,15 +22,16 @@ namespace Entitas.CodeGenerator {
             CleanDir(directory);
 
             var generatedFiles = new List<CodeGenFile>();
+            var componentInfos = provider.componentInfos;
 
             foreach (var generator in codeGenerators.OfType<IPoolCodeGenerator>()) {
-                var files = generator.Generate(provider.poolNames);
+                var files = generator.Generate(provider.poolNames, componentInfos);
                 generatedFiles.AddRange(files);
                 writeFiles(directory, files);
             }
 
             foreach (var generator in codeGenerators.OfType<IComponentCodeGenerator>()) {
-                var files = generator.Generate(provider.componentInfos);
+                var files = generator.Generate(componentInfos);
                 generatedFiles.AddRange(files);
                 writeFiles(directory, files);
             }

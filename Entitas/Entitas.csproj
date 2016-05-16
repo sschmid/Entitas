@@ -82,6 +82,7 @@
     <Compile Include="Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs" />
     <Compile Include="Entitas\EntityIndex.cs" />
+    <Compile Include="Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
