@@ -1,22 +1,12 @@
 ﻿using System;
 using Entitas;
 using Entitas.CodeGenerator;
-using Entitas.Serialization;
 
 [SingleEntity, Pool("Other")]
 public class OtherPoolComponent : IComponent {
     public static ComponentInfo componentInfo { 
         get {
-            return new ComponentInfo(
-                typeof(OtherPoolComponent).ToCompilableString(),
-                typeof(OtherPoolComponent).GetPublicMemberInfos(),
-                new [] { "Other" },
-                true,
-                "is",
-                false,
-                true,
-                true
-            );
+            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(OtherPoolComponent) })[0];
         }
     }
 

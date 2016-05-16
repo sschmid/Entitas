@@ -1,21 +1,11 @@
 using Entitas;
 using Entitas.CodeGenerator;
-using Entitas.Serialization;
 
 #pragma warning disable
 public class ComponentWithFieldsAndProperties : IComponent {
     public static ComponentInfo componentInfo { 
         get {
-            return new ComponentInfo(
-                typeof(ComponentWithFieldsAndProperties).ToCompilableString(),
-                typeof(ComponentWithFieldsAndProperties).GetPublicMemberInfos(),
-                new string[0],
-                false,
-                "is",
-                false,
-                true,
-                true
-            );
+            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(ComponentWithFieldsAndProperties) })[0];
         }
     }
 

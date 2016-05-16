@@ -1,20 +1,10 @@
 using Entitas;
 using Entitas.CodeGenerator;
-using Entitas.Serialization;
 
 public class MovableComponent : IComponent {
     public static ComponentInfo componentInfo { 
         get {
-            return new ComponentInfo(
-                typeof(MovableComponent).ToCompilableString(),
-                new System.Collections.Generic.List<PublicMemberInfo>(),
-                new string[0],
-                false,
-                "is",
-                false,
-                true,
-                true
-            );
+            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(MovableComponent) })[0];
         }
     }
 

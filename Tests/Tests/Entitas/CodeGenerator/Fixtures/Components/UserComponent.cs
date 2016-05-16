@@ -1,22 +1,12 @@
 using System;
 using Entitas;
 using Entitas.CodeGenerator;
-using Entitas.Serialization;
 
 [SingleEntity]
 public class UserComponent : IComponent {
     public static ComponentInfo componentInfo {
         get {
-            return new ComponentInfo(
-                typeof(UserComponent).ToCompilableString(),
-                typeof(UserComponent).GetPublicMemberInfos(),
-                new string[0],
-                true,
-                "is",
-                false,
-                true,
-                true
-            );
+            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(UserComponent) })[0];
         }
     }
 

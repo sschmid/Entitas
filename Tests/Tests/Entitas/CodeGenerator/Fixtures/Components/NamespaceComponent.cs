@@ -1,21 +1,11 @@
 ﻿using Entitas;
 using Entitas.CodeGenerator;
-using Entitas.Serialization;
 
 namespace My.Namespace {
     public class NamespaceComponent : IComponent {
         public static ComponentInfo componentInfo { 
             get {
-                return new ComponentInfo(
-                    typeof(NamespaceComponent).ToCompilableString(),
-                    new System.Collections.Generic.List<PublicMemberInfo>(),
-                    new string[0],
-                    false,
-                    "is",
-                    false,
-                    true,
-                    true
-                );
+                return TypeReflectionProvider.GetComponentInfos(new [] { typeof(NamespaceComponent) })[0];
             }
         }
 

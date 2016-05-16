@@ -1,21 +1,11 @@
 ﻿using Entitas;
 using Entitas.CodeGenerator;
-using Entitas.Serialization;
 
 [SingleEntity, CustomPrefix("My")]
 public class CustomPrefixComponent : IComponent {
     public static ComponentInfo componentInfo { 
         get {
-            return new ComponentInfo(
-                typeof(CustomPrefixComponent).ToCompilableString(),
-                new System.Collections.Generic.List<PublicMemberInfo>(),
-                new string[0],
-                true,
-                "My",
-                false,
-                true,
-                true
-            );
+            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(CustomPrefixComponent) })[0];
         }
     }
 

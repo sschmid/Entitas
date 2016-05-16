@@ -1,20 +1,11 @@
 ﻿using Entitas;
 using Entitas.CodeGenerator;
-using Entitas.Serialization;
 
+[Pool]
 public class DefaultPoolComponent : IComponent {
     public static ComponentInfo componentInfo {
         get {
-            return new ComponentInfo(
-                typeof(DefaultPoolComponent).ToCompilableString(),
-                new System.Collections.Generic.List<PublicMemberInfo>(),
-                new [] { "" },
-                false,
-                "is",
-                false,
-                true,
-                true
-            );
+            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(DefaultPoolComponent) })[0];
         }
     }
 

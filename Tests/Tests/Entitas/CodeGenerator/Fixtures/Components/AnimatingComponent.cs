@@ -1,21 +1,11 @@
 using Entitas;
 using Entitas.CodeGenerator;
-using Entitas.Serialization;
 
 [SingleEntity]
 public class AnimatingComponent : IComponent {
     public static ComponentInfo componentInfo { 
         get {
-            return new ComponentInfo(
-                typeof(AnimatingComponent).ToCompilableString(),
-                new System.Collections.Generic.List<PublicMemberInfo>(),
-                new string[0],
-                true,
-                "is",
-                false,
-                true,
-                true
-            );
+            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(AnimatingComponent) })[0];
         }
     }
 
