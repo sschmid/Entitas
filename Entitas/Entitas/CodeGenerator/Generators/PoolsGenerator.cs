@@ -6,7 +6,6 @@ namespace Entitas.CodeGenerator {
     public class PoolsGenerator : IPoolCodeGenerator {
 
         const string DEFAULT_POOL_NAME = "pool";
-        const string FILE_NAME = "Pools";
         const string CLASS_TEMPLATE = @"using Entitas;
 
 public static class Pools {{{0}{1}
@@ -61,7 +60,7 @@ public static class Pools {{{0}{1}
                 : poolNames.Aggregate(string.Empty, (acc, poolName) =>
                     acc + string.Format(GETTER, poolName.LowercaseFirst(), poolName, poolName + " ", getIndexKeys(poolName, infos)));
 
-            return new [] { new CodeGenFile(FILE_NAME, string.Format(CLASS_TEMPLATE, allPools, getters), GetType().FullName) };
+            return new [] { new CodeGenFile("Pools", string.Format(CLASS_TEMPLATE, allPools, getters), GetType().FullName) };
         }
 
         static string getIndexKeys(string poolName, ComponentInfo[] infos) {

@@ -5,8 +5,6 @@ namespace Entitas.CodeGenerator {
     
     public class BlueprintsGenerator : IBlueprintsCodeGenerator {
 
-        const string FILE_NAME = "BlueprintsGeneratedExtension";
-
         const string CLASS_FORMAT = @"using Entitas.Serialization.Blueprints;
 
 namespace Entitas.Unity.Serialization.Blueprints {{
@@ -23,8 +21,8 @@ namespace Entitas.Unity.Serialization.Blueprints {{
             }
 
             var orderedBlueprintNames = blueprintNames.OrderBy(name => name).ToArray();
-
-            return new [] { new CodeGenFile(FILE_NAME, string.Format(CLASS_FORMAT, generateBlueprintGetters(orderedBlueprintNames)), GetType().FullName) };
+            var blueprints = string.Format(CLASS_FORMAT, generateBlueprintGetters(orderedBlueprintNames));
+            return new [] { new CodeGenFile("BlueprintsGeneratedExtension", blueprints, GetType().FullName) };
         }
 
         string generateBlueprintGetters(string[] blueprintNames) {
@@ -32,7 +30,7 @@ namespace Entitas.Unity.Serialization.Blueprints {{
                 .Select(name => string.Format(GETTER_FORMAT, validPropertyName(name), name)).ToArray());
         }
 
-        string validPropertyName(string name) {
+        static string validPropertyName(string name) {
             return name
                 .Replace(" ", string.Empty)
                 .Replace("-", string.Empty)
