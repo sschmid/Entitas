@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
@@ -7,6 +6,8 @@ namespace Entitas.CodeGenerator {
 
         public CodeGenFile[] Generate(string[] poolNames, ComponentInfo[] componentInfos) {
             return poolNames
+                .Where(poolName => poolName.PoolPrefix() != string.Empty)
+                .Select(poolName => poolName.UppercaseFirst())
                 .Select(poolName => new CodeGenFile(poolName + "Attribute", generatePoolAttributes(poolName), GetType().FullName))
                 .ToArray();
         }

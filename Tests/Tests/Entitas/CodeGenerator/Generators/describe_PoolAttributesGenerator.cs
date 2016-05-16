@@ -5,12 +5,14 @@ using System.Linq;
 class describe_PoolAttributesGenerator : nspec {
 
     void when_generating() {
-        it["generates nothing input is empty"] = () => new PoolAttributesGenerator().Generate(new string[0], new ComponentInfo[0]).Length.should_be(0);
+        it["generates nothing if input is empty"] = () => new PoolAttributesGenerator().Generate(new string[0], new ComponentInfo[0]).Length.should_be(0);
+        it["doesn't generate for default pool"] = () => new PoolAttributesGenerator().Generate(new [] { CodeGenerator.DEFAULT_POOL_NAME }, new ComponentInfo[0]).Length.should_be(0);
+
         it["generates a PoolAttribute"] = () => {
-            var files = new PoolAttributesGenerator().Generate(new [] { "MetaGame" }, new ComponentInfo[0]);
+            var files = new PoolAttributesGenerator().Generate(new [] { "metaGame" }, new ComponentInfo[0]);
             files.Length.should_be(1);
-            files.Any(f => f.fileName == "MetaGameAttribute").should_be_true();
-            var file = files.First(f => f.fileName == "MetaGameAttribute");
+            var file = files[0];
+            file.fileName.should_be("MetaGameAttribute");
             file.fileContent.should_be(@"using Entitas.CodeGenerator;
 
 public class MetaGameAttribute : PoolAttribute {
