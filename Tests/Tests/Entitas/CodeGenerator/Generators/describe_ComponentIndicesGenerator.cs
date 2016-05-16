@@ -23,6 +23,11 @@ class describe_ComponentIndicesGenerator : nspec {
         for (int i = 0; i < lookupNames.Length; i++) {
             var lookupName = lookupNames[i];
             var expectedLookupCode = lookupCodes[i].ToUnixLineEndings();
+
+            foreach (var f in files) {
+                System.Console.WriteLine("file.fileName: " + f.fileName);
+            }
+
             files.Any(f => f.fileName == lookupName).should_be_true();
             var file = files.Single(f => f.fileName == lookupName);
             #pragma warning disable

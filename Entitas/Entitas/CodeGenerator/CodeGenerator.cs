@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
     public static class CodeGenerator {
+        public const string DEFAULT_POOL_NAME = "Pool";
         public const string COMPONENT_SUFFIX = "Component";
         public const string DEFAULT_COMPONENT_LOOKUP_TAG = "ComponentIds";
         public const string AUTO_GENERATED_HEADER_FORMAT = @"//------------------------------------------------------------------------------
@@ -87,13 +88,13 @@ namespace Entitas.CodeGenerator {
     public static class CodeGeneratorExtensions {
 
         public static string[] ComponentLookupTags(this ComponentInfo componentInfo) {
-            if (componentInfo.pools.Length == 0) {
-                return new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG };
-            }
-
             return componentInfo.pools
-                .Select(poolName => poolName + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
+                .Select(poolName => poolName.PoolPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
                 .ToArray();
+        }
+
+        public static string PoolPrefix(this string poolName) {
+            return poolName == CodeGenerator.DEFAULT_POOL_NAME ? string.Empty : poolName;
         }
 
         public static string UppercaseFirst(this string str) {

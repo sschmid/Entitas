@@ -9,9 +9,7 @@ public class DefaultPoolComponent : IComponent {
         }
     }
 
-    public static string extensions = @"using Entitas;
-
-namespace Entitas {
+    public static string extensions = @"namespace Entitas {
     public partial class Entity {
         static readonly DefaultPoolComponent defaultPoolComponent = new DefaultPoolComponent();
 
@@ -52,4 +50,3 @@ namespace Entitas {
 }
 ";
 }
-

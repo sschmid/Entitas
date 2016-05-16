@@ -212,9 +212,8 @@ class describe_TypeReflectionProvider : nspec {
                     info.fullTypeName.should_be("CComponent");
                     info.typeName.should_be("CComponent");
                     info.memberInfos.should_be_empty();
-                    info.pools.Length.should_be(4);
 
-                    info.pools.should_contain(CodeGenerator.DEFAULT_POOL_NAME);
+                    info.pools.Length.should_be(3);
                     info.pools.should_contain("PoolA");
                     info.pools.should_contain("PoolB");
                     info.pools.should_contain("PoolC");

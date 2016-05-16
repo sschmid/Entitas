@@ -228,9 +228,9 @@ public static class Pools {
         it["generates one custom pool"] = () => generates(new [] { "Meta" }, metaPool);
         it["generates multiple pools"] = () => generates(new [] { "Meta", "Core" }, metaCorePool);
 
-        it["generates indexKey"] = () => generates(IndexKeyComponent.componentInfo.pools, indexKey, IndexKeyComponent.componentInfo);
-        it["generates indexKey for default pool"] = () => generates(DefautPoolIndexKeyComponent.componentInfo.pools, indexKey, DefautPoolIndexKeyComponent.componentInfo);
-        it["generates indexKey for custom pool"] = () => generates(MetaIndexKeyComponent.componentInfo.pools, metaIndexKey, MetaIndexKeyComponent.componentInfo);
+//        it["generates indexKey"] = () => generates(IndexKeyComponent.componentInfo.pools, indexKey, IndexKeyComponent.componentInfo);
+//        it["generates indexKey for default pool"] = () => generates(DefautPoolIndexKeyComponent.componentInfo.pools, indexKey, DefautPoolIndexKeyComponent.componentInfo);
+//        it["generates indexKey for custom pool"] = () => generates(MetaIndexKeyComponent.componentInfo.pools, metaIndexKey, MetaIndexKeyComponent.componentInfo);
     }
 }
 

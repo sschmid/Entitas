@@ -38,8 +38,8 @@ namespace Entitas.CodeGenerator {
                     + code;
             }
 
-            if (componentInfo.pools.Length == 0) {
-                code += addMatcher(componentInfo);
+            if (componentInfo.pools.Length == 1 && componentInfo.pools[0].PoolPrefix() == string.Empty) {
+                code += addMatcher(componentInfo, true);
                 code += closeNamespace();
             } else {
                 // Add default matcher
@@ -273,16 +273,12 @@ $assign
     }
 ";
             if (onlyDefault) {
-                if (componentInfo.pools.Length == 0 || componentInfo.pools.Contains(string.Empty)) {
+                if (componentInfo.pools[0].PoolPrefix() == string.Empty) {
                     return buildString(componentInfo, matcherFormat);
                 } else {
                     return string.Empty;
                 }
             } else {
-                if (componentInfo.pools.Length == 0) {
-                    return buildString(componentInfo, matcherFormat);
-                }
-
                 var poolIndex = 0;
                 var matchers = componentInfo.pools.Aggregate(string.Empty, (acc, poolName) => {
                     if (poolName != string.Empty) {
@@ -309,7 +305,7 @@ $assign
             var a1_name = componentInfo.typeName.RemoveComponentSuffix();
             var a2_lowercaseName = a1_name.LowercaseFirst();
             var poolNames = componentInfo.pools;
-            var a3_tag = poolNames.Length == 0 ? string.Empty : poolNames[poolIndex];
+            var a3_tag = poolNames[poolIndex].PoolPrefix();
             var lookupTags = componentInfo.ComponentLookupTags();
             var a4_ids = lookupTags.Length == 0 ? string.Empty : lookupTags[poolIndex];
             var memberInfos = componentInfo.memberInfos;

@@ -15,7 +15,9 @@ namespace Entitas.CodeGenerator {
         readonly string[] _blueprintNames;
 
         public TypeReflectionProvider(Type[] types, string[] poolNames, string[] blueprintNames) {
-            _poolNames = poolNames;
+            var pools = new HashSet<string>(poolNames);
+            pools.Add(CodeGenerator.DEFAULT_POOL_NAME);
+            _poolNames = pools.OrderBy(poolName => poolName).ToArray();
             _componentInfos = GetComponentInfos(types);
             _blueprintNames = blueprintNames;
         }
@@ -30,7 +32,7 @@ namespace Entitas.CodeGenerator {
             var infosForNonComponents = types
                 .Where(type => !type.IsGenericType)
                 .Where(type => !type.GetInterfaces().Any(i => i.FullName == "Entitas.IComponent"))
-                .Where(type => GetPools(type).Length > 0)
+                .Where(type => GetPools(type, false).Length > 0)
                 .SelectMany(type => CreateComponentInfosForClass(type));
 
             var generatedComponentsLookup = infosForNonComponents.ToLookup(info => info.fullTypeName);
@@ -45,7 +47,7 @@ namespace Entitas.CodeGenerator {
             return new ComponentInfo(
                 type.ToCompilableString(),
                 GetPublicMemberInfo(type),
-                GetPools(type),
+                GetPools(type, true),
                 GetIsSingleEntity(type),
                 GetSingleComponentPrefix(type),
                 false,
@@ -61,7 +63,7 @@ namespace Entitas.CodeGenerator {
                     new List<PublicMemberInfo> {
                         new PublicMemberInfo(type, "value")
                     },
-                    GetPools(type),
+                    GetPools(type, false),
                     GetIsSingleEntity(type),
                     GetSingleComponentPrefix(type),
                     true,
@@ -74,12 +76,14 @@ namespace Entitas.CodeGenerator {
             return type.GetPublicMemberInfos();
         }
 
-        public static string[] GetPools(Type type) {
-            return Attribute.GetCustomAttributes(type)
+        public static string[] GetPools(Type type, bool defaultIfEmpty) {
+            var pools = Attribute.GetCustomAttributes(type)
                 .Where(attr => isTypeOrHasBaseType(attr.GetType(), "Entitas.CodeGenerator.PoolAttribute"))
                 .Select(attr => attr.GetType().GetField("poolName").GetValue(attr) as string)
                 .OrderBy(poolName => poolName)
                 .ToArray();
+
+            return (pools.Length == 0 && defaultIfEmpty) ? new[] { CodeGenerator.DEFAULT_POOL_NAME } : pools;
         }
 
         public static bool GetIsSingleEntity(Type type) {
