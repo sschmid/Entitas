@@ -12,14 +12,11 @@ namespace Entitas.CodeGenerator {
             if (poolNames.Length == 0) {
                 poolNames = new [] { string.Empty };
             }
-            var generatorName = typeof(ComponentIndicesGenerator).FullName;
+            var generatorName = GetType().FullName;
             return poolNames
                 .Select(poolName => poolName + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
-                .Select(lookupTag => new CodeGenFile {
-                    fileName = lookupTag,
-                    fileContent = generateIndicesLookup(lookupTag, emptyInfos).ToUnixLineEndings(),
-                    generatorName = generatorName
-                }).ToArray();
+                .Select(lookupTag => new CodeGenFile(lookupTag, generateIndicesLookup(lookupTag, emptyInfos), generatorName))
+                .ToArray();
         }
 
         // Important: This method should be called after Generate(poolNames)
@@ -27,13 +24,10 @@ namespace Entitas.CodeGenerator {
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
             var orderedComponentInfos = componentInfos.OrderBy(info => info.typeName).ToArray();
             var lookupTagToComponentInfosMap = getLookupTagToComponentInfosMap(orderedComponentInfos);
-            var generatorName = typeof(ComponentIndicesGenerator).FullName;
+            var generatorName = GetType().FullName;
             return lookupTagToComponentInfosMap
-                .Select(kv => new CodeGenFile {
-                    fileName = kv.Key,
-                    fileContent = generateIndicesLookup(kv.Key, kv.Value.ToArray()).ToUnixLineEndings(),
-                    generatorName = generatorName
-                }).ToArray();
+                .Select(kv => new CodeGenFile(kv.Key, generateIndicesLookup(kv.Key, kv.Value.ToArray()), generatorName))
+                .ToArray();
         }
 
         static Dictionary<string, ComponentInfo[]> getLookupTagToComponentInfosMap(ComponentInfo[] componentInfos) {
