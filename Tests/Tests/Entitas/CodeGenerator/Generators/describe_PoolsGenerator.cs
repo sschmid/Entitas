@@ -224,7 +224,7 @@ public static class Pools {
 
     void when_generating() {
 
-        it["generates default pool"] = () => generates(new string[0], defaultPool);
+        it["generates default pool"] = () => generates(new [] { CodeGenerator.DEFAULT_POOL_NAME }, defaultPool);
         it["generates one custom pool"] = () => generates(new [] { "Meta" }, metaPool);
         it["generates multiple pools"] = () => generates(new [] { "Meta", "Core" }, metaCorePool);
 

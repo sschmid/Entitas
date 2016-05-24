@@ -9,14 +9,14 @@ namespace Entitas.CodeGenerator {
         // This will generate empty lookups for all pools.
         public CodeGenFile[] Generate(string[] poolNames, ComponentInfo[] infos) {
             var emptyInfos = new ComponentInfo[0];
-            if (poolNames.Length == 0) {
-                poolNames = new [] { string.Empty };
-            }
             var generatorName = GetType().FullName;
             return poolNames
-                .Select(poolName => poolName + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
-                .Select(lookupTag => new CodeGenFile(lookupTag, generateIndicesLookup(lookupTag, emptyInfos), generatorName))
-                .ToArray();
+                .Select(poolName => poolName.PoolPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
+                .Select(lookupTag => new CodeGenFile(
+                    lookupTag,
+                    generateIndicesLookup(lookupTag, emptyInfos),
+                    generatorName
+                )).ToArray();
         }
 
         // Important: This method should be called after Generate(poolNames)
@@ -26,12 +26,17 @@ namespace Entitas.CodeGenerator {
             var lookupTagToComponentInfosMap = getLookupTagToComponentInfosMap(orderedComponentInfos);
             var generatorName = GetType().FullName;
             return lookupTagToComponentInfosMap
-                .Select(kv => new CodeGenFile(kv.Key, generateIndicesLookup(kv.Key, kv.Value.ToArray()), generatorName))
-                .ToArray();
+                .Select(kv => new CodeGenFile(
+                    kv.Key,
+                    generateIndicesLookup(kv.Key, kv.Value.ToArray()),
+                    generatorName
+                )).ToArray();
         }
 
         static Dictionary<string, ComponentInfo[]> getLookupTagToComponentInfosMap(ComponentInfo[] componentInfos) {
             var currentIndex = 0;
+
+            // order componentInfos by pool count
             var orderedComponentInfoToLookupTagsMap = componentInfos
                 .Where(info => info.generateIndex)
                 .ToDictionary(info => info, info => info.ComponentLookupTags())
@@ -41,6 +46,7 @@ namespace Entitas.CodeGenerator {
                 .Aggregate(new Dictionary<string, ComponentInfo[]>(), (map, kv) => {
                     var info = kv.Key;
                     var lookupTags = kv.Value;
+                    var componentIsAssignedToMultiplePools = lookupTags.Length > 1;
                     var incrementIndex = false;
                     foreach (var lookupTag in lookupTags) {
                         if (!map.ContainsKey(lookupTag)) {
@@ -48,7 +54,11 @@ namespace Entitas.CodeGenerator {
                         }
 
                         var infos = map[lookupTag];
-                        if (lookupTags.Length == 1) {
+                        if (componentIsAssignedToMultiplePools) {
+                            // Component has multiple lookupTags. Set at current index in all lookups.
+                            infos[currentIndex] = info;
+                            incrementIndex = true;
+                        } else {
                             // Component has only one lookupTag. Insert at next free slot.
                             for (int i = 0; i < infos.Length; i++) {
                                 if (infos[i] == null) {
@@ -56,10 +66,6 @@ namespace Entitas.CodeGenerator {
                                     break;
                                 }
                             }
-                        } else {
-                            // Component has multiple lookupTags. Set at current index in all lookups.
-                            infos[currentIndex] = info;
-                            incrementIndex = true;
                         }
                     }
                     if (incrementIndex) {

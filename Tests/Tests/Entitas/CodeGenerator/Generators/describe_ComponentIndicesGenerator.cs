@@ -41,7 +41,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
     static void generatesEmptyLookup(string[] poolNames, string[] lookupNames, string[] lookupCodes) {
         var files = new ComponentIndicesGenerator().Generate(poolNames, new ComponentInfo[0]);
-        files.Length.should_be(poolNames.Length == 0 ? 1 : poolNames.Length);
+        files.Length.should_be(poolNames.Length);
 
         for (int i = 0; i < lookupNames.Length; i++) {
             var lookupName = lookupNames[i];
@@ -182,7 +182,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates empty lookup with total components when for default pool"] = () => {
-            generatesEmptyLookup(new string[0], new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
+            generatesEmptyLookup(new [] { CodeGenerator.DEFAULT_POOL_NAME }, new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
 
     public const int TotalComponents = 0;
 

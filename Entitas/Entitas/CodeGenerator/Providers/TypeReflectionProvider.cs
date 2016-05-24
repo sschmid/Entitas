@@ -24,7 +24,7 @@ namespace Entitas.CodeGenerator {
             _blueprintNames = blueprintNames;
         }
 
-        public static ComponentInfo[] GetComponentInfos(Type[] types) {
+        public static ComponentInfo[] GetComponentInfos(params Type[] types) {
             var infosFromComponents = types
                 .Where(type => !type.IsInterface)
                 .Where(type => !type.IsAbstract)
@@ -85,7 +85,17 @@ namespace Entitas.CodeGenerator {
                 .OrderBy(poolName => poolName)
                 .ToArray();
 
-            return (pools.Length == 0 && defaultIfEmpty) ? new[] { CodeGenerator.DEFAULT_POOL_NAME } : pools;
+            if (pools.Length == 0 && defaultIfEmpty) {
+                return new[] { CodeGenerator.DEFAULT_POOL_NAME };
+            }
+
+            var defaultPoolIndex = Array.IndexOf(pools, CodeGenerator.DEFAULT_POOL_NAME);
+            if (defaultPoolIndex != -1) {
+                pools[defaultPoolIndex] = pools[0];
+                pools[0] = CodeGenerator.DEFAULT_POOL_NAME;
+            }
+
+            return pools;
         }
 
         public static bool GetIsSingleEntity(Type type) {

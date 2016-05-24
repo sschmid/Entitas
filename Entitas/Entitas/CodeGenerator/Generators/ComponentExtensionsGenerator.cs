@@ -11,8 +11,11 @@ namespace Entitas.CodeGenerator {
             var generatorName = GetType().FullName;
             return componentInfos
                 .Where(info => info.generateMethods)
-                .Select(info => new CodeGenFile(info.fullTypeName + "GeneratedExtension", generateComponentExtension(info), generatorName))
-                .ToArray();
+                .Select(info => new CodeGenFile(
+                    info.fullTypeName + "GeneratedExtension",
+                    generateComponentExtension(info),
+                    generatorName
+                )).ToArray();
         }
 
         static string generateComponentExtension(ComponentInfo componentInfo) {
@@ -33,14 +36,11 @@ namespace Entitas.CodeGenerator {
                     + code;
             }
 
-            if (componentInfo.pools.Length == 1 && componentInfo.pools[0].PoolPrefix() == string.Empty) {
-                code += addMatcher(componentInfo, true);
-                code += closeNamespace();
-            } else {
-                // Add default matcher
-                code += addMatcher(componentInfo, true);
-                code += closeNamespace();
-                // Add custom matchers
+            code += addMatcher(componentInfo, true);
+            code += closeNamespace();
+
+            var hasCustomPools = componentInfo.pools.Length > 1 || !componentInfo.pools[0].IsDefaultPoolName();
+            if (hasCustomPools) {
                 code += addMatcher(componentInfo);
                 code = addUsings("Entitas") + code;
             }
@@ -267,8 +267,9 @@ $assign
         }
     }
 ";
+
             if (onlyDefault) {
-                if (componentInfo.pools[0].PoolPrefix() == string.Empty) {
+                if (componentInfo.pools.Contains(CodeGenerator.DEFAULT_POOL_NAME)) {
                     return buildString(componentInfo, matcherFormat);
                 } else {
                     return string.Empty;
@@ -276,7 +277,7 @@ $assign
             } else {
                 var poolIndex = 0;
                 var matchers = componentInfo.pools.Aggregate(string.Empty, (acc, poolName) => {
-                    if (poolName != string.Empty) {
+                    if (!poolName.IsDefaultPoolName()) {
                         return acc + buildString(componentInfo, matcherFormat, poolIndex++);
                     } else {
                         poolIndex += 1;

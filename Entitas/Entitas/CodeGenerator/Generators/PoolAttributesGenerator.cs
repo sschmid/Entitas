@@ -6,10 +6,13 @@ namespace Entitas.CodeGenerator {
 
         public CodeGenFile[] Generate(string[] poolNames, ComponentInfo[] componentInfos) {
             return poolNames
-                .Where(poolName => poolName.PoolPrefix() != string.Empty)
+                .Where(poolName => !poolName.IsDefaultPoolName())
                 .Select(poolName => poolName.UppercaseFirst())
-                .Select(poolName => new CodeGenFile(poolName + "Attribute", generatePoolAttributes(poolName), GetType().FullName))
-                .ToArray();
+                .Select(poolName => new CodeGenFile(
+                    poolName + "Attribute",
+                    generatePoolAttributes(poolName),
+                    GetType().FullName
+                )).ToArray();
         }
 
         static string generatePoolAttributes(string poolName) {

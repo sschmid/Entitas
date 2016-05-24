@@ -11,7 +11,7 @@ public class SomeClass {
                 new List<PublicMemberInfo> {
                     new PublicMemberInfo(typeof(SomeClass), "value")
                 },
-                new [] { "", "SomePool", "SomeOtherPool" },
+                new [] { CodeGenerator.DEFAULT_POOL_NAME, "SomePool", "SomeOtherPool" },
                 false,
                 "is",
                 true,

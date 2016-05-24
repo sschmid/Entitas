@@ -22,7 +22,10 @@ namespace Entitas.Unity.Serialization.Blueprints {{
 
             var orderedBlueprintNames = blueprintNames.OrderBy(name => name).ToArray();
             var blueprints = string.Format(CLASS_FORMAT, generateBlueprintGetters(orderedBlueprintNames));
-            return new [] { new CodeGenFile("BlueprintsGeneratedExtension", blueprints, GetType().FullName) };
+            return new [] { new CodeGenFile(
+                "BlueprintsGeneratedExtension",
+                blueprints,
+                GetType().FullName) };
         }
 
         string generateBlueprintGetters(string[] blueprintNames) {

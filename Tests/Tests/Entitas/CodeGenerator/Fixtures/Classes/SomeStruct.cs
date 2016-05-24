@@ -11,7 +11,7 @@ public struct SomeStruct {
                 new List<PublicMemberInfo> {
                     new PublicMemberInfo(typeof(SomeStruct), "value")
                 },
-                new [] { "" },
+                new [] { CodeGenerator.DEFAULT_POOL_NAME },
                 false,
                 "is",
                 true,
