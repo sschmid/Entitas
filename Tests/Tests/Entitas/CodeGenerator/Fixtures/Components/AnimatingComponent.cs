@@ -3,11 +3,6 @@ using Entitas.CodeGenerator;
 
 [SingleEntity]
 public class AnimatingComponent : IComponent {
-    public static ComponentInfo componentInfo { 
-        get {
-            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(AnimatingComponent) })[0];
-        }
-    }
 
     public static string extensions =
         @"namespace Entitas {

@@ -4,11 +4,6 @@ using Entitas.CodeGenerator;
 
 [SingleEntity, Pool("Other")]
 public class OtherPoolComponent : IComponent {
-    public static ComponentInfo componentInfo { 
-        get {
-            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(OtherPoolComponent) })[0];
-        }
-    }
 
     public DateTime timestamp;
     public bool isLoggedIn;

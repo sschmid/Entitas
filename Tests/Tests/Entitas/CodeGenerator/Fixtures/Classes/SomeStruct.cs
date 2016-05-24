@@ -1,25 +1,7 @@
-﻿using System.Collections.Generic;
-using Entitas.CodeGenerator;
-using Entitas.Serialization;
+﻿using Entitas.CodeGenerator;
 
 [Pool]
 public struct SomeStruct {
-    public static ComponentInfo componentInfo {
-        get {
-            return new ComponentInfo(
-                "SomeStructComponent",
-                new List<PublicMemberInfo> {
-                    new PublicMemberInfo(typeof(SomeStruct), "value")
-                },
-                new [] { CodeGenerator.DEFAULT_POOL_NAME },
-                false,
-                "is",
-                true,
-                true,
-                true
-            );
-        }
-    }
 
     public static string extensions =
         @"using Entitas;

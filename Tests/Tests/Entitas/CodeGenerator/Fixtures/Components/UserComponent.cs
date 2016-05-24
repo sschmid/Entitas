@@ -4,11 +4,6 @@ using Entitas.CodeGenerator;
 
 [SingleEntity]
 public class UserComponent : IComponent {
-    public static ComponentInfo componentInfo {
-        get {
-            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(UserComponent) })[0];
-        }
-    }
 
     public DateTime timestamp;
     public bool isLoggedIn;

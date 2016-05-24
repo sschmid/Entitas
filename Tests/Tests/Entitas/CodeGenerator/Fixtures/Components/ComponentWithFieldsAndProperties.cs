@@ -1,13 +1,7 @@
 using Entitas;
-using Entitas.CodeGenerator;
 
 #pragma warning disable
 public class ComponentWithFieldsAndProperties : IComponent {
-    public static ComponentInfo componentInfo { 
-        get {
-            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(ComponentWithFieldsAndProperties) })[0];
-        }
-    }
 
     // Has one public field
 

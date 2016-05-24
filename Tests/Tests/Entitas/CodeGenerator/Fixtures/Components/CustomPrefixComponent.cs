@@ -3,11 +3,6 @@ using Entitas.CodeGenerator;
 
 [SingleEntity, CustomPrefix("My")]
 public class CustomPrefixComponent : IComponent {
-    public static ComponentInfo componentInfo { 
-        get {
-            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(CustomPrefixComponent) })[0];
-        }
-    }
 
     public static string extensions =
         @"namespace Entitas {

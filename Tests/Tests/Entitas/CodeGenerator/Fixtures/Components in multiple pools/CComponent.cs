@@ -3,11 +3,6 @@ using Entitas.CodeGenerator;
 
 [Pool("PoolA"), Pool("PoolB"), Pool("PoolC")]
 public class CComponent : IComponent {
-    public static ComponentInfo componentInfo { 
-        get {
-            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(CComponent) })[0];
-        }
-    }
 
     public static string extensions =
         @"using Entitas;

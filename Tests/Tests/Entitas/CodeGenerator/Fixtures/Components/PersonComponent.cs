@@ -1,12 +1,6 @@
 using Entitas;
-using Entitas.CodeGenerator;
 
 public class PersonComponent : IComponent {
-    public static ComponentInfo componentInfo { 
-        get {
-            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(PersonComponent) })[0];
-        }
-    }
 
     public int age;
     public string name;

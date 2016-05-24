@@ -1,12 +1,6 @@
 using Entitas;
-using Entitas.CodeGenerator;
 
 public class MovableComponent : IComponent {
-    public static ComponentInfo componentInfo { 
-        get {
-            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(MovableComponent) })[0];
-        }
-    }
 
     public static string extensions =
         @"namespace Entitas {

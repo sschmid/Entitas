@@ -3,11 +3,6 @@ using Entitas.CodeGenerator;
 
 [Pool, Pool("Other")]
 public class MultiplePoolAndDefaultPoolComponent : IComponent {
-    public static ComponentInfo componentInfo {
-        get {
-            return TypeReflectionProvider.GetComponentInfos(new [] { typeof(MultiplePoolAndDefaultPoolComponent) })[0];
-        }
-    }
 
     public static string extensions = @"using Entitas;
 

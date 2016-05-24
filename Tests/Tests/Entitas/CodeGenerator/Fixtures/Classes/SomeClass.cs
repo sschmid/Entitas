@@ -1,25 +1,7 @@
-﻿using System.Collections.Generic;
-using Entitas.CodeGenerator;
-using Entitas.Serialization;
+﻿using Entitas.CodeGenerator;
 
-[Pool("SomePool"), Pool("SomeOtherPool")]
+[Pool, Pool("SomePool"), Pool("SomeOtherPool")]
 public class SomeClass {
-    public static ComponentInfo componentInfo {
-        get {
-            return new ComponentInfo(
-                "SomeClassComponent",
-                new List<PublicMemberInfo> {
-                    new PublicMemberInfo(typeof(SomeClass), "value")
-                },
-                new [] { CodeGenerator.DEFAULT_POOL_NAME, "SomePool", "SomeOtherPool" },
-                false,
-                "is",
-                true,
-                true,
-                true
-            );
-        }
-    }
 
     public static string extensions =
         @"using Entitas;
@@ -69,22 +51,6 @@ namespace Entitas {
     }
 }
 
-    public partial class SomePoolMatcher {
-        static IMatcher _matcherSomeClass;
-
-        public static IMatcher SomeClass {
-            get {
-                if (_matcherSomeClass == null) {
-                    var matcher = (Matcher)Matcher.AllOf(SomePoolComponentIds.SomeClass);
-                    matcher.componentNames = SomePoolComponentIds.componentNames;
-                    _matcherSomeClass = matcher;
-                }
-
-                return _matcherSomeClass;
-            }
-        }
-    }
-
     public partial class SomeOtherPoolMatcher {
         static IMatcher _matcherSomeClass;
 
@@ -93,6 +59,22 @@ namespace Entitas {
                 if (_matcherSomeClass == null) {
                     var matcher = (Matcher)Matcher.AllOf(SomeOtherPoolComponentIds.SomeClass);
                     matcher.componentNames = SomeOtherPoolComponentIds.componentNames;
+                    _matcherSomeClass = matcher;
+                }
+
+                return _matcherSomeClass;
+            }
+        }
+    }
+
+    public partial class SomePoolMatcher {
+        static IMatcher _matcherSomeClass;
+
+        public static IMatcher SomeClass {
+            get {
+                if (_matcherSomeClass == null) {
+                    var matcher = (Matcher)Matcher.AllOf(SomePoolComponentIds.SomeClass);
+                    matcher.componentNames = SomePoolComponentIds.componentNames;
                     _matcherSomeClass = matcher;
                 }
 

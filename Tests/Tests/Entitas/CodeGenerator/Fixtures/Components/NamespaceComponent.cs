@@ -3,11 +3,6 @@ using Entitas.CodeGenerator;
 
 namespace My.Namespace {
     public class NamespaceComponent : IComponent {
-        public static ComponentInfo componentInfo { 
-            get {
-                return TypeReflectionProvider.GetComponentInfos(new [] { typeof(NamespaceComponent) })[0];
-            }
-        }
 
         public static string extensions =
             @"namespace Entitas {
