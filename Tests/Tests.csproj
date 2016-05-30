@@ -81,16 +81,9 @@
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_SystemInfo.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_VisualDebuggingConfig.cs" />
     <Compile Include="Tests\Entitas\describe_TypeExtension.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ClearReactiveSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\EntityEmittingSubSystem.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveEnsureSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveExcludeSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveEnsureExcludeSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveEnsureSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveExcludeSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Components\Components.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Components\NameAgeComponent.cs" />

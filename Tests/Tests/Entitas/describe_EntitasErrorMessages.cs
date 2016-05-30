@@ -4,6 +4,7 @@ using Entitas.Serialization.Blueprints;
 using NSpec;
 
 class describe_EntitasErrorMessages : nspec {
+
     static void printErrorMessage(Action action) {
         try {
             action();
@@ -22,6 +23,7 @@ class describe_EntitasErrorMessages : nspec {
 
         Pool pool = null;
         Entity entity = null;
+
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
             var metaData = new PoolMetaData("My Pool", componentNames, null);
@@ -30,14 +32,14 @@ class describe_EntitasErrorMessages : nspec {
         };
 
         it["creates exception with hint separated by newLine"] = () => {
-            var msg = "Message";
-            var hint = "Hint";
+            const string msg = "Message";
+            const string hint = "Hint";
             var ex = new EntitasException(msg, hint);
             ex.Message.should_be(msg + "\n" + hint);
         };
 
         it["ignores hint when null"] = () => {
-            var msg = "Message";
+            const string msg = "Message";
             string hint = null;
             var ex = new EntitasException(msg, hint);
             ex.Message.should_be(msg);
@@ -57,6 +59,7 @@ class describe_EntitasErrorMessages : nspec {
             };
 
             context["when enabled"] = () => {
+
                 it["add a component twice"] = () => printErrorMessage(() => {
                     entity.AddComponentA();
                     entity.AddComponentA();

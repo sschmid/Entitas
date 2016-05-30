@@ -4,10 +4,7 @@ using Entitas;
 class describe_Systems : nspec {
 
     static ReactiveSystem createReactiveSystem(Pool pool) {
-        var subSystem = new ReactiveSubSystemSpy(Matcher.AllOf(new[] {
-            CID.ComponentA
-        }), GroupEventType.OnEntityAdded);
-
+        var subSystem = new ReactiveSubSystemSpy(Matcher.AllOf(CID.ComponentA), GroupEventType.OnEntityAdded);
         var reactiveSystem = new ReactiveSystem(pool, subSystem);
         pool.CreateEntity().AddComponentA();
 
@@ -24,41 +21,59 @@ class describe_Systems : nspec {
         context["fixtures"] = () => {
             it["initializes InitializeSystemSpy"] = () => {
                 var initializeSystem = new InitializeSystemSpy();
-                initializeSystem.initialized.should_be_false();
+                initializeSystem.didInitialize.should_be(0);
                 initializeSystem.Initialize();
-                initializeSystem.initialized.should_be_true();
+                initializeSystem.didInitialize.should_be(1);
             };
 
             it["executes ExecuteSystemSpy"] = () => {
                 var initializeSystem = new ExecuteSystemSpy();
-                initializeSystem.executed.should_be_false();
+                initializeSystem.didExecute.should_be(0);
                 initializeSystem.Execute();
-                initializeSystem.executed.should_be_true();
+                initializeSystem.didExecute.should_be(1);
             };
 
             it["initializes and executes InitializeExecuteSystemSpy"] = () => {
                 var initializeSystem = new InitializeExecuteSystemSpy();
-                initializeSystem.initialized.should_be_false();
-                initializeSystem.executed.should_be_false();
+                initializeSystem.didInitialize.should_be(0);
+                initializeSystem.didExecute.should_be(0);
                 initializeSystem.Initialize();
                 initializeSystem.Execute();
-                initializeSystem.initialized.should_be_true();
-                initializeSystem.executed.should_be_true();
+                initializeSystem.didInitialize.should_be(1);
+                initializeSystem.didExecute.should_be(1);
+            };
+
+            it["initializes ReactiveSystemSpy"] = () => {
+                var system = createReactiveSystem(pool);
+                var spy = (ReactiveSubSystemSpy)system.subsystem;
+
+                spy.didInitialize.should_be(0);
+                spy.didExecute.should_be(0);
+
+                spy.Initialize();
+
+                spy.didInitialize.should_be(1);
+                spy.didExecute.should_be(0);
             };
 
             it["executes ReactiveSystemSpy"] = () => {
                 var system = createReactiveSystem(pool);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
+
+                spy.didInitialize.should_be(0);
                 spy.didExecute.should_be(0);
-                spy.initialized.should_be_false();
+
                 system.Execute();
+
+                spy.didInitialize.should_be(0);
                 spy.didExecute.should_be(1);
-                spy.initialized.should_be_false();
             };
         };
 
         context["systems"] = () => {
+
             Systems systems = null;
+
             before = () => {
                 systems = new Systems();
             };
@@ -71,14 +86,14 @@ class describe_Systems : nspec {
                 var system = new InitializeSystemSpy();
                 systems.Add(system);
                 systems.Initialize();
-                system.initialized.should_be_true();
+                system.didInitialize.should_be(1);
             };
 
             it["executes IExecuteSystem"] = () => {
                 var system = new ExecuteSystemSpy();
                 systems.Add(system);
                 systems.Execute();
-                system.executed.should_be_true();
+                system.didExecute.should_be(1);
             };
 
             it["initializes and executes IInitializeSystem, IExecuteSystem"] = () => {
@@ -86,8 +101,8 @@ class describe_Systems : nspec {
                 systems.Add(system);
                 systems.Initialize();
                 systems.Execute();
-                system.initialized.should_be_true();
-                system.executed.should_be_true();
+                system.didInitialize.should_be(1);
+                system.didExecute.should_be(1);
             };
 
             it["initializes and executes ReactiveSystem"] = () => {
@@ -99,8 +114,8 @@ class describe_Systems : nspec {
                 systems.Execute();
 
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
+                spy.didInitialize.should_be(1);
                 spy.didExecute.should_be(1);
-                spy.initialized.should_be_true();
             };
 
             it["clears reactive systems"] = () => {
@@ -112,8 +127,8 @@ class describe_Systems : nspec {
                 systems.Execute();
 
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
+                spy.didInitialize.should_be(1);
                 spy.didExecute.should_be(0);
-                spy.initialized.should_be_true();
             };
 
             it["clears reactive systems recursively"] = () => {
@@ -127,8 +142,8 @@ class describe_Systems : nspec {
                 parentSystems.Execute();
 
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
+                spy.didInitialize.should_be(1);
                 spy.didExecute.should_be(0);
-                spy.initialized.should_be_true();
             };
 
             it["deactivates reactive systems"] = () => {
@@ -140,8 +155,8 @@ class describe_Systems : nspec {
                 systems.Execute();
 
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
+                spy.didInitialize.should_be(1);
                 spy.didExecute.should_be(0);
-                spy.initialized.should_be_true();
             };
 
             it["deactivates reactive systems recursively"] = () => {
@@ -155,8 +170,8 @@ class describe_Systems : nspec {
                 parentSystems.Execute();
 
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
+                spy.didInitialize.should_be(1);
                 spy.didExecute.should_be(0);
-                spy.initialized.should_be_true();
             };
 
             it["activates reactive systems"] = () => {
@@ -169,11 +184,12 @@ class describe_Systems : nspec {
                 systems.Execute();
 
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
+                spy.didInitialize.should_be(1);
                 spy.didExecute.should_be(0);
-                spy.initialized.should_be_true();
 
                 pool.CreateEntity().AddComponentA();
                 systems.Execute();
+
                 spy.didExecute.should_be(1);
             };
 
@@ -189,11 +205,12 @@ class describe_Systems : nspec {
                 parentSystems.Execute();
 
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
+                spy.didInitialize.should_be(1);
                 spy.didExecute.should_be(0);
-                spy.initialized.should_be_true();
 
                 pool.CreateEntity().AddComponentA();
                 systems.Execute();
+
                 spy.didExecute.should_be(1);
             };
         };
