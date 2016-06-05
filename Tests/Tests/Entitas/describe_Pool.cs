@@ -1,4 +1,5 @@
-﻿using Entitas;
+﻿using System;
+using Entitas;
 using NSpec;
 
 class describe_Pool : nspec {
@@ -553,16 +554,23 @@ class describe_Pool : nspec {
 
         context["EntityIndex"] = () => {
 
-            it["returns null if EntityIndex doesn't exist"] = () => {
-                pool.GetEntityIndex(1).should_be_null();
-            };
+            it["throws when EntityIndex for key doesn't exist"] = expect<PoolEntityIndexDoesNotExistException>(() => {
+                pool.GetEntityIndex("unknown");
+            });
 
             it["adds and EntityIndex"] = () => {
                 const int componentIndex = 1;
                 var entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(componentIndex)), null);
-                pool.AddEntityIndex(componentIndex, entityIndex);
-                pool.GetEntityIndex(1).should_be_same(entityIndex);
+                pool.AddEntityIndex(componentIndex.ToString(), entityIndex);
+                pool.GetEntityIndex("1").should_be_same(entityIndex);
             };
+
+            it["throws when adding an EntityIndex with same name"] = expect<PoolEntityIndexDoesAlreadyExistException>(() => {
+                const int componentIndex = 1;
+                var entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(componentIndex)), null);
+                pool.AddEntityIndex(componentIndex.ToString(), entityIndex);
+                pool.AddEntityIndex(componentIndex.ToString(), entityIndex);
+            });
         };
 
         context["reset"] = () => {
@@ -667,7 +675,7 @@ class describe_Pool : nspec {
                 before = () => {
                     entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(CID.ComponentA)),
                         c => ((NameAgeComponent)(c)).name);
-                    pool.AddEntityIndex(CID.ComponentA, entityIndex);
+                    pool.AddEntityIndex(CID.ComponentA.ToString(), entityIndex);
                 };
 
                 it["deactivates EntityIndex"] = () => {

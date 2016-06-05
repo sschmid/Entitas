@@ -62,7 +62,7 @@ namespace Entitas {
         readonly List<Group>[] _groupsForIndex;
 
         readonly Stack<IComponent>[] _componentPools;
-        readonly IEntityIndex[] _entityIndices;
+        readonly Dictionary<string, IEntityIndex> _entityIndices;
 
         // Cache delegates to avoid gc allocations
         Entity.EntityChanged _cachedUpdateGroupsComponentAddedOrRemoved;
@@ -99,7 +99,7 @@ namespace Entitas {
 
             _groupsForIndex = new List<Group>[totalComponents];
             _componentPools = new Stack<IComponent>[totalComponents];
-            _entityIndices = new IEntityIndex[totalComponents];
+            _entityIndices = new Dictionary<string, IEntityIndex>();
 
             // Cache delegates to avoid gc allocations
             _cachedUpdateGroupsComponentAddedOrRemoved = updateGroupsComponentAddedOrRemoved;
@@ -234,20 +234,26 @@ namespace Entitas {
             }
         }
 
-        public void AddEntityIndex(int index, IEntityIndex entityIndex) {
-            _entityIndices[index] = entityIndex;
+        public void AddEntityIndex(string name, IEntityIndex entityIndex) {
+            if (_entityIndices.ContainsKey(name)) {
+                throw new PoolEntityIndexDoesAlreadyExistException(this, name);
+            }
+
+            _entityIndices[name] = entityIndex;
         }
 
-        public IEntityIndex GetEntityIndex(int index) {
-            return _entityIndices[index];
+        public IEntityIndex GetEntityIndex(string name) {
+            IEntityIndex entityIndex;
+            if (!_entityIndices.TryGetValue(name, out entityIndex)) {
+                throw new PoolEntityIndexDoesNotExistException(this, name);
+            }
+
+            return entityIndex;
         }
 
         public void DeactivateEntityIndices() {
-            for (int i = 0, entityIndicesLength = _entityIndices.Length; i < entityIndicesLength; i++) {
-                var entityIndex = _entityIndices[i];
-                if (entityIndex != null) {
-                    entityIndex.Deactivate();
-                }
+            foreach (var entityIndex in _entityIndices.Values) {
+                entityIndex.Deactivate();
             }
         }
 
@@ -341,6 +347,18 @@ namespace Entitas {
         public PoolMetaDataException(Pool pool, PoolMetaData poolMetaData) :
             base("Invalid PoolMetaData for '" + pool + "'!\nExpected " + pool.totalComponents + " componentName(s) but got " + poolMetaData.componentNames.Length + ":",
                 string.Join("\n", poolMetaData.componentNames)) {
+        }
+    }
+
+    public class PoolEntityIndexDoesNotExistException : EntitasException {
+        public PoolEntityIndexDoesNotExistException(Pool pool, string name) :
+            base("Cannot get EntityIndex '" + name + "' from pool '" + pool + "'!", "No EntityIndex with this name has been added.") {
+        }
+    }
+
+    public class PoolEntityIndexDoesAlreadyExistException : EntitasException {
+        public PoolEntityIndexDoesAlreadyExistException(Pool pool, string name) :
+            base("Cannot add EntityIndex '" + name + "' to pool '" + pool + "'!", "An EntityIndex with this name has already been added.") {
         }
     }
 

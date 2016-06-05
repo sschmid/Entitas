@@ -130,6 +130,16 @@ class describe_EntitasErrorMessages : nspec {
             it["releases entity before destroy"] = () => printErrorMessage(() => {
                 entity.Release(pool);
             });
+
+            it["unknown entityIndex"] = () => printErrorMessage(() => {
+                pool.GetEntityIndex("unknown");
+            });
+
+            it["duplicate entityIndex"] = () => printErrorMessage(() => {
+                var index = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(1)), null);
+                pool.AddEntityIndex("duplicate", index);
+                pool.AddEntityIndex("duplicate", index);
+            });
         };
 
         context["CollectionExtension"] = () => {

@@ -192,7 +192,7 @@ public static class Pools {
         get {
             if (_meta == null) {
                 _meta = new Pool(MetaComponentIds.TotalComponents, 0, new PoolMetaData(""Meta Pool"", MetaComponentIds.componentNames, MetaComponentIds.componentTypes));
-                _meta.AddEntityIndex(MetaComponentIds.MetaIndexKey, new EntityIndex<string>(MetaMatcher.MetaIndexKey, c => (MetaIndexKeyComponent(c).name));
+                _meta.AddEntityIndex(MetaComponentIds.MetaIndexKey.ToString(), new EntityIndex<string>(MetaMatcher.MetaIndexKey, c => (MetaIndexKeyComponent(c).name));
 
                 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 if (UnityEngine.Application.isPlaying) {
@@ -228,7 +228,10 @@ public static class Pools {
         it["generates one custom pool"] = () => generates(new [] { "Meta" }, metaPool);
         it["generates multiple pools"] = () => generates(new [] { "Meta", "Core" }, metaCorePool);
 
-//        it["generates indexKey"] = () => generates(IndexKeyComponent.componentInfo.pools, indexKey, IndexKeyComponent.componentInfo);
+//        it["generates indexKey"] = () => {
+//            var info = TypeReflectionProvider.GetComponentInfos(typeof(IndexKeyComponent))[0];
+//            generates(info.pools, indexKey, info);
+//        };
 //        it["generates indexKey for default pool"] = () => generates(DefautPoolIndexKeyComponent.componentInfo.pools, indexKey, DefautPoolIndexKeyComponent.componentInfo);
 //        it["generates indexKey for custom pool"] = () => generates(MetaIndexKeyComponent.componentInfo.pools, metaIndexKey, MetaIndexKeyComponent.componentInfo);
     }
