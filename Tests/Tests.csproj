@@ -309,6 +309,7 @@
       <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\IndexKeyComponent.cs" />
+    <Compile Include="Tests\EntitasTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
