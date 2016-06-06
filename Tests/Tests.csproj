@@ -71,7 +71,6 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ComponentIds.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MovableComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\PersonComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\Pools.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\UserComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\TestPoolAttribute.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ComponentIndicesGenerator.cs" />
@@ -310,6 +309,16 @@
     </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\IndexKeyComponent.cs" />
     <Compile Include="Tests\EntitasTest.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherPoolComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ComponentWithFieldsAndPropertiesGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\My.Namespace.NamespaceComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\CComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\CustomPrefixComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\DefaultPoolComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MultiplePoolAndDefaultPoolComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeStructComponentGeneratedExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
