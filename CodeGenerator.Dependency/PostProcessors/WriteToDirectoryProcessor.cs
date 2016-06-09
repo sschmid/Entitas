@@ -7,7 +7,7 @@ namespace Entitas.CodeGenerator {
         string directory;
 
         public WriteToDirectoryProcessor(string outputDirectory) {
-            this.directory = outputDirectory;
+            this.directory = GetSafeDir(outputDirectory);
         }
 
         public void Process(CodeGenFile[] codegenFiles) {

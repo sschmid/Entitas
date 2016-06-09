@@ -27,8 +27,9 @@ namespace Entitas.CodeGenerator {
             }
 
             var codeGenFiles = generatedFiles.ToArray();
-
+            System.Console.WriteLine("codeGenFiles: " + codeGenFiles);
             foreach (var processor in postProcessors) {
+                System.Console.WriteLine("Processor: " + processor);
                 processor.Process(codeGenFiles);
             }
 

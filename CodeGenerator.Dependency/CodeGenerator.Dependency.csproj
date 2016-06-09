@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{714D75FB-5729-4423-8AB5-39F5D4DCF236}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CodeGenerator.Dependency</RootNamespace>
+    <AssemblyName>CodeGenerator.Dependency</AssemblyName>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interfaces\IBlueprintsCodeGenerator.cs" />
+    <Compile Include="Interfaces\ICodeGenerator.cs" />
+    <Compile Include="Interfaces\ICodeGeneratorDataProvider.cs" />
+    <Compile Include="Interfaces\IComponentCodeGenerator.cs" />
+    <Compile Include="Interfaces\IPoolCodeGenerator.cs" />
+    <Compile Include="Interfaces\IPostProcessor.cs" />
+    <Compile Include="Intermediate\CodeGenFile.cs" />
+    <Compile Include="Intermediate\ComponentInfo.cs" />
+    <Compile Include="Attributes\CustomPrefixAttribute.cs" />
+    <Compile Include="Attributes\DontGenerateAttribute.cs" />
+    <Compile Include="Attributes\PoolAttribute.cs" />
+    <Compile Include="Attributes\SingleEntityAttribute.cs" />
+    <Compile Include="Serialization\PublicMemberInfo.cs" />
+    <Compile Include="Serialization\TypeSerializationExtension.cs" />
+    <Compile Include="Generators\BlueprintsGenerator.cs" />
+    <Compile Include="Generators\ComponentExtensionsGenerator.cs" />
+    <Compile Include="Generators\ComponentIndicesGenerator.cs" />
+    <Compile Include="Generators\PoolAttributesGenerator.cs" />
+    <Compile Include="Generators\PoolsGenerator.cs" />
+    <Compile Include="PostProcessors\AddHeaderToFileProcessor.cs" />
+    <Compile Include="PostProcessors\WriteToDirectoryProcessor.cs" />
+    <Compile Include="EntitasException.cs" />
+    <Compile Include="CodeGenerator.cs" />
+    <Compile Include="Properties.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Intermediate\" />
+    <Folder Include="Attributes\" />
+    <Folder Include="Serialization\" />
+    <Folder Include="Generators\" />
+    <Folder Include="PostProcessors\" />
+  </ItemGroup>
+</Project>

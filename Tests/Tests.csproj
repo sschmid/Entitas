@@ -38,6 +38,7 @@
     <Reference Include="UnityEngine">
       <HintPath>Libraries\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Tests\Entitas\describe_Entity.cs" />
@@ -305,6 +306,7 @@
     </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\PostProcessors\describe_WriteToDirectoryProcessor.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\PostProcessors\describe_AddHeaderToFileProcessor.cs" />
+    <Compile Include="Tests\describe_SerializeComponentInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

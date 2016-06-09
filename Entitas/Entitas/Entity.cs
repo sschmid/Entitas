@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Entitas.CodeGenerator;
 
 namespace Entitas {
 
@@ -423,14 +424,5 @@ namespace Entitas {
         }
     }
 
-    public static class EntityExtension {
-        public const string COMPONENT_SUFFIX = "Component";
-
-        public static string RemoveComponentSuffix(this string componentName) {
-            return componentName.EndsWith(COMPONENT_SUFFIX)
-                    ? componentName.Substring(0, componentName.Length - COMPONENT_SUFFIX.Length)
-                    : componentName;
-        }
-    }
 }
 
