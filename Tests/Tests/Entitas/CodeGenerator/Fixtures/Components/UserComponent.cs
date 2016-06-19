@@ -1,6 +1,6 @@
 using System;
 using Entitas;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 using Entitas.Serialization;
 
 [SingleEntity]

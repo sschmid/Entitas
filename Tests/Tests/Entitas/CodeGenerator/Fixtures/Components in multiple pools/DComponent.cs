@@ -1,5 +1,5 @@
 ﻿using Entitas;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 using Entitas.Serialization;
 
 [Pool("PoolB"), Pool("PoolC")]

@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 using NSpec;
 using System.Xml.Serialization;
 using System.IO;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 
 namespace Entitas {
 

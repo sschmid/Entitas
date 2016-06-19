@@ -1,10 +1,10 @@
 ﻿using System;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 using System.IO;
 using Entitas.Unity;
 using System.Reflection;
 
-namespace CodeGenerator.Reflection {
+namespace CodeGeneration.Reflection {
     class MainClass {
         public static void Main(string[] args) {
             /* Config:

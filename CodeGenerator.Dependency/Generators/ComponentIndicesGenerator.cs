@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
     public class ComponentIndicesGenerator : IPoolCodeGenerator, IComponentCodeGenerator {
 
         // Important: This method should be called before Generate(componentInfos)

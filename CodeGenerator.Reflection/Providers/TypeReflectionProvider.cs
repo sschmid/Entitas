@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Entitas.Serialization;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
     public class TypeReflectionProvider : ICodeGeneratorDataProvider {
 
         public string[] poolNames { get { return _poolNames; } }

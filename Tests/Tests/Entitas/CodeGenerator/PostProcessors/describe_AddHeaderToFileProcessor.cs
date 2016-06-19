@@ -1,5 +1,5 @@
 ﻿using NSpec;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 
 class describe_AddHeaderToFileProcessor : nspec {
     const string EXPECTED_HEADER = @"//------------------------------------------------------------------------------

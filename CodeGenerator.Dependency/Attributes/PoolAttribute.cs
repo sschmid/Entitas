@@ -1,6 +1,6 @@
 using System;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
 
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class PoolAttribute : Attribute {

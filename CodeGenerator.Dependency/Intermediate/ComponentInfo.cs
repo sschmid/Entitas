@@ -2,7 +2,7 @@
 using Entitas.Serialization;
 using System;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
 
 
     public class ComponentInfo {

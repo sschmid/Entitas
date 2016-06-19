@@ -1,5 +1,5 @@
 ﻿using System;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 using My.Namespace;
 using NSpec;
 

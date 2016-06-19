@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
     public static class TypeReflectionCodeGenerator {
         public static CodeGenFile[] Generate(Assembly assembly, string[] poolNames, string[] blueprintNames, string directory, ICodeGenerator[] codeGenerators) {
             System.Console.WriteLine("Generate...");

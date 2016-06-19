@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGenerator;
+﻿using Entitas.CodeGeneration;
 
 public class TestPoolAttribute : PoolAttribute {
     public TestPoolAttribute() : base("Test") {

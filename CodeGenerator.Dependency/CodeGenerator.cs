@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
     public static class CodeGenerator {
         public const string COMPONENT_SUFFIX = "Component";
         public const string DEFAULT_COMPONENT_LOOKUP_TAG = "ComponentIds";

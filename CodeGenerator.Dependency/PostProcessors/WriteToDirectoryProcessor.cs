@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
     public class WriteToDirectoryProcessor : IPostProcessor {
         string directory;
 

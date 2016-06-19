@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 
 class GenerateTestComponents {
     public static void Main(string[] args) {

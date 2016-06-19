@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Entitas.Serialization;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
 
     [Obsolete("Deprecated since 0.30.0. Use ComponentExtensionsGenerator")]
     public class ComponentsGenerator : ComponentExtensionsGenerator {}

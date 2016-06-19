@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
 
     [Obsolete("Deprecated since 0.30.0. Use PoolAttributesGenerator")]
     public class PoolAttributeGenerator : PoolAttributesGenerator {}

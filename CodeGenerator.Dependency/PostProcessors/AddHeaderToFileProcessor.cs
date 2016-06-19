@@ -1,4 +1,4 @@
-﻿namespace Entitas.CodeGenerator {
+﻿namespace Entitas.CodeGeneration {
     public class AddHeaderToFileProcessor : IPostProcessor {
         
         public const string AUTO_GENERATED_HEADER_FORMAT = @"//------------------------------------------------------------------------------

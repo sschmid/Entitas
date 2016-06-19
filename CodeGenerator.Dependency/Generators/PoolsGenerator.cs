@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
     public class PoolsGenerator : IPoolCodeGenerator {
 
         const string FILE_NAME = "Pools";

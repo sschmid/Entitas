@@ -1,6 +1,6 @@
 using System;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
 
     [AttributeUsage(AttributeTargets.Class)]
     public class DontGenerateAttribute : Attribute {

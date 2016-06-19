@@ -1,5 +1,5 @@
 ﻿using NSpec;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 using System.Linq;
 
 class describe_PoolAttributesGenerator : nspec {

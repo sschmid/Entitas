@@ -1,4 +1,4 @@
-﻿namespace Entitas.CodeGenerator {
+﻿namespace Entitas.CodeGeneration {
     public class CodeGenFile {
         public string fileName;
         public string fileContent;

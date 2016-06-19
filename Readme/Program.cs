@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
 
 namespace Readme {
     class MainClass {
