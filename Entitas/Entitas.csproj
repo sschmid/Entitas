@@ -65,7 +65,6 @@
     <Folder Include="Entitas\Extensions\" />
     <Folder Include="Entitas\Interfaces\" />
     <Folder Include="Entitas\Matcher\" />
-    <Folder Include="Entitas\CodeGenerator\" />
     <Folder Include="Entitas\Serialization\" />
     <Folder Include="Entitas\Serialization\Blueprints\" />
   </ItemGroup>
