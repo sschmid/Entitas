@@ -7,12 +7,12 @@ using System.Reflection;
 namespace CodeGeneration.Reflection {
     class MainClass {
         public static void Main(string[] args) {
-            /* Config:
-Entitas.Unity.CodeGenerator.GeneratedFolderPath = Assets/Examples/Generated/
-Entitas.Unity.CodeGenerator.Pools = VisualDebugging,Blueprints
-Entitas.Unity.CodeGenerator.EnabledCodeGenerators = BlueprintsGenerator,ComponentExtensionsGenerator,ComponentIndicesGenerator,PoolAttributesGenerator,PoolsGenerator
-Entitas.Unity.VisualDebugging.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/
-Entitas.Unity.VisualDebugging.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/
+            /* Properties:
+Entitas.CodeGenerator.AssemblyPath = CodeGenerator.Dependency.dll
+Entitas.CodeGenerator.GeneratedFolderPath = ../../GeneratedTestFolderPath
+Entitas.CodeGenerator.PoolNames = meta, world
+Entitas.CodeGenerator.BlueprintNames =
+
             */
             var propertiesContent = File.ReadAllText(args[0]);
             var properties = new Properties(propertiesContent);
