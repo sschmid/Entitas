@@ -9,7 +9,6 @@ namespace Entitas.CodeGeneration {
                 new AddHeaderToFileProcessor(),
                 new WriteToDirectoryProcessor(directory)
             };
-            System.Console.WriteLine("Test!!");
             return CodeGenerator.Generate(provider, codeGenerators, postProcessors);
         }
     }

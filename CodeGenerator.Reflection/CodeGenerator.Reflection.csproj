@@ -8,7 +8,6 @@
     <RootNamespace>CodeGenerator.Reflection</RootNamespace>
     <AssemblyName>CodeGenerator.Reflection</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,6 +18,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
+    <Commandlineparameters>"../../codeGenerator.properties"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>

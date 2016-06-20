@@ -17,7 +17,10 @@ Entitas.Unity.VisualDebugging.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/
             var propertiesContent = File.ReadAllText(args[0]);
             var properties = new Properties(propertiesContent);
             var assemblyPath = properties["Entitas.CodeGenerator.AssemblyPath"];
-            System.Console.WriteLine("File.Exists(assemblyPath): " + File.Exists(assemblyPath));;
+            if(!File.Exists (assemblyPath)){
+                throw new Exception (string.Format("Assembly at path '{0}' does not exist!", assemblyPath));
+            }
+
             var assembly = Assembly.LoadFrom(assemblyPath);
             var outputDirectory = properties["Entitas.CodeGenerator.GeneratedFolderPath"];
             var pools = properties["Entitas.CodeGenerator.PoolNames"].Split(',');
