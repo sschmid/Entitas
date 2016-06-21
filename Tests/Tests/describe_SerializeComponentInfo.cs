@@ -24,7 +24,7 @@ class describe_SerializeComponentInfo : nspec {
                 stream.Seek(0, SeekOrigin.Begin);
 
                 var newInfo = (ComponentInfo)binaryFormatter.Deserialize(stream);
-                var type = newInfo.memberInfos[0].type.FullName;
+                var type = newInfo.memberInfos[0].fullTypeName;
             }
         };
     }

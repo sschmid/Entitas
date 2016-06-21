@@ -316,7 +316,7 @@ $assign
 
         static string memberNamesWithType(List<PublicMemberInfo> memberInfos) {
             var typedArgs = memberInfos
-                .Select(info => info.type.ToCompilableString() + " new" + info.name.UppercaseFirst())
+                .Select(info => info.fullTypeName + " new" + info.name.UppercaseFirst())
                 .ToArray();
 
             return string.Join(", ", typedArgs);

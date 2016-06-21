@@ -16,7 +16,7 @@ class describe_PublicMemberInfo : nspec {
                 var infos = typeof(ComponentWithFields).GetPublicMemberInfos();
                 infos.Count.should_be(1);
                 var mi = infos[0];
-                mi.type.should_be(typeof(string));
+                mi.fullTypeName.should_be(typeof(string));
                 mi.name.should_be("publicField");
             };
 
@@ -24,7 +24,7 @@ class describe_PublicMemberInfo : nspec {
                 var infos = typeof(ComponentWithProperties).GetPublicMemberInfos();
                 infos.Count.should_be(1);
                 var mi = infos[0];
-                mi.type.should_be(typeof(string));
+                mi.fullTypeName.should_be(typeof(string));
                 mi.name.should_be("publicProperty");
             };
 
@@ -34,10 +34,10 @@ class describe_PublicMemberInfo : nspec {
                 var mi1 = infos[0];
                 var mi2 = infos[1];
 
-                mi1.type.should_be(typeof(string));
+                mi1.fullTypeName.should_be(typeof(string));
                 mi1.name.should_be("publicField");
 
-                mi2.type.should_be(typeof(string));
+                mi2.fullTypeName.should_be(typeof(string));
                 mi2.name.should_be("publicProperty");
             };
 
