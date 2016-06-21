@@ -39,7 +39,6 @@ namespace Entitas.CodeGenerator
             var componentInfos = new List<ComponentInfo>();
             foreach (var document in _project.Documents)
             {
-                Console.WriteLine(document.Classes.Count());
                 foreach (var classStructure in document.Classes)
                 {
                     if (IsValidIComponentClass(classStructure))
