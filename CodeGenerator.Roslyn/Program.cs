@@ -24,8 +24,8 @@ Entitas.CodeGenerator.BlueprintNames =
             if (!File.Exists (projectPath)) {
                 throw new Exception ($"Project at path '{projectPath}' does not exist!");
             }
-
             var project = ProjectStructure.Load(projectPath);
+
             var outputDirectory = properties ["Entitas.CodeGenerator.GeneratedFolderPath"];
             var pools = properties ["Entitas.CodeGenerator.PoolNames"].Split (',');
             var blueprintNames = properties ["Entitas.CodeGenerator.BlueprintNames"].Split (',');
@@ -44,6 +44,7 @@ Entitas.CodeGenerator.BlueprintNames =
             foreach (var file in output) {
                 System.Console.WriteLine ("file.fileName: " + file.fileName);
             }
+            System.Console.ReadLine();
 
         }
     }
