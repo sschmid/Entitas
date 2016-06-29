@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using CodeGenerator.Reflection.Providers;
 using Entitas.CodeGeneration;
 
 class GenerateTestComponents {

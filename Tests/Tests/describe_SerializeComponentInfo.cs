@@ -4,6 +4,7 @@ using NSpec;
 using System.Xml.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using CodeGenerator.Reflection.Providers;
 using Entitas.Migration;
 
 class describe_SerializeComponentInfo : nspec {

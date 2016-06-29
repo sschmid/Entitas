@@ -1,11 +1,9 @@
 ﻿using System;
-using Entitas.CodeGeneration;
 using System.IO;
+using Entitas.CodeGeneration;
 using Entitas.Unity;
-using System.Reflection;
-using CSharpCodeGenerator;
 
-namespace CodeGeneration.Roslyn
+namespace CodeGenerator.Roslyn
 {
     class MainClass
     {
@@ -24,9 +22,8 @@ Entitas.CodeGenerator.BlueprintNames =
             if (!File.Exists (projectPath)) {
                 throw new Exception ($"Project at path '{projectPath}' does not exist!");
             }
-            var project = ProjectStructure.Load(projectPath);
 
-            var outputDirectory = properties ["Entitas.CodeGenerator.GeneratedFolderPath"];
+            var outputDirectory = properties ["Entitas.CodeGenerator.TargetFolderInProject"];
             var pools = properties ["Entitas.CodeGenerator.PoolNames"].Split (',');
             var blueprintNames = properties ["Entitas.CodeGenerator.BlueprintNames"].Split (',');
 
@@ -39,7 +36,7 @@ Entitas.CodeGenerator.BlueprintNames =
             };
 
 
-            var output = RoslynCodeGenerator.Generate (project, pools, blueprintNames, outputDirectory, codeGenerators);
+            var output = RoslynCodeGenerator.Generate (projectPath, pools, blueprintNames, outputDirectory, codeGenerators);
 
             foreach (var file in output) {
                 System.Console.WriteLine ("file.fileName: " + file.fileName);

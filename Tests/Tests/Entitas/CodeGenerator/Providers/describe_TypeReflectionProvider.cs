@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeGenerator.Reflection.Providers;
 using Entitas;
 using Entitas.CodeGeneration;
 using My.Namespace;

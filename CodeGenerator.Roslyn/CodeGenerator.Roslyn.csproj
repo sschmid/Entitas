@@ -9,6 +9,7 @@
     <AssemblyName>CodeGenerator.Roslyn</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -86,6 +87,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Providers\RoslynComponentInfoProvider.cs" />
     <Compile Include="RoslynCodeGenerator.cs" />
+    <Compile Include="PostProcessors\DeployToProjectProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeGenerator.Dependency\CodeGenerator.Dependency.csproj">

@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
+using CodeGenerator.Reflection.Providers;
+using Entitas.CodeGeneration;
 
-namespace Entitas.CodeGeneration {
+namespace CodeGenerator.Reflection {
     public static class TypeReflectionCodeGenerator {
         public static CodeGenFile[] Generate(Assembly assembly, string[] poolNames, string[] blueprintNames, string directory, ICodeGenerator[] codeGenerators) {
             System.Console.WriteLine("Generate...");
@@ -9,7 +11,7 @@ namespace Entitas.CodeGeneration {
                 new AddHeaderToFileProcessor(),
                 new WriteToDirectoryProcessor(directory)
             };
-            return CodeGenerator.Generate(provider, codeGenerators, postProcessors);
+            return Entitas.CodeGeneration.CodeGenerator.Generate(provider, codeGenerators, postProcessors);
         }
     }
 }
