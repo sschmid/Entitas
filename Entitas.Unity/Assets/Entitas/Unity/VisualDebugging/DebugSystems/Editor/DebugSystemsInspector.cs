@@ -40,7 +40,6 @@ namespace Entitas.Unity.VisualDebugging {
             drawSystemList(systems);
 
             EditorUtility.SetDirty(target);
-            Repaint();
         }
 
         static void drawSystemsOverview(DebugSystems systems) {
