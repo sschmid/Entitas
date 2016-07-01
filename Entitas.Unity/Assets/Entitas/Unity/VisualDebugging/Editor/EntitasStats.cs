@@ -35,7 +35,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         static Dictionary<string, int> getPools(Type[] components) {
             return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
-                var lookupTags = TypeReflectionProvider.GetPools(type);
+                var lookupTags = TypeReflectionProvider.GetPools(type, false);
                 if (lookupTags.Length == 0) {
                     lookupTags = new [] { "Pool" };
                 }
@@ -54,7 +54,8 @@ namespace Entitas.Unity.VisualDebugging {
             return type.ImplementsInterface<ISystem>()
                 && type != typeof(ReactiveSystem)
                 && type != typeof(Systems)
-                && type != typeof(DebugSystems);
+                && type != typeof(DebugSystems)
+                && type != typeof(Feature);
         }
     }
 }
