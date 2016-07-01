@@ -269,6 +269,8 @@ namespace Entitas {
             return componentPool.Count > 0 ? (T)componentPool.Pop() : new T();
         }
 
+        // This method is used internally. Don't call it yourself.
+        // Use pool.DestroyEntity(entity);
         internal void destroy() {
             RemoveAllComponents();
             OnComponentAdded = null;
