@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Entitas.Unity {
+namespace Entitas.Serialization {
     public class Properties {
 
         public string[] keys { get { return _dict.Keys.ToArray(); } }
@@ -89,8 +89,8 @@ namespace Entitas.Unity {
         public override string ToString() {
             return _dict.Aggregate(string.Empty, (properties, kv) => {
                 var content = kv.Value
-                    .Replace("\n", "\\n")
-                    .Replace("\t", "\\t");
+                                .Replace("\n", "\\n")
+                                .Replace("\t", "\\t");
 
                 return properties + kv.Key + " = " + content + "\n";
             });

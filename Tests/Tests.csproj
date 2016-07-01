@@ -48,7 +48,6 @@
     <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\Entitas.Unity\describe_EntitasPreferencesConfig.cs" />
-    <Compile Include="Tests\Entitas.Unity\describe_Properties.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
     <Compile Include="Tests\Entitas\describe_Systems.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
@@ -240,9 +239,6 @@
     <Compile Include="Tests\Entitas\Serialization\Fixtures\TestEnum.cs" />
     <Compile Include="Tests\Entitas\Serialization\describe_PublicMemberInfo.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
-    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\Properties.cs">
-      <Link>Linked Libraries\Unity\Properties.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\CodeGenerator\Editor\CodeGeneratorConfig.cs">
       <Link>Linked Libraries\Unity\CodeGenerator\Editor\CodeGeneratorConfig.cs</Link>
     </Compile>
@@ -308,6 +304,10 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\MultiplePoolAndDefaultPoolComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomNames.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeStruct.cs" />
+    <Compile Include="..\Entitas\Entitas\Serialization\Properties.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Properties.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\Serialization\describe_Properties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

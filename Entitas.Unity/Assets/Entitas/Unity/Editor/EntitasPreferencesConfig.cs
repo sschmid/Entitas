@@ -1,4 +1,6 @@
-﻿namespace Entitas.Unity {
+﻿using Entitas.Serialization;
+
+namespace Entitas.Unity {
     public class EntitasPreferencesConfig {
 
         readonly Properties _properties;
