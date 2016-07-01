@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Entitas.Unity;
-using Entitas.Unity.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,17 +9,18 @@ namespace Entitas.Unity.CodeGenerator {
 
         public int priority { get { return 10; } }
 
-        Type[] _codeGenerators;
+        string[] _availableGeneratorNames;
         CodeGeneratorConfig _codeGeneratorConfig;
         List<string> _pools;
         UnityEditorInternal.ReorderableList _poolList;
 
-        static float _generatorsRectHeight = 86;
-
         public void Initialize(EntitasPreferencesConfig config) {
-            _codeGenerators = UnityCodeGenerator.GetCodeGenerators();
-            var codeGeneratorNames = _codeGenerators.Select(cg => cg.Name).ToArray();
-            _codeGeneratorConfig = new CodeGeneratorConfig(config, codeGeneratorNames);
+            _availableGeneratorNames = UnityCodeGenerator.GetCodeGenerators()
+                                                         .Select(cg => cg.Name)
+                                                         .OrderBy(generatorName => generatorName)
+                                                         .ToArray();
+
+            _codeGeneratorConfig = new CodeGeneratorConfig(config, _availableGeneratorNames);
 
             _pools = new List<string>(_codeGeneratorConfig.pools);
 
@@ -71,48 +70,32 @@ namespace Entitas.Unity.CodeGenerator {
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Code Generators", EditorStyles.boldLabel);
 
-            var enabledCodeGenerators = new HashSet<string>(_codeGeneratorConfig.enabledCodeGenerators);
+            var enabledCodeGeneratorsMask = 0;
 
-            var availableGeneratorNames = new HashSet<string>();
-
-            EntitasEditorLayout.BeginHorizontal();
-            {
-                var rect = EntitasEditorLayout.BeginVertical();
-                if (rect.height > 0) {
-                    _generatorsRectHeight = rect.height - 2;
-                }
-                {
-                    foreach (var codeGenerator in _codeGenerators) {
-                        availableGeneratorNames.Add(codeGenerator.Name);
-                        var isEnabled = enabledCodeGenerators.Contains(codeGenerator.Name);
-                        isEnabled = EditorGUILayout.Toggle(codeGenerator.Name.Replace("Generator", string.Empty), isEnabled);
-                        if (isEnabled) {
-                            enabledCodeGenerators.Add(codeGenerator.Name);
-                        } else {
-                            enabledCodeGenerators.Remove(codeGenerator.Name);
-                        }
-                    }
-                }
-                EntitasEditorLayout.EndVertical();
-
-                var bgColor = GUI.backgroundColor;
-                GUI.backgroundColor = Color.green;
-                if (GUILayout.Button("Generate", GUILayout.Width(200), GUILayout.Height(_generatorsRectHeight))) {
-                    UnityCodeGenerator.Generate();
-                }
-                GUI.backgroundColor = bgColor;
-            }
-            EntitasEditorLayout.EndHorizontal();
-            
-            foreach (var generatorName in _codeGeneratorConfig.enabledCodeGenerators.ToArray()) {
-                if (!availableGeneratorNames.Contains(generatorName)) {
-                    enabledCodeGenerators.Remove(generatorName);
+            for (int i = 0; i < _availableGeneratorNames.Length; i++) {
+                if (_codeGeneratorConfig.enabledCodeGenerators.Contains(_availableGeneratorNames[i])) {
+                    enabledCodeGeneratorsMask += (1 << i);
                 }
             }
 
-            var sortedCodeGenerators = enabledCodeGenerators.ToArray();
-            Array.Sort(sortedCodeGenerators);
-            _codeGeneratorConfig.enabledCodeGenerators = sortedCodeGenerators;
+            enabledCodeGeneratorsMask =  EditorGUILayout.MaskField("Code Generators", enabledCodeGeneratorsMask, _availableGeneratorNames);
+
+            var enabledCodeGenerators = new List<string>();
+            for (int i = 0; i < _availableGeneratorNames.Length; i++) {
+                var index = 1 << i;
+                if ((index & enabledCodeGeneratorsMask) == index) {
+                    enabledCodeGenerators.Add(_availableGeneratorNames[i]);
+                }
+            }
+
+            var bgColor = GUI.backgroundColor;
+            GUI.backgroundColor = Color.green;
+            if (GUILayout.Button("Generate", GUILayout.Height(32))) {
+                UnityCodeGenerator.Generate();
+            }
+            GUI.backgroundColor = bgColor;
+
+            _codeGeneratorConfig.enabledCodeGenerators = enabledCodeGenerators.ToArray();
         }
     }
 }
