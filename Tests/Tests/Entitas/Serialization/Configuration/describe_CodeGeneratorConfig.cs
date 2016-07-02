@@ -1,13 +1,12 @@
-﻿using Entitas.Unity.CodeGenerator;
+﻿using Entitas.Serialization.Configuration;
 using NSpec;
-using Entitas.Unity;
 
 class describe_CodeGeneratorConfig : nspec {
 
     const string configString =
-        "Entitas.Unity.CodeGenerator.GeneratedFolderPath = path/to/folder/\n" +
-        "Entitas.Unity.CodeGenerator.Pools = Core, Meta, UI\n" +
-        "Entitas.Unity.CodeGenerator.EnabledCodeGenerators = Generator1, Generator2, Generator3";
+        "Entitas.CodeGenerator.GeneratedFolderPath = path/to/folder/\n" +
+        "Entitas.CodeGenerator.Pools = Core, Meta, UI\n" +
+        "Entitas.CodeGenerator.EnabledCodeGenerators = Generator1, Generator2, Generator3";
 
     void when_creating_config() {
 
@@ -44,27 +43,27 @@ class describe_CodeGeneratorConfig : nspec {
             config.enabledCodeGenerators = new [] { "Generator4", "Generator5" };
 
             config.ToString().should_be(
-                "Entitas.Unity.CodeGenerator.GeneratedFolderPath = new/path/\n" +
-                "Entitas.Unity.CodeGenerator.Pools = Other1,Other2\n" +
-                "Entitas.Unity.CodeGenerator.EnabledCodeGenerators = Generator4,Generator5\n");
+                "Entitas.CodeGenerator.GeneratedFolderPath = new/path/\n" +
+                "Entitas.CodeGenerator.Pools = Other1,Other2\n" +
+                "Entitas.CodeGenerator.EnabledCodeGenerators = Generator4,Generator5\n");
         };
 
         it["gets string from empty config"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new string[0]);
             config.ToString().should_be(
-                "Entitas.Unity.CodeGenerator.GeneratedFolderPath = Assets/Generated/\n" +
-                "Entitas.Unity.CodeGenerator.Pools = \n" +
-                "Entitas.Unity.CodeGenerator.EnabledCodeGenerators = \n");
+                "Entitas.CodeGenerator.GeneratedFolderPath = Assets/Generated/\n" +
+                "Entitas.CodeGenerator.Pools = \n" +
+                "Entitas.CodeGenerator.EnabledCodeGenerators = \n");
         };
 
         it["removes empty pools"] = () => {
-            const string configString = "Entitas.Unity.CodeGenerator.Pools = ,,Core,,UI,,";
+            const string configString = "Entitas.CodeGenerator.Pools = ,,Core,,UI,,";
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString), new string[0]);
             config.pools.should_be(new [] { "Core", "UI" });
         };
 
         it["removes empty enabled code generators"] = () => {
-            const string configString = "Entitas.Unity.CodeGenerator.EnabledCodeGenerators = ,,Gen1,,Gen2,,";
+            const string configString = "Entitas.CodeGenerator.EnabledCodeGenerators = ,,Gen1,,Gen2,,";
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString), new string[0]);
             config.enabledCodeGenerators.should_be(new [] { "Gen1", "Gen2" });
         };
@@ -73,9 +72,9 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new string[0]);
             config.pools = new [] { "Meta", string.Empty };
             config.ToString().should_be(
-                "Entitas.Unity.CodeGenerator.GeneratedFolderPath = Assets/Generated/\n" +
-                "Entitas.Unity.CodeGenerator.Pools = Meta\n" +
-                "Entitas.Unity.CodeGenerator.EnabledCodeGenerators = \n"
+                "Entitas.CodeGenerator.GeneratedFolderPath = Assets/Generated/\n" +
+                "Entitas.CodeGenerator.Pools = Meta\n" +
+                "Entitas.CodeGenerator.EnabledCodeGenerators = \n"
             );
         };
 
@@ -83,9 +82,9 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new string[0]);
             config.enabledCodeGenerators = new [] { "Gen1", string.Empty };
             config.ToString().should_be(
-                "Entitas.Unity.CodeGenerator.GeneratedFolderPath = Assets/Generated/\n" +
-                "Entitas.Unity.CodeGenerator.Pools = \n" +
-                "Entitas.Unity.CodeGenerator.EnabledCodeGenerators = Gen1\n"
+                "Entitas.CodeGenerator.GeneratedFolderPath = Assets/Generated/\n" +
+                "Entitas.CodeGenerator.Pools = \n" +
+                "Entitas.CodeGenerator.EnabledCodeGenerators = Gen1\n"
             );
         };
     }

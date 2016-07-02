@@ -1,5 +1,5 @@
 ﻿using NSpec;
-using Entitas.Unity;
+using Entitas.Serialization.Configuration;
 
 class describe_EntitasPreferencesConfig : nspec {
     void when_config() {

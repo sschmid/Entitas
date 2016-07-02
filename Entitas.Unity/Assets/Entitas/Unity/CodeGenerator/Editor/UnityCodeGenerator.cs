@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Entitas;
 using Entitas.CodeGenerator;
+using Entitas.Serialization.Configuration;
 using Entitas.Unity.Serialization.Blueprints;
 using UnityEditor;
 using UnityEngine;

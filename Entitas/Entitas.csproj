@@ -81,7 +81,10 @@
     <Compile Include="Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs" />
-    <Compile Include="Entitas\Serialization\Properties.cs" />
+    <Compile Include="Entitas\Serialization\Configuration\CodeGeneratorConfig.cs" />
+    <Compile Include="Entitas\Serialization\Configuration\EntitasPreferencesConfig.cs" />
+    <Compile Include="Entitas\Serialization\Configuration\EntitasPreferences.cs" />
+    <Compile Include="Entitas\Serialization\Configuration\Properties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -96,5 +99,6 @@
     <Folder Include="Entitas\CodeGenerator\Intermediate\" />
     <Folder Include="Entitas\CodeGenerator\Providers\" />
     <Folder Include="Entitas\Serialization\Blueprints\" />
+    <Folder Include="Entitas\Serialization\Configuration\" />
   </ItemGroup>
 </Project>

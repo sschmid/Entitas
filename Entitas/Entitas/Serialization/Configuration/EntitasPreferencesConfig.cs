@@ -1,12 +1,21 @@
-﻿using Entitas.Serialization;
+﻿using System.Collections.Generic;
+namespace Entitas.Serialization.Configuration {
 
-namespace Entitas.Unity {
     public class EntitasPreferencesConfig {
 
         readonly Properties _properties;
 
         public EntitasPreferencesConfig(string config) {
             _properties = new Properties(config);
+        }
+
+        public string GetValueOrDefault(string key, string defaultValue) {
+            key = key.Trim();
+            if (!_properties.HasKey(key)) {
+                _properties[key] = defaultValue;
+            }
+
+            return _properties[key];
         }
 
         public string this[string key] {
@@ -16,16 +25,6 @@ namespace Entitas.Unity {
 
         public override string ToString() {
             return _properties.ToString();
-        }
-
-        public string GetValueOrDefault(string key, string defaultValue) {
-            key = key.Trim();
-            if (_properties.HasKey(key)) {
-                return _properties[key];
-            }
-
-            _properties[key] = defaultValue;
-            return _properties[key];
         }
     }
 }

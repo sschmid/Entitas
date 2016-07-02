@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Entitas.Unity;
+using Entitas.Serialization.Configuration;
 using UnityEditor;
 
 namespace Entitas.Unity.VisualDebugging {

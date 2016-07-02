@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Entitas.Serialization.Configuration;
 using UnityEditor;
 using UnityEngine;
 

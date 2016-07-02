@@ -1,9 +1,10 @@
 ﻿using System.IO;
 
-namespace Entitas.Unity {
+namespace Entitas.Serialization.Configuration {
+
     public static class EntitasPreferences {
 
-        const string CONFIG_PATH = "Entitas.properties";
+        public const string CONFIG_PATH = "Entitas.properties";
 
         public static EntitasPreferencesConfig LoadConfig() {
             return new EntitasPreferencesConfig(File.Exists(CONFIG_PATH) ? File.ReadAllText(CONFIG_PATH) : string.Empty);

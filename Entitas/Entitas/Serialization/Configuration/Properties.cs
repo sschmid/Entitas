@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Entitas.Serialization {
+namespace Entitas.Serialization.Configuration {
+
     public class Properties {
 
         public string[] keys { get { return _dict.Keys.ToArray(); } }

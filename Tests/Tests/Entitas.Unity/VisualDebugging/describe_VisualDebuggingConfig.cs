@@ -1,4 +1,4 @@
-﻿using Entitas.Unity;
+﻿using Entitas.Serialization.Configuration;
 using Entitas.Unity.VisualDebugging;
 using NSpec;
 
