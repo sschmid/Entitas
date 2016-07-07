@@ -15,7 +15,7 @@ class describe_Pool : nspec {
         };
 
         it["starts with given creationIndex"] = () => {
-            new Pool(CID.NumComponents, 42).CreateEntity().creationIndex.should_be(42);
+            new Pool(CID.NumComponents, 42, null).CreateEntity().creationIndex.should_be(42);
         };
 
         it["has no entities when no entities were created"] = () => {
@@ -30,6 +30,57 @@ class describe_Pool : nspec {
             var e = pool.CreateEntity();
             e.should_not_be_null();
             e.GetType().should_be(typeof(Entity));
+        };
+
+        it["has default PoolMetaData"] = () => {
+            pool.metaData.poolName.should_be("Unnamed Pool");
+            pool.metaData.componentNames.Length.should_be(CID.NumComponents);
+            for (int i = 0; i < pool.metaData.componentNames.Length; i++) {
+                pool.metaData.componentNames[i].should_be("Index " + i);
+            }
+        };
+
+        it["creates component pools"] = () => {
+            pool.componentPools.should_not_be_null();
+            pool.componentPools.Length.should_be(CID.NumComponents);
+        };
+
+        it["creates entity with component pools"] = () => {
+            var e = pool.CreateEntity();
+            e.componentPools.should_be_same(pool.componentPools);
+        };
+
+        it["throws when destroying an entity which the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {
+            var e = pool.CreateEntity();
+            pool.DestroyEntity(e);
+            pool.DestroyEntity(e);
+        });
+
+        it["can ToString"] = () => {
+            pool.ToString().should_be("Unnamed Pool");
+        };
+
+        context["when PoolMetaData set"] = () => {
+
+            PoolMetaData metaData = null;
+            before = () => {
+                var componentNames = new [] { "Health", "Position", "View" };
+                var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
+                metaData = new PoolMetaData("My Pool", componentNames, componentTypes);
+                pool = new Pool(componentNames.Length, 0, metaData);
+            };
+
+            it["has custom PoolMetaData"] = () => {
+                pool.metaData.should_be_same(metaData);
+            };
+
+            it["creates entity with same PoolMetaData"] = () => {
+                pool.CreateEntity().poolMetaData.should_be_same(metaData);
+            };
+
+            it["throws when componentNames is not same length as totalComponents"] = expect<PoolMetaDataException>(() => {
+                new Pool(metaData.componentNames.Length + 1, 0, metaData);
+            });
         };
 
         context["when entity created"] = () => {
@@ -112,14 +163,11 @@ class describe_Pool : nspec {
                 for (int i = 0; i < numEntities; i++) {
                     var index1 = order1[i];
                     var index2 = order2[i];
-
-                    System.Console.WriteLine(index1 + " | " + index2);
-
                     index1.should_be(index2);
                 }
             };
 
-            it["throws when destroying all entities and there are stille entities retained"] = expect<PoolStillHasRetainedEntitiesException>(() => {
+            it["throws when destroying all entities and there are still entities retained"] = expect<PoolStillHasRetainedEntitiesException>(() => {
                 pool.CreateEntity().Retain(new object());
                 pool.DestroyAllEntities();
             });
@@ -228,7 +276,7 @@ class describe_Pool : nspec {
 
             it["doesn't dispatch OnGroupCreated when group alredy exists"] = () => {
                 pool.GetGroup(Matcher.AllOf(0));
-                pool.OnGroupCreated += (p, g) => this.Fail();
+                pool.OnGroupCreated += delegate { this.Fail(); };
                 pool.GetGroup(Matcher.AllOf(0));
             };
 
@@ -249,15 +297,48 @@ class describe_Pool : nspec {
 
             it["removes all external delegates when destroying an entity"] = () => {
                 var e = pool.CreateEntity();
-                e.OnComponentAdded += (entity, index, component) => this.Fail();
-                e.OnComponentRemoved += (entity, index, component) => this.Fail();
-                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
+                e.OnComponentAdded += delegate { this.Fail(); };
+                e.OnComponentRemoved += delegate { this.Fail(); };
+                e.OnComponentReplaced += delegate { this.Fail(); };
                 pool.DestroyEntity(e);
                 var e2 = pool.CreateEntity();
                 e2.should_be_same(e);
                 e2.AddComponentA();
                 e2.ReplaceComponentA(Component.A);
                 e2.RemoveComponentA();
+            };
+
+            it["will not remove external delegates for OnEntityReleased"] = () => {
+                var e = pool.CreateEntity();
+                var didRelease = 0;
+                e.OnEntityReleased += entity => didRelease += 1;
+                pool.DestroyEntity(e);
+                didRelease.should_be(1);
+            };
+
+            it["removes all external delegates from OnEntityReleased when after being dispatched"] = () => {
+                var e = pool.CreateEntity();
+                var didRelease = 0;
+                e.OnEntityReleased += entity => didRelease += 1;
+                pool.DestroyEntity(e);
+                e.Retain(this);
+                e.Release(this);
+                didRelease.should_be(1);
+            };
+
+            it["removes all external delegates from OnEntityReleased after being dispatched (when delayed release)"] = () => {
+                var e = pool.CreateEntity();
+                var didRelease = 0;
+                e.OnEntityReleased += entity => didRelease += 1;
+                e.Retain(this);
+                pool.DestroyEntity(e);
+                didRelease.should_be(0);
+                e.Release(this);
+                didRelease.should_be(1);
+
+                e.Retain(this);
+                e.Release(this);
+                didRelease.should_be(1);
             };
         };
 
@@ -326,13 +407,6 @@ class describe_Pool : nspec {
                 it["throws when removing component"] = expect<EntityIsNotEnabledException>(() => e.RemoveComponentA());
                 it["throws when replacing component"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(new ComponentA()));
                 it["throws when replacing component with null"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(null));
-
-                it["sets componentIndexResolver to null"] = () => {
-                    e = pool.CreateEntity();
-                    e.componentNames = new string[0];
-                    pool.DestroyEntity(e);
-                    e.componentNames.should_be_null();
-                };
             };
         };
 
@@ -394,11 +468,6 @@ class describe_Pool : nspec {
                     g.GetEntities().should_not_contain(eAB1);
                 };
 
-                it["throws when destroying an entity the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {
-                    var e = pool.CreateEntity();
-                    pool.DestroyEntity(e);
-                    pool.DestroyEntity(e);
-                });
 
                 it["group dispatches OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
                     var g = pool.GetGroup(matcherAB);
@@ -514,7 +583,7 @@ class describe_Pool : nspec {
                     var m = Matcher.AllOf(CID.ComponentA);
                     var group = pool.GetGroup(m);
 
-                    group.OnEntityAdded += (g, entity, index, component) => this.Fail();
+                    group.OnEntityAdded += delegate { this.Fail(); };
 
                     pool.ClearGroups();
 
@@ -543,6 +612,38 @@ class describe_Pool : nspec {
                     pool.ResetCreationIndex();
 
                     pool.CreateEntity().creationIndex.should_be(0);
+                };
+            };
+
+            context["component pools"] = () => {
+
+                before = () => {
+                    var entity = pool.CreateEntity();
+                    entity.AddComponentA();
+                    entity.AddComponentB();
+                    entity.RemoveComponentA();
+                    entity.RemoveComponentB();
+                };
+
+                it["clears all component pools"] = () => {
+                    pool.componentPools[CID.ComponentA].Count.should_be(1);
+                    pool.componentPools[CID.ComponentB].Count.should_be(1);
+
+                    pool.ClearComponentPools();
+
+                    pool.componentPools[CID.ComponentA].Count.should_be(0);
+                    pool.componentPools[CID.ComponentB].Count.should_be(0);
+                };
+
+                it["clears a specific component pool"] = () => {
+                    pool.ClearComponentPool(CID.ComponentB);
+
+                    pool.componentPools[CID.ComponentA].Count.should_be(1);
+                    pool.componentPools[CID.ComponentB].Count.should_be(0);
+                };
+
+                it["only clears existing component pool"] = () => {
+                    pool.ClearComponentPool(CID.ComponentC);
                 };
             };
         };

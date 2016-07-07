@@ -11,7 +11,7 @@ public class OrderedDictionaryGetItemByIndex : IPerformanceTest {
         _random = new Random();
         _dict = new OrderedDictionary();
         for (int i = 0; i < n; i++) {
-            _dict.Add(i, new Entity(CP.NumComponents));
+            _dict.Add(i, new Entity(CP.NumComponents, null));
         }
     }
 

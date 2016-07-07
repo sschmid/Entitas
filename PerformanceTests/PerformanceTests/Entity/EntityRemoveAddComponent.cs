@@ -4,9 +4,10 @@ public class EntityRemoveAddComponent : IPerformanceTest {
     const int n = 1000000;
     Pool _pool;
     Entity _e;
+    ComponentA _componentA;
 
     public void Before() {
-        _pool = new Pool(CP.NumComponents);
+        _pool = Helper.CreatePool();
         _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
         _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentB }));
         _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentC }));
@@ -28,13 +29,14 @@ public class EntityRemoveAddComponent : IPerformanceTest {
             CP.ComponentC
         }));
         _e = _pool.CreateEntity();
-        _e.AddComponent(CP.ComponentA, new ComponentA());
+        _componentA = new ComponentA();
+        _e.AddComponent(CP.ComponentA, _componentA);
     }
 
     public void Run() {
         for (int i = 0; i < n; i++) {
             _e.RemoveComponent(CP.ComponentA);
-            _e.AddComponent(CP.ComponentA, new ComponentA());
+            _e.AddComponent(CP.ComponentA, _e.CreateComponent<ComponentA>(CP.ComponentA));
         }    
     }
 }

@@ -12,12 +12,15 @@ class describe_Entity : nspec {
         }
 
         e.GetComponentA().should_be_same(component);
+
         var components = e.GetComponents();
         components.Length.should_be(1);
         components.should_contain(component);
+
         var indices = e.GetComponentIndices();
         indices.Length.should_be(1);
         indices.should_contain(CID.ComponentA);
+
         e.HasComponentA().should_be_true();
         e.HasComponents(_indicesA).should_be_true();
         e.HasAnyComponent(_indicesA).should_be_true();
@@ -26,15 +29,16 @@ class describe_Entity : nspec {
     void assertHasNotComponentA(Entity e) {
         var components = e.GetComponents();
         components.Length.should_be(0);
+
         var indices = e.GetComponentIndices();
         indices.Length.should_be(0);
+
         e.HasComponentA().should_be_false();
         e.HasComponents(_indicesA).should_be_false();
         e.HasAnyComponent(_indicesA).should_be_false();
     }
 
     void when_created() {
-
         Entity e = null;
         before = () => {
             e = this.CreateEntity();
@@ -42,9 +46,28 @@ class describe_Entity : nspec {
 
         context["initial state"] = () => {
 
-            it["throws when attempting to get component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
+            it["has default PoolMetaData"] = () => {
+                e.poolMetaData.poolName.should_be("No Pool");
+                e.poolMetaData.componentNames.Length.should_be(CID.NumComponents);
+                e.poolMetaData.componentTypes.should_be_null();
+                for (int i = 0; i < e.poolMetaData.componentNames.Length; i++) {
+                    e.poolMetaData.componentNames[i].should_be(i.ToString());
+                }
+            };
+
+            it["has custom PoolMetaData when set"] = () => {
+                var poolMetaData = new PoolMetaData(null, null, null);
+                e = new Entity(0, null, poolMetaData);
+                e.poolMetaData.should_be_same(poolMetaData);
+            };
+
+            it["throws when attempting to get component at index which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
                 e.GetComponentA();
             });
+
+            it["gets total components count"] = () => {
+                e.totalComponents.should_be(CID.NumComponents);
+            };
 
             it["gets empty array of components when no components were added"] = () => {
                 e.GetComponents().should_be_empty();
@@ -54,15 +77,15 @@ class describe_Entity : nspec {
                 e.GetComponentIndices().should_be_empty();
             };
 
-            it["doesn't have component of type when no component of that type was added"] = () => {
+            it["doesn't have component at index when no component was added"] = () => {
                 e.HasComponentA().should_be_false();
             };
 
-            it["doesn't have components of types when no components of these types were added"] = () => {
+            it["doesn't have components at indices when no components were added"] = () => {
                 e.HasComponents(_indicesA).should_be_false();
             };
 
-            it["doesn't have any components of types when no components of these types were added"] = () => {
+            it["doesn't have any components at indices when no components were added"] = () => {
                 e.HasAnyComponent(_indicesA).should_be_false();
             };
 
@@ -75,7 +98,7 @@ class describe_Entity : nspec {
                 assertHasComponentA(e);
             };
 
-            it["throws when attempting to remove a component of type which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
+            it["throws when attempting to remove a component at index which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
                 e.RemoveComponentA();
             });
 
@@ -90,8 +113,7 @@ class describe_Entity : nspec {
                 e.AddComponentA();
             };
 
-            it["throws when adding a component of the same type twice"] = expect<EntityAlreadyHasComponentException>(() => {
-                e.AddComponentA();
+            it["throws when adding a component at the same index twice"] = expect<EntityAlreadyHasComponentException>(() => {
                 e.AddComponentA();
             });
 
@@ -99,7 +121,7 @@ class describe_Entity : nspec {
                 e.RemoveComponent(CID.ComponentA).should_be_same(e);
             };
 
-            it["removes a component of type"] = () => {
+            it["removes a component at index"] = () => {
                 e.RemoveComponentA();
                 assertHasNotComponentA(e);
             };
@@ -114,11 +136,11 @@ class describe_Entity : nspec {
                 assertHasComponentA(e, newComponentA);
             };
 
-            it["doesn't have components of types when not all components of these types were added"] = () => {
+            it["doesn't have components at indices when not all components were added"] = () => {
                 e.HasComponents(_indicesAB).should_be_false();
             };
 
-            it["has any components of types when any component of these types was added"] = () => {
+            it["has any components at indices when any component was added"] = () => {
                 e.HasAnyComponent(_indicesAB).should_be_true();
             };
 
@@ -145,7 +167,7 @@ class describe_Entity : nspec {
                     e.HasComponentB().should_be_true();
                 };
 
-                it["has components of types when all components of these types were added"] = () => {
+                it["has components at indices when all components were added"] = () => {
                     e.HasComponents(_indicesAB).should_be_true();
                 };
 
@@ -160,8 +182,50 @@ class describe_Entity : nspec {
                 it["can ToString"] = () => {
                     e.AddComponent(0, new SomeComponent());
                     e.Retain(this); 
-                    e.ToString().should_be("Entity_0(1)(Some, ComponentA, ComponentB)");
+                    e.ToString().should_be("Entity_0(*1)(Some, ComponentA, ComponentB)");
                 };
+            };
+        };
+
+        context["componentPool"] = () => {
+
+            it["gets component pool"] = () => {
+                var componentPool = e.GetComponentPool(CID.ComponentA);
+                componentPool.Count.should_be(0);
+            };
+
+            it["gets same component pool instance"] = () => {
+                e.GetComponentPool(CID.ComponentA).should_be_same(e.GetComponentPool(CID.ComponentA));
+            };
+
+            it["pushes component to componentPool when removed"] = () => {
+                e.AddComponentA();
+                var component = e.GetComponentA();
+                e.RemoveComponentA();
+
+                var componentPool = e.GetComponentPool(CID.ComponentA);
+                componentPool.Count.should_be(1);
+                componentPool.Pop().should_be_same(component);
+            };
+
+            it["creates new component when componentPool is empty"] = () => {
+                var type = typeof(NameAgeComponent);
+                var component = e.CreateComponent(1, type);
+                component.GetType().should_be(type);
+
+                var nameAgeComponent = ((NameAgeComponent)component);
+                nameAgeComponent.name.should_be_null();
+                nameAgeComponent.age.should_be(0);
+            };
+
+            it["gets pooled component when componentPool is not empty"] = () => {
+                var component = new NameAgeComponent();
+                e.AddComponent(1, component);
+
+                e.RemoveComponent(1);
+
+                var newComponent = (NameAgeComponent)e.CreateComponent(1, typeof(NameAgeComponent));
+                newComponent.should_be_same(component);
             };
         };
 
@@ -179,8 +243,8 @@ class describe_Entity : nspec {
                     index.should_be(CID.ComponentA);
                     component.should_be_same(Component.A);
                 };
-                e.OnComponentRemoved += (entity, index, component) => this.Fail();
-                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
+                e.OnComponentRemoved += delegate { this.Fail(); };
+                e.OnComponentReplaced += delegate { this.Fail(); };
 
                 e.AddComponentA();
                 didDispatch.should_be(1);
@@ -194,8 +258,8 @@ class describe_Entity : nspec {
                     index.should_be(CID.ComponentA);
                     component.should_be_same(Component.A);
                 };
-                e.OnComponentAdded += (entity, index, component) => this.Fail();
-                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
+                e.OnComponentAdded += delegate { this.Fail(); };
+                e.OnComponentReplaced += delegate { this.Fail(); };
 
                 e.RemoveComponentA();
                 didDispatch.should_be(1);
@@ -211,8 +275,8 @@ class describe_Entity : nspec {
                     previousComponent.should_be_same(Component.A);
                     newComponent.should_be_same(newComponentA);
                 };
-                e.OnComponentAdded += (entity, index, component) => this.Fail();
-                e.OnComponentRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentAdded += delegate { this.Fail(); };
+                e.OnComponentRemoved += delegate { this.Fail(); };
 
                 e.ReplaceComponentA(newComponentA);
                 didDispatch.should_be(1);
@@ -247,9 +311,9 @@ class describe_Entity : nspec {
             };
 
             it["doesn't dispatch anything when replacing a non existing component with null"] = () => {
-                e.OnComponentAdded += (entity, index, component) => this.Fail();
-                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
-                e.OnComponentRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentAdded += delegate { this.Fail(); };
+                e.OnComponentReplaced += delegate { this.Fail(); };
+                e.OnComponentRemoved += delegate { this.Fail(); };
 
                 e.ReplaceComponentA(null);
             };
@@ -262,8 +326,8 @@ class describe_Entity : nspec {
                     index.should_be(CID.ComponentA);
                     component.should_be_same(newComponentA);
                 };
-                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
-                e.OnComponentRemoved += (entity, index, component) => this.Fail();
+                e.OnComponentReplaced += delegate { this.Fail(); };
+                e.OnComponentRemoved += delegate { this.Fail(); };
 
                 e.ReplaceComponentA(newComponentA);
                 didDispatch.should_be(1);
@@ -273,9 +337,10 @@ class describe_Entity : nspec {
                 e.AddComponentA();
                 e.OnComponentRemoved += (entity, index, component) => {
                     didDispatch += 1;
+                    component.should_be_same(Component.A);
                 };
-                e.OnComponentAdded += (entity, index, component) => this.Fail();
-                e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => this.Fail();
+                e.OnComponentAdded += delegate { this.Fail(); };
+                e.OnComponentReplaced += delegate { this.Fail(); };
 
                 e.ReplaceComponentA(null);
                 didDispatch.should_be(1);
@@ -333,7 +398,7 @@ class describe_Entity : nspec {
 
             context["events"] = () => {
                 it["doesn't dispatch OnEntityReleased when retaining"] = () => {
-                    e.OnEntityReleased += entity => this.Fail();
+                    e.OnEntityReleased += delegate { this.Fail(); };
                     e.Retain(this);
                 };
 

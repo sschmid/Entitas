@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Entitas.Migration;
 using NSpec;
@@ -17,9 +18,9 @@ class describe_M0180 : nspec {
         it["finds all reactive system"] = () => {
             var updatedFiles = m.Migrate(dir);
             updatedFiles.Length.should_be(3);
-            updatedFiles.Any(file => file.fileName == dir + "/RenderPositionSystem.cs").should_be_true();
-            updatedFiles.Any(file => file.fileName == dir + "/RenderRotationSystem.cs").should_be_true();
-            updatedFiles.Any(file => file.fileName == dir + "/SubFolder/RenderSelectedSystem.cs").should_be_true();
+            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "RenderPositionSystem.cs")).should_be_true();
+            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "RenderRotationSystem.cs")).should_be_true();
+            updatedFiles.Any(file => file.fileName == Path.Combine(dir, Path.Combine("SubFolder", "RenderSelectedSystem.cs"))).should_be_true();
         };
 
         it["migrates to new api"] = () => {
@@ -28,7 +29,7 @@ class describe_M0180 : nspec {
 //                Console.WriteLine(file.fileContent);
             }
 
-            var reactiveSystemFile = updatedFiles.Where(file => file.fileName == dir + "/RenderRotationSystem.cs").First();
+            var reactiveSystemFile = updatedFiles.Where(file => file.fileName == Path.Combine(dir, "RenderRotationSystem.cs")).First();
             reactiveSystemFile.fileContent.should_be(@"using Entitas;
 
 public class RenderRotationSystem : IReactiveSystem

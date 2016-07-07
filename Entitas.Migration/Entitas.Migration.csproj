@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Entitas.Migration</RootNamespace>
     <AssemblyName>Entitas.Migration</AssemblyName>
-    <ReleaseVersion>0.17.0</ReleaseVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -33,13 +33,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entitas.Migration\M0180.cs" />
     <Compile Include="Entitas.Migration\MigrationUtils.cs" />
     <Compile Include="Entitas.Migration\IMigration.cs" />
     <Compile Include="Entitas.Migration\MigrationFile.cs" />
     <Compile Include="Entitas.Migration\M0190.cs" />
     <Compile Include="Entitas.Migration\M0220.cs" />
+    <Compile Include="Entitas.Migration\M0260.cs" />
+    <Compile Include="Entitas.Migration\M0300.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

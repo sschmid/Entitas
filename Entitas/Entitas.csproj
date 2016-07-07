@@ -8,7 +8,7 @@
     <RootNamespace>Entitas</RootNamespace>
     <AssemblyName>Entitas</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <ReleaseVersion>0.17.0</ReleaseVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +31,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entitas\Entity.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
     <Compile Include="Entitas\Group.cs" />
@@ -54,6 +53,35 @@
     <Compile Include="Entitas\Matcher\MatcherStatic.cs" />
     <Compile Include="Entitas\Matcher\MatcherInterfaces.cs" />
     <Compile Include="Entitas\Extensions\IMatcherExtension.cs" />
+    <Compile Include="Entitas\EntitasException.cs" />
+    <Compile Include="Entitas\CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
+    <Compile Include="Entitas\CodeGenerator\Attributes\DontGenerateAttribute.cs" />
+    <Compile Include="Entitas\CodeGenerator\Attributes\PoolAttribute.cs" />
+    <Compile Include="Entitas\CodeGenerator\Attributes\SingleEntityAttribute.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\PoolsGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Interfaces\ICodeGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Interfaces\ICodeGeneratorDataProvider.cs" />
+    <Compile Include="Entitas\CodeGenerator\Interfaces\IComponentCodeGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Interfaces\IPoolCodeGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Intermediate\CodeGenFile.cs" />
+    <Compile Include="Entitas\CodeGenerator\Intermediate\ComponentInfo.cs" />
+    <Compile Include="Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs" />
+    <Compile Include="Entitas\CodeGenerator\CodeGenerator.cs" />
+    <Compile Include="Entitas\Extensions\TypeExtension.cs" />
+    <Compile Include="Entitas\CodeGenerator\TypeReflectionCodeGenerator.cs" />
+    <Compile Include="Entitas\Serialization\PublicMemberInfo.cs" />
+    <Compile Include="Entitas\Serialization\TypeSerializationExtension.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\PoolAttributesGenerator.cs" />
+    <Compile Include="Entitas\Serialization\Blueprints\Blueprint.cs" />
+    <Compile Include="Entitas\Serialization\Blueprints\ComponentBlueprint.cs" />
+    <Compile Include="Entitas\Serialization\Blueprints\SerializableMember.cs" />
+    <Compile Include="Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs" />
+    <Compile Include="Entitas\Serialization\Properties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -61,5 +89,12 @@
     <Folder Include="Entitas\Extensions\" />
     <Folder Include="Entitas\Interfaces\" />
     <Folder Include="Entitas\Matcher\" />
+    <Folder Include="Entitas\CodeGenerator\" />
+    <Folder Include="Entitas\CodeGenerator\Attributes\" />
+    <Folder Include="Entitas\CodeGenerator\Generators\" />
+    <Folder Include="Entitas\CodeGenerator\Interfaces\" />
+    <Folder Include="Entitas\CodeGenerator\Intermediate\" />
+    <Folder Include="Entitas\CodeGenerator\Providers\" />
+    <Folder Include="Entitas\Serialization\Blueprints\" />
   </ItemGroup>
 </Project>

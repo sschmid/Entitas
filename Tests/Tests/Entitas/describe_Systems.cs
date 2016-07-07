@@ -131,9 +131,6 @@ class describe_Systems : nspec {
                 spy.initialized.should_be_true();
             };
 
-
-
-
             it["deactivates reactive systems"] = () => {
                 var system = createReactiveSystem(pool);
 

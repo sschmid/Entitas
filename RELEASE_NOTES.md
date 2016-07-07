@@ -1,3 +1,383 @@
+# 0.31.2
+
+##### Entitas.CodeGenerator
+- All attributes can now be used for classes, interfaces and structs
+
+
+# 0.31.1
+
+##### Entitas.CodeGenerator
+- Improved component generation for classes and interfaces and added support for default pool [Pool]
+- Added support to CustomComponentNameAttribute to generate multiple components with different names for one class or interface
+
+```csharp
+// This will automatically generate PositionComponent and VelocityComponent for you
+[Pool, CustomComponentName("Position", "Velocity")]
+public struct IntVector2 {
+  public int x;
+  public int y;
+}
+```
+
+- Added support for generating components for structs
+- Not generating obsolete pool attributes for generated classes
+
+
+# 0.31.0
+
+##### General
+- Removed obsolete code
+
+##### Entitas.CodeGenerator
+- Generating components for attributed classes and interfaces
+
+```csharp
+// will automatically generate SomeClassComponent for you
+[Core]
+public class SomeClass {
+    public string name;
+
+    public SomeClass(string name) {
+        this.name = name;
+    }
+}
+```
+
+- Added support to add empty PoolAttribute to assign component to default pool
+
+```csharp
+// using [Pool] will also add this component to Pools.pool
+[Core, Pool]
+public class SomeComponent : IComponent {
+}
+```
+
+##### Entitas.Unity.VisualDebugging
+- Added IComponentDrawer which can draw the whole component
+
+##### Entitas.Unity.VisualDebugging
+- Added EntitasEntityErrorHierarchyIcon to indicate retained entities in the hierarchy
+- Added CharTypeDrawer
+- Fixed components not updating in the inspector (#107)
+- Improved SystemsMonitor and added average line
+
+![Entitas-SystemsMonitor](https://cloud.githubusercontent.com/assets/233700/15198441/a515d764-17d7-11e6-965c-83c027fa89f7.png)
+
+##### Entitas.Unity.Serialization.Blueprints
+- Fixed finding all BinaryBlueprints even when not loaded
+- Correctly saving Blueprints when setting all BinaryBlueprints
+- Added BlueprintsNotFoundException
+- BinaryBlueprintInspector creates new pools instead of using one of Pools.allPools
+- Fixed pool not shown when entering play-mode while a blueprint was selected in the project view
+- Not caching blueprints when UNITY_EDITOR to enable live edit
+
+# 0.30.3
+
+##### Entitas.CodeGenerator
+- Added support for whitespace, '-' and braces in blueprint names
+
+##### Entitas.Unity.Serialization.Blueprints
+- Blueprints.FindAllBlueprints orders all blueprints by name
+- Fixed pool not shown in hierarchy
+
+
+# 0.30.2
+
+##### Note
+This release introduces Blueprints for Entitas (Beta). Update if you want to
+use and play with Blueprints. [Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Blueprints-(Beta))
+
+##### Entitas.CodeGenerator
+- Only creating PoolObserver when Application.isPlaying
+- Added BlueprintsGenerator
+
+##### Entitas.Unity.VisualDebugging
+- Added more options for sorting systems in the inspector
+- Removing event handlers from pool observer when leaving play-mode
+
+##### Entitas.Serialization.Blueprints
+- Added Blueprints (and more)
+
+##### Entitas.Unity.Serialization.Blueprints
+- Added BlueprintInspector (and more)
+
+##### Other
+- Moved build scripts into a folder
+
+
+# 0.30.1
+
+##### Entitas.Unity.VisualDebugging
+- Fixed GameObjectDestroyExtension.DestroyGameObject() compile time error (#91)
+- Improved SystemsMonitor.Draw() to use correct available width even with scrollbars
+- Tweaked drawing systems list
+- Added EntitasPoolErrorHierarchyIcon to visualize when there are erros
+
+##### Other
+- Updated build_commands.sh to generate C# project from Unity
+
+
+# 0.30.0
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+##### Entitas
+- Added IGroupObserverSystem which allows ReactiveSystems to observe multiple pools
+- Added pools.CreateGroupObserver() to simplify creating a GroupObserver for multiple pools
+
+##### Entitas.CodeGenerator
+- TypeReflectionProvider ignores abstract IComponents (#88)
+- Renamed ComponentsGenerator to ComponentExtensionsGenerator
+- Renamed PoolAttributeGenerator to PoolAttributesGenerator
+
+##### Entitas.Unity
+- Moved Assets/Entitas.Unity to Assets/Entitas/Unity
+- Simplified folder structure in Entitas-Unity.zip
+
+##### Entitas.Unity.CodeGenerator
+- Ignoring obsolete code generators
+- Generate button changes size depending on generators list height
+
+##### Entitas.Unity.VisualDebugging
+- Added Feature class which inherits from Systems or DebugSystems for you, so you don't have to care anymore
+- Fixed MissingReferenceException occurring occasionally when stopping game (#71)
+- Added support for editing entities in EditorMode (non-playing mode)
+- Fixed bug when components are added on entity creation (#87)
+- Added clear buttons to search textfields
+- Improved DateTimeTypeDrawer
+- Added new hierarchy icons for pool and systems
+
+##### Entitas.Migration
+- Added M0300
+- Moving Entitas.Migration into Entitas/Migration/Editor when creating Entitas-Unity.zip
+
+
+# 0.29.1
+
+##### Entitas.CodeGenerator
+- Added missing support for components with properties
+- Updated ComponentsGenerator to use entity.CreateComponent()
+
+##### Entitas.Unity.CodeGenerator
+- Added missing support for components with properties
+
+
+# 0.29.0
+
+##### Obsolete
+Marked old PoolMetaData constructor obsolete. If you encounter compile errors please apply Migration 0.26.0, open C# project and generate again.
+
+##### General
+- Unified Entitas sub projects into a single project
+- Unified all Unity projects into a single project
+- Documentation maintenance
+
+##### Entitas
+- Removing all event handler for entity.OnEntityReleased after event got dispatched
+- Printing entity in EntityIsNotDestroyedException
+- Added TypeExtension.ImplementsInterface()
+- Added component types to PoolMetaData
+- Made all methods in Systems virtual
+- Added auto generated header to generated files
+
+```
+//------------------------------------------------------------------------------
+// <auto-generated>
+//     This code was generated by Entitas.CodeGenerator.ComponentsGenerator.
+//
+//     Changes to this file may cause incorrect behavior and will be lost if
+//     the code is regenerated.
+// </auto-generated>
+//------------------------------------------------------------------------------
+```
+
+##### Entitas.CodeGenerator
+- Using pool specific componentIds lookup when generating matchers for components with multiple pools
+- TypeReflectionProvider ignores interfaces
+
+##### Entitas.Serialization
+- Added Entitas.Serialization
+- Added PublicMemberInfo
+
+##### Entitas.Unity.CodeGenerator
+- Compile errors won't block code generation anymore
+- Printing total generated file count when generating
+
+##### Entitas.Unity.VisualDebugging
+- Destroying EntityBahviour when entity got released
+- Using entity component pool and providing correct previous and new component
+- Added unique color for each component in EntityInspector
+- Added component search field in EntityInspector
+
+<img alt="Entitas-Component-Search" src="https://cloud.githubusercontent.com/assets/233700/13554841/98141fac-e3b2-11e5-81ef-4ef39cf2bb4c.gif" width="417" />
+
+- 'Destroy Entity' Buttons are now red
+- Simplified EntityInspector and made methods static
+- Unfolded components info is now shared between entities within same pool
+- Added shortcuts to Entitas Preferences and Generate
+- Improved TypeDrawers
+- Stepper UI tweaks
+
+![Entitas.Unity.VisualDebugging-Systems](https://cloud.githubusercontent.com/assets/233700/13554882/9c0bd7c0-e3b3-11e5-89ec-65fa888f0a48.png)
+
+- Renamed 'Script Call Optimization' to 'Optimizations'
+- Added EntitasEditorLayout
+
+
+# 0.28.2
+
+##### Entitas
+- Added ReactiveSystem destructor to prevent memory leaks
+- Added GroupObserver destructor to prevent memory leaks
+
+##### Entitas.Unity.VisualDebugging
+- EntityInspector now supports dropping UnityEngine.Object into fields that are null
+
+![Entitas.Unity.VisualDebugging-DefaultInstanceCreator](https://cloud.githubusercontent.com/assets/233700/12884636/ea8c468c-ce5f-11e5-91a9-0fdf83de7252.png)
+
+- UI tweaks
+
+
+# 0.28.1
+
+##### Entitas.Unity
+- Added "Script Call Optimization" to Entitas Preferences Window
+- Added priority to IEntitasPreferencesDrawer
+- Tweaked UI
+
+![Entitas.Unity-ScriptCallOptimization](https://cloud.githubusercontent.com/assets/233700/12832387/e893b3ec-cb99-11e5-8ccb-d3478ca0c6dc.png)
+
+##### Entitas.Unity.VisualDebugging
+- Added toggle to Entitas Preferences to enable or disable Visual Debugging
+- Tweaked UI
+
+![Entitas.Unity.VisualDebugging-Toggle](https://cloud.githubusercontent.com/assets/233700/12832391/ec74d2e8-cb99-11e5-87b3-f76e2e9ea58d.png)
+
+
+# 0.28.0
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+##### Entitas
+- Added documentation (#55)
+- Added an object pool for components (#58)
+- Added pool.ClearComponentPool(index) and pool.ClearComponentPools()
+- Added ENTITAS_FAST_AND_UNSAFE compiler flag. When set it will speed up e.Retain() and e.Release() (#59)
+
+##### Entitas.CodeGenerator
+- Generated component extensions are now reusing components using a component object pool when destroying entities (#58)
+- Added tests for testing the logic of generated files
+- Decoupling code generation logic by adding Code Generator Intermediate Format (#62)
+- Added TypeReflectionProvider
+- Supporting components with namespace
+- Simplified linq expressions
+- Removed generated systems
+- The Code Generator is not depending on Entitas anymore
+
+##### Entitas.CodeGenerator.TypeReflection
+- Added Entitas.CodeGenerator.TypeReflection project
+
+##### Entitas.Unity
+- Added `keys` and `values` getter to Properties
+
+##### Entitas.Unity.VisualDebugging
+- Added system search field to DebugSystemsInspector
+- UI tweaks and performance optimizations
+- Fixed logging wrong system stats
+- Added header image and current version label to Entitas Preferences Window
+
+![Entitas.Unity.Visualdebugging-preferences](https://cloud.githubusercontent.com/assets/233700/12795069/a13e5b6e-cab8-11e5-937d-870790e2bfe1.png)
+
+##### Entitas.Unity.Migration
+- Added Entitas.Unity.Migration which provides an easy way to migrate source files
+- Added header image and current version label to Entitas Migration Window
+
+![Entitas.Unity.Migration](https://cloud.githubusercontent.com/assets/233700/12795026/6acf24b4-cab8-11e5-90e3-98a103676d50.png)
+
+##### Other
+- Removed redundant files and gitignored Entitas in all Unity projects (#63)
+- Removed Unity projects from Entitas.sln
+- Removed warnings
+
+
+# 0.27.0
+
+##### Note
+If you're using Entitas with Unity, please open the Entitas preferences and make sure that all your desired code generators are activated. Due to some code generator renamings the ComponentLookupGenerator and the ComponentsGenerator are inactive. Activate them (if desired) and generate.
+
+##### Entitas
+- Added `pool.Reset()` which clears all groups, destroys all entities and resets creationIndex
+
+##### Entitas.CodeGenerator
+- Renamed some code generators
+- Added `CustomPrefixAttribute` to support custom prefixes for flag components
+```
+[CustomPrefix("flag")]
+public class DestroyComponent : IComponent {
+}
+
+// default
+entity.isDestroy = true;
+
+// with CustomPrefixAttribute
+entity.flagDestroy = true;
+```
+
+##### Entitas.Unity
+- Added "Feedback" menu item to report bugs, request features, join the chat, read the wiki and donate
+
+##### Entitas.Unity.CodeGenerator
+- Removing invalid code generator names from Entitas.properties
+
+##### Entitas.Unity.VisualDebugging
+- Lots of UI tweaks
+- Added toggle to sort systems by execution duration
+- Added toggle to hide empty systems
+- ReactiveSystems are highlighted with a white font color
+- Added Clear Groups Button
+- Added Entity Release Button
+- Splitted systems list into initialize and execute systems and visualizing them separately
+- Improved stepper UI
+
+##### Entitas.Migration
+- All migrations now contain information about on which folder they should be applied
+
+```
+0.26.0
+  - Deactivates code to prevent compile erros
+  - Use on folder, where generated files are located
+```
+
+##### Other
+- Added Commands.GenerateProjectFiles and using it in build.sh
+- Updated build.sh and build_commands.sh to include latest MigrationAssistant.exe
+
+
+# 0.26.1
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+
+# 0.26.0
+
+##### General
+- Updated projects to Unity 5.3
+- Improved all error messages and added hints
+- Changed and applied policy.mdpolicy to all sources
+
+##### Entitas.Unity
+- Moved Entitas Preferences to its own Editor Window
+
+![Entitas.Unity - Entitas Preferences Window](https://cloud.githubusercontent.com/assets/233700/12222689/9492611a-b7c3-11e5-880d-c4cc83c9234e.png)
+
+##### Other
+- Added runTests.bat for running test on windows (#49)
+- Updated license
+
+
 # 0.25.0
 
 ##### Entitas

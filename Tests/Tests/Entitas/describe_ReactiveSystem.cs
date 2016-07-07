@@ -9,10 +9,11 @@ class describe_ReactiveSystem : nspec {
     });
 
     void when_created() {
+
         Pool pool = null;
         ReactiveSystem reactiveSystem = null;
         ReactiveSubSystemSpy subSystem = null;
-        MultiReactiveSubSystemSpy multiSubSystem = null;
+
         before = () => {
             pool = new Pool(CID.NumComponents);
         };
@@ -70,7 +71,7 @@ class describe_ReactiveSystem : nspec {
                 subSystem.entities.should_be_null();
             };
 
-            it["deactivates"] = () => {
+            it["deactivates and will not be triggered"] = () => {
                 reactiveSystem.Deactivate();
                 var e = pool.CreateEntity();
                 e.AddComponentA();
@@ -81,7 +82,7 @@ class describe_ReactiveSystem : nspec {
                 subSystem.entities.should_be_null();
             };
 
-            it["activates"] = () => {
+            it["activates and will be triggered again"] = () => {
                 reactiveSystem.Deactivate();
                 reactiveSystem.Activate();
                 var e = pool.CreateEntity();
@@ -102,6 +103,10 @@ class describe_ReactiveSystem : nspec {
                 reactiveSystem.Execute();
 
                 subSystem.didExecute.should_be(0);
+            };
+
+            it["can ToString"] = () => {
+                reactiveSystem.ToString().should_be("ReactiveSystem(ReactiveSubSystemSpy)");
             };
         };
 
@@ -210,6 +215,9 @@ class describe_ReactiveSystem : nspec {
         };
 
         context["MultiReactiveSystem"] = () => {
+
+            MultiReactiveSubSystemSpy multiSubSystem = null;
+
             before = () => {
                 var triggers = new [] {
                     Matcher.AllOf(new [] { CID.ComponentA }).OnEntityAdded(),
@@ -236,6 +244,55 @@ class describe_ReactiveSystem : nspec {
                 multiSubSystem.didExecute.should_be(2);
                 multiSubSystem.entities.Length.should_be(1);
                 multiSubSystem.entities.should_contain(eB);
+            };
+        };
+
+        context["GroupObserverSystem"] = () => {
+
+            GroupObserverSubSystemSpy groupObserverSubSystem = null;
+            Pool pool1 = null;
+            Pool pool2 = null;
+
+            before = () => {
+                pool1 = new Pool(CID.NumComponents);
+                pool2 = new Pool(CID.NumComponents);
+
+                var groupA = pool1.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                var groupB = pool2.GetGroup(Matcher.AllOf(new [] { CID.ComponentB }));
+                
+                var groups = new [] { groupA, groupB };
+                var eventTypes = new [] { GroupEventType.OnEntityAdded, GroupEventType.OnEntityRemoved };
+                var groupObserver = new GroupObserver(groups, eventTypes);
+
+                groupObserverSubSystem = new GroupObserverSubSystemSpy(groupObserver);
+                reactiveSystem = new ReactiveSystem(groupObserverSubSystem);
+            };
+
+            it["executes when a triggered by groupObserver"] = () => {
+                var eA1 = pool1.CreateEntity();
+                eA1.AddComponentA();
+                var eA2 = pool2.CreateEntity();
+                eA2.AddComponentA();
+                
+                var eB1 = pool1.CreateEntity();
+                eB1.AddComponentB();
+                var eB2 = pool2.CreateEntity();
+                eB2.AddComponentB();
+
+                reactiveSystem.Execute();
+
+                groupObserverSubSystem.didExecute.should_be(1);
+                groupObserverSubSystem.entities.Length.should_be(1);
+                groupObserverSubSystem.entities.should_contain(eA1);
+
+                eB1.RemoveComponentB();
+                eB2.RemoveComponentB();
+
+                reactiveSystem.Execute();
+
+                groupObserverSubSystem.didExecute.should_be(2);
+                groupObserverSubSystem.entities.Length.should_be(1);
+                groupObserverSubSystem.entities.should_contain(eB2);
             };
         };
 
@@ -438,9 +495,9 @@ class describe_ReactiveSystem : nspec {
             before = () => {
                 ensureExcludeSystem = new ReactiveEnsureExcludeSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded,
                     Matcher.AllOf(new[] {
-                    CID.ComponentA,
-                    CID.ComponentB
-                }), Matcher.AllOf(new[] {
+                        CID.ComponentA,
+                        CID.ComponentB
+                    }), Matcher.AllOf(new[] {
                     CID.ComponentC
                 }));
                 reactiveSystem = new ReactiveSystem(pool, ensureExcludeSystem);

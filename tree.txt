@@ -1,0 +1,218 @@
+.
+├── Build
+├── Entitas
+│   └── Entitas
+│       ├── CodeGenerator
+│       │   ├── Attributes
+│       │   ├── Generators
+│       │   ├── Interfaces
+│       │   ├── Intermediate
+│       │   └── Providers
+│       ├── Extensions
+│       ├── Interfaces
+│       ├── Matcher
+│       └── Serialization
+│           └── Blueprints
+├── Entitas.Migration
+│   └── Entitas.Migration
+└── Entitas.Unity
+    └── Assets
+        ├── Editor
+        └── Entitas
+            └── Unity
+                ├── CodeGenerator
+                │   └── Editor
+                ├── Editor
+                ├── Migration
+                │   └── Editor
+                ├── Serialization
+                │   └── Blueprints
+                │       └── Editor
+                └── VisualDebugging
+                    ├── DebugSystems
+                    │   └── Editor
+                    ├── Editor
+                    ├── Entity
+                    │   └── Editor
+                    │       ├── DefaultInstanceCreator
+                    │       └── TypeDrawer
+                    └── PoolObserver
+                        └── Editor
+.
+├── Build
+│   ├── build.sh
+│   ├── build_commands.sh
+│   ├── runTests.bat
+│   ├── runTests.sh
+│   └── update_project_dependencies.sh
+├── Entitas
+│   └── Entitas
+│       ├── CodeGenerator
+│       │   ├── Attributes
+│       │   │   ├── CustomComponentNameAttribute.cs
+│       │   │   ├── CustomPrefixAttribute.cs
+│       │   │   ├── DontGenerateAttribute.cs
+│       │   │   ├── PoolAttribute.cs
+│       │   │   └── SingleEntityAttribute.cs
+│       │   ├── Generators
+│       │   │   ├── BlueprintsGenerator.cs
+│       │   │   ├── ComponentExtensionsGenerator.cs
+│       │   │   ├── ComponentIndicesGenerator.cs
+│       │   │   ├── PoolAttributesGenerator.cs
+│       │   │   └── PoolsGenerator.cs
+│       │   ├── Interfaces
+│       │   │   ├── IBlueprintsCodeGenerator.cs
+│       │   │   ├── ICodeGenerator.cs
+│       │   │   ├── ICodeGeneratorDataProvider.cs
+│       │   │   ├── IComponentCodeGenerator.cs
+│       │   │   └── IPoolCodeGenerator.cs
+│       │   ├── Intermediate
+│       │   │   ├── CodeGenFile.cs
+│       │   │   └── ComponentInfo.cs
+│       │   ├── Providers
+│       │   │   └── TypeReflectionProvider.cs
+│       │   ├── CodeGenerator.cs
+│       │   └── TypeReflectionCodeGenerator.cs
+│       ├── Extensions
+│       │   ├── CollectionExtension.cs
+│       │   ├── GroupExtension.cs
+│       │   ├── IMatcherExtension.cs
+│       │   ├── PoolExtension.cs
+│       │   └── TypeExtension.cs
+│       ├── Interfaces
+│       │   ├── IComponent.cs
+│       │   ├── IExecuteSystem.cs
+│       │   ├── IInitializeSystem.cs
+│       │   ├── IMatcher.cs
+│       │   ├── IReactiveSystem.cs
+│       │   └── ISystem.cs
+│       ├── Matcher
+│       │   ├── Matcher.cs
+│       │   ├── MatcherEquals.cs
+│       │   ├── MatcherInterfaces.cs
+│       │   ├── MatcherStatic.cs
+│       │   ├── MatcherToString.cs
+│       │   └── TriggerOnEvent.cs
+│       ├── Serialization
+│       │   ├── Blueprints
+│       │   │   ├── Blueprint.cs
+│       │   │   ├── BlueprintEntityExtension.cs
+│       │   │   ├── ComponentBlueprint.cs
+│       │   │   └── SerializableMember.cs
+│       │   ├── PublicMemberInfo.cs
+│       │   └── TypeSerializationExtension.cs
+│       ├── EntitasException.cs
+│       ├── Entity.cs
+│       ├── Group.cs
+│       ├── GroupObserver.cs
+│       ├── Pool.cs
+│       ├── ReactiveSystem.cs
+│       ├── Systems.cs
+│       └── entitas_version
+├── Entitas.Migration
+│   ├── Entitas.Migration
+│   │   ├── IMigration.cs
+│   │   ├── M0180.cs
+│   │   ├── M0190.cs
+│   │   ├── M0220.cs
+│   │   ├── M0260.cs
+│   │   ├── M0300.cs
+│   │   ├── MigrationFile.cs
+│   │   └── MigrationUtils.cs
+│   └── Program.cs
+├── Entitas.Unity
+│   └── Assets
+│       ├── Editor
+│       │   └── Commands.cs
+│       └── Entitas
+│           └── Unity
+│               ├── CodeGenerator
+│               │   └── Editor
+│               │       ├── CodeGeneratorConfig.cs
+│               │       ├── CodeGeneratorPreferencesDrawer.cs
+│               │       └── UnityCodeGenerator.cs
+│               ├── Editor
+│               │   ├── EntitasCheckForUpdates.cs
+│               │   ├── EntitasEditorLayout.cs
+│               │   ├── EntitasFeedback.cs
+│               │   ├── EntitasHeader.png
+│               │   ├── EntitasPreferences.cs
+│               │   ├── EntitasPreferencesConfig.cs
+│               │   ├── EntitasPreferencesDrawer.cs
+│               │   ├── EntitasPreferencesWindow.cs
+│               │   └── ScriptingDefineSymbols.cs
+│               ├── Migration
+│               │   └── Editor
+│               │       ├── EntitasMigrationHeader.png
+│               │       └── EntitasMigrationWindow.cs
+│               ├── Serialization
+│               │   └── Blueprints
+│               │       ├── Editor
+│               │       │   ├── BinaryBlueprintInspector.cs
+│               │       │   ├── BinaryBlueprintPostprocessor.cs
+│               │       │   └── BlueprintsInspector.cs
+│               │       ├── BinaryBlueprint.cs
+│               │       └── Blueprints.cs
+│               ├── VisualDebugging
+│               │   ├── DebugSystems
+│               │   │   ├── Editor
+│               │   │   │   ├── DebugSystemsInspector.cs
+│               │   │   │   └── SystemsMonitor.cs
+│               │   │   ├── DebugSystems.cs
+│               │   │   ├── DebugSystemsBehaviour.cs
+│               │   │   ├── Feature.cs
+│               │   │   └── SystemInfo.cs
+│               │   ├── Editor
+│               │   │   ├── EntitasEntityErrorHierarchyIcon.png
+│               │   │   ├── EntitasEntityHierarchyIcon.png
+│               │   │   ├── EntitasHierarchyIcon.cs
+│               │   │   ├── EntitasPoolErrorHierarchyIcon.png
+│               │   │   ├── EntitasPoolHierarchyIcon.png
+│               │   │   ├── EntitasStats.cs
+│               │   │   ├── EntitasSystemsHierarchyIcon.png
+│               │   │   ├── VisualDebuggingConfig.cs
+│               │   │   └── VisualDebuggingPreferencesDrawer.cs
+│               │   ├── Entity
+│               │   │   ├── Editor
+│               │   │   │   ├── DefaultInstanceCreator
+│               │   │   │   │   ├── DefaultArrayCreator.cs
+│               │   │   │   │   ├── DefaultStringCreator.cs
+│               │   │   │   │   └── IDefaultInstanceCreator.cs
+│               │   │   │   ├── TypeDrawer
+│               │   │   │   │   ├── AnimationCurveTypeDrawer.cs
+│               │   │   │   │   ├── ArrayTypeDrawer.cs
+│               │   │   │   │   ├── BoolTypeDrawer.cs
+│               │   │   │   │   ├── BoundsTypeDrawer.cs
+│               │   │   │   │   ├── CharTypeDrawer.cs
+│               │   │   │   │   ├── ColorTypeDrawer.cs
+│               │   │   │   │   ├── DateTimeTypeDrawer.cs
+│               │   │   │   │   ├── DictionaryTypeDrawer.cs
+│               │   │   │   │   ├── EnumTypeDrawer.cs
+│               │   │   │   │   ├── FloatTypeDrawer.cs
+│               │   │   │   │   ├── HashSetTypeDrawer.cs
+│               │   │   │   │   ├── ITypeDrawer.cs
+│               │   │   │   │   ├── IntTypeDrawer.cs
+│               │   │   │   │   ├── ListTypeDrawer.cs
+│               │   │   │   │   ├── RectTypeDrawer.cs
+│               │   │   │   │   ├── StringTypeDrawer.cs
+│               │   │   │   │   ├── UnityObjectTypeDrawer.cs
+│               │   │   │   │   ├── Vector2TypeDrawer.cs
+│               │   │   │   │   ├── Vector3TypeDrawer.cs
+│               │   │   │   │   └── Vector4TypeDrawer.cs
+│               │   │   │   ├── EntityDrawer.cs
+│               │   │   │   ├── EntityInspector.cs
+│               │   │   │   └── IComponentDrawer.cs
+│               │   │   └── EntityBehaviour.cs
+│               │   ├── PoolObserver
+│               │   │   ├── Editor
+│               │   │   │   └── PoolObserverInspector.cs
+│               │   │   ├── PoolObserver.cs
+│               │   │   └── PoolObserverBehaviour.cs
+│               │   └── GameObjectDestroyExtension.cs
+│               └── Properties.cs
+├── EntitasUpgradeGuide.md
+├── LICENSE.txt
+├── README.md
+├── RELEASE_NOTES.md
+├── policy.mdpolicy
+└── tree.txt

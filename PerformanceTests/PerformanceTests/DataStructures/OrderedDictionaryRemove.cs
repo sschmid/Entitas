@@ -10,7 +10,7 @@ public class OrderedDictionaryRemove : IPerformanceTest {
         _dict = new OrderedDictionary();
         _lookup = new Entity[n];
         for (int i = 0; i < n; i++) {
-            var e = new Entity(CP.NumComponents);
+            var e = new Entity(CP.NumComponents, null);
             _dict.Add(i, e);
             _lookup[i] = e;
         }

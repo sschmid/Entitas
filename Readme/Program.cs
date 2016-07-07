@@ -10,18 +10,23 @@ namespace Readme {
         }
 
         static void generate() {
-            var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
             var generatedFolder = getEntitasProjectDir() + "/Readme/Readme/Generated/";
 
             var codeGenerators = new ICodeGenerator[] {
                 new ComponentExtensionsGenerator(),
-                new IndicesLookupGenerator(),
-                new PoolAttributeGenerator(),
-                new PoolsGenerator(),
-                new SystemExtensionsGenerator()
+                new ComponentIndicesGenerator(),
+                new PoolAttributesGenerator(),
+                new PoolsGenerator()
             };
 
-            CodeGenerator.Generate(assembly.GetTypes(), new string[0], generatedFolder, codeGenerators);
+            var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
+
+            var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
+            var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
+
+            foreach (var file in files) {
+                Console.WriteLine("Generated: " + file.fileName);
+            }
 
             Console.WriteLine("Done. Press any key...");
             Console.Read();
