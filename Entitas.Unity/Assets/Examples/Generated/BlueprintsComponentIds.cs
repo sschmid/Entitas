@@ -9,16 +9,19 @@
 public static class BlueprintsComponentIds {
     public const int Age = 0;
     public const int Name = 1;
+    public const int RuntimeOnly = 2;
 
-    public const int TotalComponents = 2;
+    public const int TotalComponents = 3;
 
     public static readonly string[] componentNames = {
         "Age",
-        "Name"
+        "Name",
+        "RuntimeOnly"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(AgeComponent),
-        typeof(NameComponent)
+        typeof(NameComponent),
+        typeof(RuntimeOnlyComponent)
     };
 }
