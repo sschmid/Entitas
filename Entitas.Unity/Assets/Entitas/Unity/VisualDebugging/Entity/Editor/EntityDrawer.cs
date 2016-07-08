@@ -129,13 +129,13 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                var componentsData = extractComponentsInfo(entity.poolMetaData, runtimeOnly);
-                var componentNames = getAllComponentNames(componentsData);
+                var componentsInfo = extractComponentsInfo(entity.poolMetaData, runtimeOnly);
+                var componentNames = getAllComponentNames(componentsInfo);
                 var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
                 if (index >= 0) {
-                    var componentType = componentsData[index].type;
+                    var componentType = componentsInfo[index].type;
                     var component = (IComponent)Activator.CreateInstance(componentType);
-                    var componentIndex = componentsData[index].index;
+                    var componentIndex = componentsInfo[index].index;
                     entity.AddComponent(componentIndex, component);
                 }
 
