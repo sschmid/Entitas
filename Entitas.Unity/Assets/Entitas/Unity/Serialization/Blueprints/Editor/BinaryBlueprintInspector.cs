@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace Entitas.Unity.Serialization.Blueprints {
 
-    [CustomEditor(typeof(BinaryBlueprint))]
+    [CustomEditor(typeof(BinaryBlueprint))]  
     public class BinaryBlueprintInspector : Editor {
 
         public static BinaryBlueprint[] FindAllBlueprints() {
