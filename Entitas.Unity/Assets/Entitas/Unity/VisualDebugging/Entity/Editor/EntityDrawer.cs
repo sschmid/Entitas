@@ -7,6 +7,7 @@ using Entitas;
 using Entitas.Serialization;
 using Entitas.Unity;
 using Entitas.Unity.VisualDebugging;
+using Entitas.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
 
@@ -458,7 +459,7 @@ namespace Entitas.Unity.VisualDebugging {
             for (int i = 0; i < poolMetaData.componentTypes.Length; ++i) {
                 var type = poolMetaData.componentTypes[i];
                 var name = poolMetaData.componentNames[i];
-                if (runtimeOnly && Attribute.IsDefined(type, typeof(Entitas.CodeGenerator.RuntimeOnlyAttribute))) {
+                if (runtimeOnly && Attribute.IsDefined(type, typeof(RuntimeOnlyAttribute))) {
                     continue;
                 }
                 data.Add(new ComponentInfo() {
