@@ -130,14 +130,11 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                var componentsInfo = extractComponentsInfo(entity.poolMetaData, runtimeOnly);
-                var componentNames = getAllComponentNames(componentsInfo);
-                var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+                var index = drawAddComponentMenu(entity, runtimeOnly);
                 if (index >= 0) {
-                    var componentType = componentsInfo[index].type;
+                    var componentType = entity.poolMetaData.componentTypes[index];
                     var component = (IComponent)Activator.CreateInstance(componentType);
-                    var componentIndex = componentsInfo[index].index;
-                    entity.AddComponent(componentIndex, component);
+                    entity.AddComponent(index, component);
                 }
 
                 EditorGUILayout.Space();
@@ -166,13 +163,12 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
         }
 
-        public static void DrawMultipleEntities(Pool pool, Entity[] entities) {
+        public static void DrawMultipleEntities(Pool pool, Entity[] entities, bool runtimeOnly = false) {
             EditorGUILayout.Space();
             EntitasEditorLayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var componentNames = entity.poolMetaData.componentNames;
-                var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+                var index = drawAddComponentMenu(entity, runtimeOnly);
                 if (index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
                     foreach (var e in entities) {
@@ -217,7 +213,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public static void DrawComponent(bool[] unfoldedComponents, Entity entity, int index, IComponent component) {
+        public static void DrawComponent(bool[] unfoldedComponents, Entity entity, int index, IComponent component, bool runtimeOnly = false) {
             var componentType = component.GetType();
 
             var componentName = componentType.Name.RemoveComponentSuffix();
@@ -477,6 +473,16 @@ namespace Entitas.Unity.VisualDebugging {
                 list.Add(it.name);
             }
             return list;
+        }
+
+        private static int drawAddComponentMenu(Entity entity, bool runtimeOnly) {
+            var componentsInfo = extractComponentsInfo(entity.poolMetaData, runtimeOnly);
+            var componentNames = getAllComponentNames(componentsInfo);
+            var index = EditorGUILayout.Popup("Add Component", -1, componentNames.ToArray());
+            if (index >= 0) {
+                return componentsInfo[index].index;
+            }
+            return -1;
         }
 
         const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT = @"using System;
