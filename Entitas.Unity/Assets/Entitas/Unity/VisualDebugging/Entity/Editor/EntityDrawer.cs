@@ -25,7 +25,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         static bool _isInitialized;
 
-        private struct ComponentCreatonData {
+        private struct ComponentInfo {
             public int index;
             public string name;
             public Type type;
@@ -129,14 +129,13 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                var creationData = extractComponentCreationData(entity.poolMetaData, runtimeOnly);
-
-                var componentNames = getAllComponentNames(creationData);
+                var componentsData = extractComponentsInfo(entity.poolMetaData, runtimeOnly);
+                var componentNames = getAllComponentNames(componentsData);
                 var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
                 if (index >= 0) {
-                    var componentType = creationData[index].type;
+                    var componentType = componentsData[index].type;
                     var component = (IComponent)Activator.CreateInstance(componentType);
-                    var componentIndex = creationData[index].index;
+                    var componentIndex = componentsData[index].index;
                     entity.AddComponent(componentIndex, component);
                 }
 
@@ -165,33 +164,6 @@ namespace Entitas.Unity.VisualDebugging {
             }
             EntitasEditorLayout.EndVertical();
         }
-
-        static string[] getAllComponentNames(ComponentCreatonData[] data) {
-            var list = new List<string>(data.Length);
-            foreach (var it in data) {
-                list.Add(it.name);
-            }
-            return list.ToArray();
-        }
-
-        static private ComponentCreatonData[] extractComponentCreationData(PoolMetaData poolMetaData, bool runtimeOnly) {
-            List<ComponentCreatonData> data = new List<ComponentCreatonData>(poolMetaData.componentTypes.Length);
-            for (int i = 0; i < poolMetaData.componentTypes.Length; ++i) {
-                var type = poolMetaData.componentTypes[i];
-                var name = poolMetaData.componentNames[i];
-
-                if (runtimeOnly && Attribute.IsDefined(type, typeof(Entitas.CodeGenerator.RuntimeOnlyAttribute))) {
-                    continue;
-                }
-                data.Add(new ComponentCreatonData() {
-                    index = i,
-                    name = name,
-                    type = type
-                });
-            }
-            return data.ToArray();
-        }
-            
 
         public static void DrawMultipleEntities(Pool pool, Entity[] entities) {
             EditorGUILayout.Space();
@@ -479,6 +451,31 @@ namespace Entitas.Unity.VisualDebugging {
             AssetDatabase.Refresh();
             EditorApplication.isPlaying = false;
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filePath);
+        }
+
+        static private List<ComponentInfo> extractComponentsInfo(PoolMetaData poolMetaData, bool runtimeOnly) {
+            List<ComponentInfo> data = new List<ComponentInfo>(poolMetaData.componentTypes.Length);
+            for (int i = 0; i < poolMetaData.componentTypes.Length; ++i) {
+                var type = poolMetaData.componentTypes[i];
+                var name = poolMetaData.componentNames[i];
+                if (runtimeOnly && Attribute.IsDefined(type, typeof(Entitas.CodeGenerator.RuntimeOnlyAttribute))) {
+                    continue;
+                }
+                data.Add(new ComponentInfo() {
+                    index = i,
+                    name = name,
+                    type = type
+                });
+            }
+            return data;
+        }
+
+        static List<string> getAllComponentNames(List<ComponentInfo> data) {
+            var list = new List<string>(data.Count);
+            foreach (var it in data) {
+                list.Add(it.name);
+            }
+            return list;
         }
 
         const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT = @"using System;
