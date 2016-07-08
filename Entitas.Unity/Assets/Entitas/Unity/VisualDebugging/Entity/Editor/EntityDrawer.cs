@@ -100,7 +100,7 @@ namespace Entitas.Unity.VisualDebugging {
             #endif
         }
 
-        public static void DrawComponents(Pool pool, Entity entity, bool runtimeOnly = false) {
+        public static void DrawComponents(Pool pool, Entity entity, bool showAll) {
             bool[] unfoldedComponents;
             if (!_poolToUnfoldedComponents.TryGetValue(pool, out unfoldedComponents)) {
                 unfoldedComponents = new bool[pool.totalComponents];
@@ -130,7 +130,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                var index = drawAddComponentMenu(entity, runtimeOnly);
+                var index = drawAddComponentMenu(entity, showAll);
                 if (index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
                     var component = (IComponent)Activator.CreateInstance(componentType);
@@ -163,12 +163,12 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
         }
 
-        public static void DrawMultipleEntities(Pool pool, Entity[] entities, bool runtimeOnly = false) {
+        public static void DrawMultipleEntities(Pool pool, Entity[] entities, bool showAll = false) {
             EditorGUILayout.Space();
             EntitasEditorLayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var index = drawAddComponentMenu(entity, runtimeOnly);
+                var index = drawAddComponentMenu(entity, showAll);
                 if (index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
                     foreach (var e in entities) {
@@ -213,7 +213,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public static void DrawComponent(bool[] unfoldedComponents, Entity entity, int index, IComponent component, bool runtimeOnly = false) {
+        public static void DrawComponent(bool[] unfoldedComponents, Entity entity, int index, IComponent component) {
             var componentType = component.GetType();
 
             var componentName = componentType.Name.RemoveComponentSuffix();
@@ -450,12 +450,12 @@ namespace Entitas.Unity.VisualDebugging {
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filePath);
         }
 
-        static private List<ComponentInfo> extractComponentsInfo(PoolMetaData poolMetaData, bool runtimeOnly) {
+        static private List<ComponentInfo> extractComponentsInfo(PoolMetaData poolMetaData, bool showAll) {
             List<ComponentInfo> data = new List<ComponentInfo>(poolMetaData.componentTypes.Length);
             for (int i = 0; i < poolMetaData.componentTypes.Length; ++i) {
                 var type = poolMetaData.componentTypes[i];
                 var name = poolMetaData.componentNames[i];
-                if (runtimeOnly && Attribute.IsDefined(type, typeof(RuntimeOnlyAttribute))) {
+                if (showAll && Attribute.IsDefined(type, typeof(RuntimeOnlyAttribute))) {
                     continue;
                 }
                 data.Add(new ComponentInfo() {
