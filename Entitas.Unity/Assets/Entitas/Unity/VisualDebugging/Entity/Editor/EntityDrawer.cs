@@ -100,7 +100,7 @@ namespace Entitas.Unity.VisualDebugging {
             #endif
         }
 
-        public static void DrawComponents(Pool pool, Entity entity, bool showAll) {
+        public static void DrawComponents(Pool pool, Entity entity, bool hideRuntimeOnly = false) {
             bool[] unfoldedComponents;
             if (!_poolToUnfoldedComponents.TryGetValue(pool, out unfoldedComponents)) {
                 unfoldedComponents = new bool[pool.totalComponents];
@@ -130,7 +130,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                var index = drawAddComponentMenu(entity, showAll);
+                var index = drawAddComponentMenu(entity, hideRuntimeOnly);
                 if (index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
                     var component = (IComponent)Activator.CreateInstance(componentType);
@@ -163,12 +163,12 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
         }
 
-        public static void DrawMultipleEntities(Pool pool, Entity[] entities, bool showAll = false) {
+        public static void DrawMultipleEntities(Pool pool, Entity[] entities, bool hideRuntimeOnly = false) {
             EditorGUILayout.Space();
             EntitasEditorLayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var index = drawAddComponentMenu(entity, showAll);
+                var index = drawAddComponentMenu(entity, hideRuntimeOnly);
                 if (index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
                     foreach (var e in entities) {
@@ -450,12 +450,12 @@ namespace Entitas.Unity.VisualDebugging {
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filePath);
         }
 
-        static private List<ComponentInfo> extractComponentsInfo(PoolMetaData poolMetaData, bool showAll) {
+        static private List<ComponentInfo> extractComponentsInfo(PoolMetaData poolMetaData, bool hideRuntimeOnly) {
             List<ComponentInfo> data = new List<ComponentInfo>(poolMetaData.componentTypes.Length);
             for (int i = 0; i < poolMetaData.componentTypes.Length; ++i) {
                 var type = poolMetaData.componentTypes[i];
                 var name = poolMetaData.componentNames[i];
-                if (showAll && Attribute.IsDefined(type, typeof(RuntimeOnlyAttribute))) {
+                if (hideRuntimeOnly && Attribute.IsDefined(type, typeof(RuntimeOnlyAttribute))) {
                     continue;
                 }
                 data.Add(new ComponentInfo() {
@@ -475,8 +475,8 @@ namespace Entitas.Unity.VisualDebugging {
             return list;
         }
 
-        private static int drawAddComponentMenu(Entity entity, bool runtimeOnly) {
-            var componentsInfo = extractComponentsInfo(entity.poolMetaData, runtimeOnly);
+        private static int drawAddComponentMenu(Entity entity, bool hideRuntimeOnly) {
+            var componentsInfo = extractComponentsInfo(entity.poolMetaData, hideRuntimeOnly);
             var componentNames = getAllComponentNames(componentsInfo);
             var index = EditorGUILayout.Popup("Add Component", -1, componentNames.ToArray());
             if (index >= 0) {
