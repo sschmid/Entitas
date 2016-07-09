@@ -11,13 +11,13 @@ using Entitas.Serialization.Blueprints;
 
 namespace Entitas.Unity.VisualDebugging {
 
-    struct ComponentInfo {
-        public int index;
-        public string name;
-        public Type type;
-    }
-
     public static class EntityDrawer {
+
+        struct ComponentInfo {
+            public int index;
+            public string name;
+            public Type type;
+        }
 
         static Dictionary<Pool, bool[]> _poolToUnfoldedComponents;
         static GUIStyle _foldoutStyle;
