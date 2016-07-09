@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas-Header.png" alt="Entitas">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas-Header.png" alt="Entitas">
 </p>
 
 ---
@@ -9,7 +9,7 @@
     <a>If you love Entitas as much as we do<br />consider pressing this button</a>
 
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Donate-PayPal.gif" alt="Thank you!"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Donate-PayPal.gif" alt="Thank you!"></a>
 
 </p>
 
@@ -40,17 +40,17 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
 
 <p align="left">
     <a href="https://dev.windows.com">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/csharp.png" alt="CSharp" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/csharp.png" alt="CSharp" height="64"></a>
     <a href="http://unity3d.com">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/MadeForUnity.png" alt="Unity3d" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/MadeForUnity.png" alt="Unity3d" height="64"></a>
     <a href="http://unity3d.com/unite/archive/2015">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope2015.png" alt="Unite Europe 2015" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2015.png" alt="Unite Europe 2015" height="64"></a>
     <a href="http://unity3d.com/unite/archive/2015">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteBoston2015.png" alt="Unite Boston 2015" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteBoston2015.png" alt="Unite Boston 2015" height="64"></a>
     <a href="https://unite.unity.com/2016/europe">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteBoston2016.png" alt="Unite Europe 2016" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteBoston2016.png" alt="Unite Europe 2016" height="64"></a>
     <a href="https://www.wooga.com">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/wooga-logo.png" alt="Wooga" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/wooga-logo.png" alt="Wooga" height="64"></a>
 </p>
 
 ---
@@ -67,7 +67,7 @@ Videos
 <a href="http://www.slideshare.net/sschmid/uniteeurope-2015" target="_blank">» Open the slides on SlideShare: Unite Europe 2015</a>
 
 <a href="https://www.youtube.com/watch?v=1wvMXur19M4">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope2015-Video.png" alt="Video: Watch the Entitas Talk at Unite Europe 2015" height="200"></a>
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2015-Video.png" alt="Video: Watch the Entitas Talk at Unite Europe 2015" height="200"></a>
 
 
 ### ECS architecture with Unity by example
@@ -75,7 +75,7 @@ Videos
 <a href="http://www.slideshare.net/sschmid/uniteeurope-2016" target="_blank">» Open the slides on SlideShare: Unite Europe 2016</a>
 
 <a href="https://www.youtube.com/watch?v=lNTaC-JWmdI">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/UniteEurope2016-Video.png" alt="Video: Watch the Entitas Talk at Unite Europe 2016" height="200"></a>
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2016-Video.png" alt="Video: Watch the Entitas Talk at Unite Europe 2016" height="200"></a>
 
 
 First glimpse
@@ -133,9 +133,9 @@ The optional Unity module integrates Entitas nicely into Unity and provides powe
 [Read more...][wiki-unity-integration]
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas.Unity-MenuItems.png" alt="Entitas.Unity MenuItems">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas.Unity.VisualDebugging-Entity.png" alt="Entitas.Unity.VisualDebugging Entity">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/develop/Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png" alt="Entitas.Unity.VisualDebugging Systems">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity-MenuItems.png" alt="Entitas.Unity MenuItems">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity.VisualDebugging-Entity.png" alt="Entitas.Unity.VisualDebugging Entity">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png" alt="Entitas.Unity.VisualDebugging Systems">
 </p>
 
 
