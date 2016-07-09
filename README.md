@@ -48,7 +48,7 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
     <a href="http://unity3d.com/unite/archive/2015">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteBoston2015.png" alt="Unite Boston 2015" height="64"></a>
     <a href="https://unite.unity.com/2016/europe">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteBoston2016.png" alt="Unite Europe 2016" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope.png" alt="Unite Europe 2016" height="64"></a>
     <a href="https://www.wooga.com">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/wooga-logo.png" alt="Wooga" height="64"></a>
 </p>
