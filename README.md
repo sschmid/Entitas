@@ -66,7 +66,7 @@ Videos
 
 <a href="http://www.slideshare.net/sschmid/uniteeurope-2015" target="_blank">» Open the slides on SlideShare: Unite Europe 2015</a>
 
-<a href="https://www.youtube.com/watch?v=1wvMXur19M4">
+<a href="https://www.youtube.com/watch?v=1wvMXur19M4" target="_blank">
     <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2015-Video.png" alt="Video: Watch the Entitas Talk at Unite Europe 2015" height="200"></a>
 
 
@@ -74,7 +74,7 @@ Videos
 
 <a href="http://www.slideshare.net/sschmid/uniteeurope-2016" target="_blank">» Open the slides on SlideShare: Unite Europe 2016</a>
 
-<a href="https://www.youtube.com/watch?v=lNTaC-JWmdI">
+<a href="https://www.youtube.com/watch?v=lNTaC-JWmdI" target="_blank">
     <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2016-Video.png" alt="Video: Watch the Entitas Talk at Unite Europe 2016" height="200"></a>
 
 
