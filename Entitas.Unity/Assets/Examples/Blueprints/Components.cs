@@ -1,5 +1,5 @@
 ﻿using Entitas;
-using Entitas.CodeGenerator;
+using Entitas.Serialization.Blueprints;
 
 [Blueprints]
 public class NameComponent : IComponent {
@@ -11,7 +11,7 @@ public class AgeComponent : IComponent {
     public int value;
 }
 
-[Blueprints, RuntimeOnly]
-public class RuntimeOnlyComponent : IComponent {
+[Blueprints, HideInBlueprintInspector]
+public class HideInBlueprintInspectorComponent : IComponent {
 }
 

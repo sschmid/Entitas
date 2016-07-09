@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Entitas.CodeGenerator;
 using Entitas.Serialization;
 using Entitas.Serialization.Configuration;
 using UnityEditor;
 using UnityEngine;
+using Entitas.Serialization.Blueprints;
 
 namespace Entitas.Unity.VisualDebugging {
 
@@ -369,7 +369,7 @@ namespace Entitas.Unity.VisualDebugging {
             for (int i = 0; i < entity.poolMetaData.componentTypes.Length; ++i) {
                 var type = entity.poolMetaData.componentTypes[i];
                 var name = entity.poolMetaData.componentNames[i];
-                if (!hideRuntimeOnly || !Attribute.IsDefined(type, typeof(RuntimeOnlyAttribute))) {
+                if (!hideRuntimeOnly || !Attribute.IsDefined(type, typeof(HideInBlueprintInspectorAttribute))) {
                     infos.Add(new ComponentInfo() {
                         index = i,
                         name = name,
