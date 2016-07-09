@@ -23,6 +23,12 @@ namespace Entitas.Unity.VisualDebugging {
 
         static bool _isInitialized;
 
+        private struct ComponentInfo {
+            public int index;
+            public string name;
+            public Type type;
+        }
+
         public static void Initialize() {
             if (!_isInitialized) {
                 _isInitialized = true;
@@ -91,7 +97,7 @@ namespace Entitas.Unity.VisualDebugging {
             #endif
         }
 
-        public static void DrawComponents(Pool pool, Entity entity) {
+        public static void DrawComponents(Pool pool, Entity entity, bool hideRuntimeOnly = false) {
             bool[] unfoldedComponents;
             if (!_poolToUnfoldedComponents.TryGetValue(pool, out unfoldedComponents)) {
                 unfoldedComponents = new bool[pool.totalComponents];
@@ -121,8 +127,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                var componentNames = entity.poolMetaData.componentNames;
-                var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+                var index = drawAddComponentMenu(entity, hideRuntimeOnly);
                 if (index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
                     var component = (IComponent)Activator.CreateInstance(componentType);
@@ -155,13 +160,12 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
         }
 
-        public static void DrawMultipleEntities(Pool pool, Entity[] entities) {
+        public static void DrawMultipleEntities(Pool pool, Entity[] entities, bool hideRuntimeOnly = false) {
             EditorGUILayout.Space();
             EntitasEditorLayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var componentNames = entity.poolMetaData.componentNames;
-                var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+                var index = drawAddComponentMenu(entity, hideRuntimeOnly);
                 if (index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
                     foreach (var e in entities) {
@@ -441,6 +445,41 @@ namespace Entitas.Unity.VisualDebugging {
             AssetDatabase.Refresh();
             EditorApplication.isPlaying = false;
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filePath);
+        }
+
+        static private List<ComponentInfo> extractComponentsInfo(PoolMetaData poolMetaData, bool hideRuntimeOnly) {
+            List<ComponentInfo> data = new List<ComponentInfo>(poolMetaData.componentTypes.Length);
+            for (int i = 0; i < poolMetaData.componentTypes.Length; ++i) {
+                var type = poolMetaData.componentTypes[i];
+                var name = poolMetaData.componentNames[i];
+                if (hideRuntimeOnly && Attribute.IsDefined(type, typeof(RuntimeOnlyAttribute))) {
+                    continue;
+                }
+                data.Add(new ComponentInfo() {
+                    index = i,
+                    name = name,
+                    type = type
+                });
+            }
+            return data;
+        }
+
+        static List<string> getAllComponentNames(List<ComponentInfo> data) {
+            var list = new List<string>(data.Count);
+            foreach (var it in data) {
+                list.Add(it.name);
+            }
+            return list;
+        }
+
+        private static int drawAddComponentMenu(Entity entity, bool hideRuntimeOnly) {
+            var componentsInfo = extractComponentsInfo(entity.poolMetaData, hideRuntimeOnly);
+            var componentNames = getAllComponentNames(componentsInfo);
+            var index = EditorGUILayout.Popup("Add Component", -1, componentNames.ToArray());
+            if (index >= 0) {
+                return componentsInfo[index].index;
+            }
+            return -1;
         }
 
         const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT = @"using System;

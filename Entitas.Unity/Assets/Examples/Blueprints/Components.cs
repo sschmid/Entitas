@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using Entitas.CodeGenerator;
 
 [Blueprints]
 public class NameComponent : IComponent {
@@ -8,5 +9,10 @@ public class NameComponent : IComponent {
 [Blueprints]
 public class AgeComponent : IComponent {
     public int value;
+}
+
+[Blueprints]
+[RuntimeOnly]
+public class RuntimeOnlyComponent : IComponent {
 }
 

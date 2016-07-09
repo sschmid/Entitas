@@ -153,7 +153,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 }
                 EntitasEditorLayout.EndHorizontal();
 
-                EntityDrawer.DrawComponents(_pool, _entity);
+                EntityDrawer.DrawComponents(_pool, _entity, true);
             }
             var changed = EditorGUI.EndChangeCheck();
             if (changed) {
