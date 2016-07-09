@@ -11,8 +11,7 @@ public class AgeComponent : IComponent {
     public int value;
 }
 
-[Blueprints]
-[RuntimeOnly]
+[Blueprints, RuntimeOnly]
 public class RuntimeOnlyComponent : IComponent {
 }
 

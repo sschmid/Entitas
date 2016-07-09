@@ -85,6 +85,7 @@
     <Compile Include="Entitas\Serialization\Configuration\EntitasPreferencesConfig.cs" />
     <Compile Include="Entitas\Serialization\Configuration\EntitasPreferences.cs" />
     <Compile Include="Entitas\Serialization\Configuration\Properties.cs" />
+    <Compile Include="Entitas\CodeGenerator\Attributes\RuntimeOnlyAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

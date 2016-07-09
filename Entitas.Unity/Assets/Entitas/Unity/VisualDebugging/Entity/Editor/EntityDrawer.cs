@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Entitas.CodeGenerator;
 using Entitas.Serialization;
 using Entitas.Serialization.Configuration;
 using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
+    struct ComponentInfo {
+        public int index;
+        public string name;
+        public Type type;
+    }
+
     public static class EntityDrawer {
 
         static Dictionary<Pool, bool[]> _poolToUnfoldedComponents;
@@ -22,12 +30,6 @@ namespace Entitas.Unity.VisualDebugging {
         static string _componentNameSearchTerm = string.Empty;
 
         static bool _isInitialized;
-
-        private struct ComponentInfo {
-            public int index;
-            public string name;
-            public Type type;
-        }
 
         public static void Initialize() {
             if (!_isInitialized) {
@@ -351,6 +353,34 @@ namespace Entitas.Unity.VisualDebugging {
             return false;
         }
 
+        static int drawAddComponentMenu(Entity entity, bool hideRuntimeOnly) {
+            var componentsInfos = getComponentInfos(entity, hideRuntimeOnly);
+            var componentNames = componentsInfos.Select(info => info.name).ToArray();
+            var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+            if (index >= 0) {
+                return componentsInfos[index].index;
+            }
+
+            return -1;
+        }
+
+        static ComponentInfo[] getComponentInfos(Entity entity, bool hideRuntimeOnly) {
+            var infos = new List<ComponentInfo>(entity.poolMetaData.componentTypes.Length);
+            for (int i = 0; i < entity.poolMetaData.componentTypes.Length; ++i) {
+                var type = entity.poolMetaData.componentTypes[i];
+                var name = entity.poolMetaData.componentNames[i];
+                if (!hideRuntimeOnly || !Attribute.IsDefined(type, typeof(RuntimeOnlyAttribute))) {
+                    infos.Add(new ComponentInfo() {
+                        index = i,
+                        name = name,
+                        type = type
+                    });
+                }
+            }
+
+            return infos.ToArray();
+        }
+
         static GUIStyle getColoredBoxStyle(int totalComponents, int index) {
             GUIStyle[] styles;
             if (!_coloredBoxStyles.TryGetValue(totalComponents, out styles)) {
@@ -445,41 +475,6 @@ namespace Entitas.Unity.VisualDebugging {
             AssetDatabase.Refresh();
             EditorApplication.isPlaying = false;
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filePath);
-        }
-
-        static private List<ComponentInfo> extractComponentsInfo(PoolMetaData poolMetaData, bool hideRuntimeOnly) {
-            List<ComponentInfo> data = new List<ComponentInfo>(poolMetaData.componentTypes.Length);
-            for (int i = 0; i < poolMetaData.componentTypes.Length; ++i) {
-                var type = poolMetaData.componentTypes[i];
-                var name = poolMetaData.componentNames[i];
-                if (hideRuntimeOnly && Attribute.IsDefined(type, typeof(RuntimeOnlyAttribute))) {
-                    continue;
-                }
-                data.Add(new ComponentInfo() {
-                    index = i,
-                    name = name,
-                    type = type
-                });
-            }
-            return data;
-        }
-
-        static List<string> getAllComponentNames(List<ComponentInfo> data) {
-            var list = new List<string>(data.Count);
-            foreach (var it in data) {
-                list.Add(it.name);
-            }
-            return list;
-        }
-
-        private static int drawAddComponentMenu(Entity entity, bool hideRuntimeOnly) {
-            var componentsInfo = extractComponentsInfo(entity.poolMetaData, hideRuntimeOnly);
-            var componentNames = getAllComponentNames(componentsInfo);
-            var index = EditorGUILayout.Popup("Add Component", -1, componentNames.ToArray());
-            if (index >= 0) {
-                return componentsInfo[index].index;
-            }
-            return -1;
         }
 
         const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT = @"using System;
