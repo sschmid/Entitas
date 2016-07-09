@@ -354,11 +354,11 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static int drawAddComponentMenu(Entity entity, bool hideRuntimeOnly) {
-            var componentsInfos = getComponentInfos(entity, hideRuntimeOnly);
-            var componentNames = componentsInfos.Select(info => info.name).ToArray();
+            var componentInfos = getComponentInfos(entity, hideRuntimeOnly);
+            var componentNames = componentInfos.Select(info => info.name).ToArray();
             var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
             if (index >= 0) {
-                return componentsInfos[index].index;
+                return componentInfos[index].index;
             }
 
             return -1;
