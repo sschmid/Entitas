@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
@@ -17,16 +18,24 @@ namespace Entitas.Unity.VisualDebugging {
             _pool = pool;
             _entity = entity;
             _entity.OnEntityReleased += onEntityReleased;
-            Update();
+            UpdateName();
+            EditorApplication.hierarchyWindowItemOnGUI += HierarchyWindowItemOnGui;
         }
 
         void onEntityReleased(Entity e) {
             gameObject.DestroyGameObject();
         }
 
-        void Update() {
+        void UpdateName() {
             if (_entity != null && _cachedName != _entity.ToString()) {
                 name = _cachedName = _entity.ToString();
+            }
+        }
+
+        void HierarchyWindowItemOnGui(int instanceID, Rect selectionRect) {
+            var gameObject = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
+            if (gameObject != this.gameObject) {
+                UpdateName();
             }
         }
 
@@ -34,6 +43,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (_entity != null) {
                 _entity.OnEntityReleased -= onEntityReleased;
             }
+            EditorApplication.hierarchyWindowItemOnGUI -= HierarchyWindowItemOnGui;
         }
     }
 }
