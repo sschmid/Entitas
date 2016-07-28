@@ -9,6 +9,9 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+            if (memberType.IsDefined(typeof(FlagsAttribute), false)) {
+                return EditorGUILayout.EnumMaskField(memberName, (Enum)value);
+            }
             return EditorGUILayout.EnumPopup(memberName, (Enum)value);
         }
     }
