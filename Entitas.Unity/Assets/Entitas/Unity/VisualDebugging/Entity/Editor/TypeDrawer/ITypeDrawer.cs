@@ -1,5 +1,4 @@
 ﻿using System;
-using Entitas;
 
 namespace Entitas.Unity.VisualDebugging {
     public interface ITypeDrawer {
