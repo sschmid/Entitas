@@ -33,6 +33,8 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddColor(Color.red);
             e.AddAnimationCurve(AnimationCurve.EaseInOut(0f, 0f, 1f, 1f));
             e.AddMyEnum(MyEnumComponent.MyEnum.Item2);
+            e.AddMyFlags(MyFlagsComponent.MyFlags.Item2);
+            e.AddMyDouble(4.2f);
             e.AddMyFloat(4.2f);
             e.AddMyInt(42);
             e.AddRect(new Rect(1f, 2f, 3f, 4f));

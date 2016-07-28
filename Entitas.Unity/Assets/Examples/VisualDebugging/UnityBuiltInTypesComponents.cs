@@ -28,6 +28,24 @@ public class MyEnumComponent : IComponent {
 }
 
 [VisualDebugging]
+public class MyFlagsComponent : IComponent {
+
+    [System.Flags]
+    public enum MyFlags {
+        Item1,
+        Item2,
+        Item3
+    }
+
+    public MyFlags myFlags;
+}
+
+[VisualDebugging]
+public class MyDoubleComponent : IComponent {
+    public double myDouble;
+}
+
+[VisualDebugging]
 public class MyFloatComponent : IComponent {
     public float myFloat;
 }
