@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Entitas;
-using Entitas.Unity.VisualDebugging;
 using UnityEditor;
 using UnityEngine;
 

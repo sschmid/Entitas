@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Entitas.Unity;
-using Entitas.Unity.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
 
@@ -103,7 +101,7 @@ namespace Entitas.Unity.CodeGenerator {
                 GUI.backgroundColor = bgColor;
             }
             EntitasEditorLayout.EndHorizontal();
-            
+
             foreach (var generatorName in _codeGeneratorConfig.enabledCodeGenerators.ToArray()) {
                 if (!availableGeneratorNames.Contains(generatorName)) {
                     enabledCodeGenerators.Remove(generatorName);

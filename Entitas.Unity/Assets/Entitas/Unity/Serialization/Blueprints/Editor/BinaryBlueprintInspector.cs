@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Entitas;
 using Entitas.Serialization;
 using Entitas.Serialization.Blueprints;
 using Entitas.Unity.VisualDebugging;

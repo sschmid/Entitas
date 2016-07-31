@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Entitas;
 
 namespace Entitas {
     public static class CollectionExtension {

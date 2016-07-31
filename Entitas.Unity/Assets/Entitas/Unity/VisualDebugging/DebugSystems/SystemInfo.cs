@@ -1,6 +1,4 @@
 ﻿using System;
-using Entitas;
-using Entitas.Unity.VisualDebugging;
 
 namespace Entitas.Unity.VisualDebugging {
     public class SystemInfo {

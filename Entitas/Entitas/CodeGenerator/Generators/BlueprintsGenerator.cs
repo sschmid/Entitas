@@ -1,8 +1,7 @@
 ﻿using System.Linq;
-using Entitas.CodeGenerator;
 
 namespace Entitas.CodeGenerator {
-    
+
     public class BlueprintsGenerator : IBlueprintsCodeGenerator {
 
         const string FILE_NAME = "BlueprintsGeneratedExtension";
