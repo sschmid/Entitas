@@ -268,9 +268,20 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public static bool DidValueChange(object value, object newValue) {
+            // AnimationCurve.Equals only returns true if value and newValue are the same reference
+            if (value is AnimationCurve && newValue is AnimationCurve) {
+                var animationCurve = (AnimationCurve)value;
+                var newAnimationCurve = (AnimationCurve)newValue;
+                if (animationCurve == newAnimationCurve) {
+                    return true;
+                }
+                return animationCurve.length == newAnimationCurve.length
+                   && animationCurve.preWrapMode == newAnimationCurve.postWrapMode
+                   && ArrayUtility.ArrayEquals(animationCurve.keys, newAnimationCurve.keys);
+            }
             return (value == null && newValue != null)
                 || (value != null && newValue == null)
-                || ((value != null && newValue != null && !newValue.Equals(value)));
+                || (value != null && newValue != null && !newValue.Equals(value));
         }
 
         public static object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
