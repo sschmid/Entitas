@@ -79,6 +79,41 @@ namespace Entitas.CodeGenerator {
 
         /*
          *
+         * ENTITY INTERFACE
+         *
+         */
+
+        static string addEntityInterface(ComponentInfo componentInfo) {
+            return addEntityInterfaceHeader(componentInfo)
+                    + addInterfaceMethods(componentInfo)
+                    + addCloseInterface();
+        }
+
+        static string addEntityInterfaceHeader(ComponentInfo componentInfo) {
+            return string.Format(
+                "\n    public interface IHas{0} {", 
+                componentInfo.typeName.RemoveComponentSuffix()
+            );
+        }
+
+        static string addInterfaceMethods(ComponentInfo componentInfo) {
+            return new[] {
+                    "\n        public $Type $name;",
+                    "\n        public bool has$Name;",
+                    "\n        public Entity Add$Name($typedArgs);",
+                    "\n        public Entity Replace$Name($typedArgs);",
+                    "\n        public Entity Remove$Name();"
+                }
+                .SelectMany(line => buildString(componentInfo, line))
+                .ToString();
+        }
+
+        static string addCloseInterface() {
+            return "\n    }\n";
+        }
+
+        /*
+         *
          * ENTITY METHODS
          *
          */
