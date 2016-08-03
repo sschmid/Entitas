@@ -7,6 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
+    public interface IPositionEntity {
+        PositionComponent position { get; }
+        bool hasPosition { get; }
+        IPositionEntity AddPosition(int newX, int newY);
+        IPositionEntity ReplacePosition(int newX, int newY);
+        IPositionEntity RemovePosition();
+    }
+
     public partial class Entity {
         public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
 

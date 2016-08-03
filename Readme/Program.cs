@@ -16,7 +16,8 @@ namespace Readme {
                 new ComponentExtensionsGenerator(),
                 new ComponentIndicesGenerator(),
                 new PoolAttributesGenerator(),
-                new PoolsGenerator()
+                new PoolsGenerator(),
+                new PoolEntityGenerator()
             };
 
             var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));

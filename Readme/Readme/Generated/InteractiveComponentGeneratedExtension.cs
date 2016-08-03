@@ -7,6 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
+    public interface IInteractiveEntity {
+        InteractiveComponent interactive { get; }
+        bool hasInteractive { get; }
+        IInteractiveEntity AddInteractive();
+        IInteractiveEntity ReplaceInteractive();
+        IInteractiveEntity RemoveInteractive();
+    }
+
     public partial class Entity {
         static readonly InteractiveComponent interactiveComponent = new InteractiveComponent();
 

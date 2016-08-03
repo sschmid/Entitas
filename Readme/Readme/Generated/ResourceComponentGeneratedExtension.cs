@@ -7,6 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
+    public interface IResourceEntity {
+        ResourceComponent resource { get; }
+        bool hasResource { get; }
+        IResourceEntity AddResource(string newName);
+        IResourceEntity ReplaceResource(string newName);
+        IResourceEntity RemoveResource();
+    }
+
     public partial class Entity {
         public ResourceComponent resource { get { return (ResourceComponent)GetComponent(ComponentIds.Resource); } }
 

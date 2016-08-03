@@ -9,6 +9,14 @@
 using Entitas;
 
 namespace Entitas {
+    public interface IUIPositionEntity {
+        UIPositionComponent uIPosition { get; }
+        bool hasUIPosition { get; }
+        IUIPositionEntity AddUIPosition(int newX, int newY);
+        IUIPositionEntity ReplaceUIPosition(int newX, int newY);
+        IUIPositionEntity RemoveUIPosition();
+    }
+
     public partial class Entity {
         public UIPositionComponent uIPosition { get { return (UIPositionComponent)GetComponent(UIComponentIds.UIPosition); } }
 

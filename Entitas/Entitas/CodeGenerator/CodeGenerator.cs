@@ -29,6 +29,12 @@ namespace Entitas.CodeGenerator {
                 writeFiles(directory, files);
             }
 
+            foreach (var generator in codeGenerators.OfType<IPoolEntityCodeGenerator>()) {
+                var files = generator.Generate(provider.componentInfos);
+                generatedFiles.AddRange(files);
+                writeFiles(directory, files);
+            }
+
             foreach (var generator in codeGenerators.OfType<IComponentCodeGenerator>()) {
                 var files = generator.Generate(provider.componentInfos);
                 generatedFiles.AddRange(files);

@@ -31,6 +31,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entitas\CodeGenerator\Generators\PoolEntityGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Interfaces\IPoolEntityCodeGenerator.cs" />
     <Compile Include="Entitas\Entity.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
     <Compile Include="Entitas\Group.cs" />

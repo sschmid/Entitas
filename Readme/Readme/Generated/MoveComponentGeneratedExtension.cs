@@ -7,6 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
+    public interface IMoveEntity {
+        MoveComponent move { get; }
+        bool hasMove { get; }
+        IMoveEntity AddMove(int newSpeed);
+        IMoveEntity ReplaceMove(int newSpeed);
+        IMoveEntity RemoveMove();
+    }
+
     public partial class Entity {
         public MoveComponent move { get { return (MoveComponent)GetComponent(ComponentIds.Move); } }
 
