@@ -57,6 +57,7 @@ namespace Entitas {{
                     return acc;
                 })
                 .GroupBy(component => component.pools[0])
+                .Where(group => group.Key.Length > 0)
                 .Aggregate(new List<CodeGenFile>(), (acc, componentGroup) => {
                     var interfaceName = string.Format(FILE_NAME, componentGroup.Key.UppercaseFirst());
                     acc.Add(new CodeGenFile {
