@@ -40,6 +40,7 @@
     <Compile Include="Entitas\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
     <Compile Include="Entitas\Interfaces\IExecuteSystem.cs" />
+    <Compile Include="Entitas\Interfaces\IPool.cs" />
     <Compile Include="Entitas\Interfaces\ISystem.cs" />
     <Compile Include="Entitas\Pool.cs" />
     <Compile Include="Entitas\Extensions\PoolExtension.cs" />
@@ -90,18 +91,5 @@
     <Compile Include="Entitas\Serialization\Configuration\Properties.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Entitas\" />
-    <Folder Include="Entitas\Extensions\" />
-    <Folder Include="Entitas\Interfaces\" />
-    <Folder Include="Entitas\Matcher\" />
-    <Folder Include="Entitas\CodeGenerator\" />
-    <Folder Include="Entitas\CodeGenerator\Attributes\" />
-    <Folder Include="Entitas\CodeGenerator\Generators\" />
-    <Folder Include="Entitas\CodeGenerator\Interfaces\" />
-    <Folder Include="Entitas\CodeGenerator\Intermediate\" />
-    <Folder Include="Entitas\CodeGenerator\Providers\" />
-    <Folder Include="Entitas\Serialization\Blueprints\" />
-    <Folder Include="Entitas\Serialization\Configuration\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
