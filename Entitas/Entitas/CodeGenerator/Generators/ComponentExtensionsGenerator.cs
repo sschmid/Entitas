@@ -22,6 +22,10 @@ namespace Entitas.CodeGenerator {
 
         static string generateComponentExtension(ComponentInfo componentInfo) {
             var code = addNamespace();
+            if (componentInfo.isSingleEntity == false) {
+                code += addEntityInterface(componentInfo);
+            }
+
             code += addEntityMethods(componentInfo);
             if (componentInfo.isSingleEntity) {
                 code += addPoolMethods(componentInfo);
@@ -75,6 +79,62 @@ namespace Entitas.CodeGenerator {
 
         static string closeNamespace() {
             return "}\n";
+        }
+
+        /*
+         *
+         * ENTITY INTERFACE
+         *
+         */
+
+        static string addEntityInterface(ComponentInfo componentInfo) {
+            return addEntityInterfaceHeader(componentInfo)
+                    + addInterfaceMethods(componentInfo)
+                    + addCloseInterface();
+        }
+
+        static string addEntityInterfaceHeader(ComponentInfo componentInfo) {
+            return string.Format(
+                "\n    public interface I{0}Entity : IEntity {{", 
+                componentInfo.typeName.RemoveComponentSuffix()
+            );
+        }
+
+        static string addInterfaceMethods(ComponentInfo componentInfo) {
+            var interfaceName = string.Format(
+                "I{0}Entity", 
+                componentInfo.typeName.RemoveComponentSuffix()
+            );
+            return string.Format(
+                "\n        {0} {1} {{ get; }}",
+                componentInfo.fullTypeName,
+                componentInfo.typeName.RemoveComponentSuffix().LowercaseFirst()
+            ) +
+            string.Format(
+                "\n        bool has{0} {{ get; }}",
+                componentInfo.typeName.RemoveComponentSuffix()
+            ) +
+            string.Format(
+                "\n        {0} Add{1}({2});",
+                interfaceName,
+                componentInfo.typeName.RemoveComponentSuffix(),
+                memberNamesWithType(componentInfo.memberInfos)
+            ) +
+            string.Format(
+                "\n        {0} Replace{1}({2});",
+                interfaceName,
+                componentInfo.typeName.RemoveComponentSuffix(),
+                memberNamesWithType(componentInfo.memberInfos)
+            ) +
+            string.Format(
+                "\n        {0} Remove{1}();",
+                interfaceName,
+                componentInfo.typeName.RemoveComponentSuffix()
+            );
+        }
+
+        static string addCloseInterface() {
+            return "\n    }\n";
         }
 
         /*
@@ -135,7 +195,7 @@ namespace Entitas.CodeGenerator {
         public Entity Add$Name($typedArgs) {
             var component = CreateComponent<$Type>($Ids.$Name);
 $assign
-            return AddComponent($Ids.$Name, component);
+            return (Entity)AddComponent($Ids.$Name, component);
         }
 ");
         }
@@ -154,7 +214,7 @@ $assign
         static string addRemoveMethods(ComponentInfo componentInfo) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
         public Entity Remove$Name() {
-            return RemoveComponent($Ids.$Name);
+            return (Entity)RemoveComponent($Ids.$Name);
         }
 ");
         }
@@ -180,14 +240,14 @@ $assign
         }
 
         static string addPoolGetMethods(ComponentInfo componentInfo) {
-            var getMehod = componentInfo.isSingletonComponent ? @"
+            var getMethod = componentInfo.isSingletonComponent ? @"
         public Entity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
 " : @"
         public Entity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
 
         public $Type $name { get { return $nameEntity.$name; } }
 ";
-            return buildString(componentInfo, getMehod);
+            return buildString(componentInfo, getMethod);
         }
 
         static string addPoolHasMethods(ComponentInfo componentInfo) {

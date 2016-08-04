@@ -9,6 +9,14 @@
 using Entitas;
 
 namespace Entitas {
+    public interface IUIPositionEntity : IEntity {
+        UIPositionComponent uIPosition { get; }
+        bool hasUIPosition { get; }
+        IUIPositionEntity AddUIPosition(int newX, int newY);
+        IUIPositionEntity ReplaceUIPosition(int newX, int newY);
+        IUIPositionEntity RemoveUIPosition();
+    }
+
     public partial class Entity {
         public UIPositionComponent uIPosition { get { return (UIPositionComponent)GetComponent(UIComponentIds.UIPosition); } }
 
@@ -18,7 +26,7 @@ namespace Entitas {
             var component = CreateComponent<UIPositionComponent>(UIComponentIds.UIPosition);
             component.x = newX;
             component.y = newY;
-            return AddComponent(UIComponentIds.UIPosition, component);
+            return (Entity)AddComponent(UIComponentIds.UIPosition, component);
         }
 
         public Entity ReplaceUIPosition(int newX, int newY) {
@@ -30,7 +38,7 @@ namespace Entitas {
         }
 
         public Entity RemoveUIPosition() {
-            return RemoveComponent(UIComponentIds.UIPosition);
+            return (Entity)RemoveComponent(UIComponentIds.UIPosition);
         }
     }
 }

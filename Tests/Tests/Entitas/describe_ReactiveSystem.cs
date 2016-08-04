@@ -157,7 +157,7 @@ class describe_ReactiveSystem : nspec {
                 Entity providedEntity = null;
                 subSystem.executeAction = entities => {
                     didExecute += 1;
-                    providedEntity = entities[0];
+                    providedEntity = (Entity)entities[0];
                     providedEntity.retainCount.should_be(1);
                 };
 

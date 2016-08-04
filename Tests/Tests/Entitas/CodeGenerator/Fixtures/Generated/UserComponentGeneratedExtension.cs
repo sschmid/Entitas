@@ -16,7 +16,7 @@ namespace Entitas {
             var component = CreateComponent<UserComponent>(ComponentIds.User);
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
-            return AddComponent(ComponentIds.User, component);
+            return (Entity)AddComponent(ComponentIds.User, component);
         }
 
         public Entity ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
@@ -28,7 +28,7 @@ namespace Entitas {
         }
 
         public Entity RemoveUser() {
-            return RemoveComponent(ComponentIds.User);
+            return (Entity)RemoveComponent(ComponentIds.User);
         }
     }
 

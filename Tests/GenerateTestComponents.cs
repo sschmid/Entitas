@@ -16,7 +16,8 @@ class GenerateTestComponents {
             new ComponentExtensionsGenerator(),
             new ComponentIndicesGenerator(),
             new PoolAttributesGenerator(),
-            new PoolsGenerator()
+            new PoolsGenerator(),
+            new PoolEntityGenerator()
         };
 
         var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);

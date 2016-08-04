@@ -7,6 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
+    public interface IMovableEntity : IEntity {
+        MovableComponent movable { get; }
+        bool hasMovable { get; }
+        IMovableEntity AddMovable();
+        IMovableEntity ReplaceMovable();
+        IMovableEntity RemoveMovable();
+    }
+
     public partial class Entity {
         static readonly MovableComponent movableComponent = new MovableComponent();
 

@@ -17,7 +17,7 @@ namespace Entitas {
         public Entity AddCoins(int newCount) {
             var component = CreateComponent<CoinsComponent>(MetaComponentIds.Coins);
             component.count = newCount;
-            return AddComponent(MetaComponentIds.Coins, component);
+            return (Entity)AddComponent(MetaComponentIds.Coins, component);
         }
 
         public Entity ReplaceCoins(int newCount) {
@@ -28,7 +28,7 @@ namespace Entitas {
         }
 
         public Entity RemoveCoins() {
-            return RemoveComponent(MetaComponentIds.Coins);
+            return (Entity)RemoveComponent(MetaComponentIds.Coins);
         }
     }
 

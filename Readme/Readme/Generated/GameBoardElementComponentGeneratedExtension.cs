@@ -7,6 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
+    public interface IGameBoardElementEntity : IEntity {
+        GameBoardElementComponent gameBoardElement { get; }
+        bool hasGameBoardElement { get; }
+        IGameBoardElementEntity AddGameBoardElement();
+        IGameBoardElementEntity ReplaceGameBoardElement();
+        IGameBoardElementEntity RemoveGameBoardElement();
+    }
+
     public partial class Entity {
         static readonly GameBoardElementComponent gameBoardElementComponent = new GameBoardElementComponent();
 

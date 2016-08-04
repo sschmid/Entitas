@@ -6,37 +6,18 @@ namespace Entitas {
 
     /// Use pool.CreateEntity() to create a new entity and pool.DestroyEntity() to destroy it.
     /// You can add, replace and remove IComponent to an entity.
-    public partial class Entity {
+    public partial class Entity : IEntity {
 
-        /// Occurs when a component gets added. All event handlers will be removed when the entity gets destroyed by the pool.
         public event EntityChanged OnComponentAdded;
-
-        /// Occurs when a component gets removed. All event handlers will be removed when the entity gets destroyed by the pool.
         public event EntityChanged OnComponentRemoved;
-
-        /// Occurs when a component gets replaced. All event handlers will be removed when the entity gets destroyed by the pool.
         public event ComponentReplaced OnComponentReplaced;
 
-        public delegate void EntityChanged(Entity entity, int index, IComponent component);
-        public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
-
-        /// The total amount of components an entity can possibly have.
         public int totalComponents { get { return _totalComponents; } }
-
-        /// Each entity has its own unique creationIndex which will be set by the pool when you create the entity.
         public int creationIndex { get { return _creationIndex; } }
-
-        /// The pool manages the state of an entity. Active entities are enabled, destroyed entities are disabled.
         public bool isEnabled { get { return _isEnabled; } }
 
-        /// componentPools is set by the pool which created the entity and is used to reuse removed components.
-        /// Removed components will be pushed to the componentPool.
-        /// Use entity.CreateComponent(index, type) to get a new or reusable component from the componentPool.
-        /// Use entity.GetComponentPool(index) to get a componentPool for a specific component index.
         public Stack<IComponent>[] componentPools { get { return _componentPools; } }
 
-        /// The poolMetaData is set by the pool which created the entity and contains information about the pool.
-        /// It's used to provide better error messages.
         public PoolMetaData poolMetaData { get { return _poolMetaData; } }
 
         internal int _creationIndex;
@@ -75,7 +56,7 @@ namespace Entitas {
         /// Adds a component at the specified index. You can only have one component at an index.
         /// Each component type must have its own constant index.
         /// The prefered way is to use the generated methods from the code generator.
-        public Entity AddComponent(int index, IComponent component) {
+        public IEntity AddComponent(int index, IComponent component) {
             if (!_isEnabled) {
                 throw new EntityIsNotEnabledException("Cannot add component '" + _poolMetaData.componentNames[index] + "' to " + this + "!");
             }
@@ -101,7 +82,7 @@ namespace Entitas {
 
         /// Removes a component at the specified index. You can only remove a component at an index if it exists.
         /// The prefered way is to use the generated methods from the code generator.
-        public Entity RemoveComponent(int index) {
+        public IEntity RemoveComponent(int index) {
             if (!_isEnabled) {
                 throw new EntityIsNotEnabledException("Cannot remove component '" + _poolMetaData.componentNames[index] + "' from " + this + "!");
             }
@@ -121,7 +102,7 @@ namespace Entitas {
 
         /// Replaces an existing component at the specified index or adds it if it doesn't exist yet.
         /// The prefered way is to use the generated methods from the code generator.
-        public Entity ReplaceComponent(int index, IComponent component) {
+        public IEntity ReplaceComponent(int index, IComponent component) {
             if (!_isEnabled) {
                 throw new EntityIsNotEnabledException("Cannot replace component '" + _poolMetaData.componentNames[index] + "' on " + this + "!");
             }
@@ -349,8 +330,6 @@ namespace Entitas {
         /// Occurs when an entity gets released and is not retained anymore.
         public event EntityReleased OnEntityReleased;
 
-        public delegate void EntityReleased(Entity entity);
-
         #if ENTITAS_FAST_AND_UNSAFE
 
         /// Returns the number of objects that retain this entity.
@@ -363,14 +342,14 @@ namespace Entitas {
         public int retainCount { get { return owners.Count; } }
 
         /// Returns all the objects that retain this entity.
-        public readonly HashSet<object> owners = new HashSet<object>();
-
+        public HashSet<object> owners { get { return _owners; } }
+        private readonly HashSet<object> _owners = new HashSet<object>();
         #endif
 
         /// Retains the entity. An owner can only retain the same entity once.
         /// Retain/Release is part of AERC (Automatic Entity Reference Counting) and is used internally to prevent pooling retained entities.
         /// If you use retain manually you also have to release it manually at some point.
-        public Entity Retain(object owner) {
+        public IEntity Retain(object owner) {
 
             #if ENTITAS_FAST_AND_UNSAFE
 
@@ -415,14 +394,14 @@ namespace Entitas {
     }
 
     public class EntityIsAlreadyRetainedByOwnerException : EntitasException {
-        public EntityIsAlreadyRetainedByOwnerException(Entity entity, object owner) :
+        public EntityIsAlreadyRetainedByOwnerException(IEntity entity, object owner) :
             base("'" + owner + "' cannot retain " + entity + "!\nEntity is already retained by this object!",
                 "The entity must be released by this object first.") {
         }
     }
 
     public class EntityIsNotRetainedByOwnerException : EntitasException {
-        public EntityIsNotRetainedByOwnerException(Entity entity, object owner) :
+        public EntityIsNotRetainedByOwnerException(IEntity entity, object owner) :
             base("'" + owner + "' cannot release " + entity + "!\nEntity is not retained by this object!",
                 "An entity can only be released from objects that retain it.") {
         }

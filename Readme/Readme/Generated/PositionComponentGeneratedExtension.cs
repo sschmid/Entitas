@@ -7,6 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
+    public interface IPositionEntity : IEntity {
+        PositionComponent position { get; }
+        bool hasPosition { get; }
+        IPositionEntity AddPosition(int newX, int newY);
+        IPositionEntity ReplacePosition(int newX, int newY);
+        IPositionEntity RemovePosition();
+    }
+
     public partial class Entity {
         public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
 
@@ -16,7 +24,7 @@ namespace Entitas {
             var component = CreateComponent<PositionComponent>(ComponentIds.Position);
             component.x = newX;
             component.y = newY;
-            return AddComponent(ComponentIds.Position, component);
+            return (Entity)AddComponent(ComponentIds.Position, component);
         }
 
         public Entity ReplacePosition(int newX, int newY) {
@@ -28,7 +36,7 @@ namespace Entitas {
         }
 
         public Entity RemovePosition() {
-            return RemoveComponent(ComponentIds.Position);
+            return (Entity)RemoveComponent(ComponentIds.Position);
         }
     }
 

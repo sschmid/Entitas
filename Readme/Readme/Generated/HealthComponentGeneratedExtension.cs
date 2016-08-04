@@ -7,6 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
+    public interface IHealthEntity : IEntity {
+        HealthComponent health { get; }
+        bool hasHealth { get; }
+        IHealthEntity AddHealth(int newValue);
+        IHealthEntity ReplaceHealth(int newValue);
+        IHealthEntity RemoveHealth();
+    }
+
     public partial class Entity {
         public HealthComponent health { get { return (HealthComponent)GetComponent(ComponentIds.Health); } }
 
@@ -15,7 +23,7 @@ namespace Entitas {
         public Entity AddHealth(int newValue) {
             var component = CreateComponent<HealthComponent>(ComponentIds.Health);
             component.value = newValue;
-            return AddComponent(ComponentIds.Health, component);
+            return (Entity)AddComponent(ComponentIds.Health, component);
         }
 
         public Entity ReplaceHealth(int newValue) {
@@ -26,7 +34,7 @@ namespace Entitas {
         }
 
         public Entity RemoveHealth() {
-            return RemoveComponent(ComponentIds.Health);
+            return (Entity)RemoveComponent(ComponentIds.Health);
         }
     }
 
