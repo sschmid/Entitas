@@ -5,7 +5,7 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
 
     public int didExecute { get { return _didExecute; } }
     public bool initialized { get { return _initialized; } }
-    public IEntity[] entities { get { return _entities; } }
+    public Entity[] entities { get { return _entities; } }
 
     public bool replaceComponentAOnExecute;
 
@@ -14,7 +14,7 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
 
     int _didExecute;
     bool _initialized;
-    IEntity[] _entities;
+    Entity[] _entities;
 
     public ReactiveSubSystemSpy(IMatcher matcher, GroupEventType eventType) {
         _matcher = matcher;
@@ -27,9 +27,9 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
         _initialized = true;
     }
 
-    public System.Action<List<IEntity>> executeAction;
+    public System.Action<List<Entity>> executeAction;
 
-    public void Execute(List<IEntity> entities) {
+    public void Execute(List<Entity> entities) {
 	    if(executeAction == null) {
 			_didExecute++;
 			_entities = entities.ToArray();

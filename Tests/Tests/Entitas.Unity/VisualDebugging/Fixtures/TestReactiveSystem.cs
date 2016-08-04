@@ -5,7 +5,7 @@ public class TestReactiveSystem : IReactiveSystem {
 
     public TriggerOnEvent trigger { get { return Matcher.AllOf(0).OnEntityAdded(); } }
 
-    public void Execute(List<IEntity> entities) {
+    public void Execute(List<Entity> entities) {
     }
 }
 

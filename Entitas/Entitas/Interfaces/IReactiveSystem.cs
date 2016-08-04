@@ -2,25 +2,44 @@
 
 namespace Entitas {
 
-    /// Implement this interface if you want to create a reactive system which is triggered by the specified trigger.
-    public interface IReactiveSystem : IReactiveExecuteSystem {
+    /// Common interface for reactive systems.
+    public interface IReactiveSystemBase {
         TriggerOnEvent trigger { get; }
     }
 
-    /// Implement this interface if you want to create a reactive system which is triggered by any of the specified triggers.
-    public interface IMultiReactiveSystem : IReactiveExecuteSystem {
+    /// Implement this interface if you want to create a reactive system which is triggered by the specified trigger.
+    public interface IReactiveSystem : IReactiveSystemBase, IReactiveExecuteSystem<Entity> { }
+
+    /// Implement this interface if you want to create a reactive system which is triggered by the specified trigger.
+    public interface IReactiveSystem<T> : IReactiveSystemBase, IReactiveExecuteSystem<T> where T : IEntity { }
+
+    /// Common interface for multi-reactive systems.
+    public interface IMultiReactiveSystemBase {
         TriggerOnEvent[] triggers { get; }
+    }
+
+    /// Implement this interface if you want to create a reactive system which is triggered by any of the specified triggers.
+    public interface IMultiReactiveSystem : IMultiReactiveSystemBase, IReactiveExecuteSystem<Entity> { }
+
+    /// Implement this interface if you want to create a reactive system which is triggered by any of the specified triggers.
+    public interface IMultiReactiveSystem<T> : IMultiReactiveSystemBase, IReactiveExecuteSystem<T> where T : IEntity { }
+
+    /// Common interface for group observer systems.
+    public interface IGroupObserverSystemBase {
+        GroupObserver groupObserver { get; }
     }
 
     /// Implement this interface if you want to create a reactive system which is triggered by a GroupObserver.
     /// This is useful when you want to react to changes in multiple groups from different pools.
-    public interface IGroupObserverSystem : IReactiveExecuteSystem {
-        GroupObserver groupObserver { get; }
-    }
+    public interface IGroupObserverSystem : IGroupObserverSystemBase, IReactiveExecuteSystem<Entity> { }
+
+    /// Implement this interface if you want to create a reactive system which is triggered by a GroupObserver.
+    /// This is useful when you want to react to changes in multiple groups from different pools.
+    public interface IGroupObserverSystem<T> : IGroupObserverSystemBase, IReactiveExecuteSystem<T> where T : IEntity { }
 
     /// Not meant to be implemented. Use either IReactiveSystem or IMultiReactiveSystem.
-    public interface IReactiveExecuteSystem : ISystem {
-        void Execute(List<IEntity> entities);
+    public interface IReactiveExecuteSystem<T> : ISystem where T : IEntity {
+        void Execute(List<T> entities);
     }
 
     /// Implement this interface in combination with IReactiveSystem or IMultiReactiveSystem.
@@ -41,7 +60,5 @@ namespace Entitas {
     /// Implement this interface in combination with IReactiveSystem or IMultiReactiveSystem.
     /// If a system changes entities which in turn would trigger itself consider implementing IClearReactiveSystem
     /// which will ignore the changes made by the system.
-    public interface IClearReactiveSystem {
-    }
+    public interface IClearReactiveSystem { }
 }
-

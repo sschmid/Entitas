@@ -10,9 +10,9 @@ namespace Entitas {
     public class ReactiveSystem : IExecuteSystem {
 
         /// Returns the subsystem which will be managed my this instance of ReactiveSystem.
-        public IReactiveExecuteSystem subsystem { get { return _subsystem; } }
+        public IReactiveExecuteSystem<IEntity> subsystem { get { return _subsystem; } }
 
-        readonly IReactiveExecuteSystem _subsystem;
+        readonly IReactiveExecuteSystem<IEntity> _subsystem;
         readonly GroupObserver _observer;
         readonly IMatcher _ensureComponents;
         readonly IMatcher _excludeComponents;
@@ -22,20 +22,20 @@ namespace Entitas {
 
         /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
         public ReactiveSystem(Pool pool, IReactiveSystem subSystem) :
-            this(subSystem, createGroupObserver(pool, new [] { subSystem.trigger })) {
+            this((IReactiveSystem<IEntity>)subSystem, createGroupObserver(pool, new [] { subSystem.trigger })) {
         }
 
         /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
         public ReactiveSystem(Pool pool, IMultiReactiveSystem subSystem) :
-            this(subSystem, createGroupObserver(pool, subSystem.triggers)) {
+            this((IMultiReactiveSystem<IEntity>)subSystem, createGroupObserver(pool, subSystem.triggers)) {
         }
 
         /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
         public ReactiveSystem(IGroupObserverSystem subSystem) :
-            this(subSystem, subSystem.groupObserver) {
+            this((IGroupObserverSystem<IEntity>)subSystem, subSystem.groupObserver) {
         }
 
-        ReactiveSystem(IReactiveExecuteSystem subSystem, GroupObserver groupObserver) {
+        ReactiveSystem(IReactiveExecuteSystem<IEntity> subSystem, GroupObserver groupObserver) {
             _subsystem = subSystem;
             var ensureComponents = subSystem as IEnsureComponents;
             if (ensureComponents != null) {
