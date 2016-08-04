@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
-    public interface IResourceEntity {
+    public interface IResourceEntity : IEntity {
         ResourceComponent resource { get; }
         bool hasResource { get; }
         IResourceEntity AddResource(string newName);
@@ -23,7 +23,7 @@ namespace Entitas {
         public Entity AddResource(string newName) {
             var component = CreateComponent<ResourceComponent>(ComponentIds.Resource);
             component.name = newName;
-            return AddComponent(ComponentIds.Resource, component);
+            return (Entity)AddComponent(ComponentIds.Resource, component);
         }
 
         public Entity ReplaceResource(string newName) {
@@ -34,7 +34,7 @@ namespace Entitas {
         }
 
         public Entity RemoveResource() {
-            return RemoveComponent(ComponentIds.Resource);
+            return (Entity)RemoveComponent(ComponentIds.Resource);
         }
     }
 

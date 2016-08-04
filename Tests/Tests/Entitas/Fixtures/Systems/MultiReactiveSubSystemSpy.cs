@@ -5,12 +5,12 @@ public class MultiReactiveSubSystemSpy : IInitializeSystem, IMultiReactiveSystem
 
     public int didExecute { get { return _didExecute; } }
     public bool initialized { get { return _initialized; } }
-    public Entity[] entities { get { return _entities; } }
+    public IEntity[] entities { get { return _entities; } }
 
     readonly TriggerOnEvent[] _triggers;
     int _didExecute;
     bool _initialized;
-    Entity[] _entities;
+    IEntity[] _entities;
 
     public MultiReactiveSubSystemSpy(TriggerOnEvent[] triggers) {
         _triggers = triggers;
@@ -22,7 +22,7 @@ public class MultiReactiveSubSystemSpy : IInitializeSystem, IMultiReactiveSystem
         _initialized = true;
     }
 
-    public void Execute(List<Entity> entities) {
+    public void Execute(List<IEntity> entities) {
         _didExecute++;
         _entities = entities.ToArray();
     }

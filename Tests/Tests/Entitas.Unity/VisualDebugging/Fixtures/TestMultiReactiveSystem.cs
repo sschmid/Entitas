@@ -11,6 +11,6 @@ public class TestMultiReactiveSystem : IMultiReactiveSystem {
         }
     }
 
-    public void Execute(List<Entity> entities) {
+    public void Execute(List<IEntity> entities) {
     }
 }

@@ -62,9 +62,9 @@ namespace Entitas {
         Entity[] _entitiesCache;
 
         // Cache delegates to avoid gc allocations
-        Entity.EntityChanged _cachedUpdateGroupsComponentAddedOrRemoved;
-        Entity.ComponentReplaced _cachedUpdateGroupsComponentReplaced;
-        Entity.EntityReleased _cachedOnEntityReleased;
+        EntityChanged _cachedUpdateGroupsComponentAddedOrRemoved;
+        ComponentReplaced _cachedUpdateGroupsComponentReplaced;
+        EntityReleased _cachedOnEntityReleased;
 
         /// The prefered way is to use the generated methods from the code generator to create a Pool, e.g. var pool = Pools.pool;
         public Pool(int totalComponents) : this(totalComponents, 0, null) {

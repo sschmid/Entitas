@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
-    public interface IInteractiveEntity {
+    public interface IInteractiveEntity : IEntity {
         InteractiveComponent interactive { get; }
         bool hasInteractive { get; }
         IInteractiveEntity AddInteractive();

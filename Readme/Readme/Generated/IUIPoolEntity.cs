@@ -11,7 +11,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public interface IUIPoolEntity {
+    public interface IUIPoolEntity : IEntity {
         UIPositionComponent uIPosition { get; }
         bool hasUIPosition { get; }
         IUIPoolEntity AddUIPosition(int newX, int newY);

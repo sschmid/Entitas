@@ -5,13 +5,13 @@ public class GroupObserverSubSystemSpy : IInitializeSystem, IGroupObserverSystem
 
     public int didExecute { get { return _didExecute; } }
     public bool initialized { get { return _initialized; } }
-    public Entity[] entities { get { return _entities; } }
+    public IEntity[] entities { get { return _entities; } }
 
     readonly GroupObserver _groupObserver;
 
     int _didExecute;
     bool _initialized;
-    Entity[] _entities;
+    IEntity[] _entities;
 
     public GroupObserverSubSystemSpy(GroupObserver groupObserver) {
         _groupObserver = groupObserver;
@@ -23,7 +23,7 @@ public class GroupObserverSubSystemSpy : IInitializeSystem, IGroupObserverSystem
         _initialized = true;
     }
 
-    public void Execute(List<Entity> entities) {
+    public void Execute(List<IEntity> entities) {
         _didExecute++;
         _entities = entities.ToArray();
     }

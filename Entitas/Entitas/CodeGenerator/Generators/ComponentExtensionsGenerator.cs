@@ -95,7 +95,7 @@ namespace Entitas.CodeGenerator {
 
         static string addEntityInterfaceHeader(ComponentInfo componentInfo) {
             return string.Format(
-                "\n    public interface I{0}Entity {{", 
+                "\n    public interface I{0}Entity : IEntity {{", 
                 componentInfo.typeName.RemoveComponentSuffix()
             );
         }
@@ -195,7 +195,7 @@ namespace Entitas.CodeGenerator {
         public Entity Add$Name($typedArgs) {
             var component = CreateComponent<$Type>($Ids.$Name);
 $assign
-            return AddComponent($Ids.$Name, component);
+            return (Entity)AddComponent($Ids.$Name, component);
         }
 ");
         }
@@ -214,7 +214,7 @@ $assign
         static string addRemoveMethods(ComponentInfo componentInfo) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
         public Entity Remove$Name() {
-            return RemoveComponent($Ids.$Name);
+            return (Entity)RemoveComponent($Ids.$Name);
         }
 ");
         }

@@ -36,6 +36,7 @@
     <Compile Include="Entitas\Entity.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
     <Compile Include="Entitas\Group.cs" />
+    <Compile Include="Entitas\Interfaces\IEntity.cs" />
     <Compile Include="Entitas\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
     <Compile Include="Entitas\Interfaces\IExecuteSystem.cs" />

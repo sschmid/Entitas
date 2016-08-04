@@ -24,63 +24,63 @@ public static class CID {
 }
 
 public static class EntityTestExtensions {
-    public static void AddComponentA(this Entity e) {
+    public static void AddComponentA(this IEntity e) {
         e.AddComponent(CID.ComponentA, Component.A);
     }
 
-    public static void AddComponentB(this Entity e) {
+    public static void AddComponentB(this IEntity e) {
         e.AddComponent(CID.ComponentB, Component.B);
     }
 
-    public static void AddComponentC(this Entity e) {
+    public static void AddComponentC(this IEntity e) {
         e.AddComponent(CID.ComponentC, Component.C);
     }
 
-    public static bool HasComponentA(this Entity e) {
+    public static bool HasComponentA(this IEntity e) {
         return e.HasComponent(CID.ComponentA);
     }
 
-    public static bool HasComponentB(this Entity e) {
+    public static bool HasComponentB(this IEntity e) {
         return e.HasComponent(CID.ComponentB);
     }
 
-    public static bool HasComponentC(this Entity e) {
+    public static bool HasComponentC(this IEntity e) {
         return e.HasComponent(CID.ComponentC);
     }
 
-    public static void RemoveComponentA(this Entity e) {
+    public static void RemoveComponentA(this IEntity e) {
         e.RemoveComponent(CID.ComponentA);
     }
 
-    public static void RemoveComponentB(this Entity e) {
+    public static void RemoveComponentB(this IEntity e) {
         e.RemoveComponent(CID.ComponentB);
     }
 
-    public static void RemoveComponentC(this Entity e) {
+    public static void RemoveComponentC(this IEntity e) {
         e.RemoveComponent(CID.ComponentC);
     }
 
-    public static ComponentA GetComponentA(this Entity e) {
+    public static ComponentA GetComponentA(this IEntity e) {
         return (ComponentA)e.GetComponent(CID.ComponentA);
     }
 
-    public static ComponentB GetComponentB(this Entity e) {
+    public static ComponentB GetComponentB(this IEntity e) {
         return (ComponentB)e.GetComponent(CID.ComponentB);
     }
 
-    public static ComponentC GetComponentC(this Entity e) {
+    public static ComponentC GetComponentC(this IEntity e) {
         return (ComponentC)e.GetComponent(CID.ComponentC);
     }
 
-    public static void ReplaceComponentA(this Entity e, ComponentA component) {
+    public static void ReplaceComponentA(this IEntity e, ComponentA component) {
         e.ReplaceComponent(CID.ComponentA, component);
     }
 
-    public static void ReplaceComponentB(this Entity e, ComponentB component) {
+    public static void ReplaceComponentB(this IEntity e, ComponentB component) {
         e.ReplaceComponent(CID.ComponentB, component);
     }
 
-    public static void ReplaceComponentC(this Entity e, ComponentC component) {
+    public static void ReplaceComponentC(this IEntity e, ComponentC component) {
         e.ReplaceComponent(CID.ComponentC, component);
     }
 }

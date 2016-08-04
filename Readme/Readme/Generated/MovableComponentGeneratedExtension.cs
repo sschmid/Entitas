@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
-    public interface IMovableEntity {
+    public interface IMovableEntity : IEntity {
         MovableComponent movable { get; }
         bool hasMovable { get; }
         IMovableEntity AddMovable();

@@ -18,7 +18,7 @@ using Entitas;
 
 namespace Entitas {{
 
-    public interface {0} {{{1}
+    public interface {0} : IEntity {{{1}
     }}
 }}
 ";

@@ -46,6 +46,9 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IPoolEntityCodeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IPoolEntityCodeGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IEntity.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\IEntity.cs</Link>
+    </Compile>
     <Compile Include="Tests\Entitas\describe_Entity.cs" />
     <Compile Include="Tests\Entitas\describe_Group.cs" />
     <Compile Include="Tests\Entitas\describe_GroupObserver.cs" />

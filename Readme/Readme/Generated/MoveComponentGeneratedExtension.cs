@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
-    public interface IMoveEntity {
+    public interface IMoveEntity : IEntity {
         MoveComponent move { get; }
         bool hasMove { get; }
         IMoveEntity AddMove(int newSpeed);
@@ -23,7 +23,7 @@ namespace Entitas {
         public Entity AddMove(int newSpeed) {
             var component = CreateComponent<MoveComponent>(ComponentIds.Move);
             component.speed = newSpeed;
-            return AddComponent(ComponentIds.Move, component);
+            return (Entity)AddComponent(ComponentIds.Move, component);
         }
 
         public Entity ReplaceMove(int newSpeed) {
@@ -34,7 +34,7 @@ namespace Entitas {
         }
 
         public Entity RemoveMove() {
-            return RemoveComponent(ComponentIds.Move);
+            return (Entity)RemoveComponent(ComponentIds.Move);
         }
     }
 

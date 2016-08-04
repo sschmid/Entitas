@@ -20,7 +20,7 @@ namespace Entitas {
 
     /// Not meant to be implemented. Use either IReactiveSystem or IMultiReactiveSystem.
     public interface IReactiveExecuteSystem : ISystem {
-        void Execute(List<Entity> entities);
+        void Execute(List<IEntity> entities);
     }
 
     /// Implement this interface in combination with IReactiveSystem or IMultiReactiveSystem.

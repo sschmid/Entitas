@@ -11,7 +11,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public interface IMetaPoolEntity {
+    public interface IMetaPoolEntity : IEntity {
         CoinsComponent coins { get; }
         bool hasCoins { get; }
         IMetaPoolEntity AddCoins(int newCount);

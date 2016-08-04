@@ -37,6 +37,9 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IPoolEntityCodeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IPoolEntityCodeGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IEntity.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\IEntity.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Readme\Generated\AnimatingComponentGeneratedExtension.cs" />
     <Compile Include="Readme\Generated\CoinsComponentGeneratedExtension.cs" />

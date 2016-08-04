@@ -17,7 +17,7 @@ namespace Entitas {
         readonly IMatcher _ensureComponents;
         readonly IMatcher _excludeComponents;
         readonly bool _clearAfterExecute;
-        readonly List<Entity> _buffer;
+        readonly List<IEntity> _buffer;
         string _toStringCache;
 
         /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
@@ -49,7 +49,7 @@ namespace Entitas {
             _clearAfterExecute = (subSystem as IClearReactiveSystem) != null;
 
             _observer = groupObserver;
-            _buffer = new List<Entity>();
+            _buffer = new List<IEntity>();
         }
 
         static GroupObserver createGroupObserver(Pool pool, TriggerOnEvent[] triggers) {
