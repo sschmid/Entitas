@@ -7,17 +7,15 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentExtensionsGenerator : IComponentCodeGenerator {
 
-        const string CLASS_SUFFIX = "GeneratedExtension";
-
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
-            var generatorName = typeof(ComponentExtensionsGenerator).FullName;
+            var generatorName = GetType().FullName;
             return componentInfos
                 .Where(info => info.generateMethods)
-                .Select(info => new CodeGenFile {
-                    fileName = info.fullTypeName + CLASS_SUFFIX,
-                    fileContent = generateComponentExtension(info).ToUnixLineEndings(),
-                    generatorName = generatorName
-                }).ToArray();
+                .Select(info => new CodeGenFile(
+                    info.fullTypeName + "GeneratedExtension",
+                    generateComponentExtension(info),
+                    generatorName
+                )).ToArray();
         }
 
         static string generateComponentExtension(ComponentInfo componentInfo) {
@@ -38,14 +36,11 @@ namespace Entitas.CodeGenerator {
                     + code;
             }
 
-            if (componentInfo.pools.Length == 0) {
-                code += addMatcher(componentInfo);
-                code += closeNamespace();
-            } else {
-                // Add default matcher
-                code += addMatcher(componentInfo, true);
-                code += closeNamespace();
-                // Add custom matchers
+            code += addMatcher(componentInfo, true);
+            code += closeNamespace();
+
+            var hasCustomPools = componentInfo.pools.Length > 1 || !componentInfo.pools[0].IsDefaultPoolName();
+            if (hasCustomPools) {
                 code += addMatcher(componentInfo);
                 code = addUsings("Entitas") + code;
             }
@@ -272,20 +267,17 @@ $assign
         }
     }
 ";
+
             if (onlyDefault) {
-                if (componentInfo.pools.Length == 0 || componentInfo.pools.Contains(string.Empty)) {
+                if (componentInfo.pools.Contains(CodeGenerator.DEFAULT_POOL_NAME)) {
                     return buildString(componentInfo, matcherFormat);
                 } else {
                     return string.Empty;
                 }
             } else {
-                if (componentInfo.pools.Length == 0) {
-                    return buildString(componentInfo, matcherFormat);
-                }
-
                 var poolIndex = 0;
                 var matchers = componentInfo.pools.Aggregate(string.Empty, (acc, poolName) => {
-                    if (poolName != string.Empty) {
+                    if (!poolName.IsDefaultPoolName()) {
                         return acc + buildString(componentInfo, matcherFormat, poolIndex++);
                     } else {
                         poolIndex += 1;
@@ -309,7 +301,7 @@ $assign
             var a1_name = componentInfo.typeName.RemoveComponentSuffix();
             var a2_lowercaseName = a1_name.LowercaseFirst();
             var poolNames = componentInfo.pools;
-            var a3_tag = poolNames.Length == 0 ? string.Empty : poolNames[poolIndex];
+            var a3_tag = poolNames[poolIndex].PoolPrefix();
             var lookupTags = componentInfo.ComponentLookupTags();
             var a4_ids = lookupTags.Length == 0 ? string.Empty : lookupTags[poolIndex];
             var memberInfos = componentInfo.memberInfos;

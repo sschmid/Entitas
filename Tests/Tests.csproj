@@ -69,7 +69,6 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ComponentIds.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MovableComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\PersonComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\Pools.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\UserComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\TestPoolAttribute.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ComponentIndicesGenerator.cs" />
@@ -78,16 +77,9 @@
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_SystemInfo.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_VisualDebuggingConfig.cs" />
     <Compile Include="Tests\Entitas\describe_TypeExtension.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ClearReactiveSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\EntityEmittingSubSystem.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveEnsureSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveExcludeSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveEnsureExcludeSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveEnsureSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveExcludeSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Components\Components.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Components\NameAgeComponent.cs" />
@@ -312,6 +304,25 @@
     <Compile Include="Tests\Entitas\Serialization\Configuration\describe_Properties.cs" />
     <Compile Include="Tests\Entitas\Serialization\Configuration\describe_EntitasPreferencesConfig.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0320.cs" />
+    <Compile Include="Tests\Entitas\describe_EntityIndex.cs" />
+    <Compile Include="..\Entitas\Entitas\EntityIndex.cs">
+      <Link>Linked Libraries\Entitas\EntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\IndexKeyComponent.cs" />
+    <Compile Include="Tests\EntitasTest.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherPoolComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ComponentWithFieldsAndPropertiesGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\My.Namespace.NamespaceComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\CComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\CustomPrefixComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\DefaultPoolComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MultiplePoolAndDefaultPoolComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeStructComponentGeneratedExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

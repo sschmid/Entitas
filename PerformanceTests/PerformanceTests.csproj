@@ -77,6 +77,8 @@
     <Compile Include="PerformanceTests\Misc\NewInstanceT.cs" />
     <Compile Include="PerformanceTests\Misc\NewInstanceActivator.cs" />
     <Compile Include="PerformanceTests\Pool\PoolCreateBlueprint.cs" />
+    <Compile Include="PerformanceTests\Fixtures\NameComponent.cs" />
+    <Compile Include="PerformanceTests\EntityIndex\EntityIndexGetEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -88,6 +90,7 @@
     <Folder Include="PerformanceTests\Observer\" />
     <Folder Include="PerformanceTests\Pool\" />
     <Folder Include="PerformanceTests\Misc\" />
+    <Folder Include="PerformanceTests\EntityIndex\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas\Entitas.csproj">

@@ -1,4 +1,5 @@
-﻿using Entitas;
+﻿using System;
+using Entitas;
 using NSpec;
 
 class describe_Pool : nspec {
@@ -551,6 +552,27 @@ class describe_Pool : nspec {
             };
         };
 
+        context["EntityIndex"] = () => {
+
+            it["throws when EntityIndex for key doesn't exist"] = expect<PoolEntityIndexDoesNotExistException>(() => {
+                pool.GetEntityIndex("unknown");
+            });
+
+            it["adds and EntityIndex"] = () => {
+                const int componentIndex = 1;
+                var entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(componentIndex)), null);
+                pool.AddEntityIndex(componentIndex.ToString(), entityIndex);
+                pool.GetEntityIndex("1").should_be_same(entityIndex);
+            };
+
+            it["throws when adding an EntityIndex with same name"] = expect<PoolEntityIndexDoesAlreadyExistException>(() => {
+                const int componentIndex = 1;
+                var entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(componentIndex)), null);
+                pool.AddEntityIndex(componentIndex.ToString(), entityIndex);
+                pool.AddEntityIndex(componentIndex.ToString(), entityIndex);
+            });
+        };
+
         context["reset"] = () => {
 
             context["groups"] = () => {
@@ -644,6 +666,25 @@ class describe_Pool : nspec {
 
                 it["only clears existing component pool"] = () => {
                     pool.ClearComponentPool(CID.ComponentC);
+                };
+            };
+
+            context["EntityIndex"] = () => {
+
+                PrimaryEntityIndex<string> entityIndex = null;
+                before = () => {
+                    entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(CID.ComponentA)),
+                        c => ((NameAgeComponent)(c)).name);
+                    pool.AddEntityIndex(CID.ComponentA.ToString(), entityIndex);
+                };
+
+                it["deactivates EntityIndex"] = () => {
+                    var nameAgeComponent = new NameAgeComponent();
+                    nameAgeComponent.name = "Max";
+                    pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                    entityIndex.HasEntity("Max").should_be_true();
+                    pool.DeactivateEntityIndices();
+                    entityIndex.HasEntity("Max").should_be_false();
                 };
             };
         };

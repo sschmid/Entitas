@@ -48,18 +48,21 @@ namespace Entitas {
         /// Returns the number of entities that are currently retained by other objects (e.g. Group, GroupObserver, ReactiveSystem).
         public int retainedEntitiesCount { get { return _retainedEntities.Count; } }
 
-        protected readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
-        protected readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
-        protected readonly List<Group>[] _groupsForIndex;
+        readonly int _totalComponents;
+        int _creationIndex;
+
+        readonly HashSet<Entity> _entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
         readonly Stack<Entity> _reusableEntities = new Stack<Entity>();
         readonly HashSet<Entity> _retainedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
+        Entity[] _entitiesCache;
 
-        readonly int _totalComponents;
-        readonly Stack<IComponent>[] _componentPools;
-        int _creationIndex;
         readonly PoolMetaData _metaData;
 
-        Entity[] _entitiesCache;
+        readonly Dictionary<IMatcher, Group> _groups = new Dictionary<IMatcher, Group>();
+        readonly List<Group>[] _groupsForIndex;
+
+        readonly Stack<IComponent>[] _componentPools;
+        readonly Dictionary<string, IEntityIndex> _entityIndices;
 
         // Cache delegates to avoid gc allocations
         Entity.EntityChanged _cachedUpdateGroupsComponentAddedOrRemoved;
@@ -73,7 +76,6 @@ namespace Entitas {
         /// The prefered way is to use the generated methods from the code generator to create a Pool, e.g. var pool = Pools.pool;
         public Pool(int totalComponents, int startCreationIndex, PoolMetaData metaData) {
             _totalComponents = totalComponents;
-            _componentPools = new Stack<IComponent>[totalComponents];
             _creationIndex = startCreationIndex;
 
             if (metaData != null) {
@@ -96,6 +98,8 @@ namespace Entitas {
             }
 
             _groupsForIndex = new List<Group>[totalComponents];
+            _componentPools = new Stack<IComponent>[totalComponents];
+            _entityIndices = new Dictionary<string, IEntityIndex>();
 
             // Cache delegates to avoid gc allocations
             _cachedUpdateGroupsComponentAddedOrRemoved = updateGroupsComponentAddedOrRemoved;
@@ -230,6 +234,29 @@ namespace Entitas {
             }
         }
 
+        public void AddEntityIndex(string name, IEntityIndex entityIndex) {
+            if (_entityIndices.ContainsKey(name)) {
+                throw new PoolEntityIndexDoesAlreadyExistException(this, name);
+            }
+
+            _entityIndices[name] = entityIndex;
+        }
+
+        public IEntityIndex GetEntityIndex(string name) {
+            IEntityIndex entityIndex;
+            if (!_entityIndices.TryGetValue(name, out entityIndex)) {
+                throw new PoolEntityIndexDoesNotExistException(this, name);
+            }
+
+            return entityIndex;
+        }
+
+        public void DeactivateEntityIndices() {
+            foreach (var entityIndex in _entityIndices.Values) {
+                entityIndex.Deactivate();
+            }
+        }
+
         /// Resets the creationIndex back to 0.
         public void ResetCreationIndex() {
             _creationIndex = 0;
@@ -261,7 +288,7 @@ namespace Entitas {
             return _metaData.poolName;
         }
 
-        protected void updateGroupsComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
+        void updateGroupsComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 var events = new List<Group.GroupChanged>(groups.Count);
@@ -277,7 +304,7 @@ namespace Entitas {
             }
         }
 
-        protected void updateGroupsComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
+        void updateGroupsComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
                 for (int i = 0, groupsCount = groups.Count; i < groupsCount; i++) {
@@ -286,7 +313,7 @@ namespace Entitas {
             }
         }
 
-        protected void onEntityReleased(Entity entity) {
+        void onEntityReleased(Entity entity) {
             if (entity._isEnabled) {
                 throw new EntityIsNotDestroyedException("Cannot release " + entity + "!");
             }
@@ -320,6 +347,18 @@ namespace Entitas {
         public PoolMetaDataException(Pool pool, PoolMetaData poolMetaData) :
             base("Invalid PoolMetaData for '" + pool + "'!\nExpected " + pool.totalComponents + " componentName(s) but got " + poolMetaData.componentNames.Length + ":",
                 string.Join("\n", poolMetaData.componentNames)) {
+        }
+    }
+
+    public class PoolEntityIndexDoesNotExistException : EntitasException {
+        public PoolEntityIndexDoesNotExistException(Pool pool, string name) :
+            base("Cannot get EntityIndex '" + name + "' from pool '" + pool + "'!", "No EntityIndex with this name has been added.") {
+        }
+    }
+
+    public class PoolEntityIndexDoesAlreadyExistException : EntitasException {
+        public PoolEntityIndexDoesAlreadyExistException(Pool pool, string name) :
+            base("Cannot add EntityIndex '" + name + "' to pool '" + pool + "'!", "An EntityIndex with this name has already been added.") {
         }
     }
 

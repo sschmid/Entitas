@@ -1,20 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Entitas;
 
-public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
+public interface IReactiveSubSystemSpy {
+    int didExecute { get; }
+    int didInitialize { get; }
+    Entity[] entities { get; }
+}
+
+public class ReactiveSubSystemSpy : IReactiveSubSystemSpy, IInitializeSystem, IReactiveSystem {
 
     public int didExecute { get { return _didExecute; } }
-    public bool initialized { get { return _initialized; } }
+    public int didInitialize { get { return _didInitialize; } }
     public Entity[] entities { get { return _entities; } }
 
-    public bool replaceComponentAOnExecute;
+    public Action<List<Entity>> executeAction;
+
+    int _didExecute;
+    int _didInitialize;
+    Entity[] _entities;
 
     readonly IMatcher _matcher;
     readonly GroupEventType _eventType;
-
-    int _didExecute;
-    bool _initialized;
-    Entity[] _entities;
 
     public ReactiveSubSystemSpy(IMatcher matcher, GroupEventType eventType) {
         _matcher = matcher;
@@ -24,22 +31,61 @@ public class ReactiveSubSystemSpy : IInitializeSystem, IReactiveSystem {
     public TriggerOnEvent trigger { get { return new TriggerOnEvent(_matcher, _eventType); } }
 
     public void Initialize() {
-        _initialized = true;
+        _didInitialize += 1;
     }
 
-    public System.Action<List<Entity>> executeAction;
-
     public void Execute(List<Entity> entities) {
-	    if(executeAction == null) {
-			_didExecute++;
-			_entities = entities.ToArray();
-			
-			if (replaceComponentAOnExecute) {
-				var e = _entities[0];
-				e.ReplaceComponentA(Component.A);
-			}
-        } else {
+        _didExecute += 1;
+        _entities = entities.ToArray();
+
+        if (executeAction != null) {
             executeAction(entities);
         }
     }
 }
+
+public class ClearReactiveSubSystemSpy : ReactiveSubSystemSpy, IClearReactiveSystem {
+    public ClearReactiveSubSystemSpy(IMatcher matcher, GroupEventType eventType) :
+        base(matcher, eventType) {
+    }
+}
+
+public class ReactiveEnsureSubSystemSpy : ReactiveSubSystemSpy, IEnsureComponents {
+
+    public IMatcher ensureComponents { get { return _ensureComponent; } }
+
+    readonly IMatcher _ensureComponent;
+
+    public ReactiveEnsureSubSystemSpy(IMatcher matcher, GroupEventType eventType, IMatcher ensureComponent) :
+        base(matcher, eventType) {
+        _ensureComponent = ensureComponent;
+    }
+}
+
+public class ReactiveExcludeSubSystemSpy : ReactiveSubSystemSpy, IExcludeComponents {
+
+    public IMatcher excludeComponents { get { return _excludeComponent; } }
+
+    readonly IMatcher _excludeComponent;
+
+    public ReactiveExcludeSubSystemSpy(IMatcher matcher, GroupEventType eventType, IMatcher excludeComponent) :
+        base(matcher, eventType) {
+        _excludeComponent = excludeComponent;
+    }
+}
+
+public class ReactiveEnsureExcludeSubSystemSpy : ReactiveSubSystemSpy, IEnsureComponents, IExcludeComponents {
+
+    public IMatcher ensureComponents { get { return _ensureComponent; } }
+    public IMatcher excludeComponents { get { return _excludeComponent; } }
+
+    readonly IMatcher _ensureComponent;
+    readonly IMatcher _excludeComponent;
+
+    public ReactiveEnsureExcludeSubSystemSpy(IMatcher matcher, GroupEventType eventType, IMatcher ensureComponent, IMatcher excludeComponent) :
+        base(matcher, eventType) {
+        _ensureComponent = ensureComponent;
+        _excludeComponent = excludeComponent;
+    }
+}
+

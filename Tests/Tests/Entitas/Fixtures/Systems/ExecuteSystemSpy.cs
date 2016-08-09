@@ -1,12 +1,13 @@
 ﻿using Entitas;
 
 public class ExecuteSystemSpy : IExecuteSystem {
-    public bool executed { get { return _executed; } }
 
-    bool _executed;
+    public int didExecute { get { return _didExecute; } }
+
+    int _didExecute;
 
     public void Execute() {
-        _executed = true;
+        _didExecute += 1;
     }
 }
 

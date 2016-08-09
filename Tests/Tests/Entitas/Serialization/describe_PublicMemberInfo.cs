@@ -18,6 +18,10 @@ class describe_PublicMemberInfo : nspec {
                 var mi = infos[0];
                 mi.type.should_be(typeof(string));
                 mi.name.should_be("publicField");
+                mi.attributes.Length.should_be(1);
+                mi.attributes[0].memberInfos.Count.should_be(1);
+                var attrValue = mi.attributes[0].memberInfos[0].GetValue(mi.attributes[0].attribute);
+                attrValue.should_be("myField");
             };
 
             it["creates member infos for public properties (read & write)"] = () => {
@@ -26,6 +30,10 @@ class describe_PublicMemberInfo : nspec {
                 var mi = infos[0];
                 mi.type.should_be(typeof(string));
                 mi.name.should_be("publicProperty");
+                mi.attributes.Length.should_be(1);
+                mi.attributes[0].memberInfos.Count.should_be(1);
+                var attrValue = mi.attributes[0].memberInfos[0].GetValue(mi.attributes[0].attribute);
+                attrValue.should_be("myProperty");
             };
 
             it["creates member infos for fields and properties"] = () => {

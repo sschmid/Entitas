@@ -137,24 +137,24 @@ namespace Entitas {
 
         void replaceComponent(int index, IComponent replacement) {
             var previousComponent = _components[index];
-            if (previousComponent == replacement) {
-                if (OnComponentReplaced != null) {
-                    OnComponentReplaced(this, index, previousComponent, replacement);
-                }
-            } else {
+            if (replacement != previousComponent) {
                 _components[index] = replacement;
                 _componentsCache = null;
                 GetComponentPool(index).Push(previousComponent);
-                if (replacement == null) {
+                if (replacement != null) {
+                    if (OnComponentReplaced != null) {
+                        OnComponentReplaced(this, index, previousComponent, replacement);
+                    }
+                } else {
                     _componentIndicesCache = null;
                     _toStringCache = null;
                     if (OnComponentRemoved != null) {
                         OnComponentRemoved(this, index, previousComponent);
                     }
-                } else {
-                    if (OnComponentReplaced != null) {
-                        OnComponentReplaced(this, index, previousComponent, replacement);
-                    }
+                }
+            } else {
+                if (OnComponentReplaced != null) {
+                    OnComponentReplaced(this, index, previousComponent, replacement);
                 }
             }
         }
@@ -260,7 +260,7 @@ namespace Entitas {
         /// Returns a new or reusable component from the componentPool for the specified component index.
         public IComponent CreateComponent(int index, Type type) {
             var componentPool = GetComponentPool(index);
-            return (IComponent)(componentPool.Count > 0 ? componentPool.Pop() : Activator.CreateInstance(type));
+            return componentPool.Count > 0 ? componentPool.Pop() : (IComponent)Activator.CreateInstance(type);
         }
 
         /// Returns a new or reusable component from the componentPool for the specified component index.
@@ -279,6 +279,7 @@ namespace Entitas {
             _isEnabled = false;
         }
 
+        // Do not call this method manually. This method is called by the pool.
         internal void removeAllOnEntityReleasedHandlers() {
             OnEntityReleased = null;
         }

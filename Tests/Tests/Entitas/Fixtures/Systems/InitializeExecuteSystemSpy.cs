@@ -2,18 +2,18 @@
 
 public class InitializeExecuteSystemSpy : IInitializeSystem, IExecuteSystem {
 
-    public bool initialized { get { return _initialized; } }
-    public bool executed { get { return _executed; } }
+    public int didInitialize { get { return _didInitialize; } }
+    public int didExecute { get { return _didExecute; } }
 
-    bool _initialized;
-    bool _executed;
+    int _didInitialize;
+    int _didExecute;
 
     public void Initialize() {
-        _initialized = true;
+        _didInitialize += 1;
     }
 
     public void Execute() {
-        _executed = true;
+        _didExecute += 1;
     }
 }
 

@@ -31,6 +31,8 @@ namespace PerformanceTests {
 
             run<NewInstanceT>();
             run<NewInstanceActivator>();
+
+            run<EntityIndexGetEntity>();
 //            run<EmptyTest>();
 //
 //            run<IterateHashetToArray>();
@@ -83,6 +85,8 @@ namespace PerformanceTests {
         //
         //        NewInstanceT:                           393 ms
         //        NewInstanceActivator:                   542 ms
+        //        EntityIndexGetEntity:                   59 ms
+        //
         //        IterateHashetToArray:                   456 ms
         //        IterateHashSet:                         774 ms
         //
