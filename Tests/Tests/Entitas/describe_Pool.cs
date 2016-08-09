@@ -1,5 +1,4 @@
-﻿using System;
-using Entitas;
+﻿using Entitas;
 using NSpec;
 
 class describe_Pool : nspec {
@@ -65,8 +64,8 @@ class describe_Pool : nspec {
 
             PoolMetaData metaData = null;
             before = () => {
-                var componentNames = new [] { "Health", "Position", "View" };
-                var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
+                var componentNames = new[] { "Health", "Position", "View" };
+                var componentTypes = new[] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
                 metaData = new PoolMetaData("My Pool", componentNames, componentTypes);
                 pool = new Pool(componentNames.Length, 0, metaData);
             };
@@ -390,7 +389,7 @@ class describe_Pool : nspec {
 
             it["sets up entity from pool"] = () => {
                 pool.DestroyEntity(pool.CreateEntity());
-                var g = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                var g = pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentA }));
                 var e = pool.CreateEntity();
                 e.AddComponentA();
                 g.GetEntities().should_contain(e);
@@ -414,7 +413,7 @@ class describe_Pool : nspec {
         context["groups"] = () => {
 
             it["gets empty group for matcher when no entities were created"] = () => {
-                var g = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                var g = pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentA }));
                 g.should_not_be_null();
                 g.GetEntities().should_be_empty();
             };
@@ -424,7 +423,7 @@ class describe_Pool : nspec {
                 Entity eAB2 = null;
                 Entity eA = null;
 
-                IMatcher matcherAB = Matcher.AllOf(new [] {
+                IMatcher matcherAB = Matcher.AllOf(new[] {
                     CID.ComponentA,
                     CID.ComponentB
                 });
@@ -499,7 +498,7 @@ class describe_Pool : nspec {
                     var updated = 0;
                     var prevComp = eA.GetComponent(CID.ComponentA);
                     var newComp = new ComponentA();
-                    var g = pool.GetGroup(Matcher.AllOf(new [] { CID.ComponentA }));
+                    var g = pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentA }));
                     g.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => {
                         updated += 1;
                         group.should_be_same(g);
@@ -634,6 +633,46 @@ class describe_Pool : nspec {
                     pool.ResetCreationIndex();
 
                     pool.CreateEntity().creationIndex.should_be(0);
+                };
+
+
+                context["removes all event handlers"] = () => {
+
+                    it["removes OnEntityCreated"] = () => {
+                        pool.OnEntityCreated += delegate { this.Fail(); };
+                        pool.Reset();
+
+                        pool.CreateEntity();
+                    };
+
+                    it["removes OnEntityWillBeDestroyed"] = () => {
+                        pool.OnEntityWillBeDestroyed += delegate { this.Fail(); };
+                        pool.Reset();
+
+                        pool.DestroyEntity(pool.CreateEntity());
+                    };
+
+                    it["removes OnEntityDestroyed"] = () => {
+                        pool.OnEntityDestroyed += delegate { this.Fail(); };
+                        pool.Reset();
+
+                        pool.DestroyEntity(pool.CreateEntity());
+                    };
+
+                    it["removes OnGroupCreated"] = () => {
+                        pool.OnGroupCreated += delegate { this.Fail(); };
+                        pool.Reset();
+
+                        pool.GetGroup(Matcher.AllOf(0));
+                    };
+
+                    it["removes OnGroupCleared"] = () => {
+                        pool.OnGroupCleared += delegate { this.Fail(); };
+                        pool.Reset();
+                        pool.GetGroup(Matcher.AllOf(0));
+
+                        pool.ClearGroups();
+                    };
                 };
             };
 

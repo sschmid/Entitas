@@ -282,6 +282,12 @@ namespace Entitas {
             ClearGroups();
             DestroyAllEntities();
             ResetCreationIndex();
+
+            OnEntityCreated = null;
+            OnEntityWillBeDestroyed = null;
+            OnEntityDestroyed = null;
+            OnGroupCreated = null;
+            OnGroupCleared = null;
         }
 
         public override string ToString() {
