@@ -72,7 +72,7 @@ namespace Entitas {
             }
         }
 
-        /// Adds a component at a certain index. You can only have one component at an index.
+        /// Adds a component at the specified index. You can only have one component at an index.
         /// Each component type must have its own constant index.
         /// The prefered way is to use the generated methods from the code generator.
         public Entity AddComponent(int index, IComponent component) {
@@ -99,7 +99,7 @@ namespace Entitas {
             return this;
         }
 
-        /// Removes a component at a certain index. You can only remove a component at an index if it exists.
+        /// Removes a component at the specified index. You can only remove a component at an index if it exists.
         /// The prefered way is to use the generated methods from the code generator.
         public Entity RemoveComponent(int index) {
             if (!_isEnabled) {
@@ -119,7 +119,7 @@ namespace Entitas {
             return this;
         }
 
-        /// Replaces an existing component at a certain index or adds it if it doesn't exist yet.
+        /// Replaces an existing component at the specified index or adds it if it doesn't exist yet.
         /// The prefered way is to use the generated methods from the code generator.
         public Entity ReplaceComponent(int index, IComponent component) {
             if (!_isEnabled) {
@@ -137,29 +137,29 @@ namespace Entitas {
 
         void replaceComponent(int index, IComponent replacement) {
             var previousComponent = _components[index];
-            if (previousComponent == replacement) {
-                if (OnComponentReplaced != null) {
-                    OnComponentReplaced(this, index, previousComponent, replacement);
-                }
-            } else {
+            if (replacement != previousComponent) {
                 _components[index] = replacement;
                 _componentsCache = null;
                 GetComponentPool(index).Push(previousComponent);
-                if (replacement == null) {
+                if (replacement != null) {
+                    if (OnComponentReplaced != null) {
+                        OnComponentReplaced(this, index, previousComponent, replacement);
+                    }
+                } else {
                     _componentIndicesCache = null;
                     _toStringCache = null;
                     if (OnComponentRemoved != null) {
                         OnComponentRemoved(this, index, previousComponent);
                     }
-                } else {
-                    if (OnComponentReplaced != null) {
-                        OnComponentReplaced(this, index, previousComponent, replacement);
-                    }
+                }
+            } else {
+                if (OnComponentReplaced != null) {
+                    OnComponentReplaced(this, index, previousComponent, replacement);
                 }
             }
         }
 
-        /// Returns a component at a certain index. You can only get a component at an index if it exists.
+        /// Returns a component at the specified index. You can only get a component at an index if it exists.
         /// The prefered way is to use the generated methods from the code generator.
         public IComponent GetComponent(int index) {
             if (!HasComponent(index)) {
@@ -260,7 +260,7 @@ namespace Entitas {
         /// Returns a new or reusable component from the componentPool for the specified component index.
         public IComponent CreateComponent(int index, Type type) {
             var componentPool = GetComponentPool(index);
-            return (IComponent)(componentPool.Count > 0 ? componentPool.Pop() : Activator.CreateInstance(type));
+            return componentPool.Count > 0 ? componentPool.Pop() : (IComponent)Activator.CreateInstance(type);
         }
 
         /// Returns a new or reusable component from the componentPool for the specified component index.
@@ -269,6 +269,7 @@ namespace Entitas {
             return componentPool.Count > 0 ? (T)componentPool.Pop() : new T();
         }
 
+        // Do not call this method manually. This method is called by the pool.
         internal void destroy() {
             RemoveAllComponents();
             OnComponentAdded = null;
@@ -277,6 +278,7 @@ namespace Entitas {
             _isEnabled = false;
         }
 
+        // Do not call this method manually. This method is called by the pool.
         internal void removeAllOnEntityReleasedHandlers() {
             OnEntityReleased = null;
         }
