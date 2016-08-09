@@ -524,6 +524,27 @@ class describe_Entity : nspec {
                         e.RemoveAllComponents();
                         e.ToString().should_not_be_same(cache);
                     };
+
+                    it["updates cache when entity gets retained"] = () => {
+                        e.Retain(this);
+                        e.ToString().should_not_be_same(cache);
+                    };
+
+                    it["updates cache when entity gets released"] = () => {
+                        e.Retain(this);
+                        cache = e.ToString();
+                        e.Release(this);
+                        e.ToString().should_not_be_same(cache);
+                    };
+
+                    it["released entity has updated cache"] = () => {
+                        e.Retain(this);
+                        cache = e.ToString();
+                        e.OnEntityReleased += (entity) => {
+                            e.ToString().should_not_be_same(cache);
+                        };
+                        e.Release(this);
+                    };
                 };
 
                 it["updates cache when RemoveAllComponents is called, even if entity has no components"] = () => {

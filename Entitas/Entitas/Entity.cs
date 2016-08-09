@@ -385,6 +385,8 @@ namespace Entitas {
 
             #endif
 
+            _toStringCache = null;
+
             return this;
         }
 
@@ -407,6 +409,8 @@ namespace Entitas {
             if (owners.Count == 0) {
 
             #endif
+
+                _toStringCache = null;
 
                 if (OnEntityReleased != null) {
                     OnEntityReleased(this);
