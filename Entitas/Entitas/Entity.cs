@@ -17,8 +17,12 @@ namespace Entitas {
         /// Occurs when a component gets replaced. All event handlers will be removed when the entity gets destroyed by the pool.
         public event ComponentReplaced OnComponentReplaced;
 
+        /// Occurs when an entity gets released and is not retained anymore. All event handlers will be removed when the entity gets destroyed by the pool.
+        public event EntityReleased OnEntityReleased;
+
         public delegate void EntityChanged(Entity entity, int index, IComponent component);
         public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
+        public delegate void EntityReleased(Entity entity);
 
         /// The total amount of components an entity can possibly have.
         public int totalComponents { get { return _totalComponents; } }
@@ -269,6 +273,72 @@ namespace Entitas {
             return componentPool.Count > 0 ? (T)componentPool.Pop() : new T();
         }
 
+        #if ENTITAS_FAST_AND_UNSAFE
+        
+        /// Returns the number of objects that retain this entity.
+        public int retainCount { get { return _retainCount; } }
+        int _retainCount;
+
+        #else
+
+        /// Returns the number of objects that retain this entity.
+        public int retainCount { get { return owners.Count; } }
+
+        /// Returns all the objects that retain this entity.
+        public readonly HashSet<object> owners = new HashSet<object>();
+
+        #endif
+
+        /// Retains the entity. An owner can only retain the same entity once.
+        /// Retain/Release is part of AERC (Automatic Entity Reference Counting) and is used internally to prevent pooling retained entities.
+        /// If you use retain manually you also have to release it manually at some point.
+        public Entity Retain(object owner) {
+
+            #if ENTITAS_FAST_AND_UNSAFE
+            
+            _retainCount += 1;
+
+            #else
+
+            if (!owners.Add(owner)) {
+                throw new EntityIsAlreadyRetainedByOwnerException(this, owner);
+            }
+
+            #endif
+
+            _toStringCache = null;
+
+            return this;
+        }
+
+        /// Releases the entity. An owner can only release an entity if it retains it.
+        /// Retain/Release is part of AERC (Automatic Entity Reference Counting) and is used internally to prevent pooling retained entities.
+        /// If you use retain manually you also have to release it manually at some point.
+        public void Release(object owner) {
+
+            #if ENTITAS_FAST_AND_UNSAFE
+            
+            _retainCount -= 1;
+            if (_retainCount == 0) {
+
+            #else
+
+            if (!owners.Remove(owner)) {
+                throw new EntityIsNotRetainedByOwnerException(this, owner);
+            }
+
+            if (owners.Count == 0) {
+
+            #endif
+
+                _toStringCache = null;
+
+                if (OnEntityReleased != null) {
+                    OnEntityReleased(this);
+                }
+            }
+        }
+
         // This method is used internally. Don't call it yourself.
         // Use pool.DestroyEntity(entity);
         internal void destroy() {
@@ -342,80 +412,6 @@ namespace Entitas {
 
         public int GetHashCode(Entity obj) {
             return obj._creationIndex;
-        }
-    }
-
-    public partial class Entity {
-
-        /// Occurs when an entity gets released and is not retained anymore.
-        public event EntityReleased OnEntityReleased;
-
-        public delegate void EntityReleased(Entity entity);
-
-        #if ENTITAS_FAST_AND_UNSAFE
-
-        /// Returns the number of objects that retain this entity.
-        public int retainCount { get { return _retainCount; } }
-        int _retainCount;
-
-        #else
-
-        /// Returns the number of objects that retain this entity.
-        public int retainCount { get { return owners.Count; } }
-
-        /// Returns all the objects that retain this entity.
-        public readonly HashSet<object> owners = new HashSet<object>();
-
-        #endif
-
-        /// Retains the entity. An owner can only retain the same entity once.
-        /// Retain/Release is part of AERC (Automatic Entity Reference Counting) and is used internally to prevent pooling retained entities.
-        /// If you use retain manually you also have to release it manually at some point.
-        public Entity Retain(object owner) {
-
-            #if ENTITAS_FAST_AND_UNSAFE
-
-            _retainCount += 1;
-
-            #else
-
-            if (!owners.Add(owner)) {
-                throw new EntityIsAlreadyRetainedByOwnerException(this, owner);
-            }
-
-            #endif
-
-            _toStringCache = null;
-
-            return this;
-        }
-
-        /// Releases the entity. An owner can only release an entity if it retains it.
-        /// Retain/Release is part of AERC (Automatic Entity Reference Counting) and is used internally to prevent pooling retained entities.
-        /// If you use retain manually you also have to release it manually at some point.
-        public void Release(object owner) {
-
-            #if ENTITAS_FAST_AND_UNSAFE
-
-            _retainCount -= 1;
-            if (_retainCount == 0) {
-
-            #else
-
-            if (!owners.Remove(owner)) {
-                throw new EntityIsNotRetainedByOwnerException(this, owner);
-            }
-
-            if (owners.Count == 0) {
-
-            #endif
-
-                _toStringCache = null;
-
-                if (OnEntityReleased != null) {
-                    OnEntityReleased(this);
-                }
-            }
         }
     }
 
