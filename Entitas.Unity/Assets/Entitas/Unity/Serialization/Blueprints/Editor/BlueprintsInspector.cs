@@ -1,9 +1,8 @@
-﻿using Entitas.Unity.Serialization.Blueprints;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.Serialization.Blueprints {
-    
+
     [CustomEditor(typeof(Blueprints))]
     public class BlueprintsInspector : Editor {
 

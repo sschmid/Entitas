@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Entitas;
 using Entitas.Serialization;
-using Entitas.Unity;
-using Entitas.Unity.VisualDebugging;
 using UnityEditor;
 using UnityEngine;
 

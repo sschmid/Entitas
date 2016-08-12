@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Entitas.Unity;
+﻿using System.Linq;
 using UnityEditor;
 
 namespace Entitas.Unity {

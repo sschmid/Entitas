@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using Entitas.Unity.Serialization.Blueprints;
 using UnityEditor;
 
 namespace Entitas.Unity.Serialization.Blueprints {
-    
+
     public class BinaryBlueprintPostprocessor : AssetPostprocessor {
 
         public const string ASSET_LABEL = "EntitasBinaryBlueprint";
