@@ -77,7 +77,7 @@
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_SystemInfo.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_VisualDebuggingConfig.cs" />
     <Compile Include="Tests\Entitas\describe_TypeExtension.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteCleanupSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteCleanupDeinitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpy.cs" />
@@ -327,6 +327,10 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\ICleanupSystem.cs">
       <Link>Linked Libraries\Entitas\Interfaces\ICleanupSystem.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IDeinitializeSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\IDeinitializeSystem.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\Fixtures\Systems\DeinitializeSystemSpy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

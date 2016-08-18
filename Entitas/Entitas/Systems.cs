@@ -10,12 +10,14 @@ namespace Entitas {
         protected readonly List<IInitializeSystem> _initializeSystems;
         protected readonly List<IExecuteSystem> _executeSystems;
         protected readonly List<ICleanupSystem> _cleanupSystems;
+        protected readonly List<IDeinitializeSystem> _deinitializeSystems;
 
         /// Creates a new Systems instance.
         public Systems() {
             _initializeSystems = new List<IInitializeSystem>();
             _executeSystems = new List<IExecuteSystem>();
             _cleanupSystems = new List<ICleanupSystem>();
+            _deinitializeSystems = new List<IDeinitializeSystem>();
         }
 
         /// Creates a new instance of the specified type and adds it to the systems list.
@@ -53,6 +55,14 @@ namespace Entitas {
                 _cleanupSystems.Add(cleanupSystem);
             }
 
+            var deinitializeSystem = reactiveSystem != null
+                ? reactiveSystem.subsystem as IDeinitializeSystem
+                : system as IDeinitializeSystem;
+
+            if (deinitializeSystem != null) {
+                _deinitializeSystems.Add(deinitializeSystem);
+            }
+
             return this;
         }
 
@@ -74,6 +84,13 @@ namespace Entitas {
         public virtual void Cleanup() {
             for (int i = 0, cleanupSysCount = _cleanupSystems.Count; i < cleanupSysCount; i++) {
                 _cleanupSystems[i].Cleanup();
+            }
+        }
+
+        /// Calls Deinitialize() on all IDeinitializeSystem in the order you added them.
+        public virtual void Deinitialize() {
+            for (int i = 0, deinitializeSysCount = _deinitializeSystems.Count; i < deinitializeSysCount; i++) {
+                _deinitializeSystems[i].Deinitialize();
             }
         }
 

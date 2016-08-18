@@ -20,37 +20,47 @@ class describe_Systems : nspec {
 
         context["fixtures"] = () => {
             it["initializes InitializeSystemSpy"] = () => {
-                var initializeSystem = new InitializeSystemSpy();
-                initializeSystem.didInitialize.should_be(0);
-                initializeSystem.Initialize();
-                initializeSystem.didInitialize.should_be(1);
+                var system = new InitializeSystemSpy();
+                system.didInitialize.should_be(0);
+                system.Initialize();
+                system.didInitialize.should_be(1);
             };
 
             it["executes ExecuteSystemSpy"] = () => {
-                var executeSystem = new ExecuteSystemSpy();
-                executeSystem.didExecute.should_be(0);
-                executeSystem.Execute();
-                executeSystem.didExecute.should_be(1);
+                var system = new ExecuteSystemSpy();
+                system.didExecute.should_be(0);
+                system.Execute();
+                system.didExecute.should_be(1);
             };
 
             it["cleans up CleanupSystemSpy"] = () => {
-                var cleanupSystem = new CleanupSystemSpy();
-                cleanupSystem.didCleanup.should_be(0);
-                cleanupSystem.Cleanup();
-                cleanupSystem.didCleanup.should_be(1);
+                var system = new CleanupSystemSpy();
+                system.didCleanup.should_be(0);
+                system.Cleanup();
+                system.didCleanup.should_be(1);
             };
 
-            it["initializes and executes InitializeExecuteSystemSpy"] = () => {
-                var system = new InitializeExecuteCleanupSystemSpy();
+            it["deinitializes up DeinitializeSystemSpy"] = () => {
+                var system = new DeinitializeSystemSpy();
+                system.didDeinitialize.should_be(0);
+                system.Deinitialize();
+                system.didDeinitialize.should_be(1);
+            };
+
+            it["initializes and executes and cleans up and deinitializes InitializeExecuteCleanupDeinitializeSystemSpy"] = () => {
+                var system = new InitializeExecuteCleanupDeinitializeSystemSpy();
                 system.didInitialize.should_be(0);
                 system.didExecute.should_be(0);
                 system.didCleanup.should_be(0);
+                system.didDeinitialize.should_be(0);
                 system.Initialize();
                 system.Execute();
                 system.Cleanup();
+                system.Deinitialize();
                 system.didInitialize.should_be(1);
                 system.didExecute.should_be(1);
                 system.didCleanup.should_be(1);
+                system.didDeinitialize.should_be(1);
             };
 
             it["initializes ReactiveSystemSpy"] = () => {
@@ -113,15 +123,17 @@ class describe_Systems : nspec {
                 system.didCleanup.should_be(1);
             };
 
-            it["initializes and executes and cleans up IInitializeSystem, IExecuteSystem, ICleanupSystem"] = () => {
-                var system = new InitializeExecuteCleanupSystemSpy();
+            it["initializes and executes and cleans up and deinitializes IInitializeSystem, IExecuteSystem, ICleanupSystem, IDeinitializeSystem"] = () => {
+                var system = new InitializeExecuteCleanupDeinitializeSystemSpy();
                 systems.Add(system);
                 systems.Initialize();
                 systems.Execute();
                 systems.Cleanup();
+                systems.Deinitialize();
                 system.didInitialize.should_be(1);
                 system.didExecute.should_be(1);
                 system.didCleanup.should_be(1);
+                system.didDeinitialize.should_be(1);
             };
 
             it["initializes and executes and cleans up ReactiveSystem"] = () => {
@@ -132,11 +144,13 @@ class describe_Systems : nspec {
                 systems.Execute();
                 systems.Execute();
                 systems.Cleanup();
+                systems.Deinitialize();
 
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
                 spy.didInitialize.should_be(1);
                 spy.didExecute.should_be(1);
                 spy.didCleanup.should_be(1);
+                spy.didDeinitialize.should_be(1);
             };
 
             it["clears reactive systems"] = () => {

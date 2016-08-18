@@ -8,11 +8,12 @@ public interface IReactiveSubSystemSpy {
     Entity[] entities { get; }
 }
 
-public class ReactiveSubSystemSpy : IReactiveSubSystemSpy, IInitializeSystem, IReactiveSystem, ICleanupSystem {
+public class ReactiveSubSystemSpy : IReactiveSubSystemSpy, IInitializeSystem, IReactiveSystem, ICleanupSystem, IDeinitializeSystem {
 
     public int didExecute { get { return _didExecute; } }
     public int didInitialize { get { return _didInitialize; } }
     public int didCleanup { get { return _didCleanup; } }
+    public int didDeinitialize { get { return _didDeinitialize; } }
     public Entity[] entities { get { return _entities; } }
 
     public Action<List<Entity>> executeAction;
@@ -20,6 +21,7 @@ public class ReactiveSubSystemSpy : IReactiveSubSystemSpy, IInitializeSystem, IR
     int _didExecute;
     int _didInitialize;
     int _didCleanup;
+    int _didDeinitialize;
     Entity[] _entities;
 
     readonly IMatcher _matcher;
@@ -47,6 +49,10 @@ public class ReactiveSubSystemSpy : IReactiveSubSystemSpy, IInitializeSystem, IR
     
     public void Cleanup() {
         _didCleanup += 1;
+    }
+
+    public void Deinitialize() {
+        _didDeinitialize += 1;
     }
 }
 

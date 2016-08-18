@@ -88,6 +88,7 @@
     <Compile Include="Entitas\EntityIndex.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs" />
     <Compile Include="Entitas\Interfaces\ICleanupSystem.cs" />
+    <Compile Include="Entitas\Interfaces\IDeinitializeSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
