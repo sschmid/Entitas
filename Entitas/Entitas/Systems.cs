@@ -9,11 +9,13 @@ namespace Entitas {
 
         protected readonly List<IInitializeSystem> _initializeSystems;
         protected readonly List<IExecuteSystem> _executeSystems;
+        protected readonly List<ICleanupSystem> _cleanupSystems;
 
         /// Creates a new Systems instance.
         public Systems() {
             _initializeSystems = new List<IInitializeSystem>();
             _executeSystems = new List<IExecuteSystem>();
+            _cleanupSystems = new List<ICleanupSystem>();
         }
 
         /// Creates a new instance of the specified type and adds it to the systems list.
@@ -29,6 +31,7 @@ namespace Entitas {
         /// Adds the system instance to the systems list.
         public virtual Systems Add(ISystem system) {
             var reactiveSystem = system as ReactiveSystem;
+
             var initializeSystem = reactiveSystem != null
                 ? reactiveSystem.subsystem as IInitializeSystem
                 : system as IInitializeSystem;
@@ -40,6 +43,14 @@ namespace Entitas {
             var executeSystem = system as IExecuteSystem;
             if (executeSystem != null) {
                 _executeSystems.Add(executeSystem);
+            }
+
+            var cleanupSystem = reactiveSystem != null
+                ? reactiveSystem.subsystem as ICleanupSystem
+                : system as ICleanupSystem;
+
+            if (cleanupSystem != null) {
+                _cleanupSystems.Add(cleanupSystem);
             }
 
             return this;
@@ -56,6 +67,13 @@ namespace Entitas {
         public virtual void Execute() {
             for (int i = 0, exeSysCount = _executeSystems.Count; i < exeSysCount; i++) {
                 _executeSystems[i].Execute();
+            }
+        }
+
+        /// Calls Cleanup() on all ICleanupSystem, ReactiveSystem and other nested Systems instances in the order you added them.
+        public virtual void Cleanup() {
+            for (int i = 0, cleanupSysCount = _cleanupSystems.Count; i < cleanupSysCount; i++) {
+                _cleanupSystems[i].Cleanup();
             }
         }
 
