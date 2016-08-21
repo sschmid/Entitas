@@ -48,7 +48,7 @@ namespace Entitas.Unity {
         public static bool Foldout(bool foldout, string content, GUIStyle style, int leftMargin = DEFAULT_FOLDOUT_MARGIN) {
             BeginHorizontal();
             GUILayout.Space(leftMargin);
-            foldout = EditorGUILayout.Foldout(foldout, content);
+            foldout = EditorGUILayout.Foldout(foldout, content, style);
             EndHorizontal();
             return foldout;
         }
