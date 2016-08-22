@@ -1,34 +1,36 @@
-﻿using NSpec;
-using Entitas.CodeGenerator;
-using System;
+﻿using System;
 using System.Linq;
+using Entitas.CodeGenerator;
 using My.Namespace;
+using NSpec;
 
 class describe_ComponentIndicesGenerator : nspec {
 
     const bool logResults = false;
 
-    static void generates(Type type, string lookupName, string lookupCode) {
-        generates(new [] { type }, lookupName, lookupCode);
+    static void generates(Type type, string expectedLookupName, string expectedLookupCode) {
+        generates(new[] { type }, expectedLookupName, expectedLookupCode);
     }
 
-    static void generates(Type[] types, string lookupName, string lookupCode) {
-        generates(types, new [] { lookupName }, new [] { lookupCode });
+    static void generates(Type[] types, string expectedLookupName, string expectedLookupCode) {
+        generates(types, new[] { expectedLookupName }, new[] { expectedLookupCode });
     }
 
-    static void generates(Type[] types, string[] lookupNames, string[] lookupCodes) {
+    static void generates(Type[] types, string[] expectedLookupNames, string[] expectedLookupCodes) {
         var infos = TypeReflectionProvider.GetComponentInfos(types);
+
         var files = new ComponentIndicesGenerator().Generate(infos);
-        files.Length.should_be(lookupNames.Length);
 
-        for (int i = 0; i < lookupNames.Length; i++) {
-            var lookupName = lookupNames[i];
-            var expectedLookupCode = lookupCodes[i].ToUnixLineEndings();
+        files.Length.should_be(expectedLookupNames.Length);
 
-            files.Any(f => f.fileName == lookupName).should_be_true();
-            var file = files.Single(f => f.fileName == lookupName);
-            #pragma warning disable
-            if (logResults) {
+        for(int i = 0; i < expectedLookupNames.Length; i++) {
+            var expectedLookupName = expectedLookupNames[i];
+            var expectedLookupCode = expectedLookupCodes[i].ToUnixLineEndings();
+
+            files.Any(f => f.fileName == expectedLookupName).should_be_true();
+            var file = files.Single(f => f.fileName == expectedLookupName);
+#pragma warning disable
+            if(logResults) {
                 Console.WriteLine("should:\n" + expectedLookupCode);
                 Console.WriteLine("was:\n" + file.fileContent);
             }
@@ -36,16 +38,17 @@ class describe_ComponentIndicesGenerator : nspec {
         }
     }
 
-    static void generatesEmptyLookup(string[] poolNames, string[] lookupNames, string[] lookupCodes) {
+    static void generatesEmptyLookup(string[] poolNames, string[] expectedLookupNames, string[] expectedLookupCodes) {
         var files = new ComponentIndicesGenerator().Generate(poolNames);
         files.Length.should_be(poolNames.Length);
 
-        for (int i = 0; i < lookupNames.Length; i++) {
-            var lookupName = lookupNames[i];
-            var expectedLookupCode = lookupCodes[i].ToUnixLineEndings();
-            files.Any(f => f.fileName == lookupName).should_be_true();
-            var file = files.First(f => f.fileName == lookupName);
-            if (logResults) {
+        for(int i = 0; i < expectedLookupNames.Length; i++) {
+            var expectedLookupName = expectedLookupNames[i];
+            var expectedLookupCode = expectedLookupCodes[i].ToUnixLineEndings();
+
+            files.Any(f => f.fileName == expectedLookupName).should_be_true();
+            var file = files.First(f => f.fileName == expectedLookupName);
+            if(logResults) {
                 Console.WriteLine("should:\n" + expectedLookupCode);
                 Console.WriteLine("was:\n" + file.fileContent);
             }
@@ -132,7 +135,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["ignores [DontGenerate(false)]"] = () => {
-            generates(new [] {
+            generates(new[] {
                 typeof(SomeComponent),
                 typeof(DontGenerateIndexComponent)
             }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
@@ -154,10 +157,10 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates ids for all types ordered alphabetically"] = () => {
-            generates(new [] {
-                typeof(SomeComponent),
-                typeof(DontGenerateComponent)
-            }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
+            generates(new[] {
+                    typeof(SomeComponent),
+                    typeof(DontGenerateComponent)
+                }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
     public const int DontGenerate = 0;
     public const int Some = 1;
@@ -179,7 +182,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates empty lookup with total components when for default pool"] = () => {
-            generatesEmptyLookup(new [] { CodeGenerator.DEFAULT_POOL_NAME }, new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
+            generatesEmptyLookup(new[] { CodeGenerator.DEFAULT_POOL_NAME }, new[] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new[] { @"public static class ComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -190,9 +193,11 @@ class describe_ComponentIndicesGenerator : nspec {
     };
 }" });
         };
+
+
 
         it["generates empty lookup with total components when for pool names"] = () => {
-            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class MetaComponentIds {
+            generatesEmptyLookup(new[] { "Meta" }, new[] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new[] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -204,10 +209,12 @@ class describe_ComponentIndicesGenerator : nspec {
 }" });
         };
 
+
+
         it["generates multiple empty lookup with total components when for pool names"] = () => {
-            generatesEmptyLookup(new [] { "Meta", "Core" },
-                new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG },
-                new [] { @"public static class MetaComponentIds {
+            generatesEmptyLookup(new[] { "Meta", "Core" },
+                new[] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG },
+                new[] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -228,13 +235,15 @@ class describe_ComponentIndicesGenerator : nspec {
 }" });
         };
 
+
+
         context["when component is in multiple pools"] = () => {
 
             it["rearranges ids to have the same index in every lookup (2 pools)"] = () => {
-                generates(new [] {
-                    typeof(AComponent),
-                    typeof(BComponent)
-                }, new [] { "PoolAComponentIds", "PoolBComponentIds" }, new [] {
+                generates(new[] {
+                        typeof(AComponent),
+                        typeof(BComponent)
+                    }, new[] { "PoolAComponentIds", "PoolBComponentIds" }, new[] {
                     @"public static class PoolAComponentIds {
     public const int B = 0;
     public const int A = 1;
@@ -267,20 +276,22 @@ class describe_ComponentIndicesGenerator : nspec {
                 });
             };
 
+
+
             it["rearranges ids to have the same index in every lookup (3 pools)"] = () => {
-                generates(new [] {
-                    typeof(AComponent),
-                    typeof(BComponent),
-                    typeof(CComponent),
-                    typeof(DComponent),
-                    typeof(EComponent),
-                    typeof(FComponent)
-                }, new [] {
-                    "PoolAComponentIds",
-                    "PoolBComponentIds",
-                    "PoolCComponentIds",
-                }, new [] {
-                    @"public static class PoolAComponentIds {
+                generates(new[] {
+                        typeof(AComponent),
+                        typeof(BComponent),
+                        typeof(CComponent),
+                        typeof(DComponent),
+                        typeof(EComponent),
+                        typeof(FComponent)
+                    }, new[] {
+                        "PoolAComponentIds",
+                        "PoolBComponentIds",
+                        "PoolCComponentIds",
+                    }, new[] {
+                        @"public static class PoolAComponentIds {
     public const int C = 0;
     public const int B = 1;
     public const int A = 2;
@@ -339,9 +350,75 @@ class describe_ComponentIndicesGenerator : nspec {
         typeof(DComponent),
         typeof(FComponent)
     };
-}"
-                });
-            };        };
+}"              });
+            };
+
+
+
+            it["rearranges ids to have the same index in every lookup (#124)"] = () => {
+                generates(new[] {
+                        typeof(DComponent),
+                        typeof(GComponent),
+                        typeof(BComponent),
+                    }, new[] {
+                        "PoolAComponentIds",
+                        "PoolBComponentIds",
+                        "PoolCComponentIds",
+                    }, new[] {
+                @"public static class PoolAComponentIds {
+    public const int B = 0;
+    public const int G = 2;
+
+    public const int TotalComponents = 3;
+
+    public static readonly string[] componentNames = {
+        ""B"",
+        null,
+        ""G""
+    };
+
+    public static readonly System.Type[] componentTypes = {
+        typeof(BComponent),
+        null,
+        typeof(GComponent)
+    };
+}",
+                @"public static class PoolBComponentIds {
+    public const int B = 0;
+    public const int D = 1;
+
+    public const int TotalComponents = 2;
+
+    public static readonly string[] componentNames = {
+        ""B"",
+        ""D""
+    };
+
+    public static readonly System.Type[] componentTypes = {
+        typeof(BComponent),
+        typeof(DComponent)
+    };
+}",
+                @"public static class PoolCComponentIds {
+    public const int D = 1;
+    public const int G = 2;
+
+    public const int TotalComponents = 3;
+
+    public static readonly string[] componentNames = {
+        null,
+        ""D"",
+        ""G""
+    };
+
+    public static readonly System.Type[] componentTypes = {
+        null,
+        typeof(DComponent),
+        typeof(GComponent)
+    };
+}"              });
+            };
+        };
     }
 }
 

@@ -32,8 +32,8 @@ namespace Entitas.CodeGenerator {
                 acc + string.Format(CREATE_POOL_TEMPLATE, poolName, poolName.PoolPrefix(), poolName.PoolPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
             );
 
-            var allPoolsList = string.Join(", ", poolNames.Select(p => p.LowercaseFirst()).ToArray());
-            var poolFields = string.Join("\n", poolNames.Select(p => "        public Pool " + p.LowercaseFirst() + ";").ToArray());
+            var allPoolsList = string.Join(", ", poolNames.Select(poolName => poolName.LowercaseFirst()).ToArray());
+            var poolFields = string.Join("\n", poolNames.Select(poolName => "        public Pool " + poolName.LowercaseFirst() + ";").ToArray());
 
             return new[] { new CodeGenFile(
                 "Pools",

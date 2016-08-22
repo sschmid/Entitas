@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
+
     public class ComponentIndicesGenerator : IPoolCodeGenerator, IComponentCodeGenerator {
 
         // Important: This method should be called before Generate(componentInfos)
@@ -42,37 +42,53 @@ namespace Entitas.CodeGenerator {
                 .ToDictionary(info => info, info => info.ComponentLookupTags())
                 .OrderByDescending(kv => kv.Value.Length);
 
-            return orderedComponentInfoToLookupTagsMap
+            var lookupTagToComponentInfosMap = orderedComponentInfoToLookupTagsMap
                 .Aggregate(new Dictionary<string, ComponentInfo[]>(), (map, kv) => {
                     var info = kv.Key;
                     var lookupTags = kv.Value;
                     var componentIsAssignedToMultiplePools = lookupTags.Length > 1;
                     var incrementIndex = false;
-                    foreach (var lookupTag in lookupTags) {
-                        if (!map.ContainsKey(lookupTag)) {
+                    foreach(var lookupTag in lookupTags) {
+                        if(!map.ContainsKey(lookupTag)) {
                             map.Add(lookupTag, new ComponentInfo[componentInfos.Length]);
                         }
 
                         var infos = map[lookupTag];
-                        if (componentIsAssignedToMultiplePools) {
+                        if(componentIsAssignedToMultiplePools) {
                             // Component has multiple lookupTags. Set at current index in all lookups.
                             infos[currentIndex] = info;
                             incrementIndex = true;
                         } else {
                             // Component has only one lookupTag. Insert at next free slot.
-                            for (int i = 0; i < infos.Length; i++) {
-                                if (infos[i] == null) {
+                            for(int i = 0; i < infos.Length; i++) {
+                                if(infos[i] == null) {
                                     infos[i] = info;
                                     break;
                                 }
                             }
                         }
                     }
-                    if (incrementIndex) {
+                    if(incrementIndex) {
                         currentIndex++;
                     }
+
                     return map;
                 });
+
+
+            foreach(var key in lookupTagToComponentInfosMap.Keys.ToArray()) {
+                var infoList = lookupTagToComponentInfosMap[key].ToList();
+                while(infoList.Count != 0) {
+                    if(infoList[infoList.Count - 1] == null) {
+                        infoList.RemoveAt(infoList.Count - 1);
+                    } else {
+                        break;
+                    }
+                }
+                lookupTagToComponentInfosMap[key] = infoList.ToArray();
+            }
+
+            return lookupTagToComponentInfosMap;
         }
 
         static string generateIndicesLookup(string lookupTag, ComponentInfo[] componentInfos) {
@@ -91,27 +107,30 @@ namespace Entitas.CodeGenerator {
             const string fieldFormat = "    public const int {0} = {1};\n";
             const string totalFormat = "    public const int TotalComponents = {0};";
             var code = string.Empty;
-            for (int i = 0; i < componentInfos.Length; i++) {
+            for(int i = 0; i < componentInfos.Length; i++) {
                 var info = componentInfos[i];
-                if (info != null) {
+                if(info != null) {
                     code += string.Format(fieldFormat, info.typeName.RemoveComponentSuffix(), i);
                 }
             }
 
-            var totalComponents = string.Format(totalFormat, componentInfos.Count(info => info != null));
+            var totalComponents = string.Format(totalFormat, componentInfos.Length);
             return code + "\n" + totalComponents;
         }
 
         static string addComponentNames(ComponentInfo[] componentInfos) {
             const string format = "        \"{1}\",\n";
+            const string nullFormat = "        null,\n";
             var code = string.Empty;
-            for (int i = 0; i < componentInfos.Length; i++) {
+            for(int i = 0; i < componentInfos.Length; i++) {
                 var info = componentInfos[i];
-                if (info != null) {
+                if(info != null) {
                     code += string.Format(format, i, info.typeName.RemoveComponentSuffix());
+                } else {
+                    code += nullFormat;
                 }
             }
-            if (code.EndsWith(",\n")) {
+            if(code.EndsWith(",\n")) {
                 code = code.Remove(code.Length - 2) + "\n";
             }
 
@@ -123,14 +142,17 @@ namespace Entitas.CodeGenerator {
 
         static string addComponentTypes(ComponentInfo[] componentInfos) {
             const string format = "        typeof({1}),\n";
+            const string nullFormat = "        null,\n";
             var code = string.Empty;
-            for (int i = 0; i < componentInfos.Length; i++) {
+            for(int i = 0; i < componentInfos.Length; i++) {
                 var info = componentInfos[i];
-                if (info != null) {
+                if(info != null) {
                     code += string.Format(format, i, info.fullTypeName);
+                } else {
+                    code += nullFormat;
                 }
             }
-            if (code.EndsWith(",\n")) {
+            if(code.EndsWith(",\n")) {
                 code = code.Remove(code.Length - 2) + "\n";
             }
 
