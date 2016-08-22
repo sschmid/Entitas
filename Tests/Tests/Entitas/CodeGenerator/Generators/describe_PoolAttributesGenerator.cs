@@ -5,11 +5,11 @@ using System.Linq;
 class describe_PoolAttributesGenerator : nspec {
 
     void when_generating() {
-        it["generates nothing if input is empty"] = () => new PoolAttributesGenerator().Generate(new string[0], new ComponentInfo[0]).Length.should_be(0);
-        it["doesn't generate for default pool"] = () => new PoolAttributesGenerator().Generate(new [] { CodeGenerator.DEFAULT_POOL_NAME }, new ComponentInfo[0]).Length.should_be(0);
+        it["generates nothing if input is empty"] = () => new PoolAttributesGenerator().Generate(new string[0]).Length.should_be(0);
+        it["doesn't generate for default pool"] = () => new PoolAttributesGenerator().Generate(new [] { CodeGenerator.DEFAULT_POOL_NAME }).Length.should_be(0);
 
         it["generates a PoolAttribute"] = () => {
-            var files = new PoolAttributesGenerator().Generate(new [] { "metaGame" }, new ComponentInfo[0]);
+            var files = new PoolAttributesGenerator().Generate(new [] { "metaGame" });
             files.Length.should_be(1);
             var file = files[0];
             file.fileName.should_be("MetaGameAttribute");
@@ -25,7 +25,7 @@ public class MetaGameAttribute : PoolAttribute {
 
 
         it["generates multiple PoolAttributes"] = () => {
-            var files = new PoolAttributesGenerator().Generate(new [] { "MetaGame", "UI" }, new ComponentInfo[0]);
+            var files = new PoolAttributesGenerator().Generate(new [] { "MetaGame", "UI" });
             files.Length.should_be(2);
 
             files.Any(f => f.fileName == "MetaGameAttribute").should_be_true();

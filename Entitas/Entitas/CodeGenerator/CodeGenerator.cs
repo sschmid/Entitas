@@ -27,7 +27,7 @@ namespace Entitas.CodeGenerator {
             var componentInfos = provider.componentInfos;
 
             foreach (var generator in codeGenerators.OfType<IPoolCodeGenerator>()) {
-                var files = generator.Generate(provider.poolNames, componentInfos);
+                var files = generator.Generate(provider.poolNames);
                 generatedFiles.AddRange(files);
                 writeFiles(directory, files);
             }

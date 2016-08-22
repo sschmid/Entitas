@@ -1,102 +1,45 @@
 ﻿using System.Linq;
-using Entitas.CodeGenerator;
-using Entitas.Serialization;
 
 namespace Entitas.CodeGenerator {
+
     public class PoolsGenerator : IPoolCodeGenerator {
 
-        const string CLASS_TEMPLATE = @"using Entitas;
+        const string CLASS_TEMPLATE = @"namespace Entitas {{
 
-public static class Pools {{{0}{1}
-}}";
-        
-        const string ALL_POOLS_GETTER = @"
+    public partial class Pools {{
+{0}
+        public Pool[] allPools {{ get {{ return new[] {{ {1} }}; }} }}
 
-    static Pool[] _allPools;
+{2}
+    }}
+}}
+";
 
-    public static Pool[] allPools {{
-        get {{
-            if (_allPools == null) {{
-                _allPools = new [] {{ {0} }};
-            }}
+        const string CREATE_POOL_TEMPLATE = @"
+        public static Pool Create{1}Pool() {{
+            var pool = new Pool({2}.TotalComponents, 0, new PoolMetaData(""{0}"", {2}.componentNames, {2}.componentTypes));
+            #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+            var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(pool);
+            UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
+            #endif
 
-            return _allPools;
+            return pool;
         }}
-    }}";
+";
 
-        const string INDEX_KEY = @"                _$poolName.AddEntityIndex($Ids.$ComponentName.ToString(), new EntityIndex<$MemberType>($PoolPrefixMatcher.{2}, c => ({4}(c).{5}));";
+        public CodeGenFile[] Generate(string[] poolNames) {
+            var createPoolMethods = poolNames.Aggregate(string.Empty, (acc, poolName) =>
+                acc + string.Format(CREATE_POOL_TEMPLATE, poolName, poolName.PoolPrefix(), poolName.PoolPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
+            );
 
-        const string GETTER = @"
+            var allPoolsList = string.Join(", ", poolNames.Select(p => p.LowercaseFirst()).ToArray());
+            var poolFields = string.Join("\n", poolNames.Select(p => "        public Pool " + p.LowercaseFirst() + ";").ToArray());
 
-    static Pool _$poolName;
-
-    public static Pool $poolName {
-        get {
-            if (_$poolName == null) {
-                _$poolName = new Pool($Ids.TotalComponents, 0, new PoolMetaData(""$PoolNameWithSpace"", $Ids.componentNames, $Ids.componentTypes));
-$entityIndices
-                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                if (UnityEngine.Application.isPlaying) {
-                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_$poolName);
-                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-                }
-                #endif
-            }
-
-            return _$poolName;
-        }
-    }";
-
-        public CodeGenFile[] Generate(string[] poolNames, ComponentInfo[] infos) {
-            var allPools = string.Format(ALL_POOLS_GETTER,
-                string.Join(", ", poolNames.Select(poolName => poolName.LowercaseFirst()).ToArray()));
-
-            var getters = poolNames.Aggregate(string.Empty, (acc, poolName) =>
-                acc + buildString(poolName, infos, GETTER, false));
-
-            return new [] { new CodeGenFile("Pools", string.Format(CLASS_TEMPLATE, allPools, getters), GetType().FullName) };
-        }
-
-        static string buildString(string poolName, ComponentInfo[] infos, string format, bool ignoreEntityIndices) {
-            format = createFormatString(format);
-
-            var a0_poolName = poolName.LowercaseFirst();
-            var a1_poolPrefix = poolName.IsDefaultPoolName() ? string.Empty : poolName.PoolPrefix().UppercaseFirst();
-            var a2_poolPrefixWithSpace = a1_poolPrefix + (poolName.IsDefaultPoolName() ? string.Empty : " ") + CodeGenerator.DEFAULT_POOL_NAME;
-            var a3_ids = poolName.PoolPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG;
-            var a4_entityIndices = ignoreEntityIndices ? string.Empty : getEntityIndices(poolName, infos);
-
-            return string.Format(format, a0_poolName, a1_poolPrefix, a2_poolPrefixWithSpace, a3_ids, a4_entityIndices);
-        }
-
-        static string getEntityIndices(string poolName, ComponentInfo[] infos) {
-            var infosWithIndexKey = infos
-                .Where(info => info.pools.Contains(poolName))
-                .Where(info => info.memberInfos.Count > 0)
-                .Where(info => info.memberInfos[0].attributes.Any(attr => attr.attribute as IndexKeyAttribute != null));
-
-            foreach (var info in infosWithIndexKey) {
-
-                // TODO for each memeber info
-                var memberInfo = info.memberInfos[0];
-
-                return buildString(poolName, infos, INDEX_KEY, true);
-//                return string.Format(format, poolName.LowercaseFirst(), poolName, info.typeName.RemoveComponentSuffix(),
-//                    memberInfo.type.ToCompilableString(), info.fullTypeName, info.memberInfos[0].name) + "\n";
-            }
-
-            return string.Empty;
-        }
-
-        static string createFormatString(string format) {
-            return format.Replace("{", "{{")
-                .Replace("}", "}}")
-                .Replace("$poolName", "{0}")
-                .Replace("$PoolPrefix", "{1}")
-                .Replace("$PoolNameWithSpace", "{2}")
-                .Replace("$Ids", "{3}")
-                .Replace("$entityIndices", "{4}")
-                .Replace("$ComponentName", "{5}");
+            return new[] { new CodeGenFile(
+                "Pools",
+                string.Format(CLASS_TEMPLATE, createPoolMethods, allPoolsList, poolFields),
+                GetType().FullName
+            )};
         }
     }
 }

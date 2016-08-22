@@ -4,7 +4,7 @@ namespace Entitas.CodeGenerator {
 
     public class PoolAttributesGenerator : IPoolCodeGenerator {
 
-        public CodeGenFile[] Generate(string[] poolNames, ComponentInfo[] componentInfos) {
+        public CodeGenFile[] Generate(string[] poolNames) {
             return poolNames
                 .Where(poolName => !poolName.IsDefaultPoolName())
                 .Select(poolName => poolName.UppercaseFirst())

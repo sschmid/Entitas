@@ -221,7 +221,7 @@ class describe_Pool : nspec {
                     p.should_be_same(pool);
                     entity.should_be_same(e);
                     entity.HasComponentA().should_be_true();
-                    entity.IsEnabled().should_be_true();
+                    entity.isEnabled.should_be_true();
                 };
                 pool.DestroyEntity(e);
                 didDispatch.should_be(1);
@@ -234,7 +234,7 @@ class describe_Pool : nspec {
                     p.should_be_same(pool);
                     entity.should_be_same(e);
                     entity.HasComponentA().should_be_false();
-                    entity.IsEnabled().should_be_false();
+                    entity.isEnabled.should_be_false();
                 };
                 pool.DestroyEntity(e);
                 didDispatch.should_be(1);

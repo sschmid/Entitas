@@ -7,7 +7,7 @@ namespace Entitas.CodeGenerator {
 
         // Important: This method should be called before Generate(componentInfos)
         // This will generate empty lookups for all pools.
-        public CodeGenFile[] Generate(string[] poolNames, ComponentInfo[] infos) {
+        public CodeGenFile[] Generate(string[] poolNames) {
             var emptyInfos = new ComponentInfo[0];
             var generatorName = GetType().FullName;
             return poolNames

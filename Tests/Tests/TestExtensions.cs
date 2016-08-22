@@ -1,14 +1,9 @@
-﻿using Entitas;
+﻿using System.Collections.Generic;
+using Entitas;
 using NSpec;
-using System.Collections.Generic;
-
-public static class EntityExtensions {
-    public static bool IsEnabled(this Entity entity) {
-        return entity.isEnabled;
-    }
-}
 
 public static class TestExtensions {
+
     public static void Fail(this nspec spec) {
         "but did".should_be("should not execute");
     }

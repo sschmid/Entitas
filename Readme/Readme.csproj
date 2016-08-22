@@ -212,6 +212,12 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\ICleanupSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\ICleanupSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\IDeinitializeSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\IDeinitializeSystem.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

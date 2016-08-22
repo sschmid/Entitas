@@ -21,6 +21,7 @@ class describe_TypeReflectionProvider : nspec {
     void when_providing() {
 
         context["pool names"] = () => {
+
             it["has default pool if pool names is empty"] = () => {
                 var provider = createProviderWithPoolName();
                 provider.poolNames.Length.should_be(1);
@@ -38,6 +39,7 @@ class describe_TypeReflectionProvider : nspec {
         context["component infos"] = () => {
 
             context["when type doesn't implement IComponent"] = () => {
+
                 it["creates a component for a class"] = () => {
                     var provider = createProviderWithTypes(typeof(SomeClass));
                     provider.componentInfos.Length.should_be(1);

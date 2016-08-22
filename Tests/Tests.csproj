@@ -331,6 +331,10 @@
       <Link>Linked Libraries\Entitas\Interfaces\IDeinitializeSystem.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\Fixtures\Systems\DeinitializeSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\describe_Pools.cs" />
+    <Compile Include="..\Entitas\Entitas\Pools.cs">
+      <Link>Linked Libraries\Entitas\Pools.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
