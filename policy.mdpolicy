@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PolicySet name="Entitas.mdpolicy">
-  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain">
-    <EolMarker>Unix</EolMarker>
-  </TextStylePolicy>
+  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
   <VersionControlPolicy inheritsSet="Mono" />
   <CSharpFormattingPolicy inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp">
+    <IndentSwitchSection>True</IndentSwitchSection>
     <NewLinesForBracesInTypes>False</NewLinesForBracesInTypes>
     <NewLinesForBracesInMethods>False</NewLinesForBracesInMethods>
     <SpacingAfterMethodDeclarationName>False</SpacingAfterMethodDeclarationName>
     <SpaceAfterMethodCallName>False</SpaceAfterMethodCallName>
+    <SpaceAfterControlFlowStatementKeyword>False</SpaceAfterControlFlowStatementKeyword>
     <SpaceBeforeOpenSquareBracket>False</SpaceBeforeOpenSquareBracket>
   </CSharpFormattingPolicy>
   <NameConventionPolicy>
@@ -138,12 +138,8 @@
     </Rules>
   </NameConventionPolicy>
   <ChangeLogPolicy inheritsSet="Mono" />
-  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp">
-    <EolMarker>Unix</EolMarker>
-  </TextStylePolicy>
-  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="application/xml">
-    <EolMarker>Unix</EolMarker>
-  </TextStylePolicy>
+  <TextStylePolicy inheritsSet="null" scope="text/x-csharp" />
+  <TextStylePolicy inheritsSet="null" scope="application/xml" />
   <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xml" />
   <StandardHeader>
     <Text />
@@ -153,9 +149,7 @@
     <DirectoryNamespaceAssociation>None</DirectoryNamespaceAssociation>
     <ResourceNamePolicy>FileName</ResourceNamePolicy>
   </DotNetNamingPolicy>
-  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-fsharp">
-    <EolMarker>Unix</EolMarker>
-  </TextStylePolicy>
+  <TextStylePolicy inheritsSet="null" scope="text/x-fsharp" />
   <FSharpFormattingPolicy scope="text/x-fsharp">
     <DefaultFormat>
       <IndentOnTryWith>False</IndentOnTryWith>

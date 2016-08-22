@@ -82,6 +82,8 @@ Global
 		$4.SpacingAfterMethodDeclarationName = False
 		$4.SpaceAfterMethodCallName = False
 		$4.SpaceBeforeOpenSquareBracket = False
+		$4.IndentSwitchSection = True
+		$4.SpaceAfterControlFlowStatementKeyword = False
 		$0.StandardHeader = $5
 		$5.Text = 
 		$5.IncludeInNewFiles = True
@@ -197,7 +199,7 @@ Global
 		$0.XmlFormattingPolicy = $29
 		$29.inheritsSet = Mono
 		$29.inheritsScope = application/xml
-		$29.scope = application/xml
+		$29.scope = application/config+xml
 		version = 1.0.0
 	EndGlobalSection
 EndGlobal
