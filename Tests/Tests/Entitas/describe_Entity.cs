@@ -6,16 +6,16 @@ class describe_Entity : nspec {
     readonly int[] _indicesA = { CID.ComponentA };
     readonly int[] _indicesAB = { CID.ComponentA, CID.ComponentB };
 
-    void assertHasComponentA(Entity e, IComponent component = null) {
-        if (component == null) {
-            component = Component.A;
+    void assertHasComponentA(Entity e, IComponent componentA = null) {
+        if (componentA == null) {
+            componentA = Component.A;
         }
 
-        e.GetComponentA().should_be_same(component);
+        e.GetComponentA().should_be_same(componentA);
 
         var components = e.GetComponents();
         components.Length.should_be(1);
-        components.should_contain(component);
+        components.should_contain(componentA);
 
         var indices = e.GetComponentIndices();
         indices.Length.should_be(1);
@@ -39,6 +39,7 @@ class describe_Entity : nspec {
     }
 
     void when_created() {
+
         Entity e = null;
         before = () => {
             e = this.CreateEntity();
@@ -65,7 +66,7 @@ class describe_Entity : nspec {
                 e.GetComponentA();
             });
 
-            it["gets total components count"] = () => {
+            it["gets total components count when empty"] = () => {
                 e.totalComponents.should_be(CID.TotalComponents);
             };
 
@@ -109,6 +110,7 @@ class describe_Entity : nspec {
         };
 
         context["when component added"] = () => {
+
             before = () => {
                 e.AddComponentA();
             };
@@ -145,6 +147,7 @@ class describe_Entity : nspec {
             };
 
             context["when adding another component"] = () => {
+
                 before = () => {
                     e.AddComponentB();
                 };
@@ -181,7 +184,7 @@ class describe_Entity : nspec {
 
                 it["can ToString"] = () => {
                     e.AddComponent(0, new SomeComponent());
-                    e.Retain(this); 
+                    e.Retain(this);
                     e.ToString().should_be("Entity_0(*1)(Some, ComponentA, ComponentB)");
                 };
             };
@@ -230,6 +233,7 @@ class describe_Entity : nspec {
         };
 
         context["events"] = () => {
+
             int didDispatch = 0;
 
             before = () => {
@@ -252,6 +256,7 @@ class describe_Entity : nspec {
 
             it["dispatches OnComponentRemoved when removing a component"] = () => {
                 e.AddComponentA();
+
                 e.OnComponentRemoved += (entity, index, component) => {
                     didDispatch += 1;
                     entity.should_be_same(e);
@@ -265,9 +270,21 @@ class describe_Entity : nspec {
                 didDispatch.should_be(1);
             };
 
+            it["dispatches OnComponentRemoved before pushing component to pool"] = () => {
+                e.AddComponentA();
+
+                e.OnComponentRemoved += (entity, index, component) => {
+                    var newComponent = entity.CreateComponent(index, component.GetType());
+                    component.should_not_be_same(newComponent);
+                };
+
+                e.RemoveComponentA();
+            };
+
             it["dispatches OnComponentReplaced when replacing a component"] = () => {
                 e.AddComponentA();
                 var newComponentA = new ComponentA();
+
                 e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => {
                     didDispatch += 1;
                     entity.should_be_same(e);
@@ -285,6 +302,7 @@ class describe_Entity : nspec {
             it["provides previous and new component OnComponentReplaced when replacing with different component"] = () => {
                 var prevComp = new ComponentA();
                 var newComp = new ComponentA();
+
                 e.OnComponentReplaced += (entity, index, previousComponent, newComponent) => {
                     didDispatch += 1;
                     entity.should_be_same(e);
@@ -320,6 +338,7 @@ class describe_Entity : nspec {
 
             it["dispatches OnComponentAdded when attempting to replace a component which hasn't been added"] = () => {
                 var newComponentA = new ComponentA();
+
                 e.OnComponentAdded += (entity, index, component) => {
                     didDispatch += 1;
                     entity.should_be_same(e);
@@ -335,6 +354,7 @@ class describe_Entity : nspec {
 
             it["dispatches OnComponentRemoved when replacing a component with null"] = () => {
                 e.AddComponentA();
+
                 e.OnComponentRemoved += (entity, index, component) => {
                     didDispatch += 1;
                     component.should_be_same(Component.A);
@@ -356,6 +376,7 @@ class describe_Entity : nspec {
         };
 
         context["reference counting"] = () => {
+
             it["retains entity"] = () => {
                 e.retainCount.should_be(0);
                 e.Retain(this);
@@ -397,6 +418,7 @@ class describe_Entity : nspec {
             });
 
             context["events"] = () => {
+
                 it["doesn't dispatch OnEntityReleased when retaining"] = () => {
                     e.OnEntityReleased += delegate { this.Fail(); };
                     e.Retain(this);
@@ -404,20 +426,26 @@ class describe_Entity : nspec {
 
                 it["dispatches OnEntityReleased when retain and release"] = () => {
                     var didDispatch = 0;
+
                     e.OnEntityReleased += entity => {
                         didDispatch += 1;
                         entity.should_be_same(e);
                     };
+
                     e.Retain(this);
                     e.Release(this);
+
+                    didDispatch.should_be(1);
                 };
             };
         };
 
         context["internal caching"] = () => {
+
             context["components"] = () => {
 
                 IComponent[] cache = null;
+
                 before = () => {
                     e.AddComponentA();
                     cache = e.GetComponents();
@@ -456,6 +484,7 @@ class describe_Entity : nspec {
             context["component indices"] = () => {
 
                 int[] cache = null;
+
                 before = () => {
                     e.AddComponentA();
                     cache = e.GetComponentIndices();
@@ -496,6 +525,7 @@ class describe_Entity : nspec {
                 context["when component was added"] = () => {
 
                     string cache = null;
+
                     before = () => {
                         e.AddComponentA();
                         cache = e.ToString();
@@ -545,12 +575,12 @@ class describe_Entity : nspec {
                         };
                         e.Release(this);
                     };
-                };
 
-                it["updates cache when RemoveAllComponents is called, even if entity has no components"] = () => {
-                    var str = e.ToString();
-                    e.RemoveAllComponents();
-                    e.ToString().should_not_be_same(str);
+                    it["updates cache when RemoveAllComponents is called, even if entity has no components"] = () => {
+                        cache = e.ToString();
+                        e.RemoveAllComponents();
+                        e.ToString().should_not_be_same(cache);
+                    };
                 };
             };
         };

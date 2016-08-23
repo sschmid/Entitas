@@ -337,6 +337,9 @@
     <Compile Include="Tests\Entitas\Systems\Fixtures\InitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Systems\Fixtures\MultiReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Systems\Fixtures\ReactiveSubSystemSpyBase.cs" />
+    <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">
+      <Link>Linked Libraries\Entitas\Extensions\EntityExtension.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

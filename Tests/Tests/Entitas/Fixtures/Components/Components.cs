@@ -3,7 +3,6 @@
 public class ComponentA : IComponent {}
 public class ComponentB : IComponent {}
 public class ComponentC : IComponent {}
-
 public class ComponentD : IComponent {}
 public class ComponentE : IComponent {}
 public class ComponentF : IComponent {}

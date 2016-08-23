@@ -5,7 +5,7 @@ using NSpec;
 public static class TestExtensions {
 
     public static void Fail(this nspec spec) {
-        "but did".should_be("should not execute");
+        "but did".should_be("should not happen");
     }
 
     public static Entity CreateEntity(this nspec spec) {

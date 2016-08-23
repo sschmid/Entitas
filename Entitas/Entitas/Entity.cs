@@ -144,7 +144,6 @@ namespace Entitas {
             if(replacement != previousComponent) {
                 _components[index] = replacement;
                 _componentsCache = null;
-                GetComponentPool(index).Push(previousComponent);
                 if(replacement != null) {
                     if(OnComponentReplaced != null) {
                         OnComponentReplaced(this, index, previousComponent, replacement);
@@ -156,6 +155,9 @@ namespace Entitas {
                         OnComponentRemoved(this, index, previousComponent);
                     }
                 }
+
+                GetComponentPool(index).Push(previousComponent);
+
             } else {
                 if(OnComponentReplaced != null) {
                     OnComponentReplaced(this, index, previousComponent, replacement);
