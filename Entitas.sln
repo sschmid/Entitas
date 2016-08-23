@@ -46,7 +46,7 @@ Global
 		$0.TextStylePolicy = $2
 		$2.inheritsSet = VisualStudio
 		$2.inheritsScope = text/plain
-		$2.scope = application/xml
+		$2.scope = text/x-csharp
 		$2.EolMarker = Unix
 		$0.TextStylePolicy = $3
 		$3.inheritsSet = VisualStudio
