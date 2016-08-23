@@ -6,7 +6,7 @@ class describe_Pool : nspec {
 
         Pool pool = null;
         before = () => {
-            pool = new Pool(CID.NumComponents);
+            pool = new Pool(CID.TotalComponents);
         };
 
         it["increments creationIndex"] = () => {
@@ -15,7 +15,7 @@ class describe_Pool : nspec {
         };
 
         it["starts with given creationIndex"] = () => {
-            new Pool(CID.NumComponents, 42, null).CreateEntity().creationIndex.should_be(42);
+            new Pool(CID.TotalComponents, 42, null).CreateEntity().creationIndex.should_be(42);
         };
 
         it["has no entities when no entities were created"] = () => {
@@ -34,7 +34,7 @@ class describe_Pool : nspec {
 
         it["has default PoolMetaData"] = () => {
             pool.metaData.poolName.should_be("Unnamed Pool");
-            pool.metaData.componentNames.Length.should_be(CID.NumComponents);
+            pool.metaData.componentNames.Length.should_be(CID.TotalComponents);
             for (int i = 0; i < pool.metaData.componentNames.Length; i++) {
                 pool.metaData.componentNames[i].should_be("Index " + i);
             }
@@ -42,7 +42,7 @@ class describe_Pool : nspec {
 
         it["creates component pools"] = () => {
             pool.componentPools.should_not_be_null();
-            pool.componentPools.Length.should_be(CID.NumComponents);
+            pool.componentPools.Length.should_be(CID.TotalComponents);
         };
 
         it["creates entity with component pools"] = () => {
@@ -516,7 +516,7 @@ class describe_Pool : nspec {
                 context["event timing"] = () => {
 
                     before = () => {
-                        pool = new Pool(CID.NumComponents);
+                        pool = new Pool(CID.TotalComponents);
                     };
 
                     it["dispatches group.OnEntityAdded events after all groups are updated"] = () => {
@@ -533,7 +533,7 @@ class describe_Pool : nspec {
                     };
 
                     it["dispatches group.OnEntityRemoved events after all groups are updated"] = () => {
-                        pool = new Pool(CID.NumComponents);
+                        pool = new Pool(CID.TotalComponents);
                         var groupB = pool.GetGroup(Matcher.AllOf(CID.ComponentB));
                         var groupA = pool.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
 

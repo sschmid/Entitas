@@ -13,7 +13,7 @@ class describe_GroupObserver : nspec {
         IMatcher matcherA = Matcher.AllOf(new[] { CID.ComponentA });
 
         before = () => {
-            _pool = new Pool(CID.NumComponents);
+            _pool = new Pool(CID.TotalComponents);
             groupA = _pool.GetGroup(matcherA);
         };
 

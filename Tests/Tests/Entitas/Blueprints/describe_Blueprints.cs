@@ -10,7 +10,7 @@ class describe_Blueprints : nspec {
         Entity entity = null;
 
         before = () => {
-            pool = new Pool(CID.NumComponents);
+            pool = new Pool(CID.TotalComponents);
             entity = pool.CreateEntity();
         };
 

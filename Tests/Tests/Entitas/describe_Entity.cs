@@ -48,7 +48,7 @@ class describe_Entity : nspec {
 
             it["has default PoolMetaData"] = () => {
                 e.poolMetaData.poolName.should_be("No Pool");
-                e.poolMetaData.componentNames.Length.should_be(CID.NumComponents);
+                e.poolMetaData.componentNames.Length.should_be(CID.TotalComponents);
                 e.poolMetaData.componentTypes.should_be_null();
                 for (int i = 0; i < e.poolMetaData.componentNames.Length; i++) {
                     e.poolMetaData.componentNames[i].should_be(i.ToString());
@@ -66,7 +66,7 @@ class describe_Entity : nspec {
             });
 
             it["gets total components count"] = () => {
-                e.totalComponents.should_be(CID.NumComponents);
+                e.totalComponents.should_be(CID.TotalComponents);
             };
 
             it["gets empty array of components when no components were added"] = () => {

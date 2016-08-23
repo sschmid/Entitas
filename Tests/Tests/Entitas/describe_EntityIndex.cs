@@ -11,7 +11,7 @@ class describe_EntityIndex : nspec {
         Group group = null;
 
         before = () => {
-            pool = new Pool(CID.NumComponents);
+            pool = new Pool(CID.TotalComponents);
             group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
             index = new PrimaryEntityIndex<string>(group, (e, c) => ((NameAgeComponent)c).name);
         };
@@ -103,7 +103,7 @@ class describe_EntityIndex : nspec {
         Group group = null;
 
         before = () => {
-            pool = new Pool(CID.NumComponents);
+            pool = new Pool(CID.TotalComponents);
             group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
             index = new EntityIndex<string>(group, (e, c) => ((NameAgeComponent)c).name);
         };
@@ -143,7 +143,7 @@ class describe_EntityIndex : nspec {
             it["has existing entity"] = () => {
                 var newIndex = new EntityIndex<string>(group, (e, c) => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name);
                 newIndex.GetEntities(name).Count.should_be(2);
-            };
+            };  
 
             it["releases and removes entity from index when component gets removed"] = () => {
                 entity1.RemoveComponent(CID.ComponentA);
@@ -180,7 +180,7 @@ class describe_EntityIndex : nspec {
         Group group = null;
 
         before = () => {
-            pool = new Pool(CID.NumComponents);
+            pool = new Pool(CID.TotalComponents);
         };
 
         it["gets last component that triggered adding entity to group"] = () => {

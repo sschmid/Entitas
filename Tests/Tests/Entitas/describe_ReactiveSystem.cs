@@ -47,7 +47,7 @@ class describe_ReactiveSystem : nspec {
         ReactiveSubSystemSpy subSystem = null;
 
         before = () => {
-            _pool = new Pool(CID.NumComponents);
+            _pool = new Pool(CID.TotalComponents);
         };
 
         context["OnEntityAdded"] = () => {
@@ -342,8 +342,8 @@ class describe_ReactiveSystem : nspec {
             Pool pool2 = null;
 
             before = () => {
-                pool1 = new Pool(CID.NumComponents);
-                pool2 = new Pool(CID.NumComponents);
+                pool1 = new Pool(CID.TotalComponents);
+                pool2 = new Pool(CID.TotalComponents);
 
                 var groupA = pool1.GetGroup(Matcher.AllOf(CID.ComponentA));
                 var groupB = pool2.GetGroup(Matcher.AllOf(CID.ComponentB));

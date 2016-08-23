@@ -14,6 +14,7 @@ class describe_Systems : nspec {
     void when_systems() {
 
         Pool pool = null;
+
         before = () => {
             pool = new Pool(10);
         };

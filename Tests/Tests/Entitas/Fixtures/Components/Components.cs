@@ -21,7 +21,7 @@ public static class CID {
     public const int ComponentC = 3;
     public const int ComponentD = 4;
 
-    public const int NumComponents = 5;
+    public const int TotalComponents = 5;
 }
 
 public static class EntityTestExtensions {

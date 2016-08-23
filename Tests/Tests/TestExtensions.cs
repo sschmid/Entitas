@@ -9,7 +9,7 @@ public static class TestExtensions {
     }
 
     public static Entity CreateEntity(this nspec spec) {
-        return new Entity(CID.NumComponents, new Stack<IComponent>[CID.NumComponents]);
+        return new Entity(CID.TotalComponents, new Stack<IComponent>[CID.TotalComponents]);
     }
 }
 

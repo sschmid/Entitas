@@ -48,7 +48,6 @@
     <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
-    <Compile Include="Tests\Entitas\describe_Systems.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0180.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0190.cs" />
@@ -77,13 +76,8 @@
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_SystemInfo.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_VisualDebuggingConfig.cs" />
     <Compile Include="Tests\Entitas\describe_TypeExtension.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteCleanupDeinitializeSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Components\Components.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Components\NameAgeComponent.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ExecuteSystemSpy.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\AnimatingComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\CustomPrefixComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\DontGenerateComponent.cs" />
@@ -253,7 +247,6 @@
     <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\Feature.cs">
       <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\Feature.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\Fixtures\Systems\GroupObserverSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\AbstractComponent.cs" />
     <Compile Include="Tests\Entitas\Blueprints\describe_Blueprints.cs" />
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\Blueprint.cs">
@@ -323,19 +316,26 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MultiplePoolAndDefaultPoolComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeStructComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
     <Compile Include="..\Entitas\Entitas\Interfaces\ICleanupSystem.cs">
       <Link>Linked Libraries\Entitas\Interfaces\ICleanupSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IDeinitializeSystem.cs">
       <Link>Linked Libraries\Entitas\Interfaces\IDeinitializeSystem.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\Fixtures\Systems\DeinitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\describe_Pools.cs" />
     <Compile Include="..\Entitas\Entitas\Pools.cs">
       <Link>Linked Libraries\Entitas\Pools.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple pools\GComponent.cs" />
+    <Compile Include="Tests\Entitas\Systems\describe_Systems.cs" />
+    <Compile Include="Tests\Entitas\Systems\Fixtures\ReactiveSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Systems\Fixtures\CleanupSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Systems\Fixtures\DeinitializeSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Systems\Fixtures\ExecuteSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Systems\Fixtures\GroupObserverSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Systems\Fixtures\InitializeExecuteCleanupDeinitializeSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Systems\Fixtures\InitializeSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Systems\Fixtures\MultiReactiveSubSystemSpy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -349,7 +349,6 @@
     <Folder Include="Linked Libraries\" />
     <Folder Include="Tests\Entitas\CodeGenerator\" />
     <Folder Include="Tests\Entitas.Unity\VisualDebugging\" />
-    <Folder Include="Tests\Entitas\Fixtures\Systems\" />
     <Folder Include="Tests\Entitas\Fixtures\Components\" />
     <Folder Include="Tests\Entitas\CodeGenerator\Fixtures\Components\" />
     <Folder Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\" />
@@ -358,6 +357,8 @@
     <Folder Include="Tests\Entitas.Unity\Blueprints\" />
     <Folder Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\" />
     <Folder Include="Tests\Entitas\Serialization\Configuration\" />
+    <Folder Include="Tests\Entitas\Systems\" />
+    <Folder Include="Tests\Entitas\Systems\Fixtures\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />
