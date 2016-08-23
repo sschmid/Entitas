@@ -11,13 +11,7 @@ class describe_PoolsGenerator : nspec {
     public partial class Pools {
 
         public static Pool CreatePool() {
-            var pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData(""Pool"", ComponentIds.componentNames, ComponentIds.componentTypes));
-            #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-            var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(pool);
-            UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-            #endif
-
-            return pool;
+            return CreatePool(""Pool"", ComponentIds.TotalComponents, ComponentIds.componentNames, ComponentIds.componentTypes);
         }
 
         public Pool[] allPools { get { return new[] { pool }; } }
@@ -32,13 +26,7 @@ class describe_PoolsGenerator : nspec {
     public partial class Pools {
 
         public static Pool CreateMetaPool() {
-            var pool = new Pool(MetaComponentIds.TotalComponents, 0, new PoolMetaData(""Meta"", MetaComponentIds.componentNames, MetaComponentIds.componentTypes));
-            #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-            var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(pool);
-            UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-            #endif
-
-            return pool;
+            return CreatePool(""Meta"", MetaComponentIds.TotalComponents, MetaComponentIds.componentNames, MetaComponentIds.componentTypes);
         }
 
         public Pool[] allPools { get { return new[] { meta }; } }
@@ -53,23 +41,11 @@ class describe_PoolsGenerator : nspec {
     public partial class Pools {
 
         public static Pool CreateMetaPool() {
-            var pool = new Pool(MetaComponentIds.TotalComponents, 0, new PoolMetaData(""Meta"", MetaComponentIds.componentNames, MetaComponentIds.componentTypes));
-            #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-            var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(pool);
-            UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-            #endif
-
-            return pool;
+            return CreatePool(""Meta"", MetaComponentIds.TotalComponents, MetaComponentIds.componentNames, MetaComponentIds.componentTypes);
         }
 
         public static Pool CreateCorePool() {
-            var pool = new Pool(CoreComponentIds.TotalComponents, 0, new PoolMetaData(""Core"", CoreComponentIds.componentNames, CoreComponentIds.componentTypes));
-            #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-            var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(pool);
-            UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-            #endif
-
-            return pool;
+            return CreatePool(""Core"", CoreComponentIds.TotalComponents, CoreComponentIds.componentNames, CoreComponentIds.componentTypes);
         }
 
         public Pool[] allPools { get { return new[] { meta, core }; } }
@@ -104,4 +80,3 @@ class describe_PoolsGenerator : nspec {
         it["generates multiple pools"] = () => generates(new[] { "Meta", "Core" }, coreMetaPool);
     }
 }
-

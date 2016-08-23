@@ -17,13 +17,7 @@ namespace Entitas.CodeGenerator {
 
         const string CREATE_POOL_TEMPLATE = @"
         public static Pool Create{1}Pool() {{
-            var pool = new Pool({2}.TotalComponents, 0, new PoolMetaData(""{0}"", {2}.componentNames, {2}.componentTypes));
-            #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-            var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(pool);
-            UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-            #endif
-
-            return pool;
+            return CreatePool(""{0}"", {2}.TotalComponents, {2}.componentNames, {2}.componentTypes);
         }}
 ";
 
