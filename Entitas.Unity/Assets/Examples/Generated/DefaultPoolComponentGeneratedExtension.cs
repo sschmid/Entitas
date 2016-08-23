@@ -6,8 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Entitas;
-
 namespace Entitas {
     public partial class Entity {
         static readonly DefaultPoolComponent defaultPoolComponent = new DefaultPoolComponent();

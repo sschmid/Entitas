@@ -8,7 +8,7 @@ class describe_EntitasErrorMessages : EntitasTest {
     static void printErrorMessage(Action action) {
         try {
             action();
-        } catch (Exception exception) {
+        } catch(Exception exception) {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("================================================================================");
             Console.WriteLine("Exception preview for: " + exception.GetType());
@@ -148,7 +148,7 @@ class describe_EntitasErrorMessages : EntitasTest {
         };
 
         context["CollectionExtension"] = () => {
-            
+
             it["get single entity when more than one exist"] = () => printErrorMessage(() => {
                 new Entity[2].SingleEntity();
             });

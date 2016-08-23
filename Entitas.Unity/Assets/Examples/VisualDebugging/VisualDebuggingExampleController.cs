@@ -6,7 +6,7 @@ using UnityEngine;
 public class VisualDebuggingExampleController : MonoBehaviour {
 
     void Start() {
-        var pool = Pools.visualDebugging;
+        var pool = Pools.sharedInstance.visualDebugging = Pools.CreateVisualDebuggingPool();
         pool.GetGroup(VisualDebuggingMatcher.Vector3);
         pool.GetGroup(VisualDebuggingMatcher.GameObject);
         pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
@@ -17,7 +17,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
 
         createTestEntityError(pool);
 
-        pool.CreateSystem<AReactiveSystem>();
+        pool.CreateSystem(new AReactiveSystem());
     }
 
     void createTestEntityError(Pool pool) {

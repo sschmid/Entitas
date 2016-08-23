@@ -7,7 +7,7 @@ class describe_Entity : nspec {
     readonly int[] _indicesAB = { CID.ComponentA, CID.ComponentB };
 
     void assertHasComponentA(Entity e, IComponent componentA = null) {
-        if (componentA == null) {
+        if(componentA == null) {
             componentA = Component.A;
         }
 
@@ -51,7 +51,7 @@ class describe_Entity : nspec {
                 e.poolMetaData.poolName.should_be("No Pool");
                 e.poolMetaData.componentNames.Length.should_be(CID.TotalComponents);
                 e.poolMetaData.componentTypes.should_be_null();
-                for (int i = 0; i < e.poolMetaData.componentNames.Length; i++) {
+                for(int i = 0; i < e.poolMetaData.componentNames.Length; i++) {
                     e.poolMetaData.componentNames[i].should_be(i.ToString());
                 }
             };

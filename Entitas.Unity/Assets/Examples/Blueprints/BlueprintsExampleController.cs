@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Entitas;
 using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
 
@@ -7,13 +8,16 @@ public class BlueprintsExampleController : MonoBehaviour {
     public Blueprints blueprints;
 
     void Start() {
-        var max = Pools.blueprints
+
+        Pools.sharedInstance.blueprints = Pools.CreateBlueprintsPool();
+
+        var max = Pools.sharedInstance.blueprints
             .CreateEntity()
             .ApplyBlueprint(blueprints.Max);
 
         Debug.Log("max: " + max);
 
-        var jack = Pools.blueprints
+        var jack = Pools.sharedInstance.blueprints
             .CreateEntity()
             .ApplyBlueprint(blueprints.Jack);
 
@@ -25,7 +29,7 @@ public class BlueprintsExampleController : MonoBehaviour {
     IEnumerator createMax() {
         while (true) {
 
-            var max = Pools.blueprints
+            var max = Pools.sharedInstance.blueprints
                 .CreateEntity()
                 .ApplyBlueprint(blueprints.Max);
 
