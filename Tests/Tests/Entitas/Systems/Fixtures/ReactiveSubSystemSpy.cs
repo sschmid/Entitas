@@ -1,28 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Entitas;
+﻿using Entitas;
 
-public interface IReactiveSubSystemSpy {
-    int didExecute { get; }
-    int didInitialize { get; }
-    Entity[] entities { get; }
-}
+public class ReactiveSubSystemSpy : ReactiveSubSystemSpyBase, IReactiveSystem {
 
-public class ReactiveSubSystemSpy : IReactiveSubSystemSpy, IInitializeSystem, IReactiveSystem, ICleanupSystem, IDeinitializeSystem {
-
-    public int didExecute { get { return _didExecute; } }
-    public int didInitialize { get { return _didInitialize; } }
-    public int didCleanup { get { return _didCleanup; } }
-    public int didDeinitialize { get { return _didDeinitialize; } }
-    public Entity[] entities { get { return _entities; } }
-
-    public Action<List<Entity>> executeAction;
-
-    int _didExecute;
-    int _didInitialize;
-    int _didCleanup;
-    int _didDeinitialize;
-    Entity[] _entities;
+    public TriggerOnEvent trigger { get { return new TriggerOnEvent(_matcher, _eventType); } }
 
     readonly IMatcher _matcher;
     readonly GroupEventType _eventType;
@@ -30,29 +10,6 @@ public class ReactiveSubSystemSpy : IReactiveSubSystemSpy, IInitializeSystem, IR
     public ReactiveSubSystemSpy(IMatcher matcher, GroupEventType eventType) {
         _matcher = matcher;
         _eventType = eventType;
-    }
-
-    public TriggerOnEvent trigger { get { return new TriggerOnEvent(_matcher, _eventType); } }
-
-    public void Initialize() {
-        _didInitialize += 1;
-    }
-
-    public void Execute(List<Entity> entities) {
-        _didExecute += 1;
-        _entities = entities.ToArray();
-
-        if (executeAction != null) {
-            executeAction(entities);
-        }
-    }
-    
-    public void Cleanup() {
-        _didCleanup += 1;
-    }
-
-    public void Deinitialize() {
-        _didDeinitialize += 1;
     }
 }
 

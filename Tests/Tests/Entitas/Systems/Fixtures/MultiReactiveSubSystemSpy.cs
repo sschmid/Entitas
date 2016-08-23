@@ -1,31 +1,13 @@
-﻿using System.Collections.Generic;
-using Entitas;
+﻿using Entitas;
 
-public class MultiReactiveSubSystemSpy : IReactiveSubSystemSpy, IInitializeSystem, IMultiReactiveSystem {
+public class MultiReactiveSubSystemSpy : ReactiveSubSystemSpyBase, IMultiReactiveSystem {
 
-    public int didExecute { get { return _didExecute; } }
-    public int didInitialize { get { return _didInitialize; } }
-    public Entity[] entities { get { return _entities; } }
-
-    int _didExecute;
-    int _didInitialize;
-    Entity[] _entities;
+    public TriggerOnEvent[] triggers { get { return _triggers; } }
 
     readonly TriggerOnEvent[] _triggers;
 
     public MultiReactiveSubSystemSpy(TriggerOnEvent[] triggers) {
         _triggers = triggers;
-    }
-
-    public TriggerOnEvent[] triggers { get { return _triggers; } }
-
-    public void Initialize() {
-        _didInitialize += 1;
-    }
-
-    public void Execute(List<Entity> entities) {
-        _didExecute += 1;
-        _entities = entities.ToArray();
     }
 }
 
@@ -49,6 +31,21 @@ public class MultiReactiveExcludeSubSystemSpy : MultiReactiveSubSystemSpy, IExcl
 
     public MultiReactiveExcludeSubSystemSpy(TriggerOnEvent[] triggers, IMatcher excludeComponents) :
         base(triggers) {
+        _excludeComponents = excludeComponents;
+    }
+}
+
+public class MultiReactiveEnsureExcludeSubSystemSpy : MultiReactiveSubSystemSpy, IEnsureComponents, IExcludeComponents {
+
+    public IMatcher ensureComponents { get { return _ensureComponents; } }
+    public IMatcher excludeComponents { get { return _excludeComponents; } }
+
+    readonly IMatcher _ensureComponents;
+    readonly IMatcher _excludeComponents;
+
+    public MultiReactiveEnsureExcludeSubSystemSpy(TriggerOnEvent[] triggers, IMatcher ensureComponents, IMatcher excludeComponents) :
+        base(triggers) {
+        _ensureComponents = ensureComponents;
         _excludeComponents = excludeComponents;
     }
 }

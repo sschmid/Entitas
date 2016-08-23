@@ -336,6 +336,7 @@
     <Compile Include="Tests\Entitas\Systems\Fixtures\InitializeExecuteCleanupDeinitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Systems\Fixtures\InitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Systems\Fixtures\MultiReactiveSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Systems\Fixtures\ReactiveSubSystemSpyBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
