@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using NSpec;
+using System.Collections.Generic;
 
 class describe_EntityIndex : nspec {
 
@@ -12,7 +13,7 @@ class describe_EntityIndex : nspec {
         before = () => {
             pool = new Pool(CID.NumComponents);
             group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
-            index = new PrimaryEntityIndex<string>(group, c => ((NameAgeComponent)c).name);
+            index = new PrimaryEntityIndex<string>(group, (e, c) => ((NameAgeComponent)c).name);
         };
 
         context["when entity for key doesn't exist"] = () => {
@@ -58,7 +59,7 @@ class describe_EntityIndex : nspec {
             };
 
             it["has existing entity"] = () => {
-                var newIndex = new PrimaryEntityIndex<string>(group, c => ((NameAgeComponent)c).name);
+                var newIndex = new PrimaryEntityIndex<string>(group, (e, c) => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name);
                 newIndex.HasEntity(name).should_be_true();
             };
 
@@ -104,7 +105,7 @@ class describe_EntityIndex : nspec {
         before = () => {
             pool = new Pool(CID.NumComponents);
             group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
-            index = new EntityIndex<string>(group, c => ((NameAgeComponent)c).name);
+            index = new EntityIndex<string>(group, (e, c) => ((NameAgeComponent)c).name);
         };
 
         context["when entity for key doesn't exist"] = () => {
@@ -140,7 +141,7 @@ class describe_EntityIndex : nspec {
             };
 
             it["has existing entity"] = () => {
-                var newIndex = new EntityIndex<string>(group, c => ((NameAgeComponent)c).name);
+                var newIndex = new EntityIndex<string>(group, (e, c) => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name);
                 newIndex.GetEntities(name).Count.should_be(2);
             };
 
@@ -169,6 +170,66 @@ class describe_EntityIndex : nspec {
                     index.GetEntities(name).should_be_empty();
                 };
             };
+        };
+    }
+
+    void when_index_multiple_components() {
+
+        EntityIndex<string> index = null;
+        Pool pool = null;
+        Group group = null;
+
+        before = () => {
+            pool = new Pool(CID.NumComponents);
+        };
+
+        it["gets last component that triggered adding entity to group"] = () => {
+
+            IComponent receivedComponent = null;
+
+            group = pool.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
+            index = new EntityIndex<string>(group, (e, c) => {
+                receivedComponent = c;
+                return ((NameAgeComponent)c).name;
+            });
+
+            var nameAgeComponent1 = new NameAgeComponent();
+            nameAgeComponent1.name = "Max";
+
+            var nameAgeComponent2 = new NameAgeComponent();
+            nameAgeComponent2.name = "Jack";
+
+            pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent1)
+                               .AddComponent(CID.ComponentB, nameAgeComponent2);
+
+            receivedComponent.should_be_same(nameAgeComponent2);
+        };
+
+        it["works with NoneOf"] = () => {
+
+            var receivedComponents = new List<IComponent>();
+
+            var nameAgeComponent1 = new NameAgeComponent();
+            nameAgeComponent1.name = "Max";
+
+            var nameAgeComponent2 = new NameAgeComponent();
+            nameAgeComponent2.name = "Jack";
+
+            group = pool.GetGroup(Matcher.AllOf(CID.ComponentA).NoneOf(CID.ComponentB));
+            index = new EntityIndex<string>(group, (e, c) => {
+                receivedComponents.Add(c);
+
+                if (c == nameAgeComponent1) {
+                    return ((NameAgeComponent)c).name;
+                }
+
+                return ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
+            });
+
+            pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent1)
+                               .AddComponent(CID.ComponentB, nameAgeComponent2);
+
+            receivedComponents.Count.should_be(2);
         };
     }
 }

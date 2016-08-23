@@ -1,5 +1,4 @@
 ﻿using Entitas;
-using System;
 
 public class EntityIndexGetEntity : IPerformanceTest {
 
@@ -11,7 +10,7 @@ public class EntityIndexGetEntity : IPerformanceTest {
 
     public void Before() {
         _pool = Helper.CreatePool();
-        _index = new PrimaryEntityIndex<string>(_pool.GetGroup(Matcher.AllOf(CP.ComponentA)), c => ((NameComponent)c).name);
+        _index = new PrimaryEntityIndex<string>(_pool.GetGroup(Matcher.AllOf(CP.ComponentA)), (e, c) => ((NameComponent)c).name);
 
         for (int i = 0; i < 10; i++) {
             var nameComponent = new NameComponent();

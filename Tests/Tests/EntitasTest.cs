@@ -23,7 +23,7 @@ class EntitasTest : nspec {
     }
 
     protected PrimaryEntityIndex<string> createPrimaryIndex() {
-        return new PrimaryEntityIndex<string>(getGroupA(), c => ((NameAgeComponent)c).name);
+        return new PrimaryEntityIndex<string>(getGroupA(), (e, c) => ((NameAgeComponent)c).name);
     }
 
     protected NameAgeComponent createNameAge(string name = "Max", int age = 42) {

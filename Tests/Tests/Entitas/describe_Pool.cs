@@ -713,7 +713,7 @@ class describe_Pool : nspec {
                 PrimaryEntityIndex<string> entityIndex = null;
                 before = () => {
                     entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(CID.ComponentA)),
-                        c => ((NameAgeComponent)(c)).name);
+                        (e, c) => ((NameAgeComponent)(c)).name);
                     pool.AddEntityIndex(CID.ComponentA.ToString(), entityIndex);
                 };
 
