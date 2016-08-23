@@ -18,21 +18,6 @@ namespace Entitas {
         }
 
         /// This is the recommended way to create systems.
-        /// It will create a new instance of the type, will inject the pool if ISetPool is implemented
-        /// and will automatically create a ReactiveSystem if it is a IReactiveSystem or IMultiReactiveSystem.
-        public static ISystem CreateSystem<T>(this Pool pool) where T: ISystem, new() {
-            return pool.CreateSystem(typeof(T));
-        }
-
-        /// This is the recommended way to create systems.
-        /// It will create a new instance of the type, will inject the pool if ISetPool is implemented
-        /// and will automatically create a ReactiveSystem if it is a IReactiveSystem or IMultiReactiveSystem.
-        public static ISystem CreateSystem(this Pool pool, Type systemType) {
-            var system = (ISystem)Activator.CreateInstance(systemType);
-            return pool.CreateSystem(system);
-        }
-
-        /// This is the recommended way to create systems.
         /// It will inject the pool if ISetPool is implemented
         /// and will automatically create a ReactiveSystem if it is a IReactiveSystem or IMultiReactiveSystem.
         public static ISystem CreateSystem(this Pool pool, ISystem system) {
