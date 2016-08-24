@@ -65,6 +65,8 @@ namespace Entitas {
         readonly Stack<IComponent>[] _componentPools;
         readonly Dictionary<string, IEntityIndex> _entityIndices;
 
+        readonly new List<Group.GroupChanged> _reusableEventList = new List<Group.GroupChanged>();
+
         // Cache delegates to avoid gc allocations
         Entity.EntityChanged _cachedUpdateGroupsComponentAddedOrRemoved;
         Entity.ComponentReplaced _cachedUpdateGroupsComponentReplaced;
@@ -305,12 +307,12 @@ namespace Entitas {
         void updateGroupsComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
-                var events = new List<Group.GroupChanged>(groups.Count);
+                _reusableEventList.Clear();
                 for (int i = 0; i < groups.Count; i++) {
-                    events.Add(groups[i].handleEntity(entity));
+                    _reusableEventList.Add(groups[i].handleEntity(entity));
                 }
-                for (int i = 0; i < events.Count; i++) {
-                    var groupChangedEvent = events[i];
+                for (int i = 0; i < _reusableEventList.Count; i++) {
+                    var groupChangedEvent = _reusableEventList[i];
                     if (groupChangedEvent != null) {
                         groupChangedEvent(groups[i], entity, index, component);
                     }
