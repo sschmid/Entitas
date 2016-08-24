@@ -218,6 +218,12 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IDeinitializeSystem.cs">
       <Link>Linked Libraries\Entitas\Interfaces\IDeinitializeSystem.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Pools.cs">
+      <Link>Linked Libraries\Entitas\Pools.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">
+      <Link>Linked Libraries\Entitas\Extensions\EntityExtension.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

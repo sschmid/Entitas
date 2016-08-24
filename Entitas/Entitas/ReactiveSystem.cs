@@ -6,7 +6,7 @@ namespace Entitas {
     /// It will only call subsystem.Execute() if there were changes based on the triggers and eventTypes specified by your subsystem
     /// and will only pass in changed entities. A common use-case is to react to changes,
     /// e.g. a change of the position of an entity to update the gameObject.transform.position of the related gameObject.
-    /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
+    /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
     public class ReactiveSystem : IExecuteSystem {
 
         /// Returns the subsystem which will be managed my this instance of ReactiveSystem.
@@ -20,17 +20,17 @@ namespace Entitas {
         readonly List<Entity> _buffer;
         string _toStringCache;
 
-        /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
+        /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
         public ReactiveSystem(Pool pool, IReactiveSystem subSystem) :
             this(subSystem, createGroupObserver(pool, new [] { subSystem.trigger })) {
         }
 
-        /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
+        /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
         public ReactiveSystem(Pool pool, IMultiReactiveSystem subSystem) :
             this(subSystem, createGroupObserver(pool, subSystem.triggers)) {
         }
 
-        /// Recommended way to create systems in general: pool.CreateSystem<RenderPositionSystem>();
+        /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
         public ReactiveSystem(IGroupObserverSystem subSystem) :
             this(subSystem, subSystem.groupObserver) {
         }

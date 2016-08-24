@@ -79,8 +79,9 @@ namespace Entitas.CodeGenerator {
             foreach(var key in lookupTagToComponentInfosMap.Keys.ToArray()) {
                 var infoList = lookupTagToComponentInfosMap[key].ToList();
                 while(infoList.Count != 0) {
-                    if(infoList[infoList.Count - 1] == null) {
-                        infoList.RemoveAt(infoList.Count - 1);
+                    var last = infoList.Count - 1;
+                    if(infoList[last] == null) {
+                        infoList.RemoveAt(last);
                     } else {
                         break;
                     }
