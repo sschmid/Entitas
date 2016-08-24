@@ -52,6 +52,10 @@
             if (multiReactiveSystem != null) {
                 return new ReactiveSystem(pool, multiReactiveSystem);
             }
+            var groupObserverSystem = system as IGroupObserverSystem;
+            if (groupObserverSystem != null) {
+                return new ReactiveSystem(groupObserverSystem);
+            }
 
             return system;
         }
