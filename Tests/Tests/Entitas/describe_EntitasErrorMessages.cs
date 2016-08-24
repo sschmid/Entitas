@@ -97,12 +97,11 @@ class describe_EntitasErrorMessages : EntitasTest {
                 createEntityA();
                 createEntityA();
                 var matcher = createMatcherA();
-                matcher.componentNames = new [] { "Health", "Position", "View" };
+                matcher.componentNames = _pool.metaData.componentNames;
                 var group = _pool.GetGroup(matcher);
                 group.GetSingleEntity();
             });
         };
-
 
         context["GroupObserver"] = () => {
 

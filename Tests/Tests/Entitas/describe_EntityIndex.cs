@@ -230,6 +230,8 @@ class describe_EntityIndex : nspec {
                                .AddComponent(CID.ComponentB, nameAgeComponent2);
 
             receivedComponents.Count.should_be(2);
+            receivedComponents[0].should_be(nameAgeComponent1);
+            receivedComponents[1].should_be(nameAgeComponent2);
         };
     }
 }

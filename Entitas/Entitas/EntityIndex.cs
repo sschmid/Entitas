@@ -28,7 +28,7 @@ namespace Entitas {
 
         protected void indexEntities(Group group) {
             var entities = group.GetEntities();
-            for (int i = 0, entitiesLength = entities.Length; i < entitiesLength; i++) {
+            for (int i = 0; i < entities.Length; i++) {
                 addEntity(entities[i], null);
             }
         }

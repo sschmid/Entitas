@@ -1,7 +1,8 @@
-﻿using NSpec;
-using Entitas;
+﻿using Entitas;
+using NSpec;
 
 class describe_Group : nspec {
+
     Group _groupA;
 
     void assertContains(params Entity[] expectedEntities) {
@@ -28,14 +29,13 @@ class describe_Group : nspec {
         Entity eA2 = null;
 
         before = () => {
-            _groupA = new Group(Matcher.AllOf(new [] { CID.ComponentA }));
-            eA1 = this.CreateEntity();
-            eA1.AddComponentA();
-            eA2 = this.CreateEntity();
-            eA2.AddComponentA();
+            _groupA = new Group(Matcher.AllOf(CID.ComponentA));
+            eA1 = this.CreateEntity().AddComponentA();
+            eA2 = this.CreateEntity().AddComponentA();
         };
 
         context["initial state"] = () => {
+
             it["doesn't have entities which haven't been added"] = () => {
                 _groupA.GetEntities().should_be_empty();
             };
@@ -50,6 +50,7 @@ class describe_Group : nspec {
         };
 
         context["when entity is matching"] = () => {
+
             before = () => {
                 handleSilently(eA1);
             };
@@ -64,6 +65,7 @@ class describe_Group : nspec {
             };
 
             context["when entity doesn't match anymore"] = () => {
+
                 it["removes entity"] = () => {
                     eA1.RemoveComponentA();
                     handleSilently(eA1);
@@ -74,8 +76,7 @@ class describe_Group : nspec {
         };
 
         it["doesn't add entity when not matching"] = () => {
-            var e = this.CreateEntity();
-            e.AddComponentB();
+            var e = this.CreateEntity().AddComponentB();
             handleSilently(e);
             assertContainsNot(e);
         };
@@ -96,6 +97,7 @@ class describe_Group : nspec {
         });
 
         context["events"] = () => {
+
             var didDispatch = 0;
 
             before = () => {
@@ -127,8 +129,7 @@ class describe_Group : nspec {
             };
 
             it["doesn't dispatches OnEntityAdded when entity is not matching"] = () => {
-                var e = this.CreateEntity();
-                e.AddComponentB();
+                var e = this.CreateEntity().AddComponentB();
                 _groupA.OnEntityAdded += delegate { this.Fail(); };
                 _groupA.OnEntityRemoved += delegate { this.Fail(); };
                 _groupA.OnEntityUpdated += delegate { this.Fail(); };
@@ -161,10 +162,12 @@ class describe_Group : nspec {
 
             it["dispatches OnEntityRemoved, OnEntityAdded and OnEntityUpdated when updating"] = () => {
                 handleSilently(eA1);
+
                 var removed = 0;
                 var added = 0;
                 var updated = 0;
                 var newComponentA = new ComponentA();
+
                 _groupA.OnEntityRemoved += (group, entity, index, component) => {
                     removed += 1;
                     group.should_be(_groupA);
@@ -222,8 +225,11 @@ class describe_Group : nspec {
         };
 
         context["internal caching"] = () => {
+
             context["GetEntities()"] = () => {
+
                 Entity[] cache = null;
+
                 before = () => {
                     handleSilently(eA1);
                     cache = _groupA.GetEntities();
@@ -263,7 +269,9 @@ class describe_Group : nspec {
             };
 
             context["SingleEntity()"] = () => {
+
                 Entity cache = null;
+
                 before = () => {
                     handleSilently(eA1);
                     cache = _groupA.GetSingleEntity();

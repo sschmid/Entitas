@@ -222,7 +222,9 @@ class describe_Pool : nspec {
                     entity.should_be_same(e);
                     entity.HasComponentA().should_be_true();
                     entity.isEnabled.should_be_true();
+                    p.GetEntities().Length.should_be(0);
                 };
+                pool.GetEntities();
                 pool.DestroyEntity(e);
                 didDispatch.should_be(1);
             };

@@ -1,5 +1,5 @@
-﻿using NSpec;
-using Entitas;
+﻿using Entitas;
+using NSpec;
 
 class describe_GroupObserver : nspec {
 
@@ -10,7 +10,7 @@ class describe_GroupObserver : nspec {
         Group groupA = null;
         GroupObserver observerA = null;
 
-        IMatcher matcherA = Matcher.AllOf(new[] { CID.ComponentA });
+        IMatcher matcherA = Matcher.AllOf(CID.ComponentA);
 
         before = () => {
             _pool = new Pool(CID.TotalComponents);
@@ -18,6 +18,7 @@ class describe_GroupObserver : nspec {
         };
 
         context["when observing with eventType OnEntityAdded"] = () => {
+            
             before = () => {
                 observerA = new GroupObserver(groupA, GroupEventType.OnEntityAdded);
             };
@@ -27,7 +28,9 @@ class describe_GroupObserver : nspec {
             };
 
             context["when entity collected"] = () => {
+
                 Entity e = null;
+
                 before = () => {
                     e = createEA();
                 };
@@ -90,7 +93,9 @@ class describe_GroupObserver : nspec {
             };
 
             context["reference counting"] = () => {
+
                 Entity e = null;
+
                 before = () => {
                     e = createEA();
                 };
@@ -118,6 +123,7 @@ class describe_GroupObserver : nspec {
         };
 
         context["when observing with eventType OnEntityRemoved"] = () => {
+
             before = () => {
                 observerA = new GroupObserver(groupA, GroupEventType.OnEntityRemoved);
             };
@@ -134,6 +140,7 @@ class describe_GroupObserver : nspec {
         };
 
         context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
+
             before = () => {
                 observerA = new GroupObserver(groupA, GroupEventType.OnEntityAddedOrRemoved);
             };
@@ -155,8 +162,9 @@ class describe_GroupObserver : nspec {
         context["when observing multiple groups"] = () => {
 
             Group groupB = null;
+
             before = () => {
-                groupB = _pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentB }));
+                groupB = _pool.GetGroup(Matcher.AllOf(CID.ComponentB));
             };
 
             it["throws when group count != eventType count"] = expect<GroupObserverException>(() => {
@@ -170,6 +178,7 @@ class describe_GroupObserver : nspec {
             });
 
             context["when observing with eventType OnEntityAdded"] = () => {
+
                 before = () => {
                     observerA = new GroupObserver(
                         new [] { groupA, groupB },
@@ -179,6 +188,7 @@ class describe_GroupObserver : nspec {
                         }
                     );
                 };
+
                 it["returns collected entities"] = () => {
                     var eA = createEA();
                     var eB = createEB();
@@ -195,6 +205,7 @@ class describe_GroupObserver : nspec {
             };
 
             context["when observing with eventType OnEntityRemoved"] = () => {
+
                 before = () => {
                     observerA = new GroupObserver(
                         new [] { groupA, groupB },
@@ -219,6 +230,7 @@ class describe_GroupObserver : nspec {
             };
 
             context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
+
                 before = () => {
                     observerA = new GroupObserver(
                         new [] { groupA, groupB },
@@ -247,6 +259,7 @@ class describe_GroupObserver : nspec {
             };
 
             context["when observing with mixed eventTypes"] = () => {
+
                 before = () => {
                     observerA = new GroupObserver(
                         new [] { groupA, groupB },
@@ -275,15 +288,11 @@ class describe_GroupObserver : nspec {
     }
 
     Entity createEA() {
-        var e = _pool.CreateEntity();
-        e.AddComponentA();
-        return e;
+        return _pool.CreateEntity().AddComponentA();
     }
 
     Entity createEB() {
-        var e = _pool.CreateEntity();
-        e.AddComponentB();
-        return e;
+        return _pool.CreateEntity().AddComponentB();
     }
 }
 

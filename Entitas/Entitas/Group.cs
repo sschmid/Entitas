@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Entitas {
@@ -58,12 +57,6 @@ namespace Entitas {
             }
         }
 
-        internal GroupChanged handleEntity(Entity entity) {
-            return _matcher.Matches(entity)
-                        ? addEntity(entity)
-                        : removeEntity(entity);
-        }
-
         /// This is used by the pool to manage the group.
         public void UpdateEntity(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             if (_entities.Contains(entity)) {
@@ -87,6 +80,12 @@ namespace Entitas {
             OnEntityUpdated = null;
         }
 
+        internal GroupChanged handleEntity(Entity entity) {
+            return _matcher.Matches(entity)
+                       ? (addEntitySilently(entity) ? OnEntityAdded : null)
+                       : (removeEntitySilently(entity) ? OnEntityRemoved : null);
+        }
+
         bool addEntitySilently(Entity entity) {
             var added = _entities.Add(entity);
             if (added) {
@@ -102,10 +101,6 @@ namespace Entitas {
             if (addEntitySilently(entity) && OnEntityAdded != null) {
                 OnEntityAdded(this, entity, index, component);
             }
-        }
-
-        GroupChanged addEntity(Entity entity) {
-            return addEntitySilently(entity) ? OnEntityAdded : null;
         }
 
         bool removeEntitySilently(Entity entity) {
@@ -129,10 +124,6 @@ namespace Entitas {
                 }
                 entity.Release(this);
             }
-        }
-
-        GroupChanged removeEntity(Entity entity) {
-            return removeEntitySilently(entity) ? OnEntityRemoved : null;
         }
 
         /// Determines whether this group has the specified entity.
