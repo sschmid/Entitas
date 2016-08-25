@@ -199,7 +199,7 @@ namespace Entitas {
         /// Returns all indices of added components.
         public int[] GetComponentIndices() {
             if(_componentIndicesCache == null) {
-                var indices = new List<int>(16);
+                var indices = EntitasCache.reusableIntList;
                 for(int i = 0; i < _components.Length; i++) {
                     if(_components[i] != null) {
                         indices.Add(i);
