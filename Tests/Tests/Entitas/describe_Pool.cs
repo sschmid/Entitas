@@ -2,9 +2,11 @@
 using NSpec;
 
 class describe_Pool : nspec {
+
     void when_created() {
 
         Pool pool = null;
+
         before = () => {
             pool = new Pool(CID.TotalComponents);
         };
@@ -63,6 +65,7 @@ class describe_Pool : nspec {
         context["when PoolMetaData set"] = () => {
 
             PoolMetaData metaData = null;
+
             before = () => {
                 var componentNames = new[] { "Health", "Position", "View" };
                 var componentTypes = new[] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
@@ -86,6 +89,7 @@ class describe_Pool : nspec {
         context["when entity created"] = () => {
 
             Entity e = null;
+
             before = () => {
                 e = pool.CreateEntity();
                 e.AddComponentA();
@@ -137,6 +141,7 @@ class describe_Pool : nspec {
                 // This is a Unity specific problem. Run Unity Test Tools with in the Entitas.Unity project
 
                 const int numEntities = 10;
+
                 for (int i = 0; i < numEntities; i++) {
                     pool.CreateEntity();
                 }
@@ -174,6 +179,7 @@ class describe_Pool : nspec {
         };
 
         context["internal caching"] = () => {
+
             it["caches entities"] = () => {
                 var entities = pool.GetEntities();
                 pool.GetEntities().should_be_same(entities);
@@ -196,6 +202,7 @@ class describe_Pool : nspec {
         context["events"] = () => {
 
             var didDispatch = 0;
+
             before = () => {
                 didDispatch = 0;
             };
@@ -222,6 +229,7 @@ class describe_Pool : nspec {
                     entity.should_be_same(e);
                     entity.HasComponentA().should_be_true();
                     entity.isEnabled.should_be_true();
+
                     p.GetEntities().Length.should_be(0);
                 };
                 pool.GetEntities();
@@ -242,12 +250,10 @@ class describe_Pool : nspec {
                 didDispatch.should_be(1);
             };
 
-            it["Entity is released after OnEntityDestroyed"] = () => {
+            it["entity is released after OnEntityDestroyed"] = () => {
                 var e = pool.CreateEntity();
                 pool.OnEntityDestroyed += (p, entity) => {
                     didDispatch += 1;
-                    p.should_be_same(pool);
-                    entity.should_be_same(e);
                     entity.retainCount.should_be(1);
                     var newEntity = pool.CreateEntity();
                     newEntity.should_not_be_null();
@@ -391,14 +397,16 @@ class describe_Pool : nspec {
 
             it["sets up entity from pool"] = () => {
                 pool.DestroyEntity(pool.CreateEntity());
-                var g = pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentA }));
+                var g = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
                 var e = pool.CreateEntity();
                 e.AddComponentA();
                 g.GetEntities().should_contain(e);
             };
 
             context["when entity gets destroyed"] = () => {
+
                 Entity e = null;
+
                 before = () => {
                     e = pool.CreateEntity();
                     e.AddComponentA();
@@ -415,12 +423,13 @@ class describe_Pool : nspec {
         context["groups"] = () => {
 
             it["gets empty group for matcher when no entities were created"] = () => {
-                var g = pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentA }));
+                var g = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
                 g.should_not_be_null();
                 g.GetEntities().should_be_empty();
             };
 
             context["when entities created"] = () => {
+
                 Entity eAB1 = null;
                 Entity eAB2 = null;
                 Entity eA = null;
@@ -434,9 +443,11 @@ class describe_Pool : nspec {
                     eAB1 = pool.CreateEntity();
                     eAB1.AddComponentA();
                     eAB1.AddComponentB();
+
                     eAB2 = pool.CreateEntity();
                     eAB2.AddComponentA();
                     eAB2.AddComponentB();
+
                     eA = pool.CreateEntity();
                     eA.AddComponentA();
                 };
@@ -470,7 +481,6 @@ class describe_Pool : nspec {
                     g.GetEntities().should_not_contain(eAB1);
                 };
 
-
                 it["group dispatches OnEntityRemoved and OnEntityAdded when replacing components"] = () => {
                     var g = pool.GetGroup(matcherAB);
                     var didDispatchRemoved = 0;
@@ -500,7 +510,7 @@ class describe_Pool : nspec {
                     var updated = 0;
                     var prevComp = eA.GetComponent(CID.ComponentA);
                     var newComp = new ComponentA();
-                    var g = pool.GetGroup(Matcher.AllOf(new[] { CID.ComponentA }));
+                    var g = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
                     g.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => {
                         updated += 1;
                         group.should_be_same(g);
@@ -537,10 +547,10 @@ class describe_Pool : nspec {
                     it["dispatches group.OnEntityRemoved events after all groups are updated"] = () => {
                         pool = new Pool(CID.TotalComponents);
                         var groupB = pool.GetGroup(Matcher.AllOf(CID.ComponentB));
-                        var groupA = pool.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
+                        var groupAB = pool.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
 
                         groupB.OnEntityRemoved += delegate {
-                            groupA.count.should_be(0);
+                            groupAB.count.should_be(0);
                         };
 
                         var entity = pool.CreateEntity();
@@ -563,7 +573,7 @@ class describe_Pool : nspec {
                 const int componentIndex = 1;
                 var entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(componentIndex)), null);
                 pool.AddEntityIndex(componentIndex.ToString(), entityIndex);
-                pool.GetEntityIndex("1").should_be_same(entityIndex);
+                pool.GetEntityIndex(componentIndex.ToString()).should_be_same(entityIndex);
             };
 
             it["throws when adding an EntityIndex with same name"] = expect<PoolEntityIndexDoesAlreadyExistException>(() => {
@@ -579,6 +589,7 @@ class describe_Pool : nspec {
             context["groups"] = () => {
 
                 it["resets and removes groups from pool"] = () => {
+
                     var m = Matcher.AllOf(CID.ComponentA);
                     var groupsCreated = 0;
                     Group createdGroup = null;
@@ -713,6 +724,7 @@ class describe_Pool : nspec {
             context["EntityIndex"] = () => {
 
                 PrimaryEntityIndex<string> entityIndex = null;
+
                 before = () => {
                     entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(CID.ComponentA)),
                         (e, c) => ((NameAgeComponent)(c)).name);

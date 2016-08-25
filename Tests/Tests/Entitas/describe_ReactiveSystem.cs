@@ -1,12 +1,9 @@
-﻿using NSpec;
-using Entitas;
+﻿using Entitas;
+using NSpec;
 
 class describe_ReactiveSystem : nspec {
 
-    readonly IMatcher _matcherAB = Matcher.AllOf(new [] {
-        CID.ComponentA,
-        CID.ComponentB
-    });
+    readonly IMatcher _matcherAB = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
 
     static void assertEntities(IReactiveSubSystemSpy system, Entity entity, int didExecute = 1) {
         if (entity == null) {
@@ -58,72 +55,43 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["does not execute its subsystem when no entities were collected"] = () => {
-
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, null);
             };
 
             it["executes when triggered"] = () => {
-
-                // given
                 var e = createEntityAB();
-
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, e);
             };
 
             it["executes only once when triggered"] = () => {
-
-                // given
                 var e = createEntityAB();
-
-                // when
                 reactiveSystem.Execute();
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, e);
             };
 
             it["retains and releases collected entities"] = () => {
-
-                // given
                 var e = createEntityAB();
                 var retainCount = e.retainCount;
-
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 retainCount.should_be(3); // retained by pool, group and group observer
                 e.retainCount.should_be(2); // retained by pool and group
             };
 
             it["collects changed entities in execute"] = () => {
-
-                // given
                 var e = createEntityAB();
                 subSystem.executeAction = entities => {
                     entities[0].ReplaceComponentA(Component.A);
                 };
 
-                // when
                 reactiveSystem.Execute();
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, e, 2);
             };
 
             it["collects created entities in execute"] = () => {
-
-                // given
                 var e1 = createEntityAB();
                 Entity e2 = null;
                 subSystem.executeAction = entities => {
@@ -135,62 +103,35 @@ class describe_ReactiveSystem : nspec {
                 reactiveSystem.Execute();
                 assertEntities(subSystem, e1);
 
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, e2, 2);
             };
 
             it["doesn't execute when not triggered"] = () => {
-
-                // given
                 _pool.CreateEntity().AddComponentA();
-
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, null);
             };
 
             it["deactivates and will not trigger"] = () => {
-
-                // given
                 reactiveSystem.Deactivate();
                 createEntityAB();
-
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, null);
             };
 
             it["activates and will trigger again"] = () => {
-
-                // given
                 reactiveSystem.Deactivate();
                 reactiveSystem.Activate();
                 var e = createEntityAB();
-
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, e);
             };
 
             it["clears"] = () => {
-
-                // given
                 createEntityAB();
-
-                // when
                 reactiveSystem.Clear();
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, null);
             };
 
@@ -207,49 +148,32 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["executes when triggered"] = () => {
-
-                // given
                 var e = createEntityAB()
                     .RemoveComponentA();
 
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, e);
             };
 
             it["executes only once when triggered"] = () => {
-
-                // given
                 var e = createEntityAB()
                     .RemoveComponentA();
 
-                // when
                 reactiveSystem.Execute();
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, e);
             };
 
             it["doesn't execute when not triggered"] = () => {
-
-                // given
                 createEntityAB()
                     .AddComponentC()
                     .RemoveComponentC();
 
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, null);
             };
 
             it["retains entities until execute completed"] = () => {
-
-                // given
                 var e = createEntityAB();
                 var didExecute = 0;
                 subSystem.executeAction = entities => {
@@ -257,11 +181,8 @@ class describe_ReactiveSystem : nspec {
                     entities[0].retainCount.should_be(1);
                 };
 
-                // when
                 _pool.DestroyEntity(e);
                 reactiveSystem.Execute();
-
-                // then
                 didExecute.should_be(1);
                 e.retainCount.should_be(0);
             };
@@ -275,28 +196,16 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["executes when added"] = () => {
-
-                // given
                 var e = createEntityAB();
-
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, e);
             };
 
             it["executes when removed"] = () => {
-
-                // given
                 var e = createEntityAB();
                 reactiveSystem.Execute();
-
-                // when
                 e.RemoveComponentA();
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(subSystem, e, 2);
             };
         };
@@ -315,22 +224,12 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["executes when any trigger is triggered"] = () => {
-
-                // given
                 var eA = _pool.CreateEntity().AddComponentA();
                 var eB = _pool.CreateEntity().AddComponentB();
-
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(multiSubSystem, eA);
-
-                // when
                 eB.RemoveComponentB();
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(multiSubSystem, eB, 2);
             };
         };
@@ -360,26 +259,18 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["executes when a triggered by groupObserver"] = () => {
-
-                // given
                 var eA1 = pool1.CreateEntity().AddComponentA();
                 pool2.CreateEntity().AddComponentA();
 
                 var eB1 = pool1.CreateEntity().AddComponentB();
                 var eB2 = pool2.CreateEntity().AddComponentB();
 
-                // when
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(groupObserverSubSystem, eA1);
 
-                // when
                 eB1.RemoveComponentB();
                 eB2.RemoveComponentB();
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(groupObserverSubSystem, eB2, 2);
             };
         };
@@ -410,17 +301,11 @@ class describe_ReactiveSystem : nspec {
                     };
 
                     it["only passes in entities matching required matcher"] = () => {
-
-                        // when
                         reactiveSystem.Execute();
-
-                        // then
                         assertEntities(ensureSubSystem, eABC);
                     };
 
                     it["retains included entities until execute completed"] = () => {
-
-                        // given
                         var retainCount = eABC.retainCount;
                         var didExecute = 0;
                         ensureSubSystem.executeAction = entities => {
@@ -428,18 +313,13 @@ class describe_ReactiveSystem : nspec {
                             eABC.retainCount.should_be(3);
                         };
 
-                        // when
                         reactiveSystem.Execute();
-
-                        // then
                         didExecute.should_be(1);
                         retainCount.should_be(3); // retained by pool, group and group observer
                         eABC.retainCount.should_be(2); // retained by pool and group
                     };
 
                     it["doesn't retain not included entities until execute completed"] = () => {
-
-                        // given
                         var retainCount = eAB.retainCount;
                         var didExecute = 0;
                         ensureSubSystem.executeAction = entity => {
@@ -447,10 +327,7 @@ class describe_ReactiveSystem : nspec {
                             eAB.retainCount.should_be(2);
                         };
 
-                        // when
                         reactiveSystem.Execute();
-
-                        // then
                         didExecute.should_be(1);
                         retainCount.should_be(3); // retained by pool, group and group observer
                         eAB.retainCount.should_be(2); // retained by pool and group
@@ -459,7 +336,6 @@ class describe_ReactiveSystem : nspec {
 
                     it["doesn't call execute when no entities left after filtering"] = () => {
 
-                        // given
                         ensureSubSystem = new ReactiveEnsureSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded, Matcher.AllOf(
                             CID.ComponentA,
                             CID.ComponentB,
@@ -471,11 +347,7 @@ class describe_ReactiveSystem : nspec {
 
                         createEntityAB();
                         createEntityABC();
-
-                        // when
                         reactiveSystem.Execute();
-
-                        // then
                         assertEntities(ensureSubSystem, null);
                     };
                 };
@@ -484,8 +356,6 @@ class describe_ReactiveSystem : nspec {
                 context["multi reactive system"] = () => {
 
                     it["only passes in entities matching required matcher"] = () => {
-
-                        // given
                         var triggers = new [] {
                             Matcher.AllOf(CID.ComponentA).OnEntityAdded(),
                             Matcher.AllOf(CID.ComponentB).OnEntityAdded()
@@ -502,11 +372,7 @@ class describe_ReactiveSystem : nspec {
 
                         createEntityAB();
                         eABC = createEntityABC();
-
-                        // when
                         reactiveSystem.Execute();
-
-                        // then
                         assertEntities(ensureSubSystem, eABC);
                     };
                 };
@@ -531,43 +397,29 @@ class describe_ReactiveSystem : nspec {
                     };
 
                     it["only passes in entities not matching matcher"] = () => {
-
-                        // when
                         reactiveSystem.Execute();
-
-                        // then
                         assertEntities(excludeSubSystem, eAB);
                     };
 
                     it["retains included entities until execute completed"] = () => {
-
-                        // given
                         var didExecute = 0;
                         excludeSubSystem.executeAction = entities => {
                             didExecute += 1;
                             eAB.retainCount.should_be(3);
                         };
 
-                        // when
                         reactiveSystem.Execute();
-
-                        // then
                         didExecute.should_be(1);
                     };
 
                     it["doesn't retain not included entities until execute completed"] = () => {
-
-                        // given
                         var didExecute = 0;
                         excludeSubSystem.executeAction = entities => {
                             didExecute += 1;
                             eABC.retainCount.should_be(2);
                         };
 
-                        // when
                         reactiveSystem.Execute();
-
-                        // then
                         didExecute.should_be(1);
                     };
                 };
@@ -575,8 +427,6 @@ class describe_ReactiveSystem : nspec {
                 context["multi reactive system"] = () => {
                     
                     it["only passes in entities not matching required matcher"] = () => {
-
-                        // given
                         var triggers = new [] {
                             Matcher.AllOf(CID.ComponentA).OnEntityAdded(),
                             Matcher.AllOf(CID.ComponentB).OnEntityAdded()
@@ -588,11 +438,7 @@ class describe_ReactiveSystem : nspec {
 
                         eAB = createEntityAB();
                         createEntityABC();
-
-                        // when
                         reactiveSystem.Execute();
-
-                        // then
                         assertEntities(excludeSubSystem, eAB);
                     };
                 };
@@ -615,34 +461,22 @@ class describe_ReactiveSystem : nspec {
                 };
 
                 it["only passes in correct entities"] = () => {
-
-                    // when
                     reactiveSystem.Execute();
-
-                    // then
                     assertEntities(ensureExcludeSystem, eAB);
                 };
 
                 it["retains included entities until execute completed"] = () => {
-
-                    // given
                     var didExecute = 0;
                     ensureExcludeSystem.executeAction = entities => {
                         didExecute += 1;
                         eAB.retainCount.should_be(3);
                     };
 
-                    // when
                     reactiveSystem.Execute();
-
-                    // then
                     didExecute.should_be(1);
                 };
 
                 it["doesn't retain not included entities until execute completed"] = () => {
-
-                    // given
-
                     var didExecute = 0;
                     ensureExcludeSystem.executeAction = entities => {
                         didExecute += 1;
@@ -650,10 +484,7 @@ class describe_ReactiveSystem : nspec {
                         eABC.retainCount.should_be(2);
                     };
 
-                    // when
                     reactiveSystem.Execute();
-
-                    // then
                     didExecute.should_be(1);
                 };
             };
@@ -669,19 +500,13 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["clears reactive system after execute when implementing IClearReactiveSystem"] = () => {
-
-                // given
                 subSystem.executeAction = entities => {
                     entities[0].ReplaceComponentA(Component.A);
                 };
 
                 var e = createEntityAB();
-
-                // when
                 reactiveSystem.Execute();
                 reactiveSystem.Execute();
-
-                // then
                 assertEntities(clearSubSystem, e);
             };
         };

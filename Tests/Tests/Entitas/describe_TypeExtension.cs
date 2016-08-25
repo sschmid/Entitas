@@ -2,6 +2,7 @@
 using Entitas;
 
 class describe_TypeExtension : nspec {
+
     void when_type() {
 
         it["return false if type doesn't implement interface"] = () => {
