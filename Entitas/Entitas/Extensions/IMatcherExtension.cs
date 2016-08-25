@@ -1,4 +1,5 @@
 ﻿namespace Entitas {
+
     public static class IMatcherExtension {
 
         /// Convenience method to create a new TriggerOnEvent. Commonly used in IReactiveSystem and IMultiReactiveSystem.

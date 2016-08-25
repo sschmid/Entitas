@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Entitas;
 
 namespace Entitas {
+
     public static class CollectionExtension {
 
         /// Returns the only entity in the collection. It will throw an exception if the collection doesn't have exactly one entity.
