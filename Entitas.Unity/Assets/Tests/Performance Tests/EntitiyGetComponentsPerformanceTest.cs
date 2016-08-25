@@ -1,7 +1,7 @@
 ﻿using Entitas;
 using UnityEngine;
 
-public class GetComponentIndicesPerformanceTest : MonoBehaviour {
+public class EntitiyGetComponentsPerformanceTest : MonoBehaviour {
 
     Entity _entity;
 
@@ -14,6 +14,6 @@ public class GetComponentIndicesPerformanceTest : MonoBehaviour {
         _entity.AddMyInt(0);
         _entity.RemoveMyInt();
 
-        _entity.GetComponentIndices();
+        _entity.GetComponents();
     }
 }
