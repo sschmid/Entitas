@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.Serialization;
@@ -89,6 +89,7 @@ namespace Entitas.CodeGenerator {
                     + addHasMethods(componentInfo)
                     + addAddMethods(componentInfo)
                     + addReplaceMethods(componentInfo)
+                    + addUpdateMethod(componentInfo)
                     + addRemoveMethods(componentInfo)
                     + addCloseClass();
         }
@@ -145,6 +146,17 @@ $assign
         public Entity Replace$Name($typedArgs) {
             var component = CreateComponent<$Type>($Ids.$Name);
 $assign
+            ReplaceComponent($Ids.$Name, component);
+            return this;
+        }
+");
+        }
+
+        private static string addUpdateMethod(ComponentInfo componentInfo) {
+            return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
+        public Entity Update$Name($typedNullableArgs) {
+            var component = CreateComponent<$Type>($Ids.$Name);
+$nullableAssigns
             ReplaceComponent($Ids.$Name, component);
             return this;
         }
@@ -319,10 +331,12 @@ $assign
             var prefix = componentInfo.singleComponentPrefix;
             var a8_prefix = prefix.UppercaseFirst();
             var a9_lowercasePrefix = prefix.LowercaseFirst();
+            var a10_memberNamesWithNullableType = memberNamesWithNullableType(memberInfos);
+            var a11_memberNullableAssigns = memberNullableAssignments(memberInfos);
 
             return string.Format(format, a0_type, a1_name, a2_lowercaseName,
                 a3_tag, a4_ids, a5_memberNamesWithType, a6_memberAssigns, a7_memberNames,
-                a8_prefix, a9_lowercasePrefix);
+                a8_prefix, a9_lowercasePrefix, a10_memberNamesWithNullableType, a11_memberNullableAssigns);
         }
 
         static string createFormatString(string format) {
@@ -337,7 +351,13 @@ $assign
                         .Replace("$assign", "{6}")
                         .Replace("$args", "{7}")
                         .Replace("$Prefix", "{8}")
-                        .Replace("$prefix", "{9}");
+                        .Replace("$prefix", "{9}")
+                        .Replace("$typedNullableArgs", "{10}")
+                        .Replace("$nullableAssigns", "{11}");
+        }
+
+        static bool isNullable(Type type) {
+            return !type.IsValueType || (Nullable.GetUnderlyingType(type) != null);
         }
 
         static string memberNamesWithType(List<PublicMemberInfo> memberInfos) {
@@ -348,6 +368,17 @@ $assign
             return string.Join(", ", typedArgs);
         }
 
+        static string memberNamesWithNullableType(List<PublicMemberInfo> memberInfos) {
+            var typedArgs = memberInfos
+                .Where(info => !isNullable(info.type))
+                .Select(info => info.type.ToCompilableString() + "? " + info.name + " = null")
+                .Concat(memberInfos
+                    .Where(info => isNullable(info.type))
+                    .Select(info => info.type.ToCompilableString() + " " + info.name + " = null"))
+                .ToArray();
+            return string.Join(", ", typedArgs);
+        }
+
         static string memberAssignments(List<PublicMemberInfo> memberInfos) {
             const string format = "            component.{0} = {1};";
             var assignments = memberInfos.Select(info => {
@@ -355,6 +386,19 @@ $assign
                 return string.Format(format, info.name, newArg);
             }).ToArray();
 
+            return string.Join("\n", assignments);
+        }
+
+        static string memberNullableAssignments(List<PublicMemberInfo> memberInfos) {
+            const string nullableFormat = "            component.{0} = {0}.GetValueOrDefault(component.{0});";
+            const string format = "            component.{0} = {0};";
+            var assignments = memberInfos
+                .Where(info => !isNullable(info.type))
+                .Select(info => string.Format(nullableFormat, info.name))
+                .Concat(memberInfos
+                    .Where(info => isNullable(info.type))
+                    .Select(info => string.Format(format, info.name))
+                ).ToArray();
             return string.Join("\n", assignments);
         }
 
