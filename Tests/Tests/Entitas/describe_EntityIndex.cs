@@ -175,6 +175,7 @@ class describe_EntityIndex : nspec {
 
     void when_index_multiple_components() {
 
+        #pragma warning disable
         EntityIndex<string> index = null;
         Pool pool = null;
         Group group = null;

@@ -741,5 +741,33 @@ class describe_Pool : nspec {
                 };
             };
         };
+
+        context["EntitasCache"] = () => {
+
+            it["pops new list from list pool"] = () => {
+                var groupA = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
+                var groupAB = pool.GetGroup(Matcher.AnyOf(CID.ComponentA, CID.ComponentB));
+                var groupABC = pool.GetGroup(Matcher.AnyOf(CID.ComponentA, CID.ComponentB, CID.ComponentC));
+
+                var didExecute = 0;
+
+                groupA.OnEntityAdded += (g, entity, index, component) => {
+                    didExecute += 1;
+                    entity.RemoveComponentA();
+                };
+
+                groupAB.OnEntityAdded += (g, entity, index, component) => {
+                    didExecute += 1;
+                };
+
+                groupABC.OnEntityAdded += (g, entity, index, component) => {
+                    didExecute += 1;
+                };
+
+                pool.CreateEntity().AddComponentA();
+
+                didExecute.should_be(3);
+            };
+        };
     }
 }

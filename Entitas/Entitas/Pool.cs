@@ -305,7 +305,7 @@ namespace Entitas {
         void updateGroupsComponentAddedOrRemoved(Entity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if (groups != null) {
-                var events = EntitasCache.reusableGroupChangedList;
+                var events = EntitasCache.PopGroupChangedList();
                 for (int i = 0; i < groups.Count; i++) {
                     events.Add(groups[i].handleEntity(entity));
                 }
@@ -315,6 +315,7 @@ namespace Entitas {
                         groupChangedEvent(groups[i], entity, index, component);
                     }
                 }
+                EntitasCache.PushGroupChangedList(events);
             }
         }
 

@@ -340,6 +340,9 @@
     <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\EntityExtension.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\EntitasCache.cs">
+      <Link>Linked Libraries\Entitas\EntitasCache.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
