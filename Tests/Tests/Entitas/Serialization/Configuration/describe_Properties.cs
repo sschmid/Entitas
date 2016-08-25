@@ -18,6 +18,7 @@ class describe_Properties : nspec {
     }
 
     void when_creating_properties() {
+
         context["when empty"] = () => {
             it["is empty"] = () => assertProperties(string.Empty, string.Empty, null);
         };

@@ -2,9 +2,11 @@
 using Entitas.Serialization.Configuration;
 
 class describe_EntitasPreferencesConfig : nspec {
+
     void when_config() {
 
         EntitasPreferencesConfig config = null;
+
         before = () => {
             config = new EntitasPreferencesConfig(string.Empty);
         };

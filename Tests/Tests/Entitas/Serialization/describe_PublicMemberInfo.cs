@@ -80,6 +80,7 @@ class describe_PublicMemberInfo : nspec {
         context["when cloning object"] = () => {
 
             ComponentWithFieldsAndProperties component = null;
+
             before = () => {
                 component = new ComponentWithFieldsAndProperties();
                 component.publicField = "field";

@@ -4,14 +4,15 @@ using System.Linq;
 using Entitas.Serialization;
 
 namespace Entitas.CodeGenerator {
+
     public class TypeReflectionProvider : ICodeGeneratorDataProvider {
 
-        public string[] poolNames { get { return _poolNames; } }
         public ComponentInfo[] componentInfos { get { return _componentInfos; } }
+        public string[] poolNames { get { return _poolNames; } }
         public string[] blueprintNames { get { return _blueprintNames; } }
 
-        readonly string[] _poolNames;
         readonly ComponentInfo[] _componentInfos;
+        readonly string[] _poolNames;
         readonly string[] _blueprintNames;
 
         public TypeReflectionProvider(Type[] types, string[] poolNames, string[] blueprintNames) {
@@ -19,8 +20,8 @@ namespace Entitas.CodeGenerator {
             if (poolNames.Length == 0) {
                 pools.Add(CodeGenerator.DEFAULT_POOL_NAME);
             }
-            _poolNames = pools.OrderBy(poolName => poolName).ToArray();
             _componentInfos = GetComponentInfos(types);
+            _poolNames = pools.OrderBy(poolName => poolName).ToArray();
             _blueprintNames = blueprintNames;
         }
 

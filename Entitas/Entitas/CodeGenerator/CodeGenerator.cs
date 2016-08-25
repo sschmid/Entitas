@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
+
     public static class CodeGenerator {
+
         public const string DEFAULT_POOL_NAME = "Pool";
         public const string COMPONENT_SUFFIX = "Component";
 
