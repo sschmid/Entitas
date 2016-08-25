@@ -1,5 +1,7 @@
 ﻿namespace Entitas {
+
     public struct TriggerOnEvent {
+
         public IMatcher trigger;
         public GroupEventType eventType;
 

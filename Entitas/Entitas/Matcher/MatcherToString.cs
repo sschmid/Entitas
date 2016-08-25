@@ -1,6 +1,7 @@
 ﻿using System.Text;
 
 namespace Entitas {
+
     public partial class Matcher {
 
         public string[] componentNames;
@@ -33,7 +34,7 @@ namespace Entitas {
             sb.Append(prefix);
             sb.Append("(");
             var lastSeparator = indexArray.Length - 1;
-            for (int i = 0, indicesLength = indexArray.Length; i < indicesLength; i++) {
+            for (int i = 0; i < indexArray.Length; i++) {
                 var index = indexArray[i];
                 if (componentNames == null) {
                     sb.Append(index);

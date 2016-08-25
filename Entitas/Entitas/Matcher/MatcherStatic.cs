@@ -1,5 +1,7 @@
 ﻿namespace Entitas {
+
     public partial class Matcher {
+
         public static IAllOfMatcher AllOf(params int[] indices) {
             var matcher = new Matcher();
             matcher._allOfIndices = distinctIndices(indices);

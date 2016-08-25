@@ -10,6 +10,9 @@ namespace Entitas {
         public static List<int> reusableIntList { get { _reusableIntList.Clear(); return _reusableIntList; } }
         static readonly List<int> _reusableIntList = new List<int>();
 
+        public static HashSet<int> reusableIntHashSet { get { _reusableIntHashSet.Clear(); return _reusableIntHashSet; } }
+        static readonly HashSet<int> _reusableIntHashSet = new HashSet<int>();
+
         public static List<Group.GroupChanged> PopGroupChangedList() {
             if(_groupChangedLists.Count == 0) {
                 return new List<Group.GroupChanged>();

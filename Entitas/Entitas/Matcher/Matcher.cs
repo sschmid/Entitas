@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Entitas;
 
 namespace Entitas {
+
     public partial class Matcher : IAllOfMatcher, IAnyOfMatcher, INoneOfMatcher {
+
         public int[] indices {
             get {
                 if (_indices == null) {
@@ -53,11 +54,7 @@ namespace Entitas {
         }
 
         int[] mergeIndices() {
-            var totalIndices = (_allOfIndices != null ? _allOfIndices.Length : 0)
-                               + (_anyOfIndices != null ? _anyOfIndices.Length : 0)
-                               + (_noneOfIndices != null ? _noneOfIndices.Length : 0);
-
-            var indicesList = new List<int>(totalIndices);
+            var indicesList = EntitasCache.reusableIntList;
             if (_allOfIndices != null) {
                 indicesList.AddRange(_allOfIndices);
             }
@@ -73,7 +70,7 @@ namespace Entitas {
 
         static int[] mergeIndices(IMatcher[] matchers) {
             var indices = new int[matchers.Length];
-            for (int i = 0, matchersLength = matchers.Length; i < matchersLength; i++) {
+            for (int i = 0; i < matchers.Length; i++) {
                 var matcher = matchers[i];
                 if (matcher.indices.Length != 1) {
                     throw new MatcherException(matcher);
@@ -85,7 +82,7 @@ namespace Entitas {
         }
 
         static string[] getComponentNames(IMatcher[] matchers) {
-            for (int i = 0, matchersLength = matchers.Length; i < matchersLength; i++) {
+            for (int i = 0; i < matchers.Length; i++) {
                 var matcher = matchers[i] as Matcher;
                 if (matcher != null && matcher.componentNames != null) {
                     return matcher.componentNames;
@@ -103,7 +100,10 @@ namespace Entitas {
         }
 
         static int[] distinctIndices(IEnumerable<int> indices) {
-            var indicesSet = new HashSet<int>(indices);
+            var indicesSet = EntitasCache.reusableIntHashSet;
+            foreach(var index in indices) {
+                indicesSet.Add(index);
+            }
             var uniqueIndices = new int[indicesSet.Count];
             indicesSet.CopyTo(uniqueIndices);
             Array.Sort(uniqueIndices);
