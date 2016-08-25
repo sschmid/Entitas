@@ -182,7 +182,7 @@ namespace Entitas {
         /// Returns all added components.
         public IComponent[] GetComponents() {
             if(_componentsCache == null) {
-                var components = new List<IComponent>(16);
+                var components = EntitasCache.reusableIComponentList;
                 for(int i = 0; i < _components.Length; i++) {
                     var component = _components[i];
                     if(component != null) {

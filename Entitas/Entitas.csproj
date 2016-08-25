@@ -91,6 +91,7 @@
     <Compile Include="Entitas\Interfaces\ICleanupSystem.cs" />
     <Compile Include="Entitas\Interfaces\IDeinitializeSystem.cs" />
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
+    <Compile Include="Entitas\EntitasCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
