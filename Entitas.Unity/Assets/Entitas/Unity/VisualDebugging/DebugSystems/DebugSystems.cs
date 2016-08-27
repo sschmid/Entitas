@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -17,7 +16,7 @@ namespace Entitas.Unity.VisualDebugging {
     public class DebugSystems : Systems {
         public static AvgResetInterval avgResetInterval = AvgResetInterval.Never;
 
-        public int totalInitializeSystemsCount { 
+        public int totalInitializeSystemsCount {
             get {
                 var total = 0;
                 foreach (var system in _initializeSystems) {

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 
 namespace Entitas.CodeGenerator {
-    
+
     public class BlueprintsGenerator : IBlueprintsCodeGenerator {
 
         const string CLASS_FORMAT = @"using Entitas.Serialization.Blueprints;

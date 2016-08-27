@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Entitas.Serialization.Blueprints;
-using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
 
 namespace Entitas.Unity.Serialization.Blueprints {
