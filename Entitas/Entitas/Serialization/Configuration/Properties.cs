@@ -42,7 +42,7 @@ namespace Entitas.Serialization.Configuration {
         }
 
         static string convertLineEndings(string str) {
-            return str.Replace("\r\n", "\n");
+            return str.Replace("\r\n", "\n").Replace("\r", "\n");
         }
 
         static string[] getLinesWithProperties(string properties) {

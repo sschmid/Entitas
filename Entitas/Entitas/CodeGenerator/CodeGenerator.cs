@@ -113,7 +113,7 @@ namespace Entitas.CodeGenerator {
         }
 
         public static string ToUnixLineEndings(this string str) {
-            return str.Replace(Environment.NewLine, "\n");
+            return str.Replace("\r\n", "\n").Replace("\r", "\n");
         }
     }
 }
