@@ -121,7 +121,7 @@ namespace Entitas.Unity.VisualDebugging {
                 }
                 EntitasEditorLayout.EndHorizontal();
 
-                _showInitializeSystems = EditorGUILayout.Foldout(_showInitializeSystems, "Initialize Systems");
+                _showInitializeSystems = EntitasEditorLayout.Foldout(_showInitializeSystems, "Initialize Systems");
                 if (_showInitializeSystems && shouldShowSystems(systems, true)) {
                     EntitasEditorLayout.BeginVerticalBox();
                     {
@@ -133,7 +133,7 @@ namespace Entitas.Unity.VisualDebugging {
                     EntitasEditorLayout.EndVertical();
                 }
 
-                _showExecuteSystems = EditorGUILayout.Foldout(_showExecuteSystems, "Execute Systems");
+                _showExecuteSystems = EntitasEditorLayout.Foldout(_showExecuteSystems, "Execute Systems");
                 if (_showExecuteSystems && shouldShowSystems(systems, false)) {
                     EntitasEditorLayout.BeginVerticalBox();
                     {
