@@ -131,7 +131,7 @@ namespace Entitas.CodeGenerator {
                     code += nullFormat;
                 }
             }
-            if(code.EndsWith(",\n")) {
+            if(code.EndsWith(",\n", System.StringComparison.Ordinal)) {
                 code = code.Remove(code.Length - 2) + "\n";
             }
 
@@ -153,7 +153,7 @@ namespace Entitas.CodeGenerator {
                     code += nullFormat;
                 }
             }
-            if(code.EndsWith(",\n")) {
+            if(code.EndsWith(",\n", System.StringComparison.Ordinal)) {
                 code = code.Remove(code.Length - 2) + "\n";
             }
 

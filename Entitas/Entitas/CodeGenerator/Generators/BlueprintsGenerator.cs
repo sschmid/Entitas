@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Entitas.CodeGenerator;
 
 namespace Entitas.CodeGenerator {
     
