@@ -2,6 +2,7 @@
 using System.Threading;
 
 public class SlowInitializeExecuteSystem : IInitializeSystem, IExecuteSystem {
+
     public void Initialize() {
         Thread.Sleep(10);
     }

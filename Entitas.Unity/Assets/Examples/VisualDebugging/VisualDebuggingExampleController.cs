@@ -7,10 +7,8 @@ public class VisualDebuggingExampleController : MonoBehaviour {
 
     void Start() {
         var pool = Pools.sharedInstance.visualDebugging = Pools.CreateVisualDebuggingPool();
-        pool.GetGroup(VisualDebuggingMatcher.Vector3);
-        pool.GetGroup(VisualDebuggingMatcher.GameObject);
-        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
-        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
+
+        createTestGroups(pool);
 
         createTestEntities(pool);
         createTestEntityWithNullValues(pool);
@@ -20,8 +18,11 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         pool.CreateSystem(new AReactiveSystem());
     }
 
-    void createTestEntityError(Pool pool) {
-        pool.DestroyEntity(pool.CreateEntity().Retain(this));
+    void createTestGroups(Pool pool) {
+        pool.GetGroup(VisualDebuggingMatcher.Vector3);
+        pool.GetGroup(VisualDebuggingMatcher.GameObject);
+        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
+        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
     }
 
     void createTestEntities(Pool pool) {
@@ -145,6 +146,10 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         string personName = null;
         string personGender = null;
         e.AddPerson(personName, personGender);
+    }
+
+    void createTestEntityError(Pool pool) {
+        pool.DestroyEntity(pool.CreateEntity().Retain(this));
     }
 }
 

@@ -18,6 +18,7 @@ public class AnimationCurveComponent : IComponent {
 
 [VisualDebugging]
 public class MyEnumComponent : IComponent {
+
     public enum MyEnum {
         Item1,
         Item2,

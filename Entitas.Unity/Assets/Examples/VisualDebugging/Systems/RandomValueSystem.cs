@@ -2,6 +2,7 @@
 using UnityEngine;
 
 public class RandomValueSystem : IExecuteSystem, ISetPool {
+
     Pool _pool;
 
     public void SetPool(Pool pool) {
