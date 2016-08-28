@@ -17,6 +17,10 @@ class describe_PoolsGenerator : nspec {
         public Pool[] allPools { get { return new[] { pool }; } }
 
         public Pool pool;
+
+        public void SetAllPools() {
+            pool = CreatePool();
+        }
     }
 }
 ";
@@ -32,6 +36,10 @@ class describe_PoolsGenerator : nspec {
         public Pool[] allPools { get { return new[] { meta }; } }
 
         public Pool meta;
+
+        public void SetAllPools() {
+            meta = CreateMetaPool();
+        }
     }
 }
 ";
@@ -52,6 +60,11 @@ class describe_PoolsGenerator : nspec {
 
         public Pool meta;
         public Pool core;
+
+        public void SetAllPools() {
+            meta = CreateMetaPool();
+            core = CreateCorePool();
+        }
     }
 }
 ";

@@ -11,6 +11,10 @@ namespace Entitas.CodeGenerator {
         public Pool[] allPools {{ get {{ return new[] {{ {1} }}; }} }}
 
 {2}
+
+        public void SetAllPools() {{
+{3}
+        }}
     }}
 }}
 ";
@@ -27,11 +31,15 @@ namespace Entitas.CodeGenerator {
             );
 
             var allPoolsList = string.Join(", ", poolNames.Select(poolName => poolName.LowercaseFirst()).ToArray());
-            var poolFields = string.Join("\n", poolNames.Select(poolName => "        public Pool " + poolName.LowercaseFirst() + ";").ToArray());
+            var poolFields = string.Join("\n", poolNames.Select(poolName =>
+                "        public Pool " + poolName.LowercaseFirst() + ";").ToArray());
+
+            var setAllPools = string.Join("\n", poolNames.Select(poolName =>
+                "            " + poolName.LowercaseFirst() + " = Create" + poolName.PoolPrefix() + "Pool();").ToArray());
 
             return new[] { new CodeGenFile(
                 "Pools",
-                string.Format(CLASS_TEMPLATE, createPoolMethods, allPoolsList, poolFields),
+                string.Format(CLASS_TEMPLATE, createPoolMethods, allPoolsList, poolFields, setAllPools),
                 GetType().FullName
             )};
         }
