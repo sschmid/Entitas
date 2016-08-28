@@ -3,7 +3,9 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class SystemsMonitor {
+
         public float xBorder = 48;
         public float yBorder = 20;
         public int rightLinePadding = -15;

@@ -3,7 +3,9 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class Vector2TypeDrawer : ITypeDrawer {
+
         public bool HandlesType(Type type) {
             return type == typeof(Vector2);
         }

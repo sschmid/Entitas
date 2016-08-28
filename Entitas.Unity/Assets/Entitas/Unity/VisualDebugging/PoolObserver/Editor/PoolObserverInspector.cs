@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 
 namespace Entitas.Unity.VisualDebugging {
+
     [CustomEditor(typeof(PoolObserverBehaviour))]
     public class PoolObserverInspector : Editor {
 

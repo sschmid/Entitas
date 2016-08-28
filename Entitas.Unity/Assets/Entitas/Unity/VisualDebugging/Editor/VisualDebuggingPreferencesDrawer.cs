@@ -3,9 +3,10 @@ using Entitas.Serialization.Configuration;
 using UnityEditor;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class VisualDebuggingPreferencesDrawer : IEntitasPreferencesDrawer {
 
-        public int priority { get { return 20; } }
+        public int priority { get { return EntitasPreferencesDrawerPriorities.visualDebugging; } }
 
         const string ENTITAS_DISABLE_VISUAL_DEBUGGING = "ENTITAS_DISABLE_VISUAL_DEBUGGING";
 

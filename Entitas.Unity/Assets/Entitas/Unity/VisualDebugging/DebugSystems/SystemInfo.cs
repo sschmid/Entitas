@@ -1,7 +1,9 @@
 ﻿using System;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class SystemInfo {
+
         public ISystem system { get { return _system; } }
         public string systemName { get { return _systemName; } }
 

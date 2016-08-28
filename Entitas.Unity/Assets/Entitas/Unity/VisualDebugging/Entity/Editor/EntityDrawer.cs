@@ -9,6 +9,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public static class EntityDrawer {
 
         static Dictionary<Pool, bool[]> _poolToUnfoldedComponents;

@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     [CustomEditor(typeof(DebugSystemsBehaviour))]
     public class DebugSystemsInspector : Editor {
 

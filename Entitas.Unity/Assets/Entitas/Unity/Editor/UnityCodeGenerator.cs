@@ -8,9 +8,10 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.CodeGenerator {
+
     public static class UnityCodeGenerator {
 
-        [MenuItem("Entitas/Generate #%g", false, 100)]
+        [MenuItem("Entitas/Generate #%g", false, EntitasMenuItemPriorities.generate)]
         public static void Generate() {
             checkCanGenerate();
 
@@ -34,7 +35,7 @@ namespace Entitas.Unity.CodeGenerator {
             var generatedFiles = TypeReflectionCodeGenerator.Generate(assembly, config.pools,
                 blueprintNames, config.generatedFolderPath, enabledCodeGenerators);
 
-            foreach (var file in generatedFiles) {
+            foreach(var file in generatedFiles) {
                 Debug.Log(file.generatorName + ": " + file.fileName);
             }
 
@@ -53,7 +54,7 @@ namespace Entitas.Unity.CodeGenerator {
         }
 
         static void checkCanGenerate() {
-            if (EditorApplication.isCompiling) {
+            if(EditorApplication.isCompiling) {
                 throw new Exception("Cannot generate because Unity is still compiling. Please wait...");
             }
 
@@ -61,7 +62,7 @@ namespace Entitas.Unity.CodeGenerator {
             var logEntries = assembly.GetType("UnityEditorInternal.LogEntries");
             logEntries.GetMethod("Clear").Invoke(new object(), null);
             var canCompile = (int)logEntries.GetMethod("GetCount").Invoke(new object(), null) == 0;
-            if (!canCompile) {
+            if(!canCompile) {
                 Debug.Log("There are compile errors! Generated code will be based on last compiled executable.");
             }
         }

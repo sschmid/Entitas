@@ -4,6 +4,7 @@ using UnityEngine;
 namespace Entitas.Unity.VisualDebugging {
 
     public class PoolObserver {
+
         public Pool pool { get { return _pool; } }
         public Group[] groups { get { return _groups.ToArray(); }}
         public GameObject entitiesContainer { get { return _entitiesContainer.gameObject; } }

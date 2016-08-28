@@ -5,7 +5,9 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class HashSetTypeDrawer : ITypeDrawer {
+
         public bool HandlesType(Type type) {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(HashSet<>);
         }

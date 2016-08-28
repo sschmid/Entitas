@@ -5,7 +5,9 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class ListTypeDrawer : ITypeDrawer {
+
         public bool HandlesType(Type type) {
             return type.GetInterfaces().Contains(typeof(IList));
         }

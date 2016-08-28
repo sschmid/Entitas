@@ -2,7 +2,9 @@ using System;
 using UnityEditor;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class DoubleTypeDrawer : ITypeDrawer {
+
         public bool HandlesType(Type type) {
             return type == typeof(double);
         }

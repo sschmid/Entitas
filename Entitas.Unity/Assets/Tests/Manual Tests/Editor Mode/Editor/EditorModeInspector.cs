@@ -10,7 +10,7 @@ public class EditorModeInspector : Editor {
         var controller = (EditorModeController)target;
 
         if (controller.pool == null) {
-            controller.pool = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("Pool", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
+            controller.pool = Pools.CreateVisualDebuggingPool();
             new Entitas.Unity.VisualDebugging.PoolObserver(controller.pool);
         }
 

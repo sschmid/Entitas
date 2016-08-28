@@ -2,6 +2,7 @@
 using UnityEngine;
 
 namespace Entitas.Unity {
+
     public static class EntitasEditorLayout {
 
         const int DEFAULT_FOLDOUT_MARGIN = 11;

@@ -2,6 +2,7 @@
 using Entitas;
 
 public class ObserverDestructorController : MonoBehaviour {
+
     Entity _initialEntity;
 
     void Start() {

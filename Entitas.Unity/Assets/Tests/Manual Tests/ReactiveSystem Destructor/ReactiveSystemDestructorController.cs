@@ -2,6 +2,7 @@
 using Entitas;
 
 public class ReactiveSystemDestructorController : MonoBehaviour {
+
     Entity _initialEntity;
 
     void Start() {

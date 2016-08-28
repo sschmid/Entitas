@@ -14,6 +14,7 @@ namespace Entitas.Unity.VisualDebugging {
     }
 
     public class DebugSystems : Systems {
+
         public static AvgResetInterval avgResetInterval = AvgResetInterval.Never;
 
         public int totalInitializeSystemsCount {
@@ -111,7 +112,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         public override void Initialize() {
             _totalDuration = 0;
-            for (int i = 0, _initializeSystemsCount = _initializeSystems.Count; i < _initializeSystemsCount; i++) {
+            for (int i = 0; i < _initializeSystems.Count; i++) {
                 var system = _initializeSystems[i];
                 var systemInfo = _initializeSystemInfos[i];
                 if (systemInfo.isActive) {
@@ -135,7 +136,7 @@ namespace Entitas.Unity.VisualDebugging {
             if (Time.frameCount % (int)avgResetInterval == 0) {
                 ResetDurations();
             }
-            for (int i = 0, exeSystemsCount = _executeSystems.Count; i < exeSystemsCount; i++) {
+            for (int i = 0; i < _executeSystems.Count; i++) {
                 var system = _executeSystems[i];
                 var systemInfo = _executeSystemInfos[i];
                 if (systemInfo.isActive) {

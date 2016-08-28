@@ -20,7 +20,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 .ToArray();
         }
 
-        [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, 300)]
+        [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, EntitasMenuItemPriorities.blueprints_update_all_blueprints)]
         public static void UpdateAllBinaryBlueprints() {
             if (!EditorApplication.isPlayingOrWillChangePlaymode) {
                 var allPools = findAllPools();
@@ -80,13 +80,16 @@ namespace Entitas.Unity.Serialization.Blueprints {
         }
 
         static Pool[] findAllPools() {
-            
+
             // Use reflection because there is no generated Pools.cs when you create a new emtpy project.
 
-            var poolsType = Assembly.GetAssembly(typeof(Entity)).GetTypes().SingleOrDefault(type => type.FullName == "Pools");
+            var poolsType = Assembly.GetAssembly(typeof(Entity)).GetTypes().SingleOrDefault(type =>
+                type.FullName == "Entitas.Pools" ||
+                type.FullName == "Pools" // Obsolete, last gen PoolsGenerator
+            );
 
             if (poolsType != null) {
-                var allPools = poolsType.GetProperties(BindingFlags.Public | BindingFlags.Static)
+                var allPools = poolsType.GetProperties(BindingFlags.Public)
                     .Single(info => info.Name == "allPools");
 
                 return (Pool[])allPools.GetValue(poolsType, null);
