@@ -5,6 +5,7 @@ namespace Entitas.Serialization.Blueprints {
 
     [Serializable]
     public class ComponentBlueprint {
+
         public int index;
         public string fullTypeName;
         public SerializableMember[] members;
@@ -20,11 +21,11 @@ namespace Entitas.Serialization.Blueprints {
             _componentMembers = null;
 
             this.index = index;
-            this.fullTypeName = _type.FullName;
+            fullTypeName = _type.FullName;
 
             var memberInfos = _type.GetPublicMemberInfos();
             members = new SerializableMember[memberInfos.Count];
-            for (int i = 0, memberInfosLength = memberInfos.Count; i < memberInfosLength; i++) {
+            for (int i = 0; i < memberInfos.Count; i++) {
                 var info = memberInfos[i];
                 members[i] = new SerializableMember(info.name, info.GetValue(component));
             }
@@ -50,13 +51,13 @@ namespace Entitas.Serialization.Blueprints {
             if (_componentMembers == null) {
                 var memberInfos = _type.GetPublicMemberInfos();
                 _componentMembers = new Dictionary<string, PublicMemberInfo>(memberInfos.Count);
-                for (int i = 0, memberInfosLength = memberInfos.Count; i < memberInfosLength; i++) {
+                for (int i = 0; i < memberInfos.Count; i++) {
                     var info = memberInfos[i];
                     _componentMembers.Add(info.name, info);
                 }
             }
 
-            for (int i = 0, membersLength = members.Length; i < membersLength; i++) {
+            for (int i = 0; i < members.Length; i++) {
                 var member = members[i];
 
                 PublicMemberInfo memberInfo;

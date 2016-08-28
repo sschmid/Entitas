@@ -5,6 +5,7 @@ using Entitas.Migration;
 using NSpec;
 
 class describe_M0260 : nspec {
+
     void when_migrating() {
 
         var dir = Environment.CurrentDirectory + "/Tests/Tests/Entitas.Migration/Fixtures/M0260";

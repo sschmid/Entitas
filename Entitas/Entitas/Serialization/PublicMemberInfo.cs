@@ -51,7 +51,7 @@ namespace Entitas.Serialization {
 
         static AttributeInfo[] getAttributes(object[] attributes) {
             var infos = new AttributeInfo[attributes.Length];
-            for (int i = 0, attrsLength = attributes.Length; i < attrsLength; i++) {
+            for (int i = 0; i < attributes.Length; i++) {
                 var attr = attributes[i];
                 infos[i] = new AttributeInfo(attr, attr.GetType().GetPublicMemberInfos());
             }
@@ -79,11 +79,11 @@ namespace Entitas.Serialization {
             var propertyInfos = type.GetProperties(bindingFlags);
             var memberInfos = new List<PublicMemberInfo>(fieldInfos.Length + propertyInfos.Length);
 
-            for (int i = 0, fieldInfosLength = fieldInfos.Length; i < fieldInfosLength; i++) {
+            for (int i = 0; i < fieldInfos.Length; i++) {
                 memberInfos.Add(new PublicMemberInfo(fieldInfos[i]));
             }
 
-            for (int i = 0, propertyInfosLength = propertyInfos.Length; i < propertyInfosLength; i++) {
+            for (int i = 0; i < propertyInfos.Length; i++) {
                 var propertyInfo = propertyInfos[i];
                 if (propertyInfo.CanRead && propertyInfo.CanWrite) {
                     memberInfos.Add(new PublicMemberInfo(propertyInfo));
@@ -107,7 +107,7 @@ namespace Entitas.Serialization {
 
         public static void CopyPublicMemberValues(this object source, object target) {
             var memberInfos = source.GetType().GetPublicMemberInfos();
-            for (int i = 0, memberInfosLength = memberInfos.Count; i < memberInfosLength; i++) {
+            for (int i = 0; i < memberInfos.Count; i++) {
                 var info = memberInfos[i];
                 info.SetValue(target, info.GetValue(source));
             }

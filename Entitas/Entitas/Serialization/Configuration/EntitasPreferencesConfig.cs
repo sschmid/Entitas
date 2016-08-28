@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-namespace Entitas.Serialization.Configuration {
+﻿namespace Entitas.Serialization.Configuration {
 
     public class EntitasPreferencesConfig {
 

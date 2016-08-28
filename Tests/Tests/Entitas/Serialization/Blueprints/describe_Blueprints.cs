@@ -58,7 +58,7 @@ class describe_Blueprints : nspec {
                 componentBlueprint.members[1].value.should_be(component.age);
             };
 
-            it["creates a component with and sets members values"] = () => {
+            it["creates a component and sets members values"] = () => {
                 var componentBlueprint = new ComponentBlueprint();
                 componentBlueprint.fullTypeName = typeof(ComponentWithFieldsAndProperties).FullName;
                 componentBlueprint.index = CID.ComponentB;
@@ -110,6 +110,7 @@ class describe_Blueprints : nspec {
             context["when applying blueprint"] = () => {
 
                 Blueprint blueprint = null;
+
                 before = () => {
                     var component1 = new ComponentBlueprint();
                     component1.index = CID.ComponentA;
@@ -154,7 +155,6 @@ class describe_Blueprints : nspec {
                     entity.AddComponent(CID.ComponentB, nameAgeComponent);
 
                     entity.ApplyBlueprint(blueprint, true);
-
                 };
 
                 it["uses component from componentPool"] = () => {

@@ -66,6 +66,7 @@ class describe_SystemInfo : nspec {
         context["when created"] = () => {
 
             SystemInfo info = null;
+
             before = () => {
                 info = new SystemInfo(new TestExecuteSystem());
             };
