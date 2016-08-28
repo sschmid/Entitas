@@ -32,7 +32,7 @@ namespace Entitas.Unity.CodeGenerator {
                 _pools[index] = EditorGUI.TextField(rect, _pools[index]);
             };
             _poolList.onAddCallback = list => list.list.Add("New Pool");
-            _poolList.onCanRemoveCallback = list => true;
+            _poolList.onCanRemoveCallback = list => list.count > 1;
             _poolList.onChangedCallback = list => GUI.changed = true;
         }
 
@@ -57,7 +57,7 @@ namespace Entitas.Unity.CodeGenerator {
 
             _poolList.DoLayoutList();
 
-            if(_pools.Count == 0) {
+            if(_pools.Count <= 1) {
                 EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple pools. " +
                 "The code generator generates subclasses of PoolAttribute for each pool name. " +
                 "You can assign components to a specific pool with the generated attribute, e.g. [UI] or [MetaGame], " +
