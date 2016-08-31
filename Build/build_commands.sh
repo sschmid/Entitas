@@ -85,6 +85,7 @@ collect_misc_files() {
   cp RELEASE_NOTES.md "$SRC_DIR/RELEASE_NOTES.md"
   cp EntitasUpgradeGuide.md "$SRC_DIR/EntitasUpgradeGuide.md"
   cp LICENSE.txt "$SRC_DIR/LICENSE.txt"
+  cp -r Documentation "$SRC_DIR/"
 
   echo "Collecting misc files done."
 }
@@ -97,6 +98,7 @@ create_zip() {
   echo "Creating Entitas-CSharp.zip..."
   mkdir $TMP_DIR
   cp -r $SRC_DIR/$ES $TMP_DIR
+  cp -r "$SRC_DIR/Documentation" $TMP_DIR
   cp "$SRC_DIR/"* $TMP_DIR || true
 
   pushd $TMP_DIR > /dev/null

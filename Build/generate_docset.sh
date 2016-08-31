@@ -24,6 +24,7 @@ make
 perl -pi -w -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>ent<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/s" ${DOCSET_NAME}.docset/Contents/Info.plist
 
 # Move the docset to the root Documentation directory
+rm -rf "../../Documentation"
 mkdir -p "../../Documentation"
 zip -r "../../Documentation/${DOCSET_NAME}.docset.zip" "${DOCSET_NAME}.docset"
 
