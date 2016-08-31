@@ -18,10 +18,9 @@ doxygen docset.doxyfile
 cd html
 make
 
-# In order for Dash to associate this docset with the "ent"
-# (short for "Entitas") keyword, we have to manually modify
-# the generated plist.
-perl -pi -w -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>ent<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/s" ${DOCSET_NAME}.docset/Contents/Info.plist
+# In order for Dash to associate this docset with the "entitas" keyword,
+# we have to manually modify the generated plist.
+perl -pi -w -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>entitas<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/s" ${DOCSET_NAME}.docset/Contents/Info.plist
 
 # Move the docset to the root Documentation directory
 rm -rf "../../Documentation"
