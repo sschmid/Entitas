@@ -14,23 +14,17 @@ namespace Entitas {
             return CreatePool("Blueprints", BlueprintsComponentIds.TotalComponents, BlueprintsComponentIds.componentNames, BlueprintsComponentIds.componentTypes);
         }
 
-        public static Pool CreatePool() {
-            return CreatePool("Pool", ComponentIds.TotalComponents, ComponentIds.componentNames, ComponentIds.componentTypes);
-        }
-
         public static Pool CreateVisualDebuggingPool() {
             return CreatePool("VisualDebugging", VisualDebuggingComponentIds.TotalComponents, VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes);
         }
 
-        public Pool[] allPools { get { return new[] { blueprints, pool, visualDebugging }; } }
+        public Pool[] allPools { get { return new[] { blueprints, visualDebugging }; } }
 
         public Pool blueprints;
-        public Pool pool;
         public Pool visualDebugging;
 
         public void SetAllPools() {
             blueprints = CreateBlueprintsPool();
-            pool = CreatePool();
             visualDebugging = CreateVisualDebuggingPool();
         }
     }
