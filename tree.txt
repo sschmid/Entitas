@@ -1,5 +1,6 @@
 .
 ├── Build
+├── Documentation
 ├── Entitas
 │   └── Entitas
 │       ├── CodeGenerator
@@ -12,7 +13,8 @@
 │       ├── Interfaces
 │       ├── Matcher
 │       └── Serialization
-│           └── Blueprints
+│           ├── Blueprints
+│           └── Configuration
 ├── Entitas.Migration
 │   └── Entitas.Migration
 └── Entitas.Unity
@@ -42,9 +44,13 @@
 ├── Build
 │   ├── build.sh
 │   ├── build_commands.sh
+│   ├── docset.doxyfile
+│   ├── generate_docset.sh
 │   ├── runTests.bat
 │   ├── runTests.sh
 │   └── update_project_dependencies.sh
+├── Documentation
+│   └── Entitas-0.32.0.docset.zip
 ├── Entitas
 │   └── Entitas
 │       ├── CodeGenerator
@@ -52,12 +58,14 @@
 │       │   │   ├── CustomComponentNameAttribute.cs
 │       │   │   ├── CustomPrefixAttribute.cs
 │       │   │   ├── DontGenerateAttribute.cs
+│       │   │   ├── IndexKeyAttribute.cs
 │       │   │   ├── PoolAttribute.cs
 │       │   │   └── SingleEntityAttribute.cs
 │       │   ├── Generators
 │       │   │   ├── BlueprintsGenerator.cs
 │       │   │   ├── ComponentExtensionsGenerator.cs
 │       │   │   ├── ComponentIndicesGenerator.cs
+│       │   │   ├── OldPoolsGenerator.cs
 │       │   │   ├── PoolAttributesGenerator.cs
 │       │   │   └── PoolsGenerator.cs
 │       │   ├── Interfaces
@@ -75,12 +83,15 @@
 │       │   └── TypeReflectionCodeGenerator.cs
 │       ├── Extensions
 │       │   ├── CollectionExtension.cs
+│       │   ├── EntityExtension.cs
 │       │   ├── GroupExtension.cs
 │       │   ├── IMatcherExtension.cs
 │       │   ├── PoolExtension.cs
 │       │   └── TypeExtension.cs
 │       ├── Interfaces
+│       │   ├── ICleanupSystem.cs
 │       │   ├── IComponent.cs
+│       │   ├── IDeinitializeSystem.cs
 │       │   ├── IExecuteSystem.cs
 │       │   ├── IInitializeSystem.cs
 │       │   ├── IMatcher.cs
@@ -99,13 +110,21 @@
 │       │   │   ├── BlueprintEntityExtension.cs
 │       │   │   ├── ComponentBlueprint.cs
 │       │   │   └── SerializableMember.cs
+│       │   ├── Configuration
+│       │   │   ├── CodeGeneratorConfig.cs
+│       │   │   ├── EntitasPreferences.cs
+│       │   │   ├── EntitasPreferencesConfig.cs
+│       │   │   └── Properties.cs
 │       │   ├── PublicMemberInfo.cs
 │       │   └── TypeSerializationExtension.cs
+│       ├── EntitasCache.cs
 │       ├── EntitasException.cs
 │       ├── Entity.cs
+│       ├── EntityIndex.cs
 │       ├── Group.cs
 │       ├── GroupObserver.cs
 │       ├── Pool.cs
+│       ├── Pools.cs
 │       ├── ReactiveSystem.cs
 │       ├── Systems.cs
 │       └── entitas_version
@@ -117,6 +136,7 @@
 │   │   ├── M0220.cs
 │   │   ├── M0260.cs
 │   │   ├── M0300.cs
+│   │   ├── M0320.cs
 │   │   ├── MigrationFile.cs
 │   │   └── MigrationUtils.cs
 │   └── Program.cs
@@ -128,7 +148,6 @@
 │           └── Unity
 │               ├── CodeGenerator
 │               │   └── Editor
-│               │       ├── CodeGeneratorConfig.cs
 │               │       ├── CodeGeneratorPreferencesDrawer.cs
 │               │       └── UnityCodeGenerator.cs
 │               ├── Editor
@@ -136,9 +155,9 @@
 │               │   ├── EntitasEditorLayout.cs
 │               │   ├── EntitasFeedback.cs
 │               │   ├── EntitasHeader.png
-│               │   ├── EntitasPreferences.cs
-│               │   ├── EntitasPreferencesConfig.cs
+│               │   ├── EntitasMenuItemPriorities.cs
 │               │   ├── EntitasPreferencesDrawer.cs
+│               │   ├── EntitasPreferencesDrawerPriorities.cs
 │               │   ├── EntitasPreferencesWindow.cs
 │               │   └── ScriptingDefineSymbols.cs
 │               ├── Migration
@@ -153,63 +172,63 @@
 │               │       │   └── BlueprintsInspector.cs
 │               │       ├── BinaryBlueprint.cs
 │               │       └── Blueprints.cs
-│               ├── VisualDebugging
-│               │   ├── DebugSystems
-│               │   │   ├── Editor
-│               │   │   │   ├── DebugSystemsInspector.cs
-│               │   │   │   └── SystemsMonitor.cs
-│               │   │   ├── DebugSystems.cs
-│               │   │   ├── DebugSystemsBehaviour.cs
-│               │   │   ├── Feature.cs
-│               │   │   └── SystemInfo.cs
-│               │   ├── Editor
-│               │   │   ├── EntitasEntityErrorHierarchyIcon.png
-│               │   │   ├── EntitasEntityHierarchyIcon.png
-│               │   │   ├── EntitasHierarchyIcon.cs
-│               │   │   ├── EntitasPoolErrorHierarchyIcon.png
-│               │   │   ├── EntitasPoolHierarchyIcon.png
-│               │   │   ├── EntitasStats.cs
-│               │   │   ├── EntitasSystemsHierarchyIcon.png
-│               │   │   ├── VisualDebuggingConfig.cs
-│               │   │   └── VisualDebuggingPreferencesDrawer.cs
-│               │   ├── Entity
-│               │   │   ├── Editor
-│               │   │   │   ├── DefaultInstanceCreator
-│               │   │   │   │   ├── DefaultArrayCreator.cs
-│               │   │   │   │   ├── DefaultStringCreator.cs
-│               │   │   │   │   └── IDefaultInstanceCreator.cs
-│               │   │   │   ├── TypeDrawer
-│               │   │   │   │   ├── AnimationCurveTypeDrawer.cs
-│               │   │   │   │   ├── ArrayTypeDrawer.cs
-│               │   │   │   │   ├── BoolTypeDrawer.cs
-│               │   │   │   │   ├── BoundsTypeDrawer.cs
-│               │   │   │   │   ├── CharTypeDrawer.cs
-│               │   │   │   │   ├── ColorTypeDrawer.cs
-│               │   │   │   │   ├── DateTimeTypeDrawer.cs
-│               │   │   │   │   ├── DictionaryTypeDrawer.cs
-│               │   │   │   │   ├── EnumTypeDrawer.cs
-│               │   │   │   │   ├── FloatTypeDrawer.cs
-│               │   │   │   │   ├── HashSetTypeDrawer.cs
-│               │   │   │   │   ├── ITypeDrawer.cs
-│               │   │   │   │   ├── IntTypeDrawer.cs
-│               │   │   │   │   ├── ListTypeDrawer.cs
-│               │   │   │   │   ├── RectTypeDrawer.cs
-│               │   │   │   │   ├── StringTypeDrawer.cs
-│               │   │   │   │   ├── UnityObjectTypeDrawer.cs
-│               │   │   │   │   ├── Vector2TypeDrawer.cs
-│               │   │   │   │   ├── Vector3TypeDrawer.cs
-│               │   │   │   │   └── Vector4TypeDrawer.cs
-│               │   │   │   ├── EntityDrawer.cs
-│               │   │   │   ├── EntityInspector.cs
-│               │   │   │   └── IComponentDrawer.cs
-│               │   │   └── EntityBehaviour.cs
-│               │   ├── PoolObserver
-│               │   │   ├── Editor
-│               │   │   │   └── PoolObserverInspector.cs
-│               │   │   ├── PoolObserver.cs
-│               │   │   └── PoolObserverBehaviour.cs
-│               │   └── GameObjectDestroyExtension.cs
-│               └── Properties.cs
+│               └── VisualDebugging
+│                   ├── DebugSystems
+│                   │   ├── Editor
+│                   │   │   ├── DebugSystemsInspector.cs
+│                   │   │   └── SystemsMonitor.cs
+│                   │   ├── DebugSystems.cs
+│                   │   ├── DebugSystemsBehaviour.cs
+│                   │   ├── Feature.cs
+│                   │   └── SystemInfo.cs
+│                   ├── Editor
+│                   │   ├── EntitasEntityErrorHierarchyIcon.png
+│                   │   ├── EntitasEntityHierarchyIcon.png
+│                   │   ├── EntitasHierarchyIcon.cs
+│                   │   ├── EntitasPoolErrorHierarchyIcon.png
+│                   │   ├── EntitasPoolHierarchyIcon.png
+│                   │   ├── EntitasStats.cs
+│                   │   ├── EntitasSystemsHierarchyIcon.png
+│                   │   ├── VisualDebuggingConfig.cs
+│                   │   └── VisualDebuggingPreferencesDrawer.cs
+│                   ├── Entity
+│                   │   ├── Editor
+│                   │   │   ├── DefaultInstanceCreator
+│                   │   │   │   ├── DefaultArrayCreator.cs
+│                   │   │   │   ├── DefaultStringCreator.cs
+│                   │   │   │   └── IDefaultInstanceCreator.cs
+│                   │   │   ├── TypeDrawer
+│                   │   │   │   ├── AnimationCurveTypeDrawer.cs
+│                   │   │   │   ├── ArrayTypeDrawer.cs
+│                   │   │   │   ├── BoolTypeDrawer.cs
+│                   │   │   │   ├── BoundsTypeDrawer.cs
+│                   │   │   │   ├── CharTypeDrawer.cs
+│                   │   │   │   ├── ColorTypeDrawer.cs
+│                   │   │   │   ├── DateTimeTypeDrawer.cs
+│                   │   │   │   ├── DictionaryTypeDrawer.cs
+│                   │   │   │   ├── DoubleTypeDrawer.cs
+│                   │   │   │   ├── EnumTypeDrawer.cs
+│                   │   │   │   ├── FloatTypeDrawer.cs
+│                   │   │   │   ├── HashSetTypeDrawer.cs
+│                   │   │   │   ├── ITypeDrawer.cs
+│                   │   │   │   ├── IntTypeDrawer.cs
+│                   │   │   │   ├── ListTypeDrawer.cs
+│                   │   │   │   ├── RectTypeDrawer.cs
+│                   │   │   │   ├── StringTypeDrawer.cs
+│                   │   │   │   ├── UnityObjectTypeDrawer.cs
+│                   │   │   │   ├── Vector2TypeDrawer.cs
+│                   │   │   │   ├── Vector3TypeDrawer.cs
+│                   │   │   │   └── Vector4TypeDrawer.cs
+│                   │   │   ├── EntityDrawer.cs
+│                   │   │   ├── EntityInspector.cs
+│                   │   │   └── IComponentDrawer.cs
+│                   │   └── EntityBehaviour.cs
+│                   ├── PoolObserver
+│                   │   ├── Editor
+│                   │   │   └── PoolObserverInspector.cs
+│                   │   ├── PoolObserver.cs
+│                   │   └── PoolObserverBehaviour.cs
+│                   └── GameObjectDestroyExtension.cs
 ├── EntitasUpgradeGuide.md
 ├── LICENSE.txt
 ├── README.md
