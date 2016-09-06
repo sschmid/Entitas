@@ -92,6 +92,7 @@
     <Compile Include="Entitas\Interfaces\IDeinitializeSystem.cs" />
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
     <Compile Include="Entitas\EntitasCache.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\OldPoolsGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
