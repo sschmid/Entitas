@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 
 namespace Entitas.Migration {
+
     public class M0180 : IMigration {
 
         public string version { get { return "0.18.0"; } }

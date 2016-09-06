@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+
 namespace Entitas.Migration {
+
     public class M0260 : IMigration {
 
         public string version { get { return "0.26.0"; } }
