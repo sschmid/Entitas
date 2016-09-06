@@ -13,7 +13,7 @@ namespace Entitas.Serialization.Configuration {
         }
 
         public const string POOLS_KEY = "Entitas.CodeGenerator.Pools";
-        public const string DEFAULT_POOLS = Entitas.CodeGenerator.CodeGenerator.DEFAULT_POOL_NAME;
+        public const string DEFAULT_POOLS = "Pool";
         public string[] pools {
             get { return separateValues(_config.GetValueOrDefault(POOLS_KEY, DEFAULT_POOLS)); }
             set { _config[POOLS_KEY] = joinValues(value); }

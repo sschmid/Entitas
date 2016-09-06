@@ -32,7 +32,7 @@ namespace Entitas.Unity.CodeGenerator {
                 _pools[index] = EditorGUI.TextField(rect, _pools[index]);
             };
             _poolList.onAddCallback = list => list.list.Add("New Pool");
-            _poolList.onCanRemoveCallback = list => list.count > 1;
+            _poolList.onCanRemoveCallback = list => true;
             _poolList.onChangedCallback = list => GUI.changed = true;
         }
 
