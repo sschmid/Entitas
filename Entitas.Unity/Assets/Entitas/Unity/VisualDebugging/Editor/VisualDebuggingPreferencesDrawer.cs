@@ -44,10 +44,10 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.Space();
 
                 _visualDebuggingConfig.defaultInstanceCreatorFolderPath =
-                    EditorGUILayout.TextField("DefaultInstanceCreator Folder", _visualDebuggingConfig.defaultInstanceCreatorFolderPath);
+                    EditorGUILayout.TextField("Default Instance Creators", _visualDebuggingConfig.defaultInstanceCreatorFolderPath);
 
                 _visualDebuggingConfig.typeDrawerFolderPath =
-                    EditorGUILayout.TextField("TypeDrawer Folder", _visualDebuggingConfig.typeDrawerFolderPath);
+                    EditorGUILayout.TextField("Type Drawers", _visualDebuggingConfig.typeDrawerFolderPath);
             }
             EntitasEditorLayout.EndVertical();
         }
