@@ -34,6 +34,27 @@ class describe_TypeReflectionProvider : nspec {
                 provider.poolNames.should_contain("Pool1");
                 provider.poolNames.should_contain("Pool2");
             };
+
+            it["sorts pool names by name"] = () => {
+                var provider = createProviderWithPoolName("Pool2", "Pool1");
+                provider.poolNames.Length.should_be(2);
+                provider.poolNames.should_contain("Pool1");
+                provider.poolNames.should_contain("Pool2");
+            };
+
+            it["removes duplicates"] = () => {
+                var provider = createProviderWithPoolName("Pool1", "Pool2", "Pool1");
+                provider.poolNames.Length.should_be(2);
+                provider.poolNames.should_contain("Pool1");
+                provider.poolNames.should_contain("Pool2");
+            };
+
+            it["converts pool names to uppercaseFirst"] = () => {
+                var provider = createProviderWithPoolName("pool1", "pool2");
+                provider.poolNames.Length.should_be(2);
+                provider.poolNames.should_contain("Pool1");
+                provider.poolNames.should_contain("Pool2");
+            };
         };
 
         context["component infos"] = () => {

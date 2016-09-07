@@ -21,7 +21,10 @@ namespace Entitas.CodeGenerator {
                 pools.Add(CodeGenerator.DEFAULT_POOL_NAME);
             }
             _componentInfos = GetComponentInfos(types);
-            _poolNames = pools.OrderBy(poolName => poolName).ToArray();
+            _poolNames = pools
+                .Select(poolName => poolName.UppercaseFirst())
+                .OrderBy(poolName => poolName)
+                .ToArray();
             _blueprintNames = blueprintNames;
         }
 
