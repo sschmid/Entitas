@@ -93,6 +93,8 @@
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
     <Compile Include="Entitas\EntitasCache.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\OldPoolsGenerator.cs" />
+    <Compile Include="Entitas\Caching\ObjectCache.cs" />
+    <Compile Include="Entitas\Caching\ObjectPool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -108,5 +110,6 @@
     <Folder Include="Entitas\CodeGenerator\Providers\" />
     <Folder Include="Entitas\Serialization\Blueprints\" />
     <Folder Include="Entitas\Serialization\Configuration\" />
+    <Folder Include="Entitas\Caching\" />
   </ItemGroup>
 </Project>

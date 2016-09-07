@@ -343,6 +343,14 @@
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpyBase.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_BlueprintsGenerator.cs" />
+    <Compile Include="Tests\Entitas\Caching\describe_ObjectCache.cs" />
+    <Compile Include="Tests\Entitas\Caching\describe_ObjectPool.cs" />
+    <Compile Include="..\Entitas\Entitas\Caching\ObjectCache.cs">
+      <Link>Linked Libraries\Entitas\Caching\ObjectCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Caching\ObjectPool.cs">
+      <Link>Linked Libraries\Entitas\Caching\ObjectPool.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -364,6 +372,7 @@
     <Folder Include="Tests\Entitas\Serialization\Configuration\" />
     <Folder Include="Tests\Entitas\Serialization\Blueprints\" />
     <Folder Include="Tests\Entitas\Fixtures\Systems\" />
+    <Folder Include="Tests\Entitas\Caching\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\nunit.framework.dll" />
