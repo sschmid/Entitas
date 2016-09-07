@@ -91,10 +91,10 @@
     <Compile Include="Entitas\Interfaces\ICleanupSystem.cs" />
     <Compile Include="Entitas\Interfaces\IDeinitializeSystem.cs" />
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
-    <Compile Include="Entitas\EntitasCache.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\OldPoolsGenerator.cs" />
     <Compile Include="Entitas\Caching\ObjectCache.cs" />
     <Compile Include="Entitas\Caching\ObjectPool.cs" />
+    <Compile Include="Entitas\Caching\EntitasCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

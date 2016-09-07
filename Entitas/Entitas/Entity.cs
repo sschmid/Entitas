@@ -182,15 +182,18 @@ namespace Entitas {
         /// Returns all added components.
         public IComponent[] GetComponents() {
             if(_componentsCache == null) {
-                var components = EntitasCache.reusableIComponentList;
-                for(int i = 0; i < _components.Length; i++) {
-                    var component = _components[i];
-                    if(component != null) {
-                        components.Add(component);
-                    }
-                }
+                var components = EntitasCache.GetIComponentList();
 
-                _componentsCache = components.ToArray();
+                    for(int i = 0; i < _components.Length; i++) {
+                        var component = _components[i];
+                        if(component != null) {
+                            components.Add(component);
+                        }
+                    }
+
+                    _componentsCache = components.ToArray();
+
+                EntitasCache.PushIComponentList(components);
             }
 
             return _componentsCache;
@@ -199,14 +202,17 @@ namespace Entitas {
         /// Returns all indices of added components.
         public int[] GetComponentIndices() {
             if(_componentIndicesCache == null) {
-                var indices = EntitasCache.reusableIntList;
-                for(int i = 0; i < _components.Length; i++) {
-                    if(_components[i] != null) {
-                        indices.Add(i);
-                    }
-                }
+                var indices = EntitasCache.GetIntList();
 
-                _componentIndicesCache = indices.ToArray();
+                    for(int i = 0; i < _components.Length; i++) {
+                        if(_components[i] != null) {
+                            indices.Add(i);
+                        }
+                    }
+
+                    _componentIndicesCache = indices.ToArray();
+
+                EntitasCache.PushIntList(indices);
             }
 
             return _componentIndicesCache;

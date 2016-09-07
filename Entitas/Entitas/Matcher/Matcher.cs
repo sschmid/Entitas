@@ -54,18 +54,23 @@ namespace Entitas {
         }
 
         int[] mergeIndices() {
-            var indicesList = EntitasCache.reusableIntList;
-            if (_allOfIndices != null) {
-                indicesList.AddRange(_allOfIndices);
-            }
-            if (_anyOfIndices != null) {
-                indicesList.AddRange(_anyOfIndices);
-            }
-            if (_noneOfIndices != null) {
-                indicesList.AddRange(_noneOfIndices);
-            }
+            var indicesList = EntitasCache.GetIntList();
 
-            return distinctIndices(indicesList);
+                if(_allOfIndices != null) {
+                    indicesList.AddRange(_allOfIndices);
+                }
+                if(_anyOfIndices != null) {
+                    indicesList.AddRange(_anyOfIndices);
+                }
+                if(_noneOfIndices != null) {
+                    indicesList.AddRange(_noneOfIndices);
+                }
+
+                var mergedIndices = distinctIndices(indicesList);
+
+            EntitasCache.PushIntList(indicesList);
+
+            return mergedIndices;
         }
 
         static int[] mergeIndices(IMatcher[] matchers) {
@@ -99,14 +104,18 @@ namespace Entitas {
             }
         }
 
-        static int[] distinctIndices(IEnumerable<int> indices) {
-            var indicesSet = EntitasCache.reusableIntHashSet;
-            foreach(var index in indices) {
-                indicesSet.Add(index);
-            }
-            var uniqueIndices = new int[indicesSet.Count];
-            indicesSet.CopyTo(uniqueIndices);
-            Array.Sort(uniqueIndices);
+        static int[] distinctIndices(IList<int> indices) {
+            var indicesSet = EntitasCache.GetIntHashSet();
+
+                foreach(var index in indices) {
+                    indicesSet.Add(index);
+                }
+                var uniqueIndices = new int[indicesSet.Count];
+                indicesSet.CopyTo(uniqueIndices);
+                Array.Sort(uniqueIndices);
+
+            EntitasCache.PushIntHashSet(indicesSet);
+
             return uniqueIndices;
         }
     }

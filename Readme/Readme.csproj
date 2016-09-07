@@ -224,8 +224,14 @@
     <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\EntityExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\EntitasCache.cs">
-      <Link>Linked Libraries\Entitas\EntitasCache.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Caching\EntitasCache.cs">
+      <Link>Linked Libraries\Entitas\Caching\EntitasCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Caching\ObjectCache.cs">
+      <Link>Linked Libraries\Entitas\Caching\ObjectCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Caching\ObjectPool.cs">
+      <Link>Linked Libraries\Entitas\Caching\ObjectPool.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

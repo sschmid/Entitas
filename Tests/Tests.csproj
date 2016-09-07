@@ -328,9 +328,6 @@
     <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\EntityExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\EntitasCache.cs">
-      <Link>Linked Libraries\Entitas\EntitasCache.cs</Link>
-    </Compile>
     <Compile Include="Tests\Entitas\Serialization\Blueprints\describe_Blueprints.cs" />
     <Compile Include="Tests\Entitas\describe_Systems.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
@@ -350,6 +347,9 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Caching\ObjectPool.cs">
       <Link>Linked Libraries\Entitas\Caching\ObjectPool.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Caching\EntitasCache.cs">
+      <Link>Linked Libraries\Entitas\Caching\EntitasCache.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
