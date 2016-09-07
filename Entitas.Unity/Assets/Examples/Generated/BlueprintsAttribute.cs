@@ -9,6 +9,7 @@
 using Entitas.CodeGenerator;
 
 public class BlueprintsAttribute : PoolAttribute {
+
     public BlueprintsAttribute() : base("Blueprints") {
     }
 }

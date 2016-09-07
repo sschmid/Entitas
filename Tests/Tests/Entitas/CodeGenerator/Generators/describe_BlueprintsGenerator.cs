@@ -30,6 +30,7 @@ class describe_BlueprintsGenerator : nspec {
 namespace Entitas.Unity.Serialization.Blueprints {
 
     public partial class Blueprints {
+
         public Blueprint MyBlueprint1 { get { return GetBlueprint(""MyBlueprint1""); } }
         public Blueprint MyBlueprint2 { get { return GetBlueprint(""MyBlueprint2""); } }
     }
@@ -43,6 +44,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
 namespace Entitas.Unity.Serialization.Blueprints {
 
     public partial class Blueprints {
+
         public Blueprint MyBlueprint { get { return GetBlueprint(""My Blueprint""); } }
     }
 }
@@ -55,6 +57,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
 namespace Entitas.Unity.Serialization.Blueprints {
 
     public partial class Blueprints {
+
         public Blueprint MyBlueprint { get { return GetBlueprint(""My-Blueprint""); } }
     }
 }
@@ -67,6 +70,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
 namespace Entitas.Unity.Serialization.Blueprints {
 
     public partial class Blueprints {
+
         public Blueprint MyBlueprintVersion2 { get { return GetBlueprint(""MyBlueprint (Version 2)""); } }
     }
 }

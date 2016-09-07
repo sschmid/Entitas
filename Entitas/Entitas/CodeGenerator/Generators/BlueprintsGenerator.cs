@@ -9,6 +9,7 @@ namespace Entitas.CodeGenerator {
 namespace Entitas.Unity.Serialization.Blueprints {{
 
     public partial class Blueprints {{
+
 {0}
     }}
 }}
