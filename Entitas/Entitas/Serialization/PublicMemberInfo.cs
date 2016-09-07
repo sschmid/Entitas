@@ -61,6 +61,7 @@ namespace Entitas.Serialization {
     }
 
     public class AttributeInfo {
+
         public readonly object attribute;
         public readonly List<PublicMemberInfo> memberInfos;
 

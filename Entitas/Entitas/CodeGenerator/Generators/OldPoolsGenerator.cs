@@ -48,8 +48,8 @@ public static class Pools {{
                 string.Join(", ", poolNames.Select(poolName => poolName.LowercaseFirst()).ToArray()));
 
             var getters = poolNames.Aggregate(string.Empty, (acc, poolName) =>
-                                        acc + string.Format(GETTER, poolName.LowercaseFirst(), poolName.PoolPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
-                                        poolName.IsDefaultPoolName() ? string.Empty : poolName.PoolPrefix() + " "));
+                                acc + string.Format(GETTER, poolName.LowercaseFirst(), poolName.PoolPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
+                                poolName.IsDefaultPoolName() ? string.Empty : poolName.PoolPrefix() + " "));
 
             return new [] { new CodeGenFile(
                     "Pools",

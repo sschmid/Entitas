@@ -251,7 +251,9 @@ class describe_Properties : nspec {
         };
 
         context["adding properties"] = () => {
+
             Properties p = null;
+
             before = () => {
                 p = new Properties();
             };

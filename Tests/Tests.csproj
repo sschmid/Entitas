@@ -332,7 +332,6 @@
       <Link>Linked Libraries\Entitas\EntitasCache.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\Serialization\Blueprints\describe_Blueprints.cs" />
-    <Compile Include="Tests\Entitas\Serialization\Blueprints\describe_BlueprintsGenerator.cs" />
     <Compile Include="Tests\Entitas\describe_Systems.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\DeinitializeSystemSpy.cs" />
@@ -343,6 +342,7 @@
     <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpyBase.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_BlueprintsGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

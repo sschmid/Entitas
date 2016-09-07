@@ -25,9 +25,6 @@ class describe_M0180 : nspec {
 
         it["migrates to new api"] = () => {
             var updatedFiles = m.Migrate(dir);
-            foreach (var file in updatedFiles) {
-//                Console.WriteLine(file.fileContent);
-            }
 
             var reactiveSystemFile = updatedFiles.Where(file => file.fileName == Path.Combine(dir, "RenderRotationSystem.cs")).First();
             reactiveSystemFile.fileContent.should_be(@"using Entitas;

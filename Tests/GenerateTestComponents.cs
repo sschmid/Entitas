@@ -4,6 +4,7 @@ using System.Reflection;
 using Entitas.CodeGenerator;
 
 class GenerateTestComponents {
+
     public static void Main(string[] args) {
         generate();
     }

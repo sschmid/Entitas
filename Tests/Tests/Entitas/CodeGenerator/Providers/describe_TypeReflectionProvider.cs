@@ -154,6 +154,7 @@ class describe_TypeReflectionProvider : nspec {
             };
 
             context["when type implements IComponent"] = () => {
+
                 it["finds no components and ignores IComponent itself"] = () => {
                     var provider = createProviderWithTypes(typeof(IComponent));
                     provider.componentInfos.should_be_empty();
@@ -335,6 +336,7 @@ class describe_TypeReflectionProvider : nspec {
         };
 
         context["blueprint names"] = () => {
+
             it["has no blueprint names if empty"] = () => {
                 var provider = createProviderWithBlueprintNames();
                 provider.blueprintNames.should_be_empty();

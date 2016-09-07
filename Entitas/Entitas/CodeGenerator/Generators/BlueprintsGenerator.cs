@@ -7,6 +7,7 @@ namespace Entitas.CodeGenerator {
         const string CLASS_FORMAT = @"using Entitas.Serialization.Blueprints;
 
 namespace Entitas.Unity.Serialization.Blueprints {{
+
     public partial class Blueprints {{
 {0}
     }}

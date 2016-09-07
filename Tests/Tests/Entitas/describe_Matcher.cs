@@ -41,6 +41,7 @@ class describe_Matcher : nspec {
         context["allOf"] = () => {
 
             IAllOfMatcher m = null;
+
             before = () => m = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
 
             it["has all indices"] = () => {
