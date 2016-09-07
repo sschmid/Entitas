@@ -15,17 +15,17 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 - Fixed inconsistent Line endings (#116 @ParagonFable)
 
 ##### Entitas
-- Added new Pools class. There is no static Pools anymore but an instance.
-- Added ISetPools to inject the shared pools instance
-- Removed pool.CreateSystem<T>() and pool.CreateSystem(Type type) (Apply migration 0.32.0)
-- Fixed pool.CreateSystem() not creating a ReactiveSystem for IGroupObserverSystem
-- Added EntityIndex (#154)
-- pool.Reset() removes all event handlers
+- Added new `Pools` class. There is no static Pools anymore but an instance.
+- Added `ISetPools` to inject the shared pools instance
+- Removed `pool.CreateSystem<T>()` and `pool.CreateSystem(Type type)` (Apply migration 0.32.0)
+- Fixed `pool.CreateSystem()` not creating a ReactiveSystem for IGroupObserverSystem
+- Added `EntityIndex` (#154)
+- `pool.Reset()` removes all event handlers
 - Fixed retain / release didn't update entity toString cache
-- Added EntitasCache for object pooling of collections to reduce memory allocations
+- Added `EntitasCache` for object pooling of collections to reduce memory allocations
 - Updated Entity, Matcher and Pool to use EntitasCache (less garbage :heart:)
-- Added ICleanupSystem
-- Added IDeinitializeSystem
+- Added `ICleanupSystem`
+- Added `IDeinitializeSystem`
 - Pushing removed component to component pool after dispatching event
 
 ##### Entitas.CodeGenerator
