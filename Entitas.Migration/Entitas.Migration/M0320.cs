@@ -23,8 +23,6 @@ namespace Entitas.Migration {
                 file.fileContent = file.fileContent.Replace("Entitas.Unity.CodeGenerator.GeneratedFolderPath", "Entitas.CodeGenerator.GeneratedFolderPath");
                 file.fileContent = file.fileContent.Replace("Entitas.Unity.CodeGenerator.Pools", "Entitas.CodeGenerator.Pools");
                 file.fileContent = file.fileContent.Replace("Entitas.Unity.CodeGenerator.EnabledCodeGenerators", "Entitas.CodeGenerator.EnabledCodeGenerators");
-
-                properties[i] = file;
             }
 
             const string pattern = @".CreateSystem<(?<system>\w*)>\(\s*\)";
@@ -41,8 +39,6 @@ namespace Entitas.Migration {
                     pattern,
                     match => ".CreateSystem(new " + match.Groups["system"].Value + "())"
                 );
-
-                sources[i] = file;
             }
 
             return properties.Concat(sources).ToArray();

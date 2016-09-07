@@ -87,7 +87,6 @@ class describe_PoolsGenerator : nspec {
     }
 
     void when_generating() {
-
         it["generates default pool"] = () => generates(new[] { CodeGenerator.DEFAULT_POOL_NAME }, defaultPool);
         it["generates one custom pool"] = () => generates(new[] { "Meta" }, metaPool);
         it["generates multiple pools"] = () => generates(new[] { "Meta", "Core" }, coreMetaPool);

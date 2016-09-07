@@ -31,7 +31,6 @@ namespace Entitas.Migration {
                 file.fileContent = Regex.Replace(file.fileContent, EVENT_TYPE_PATTERN_END, match => match.Value + " }", RegexOptions.Multiline);
                 file.fileContent = Regex.Replace(file.fileContent, TRIGGER_PATTERN, TRIGGER_REPLACEMENT, RegexOptions.Multiline);
                 file.fileContent = Regex.Replace(file.fileContent, EVENT_TYPE_PATTERN, EVENT_TYPE_REPLACEMENT, RegexOptions.Multiline);
-                files[i] = file;
             }
 
             return files;

@@ -8,10 +8,8 @@ namespace Entitas.Migration {
 
         public static MigrationFile[] GetFiles(string path, string searchPattern = "*.cs") {
             return Directory.GetFiles(path, searchPattern, SearchOption.AllDirectories)
-                .Select(p => new MigrationFile {
-                    fileName = p,
-                    fileContent = File.ReadAllText(p)
-                }).ToArray();
+                            .Select(p => new MigrationFile(p, File.ReadAllText(p)))
+                            .ToArray();
         }
 
         public static void WriteFiles(MigrationFile[] files) {
