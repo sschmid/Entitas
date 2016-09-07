@@ -21,7 +21,7 @@ class describe_CodeGeneratorConfig : nspec {
         it["gets default values when keys dont exist"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new [] {"Gen1, Gen2"});
             config.generatedFolderPath.should_be("Assets/Generated/");
-            config.pools.should_be(new [] { "Pool" });
+            config.pools.should_be_empty();
             config.enabledCodeGenerators.should_be(new [] {"Gen1", "Gen2"});
         };
 
@@ -52,7 +52,7 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new string[0]);
             config.ToString().should_be(
                 "Entitas.CodeGenerator.GeneratedFolderPath = Assets/Generated/\n" +
-                "Entitas.CodeGenerator.Pools = Pool\n" +
+                "Entitas.CodeGenerator.Pools = \n" +
                 "Entitas.CodeGenerator.EnabledCodeGenerators = \n");
         };
 
@@ -83,7 +83,7 @@ class describe_CodeGeneratorConfig : nspec {
             config.enabledCodeGenerators = new [] { "Gen1", string.Empty };
             config.ToString().should_be(
                 "Entitas.CodeGenerator.GeneratedFolderPath = Assets/Generated/\n" +
-                "Entitas.CodeGenerator.Pools = Pool\n" +
+                "Entitas.CodeGenerator.Pools = \n" +
                 "Entitas.CodeGenerator.EnabledCodeGenerators = Gen1\n"
             );
         };
