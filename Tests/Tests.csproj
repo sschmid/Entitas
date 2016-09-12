@@ -351,6 +351,7 @@
     <Compile Include="..\Entitas\Entitas\Caching\EntitasCache.cs">
       <Link>Linked Libraries\Entitas\Caching\EntitasCache.cs</Link>
     </Compile>
+    <Compile Include="Tests\Entitas\Caching\describe_EntitasCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
