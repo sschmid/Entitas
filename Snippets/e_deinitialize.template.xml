@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeTemplates version="3.0">
+  <CodeTemplate version="2.0">
+    <Header>
+      <_Group>C#</_Group>
+      <Version />
+      <MimeType>text/x-csharp</MimeType>
+      <Shortcut>e_deinitialize</Shortcut>
+      <_Description>Deinitialize()</_Description>
+      <TemplateType>Expansion</TemplateType>
+    </Header>
+    <Variables />
+    <Code><![CDATA[public void Deinitialize() {
+$end$
+}]]></Code>
+  </CodeTemplate>
+</CodeTemplates>
