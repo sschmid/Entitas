@@ -734,11 +734,19 @@ class describe_Pool : nspec {
                 it["deactivates EntityIndex"] = () => {
                     var nameAgeComponent = new NameAgeComponent();
                     nameAgeComponent.name = "Max";
+
                     pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
                     entityIndex.HasEntity("Max").should_be_true();
-                    pool.DeactivateEntityIndices();
+
+                    pool.DeactivateAndRemoveEntityIndices();
+
                     entityIndex.HasEntity("Max").should_be_false();
                 };
+
+                it["removes EntityIndex"] = expect<PoolEntityIndexDoesNotExistException>(() => {
+                    pool.DeactivateAndRemoveEntityIndices();
+                    pool.GetEntityIndex(CID.ComponentA.ToString());
+                });
             };
         };
 
