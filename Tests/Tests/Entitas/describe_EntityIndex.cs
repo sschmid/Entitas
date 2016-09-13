@@ -13,7 +13,12 @@ class describe_EntityIndex : nspec {
         before = () => {
             pool = new Pool(CID.TotalComponents);
             group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
-            index = new PrimaryEntityIndex<string>(group, (e, c) => ((NameAgeComponent)c).name);
+            index = new PrimaryEntityIndex<string>(group, (e, c) => {
+                var nameAge = c as NameAgeComponent;
+                return nameAge != null
+                    ? nameAge.name
+                    : ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
+            });
         };
 
         context["when entity for key doesn't exist"] = () => {
@@ -59,7 +64,12 @@ class describe_EntityIndex : nspec {
             };
 
             it["has existing entity"] = () => {
-                var newIndex = new PrimaryEntityIndex<string>(group, (e, c) => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name);
+                var newIndex = new PrimaryEntityIndex<string>(group, (e, c) => {
+                    var nameAge = c as NameAgeComponent;
+                    return nameAge != null
+                        ? nameAge.name
+                        : ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
+                });
                 newIndex.HasEntity(name).should_be_true();
             };
 
@@ -92,6 +102,25 @@ class describe_EntityIndex : nspec {
                     pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
                     index.HasEntity(name).should_be_false();
                 };
+
+                context["when actrivated"] = () => {
+
+                    before = () => {
+                        index.Activate();
+                    };
+
+                    it["has existing entity"] = () => {
+                        index.HasEntity(name).should_be_true();
+                    };
+
+                    it["adds new entities"] = () => {
+                        var nameAgeComponent = new NameAgeComponent();
+                        nameAgeComponent.name = "Jack";
+                        entity = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+
+                        index.HasEntity("Jack").should_be_true();
+                    };
+                };
             };
         };
     }
@@ -105,7 +134,12 @@ class describe_EntityIndex : nspec {
         before = () => {
             pool = new Pool(CID.TotalComponents);
             group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
-            index = new EntityIndex<string>(group, (e, c) => ((NameAgeComponent)c).name);
+            index = new EntityIndex<string>(group, (e, c) => {
+                var nameAge = c as NameAgeComponent;
+                return nameAge != null
+                    ? nameAge.name
+                    : ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
+            });
         };
 
         context["when entity for key doesn't exist"] = () => {
@@ -118,11 +152,12 @@ class describe_EntityIndex : nspec {
         context["when entity for key exists"] = () => {
 
             const string name = "Max";
+            NameAgeComponent nameAgeComponent = null;
             Entity entity1 = null;
             Entity entity2 = null;
 
             before = () => {
-                var nameAgeComponent = new NameAgeComponent();
+                nameAgeComponent = new NameAgeComponent();
                 nameAgeComponent.name = name;
                 entity1 = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
                 entity2 = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
@@ -140,8 +175,13 @@ class describe_EntityIndex : nspec {
                 entity2.retainCount.should_be(3); // Pool, Group, EntityIndex
             };
 
-            it["has existing entity"] = () => {
-                var newIndex = new EntityIndex<string>(group, (e, c) => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name);
+            it["has existing entities"] = () => {
+                var newIndex = new EntityIndex<string>(group, (e, c) => {
+                    var nameAge = c as NameAgeComponent;
+                    return nameAge != null
+                        ? nameAge.name
+                        : ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
+                });
                 newIndex.GetEntities(name).Count.should_be(2);
             };  
 
@@ -164,10 +204,32 @@ class describe_EntityIndex : nspec {
                 };
 
                 it["doesn't add entities anymore"] = () => {
-                    var nameAgeComponent = new NameAgeComponent();
-                    nameAgeComponent.name = name;
                     pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
                     index.GetEntities(name).should_be_empty();
+                };
+
+                context["when actrivated"] = () => {
+
+                    before = () => {
+                        index.Activate();
+                    };
+
+                    it["has existing entities"] = () => {
+                        var entities = index.GetEntities(name);
+                        entities.Count.should_be(2);
+                        entities.should_contain(entity1);
+                        entities.should_contain(entity2);
+                    };
+
+                    it["adds new entities"] = () => {
+                        var entity3 = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+
+                        var entities = index.GetEntities(name);
+                        entities.Count.should_be(3);
+                        entities.should_contain(entity1);
+                        entities.should_contain(entity2);
+                        entities.should_contain(entity3);
+                    };
                 };
             };
         };

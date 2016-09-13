@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Entitas {
 
     public interface IEntityIndex {
+        void Activate();
         void Deactivate();
     }
 
@@ -15,9 +16,11 @@ namespace Entitas {
         protected AbstractEntityIndex(Group group, Func<Entity, IComponent, T> getKey) {
             _group = group;
             _getKey = getKey;
+        }
 
-            group.OnEntityAdded += onEntityAdded;
-            group.OnEntityRemoved += onEntityRemoved;
+        public virtual void Activate() {
+            _group.OnEntityAdded += onEntityAdded;
+            _group.OnEntityRemoved += onEntityRemoved;
         }
 
         public virtual void Deactivate() {
@@ -58,7 +61,12 @@ namespace Entitas {
 
         public PrimaryEntityIndex(Group group, Func<Entity, IComponent, T> getKey) : base(group, getKey) {
             _index = new Dictionary<T, Entity>();
-            indexEntities(group);
+            Activate();
+        }
+
+        public override void Activate() {
+            base.Activate();
+            indexEntities(_group);
         }
 
         public bool HasEntity(T key) {
@@ -112,7 +120,12 @@ namespace Entitas {
 
         public EntityIndex(Group group, Func<Entity, IComponent, T> getKey) : base(group, getKey) {
             _index = new Dictionary<T, HashSet<Entity>>();
-            indexEntities(group);
+            Activate();
+        }
+
+        public override void Activate() {
+            base.Activate();
+            indexEntities(_group);
         }
 
         public HashSet<Entity> GetEntities(T key) {
