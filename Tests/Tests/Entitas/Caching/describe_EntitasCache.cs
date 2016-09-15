@@ -33,7 +33,7 @@ class describe_EntitasCache : nspec {
             EntitasCache.GetIntHashSet().Count.should_be(0);
         };
 
-        it["clears int hashSet"] = () => {
+        it["clears GroupChanged hashSet"] = () => {
             var list = EntitasCache.GetGroupChangedList();
             list.Add((group, entity, index, component) => {});
             EntitasCache.PushGroupChangedList(list);
