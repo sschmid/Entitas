@@ -6,16 +6,16 @@ public interface IReactiveSubSystemSpy {
     int didInitialize { get; }
     int didExecute { get; }
     int didCleanup { get; }
-    int didDeinitialize { get; }
+    int didTearDown { get; }
     Entity[] entities { get; }
 }
 
-public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IInitializeSystem, ICleanupSystem, IDeinitializeSystem {
+public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem {
 
     public int didInitialize { get { return _didInitialize; } }
     public int didExecute { get { return _didExecute; } }
     public int didCleanup { get { return _didCleanup; } }
-    public int didDeinitialize { get { return _didDeinitialize; } }
+    public int didTearDown { get { return _didTearDown; } }
     public Entity[] entities { get { return _entities; } }
 
     public Action<List<Entity>> executeAction;
@@ -23,7 +23,7 @@ public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IInitial
     protected int _didInitialize;
     protected int _didExecute;
     protected int _didCleanup;
-    protected int _didDeinitialize;
+    protected int _didTearDown;
     protected Entity[] _entities;
 
     public void Initialize() {
@@ -48,8 +48,8 @@ public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IInitial
         _didCleanup += 1;
     }
 
-    public void Deinitialize() {
-        _didDeinitialize += 1;
+    public void TearDown() {
+        _didTearDown += 1;
     }
 }
 
