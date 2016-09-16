@@ -28,7 +28,7 @@ namespace Entitas {
         /// This is the recommended way to create systems.
         /// It will inject the pool if ISetPool is implemented.
         /// It will inject the Pools.sharedInstance if ISetPools is implemented.
-        /// It will automatically create a ReactiveSystem if it is a IReactiveSystem or IMultiReactiveSystem.
+        /// It will automatically create a ReactiveSystem if it is a IReactiveSystem, IMultiReactiveSystem or IGroupObserverSystem.
         public static ISystem CreateSystem(this Pool pool, ISystem system) {
             return CreateSystem(pool, system, Pools.sharedInstance);
         }
@@ -45,7 +45,7 @@ namespace Entitas {
         /// This is the recommended way to create systems.
         /// It will inject the pool if ISetPool is implemented.
         /// It will inject the pools if ISetPools is implemented.
-        /// It will automatically create a ReactiveSystem if it is a IReactiveSystem or IMultiReactiveSystem.
+        /// It will automatically create a ReactiveSystem if it is a IReactiveSystem, IMultiReactiveSystem or IGroupObserverSystem.
         public static ISystem CreateSystem(this Pool pool, IReactiveExecuteSystem system) {
             return CreateSystem(pool, system, Pools.sharedInstance);
         }
@@ -53,7 +53,7 @@ namespace Entitas {
         /// This is the recommended way to create systems.
         /// It will inject the pool if ISetPool is implemented.
         /// It will inject the pools if ISetPools is implemented.
-        /// It will automatically create a ReactiveSystem if it is a IReactiveSystem or IMultiReactiveSystem.
+        /// It will automatically create a ReactiveSystem if it is a IReactiveSystem, IMultiReactiveSystem or IGroupObserverSystem.
         public static ISystem CreateSystem(this Pool pool, IReactiveExecuteSystem system, Pools pools) {
             SetPool(system, pool);
             SetPools(system, pools);
@@ -86,6 +86,7 @@ namespace Entitas {
 
         /// This is the recommended way to create systems.
         /// It will inject the pools if ISetPools is implemented.
+        /// It will automatically create a ReactiveSystem if it is a IGroupObserverSystem.
         public static ISystem CreateSystem(this Pools pools, IReactiveExecuteSystem system) {
             SetPools(system, pools);
 

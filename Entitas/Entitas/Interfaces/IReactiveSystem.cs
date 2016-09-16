@@ -18,12 +18,12 @@ namespace Entitas {
         GroupObserver groupObserver { get; }
     }
 
-    /// Not meant to be implemented. Use either IReactiveSystem or IMultiReactiveSystem.
+    /// Not meant to be implemented. Use IReactiveSystem, IMultiReactiveSystem or IGroupObserverSystem.
     public interface IReactiveExecuteSystem : ISystem {
         void Execute(List<Entity> entities);
     }
 
-    /// Implement this interface in combination with IReactiveSystem or IMultiReactiveSystem.
+    /// Implement this interface in combination with IReactiveSystem, IMultiReactiveSystem or IGroupObserverSystem.
     /// It will ensure that all entities will match the specified matcher.
     /// This is useful when a component triggered the reactive system, but once the system gets executed the component already has been removed.
     /// Implementing IEnsureComponents can filter these enities.
@@ -31,14 +31,14 @@ namespace Entitas {
         IMatcher ensureComponents { get; }
     }
 
-    /// Implement this interface in combination with IReactiveSystem or IMultiReactiveSystem.
+    /// Implement this interface in combination with IReactiveSystem, IMultiReactiveSystem or IGroupObserverSystem.
     /// It will exclude all entities which match the specified matcher.
     /// To exclude multiple components use Matcher.AnyOf(ComponentX, ComponentY, ComponentZ).
     public interface IExcludeComponents {
         IMatcher excludeComponents { get; }
     }
 
-    /// Implement this interface in combination with IReactiveSystem or IMultiReactiveSystem.
+    /// Implement this interface in combination with IReactiveSystem, IMultiReactiveSystem or IGroupObserverSystem.
     /// If a system changes entities which in turn would trigger itself consider implementing IClearReactiveSystem
     /// which will ignore the changes made by the system.
     public interface IClearReactiveSystem {
