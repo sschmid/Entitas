@@ -215,8 +215,8 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\ICleanupSystem.cs">
       <Link>Linked Libraries\Entitas\Interfaces\ICleanupSystem.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IDeinitializeSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IDeinitializeSystem.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Interfaces\ITearDownSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\ITearDownSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Pools.cs">
       <Link>Linked Libraries\Entitas\Pools.cs</Link>

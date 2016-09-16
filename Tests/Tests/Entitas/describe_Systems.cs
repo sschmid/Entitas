@@ -42,15 +42,15 @@ class describe_Systems : nspec {
                 system.didCleanup.should_be(1);
             };
 
-            it["deinitializes up DeinitializeSystemSpy"] = () => {
-                var system = new DeinitializeSystemSpy();
-                system.didDeinitialize.should_be(0);
-                system.Deinitialize();
-                system.didDeinitialize.should_be(1);
+            it["tears down TearDownSystemSpy"] = () => {
+                var system = new TearDownSystemSpy();
+                system.didTearDown.should_be(0);
+                system.TearDown();
+                system.didTearDown.should_be(1);
             };
 
-            it["initializes, executes, cleans up and deinitializes InitializeExecuteCleanupDeinitializeSystemSpy"] = () => {
-                var system = new InitializeExecuteCleanupDeinitializeSystemSpy();
+            it["initializes, executes, cleans up and tears down InitializeExecuteCleanupTearDownSystemSpy"] = () => {
+                var system = new InitializeExecuteCleanupTearDownSystemSpy();
 
                 system.didInitialize.should_be(0);
                 system.Initialize();
@@ -64,9 +64,9 @@ class describe_Systems : nspec {
                 system.Cleanup();
                 system.didCleanup.should_be(1);
 
-                system.didDeinitialize.should_be(0);
-                system.Deinitialize();
-                system.didDeinitialize.should_be(1);
+                system.didTearDown.should_be(0);
+                system.TearDown();
+                system.didTearDown.should_be(1);
             };
 
             it["executes ReactiveSystemSpy"] = () => {
@@ -112,8 +112,8 @@ class describe_Systems : nspec {
                 system.didCleanup.should_be(1);
             };
 
-            it["initializes, executes, cleans up and deinitializes InitializeExecuteCleanupDeinitializeSystemSpy"] = () => {
-                var system = new InitializeExecuteCleanupDeinitializeSystemSpy();
+            it["initializes, executes, cleans up and tears down InitializeExecuteCleanupTearDownSystemSpy"] = () => {
+                var system = new InitializeExecuteCleanupTearDownSystemSpy();
                 systems.Add(system);
 
                 system.didInitialize.should_be(0);
@@ -128,12 +128,12 @@ class describe_Systems : nspec {
                 systems.Cleanup();
                 system.didCleanup.should_be(1);
 
-                system.didDeinitialize.should_be(0);
-                systems.Deinitialize();
-                system.didDeinitialize.should_be(1);
+                system.didTearDown.should_be(0);
+                systems.TearDown();
+                system.didTearDown.should_be(1);
             };
 
-            it["initializes, executes, cleans up and deinitializes ReactiveSystem"] = () => {
+            it["initializes, executes, cleans up and tears down ReactiveSystem"] = () => {
                 var system = createReactiveSystem(pool);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
 
@@ -152,13 +152,13 @@ class describe_Systems : nspec {
                 systems.Cleanup();
                 spy.didCleanup.should_be(1);
 
-                spy.didDeinitialize.should_be(0);
-                systems.Deinitialize();
-                spy.didDeinitialize.should_be(1);
+                spy.didTearDown.should_be(0);
+                systems.TearDown();
+                spy.didTearDown.should_be(1);
             };
 
 
-            it["initializes, executes, cleans up and deinitializes systems recursively"] = () => {
+            it["initializes, executes, cleans up and tears down systems recursively"] = () => {
                 var system = createReactiveSystem(pool);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
 
@@ -180,9 +180,9 @@ class describe_Systems : nspec {
                 parentSystems.Cleanup();
                 spy.didCleanup.should_be(1);
 
-                spy.didDeinitialize.should_be(0);
-                parentSystems.Deinitialize();
-                spy.didDeinitialize.should_be(1);
+                spy.didTearDown.should_be(0);
+                parentSystems.TearDown();
+                spy.didTearDown.should_be(1);
             };
 
             it["clears reactive systems"] = () => {

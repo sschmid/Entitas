@@ -317,8 +317,8 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\ICleanupSystem.cs">
       <Link>Linked Libraries\Entitas\Interfaces\ICleanupSystem.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IDeinitializeSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IDeinitializeSystem.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Interfaces\ITearDownSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\ITearDownSystem.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\describe_Pools.cs" />
     <Compile Include="..\Entitas\Entitas\Pools.cs">
@@ -331,10 +331,10 @@
     <Compile Include="Tests\Entitas\Serialization\Blueprints\describe_Blueprints.cs" />
     <Compile Include="Tests\Entitas\describe_Systems.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\DeinitializeSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\TearDownSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ExecuteSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\GroupObserverSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteCleanupDeinitializeSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteCleanupTearDownSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpy.cs" />

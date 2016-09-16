@@ -2,21 +2,21 @@
 
 namespace Entitas {
 
-    /// Systems provide a convenient way to group systems. You can add IInitializeSystem, IExecuteSystem, ICleanupSystem, IDeinitializeSystem, ReactiveSystem and other nested Systems instances.
+    /// Systems provide a convenient way to group systems. You can add IInitializeSystem, IExecuteSystem, ICleanupSystem, ITearDownSystem, ReactiveSystem and other nested Systems instances.
     /// All systems will be initialized and executed based on the order you added them.
-    public class Systems : IInitializeSystem, IExecuteSystem, ICleanupSystem, IDeinitializeSystem {
+    public class Systems : IInitializeSystem, IExecuteSystem, ICleanupSystem, ITearDownSystem {
 
         protected readonly List<IInitializeSystem> _initializeSystems;
         protected readonly List<IExecuteSystem> _executeSystems;
         protected readonly List<ICleanupSystem> _cleanupSystems;
-        protected readonly List<IDeinitializeSystem> _deinitializeSystems;
+        protected readonly List<ITearDownSystem> _tearDownSystems;
 
         /// Creates a new Systems instance.
         public Systems() {
             _initializeSystems = new List<IInitializeSystem>();
             _executeSystems = new List<IExecuteSystem>();
             _cleanupSystems = new List<ICleanupSystem>();
-            _deinitializeSystems = new List<IDeinitializeSystem>();
+            _tearDownSystems = new List<ITearDownSystem>();
         }
 
         /// Adds the system instance to the systems list.
@@ -44,12 +44,12 @@ namespace Entitas {
                 _cleanupSystems.Add(cleanupSystem);
             }
 
-            var deinitializeSystem = reactiveSystem != null
-                ? reactiveSystem.subsystem as IDeinitializeSystem
-                : system as IDeinitializeSystem;
+            var tearDownSystem = reactiveSystem != null
+                ? reactiveSystem.subsystem as ITearDownSystem
+                : system as ITearDownSystem;
 
-            if (deinitializeSystem != null) {
-                _deinitializeSystems.Add(deinitializeSystem);
+            if (tearDownSystem != null) {
+                _tearDownSystems.Add(tearDownSystem);
             }
 
             return this;
@@ -76,10 +76,10 @@ namespace Entitas {
             }
         }
 
-        /// Calls Deinitialize() on all IDeinitializeSystem, ReactiveSystem and other nested Systems instances in the order you added them.
-        public virtual void Deinitialize() {
-            for (int i = 0; i < _deinitializeSystems.Count; i++) {
-                _deinitializeSystems[i].Deinitialize();
+        /// Calls TearDown() on all ITearDownSystem, ReactiveSystem and other nested Systems instances in the order you added them.
+        public virtual void TearDown() {
+            for (int i = 0; i < _tearDownSystems.Count; i++) {
+                _tearDownSystems[i].TearDown();
             }
         }
 
