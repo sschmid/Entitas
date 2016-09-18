@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
@@ -8,7 +8,7 @@ namespace Entitas.CodeGenerator {
 
     public partial class Pools {{
 {0}
-        public Pool[] allPools {{ get {{ return new[] {{ {1} }}; }} }}
+        public Pool[] allPools {{ get {{ return new [] {{ {1} }}; }} }}
 
 {2}
 
@@ -37,7 +37,7 @@ namespace Entitas.CodeGenerator {
             var setAllPools = string.Join("\n", poolNames.Select(poolName =>
                 "            " + poolName.LowercaseFirst() + " = Create" + poolName.PoolPrefix() + "Pool();").ToArray());
 
-            return new[] { new CodeGenFile(
+            return new [] { new CodeGenFile(
                 "Pools",
                 string.Format(CLASS_TEMPLATE, createPoolMethods, allPoolsList, poolFields, setAllPools),
                 GetType().FullName

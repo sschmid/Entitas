@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.Serialization;
@@ -90,7 +90,7 @@ namespace Entitas.CodeGenerator {
                 .ToArray();
 
             if (pools.Length == 0 && defaultIfEmpty) {
-                return new[] { CodeGenerator.DEFAULT_POOL_NAME };
+                return new [] { CodeGenerator.DEFAULT_POOL_NAME };
             }
 
             var defaultPoolIndex = Array.IndexOf(pools, CodeGenerator.DEFAULT_POOL_NAME);

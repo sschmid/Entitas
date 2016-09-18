@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using Entitas.CodeGenerator;
@@ -20,7 +20,7 @@ class describe_ComponentExtensionsGenerator : nspec {
         var expectedFileContent = File.ReadAllText(path);
         var info = TypeReflectionProvider.GetComponentInfos(typeof(T)).Single();
 
-        var codeGenFiles = new ComponentExtensionsGenerator().Generate(new[] { info });
+        var codeGenFiles = new ComponentExtensionsGenerator().Generate(new [] { info });
         codeGenFiles.Length.should_be(1);
         var codeGenFile = codeGenFiles.Single();
 
@@ -43,7 +43,7 @@ class describe_ComponentExtensionsGenerator : nspec {
         it["supports properties"] = () => generates<ComponentWithFieldsAndProperties>();
         it["ignores [DontGenerate]"] = () => {
             var info = TypeReflectionProvider.GetComponentInfos(typeof(DontGenerateComponent))[0];
-            var files = new ComponentExtensionsGenerator().Generate(new[] { info });
+            var files = new ComponentExtensionsGenerator().Generate(new [] { info });
             files.Length.should_be(0);
         };
 

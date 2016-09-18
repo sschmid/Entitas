@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_Pool : nspec {
@@ -67,8 +67,8 @@ class describe_Pool : nspec {
             PoolMetaData metaData = null;
 
             before = () => {
-                var componentNames = new[] { "Health", "Position", "View" };
-                var componentTypes = new[] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
+                var componentNames = new [] { "Health", "Position", "View" };
+                var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
                 metaData = new PoolMetaData("My Pool", componentNames, componentTypes);
                 pool = new Pool(componentNames.Length, 0, metaData);
             };
@@ -434,7 +434,7 @@ class describe_Pool : nspec {
                 Entity eAB2 = null;
                 Entity eA = null;
 
-                IMatcher matcherAB = Matcher.AllOf(new[] {
+                IMatcher matcherAB = Matcher.AllOf(new [] {
                     CID.ComponentA,
                     CID.ComponentB
                 });

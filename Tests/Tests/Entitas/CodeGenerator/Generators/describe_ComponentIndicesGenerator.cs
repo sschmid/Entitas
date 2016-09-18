@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Entitas.CodeGenerator;
 using My.Namespace;
@@ -9,11 +9,11 @@ class describe_ComponentIndicesGenerator : nspec {
     const bool logResults = false;
 
     static void generates(Type type, string expectedLookupName, string expectedLookupCode) {
-        generates(new[] { type }, expectedLookupName, expectedLookupCode);
+        generates(new [] { type }, expectedLookupName, expectedLookupCode);
     }
 
     static void generates(Type[] types, string expectedLookupName, string expectedLookupCode) {
-        generates(types, new[] { expectedLookupName }, new[] { expectedLookupCode });
+        generates(types, new [] { expectedLookupName }, new [] { expectedLookupCode });
     }
 
     static void generates(Type[] types, string[] expectedLookupNames, string[] expectedLookupCodes) {
@@ -135,7 +135,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["ignores [DontGenerate(false)]"] = () => {
-            generates(new[] {
+            generates(new [] {
                 typeof(SomeComponent),
                 typeof(DontGenerateIndexComponent)
             }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
@@ -157,7 +157,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates ids for all types ordered alphabetically"] = () => {
-            generates(new[] {
+            generates(new [] {
                     typeof(SomeComponent),
                     typeof(DontGenerateComponent)
                 }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
@@ -182,7 +182,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates empty lookup with total components when for default pool"] = () => {
-            generatesEmptyLookup(new[] { CodeGenerator.DEFAULT_POOL_NAME }, new[] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new[] { @"public static class ComponentIds {
+            generatesEmptyLookup(new [] { CodeGenerator.DEFAULT_POOL_NAME }, new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -197,7 +197,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates empty lookup with total components when for pool names"] = () => {
-            generatesEmptyLookup(new[] { "Meta" }, new[] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new[] { @"public static class MetaComponentIds {
+            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -212,9 +212,9 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates multiple empty lookup with total components when for pool names"] = () => {
-            generatesEmptyLookup(new[] { "Meta", "Core" },
-                new[] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG },
-                new[] { @"public static class MetaComponentIds {
+            generatesEmptyLookup(new [] { "Meta", "Core" },
+                new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG },
+                new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -240,10 +240,10 @@ class describe_ComponentIndicesGenerator : nspec {
         context["when component is in multiple pools"] = () => {
 
             it["rearranges ids to have the same index in every lookup (2 pools)"] = () => {
-                generates(new[] {
+                generates(new [] {
                         typeof(AComponent),
                         typeof(BComponent)
-                    }, new[] { "PoolAComponentIds", "PoolBComponentIds" }, new[] {
+                    }, new [] { "PoolAComponentIds", "PoolBComponentIds" }, new [] {
                     @"public static class PoolAComponentIds {
     public const int B = 0;
     public const int A = 1;
@@ -279,18 +279,18 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
             it["rearranges ids to have the same index in every lookup (3 pools)"] = () => {
-                generates(new[] {
+                generates(new [] {
                         typeof(AComponent),
                         typeof(BComponent),
                         typeof(CComponent),
                         typeof(DComponent),
                         typeof(EComponent),
                         typeof(FComponent)
-                    }, new[] {
+                    }, new [] {
                         "PoolAComponentIds",
                         "PoolBComponentIds",
                         "PoolCComponentIds",
-                    }, new[] {
+                    }, new [] {
                         @"public static class PoolAComponentIds {
     public const int C = 0;
     public const int B = 1;
@@ -356,15 +356,15 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
             it["rearranges ids to have the same index in every lookup (#124)"] = () => {
-                generates(new[] {
+                generates(new [] {
                         typeof(DComponent),
                         typeof(GComponent),
                         typeof(BComponent),
-                    }, new[] {
+                    }, new [] {
                         "PoolAComponentIds",
                         "PoolBComponentIds",
                         "PoolCComponentIds",
-                    }, new[] {
+                    }, new [] {
                 @"public static class PoolAComponentIds {
     public const int B = 0;
     public const int G = 2;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas.CodeGenerator;
 using NSpec;
 
@@ -14,7 +14,7 @@ class describe_PoolsGenerator : nspec {
             return CreatePool(""Pool"", ComponentIds.TotalComponents, ComponentIds.componentNames, ComponentIds.componentTypes);
         }
 
-        public Pool[] allPools { get { return new[] { pool }; } }
+        public Pool[] allPools { get { return new [] { pool }; } }
 
         public Pool pool;
 
@@ -33,7 +33,7 @@ class describe_PoolsGenerator : nspec {
             return CreatePool(""Meta"", MetaComponentIds.TotalComponents, MetaComponentIds.componentNames, MetaComponentIds.componentTypes);
         }
 
-        public Pool[] allPools { get { return new[] { meta }; } }
+        public Pool[] allPools { get { return new [] { meta }; } }
 
         public Pool meta;
 
@@ -56,7 +56,7 @@ class describe_PoolsGenerator : nspec {
             return CreatePool(""Core"", CoreComponentIds.TotalComponents, CoreComponentIds.componentNames, CoreComponentIds.componentTypes);
         }
 
-        public Pool[] allPools { get { return new[] { meta, core }; } }
+        public Pool[] allPools { get { return new [] { meta, core }; } }
 
         public Pool meta;
         public Pool core;
@@ -87,8 +87,8 @@ class describe_PoolsGenerator : nspec {
     }
 
     void when_generating() {
-        it["generates default pool"] = () => generates(new[] { CodeGenerator.DEFAULT_POOL_NAME }, defaultPool);
-        it["generates one custom pool"] = () => generates(new[] { "Meta" }, metaPool);
-        it["generates multiple pools"] = () => generates(new[] { "Meta", "Core" }, coreMetaPool);
+        it["generates default pool"] = () => generates(new [] { CodeGenerator.DEFAULT_POOL_NAME }, defaultPool);
+        it["generates one custom pool"] = () => generates(new [] { "Meta" }, metaPool);
+        it["generates multiple pools"] = () => generates(new [] { "Meta", "Core" }, coreMetaPool);
     }
 }
