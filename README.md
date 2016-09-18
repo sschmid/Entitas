@@ -5,12 +5,10 @@
 ---
 
 <p align="center">
-
     <a>If you love Entitas as much as we do<br />please support the development</a>
 
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Donate-PayPal.gif" alt="Thank you!"></a>
-
 </p>
 
 ---
