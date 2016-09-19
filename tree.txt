@@ -1,8 +1,10 @@
 .
 ├── Build
+├── CodeGenerator
 ├── Documentation
 ├── Entitas
 │   └── Entitas
+│       ├── Caching
 │       ├── CodeGenerator
 │       │   ├── Attributes
 │       │   ├── Generators
@@ -17,29 +19,30 @@
 │           └── Configuration
 ├── Entitas.Migration
 │   └── Entitas.Migration
-└── Entitas.Unity
-    └── Assets
-        ├── Editor
-        └── Entitas
-            └── Unity
-                ├── CodeGenerator
-                │   └── Editor
-                ├── Editor
-                ├── Migration
-                │   └── Editor
-                ├── Serialization
-                │   └── Blueprints
-                │       └── Editor
-                └── VisualDebugging
-                    ├── DebugSystems
-                    │   └── Editor
-                    ├── Editor
-                    ├── Entity
-                    │   └── Editor
-                    │       ├── DefaultInstanceCreator
-                    │       └── TypeDrawer
-                    └── PoolObserver
-                        └── Editor
+├── Entitas.Unity
+│   └── Assets
+│       ├── Editor
+│       └── Entitas
+│           └── Unity
+│               ├── CodeGenerator
+│               │   └── Editor
+│               ├── Editor
+│               ├── Migration
+│               │   └── Editor
+│               ├── Serialization
+│               │   └── Blueprints
+│               │       └── Editor
+│               └── VisualDebugging
+│                   ├── DebugSystems
+│                   │   └── Editor
+│                   ├── Editor
+│                   ├── Entity
+│                   │   └── Editor
+│                   │       ├── DefaultInstanceCreator
+│                   │       └── TypeDrawer
+│                   └── PoolObserver
+│                       └── Editor
+└── Snippets
 .
 ├── Build
 │   ├── build.sh
@@ -49,10 +52,15 @@
 │   ├── runTests.bat
 │   ├── runTests.sh
 │   └── update_project_dependencies.sh
+├── CodeGenerator
 ├── Documentation
-│   └── Entitas-0.32.0.docset.zip
+│   └── Entitas-0.33.0.docset.zip
 ├── Entitas
 │   └── Entitas
+│       ├── Caching
+│       │   ├── EntitasCache.cs
+│       │   ├── ObjectCache.cs
+│       │   └── ObjectPool.cs
 │       ├── CodeGenerator
 │       │   ├── Attributes
 │       │   │   ├── CustomComponentNameAttribute.cs
@@ -91,12 +99,12 @@
 │       ├── Interfaces
 │       │   ├── ICleanupSystem.cs
 │       │   ├── IComponent.cs
-│       │   ├── IDeinitializeSystem.cs
 │       │   ├── IExecuteSystem.cs
 │       │   ├── IInitializeSystem.cs
 │       │   ├── IMatcher.cs
 │       │   ├── IReactiveSystem.cs
-│       │   └── ISystem.cs
+│       │   ├── ISystem.cs
+│       │   └── ITearDownSystem.cs
 │       ├── Matcher
 │       │   ├── Matcher.cs
 │       │   ├── MatcherEquals.cs
@@ -117,7 +125,6 @@
 │       │   │   └── Properties.cs
 │       │   ├── PublicMemberInfo.cs
 │       │   └── TypeSerializationExtension.cs
-│       ├── EntitasCache.cs
 │       ├── EntitasException.cs
 │       ├── Entity.cs
 │       ├── EntityIndex.cs
@@ -229,9 +236,23 @@
 │                   │   ├── PoolObserver.cs
 │                   │   └── PoolObserverBehaviour.cs
 │                   └── GameObjectDestroyExtension.cs
+├── Snippets
+│   ├── e_cleanup.template.xml
+│   ├── e_component.template.xml
+│   ├── e_deinitialize.template.xml
+│   ├── e_ensure.template.xml
+│   ├── e_exclude.template.xml
+│   ├── e_execute.template.xml
+│   ├── e_initialize.template.xml
+│   ├── e_rexecute.template.xml
+│   ├── e_setPool.template.xml
+│   ├── e_setPools.template.xml
+│   ├── e_system.template.xml
+│   └── e_trigger.template.xml
 ├── EntitasUpgradeGuide.md
 ├── LICENSE.txt
 ├── README.md
 ├── RELEASE_NOTES.md
+├── icon.png
 ├── policy.mdpolicy
 └── tree.txt
