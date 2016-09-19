@@ -35,6 +35,12 @@ etc...
 $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/Generated/
 ```
 
+# Entitas 0.33.0 upgrade guide
+'IDeinitializeSystem' has been renamed to 'ITearDownSystem'. If you were using
+'IDeinitializeSystem', manually rename it to 'ITearDownSystem' before updating
+to this version.
+
+
 # Entitas 0.32.0 upgrade guide
 Use the command line tool `MigrationAssistant.exe` to automatically fix compile errors.
 Entitas 0.32.0 introduces a new Pools class. Using the new PoolsGenerator will require

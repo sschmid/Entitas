@@ -1,3 +1,23 @@
+# 0.33.0
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+##### Entitas
+- Added pools.CreateSystem()
+- Added ObjectPool and ObjectCache and updated EntitasCache to use ObjectCache (#157)
+- Added entityIndex.Activate() and removing entity indices from pool (#163)
+- Renamed IDeinitializeSystem to ITearDownSystem (#164)
+
+##### Entitas.CodeGenerator
+- TypeReflectionProvider sorts pool names and ToUppercaseFirst() (#155)
+- CodeGeneratorConfig doesn't add default pool anymore (#156)
+
+##### Other
+- Added repository icon
+- Added snippets (see Snippets folder)
+
+
 # 0.32.0
 
 Summer break is over! Entitas development is back on track!
