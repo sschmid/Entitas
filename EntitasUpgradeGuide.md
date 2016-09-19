@@ -36,8 +36,8 @@ $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/Generated/
 ```
 
 # Entitas 0.33.0 upgrade guide
-'IDeinitializeSystem' has been renamed to 'ITearDownSystem'. If you were using
-'IDeinitializeSystem', manually rename it to 'ITearDownSystem' before updating
+`IDeinitializeSystem` has been renamed to `ITearDownSystem`. If you were using
+`IDeinitializeSystem`, manually rename it to `ITearDownSystem` before updating
 to this version.
 
 
