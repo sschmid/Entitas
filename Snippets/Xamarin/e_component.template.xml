@@ -10,11 +10,19 @@
       <TemplateType>Expansion</TemplateType>
     </Header>
     <Variables>
+      <Variable name="pool">
+        <Default>Core</Default>
+      </Variable>
       <Variable name="name">
         <Default>Some</Default>
       </Variable>
     </Variables>
-    <Code><![CDATA[public sealed class $name$Component : IComponent {
+    <Code><![CDATA[using Entitas;
+
+[$pool$]
+public sealed class $name$Component : IComponent {
+
+    public string someValue;
 }]]></Code>
   </CodeTemplate>
 </CodeTemplates>

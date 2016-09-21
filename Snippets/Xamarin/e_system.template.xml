@@ -14,7 +14,9 @@
         <Default>Some</Default>
       </Variable>
     </Variables>
-    <Code><![CDATA[public sealed class $name$System {
+    <Code><![CDATA[using Entitas;
+
+public sealed class $name$System : IExecuteSystem {
 $end$
 }
 ]]></Code>

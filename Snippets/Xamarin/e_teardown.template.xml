@@ -5,12 +5,12 @@
       <_Group>C#</_Group>
       <Version />
       <MimeType>text/x-csharp</MimeType>
-      <Shortcut>e_deinitialize</Shortcut>
-      <_Description>Deinitialize()</_Description>
+      <Shortcut>e_teardown</Shortcut>
+      <_Description>TearDown()</_Description>
       <TemplateType>Expansion</TemplateType>
     </Header>
     <Variables />
-    <Code><![CDATA[public void Deinitialize() {
+    <Code><![CDATA[public void TearDown() {
 $end$
 }]]></Code>
   </CodeTemplate>
