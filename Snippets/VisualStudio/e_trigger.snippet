@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>e_trigger</Title>
+      <Author>
+      </Author>
+      <Description>TriggerOnEvent trigger</Description>
+      <HelpUrl>
+      </HelpUrl>
+      <Shortcut>e_trigger</Shortcut>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="true">
+          <ID>id</ID>
+          <ToolTip>
+          </ToolTip>
+          <Default>Some</Default>
+          <Function>
+          </Function>
+        </Literal>
+        <Literal Editable="true">
+          <ID>matcher</ID>
+          <ToolTip>
+          </ToolTip>
+          <Default>Matcher</Default>
+          <Function>
+          </Function>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp" Delimiter="$" Kind="method decl"><![CDATA[ public TriggerOnEvent trigger { get { return $matcher$.$id$.OnEntityAdded(); } }]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
