@@ -1,8 +1,8 @@
 #!/bin/sh
-xbuild Tests/Tests.csproj /property:Configuration=Debug /verbosity:minimal
+xbuild Tests/Tests.csproj /property:Configuration=Release /verbosity:minimal
 if [ $? = 0 ]
 then
-	mono Tests/Libraries/NSpec/NSpecRunner.exe Tests/bin/Debug/Tests.dll
+	mono Tests/bin/Release/Tests.exe
 else
 	echo "ERROR: Could not compile!"
 	exit 1
