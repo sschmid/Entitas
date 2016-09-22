@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+echo "### Generating Documentation... ========================================="
+
 # Ensure Doxygen is installed
 command -v doxygen >/dev/null 2>&1 || { echo >&2 "Error: Doxygen not found! Doxygen is required to generate docsets. Try \"brew install doxygen\"."; exit 1; }
 
@@ -30,3 +32,5 @@ zip -r "../../Documentation/${DOCSET_NAME}.docset.zip" "${DOCSET_NAME}.docset"
 # Remove all temp files
 rm -rf ../html
 popd
+
+echo "### Generating Documentation done ======================================="

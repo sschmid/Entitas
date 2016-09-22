@@ -22,6 +22,7 @@ class check_namespaces : nspec {
                 !p.Contains(dir("Tests")) &&
                 !p.Contains(dir("Examples")) &&
                 !p.Contains(dir("Readme")) &&
+                !p.Contains(dir("Build")) &&
                 !p.Contains(dir("bin")) &&
                 !p.Contains(dir("obj")) &&
                 !p.Contains("AssemblyInfo.cs") &&
@@ -39,8 +40,10 @@ class check_namespaces : nspec {
 
         var sourceFiles = getSourceFiles(entitasProjectDir);
 
-        sourceFiles.Count.should_be_greater_than(80);
-        sourceFiles.Count.should_be_less_than(150);
+        it["processes roughly the correct number of files"] = () => {
+            sourceFiles.Count.should_be_greater_than(80);
+            sourceFiles.Count.should_be_less_than(150);
+        };
 
         const string namespacePattern = @"(?:^namespace)\s.*\b";
         string expectedNamespacePattern = string.Format(@"[^\{0}]*", Path.DirectorySeparatorChar);

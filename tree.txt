@@ -1,6 +1,4 @@
 .
-├── Build
-├── CodeGenerator
 ├── Documentation
 ├── Entitas
 │   └── Entitas
@@ -42,17 +40,11 @@
 │                   │       └── TypeDrawer
 │                   └── PoolObserver
 │                       └── Editor
+├── Scripts
 └── Snippets
+    ├── VisualStudio
+    └── Xamarin
 .
-├── Build
-│   ├── build.sh
-│   ├── build_commands.sh
-│   ├── docset.doxyfile
-│   ├── generate_docset.sh
-│   ├── runTests.bat
-│   ├── runTests.sh
-│   └── update_project_dependencies.sh
-├── CodeGenerator
 ├── Documentation
 │   └── Entitas-0.33.0.docset.zip
 ├── Entitas
@@ -236,19 +228,43 @@
 │                   │   ├── PoolObserver.cs
 │                   │   └── PoolObserverBehaviour.cs
 │                   └── GameObjectDestroyExtension.cs
+├── Scripts
+│   ├── build.sh
+│   ├── build_commands.sh
+│   ├── docset.doxyfile
+│   ├── exclude.txt
+│   ├── generate_docset.sh
+│   ├── runTests.bat
+│   ├── runTests.sh
+│   ├── update_project_dependencies.sh
+│   └── vars.sh
 ├── Snippets
-│   ├── e_cleanup.template.xml
-│   ├── e_component.template.xml
-│   ├── e_deinitialize.template.xml
-│   ├── e_ensure.template.xml
-│   ├── e_exclude.template.xml
-│   ├── e_execute.template.xml
-│   ├── e_initialize.template.xml
-│   ├── e_rexecute.template.xml
-│   ├── e_setPool.template.xml
-│   ├── e_setPools.template.xml
-│   ├── e_system.template.xml
-│   └── e_trigger.template.xml
+│   ├── VisualStudio
+│   │   ├── e_cleanup.snippet
+│   │   ├── e_component.snippet
+│   │   ├── e_ensure.snippet
+│   │   ├── e_exclude.snippet
+│   │   ├── e_execute.snippet
+│   │   ├── e_initialize.snippet
+│   │   ├── e_rexecute.snippet
+│   │   ├── e_setPool.snippet
+│   │   ├── e_setPools.snippet
+│   │   ├── e_system.snippet
+│   │   ├── e_teardown.snippet
+│   │   └── e_trigger.snippet
+│   └── Xamarin
+│       ├── e_cleanup.template.xml
+│       ├── e_component.template.xml
+│       ├── e_ensure.template.xml
+│       ├── e_exclude.template.xml
+│       ├── e_execute.template.xml
+│       ├── e_initialize.template.xml
+│       ├── e_rexecute.template.xml
+│       ├── e_setPool.template.xml
+│       ├── e_setPools.template.xml
+│       ├── e_system.template.xml
+│       ├── e_teardown.template.xml
+│       └── e_trigger.template.xml
 ├── EntitasUpgradeGuide.md
 ├── LICENSE.txt
 ├── README.md
