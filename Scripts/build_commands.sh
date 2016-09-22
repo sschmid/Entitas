@@ -120,8 +120,8 @@ create_zip() {
 
 create_tree_overview() {
   echo "Creating tree overview... ============================================="
-  tree -I 'bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties' --noreport -d > tree.txt
-  tree -I 'bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties' --noreport --dirsfirst >> tree.txt
+  tree -I 'bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties' --noreport -d > tree.txt
+  tree -I 'bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties' --noreport --dirsfirst >> tree.txt
   cat tree.txt
   echo "Creating tree overview done ==========================================="
 }
