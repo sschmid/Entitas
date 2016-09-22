@@ -7,6 +7,7 @@ Thumbs.db
 # Unity
 Library
 Temp
+ProjectVersion.txt
 *.unitypackage
 *-CSharp-vs.csproj
 *-CSharp.csproj
@@ -15,13 +16,13 @@ Temp
 
 # Xamarin
 obj
+bin
 *.userprefs
 test-results
 
 # Custom
-bin
+Build
 
 Entitas.Unity/Entitas.Unity.sln
 Entitas.Unity/Assets/Libraries
 Entitas.Unity/Assets/Libraries.meta
-ProjectVersion.txt

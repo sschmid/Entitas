@@ -1,16 +1,18 @@
 #!/bin/sh
 set -e
-
-source Build/build_commands.sh
+source Scripts/build_commands.sh
 
 collect_sources
 update_project_dependencies
 generateProjectFiles
+
+collect_misc
+
 build
 runTests
 
-sh Build/generate_docset.sh
+sh Scripts/generate_docset.sh
 
-collect_misc_files
+post_build_collect_misc
 create_zip
 create_tree_overview

@@ -1,105 +1,95 @@
 #!/bin/sh
-BIN_DIR="bin"
-SRC_DIR="$BIN_DIR/Sources"
-
-# csharp
-ES="Entitas"
-CG="Entitas.CodeGenerator"
-MIG="Entitas.Migration"
-CG_TR="Entitas.CodeGenerator.TypeReflection"
-ESU="Entitas.Unity"
-
-ESU_ASSETS="$ESU/Assets"
+source Scripts/vars.sh
 
 collect_sources() {
-  echo "Collecting sources..."
+  echo "### Collecting sources... ============================================="
 
-  rm -rf $BIN_DIR
-  mkdir $BIN_DIR $SRC_DIR $SRC_DIR/$ESU
+  rm -rfv $BUILD
+  mkdir $BUILD $BUILD_SRC $BUILD_SRC/$ESU
 
-  cp -r {"$ES/$ES","$MIG/$MIG"} $SRC_DIR
-  cp -r "$ESU_ASSETS/$ES/Unity/" $SRC_DIR/$ESU
-  find "./$SRC_DIR" -name "*.meta" -type f -delete
+  cpe {"$ES/$ES","$MIG/$MIG"} $BUILD_SRC
+  cpe "$ESU_ASSETS/$ES/Unity/" $BUILD_SRC/$ESU
 
+  echo "### Collecting sources done ==========================================="
+}
+
+collect_misc() {
+  echo "### Collecting misc files... =========================================="
+
+  # Meta files
   header_meta="Editor/EntitasHeader.png.meta"
-  cp "$ESU_ASSETS/$ES/Unity/$header_meta" "$SRC_DIR/$ESU/$header_meta"
-
   entity_icon_meta="Editor/EntitasEntityHierarchyIcon.png.meta"
   entityError_icon_meta="Editor/EntitasEntityErrorHierarchyIcon.png.meta"
   pool_icon_meta="Editor/EntitasPoolHierarchyIcon.png.meta"
   poolError_icon_meta="Editor/EntitasPoolErrorHierarchyIcon.png.meta"
   systems_icon_meta="Editor/EntitasSystemsHierarchyIcon.png.meta"
-  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$entity_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$entity_icon_meta"
-  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$entityError_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$entityError_icon_meta"
-  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$pool_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$pool_icon_meta"
-  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$poolError_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$poolError_icon_meta"
-  cp "$ESU_ASSETS/$ES/Unity/VisualDebugging/$systems_icon_meta" "$SRC_DIR/$ESU/VisualDebugging/$systems_icon_meta"
-
   migration_header_meta="Editor/EntitasMigrationHeader.png.meta"
-  cp "$ESU_ASSETS/$ES/Unity/Migration/$migration_header_meta" "$SRC_DIR/$ESU/Migration/$migration_header_meta"
 
-  echo "Collecting sources done."
+  cp -v "$ESU_ASSETS/$ES/Unity/$header_meta" "$BUILD_SRC/$ESU/$header_meta"
+  cp -v "$ESU_ASSETS/$ES/Unity/VisualDebugging/$entity_icon_meta" "$BUILD_SRC/$ESU/VisualDebugging/$entity_icon_meta"
+  cp -v "$ESU_ASSETS/$ES/Unity/VisualDebugging/$entityError_icon_meta" "$BUILD_SRC/$ESU/VisualDebugging/$entityError_icon_meta"
+  cp -v "$ESU_ASSETS/$ES/Unity/VisualDebugging/$pool_icon_meta" "$BUILD_SRC/$ESU/VisualDebugging/$pool_icon_meta"
+  cp -v "$ESU_ASSETS/$ES/Unity/VisualDebugging/$poolError_icon_meta" "$BUILD_SRC/$ESU/VisualDebugging/$poolError_icon_meta"
+  cp -v "$ESU_ASSETS/$ES/Unity/VisualDebugging/$systems_icon_meta" "$BUILD_SRC/$ESU/VisualDebugging/$systems_icon_meta"
+  cp -v "$ESU_ASSETS/$ES/Unity/Migration/$migration_header_meta" "$BUILD_SRC/$ESU/Migration/$migration_header_meta"
+
+  echo "### Collecting misc files done ========================================"
+}
+
+post_build_collect_misc() {
+  echo "Collecting misc files... =============================================="
+
+  cp -v "$MIG/bin/Release/Entitas.Migration.exe" "$BUILD_SRC/MigrationAssistant.exe"
+  cp -v README.md "$BUILD_SRC/README.md"
+  cp -v RELEASE_NOTES.md "$BUILD_SRC/RELEASE_NOTES.md"
+  cp -v EntitasUpgradeGuide.md "$BUILD_SRC/EntitasUpgradeGuide.md"
+  cp -v LICENSE.txt "$BUILD_SRC/LICENSE.txt"
+  rsync -arv Documentation "$BUILD_SRC/"
+
+  echo "Collecting misc files done ============================================"
 }
 
 update_project_dependencies() {
-  echo "Updating project dependencies..."
+  echo "Updating project dependencies... ======================================"
 
-  ESU_LIBS_DIR="$ESU_ASSETS/Libraries"
+  rm -rf $ESU_LIBS
+  mkdir $ESU_LIBS
+  rsync -arv $BUILD_SRC/{$ES,$MIG} $ESU_LIBS
 
-  rm -rf $ESU_LIBS_DIR
-  mkdir $ESU_LIBS_DIR
-
-  cp -r $SRC_DIR/{$ES,$MIG} $ESU_LIBS_DIR
-
-  echo "Updating project dependencies done."
+  echo "Updating project dependencies done ===================================="
 }
 
 generateProjectFiles() {
-  echo "Generating project files..."
-  PWD=$(pwd)
+  echo "Generating project files... ==========================================="
 
   # Unity bug: https://support.unity3d.com/hc/en-us/requests/36273
   # Fixed in 5.3.4p1
-  /Applications/Unity/Unity.app/Contents/MacOS/Unity -quit -batchmode -logfile -projectPath "$PWD/$ESU/Assets/../" -executeMethod Commands.GenerateProjectFiles
-  echo "  SKIPPING"
+  $UNITY -quit -batchmode -logfile -projectPath "$PWD/$ESU_ASSETS/../" -executeMethod Commands.GenerateProjectFiles
 
-  echo "Generating project files done."
+  echo "Generating project files done ========================================="
 }
 
 build() {
-  echo "Building..."
-  xbuild /target:Clean /property:Configuration=Release Entitas.sln
-  xbuild /property:Configuration=Release Entitas.sln
-  echo "Building done."
+  echo "Building... ==========================================================="
+  xbuild /target:Clean /property:Configuration=Release $BUILD_PROJECT
+  xbuild /property:Configuration=Release $BUILD_PROJECT
+  echo "Building done ========================================================="
 }
 
 runTests() {
-  mono Tests/Libraries/NSpec/NSpecRunner.exe Tests/bin/Release/Tests.dll
-}
-
-collect_misc_files() {
-  echo "Collecting misc files..."
-
-  cp "$MIG/bin/Release/Entitas.Migration.exe" "$SRC_DIR/MigrationAssistant.exe"
-  cp README.md "$SRC_DIR/README.md"
-  cp RELEASE_NOTES.md "$SRC_DIR/RELEASE_NOTES.md"
-  cp EntitasUpgradeGuide.md "$SRC_DIR/EntitasUpgradeGuide.md"
-  cp LICENSE.txt "$SRC_DIR/LICENSE.txt"
-  cp -r Documentation "$SRC_DIR/"
-
-  echo "Collecting misc files done."
+  mono $TEST_RUNNER
 }
 
 create_zip() {
-  echo "Creating zip files..."
+  echo "Creating zip files... ================================================="
 
-  TMP_DIR="$BIN_DIR/tmp"
+  TMP_DIR="$BUILD/tmp"
 
   echo "Creating Entitas-CSharp.zip..."
   mkdir $TMP_DIR
-  cp -r $SRC_DIR/$ES $TMP_DIR
-  cp -r "$SRC_DIR/Documentation" $TMP_DIR
-  cp "$SRC_DIR/"* $TMP_DIR || true
+  cp -r $BUILD_SRC/$ES $TMP_DIR
+  cp -r "$BUILD_SRC/Documentation" $TMP_DIR
+  cp "$BUILD_SRC/"* $TMP_DIR || true
 
   pushd $TMP_DIR > /dev/null
     zip -rq ../Entitas-CSharp.zip ./
@@ -108,7 +98,7 @@ create_zip() {
 
   echo "Creating Entitas-Unity.zip..."
   mkdir $TMP_DIR
-  cp -r "$SRC_DIR/"* $TMP_DIR || true
+  cp -r "$BUILD_SRC/"* $TMP_DIR || true
 
   tmp_editor_dir="$TMP_DIR/Editor"
   mkdir $tmp_editor_dir
@@ -125,12 +115,13 @@ create_zip() {
   popd > /dev/null
   rm -rf $TMP_DIR
 
-  echo "Creating zip files done."
+  echo "Creating zip files done ==============================================="
 }
 
 create_tree_overview() {
-  echo "Creating tree overview..."
+  echo "Creating tree overview... ============================================="
   tree -I 'bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties' --noreport -d > tree.txt
   tree -I 'bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties' --noreport --dirsfirst >> tree.txt
-  echo "Creating tree overview done."
+  cat tree.txt
+  echo "Creating tree overview done ==========================================="
 }
