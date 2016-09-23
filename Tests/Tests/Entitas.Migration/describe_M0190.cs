@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Entitas.Migration;
 using NSpec;
@@ -8,9 +7,10 @@ class describe_M0190 : nspec {
 
     void when_migrating() {
 
-        var dir = Environment.CurrentDirectory + "/Tests/Tests/Entitas.Migration/Fixtures/M0190";
+        var dir = TestExtensions.GetProjectRoot() + "/Tests/Tests/Entitas.Migration/Fixtures/M0190";
 
         IMigration m = null;
+
         before = () => {
             m = new M0190();
         };
@@ -42,4 +42,3 @@ public class RenderRotationSystem : IReactiveSystem {
 
     }
 }
-

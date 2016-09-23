@@ -6,11 +6,6 @@ using NSpec;
 
 class check_namespaces : nspec {
 
-    static string getEntitasProjectDir() {
-        var dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
-        return dirInfo.FullName;
-    }
-
     static string dir(params string[] paths) {
         return paths.Aggregate(string.Empty, (pathString, p) => pathString + p + Path.DirectorySeparatorChar);
     }
@@ -33,12 +28,12 @@ class check_namespaces : nspec {
     }
 
     void when_checking_namespaces() {
-        var entitasProjectDir = getEntitasProjectDir();
+        var projectRoot = TestExtensions.GetProjectRoot();
 
         var entitasSourceDir = dir("Entitas", "Entitas");
         var entitasUnitySourceDir = dir("Entitas.Unity", "Assets", "Entitas", "Unity");
 
-        var sourceFiles = getSourceFiles(entitasProjectDir);
+        var sourceFiles = getSourceFiles(projectRoot);
 
         it["processes roughly the correct number of files"] = () => {
             sourceFiles.Count.should_be_greater_than(80);
@@ -50,12 +45,12 @@ class check_namespaces : nspec {
 
         var each = new Each<string, string, string>();
 
-        foreach (var file in sourceFiles) {
+        foreach(var file in sourceFiles) {
 
             string expectedNamespace;
 
             var fileName = file.Key
-                .Replace(dir(entitasProjectDir), string.Empty)
+                .Replace(dir(projectRoot), string.Empty)
                 .Replace(entitasSourceDir + "CodeGenerator", "Entitas.CodeGenerator")
                 .Replace(entitasSourceDir + dir("Serialization", "Blueprints"), "Entitas.Serialization.Blueprints/")
                 .Replace(entitasSourceDir + dir("Serialization", "Configuration"), "Entitas.Serialization.Configuration/")
@@ -66,9 +61,9 @@ class check_namespaces : nspec {
                 .Replace(entitasUnitySourceDir + dir("Serialization", "Blueprints"), "Entitas.Unity.Serialization.Blueprints/")
                 .Replace(entitasUnitySourceDir + "Migration", "Entitas.Unity.Migration");
 
-            if (file.Key.Contains(typeof(Entitas.Feature).Name) ||
+            if(file.Key.Contains(typeof(Entitas.Feature).Name) ||
                 file.Key.Contains("BlueprintEntityExtension")) {
-                    expectedNamespace = "Entitas";
+                expectedNamespace = "Entitas";
             } else {
                 expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
                     .ToString()
@@ -89,4 +84,3 @@ class check_namespaces : nspec {
         );
     }
 }
-
