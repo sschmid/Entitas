@@ -150,9 +150,9 @@ Contributing to Entitas
 
 The project is hosted on [GitHub][github-entitas] where you can [report issues][issues], fork the project and [submit pull requests][pulls].
 
-Entitas.sln contains all projects and tests in one solution. Run Build/build.sh to copy all required Entitas source files to all Unity projects.
+Entitas.sln contains all projects and tests in one solution. Run Scripts/build.sh to copy all required Entitas source files to all Unity projects.
 
-To run the tests, navigate to the project root folder and execute Build/runTests.sh.
+To run the tests, navigate to the project root folder and execute Scripts/runTests.sh.
 
 - Check the [issues][issues] to make sure nobody hasn't already requested it and/or contributed it
 - Fork the project
