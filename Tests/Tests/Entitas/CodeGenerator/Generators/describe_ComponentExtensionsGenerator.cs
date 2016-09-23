@@ -12,8 +12,8 @@ class describe_ComponentExtensionsGenerator : nspec {
     const string classSuffix = "GeneratedExtension";
 
     static void generates<T>(string expectedFileName = null) {
-        var entitasDir = new DirectoryInfo(Directory.GetCurrentDirectory());
-        var fixturesDir = entitasDir + "/Tests/Tests/Entitas/CodeGenerator/Fixtures/Generated/";
+        var projectRoot = TestExtensions.GetProjectRoot();
+        var fixturesDir = projectRoot + "/Tests/Tests/Entitas/CodeGenerator/Fixtures/Generated/";
         expectedFileName = (expectedFileName ?? typeof(T).FullName) + "GeneratedExtension";
         var path = fixturesDir + expectedFileName + ".cs";
 

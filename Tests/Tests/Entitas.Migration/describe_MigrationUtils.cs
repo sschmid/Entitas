@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Entitas.Migration;
 using NSpec;
@@ -8,7 +7,7 @@ class describe_MigrationUtils : nspec {
 
     void when_migrating() {
 
-        var dir = Environment.CurrentDirectory + "/Tests/Tests/Entitas.Migration/Fixtures/M0180";
+        var dir = TestExtensions.GetProjectRoot() + "/Tests/Tests/Entitas.Migration/Fixtures/M0180";
 
         it["gets only *.cs source files"] = () => {
             var files = MigrationUtils.GetFiles(dir);
@@ -22,4 +21,3 @@ class describe_MigrationUtils : nspec {
         };
     }
 }
-
