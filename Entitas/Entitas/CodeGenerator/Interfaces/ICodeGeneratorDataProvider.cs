@@ -1,4 +1,4 @@
-﻿namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGenerator {
 
     public interface ICodeGeneratorDataProvider {
 
@@ -13,4 +13,3 @@
         string[] blueprintNames { get; }
     }
 }
-

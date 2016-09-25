@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
@@ -43,4 +43,3 @@ namespace Entitas.Unity.Serialization.Blueprints {{
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿namespace Entitas.Migration {
+namespace Entitas.Migration {
 
     public class M0300 : IMigration {
 
@@ -22,4 +22,3 @@
         }
     }
 }
-

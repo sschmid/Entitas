@@ -1,4 +1,4 @@
-﻿using Entitas.Serialization.Blueprints;
+using Entitas.Serialization.Blueprints;
 
 namespace Entitas {
 
@@ -21,4 +21,3 @@ namespace Entitas {
         }
     }
 }
-

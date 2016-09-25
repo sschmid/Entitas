@@ -1,4 +1,4 @@
-﻿namespace Entitas {
+namespace Entitas {
 
     public struct TriggerOnEvent {
 
@@ -11,4 +11,3 @@
         }
     }
 }
-

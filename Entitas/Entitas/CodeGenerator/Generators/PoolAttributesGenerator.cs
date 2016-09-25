@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
@@ -28,4 +28,3 @@ public class {0}Attribute : PoolAttribute {{
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Reflection;
 using Entitas.Migration;
@@ -88,4 +88,3 @@ namespace Entitas.Unity.Migration {
         }
     }
 }
-

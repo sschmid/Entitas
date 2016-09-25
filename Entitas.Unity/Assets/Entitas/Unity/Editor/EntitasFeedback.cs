@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity {
@@ -31,4 +31,3 @@ namespace Entitas.Unity {
         }
     }
 }
-

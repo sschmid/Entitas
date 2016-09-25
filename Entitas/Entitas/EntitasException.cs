@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Entitas {
 
@@ -10,4 +10,3 @@ namespace Entitas {
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEditor;
@@ -71,4 +71,3 @@ namespace Entitas.Unity.VisualDebugging {
         }
     }
 }
-

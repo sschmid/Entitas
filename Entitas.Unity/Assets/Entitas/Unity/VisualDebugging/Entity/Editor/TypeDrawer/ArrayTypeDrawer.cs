@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
@@ -121,4 +121,3 @@ namespace Entitas.Unity.VisualDebugging {
         }
     }
 }
-

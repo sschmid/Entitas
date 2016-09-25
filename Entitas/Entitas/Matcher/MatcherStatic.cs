@@ -1,4 +1,4 @@
-﻿namespace Entitas {
+namespace Entitas {
 
     public partial class Matcher {
 
@@ -27,4 +27,3 @@
         }
     }
 }
-

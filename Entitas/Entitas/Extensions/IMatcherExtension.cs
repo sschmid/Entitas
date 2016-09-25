@@ -1,4 +1,4 @@
-﻿namespace Entitas {
+namespace Entitas {
 
     public static class IMatcherExtension {
 
@@ -18,4 +18,3 @@
         }
     }
 }
-

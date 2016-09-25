@@ -98,4 +98,3 @@ namespace Entitas.Serialization.Configuration {
         }
     }
 }
-

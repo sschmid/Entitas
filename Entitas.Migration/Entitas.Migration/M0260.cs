@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 
 namespace Entitas.Migration {
 
@@ -33,4 +33,3 @@ namespace Entitas.Migration {
         }
     }
 }
-

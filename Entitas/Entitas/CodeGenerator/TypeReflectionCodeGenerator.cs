@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 
 namespace Entitas.CodeGenerator {
 
@@ -10,4 +10,3 @@ namespace Entitas.CodeGenerator {
         }
     }
 }
-

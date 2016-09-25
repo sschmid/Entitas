@@ -1,4 +1,4 @@
-﻿namespace Entitas.Migration {
+namespace Entitas.Migration {
 
     public class MigrationFile {
 
@@ -11,4 +11,3 @@
         }
     }
 }
-

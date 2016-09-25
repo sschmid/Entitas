@@ -1,4 +1,4 @@
-﻿namespace Entitas.Migration {
+namespace Entitas.Migration {
 
     public interface IMigration {
 
@@ -9,4 +9,3 @@
         MigrationFile[] Migrate(string path);
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Entitas.Unity.VisualDebugging {
 
@@ -14,4 +14,3 @@ namespace Entitas.Unity.VisualDebugging {
         }
     }
 }
-
