@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using NSpec;
@@ -10,30 +9,9 @@ class check_namespaces : nspec {
         return paths.Aggregate(string.Empty, (pathString, p) => pathString + p + Path.DirectorySeparatorChar);
     }
 
-    static Dictionary<string, string> getSourceFiles(string path) {
-        return Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories)
-            .Where(p => !p.Contains(dir("Generated")) &&
-                !p.Contains(dir("Libraries")) &&
-                !p.Contains(dir("Tests")) &&
-                !p.Contains(dir("Examples")) &&
-                !p.Contains(dir("Readme")) &&
-                !p.Contains(dir("Build")) &&
-                !p.Contains(dir("bin")) &&
-                !p.Contains(dir("obj")) &&
-                !p.Contains("AssemblyInfo.cs") &&
-                !p.Contains("Commands.cs") &&
-                !p.Contains("Program.cs")
-            )
-            .ToDictionary(p => p, p => File.ReadAllText(p));
-    }
-
     void when_checking_namespaces() {
         var projectRoot = TestExtensions.GetProjectRoot();
-
-        var entitasSourceDir = dir("Entitas", "Entitas");
-        var entitasUnitySourceDir = dir("Entitas.Unity", "Assets", "Entitas", "Unity");
-
-        var sourceFiles = getSourceFiles(projectRoot);
+        var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
 
         it["processes roughly the correct number of files"] = () => {
             sourceFiles.Count.should_be_greater_than(80);
@@ -42,6 +20,9 @@ class check_namespaces : nspec {
 
         const string namespacePattern = @"(?:^namespace)\s.*\b";
         string expectedNamespacePattern = string.Format(@"[^\{0}]*", Path.DirectorySeparatorChar);
+
+        var entitasSourceDir = dir("Entitas", "Entitas");
+        var entitasUnitySourceDir = dir("Entitas.Unity", "Assets", "Entitas", "Unity");
 
         var each = new Each<string, string, string>();
 
@@ -82,5 +63,27 @@ class check_namespaces : nspec {
         each.Do((fileName, given, expected) =>
             it["{0} namespace should be {2}".With(fileName, given, expected)] = () => given.should_be(expected)
         );
+    }
+
+    void when_checking_formatting() {
+        var projectRoot = TestExtensions.GetProjectRoot();
+        var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
+
+        var each = new Each<string, string>();
+
+        foreach(var file in sourceFiles) {
+            each.Add(new NSpecTuple<string, string>(file.Key, file.Value));
+        }
+
+        each.Do((fileName, fileContent) => {
+            it["{0} should not end with two newline".With(fileName, fileContent)] = () =>
+                fileContent.EndsWith("\n\n", System.StringComparison.Ordinal).should_be_false();
+
+            it["{0} should end with single newline".With(fileName, fileContent)] = () =>
+                fileContent.EndsWith("\n", System.StringComparison.Ordinal).should_be_true();
+
+            it["{0} should not contain new[]".With(fileName, fileContent)] = () =>
+                fileContent.Contains("new[]").should_be_false();
+        });
     }
 }

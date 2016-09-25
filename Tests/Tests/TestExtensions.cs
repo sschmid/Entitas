@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Entitas;
 using NSpec;
 
@@ -22,5 +23,26 @@ public static class TestExtensions {
 
         // This happens if you use the provided runTests.sh
         return current.FullName;
+    }
+
+    public static Dictionary<string, string> GetSourceFiles(string path) {
+        return Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories)
+                    .Where(p =>
+                        !p.Contains(dir("Generated")) &&
+                        !p.Contains(dir("Libraries")) &&
+                        !p.Contains(dir("Tests")) &&
+                        !p.Contains(dir("Examples")) &&
+                        !p.Contains(dir("Readme")) &&
+                        !p.Contains(dir("Build")) &&
+                        !p.Contains(dir("bin")) &&
+                        !p.Contains(dir("obj")) &&
+                        !p.Contains("AssemblyInfo.cs") &&
+                        !p.Contains("Commands.cs") &&
+                        !p.Contains("Program.cs")
+                    ).ToDictionary(p => p, p => File.ReadAllText(p));
+    }
+
+    static string dir(params string[] paths) {
+        return paths.Aggregate(string.Empty, (pathString, p) => pathString + p + Path.DirectorySeparatorChar);
     }
 }
