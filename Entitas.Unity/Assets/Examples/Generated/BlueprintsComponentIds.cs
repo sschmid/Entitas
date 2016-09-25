@@ -8,19 +8,22 @@
 //------------------------------------------------------------------------------
 public static class BlueprintsComponentIds {
     public const int Age = 0;
-    public const int HideInBlueprintInspector = 1;
-    public const int Name = 2;
+    public const int HideInBlueprintInspectorClass = 1;
+    public const int HideInBlueprintInspector = 2;
+    public const int Name = 3;
 
-    public const int TotalComponents = 3;
+    public const int TotalComponents = 4;
 
     public static readonly string[] componentNames = {
         "Age",
+        "HideInBlueprintInspectorClass",
         "HideInBlueprintInspector",
         "Name"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(AgeComponent),
+        typeof(HideInBlueprintInspectorClassComponent),
         typeof(HideInBlueprintInspectorComponent),
         typeof(NameComponent)
     };

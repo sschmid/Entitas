@@ -357,6 +357,10 @@
     <Compile Include="Tests\Entitas\Caching\describe_EntitasCache.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="Tests\Entitas\describe_EntityExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeClassHideInBlueprintInspector.cs" />
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

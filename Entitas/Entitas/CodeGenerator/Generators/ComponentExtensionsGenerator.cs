@@ -48,13 +48,17 @@ namespace Entitas.CodeGenerator {
         }
 
         static string generateComponent(ComponentInfo componentInfo) {
+            const string hideInBlueprintInspector = "[Entitas.Serialization.Blueprints.HideInBlueprintInspectorAttribute]\n";
             const string componentFormat = @"public class {0} : IComponent {{
     public {1} {2};
 }}
 
 ";
             var memberInfo = componentInfo.memberInfos[0];
-            return string.Format(componentFormat, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
+            var code = string.Format(componentFormat, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
+            return componentInfo.hideInBlueprintInspector
+                        ? hideInBlueprintInspector + code
+                        : code;
         }
 
         static string addUsings(params string[] usings) {

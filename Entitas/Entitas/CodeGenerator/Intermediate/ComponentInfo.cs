@@ -13,13 +13,14 @@ namespace Entitas.CodeGenerator {
         public readonly bool generateComponent;
         public readonly bool generateMethods;
         public readonly bool generateIndex;
+        public readonly bool hideInBlueprintInspector;
         
         public readonly string typeName;
         public readonly bool isSingletonComponent;
 
         public ComponentInfo(string fullTypeName, List<PublicMemberInfo> memberInfos, string[] pools,
                             bool isSingleEntity, string singleComponentPrefix,
-                            bool generateComponent, bool generateMethods, bool generateIndex) {
+                            bool generateComponent, bool generateMethods, bool generateIndex, bool hideInBlueprintInspector) {
 
             this.fullTypeName = fullTypeName;
             this.memberInfos = memberInfos;
@@ -29,6 +30,7 @@ namespace Entitas.CodeGenerator {
             this.generateComponent = generateComponent;
             this.generateMethods = generateMethods;
             this.generateIndex = generateIndex;
+            this.hideInBlueprintInspector = hideInBlueprintInspector;
 
             var nameSplit = fullTypeName.Split('.');
             typeName = nameSplit[nameSplit.Length - 1];

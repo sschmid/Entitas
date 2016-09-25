@@ -15,3 +15,7 @@ public class AgeComponent : IComponent {
 public class HideInBlueprintInspectorComponent : IComponent {
 }
 
+[Blueprints, HideInBlueprintInspector]
+public class HideInBlueprintInspectorClass {
+}
+
