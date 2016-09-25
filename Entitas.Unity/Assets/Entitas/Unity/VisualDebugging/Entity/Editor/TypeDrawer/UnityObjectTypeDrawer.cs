@@ -1,9 +1,10 @@
 using System;
-using Entitas;
 using UnityEditor;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class UnityObjectTypeDrawer : ITypeDrawer {
+
         public bool HandlesType(Type type) {
             return type == typeof(UnityEngine.Object) ||
                 type.IsSubclassOf(typeof(UnityEngine.Object));

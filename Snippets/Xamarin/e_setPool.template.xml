@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeTemplates version="3.0">
+  <CodeTemplate version="2.0">
+    <Header>
+      <_Group>C#</_Group>
+      <Version />
+      <MimeType>text/x-csharp</MimeType>
+      <Shortcut>e_setPool</Shortcut>
+      <_Description>SetPool</_Description>
+      <TemplateType>Unknown</TemplateType>
+    </Header>
+    <Variables />
+    <Code><![CDATA[Pool _pool;
+
+public void SetPool(Pool pool) {
+    _pool = pool;
+}
+]]></Code>
+  </CodeTemplate>
+</CodeTemplates>

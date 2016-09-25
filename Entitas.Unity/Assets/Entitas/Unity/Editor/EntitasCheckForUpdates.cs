@@ -8,12 +8,13 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity {
+
     public static class EntitasCheckForUpdates {
 
         const string URL_GITHUB_API_LATEST_RELEASE = "https://api.github.com/repos/sschmid/Entitas-CSharp/releases/latest";
         const string URL_GITHUB_RELEASES = "https://github.com/sschmid/Entitas-CSharp/releases";
 
-        [MenuItem("Entitas/Check for Updates...", false, 2)]
+        [MenuItem("Entitas/Check for Updates...", false, EntitasMenuItemPriorities.check_for_updates)]
         public static void CheckForUpdates() {
             var response = requestLatestRelease();
             var remoteVersion = parseVersion(response);

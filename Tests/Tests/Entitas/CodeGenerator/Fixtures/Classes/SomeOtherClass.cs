@@ -4,8 +4,6 @@ namespace SomeNamespace {
 
     [Pool("SomePool")]
     public class SomeOtherClass {
-        public SomeOtherClass() {
-        }
     }
 }
 

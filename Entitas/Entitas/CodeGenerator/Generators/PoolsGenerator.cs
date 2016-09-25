@@ -1,69 +1,47 @@
-﻿using System.Linq;
-using Entitas.CodeGenerator;
+using System.Linq;
 
 namespace Entitas.CodeGenerator {
+
     public class PoolsGenerator : IPoolCodeGenerator {
 
-        const string FILE_NAME = "Pools";
-        const string CLASS_TEMPLATE = @"using Entitas;
+        const string CLASS_TEMPLATE = @"namespace Entitas {{
 
-public static class Pools {{{0}{1}
-}}";
+    public partial class Pools {{
+{0}
+        public Pool[] allPools {{ get {{ return new [] {{ {1} }}; }} }}
 
-        const string ALL_POOLS_GETTER = @"
+{2}
 
-    static Pool[] _allPools;
-
-    public static Pool[] allPools {{
-        get {{
-            if (_allPools == null) {{
-                _allPools = new [] {{ {0} }};
-            }}
-
-            return _allPools;
+        public void SetAllPools() {{
+{3}
         }}
-    }}";
+    }}
+}}
+";
 
-        const string GETTER = @"
-
-    static Pool _{0};
-
-    public static Pool {0} {{
-        get {{
-            if (_{0} == null) {{
-                _{0} = new Pool({1}" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG + @".TotalComponents, 0, new PoolMetaData(""{2}Pool"", {1}" +
-                    CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG + @".componentNames, {1}" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG + @".componentTypes));
-                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                if (UnityEngine.Application.isPlaying) {{
-                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_{0});
-                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-                }}
-                #endif
-            }}
-
-            return _{0};
+        const string CREATE_POOL_TEMPLATE = @"
+        public static Pool Create{1}Pool() {{
+            return CreatePool(""{0}"", {2}.TotalComponents, {2}.componentNames, {2}.componentTypes);
         }}
-    }}";
+";
 
         public CodeGenFile[] Generate(string[] poolNames) {
-            const string defaultPoolName = "pool";
+            var createPoolMethods = poolNames.Aggregate(string.Empty, (acc, poolName) =>
+                acc + string.Format(CREATE_POOL_TEMPLATE, poolName, poolName.PoolPrefix(), poolName.PoolPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
+            );
 
-            var allPools = poolNames == null || poolNames.Length == 0
-                ? string.Format(ALL_POOLS_GETTER, defaultPoolName)
-                : string.Format(ALL_POOLS_GETTER, string.Join(", ", poolNames.Select(poolName => poolName.LowercaseFirst()).ToArray()));
+            var allPoolsList = string.Join(", ", poolNames.Select(poolName => poolName.LowercaseFirst()).ToArray());
+            var poolFields = string.Join("\n", poolNames.Select(poolName =>
+                "        public Pool " + poolName.LowercaseFirst() + ";").ToArray());
 
-            var getters = poolNames == null || poolNames.Length == 0
-                ? string.Format(GETTER, defaultPoolName, string.Empty, string.Empty)
-                : poolNames.Aggregate(string.Empty, (acc, poolName) =>
-                    acc + string.Format(GETTER, poolName.LowercaseFirst(), poolName, poolName + " "));
+            var setAllPools = string.Join("\n", poolNames.Select(poolName =>
+                "            " + poolName.LowercaseFirst() + " = Create" + poolName.PoolPrefix() + "Pool();").ToArray());
 
-            var generatorName = typeof(PoolsGenerator).FullName;
-            return new [] { new CodeGenFile {
-                    fileName = FILE_NAME,
-                    fileContent = string.Format(CLASS_TEMPLATE, allPools, getters).ToUnixLineEndings(),
-                    generatorName = generatorName
-                }
-            };
+            return new [] { new CodeGenFile(
+                "Pools",
+                string.Format(CLASS_TEMPLATE, createPoolMethods, allPoolsList, poolFields, setAllPools),
+                GetType().FullName
+            )};
         }
     }
 }

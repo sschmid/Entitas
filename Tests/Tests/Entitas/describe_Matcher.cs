@@ -2,6 +2,7 @@
 using Entitas;
 
 class describe_Matcher : nspec {
+
     static void assertIndicesContain(int[] indices, params int[] expectedIndices) {
         indices.Length.should_be(expectedIndices.Length);
         for (int i = 0; i < expectedIndices.Length; i++) {
@@ -10,11 +11,13 @@ class describe_Matcher : nspec {
     }
 
     void when_creating_matcher() {
+
         Entity eA = null;
         Entity eB = null;
         Entity eC = null;
         Entity eAB = null;
         Entity eABC = null;
+
         before = () => {
             eA = this.CreateEntity();
             eA.AddComponentA();
@@ -36,11 +39,10 @@ class describe_Matcher : nspec {
         };
 
         context["allOf"] = () => {
+
             IAllOfMatcher m = null;
-            before = () => m = Matcher.AllOf(new [] {
-                CID.ComponentA,
-                CID.ComponentB
-            });
+
+            before = () => m = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
 
             it["has all indices"] = () => {
                 assertIndicesContain(m.indices, CID.ComponentA, CID.ComponentB);
@@ -109,7 +111,9 @@ class describe_Matcher : nspec {
         };
 
         context["anyOf"] = () => {
+
             IAnyOfMatcher m = null;
+
             before = () => m = Matcher.AnyOf(new [] {
                 CID.ComponentA,
                 CID.ComponentB
@@ -170,7 +174,9 @@ class describe_Matcher : nspec {
         };
 
         context["allOf.noneOf"] = () => {
+
             ICompoundMatcher m = null;
+
             before = () => m = Matcher.AllOf(new [] {
                 CID.ComponentA,
                 CID.ComponentB
@@ -227,7 +233,9 @@ class describe_Matcher : nspec {
         };
 
         context["anyOf.noneOf"] = () => {
+
             ICompoundMatcher m = null;
+
             before = () => m = Matcher.AnyOf(new [] {
                 CID.ComponentA,
                 CID.ComponentB
@@ -279,7 +287,9 @@ class describe_Matcher : nspec {
         };
 
         context["allOf.anyOf"] = () => {
+
             ICompoundMatcher m = null;
+
             before = () => m = Matcher.AllOf(new [] {
                 CID.ComponentA,
                 CID.ComponentB
@@ -330,6 +340,7 @@ class describe_Matcher : nspec {
         };
 
         context["indices cache"] = () => {
+
             it["updates cache when calling AnyOf"] = () => {
                 var m = Matcher.AllOf(new [] { CID.ComponentA });
                 var cache = m.indices;
@@ -346,6 +357,7 @@ class describe_Matcher : nspec {
         };
 
         context["equals"] = () => {
+
             it["equals equal AllOfMatcher"] = () => {
                 var m1 = allOfAB();
                 var m2 = allOfAB();

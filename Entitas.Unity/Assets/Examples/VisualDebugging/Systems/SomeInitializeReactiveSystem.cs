@@ -2,6 +2,7 @@
 using Entitas;
 
 public class SomeInitializeReactiveSystem : IInitializeSystem, IReactiveSystem {
+
     public TriggerOnEvent trigger { get { return Matcher.AllOf(0).OnEntityAdded(); } }
 
     public void Initialize() {

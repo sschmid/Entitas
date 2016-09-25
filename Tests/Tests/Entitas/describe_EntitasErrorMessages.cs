@@ -3,11 +3,12 @@ using Entitas;
 using Entitas.Serialization.Blueprints;
 using NSpec;
 
-class describe_EntitasErrorMessages : nspec {
+class describe_EntitasErrorMessages : EntitasTest {
+
     static void printErrorMessage(Action action) {
         try {
             action();
-        } catch (Exception exception) {
+        } catch(Exception exception) {
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("================================================================================");
             Console.WriteLine("Exception preview for: " + exception.GetType());
@@ -20,26 +21,32 @@ class describe_EntitasErrorMessages : nspec {
 
     void when_throwing() {
 
-        Pool pool = null;
-        Entity entity = null;
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
             var metaData = new PoolMetaData("My Pool", componentNames, null);
-            pool = new Pool(componentNames.Length, 42, metaData);
-            entity = pool.CreateEntity();
+            _pool = new Pool(componentNames.Length, 42, metaData);
+            _entity = createEntity();
         };
 
         it["creates exception with hint separated by newLine"] = () => {
-            var msg = "Message";
-            var hint = "Hint";
+
+            // given
+            const string msg = "Message";
+            const string hint = "Hint";
             var ex = new EntitasException(msg, hint);
+
+            // then
             ex.Message.should_be(msg + "\n" + hint);
         };
 
         it["ignores hint when null"] = () => {
-            var msg = "Message";
+
+            // given
+            const string msg = "Message";
             string hint = null;
             var ex = new EntitasException(msg, hint);
+
+            // then
             ex.Message.should_be(msg);
         };
 
@@ -48,37 +55,38 @@ class describe_EntitasErrorMessages : nspec {
             context["when not enabled"] = () => {
 
                 before = () => {
-                    pool.DestroyEntity(entity);
+                    _pool.DestroyEntity(_entity);
                 };
 
-                it["add a component"] = () => printErrorMessage(() => entity.AddComponentA());
-                it["remove a component"] = () => printErrorMessage(() => entity.RemoveComponentA());
-                it["replace a component"] = () => printErrorMessage(() => entity.ReplaceComponentA(Component.A));
+                it["add a component"] = () => printErrorMessage(() => _entity.AddComponentA());
+                it["remove a component"] = () => printErrorMessage(() => _entity.RemoveComponentA());
+                it["replace a component"] = () => printErrorMessage(() => _entity.ReplaceComponentA(Component.A));
             };
 
             context["when enabled"] = () => {
+
                 it["add a component twice"] = () => printErrorMessage(() => {
-                    entity.AddComponentA();
-                    entity.AddComponentA();
+                    _entity.AddComponentA();
+                    _entity.AddComponentA();
                 });
 
                 it["remove a component that doesn't exist"] = () => printErrorMessage(() => {
-                    entity.RemoveComponentA();
+                    _entity.RemoveComponentA();
                 });
 
                 it["get a component that doesn't exist"] = () => printErrorMessage(() => {
-                    entity.GetComponentA();
+                    _entity.GetComponentA();
                 });
 
                 it["retain an entity twice"] = () => printErrorMessage(() => {
                     var owner = new object();
-                    entity.Retain(owner);
-                    entity.Retain(owner);
+                    _entity.Retain(owner);
+                    _entity.Retain(owner);
                 });
 
                 it["release an entity with wrong owner"] = () => printErrorMessage(() => {
                     var owner = new object();
-                    entity.Release(owner);
+                    _entity.Release(owner);
                 });
             };
         };
@@ -86,15 +94,14 @@ class describe_EntitasErrorMessages : nspec {
         context["Group"] = () => {
 
             it["get single entity when multiple exist"] = () => printErrorMessage(() => {
-                pool.CreateEntity().AddComponentA();
-                pool.CreateEntity().AddComponentA();
-                var matcher = (Matcher)Matcher.AllOf(CID.ComponentA);
-                matcher.componentNames = new [] { "Health", "Position", "View" };
-                var group = pool.GetGroup(matcher);
+                createEntityA();
+                createEntityA();
+                var matcher = createMatcherA();
+                matcher.componentNames = _pool.metaData.componentNames;
+                var group = _pool.GetGroup(matcher);
                 group.GetSingleEntity();
             });
         };
-
 
         context["GroupObserver"] = () => {
 
@@ -116,21 +123,31 @@ class describe_EntitasErrorMessages : nspec {
             });
 
             it["destroy entity which is not in pool"] = () => printErrorMessage(() => {
-                pool.DestroyEntity(new Entity(0, null));
+                _pool.DestroyEntity(new Entity(0, null));
             });
 
             it["destroy retained entities"] = () => printErrorMessage(() => {
-                pool.CreateEntity().Retain(this);
-                pool.DestroyAllEntities();
+                createEntity().Retain(this);
+                _pool.DestroyAllEntities();
             });
 
             it["releases entity before destroy"] = () => printErrorMessage(() => {
-                entity.Release(pool);
+                _entity.Release(_pool);
+            });
+
+            it["unknown entityIndex"] = () => printErrorMessage(() => {
+                _pool.GetEntityIndex("unknown");
+            });
+
+            it["duplicate entityIndex"] = () => printErrorMessage(() => {
+                var index = new PrimaryEntityIndex<string>(getGroupA(), null);
+                _pool.AddEntityIndex("duplicate", index);
+                _pool.AddEntityIndex("duplicate", index);
             });
         };
 
         context["CollectionExtension"] = () => {
-            
+
             it["get single entity when more than one exist"] = () => printErrorMessage(() => {
                 new Entity[2].SingleEntity();
             });
@@ -141,14 +158,13 @@ class describe_EntitasErrorMessages : nspec {
             it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
                 var componentBlueprint = new ComponentBlueprint();
                 componentBlueprint.fullTypeName = "string";
-                componentBlueprint.CreateComponent(entity);
+                componentBlueprint.CreateComponent(_entity);
             });
 
             it["type doesn't exist"] = () => printErrorMessage(() => {
                 var componentBlueprint = new ComponentBlueprint();
                 componentBlueprint.fullTypeName = "UnknownType";
-                componentBlueprint.CreateComponent(entity);
-                componentBlueprint.CreateComponent(entity);
+                componentBlueprint.CreateComponent(_entity);
             });
 
             it["invalid field name"] = () => printErrorMessage(() => {
@@ -159,7 +175,21 @@ class describe_EntitasErrorMessages : nspec {
                     new SerializableMember("xxx", "publicFieldValue"),
                     new SerializableMember("publicProperty", "publicPropertyValue")
                 };
-                componentBlueprint.CreateComponent(entity);
+                componentBlueprint.CreateComponent(_entity);
+            });
+        };
+
+        context["EntityIndex"] = () => {
+
+            it["no entity with key"] = () => printErrorMessage(() => {
+                createPrimaryIndex().GetEntity("unknownKey");
+            });
+
+            it["multiple entities for primary key"] = () => printErrorMessage(() => {
+                createPrimaryIndex();
+                var nameAge = createNameAge();
+                _pool.CreateEntity().AddComponent(CID.ComponentA, nameAge);
+                _pool.CreateEntity().AddComponent(CID.ComponentA, nameAge);
             });
         };
     }

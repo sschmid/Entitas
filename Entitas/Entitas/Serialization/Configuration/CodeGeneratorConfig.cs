@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace Entitas.Serialization.Configuration {
@@ -48,7 +48,7 @@ namespace Entitas.Serialization.Configuration {
 
         static string[] separateValues(string values) {
             return values
-                        .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                        .Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                         .Select(value => value.Trim())
                         .ToArray();
         }

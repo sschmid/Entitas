@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Readme</RootNamespace>
     <AssemblyName>Readme</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -205,6 +205,33 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\SerializableMember.cs">
       <Link>Linked Libraries\Entitas\Serialization\Blueprints\SerializableMember.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\EntityIndex.cs">
+      <Link>Linked Libraries\Entitas\EntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\ICleanupSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\ICleanupSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Interfaces\ITearDownSystem.cs">
+      <Link>Linked Libraries\Entitas\Interfaces\ITearDownSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Pools.cs">
+      <Link>Linked Libraries\Entitas\Pools.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">
+      <Link>Linked Libraries\Entitas\Extensions\EntityExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Caching\EntitasCache.cs">
+      <Link>Linked Libraries\Entitas\Caching\EntitasCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Caching\ObjectCache.cs">
+      <Link>Linked Libraries\Entitas\Caching\ObjectCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Caching\ObjectPool.cs">
+      <Link>Linked Libraries\Entitas\Caching\ObjectPool.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

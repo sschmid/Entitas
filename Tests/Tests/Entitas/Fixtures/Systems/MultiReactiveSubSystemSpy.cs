@@ -1,29 +1,52 @@
-﻿using System.Collections.Generic;
-using Entitas;
+﻿using Entitas;
 
-public class MultiReactiveSubSystemSpy : IInitializeSystem, IMultiReactiveSystem {
+public class MultiReactiveSubSystemSpy : ReactiveSubSystemSpyBase, IMultiReactiveSystem {
 
-    public int didExecute { get { return _didExecute; } }
-    public bool initialized { get { return _initialized; } }
-    public Entity[] entities { get { return _entities; } }
+    public TriggerOnEvent[] triggers { get { return _triggers; } }
 
     readonly TriggerOnEvent[] _triggers;
-    int _didExecute;
-    bool _initialized;
-    Entity[] _entities;
 
     public MultiReactiveSubSystemSpy(TriggerOnEvent[] triggers) {
         _triggers = triggers;
     }
+}
 
-    public TriggerOnEvent[] triggers { get { return _triggers; } }
+public class MultiReactiveEnsureSubSystemSpy : MultiReactiveSubSystemSpy, IEnsureComponents {
 
-    public void Initialize() {
-        _initialized = true;
-    }
+    public IMatcher ensureComponents { get { return _ensureComponents; } }
 
-    public void Execute(List<Entity> entities) {
-        _didExecute++;
-        _entities = entities.ToArray();
+    readonly IMatcher _ensureComponents;
+
+    public MultiReactiveEnsureSubSystemSpy(TriggerOnEvent[] triggers, IMatcher ensureComponents) :
+        base(triggers) {
+        _ensureComponents = ensureComponents;
     }
 }
+
+public class MultiReactiveExcludeSubSystemSpy : MultiReactiveSubSystemSpy, IExcludeComponents {
+
+    public IMatcher excludeComponents { get { return _excludeComponents; } }
+
+    readonly IMatcher _excludeComponents;
+
+    public MultiReactiveExcludeSubSystemSpy(TriggerOnEvent[] triggers, IMatcher excludeComponents) :
+        base(triggers) {
+        _excludeComponents = excludeComponents;
+    }
+}
+
+public class MultiReactiveEnsureExcludeSubSystemSpy : MultiReactiveSubSystemSpy, IEnsureComponents, IExcludeComponents {
+
+    public IMatcher ensureComponents { get { return _ensureComponents; } }
+    public IMatcher excludeComponents { get { return _excludeComponents; } }
+
+    readonly IMatcher _ensureComponents;
+    readonly IMatcher _excludeComponents;
+
+    public MultiReactiveEnsureExcludeSubSystemSpy(TriggerOnEvent[] triggers, IMatcher ensureComponents, IMatcher excludeComponents) :
+        base(triggers) {
+        _ensureComponents = ensureComponents;
+        _excludeComponents = excludeComponents;
+    }
+}
+

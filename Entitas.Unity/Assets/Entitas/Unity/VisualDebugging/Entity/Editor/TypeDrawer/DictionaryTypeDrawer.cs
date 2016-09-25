@@ -5,7 +5,9 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class DictionaryTypeDrawer : ITypeDrawer {
+
         public bool HandlesType(Type type) {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>);
         }

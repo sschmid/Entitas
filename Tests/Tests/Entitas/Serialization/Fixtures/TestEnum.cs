@@ -5,6 +5,7 @@
 }
 
 public class NestedTest {
+
     public enum NestedTestEnum {
         NestedTest1,
         NestedTest2,

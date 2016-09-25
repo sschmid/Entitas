@@ -16,8 +16,6 @@
 
                 file.fileContent = file.fileContent.Replace("ComponentsGenerator", "ComponentExtensionsGenerator");
                 file.fileContent = file.fileContent.Replace("PoolAttributeGenerator", "PoolAttributesGenerator");
-
-                files[i] = file;
             }
 
             return files;

@@ -2,7 +2,10 @@
 using UnityEngine;
 
 namespace Entitas.Unity {
+
     public static class EntitasEditorLayout {
+
+        const int DEFAULT_FOLDOUT_MARGIN = 11;
 
         public static void ShowWindow<T>(string title) where T : EditorWindow {
             var window = EditorWindow.GetWindow<T>(true, title);
@@ -37,6 +40,18 @@ namespace Entitas.Unity {
             GUI.DrawTexture(new Rect(4, 2, width, height), texture, ScaleMode.ScaleToFit);
 
             return height;
+        }
+
+        public static bool Foldout(bool foldout, string content, int leftMargin = DEFAULT_FOLDOUT_MARGIN) {
+            return Foldout(foldout, content, EditorStyles.foldout, leftMargin);
+        }
+
+        public static bool Foldout(bool foldout, string content, GUIStyle style, int leftMargin = DEFAULT_FOLDOUT_MARGIN) {
+            BeginHorizontal();
+            GUILayout.Space(leftMargin);
+            foldout = EditorGUILayout.Foldout(foldout, content, style);
+            EndHorizontal();
+            return foldout;
         }
 
         public static Rect BeginVertical() {

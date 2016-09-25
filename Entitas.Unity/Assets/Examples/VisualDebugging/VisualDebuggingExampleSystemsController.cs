@@ -3,6 +3,7 @@ using UnityEngine;
 using Entitas.Unity.VisualDebugging;
 
 public class VisualDebuggingExampleSystemsController : MonoBehaviour {
+
     Systems _systems;
 
     Pool _pool;
@@ -24,11 +25,11 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
     Systems createAllSystemCombinations() {
         return new Feature("All System Combinations")
-            .Add(_pool.CreateSystem<SomeInitializeSystem>())
-            .Add(_pool.CreateSystem<SomeExecuteSystem>())
-            .Add(_pool.CreateSystem<SomeReactiveSystem>())
-            .Add(_pool.CreateSystem<SomeInitializeExecuteSystem>())
-            .Add(_pool.CreateSystem<SomeInitializeReactiveSystem>());
+            .Add(_pool.CreateSystem(new SomeInitializeSystem()))
+            .Add(_pool.CreateSystem(new SomeExecuteSystem()))
+            .Add(_pool.CreateSystem(new SomeReactiveSystem()))
+            .Add(_pool.CreateSystem(new SomeInitializeExecuteSystem()))
+            .Add(_pool.CreateSystem(new SomeInitializeReactiveSystem()));
     }
 
     Systems createSubSystems() {
@@ -43,7 +44,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
     }
 
     Systems createSameInstance() {
-        var system = _pool.CreateSystem<RandomDurationSystem>();
+        var system = _pool.CreateSystem(new RandomDurationSystem());
         return new Feature("Same System Instances")
             .Add(system)
             .Add(system)
@@ -77,13 +78,13 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
     Systems createSomeSystems() {
         return new Feature("Some Systems")
-            .Add(_pool.CreateSystem<SlowInitializeSystem>())
-            .Add(_pool.CreateSystem<SlowInitializeExecuteSystem>())
-            .Add(_pool.CreateSystem<FastSystem>())
-            .Add(_pool.CreateSystem<SlowSystem>())
-            .Add(_pool.CreateSystem<RandomDurationSystem>())
-            .Add(_pool.CreateSystem<AReactiveSystem>())
-            .Add(_pool.CreateSystem<RandomValueSystem>())
-            .Add(_pool.CreateSystem<ProcessRandomValueSystem>());
+            .Add(_pool.CreateSystem(new SlowInitializeSystem()))
+            .Add(_pool.CreateSystem(new SlowInitializeExecuteSystem()))
+            .Add(_pool.CreateSystem(new FastSystem()))
+            .Add(_pool.CreateSystem(new SlowSystem()))
+            .Add(_pool.CreateSystem(new RandomDurationSystem()))
+            .Add(_pool.CreateSystem(new AReactiveSystem()))
+            .Add(_pool.CreateSystem(new RandomValueSystem()))
+            .Add(_pool.CreateSystem(new ProcessRandomValueSystem()));
     }
 }

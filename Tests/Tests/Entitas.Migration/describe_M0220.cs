@@ -1,15 +1,16 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Entitas.Migration;
 using NSpec;
 
 class describe_M0220 : nspec {
+
     void when_migrating() {
 
-        var dir = Environment.CurrentDirectory + "/Tests/Tests/Entitas.Migration/Fixtures/M0220";
+        var dir = TestExtensions.GetProjectRoot() + "/Tests/Tests/Entitas.Migration/Fixtures/M0220";
 
         IMigration m = null;
+
         before = () => {
             m = new M0220();
         };
@@ -38,4 +39,3 @@ public class RenderPositionSystem : IReactiveSystem {
 
     }
 }
-

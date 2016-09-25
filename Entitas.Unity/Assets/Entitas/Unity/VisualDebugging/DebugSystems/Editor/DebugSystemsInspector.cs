@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     [CustomEditor(typeof(DebugSystemsBehaviour))]
     public class DebugSystemsInspector : Editor {
 
@@ -121,7 +122,7 @@ namespace Entitas.Unity.VisualDebugging {
                 }
                 EntitasEditorLayout.EndHorizontal();
 
-                _showInitializeSystems = EditorGUILayout.Foldout(_showInitializeSystems, "Initialize Systems");
+                _showInitializeSystems = EntitasEditorLayout.Foldout(_showInitializeSystems, "Initialize Systems");
                 if (_showInitializeSystems && shouldShowSystems(systems, true)) {
                     EntitasEditorLayout.BeginVerticalBox();
                     {
@@ -133,7 +134,7 @@ namespace Entitas.Unity.VisualDebugging {
                     EntitasEditorLayout.EndVertical();
                 }
 
-                _showExecuteSystems = EditorGUILayout.Foldout(_showExecuteSystems, "Execute Systems");
+                _showExecuteSystems = EntitasEditorLayout.Foldout(_showExecuteSystems, "Execute Systems");
                 if (_showExecuteSystems && shouldShowSystems(systems, false)) {
                     EntitasEditorLayout.BeginVerticalBox();
                     {
@@ -148,7 +149,7 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
         }
 
-        int drawSystemInfos(DebugSystems systems, bool initOnly, bool isChildSysem) {
+        int drawSystemInfos(DebugSystems systems, bool initOnly, bool isChildSystem) {
             var systemInfos = initOnly ? systems.initializeSystemInfos : systems.executeSystemInfos;
             systemInfos = systemInfos
                 .Where(systemInfo => systemInfo.averageExecutionDuration >= _threshold)
@@ -168,7 +169,7 @@ namespace Entitas.Unity.VisualDebugging {
                 if (systemInfo.systemName.ToLower().Contains(_systemNameSearchTerm.ToLower())) {
                     EntitasEditorLayout.BeginHorizontal();
                     {
-                        EditorGUI.BeginDisabledGroup(isChildSysem);
+                        EditorGUI.BeginDisabledGroup(isChildSystem);
                         {
                             systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
                         }

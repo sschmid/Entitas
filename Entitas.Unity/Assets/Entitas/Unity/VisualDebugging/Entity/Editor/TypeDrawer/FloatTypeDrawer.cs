@@ -1,9 +1,10 @@
 using System;
-using Entitas;
 using UnityEditor;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class FloatTypeDrawer : ITypeDrawer {
+
         public bool HandlesType(Type type) {
             return type == typeof(float);
         }

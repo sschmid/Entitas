@@ -18,6 +18,7 @@ class describe_Properties : nspec {
     }
 
     void when_creating_properties() {
+
         context["when empty"] = () => {
             it["is empty"] = () => assertProperties(string.Empty, string.Empty, null);
         };
@@ -71,6 +72,7 @@ class describe_Properties : nspec {
         };
 
         context["when multiline"] = () => {
+
             it["creates Properties from multiline input string"] = () => {
                 var input =
                     "some.key.1=some value 1" + "\n" +
@@ -212,6 +214,7 @@ class describe_Properties : nspec {
         };
 
         context["when replacing special characters in values"] = () => {
+
             it["replaces \\n with newline"] = () => {
                 var input =
                     @"some.key=some\nvalue" + "\n" +
@@ -248,7 +251,9 @@ class describe_Properties : nspec {
         };
 
         context["adding properties"] = () => {
+
             Properties p = null;
+
             before = () => {
                 p = new Properties();
             };
@@ -275,6 +280,7 @@ class describe_Properties : nspec {
         };
 
         context["placeholder"] = () => {
+
             it["replaces placeholder within ${...}"] = () => {
                 var input =
                     "project.name = Entitas" + "\n" +
@@ -300,8 +306,8 @@ class describe_Properties : nspec {
 
             it["converts and normalizes line endings"] = () => {
                 var input =
-                    "project.name = Entitas" + "\r\n" +
-                    "project.domain = com.sschmid" + "\r\n" +
+                    "project.name = Entitas" + "\n" +
+                    "project.domain = com.sschmid" + "\r" +
                     "project.bundleId = ${project.domain}.${project.name}" + "\r\n";
 
                 const string expectedOutput =

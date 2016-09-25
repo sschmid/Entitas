@@ -2,14 +2,17 @@
 using Entitas.Serialization.Configuration;
 
 class describe_EntitasPreferencesConfig : nspec {
+
     void when_config() {
 
         EntitasPreferencesConfig config = null;
+
         before = () => {
             config = new EntitasPreferencesConfig(string.Empty);
         };
 
         it["gets string from empty config"] = () => config.ToString().should_be(string.Empty);
+
         it["gets default value from empty config and sets value for trimmed key"] = () => {
             config.GetValueOrDefault(" testKey ", " testValue ").should_be("testValue ");
             config.ToString().should_be("testKey = testValue \n");

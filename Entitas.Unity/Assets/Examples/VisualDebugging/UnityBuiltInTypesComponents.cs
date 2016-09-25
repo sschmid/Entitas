@@ -18,6 +18,7 @@ public class AnimationCurveComponent : IComponent {
 
 [VisualDebugging]
 public class MyEnumComponent : IComponent {
+
     public enum MyEnum {
         Item1,
         Item2,
@@ -25,6 +26,25 @@ public class MyEnumComponent : IComponent {
     }
 
     public MyEnum myEnum;
+}
+
+[VisualDebugging]
+public class MyFlagsComponent : IComponent {
+
+    [System.Flags]
+    public enum MyFlags {
+        Item1 = 1,
+        Item2 = 2,
+        Item3 = 4,
+        Item4 = 8
+    }
+
+    public MyFlags myFlags;
+}
+
+[VisualDebugging]
+public class MyDoubleComponent : IComponent {
+    public double myDouble;
 }
 
 [VisualDebugging]

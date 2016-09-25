@@ -6,55 +6,26 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Entitas;
+namespace Entitas {
 
-public static class Pools {
+    public partial class Pools {
 
-    static Pool[] _allPools;
-
-    public static Pool[] allPools {
-        get {
-            if (_allPools == null) {
-                _allPools = new [] { visualDebugging, blueprints };
-            }
-
-            return _allPools;
+        public static Pool CreateBlueprintsPool() {
+            return CreatePool("Blueprints", BlueprintsComponentIds.TotalComponents, BlueprintsComponentIds.componentNames, BlueprintsComponentIds.componentTypes);
         }
-    }
 
-    static Pool _visualDebugging;
-
-    public static Pool visualDebugging {
-        get {
-            if (_visualDebugging == null) {
-                _visualDebugging = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("VisualDebugging Pool", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
-                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                if (UnityEngine.Application.isPlaying) {
-                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_visualDebugging);
-                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-                }
-                #endif
-            }
-
-            return _visualDebugging;
+        public static Pool CreateVisualDebuggingPool() {
+            return CreatePool("VisualDebugging", VisualDebuggingComponentIds.TotalComponents, VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes);
         }
-    }
 
-    static Pool _blueprints;
+        public Pool[] allPools { get { return new[] { blueprints, visualDebugging }; } }
 
-    public static Pool blueprints {
-        get {
-            if (_blueprints == null) {
-                _blueprints = new Pool(BlueprintsComponentIds.TotalComponents, 0, new PoolMetaData("Blueprints Pool", BlueprintsComponentIds.componentNames, BlueprintsComponentIds.componentTypes));
-                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                if (UnityEngine.Application.isPlaying) {
-                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_blueprints);
-                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-                }
-                #endif
-            }
+        public Pool blueprints;
+        public Pool visualDebugging;
 
-            return _blueprints;
+        public void SetAllPools() {
+            blueprints = CreateBlueprintsPool();
+            visualDebugging = CreateVisualDebuggingPool();
         }
     }
 }

@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>PerformanceTests</RootNamespace>
     <AssemblyName>PerformanceTests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -62,7 +62,7 @@
     <Compile Include="PerformanceTests\DataStructures\IterateHashetToArray.cs" />
     <Compile Include="PerformanceTests\Entity\EntityAddComponent.cs" />
     <Compile Include="PerformanceTests\Entity\ObjectGetProperty.cs" />
-    <Compile Include="PerformanceTests\Observer\ObserverIterateCollectedEntities.cs" />
+    <Compile Include="PerformanceTests\GroupObserver\GroupObserverIterateCollectedEntities.cs" />
     <Compile Include="PerformanceTests\DataStructures\QueueDequeue.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListQueue.cs" />
     <Compile Include="PerformanceTests\Pool\PoolCreateEntity.cs" />
@@ -77,6 +77,9 @@
     <Compile Include="PerformanceTests\Misc\NewInstanceT.cs" />
     <Compile Include="PerformanceTests\Misc\NewInstanceActivator.cs" />
     <Compile Include="PerformanceTests\Pool\PoolCreateBlueprint.cs" />
+    <Compile Include="PerformanceTests\Fixtures\NameComponent.cs" />
+    <Compile Include="PerformanceTests\EntityIndex\EntityIndexGetEntity.cs" />
+    <Compile Include="PerformanceTests\GroupObserver\GroupObserverActivate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -85,9 +88,10 @@
     <Folder Include="PerformanceTests\Fixtures\" />
     <Folder Include="PerformanceTests\EntityMatcher\" />
     <Folder Include="PerformanceTests\DataStructures\" />
-    <Folder Include="PerformanceTests\Observer\" />
+    <Folder Include="PerformanceTests\GroupObserver\" />
     <Folder Include="PerformanceTests\Pool\" />
     <Folder Include="PerformanceTests\Misc\" />
+    <Folder Include="PerformanceTests\EntityIndex\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas\Entitas.csproj">

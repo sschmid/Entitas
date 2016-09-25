@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 
 namespace Entitas.Migration {
+
     public class M0220 : IMigration {
 
         public string version { get { return "0.22.0"; } }
@@ -30,8 +31,6 @@ namespace Entitas.Migration {
                 file.fileContent = Regex.Replace(file.fileContent, TRIGGER_PATTERN,
                     match => string.Format(TRIGGER_REPLACEMENT_FORMAT, match.Groups["matcher"].Value, eventType),
                     RegexOptions.Multiline);
-
-                files[i] = file;
             }
 
             return files;

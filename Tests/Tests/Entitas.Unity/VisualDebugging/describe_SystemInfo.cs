@@ -3,6 +3,7 @@ using Entitas.Unity.VisualDebugging;
 using Entitas;
 
 class describe_SystemInfo : nspec {
+
     void when_SystemInfo() {
 
         it["creates systemInfo for initialize system"] = () => {
@@ -66,6 +67,7 @@ class describe_SystemInfo : nspec {
         context["when created"] = () => {
 
             SystemInfo info = null;
+
             before = () => {
                 info = new SystemInfo(new TestExecuteSystem());
             };

@@ -3,6 +3,7 @@ using Entitas;
 using Entitas.Unity.VisualDebugging;
 
 public class CustomObjectTypeDrawer : ITypeDrawer, IDefaultInstanceCreator {
+
     public bool HandlesType(Type type) {
         return type == typeof(CustomObject);
     }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Entitas.Serialization.Blueprints;
-using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
 
 namespace Entitas.Unity.Serialization.Blueprints {
@@ -26,7 +25,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
             _blueprintsMap = new Dictionary<string, Blueprint>(blueprints.Length);
             #endif
 
-            for (int i = 0, blueprintsLength = blueprints.Length; i < blueprintsLength; i++) {
+            for (int i = 0; i < blueprints.Length; i++) {
                 var blueprint = blueprints[i];
                 if (blueprint != null) {
                     _binaryBlueprintsMap.Add(blueprint.name, blueprint);

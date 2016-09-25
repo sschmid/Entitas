@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace Entitas {
@@ -45,7 +44,7 @@ namespace Entitas {
 
         /// Activates the GroupObserver (GroupObserver are activated by default) and will start collecting changed entities.
         public void Activate() {
-            for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
+            for (int i = 0; i < _groups.Length; i++) {
                 var group = _groups[i];
                 var eventType = _eventTypes[i];
                 if (eventType == GroupEventType.OnEntityAdded) {
@@ -66,7 +65,7 @@ namespace Entitas {
         /// Deactivates the GroupObserver (GroupObserver are activated by default).
         /// This will also clear all collected entities.
         public void Deactivate() {
-            for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
+            for (int i = 0; i < _groups.Length; i++) {
                 var group = _groups[i];
                 group.OnEntityAdded -= _addEntityCache;
                 group.OnEntityRemoved -= _addEntityCache;
@@ -95,7 +94,7 @@ namespace Entitas {
 
                 const string separator = ", ";
                 var lastSeparator = _groups.Length - 1;
-                for (int i = 0, groupsLength = _groups.Length; i < groupsLength; i++) {
+                for (int i = 0; i < _groups.Length; i++) {
                     sb.Append(_groups[i]);
                     if (i < lastSeparator) {
                         sb.Append(separator);

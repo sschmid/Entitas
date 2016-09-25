@@ -1,5 +1,7 @@
 ﻿namespace Entitas {
+
     public partial class Matcher {
+
         public override bool Equals(object obj) {
             if (obj == null || obj.GetType() != GetType() || obj.GetHashCode() != GetHashCode()) {
                 return false;
@@ -30,7 +32,7 @@
                 return false;
             }
 
-            for (int i = 0, indicesLength = i1.Length; i < indicesLength; i++) {
+            for (int i = 0; i < i1.Length; i++) {
                 if (i1[i] != i2[i]) {
                     return false;
                 }
@@ -57,7 +59,7 @@
 
         static int applyHash(int hash, int[] indices, int i1, int i2) {
             if (indices != null) {
-                for (int i = 0, indicesLength = indices.Length; i < indicesLength; i++) {
+                for (int i = 0; i < indices.Length; i++) {
                     hash ^= indices[i] * i1;
                 }
                 hash ^= indices.Length * i2;

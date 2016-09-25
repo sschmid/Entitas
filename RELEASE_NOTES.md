@@ -1,3 +1,73 @@
+# 0.33.0
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+##### Entitas
+- Added pools.CreateSystem()
+- Added ObjectPool and ObjectCache and updated EntitasCache to use ObjectCache (#157)
+- Added entityIndex.Activate() and removing entity indices from pool (#163)
+- Renamed IDeinitializeSystem to ITearDownSystem (#164)
+
+##### Entitas.CodeGenerator
+- TypeReflectionProvider sorts pool names and ToUppercaseFirst() (#155)
+- CodeGeneratorConfig doesn't add default pool anymore (#156)
+
+##### Other
+- Added repository icon
+- Added snippets (see Snippets folder)
+
+
+# 0.32.0
+
+Summer break is over! Entitas development is back on track!
+Thanks all of you guys for using and contributing to Entitas.
+This release is packed with improvements from all of you, thanks for that!
+
+##### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+##### General
+- Lots of maintenance, refactoring, documentation and cleanup. Checked every class and every test ;)
+- Removed unused usings (#134 @thematthopkins )
+- Added script to generate docset and included it in build script (#141 @mstrchrstphr)
+- Updated policy.mdpolicy to support latest Xamarin Studio
+- Fixed inconsistent Line endings (#116 @ParagonFable)
+
+##### Entitas
+- Added new `Pools` class. There is no static Pools anymore but an instance.
+- Added `ISetPools` to inject the shared pools instance
+- Removed `pool.CreateSystem<T>()` and `pool.CreateSystem(Type type)` (Apply migration 0.32.0)
+- Fixed `pool.CreateSystem()` not creating a ReactiveSystem for IGroupObserverSystem
+- Added `EntityIndex` (#154)
+- `pool.Reset()` removes all event handlers
+- Fixed retain / release didn't update entity toString cache
+- Added `EntitasCache` for object pooling of collections to reduce memory allocations
+- Updated Entity, Matcher and Pool to use EntitasCache (less garbage :heart:)
+- Added `ICleanupSystem`
+- Added `IDeinitializeSystem`
+- Pushing removed component to component pool after dispatching event
+
+##### Entitas.CodeGenerator
+- Fixed ComponentIndicesGenerator with multiple pools (#124)
+- CodeGeneratorConfig will add default pool
+- Fixed pools order if default pool exists
+
+##### Entitas.Unity.CodeGenerator
+- CodeGenerator Preferences is using MaskField instead of Toggles now
+
+##### Entitas.Unity.VisualDebugging
+- Less editor repaints for DebugSystemsInspector to improve performance
+- Fixed system stats (Log stats) not ignoring Feature class
+- Add ITypeDrawer for doubles (#132 @bddckr)
+- Added support for enum masks (#132 @bddckr)
+- Adjusted foldout spacing in custom inspector (#149 @ByteSheep)
+
+##### Other
+- Updated keys for Entitas.properties and moved files from Entitas.Unity to Entitas.Serialization.Configuration
+- Moved Properties from Entitas.Unity to Entitas.Serialization
+
+
 # 0.31.2
 
 ##### Entitas.CodeGenerator
@@ -54,8 +124,6 @@ public class SomeComponent : IComponent {
 
 ##### Entitas.Unity.VisualDebugging
 - Added IComponentDrawer which can draw the whole component
-
-##### Entitas.Unity.VisualDebugging
 - Added EntitasEntityErrorHierarchyIcon to indicate retained entities in the hierarchy
 - Added CharTypeDrawer
 - Fixed components not updating in the inspector (#107)

@@ -4,6 +4,7 @@ namespace Entitas.Unity.VisualDebugging {
 
     [ExecuteInEditMode]
     public class PoolObserverBehaviour : MonoBehaviour {
+
         public PoolObserver poolObserver { get { return _poolObserver; } }
 
         PoolObserver _poolObserver;

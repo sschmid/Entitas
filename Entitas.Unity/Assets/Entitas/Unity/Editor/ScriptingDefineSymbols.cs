@@ -4,7 +4,9 @@ using System.Linq;
 using UnityEditor;
 
 namespace Entitas.Unity {
+
     public class ScriptingDefineSymbols {
+
         public Dictionary<BuildTargetGroup, string> buildTargetToDefSymbol { get { return _buildTargetToDefSymbol; } }
 
         readonly Dictionary<BuildTargetGroup, string> _buildTargetToDefSymbol;

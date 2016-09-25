@@ -227,7 +227,7 @@ namespace Entitas.Unity.VisualDebugging {
                         if (memberInfos.Count == 0) {
                             EditorGUILayout.LabelField(componentName, EditorStyles.boldLabel);
                         } else {
-                            unfoldedComponents[index] = EditorGUILayout.Foldout(unfoldedComponents[index], componentName, _foldoutStyle);
+                            unfoldedComponents[index] = EntitasEditorLayout.Foldout(unfoldedComponents[index], componentName, _foldoutStyle);
                         }
                         if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                             entity.RemoveComponent(index);

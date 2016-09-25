@@ -29,25 +29,27 @@ public static class VisualDebuggingComponentIds {
     public const int MonoBehaviourSubClass = 19;
     public const int MyBool = 20;
     public const int MyChar = 21;
-    public const int MyEnum = 22;
-    public const int MyFloat = 23;
-    public const int MyInt = 24;
-    public const int MyString = 25;
-    public const int Person = 26;
-    public const int Property = 27;
-    public const int Rect = 28;
-    public const int SomeOtherClass = 29;
-    public const int SystemObject = 30;
-    public const int Test = 31;
-    public const int Texture2D = 32;
-    public const int Texture = 33;
-    public const int UnityObject = 34;
-    public const int UnsupportedObject = 35;
-    public const int Vector2 = 36;
-    public const int Vector3 = 37;
-    public const int Vector4 = 38;
+    public const int MyDouble = 22;
+    public const int MyEnum = 23;
+    public const int MyFlags = 24;
+    public const int MyFloat = 25;
+    public const int MyInt = 26;
+    public const int MyString = 27;
+    public const int Person = 28;
+    public const int Property = 29;
+    public const int Rect = 30;
+    public const int SomeOtherClass = 31;
+    public const int SystemObject = 32;
+    public const int Test = 33;
+    public const int Texture2D = 34;
+    public const int Texture = 35;
+    public const int UnityObject = 36;
+    public const int UnsupportedObject = 37;
+    public const int Vector2 = 38;
+    public const int Vector3 = 39;
+    public const int Vector4 = 40;
 
-    public const int TotalComponents = 39;
+    public const int TotalComponents = 41;
 
     public static readonly string[] componentNames = {
         "Position",
@@ -72,7 +74,9 @@ public static class VisualDebuggingComponentIds {
         "MonoBehaviourSubClass",
         "MyBool",
         "MyChar",
+        "MyDouble",
         "MyEnum",
+        "MyFlags",
         "MyFloat",
         "MyInt",
         "MyString",
@@ -114,7 +118,9 @@ public static class VisualDebuggingComponentIds {
         typeof(MonoBehaviourSubClassComponent),
         typeof(MyBoolComponent),
         typeof(MyCharComponent),
+        typeof(MyDoubleComponent),
         typeof(MyEnumComponent),
+        typeof(MyFlagsComponent),
         typeof(MyFloatComponent),
         typeof(MyIntComponent),
         typeof(MyStringComponent),

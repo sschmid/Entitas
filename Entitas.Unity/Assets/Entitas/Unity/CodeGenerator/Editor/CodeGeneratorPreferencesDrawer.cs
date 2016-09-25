@@ -5,9 +5,10 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.CodeGenerator {
+
     public class CodeGeneratorPreferencesDrawer : IEntitasPreferencesDrawer {
 
-        public int priority { get { return 10; } }
+        public int priority { get { return EntitasPreferencesDrawerPriorities.codeGenerator; } }
 
         string[] _availableGeneratorNames;
         CodeGeneratorConfig _codeGeneratorConfig;
@@ -56,7 +57,7 @@ namespace Entitas.Unity.CodeGenerator {
 
             _poolList.DoLayoutList();
 
-            if (_pools.Count == 0) {
+            if(_pools.Count <= 1) {
                 EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple pools. " +
                 "The code generator generates subclasses of PoolAttribute for each pool name. " +
                 "You can assign components to a specific pool with the generated attribute, e.g. [UI] or [MetaGame], " +
@@ -72,25 +73,25 @@ namespace Entitas.Unity.CodeGenerator {
 
             var enabledCodeGeneratorsMask = 0;
 
-            for (int i = 0; i < _availableGeneratorNames.Length; i++) {
-                if (_codeGeneratorConfig.enabledCodeGenerators.Contains(_availableGeneratorNames[i])) {
+            for(int i = 0; i < _availableGeneratorNames.Length; i++) {
+                if(_codeGeneratorConfig.enabledCodeGenerators.Contains(_availableGeneratorNames[i])) {
                     enabledCodeGeneratorsMask += (1 << i);
                 }
             }
 
-            enabledCodeGeneratorsMask =  EditorGUILayout.MaskField("Code Generators", enabledCodeGeneratorsMask, _availableGeneratorNames);
+            enabledCodeGeneratorsMask = EditorGUILayout.MaskField("Code Generators", enabledCodeGeneratorsMask, _availableGeneratorNames);
 
             var enabledCodeGenerators = new List<string>();
-            for (int i = 0; i < _availableGeneratorNames.Length; i++) {
+            for(int i = 0; i < _availableGeneratorNames.Length; i++) {
                 var index = 1 << i;
-                if ((index & enabledCodeGeneratorsMask) == index) {
+                if((index & enabledCodeGeneratorsMask) == index) {
                     enabledCodeGenerators.Add(_availableGeneratorNames[i]);
                 }
             }
 
             var bgColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.green;
-            if (GUILayout.Button("Generate", GUILayout.Height(32))) {
+            if(GUILayout.Button("Generate", GUILayout.Height(32))) {
                 UnityCodeGenerator.Generate();
             }
             GUI.backgroundColor = bgColor;

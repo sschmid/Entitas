@@ -7,9 +7,10 @@ using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public static class EntitasStats {
 
-        [MenuItem("Entitas/Log Stats", false, 200)]
+        [MenuItem("Entitas/Log Stats", false, EntitasMenuItemPriorities.log_stats)]
         public static void LogStats() {
             foreach (var stat in GetStats()) {
                 Debug.Log(stat.Key + ": " + stat.Value);
@@ -35,7 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         static Dictionary<string, int> getPools(Type[] components) {
             return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
-                var lookupTags = TypeReflectionProvider.GetPools(type);
+                var lookupTags = TypeReflectionProvider.GetPools(type, false);
                 if (lookupTags.Length == 0) {
                     lookupTags = new [] { "Pool" };
                 }

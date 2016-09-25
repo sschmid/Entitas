@@ -3,6 +3,7 @@
 namespace Entitas.Unity.VisualDebugging {
 
     public class VisualDebuggingConfig {
+
         public string defaultInstanceCreatorFolderPath {
             get { return _config.GetValueOrDefault(DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY, DEFAULT_DEFAULT_INSTANCE_CREATOR_FOLDER_PATH); }
             set { _config[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY] = value; }

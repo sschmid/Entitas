@@ -9,6 +9,7 @@
 using Entitas.CodeGenerator;
 
 public class VisualDebuggingAttribute : PoolAttribute {
+
     public VisualDebuggingAttribute() : base("VisualDebugging") {
     }
 }

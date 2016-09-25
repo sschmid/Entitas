@@ -3,8 +3,10 @@ using Entitas.Serialization.Configuration;
 using UnityEditor;
 
 namespace Entitas.Unity {
+
     public class EntitasPreferencesDrawer : IEntitasPreferencesDrawer {
-        public int priority { get { return 0; } }
+
+        public int priority { get { return EntitasPreferencesDrawerPriorities.preferences; } }
 
         const string ENTITAS_FAST_AND_UNSAFE = "ENTITAS_FAST_AND_UNSAFE";
 

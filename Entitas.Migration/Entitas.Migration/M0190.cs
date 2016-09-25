@@ -2,6 +2,7 @@
 using System.Text.RegularExpressions;
 
 namespace Entitas.Migration {
+
     public class M0190 : IMigration {
 
         public string version { get { return "0.19.0"; } }
@@ -19,9 +20,7 @@ namespace Entitas.Migration {
                 .ToArray();
 
             for (int i = 0; i < files.Length; i++) {
-                var file = files[i];
-                file.fileContent = Regex.Replace(file.fileContent, EXECUTE_PATTERN, EXECUTE_REPLACEMENT, RegexOptions.Multiline);
-                files[i] = file;
+                files[i].fileContent = Regex.Replace(files[i].fileContent, EXECUTE_PATTERN, EXECUTE_REPLACEMENT, RegexOptions.Multiline);
             }
 
             return files;

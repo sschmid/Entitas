@@ -6,22 +6,23 @@ using UnityEngine;
 public class VisualDebuggingExampleController : MonoBehaviour {
 
     void Start() {
-        var pool = Pools.visualDebugging;
-        pool.GetGroup(VisualDebuggingMatcher.Vector3);
-        pool.GetGroup(VisualDebuggingMatcher.GameObject);
-        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
-        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
+        var pool = Pools.sharedInstance.visualDebugging = Pools.CreateVisualDebuggingPool();
+
+        createTestGroups(pool);
 
         createTestEntities(pool);
         createTestEntityWithNullValues(pool);
 
         createTestEntityError(pool);
 
-        pool.CreateSystem<AReactiveSystem>();
+        pool.CreateSystem(new AReactiveSystem());
     }
 
-    void createTestEntityError(Pool pool) {
-        pool.DestroyEntity(pool.CreateEntity().Retain(this));
+    void createTestGroups(Pool pool) {
+        pool.GetGroup(VisualDebuggingMatcher.Vector3);
+        pool.GetGroup(VisualDebuggingMatcher.GameObject);
+        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
+        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
     }
 
     void createTestEntities(Pool pool) {
@@ -33,6 +34,8 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddColor(Color.red);
             e.AddAnimationCurve(AnimationCurve.EaseInOut(0f, 0f, 1f, 1f));
             e.AddMyEnum(MyEnumComponent.MyEnum.Item2);
+            e.AddMyFlags(MyFlagsComponent.MyFlags.Item2);
+            e.AddMyDouble(4.2f);
             e.AddMyFloat(4.2f);
             e.AddMyInt(42);
             e.AddRect(new Rect(1f, 2f, 3f, 4f));
@@ -143,6 +146,10 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         string personName = null;
         string personGender = null;
         e.AddPerson(personName, personGender);
+    }
+
+    void createTestEntityError(Pool pool) {
+        pool.DestroyEntity(pool.CreateEntity().Retain(this));
     }
 }
 

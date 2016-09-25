@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+
 namespace Entitas.Migration {
+
     public class M0260 : IMigration {
 
         public string version { get { return "0.26.0"; } }
@@ -25,7 +27,6 @@ namespace Entitas.Migration {
                 file.fileContent = file.fileContent.Replace(POOL_PATTERN_1, REPLACEMENT + POOL_PATTERN_1);
                 file.fileContent = file.fileContent.Replace(POOL_PATTERN_2, REPLACEMENT + POOL_PATTERN_2);
                 file.fileContent = file.fileContent.Replace(COMPONENT_PATTERN, REPLACEMENT + COMPONENT_PATTERN);
-                files[i] = file;
             }
 
             return files;

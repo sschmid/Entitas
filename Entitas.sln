@@ -46,7 +46,8 @@ Global
 		$0.TextStylePolicy = $2
 		$2.inheritsSet = VisualStudio
 		$2.inheritsScope = text/plain
-		$2.scope = text/plain
+		$2.scope = text/x-csharp
+		$2.EolMarker = Unix
 		$0.TextStylePolicy = $3
 		$3.inheritsSet = VisualStudio
 		$3.inheritsScope = text/plain
@@ -76,18 +77,29 @@ Global
 		$4.inheritsSet = Mono
 		$4.inheritsScope = text/x-csharp
 		$4.scope = text/x-csharp
+		$4.NewLinesForBracesInTypes = False
+		$4.NewLinesForBracesInMethods = False
+		$4.SpacingAfterMethodDeclarationName = False
+		$4.SpaceAfterMethodCallName = False
+		$4.SpaceBeforeOpenSquareBracket = False
+		$4.IndentSwitchSection = True
+		$4.SpaceAfterControlFlowStatementKeyword = False
 		$0.StandardHeader = $5
 		$5.Text = 
 		$5.IncludeInNewFiles = True
 		$0.NameConventionPolicy = $6
 		$6.Rules = $7
 		$7.NamingRule = $8
-		$8.Name = PascalCase
-		$8.AffectedEntity = Namespace, Class, Struct, Enum, Delegate, Event, EnumMember, Label
+		$8.Name = Constants (local)
+		$8.AffectedEntity = LocalConstant
 		$8.VisibilityMask = VisibilityMask
-		$8.NamingStyle = PascalCase
+		$8.NamingStyle = CamelCase
 		$8.IncludeInstanceMembers = True
 		$8.IncludeStaticEntities = True
+		$8.RequiredPrefixes = $27
+		$27.String = T
+		$8.RequiredSuffixes = $28
+		$28.String = Exception
 		$7.NamingRule = $9
 		$9.Name = Interfaces
 		$9.RequiredPrefixes = $10
@@ -184,6 +196,10 @@ Global
 		$26.NamingStyle = CamelCase
 		$26.IncludeInstanceMembers = True
 		$26.IncludeStaticEntities = True
+		$0.XmlFormattingPolicy = $29
+		$29.inheritsSet = Mono
+		$29.inheritsScope = application/xml
+		$29.scope = application/config+xml
 		version = 1.0.0
 	EndGlobalSection
 EndGlobal

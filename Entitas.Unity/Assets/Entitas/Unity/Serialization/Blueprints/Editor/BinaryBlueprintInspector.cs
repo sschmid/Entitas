@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Entitas;
 using Entitas.Serialization;
 using Entitas.Serialization.Blueprints;
 using Entitas.Unity.VisualDebugging;
@@ -21,7 +20,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 .ToArray();
         }
 
-        [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, 300)]
+        [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, EntitasMenuItemPriorities.blueprints_update_all_blueprints)]
         public static void UpdateAllBinaryBlueprints() {
             if (!EditorApplication.isPlayingOrWillChangePlaymode) {
                 var allPools = findAllPools();
@@ -81,17 +80,31 @@ namespace Entitas.Unity.Serialization.Blueprints {
         }
 
         static Pool[] findAllPools() {
-            
+
             // Use reflection because there is no generated Pools.cs when you create a new emtpy project.
 
-            var poolsType = Assembly.GetAssembly(typeof(Entity)).GetTypes().SingleOrDefault(type => type.FullName == "Pools");
+            var oldPoolsType = Assembly.GetAssembly(typeof(Entity)).GetTypes().SingleOrDefault(type =>
+                type.FullName == "Pools" // Obsolete, last gen PoolsGenerator
+            );
 
-            if (poolsType != null) {
-                var allPools = poolsType.GetProperties(BindingFlags.Public | BindingFlags.Static)
-                    .Single(info => info.Name == "allPools");
+            if (oldPoolsType != null) {
+                var allPoolsProperty = oldPoolsType.GetProperty("allPools", BindingFlags.Public | BindingFlags.Static);
+                return (Pool[])allPoolsProperty.GetValue(oldPoolsType, null);
+            } else {
+                const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
+                var allPoolsProperty = typeof(Pools).GetProperty("allPools", bindingFlags);
+                if (allPoolsProperty != null) {
+                    var poolsType = typeof(Pools);
+                    var setAllPoolsMethod = poolsType.GetMethod("SetAllPools", bindingFlags);
+                    if (setAllPoolsMethod != null) {
+                        var pools = new Pools();
+                        setAllPoolsMethod.Invoke(pools, null);
+                        var allPoolsGetter = poolsType.GetProperty("allPools", bindingFlags);
 
-                return (Pool[])allPools.GetValue(poolsType, null);
-            }
+                        return (Pool[])allPoolsGetter.GetValue(pools, null);
+                    }
+                }
+			}
 
             return new Pool[0];
         }

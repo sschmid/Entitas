@@ -3,9 +3,11 @@ using Entitas;
 using System;
 
 class describe_GeneratedComponents : nspec {
+
     void when_generated() {
 
         Pool pool = null;
+
         before = () => {
             pool = new Pool(ComponentIds.TotalComponents);
         };
@@ -14,6 +16,7 @@ class describe_GeneratedComponents : nspec {
 
             Entity e = null;
             int index = -1;
+
             before = () => {
                 e = pool.CreateEntity();
                 e.isMovable = true;
@@ -61,6 +64,7 @@ class describe_GeneratedComponents : nspec {
             context["matcher"] = () => {
 
                 IMatcher matcher = null;
+
                 before = () => {
                     matcher = Matcher.Movable;
                 };
@@ -84,6 +88,7 @@ class describe_GeneratedComponents : nspec {
 
             Entity e = null;
             int index = ComponentIds.Person;
+
             before = () => {
                 e = pool.CreateEntity();
             };
@@ -123,6 +128,7 @@ class describe_GeneratedComponents : nspec {
             context["component pool"] = () => {
                 
                 PersonComponent person = null;
+
                 before = () => {
                     person = e.AddPerson(42, "Max").person;
                 };
@@ -163,6 +169,7 @@ class describe_GeneratedComponents : nspec {
             context["matcher"] = () => {
 
                 IMatcher matcher = null;
+
                 before = () => {
                     matcher = Matcher.Person;
                 };
@@ -186,6 +193,7 @@ class describe_GeneratedComponents : nspec {
 
             Entity e = null;
             int index = -1;
+
             before = () => {
                 index = ComponentIds.Animating;
             };
@@ -238,6 +246,7 @@ class describe_GeneratedComponents : nspec {
                 context["matcher"] = () => {
 
                     IMatcher matcher = null;
+
                     before = () => {
                         matcher = Matcher.Animating;
                     };
@@ -323,6 +332,7 @@ class describe_GeneratedComponents : nspec {
             context["entity extensions"] = () => {
 
                 Entity e = null;
+
                 before = () => {
                     e = pool.CreateEntity();
                 };
@@ -362,6 +372,7 @@ class describe_GeneratedComponents : nspec {
                 context["component pool"] = () => {
 
                     UserComponent user = null;
+
                     before = () => {
                         user = e.AddUser(date1, false).user;
                     };
@@ -402,6 +413,7 @@ class describe_GeneratedComponents : nspec {
                 context["matcher"] = () => {
 
                     IMatcher matcher = null;
+
                     before = () => {
                         matcher = Matcher.User;
                     };

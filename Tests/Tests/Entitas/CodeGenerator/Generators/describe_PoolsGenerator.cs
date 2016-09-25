@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas.CodeGenerator;
 using NSpec;
 
@@ -6,148 +6,89 @@ class describe_PoolsGenerator : nspec {
 
     const bool logResults = false;
 
-    const string defaultPool = @"using Entitas;
+    const string defaultPool = @"namespace Entitas {
 
-public static class Pools {
+    public partial class Pools {
 
-    static Pool[] _allPools;
+        public static Pool CreatePool() {
+            return CreatePool(""Pool"", ComponentIds.TotalComponents, ComponentIds.componentNames, ComponentIds.componentTypes);
+        }
 
-    public static Pool[] allPools {
-        get {
-            if (_allPools == null) {
-                _allPools = new [] { pool };
-            }
+        public Pool[] allPools { get { return new [] { pool }; } }
 
-            return _allPools;
+        public Pool pool;
+
+        public void SetAllPools() {
+            pool = CreatePool();
         }
     }
+}
+";
 
-    static Pool _pool;
+    const string metaPool = @"namespace Entitas {
 
-    public static Pool pool {
-        get {
-            if (_pool == null) {
-                _pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData(""Pool"", ComponentIds.componentNames, ComponentIds.componentTypes));
-                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                if (UnityEngine.Application.isPlaying) {
-                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool);
-                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-                }
-                #endif
-            }
+    public partial class Pools {
 
-            return _pool;
+        public static Pool CreateMetaPool() {
+            return CreatePool(""Meta"", MetaComponentIds.TotalComponents, MetaComponentIds.componentNames, MetaComponentIds.componentTypes);
+        }
+
+        public Pool[] allPools { get { return new [] { meta }; } }
+
+        public Pool meta;
+
+        public void SetAllPools() {
+            meta = CreateMetaPool();
         }
     }
-}";
+}
+";
 
-    const string metaPool = @"using Entitas;
+    const string coreMetaPool = @"namespace Entitas {
 
-public static class Pools {
+    public partial class Pools {
 
-    static Pool[] _allPools;
+        public static Pool CreateMetaPool() {
+            return CreatePool(""Meta"", MetaComponentIds.TotalComponents, MetaComponentIds.componentNames, MetaComponentIds.componentTypes);
+        }
 
-    public static Pool[] allPools {
-        get {
-            if (_allPools == null) {
-                _allPools = new [] { meta };
-            }
+        public static Pool CreateCorePool() {
+            return CreatePool(""Core"", CoreComponentIds.TotalComponents, CoreComponentIds.componentNames, CoreComponentIds.componentTypes);
+        }
 
-            return _allPools;
+        public Pool[] allPools { get { return new [] { meta, core }; } }
+
+        public Pool meta;
+        public Pool core;
+
+        public void SetAllPools() {
+            meta = CreateMetaPool();
+            core = CreateCorePool();
         }
     }
+}
+";
 
-    static Pool _meta;
+    void generates(string[] poolNames, string expectedFileContent) {
+        expectedFileContent = expectedFileContent.ToUnixLineEndings();
 
-    public static Pool meta {
-        get {
-            if (_meta == null) {
-                _meta = new Pool(MetaComponentIds.TotalComponents, 0, new PoolMetaData(""Meta Pool"", MetaComponentIds.componentNames, MetaComponentIds.componentTypes));
-                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                if (UnityEngine.Application.isPlaying) {
-                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta);
-                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-                }
-                #endif
-            }
-
-            return _meta;
-        }
-    }
-}";
-
-    const string metaCorePool = @"using Entitas;
-
-public static class Pools {
-
-    static Pool[] _allPools;
-
-    public static Pool[] allPools {
-        get {
-            if (_allPools == null) {
-                _allPools = new [] { meta, core };
-            }
-
-            return _allPools;
-        }
-    }
-
-    static Pool _meta;
-
-    public static Pool meta {
-        get {
-            if (_meta == null) {
-                _meta = new Pool(MetaComponentIds.TotalComponents, 0, new PoolMetaData(""Meta Pool"", MetaComponentIds.componentNames, MetaComponentIds.componentTypes));
-                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                if (UnityEngine.Application.isPlaying) {
-                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta);
-                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-                }
-                #endif
-            }
-
-            return _meta;
-        }
-    }
-
-    static Pool _core;
-
-    public static Pool core {
-        get {
-            if (_core == null) {
-                _core = new Pool(CoreComponentIds.TotalComponents, 0, new PoolMetaData(""Core Pool"", CoreComponentIds.componentNames, CoreComponentIds.componentTypes));
-                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                if (UnityEngine.Application.isPlaying) {
-                    var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_core);
-                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
-                }
-                #endif
-            }
-
-            return _core;
-        }
-    }
-}";
-
-    void generates(string[] poolNames, string fileContent) {
-        fileContent = fileContent.ToUnixLineEndings();
         var files = new PoolsGenerator().Generate(poolNames);
         files.Length.should_be(1);
         var file = files[0];
+
         #pragma warning disable
-        if (logResults) {
-            Console.WriteLine("should:\n" + fileContent);
+        if(logResults) {
+            Console.WriteLine("should:\n" + expectedFileContent);
             Console.WriteLine("was:\n" + file.fileContent);
         }
 
         file.fileName.should_be("Pools");
-        file.fileContent.should_be(fileContent);
+        file.fileContent.should_be(expectedFileContent);
     }
 
     void when_generating() {
-        it["generates default pool"] = () => generates(new string[0], defaultPool);
+        it["generates default pool"] = () => generates(new [] { CodeGenerator.DEFAULT_POOL_NAME }, defaultPool);
         it["generates one custom pool"] = () => generates(new [] { "Meta" }, metaPool);
-        it["generates multiple pools"] = () => generates(new [] { "Meta", "Core" }, metaCorePool);
+        it["generates multiple pools"] = () => generates(new [] { "Meta", "Core" }, coreMetaPool);
     }
 }
-

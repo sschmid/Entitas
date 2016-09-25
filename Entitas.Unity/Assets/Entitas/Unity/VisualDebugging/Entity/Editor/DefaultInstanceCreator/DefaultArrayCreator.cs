@@ -1,7 +1,9 @@
 ﻿using System;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class DefaultArrayCreator : IDefaultInstanceCreator {
+
         public bool HandlesType(Type type) {
             return type.IsArray;
         }

@@ -4,7 +4,9 @@ using UnityEngine;
 using System.Collections;
 
 namespace Entitas.Unity.VisualDebugging {
+
     public class ArrayTypeDrawer : ITypeDrawer {
+
         public bool HandlesType(Type type) {
             return type.IsArray;
         }
