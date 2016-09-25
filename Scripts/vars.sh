@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 PWD=$(pwd)
 
 # Folders

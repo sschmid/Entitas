@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 source Scripts/vars.sh
 
 collect_sources() {

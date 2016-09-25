@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 source Scripts/vars.sh
 xbuild $TEST_PROJECT /property:Configuration=Release /verbosity:minimal
 if [ $? = 0 ]
