@@ -19,7 +19,6 @@ namespace Entitas {
         }
 
         public static void CopyTo(this Entity entity, Entity target, bool replaceExisting = false, params int[] indices) {
-            var components = entity.GetComponents();
             var componentIndices = indices.Length == 0 ? entity.GetComponentIndices() : indices;
             for(int i = 0; i < componentIndices.Length; i++) {
                 var index = componentIndices[i];
