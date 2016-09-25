@@ -10,7 +10,7 @@ IF NOT EXIST "%msbuild.exe%" (
 )
 
 REM Compile tests.
-CALL %msbuild.exe% Tests\Tests.csproj /property:Configuration=Debug /verbosity:minimal
+CALL %msbuild.exe% Tests\Tests.csproj /property:Configuration=Release /verbosity:minimal
 
 IF NOT %ERRORLEVEL% == 0 (
 	ECHO Error %ERRORLEVEL%: Could not compile tests.
@@ -18,4 +18,4 @@ IF NOT %ERRORLEVEL% == 0 (
 )
 
 REM Run tests.
-Tests\Libraries\NSpec\NSpecRunner.exe Tests\bin\Debug\Tests.dll	
+Tests\bin\Release\Tests.exe
