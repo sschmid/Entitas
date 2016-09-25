@@ -32,7 +32,7 @@ namespace Entitas {
         public bool hasUser { get { return userEntity != null; } }
 
         public Entity SetUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            if (hasUser) {
+            if(hasUser) {
                 throw new EntitasException("Could not set user!\n" + this + " already has an entity with UserComponent!",
                     "You should check if the pool already has a userEntity before setting it or use pool.ReplaceUser().");
             }
@@ -43,7 +43,7 @@ namespace Entitas {
 
         public Entity ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
             var entity = userEntity;
-            if (entity == null) {
+            if(entity == null) {
                 entity = SetUser(newTimestamp, newIsLoggedIn);
             } else {
                 entity.ReplaceUser(newTimestamp, newIsLoggedIn);
@@ -62,7 +62,7 @@ namespace Entitas {
 
         public static IMatcher User {
             get {
-                if (_matcherUser == null) {
+                if(_matcherUser == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.User);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherUser = matcher;

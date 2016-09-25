@@ -5,8 +5,8 @@ namespace Entitas {
         public bool isAnimating {
             get { return HasComponent(ComponentIds.Animating); }
             set {
-                if (value != isAnimating) {
-                    if (value) {
+                if(value != isAnimating) {
+                    if(value) {
                         AddComponent(ComponentIds.Animating, animatingComponent);
                     } else {
                         RemoveComponent(ComponentIds.Animating);
@@ -28,8 +28,8 @@ namespace Entitas {
             get { return animatingEntity != null; }
             set {
                 var entity = animatingEntity;
-                if (value != (entity != null)) {
-                    if (value) {
+                if(value != (entity != null)) {
+                    if(value) {
                         CreateEntity().isAnimating = true;
                     } else {
                         DestroyEntity(entity);
@@ -44,7 +44,7 @@ namespace Entitas {
 
         public static IMatcher Animating {
             get {
-                if (_matcherAnimating == null) {
+                if(_matcherAnimating == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.Animating);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherAnimating = matcher;

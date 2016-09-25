@@ -29,7 +29,7 @@ namespace Entitas {
 
         public static IMatcher Person {
             get {
-                if (_matcherPerson == null) {
+                if(_matcherPerson == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.Person);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherPerson = matcher;

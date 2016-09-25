@@ -1,12 +1,12 @@
-﻿namespace Entitas {
+namespace Entitas {
     public partial class Entity {
         static readonly DefaultPoolComponent defaultPoolComponent = new DefaultPoolComponent();
 
         public bool isDefaultPool {
             get { return HasComponent(ComponentIds.DefaultPool); }
             set {
-                if (value != isDefaultPool) {
-                    if (value) {
+                if(value != isDefaultPool) {
+                    if(value) {
                         AddComponent(ComponentIds.DefaultPool, defaultPoolComponent);
                     } else {
                         RemoveComponent(ComponentIds.DefaultPool);
@@ -26,7 +26,7 @@
 
         public static IMatcher DefaultPool {
             get {
-                if (_matcherDefaultPool == null) {
+                if(_matcherDefaultPool == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.DefaultPool);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherDefaultPool = matcher;

@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class SomeStructComponent : IComponent {
     public SomeStruct value;
@@ -33,7 +33,7 @@ namespace Entitas {
 
         public static IMatcher SomeStruct {
             get {
-                if (_matcherSomeStruct == null) {
+                if(_matcherSomeStruct == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.SomeStruct);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherSomeStruct = matcher;

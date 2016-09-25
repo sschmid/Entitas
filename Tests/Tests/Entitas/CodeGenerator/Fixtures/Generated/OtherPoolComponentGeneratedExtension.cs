@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 namespace Entitas {
     public partial class Entity {
@@ -34,7 +34,7 @@ namespace Entitas {
         public bool hasOtherPool { get { return otherPoolEntity != null; } }
 
         public Entity SetOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            if (hasOtherPool) {
+            if(hasOtherPool) {
                 throw new EntitasException("Could not set otherPool!\n" + this + " already has an entity with OtherPoolComponent!",
                     "You should check if the pool already has a otherPoolEntity before setting it or use pool.ReplaceOtherPool().");
             }
@@ -45,7 +45,7 @@ namespace Entitas {
 
         public Entity ReplaceOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
             var entity = otherPoolEntity;
-            if (entity == null) {
+            if(entity == null) {
                 entity = SetOtherPool(newTimestamp, newIsLoggedIn);
             } else {
                 entity.ReplaceOtherPool(newTimestamp, newIsLoggedIn);
@@ -65,7 +65,7 @@ namespace Entitas {
 
         public static IMatcher OtherPool {
             get {
-                if (_matcherOtherPool == null) {
+                if(_matcherOtherPool == null) {
                     var matcher = (Matcher)Matcher.AllOf(OtherComponentIds.OtherPool);
                     matcher.componentNames = OtherComponentIds.componentNames;
                     _matcherOtherPool = matcher;

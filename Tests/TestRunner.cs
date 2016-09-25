@@ -13,8 +13,8 @@ namespace Tests {
 
             format();
 
-            var tagOrClassName = "focus";
-            //var tagOrClassName = string.Empty;
+            //var tagOrClassName = "focus";
+            var tagOrClassName = string.Empty;
 
             var types = Assembly.GetAssembly(typeof(describe_Entity)).GetTypes();
 
@@ -30,8 +30,7 @@ namespace Tests {
 
         static void format() {
             var projectRoot = TestExtensions.GetProjectRoot();
-            var fixturesDir = projectRoot + "/Tests/Tests/Entitas/CodeGenerator/Fixtures/Generated/";
-            var sourceFiles = TestExtensions.GetSourceFiles(fixturesDir);
+            var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
 
 
             foreach(var key in sourceFiles.Keys.ToArray()) {
@@ -55,17 +54,17 @@ namespace Tests {
                 //    Console.WriteLine("Updated " + key);
                 //}
 
-                if(fileContent.Contains("if (")) {
-                    fileContent = fileContent.Replace("if (", "if(");
-                    System.IO.File.WriteAllText(key, fileContent);
-                    Console.WriteLine("Updated " + key);
-                }
+                //if(fileContent.Contains("if (")) {
+                //    fileContent = fileContent.Replace("if (", "if(");
+                //    System.IO.File.WriteAllText(key, fileContent);
+                //    Console.WriteLine("Updated " + key);
+                //}
 
-                if(fileContent.Contains("foreach (")) {
-                    fileContent = fileContent.Replace("foreach (", "foreach(");
-                    System.IO.File.WriteAllText(key, fileContent);
-                    Console.WriteLine("Updated " + key);
-                }
+                //if(fileContent.Contains("foreach (")) {
+                //    fileContent = fileContent.Replace("foreach (", "foreach(");
+                //    System.IO.File.WriteAllText(key, fileContent);
+                //    Console.WriteLine("Updated " + key);
+                //}
             }
         }
     }

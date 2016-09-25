@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 namespace Entitas {
     public partial class Entity {
@@ -7,8 +7,8 @@ namespace Entitas {
         public bool isMultiplePoolAndDefaultPool {
             get { return HasComponent(ComponentIds.MultiplePoolAndDefaultPool); }
             set {
-                if (value != isMultiplePoolAndDefaultPool) {
-                    if (value) {
+                if(value != isMultiplePoolAndDefaultPool) {
+                    if(value) {
                         AddComponent(ComponentIds.MultiplePoolAndDefaultPool, multiplePoolAndDefaultPoolComponent);
                     } else {
                         RemoveComponent(ComponentIds.MultiplePoolAndDefaultPool);
@@ -28,7 +28,7 @@ namespace Entitas {
 
         public static IMatcher MultiplePoolAndDefaultPool {
             get {
-                if (_matcherMultiplePoolAndDefaultPool == null) {
+                if(_matcherMultiplePoolAndDefaultPool == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.MultiplePoolAndDefaultPool);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherMultiplePoolAndDefaultPool = matcher;
@@ -45,7 +45,7 @@ namespace Entitas {
 
         public static IMatcher MultiplePoolAndDefaultPool {
             get {
-                if (_matcherMultiplePoolAndDefaultPool == null) {
+                if(_matcherMultiplePoolAndDefaultPool == null) {
                     var matcher = (Matcher)Matcher.AllOf(OtherComponentIds.MultiplePoolAndDefaultPool);
                     matcher.componentNames = OtherComponentIds.componentNames;
                     _matcherMultiplePoolAndDefaultPool = matcher;

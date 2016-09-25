@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class SomeClassComponent : IComponent {
     public SomeClass value;
@@ -33,7 +33,7 @@ namespace Entitas {
 
         public static IMatcher SomeClass {
             get {
-                if (_matcherSomeClass == null) {
+                if(_matcherSomeClass == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.SomeClass);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherSomeClass = matcher;
@@ -50,7 +50,7 @@ namespace Entitas {
 
         public static IMatcher SomeClass {
             get {
-                if (_matcherSomeClass == null) {
+                if(_matcherSomeClass == null) {
                     var matcher = (Matcher)Matcher.AllOf(SomeOtherPoolComponentIds.SomeClass);
                     matcher.componentNames = SomeOtherPoolComponentIds.componentNames;
                     _matcherSomeClass = matcher;
@@ -66,7 +66,7 @@ namespace Entitas {
 
         public static IMatcher SomeClass {
             get {
-                if (_matcherSomeClass == null) {
+                if(_matcherSomeClass == null) {
                     var matcher = (Matcher)Matcher.AllOf(SomePoolComponentIds.SomeClass);
                     matcher.componentNames = SomePoolComponentIds.componentNames;
                     _matcherSomeClass = matcher;

@@ -34,7 +34,7 @@ namespace Entitas {
 
         public static IMatcher SomeClassHideInBlueprintInspector {
             get {
-                if (_matcherSomeClassHideInBlueprintInspector == null) {
+                if(_matcherSomeClassHideInBlueprintInspector == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.SomeClassHideInBlueprintInspector);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherSomeClassHideInBlueprintInspector = matcher;

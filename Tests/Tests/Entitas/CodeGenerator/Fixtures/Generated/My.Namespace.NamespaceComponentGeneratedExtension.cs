@@ -1,12 +1,12 @@
-﻿namespace Entitas {
+namespace Entitas {
     public partial class Entity {
         static readonly My.Namespace.NamespaceComponent namespaceComponent = new My.Namespace.NamespaceComponent();
 
         public bool isNamespace {
             get { return HasComponent(ComponentIds.Namespace); }
             set {
-                if (value != isNamespace) {
-                    if (value) {
+                if(value != isNamespace) {
+                    if(value) {
                         AddComponent(ComponentIds.Namespace, namespaceComponent);
                     } else {
                         RemoveComponent(ComponentIds.Namespace);
@@ -26,7 +26,7 @@
 
         public static IMatcher Namespace {
             get {
-                if (_matcherNamespace == null) {
+                if(_matcherNamespace == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.Namespace);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherNamespace = matcher;

@@ -1,4 +1,4 @@
-﻿namespace Entitas {
+namespace Entitas {
     public partial class Entity {
         public ComponentWithFieldsAndProperties componentWithFieldsAndProperties { get { return (ComponentWithFieldsAndProperties)GetComponent(ComponentIds.ComponentWithFieldsAndProperties); } }
 
@@ -29,7 +29,7 @@
 
         public static IMatcher ComponentWithFieldsAndProperties {
             get {
-                if (_matcherComponentWithFieldsAndProperties == null) {
+                if(_matcherComponentWithFieldsAndProperties == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.ComponentWithFieldsAndProperties);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherComponentWithFieldsAndProperties = matcher;
