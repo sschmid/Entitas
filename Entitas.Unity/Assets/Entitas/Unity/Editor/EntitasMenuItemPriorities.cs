@@ -1,4 +1,4 @@
-﻿namespace Entitas.Unity {
+namespace Entitas.Unity {
 
     public static class EntitasMenuItemPriorities {
 

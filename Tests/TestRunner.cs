@@ -35,8 +35,13 @@ namespace Tests {
 
             foreach(var key in sourceFiles.Keys.ToArray()) {
                 var fileContent = sourceFiles[key];
-                if(fileContent.EndsWith("\n\n", StringComparison.Ordinal)) {
-                    fileContent = fileContent.Substring(0, fileContent.Length - 1);
+                //if(fileContent.EndsWith("\n\n", StringComparison.Ordinal)) {
+                //    fileContent = fileContent.Substring(0, fileContent.Length - 1);
+                //    File.WriteAllText(key, fileContent);
+                //    Console.WriteLine("Updated " + key);
+                //}
+                if(!fileContent.EndsWith("\n", StringComparison.Ordinal)) {
+                    fileContent = fileContent + "\n";
                     File.WriteAllText(key, fileContent);
                     Console.WriteLine("Updated " + key);
                 }

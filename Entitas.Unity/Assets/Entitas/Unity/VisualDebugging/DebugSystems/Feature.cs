@@ -1,4 +1,4 @@
-﻿namespace Entitas {
+namespace Entitas {
 
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
