@@ -10,7 +10,8 @@ namespace Tests {
     class TestRunner {
 
         public static void Main(string[] args) {
-            var tagOrClassName = "";
+            //var tagOrClassName = "focus";
+            var tagOrClassName = string.Empty;
 
             var types = Assembly.GetAssembly(typeof(describe_Entity)).GetTypes();
 
