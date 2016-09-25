@@ -64,6 +64,11 @@ namespace Entitas {
             Activate();
         }
 
+        public PrimaryEntityIndex(Group group, Func<Entity, IComponent, T> getKey, IEqualityComparer<T> comparer) : base(group, getKey) {
+            _index = new Dictionary<T, Entity>(comparer);
+            Activate();
+        }
+
         public override void Activate() {
             base.Activate();
             indexEntities(_group);
@@ -120,6 +125,11 @@ namespace Entitas {
 
         public EntityIndex(Group group, Func<Entity, IComponent, T> getKey) : base(group, getKey) {
             _index = new Dictionary<T, HashSet<Entity>>();
+            Activate();
+        }
+
+        public EntityIndex(Group group, Func<Entity, IComponent, T> getKey, IEqualityComparer<T> comparer) : base(group, getKey) {
+            _index = new Dictionary<T, HashSet<Entity>>(comparer);
             Activate();
         }
 
