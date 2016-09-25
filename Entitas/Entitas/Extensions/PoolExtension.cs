@@ -156,6 +156,8 @@ namespace Entitas {
             return new GroupObserver(groups, eventTypes);
         }
 
+        /// Creates a new entity and adds copies of all specified components to it.
+        /// If replaceExisting is true it will replace exisintg components.
         public static Entity CloneEntity(this Pool pool, Entity entity, bool replaceExisting = false, params int[] indices) {
             var target = pool.CreateEntity();
             entity.CopyTo(target, replaceExisting, indices);
