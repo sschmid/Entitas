@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.Serialization.Configuration;
 using UnityEditor;
 
@@ -33,8 +33,8 @@ namespace Entitas.Unity.VisualDebugging {
                 }
                 var changed = EditorGUI.EndChangeCheck();
 
-                if (changed) {
-                    if (_enableVisualDebugging) {
+                if(changed) {
+                    if(_enableVisualDebugging) {
                         _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
                     } else {
                         _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);

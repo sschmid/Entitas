@@ -15,15 +15,15 @@ namespace Entitas.Unity.VisualDebugging {
             var array = (Array)value;
             var elementType = memberType.GetElementType();
             var indent = EditorGUI.indentLevel;
-            if (array.Rank == 1) {
+            if(array.Rank == 1) {
                 var length = array.GetLength(0);
-                if (length == 0) {
+                if(length == 0) {
                     EditorGUILayout.BeginHorizontal();
                     {
                         EditorGUILayout.LabelField(memberName, "empty");
-                        if (GUILayout.Button("Add element", GUILayout.Height(14))) {
+                        if(GUILayout.Button("Add element", GUILayout.Height(14))) {
                             object defaultValue;
-                            if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                            if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                                 var newArray = Array.CreateInstance(elementType, 1);
                                 newArray.SetValue(defaultValue, 0);
                                 array = newArray;
@@ -45,17 +45,17 @@ namespace Entitas.Unity.VisualDebugging {
                             entity, index, component, (newComponent, newValue) => array.SetValue(newValue, localIndex));
 
                         var action = drawEditActions(array, elementType, localIndex);
-                        if (action != null) {
+                        if(action != null) {
                             editAction = action;
                         }
                     }
                     EditorGUILayout.EndHorizontal();
                 }
 
-                if (editAction != null) {
+                if(editAction != null) {
                     array = editAction();
                 }
-            } else if (array.Rank == 2) {
+            } else if(array.Rank == 2) {
                 EditorGUILayout.LabelField(memberName);
                 for (int i = 0; i < array.GetLength(0); i++) {
                     var localIndex1 = i;
@@ -66,7 +66,7 @@ namespace Entitas.Unity.VisualDebugging {
                     }
                     EditorGUILayout.Space();
                 }
-            } else if (array.Rank == 3) {
+            } else if(array.Rank == 3) {
                 EditorGUILayout.LabelField(memberName);
                 for (int i = 0; i < array.GetLength(0); i++) {
                     var localIndex1 = i;
@@ -89,18 +89,18 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static Func<Array> drawEditActions(Array array, Type elementType, int index) {
-            if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
+            if(GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                 return () => arrayRemoveAt(array, elementType, index);
             }
-            if (GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
+            if(GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
                 object defaultValue;
-                if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                     return () => arrayInsertAt(array, elementType, defaultValue, index);
                 }
             }
-            if (GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
+            if(GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
                 object defaultValue;
-                if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                     return () => arrayInsertAt(array, elementType, defaultValue, index + 1);
                 }
             }

@@ -42,7 +42,7 @@ namespace Entitas.Serialization {
         }
 
         public void SetValue(object obj, object value) {
-            if (_fieldInfo != null) {
+            if(_fieldInfo != null) {
                 _fieldInfo.SetValue(obj, value);
             } else {
                 _propertyInfo.SetValue(obj, value, null);                
@@ -86,7 +86,7 @@ namespace Entitas.Serialization {
 
             for (int i = 0; i < propertyInfos.Length; i++) {
                 var propertyInfo = propertyInfos[i];
-                if (propertyInfo.CanRead && propertyInfo.CanWrite) {
+                if(propertyInfo.CanRead && propertyInfo.CanWrite) {
                     memberInfos.Add(new PublicMemberInfo(propertyInfo));
                 }
             }

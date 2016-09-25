@@ -20,22 +20,22 @@ namespace Entitas.Unity.VisualDebugging {
 
             EditorGUILayout.BeginHorizontal();
             {
-                if (isEmpty) {
+                if(isEmpty) {
                     EditorGUILayout.LabelField(memberName, "empty");
                 } else {
                     EditorGUILayout.LabelField(memberName);
                 }
 
-                if (GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
+                if(GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
                     object defaultValue;
-                    if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                    if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                         itemsToAdd.Add(defaultValue);
                     }
                 }
             }
             EditorGUILayout.EndHorizontal();
 
-            if (!isEmpty) {
+            if(!isEmpty) {
                 EditorGUILayout.Space();
                 var indent = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = indent + 1;
@@ -43,12 +43,12 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.BeginHorizontal();
                     {
                         var newItem = EntityDrawer.DrawAndGetNewValue(elementType, string.Empty, item, entity, index, component);
-                        if (EntityDrawer.DidValueChange(item, newItem)) {
+                        if(EntityDrawer.DidValueChange(item, newItem)) {
                             itemsToRemove.Add(item);
                             itemsToAdd.Add(newItem);
                         }
 
-                        if (GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
+                        if(GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
                             itemsToRemove.Add(item);
                         }
                     }

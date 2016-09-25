@@ -50,10 +50,10 @@ namespace Entitas.CodeGenerator {
         }
 
         public static string GetSafeDir(string directory) {
-            if (!directory.EndsWith("/", StringComparison.Ordinal)) {
+            if(!directory.EndsWith("/", StringComparison.Ordinal)) {
                 directory += "/";
             }
-            if (!directory.EndsWith("Generated/", StringComparison.Ordinal)) {
+            if(!directory.EndsWith("Generated/", StringComparison.Ordinal)) {
                 directory += "Generated/";
             }
             return directory;
@@ -61,7 +61,7 @@ namespace Entitas.CodeGenerator {
 
         public static void CleanDir(string directory) {
             directory = GetSafeDir(directory);
-            if (Directory.Exists(directory)) {
+            if(Directory.Exists(directory)) {
                 var files = new DirectoryInfo(directory).GetFiles("*.cs", SearchOption.AllDirectories);
                 foreach (var file in files) {
                     try {
@@ -76,7 +76,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static void writeFiles(string directory, CodeGenFile[] files) {
-            if (!Directory.Exists(directory)) {
+            if(!Directory.Exists(directory)) {
                 Directory.CreateDirectory(directory);
             }
             foreach (var file in files) {

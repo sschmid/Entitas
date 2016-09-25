@@ -10,7 +10,7 @@ namespace Entitas {
             var componentsLength = blueprint.components.Length;
             for (int i = 0; i < componentsLength; i++) {
                 var componentBlueprint = blueprint.components[i];
-                if (replaceComponents) {
+                if(replaceComponents) {
                     ReplaceComponent(componentBlueprint.index, componentBlueprint.CreateComponent(this));
                 } else {
                     AddComponent(componentBlueprint.index, componentBlueprint.CreateComponent(this));

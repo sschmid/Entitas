@@ -80,7 +80,7 @@ namespace Entitas {
 
         public Entity GetEntity(T key) {
             var entity = TryGetEntity(key);
-            if (entity == null) {
+            if(entity == null) {
                 throw new EntityIndexException("Entity for key '" + key + "' doesn't exist!",
                     "You should check if an entity with that key exists before getting it.");
             }
@@ -104,7 +104,7 @@ namespace Entitas {
 
         protected override void addEntity(Entity entity, IComponent component) {
             var key = _getKey(entity, component);
-            if (_index.ContainsKey(key)) {
+            if(_index.ContainsKey(key)) {
                 throw new EntityIndexException("Entity for key '" + key + "' already exists!",
                     "Only one entity for a primary key is allowed.");
             }
@@ -140,7 +140,7 @@ namespace Entitas {
 
         public HashSet<Entity> GetEntities(T key) {
             HashSet<Entity> entities;
-            if (!_index.TryGetValue(key, out entities)) {
+            if(!_index.TryGetValue(key, out entities)) {
                 entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
                 _index.Add(key, entities);
             }

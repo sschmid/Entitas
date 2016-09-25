@@ -39,11 +39,11 @@ namespace Entitas {
         ReactiveSystem(IReactiveExecuteSystem subSystem, GroupObserver groupObserver) {
             _subsystem = subSystem;
             var ensureComponents = subSystem as IEnsureComponents;
-            if (ensureComponents != null) {
+            if(ensureComponents != null) {
                 _ensureComponents = ensureComponents.ensureComponents;
             }
             var excludeComponents = subSystem as IExcludeComponents;
-            if (excludeComponents != null) {
+            if(excludeComponents != null) {
                 _excludeComponents = excludeComponents.excludeComponents;
             }
 
@@ -86,24 +86,24 @@ namespace Entitas {
 
         /// Will call subsystem.Execute() with changed entities if there are any. Otherwise it will not call subsystem.Execute().
         public void Execute() {
-            if (_observer.collectedEntities.Count != 0) {
-                if (_ensureComponents != null) {
-                    if (_excludeComponents != null) {
+            if(_observer.collectedEntities.Count != 0) {
+                if(_ensureComponents != null) {
+                    if(_excludeComponents != null) {
                         foreach (var e in _observer.collectedEntities) {
-                            if (_ensureComponents.Matches(e) && !_excludeComponents.Matches(e)) {
+                            if(_ensureComponents.Matches(e) && !_excludeComponents.Matches(e)) {
                                 _buffer.Add(e.Retain(this));
                             }
                         }
                     } else {
                         foreach (var e in _observer.collectedEntities) {
-                            if (_ensureComponents.Matches(e)) {
+                            if(_ensureComponents.Matches(e)) {
                                 _buffer.Add(e.Retain(this));
                             }
                         }
                     }
-                } else if (_excludeComponents != null) {
+                } else if(_excludeComponents != null) {
                     foreach (var e in _observer.collectedEntities) {
-                        if (!_excludeComponents.Matches(e)) {
+                        if(!_excludeComponents.Matches(e)) {
                             _buffer.Add(e.Retain(this));
                         }
                     }
@@ -114,13 +114,13 @@ namespace Entitas {
                 }
 
                 _observer.ClearCollectedEntities();
-                if (_buffer.Count != 0) {
+                if(_buffer.Count != 0) {
                     _subsystem.Execute(_buffer);
                     for (int i = 0; i < _buffer.Count; i++) {
                         _buffer[i].Release(this);
                     }
                     _buffer.Clear();
-                    if (_clearAfterExecute) {
+                    if(_clearAfterExecute) {
                         _observer.ClearCollectedEntities();
                     }
                 }
@@ -128,7 +128,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            if (_toStringCache == null) {
+            if(_toStringCache == null) {
                 _toStringCache = "ReactiveSystem(" + subsystem + ")";
             }
 

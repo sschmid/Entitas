@@ -45,7 +45,7 @@ namespace Entitas.Unity.VisualDebugging {
             var reactiveSystem = system as ReactiveSystem;
             var isReactive = reactiveSystem != null;
             Type systemType;
-            if (isReactive) {
+            if(isReactive) {
                 _interfaceFlags = getInterfaceFlags(reactiveSystem.subsystem, isReactive);
                 systemType = reactiveSystem.subsystem.GetType();
             } else {
@@ -54,7 +54,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
 
             var debugSystem = system as DebugSystems;
-            if (debugSystem != null) {
+            if(debugSystem != null) {
                 _systemName = debugSystem.name;
             } else {
                 _systemName = systemType.Name.EndsWith(SYSTEM_SUFFIX, StringComparison.Ordinal)
@@ -66,10 +66,10 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public void AddExecutionDuration(double executionDuration) {
-            if (executionDuration < _minExecutionDuration || _minExecutionDuration == 0) {
+            if(executionDuration < _minExecutionDuration || _minExecutionDuration == 0) {
                 _minExecutionDuration = executionDuration;
             }
-            if (executionDuration > _maxExecutionDuration) {
+            if(executionDuration > _maxExecutionDuration) {
                 _maxExecutionDuration = executionDuration;
             }
 
@@ -84,13 +84,13 @@ namespace Entitas.Unity.VisualDebugging {
 
         static SystemInterfaceFlags getInterfaceFlags(ISystem system, bool isReactive) {
             var flags = SystemInterfaceFlags.None;
-            if (system is IInitializeSystem) {
+            if(system is IInitializeSystem) {
                 flags |= SystemInterfaceFlags.IInitializeSystem;
             }
-            if (system is IExecuteSystem) {
+            if(system is IExecuteSystem) {
                 flags |= SystemInterfaceFlags.IExecuteSystem;
             }
-            if (isReactive) {
+            if(isReactive) {
                 flags |= SystemInterfaceFlags.IReactiveSystem;
             }
 

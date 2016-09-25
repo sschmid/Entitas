@@ -41,7 +41,7 @@ namespace Entitas {
 
         /// This is used by the pool to manage the group.
         public void HandleEntitySilently(Entity entity) {
-            if (_matcher.Matches(entity)) {
+            if(_matcher.Matches(entity)) {
                 addEntitySilently(entity);
             } else {
                 removeEntitySilently(entity);
@@ -50,7 +50,7 @@ namespace Entitas {
 
         /// This is used by the pool to manage the group.
         public void HandleEntity(Entity entity, int index, IComponent component) {
-            if (_matcher.Matches(entity)) {
+            if(_matcher.Matches(entity)) {
                 addEntity(entity, index, component);
             } else {
                 removeEntity(entity, index, component);
@@ -59,14 +59,14 @@ namespace Entitas {
 
         /// This is used by the pool to manage the group.
         public void UpdateEntity(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
-            if (_entities.Contains(entity)) {
-                if (OnEntityRemoved != null) {
+            if(_entities.Contains(entity)) {
+                if(OnEntityRemoved != null) {
                     OnEntityRemoved(this, entity, index, previousComponent);
                 }
-                if (OnEntityAdded != null) {
+                if(OnEntityAdded != null) {
                     OnEntityAdded(this, entity, index, newComponent);
                 }
-                if (OnEntityUpdated != null) {
+                if(OnEntityUpdated != null) {
                     OnEntityUpdated(this, entity, index, previousComponent, newComponent);
                 }
             }
@@ -88,7 +88,7 @@ namespace Entitas {
 
         bool addEntitySilently(Entity entity) {
             var added = _entities.Add(entity);
-            if (added) {
+            if(added) {
                 _entitiesCache = null;
                 _singleEntityCache = null;
                 entity.Retain(this);
@@ -98,14 +98,14 @@ namespace Entitas {
         }
 
         void addEntity(Entity entity, int index, IComponent component) {
-            if (addEntitySilently(entity) && OnEntityAdded != null) {
+            if(addEntitySilently(entity) && OnEntityAdded != null) {
                 OnEntityAdded(this, entity, index, component);
             }
         }
 
         bool removeEntitySilently(Entity entity) {
             var removed = _entities.Remove(entity);
-            if (removed) {
+            if(removed) {
                 _entitiesCache = null;
                 _singleEntityCache = null;
                 entity.Release(this);
@@ -116,10 +116,10 @@ namespace Entitas {
 
         void removeEntity(Entity entity, int index, IComponent component) {
             var removed = _entities.Remove(entity);
-            if (removed) {
+            if(removed) {
                 _entitiesCache = null;
                 _singleEntityCache = null;
-                if (OnEntityRemoved != null) {
+                if(OnEntityRemoved != null) {
                     OnEntityRemoved(this, entity, index, component);
                 }
                 entity.Release(this);
@@ -133,7 +133,7 @@ namespace Entitas {
 
         /// Returns all entities which are currently in this group.
         public Entity[] GetEntities() {
-            if (_entitiesCache == null) {
+            if(_entitiesCache == null) {
                 _entitiesCache = new Entity[_entities.Count];
                 _entities.CopyTo(_entitiesCache);
             }
@@ -144,14 +144,14 @@ namespace Entitas {
         /// Returns the only entity in this group. It will return null if the group is empty.
         /// It will throw an exception if the group has more than one entity.
         public Entity GetSingleEntity() {
-            if (_singleEntityCache == null) {
+            if(_singleEntityCache == null) {
                 var c = _entities.Count;
-                if (c == 1) {
+                if(c == 1) {
                     using (var enumerator = _entities.GetEnumerator()) {
                         enumerator.MoveNext();
                         _singleEntityCache = enumerator.Current;
                     }
-                } else if (c == 0) {
+                } else if(c == 0) {
                     return null;
                 } else {
                     throw new GroupSingleEntityException(this);
@@ -162,7 +162,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            if (_toStringCache == null) {
+            if(_toStringCache == null) {
                 _toStringCache = "Group(" + _matcher + ")";
             }
             return _toStringCache;

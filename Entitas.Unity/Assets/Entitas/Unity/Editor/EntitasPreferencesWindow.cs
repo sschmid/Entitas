@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Reflection;
 using Entitas.Serialization.Configuration;
@@ -56,7 +56,7 @@ namespace Entitas.Unity {
             }
             EditorGUILayout.EndScrollView();
 
-            if (GUI.changed) {
+            if(GUI.changed) {
                 EntitasPreferences.SaveConfig(_config);
             }
         }

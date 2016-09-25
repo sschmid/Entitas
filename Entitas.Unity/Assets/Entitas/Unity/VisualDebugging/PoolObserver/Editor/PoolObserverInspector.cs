@@ -17,7 +17,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.LabelField("Reusable entities", poolObserver.pool.reusableEntitiesCount.ToString());
 
                 var retainedEntitiesCount = poolObserver.pool.retainedEntitiesCount;
-                if (retainedEntitiesCount != 0) {
+                if(retainedEntitiesCount != 0) {
                     var c = GUI.contentColor;
                     GUI.color = Color.red;
                     EditorGUILayout.LabelField("Retained entities", retainedEntitiesCount.ToString());
@@ -27,7 +27,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EntitasEditorLayout.BeginHorizontal();
                 {
-                    if (GUILayout.Button("Create Entity")) {
+                    if(GUILayout.Button("Create Entity")) {
                         var entity = poolObserver.pool.CreateEntity();
                         var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
                                                     .Single(eb => eb.entity == entity);
@@ -37,7 +37,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                     var bgColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.red;
-                    if (GUILayout.Button("Destroy All Entities")) {
+                    if(GUILayout.Button("Destroy All Entities")) {
                         poolObserver.pool.DestroyAllEntities();
                     }
                     GUI.backgroundColor = bgColor;
@@ -47,7 +47,7 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
 
             var groups = poolObserver.groups;
-            if (groups.Length != 0) {
+            if(groups.Length != 0) {
                 EntitasEditorLayout.BeginVerticalBox();
                 {
                     EditorGUILayout.LabelField("Groups (" + groups.Length + ")", EditorStyles.boldLabel);
@@ -59,7 +59,7 @@ namespace Entitas.Unity.VisualDebugging {
                         }
                         EntitasEditorLayout.EndHorizontal();
                     }
-                    if (GUILayout.Button("Clear Groups")) {
+                    if(GUILayout.Button("Clear Groups")) {
                         poolObserver.pool.ClearGroups();
                     }
                 }

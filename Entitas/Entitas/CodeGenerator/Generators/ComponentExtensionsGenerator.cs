@@ -20,11 +20,11 @@ namespace Entitas.CodeGenerator {
         static string generateComponentExtension(ComponentInfo componentInfo) {
             var code = addNamespace();
             code += addEntityMethods(componentInfo);
-            if (componentInfo.isSingleEntity) {
+            if(componentInfo.isSingleEntity) {
                 code += addPoolMethods(componentInfo);
             }
 
-            if (componentInfo.generateComponent) {
+            if(componentInfo.generateComponent) {
                 // Add default matcher
                 code += addMatcher(componentInfo, true);
                 code += closeNamespace();
@@ -39,7 +39,7 @@ namespace Entitas.CodeGenerator {
             code += closeNamespace();
 
             var hasCustomPools = componentInfo.pools.Length > 1 || !componentInfo.pools[0].IsDefaultPoolName();
-            if (hasCustomPools) {
+            if(hasCustomPools) {
                 code += addMatcher(componentInfo);
                 code = addUsings("Entitas") + code;
             }
@@ -108,8 +108,8 @@ namespace Entitas.CodeGenerator {
         public bool $prefix$Name {
             get { return HasComponent($Ids.$Name); }
             set {
-                if (value != $prefix$Name) {
-                    if (value) {
+                if(value != $prefix$Name) {
+                    if(value) {
                         AddComponent($Ids.$Name, $nameComponent);
                     } else {
                         RemoveComponent($Ids.$Name);
@@ -194,8 +194,8 @@ $assign
             get { return $nameEntity != null; }
             set {
                 var entity = $nameEntity;
-                if (value != (entity != null)) {
-                    if (value) {
+                if(value != (entity != null)) {
+                    if(value) {
                         CreateEntity().$prefix$Name = true;
                     } else {
                         DestroyEntity(entity);
@@ -212,7 +212,7 @@ $assign
         static object addPoolAddMethods(ComponentInfo componentInfo) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
         public Entity Set$Name($typedArgs) {
-            if (has$Name) {
+            if(has$Name) {
                 throw new EntitasException(""Could not set $name!\n"" + this + "" already has an entity with $Type!"",
                     ""You should check if the pool already has a $nameEntity before setting it or use pool.Replace$Name()."");
             }
@@ -227,7 +227,7 @@ $assign
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
         public Entity Replace$Name($typedArgs) {
             var entity = $nameEntity;
-            if (entity == null) {
+            if(entity == null) {
                 entity = Set$Name($args);
             } else {
                 entity.Replace$Name($args);
@@ -259,7 +259,7 @@ $assign
 
         public static IMatcher $Name {
             get {
-                if (_matcher$Name == null) {
+                if(_matcher$Name == null) {
                     var matcher = (Matcher)Matcher.AllOf($Ids.$Name);
                     matcher.componentNames = $Ids.componentNames;
                     _matcher$Name = matcher;
@@ -271,8 +271,8 @@ $assign
     }
 ";
 
-            if (onlyDefault) {
-                if (componentInfo.pools.Contains(CodeGenerator.DEFAULT_POOL_NAME)) {
+            if(onlyDefault) {
+                if(componentInfo.pools.Contains(CodeGenerator.DEFAULT_POOL_NAME)) {
                     return buildString(componentInfo, matcherFormat);
                 } else {
                     return string.Empty;
@@ -280,7 +280,7 @@ $assign
             } else {
                 var poolIndex = 0;
                 var matchers = componentInfo.pools.Aggregate(string.Empty, (acc, poolName) => {
-                    if (!poolName.IsDefaultPoolName()) {
+                    if(!poolName.IsDefaultPoolName()) {
                         return acc + buildString(componentInfo, matcherFormat, poolIndex++);
                     } else {
                         poolIndex += 1;

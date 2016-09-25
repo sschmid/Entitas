@@ -17,7 +17,7 @@ public static class Pools {{
 
     public static Pool[] allPools {{
         get {{
-            if (_allPools == null) {{
+            if(_allPools == null) {{
                 _allPools = new [] {{ {0} }};
             }}
             return _allPools;
@@ -30,10 +30,10 @@ public static class Pools {{
 
     public static Pool {0} {{
         get {{
-            if (_{0} == null) {{
+            if(_{0} == null) {{
                 _{0} = new Pool({1}.TotalComponents, 0, new PoolMetaData(""{2}Pool"", {1}.componentNames, {1}.componentTypes));
-                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                if (UnityEngine.Application.isPlaying) {{
+                #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+                if(UnityEngine.Application.isPlaying) {{
                     var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_{0});
                     UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 }}

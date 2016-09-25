@@ -17,7 +17,7 @@ namespace Entitas.CodeGenerator {
 
         public TypeReflectionProvider(Type[] types, string[] poolNames, string[] blueprintNames) {
             var pools = new HashSet<string>(poolNames);
-            if (poolNames.Length == 0) {
+            if(poolNames.Length == 0) {
                 pools.Add(CodeGenerator.DEFAULT_POOL_NAME);
             }
             _componentInfos = GetComponentInfos(types);
@@ -91,12 +91,12 @@ namespace Entitas.CodeGenerator {
                 .OrderBy(poolName => poolName)
                 .ToArray();
 
-            if (pools.Length == 0 && defaultIfEmpty) {
+            if(pools.Length == 0 && defaultIfEmpty) {
                 return new [] { CodeGenerator.DEFAULT_POOL_NAME };
             }
 
             var defaultPoolIndex = Array.IndexOf(pools, CodeGenerator.DEFAULT_POOL_NAME);
-            if (defaultPoolIndex != -1) {
+            if(defaultPoolIndex != -1) {
                 pools[defaultPoolIndex] = pools[0];
                 pools[0] = CodeGenerator.DEFAULT_POOL_NAME;
             }
@@ -120,7 +120,7 @@ namespace Entitas.CodeGenerator {
             var attr = Attribute.GetCustomAttributes(type)
                 .SingleOrDefault(a => isTypeOrHasBaseType(a.GetType(), "Entitas.CodeGenerator.CustomComponentNameAttribute"));
 
-            if (attr == null) {
+            if(attr == null) {
                 var nameSplit = type.ToCompilableString().Split('.');
                 var componentName = nameSplit[nameSplit.Length - 1].AddComponentSuffix();
                 return new [] { componentName };
@@ -149,7 +149,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static bool hasBaseType(Type type, string fullTypeName) {
-            if (type.FullName == fullTypeName) {
+            if(type.FullName == fullTypeName) {
                 return false;
             }
 
@@ -159,7 +159,7 @@ namespace Entitas.CodeGenerator {
         static bool isTypeOrHasBaseType(Type type, string fullTypeName) {
             var t = type;
             while (t != null) {
-                if (t.FullName == fullTypeName) {
+                if(t.FullName == fullTypeName) {
                     return true;
                 }
                 t = t.BaseType;

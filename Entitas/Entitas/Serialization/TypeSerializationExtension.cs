@@ -12,18 +12,18 @@ namespace Entitas.Serialization {
         /// e.g. int instead of System.Int32
         /// e.g. System.Collections.Generic.Dictionary<int, string> instead of System.Collections.Generic.Dictionary`2[System.Int32,System.String]
         public static string ToCompilableString(this Type type) {
-            if (_builtInTypesToString.ContainsKey(type.FullName)) {
+            if(_builtInTypesToString.ContainsKey(type.FullName)) {
                 return _builtInTypesToString[type.FullName];
             }
-            if (type.IsGenericType) {
+            if(type.IsGenericType) {
                 var genericMainType = type.FullName.Split('`')[0];
                 var genericArguments = type.GetGenericArguments().Select(argType => argType.ToCompilableString()).ToArray();
                 return genericMainType + "<" + string.Join(", ", genericArguments) + ">";
             }
-            if (type.IsArray) {
+            if(type.IsArray) {
                 return type.GetElementType().ToCompilableString() + "[" + new string(',', type.GetArrayRank() - 1) + "]";
             }
-            if (type.IsNested) {
+            if(type.IsNested) {
                 return type.FullName.Replace('+', '.');
             }
 
@@ -35,15 +35,15 @@ namespace Entitas.Serialization {
         /// e.g. int instead of System.Int32
         /// e.g. System.Collections.Generic.Dictionary<int, string> instead of System.Collections.Generic.Dictionary`2[System.Int32,System.String]
         public static string ToReadableString(this Type type) {
-            if (_builtInTypesToString.ContainsKey(type.FullName)) {
+            if(_builtInTypesToString.ContainsKey(type.FullName)) {
                 return _builtInTypesToString[type.FullName];
             }
-            if (type.IsGenericType) {
+            if(type.IsGenericType) {
                 var genericMainType = type.FullName.Split('`')[0];
                 var genericArguments = type.GetGenericArguments().Select(argType => argType.ToReadableString()).ToArray();
                 return genericMainType + "<" + string.Join(", ", genericArguments) + ">";
             }
-            if (type.IsArray) {
+            if(type.IsArray) {
                 return type.GetElementType().ToReadableString() + "[" + new string(',', type.GetArrayRank() - 1) + "]";
             }
 
@@ -54,13 +54,13 @@ namespace Entitas.Serialization {
         public static Type ToType(this string typeString) {
             var fullTypeName = generateTypeString(typeString);
             var type = Type.GetType(fullTypeName);
-            if (type != null) {
+            if(type != null) {
                 return type;
             }
 
             foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
                 type = assembly.GetType(fullTypeName);
-                if (type != null) {
+                if(type != null) {
                     return type;
                 }
             }
@@ -69,7 +69,7 @@ namespace Entitas.Serialization {
         }
 
         static string generateTypeString(string typeString) {
-            if (_builtInTypeStrings.ContainsKey(typeString)) {
+            if(_builtInTypeStrings.ContainsKey(typeString)) {
                 typeString = _builtInTypeStrings[typeString];
             } else {
                 typeString = generateGenericArguments(typeString);

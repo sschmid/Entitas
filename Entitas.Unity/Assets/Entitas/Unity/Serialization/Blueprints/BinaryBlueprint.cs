@@ -14,7 +14,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
         public Blueprint Deserialize() {
             Blueprint blueprint;
-            if (blueprintData == null || blueprintData.Length == 0) {
+            if(blueprintData == null || blueprintData.Length == 0) {
                 blueprint = new Blueprint(string.Empty, "New Blueprint", new Entity(0, null, null));
             } else {
                 using (var stream = new MemoryStream(blueprintData)) {

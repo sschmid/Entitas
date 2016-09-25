@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -19,16 +19,16 @@ namespace Entitas.Unity.VisualDebugging {
 
             EditorGUILayout.BeginHorizontal();
             {
-                if (dictionary.Count == 0) {
+                if(dictionary.Count == 0) {
                     EditorGUILayout.LabelField(memberName, "empty");
                 } else {
                     EditorGUILayout.LabelField(memberName);
                 }
-                if (GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
+                if(GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
                     object defaultKey;
-                    if (EntityDrawer.CreateDefault(keyType, out defaultKey)) {
+                    if(EntityDrawer.CreateDefault(keyType, out defaultKey)) {
                         object defaultValue;
-                        if (EntityDrawer.CreateDefault(valueType, out defaultValue)) {
+                        if(EntityDrawer.CreateDefault(valueType, out defaultValue)) {
                             dictionary[defaultKey] = defaultValue;
                         }
                     }
@@ -36,7 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
             EditorGUILayout.EndHorizontal();
 
-            if (dictionary.Count > 0) {
+            if(dictionary.Count > 0) {
                 EditorGUILayout.Space();
                 var indent = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = indent + 1;
@@ -48,7 +48,7 @@ namespace Entitas.Unity.VisualDebugging {
                         entity, index, component, (newComponent, newValue) => {
                         var tmpValue = dictionary[key];
                         dictionary.Remove(key);
-                        if (newValue != null) {
+                        if(newValue != null) {
                             dictionary[newValue] = tmpValue;
                         }
                     });

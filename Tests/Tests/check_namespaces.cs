@@ -84,6 +84,9 @@ class check_namespaces : nspec {
 
             it["{0} should not contain new[]".With(fileName, fileContent)] = () =>
                 fileContent.Contains("new[]").should_be_false();
+
+            it["{0} should not contain if (".With(fileName, fileContent)] = () =>
+                fileContent.Contains("if (").should_be_false();
         });
     }
 }

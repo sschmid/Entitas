@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity {
@@ -15,9 +15,9 @@ namespace Entitas.Unity {
 
         public static Texture2D LoadTexture(string label) {
             var assets = AssetDatabase.FindAssets(label);
-            if (assets.Length > 0) {
+            if(assets.Length > 0) {
                 var guid = assets[0];
-                if (guid != null) {
+                if(guid != null) {
                     var path = AssetDatabase.GUIDToAssetPath(guid);
                     return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
                 }

@@ -48,7 +48,7 @@ namespace Entitas.Unity.Migration {
                     {
                         EditorGUILayout.LabelField(migration.version, EditorStyles.boldLabel);
                         EditorGUILayout.LabelField(migration.description, descriptionStyle);
-                        if (GUILayout.Button("Apply migration " + migration.version)) {
+                        if(GUILayout.Button("Apply migration " + migration.version)) {
                             migrate(migration);
                         }
                     }
@@ -66,7 +66,7 @@ namespace Entitas.Unity.Migration {
                                     "Cancel"
                                 );
 
-            if (shouldMigrate) {
+            if(shouldMigrate) {
                 EditorUtility.DisplayDialog("Migrate",
                     "Please select the folder, " + migration.workingDirectory + ".",
                     "I will select the requested folder"
@@ -74,7 +74,7 @@ namespace Entitas.Unity.Migration {
 
                 var path = "Assets/";
                 path = EditorUtility.OpenFolderPanel(migration.version + ": " + migration.workingDirectory, path, string.Empty);
-                if (!string.IsNullOrEmpty(path)) {
+                if(!string.IsNullOrEmpty(path)) {
                     var changedFiles = migration.Migrate(path);
                     Debug.Log("Applying " + migration.version);
                     foreach (var file in changedFiles) {

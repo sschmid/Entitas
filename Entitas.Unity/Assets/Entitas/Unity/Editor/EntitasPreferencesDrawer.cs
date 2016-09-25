@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.Serialization.Configuration;
 using UnityEditor;
 
@@ -40,8 +40,8 @@ namespace Entitas.Unity {
             }
             var changed = EditorGUI.EndChangeCheck();
 
-            if (changed) {
-                if (_scriptCallOptimization == ScriptCallOptimization.Disabled) {
+            if(changed) {
+                if(_scriptCallOptimization == ScriptCallOptimization.Disabled) {
                     _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 } else {
                     _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_FAST_AND_UNSAFE);

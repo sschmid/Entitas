@@ -1,4 +1,4 @@
-﻿namespace Entitas.Serialization.Configuration {
+namespace Entitas.Serialization.Configuration {
 
     public class EntitasPreferencesConfig {
 
@@ -10,7 +10,7 @@
 
         public string GetValueOrDefault(string key, string defaultValue) {
             key = key.Trim();
-            if (!_properties.HasKey(key)) {
+            if(!_properties.HasKey(key)) {
                 _properties[key] = defaultValue;
             }
 

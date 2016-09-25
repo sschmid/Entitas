@@ -32,7 +32,7 @@ namespace Entitas {
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
             _eventTypes = eventTypes;
 
-            if (groups.Length != eventTypes.Length) {
+            if(groups.Length != eventTypes.Length) {
                 throw new GroupObserverException("Unbalanced count with groups (" + groups.Length +
                     ") and event types (" + eventTypes.Length + ").",
                     "Group and event type count must be equal.");
@@ -47,13 +47,13 @@ namespace Entitas {
             for (int i = 0; i < _groups.Length; i++) {
                 var group = _groups[i];
                 var eventType = _eventTypes[i];
-                if (eventType == GroupEventType.OnEntityAdded) {
+                if(eventType == GroupEventType.OnEntityAdded) {
                     group.OnEntityAdded -= _addEntityCache;
                     group.OnEntityAdded += _addEntityCache;
-                } else if (eventType == GroupEventType.OnEntityRemoved) {
+                } else if(eventType == GroupEventType.OnEntityRemoved) {
                     group.OnEntityRemoved -= _addEntityCache;
                     group.OnEntityRemoved += _addEntityCache;
-                } else if (eventType == GroupEventType.OnEntityAddedOrRemoved) {
+                } else if(eventType == GroupEventType.OnEntityAddedOrRemoved) {
                     group.OnEntityAdded -= _addEntityCache;
                     group.OnEntityAdded += _addEntityCache;
                     group.OnEntityRemoved -= _addEntityCache;
@@ -83,20 +83,20 @@ namespace Entitas {
 
         void addEntity(Group group, Entity entity, int index, IComponent component) {
             var added = _collectedEntities.Add(entity);
-            if (added) {
+            if(added) {
                 entity.Retain(this);
             }
         }
 
         public override string ToString() {
-            if (_toStringCache == null) {
+            if(_toStringCache == null) {
                 var sb = new StringBuilder().Append("GroupObserver(");
 
                 const string separator = ", ";
                 var lastSeparator = _groups.Length - 1;
                 for (int i = 0; i < _groups.Length; i++) {
                     sb.Append(_groups[i]);
-                    if (i < lastSeparator) {
+                    if(i < lastSeparator) {
                         sb.Append(separator);
                     }
                 }

@@ -44,7 +44,7 @@ namespace Entitas.Unity {
 
         public static string GetLocalVersion() {
             var files = Directory.GetFiles(Application.dataPath, "entitas_version", SearchOption.AllDirectories);
-            if (files.Length != 1) {
+            if(files.Length != 1) {
                 Debug.Log("Couldn't locate file entitas_version");
                 return "0.0.0";
             }
@@ -58,7 +58,7 @@ namespace Entitas.Unity {
 
             switch (remoteVersion.CompareTo(localVersion)) {
                 case 1:
-                    if (EditorUtility.DisplayDialog("Entitas Update",
+                    if(EditorUtility.DisplayDialog("Entitas Update",
                             string.Format("A newer version of Entitas is available!\n\n" +
                             "Currently installed version: {0}\n" +
                             "New version: {1}", localVersion, remoteVersion),
@@ -75,7 +75,7 @@ namespace Entitas.Unity {
                     );
                     break;
                 case -1:
-                    if (EditorUtility.DisplayDialog("Entitas Update",
+                    if(EditorUtility.DisplayDialog("Entitas Update",
                             string.Format("Your Entitas version seems to be newer than the latest release?!?\n\n" +
                             "Currently installed version: {0}\n" +
                             "Latest release: {1}", localVersion, remoteVersion),

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
     
@@ -6,9 +6,9 @@ namespace Entitas.Unity.VisualDebugging {
 
         public static void DestroyGameObject(this GameObject gameObject) {
 
-            #if (UNITY_EDITOR)
+            #if(UNITY_EDITOR)
 
-            if (Application.isPlaying) {
+            if(Application.isPlaying) {
                 Object.Destroy(gameObject);
             } else {
                 Object.DestroyImmediate(gameObject);

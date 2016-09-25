@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -81,10 +81,10 @@ namespace Entitas {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
 
-            if (metaData != null) {
+            if(metaData != null) {
                 _metaData = metaData;
 
-                if (metaData.componentNames.Length != totalComponents) {
+                if(metaData.componentNames.Length != totalComponents) {
                     throw new PoolMetaDataException(this, metaData);
                 }
             } else {
@@ -123,7 +123,7 @@ namespace Entitas {
             entity.OnComponentReplaced += _cachedUpdateGroupsComponentReplaced;
             entity.OnEntityReleased += _cachedOnEntityReleased;
 
-            if (OnEntityCreated != null) {
+            if(OnEntityCreated != null) {
                 OnEntityCreated(this, entity);
             }
 
@@ -133,23 +133,23 @@ namespace Entitas {
         /// Destroys the entity, removes all its components and pushs it back to the internal ObjectPool for entities.
         public virtual void DestroyEntity(Entity entity) {
             var removed = _entities.Remove(entity);
-            if (!removed) {
+            if(!removed) {
                 throw new PoolDoesNotContainEntityException("'" + this + "' cannot destroy " + entity + "!",
                     "Did you call pool.DestroyEntity() on a wrong pool?");
             }
             _entitiesCache = null;
 
-            if (OnEntityWillBeDestroyed != null) {
+            if(OnEntityWillBeDestroyed != null) {
                 OnEntityWillBeDestroyed(this, entity);
             }
 
             entity.destroy();
 
-            if (OnEntityDestroyed != null) {
+            if(OnEntityDestroyed != null) {
                 OnEntityDestroyed(this, entity);
             }
 
-            if (entity.retainCount == 1) {
+            if(entity.retainCount == 1) {
                 // Can be released immediately without going to _retainedEntities
                 entity.OnEntityReleased -= _cachedOnEntityReleased;
                 _reusableEntities.Push(entity);
@@ -171,7 +171,7 @@ namespace Entitas {
 
             _entities.Clear();
 
-            if (_retainedEntities.Count != 0) {
+            if(_retainedEntities.Count != 0) {
                 throw new PoolStillHasRetainedEntitiesException(this);
             }
         }
@@ -183,7 +183,7 @@ namespace Entitas {
 
         /// Returns all entities which are currently in the pool.
         public virtual Entity[] GetEntities() {
-            if (_entitiesCache == null) {
+            if(_entitiesCache == null) {
                 _entitiesCache = new Entity[_entities.Count];
                 _entities.CopyTo(_entitiesCache);
             }
@@ -195,7 +195,7 @@ namespace Entitas {
         /// Calling pool.GetGroup(matcher) with the same matcher will always return the same instance of the group.
         public virtual Group GetGroup(IMatcher matcher) {
             Group group;
-            if (!_groups.TryGetValue(matcher, out group)) {
+            if(!_groups.TryGetValue(matcher, out group)) {
                 group = new Group(matcher);
                 var entities = GetEntities();
                 for (int i = 0; i < entities.Length; i++) {
@@ -205,13 +205,13 @@ namespace Entitas {
 
                 for (int i = 0; i < matcher.indices.Length; i++) {
                     var index = matcher.indices[i];
-                    if (_groupsForIndex[index] == null) {
+                    if(_groupsForIndex[index] == null) {
                         _groupsForIndex[index] = new List<Group>();
                     }
                     _groupsForIndex[index].Add(group);
                 }
 
-                if (OnGroupCreated != null) {
+                if(OnGroupCreated != null) {
                     OnGroupCreated(this, group);
                 }
             }
@@ -228,7 +228,7 @@ namespace Entitas {
                     entities[i].Release(group);
                 }
 
-                if (OnGroupCleared != null) {
+                if(OnGroupCleared != null) {
                     OnGroupCleared(this, group);
                 }
             }
@@ -241,7 +241,7 @@ namespace Entitas {
 
         /// Adds the IEntityIndex for the specified name. There can only be one IEntityIndex per name.
         public void AddEntityIndex(string name, IEntityIndex entityIndex) {
-            if (_entityIndices.ContainsKey(name)) {
+            if(_entityIndices.ContainsKey(name)) {
                 throw new PoolEntityIndexDoesAlreadyExistException(this, name);
             }
 
@@ -251,7 +251,7 @@ namespace Entitas {
         /// Gets the IEntityIndex for the specified name.
         public IEntityIndex GetEntityIndex(string name) {
             IEntityIndex entityIndex;
-            if (!_entityIndices.TryGetValue(name, out entityIndex)) {
+            if(!_entityIndices.TryGetValue(name, out entityIndex)) {
                 throw new PoolEntityIndexDoesNotExistException(this, name);
             }
 
@@ -275,7 +275,7 @@ namespace Entitas {
         /// Clears the componentPool at the specified index.
         public void ClearComponentPool(int index) {
             var componentPool = _componentPools[index];
-            if (componentPool != null) {
+            if(componentPool != null) {
                 componentPool.Clear();
             }
         }
@@ -326,7 +326,7 @@ namespace Entitas {
 
         void updateGroupsComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent) {
             var groups = _groupsForIndex[index];
-            if (groups != null) {
+            if(groups != null) {
                 for (int i = 0; i < groups.Count; i++) {
                     groups[i].UpdateEntity(entity, index, previousComponent, newComponent);
                 }
@@ -334,7 +334,7 @@ namespace Entitas {
         }
 
         void onEntityReleased(Entity entity) {
-            if (entity._isEnabled) {
+            if(entity._isEnabled) {
                 throw new EntityIsNotDestroyedException("Cannot release " + entity + "!");
             }
             entity.removeAllOnEntityReleasedHandlers();

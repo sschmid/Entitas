@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Entitas {
 
@@ -59,15 +59,15 @@ namespace Entitas {
             SetPools(system, pools);
 
             var reactiveSystem = system as IReactiveSystem;
-            if (reactiveSystem != null) {
+            if(reactiveSystem != null) {
                 return new ReactiveSystem(pool, reactiveSystem);
             }
             var multiReactiveSystem = system as IMultiReactiveSystem;
-            if (multiReactiveSystem != null) {
+            if(multiReactiveSystem != null) {
                 return new ReactiveSystem(pool, multiReactiveSystem);
             }
             var groupObserverSystem = system as IGroupObserverSystem;
-            if (groupObserverSystem != null) {
+            if(groupObserverSystem != null) {
                 return new ReactiveSystem(groupObserverSystem);
             }
 
@@ -91,7 +91,7 @@ namespace Entitas {
             SetPools(system, pools);
 
             var groupObserverSystem = system as IGroupObserverSystem;
-            if (groupObserverSystem != null) {
+            if(groupObserverSystem != null) {
                 return new ReactiveSystem(groupObserverSystem);
             }
 
@@ -128,7 +128,7 @@ namespace Entitas {
         /// This will set the pool if ISetPool is implemented.
         public static void SetPool(ISystem system, Pool pool) {
             var poolSystem = system as ISetPool;
-            if (poolSystem != null) {
+            if(poolSystem != null) {
                 poolSystem.SetPool(pool);
             }
         }
@@ -136,7 +136,7 @@ namespace Entitas {
         /// This will set the pools if ISetPools is implemented.
         public static void SetPools(ISystem system, Pools pools) {
             var poolsSystem = system as ISetPools;
-            if (poolsSystem != null) {
+            if(poolsSystem != null) {
                 poolsSystem.SetPools(pools);
             }
         }

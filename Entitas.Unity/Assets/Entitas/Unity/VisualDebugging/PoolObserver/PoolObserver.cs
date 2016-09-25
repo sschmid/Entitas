@@ -45,7 +45,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public override string ToString() {
-            if (_pool.retainedEntitiesCount != 0) {
+            if(_pool.retainedEntitiesCount != 0) {
                 return _entitiesContainer.name = 
                     _pool.metaData.poolName + " (" +
                     _pool.count + " entities, " +

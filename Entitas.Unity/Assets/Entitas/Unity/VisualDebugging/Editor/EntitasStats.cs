@@ -37,11 +37,11 @@ namespace Entitas.Unity.VisualDebugging {
         static Dictionary<string, int> getPools(Type[] components) {
             return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
                 var lookupTags = TypeReflectionProvider.GetPools(type, false);
-                if (lookupTags.Length == 0) {
+                if(lookupTags.Length == 0) {
                     lookupTags = new [] { "Pool" };
                 }
                 foreach (var lookupTag in lookupTags) {
-                    if (!lookups.ContainsKey(lookupTag)) {
+                    if(!lookups.ContainsKey(lookupTag)) {
                         lookups.Add(lookupTag, 0);
                     }
 

@@ -11,7 +11,7 @@ namespace Tests {
 
         public static void Main(string[] args) {
 
-            //format();
+            format();
 
             //var tagOrClassName = "focus";
             var tagOrClassName = string.Empty;
@@ -28,30 +28,37 @@ namespace Tests {
             Environment.Exit(results.Failures().Count());
         }
 
-        //static void format() {
-        //    var projectRoot = TestExtensions.GetProjectRoot();
-        //    var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
+        static void format() {
+            var projectRoot = TestExtensions.GetProjectRoot();
+            var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
 
-        //    foreach(var key in sourceFiles.Keys.ToArray()) {
-        //        var fileContent = sourceFiles[key];
-        //        if(fileContent.EndsWith("\n\n", StringComparison.Ordinal)) {
-        //            fileContent = fileContent.Substring(0, fileContent.Length - 1);
-        //            System.IO.File.WriteAllText(key, fileContent);
-        //            Console.WriteLine("Updated " + key);
-        //        }
+            foreach(var key in sourceFiles.Keys.ToArray()) {
+                var fileContent = sourceFiles[key];
 
-        //        if(!fileContent.EndsWith("\n", StringComparison.Ordinal)) {
-        //            fileContent = fileContent + "\n";
-        //            System.IO.File.WriteAllText(key, fileContent);
-        //            Console.WriteLine("Updated " + key);
-        //        }
+                //if(fileContent.EndsWith("\n\n", StringComparison.Ordinal)) {
+                //    fileContent = fileContent.Substring(0, fileContent.Length - 1);
+                //    System.IO.File.WriteAllText(key, fileContent);
+                //    Console.WriteLine("Updated " + key);
+                //}
 
-        //        if(fileContent.Contains("new[]")) {
-        //            fileContent = fileContent.Replace("new[]", "new []");
-        //            System.IO.File.WriteAllText(key, fileContent);
-        //            Console.WriteLine("Updated " + key);
-        //        }
-        //    }
-        //}
+                //if(!fileContent.EndsWith("\n", StringComparison.Ordinal)) {
+                //    fileContent = fileContent + "\n";
+                //    System.IO.File.WriteAllText(key, fileContent);
+                //    Console.WriteLine("Updated " + key);
+                //}
+
+                //if(fileContent.Contains("new[]")) {
+                //    fileContent = fileContent.Replace("new[]", "new []");
+                //    System.IO.File.WriteAllText(key, fileContent);
+                //    Console.WriteLine("Updated " + key);
+                //}
+
+                if(fileContent.Contains("if (")) {
+                    fileContent = fileContent.Replace("if (", "if(");
+                    System.IO.File.WriteAllText(key, fileContent);
+                    Console.WriteLine("Updated " + key);
+                }
+            }
+        }
     }
 }

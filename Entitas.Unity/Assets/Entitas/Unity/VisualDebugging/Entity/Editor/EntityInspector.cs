@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using UnityEditor;
 
 namespace Entitas.Unity.VisualDebugging {
@@ -11,7 +11,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public override void OnInspectorGUI() {
-            if (targets.Length == 1) {
+            if(targets.Length == 1) {
                 var entityBehaviour = (EntityBehaviour)target;
                 EntityDrawer.DrawEntity(entityBehaviour.pool, entityBehaviour.entity);
             } else {
@@ -23,7 +23,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EntityDrawer.DrawMultipleEntities(entityBehaviour.pool, entities);
             }
 
-            if (target != null) {
+            if(target != null) {
                 EditorUtility.SetDirty(target);
             }
         }

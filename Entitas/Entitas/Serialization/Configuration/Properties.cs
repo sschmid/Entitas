@@ -58,7 +58,7 @@ namespace Entitas.Serialization.Configuration {
             var currentProperty = string.Empty;
             return lines.Aggregate(new List<string>(), (acc, line) => {
                 currentProperty += line;
-                if (currentProperty.EndsWith("\\", StringComparison.Ordinal)) {
+                if(currentProperty.EndsWith("\\", StringComparison.Ordinal)) {
                     currentProperty = currentProperty.Substring(0, currentProperty.Length - 1);
                 } else {
                     acc.Add(currentProperty);
