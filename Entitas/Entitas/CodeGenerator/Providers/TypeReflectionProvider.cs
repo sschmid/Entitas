@@ -58,7 +58,8 @@ namespace Entitas.CodeGenerator {
                 GetSingleComponentPrefix(type),
                 false,
                 GetGenerateMethods(type),
-                GetGenerateIndex(type)
+                GetGenerateIndex(type),
+                GetHideInBlueprintInspector(type)
             );
         }
 
@@ -74,7 +75,8 @@ namespace Entitas.CodeGenerator {
                     GetSingleComponentPrefix(type),
                     true,
                     GetGenerateMethods(type),
-                    GetGenerateIndex(type)
+                    GetGenerateIndex(type),
+                    GetHideInBlueprintInspector(type)
                 )).ToArray();
         }
 
@@ -137,6 +139,13 @@ namespace Entitas.CodeGenerator {
                 .SingleOrDefault(a => isTypeOrHasBaseType(a.GetType(), "Entitas.CodeGenerator.DontGenerateAttribute"));
 
             return attr == null || (bool)attr.GetType().GetField("generateIndex").GetValue(attr);
+        }
+
+        public static bool GetHideInBlueprintInspector(Type type) {
+            var attr = Attribute.GetCustomAttributes(type)
+                .SingleOrDefault(a => isTypeOrHasBaseType(a.GetType(), "Entitas.Serialization.Blueprints.HideInBlueprintInspectorAttribute"));
+
+            return attr != null;
         }
 
         static bool hasBaseType(Type type, string fullTypeName) {

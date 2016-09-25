@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using Entitas.Serialization.Blueprints;
 
 [Blueprints]
 public class NameComponent : IComponent {
@@ -8,5 +9,13 @@ public class NameComponent : IComponent {
 [Blueprints]
 public class AgeComponent : IComponent {
     public int value;
+}
+
+[Blueprints, HideInBlueprintInspector]
+public class HideInBlueprintInspectorComponent : IComponent {
+}
+
+[Blueprints, HideInBlueprintInspector]
+public class HideInBlueprintInspectorClass {
 }
 

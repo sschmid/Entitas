@@ -7,10 +7,17 @@ using Entitas.Serialization;
 using Entitas.Serialization.Configuration;
 using UnityEditor;
 using UnityEngine;
+using Entitas.Serialization.Blueprints;
 
 namespace Entitas.Unity.VisualDebugging {
 
     public static class EntityDrawer {
+
+        struct ComponentInfo {
+            public int index;
+            public string name;
+            public Type type;
+        }
 
         static Dictionary<Pool, bool[]> _poolToUnfoldedComponents;
         static GUIStyle _foldoutStyle;
@@ -92,7 +99,7 @@ namespace Entitas.Unity.VisualDebugging {
             #endif
         }
 
-        public static void DrawComponents(Pool pool, Entity entity) {
+        public static void DrawComponents(Pool pool, Entity entity, bool hideInBlueprintInspector = false) {
             bool[] unfoldedComponents;
             if (!_poolToUnfoldedComponents.TryGetValue(pool, out unfoldedComponents)) {
                 unfoldedComponents = new bool[pool.totalComponents];
@@ -122,8 +129,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                var componentNames = entity.poolMetaData.componentNames;
-                var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+                var index = drawAddComponentMenu(entity, hideInBlueprintInspector);
                 if (index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
                     var component = (IComponent)Activator.CreateInstance(componentType);
@@ -156,13 +162,12 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
         }
 
-        public static void DrawMultipleEntities(Pool pool, Entity[] entities) {
+        public static void DrawMultipleEntities(Pool pool, Entity[] entities, bool hideInBlueprintInspector = false) {
             EditorGUILayout.Space();
             EntitasEditorLayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var componentNames = entity.poolMetaData.componentNames;
-                var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+                var index = drawAddComponentMenu(entity, hideInBlueprintInspector);
                 if (index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
                     foreach (var e in entities) {
@@ -346,6 +351,34 @@ namespace Entitas.Unity.VisualDebugging {
 
             defaultValue = null;
             return false;
+        }
+
+        static int drawAddComponentMenu(Entity entity, bool hideInBlueprintInspector) {
+            var componentInfos = getComponentInfos(entity, hideInBlueprintInspector);
+            var componentNames = componentInfos.Select(info => info.name).ToArray();
+            var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
+            if (index >= 0) {
+                return componentInfos[index].index;
+            }
+
+            return -1;
+        }
+
+        static ComponentInfo[] getComponentInfos(Entity entity, bool hideInBlueprintInspector) {
+            var infos = new List<ComponentInfo>(entity.poolMetaData.componentTypes.Length);
+            for (int i = 0; i < entity.poolMetaData.componentTypes.Length; ++i) {
+                var type = entity.poolMetaData.componentTypes[i];
+                var name = entity.poolMetaData.componentNames[i];
+                if (!hideInBlueprintInspector || !Attribute.IsDefined(type, typeof(HideInBlueprintInspectorAttribute))) {
+                    infos.Add(new ComponentInfo {
+                        index = i,
+                        name = name,
+                        type = type
+                    });
+                }
+            }
+
+            return infos.ToArray();
         }
 
         static GUIStyle getColoredBoxStyle(int totalComponents, int index) {

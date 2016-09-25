@@ -18,7 +18,7 @@ namespace Entitas {
             return CreatePool("VisualDebugging", VisualDebuggingComponentIds.TotalComponents, VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes);
         }
 
-        public Pool[] allPools { get { return new[] { blueprints, visualDebugging }; } }
+        public Pool[] allPools { get { return new [] { blueprints, visualDebugging }; } }
 
         public Pool blueprints;
         public Pool visualDebugging;

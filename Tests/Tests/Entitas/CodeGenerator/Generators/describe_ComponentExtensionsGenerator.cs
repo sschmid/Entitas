@@ -55,6 +55,9 @@ class describe_ComponentExtensionsGenerator : nspec {
 
         it["generates component for class"] = () => generates<SomeClass>("SomeClassComponent");
         it["generates component for struct"] = () => generates<SomeStruct>("SomeStructComponent");
+
+        it["generates component for class with HideInBlueprintInspectorAttribute"] = () =>
+            generates<SomeClassHideInBlueprintInspector>("SomeClassHideInBlueprintInspectorComponent");
     }
 }
 
