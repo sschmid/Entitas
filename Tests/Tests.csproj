@@ -356,6 +356,7 @@
     </Compile>
     <Compile Include="Tests\Entitas\Caching\describe_EntitasCache.cs" />
     <Compile Include="TestRunner.cs" />
+    <Compile Include="Tests\Entitas\describe_EntityExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
