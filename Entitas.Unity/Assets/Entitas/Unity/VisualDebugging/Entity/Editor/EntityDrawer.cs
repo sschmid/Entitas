@@ -83,7 +83,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             EntitasEditorLayout.BeginVerticalBox();
             {
-                foreach (var owner in entity.owners.ToArray()) {
+                foreach(var owner in entity.owners.ToArray()) {
                     EntitasEditorLayout.BeginHorizontal();
                     {
                         EditorGUILayout.LabelField(owner.ToString());
@@ -170,7 +170,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var index = drawAddComponentMenu(entity, hideInBlueprintInspector);
                 if(index >= 0) {
                     var componentType = entity.poolMetaData.componentTypes[index];
-                    foreach (var e in entities) {
+                    foreach(var e in entities) {
                         var component = (IComponent)Activator.CreateInstance(componentType);
                         e.AddComponent(index, component);
                     }
@@ -184,7 +184,7 @@ namespace Entitas.Unity.VisualDebugging {
             GUI.backgroundColor = Color.red;
 
             if(GUILayout.Button("Destroy selected entities")) {
-                foreach (var e in entities) {
+                foreach(var e in entities) {
                     pool.DestroyEntity(e);
                 }
             }
@@ -193,7 +193,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             EditorGUILayout.Space();
 
-            foreach (var e in entities) {
+            foreach(var e in entities) {
 
                 EntitasEditorLayout.BeginHorizontal();
                 {
@@ -252,7 +252,7 @@ namespace Entitas.Unity.VisualDebugging {
                                 entity.GetComponentPool(index).Push(newComponent);
                             }
                         } else {
-                            foreach (var info in memberInfos) {
+                            foreach(var info in memberInfos) {
                                 DrawAndSetElement(info.type, info.name, info.GetValue(component),
                                     entity, index, component, info.SetValue);
                             }
@@ -329,7 +329,7 @@ namespace Entitas.Unity.VisualDebugging {
                 defaultValue = Activator.CreateInstance(type);
                 return true;
             } catch (Exception) {
-                foreach (var creator in _defaultInstanceCreators) {
+                foreach(var creator in _defaultInstanceCreators) {
                     if(creator.HandlesType(type)) {
                         defaultValue = creator.CreateDefault(type);
                         return true;
@@ -411,7 +411,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static ITypeDrawer getTypeDrawer(Type type) {
-            foreach (var drawer in _typeDrawers) {
+            foreach(var drawer in _typeDrawers) {
                 if(drawer.HandlesType(type)) {
                     return drawer;
                 }
@@ -421,7 +421,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static IComponentDrawer getComponentDrawer(Type type) {
-            foreach (var drawer in _componentDrawers) {
+            foreach(var drawer in _componentDrawers) {
                 if(drawer.HandlesType(type)) {
                     return drawer;
                 }

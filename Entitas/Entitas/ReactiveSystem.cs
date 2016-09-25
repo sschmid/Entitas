@@ -89,26 +89,26 @@ namespace Entitas {
             if(_observer.collectedEntities.Count != 0) {
                 if(_ensureComponents != null) {
                     if(_excludeComponents != null) {
-                        foreach (var e in _observer.collectedEntities) {
+                        foreach(var e in _observer.collectedEntities) {
                             if(_ensureComponents.Matches(e) && !_excludeComponents.Matches(e)) {
                                 _buffer.Add(e.Retain(this));
                             }
                         }
                     } else {
-                        foreach (var e in _observer.collectedEntities) {
+                        foreach(var e in _observer.collectedEntities) {
                             if(_ensureComponents.Matches(e)) {
                                 _buffer.Add(e.Retain(this));
                             }
                         }
                     }
                 } else if(_excludeComponents != null) {
-                    foreach (var e in _observer.collectedEntities) {
+                    foreach(var e in _observer.collectedEntities) {
                         if(!_excludeComponents.Matches(e)) {
                             _buffer.Add(e.Retain(this));
                         }
                     }
                 } else {
-                    foreach (var e in _observer.collectedEntities) {
+                    foreach(var e in _observer.collectedEntities) {
                         _buffer.Add(e.Retain(this));
                     }
                 }

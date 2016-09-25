@@ -9,6 +9,7 @@ class check_namespaces : nspec {
         return paths.Aggregate(string.Empty, (pathString, p) => pathString + p + Path.DirectorySeparatorChar);
     }
 
+    [Tag("focus")]
     void when_checking_namespaces() {
         var projectRoot = TestExtensions.GetProjectRoot();
         var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
@@ -87,6 +88,9 @@ class check_namespaces : nspec {
 
             it["{0} should not contain if (".With(fileName, fileContent)] = () =>
                 fileContent.Contains("if (").should_be_false();
+
+            it["{0} should not contain foreach (".With(fileName, fileContent)] = () =>
+                fileContent.Contains("foreach (").should_be_false();
         });
     }
 }

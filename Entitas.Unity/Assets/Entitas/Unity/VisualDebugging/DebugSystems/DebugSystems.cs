@@ -20,7 +20,7 @@ namespace Entitas.Unity.VisualDebugging {
         public int totalInitializeSystemsCount {
             get {
                 var total = 0;
-                foreach (var system in _initializeSystems) {
+                foreach(var system in _initializeSystems) {
                     var debugSystems = system as DebugSystems;
                     if(debugSystems != null) {
                         total += debugSystems.totalInitializeSystemsCount;
@@ -35,7 +35,7 @@ namespace Entitas.Unity.VisualDebugging {
         public int totalExecuteSystemsCount {
             get {
                 var total = 0;
-                foreach (var system in _executeSystems) {
+                foreach(var system in _executeSystems) {
                     var debugSystems = system as DebugSystems;
                     if(debugSystems != null) {
                         total += debugSystems.totalExecuteSystemsCount;
@@ -98,10 +98,10 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public void ResetDurations() {
-            foreach (var systemInfo in _initializeSystemInfos) {
+            foreach(var systemInfo in _initializeSystemInfos) {
                 systemInfo.ResetDurations();
             }
-            foreach (var systemInfo in _executeSystemInfos) {
+            foreach(var systemInfo in _executeSystemInfos) {
                 systemInfo.ResetDurations();
                 var debugSystems = systemInfo.system as DebugSystems;
                 if(debugSystems != null) {

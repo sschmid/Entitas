@@ -75,7 +75,7 @@ namespace Entitas {
 
         /// Clears all collected entities.
         public void ClearCollectedEntities() {
-            foreach (var entity in _collectedEntities) {
+            foreach(var entity in _collectedEntities) {
                 entity.Release(this);
             }
             _collectedEntities.Clear();

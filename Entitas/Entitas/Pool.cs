@@ -221,7 +221,7 @@ namespace Entitas {
 
         /// Clears all groups. This is useful when you want to soft-restart your application.
         public void ClearGroups() {
-            foreach (var group in _groups.Values) {
+            foreach(var group in _groups.Values) {
                 group.RemoveAllEventHandlers();
                 var entities = group.GetEntities();
                 for (int i = 0; i < entities.Length; i++) {
@@ -260,7 +260,7 @@ namespace Entitas {
 
         /// Deactivates and removes all entity indices.
         public void DeactivateAndRemoveEntityIndices() {
-            foreach (var entityIndex in _entityIndices.Values) {
+            foreach(var entityIndex in _entityIndices.Values) {
                 entityIndex.Deactivate();
             }
 

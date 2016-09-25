@@ -95,7 +95,7 @@ namespace Entitas {
         }
 
         protected override void clear() {
-            foreach (var entity in _index.Values) {
+            foreach(var entity in _index.Values) {
                 entity.Release(this);
             }
 
@@ -149,8 +149,8 @@ namespace Entitas {
         }
 
         protected override void clear() {
-            foreach (var entities in _index.Values) {
-                foreach (var entity in entities) {
+            foreach(var entities in _index.Values) {
+                foreach(var entity in entities) {
                     entity.Release(this);
                 }
             }

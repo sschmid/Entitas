@@ -28,19 +28,19 @@ namespace Entitas.CodeGenerator {
             var generatedFiles = new List<CodeGenFile>();
             var componentInfos = provider.componentInfos;
 
-            foreach (var generator in codeGenerators.OfType<IPoolCodeGenerator>()) {
+            foreach(var generator in codeGenerators.OfType<IPoolCodeGenerator>()) {
                 var files = generator.Generate(provider.poolNames);
                 generatedFiles.AddRange(files);
                 writeFiles(directory, files);
             }
 
-            foreach (var generator in codeGenerators.OfType<IComponentCodeGenerator>()) {
+            foreach(var generator in codeGenerators.OfType<IComponentCodeGenerator>()) {
                 var files = generator.Generate(componentInfos);
                 generatedFiles.AddRange(files);
                 writeFiles(directory, files);
             }
 
-            foreach (var generator in codeGenerators.OfType<IBlueprintsCodeGenerator>()) {
+            foreach(var generator in codeGenerators.OfType<IBlueprintsCodeGenerator>()) {
                 var files = generator.Generate(provider.blueprintNames);
                 generatedFiles.AddRange(files);
                 writeFiles(directory, files);
@@ -63,7 +63,7 @@ namespace Entitas.CodeGenerator {
             directory = GetSafeDir(directory);
             if(Directory.Exists(directory)) {
                 var files = new DirectoryInfo(directory).GetFiles("*.cs", SearchOption.AllDirectories);
-                foreach (var file in files) {
+                foreach(var file in files) {
                     try {
                         File.Delete(file.FullName);
                     } catch {
@@ -79,7 +79,7 @@ namespace Entitas.CodeGenerator {
             if(!Directory.Exists(directory)) {
                 Directory.CreateDirectory(directory);
             }
-            foreach (var file in files) {
+            foreach(var file in files) {
                 var fileName = directory + file.fileName + ".cs";
                 var fileContent = file.fileContent.Replace("\n", Environment.NewLine);
                 var header = string.Format(AUTO_GENERATED_HEADER_FORMAT, file.generatorName);

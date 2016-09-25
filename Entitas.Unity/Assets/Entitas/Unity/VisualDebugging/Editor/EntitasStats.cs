@@ -12,7 +12,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         [MenuItem("Entitas/Log Stats", false, EntitasMenuItemPriorities.log_stats)]
         public static void LogStats() {
-            foreach (var stat in GetStats()) {
+            foreach(var stat in GetStats()) {
                 Debug.Log(stat.Key + ": " + stat.Value);
             }
         }
@@ -27,7 +27,7 @@ namespace Entitas.Unity.VisualDebugging {
                 { "Systems", types.Count(implementsSystem) }
             };
 
-            foreach (var pool in pools) {
+            foreach(var pool in pools) {
                 stats.Add("Components in " + pool.Key, pool.Value);
             }
 
@@ -40,7 +40,7 @@ namespace Entitas.Unity.VisualDebugging {
                 if(lookupTags.Length == 0) {
                     lookupTags = new [] { "Pool" };
                 }
-                foreach (var lookupTag in lookupTags) {
+                foreach(var lookupTag in lookupTags) {
                     if(!lookups.ContainsKey(lookupTag)) {
                         lookups.Add(lookupTag, 0);
                     }

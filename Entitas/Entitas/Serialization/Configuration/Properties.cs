@@ -72,16 +72,16 @@ namespace Entitas.Serialization.Configuration {
         void addProperties(string[] lines) {
             var keyValueDelimiter = new [] { '=' };
             var properties = lines.Select(line => line.Split(keyValueDelimiter, 2));
-            foreach (var property in properties) {
+            foreach(var property in properties) {
                 this[property[0]] = property[1];
             }
         }
 
         void replacePlaceholders() {
             const string placeholderPattern = @"(?:(?<=\${).+?(?=}))";
-            foreach (var key in _dict.Keys.ToArray()) {
+            foreach(var key in _dict.Keys.ToArray()) {
                 var matches = Regex.Matches(_dict[key], placeholderPattern);
-                foreach (Match match in matches) {
+                foreach(Match match in matches) {
                     _dict[key] = _dict[key].Replace("${" + match.Value + "}", _dict[match.Value]);
                 }
             }

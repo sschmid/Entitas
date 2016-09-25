@@ -39,7 +39,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.Space();
                 var indent = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = indent + 1;
-                foreach (var item in (IEnumerable)value) {
+                foreach(var item in (IEnumerable)value) {
                     EditorGUILayout.BeginHorizontal();
                     {
                         var newItem = EntityDrawer.DrawAndGetNewValue(elementType, string.Empty, item, entity, index, component);
@@ -58,11 +58,11 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUI.indentLevel = indent;
             }
 
-            foreach (var item in itemsToRemove) {
+            foreach(var item in itemsToRemove) {
                 memberType.GetMethod("Remove").Invoke(value, new [] { item });
             }
 
-            foreach (var item in itemsToAdd) {
+            foreach(var item in itemsToAdd) {
                 memberType.GetMethod("Add").Invoke(value, new [] { item });
             }
 

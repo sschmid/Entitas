@@ -158,7 +158,7 @@ namespace Entitas.Unity.VisualDebugging {
             systemInfos = getSortedSystemInfos(systemInfos, _systemSortMethod);
 
             var systemsDrawn = 0;
-            foreach (var systemInfo in systemInfos) {
+            foreach(var systemInfo in systemInfos) {
                 var debugSystems = systemInfo.system as DebugSystems;
                 if(debugSystems != null) {
                     if(!shouldShowSystems(debugSystems, initOnly)) {

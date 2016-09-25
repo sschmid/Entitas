@@ -31,7 +31,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 var binaryBlueprints = FindAllBlueprints();
                 var allPoolNames = allPools.Select(pool => pool.metaData.poolName).ToArray();
                 var updated = 0;
-                foreach (var binaryBlueprint in binaryBlueprints) {
+                foreach(var binaryBlueprint in binaryBlueprints) {
                     var didUpdate = UpdateBinaryBlueprint(binaryBlueprint, allPools, allPoolNames);
                     if(didUpdate) {
                         updated += 1;
@@ -57,7 +57,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
             var pool = allPools[poolIndex];
             blueprint.poolIdentifier = pool.metaData.poolName;
 
-            foreach (var component in blueprint.components) {
+            foreach(var component in blueprint.components) {
                 var type = component.fullTypeName.ToType();
                 var index = Array.IndexOf(pool.metaData.componentTypes, type);
 

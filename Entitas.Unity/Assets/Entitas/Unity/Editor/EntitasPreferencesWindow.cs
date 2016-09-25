@@ -36,7 +36,7 @@ namespace Entitas.Unity {
                 .OrderBy(drawer => drawer.priority)
                 .ToArray();
 
-            foreach (var drawer in _preferencesDrawers) {
+            foreach(var drawer in _preferencesDrawers) {
                 drawer.Initialize(_config);
             }
         }
@@ -49,7 +49,7 @@ namespace Entitas.Unity {
                 EditorGUILayout.LabelField("Version: " + _localVersion);
                 GUILayout.Space(offsetY - 24);
 
-                foreach (var drawer in _preferencesDrawers) {
+                foreach(var drawer in _preferencesDrawers) {
                     drawer.Draw(_config);
                     EditorGUILayout.Space();
                 }

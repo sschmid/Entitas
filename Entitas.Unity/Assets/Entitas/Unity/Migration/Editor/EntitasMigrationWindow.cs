@@ -43,7 +43,7 @@ namespace Entitas.Unity.Migration {
 
                 var descriptionStyle = new GUIStyle(GUI.skin.label);
                 descriptionStyle.wordWrap = true;
-                foreach (var migration in _migrations) {
+                foreach(var migration in _migrations) {
                     EntitasEditorLayout.BeginVerticalBox();
                     {
                         EditorGUILayout.LabelField(migration.version, EditorStyles.boldLabel);
@@ -77,7 +77,7 @@ namespace Entitas.Unity.Migration {
                 if(!string.IsNullOrEmpty(path)) {
                     var changedFiles = migration.Migrate(path);
                     Debug.Log("Applying " + migration.version);
-                    foreach (var file in changedFiles) {
+                    foreach(var file in changedFiles) {
                         MigrationUtils.WriteFiles(changedFiles);
                         Debug.Log("Migrated " + file.fileName);
                     }

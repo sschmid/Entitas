@@ -58,7 +58,7 @@ namespace Entitas.Serialization {
                 return type;
             }
 
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+            foreach(var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
                 type = assembly.GetType(fullTypeName);
                 if(type != null) {
                     return type;

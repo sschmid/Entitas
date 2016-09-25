@@ -51,7 +51,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EntitasEditorLayout.BeginVerticalBox();
                 {
                     EditorGUILayout.LabelField("Groups (" + groups.Length + ")", EditorStyles.boldLabel);
-                    foreach (var group in groups.OrderByDescending(g => g.count)) {
+                    foreach(var group in groups.OrderByDescending(g => g.count)) {
                         EntitasEditorLayout.BeginHorizontal();
                         {
                             EditorGUILayout.LabelField(group.ToString());
