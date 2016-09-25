@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 source Scripts/build_commands.sh
 
