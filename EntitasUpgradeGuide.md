@@ -37,7 +37,10 @@ $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/Generated/
 
 # Entitas 0.34.0 upgrade guide
 #### Before you install
-- Manually rename `GroupObserver` to `EntityCollector`
+- Rename `GroupObserver` to `EntityCollector`
+- Rename `.CreateGroupObserver()` to `.CreateEntityCollector()`
+- Find & Replace `IGroupObserverSystem` with `IEntityCollectorSystem`
+- Find & Replace `public GroupObserver groupObserver` with `public EntityCollector entityCollector`
 
 #### After you intalled
 - You're fine - nothing to do for you :heart:
