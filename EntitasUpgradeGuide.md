@@ -39,7 +39,7 @@ $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/Generated/
 #### Before you install
 - Rename `GroupObserver` to `EntityCollector`
 - Rename `.CreateGroupObserver()` to `.CreateEntityCollector()`
-- Rename `IGroupObserverSystem` with `IEntityCollectorSystem`
+- Rename `IGroupObserverSystem` to `IEntityCollectorSystem`
 - Find & Replace `public EntityCollector groupObserver` with `public EntityCollector entityCollector`
 
 #### After you intalled
