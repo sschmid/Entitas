@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Entitas;
+using UnityEditor;
 
 public class ReactiveSystemDestructorController : MonoBehaviour {
 
@@ -18,7 +19,8 @@ public class ReactiveSystemDestructorController : MonoBehaviour {
         for (int i = 0; i < 5000; i++) {
             var e = pool.CreateEntity();
             if (e == _initialEntity) {
-                Debug.Log("Reusing entity!");
+                Debug.Log("Success: Reusing entity!");
+                EditorApplication.isPlaying = false;
             }
         }
     }

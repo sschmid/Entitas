@@ -4,7 +4,7 @@ PWD=$(pwd)
 # Folders
 BUILD="Build"
 BUILD_SRC="$BUILD/src"
-UNITY='/Applications/Unity_5.3.4p6/Unity.app/Contents/MacOS/Unity'
+UNITY='/Applications/Unity/Unity.app/Contents/MacOS/Unity'
 
 # Tests
 TEST_PROJECT="Tests/Tests.csproj"
