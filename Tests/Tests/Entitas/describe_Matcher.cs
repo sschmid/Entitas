@@ -424,6 +424,29 @@ class describe_Matcher : nspec {
                 mX.GetHashCode().should_be(mY.GetHashCode());
             };
         };
+
+        context["when filtering"] = () => {
+
+            IMatcher m = null;
+
+            before = () => m = Matcher.AllOf(CID.ComponentD).Where(entity => {
+                var component = (NameAgeComponent)entity.GetComponent(CID.ComponentD);
+                return component.age > 30;
+            });
+
+            it["only contains entities passing the filter condition"] = () => {
+                var e1 = this.CreateEntity();
+                var nameAge1 = new NameAgeComponent { name = "Max", age = 42 };
+                e1.AddComponent(CID.ComponentD, nameAge1);
+
+                var e2 = this.CreateEntity();
+                var nameAge2 = new NameAgeComponent { name = "Jack", age = 24 };
+                e2.AddComponent(CID.ComponentD, nameAge2);
+
+                m.Matches(e1).should_be_true();
+                m.Matches(e2).should_be_false();
+            };
+        };
     }
 
     static IMatcher allOfAB() {
