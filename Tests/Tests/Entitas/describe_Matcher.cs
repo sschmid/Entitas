@@ -446,6 +446,11 @@ class describe_Matcher : nspec {
                 m.Matches(e1).should_be_true();
                 m.Matches(e2).should_be_false();
             };
+
+            it["doesn't attempt to filter entites not matching the matcher"] = () => {
+                var e = this.CreateEntity();
+                m.Matches(e).should_be_false();
+            };
         };
     }
 

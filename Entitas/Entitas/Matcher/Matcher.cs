@@ -54,11 +54,10 @@ namespace Entitas {
         }
 
         public bool Matches(Entity entity) {
-            var matchesAllOf = _allOfIndices == null || entity.HasComponents(_allOfIndices);
-            var matchesAnyOf = _anyOfIndices == null || entity.HasAnyComponent(_anyOfIndices);
-            var matchesNoneOf = _noneOfIndices == null || !entity.HasAnyComponent(_noneOfIndices);
-            var passesFilter = _filter == null || _filter(entity);
-            return matchesAllOf && matchesAnyOf && matchesNoneOf && passesFilter;
+            return (_allOfIndices == null || entity.HasComponents(_allOfIndices))
+                && (_anyOfIndices == null || entity.HasAnyComponent(_anyOfIndices))
+                && (_noneOfIndices == null || !entity.HasAnyComponent(_noneOfIndices))
+                && (_filter == null || _filter(entity));
         }
 
         int[] mergeIndices() {
