@@ -100,7 +100,7 @@ Entitas is fast, light and gets rid of unnecessary complexity. There are less th
 - Entity
 - Pool
 - Group
-- Group Observer
+- Entity Collector
 
 [Read more...][wiki-overview]
 
@@ -130,7 +130,7 @@ The optional Unity module integrates Entitas nicely into Unity and provides powe
 Entitas deep dive
 =================
 
-[Read the wiki][wiki] or checkout the awesome [example projects][wiki-example-projects] to see Entitas in action. These example projects illustrate how systems, groups, observers and entities all play together seamlessly.
+[Read the wiki][wiki] or checkout the awesome [example projects][wiki-example-projects] to see Entitas in action. These example projects illustrate how systems, groups, collectors and entities all play together seamlessly.
 
 
 Download Entitas
