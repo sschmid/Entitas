@@ -1,10 +1,12 @@
 # 0.34.0
 
-##### Breaking changes
+See and discuss changes in [Milestone 0.34.0](https://github.com/sschmid/Entitas-CSharp/milestone/4)
+
+#### Breaking changes
 Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
 
-##### Entitas
-- Added api to clone entities (#178 182)
+#### Entitas
+- Added api to clone entities (#178 #182)
   - `pool.CloneEntity(e);`
   - `entity.CopyTo(target);`
 
@@ -14,10 +16,10 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
   - `Matcher.Position.Where(e => e.position.x > 10);`
   - Can also be used for triggers
 
-##### Entitas.Serialization.Blueprints (#185)
-- Added HideInBlueprintInspectorAttribute
+#### Entitas.Serialization.Blueprints
+- Added HideInBlueprintInspectorAttribute (#185)
 
-##### Other
+#### Other
 - Improved snippets
 - Added Visual Studio snippets (#172)
 - Added TestRunner to support test debugging (#175 #176)
