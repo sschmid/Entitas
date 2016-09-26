@@ -87,19 +87,19 @@ namespace Readme {
             };
         }
 
-        static void groupObserverExample(Pool pool) {
+        static void entityCollectorExample(Pool pool) {
             var group = pool.GetGroup(Matcher.Position);
-            var observer = group.CreateObserver(GroupEventType.OnEntityAdded);
+            var collector = group.CreateCollector(GroupEventType.OnEntityAdded);
 
             // ----------------------------
-            foreach (var e in observer.collectedEntities) {
+            foreach (var e in collector.collectedEntities) {
                 // do something
             }
-            observer.ClearCollectedEntities();
+            collector.ClearCollectedEntities();
 
 
             // ----------------------------
-            observer.Deactivate();
+            collector.Deactivate();
         }
 
         static void positionComponent(Entity e, PositionComponent component, int x, int y) {

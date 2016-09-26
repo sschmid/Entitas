@@ -1,19 +1,19 @@
 ﻿using Entitas;
 
-public class GroupObserverActivate : IPerformanceTest {
+public class EntityCollectorActivate : IPerformanceTest {
 
     const int n = 10000;
-    GroupObserver _observer;
+    EntityCollector _collector;
 
     public void Before() {
         var pool = Helper.CreatePool();
         var group = pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
-        _observer = group.CreateObserver();
+        _collector = group.CreateCollector();
     }
 
     public void Run() {
         for(int i = 0; i < n; i++) {
-            _observer.Activate();
+            _collector.Activate();
         }
     }
 }

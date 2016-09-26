@@ -1,14 +1,14 @@
 ﻿using Entitas;
 using NSpec;
 
-class describe_GroupObserver : nspec {
+class describe_EntityCollector : nspec {
 
     Pool _pool;
 
     void when_created() {
 
         Group groupA = null;
-        GroupObserver observerA = null;
+        EntityCollector collectorA = null;
 
         IMatcher matcherA = Matcher.AllOf(CID.ComponentA);
 
@@ -20,11 +20,11 @@ class describe_GroupObserver : nspec {
         context["when observing with eventType OnEntityAdded"] = () => {
             
             before = () => {
-                observerA = new GroupObserver(groupA, GroupEventType.OnEntityAdded);
+                collectorA = new EntityCollector(groupA, GroupEventType.OnEntityAdded);
             };
 
             it["is empty when nothing happend"] = () => {
-                observerA.collectedEntities.should_be_empty();
+                collectorA.collectedEntities.should_be_empty();
             };
 
             context["when entity collected"] = () => {
@@ -36,7 +36,7 @@ class describe_GroupObserver : nspec {
                 };
 
                 it["returns collected entities"] = () => {
-                    var entities = observerA.collectedEntities;
+                    var entities = collectorA.collectedEntities;
                     entities.Count.should_be(1);
                     entities.should_contain(e);
                 };
@@ -44,7 +44,7 @@ class describe_GroupObserver : nspec {
                 it["only collects matching entities"] = () => {
                     createEB();
                 
-                    var entities = observerA.collectedEntities;
+                    var entities = collectorA.collectedEntities;
                     entities.Count.should_be(1);
                     entities.should_contain(e);
                 };
@@ -53,42 +53,42 @@ class describe_GroupObserver : nspec {
                     e.RemoveComponentA();
                     e.AddComponentA();
 
-                    var entities = observerA.collectedEntities;
+                    var entities = collectorA.collectedEntities;
                     entities.Count.should_be(1);
                     entities.should_contain(e);
                 };
 
                 it["clears collected entities on deactivation"] = () => {
-                    observerA.Deactivate();
-                    observerA.collectedEntities.should_be_empty();
+                    collectorA.Deactivate();
+                    collectorA.collectedEntities.should_be_empty();
                 };
 
                 it["doesn't collect entities when deactivated"] = () => {
-                    observerA.Deactivate();
+                    collectorA.Deactivate();
                     createEA();
-                    observerA.collectedEntities.should_be_empty();
+                    collectorA.collectedEntities.should_be_empty();
                 };
                 
                 it["continues collecting when activated"] = () => {
-                    observerA.Deactivate();
+                    collectorA.Deactivate();
                     createEA();
 
-                    observerA.Activate();
+                    collectorA.Activate();
 
                     var e2 = createEA();
 
-                    var entities = observerA.collectedEntities;
+                    var entities = collectorA.collectedEntities;
                     entities.Count.should_be(1);
                     entities.should_contain(e2);
                 };
 
                 it["clears collected entities"] = () => {
-                    observerA.ClearCollectedEntities();
-                    observerA.collectedEntities.should_be_empty();
+                    collectorA.ClearCollectedEntities();
+                    collectorA.collectedEntities.should_be_empty();
                 };
 
                 it["can ToString"] = () => {
-                    observerA.ToString().should_be("GroupObserver(Group(AllOf(1)))");
+                    collectorA.ToString().should_be("Collector(Group(AllOf(1)))");
                 };
             };
 
@@ -110,7 +110,7 @@ class describe_GroupObserver : nspec {
                 
                 it["releases entity when clearing collected entities"] = () => {
                     _pool.DestroyEntity(e);
-                    observerA.ClearCollectedEntities();
+                    collectorA.ClearCollectedEntities();
                     e.retainCount.should_be(0);
                 };
 
@@ -125,15 +125,15 @@ class describe_GroupObserver : nspec {
         context["when observing with eventType OnEntityRemoved"] = () => {
 
             before = () => {
-                observerA = new GroupObserver(groupA, GroupEventType.OnEntityRemoved);
+                collectorA = new EntityCollector(groupA, GroupEventType.OnEntityRemoved);
             };
 
             it["returns collected entities"] = () => {
                 var e = createEA();
-                observerA.collectedEntities.should_be_empty();
+                collectorA.collectedEntities.should_be_empty();
 
                 e.RemoveComponentA();
-                var entities = observerA.collectedEntities;
+                var entities = collectorA.collectedEntities;
                 entities.Count.should_be(1);
                 entities.should_contain(e);
             };
@@ -142,18 +142,18 @@ class describe_GroupObserver : nspec {
         context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
 
             before = () => {
-                observerA = new GroupObserver(groupA, GroupEventType.OnEntityAddedOrRemoved);
+                collectorA = new EntityCollector(groupA, GroupEventType.OnEntityAddedOrRemoved);
             };
 
             it["returns collected entities"] = () => {
                 var e = createEA();
-                var entities = observerA.collectedEntities;
+                var entities = collectorA.collectedEntities;
                 entities.Count.should_be(1);
                 entities.should_contain(e);
-                observerA.ClearCollectedEntities();
+                collectorA.ClearCollectedEntities();
 
                 e.RemoveComponentA();
-                entities = observerA.collectedEntities;
+                entities = collectorA.collectedEntities;
                 entities.Count.should_be(1);
                 entities.should_contain(e);
             };
@@ -167,8 +167,8 @@ class describe_GroupObserver : nspec {
                 groupB = _pool.GetGroup(Matcher.AllOf(CID.ComponentB));
             };
 
-            it["throws when group count != eventType count"] = expect<GroupObserverException>(() => {
-                observerA = new GroupObserver(
+            it["throws when group count != eventType count"] = expect<EntityCollectorException>(() => {
+                collectorA = new EntityCollector(
                     new [] { groupA },
                     new [] {
                         GroupEventType.OnEntityAdded,
@@ -180,7 +180,7 @@ class describe_GroupObserver : nspec {
             context["when observing with eventType OnEntityAdded"] = () => {
 
                 before = () => {
-                    observerA = new GroupObserver(
+                    collectorA = new EntityCollector(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEventType.OnEntityAdded,
@@ -193,21 +193,21 @@ class describe_GroupObserver : nspec {
                     var eA = createEA();
                     var eB = createEB();
 
-                    var entities = observerA.collectedEntities;
+                    var entities = collectorA.collectedEntities;
                     entities.Count.should_be(2);
                     entities.should_contain(eA);
                     entities.should_contain(eB);
                 };
 
                 it["can ToString"] = () => {
-                    observerA.ToString().should_be("GroupObserver(Group(AllOf(1)), Group(AllOf(2)))");
+                    collectorA.ToString().should_be("Collector(Group(AllOf(1)), Group(AllOf(2)))");
                 };
             };
 
             context["when observing with eventType OnEntityRemoved"] = () => {
 
                 before = () => {
-                    observerA = new GroupObserver(
+                    collectorA = new EntityCollector(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEventType.OnEntityRemoved,
@@ -218,11 +218,11 @@ class describe_GroupObserver : nspec {
                 it["returns collected entities"] = () => {
                     var eA = createEA();
                     var eB = createEB();
-                    observerA.collectedEntities.should_be_empty();
+                    collectorA.collectedEntities.should_be_empty();
 
                     eA.RemoveComponentA();
                     eB.RemoveComponentB();
-                    var entities = observerA.collectedEntities;
+                    var entities = collectorA.collectedEntities;
                     entities.Count.should_be(2);
                     entities.should_contain(eA);
                     entities.should_contain(eB);
@@ -232,7 +232,7 @@ class describe_GroupObserver : nspec {
             context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
 
                 before = () => {
-                    observerA = new GroupObserver(
+                    collectorA = new EntityCollector(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEventType.OnEntityAddedOrRemoved,
@@ -243,15 +243,15 @@ class describe_GroupObserver : nspec {
                 it["returns collected entities"] = () => {
                     var eA = createEA();
                     var eB = createEB();
-                    var entities = observerA.collectedEntities;
+                    var entities = collectorA.collectedEntities;
                     entities.Count.should_be(2);
                     entities.should_contain(eA);
                     entities.should_contain(eB);
-                    observerA.ClearCollectedEntities();
+                    collectorA.ClearCollectedEntities();
 
                     eA.RemoveComponentA();
                     eB.RemoveComponentB();
-                    entities = observerA.collectedEntities;
+                    entities = collectorA.collectedEntities;
                     entities.Count.should_be(2);
                     entities.should_contain(eA);
                     entities.should_contain(eB);
@@ -261,7 +261,7 @@ class describe_GroupObserver : nspec {
             context["when observing with mixed eventTypes"] = () => {
 
                 before = () => {
-                    observerA = new GroupObserver(
+                    collectorA = new EntityCollector(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEventType.OnEntityAdded,
@@ -272,14 +272,14 @@ class describe_GroupObserver : nspec {
                 it["returns collected entities"] = () => {
                     var eA = createEA();
                     var eB = createEB();
-                    var entities = observerA.collectedEntities;
+                    var entities = collectorA.collectedEntities;
                     entities.Count.should_be(1);
                     entities.should_contain(eA);
-                    observerA.ClearCollectedEntities();
+                    collectorA.ClearCollectedEntities();
 
                     eA.RemoveComponentA();
                     eB.RemoveComponentB();
-                    entities = observerA.collectedEntities;
+                    entities = collectorA.collectedEntities;
                     entities.Count.should_be(1);
                     entities.should_contain(eB);
                 };
