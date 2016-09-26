@@ -144,7 +144,7 @@ namespace Entitas {
         /// Creates a GroupObserver which observes all specified pools.
         /// This is useful when you want to create a GroupObserver for multiple pools
         /// which can be used with IGroupObserverSystem.
-        public static GroupObserver CreateGroupObserver(this Pool[] pools, IMatcher matcher, GroupEventType eventType = GroupEventType.OnEntityAdded) {
+        public static EntityCollector CreateGroupObserver(this Pool[] pools, IMatcher matcher, GroupEventType eventType = GroupEventType.OnEntityAdded) {
             var groups = new Group[pools.Length];
             var eventTypes = new GroupEventType[pools.Length];
 
@@ -153,7 +153,7 @@ namespace Entitas {
                 eventTypes[i] = eventType;
             }
 
-            return new GroupObserver(groups, eventTypes);
+            return new EntityCollector(groups, eventTypes);
         }
 
         /// Creates a new entity and adds copies of all specified components to it.

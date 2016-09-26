@@ -252,7 +252,7 @@ class describe_ReactiveSystem : nspec {
                     GroupEventType.OnEntityAdded,
                     GroupEventType.OnEntityRemoved
                 };
-                var groupObserver = new GroupObserver(groups, eventTypes);
+                var groupObserver = new EntityCollector(groups, eventTypes);
 
                 groupObserverSubSystem = new GroupObserverSubSystemSpy(groupObserver);
                 reactiveSystem = new ReactiveSystem(groupObserverSubSystem);

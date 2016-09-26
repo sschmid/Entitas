@@ -40,7 +40,7 @@
     <Compile Include="Entitas\Interfaces\ISystem.cs" />
     <Compile Include="Entitas\Pool.cs" />
     <Compile Include="Entitas\Extensions\PoolExtension.cs" />
-    <Compile Include="Entitas\GroupObserver.cs" />
+    <Compile Include="Entitas\EntityCollector.cs" />
     <Compile Include="Entitas\Extensions\GroupExtension.cs" />
     <Compile Include="Entitas\Interfaces\IReactiveSystem.cs" />
     <Compile Include="Entitas\ReactiveSystem.cs" />

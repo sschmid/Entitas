@@ -3,7 +3,7 @@
 public class GroupObserverActivate : IPerformanceTest {
 
     const int n = 10000;
-    GroupObserver _observer;
+    EntityCollector _observer;
 
     public void Before() {
         var pool = Helper.CreatePool();

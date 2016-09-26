@@ -2,11 +2,11 @@
 
 public class GroupObserverSubSystemSpy : ReactiveSubSystemSpyBase, IGroupObserverSystem {
 
-    public GroupObserver groupObserver { get { return _groupObserver; } }
+    public EntityCollector groupObserver { get { return _groupObserver; } }
 
-    readonly GroupObserver _groupObserver;
+    readonly EntityCollector _groupObserver;
 
-    public GroupObserverSubSystemSpy(GroupObserver groupObserver) {
+    public GroupObserverSubSystemSpy(EntityCollector groupObserver) {
         _groupObserver = groupObserver;
     }
 }

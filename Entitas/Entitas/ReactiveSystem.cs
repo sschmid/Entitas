@@ -14,7 +14,7 @@ namespace Entitas {
         public IReactiveExecuteSystem subsystem { get { return _subsystem; } }
 
         readonly IReactiveExecuteSystem _subsystem;
-        readonly GroupObserver _observer;
+        readonly EntityCollector _observer;
         readonly IMatcher _ensureComponents;
         readonly IMatcher _excludeComponents;
         readonly bool _clearAfterExecute;
@@ -36,7 +36,7 @@ namespace Entitas {
             this(subSystem, subSystem.groupObserver) {
         }
 
-        ReactiveSystem(IReactiveExecuteSystem subSystem, GroupObserver groupObserver) {
+        ReactiveSystem(IReactiveExecuteSystem subSystem, EntityCollector groupObserver) {
             _subsystem = subSystem;
             var ensureComponents = subSystem as IEnsureComponents;
             if(ensureComponents != null) {
@@ -53,7 +53,7 @@ namespace Entitas {
             _buffer = new List<Entity>();
         }
 
-        static GroupObserver createGroupObserver(Pool pool, TriggerOnEvent[] triggers) {
+        static EntityCollector createGroupObserver(Pool pool, TriggerOnEvent[] triggers) {
             var triggersLength = triggers.Length;
             var groups = new Group[triggersLength];
             var eventTypes = new GroupEventType[triggersLength];
@@ -63,7 +63,7 @@ namespace Entitas {
                 eventTypes[i] = trigger.eventType;
             }
 
-            return new GroupObserver(groups, eventTypes);
+            return new EntityCollector(groups, eventTypes);
         }
 
         /// Activates the ReactiveSystem (ReactiveSystem are activated by default) and starts observing changes

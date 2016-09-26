@@ -104,8 +104,8 @@
     <Compile Include="..\Entitas\Entitas\Group.cs">
       <Link>Linked Libraries\Entitas\Group.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\GroupObserver.cs">
-      <Link>Linked Libraries\Entitas\GroupObserver.cs</Link>
+    <Compile Include="..\Entitas\Entitas\EntityCollector.cs">
+      <Link>Linked Libraries\Entitas\EntityCollector.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Pool.cs">
       <Link>Linked Libraries\Entitas\Pool.cs</Link>

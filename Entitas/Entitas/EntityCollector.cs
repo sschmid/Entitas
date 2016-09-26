@@ -10,7 +10,7 @@ namespace Entitas {
     }
 
     /// A GroupObserver can observe one or more groups and collects changed entities based on the specified eventType.
-    public class GroupObserver {
+    public class EntityCollector {
 
         /// Returns all collected entities. Call observer.ClearCollectedEntities() once you processed all entities.
         public HashSet<Entity> collectedEntities { get { return _collectedEntities; } }
@@ -22,12 +22,12 @@ namespace Entitas {
         string _toStringCache;
 
         /// Creates a GroupObserver and will collect changed entities based on the specified eventType.
-        public GroupObserver(Group group, GroupEventType eventType)
+        public EntityCollector(Group group, GroupEventType eventType)
             : this(new [] { group }, new [] { eventType }) {
         }
 
         /// Creates a GroupObserver and will collect changed entities based on the specified eventTypes.
-        public GroupObserver(Group[] groups, GroupEventType[] eventTypes) {
+        public EntityCollector(Group[] groups, GroupEventType[] eventTypes) {
             _groups = groups;
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
             _eventTypes = eventTypes;
@@ -108,7 +108,7 @@ namespace Entitas {
             return _toStringCache;
         }
 
-        ~GroupObserver () {
+        ~EntityCollector () {
             Deactivate();
         }
     }
