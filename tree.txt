@@ -15,6 +15,7 @@
 │       └── Serialization
 │           ├── Blueprints
 │           └── Configuration
+├── Entitas.CodeGenerator
 ├── Entitas.Migration
 │   └── Entitas.Migration
 ├── Entitas.Unity
@@ -46,7 +47,7 @@
     └── Xamarin
 .
 ├── Documentation
-│   └── Entitas-0.33.0.docset.zip
+│   └── Entitas-0.34.0.docset.zip
 ├── Entitas
 │   └── Entitas
 │       ├── Caching
@@ -109,6 +110,7 @@
 │       │   │   ├── Blueprint.cs
 │       │   │   ├── BlueprintEntityExtension.cs
 │       │   │   ├── ComponentBlueprint.cs
+│       │   │   ├── HideInBlueprintInspectorAttribute.cs
 │       │   │   └── SerializableMember.cs
 │       │   ├── Configuration
 │       │   │   ├── CodeGeneratorConfig.cs
@@ -119,14 +121,15 @@
 │       │   └── TypeSerializationExtension.cs
 │       ├── EntitasException.cs
 │       ├── Entity.cs
+│       ├── EntityCollector.cs
 │       ├── EntityIndex.cs
 │       ├── Group.cs
-│       ├── GroupObserver.cs
 │       ├── Pool.cs
 │       ├── Pools.cs
 │       ├── ReactiveSystem.cs
 │       ├── Systems.cs
 │       └── entitas_version
+├── Entitas.CodeGenerator
 ├── Entitas.Migration
 │   ├── Entitas.Migration
 │   │   ├── IMigration.cs

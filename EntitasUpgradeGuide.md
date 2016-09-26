@@ -35,10 +35,20 @@ etc...
 $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/Generated/
 ```
 
+# Entitas 0.34.0 upgrade guide
+#### Before you install
+- Manually rename `GroupObserver` to `EntityCollector`
+
+#### After you intalled
+- You're fine - nothing to do for you :heart:
+
+
 # Entitas 0.33.0 upgrade guide
-`IDeinitializeSystem` has been renamed to `ITearDownSystem`. If you were using
-`IDeinitializeSystem`, manually rename it to `ITearDownSystem` before updating
-to this version.
+#### Before you install
+- Manually rename `IDeinitializeSystem` to `ITearDownSystem`
+
+#### After you intalled
+- You're fine - nothing to do for you :heart:
 
 
 # Entitas 0.32.0 upgrade guide
