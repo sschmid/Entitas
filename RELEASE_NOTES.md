@@ -14,8 +14,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 - Rename GroupObserver to EntityCollector (#168 #188)
 - Added filter condition to matchers (#165 #189)
   - `Matcher.Position.Where(e => e.position.x > 10);`
-  - Can also be used for triggers
-
+  
 #### Entitas.Serialization.Blueprints
 - Added HideInBlueprintInspectorAttribute (#185)
 
