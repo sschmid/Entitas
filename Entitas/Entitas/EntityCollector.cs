@@ -3,12 +3,6 @@ using System.Text;
 
 namespace Entitas {
 
-    public enum GroupEventType : byte {
-        OnEntityAdded,
-        OnEntityRemoved,
-        OnEntityAddedOrRemoved
-    }
-
     /// A GroupObserver can observe one or more groups and collects changed entities based on the specified eventType.
     public class EntityCollector {
 

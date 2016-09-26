@@ -3,6 +3,12 @@ using System.Linq;
 
 namespace Entitas {
 
+    public enum GroupEventType : byte {
+        OnEntityAdded,
+        OnEntityRemoved,
+        OnEntityAddedOrRemoved
+    }
+
     /// Use pool.GetGroup(matcher) to get a group of entities which match the specified matcher.
     /// Calling pool.GetGroup(matcher) with the same matcher will always return the same instance of the group.
     /// The created group is managed by the pool and will always be up to date.
