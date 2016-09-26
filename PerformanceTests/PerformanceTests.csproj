@@ -62,7 +62,7 @@
     <Compile Include="PerformanceTests\DataStructures\IterateHashetToArray.cs" />
     <Compile Include="PerformanceTests\Entity\EntityAddComponent.cs" />
     <Compile Include="PerformanceTests\Entity\ObjectGetProperty.cs" />
-    <Compile Include="PerformanceTests\GroupObserver\GroupObserverIterateCollectedEntities.cs" />
+    <Compile Include="PerformanceTests\GroupObserver\EntityCollectorIterateCollectedEntities.cs" />
     <Compile Include="PerformanceTests\DataStructures\QueueDequeue.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListQueue.cs" />
     <Compile Include="PerformanceTests\Pool\PoolCreateEntity.cs" />
@@ -79,7 +79,7 @@
     <Compile Include="PerformanceTests\Pool\PoolCreateBlueprint.cs" />
     <Compile Include="PerformanceTests\Fixtures\NameComponent.cs" />
     <Compile Include="PerformanceTests\EntityIndex\EntityIndexGetEntity.cs" />
-    <Compile Include="PerformanceTests\GroupObserver\GroupObserverActivate.cs" />
+    <Compile Include="PerformanceTests\GroupObserver\EntityCollectorActivate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -41,8 +41,8 @@ namespace PerformanceTests {
 
             //run<ObjectGetProperty>();
             //run<EmptyTest>();
-            //run<GroupObserverIterateCollectedEntities>();
-            //run<GroupObserverActivate>();
+            //run<EntityCollectorIterateCollectedEntities>();
+            //run<EntityCollectorActivate>();
 
             //run<HashSetContainsAdd>();
             //run<ArrayGetItem>();
@@ -93,8 +93,8 @@ namespace PerformanceTests {
 
         //ObjectGetProperty:                      6 ms
 
-        //GroupObserverIterateCollectedEntities:  957 ms
-        //GroupObserverActivate:                  1 ms
+        //EntityCollectorIterateCollectedEntities:957 ms
+        //EntityCollectorActivate:                1 ms
         //PropertiesCreate:                       251 ms
 
         //HashSetContainsAdd:                     173 ms

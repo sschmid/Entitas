@@ -3,10 +3,10 @@ using System.Text;
 
 namespace Entitas {
 
-    /// A GroupObserver can observe one or more groups and collects changed entities based on the specified eventType.
+    /// An EntityCollector can observe one or more groups and collects changed entities based on the specified eventType.
     public class EntityCollector {
 
-        /// Returns all collected entities. Call observer.ClearCollectedEntities() once you processed all entities.
+        /// Returns all collected entities. Call collector.ClearCollectedEntities() once you processed all entities.
         public HashSet<Entity> collectedEntities { get { return _collectedEntities; } }
 
         readonly HashSet<Entity> _collectedEntities;
@@ -15,19 +15,19 @@ namespace Entitas {
         Group.GroupChanged _addEntityCache;
         string _toStringCache;
 
-        /// Creates a GroupObserver and will collect changed entities based on the specified eventType.
+        /// Creates an EntityCollector and will collect changed entities based on the specified eventType.
         public EntityCollector(Group group, GroupEventType eventType)
             : this(new [] { group }, new [] { eventType }) {
         }
 
-        /// Creates a GroupObserver and will collect changed entities based on the specified eventTypes.
+        /// Creates an EntityCollector and will collect changed entities based on the specified eventTypes.
         public EntityCollector(Group[] groups, GroupEventType[] eventTypes) {
             _groups = groups;
             _collectedEntities = new HashSet<Entity>(EntityEqualityComparer.comparer);
             _eventTypes = eventTypes;
 
             if(groups.Length != eventTypes.Length) {
-                throw new GroupObserverException("Unbalanced count with groups (" + groups.Length +
+                throw new EntityCollectorException("Unbalanced count with groups (" + groups.Length +
                     ") and event types (" + eventTypes.Length + ").",
                     "Group and event type count must be equal.");
             }
@@ -36,7 +36,7 @@ namespace Entitas {
             Activate();
         }
 
-        /// Activates the GroupObserver (GroupObserver are activated by default) and will start collecting changed entities.
+        /// Activates the EntityCollector (EntityCollectors are activated by default) and will start collecting changed entities.
         public void Activate() {
             for (int i = 0; i < _groups.Length; i++) {
                 var group = _groups[i];
@@ -56,7 +56,7 @@ namespace Entitas {
             }
         }
 
-        /// Deactivates the GroupObserver (GroupObserver are activated by default).
+        /// Deactivates the EntityCollector (EntityCollectors are activated by default).
         /// This will also clear all collected entities.
         public void Deactivate() {
             for (int i = 0; i < _groups.Length; i++) {
@@ -84,7 +84,7 @@ namespace Entitas {
 
         public override string ToString() {
             if(_toStringCache == null) {
-                var sb = new StringBuilder().Append("GroupObserver(");
+                var sb = new StringBuilder().Append("Collector(");
 
                 const string separator = ", ";
                 var lastSeparator = _groups.Length - 1;
@@ -107,8 +107,8 @@ namespace Entitas {
         }
     }
 
-    public class GroupObserverException : EntitasException {
-        public GroupObserverException(string message, string hint) : base(message, hint) {
+    public class EntityCollectorException : EntitasException {
+        public EntityCollectorException(string message, string hint) : base(message, hint) {
         }
     }
 }

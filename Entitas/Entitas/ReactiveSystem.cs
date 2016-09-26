@@ -2,19 +2,19 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    /// A ReactiveSystem manages your implementation of a IReactiveSystem, IMultiReactiveSystem or IGroupObserverSystem subsystem.
+    /// A ReactiveSystem manages your implementation of a IReactiveSystem, IMultiReactiveSystem or IEntityCollectorSystem subsystem.
     /// It will only call subsystem.Execute() if there were changes based on the triggers and eventTypes specified by your subsystem
     /// and will only pass in changed entities. A common use-case is to react to changes,
     /// e.g. a change of the position of an entity to update the gameObject.transform.position of the related gameObject.
     /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
-    /// This will automatically wrap MySystem in a ReactiveSystem if it implements IReactiveSystem, IMultiReactiveSystem or IGroupObserverSystem.
+    /// This will automatically wrap MySystem in a ReactiveSystem if it implements IReactiveSystem, IMultiReactiveSystem or IEntityCollectorSystem.
     public class ReactiveSystem : IExecuteSystem {
 
         /// Returns the subsystem which will be managed by this instance of ReactiveSystem.
         public IReactiveExecuteSystem subsystem { get { return _subsystem; } }
 
         readonly IReactiveExecuteSystem _subsystem;
-        readonly EntityCollector _observer;
+        readonly EntityCollector _collector;
         readonly IMatcher _ensureComponents;
         readonly IMatcher _excludeComponents;
         readonly bool _clearAfterExecute;
@@ -23,20 +23,20 @@ namespace Entitas {
 
         /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
         public ReactiveSystem(Pool pool, IReactiveSystem subSystem) :
-            this(subSystem, createGroupObserver(pool, new [] { subSystem.trigger })) {
+            this(subSystem, createEntityCollector(pool, new [] { subSystem.trigger })) {
         }
 
         /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
         public ReactiveSystem(Pool pool, IMultiReactiveSystem subSystem) :
-            this(subSystem, createGroupObserver(pool, subSystem.triggers)) {
+            this(subSystem, createEntityCollector(pool, subSystem.triggers)) {
         }
 
         /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
-        public ReactiveSystem(IGroupObserverSystem subSystem) :
-            this(subSystem, subSystem.groupObserver) {
+        public ReactiveSystem(IEntityCollectorSystem subSystem) :
+            this(subSystem, subSystem.entityCollector) {
         }
 
-        ReactiveSystem(IReactiveExecuteSystem subSystem, EntityCollector groupObserver) {
+        ReactiveSystem(IReactiveExecuteSystem subSystem, EntityCollector collector) {
             _subsystem = subSystem;
             var ensureComponents = subSystem as IEnsureComponents;
             if(ensureComponents != null) {
@@ -49,11 +49,11 @@ namespace Entitas {
 
             _clearAfterExecute = (subSystem as IClearReactiveSystem) != null;
 
-            _observer = groupObserver;
+            _collector = collector;
             _buffer = new List<Entity>();
         }
 
-        static EntityCollector createGroupObserver(Pool pool, TriggerOnEvent[] triggers) {
+        static EntityCollector createEntityCollector(Pool pool, TriggerOnEvent[] triggers) {
             var triggersLength = triggers.Length;
             var groups = new Group[triggersLength];
             var eventTypes = new GroupEventType[triggersLength];
@@ -69,51 +69,51 @@ namespace Entitas {
         /// Activates the ReactiveSystem (ReactiveSystem are activated by default) and starts observing changes
         /// based on the triggers and eventTypes specified by the subsystem.
         public void Activate() {
-            _observer.Activate();
+            _collector.Activate();
         }
 
         /// Deactivates the ReactiveSystem (ReactiveSystem are activated by default).
         /// No changes will be tracked while deactivated.
         /// This will also clear the ReactiveSystems.
         public void Deactivate() {
-            _observer.Deactivate();
+            _collector.Deactivate();
         }
 
         /// Clears all accumulated changes.
         public void Clear() {
-            _observer.ClearCollectedEntities();
+            _collector.ClearCollectedEntities();
         }
 
         /// Will call subsystem.Execute() with changed entities if there are any. Otherwise it will not call subsystem.Execute().
         public void Execute() {
-            if(_observer.collectedEntities.Count != 0) {
+            if(_collector.collectedEntities.Count != 0) {
                 if(_ensureComponents != null) {
                     if(_excludeComponents != null) {
-                        foreach(var e in _observer.collectedEntities) {
+                        foreach(var e in _collector.collectedEntities) {
                             if(_ensureComponents.Matches(e) && !_excludeComponents.Matches(e)) {
                                 _buffer.Add(e.Retain(this));
                             }
                         }
                     } else {
-                        foreach(var e in _observer.collectedEntities) {
+                        foreach(var e in _collector.collectedEntities) {
                             if(_ensureComponents.Matches(e)) {
                                 _buffer.Add(e.Retain(this));
                             }
                         }
                     }
                 } else if(_excludeComponents != null) {
-                    foreach(var e in _observer.collectedEntities) {
+                    foreach(var e in _collector.collectedEntities) {
                         if(!_excludeComponents.Matches(e)) {
                             _buffer.Add(e.Retain(this));
                         }
                     }
                 } else {
-                    foreach(var e in _observer.collectedEntities) {
+                    foreach(var e in _collector.collectedEntities) {
                         _buffer.Add(e.Retain(this));
                     }
                 }
 
-                _observer.ClearCollectedEntities();
+                _collector.ClearCollectedEntities();
                 if(_buffer.Count != 0) {
                     _subsystem.Execute(_buffer);
                     for (int i = 0; i < _buffer.Count; i++) {
@@ -121,7 +121,7 @@ namespace Entitas {
                     }
                     _buffer.Clear();
                     if(_clearAfterExecute) {
-                        _observer.ClearCollectedEntities();
+                        _collector.ClearCollectedEntities();
                     }
                 }
             }

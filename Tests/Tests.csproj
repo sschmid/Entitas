@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="Tests\Entitas\describe_Entity.cs" />
     <Compile Include="Tests\Entitas\describe_Group.cs" />
-    <Compile Include="Tests\Entitas\describe_GroupObserver.cs" />
+    <Compile Include="Tests\Entitas\describe_EntityCollector.cs" />
     <Compile Include="Tests\Entitas\describe_Matcher.cs" />
     <Compile Include="Tests\Entitas\describe_Pool.cs" />
     <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
@@ -336,7 +336,7 @@
     <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\TearDownSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ExecuteSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\GroupObserverSubSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\EntityCollectorSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteCleanupTearDownSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveSubSystemSpy.cs" />

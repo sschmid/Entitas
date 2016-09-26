@@ -76,7 +76,7 @@ class describe_ReactiveSystem : nspec {
                 var e = createEntityAB();
                 var retainCount = e.retainCount;
                 reactiveSystem.Execute();
-                retainCount.should_be(3); // retained by pool, group and group observer
+                retainCount.should_be(3); // retained by pool, group and entity collector
                 e.retainCount.should_be(2); // retained by pool and group
             };
 
@@ -234,9 +234,9 @@ class describe_ReactiveSystem : nspec {
             };
         };
 
-        context["GroupObserverSystem"] = () => {
+        context["EntityCollectorSystem"] = () => {
 
-            GroupObserverSubSystemSpy groupObserverSubSystem = null;
+            EntityCollectorSubSystemSpy entityCollectorSubSystem = null;
             Pool pool1 = null;
             Pool pool2 = null;
 
@@ -252,13 +252,13 @@ class describe_ReactiveSystem : nspec {
                     GroupEventType.OnEntityAdded,
                     GroupEventType.OnEntityRemoved
                 };
-                var groupObserver = new EntityCollector(groups, eventTypes);
+                var entityCollector = new EntityCollector(groups, eventTypes);
 
-                groupObserverSubSystem = new GroupObserverSubSystemSpy(groupObserver);
-                reactiveSystem = new ReactiveSystem(groupObserverSubSystem);
+                entityCollectorSubSystem = new EntityCollectorSubSystemSpy(entityCollector);
+                reactiveSystem = new ReactiveSystem(entityCollectorSubSystem);
             };
 
-            it["executes when a triggered by groupObserver"] = () => {
+            it["executes when a triggered by entityCollector"] = () => {
                 var eA1 = pool1.CreateEntity().AddComponentA();
                 pool2.CreateEntity().AddComponentA();
 
@@ -266,12 +266,12 @@ class describe_ReactiveSystem : nspec {
                 var eB2 = pool2.CreateEntity().AddComponentB();
 
                 reactiveSystem.Execute();
-                assertEntities(groupObserverSubSystem, eA1);
+                assertEntities(entityCollectorSubSystem, eA1);
 
                 eB1.RemoveComponentB();
                 eB2.RemoveComponentB();
                 reactiveSystem.Execute();
-                assertEntities(groupObserverSubSystem, eB2, 2);
+                assertEntities(entityCollectorSubSystem, eB2, 2);
             };
         };
 
@@ -315,7 +315,7 @@ class describe_ReactiveSystem : nspec {
 
                         reactiveSystem.Execute();
                         didExecute.should_be(1);
-                        retainCount.should_be(3); // retained by pool, group and group observer
+                        retainCount.should_be(3); // retained by pool, group and entity collector
                         eABC.retainCount.should_be(2); // retained by pool and group
                     };
 
@@ -329,7 +329,7 @@ class describe_ReactiveSystem : nspec {
 
                         reactiveSystem.Execute();
                         didExecute.should_be(1);
-                        retainCount.should_be(3); // retained by pool, group and group observer
+                        retainCount.should_be(3); // retained by pool, group and entity collector
                         eAB.retainCount.should_be(2); // retained by pool and group
                         eABC.retainCount.should_be(2); // retained by pool and group
                     };
