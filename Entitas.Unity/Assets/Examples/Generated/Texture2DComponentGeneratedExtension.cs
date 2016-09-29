@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public Texture2DComponent texture2D { get { return (Texture2DComponent)GetComponent(VisualDebuggingComponentIds.Texture2D); } }
 
+    public partial class Entity {
+
+        public Texture2DComponent texture2D { get { return (Texture2DComponent)GetComponent(VisualDebuggingComponentIds.Texture2D); } }
         public bool hasTexture2D { get { return HasComponent(VisualDebuggingComponentIds.Texture2D); } }
 
         public Entity AddTexture2D(UnityEngine.Texture2D newTexture2D) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherTexture2D;
 
         public static IMatcher Texture2D {
             get {
-                if (_matcherTexture2D == null) {
+                if(_matcherTexture2D == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Texture2D);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherTexture2D = matcher;

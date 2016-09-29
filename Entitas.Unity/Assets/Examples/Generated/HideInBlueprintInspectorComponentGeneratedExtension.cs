@@ -9,14 +9,16 @@
 using Entitas;
 
 namespace Entitas {
+
     public partial class Entity {
+
         static readonly HideInBlueprintInspectorComponent hideInBlueprintInspectorComponent = new HideInBlueprintInspectorComponent();
 
         public bool isHideInBlueprintInspector {
             get { return HasComponent(BlueprintsComponentIds.HideInBlueprintInspector); }
             set {
-                if (value != isHideInBlueprintInspector) {
-                    if (value) {
+                if(value != isHideInBlueprintInspector) {
+                    if(value) {
                         AddComponent(BlueprintsComponentIds.HideInBlueprintInspector, hideInBlueprintInspectorComponent);
                     } else {
                         RemoveComponent(BlueprintsComponentIds.HideInBlueprintInspector);
@@ -33,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class BlueprintsMatcher {
+
         static IMatcher _matcherHideInBlueprintInspector;
 
         public static IMatcher HideInBlueprintInspector {
             get {
-                if (_matcherHideInBlueprintInspector == null) {
+                if(_matcherHideInBlueprintInspector == null) {
                     var matcher = (Matcher)Matcher.AllOf(BlueprintsComponentIds.HideInBlueprintInspector);
                     matcher.componentNames = BlueprintsComponentIds.componentNames;
                     _matcherHideInBlueprintInspector = matcher;

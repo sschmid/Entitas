@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public DateTimeComponent dateTime { get { return (DateTimeComponent)GetComponent(VisualDebuggingComponentIds.DateTime); } }
 
+    public partial class Entity {
+
+        public DateTimeComponent dateTime { get { return (DateTimeComponent)GetComponent(VisualDebuggingComponentIds.DateTime); } }
         public bool hasDateTime { get { return HasComponent(VisualDebuggingComponentIds.DateTime); } }
 
         public Entity AddDateTime(System.DateTime newDate) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherDateTime;
 
         public static IMatcher DateTime {
             get {
-                if (_matcherDateTime == null) {
+                if(_matcherDateTime == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.DateTime);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherDateTime = matcher;

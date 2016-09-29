@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public HashSetComponent hashSet { get { return (HashSetComponent)GetComponent(VisualDebuggingComponentIds.HashSet); } }
 
+    public partial class Entity {
+
+        public HashSetComponent hashSet { get { return (HashSetComponent)GetComponent(VisualDebuggingComponentIds.HashSet); } }
         public bool hasHashSet { get { return HasComponent(VisualDebuggingComponentIds.HashSet); } }
 
         public Entity AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherHashSet;
 
         public static IMatcher HashSet {
             get {
-                if (_matcherHashSet == null) {
+                if(_matcherHashSet == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.HashSet);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherHashSet = matcher;

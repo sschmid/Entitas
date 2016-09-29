@@ -9,13 +9,15 @@
 using Entitas;
 
 public class CoolNameComponent : IComponent {
+
     public BadName value;
 }
 
 namespace Entitas {
-    public partial class Entity {
-        public CoolNameComponent coolName { get { return (CoolNameComponent)GetComponent(VisualDebuggingComponentIds.CoolName); } }
 
+    public partial class Entity {
+
+        public CoolNameComponent coolName { get { return (CoolNameComponent)GetComponent(VisualDebuggingComponentIds.CoolName); } }
         public bool hasCoolName { get { return HasComponent(VisualDebuggingComponentIds.CoolName); } }
 
         public Entity AddCoolName(BadName newValue) {
@@ -38,11 +40,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherCoolName;
 
         public static IMatcher CoolName {
             get {
-                if (_matcherCoolName == null) {
+                if(_matcherCoolName == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.CoolName);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherCoolName = matcher;

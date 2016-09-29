@@ -9,13 +9,15 @@
 using Entitas;
 
 public class VelocityComponent : IComponent {
+
     public IntVector2 value;
 }
 
 namespace Entitas {
-    public partial class Entity {
-        public VelocityComponent velocity { get { return (VelocityComponent)GetComponent(ComponentIds.Velocity); } }
 
+    public partial class Entity {
+
+        public VelocityComponent velocity { get { return (VelocityComponent)GetComponent(ComponentIds.Velocity); } }
         public bool hasVelocity { get { return HasComponent(ComponentIds.Velocity); } }
 
         public Entity AddVelocity(IntVector2 newValue) {
@@ -37,11 +39,12 @@ namespace Entitas {
     }
 
     public partial class Matcher {
+
         static IMatcher _matcherVelocity;
 
         public static IMatcher Velocity {
             get {
-                if (_matcherVelocity == null) {
+                if(_matcherVelocity == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.Velocity);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherVelocity = matcher;
@@ -54,11 +57,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherVelocity;
 
         public static IMatcher Velocity {
             get {
-                if (_matcherVelocity == null) {
+                if(_matcherVelocity == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Velocity);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherVelocity = matcher;

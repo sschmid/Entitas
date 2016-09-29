@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public ColorComponent color { get { return (ColorComponent)GetComponent(VisualDebuggingComponentIds.Color); } }
 
+    public partial class Entity {
+
+        public ColorComponent color { get { return (ColorComponent)GetComponent(VisualDebuggingComponentIds.Color); } }
         public bool hasColor { get { return HasComponent(VisualDebuggingComponentIds.Color); } }
 
         public Entity AddColor(UnityEngine.Color newColor) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherColor;
 
         public static IMatcher Color {
             get {
-                if (_matcherColor == null) {
+                if(_matcherColor == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Color);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherColor = matcher;

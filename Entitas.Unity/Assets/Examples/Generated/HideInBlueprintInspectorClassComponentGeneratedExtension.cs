@@ -10,13 +10,15 @@ using Entitas;
 
 [Entitas.Serialization.Blueprints.HideInBlueprintInspectorAttribute]
 public class HideInBlueprintInspectorClassComponent : IComponent {
+
     public HideInBlueprintInspectorClass value;
 }
 
 namespace Entitas {
-    public partial class Entity {
-        public HideInBlueprintInspectorClassComponent hideInBlueprintInspectorClass { get { return (HideInBlueprintInspectorClassComponent)GetComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass); } }
 
+    public partial class Entity {
+
+        public HideInBlueprintInspectorClassComponent hideInBlueprintInspectorClass { get { return (HideInBlueprintInspectorClassComponent)GetComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass); } }
         public bool hasHideInBlueprintInspectorClass { get { return HasComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass); } }
 
         public Entity AddHideInBlueprintInspectorClass(HideInBlueprintInspectorClass newValue) {
@@ -39,11 +41,12 @@ namespace Entitas {
 }
 
     public partial class BlueprintsMatcher {
+
         static IMatcher _matcherHideInBlueprintInspectorClass;
 
         public static IMatcher HideInBlueprintInspectorClass {
             get {
-                if (_matcherHideInBlueprintInspectorClass == null) {
+                if(_matcherHideInBlueprintInspectorClass == null) {
                     var matcher = (Matcher)Matcher.AllOf(BlueprintsComponentIds.HideInBlueprintInspectorClass);
                     matcher.componentNames = BlueprintsComponentIds.componentNames;
                     _matcherHideInBlueprintInspectorClass = matcher;

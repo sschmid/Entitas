@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public AnimationCurveComponent animationCurve { get { return (AnimationCurveComponent)GetComponent(VisualDebuggingComponentIds.AnimationCurve); } }
 
+    public partial class Entity {
+
+        public AnimationCurveComponent animationCurve { get { return (AnimationCurveComponent)GetComponent(VisualDebuggingComponentIds.AnimationCurve); } }
         public bool hasAnimationCurve { get { return HasComponent(VisualDebuggingComponentIds.AnimationCurve); } }
 
         public Entity AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherAnimationCurve;
 
         public static IMatcher AnimationCurve {
             get {
-                if (_matcherAnimationCurve == null) {
+                if(_matcherAnimationCurve == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.AnimationCurve);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherAnimationCurve = matcher;

@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public JaggedArrayComponent jaggedArray { get { return (JaggedArrayComponent)GetComponent(VisualDebuggingComponentIds.JaggedArray); } }
 
+    public partial class Entity {
+
+        public JaggedArrayComponent jaggedArray { get { return (JaggedArrayComponent)GetComponent(VisualDebuggingComponentIds.JaggedArray); } }
         public bool hasJaggedArray { get { return HasComponent(VisualDebuggingComponentIds.JaggedArray); } }
 
         public Entity AddJaggedArray(string[][] newJaggedArray) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherJaggedArray;
 
         public static IMatcher JaggedArray {
             get {
-                if (_matcherJaggedArray == null) {
+                if(_matcherJaggedArray == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.JaggedArray);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherJaggedArray = matcher;

@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public Vector4Component vector4 { get { return (Vector4Component)GetComponent(VisualDebuggingComponentIds.Vector4); } }
 
+    public partial class Entity {
+
+        public Vector4Component vector4 { get { return (Vector4Component)GetComponent(VisualDebuggingComponentIds.Vector4); } }
         public bool hasVector4 { get { return HasComponent(VisualDebuggingComponentIds.Vector4); } }
 
         public Entity AddVector4(UnityEngine.Vector4 newVector4) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherVector4;
 
         public static IMatcher Vector4 {
             get {
-                if (_matcherVector4 == null) {
+                if(_matcherVector4 == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Vector4);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherVector4 = matcher;

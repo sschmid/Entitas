@@ -9,13 +9,15 @@
 using Entitas;
 
 public class ISomeInterfaceComponent : IComponent {
+
     public ISomeInterface value;
 }
 
 namespace Entitas {
-    public partial class Entity {
-        public ISomeInterfaceComponent iSomeInterface { get { return (ISomeInterfaceComponent)GetComponent(VisualDebuggingComponentIds.ISomeInterface); } }
 
+    public partial class Entity {
+
+        public ISomeInterfaceComponent iSomeInterface { get { return (ISomeInterfaceComponent)GetComponent(VisualDebuggingComponentIds.ISomeInterface); } }
         public bool hasISomeInterface { get { return HasComponent(VisualDebuggingComponentIds.ISomeInterface); } }
 
         public Entity AddISomeInterface(ISomeInterface newValue) {
@@ -37,14 +39,13 @@ namespace Entitas {
     }
 
     public partial class Pool {
+
         public Entity iSomeInterfaceEntity { get { return GetGroup(VisualDebuggingMatcher.ISomeInterface).GetSingleEntity(); } }
-
         public ISomeInterfaceComponent iSomeInterface { get { return iSomeInterfaceEntity.iSomeInterface; } }
-
         public bool hasISomeInterface { get { return iSomeInterfaceEntity != null; } }
 
         public Entity SetISomeInterface(ISomeInterface newValue) {
-            if (hasISomeInterface) {
+            if(hasISomeInterface) {
                 throw new EntitasException("Could not set iSomeInterface!\n" + this + " already has an entity with ISomeInterfaceComponent!",
                     "You should check if the pool already has a iSomeInterfaceEntity before setting it or use pool.ReplaceISomeInterface().");
             }
@@ -55,7 +56,7 @@ namespace Entitas {
 
         public Entity ReplaceISomeInterface(ISomeInterface newValue) {
             var entity = iSomeInterfaceEntity;
-            if (entity == null) {
+            if(entity == null) {
                 entity = SetISomeInterface(newValue);
             } else {
                 entity.ReplaceISomeInterface(newValue);
@@ -71,11 +72,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherISomeInterface;
 
         public static IMatcher ISomeInterface {
             get {
-                if (_matcherISomeInterface == null) {
+                if(_matcherISomeInterface == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.ISomeInterface);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherISomeInterface = matcher;

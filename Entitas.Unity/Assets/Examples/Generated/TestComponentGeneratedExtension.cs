@@ -9,14 +9,16 @@
 using Entitas;
 
 namespace Entitas {
+
     public partial class Entity {
+
         static readonly TestComponent testComponent = new TestComponent();
 
         public bool isTest {
             get { return HasComponent(VisualDebuggingComponentIds.Test); }
             set {
-                if (value != isTest) {
-                    if (value) {
+                if(value != isTest) {
+                    if(value) {
                         AddComponent(VisualDebuggingComponentIds.Test, testComponent);
                     } else {
                         RemoveComponent(VisualDebuggingComponentIds.Test);
@@ -33,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherTest;
 
         public static IMatcher Test {
             get {
-                if (_matcherTest == null) {
+                if(_matcherTest == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Test);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherTest = matcher;

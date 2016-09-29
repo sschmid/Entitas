@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public static class TestComponentIds {
+
     public const int Some = 0;
 
     public const int TotalComponents = 1;

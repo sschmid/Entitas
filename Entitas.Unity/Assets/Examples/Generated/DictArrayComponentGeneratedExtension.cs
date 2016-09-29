@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public DictArrayComponent dictArray { get { return (DictArrayComponent)GetComponent(VisualDebuggingComponentIds.DictArray); } }
 
+    public partial class Entity {
+
+        public DictArrayComponent dictArray { get { return (DictArrayComponent)GetComponent(VisualDebuggingComponentIds.DictArray); } }
         public bool hasDictArray { get { return HasComponent(VisualDebuggingComponentIds.DictArray); } }
 
         public Entity AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
@@ -36,11 +37,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherDictArray;
 
         public static IMatcher DictArray {
             get {
-                if (_matcherDictArray == null) {
+                if(_matcherDictArray == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.DictArray);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherDictArray = matcher;

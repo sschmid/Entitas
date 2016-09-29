@@ -9,13 +9,15 @@
 using Entitas;
 
 public class PositionComponent : IComponent {
+
     public IntVector2 value;
 }
 
 namespace Entitas {
-    public partial class Entity {
-        public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
 
+    public partial class Entity {
+
+        public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
         public bool hasPosition { get { return HasComponent(ComponentIds.Position); } }
 
         public Entity AddPosition(IntVector2 newValue) {
@@ -37,11 +39,12 @@ namespace Entitas {
     }
 
     public partial class Matcher {
+
         static IMatcher _matcherPosition;
 
         public static IMatcher Position {
             get {
-                if (_matcherPosition == null) {
+                if(_matcherPosition == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.Position);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherPosition = matcher;
@@ -54,11 +57,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherPosition;
 
         public static IMatcher Position {
             get {
-                if (_matcherPosition == null) {
+                if(_matcherPosition == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Position);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherPosition = matcher;

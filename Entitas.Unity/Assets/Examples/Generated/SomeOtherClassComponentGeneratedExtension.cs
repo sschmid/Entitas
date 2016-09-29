@@ -9,13 +9,15 @@
 using Entitas;
 
 public class SomeOtherClassComponent : IComponent {
+
     public SomeNamespace.SomeOtherClass value;
 }
 
 namespace Entitas {
-    public partial class Entity {
-        public SomeOtherClassComponent someOtherClass { get { return (SomeOtherClassComponent)GetComponent(VisualDebuggingComponentIds.SomeOtherClass); } }
 
+    public partial class Entity {
+
+        public SomeOtherClassComponent someOtherClass { get { return (SomeOtherClassComponent)GetComponent(VisualDebuggingComponentIds.SomeOtherClass); } }
         public bool hasSomeOtherClass { get { return HasComponent(VisualDebuggingComponentIds.SomeOtherClass); } }
 
         public Entity AddSomeOtherClass(SomeNamespace.SomeOtherClass newValue) {
@@ -38,11 +40,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherSomeOtherClass;
 
         public static IMatcher SomeOtherClass {
             get {
-                if (_matcherSomeOtherClass == null) {
+                if(_matcherSomeOtherClass == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.SomeOtherClass);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherSomeOtherClass = matcher;

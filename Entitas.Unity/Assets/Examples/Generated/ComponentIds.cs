@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public static class ComponentIds {
+
     public const int Position = 0;
     public const int Velocity = 1;
     public const int DefaultPool = 2;

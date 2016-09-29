@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public UnsupportedObjectComponent unsupportedObject { get { return (UnsupportedObjectComponent)GetComponent(VisualDebuggingComponentIds.UnsupportedObject); } }
 
+    public partial class Entity {
+
+        public UnsupportedObjectComponent unsupportedObject { get { return (UnsupportedObjectComponent)GetComponent(VisualDebuggingComponentIds.UnsupportedObject); } }
         public bool hasUnsupportedObject { get { return HasComponent(VisualDebuggingComponentIds.UnsupportedObject); } }
 
         public Entity AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherUnsupportedObject;
 
         public static IMatcher UnsupportedObject {
             get {
-                if (_matcherUnsupportedObject == null) {
+                if(_matcherUnsupportedObject == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.UnsupportedObject);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherUnsupportedObject = matcher;

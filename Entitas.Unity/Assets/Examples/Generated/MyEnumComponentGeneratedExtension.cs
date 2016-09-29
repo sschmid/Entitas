@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public MyEnumComponent myEnum { get { return (MyEnumComponent)GetComponent(VisualDebuggingComponentIds.MyEnum); } }
 
+    public partial class Entity {
+
+        public MyEnumComponent myEnum { get { return (MyEnumComponent)GetComponent(VisualDebuggingComponentIds.MyEnum); } }
         public bool hasMyEnum { get { return HasComponent(VisualDebuggingComponentIds.MyEnum); } }
 
         public Entity AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherMyEnum;
 
         public static IMatcher MyEnum {
             get {
-                if (_matcherMyEnum == null) {
+                if(_matcherMyEnum == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.MyEnum);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherMyEnum = matcher;

@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public ListArrayComponent listArray { get { return (ListArrayComponent)GetComponent(VisualDebuggingComponentIds.ListArray); } }
 
+    public partial class Entity {
+
+        public ListArrayComponent listArray { get { return (ListArrayComponent)GetComponent(VisualDebuggingComponentIds.ListArray); } }
         public bool hasListArray { get { return HasComponent(VisualDebuggingComponentIds.ListArray); } }
 
         public Entity AddListArray(System.Collections.Generic.List<string>[] newListArray) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherListArray;
 
         public static IMatcher ListArray {
             get {
-                if (_matcherListArray == null) {
+                if(_matcherListArray == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.ListArray);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherListArray = matcher;

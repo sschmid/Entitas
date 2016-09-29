@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public MyFlagsComponent myFlags { get { return (MyFlagsComponent)GetComponent(VisualDebuggingComponentIds.MyFlags); } }
 
+    public partial class Entity {
+
+        public MyFlagsComponent myFlags { get { return (MyFlagsComponent)GetComponent(VisualDebuggingComponentIds.MyFlags); } }
         public bool hasMyFlags { get { return HasComponent(VisualDebuggingComponentIds.MyFlags); } }
 
         public Entity AddMyFlags(MyFlagsComponent.MyFlags newMyFlags) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherMyFlags;
 
         public static IMatcher MyFlags {
             get {
-                if (_matcherMyFlags == null) {
+                if(_matcherMyFlags == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.MyFlags);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherMyFlags = matcher;

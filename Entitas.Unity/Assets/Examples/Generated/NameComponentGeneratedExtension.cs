@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public NameComponent name { get { return (NameComponent)GetComponent(BlueprintsComponentIds.Name); } }
 
+    public partial class Entity {
+
+        public NameComponent name { get { return (NameComponent)GetComponent(BlueprintsComponentIds.Name); } }
         public bool hasName { get { return HasComponent(BlueprintsComponentIds.Name); } }
 
         public Entity AddName(string newValue) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class BlueprintsMatcher {
+
         static IMatcher _matcherName;
 
         public static IMatcher Name {
             get {
-                if (_matcherName == null) {
+                if(_matcherName == null) {
                     var matcher = (Matcher)Matcher.AllOf(BlueprintsComponentIds.Name);
                     matcher.componentNames = BlueprintsComponentIds.componentNames;
                     _matcherName = matcher;

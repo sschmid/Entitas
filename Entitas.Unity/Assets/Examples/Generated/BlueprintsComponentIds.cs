@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public static class BlueprintsComponentIds {
+
     public const int Age = 0;
     public const int HideInBlueprintInspectorClass = 1;
     public const int HideInBlueprintInspector = 2;

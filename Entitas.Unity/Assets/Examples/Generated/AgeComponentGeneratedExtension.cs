@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public AgeComponent age { get { return (AgeComponent)GetComponent(BlueprintsComponentIds.Age); } }
 
+    public partial class Entity {
+
+        public AgeComponent age { get { return (AgeComponent)GetComponent(BlueprintsComponentIds.Age); } }
         public bool hasAge { get { return HasComponent(BlueprintsComponentIds.Age); } }
 
         public Entity AddAge(int newValue) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class BlueprintsMatcher {
+
         static IMatcher _matcherAge;
 
         public static IMatcher Age {
             get {
-                if (_matcherAge == null) {
+                if(_matcherAge == null) {
                     var matcher = (Matcher)Matcher.AllOf(BlueprintsComponentIds.Age);
                     matcher.componentNames = BlueprintsComponentIds.componentNames;
                     _matcherAge = matcher;

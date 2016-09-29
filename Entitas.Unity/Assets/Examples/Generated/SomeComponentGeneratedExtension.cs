@@ -9,14 +9,16 @@
 using Entitas;
 
 namespace Entitas {
+
     public partial class Entity {
+
         static readonly SomeComponent someComponent = new SomeComponent();
 
         public bool isSome {
             get { return HasComponent(TestComponentIds.Some); }
             set {
-                if (value != isSome) {
-                    if (value) {
+                if(value != isSome) {
+                    if(value) {
                         AddComponent(TestComponentIds.Some, someComponent);
                     } else {
                         RemoveComponent(TestComponentIds.Some);
@@ -33,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class TestMatcher {
+
         static IMatcher _matcherSome;
 
         public static IMatcher Some {
             get {
-                if (_matcherSome == null) {
+                if(_matcherSome == null) {
                     var matcher = (Matcher)Matcher.AllOf(TestComponentIds.Some);
                     matcher.componentNames = TestComponentIds.componentNames;
                     _matcherSome = matcher;

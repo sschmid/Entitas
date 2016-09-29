@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public DictionaryComponent dictionary { get { return (DictionaryComponent)GetComponent(VisualDebuggingComponentIds.Dictionary); } }
 
+    public partial class Entity {
+
+        public DictionaryComponent dictionary { get { return (DictionaryComponent)GetComponent(VisualDebuggingComponentIds.Dictionary); } }
         public bool hasDictionary { get { return HasComponent(VisualDebuggingComponentIds.Dictionary); } }
 
         public Entity AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherDictionary;
 
         public static IMatcher Dictionary {
             get {
-                if (_matcherDictionary == null) {
+                if(_matcherDictionary == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Dictionary);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherDictionary = matcher;

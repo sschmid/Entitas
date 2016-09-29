@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public BoundsComponent bounds { get { return (BoundsComponent)GetComponent(VisualDebuggingComponentIds.Bounds); } }
 
+    public partial class Entity {
+
+        public BoundsComponent bounds { get { return (BoundsComponent)GetComponent(VisualDebuggingComponentIds.Bounds); } }
         public bool hasBounds { get { return HasComponent(VisualDebuggingComponentIds.Bounds); } }
 
         public Entity AddBounds(UnityEngine.Bounds newBounds) {
@@ -34,11 +35,12 @@ namespace Entitas {
 }
 
     public partial class VisualDebuggingMatcher {
+
         static IMatcher _matcherBounds;
 
         public static IMatcher Bounds {
             get {
-                if (_matcherBounds == null) {
+                if(_matcherBounds == null) {
                     var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Bounds);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherBounds = matcher;
