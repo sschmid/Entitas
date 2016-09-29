@@ -21,7 +21,8 @@ bin
 test-results
 
 # Custom
-Build
+Build/*
+!Build/*.zip
 
 Entitas.Unity/Entitas.Unity.sln
 Entitas.Unity/Assets/Libraries
