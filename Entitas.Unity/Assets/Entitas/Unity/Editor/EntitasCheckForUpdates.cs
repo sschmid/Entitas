@@ -9,6 +9,47 @@ using UnityEngine;
 
 namespace Entitas.Unity {
 
+    public enum EntitasUpdateState {
+        UpToDate,
+        UpdateAvailable,
+        AheadOfLatestRelease,
+        NoConnection
+    }
+
+    public class EntitasUpdateInfo {
+
+        public EntitasUpdateState updateState { get { return _updateState; } }
+
+        public readonly string localVersionString;
+        public readonly string remoteVersionString;
+
+        readonly EntitasUpdateState _updateState;
+
+        public EntitasUpdateInfo(string localVersionString, string remoteVersionString) {
+            this.localVersionString = localVersionString.Trim();
+            this.remoteVersionString = remoteVersionString.Trim();
+
+            if(remoteVersionString != string.Empty) {
+                var localVersion = new Version(localVersionString);
+                var remoteVersion = new Version(remoteVersionString);
+
+                switch(remoteVersion.CompareTo(localVersion)) {
+                    case 1:
+                        _updateState = EntitasUpdateState.UpdateAvailable;
+                        break;
+                    case 0:
+                        _updateState = EntitasUpdateState.UpToDate;
+                        break;
+                    case -1:
+                        _updateState = EntitasUpdateState.AheadOfLatestRelease;
+                        break;
+                }
+            } else {
+                _updateState = EntitasUpdateState.NoConnection;
+            }
+        }
+    }
+
     public static class EntitasCheckForUpdates {
 
         const string URL_GITHUB_API_LATEST_RELEASE = "https://api.github.com/repos/sschmid/Entitas-CSharp/releases/latest";
@@ -16,30 +57,14 @@ namespace Entitas.Unity {
 
         [MenuItem(EntitasMenuItems.check_for_updates, false, EntitasMenuItemPriorities.check_for_updates)]
         public static void CheckForUpdates() {
-            var response = requestLatestRelease();
-            var remoteVersion = parseVersion(response);
+            var info = GetUpdateInfo();
+            displayUpdateInfo(info);
+        }
+
+        public static EntitasUpdateInfo GetUpdateInfo() {
             var localVersion = GetLocalVersion();
-
-            displayUpdateInfo(remoteVersion, localVersion);
-        }
-
-        static string requestLatestRelease() {
-            ServicePointManager.ServerCertificateValidationCallback += trustSource;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL_GITHUB_API_LATEST_RELEASE);
-            httpWebRequest.UserAgent = Environment.UserName + "sschmid/Entitas-CSharp/Entitas.Unity/CheckForUpdates";
-            httpWebRequest.Timeout = 15000;
-            var webResponse = httpWebRequest.GetResponse();
-            ServicePointManager.ServerCertificateValidationCallback -= trustSource;
-            var response = string.Empty;
-            using (var streamReader = new StreamReader(webResponse.GetResponseStream())) {
-                response = streamReader.ReadToEnd();
-            }
-            return response;
-        }
-
-        static string parseVersion(string response) {
-            const string versionPattern = @"(?<=""tag_name"":"").*?(?="")";
-            return Regex.Match(response, versionPattern).Value;
+            var remoteVersion = GetRemoteVersion();
+            return new EntitasUpdateInfo(localVersion, remoteVersion);
         }
 
         public static string GetLocalVersion() {
@@ -52,37 +77,74 @@ namespace Entitas.Unity {
             return File.ReadAllText(files[0]);
         }
 
-        static void displayUpdateInfo(string remoteVersionString, string localVersionString) {
-            var remoteVersion = new Version(remoteVersionString);
-            var localVersion = new Version(localVersionString);
+        public static string GetRemoteVersion() {
+            string latestRelease = null;
+            try {
+                latestRelease = requestLatestRelease();
+            } catch(Exception) {
+                latestRelease = string.Empty;
+            }
 
-            switch (remoteVersion.CompareTo(localVersion)) {
-                case 1:
+            return parseVersion(latestRelease);
+        }
+
+        static string requestLatestRelease() {
+            ServicePointManager.ServerCertificateValidationCallback += trustSource;
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL_GITHUB_API_LATEST_RELEASE);
+            httpWebRequest.UserAgent = Environment.UserName + "sschmid/Entitas-CSharp/Entitas.Unity/CheckForUpdates";
+            httpWebRequest.Timeout = 15000;
+            var webResponse = httpWebRequest.GetResponse();
+            ServicePointManager.ServerCertificateValidationCallback -= trustSource;
+            var response = string.Empty;
+            using(var streamReader = new StreamReader(webResponse.GetResponseStream())) {
+                response = streamReader.ReadToEnd();
+            }
+            return response;
+        }
+
+        static string parseVersion(string response) {
+            const string versionPattern = @"(?<=""tag_name"":"").*?(?="")";
+            return Regex.Match(response, versionPattern).Value;
+        }
+
+        static void displayUpdateInfo(EntitasUpdateInfo info) {
+            switch(info.updateState) {
+                case EntitasUpdateState.UpdateAvailable:
                     if(EditorUtility.DisplayDialog("Entitas Update",
                             string.Format("A newer version of Entitas is available!\n\n" +
                             "Currently installed version: {0}\n" +
-                            "New version: {1}", localVersion, remoteVersion),
+                            "New version: {1}", info.localVersionString, info.remoteVersionString),
                             "Show release",
                             "Cancel"
                         )) {
                         Application.OpenURL(URL_GITHUB_RELEASES);
                     }
                     break;
-                case 0:
+                case EntitasUpdateState.UpToDate:
                     EditorUtility.DisplayDialog("Entitas Update",
-                        "Entitas is up to date (" + localVersion + ")",
+                        "Entitas is up to date (" + info.localVersionString + ")",
                         "Ok"
                     );
                     break;
-                case -1:
+                case EntitasUpdateState.AheadOfLatestRelease:
                     if(EditorUtility.DisplayDialog("Entitas Update",
                             string.Format("Your Entitas version seems to be newer than the latest release?!?\n\n" +
                             "Currently installed version: {0}\n" +
-                            "Latest release: {1}", localVersion, remoteVersion),
+                            "Latest release: {1}", info.localVersionString, info.remoteVersionString),
                             "Show release",
                             "Cancel"
                         )) {
                         Application.OpenURL(URL_GITHUB_RELEASES);
+                    }
+                    break;
+                case EntitasUpdateState.NoConnection:
+                    if(EditorUtility.DisplayDialog("Entitas Update",
+                            "Could not request latest Entitas version!\n\n" +
+                            "Make sure that you are connected to the internet.\n",
+                            "Try again",
+                            "Cancel"
+                        )) {
+                        CheckForUpdates();
                     }
                     break;
             }
