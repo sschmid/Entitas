@@ -10,7 +10,7 @@ namespace Entitas.Unity.VisualDebugging {
 
     public static class EntitasStats {
 
-        [MenuItem("Entitas/Log Stats", false, EntitasMenuItemPriorities.log_stats)]
+        [MenuItem(EntitasMenuItems.log_stats, false, EntitasMenuItemPriorities.log_stats)]
         public static void LogStats() {
             foreach(var stat in GetStats()) {
                 Debug.Log(stat.Key + ": " + stat.Value);

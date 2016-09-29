@@ -20,7 +20,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 .ToArray();
         }
 
-        [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, EntitasMenuItemPriorities.blueprints_update_all_blueprints)]
+        [DidReloadScripts, MenuItem(EntitasMenuItems.blueprints_update_all_blueprints, false, EntitasMenuItemPriorities.blueprints_update_all_blueprints)]
         public static void UpdateAllBinaryBlueprints() {
             if(!EditorApplication.isPlayingOrWillChangePlaymode) {
                 var allPools = findAllPools();
