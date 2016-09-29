@@ -31,7 +31,8 @@ class describe_ComponentExtensionsGenerator : nspec {
         }
 
         codeGenFile.fileName.should_be(expectedFileName);
-        codeGenFile.fileContent.should_be(expectedFileContent);
+        var header = string.Format(CodeGenerator.AUTO_GENERATED_HEADER_FORMAT, typeof(ComponentExtensionsGenerator));
+        (header + codeGenFile.fileContent).should_be(expectedFileContent);
     }
 
     void when_generating() {

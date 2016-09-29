@@ -361,6 +361,12 @@
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs">
       <Link>Linked Libraries\Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs</Link>
     </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\PoolAComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassHideInBlueprintInspectorComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\PoolBComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\PoolCComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeOtherPoolComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomePoolComponentIds.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

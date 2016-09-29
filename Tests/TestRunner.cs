@@ -12,6 +12,7 @@ namespace Tests {
         public static void Main(string[] args) {
 
             //format();
+            //Tests.GenerateTestComponents.Generate();
 
             //var tagOrClassName = "focus";
             var tagOrClassName = string.Empty;

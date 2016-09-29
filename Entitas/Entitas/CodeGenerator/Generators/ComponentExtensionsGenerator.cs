@@ -50,6 +50,7 @@ namespace Entitas.CodeGenerator {
         static string generateComponent(ComponentInfo componentInfo) {
             const string hideInBlueprintInspector = "[Entitas.Serialization.Blueprints.HideInBlueprintInspectorAttribute]\n";
             const string componentFormat = @"public class {0} : IComponent {{
+
     public {1} {2};
 }}
 
@@ -68,7 +69,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addNamespace() {
-            return @"namespace Entitas {";
+            return "namespace Entitas {\n";
         }
 
         static string closeNamespace() {
@@ -92,7 +93,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static string addEntityClassHeader() {
-            return "\n    public partial class Entity {";
+            return "\n    public partial class Entity {\n";
         }
 
         static string addGetMethods(ComponentInfo componentInfo) {
@@ -122,8 +123,7 @@ namespace Entitas.CodeGenerator {
             $prefix$Name = value;
             return this;
         }
-" : @"
-        public bool has$Name { get { return HasComponent($Ids.$Name); } }
+" : @"        public bool has$Name { get { return HasComponent($Ids.$Name); } }
 ";
             return buildString(componentInfo, hasMethod);
         }
@@ -174,7 +174,7 @@ $assign
         }
 
         static string addPoolClassHeader() {
-            return "\n    public partial class Pool {";
+            return "\n    public partial class Pool {\n";
         }
 
         static string addPoolGetMethods(ComponentInfo componentInfo) {
@@ -182,7 +182,6 @@ $assign
         public Entity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
 " : @"
         public Entity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
-
         public $Type $name { get { return $nameEntity.$name; } }
 ";
             return buildString(componentInfo, getMehod);
@@ -203,8 +202,7 @@ $assign
                 }
             }
         }
-" : @"
-        public bool has$Name { get { return $nameEntity != null; } }
+" : @"        public bool has$Name { get { return $nameEntity != null; } }
 ";
             return buildString(componentInfo, hasMethod);
         }
@@ -255,6 +253,7 @@ $assign
        static string addMatcher(ComponentInfo componentInfo, bool onlyDefault = false) {
             const string matcherFormat = @"
     public partial class $TagMatcher {
+
         static IMatcher _matcher$Name;
 
         public static IMatcher $Name {

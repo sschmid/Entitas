@@ -43,7 +43,7 @@ class describe_M0320 : nspec {
         it["updates pool.CreateSystem(instance)"] = () => {
             var updatedFiles = m.Migrate(dir);
             var file = updatedFiles[1];
-            file.fileContent.should_be("pool.CreateSystem(new MySystem1());\npool.CreateSystem(new MySystem2());");
+            file.fileContent.should_be("pool.CreateSystem(new MySystem1());\npool.CreateSystem(new MySystem2());\n");
         };
     }
 }

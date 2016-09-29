@@ -6,22 +6,19 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class OtherComponentIds {
+public static class SomePoolComponentIds {
 
-    public const int OtherPool = 0;
-    public const int MultiplePoolAndDefaultPool = 2;
+    public const int SomeClass = 1;
 
-    public const int TotalComponents = 3;
+    public const int TotalComponents = 2;
 
     public static readonly string[] componentNames = {
-        "OtherPool",
         null,
-        "MultiplePoolAndDefaultPool"
+        "SomeClass"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(OtherPoolComponent),
         null,
-        typeof(MultiplePoolAndDefaultPoolComponent)
+        typeof(SomeClassComponent)
     };
 }

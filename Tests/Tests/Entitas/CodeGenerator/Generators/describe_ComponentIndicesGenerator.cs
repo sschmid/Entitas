@@ -34,6 +34,7 @@ class describe_ComponentIndicesGenerator : nspec {
                 Console.WriteLine("should:\n" + expectedLookupCode);
                 Console.WriteLine("was:\n" + file.fileContent);
             }
+
             file.fileContent.should_be(expectedLookupCode);
         }
     }
@@ -61,6 +62,7 @@ class describe_ComponentIndicesGenerator : nspec {
         it["generates default lookup"] = () => {
             generates(typeof(SomeComponent), CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
+
     public const int Some = 0;
 
     public const int TotalComponents = 1;
@@ -72,7 +74,8 @@ class describe_ComponentIndicesGenerator : nspec {
     public static readonly System.Type[] componentTypes = {
         typeof(SomeComponent)
     };
-}");
+}
+");
         };
 
 
@@ -80,6 +83,7 @@ class describe_ComponentIndicesGenerator : nspec {
         it["generates compatible field names for components with namespace"] = () => {
             generates(typeof(NamespaceComponent), CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
+
     public const int Namespace = 0;
 
     public const int TotalComponents = 1;
@@ -91,7 +95,8 @@ class describe_ComponentIndicesGenerator : nspec {
     public static readonly System.Type[] componentTypes = {
         typeof(My.Namespace.NamespaceComponent)
     };
-}");
+}
+");
         };
 
 
@@ -99,6 +104,7 @@ class describe_ComponentIndicesGenerator : nspec {
         it["generates lookup with name from attribute"] = () => {
             generates(typeof(OtherPoolComponent), "OtherComponentIds",
                 @"public static class OtherComponentIds {
+
     public const int OtherPool = 0;
 
     public const int TotalComponents = 1;
@@ -110,7 +116,8 @@ class describe_ComponentIndicesGenerator : nspec {
     public static readonly System.Type[] componentTypes = {
         typeof(OtherPoolComponent)
     };
-}");
+}
+");
         };
 
 
@@ -118,6 +125,7 @@ class describe_ComponentIndicesGenerator : nspec {
         it["generates id for [DontGenerate]"] = () => {
             generates(typeof(DontGenerateComponent), CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
+
     public const int DontGenerate = 0;
 
     public const int TotalComponents = 1;
@@ -129,7 +137,8 @@ class describe_ComponentIndicesGenerator : nspec {
     public static readonly System.Type[] componentTypes = {
         typeof(DontGenerateComponent)
     };
-}");
+}
+");
         };
 
 
@@ -140,6 +149,7 @@ class describe_ComponentIndicesGenerator : nspec {
                 typeof(DontGenerateIndexComponent)
             }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
+
     public const int Some = 0;
 
     public const int TotalComponents = 1;
@@ -151,7 +161,8 @@ class describe_ComponentIndicesGenerator : nspec {
     public static readonly System.Type[] componentTypes = {
         typeof(SomeComponent)
     };
-}");
+}
+");
         };
 
 
@@ -162,6 +173,7 @@ class describe_ComponentIndicesGenerator : nspec {
                     typeof(DontGenerateComponent)
                 }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
                 @"public static class ComponentIds {
+
     public const int DontGenerate = 0;
     public const int Some = 1;
 
@@ -176,7 +188,8 @@ class describe_ComponentIndicesGenerator : nspec {
         typeof(DontGenerateComponent),
         typeof(SomeComponent)
     };
-}");
+}
+");
         };
 
 
@@ -191,7 +204,8 @@ class describe_ComponentIndicesGenerator : nspec {
 
     public static readonly System.Type[] componentTypes = {
     };
-}" });
+}
+" });
         };
 
 
@@ -206,7 +220,8 @@ class describe_ComponentIndicesGenerator : nspec {
 
     public static readonly System.Type[] componentTypes = {
     };
-}" });
+}
+" });
         };
 
 
@@ -223,7 +238,8 @@ class describe_ComponentIndicesGenerator : nspec {
 
     public static readonly System.Type[] componentTypes = {
     };
-}", @"public static class CoreComponentIds {
+}
+", @"public static class CoreComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -232,7 +248,8 @@ class describe_ComponentIndicesGenerator : nspec {
 
     public static readonly System.Type[] componentTypes = {
     };
-}" });
+}
+" });
         };
 
 
@@ -245,6 +262,7 @@ class describe_ComponentIndicesGenerator : nspec {
                         typeof(BComponent)
                     }, new [] { "PoolAComponentIds", "PoolBComponentIds" }, new [] {
                     @"public static class PoolAComponentIds {
+
     public const int B = 0;
     public const int A = 1;
 
@@ -259,8 +277,10 @@ class describe_ComponentIndicesGenerator : nspec {
         typeof(BComponent),
         typeof(AComponent)
     };
-}",
+}
+",
                     @"public static class PoolBComponentIds {
+
     public const int B = 0;
 
     public const int TotalComponents = 1;
@@ -272,7 +292,8 @@ class describe_ComponentIndicesGenerator : nspec {
     public static readonly System.Type[] componentTypes = {
         typeof(BComponent)
     };
-}"
+}
+"
                 });
             };
 
@@ -292,6 +313,7 @@ class describe_ComponentIndicesGenerator : nspec {
                         "PoolCComponentIds",
                     }, new [] {
                         @"public static class PoolAComponentIds {
+
     public const int C = 0;
     public const int B = 1;
     public const int A = 2;
@@ -309,8 +331,10 @@ class describe_ComponentIndicesGenerator : nspec {
         typeof(BComponent),
         typeof(AComponent)
     };
-}",
+}
+",
                     @"public static class PoolBComponentIds {
+
     public const int C = 0;
     public const int B = 1;
     public const int D = 2;
@@ -328,8 +352,10 @@ class describe_ComponentIndicesGenerator : nspec {
         typeof(BComponent),
         typeof(DComponent)
     };
-}",
+}
+",
                     @"public static class PoolCComponentIds {
+
     public const int C = 0;
     public const int E = 1;
     public const int D = 2;
@@ -350,7 +376,8 @@ class describe_ComponentIndicesGenerator : nspec {
         typeof(DComponent),
         typeof(FComponent)
     };
-}"              });
+}
+"              });
             };
 
 
@@ -366,6 +393,7 @@ class describe_ComponentIndicesGenerator : nspec {
                         "PoolCComponentIds",
                     }, new [] {
                 @"public static class PoolAComponentIds {
+
     public const int B = 0;
     public const int G = 2;
 
@@ -382,8 +410,10 @@ class describe_ComponentIndicesGenerator : nspec {
         null,
         typeof(GComponent)
     };
-}",
+}
+",
                 @"public static class PoolBComponentIds {
+
     public const int B = 0;
     public const int D = 1;
 
@@ -398,8 +428,10 @@ class describe_ComponentIndicesGenerator : nspec {
         typeof(BComponent),
         typeof(DComponent)
     };
-}",
+}
+",
                 @"public static class PoolCComponentIds {
+
     public const int D = 1;
     public const int G = 2;
 
@@ -416,7 +448,8 @@ class describe_ComponentIndicesGenerator : nspec {
         typeof(DComponent),
         typeof(GComponent)
     };
-}"              });
+}
+"              });
             };
         };
     }

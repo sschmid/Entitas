@@ -1,46 +1,74 @@
-//using System;
-//using System.IO;
-//using System.Reflection;
-//using Entitas.CodeGenerator;
+using System;
+using System.IO;
+using System.Reflection;
+using Entitas.CodeGenerator;
+using My.Namespace;
 
-//namespace Tests {
+namespace Tests {
 
-//    class GenerateTestComponents {
+    public static class GenerateTestComponents {
 
-//        public static void Main(string[] args) {
-//            generate();
-//        }
+        public static void Generate() {
+            var generatedFolder = getEntitasProjectDir() + "/Tests/Tests/Entitas/CodeGenerator/Fixtures/Generated/";
 
-//        static void generate() {
-//            var assembly = Assembly.GetAssembly(typeof(SomeComponent));
-//            var generatedFolder = getEntitasProjectDir() + "/Tests/Tests/Entitas/CodeGenerator/Fixtures/Generated/";
+            var codeGenerators = new ICodeGenerator[] {
+                new ComponentExtensionsGenerator(),
+                new ComponentIndicesGenerator(),
+                new PoolAttributesGenerator(),
+                new PoolsGenerator(),
+                new BlueprintsGenerator()
+            };
 
-//            var codeGenerators = new ICodeGenerator[] {
-//            new ComponentExtensionsGenerator(),
-//            new ComponentIndicesGenerator(),
-//            new PoolAttributesGenerator(),
-//            new PoolsGenerator()
-//        };
+            var types = new [] {
+                typeof(AnimatingComponent),
+                typeof(CComponent),
+                typeof(ComponentWithFieldsAndProperties),
+                typeof(CustomPrefixComponent),
+                typeof(DefaultPoolComponent),
+                typeof(MovableComponent),
+                typeof(MultiplePoolAndDefaultPoolComponent),
+                typeof(NamespaceComponent),
+                typeof(OtherPoolComponent),
+                typeof(PersonComponent),
+                typeof(SomeClass),
+                typeof(SomeClassHideInBlueprintInspector),
+                typeof(SomeStruct),
+                typeof(UserComponent)
+            };
 
-//            var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
-//            var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
+            var pools = new [] {
+                "PoolA",
+                "PoolB",
+                "PoolC",
+                "OtherPool",
+                "SomePool",
+                "SomeOtherPool"
+            };
 
-//            foreach(var file in files) {
-//                Console.WriteLine("Generated: " + file.fileName);
-//            }
+            var blueprints = new [] {
+                "Gem",
+                "Blocker"
+            };
 
-//            Console.WriteLine("Done. Press any key...");
-//            Console.Read();
-//        }
+            var provider = new TypeReflectionProvider(types, pools, blueprints);
+            var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
 
-//        static string getEntitasProjectDir() {
-//            var dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
-//            const string projectName = "Tests";
-//            while(dirInfo.Name != projectName) {
-//                dirInfo = dirInfo.Parent;
-//            }
+            foreach(var file in files) {
+                Console.WriteLine("Generated: " + file.fileName);
+            }
 
-//            return dirInfo.Parent.FullName;
-//        }
-//    }
-//}
+            Console.WriteLine("Done. Press any key...");
+            Console.Read();
+        }
+
+        static string getEntitasProjectDir() {
+            var dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
+            const string projectName = "Tests";
+            while(dirInfo.Name != projectName) {
+                dirInfo = dirInfo.Parent;
+            }
+
+            return dirInfo.Parent.FullName;
+        }
+    }
+}
