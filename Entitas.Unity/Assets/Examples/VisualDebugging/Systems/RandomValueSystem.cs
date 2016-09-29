@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using UnityEngine;
 
 public class RandomValueSystem : IExecuteSystem, ISetPool {
@@ -13,4 +13,3 @@ public class RandomValueSystem : IExecuteSystem, ISetPool {
         _pool.CreateEntity().AddMyFloat(Random.value);
     }
 }
-

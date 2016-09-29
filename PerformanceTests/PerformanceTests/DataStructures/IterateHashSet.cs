@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 public class IterateHashSet : IPerformanceTest {
     const int n = 10000;
@@ -15,10 +15,9 @@ public class IterateHashSet : IPerformanceTest {
     #pragma warning disable
     public void Run() {
         for (int i = 0; i < n; i++) {
-            foreach (var item in _set) {
+            foreach(var item in _set) {
                 var k = item;
             }
         }
     }
 }
-

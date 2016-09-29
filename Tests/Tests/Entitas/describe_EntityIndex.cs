@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 using System.Collections.Generic;
 
@@ -282,7 +282,7 @@ class describe_EntityIndex : nspec {
             index = new EntityIndex<string>(group, (e, c) => {
                 receivedComponents.Add(c);
 
-                if (c == nameAgeComponent1) {
+                if(c == nameAgeComponent1) {
                     return ((NameAgeComponent)c).name;
                 }
 
@@ -298,4 +298,3 @@ class describe_EntityIndex : nspec {
         };
     }
 }
-

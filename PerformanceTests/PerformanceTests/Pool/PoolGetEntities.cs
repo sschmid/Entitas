@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class PoolGetEntities : IPerformanceTest {
     const int n = 100000;
@@ -15,4 +15,3 @@ public class PoolGetEntities : IPerformanceTest {
         _pool.GetEntities();
     }
 }
-

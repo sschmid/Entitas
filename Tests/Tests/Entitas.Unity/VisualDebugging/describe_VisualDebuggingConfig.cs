@@ -1,4 +1,4 @@
-﻿using Entitas.Serialization.Configuration;
+using Entitas.Serialization.Configuration;
 using Entitas.Unity.VisualDebugging;
 using NSpec;
 
@@ -49,4 +49,3 @@ class describe_VisualDebuggingConfig : nspec {
         };
     }
 }
-

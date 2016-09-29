@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas.Serialization.Configuration;
 
 class describe_EntitasPreferencesConfig : nspec {
@@ -25,4 +25,3 @@ class describe_EntitasPreferencesConfig : nspec {
         };
     }
 }
-

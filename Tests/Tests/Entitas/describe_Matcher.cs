@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas;
 
 class describe_Matcher : nspec {
@@ -462,4 +462,3 @@ class describe_Matcher : nspec {
         return Matcher.AllOf(new [] { CID.ComponentB, CID.ComponentA });
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Entitas;
@@ -39,6 +39,18 @@ public static class TestExtensions {
                         !p.Contains("AssemblyInfo.cs") &&
                         !p.Contains("Commands.cs") &&
                         !p.Contains("Program.cs")
+                    ).ToDictionary(p => p, p => File.ReadAllText(p));
+    }
+
+    public static Dictionary<string, string> GetSourceFilesInclAllProjects(string path) {
+        return Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories)
+                    .Where(p =>
+                        !p.Contains(dir("Generated")) &&
+                        !p.Contains(dir("Libraries")) &&
+                        !p.Contains(dir("Build")) &&
+                        !p.Contains(dir("bin")) &&
+                        !p.Contains(dir("obj")) &&
+                        !p.Contains("AssemblyInfo.cs")
                     ).ToDictionary(p => p, p => File.ReadAllText(p));
     }
 

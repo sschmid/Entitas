@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using System;
 using System.Collections.Specialized;
 
@@ -21,4 +21,3 @@ public class OrderedDictionaryGetItemByKey : IPerformanceTest {
         }
     }
 }
-

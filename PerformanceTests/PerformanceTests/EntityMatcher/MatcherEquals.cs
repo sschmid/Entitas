@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class MatcherEquals : IPerformanceTest {
     const int n = 10000000;
@@ -24,4 +24,3 @@ public class MatcherEquals : IPerformanceTest {
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class TearDownSystemSpy : ITearDownSystem {
 
@@ -10,4 +10,3 @@ public class TearDownSystemSpy : ITearDownSystem {
         _didTearDown += 1;
     }
 }
-

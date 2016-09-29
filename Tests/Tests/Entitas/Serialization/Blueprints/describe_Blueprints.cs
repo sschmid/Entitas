@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using Entitas.Serialization.Blueprints;
 using NSpec;
 
@@ -179,4 +179,3 @@ class describe_Blueprints : nspec {
         };
     }
 }
-

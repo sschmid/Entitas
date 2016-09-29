@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 
 namespace PerformanceTests {
@@ -112,7 +112,7 @@ namespace PerformanceTests {
 
         static void run<T>() where T : IPerformanceTest, new() {
             Thread.Sleep(100);
-            if (typeof(T) == typeof(EmptyTest)) {
+            if(typeof(T) == typeof(EmptyTest)) {
                 Console.WriteLine(string.Empty);
                 return;
             }

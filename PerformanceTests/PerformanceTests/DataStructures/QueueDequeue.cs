@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 public class QueueDequeue : IPerformanceTest {
     const int n = 1000000;
@@ -19,5 +19,3 @@ public class QueueDequeue : IPerformanceTest {
         }
     }
 }
-
-

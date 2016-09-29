@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class EntityCollectorIterateCollectedEntities : IPerformanceTest {
 
@@ -25,4 +25,3 @@ public class EntityCollectorIterateCollectedEntities : IPerformanceTest {
         }
     }
 }
-

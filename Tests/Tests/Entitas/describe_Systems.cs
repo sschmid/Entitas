@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas;
 
 class describe_Systems : nspec {
@@ -289,4 +289,3 @@ class describe_Systems : nspec {
         };
     }
 }
-

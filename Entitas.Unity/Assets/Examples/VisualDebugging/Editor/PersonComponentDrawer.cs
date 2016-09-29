@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas;
 using Entitas.Unity.VisualDebugging;
 using UnityEditor;
@@ -14,7 +14,7 @@ public class PersonComponentDrawer : IComponentDrawer {
 
         person.name = EditorGUILayout.TextField("Name", person.name);
 
-        if (person.gender == null) {
+        if(person.gender == null) {
             person.gender = PersonGender.Male.ToString();
         }
 

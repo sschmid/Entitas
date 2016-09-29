@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_Pools : nspec {
@@ -20,4 +20,3 @@ class describe_Pools : nspec {
         };
     }
 }
-

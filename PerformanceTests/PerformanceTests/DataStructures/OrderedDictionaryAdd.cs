@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using System.Collections.Specialized;
 
 public class OrderedDictionaryAdd : IPerformanceTest {
@@ -15,4 +15,3 @@ public class OrderedDictionaryAdd : IPerformanceTest {
         }
     }
 }
-

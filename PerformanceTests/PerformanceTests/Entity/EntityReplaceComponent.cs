@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using System.Collections.Generic;
 
 public class EntityReplaceComponent : IPerformanceTest {
@@ -38,4 +38,3 @@ public class EntityReplaceComponent : IPerformanceTest {
         }
     }
 }
-

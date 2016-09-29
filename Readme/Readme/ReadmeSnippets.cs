@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 namespace Readme {
 
@@ -33,7 +33,7 @@ namespace Readme {
 
         static void moveSystem(Pool pool) {
             var entities = pool.GetEntities(Matcher.AllOf(Matcher.Move, Matcher.Position));
-            foreach (var entity in entities) {
+            foreach(var entity in entities) {
                 var move = entity.move;
                 var pos = entity.position;
                 entity.ReplacePosition(pos.x, pos.y + move.speed);
@@ -72,7 +72,7 @@ namespace Readme {
             // Returns all entities having MovableComponent and PositionComponent.
             // Matchers are also generated for you.
             var entities = pool.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
-            foreach (var e in entities) {
+            foreach(var e in entities) {
                 // do something
             }
         }
@@ -92,7 +92,7 @@ namespace Readme {
             var collector = group.CreateCollector(GroupEventType.OnEntityAdded);
 
             // ----------------------------
-            foreach (var e in collector.collectedEntities) {
+            foreach(var e in collector.collectedEntities) {
                 // do something
             }
             collector.ClearCollectedEntities();
@@ -136,4 +136,3 @@ namespace Readme {
         }
     }
 }
-

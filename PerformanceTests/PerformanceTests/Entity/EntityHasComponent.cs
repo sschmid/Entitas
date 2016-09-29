@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class EntityHasComponent : IPerformanceTest {
     const int n = 1000000;
@@ -18,4 +18,3 @@ public class EntityHasComponent : IPerformanceTest {
         }
     }
 }
-

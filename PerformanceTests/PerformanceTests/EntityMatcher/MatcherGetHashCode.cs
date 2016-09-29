@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class MatcherGetHashCode : IPerformanceTest {
     const int n = 10000000;
@@ -18,4 +18,3 @@ public class MatcherGetHashCode : IPerformanceTest {
         }
     }
 }
-

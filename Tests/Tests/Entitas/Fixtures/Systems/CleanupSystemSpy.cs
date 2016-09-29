@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class CleanupSystemSpy : ICleanupSystem {
 
@@ -10,4 +10,3 @@ public class CleanupSystemSpy : ICleanupSystem {
         _didCleanup += 1;
     }
 }
-

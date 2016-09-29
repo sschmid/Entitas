@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class EntityIndexGetEntity : IPerformanceTest {
 
@@ -26,4 +26,3 @@ public class EntityIndexGetEntity : IPerformanceTest {
         }
     }
 }
-

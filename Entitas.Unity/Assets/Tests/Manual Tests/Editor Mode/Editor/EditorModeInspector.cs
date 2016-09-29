@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 using Entitas;
 
@@ -9,16 +9,16 @@ public class EditorModeInspector : Editor {
 
         var controller = (EditorModeController)target;
 
-        if (controller.pool == null) {
+        if(controller.pool == null) {
             controller.pool = Pools.CreateVisualDebuggingPool();
             new Entitas.Unity.VisualDebugging.PoolObserver(controller.pool);
         }
 
-        if (GUILayout.Button("Reset pool")) {
+        if(GUILayout.Button("Reset pool")) {
             controller.pool.Reset();
         }
 
-        if (GUILayout.Button("Create entitiy")) {
+        if(GUILayout.Button("Create entitiy")) {
             var e = controller.pool.CreateEntity();
             e.AddMyString("Editor Mode");
 

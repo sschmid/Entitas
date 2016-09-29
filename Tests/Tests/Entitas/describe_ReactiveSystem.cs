@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_ReactiveSystem : nspec {
@@ -6,7 +6,7 @@ class describe_ReactiveSystem : nspec {
     readonly IMatcher _matcherAB = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
 
     static void assertEntities(IReactiveSubSystemSpy system, Entity entity, int didExecute = 1) {
-        if (entity == null) {
+        if(entity == null) {
             system.didExecute.should_be(0);
             system.entities.should_be_null();
 
@@ -95,7 +95,7 @@ class describe_ReactiveSystem : nspec {
                 var e1 = createEntityAB();
                 Entity e2 = null;
                 subSystem.executeAction = entities => {
-                    if (e2 == null) {
+                    if(e2 == null) {
                         e2 = createEntityAB();
                     }
                 };
@@ -512,4 +512,3 @@ class describe_ReactiveSystem : nspec {
         };
     }
 }
-

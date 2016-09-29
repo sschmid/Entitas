@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Entitas;
 
@@ -33,7 +33,7 @@ public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IInitial
     public void Execute(List<Entity> entities) {
         _didExecute += 1;
 
-        if (entities != null) {
+        if(entities != null) {
             _entities = entities.ToArray();
         } else {
             _entities = null;
@@ -52,4 +52,3 @@ public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IInitial
         _didTearDown += 1;
     }
 }
-

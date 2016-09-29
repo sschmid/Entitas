@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas;
 using System;
 
@@ -507,4 +507,3 @@ class describe_GeneratedComponents : nspec {
         };
     }
 }
-

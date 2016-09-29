@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 
 public static class PerformanceTestRunner {
     static readonly Stopwatch _stopwatch;
@@ -16,4 +16,3 @@ public static class PerformanceTestRunner {
         return _stopwatch.ElapsedMilliseconds;
     }
 }
-

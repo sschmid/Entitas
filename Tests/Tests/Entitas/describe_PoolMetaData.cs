@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas;
 
 class describe_PoolMetaData : nspec {
@@ -19,4 +19,3 @@ class describe_PoolMetaData : nspec {
         };
     }
 }
-

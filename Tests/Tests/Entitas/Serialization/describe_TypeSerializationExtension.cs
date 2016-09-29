@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Entitas;
 using Entitas.Serialization;
@@ -182,4 +182,3 @@ class describe_TypeSerializationExtension : nspec {
         };
     }
 }
-

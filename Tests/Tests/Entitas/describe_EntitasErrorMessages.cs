@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas;
 using Entitas.Serialization.Blueprints;
 using NSpec;
@@ -194,4 +194,3 @@ class describe_EntitasErrorMessages : EntitasTest {
         };
     }
 }
-

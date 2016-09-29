@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using System.Threading;
 
 public class SlowSystem : IExecuteSystem {
@@ -7,4 +7,3 @@ public class SlowSystem : IExecuteSystem {
         Thread.Sleep(4);
     }
 }
-

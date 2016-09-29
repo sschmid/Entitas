@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using System.Threading;
 using UnityEngine;
 
@@ -8,4 +8,3 @@ public class RandomDurationSystem : IExecuteSystem {
         Thread.Sleep(Random.Range(0, 9));
     }
 }
-

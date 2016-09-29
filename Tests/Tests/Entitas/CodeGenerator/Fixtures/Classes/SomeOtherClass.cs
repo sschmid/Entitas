@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGenerator;
+using Entitas.CodeGenerator;
 
 namespace SomeNamespace {
 
@@ -6,4 +6,3 @@ namespace SomeNamespace {
     public class SomeOtherClass {
     }
 }
-

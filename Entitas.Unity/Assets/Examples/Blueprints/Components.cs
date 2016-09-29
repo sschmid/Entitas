@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using Entitas.Serialization.Blueprints;
 
 [Blueprints]
@@ -18,4 +18,3 @@ public class HideInBlueprintInspectorComponent : IComponent {
 [Blueprints, HideInBlueprintInspector]
 public class HideInBlueprintInspectorClass {
 }
-

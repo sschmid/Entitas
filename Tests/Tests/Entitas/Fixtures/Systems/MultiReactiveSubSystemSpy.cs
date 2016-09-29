@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class MultiReactiveSubSystemSpy : ReactiveSubSystemSpyBase, IMultiReactiveSystem {
 
@@ -49,4 +49,3 @@ public class MultiReactiveEnsureExcludeSubSystemSpy : MultiReactiveSubSystemSpy,
         _excludeComponents = excludeComponents;
     }
 }
-

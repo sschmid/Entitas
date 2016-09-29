@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 public class NewInstanceActivator : IPerformanceTest {
     const int n = 1000000;
@@ -19,4 +19,3 @@ public class NewInstanceActivator : IPerformanceTest {
         Activator.CreateInstance(_type);
     }
 }
-

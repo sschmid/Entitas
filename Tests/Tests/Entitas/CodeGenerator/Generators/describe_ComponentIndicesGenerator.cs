@@ -421,4 +421,3 @@ class describe_ComponentIndicesGenerator : nspec {
         };
     }
 }
-

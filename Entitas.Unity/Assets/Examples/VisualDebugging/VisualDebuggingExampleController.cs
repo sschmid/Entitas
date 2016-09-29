@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
@@ -152,4 +152,3 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         pool.DestroyEntity(pool.CreateEntity().Retain(this));
     }
 }
-

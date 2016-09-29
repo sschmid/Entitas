@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using UnityEngine;
 using Entitas.Unity.VisualDebugging;
 
@@ -10,7 +10,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
     void Start() {
         _pool = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("Systems Pool", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
-        #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+        #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
         new PoolObserver(_pool);
         #endif
         _systems = createNestedSystems();

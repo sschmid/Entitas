@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class PoolCreateEntity : IPerformanceTest {
     const int n = 100000;
@@ -14,4 +14,3 @@ public class PoolCreateEntity : IPerformanceTest {
         }
     }
 }
-

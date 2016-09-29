@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_ObjectCache : nspec {
@@ -55,4 +55,3 @@ class describe_ObjectCache : nspec {
         };
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using Entitas;
 
@@ -10,4 +10,3 @@ public class AReactiveSystem : IReactiveSystem {
         Thread.Sleep(2);
     }
 }
-

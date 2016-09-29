@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_EntityCollector : nspec {
@@ -295,4 +295,3 @@ class describe_EntityCollector : nspec {
         return _pool.CreateEntity().AddComponentB();
     }
 }
-

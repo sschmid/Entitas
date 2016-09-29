@@ -1,4 +1,4 @@
-﻿using Entitas.Serialization;
+using Entitas.Serialization;
 
 namespace Entitas {
 

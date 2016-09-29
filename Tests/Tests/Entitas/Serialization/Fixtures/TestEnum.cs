@@ -1,4 +1,4 @@
-﻿public enum TestEnum {
+public enum TestEnum {
     Test1,
     Test2,
     Test3
@@ -12,4 +12,3 @@ public class NestedTest {
         NestedTest3
     }
 }
-

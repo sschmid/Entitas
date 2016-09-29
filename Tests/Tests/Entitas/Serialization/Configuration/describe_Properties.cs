@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Entitas.Serialization.Configuration;
 using NSpec;
 
 class describe_Properties : nspec {
 
-    void assertProperties(string input, string expectedOutput, Dictionary<string, string>expectedProperties) {
+    void assertProperties(string input, string expectedOutput, Dictionary<string, string> expectedProperties) {
         var p = new Properties(input);
         var expectedCount = expectedProperties != null ? expectedProperties.Count : 0;
         p.count.should_be(expectedCount);
         p.ToString().should_be(expectedOutput);
-        if (expectedProperties != null) {
-            foreach (var kv in expectedProperties) {
+        if(expectedProperties != null) {
+            foreach(var kv in expectedProperties) {
                 p.HasKey(kv.Key).should_be_true();
                 p[kv.Key].should_be(kv.Value);
             }
@@ -24,6 +24,7 @@ class describe_Properties : nspec {
         };
 
         context["when single line"] = () => {
+
             it["creates Properties from single line input string"] = () => {
                 const string input = "some.key=some value";
 
@@ -37,6 +38,7 @@ class describe_Properties : nspec {
         };
 
         context["ignores whitespace"] = () => {
+
             it["ignores whitespace between key and value"] = () => {
                 const string input = "some.key  =  some value";
 
@@ -155,7 +157,7 @@ class describe_Properties : nspec {
             it["supports multiline values ending with \\"] = () => {
                 var input =
                     "some.key=some val\\" + "\n" + "ue" + "\n" +
-                    "some.other.key=other val\\" +"\n" + "ue" + "\n";
+                    "some.other.key=other val\\" + "\n" + "ue" + "\n";
 
                 const string expectedOutput =
                     "some.key = some value\n" +
@@ -326,4 +328,3 @@ class describe_Properties : nspec {
         };
     }
 }
-

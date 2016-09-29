@@ -1,4 +1,4 @@
-﻿public class NewInstanceT : IPerformanceTest {
+public class NewInstanceT : IPerformanceTest {
     const int n = 1000000;
 
     public void Before() {
@@ -14,4 +14,3 @@
         new T();
     }
 }
-

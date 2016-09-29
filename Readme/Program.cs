@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Reflection;
 using Entitas.CodeGenerator;
@@ -24,7 +24,7 @@ namespace Readme {
             var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
             var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
 
-            foreach (var file in files) {
+            foreach(var file in files) {
                 Console.WriteLine("Generated: " + file.fileName);
             }
 
@@ -43,4 +43,3 @@ namespace Readme {
         }
     }
 }
-

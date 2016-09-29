@@ -25,7 +25,7 @@ class describe_ComponentExtensionsGenerator : nspec {
         var codeGenFile = codeGenFiles.Single();
 
         #pragma warning disable
-        if (logResults) {
+        if(logResults) {
             Console.WriteLine("should:\n" + expectedFileContent);
             Console.WriteLine("was:\n" + codeGenFile.fileContent);
         }
@@ -60,4 +60,3 @@ class describe_ComponentExtensionsGenerator : nspec {
             generates<SomeClassHideInBlueprintInspector>("SomeClassHideInBlueprintInspectorComponent");
     }
 }
-

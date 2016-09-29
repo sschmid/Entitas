@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class InitializeSystemSpy : IInitializeSystem {
 
@@ -10,4 +10,3 @@ public class InitializeSystemSpy : IInitializeSystem {
         _didInitialize += 1;
     }
 }
-

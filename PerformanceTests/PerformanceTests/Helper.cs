@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using Entitas.CodeGenerator;
 
 public static class Helper {
@@ -6,4 +6,3 @@ public static class Helper {
         return new Pool(CP.NumComponents, 0, new PoolMetaData(CodeGenerator.DEFAULT_POOL_NAME, new string[CP.NumComponents], null));
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas.CodeGenerator;
 
 class describe_CodeGenerator : nspec {
@@ -11,4 +11,3 @@ class describe_CodeGenerator : nspec {
         it["appends 'Generated/'"] = () => CodeGenerator.GetSafeDir("/").should_be("/Generated/");
     }
 }
-

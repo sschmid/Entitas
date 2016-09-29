@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class ObjectGetProperty : IPerformanceTest {
     const int n = 10000000;
@@ -14,4 +14,3 @@ public class ObjectGetProperty : IPerformanceTest {
         }
     }
 }
-

@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using System.Collections.Specialized;
 
 public class OrderedDictionaryRemove : IPerformanceTest {
@@ -22,4 +22,3 @@ public class OrderedDictionaryRemove : IPerformanceTest {
         }
     }
 }
-

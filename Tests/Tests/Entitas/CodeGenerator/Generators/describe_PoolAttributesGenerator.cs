@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas.CodeGenerator;
 using System.Linq;
 
@@ -45,4 +45,3 @@ public class UIAttribute : PoolAttribute {
         };
     }
 }
-

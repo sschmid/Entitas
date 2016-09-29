@@ -1,4 +1,4 @@
-﻿using Entitas.Serialization;
+using Entitas.Serialization;
 using NSpec;
 
 class describe_PublicMemberInfo : nspec {
@@ -106,4 +106,3 @@ class describe_PublicMemberInfo : nspec {
         };
     }
 }
-

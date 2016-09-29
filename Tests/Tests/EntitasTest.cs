@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas;
 
 class EntitasTest : nspec {
@@ -37,4 +37,3 @@ class EntitasTest : nspec {
         entity.AddComponent(CID.ComponentA, createNameAge());
     }
 }
-

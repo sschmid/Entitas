@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_ObjectPool : nspec {
@@ -43,4 +43,3 @@ class describe_ObjectPool : nspec {
         };
     }
 }
-

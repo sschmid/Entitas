@@ -1,6 +1,5 @@
-﻿public class NestedClass {
+public class NestedClass {
 
     public class InnerClass {
     }
 }
-

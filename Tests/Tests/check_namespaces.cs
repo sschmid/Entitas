@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using NSpec;
@@ -9,7 +9,6 @@ class check_namespaces : nspec {
         return paths.Aggregate(string.Empty, (pathString, p) => pathString + p + Path.DirectorySeparatorChar);
     }
 
-    [Tag("focus")]
     void when_checking_namespaces() {
         var projectRoot = TestExtensions.GetProjectRoot();
         var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
@@ -64,33 +63,5 @@ class check_namespaces : nspec {
         each.Do((fileName, given, expected) =>
             it["{0} namespace should be {2}".With(fileName, given, expected)] = () => given.should_be(expected)
         );
-    }
-
-    void when_checking_formatting() {
-        var projectRoot = TestExtensions.GetProjectRoot();
-        var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
-
-        var each = new Each<string, string>();
-
-        foreach(var file in sourceFiles) {
-            each.Add(new NSpecTuple<string, string>(file.Key, file.Value));
-        }
-
-        each.Do((fileName, fileContent) => {
-            it["{0} should not end with two newline".With(fileName, fileContent)] = () =>
-                fileContent.EndsWith("\n\n", System.StringComparison.Ordinal).should_be_false();
-
-            it["{0} should end with single newline".With(fileName, fileContent)] = () =>
-                fileContent.EndsWith("\n", System.StringComparison.Ordinal).should_be_true();
-
-            it["{0} should not contain new[]".With(fileName, fileContent)] = () =>
-                fileContent.Contains("new[]").should_be_false();
-
-            it["{0} should not contain if (".With(fileName, fileContent)] = () =>
-                fileContent.Contains("if (").should_be_false();
-
-            it["{0} should not contain foreach (".With(fileName, fileContent)] = () =>
-                fileContent.Contains("foreach (").should_be_false();
-        });
     }
 }

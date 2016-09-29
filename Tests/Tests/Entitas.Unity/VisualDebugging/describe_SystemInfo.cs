@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas.Unity.VisualDebugging;
 using Entitas;
 
@@ -119,4 +119,3 @@ class describe_SystemInfo : nspec {
         };
     }
 }
-

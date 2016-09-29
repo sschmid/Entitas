@@ -1,6 +1,5 @@
-﻿using Entitas.CodeGenerator;
+using Entitas.CodeGenerator;
 
 [Pool("SomePool")]
 public interface ISomeInterface {
 }
-

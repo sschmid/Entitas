@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Entitas;
 
 public class SomeReactiveSystem : IReactiveSystem {
@@ -8,4 +8,3 @@ public class SomeReactiveSystem : IReactiveSystem {
     public void Execute(List<Entity> entities) {
     }
 }
-

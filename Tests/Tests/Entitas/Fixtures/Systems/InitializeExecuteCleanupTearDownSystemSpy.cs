@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class InitializeExecuteCleanupTearDownSystemSpy : ReactiveSubSystemSpyBase, IExecuteSystem {
 
@@ -6,4 +6,3 @@ public class InitializeExecuteCleanupTearDownSystemSpy : ReactiveSubSystemSpyBas
         Execute(null);
     }
 }
-

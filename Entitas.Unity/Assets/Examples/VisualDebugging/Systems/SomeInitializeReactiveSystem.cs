@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Entitas;
 
 public class SomeInitializeReactiveSystem : IInitializeSystem, IReactiveSystem {
@@ -11,4 +11,3 @@ public class SomeInitializeReactiveSystem : IInitializeSystem, IReactiveSystem {
     public void Execute(List<Entity> entities) {
     }
 }
-

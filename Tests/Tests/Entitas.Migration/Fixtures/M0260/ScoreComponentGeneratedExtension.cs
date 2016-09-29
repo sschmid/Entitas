@@ -23,7 +23,7 @@ namespace Entitas {
             var component = _scoreComponentPool.Count > 0 ? _scoreComponentPool.Pop() : new ScoreComponent();
             component.value = newValue;
             ReplaceComponent(ComponentIds.Score, component);
-            if (previousComponent != null) {
+            if(previousComponent != null) {
                 _scoreComponentPool.Push(previousComponent);
             }
             return this;
@@ -45,7 +45,7 @@ namespace Entitas {
         public bool hasScore { get { return scoreEntity != null; } }
 
         public Entity SetScore(int newValue) {
-            if (hasScore) {
+            if(hasScore) {
                 throw new SingleEntityException(Matcher.Score);
             }
             var entity = CreateEntity();
@@ -55,7 +55,7 @@ namespace Entitas {
 
         public Entity ReplaceScore(int newValue) {
             var entity = scoreEntity;
-            if (entity == null) {
+            if(entity == null) {
                 entity = SetScore(newValue);
             } else {
                 entity.ReplaceScore(newValue);
@@ -74,7 +74,7 @@ namespace Entitas {
 
         public static IMatcher Score {
             get {
-                if (_matcherScore == null) {
+                if(_matcherScore == null) {
                     _matcherScore = Matcher.AllOf(ComponentIds.Score);
                 }
 

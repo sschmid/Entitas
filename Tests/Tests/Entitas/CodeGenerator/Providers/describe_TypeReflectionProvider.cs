@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas;
 using Entitas.CodeGenerator;
 using My.Namespace;
@@ -372,4 +372,3 @@ class describe_TypeReflectionProvider : nspec {
         };
     }
 }
-

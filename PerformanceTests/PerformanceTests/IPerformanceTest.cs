@@ -1,6 +1,5 @@
-﻿public interface IPerformanceTest {
+public interface IPerformanceTest {
     void Before();
 
     void Run();
 }
-

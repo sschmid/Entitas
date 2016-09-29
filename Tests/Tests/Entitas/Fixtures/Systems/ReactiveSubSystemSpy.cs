@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class ReactiveSubSystemSpy : ReactiveSubSystemSpyBase, IReactiveSystem {
 
@@ -57,4 +57,3 @@ public class ReactiveEnsureExcludeSubSystemSpy : ReactiveSubSystemSpy, IEnsureCo
         _excludeComponent = excludeComponent;
     }
 }
-

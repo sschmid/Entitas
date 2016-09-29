@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using System.Collections.Generic;
 
 public class LinkedListAdd : IPerformanceTest {
@@ -15,4 +15,3 @@ public class LinkedListAdd : IPerformanceTest {
         }
     }
 }
-

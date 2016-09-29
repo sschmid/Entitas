@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using System;
 
 public class ArrayGetItem : IPerformanceTest {
@@ -22,5 +22,3 @@ public class ArrayGetItem : IPerformanceTest {
         }
     }
 }
-
-

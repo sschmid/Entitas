@@ -1,4 +1,4 @@
-﻿using Entitas.Serialization.Configuration;
+using Entitas.Serialization.Configuration;
 using NSpec;
 
 class describe_CodeGeneratorConfig : nspec {
@@ -89,4 +89,3 @@ class describe_CodeGeneratorConfig : nspec {
         };
     }
 }
-

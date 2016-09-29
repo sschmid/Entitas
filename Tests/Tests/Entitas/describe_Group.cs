@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_Group : nspec {
@@ -11,7 +11,7 @@ class describe_Group : nspec {
         var entities = _groupA.GetEntities();
         entities.Length.should_be(expectedEntities.Length);
 
-        foreach (var e in expectedEntities) {
+        foreach(var e in expectedEntities) {
             entities.should_contain(e);
             _groupA.ContainsEntity(e).should_be_true();
         }
@@ -414,4 +414,3 @@ class describe_Group : nspec {
         _groupA.UpdateEntity(entity, CID.ComponentA, Component.A, component);
     }
 }
-

@@ -1,6 +1,5 @@
-﻿using Entitas;
+using Entitas;
 
 public class HealthComponent : IComponent {
     public int value;
 }
-

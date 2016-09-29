@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 public class IterateHashetToArray : IPerformanceTest {
     const int n = 10000;
@@ -23,5 +23,3 @@ public class IterateHashetToArray : IPerformanceTest {
         }
     }
 }
-
-

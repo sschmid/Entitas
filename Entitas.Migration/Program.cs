@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace Entitas.Migration {
@@ -14,23 +14,23 @@ namespace Entitas.Migration {
                 new M0320()
             };
 
-            if (args == null) {
+            if(args == null) {
                 printUsage(allMigrations);
-            } else if (args.Length == 1) {
+            } else if(args.Length == 1) {
                 var arg = args[0];
-                if (arg == "-l") {
+                if(arg == "-l") {
                     printAllMigrations(allMigrations);
                 } else {
                     printUsage(allMigrations);
                 }
-            } else if (args.Length == 2) {
+            } else if(args.Length == 2) {
                 var version = args[0];
                 var path = args[1];
                 var migrations = allMigrations.Where(m => m.version == version).ToArray();
-                if (migrations.Length == 0) {
+                if(migrations.Length == 0) {
                     printVersionNotFound(version, allMigrations);
                 } else {
-                    foreach (var m in migrations) {
+                    foreach(var m in migrations) {
                         MigrationUtils.WriteFiles(m.Migrate(path));
                     }
                 }
@@ -47,7 +47,7 @@ namespace Entitas.Migration {
         }
 
         static void printAllMigrations(IMigration[] migrations) {
-            foreach (var m in migrations) {
+            foreach(var m in migrations) {
                 Console.WriteLine("========================================");
                 Console.WriteLine(m.version + "\n  - " + m.description + "\n  - Use on folder, " + m.workingDirectory);
             }

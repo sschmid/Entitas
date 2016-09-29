@@ -1,6 +1,5 @@
-﻿using Entitas;
+using Entitas;
 
 public class ResourceComponent : IComponent {
     public string name;
 }
-

@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class ExecuteSystemSpy : IExecuteSystem {
 
@@ -10,4 +10,3 @@ public class ExecuteSystemSpy : IExecuteSystem {
         _didExecute += 1;
     }
 }
-
