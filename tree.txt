@@ -1,5 +1,4 @@
 .
-├── Documentation
 ├── Entitas
 │   └── Entitas
 │       ├── Caching
@@ -46,8 +45,6 @@
     ├── VisualStudio
     └── Xamarin
 .
-├── Documentation
-│   └── Entitas-0.34.0.docset.zip
 ├── Entitas
 │   └── Entitas
 │       ├── Caching
@@ -157,7 +154,7 @@
 │               │   ├── EntitasEditorLayout.cs
 │               │   ├── EntitasFeedback.cs
 │               │   ├── EntitasHeader.png
-│               │   ├── EntitasMenuItemPriorities.cs
+│               │   ├── EntitasMenuItems.cs
 │               │   ├── EntitasPreferencesDrawer.cs
 │               │   ├── EntitasPreferencesDrawerPriorities.cs
 │               │   ├── EntitasPreferencesWindow.cs

@@ -17,20 +17,15 @@ perl -pi -w -e "s/DOCSET_BUNDLE_ID.*\n/DOCSET_BUNDLE_ID = ${DOCSET_NAME}\n/s" do
 
 # Generate the docset
 doxygen docset.doxyfile
-cd html
+cd ../Build/docs/html
 make
 
 # In order for Dash to associate this docset with the "entitas" keyword,
 # we have to manually modify the generated plist.
 perl -pi -w -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>entitas<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/s" ${DOCSET_NAME}.docset/Contents/Info.plist
 
-# Move the docset to the root Documentation directory
-rm -rf "../../Documentation"
-mkdir -p "../../Documentation"
-zip -r "../../Documentation/${DOCSET_NAME}.docset.zip" "${DOCSET_NAME}.docset"
+zip -r "../${DOCSET_NAME}.docset.zip" "${DOCSET_NAME}.docset"
 
-# Remove all temp files
-rm -rf ../html
 popd
 
 echo "### Generating Documentation done ======================================="

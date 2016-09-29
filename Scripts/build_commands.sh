@@ -5,7 +5,7 @@ collect_sources() {
   echo "### Collecting sources... ============================================="
 
   rm -rfv $BUILD
-  mkdir $BUILD $BUILD_SRC $BUILD_SRC/$ESU
+  mkdir $BUILD $BUILD_SRC $BUILD_SRC/$ESU $BUILD_DEPLOY
 
   cpe {"$ES/$ES","$MIG/$MIG"} $BUILD_SRC
   cpe "$ESU_ASSETS/$ES/Unity/" $BUILD_SRC/$ESU
@@ -44,7 +44,7 @@ post_build_collect_misc() {
   cp -v RELEASE_NOTES.md "$BUILD_SRC/RELEASE_NOTES.md"
   cp -v EntitasUpgradeGuide.md "$BUILD_SRC/EntitasUpgradeGuide.md"
   cp -v LICENSE.txt "$BUILD_SRC/LICENSE.txt"
-  rsync -arv Documentation "$BUILD_SRC/"
+  rsync -arv "$BUILD_DOCS/" "$BUILD_SRC/Documentation"
 
   echo "Collecting misc files done ============================================"
 }
@@ -92,7 +92,7 @@ create_zip() {
   cp "$BUILD_SRC/"* $TMP_DIR || true
 
   pushd $TMP_DIR > /dev/null
-    zip -rq ../Entitas-CSharp.zip ./
+    zip -rq "../../$BUILD_DEPLOY/Entitas-CSharp.zip" ./
   popd > /dev/null
   rm -rf $TMP_DIR
 
@@ -111,7 +111,7 @@ create_zip() {
   mv "$TMP_DIR/$ESU/" "$TMP_DIR/$ES/Unity/"
 
   pushd $TMP_DIR > /dev/null
-    zip -rq ../Entitas-Unity.zip ./
+    zip -rq "../../$BUILD_DEPLOY/Entitas-Unity.zip" ./
   popd > /dev/null
   rm -rf $TMP_DIR
 

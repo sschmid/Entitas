@@ -1,10 +1,12 @@
 #!/bin/bash
 PWD=$(pwd)
+UNITY='/Applications/Unity/Unity.app/Contents/MacOS/Unity'
 
 # Folders
 BUILD="Build"
 BUILD_SRC="$BUILD/src"
-UNITY='/Applications/Unity/Unity.app/Contents/MacOS/Unity'
+BUILD_DOCS="$BUILD/docs"
+BUILD_DEPLOY="$BUILD/deploy"
 
 # Tests
 TEST_PROJECT="Tests/Tests.csproj"

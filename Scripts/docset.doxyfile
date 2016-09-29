@@ -2,7 +2,7 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME = Entitas-0.34.0
 PROJECT_LOGO           =
-OUTPUT_DIRECTORY       =
+OUTPUT_DIRECTORY       = ../Build/docs
 CREATE_SUBDIRS         = NO
 ALLOW_UNICODE_NAMES    = NO
 OUTPUT_LANGUAGE        = English
