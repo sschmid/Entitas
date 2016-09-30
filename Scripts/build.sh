@@ -11,7 +11,7 @@ collect_misc
 build
 runTests
 
-sh Scripts/generate_docset.sh
+sh Scripts/generate_docs.sh
 
 post_build_collect_misc
 create_zip

@@ -11,9 +11,12 @@ pushd "$(dirname "$(readlink "$BASH_SOURCE" || echo "$BASH_SOURCE")")"
 
 # Use the current Entitas version to generate the docset name and id
 ENTITAS_VERSION=`cat ../Entitas/Entitas/entitas_version`
-DOCSET_NAME="Entitas-${ENTITAS_VERSION}"
-perl -pi -w -e "s/PROJECT_NAME.*\n/PROJECT_NAME = ${DOCSET_NAME}\n/s" docset.doxyfile
-perl -pi -w -e "s/DOCSET_BUNDLE_ID.*\n/DOCSET_BUNDLE_ID = ${DOCSET_NAME}\n/s" docset.doxyfile
+PROJECT_NAME="Entitas-${ENTITAS_VERSION}"
+
+perl -pi -w -e "s/PROJECT_NAME.*\n/PROJECT_NAME = ${PROJECT_NAME}\n/s" docset.doxyfile
+perl -pi -w -e "s/DOCSET_BUNDLE_ID.*\n/DOCSET_BUNDLE_ID = ${PROJECT_NAME}\n/s" docset.doxyfile
+
+perl -pi -w -e "s/PROJECT_NAME.*\n/PROJECT_NAME = ${PROJECT_NAME}\n/s" html.doxyfile
 
 # Generate the docset
 doxygen docset.doxyfile
@@ -24,7 +27,14 @@ make
 # we have to manually modify the generated plist.
 perl -pi -w -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>entitas<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/s" ${DOCSET_NAME}.docset/Contents/Info.plist
 
-zip -r "../${DOCSET_NAME}.docset.zip" "${DOCSET_NAME}.docset"
+zip -r "../${PROJECT_NAME}.docset.zip" "${PROJECT_NAME}.docset"
+
+# Remove all temp files
+rm -rf ../html
+
+# Generate html docs
+cd -
+doxygen html.doxyfile
 
 popd
 
