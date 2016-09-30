@@ -36,6 +36,8 @@ rm -rf ../html
 cd -
 doxygen html.doxyfile
 
+rsync -arv ../Build/docs/html/ ../docs
+
 popd
 
 echo "### Generating Documentation done ======================================="
