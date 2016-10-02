@@ -229,17 +229,25 @@
 │                   │   └── PoolObserverBehaviour.cs
 │                   └── GameObjectDestroyExtension.cs
 ├── Scripts
-│   ├── Project-Logo.png
-│   ├── build.sh
-│   ├── build_commands.sh
+│   ├── build
+│   ├── clean
+│   ├── collect_sources
+│   ├── deploy
+│   ├── docs-logo.png
 │   ├── docset.doxyfile
-│   ├── exclude.txt
-│   ├── generate_docs.sh
+│   ├── generate_docs
+│   ├── generate_tree_file
+│   ├── generate_unity_csharp_project
 │   ├── html.doxyfile
-│   ├── runTests.bat
-│   ├── runTests.sh
-│   ├── update_project_dependencies.sh
-│   └── vars.sh
+│   ├── post_build_collect
+│   ├── release
+│   ├── rsync_exclude.txt
+│   ├── rsync_include.txt
+│   ├── run_tests
+│   ├── run_unity_tests
+│   ├── tree.txt
+│   ├── update_project_dependencies
+│   └── vars
 ├── Snippets
 │   ├── VisualStudio
 │   │   ├── e_cleanup.snippet

@@ -1,0 +1,9 @@
+#!/bin/bash -e
+source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
+${SCRIPTS}/clean
+echo "### Collecting sources... -=============================================="
+mkdir -pv "${BUILD_SRC}/${ESU}"
+cpe "${ROOT}/${ES}/${ES}" $BUILD_SRC
+cpe "${ROOT}/${MIG}/${MIG}" $BUILD_SRC
+cpe "${ROOT}/${ESU_ASSETS}/${ES}/Unity/" "${BUILD_SRC}/${ESU}"
+echo "### Collecting sources done -============================================"

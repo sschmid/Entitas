@@ -23,7 +23,7 @@ test-results
 # Custom
 Build/*
 !Build/deploy/
-
 Entitas.Unity/Entitas.Unity.sln
 Entitas.Unity/Assets/Libraries
 Entitas.Unity/Assets/Libraries.meta
+unity-test-results.xml

@@ -1,0 +1,6 @@
+#!/bin/bash -e
+source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
+echo "### Running tests... -==================================================="
+# xbuild $TEST_PROJECT /property:Configuration=Release /verbosity:minimal
+mono $TEST_RUNNER
+echo "### Running tests done -================================================="

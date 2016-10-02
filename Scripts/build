@@ -1,0 +1,7 @@
+#!/bin/bash -e
+source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
+${SCRIPTS}/generate_unity_csharp_project
+echo "### Building... -========================================================"
+xbuild /target:Clean /property:Configuration=Release $PROJECT
+xbuild /property:Configuration=Release $PROJECT
+echo "### Building done -======================================================"

@@ -2,7 +2,7 @@
 
 public static class Commands {
 
-    public static void GenerateProjectFiles() {
+    public static void GenerateCSharpProject() {
         EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
     }
 }

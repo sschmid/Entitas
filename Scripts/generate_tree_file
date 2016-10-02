@@ -1,0 +1,10 @@
+#!/bin/bash -e
+source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
+echo "### Creating tree file... -=============================================="
+TREE_IGNORE="bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|docs|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties|unity-test-results.xml"
+pushd $ROOT > /dev/null
+tree -I "$TREE_IGNORE" --noreport -d > tree.txt
+tree -I "$TREE_IGNORE" --noreport --dirsfirst >> tree.txt
+cat tree.txt
+popd > /dev/null
+echo "### Creating tree file done -============================================"

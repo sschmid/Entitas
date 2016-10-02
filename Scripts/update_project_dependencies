@@ -1,0 +1,9 @@
+#!/bin/bash -e
+source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
+${SCRIPTS}/collect_sources
+echo "### Updating project dependencies... -==================================="
+rm -rf "${ROOT}/${ESU_LIBS}"
+mkdir "${ROOT}/${ESU_LIBS}"
+cpe "${BUILD_SRC}/${ES}" "${ROOT}/${ESU_LIBS}"
+cpe "${BUILD_SRC}/${MIG}" "${ROOT}/${ESU_LIBS}"
+echo "### Updating project dependencies done -================================="

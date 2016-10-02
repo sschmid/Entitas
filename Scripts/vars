@@ -1,0 +1,23 @@
+#!/bin/bash
+UNITY="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
+SCRIPTS="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
+ROOT="${SCRIPTS}/.."
+BUILD="${ROOT}/Build"
+BUILD_SRC="${BUILD}/src"
+BUILD_DOCS="${BUILD}/docs"
+BUILD_DEPLOY="${BUILD}/deploy"
+PROJECT="${ROOT}/Entitas.sln"
+TEST_PROJECT="${ROOT}/Tests/Tests.csproj"
+TEST_RUNNER="${ROOT}/Tests/bin/Release/Tests.exe"
+DOCS="$ROOT/docs"
+ES="Entitas"
+CG="Entitas.CodeGenerator"
+MIG="Entitas.Migration"
+ESU="Entitas.Unity"
+ESU_ASSETS="${ESU}/Assets"
+ESU_LIBS="${ESU_ASSETS}/Libraries"
+ENTITAS_VERSION=`cat ${ROOT}/Entitas/Entitas/entitas_version`
+
+cpe() {
+  rsync -arvv --include-from "${SCRIPTS}/rsync_include.txt" --exclude-from "${SCRIPTS}/rsync_exclude.txt" $1 $2
+}
