@@ -1,6 +1,6 @@
 var NAVTREE =
 [
-  [ "Entitas-0.34.0", "index.html", [
+  [ "Entitas", "index.html", [
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ]
     ] ],
@@ -24,8 +24,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"d8/d06/_trigger_on_event_8cs_source.html"
+"_blueprint_8cs_source.html",
+"class_entitas_1_1_group.html#a32a677c3dcbb49779d66cf154c6db714",
+"interface_entitas_1_1_code_generator_1_1_i_code_generator_data_provider.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
