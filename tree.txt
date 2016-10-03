@@ -14,7 +14,6 @@
 │       └── Serialization
 │           ├── Blueprints
 │           └── Configuration
-├── Entitas.CodeGenerator
 ├── Entitas.Migration
 │   └── Entitas.Migration
 ├── Entitas.Unity
@@ -41,6 +40,7 @@
 │                   └── PoolObserver
 │                       └── Editor
 ├── Scripts
+│   └── Docs
 └── Snippets
     ├── VisualStudio
     └── Xamarin
@@ -126,7 +126,6 @@
 │       ├── ReactiveSystem.cs
 │       ├── Systems.cs
 │       └── entitas_version
-├── Entitas.CodeGenerator
 ├── Entitas.Migration
 │   ├── Entitas.Migration
 │   │   ├── IMigration.cs
@@ -229,16 +228,19 @@
 │                   │   └── PoolObserverBehaviour.cs
 │                   └── GameObjectDestroyExtension.cs
 ├── Scripts
+│   ├── Docs
+│   │   ├── docs-logo.png
+│   │   ├── docset.doxyfile
+│   │   ├── html.doxyfile
+│   │   ├── icon.png
+│   │   └── icon@2x.png
 │   ├── build
 │   ├── clean
 │   ├── collect_sources
 │   ├── deploy
-│   ├── docs-logo.png
-│   ├── docset.doxyfile
 │   ├── generate_docs
 │   ├── generate_tree_file
 │   ├── generate_unity_csharp_project
-│   ├── html.doxyfile
 │   ├── post_build_collect
 │   ├── release
 │   ├── rsync_exclude.txt

@@ -33,9 +33,9 @@ pushd $TMP_DIR > /dev/null
 popd > /dev/null
 rm -rf $TMP_DIR
 
-echo "Creating com.sschmid.Entitas.docset.zip..."
+echo "Creating Entitas.docset.tgz..."
 pushd "${BUILD_DOCS}/docset" > /dev/null
-  zip -rq "${BUILD_DEPLOY}/com.sschmid.Entitas.docset.zip" ./com.sschmid.Entitas.docset
+  tar --exclude='.DS_Store' -czf "${BUILD_DEPLOY}/Entitas.docset.tgz" Entitas.docset
 popd > /dev/null
 
 echo "### Delpoying done -====================================================="

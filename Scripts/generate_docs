@@ -24,6 +24,7 @@ sed -i .bak -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>entitas<\/str
 rm "${DOCSET}/Contents/Info.plist.bak"
 cp "${SCRIPTS}/Docs/icon.png" $DOCSET
 cp "${SCRIPTS}/Docs/icon@2x.png" $DOCSET
+rm -rf "Entitas.docset"
 mv $DOCSET "Entitas.docset"
 popd > /dev/null
 
