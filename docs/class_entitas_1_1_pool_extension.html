@@ -132,7 +132,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00021">21</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00029">29</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6287ecf826a5b986e25bcf99cb299785"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6287ecf826a5b986e25bcf99cb299785">&sect;&nbsp;</a></span>CloneEntity()</h2>
@@ -181,7 +181,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 <p>Creates a new entity and adds copies of all specified components to it. If replaceExisting is true it will replace exisintg components. </p>
 
-<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00161">161</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00194">194</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
 
 </div>
 </div>
@@ -224,9 +224,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Creates an <a class="el" href="class_entitas_1_1_entity_collector.html" title="An EntityCollector can observe one or more groups and collects changed entities based on the specifie...">EntityCollector</a> which observes all specified pools. This is useful when you want to create an <a class="el" href="class_entitas_1_1_entity_collector.html" title="An EntityCollector can observe one or more groups and collects changed entities based on the specifie...">EntityCollector</a> for multiple pools which can be used with <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
+<p>Creates an <a class="el" href="class_entitas_1_1_entity_collector.html">EntityCollector</a> which observes all specified pools. This is useful when you want to create an <a class="el" href="class_entitas_1_1_entity_collector.html">EntityCollector</a> for multiple pools which can be used with <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
 
-<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00147">147</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00176">176</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
 
 </div>
 </div>
@@ -263,9 +263,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is the recommended way to create systems. It will inject the pool if <a class="el" href="interface_entitas_1_1_i_set_pool.html">ISetPool</a> is implemented. It will inject the Pools.sharedInstance if <a class="el" href="interface_entitas_1_1_i_set_pools.html">ISetPools</a> is implemented. It will automatically create a <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> if it is a <a class="el" href="interface_entitas_1_1_i_reactive_system.html" title="Implement this interface if you want to create a reactive system which is triggered by the specified ...">IReactiveSystem</a>, <a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html" title="Implement this interface if you want to create a reactive system which is triggered by any of the spe...">IMultiReactiveSystem</a> or <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
+<p>This is the recommended way to create systems. It will inject the pool if <a class="el" href="interface_entitas_1_1_i_set_pool.html">ISetPool</a> is implemented. It will inject the Pools.sharedInstance if <a class="el" href="interface_entitas_1_1_i_set_pools.html">ISetPools</a> is implemented. It will automatically create a <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> if it is a <a class="el" href="interface_entitas_1_1_i_reactive_system.html">IReactiveSystem</a>, <a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html">IMultiReactiveSystem</a> or <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
 
-<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00032">32</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00041">41</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
 
 </div>
 </div>
@@ -310,7 +310,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 <p>This is the recommended way to create systems. It will inject the pool if <a class="el" href="interface_entitas_1_1_i_set_pool.html">ISetPool</a> is implemented. It will inject the pools if <a class="el" href="interface_entitas_1_1_i_set_pools.html">ISetPools</a> is implemented. </p>
 
-<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00039">39</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00048">48</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
 
 </div>
 </div>
@@ -347,9 +347,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is the recommended way to create systems. It will inject the pool if <a class="el" href="interface_entitas_1_1_i_set_pool.html">ISetPool</a> is implemented. It will inject the pools if <a class="el" href="interface_entitas_1_1_i_set_pools.html">ISetPools</a> is implemented. It will automatically create a <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> if it is a <a class="el" href="interface_entitas_1_1_i_reactive_system.html" title="Implement this interface if you want to create a reactive system which is triggered by the specified ...">IReactiveSystem</a>, <a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html" title="Implement this interface if you want to create a reactive system which is triggered by any of the spe...">IMultiReactiveSystem</a> or <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
+<p>This is the recommended way to create systems. It will inject the pool if <a class="el" href="interface_entitas_1_1_i_set_pool.html">ISetPool</a> is implemented. It will inject the pools if <a class="el" href="interface_entitas_1_1_i_set_pools.html">ISetPools</a> is implemented. It will automatically create a <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> if it is a <a class="el" href="interface_entitas_1_1_i_reactive_system.html">IReactiveSystem</a>, <a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html">IMultiReactiveSystem</a> or <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
 
-<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00049">49</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00061">61</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
 
 </div>
 </div>
@@ -392,9 +392,9 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is the recommended way to create systems. It will inject the pool if <a class="el" href="interface_entitas_1_1_i_set_pool.html">ISetPool</a> is implemented. It will inject the pools if <a class="el" href="interface_entitas_1_1_i_set_pools.html">ISetPools</a> is implemented. It will automatically create a <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> if it is a <a class="el" href="interface_entitas_1_1_i_reactive_system.html" title="Implement this interface if you want to create a reactive system which is triggered by the specified ...">IReactiveSystem</a>, <a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html" title="Implement this interface if you want to create a reactive system which is triggered by any of the spe...">IMultiReactiveSystem</a> or <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
+<p>This is the recommended way to create systems. It will inject the pool if <a class="el" href="interface_entitas_1_1_i_set_pool.html">ISetPool</a> is implemented. It will inject the pools if <a class="el" href="interface_entitas_1_1_i_set_pools.html">ISetPools</a> is implemented. It will automatically create a <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> if it is a <a class="el" href="interface_entitas_1_1_i_reactive_system.html">IReactiveSystem</a>, <a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html">IMultiReactiveSystem</a> or <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
 
-<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00057">57</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00071">71</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
 
 </div>
 </div>
@@ -433,7 +433,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 <p>This is the recommended way to create systems. It will inject the pools if <a class="el" href="interface_entitas_1_1_i_set_pools.html">ISetPools</a> is implemented. </p>
 
-<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00082">82</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00099">99</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
 
 </div>
 </div>
@@ -472,7 +472,7 @@ static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </div><div class="memdoc">
 <p>This is the recommended way to create systems. It will inject the pools if <a class="el" href="interface_entitas_1_1_i_set_pools.html">ISetPools</a> is implemented. It will automatically create a <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> if it is a <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
 
-<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00090">90</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_pool_extension_8cs_source.html#l00108">108</a> of file <a class="el" href="_pool_extension_8cs_source.html">PoolExtension.cs</a>.</p>
 
 </div>
 </div>

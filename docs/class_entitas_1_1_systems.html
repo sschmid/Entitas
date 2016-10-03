@@ -96,10 +96,10 @@ Inheritance diagram for Entitas.Systems:</div>
  <div class="center">
   <img src="class_entitas_1_1_systems.png" usemap="#Entitas.Systems_map" alt=""/>
   <map id="Entitas.Systems_map" name="Entitas.Systems_map">
-<area href="interface_entitas_1_1_i_initialize_system.html" title="Implement this interface if you want to create a system which should be initialized once in the begin..." alt="Entitas.IInitializeSystem" shape="rect" coords="0,56,154,80"/>
-<area href="interface_entitas_1_1_i_execute_system.html" title="Implement this interface if you want to create a system which should be executed every frame..." alt="Entitas.IExecuteSystem" shape="rect" coords="164,56,318,80"/>
-<area href="interface_entitas_1_1_i_cleanup_system.html" title="Implement this interface if you want to create a system which should execute cleanup logic after exec..." alt="Entitas.ICleanupSystem" shape="rect" coords="328,56,482,80"/>
-<area href="interface_entitas_1_1_i_tear_down_system.html" title="Implement this interface if you want to create a system which should tear down once in the end..." alt="Entitas.ITearDownSystem" shape="rect" coords="492,56,646,80"/>
+<area href="interface_entitas_1_1_i_initialize_system.html" alt="Entitas.IInitializeSystem" shape="rect" coords="0,56,154,80"/>
+<area href="interface_entitas_1_1_i_execute_system.html" alt="Entitas.IExecuteSystem" shape="rect" coords="164,56,318,80"/>
+<area href="interface_entitas_1_1_i_cleanup_system.html" alt="Entitas.ICleanupSystem" shape="rect" coords="328,56,482,80"/>
+<area href="interface_entitas_1_1_i_tear_down_system.html" alt="Entitas.ITearDownSystem" shape="rect" coords="492,56,646,80"/>
 <area href="interface_entitas_1_1_i_system.html" alt="Entitas.ISystem" shape="rect" coords="0,0,154,24"/>
 <area href="interface_entitas_1_1_i_system.html" alt="Entitas.ISystem" shape="rect" coords="164,0,318,24"/>
 <area href="interface_entitas_1_1_i_system.html" alt="Entitas.ISystem" shape="rect" coords="328,0,482,24"/>
@@ -117,21 +117,13 @@ Public Member Functions</h2></td></tr>
 virtual <a class="el" href="class_entitas_1_1_systems.html">Systems</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#ac6c2a6fcc131ee87786fb613c0e82d16">Add</a> (<a class="el" href="interface_entitas_1_1_i_system.html">ISystem</a> system)</td></tr>
 <tr class="memdesc:ac6c2a6fcc131ee87786fb613c0e82d16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the system instance to the systems list. <br /></td></tr>
 <tr class="separator:ac6c2a6fcc131ee87786fb613c0e82d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33b35b3cdbdb16c347086a4ce4a23495"><td class="memItemLeft" align="right" valign="top"><a id="a33b35b3cdbdb16c347086a4ce4a23495"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#a33b35b3cdbdb16c347086a4ce4a23495">Initialize</a> ()</td></tr>
-<tr class="memdesc:a33b35b3cdbdb16c347086a4ce4a23495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls <a class="el" href="class_entitas_1_1_systems.html#a33b35b3cdbdb16c347086a4ce4a23495" title="Calls Initialize() on all IInitializeSystem, ReactiveSystem and other nested Systems instances in the...">Initialize()</a> on all <a class="el" href="interface_entitas_1_1_i_initialize_system.html" title="Implement this interface if you want to create a system which should be initialized once in the begin...">IInitializeSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. <br /></td></tr>
+<tr class="memitem:a33b35b3cdbdb16c347086a4ce4a23495"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#a33b35b3cdbdb16c347086a4ce4a23495">Initialize</a> ()</td></tr>
 <tr class="separator:a33b35b3cdbdb16c347086a4ce4a23495"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b3a145d250e1a5b8cfa90f9b3c0b716"><td class="memItemLeft" align="right" valign="top"><a id="a5b3a145d250e1a5b8cfa90f9b3c0b716"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#a5b3a145d250e1a5b8cfa90f9b3c0b716">Execute</a> ()</td></tr>
-<tr class="memdesc:a5b3a145d250e1a5b8cfa90f9b3c0b716"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls <a class="el" href="class_entitas_1_1_systems.html#a5b3a145d250e1a5b8cfa90f9b3c0b716" title="Calls Execute() on all IExecuteSystem, ReactiveSystem and other nested Systems instances in the order...">Execute()</a> on all <a class="el" href="interface_entitas_1_1_i_execute_system.html" title="Implement this interface if you want to create a system which should be executed every frame...">IExecuteSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. <br /></td></tr>
+<tr class="memitem:a5b3a145d250e1a5b8cfa90f9b3c0b716"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#a5b3a145d250e1a5b8cfa90f9b3c0b716">Execute</a> ()</td></tr>
 <tr class="separator:a5b3a145d250e1a5b8cfa90f9b3c0b716"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9cb3253bb32206b420b4a041ebdcff2"><td class="memItemLeft" align="right" valign="top"><a id="ae9cb3253bb32206b420b4a041ebdcff2"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#ae9cb3253bb32206b420b4a041ebdcff2">Cleanup</a> ()</td></tr>
-<tr class="memdesc:ae9cb3253bb32206b420b4a041ebdcff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls <a class="el" href="class_entitas_1_1_systems.html#ae9cb3253bb32206b420b4a041ebdcff2" title="Calls Cleanup() on all ICleanupSystem, ReactiveSystem and other nested Systems instances in the order...">Cleanup()</a> on all <a class="el" href="interface_entitas_1_1_i_cleanup_system.html" title="Implement this interface if you want to create a system which should execute cleanup logic after exec...">ICleanupSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. <br /></td></tr>
+<tr class="memitem:ae9cb3253bb32206b420b4a041ebdcff2"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#ae9cb3253bb32206b420b4a041ebdcff2">Cleanup</a> ()</td></tr>
 <tr class="separator:ae9cb3253bb32206b420b4a041ebdcff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7610d89dd9172d6dd881bd73f7cb0b48"><td class="memItemLeft" align="right" valign="top"><a id="a7610d89dd9172d6dd881bd73f7cb0b48"></a>
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#a7610d89dd9172d6dd881bd73f7cb0b48">TearDown</a> ()</td></tr>
-<tr class="memdesc:a7610d89dd9172d6dd881bd73f7cb0b48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls <a class="el" href="class_entitas_1_1_systems.html#a7610d89dd9172d6dd881bd73f7cb0b48" title="Calls TearDown() on all ITearDownSystem, ReactiveSystem and other nested Systems instances in the ord...">TearDown()</a> on all <a class="el" href="interface_entitas_1_1_i_tear_down_system.html" title="Implement this interface if you want to create a system which should tear down once in the end...">ITearDownSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. <br /></td></tr>
+<tr class="memitem:a7610d89dd9172d6dd881bd73f7cb0b48"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#a7610d89dd9172d6dd881bd73f7cb0b48">TearDown</a> ()</td></tr>
 <tr class="separator:a7610d89dd9172d6dd881bd73f7cb0b48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47de4f75c6dc07bf138999e7aae5a0c0"><td class="memItemLeft" align="right" valign="top"><a id="a47de4f75c6dc07bf138999e7aae5a0c0"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_systems.html#a47de4f75c6dc07bf138999e7aae5a0c0">ActivateReactiveSystems</a> ()</td></tr>
@@ -160,10 +152,40 @@ readonly List&lt; <a class="el" href="interface_entitas_1_1_i_tear_down_system.h
 <tr class="separator:ac1b777aaf53a1ab62e057f00e28768e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="class_entitas_1_1_systems.html">Systems</a> provide a convenient way to group systems. You can add <a class="el" href="interface_entitas_1_1_i_initialize_system.html" title="Implement this interface if you want to create a system which should be initialized once in the begin...">IInitializeSystem</a>, <a class="el" href="interface_entitas_1_1_i_execute_system.html" title="Implement this interface if you want to create a system which should be executed every frame...">IExecuteSystem</a>, <a class="el" href="interface_entitas_1_1_i_cleanup_system.html" title="Implement this interface if you want to create a system which should execute cleanup logic after exec...">ICleanupSystem</a>, <a class="el" href="interface_entitas_1_1_i_tear_down_system.html" title="Implement this interface if you want to create a system which should tear down once in the end...">ITearDownSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances. All systems will be initialized and executed based on the order you added them. </p>
+<div class="textblock"><p><a class="el" href="class_entitas_1_1_systems.html">Systems</a> provide a convenient way to group systems. You can add <a class="el" href="interface_entitas_1_1_i_initialize_system.html">IInitializeSystem</a>, <a class="el" href="interface_entitas_1_1_i_execute_system.html">IExecuteSystem</a>, <a class="el" href="interface_entitas_1_1_i_cleanup_system.html">ICleanupSystem</a>, <a class="el" href="interface_entitas_1_1_i_tear_down_system.html">ITearDownSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances. All systems will be initialized and executed based on the order you added them. </p>
 
-<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00007">7</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00010">10</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae9cb3253bb32206b420b4a041ebdcff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9cb3253bb32206b420b4a041ebdcff2">&sect;&nbsp;</a></span>Cleanup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Entitas.Systems.Cleanup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Calls <a class="el" href="class_entitas_1_1_systems.html#ae9cb3253bb32206b420b4a041ebdcff2">Cleanup()</a> on all <a class="el" href="interface_entitas_1_1_i_cleanup_system.html">ICleanupSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
+
+<p>Implements <a class="el" href="interface_entitas_1_1_i_cleanup_system.html">Entitas.ICleanupSystem</a>.</p>
+
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00080">80</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+
+</div>
+</div>
 <a id="aa99602f321bc4feb11e11e586493f805"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa99602f321bc4feb11e11e586493f805">&sect;&nbsp;</a></span>DeactivateReactiveSystems()</h2>
 
@@ -188,7 +210,97 @@ readonly List&lt; <a class="el" href="interface_entitas_1_1_i_tear_down_system.h
 </div><div class="memdoc">
 <p>Deactivates all ReactiveSystems in the systems list. This will also clear all ReactiveSystems. This is useful when you want to soft-restart your application and want to reuse your existing system instances. </p>
 
-<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00104">104</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00114">114</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+
+</div>
+</div>
+<a id="a5b3a145d250e1a5b8cfa90f9b3c0b716"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b3a145d250e1a5b8cfa90f9b3c0b716">&sect;&nbsp;</a></span>Execute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Entitas.Systems.Execute </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Calls <a class="el" href="class_entitas_1_1_systems.html#a5b3a145d250e1a5b8cfa90f9b3c0b716">Execute()</a> on all <a class="el" href="interface_entitas_1_1_i_execute_system.html">IExecuteSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
+
+<p>Implements <a class="el" href="interface_entitas_1_1_i_execute_system.html">Entitas.IExecuteSystem</a>.</p>
+
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00072">72</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+
+</div>
+</div>
+<a id="a33b35b3cdbdb16c347086a4ce4a23495"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33b35b3cdbdb16c347086a4ce4a23495">&sect;&nbsp;</a></span>Initialize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Entitas.Systems.Initialize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Calls <a class="el" href="class_entitas_1_1_systems.html#a33b35b3cdbdb16c347086a4ce4a23495">Initialize()</a> on all <a class="el" href="interface_entitas_1_1_i_initialize_system.html">IInitializeSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
+
+<p>Implements <a class="el" href="interface_entitas_1_1_i_initialize_system.html">Entitas.IInitializeSystem</a>.</p>
+
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00064">64</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+
+</div>
+</div>
+<a id="a7610d89dd9172d6dd881bd73f7cb0b48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7610d89dd9172d6dd881bd73f7cb0b48">&sect;&nbsp;</a></span>TearDown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Entitas.Systems.TearDown </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Calls <a class="el" href="class_entitas_1_1_systems.html#a7610d89dd9172d6dd881bd73f7cb0b48">TearDown()</a> on all <a class="el" href="interface_entitas_1_1_i_tear_down_system.html">ITearDownSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
+
+<p>Implements <a class="el" href="interface_entitas_1_1_i_tear_down_system.html">Entitas.ITearDownSystem</a>.</p>
+
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00088">88</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
 
 </div>
 </div>
