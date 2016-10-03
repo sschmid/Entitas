@@ -36,7 +36,7 @@ Entitas 0.35.0 upgrade guide
 #### Before you install
 - You're fine - nothing to do for you :heart:
 
-#### After you intalled
+#### After you installed
 - Fix all the errors where you used `matcher.Where()`
 
 
@@ -44,7 +44,7 @@ Entitas 0.34.0 upgrade guide
 ============================
 
 #### Info
-`GroupObserver` has been renamed to `EntityCollector`. See #168 
+`GroupObserver` has been renamed to `EntityCollector`. See #168
 
 #### Before you install
 - Rename `GroupObserver` to `EntityCollector`
@@ -52,7 +52,7 @@ Entitas 0.34.0 upgrade guide
 - Rename `IGroupObserverSystem` to `IEntityCollectorSystem`
 - Find & Replace `public EntityCollector groupObserver` with `public EntityCollector entityCollector`
 
-#### After you intalled
+#### After you installed
 - You're fine - nothing to do for you :heart:
 
 
@@ -60,12 +60,12 @@ Entitas 0.33.0 upgrade guide
 ============================
 
 #### Info
-`IDeinitializeSystem` has been renamed to `ITearDownSystem`. See #164 
+`IDeinitializeSystem` has been renamed to `ITearDownSystem`. See #164
 
 #### Before you install
 - Manually rename `IDeinitializeSystem` to `ITearDownSystem`
 
-#### After you intalled
+#### After you installed
 - You're fine - nothing to do for you :heart:
 
 
