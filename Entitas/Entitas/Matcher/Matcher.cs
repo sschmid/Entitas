@@ -23,8 +23,6 @@ namespace Entitas {
         int[] _anyOfIndices;
         int[] _noneOfIndices;
 
-        MatcherFilter _filter;
-
         Matcher() {
         }
 
@@ -48,16 +46,10 @@ namespace Entitas {
             return NoneOf(mergeIndices(matchers));
         }
 
-        public IMatcher Where(MatcherFilter filter) {
-            _filter = filter;
-            return this;
-        }
-
         public bool Matches(Entity entity) {
             return (_allOfIndices == null || entity.HasComponents(_allOfIndices))
                 && (_anyOfIndices == null || entity.HasAnyComponent(_anyOfIndices))
-                && (_noneOfIndices == null || !entity.HasAnyComponent(_noneOfIndices))
-                && (_filter == null || _filter(entity));
+                && (_noneOfIndices == null || !entity.HasAnyComponent(_noneOfIndices));
         }
 
         int[] mergeIndices() {
