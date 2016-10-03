@@ -113,14 +113,18 @@ namespace Entitas {
         }
 
         bool addEntitySilently(Entity entity) {
-            var added = _entities.Add(entity);
-            if(added) {
-                _entitiesCache = null;
-                _singleEntityCache = null;
-                entity.Retain(this);
+            if(entity.isEnabled) {
+                var added = _entities.Add(entity);
+                if(added) {
+                    _entitiesCache = null;
+                    _singleEntityCache = null;
+                    entity.Retain(this);
+                }
+
+                return added;
             }
 
-            return added;
+            return false;
         }
 
         void addEntity(Entity entity, int index, IComponent component) {

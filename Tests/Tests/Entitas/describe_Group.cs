@@ -75,6 +75,15 @@ class describe_Group : nspec {
             };
         };
 
+        context["when entity is not enabled"] = () => {
+
+            it["doesn't add entity"] = () => {
+                eA1._isEnabled = false;
+                handleSilently(eA1);
+                assertContainsNot(eA1);
+            };
+        };
+
         it["doesn't add entity when not matching"] = () => {
             var e = this.CreateEntity().AddComponentB();
             handleSilently(e);
