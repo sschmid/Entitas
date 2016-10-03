@@ -525,6 +525,16 @@ class describe_Pool : nspec {
                     updated.should_be(1);
                 };
 
+                it["group with matcher NoneOf doesn't dispatch OnEntityAdded when destroying entity"] = () => {
+                    var e = pool.CreateEntity()
+                                .AddComponentA()
+                                .AddComponentB();
+                    var matcher = Matcher.AllOf(CID.ComponentB).NoneOf(CID.ComponentA);
+                    var g = pool.GetGroup(matcher);
+                    g.OnEntityAdded += delegate { this.Fail(); };
+                    pool.DestroyEntity(e);
+                };
+
                 context["event timing"] = () => {
 
                     before = () => {

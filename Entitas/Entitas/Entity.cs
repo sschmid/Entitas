@@ -427,11 +427,11 @@ namespace Entitas {
         // This method is used internally. Don't call it yourself.
         // Use pool.DestroyEntity(entity);
         internal void destroy() {
+            _isEnabled = false;
             RemoveAllComponents();
             OnComponentAdded = null;
             OnComponentReplaced = null;
             OnComponentRemoved = null;
-            _isEnabled = false;
         }
 
         // Do not call this method manually. This method is called by the pool.
