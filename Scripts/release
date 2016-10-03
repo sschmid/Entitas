@@ -3,7 +3,7 @@ source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
 echo "### Releasing... -======================================================="
 pushd ${SCRIPTS} > /dev/null
 ./build
-# ./run_tests
+./run_tests
 ./run_unity_tests
 ./generate_docs
 ./post_build_collect

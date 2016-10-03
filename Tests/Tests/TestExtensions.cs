@@ -21,7 +21,12 @@ public static class TestExtensions {
             return current.Parent.Parent.Parent.FullName;
         }
 
-        // This happens if you use the provided runTests.sh
+        if(current.Name == "Scripts") {
+            // This happens if you run ./run_tests
+            return current.Parent.FullName;
+        }
+
+        // This happens if you run ./Scripts/run_tests
         return current.FullName;
     }
 
