@@ -2,15 +2,21 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    /// A ReactiveSystem manages your implementation of a IReactiveSystem, IMultiReactiveSystem or IEntityCollectorSystem subsystem.
-    /// It will only call subsystem.Execute() if there were changes based on the triggers and eventTypes specified by your subsystem
-    /// and will only pass in changed entities. A common use-case is to react to changes,
-    /// e.g. a change of the position of an entity to update the gameObject.transform.position of the related gameObject.
-    /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
-    /// This will automatically wrap MySystem in a ReactiveSystem if it implements IReactiveSystem, IMultiReactiveSystem or IEntityCollectorSystem.
+    /// A ReactiveSystem manages your implementation of a IReactiveSystem,
+    /// IMultiReactiveSystem or IEntityCollectorSystem subsystem.
+    /// It will only call subsystem.Execute() if there were changes based on
+    /// the triggers and eventTypes specified by your subsystem
+    /// and will only pass in changed entities. A common use-case is to react
+    /// to changes, e.g. a change of the position of an entity to update the
+    /// gameObject.transform.position of the related gameObject.
+    /// Recommended way to create systems in general:
+    /// pool.CreateSystem(new MySystem()); This will automatically wrap MySystem
+    /// in a ReactiveSystem if it implements IReactiveSystem,
+    /// IMultiReactiveSystem or IEntityCollectorSystem.
     public class ReactiveSystem : IExecuteSystem {
 
-        /// Returns the subsystem which will be managed by this instance of ReactiveSystem.
+        /// Returns the subsystem which will be managed by this
+        /// instance of ReactiveSystem.
         public IReactiveExecuteSystem subsystem { get { return _subsystem; } }
 
         readonly IReactiveExecuteSystem _subsystem;
@@ -21,22 +27,27 @@ namespace Entitas {
         readonly List<Entity> _buffer;
         string _toStringCache;
 
-        /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
-        public ReactiveSystem(Pool pool, IReactiveSystem subSystem) :
-            this(subSystem, createEntityCollector(pool, new [] { subSystem.trigger })) {
+        /// Recommended way to create systems in general:
+        /// pool.CreateSystem(new MySystem());
+        public ReactiveSystem(Pool pool, IReactiveSystem subSystem) : this(
+            subSystem, createEntityCollector(pool, new [] { subSystem.trigger })
+        ) {
         }
 
-        /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
+        /// Recommended way to create systems in general:
+        /// pool.CreateSystem(new MySystem());
         public ReactiveSystem(Pool pool, IMultiReactiveSystem subSystem) :
             this(subSystem, createEntityCollector(pool, subSystem.triggers)) {
         }
 
-        /// Recommended way to create systems in general: pool.CreateSystem(new MySystem());
+        /// Recommended way to create systems in general:
+        /// pool.CreateSystem(new MySystem());
         public ReactiveSystem(IEntityCollectorSystem subSystem) :
             this(subSystem, subSystem.entityCollector) {
         }
 
-        ReactiveSystem(IReactiveExecuteSystem subSystem, EntityCollector collector) {
+        ReactiveSystem(IReactiveExecuteSystem subSystem,
+                       EntityCollector collector) {
             _subsystem = subSystem;
             var ensureComponents = subSystem as IEnsureComponents;
             if(ensureComponents != null) {
@@ -53,7 +64,8 @@ namespace Entitas {
             _buffer = new List<Entity>();
         }
 
-        static EntityCollector createEntityCollector(Pool pool, TriggerOnEvent[] triggers) {
+        static EntityCollector createEntityCollector(
+            Pool pool, TriggerOnEvent[] triggers) {
             var triggersLength = triggers.Length;
             var groups = new Group[triggersLength];
             var eventTypes = new GroupEventType[triggersLength];
@@ -66,15 +78,17 @@ namespace Entitas {
             return new EntityCollector(groups, eventTypes);
         }
 
-        /// Activates the ReactiveSystem (ReactiveSystem are activated by default) and starts observing changes
+        /// Activates the ReactiveSystem and starts observing changes
         /// based on the triggers and eventTypes specified by the subsystem.
+        /// ReactiveSystem are activated by default.
         public void Activate() {
             _collector.Activate();
         }
 
-        /// Deactivates the ReactiveSystem (ReactiveSystem are activated by default).
+        /// Deactivates the ReactiveSystem.
         /// No changes will be tracked while deactivated.
         /// This will also clear the ReactiveSystems.
+        /// ReactiveSystem are activated by default
         public void Deactivate() {
             _collector.Deactivate();
         }
@@ -84,13 +98,15 @@ namespace Entitas {
             _collector.ClearCollectedEntities();
         }
 
-        /// Will call subsystem.Execute() with changed entities if there are any. Otherwise it will not call subsystem.Execute().
+        /// Will call subsystem.Execute() with changed entities
+        /// if there are any. Otherwise it will not call subsystem.Execute().
         public void Execute() {
             if(_collector.collectedEntities.Count != 0) {
                 if(_ensureComponents != null) {
                     if(_excludeComponents != null) {
                         foreach(var e in _collector.collectedEntities) {
-                            if(_ensureComponents.Matches(e) && !_excludeComponents.Matches(e)) {
+                            if(_ensureComponents.Matches(e) &&
+                               !_excludeComponents.Matches(e)) {
                                 _buffer.Add(e.Retain(this));
                             }
                         }

@@ -20,7 +20,9 @@ namespace Entitas.Serialization.Blueprints {
             var componentIndices = entity.GetComponentIndices();
             components = new ComponentBlueprint[allComponents.Length];
             for (int i = 0; i < allComponents.Length; i++) {
-                components[i] = new ComponentBlueprint(componentIndices[i], allComponents[i]);
+                components[i] = new ComponentBlueprint(
+                    componentIndices[i], allComponents[i]
+                );
             }
         }
     }

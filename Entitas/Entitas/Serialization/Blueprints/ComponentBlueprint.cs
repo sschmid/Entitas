@@ -27,7 +27,9 @@ namespace Entitas.Serialization.Blueprints {
             members = new SerializableMember[memberInfos.Count];
             for (int i = 0; i < memberInfos.Count; i++) {
                 var info = memberInfos[i];
-                members[i] = new SerializableMember(info.name, info.GetValue(component));
+                members[i] = new SerializableMember(
+                    info.name, info.GetValue(component)
+                );
             }
         }
 
@@ -36,13 +38,20 @@ namespace Entitas.Serialization.Blueprints {
                 _type = fullTypeName.ToType();
 
                 if(_type == null) {
-                    throw new ComponentBlueprintException("Type '" + fullTypeName + "' doesn't exist in any assembly!",
-                        "Please check the full type name.");
+                    throw new ComponentBlueprintException(
+                        "Type '" + fullTypeName +
+                        "' doesn't exist in any assembly!",
+                        "Please check the full type name."
+                    );
                 }
 
                 if(!_type.ImplementsInterface<IComponent>()) {
-                    throw new ComponentBlueprintException("Type '" + fullTypeName + "' doesn't implement IComponent!",
-                        typeof(ComponentBlueprint).Name + " only supports IComponent.");
+                    throw new ComponentBlueprintException(
+                        "Type '" + fullTypeName +
+                        "' doesn't implement IComponent!",
+                        typeof(ComponentBlueprint).Name +
+                        " only supports IComponent."
+                    );
                 }
             }
 
@@ -50,7 +59,9 @@ namespace Entitas.Serialization.Blueprints {
 
             if(_componentMembers == null) {
                 var memberInfos = _type.GetPublicMemberInfos();
-                _componentMembers = new Dictionary<string, PublicMemberInfo>(memberInfos.Count);
+                _componentMembers = new Dictionary<string, PublicMemberInfo>(
+                    memberInfos.Count
+                );
                 for (int i = 0; i < memberInfos.Count; i++) {
                     var info = memberInfos[i];
                     _componentMembers.Add(info.name, info);
@@ -62,8 +73,11 @@ namespace Entitas.Serialization.Blueprints {
 
                 PublicMemberInfo memberInfo;
                 if(!_componentMembers.TryGetValue(member.name, out memberInfo)) {
-                    throw new ComponentBlueprintException("Could not find member '" + member.name + "' in type '" + _type.FullName + "'!",
-                        "Only non-static public members are supported.");
+                    throw new ComponentBlueprintException(
+                        "Could not find member '" + member.name +
+                        "' in type '" + _type.FullName + "'!",
+                        "Only non-static public members are supported."
+                    );
                 }
 
                 memberInfo.SetValue(component, member.value);
@@ -74,7 +88,8 @@ namespace Entitas.Serialization.Blueprints {
     }
 
     public class ComponentBlueprintException : EntitasException {
-        public ComponentBlueprintException(string message, string hint) : base(message, hint) {
+        public ComponentBlueprintException(string message, string hint) :
+            base(message, hint) {
         }
     }
 }

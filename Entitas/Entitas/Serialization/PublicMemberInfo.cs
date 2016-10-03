@@ -78,7 +78,9 @@ namespace Entitas.Serialization {
 
             var fieldInfos = type.GetFields(bindingFlags);
             var propertyInfos = type.GetProperties(bindingFlags);
-            var memberInfos = new List<PublicMemberInfo>(fieldInfos.Length + propertyInfos.Length);
+            var memberInfos = new List<PublicMemberInfo>(
+                fieldInfos.Length + propertyInfos.Length
+            );
 
             for (int i = 0; i < fieldInfos.Length; i++) {
                 memberInfos.Add(new PublicMemberInfo(fieldInfos[i]));

@@ -13,7 +13,10 @@ namespace Entitas {
         protected readonly Group _group;
         protected readonly Func<Entity, IComponent, T> _getKey;
 
-        protected AbstractEntityIndex(Group group, Func<Entity, IComponent, T> getKey) {
+        protected AbstractEntityIndex(
+            Group group,
+            Func<Entity,
+            IComponent, T> getKey) {
             _group = group;
             _getKey = getKey;
         }
@@ -36,17 +39,21 @@ namespace Entitas {
             }
         }
 
-        protected void onEntityAdded(Group group, Entity entity, int index, IComponent component) {
+        protected void onEntityAdded(
+            Group group, Entity entity, int index, IComponent component) {
             addEntity(entity, component);
         }
 
-        protected void onEntityRemoved(Group group, Entity entity, int index, IComponent component) {
+        protected void onEntityRemoved(
+            Group group, Entity entity, int index, IComponent component) {
             removeEntity(entity, component);
         }
 
         protected abstract void addEntity(Entity entity, IComponent component);
 
-        protected abstract void removeEntity(Entity entity, IComponent component);
+        protected abstract void removeEntity(
+            Entity entity, IComponent component
+        );
 
         protected abstract void clear();
 
@@ -59,12 +66,18 @@ namespace Entitas {
 
         readonly Dictionary<T, Entity> _index;
 
-        public PrimaryEntityIndex(Group group, Func<Entity, IComponent, T> getKey) : base(group, getKey) {
+        public PrimaryEntityIndex(
+            Group group,
+            Func<Entity, IComponent, T> getKey
+        ) : base(group, getKey) {
             _index = new Dictionary<T, Entity>();
             Activate();
         }
 
-        public PrimaryEntityIndex(Group group, Func<Entity, IComponent, T> getKey, IEqualityComparer<T> comparer) : base(group, getKey) {
+        public PrimaryEntityIndex(
+            Group group, Func<Entity,
+            IComponent, T> getKey,
+            IEqualityComparer<T> comparer) : base(group, getKey) {
             _index = new Dictionary<T, Entity>(comparer);
             Activate();
         }
@@ -81,8 +94,11 @@ namespace Entitas {
         public Entity GetEntity(T key) {
             var entity = TryGetEntity(key);
             if(entity == null) {
-                throw new EntityIndexException("Entity for key '" + key + "' doesn't exist!",
-                    "You should check if an entity with that key exists before getting it.");
+                throw new EntityIndexException(
+                    "Entity for key '" + key + "' doesn't exist!",
+                    "You should check if an entity with that key exists " +
+                    "before getting it."
+                );
             }
 
             return entity;
@@ -102,10 +118,12 @@ namespace Entitas {
             _index.Clear();
         }
 
-        protected override void addEntity(Entity entity, IComponent component) {
+        protected override void addEntity(
+            Entity entity, IComponent component) {
             var key = _getKey(entity, component);
             if(_index.ContainsKey(key)) {
-                throw new EntityIndexException("Entity for key '" + key + "' already exists!",
+                throw new EntityIndexException(
+                    "Entity for key '" + key + "' already exists!",
                     "Only one entity for a primary key is allowed.");
             }
 
@@ -113,7 +131,8 @@ namespace Entitas {
             entity.Retain(this);
         }
 
-        protected override void removeEntity(Entity entity, IComponent component) {
+        protected override void removeEntity(
+            Entity entity, IComponent component) {
             _index.Remove(_getKey(entity, component));
             entity.Release(this);
         }
@@ -123,12 +142,16 @@ namespace Entitas {
 
         readonly Dictionary<T, HashSet<Entity>> _index;
 
-        public EntityIndex(Group group, Func<Entity, IComponent, T> getKey) : base(group, getKey) {
+        public EntityIndex(Group group, Func<Entity, IComponent, T> getKey) :
+            base(group, getKey) {
             _index = new Dictionary<T, HashSet<Entity>>();
             Activate();
         }
 
-        public EntityIndex(Group group, Func<Entity, IComponent, T> getKey, IEqualityComparer<T> comparer) : base(group, getKey) {
+        public EntityIndex(
+            Group group,
+            Func<Entity, IComponent, T> getKey,
+            IEqualityComparer<T> comparer) : base(group, getKey) {
             _index = new Dictionary<T, HashSet<Entity>>(comparer);
             Activate();
         }
@@ -163,7 +186,8 @@ namespace Entitas {
             entity.Retain(this);
         }
 
-        protected override void removeEntity(Entity entity, IComponent component) {
+        protected override void removeEntity(
+            Entity entity, IComponent component) {
             GetEntities(_getKey(entity, component)).Remove(entity);
             entity.Release(this);
         }

@@ -7,21 +7,27 @@ namespace Entitas.Serialization {
 
     public static class TypeSerializationExtension {
 
-        /// Generates a simplified type string for the specified type that can be compiled.
-        /// This is useful for code generation that will produce compilable source code.
+        /// Generates a simplified type string for the specified type that
+        /// can be compiled. This is useful for code generation that will
+        /// produce compilable source code.
         /// e.g. int instead of System.Int32
-        /// e.g. System.Collections.Generic.Dictionary<int, string> instead of System.Collections.Generic.Dictionary`2[System.Int32,System.String]
+        /// e.g. System.Collections.Generic.Dictionary<int, string> instead of
+        /// System.Collections.Generic.Dictionary`2[System.Int32,System.String]
         public static string ToCompilableString(this Type type) {
             if(_builtInTypesToString.ContainsKey(type.FullName)) {
                 return _builtInTypesToString[type.FullName];
             }
             if(type.IsGenericType) {
                 var genericMainType = type.FullName.Split('`')[0];
-                var genericArguments = type.GetGenericArguments().Select(argType => argType.ToCompilableString()).ToArray();
-                return genericMainType + "<" + string.Join(", ", genericArguments) + ">";
+                var genericArguments = type.GetGenericArguments().Select(
+                    argType => argType.ToCompilableString()
+                ).ToArray();
+                return genericMainType +
+                    "<" + string.Join(", ", genericArguments) + ">";
             }
             if(type.IsArray) {
-                return type.GetElementType().ToCompilableString() + "[" + new string(',', type.GetArrayRank() - 1) + "]";
+                return type.GetElementType().ToCompilableString() +
+                    "[" + new string(',', type.GetArrayRank() - 1) + "]";
             }
             if(type.IsNested) {
                 return type.FullName.Replace('+', '.');
@@ -30,21 +36,28 @@ namespace Entitas.Serialization {
             return type.FullName;
         }
 
-        /// Generates a simplified type string for the specified type that is easy to read and can be parsed and converted into System.Type.
-        /// This is useful for code generation that serializes objects which is also used to create runtime objects based on the type string.
+        /// Generates a simplified type string for the specified type that
+        /// is easy to read and can be parsed and converted into System.Type.
+        /// This is useful for code generation that serializes objects which is
+        /// also used to create runtime objects based on the type string.
         /// e.g. int instead of System.Int32
-        /// e.g. System.Collections.Generic.Dictionary<int, string> instead of System.Collections.Generic.Dictionary`2[System.Int32,System.String]
+        /// e.g. System.Collections.Generic.Dictionary<int, string> instead of
+        /// System.Collections.Generic.Dictionary`2[System.Int32,System.String]
         public static string ToReadableString(this Type type) {
             if(_builtInTypesToString.ContainsKey(type.FullName)) {
                 return _builtInTypesToString[type.FullName];
             }
             if(type.IsGenericType) {
                 var genericMainType = type.FullName.Split('`')[0];
-                var genericArguments = type.GetGenericArguments().Select(argType => argType.ToReadableString()).ToArray();
-                return genericMainType + "<" + string.Join(", ", genericArguments) + ">";
+                var genericArguments = type.GetGenericArguments().Select(
+                    argType => argType.ToReadableString()
+                ).ToArray();
+                return genericMainType +
+                    "<" + string.Join(", ", genericArguments) + ">";
             }
             if(type.IsArray) {
-                return type.GetElementType().ToReadableString() + "[" + new string(',', type.GetArrayRank() - 1) + "]";
+                return type.GetElementType().ToReadableString() +
+                    "[" + new string(',', type.GetArrayRank() - 1) + "]";
             }
 
             return type.FullName;

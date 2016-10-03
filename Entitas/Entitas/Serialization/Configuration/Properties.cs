@@ -59,7 +59,9 @@ namespace Entitas.Serialization.Configuration {
             return lines.Aggregate(new List<string>(), (acc, line) => {
                 currentProperty += line;
                 if(currentProperty.EndsWith("\\", StringComparison.Ordinal)) {
-                    currentProperty = currentProperty.Substring(0, currentProperty.Length - 1);
+                    currentProperty = currentProperty.Substring(
+                        0, currentProperty.Length - 1
+                    );
                 } else {
                     acc.Add(currentProperty);
                     currentProperty = string.Empty;
@@ -71,7 +73,9 @@ namespace Entitas.Serialization.Configuration {
 
         void addProperties(string[] lines) {
             var keyValueDelimiter = new [] { '=' };
-            var properties = lines.Select(line => line.Split(keyValueDelimiter, 2));
+            var properties = lines.Select(
+                line => line.Split(keyValueDelimiter, 2)
+            );
             foreach(var property in properties) {
                 this[property[0]] = property[1];
             }
@@ -82,7 +86,9 @@ namespace Entitas.Serialization.Configuration {
             foreach(var key in _dict.Keys.ToArray()) {
                 var matches = Regex.Matches(_dict[key], placeholderPattern);
                 foreach(Match match in matches) {
-                    _dict[key] = _dict[key].Replace("${" + match.Value + "}", _dict[match.Value]);
+                    _dict[key] = _dict[key].Replace(
+                        "${" + match.Value + "}", _dict[match.Value]
+                    );
                 }
             }
         }

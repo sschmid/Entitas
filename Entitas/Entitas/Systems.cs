@@ -2,9 +2,13 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    /// Systems provide a convenient way to group systems. You can add IInitializeSystem, IExecuteSystem, ICleanupSystem, ITearDownSystem, ReactiveSystem and other nested Systems instances.
-    /// All systems will be initialized and executed based on the order you added them.
-    public class Systems : IInitializeSystem, IExecuteSystem, ICleanupSystem, ITearDownSystem {
+    /// Systems provide a convenient way to group systems.
+    /// You can add IInitializeSystem, IExecuteSystem, ICleanupSystem,
+    /// ITearDownSystem, ReactiveSystem and other nested Systems instances.
+    /// All systems will be initialized and executed based on the order
+    /// you added them.
+    public class Systems : IInitializeSystem, IExecuteSystem,
+                           ICleanupSystem, ITearDownSystem {
 
         protected readonly List<IInitializeSystem> _initializeSystems;
         protected readonly List<IExecuteSystem> _executeSystems;
@@ -55,28 +59,32 @@ namespace Entitas {
             return this;
         }
 
-        /// Calls Initialize() on all IInitializeSystem, ReactiveSystem and other nested Systems instances in the order you added them.
+        /// Calls Initialize() on all IInitializeSystem, ReactiveSystem and
+        /// other nested Systems instances in the order you added them.
         public virtual void Initialize() {
             for (int i = 0; i < _initializeSystems.Count; i++) {
                 _initializeSystems[i].Initialize();
             }
         }
 
-        /// Calls Execute() on all IExecuteSystem, ReactiveSystem and other nested Systems instances in the order you added them.
+        /// Calls Execute() on all IExecuteSystem, ReactiveSystem and other
+        /// nested Systems instances in the order you added them.
         public virtual void Execute() {
             for (int i = 0; i < _executeSystems.Count; i++) {
                 _executeSystems[i].Execute();
             }
         }
 
-        /// Calls Cleanup() on all ICleanupSystem, ReactiveSystem and other nested Systems instances in the order you added them.
+        /// Calls Cleanup() on all ICleanupSystem, ReactiveSystem and other
+        /// nested Systems instances in the order you added them.
         public virtual void Cleanup() {
             for (int i = 0; i < _cleanupSystems.Count; i++) {
                 _cleanupSystems[i].Cleanup();
             }
         }
 
-        /// Calls TearDown() on all ITearDownSystem, ReactiveSystem and other nested Systems instances in the order you added them.
+        /// Calls TearDown() on all ITearDownSystem, ReactiveSystem and other
+        /// nested Systems instances in the order you added them.
         public virtual void TearDown() {
             for (int i = 0; i < _tearDownSystems.Count; i++) {
                 _tearDownSystems[i].TearDown();
@@ -99,8 +107,10 @@ namespace Entitas {
             }
         }
 
-        /// Deactivates all ReactiveSystems in the systems list. This will also clear all ReactiveSystems.
-        /// This is useful when you want to soft-restart your application and want to reuse your existing system instances.
+        /// Deactivates all ReactiveSystems in the systems list.
+        /// This will also clear all ReactiveSystems.
+        /// This is useful when you want to soft-restart your application and
+        /// want to reuse your existing system instances.
         public virtual void DeactivateReactiveSystems() {
             for (int i = 0; i < _executeSystems.Count; i++) {
                 var system = _executeSystems[i];
