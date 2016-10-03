@@ -1,3 +1,14 @@
+# 0.35.0
+
+### General
+- Maintenance, cleanup and formatting
+- Completely new build system to create new releases
+
+#### Entitas
+- Fixed adding disabled entities to groups (#192, #193)
+- Removed matcher with filter (#194, #195)
+
+
 # 0.34.0
 
 See and discuss changes in [Milestone 0.34.0](https://github.com/sschmid/Entitas-CSharp/milestone/4)
@@ -6,23 +17,23 @@ See and discuss changes in [Milestone 0.34.0](https://github.com/sschmid/Entitas
 Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
 
 #### Entitas
-- Added api to clone entities (#178 #182)
+- Added api to clone entities (#178, #182)
   - `pool.CloneEntity(e);`
   - `entity.CopyTo(target);`
 
-- Added EntityIndex constructor with EqualityComparer (#170 #186)
-- Rename GroupObserver to EntityCollector (#168 #188)
-- Added filter condition to matchers (#165 #189)
+- Added EntityIndex constructor with EqualityComparer (#170, #186)
+- Rename GroupObserver to EntityCollector (#168, #188)
+- Added filter condition to matchers (#165, #189)
   - `Matcher.Position.Where(e => e.position.x > 10);`
-  
+
 #### Entitas.Serialization.Blueprints
 - Added HideInBlueprintInspectorAttribute (#185)
 
 #### Other
 - Improved snippets
 - Added Visual Studio snippets (#172)
-- Added TestRunner to support test debugging (#175 #176)
-- Updated build scripts (#173 #177)
+- Added TestRunner to support test debugging (#175, #176)
+- Updated build scripts (#173, #177)
 - Added tests for code formatting
 
 

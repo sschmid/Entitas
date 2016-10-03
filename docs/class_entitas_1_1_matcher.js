@@ -10,7 +10,6 @@ var class_entitas_1_1_matcher =
     [ "NoneOf", "class_entitas_1_1_matcher.html#acc38592ee2cb09bbd14cce4130b0dc55", null ],
     [ "NoneOf", "class_entitas_1_1_matcher.html#aa8aca555e5a2d23f3be11f2a9e251c9a", null ],
     [ "ToString", "class_entitas_1_1_matcher.html#a56de37952db8b209702f09f70240d218", null ],
-    [ "Where", "class_entitas_1_1_matcher.html#a565f6688edae9492d0901681d7d77341", null ],
     [ "componentNames", "class_entitas_1_1_matcher.html#aa3fb719157862c0439d8342683e28832", null ],
     [ "allOfIndices", "class_entitas_1_1_matcher.html#aca55b58ee7053169d8db50e4415857af", null ],
     [ "anyOfIndices", "class_entitas_1_1_matcher.html#a3bcc41dc54652e742539b10f1e74659e", null ],
