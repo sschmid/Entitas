@@ -1,12 +1,17 @@
 # 0.35.0
 
-### General
-- Maintenance, cleanup and formatting
-- Completely new build system to create new releases
+See and discuss changes in [Milestone 0.35.0](https://github.com/sschmid/Entitas-CSharp/milestone/5)
+
+#### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
 
 #### Entitas
 - Fixed adding disabled entities to groups (#192, #193)
 - Removed matcher with filter (#194, #195)
+
+### Other
+- Maintenance, cleanup and formatting
+- Completely new build system to create new releases
 
 
 # 0.34.0
