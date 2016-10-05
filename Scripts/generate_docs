@@ -3,32 +3,35 @@ source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
 DOXYFILE_HTML="${SCRIPTS}/Docs/html.doxyfile"
 DOXYFILE_DOCSET="${SCRIPTS}/Docs/docset.doxyfile"
 DOCSET="com.sschmid.Entitas.docset"
-echo "### Generating Documentation... -========================================"
-pushd $ROOT > /dev/null
 
 generate_doc() {
   echo "Generating $1: PROJECT_NUMBER = $ENTITAS_VERSION"
-  sed -i .bak -e "s/PROJECT_NUMBER.*/PROJECT_NUMBER         = $ENTITAS_VERSION/g" $1
+  sed -i .bak -e "s/PROJECT_NUMBER.*/PROJECT_NUMBER         = $ENTITAS_VERSION/" $1
   rm "${1}.bak"
   doxygen $1
 }
 
-generate_doc $DOXYFILE_HTML
-generate_doc $DOXYFILE_DOCSET
-pushd "${BUILD_DOCS}/docset" > /dev/null
-make
-# In order for Dash to associate this docset with the "entitas" keyword,
-# we have to manually modify the generated plist.
-# http://stackoverflow.com/questions/14678025/how-do-i-specify-a-keyword-for-dash-with-doxygen
-sed -i .bak -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>entitas<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/" "${DOCSET}/Contents/Info.plist"
-rm "${DOCSET}/Contents/Info.plist.bak"
-cp "${SCRIPTS}/Docs/icon.png" $DOCSET
-cp "${SCRIPTS}/Docs/icon@2x.png" $DOCSET
-rm -rf "Entitas.docset"
-mv $DOCSET "Entitas.docset"
-popd > /dev/null
+generate_docs() {
+  pushd $ROOT > /dev/null
+    generate_doc $DOXYFILE_HTML
+    generate_doc $DOXYFILE_DOCSET
 
-rsync -ar "${BUILD_DOCS}/html/" $DOCS
+    pushd "${BUILD_DOCS}/docset" > /dev/null
+      make
+      # In order for Dash to associate this docset with the "entitas" keyword,
+      # we have to manually modify the generated plist.
+      # http://stackoverflow.com/questions/14678025/how-do-i-specify-a-keyword-for-dash-with-doxygen
+      sed -i .bak -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>entitas<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/" "${DOCSET}/Contents/Info.plist"
+      rm "${DOCSET}/Contents/Info.plist.bak"
+      
+      cp "${SCRIPTS}/Docs/icon.png" $DOCSET
+      cp "${SCRIPTS}/Docs/icon@2x.png" $DOCSET
+      rm -rf "Entitas.docset"
+      mv $DOCSET "Entitas.docset"
+    popd > /dev/null
 
-popd > /dev/null
-echo "### Generating Documentation done -======================================"
+    rsync -ar "${BUILD_DOCS}/html/" $DOCS
+  popd > /dev/null
+}
+
+run generate_docs "Generating Documentation"

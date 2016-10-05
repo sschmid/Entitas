@@ -1,8 +1,13 @@
 #!/bin/bash
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
-echo "### Running Unity tests... -============================================="
-$UNITY -quit -batchmode -runEditorTests -projectPath "$ROOT/$ESU_ASSETS/../" -editorTestsResultFile "${ROOT}/unity-test-results.xml"
-TEST_RESULT=$?
-echo `cat "${ROOT}/unity-test-results.xml"`
-echo "### Running Unity tests done with ${TEST_RESULT} -============================="
-exit $TEST_RESULT
+
+run_unity_tests() {
+  $UNITY -quit -batchmode -runEditorTests -projectPath "$ROOT/$ESU_ASSETS/../" -editorTestsResultFile "${ROOT}/unity-test-results.xml"
+  TEST_RESULT=$?
+  echo `cat "${ROOT}/unity-test-results.xml"`
+  echo $TEST_RESULT
+  echo "Exit with ${TEST_RESULT}"
+  exit $TEST_RESULT
+}
+
+run run_unity_tests "Running Unity tests"

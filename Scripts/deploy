@@ -1,41 +1,49 @@
 #!/bin/bash -e
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
-echo "### Delpoying... -======================================================="
 TMP_DIR="${BUILD}/tmp"
 
-echo "Creating Entitas-CSharp.zip..."
-mkdir $TMP_DIR
-cp -r "${BUILD_SRC}/${ES}" $TMP_DIR
-cp "${BUILD_SRC}/"* $TMP_DIR || true
-cp -r "$BUILD_DOCS/html/" "${TMP_DIR}/Documentation"
+create_entitas_zip() {
+  mkdir $TMP_DIR
 
-pushd $TMP_DIR > /dev/null
-  zip -rq "${BUILD_DEPLOY}/Entitas-CSharp.zip" ./
-popd > /dev/null
-rm -rf $TMP_DIR
+  cp -r "${BUILD_SRC}/${ES}" $TMP_DIR
+  cp "${BUILD_SRC}/"* $TMP_DIR || true
+  cp -r "$BUILD_DOCS/html/" "${TMP_DIR}/Documentation"
 
-echo "Creating Entitas-Unity.zip..."
-mkdir $TMP_DIR
-cp -r "${BUILD_SRC}/"* $TMP_DIR || true
+  pushd $TMP_DIR > /dev/null
+    zip -rq "${BUILD_DEPLOY}/Entitas-CSharp.zip" ./
+  popd > /dev/null
 
-EDITOR="${TMP_DIR}/Editor"
-mkdir $EDITOR
-mv "${TMP_DIR}/Entitas/CodeGenerator/"* $EDITOR
-mv {"${EDITOR}/Attributes",$EDITOR} "${TMP_DIR}/Entitas/CodeGenerator"
+  rm -rf $TMP_DIR
+}
 
-mkdir "${TMP_DIR}/${ES}/Migration/"
-mv "${TMP_DIR}/${MIG}/" "${TMP_DIR}/${ES}/Migration/Editor/"
-mv "${TMP_DIR}/${ESU}/" "${TMP_DIR}/${ES}/Unity/"
-cp -r "$BUILD_DOCS/html/" "${TMP_DIR}/Documentation"
+create_entitas_unity_zip() {
+  mkdir $TMP_DIR
 
-pushd $TMP_DIR > /dev/null
-  zip -rq "${BUILD_DEPLOY}/Entitas-Unity.zip" ./
-popd > /dev/null
-rm -rf $TMP_DIR
+  cp -r "${BUILD_SRC}/"* $TMP_DIR || true
 
-echo "Creating Entitas.docset.tgz..."
-pushd "${BUILD_DOCS}/docset" > /dev/null
-  tar --exclude='.DS_Store' -czf "${BUILD_DEPLOY}/Entitas.docset.tgz" Entitas.docset
-popd > /dev/null
+  EDITOR="${TMP_DIR}/Editor"
+  mkdir $EDITOR
+  mv "${TMP_DIR}/Entitas/CodeGenerator/"* $EDITOR
+  mv {"${EDITOR}/Attributes",$EDITOR} "${TMP_DIR}/Entitas/CodeGenerator"
 
-echo "### Delpoying done -====================================================="
+  mkdir "${TMP_DIR}/${ES}/Migration/"
+  mv "${TMP_DIR}/${MIG}/" "${TMP_DIR}/${ES}/Migration/Editor/"
+  mv "${TMP_DIR}/${ESU}/" "${TMP_DIR}/${ES}/Unity/"
+  cp -r "$BUILD_DOCS/html/" "${TMP_DIR}/Documentation"
+
+  pushd $TMP_DIR > /dev/null
+    zip -rq "${BUILD_DEPLOY}/Entitas-Unity.zip" ./
+  popd > /dev/null
+  
+  rm -rf $TMP_DIR
+}
+
+create_entitas_docset_tgz() {
+  pushd "${BUILD_DOCS}/docset" > /dev/null
+    tar --exclude='.DS_Store' -czf "${BUILD_DEPLOY}/Entitas.docset.tgz" Entitas.docset
+  popd > /dev/null
+}
+
+run create_entitas_zip "Creating Entitas-CSharp.zip"
+run create_entitas_unity_zip "Creating Entitas-Unity.zip"
+run create_entitas_docset_tgz "Creating Entitas.docset.tgz"

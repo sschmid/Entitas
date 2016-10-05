@@ -1,8 +1,13 @@
 #!/bin/bash -e
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
-echo "### Cleaning ${BUILD}... -==============================================="
-rm -rfv $BUILD
-echo "### Cleaning ${BUILD} done -============================================="
-echo "### Creating folder structure... -======================================="
-mkdir -v $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
-echo "### Creating folder structure done -====================================="
+
+clean() {
+  rm -rfv $BUILD
+}
+
+create_folder_structure() {
+  mkdir -v $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
+}
+
+run clean "Cleaning ${BUILD}"
+run create_folder_structure "Creating folder structure"

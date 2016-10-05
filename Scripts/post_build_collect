@@ -1,9 +1,12 @@
 #!/bin/bash -e
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
-echo "### Post build collecting... -==========================================="
-cp -v "${ROOT}/${MIG}/bin/Release/Entitas.Migration.exe" "${BUILD_SRC}/MigrationAssistant.exe"
-cp -v "${ROOT}/README.md" "$BUILD_SRC/README.md"
-cp -v "${ROOT}/RELEASE_NOTES.md" "$BUILD_SRC/RELEASE_NOTES.md"
-cp -v "${ROOT}/EntitasUpgradeGuide.md" "$BUILD_SRC/EntitasUpgradeGuide.md"
-cp -v "${ROOT}/LICENSE.txt" "$BUILD_SRC/LICENSE.txt"
-echo "### Post build collecting done -========================================="
+
+post_build_collect() {
+  cp -v "${ROOT}/${MIG}/bin/Release/Entitas.Migration.exe" "${BUILD_SRC}/MigrationAssistant.exe"
+  cp -v "${ROOT}/README.md" "$BUILD_SRC/README.md"
+  cp -v "${ROOT}/RELEASE_NOTES.md" "$BUILD_SRC/RELEASE_NOTES.md"
+  cp -v "${ROOT}/EntitasUpgradeGuide.md" "$BUILD_SRC/EntitasUpgradeGuide.md"
+  cp -v "${ROOT}/LICENSE.txt" "$BUILD_SRC/LICENSE.txt"
+}
+
+run post_build_collect "Post build collecting"

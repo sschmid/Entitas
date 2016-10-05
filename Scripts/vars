@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 UNITY="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
 SCRIPTS="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
 ROOT="${SCRIPTS}/.."
@@ -20,4 +20,12 @@ ENTITAS_VERSION=`cat ${ROOT}/Entitas/Entitas/entitas_version`
 
 cpe() {
   rsync -arvv --include-from "${SCRIPTS}/rsync_include.txt" --exclude-from "${SCRIPTS}/rsync_exclude.txt" $1 $2
+}
+
+run() {
+  # $1 function
+  # $2 message
+  echo "+++ ${2}... -========================================"
+  "$@"
+  echo "+++ ${2} done -======================================"
 }
