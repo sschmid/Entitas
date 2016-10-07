@@ -1,9 +1,0 @@
-#!/bin/bash -e
-source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
-
-run_tests() {
-  xbuild $TEST_PROJECT /property:Configuration=Release /verbosity:minimal
-  mono $TEST_RUNNER
-}
-
-run run_tests "Running tests"

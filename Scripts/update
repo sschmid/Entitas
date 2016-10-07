@@ -1,0 +1,20 @@
+#!/bin/bash -e
+source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
+
+# clean
+rm -rf $BUILD
+
+# create folder structure
+mkdir $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
+
+# collect sources
+mkdir "${BUILD_SRC}/${ESU}"
+cpe "${ROOT}/${ES}/${ES}" $BUILD_SRC
+cpe "${ROOT}/${MIG}/${MIG}" $BUILD_SRC
+cpe "${ROOT}/${ESU_ASSETS}/${ES}/Unity/" "${BUILD_SRC}/${ESU}"
+
+# update project dependencies
+rm -rf "${ROOT}/${ESU_LIBS}"
+mkdir "${ROOT}/${ESU_LIBS}"
+cpe "${BUILD_SRC}/${ES}" "${ROOT}/${ESU_LIBS}"
+cpe "${BUILD_SRC}/${MIG}" "${ROOT}/${ESU_LIBS}"

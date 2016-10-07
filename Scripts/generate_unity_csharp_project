@@ -1,9 +1,0 @@
-#!/bin/bash -e
-source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
-
-generate_unity_csharp_project() {
-  $UNITY -quit -batchmode -logfile -projectPath "$ROOT/$ESU_ASSETS/../" -executeMethod Commands.GenerateCSharpProject
-}
-
-${SCRIPTS}/update_project_dependencies
-run generate_unity_csharp_project "Generating C# project"

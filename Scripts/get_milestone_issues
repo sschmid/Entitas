@@ -1,4 +1,0 @@
-#!/bin/bash -e
-source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/vars"
-#echo "### Getting latest... -=================================================="
-#echo "### Getting latest done -================================================"

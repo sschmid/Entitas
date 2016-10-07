@@ -1,0 +1,54 @@
+#!/bin/bash -e
+source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
+
+${SCRIPTS}/build
+${SCRIPTS}/test
+${SCRIPTS}/docs
+
+# collect
+cp -v "${ROOT}/${MIG}/bin/Release/Entitas.Migration.exe" "${BUILD_SRC}/MigrationAssistant.exe"
+cp -v "${ROOT}/README.md" "$BUILD_SRC/README.md"
+cp -v "${ROOT}/RELEASE_NOTES.md" "$BUILD_SRC/RELEASE_NOTES.md"
+cp -v "${ROOT}/EntitasUpgradeGuide.md" "$BUILD_SRC/EntitasUpgradeGuide.md"
+cp -v "${ROOT}/LICENSE.txt" "$BUILD_SRC/LICENSE.txt"
+
+TMP_DIR="${BUILD}/tmp"
+
+# create entitas zip
+mkdir $TMP_DIR
+cp -r "${BUILD_SRC}/${ES}" $TMP_DIR
+cp "${BUILD_SRC}/"* $TMP_DIR || true
+cp -r "$BUILD_DOCS/html/" "${TMP_DIR}/Documentation"
+pushd $TMP_DIR > /dev/null
+  zip -rq "${BUILD_DEPLOY}/Entitas-CSharp.zip" ./
+popd > /dev/null
+rm -rf $TMP_DIR
+
+# create entitas unity zip
+mkdir $TMP_DIR
+cp -r "${BUILD_SRC}/"* $TMP_DIR || true
+EDITOR="${TMP_DIR}/Editor"
+mkdir $EDITOR
+mv "${TMP_DIR}/Entitas/CodeGenerator/"* $EDITOR
+mv {"${EDITOR}/Attributes",$EDITOR} "${TMP_DIR}/Entitas/CodeGenerator"
+mkdir "${TMP_DIR}/${ES}/Migration/"
+mv "${TMP_DIR}/${MIG}/" "${TMP_DIR}/${ES}/Migration/Editor/"
+mv "${TMP_DIR}/${ESU}/" "${TMP_DIR}/${ES}/Unity/"
+cp -r "$BUILD_DOCS/html/" "${TMP_DIR}/Documentation"
+pushd $TMP_DIR > /dev/null
+  zip -rq "${BUILD_DEPLOY}/Entitas-Unity.zip" ./
+popd > /dev/null
+rm -rf $TMP_DIR
+
+# create entitas docset tgz
+pushd "${BUILD_DOCS}/docset" > /dev/null
+tar --exclude='.DS_Store' -czf "${BUILD_DEPLOY}/Entitas.docset.tgz" Entitas.docset
+popd > /dev/null
+
+# generate tree file
+TREE_IGNORE="bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|docs|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties|unity-test-results.xml"
+pushd $ROOT > /dev/null
+  tree -I "$TREE_IGNORE" --noreport -d > tree.txt
+  tree -I "$TREE_IGNORE" --noreport --dirsfirst >> tree.txt
+  cat tree.txt
+popd > /dev/null

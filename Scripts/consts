@@ -1,15 +1,22 @@
 #!/bin/bash -e
 UNITY="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
+
 SCRIPTS="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
 ROOT="${SCRIPTS}/.."
+
 BUILD="${ROOT}/Build"
 BUILD_SRC="${BUILD}/src"
 BUILD_DOCS="${BUILD}/docs"
 BUILD_DEPLOY="${BUILD}/deploy"
+
 PROJECT="${ROOT}/Entitas.sln"
+
 TEST_PROJECT="${ROOT}/Tests/Tests.csproj"
 TEST_RUNNER="${ROOT}/Tests/bin/Release/Tests.exe"
+
 DOCS="$ROOT/docs"
+DOCS_RES="${SCRIPTS}/docs_resources"
+
 ES="Entitas"
 CG="Entitas.CodeGenerator"
 MIG="Entitas.Migration"
@@ -18,14 +25,9 @@ ESU_ASSETS="${ESU}/Assets"
 ESU_LIBS="${ESU_ASSETS}/Libraries"
 ENTITAS_VERSION=`cat ${ROOT}/Entitas/Entitas/entitas_version`
 
-cpe() {
-  rsync -arvv --include-from "${SCRIPTS}/rsync_include.txt" --exclude-from "${SCRIPTS}/rsync_exclude.txt" $1 $2
-}
+UNITY_PROJECT="$ROOT/$ESU_ASSETS/../"
+UNITY_EXECUTE_METHOD="Commands.GenerateCSharpProject"
 
-run() {
-  # $1 function
-  # $2 message
-  echo "+++ ${2}... -========================================"
-  "$@"
-  echo "+++ ${2} done -======================================"
+cpe() {
+  rsync -ar --include-from "${SCRIPTS}/rsync_include.txt" --exclude-from "${SCRIPTS}/rsync_exclude.txt" $1 $2
 }

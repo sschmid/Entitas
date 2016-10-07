@@ -1,0 +1,16 @@
+#!/bin/bash -e
+source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
+
+# build project
+xbuild /target:Clean /property:Configuration=Release /verbosity:minimal $PROJECT
+xbuild /property:Configuration=Release /verbosity:minimal $PROJECT
+
+# update
+${SCRIPTS}/update
+
+# generate unity csharp project
+$UNITY -quit \
+       -batchmode \
+       -logfile \
+       -projectPath $UNITY_PROJECT \
+       -executeMethod $UNITY_EXECUTE_METHOD
