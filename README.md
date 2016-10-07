@@ -195,8 +195,8 @@ Entitas is available in
 
 
 [clean-coders]: https://cleancoders.com "Clean Coders"
-[entitas-csharp-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/bin/Entitas-CSharp.zip?raw=true "Download Entitas-CSharp.zip"
-[entitas-unity-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/bin/Entitas-Unity.zip?raw=true "Download Entitas-Unity.zip"
+[entitas-csharp-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/Build/deploy/Entitas-CSharp.zip?raw=true "Download Entitas-CSharp.zip"
+[entitas-unity-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/Build/deploy//Entitas-Unity.zip?raw=true "Download Entitas-Unity.zip"
 
 [wiki]: https://github.com/sschmid/Entitas-CSharp/wiki "Entitas Wiki"
 [wiki-code-generator]: https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator "Wiki - Code Generator"
