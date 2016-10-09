@@ -65,6 +65,10 @@ public class RectComponent : IComponent {
 [VisualDebugging]
 public class MyStringComponent : IComponent {
     public string myString;
+
+    public override string ToString() {
+        return "MyString(" + myString + ")";
+    }
 }
 
 [VisualDebugging]
