@@ -17,8 +17,8 @@ namespace Entitas.Unity.VisualDebugging {
         void Update() {
             if(_poolObserver == null) {
                 gameObject.DestroyGameObject();
-            } else if(_poolObserver.entitiesContainer != null) {
-                _poolObserver.entitiesContainer.name = _poolObserver.ToString();
+            } else if(_poolObserver.gameObject != null) {
+                _poolObserver.gameObject.name = _poolObserver.ToString();
             }
         }
 

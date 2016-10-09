@@ -35,7 +35,7 @@ public static class Pools {{
                 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 if(UnityEngine.Application.isPlaying) {{
                     var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_{0});
-                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
+                    UnityEngine.Object.DontDestroyOnLoad(poolObserver.gameObject);
                 }}
                 #endif
             }}

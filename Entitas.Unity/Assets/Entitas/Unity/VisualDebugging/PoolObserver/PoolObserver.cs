@@ -8,18 +8,18 @@ namespace Entitas.Unity.VisualDebugging {
 
         public Pool pool { get { return _pool; } }
         public Group[] groups { get { return _groups.ToArray(); }}
-        public GameObject entitiesContainer { get { return _entitiesContainer.gameObject; } }
+        public GameObject gameObject { get { return _gameObject; } }
 
         readonly Pool _pool;
         readonly List<Group> _groups;
-        readonly Transform _entitiesContainer;
+        readonly GameObject _gameObject;
         StringBuilder _toStringBuilder = new StringBuilder();
 
         public PoolObserver(Pool pool) {
             _pool = pool;
             _groups = new List<Group>();
-            _entitiesContainer = new GameObject().transform;
-            _entitiesContainer.gameObject.AddComponent<PoolObserverBehaviour>().Init(this);
+            _gameObject = new GameObject();
+            _gameObject.AddComponent<PoolObserverBehaviour>().Init(this);
 
             _pool.OnEntityCreated += onEntityCreated;
             _pool.OnGroupCreated += onGroupCreated;
@@ -35,7 +35,7 @@ namespace Entitas.Unity.VisualDebugging {
         void onEntityCreated(Pool pool, Entity entity) {
             var entityBehaviour = new GameObject().AddComponent<EntityBehaviour>();
             entityBehaviour.Init(pool, entity);
-            entityBehaviour.transform.SetParent(_entitiesContainer, false);
+            entityBehaviour.transform.SetParent(_gameObject.transform, false);
         }
 
         void onGroupCreated(Pool pool, Group group) {
@@ -62,7 +62,9 @@ namespace Entitas.Unity.VisualDebugging {
                 .Append(_groups.Count)
                 .Append(" groups)");
 
-            return _entitiesContainer.name = _toStringBuilder.ToString();
+            var str = _toStringBuilder.ToString();
+            _gameObject.name = str;
+            return str;
         }
     }
 }
