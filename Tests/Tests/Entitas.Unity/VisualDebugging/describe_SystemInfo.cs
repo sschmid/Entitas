@@ -15,6 +15,8 @@ class describe_SystemInfo : nspec {
 
             info.isInitializeSystems.should_be_true();
             info.isExecuteSystems.should_be_false();
+            info.isCleanupSystems.should_be_false();
+            info.isTearDownSystems.should_be_false();
             info.isReactiveSystems.should_be_false();
 
             info.accumulatedExecutionDuration.should_be(0);
@@ -32,6 +34,32 @@ class describe_SystemInfo : nspec {
             info.systemName.should_be("TestExecute");
             info.isInitializeSystems.should_be_false();
             info.isExecuteSystems.should_be_true();
+            info.isCleanupSystems.should_be_false();
+            info.isTearDownSystems.should_be_false();
+            info.isReactiveSystems.should_be_false();
+        };
+
+        it["creates systemInfo for cleanup system"] = () => {
+            var system = new TestCleanupSystem();
+            var info = new SystemInfo(system);
+
+            info.systemName.should_be("TestCleanup");
+            info.isInitializeSystems.should_be_false();
+            info.isExecuteSystems.should_be_false();
+            info.isCleanupSystems.should_be_true();
+            info.isTearDownSystems.should_be_false();
+            info.isReactiveSystems.should_be_false();
+        };
+
+        it["creates systemInfo for teardown system"] = () => {
+            var system = new TestTearDownSystem();
+            var info = new SystemInfo(system);
+
+            info.systemName.should_be("TestTearDown");
+            info.isInitializeSystems.should_be_false();
+            info.isExecuteSystems.should_be_false();
+            info.isCleanupSystems.should_be_false();
+            info.isTearDownSystems.should_be_true();
             info.isReactiveSystems.should_be_false();
         };
 
@@ -43,6 +71,8 @@ class describe_SystemInfo : nspec {
 
             info.isInitializeSystems.should_be_false();
             info.isExecuteSystems.should_be_false();
+            info.isCleanupSystems.should_be_false();
+            info.isTearDownSystems.should_be_false();
             info.isReactiveSystems.should_be_true();
         };
 
@@ -54,6 +84,8 @@ class describe_SystemInfo : nspec {
 
             info.isInitializeSystems.should_be_false();
             info.isExecuteSystems.should_be_false();
+            info.isCleanupSystems.should_be_false();
+            info.isTearDownSystems.should_be_false();
             info.isReactiveSystems.should_be_true();
         };
 

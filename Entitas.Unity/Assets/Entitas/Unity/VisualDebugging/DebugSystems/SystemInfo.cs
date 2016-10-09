@@ -2,6 +2,16 @@ using System;
 
 namespace Entitas.Unity.VisualDebugging {
 
+    [Flags]
+    public enum SystemInterfaceFlags {
+        None              = 0,
+        IInitializeSystem = 1 << 1,
+        IExecuteSystem    = 1 << 2,
+        ICleanupSystem    = 1 << 3,
+        ITearDownSystem   = 1 << 4,
+        IReactiveSystem   = 1 << 5
+    }
+
     public class SystemInfo {
 
         public ISystem system { get { return _system; } }
@@ -15,13 +25,21 @@ namespace Entitas.Unity.VisualDebugging {
             get { return (_interfaceFlags & SystemInterfaceFlags.IExecuteSystem) == SystemInterfaceFlags.IExecuteSystem; }
         }
 
+        public bool isCleanupSystems {
+            get { return (_interfaceFlags & SystemInterfaceFlags.ICleanupSystem) == SystemInterfaceFlags.ICleanupSystem; }
+        }
+
+        public bool isTearDownSystems {
+            get { return (_interfaceFlags & SystemInterfaceFlags.ITearDownSystem) == SystemInterfaceFlags.ITearDownSystem; }
+        }
+
         public bool isReactiveSystems {
             get { return (_interfaceFlags & SystemInterfaceFlags.IReactiveSystem) == SystemInterfaceFlags.IReactiveSystem; }
         }
 
-        public double accumulatedExecutionDuration { get { return _accumulatedExecutionDuration; } }
-        public double minExecutionDuration { get { return _minExecutionDuration; } }
-        public double maxExecutionDuration { get { return _maxExecutionDuration; } }
+        public double accumulatedDuration { get { return _accumulatedExecutionDuration; } }
+        public double minDuration { get { return _minDuration; } }
+        public double maxDuration { get { return _maxDuration; } }
         public double averageExecutionDuration {
             get { return _durationsCount == 0 ? 0 : _accumulatedExecutionDuration / _durationsCount; }
         }
@@ -33,8 +51,8 @@ namespace Entitas.Unity.VisualDebugging {
         readonly string _systemName;
 
         double _accumulatedExecutionDuration;
-        double _minExecutionDuration;
-        double _maxExecutionDuration;
+        double _minDuration;
+        double _maxDuration;
         int _durationsCount;
 
         const string SYSTEM_SUFFIX = "System";
@@ -66,11 +84,11 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public void AddExecutionDuration(double executionDuration) {
-            if(executionDuration < _minExecutionDuration || _minExecutionDuration == 0) {
-                _minExecutionDuration = executionDuration;
+            if(executionDuration < _minDuration || _minDuration == 0) {
+                _minDuration = executionDuration;
             }
-            if(executionDuration > _maxExecutionDuration) {
-                _maxExecutionDuration = executionDuration;
+            if(executionDuration > _maxDuration) {
+                _maxDuration = executionDuration;
             }
 
             _accumulatedExecutionDuration += executionDuration;
@@ -90,19 +108,17 @@ namespace Entitas.Unity.VisualDebugging {
             if(system is IExecuteSystem) {
                 flags |= SystemInterfaceFlags.IExecuteSystem;
             }
+            if(system is ICleanupSystem) {
+                flags |= SystemInterfaceFlags.ICleanupSystem;
+            }
+            if(system is ITearDownSystem) {
+                flags |= SystemInterfaceFlags.ITearDownSystem;
+            }
             if(isReactive) {
                 flags |= SystemInterfaceFlags.IReactiveSystem;
             }
 
             return flags;
-        }
-
-        [Flags]
-        enum SystemInterfaceFlags {
-            None = 0,
-            IInitializeSystem = 1,
-            IExecuteSystem = 2,
-            IReactiveSystem = 4
         }
     }
 }
