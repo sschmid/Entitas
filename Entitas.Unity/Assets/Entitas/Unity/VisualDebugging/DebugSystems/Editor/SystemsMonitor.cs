@@ -12,7 +12,7 @@ namespace Entitas.Unity.VisualDebugging {
         public string labelFormat = "{0:0.0}";
         public string axisFormat = "{0:0.0}";
         public int gridLines = 1;
-        public float axisRounding = 10f;
+        public float axisRounding = 1f;
         public float anchorRadius = 1f;
         public Color lineColor = Color.magenta;
 
