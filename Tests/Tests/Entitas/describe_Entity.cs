@@ -1,5 +1,6 @@
 using Entitas;
 using NSpec;
+using My.Namespace;
 
 class describe_Entity : nspec {
 
@@ -182,10 +183,20 @@ class describe_Entity : nspec {
                     e.GetComponentIndices().should_be_empty();
                 };
 
-                it["can ToString"] = () => {
+                it["can ToString and removes *Component suffix"] = () => {
                     e.AddComponent(0, new SomeComponent());
                     e.Retain(this);
                     e.ToString().should_be("Entity_0(*1)(Some, ComponentA, ComponentB)");
+                };
+
+                it["uses component.ToString()"] = () => {
+                    e.AddComponent(0, new NameAgeComponent { name = "Max", age = 42 });
+                    e.ToString().should_be("Entity_0(*0)(NameAge(Max, 42), ComponentA, ComponentB)");
+                };
+
+                it["uses short component name without namespace if ToString is not implemented"] = () => {
+                    e.AddComponent(0, new NamespaceComponent());
+                    e.ToString().should_be("Entity_0(*0)(Namespace, ComponentA, ComponentB)");
                 };
             };
         };
@@ -545,9 +556,9 @@ class describe_Entity : nspec {
                         e.ToString().should_not_be_same(cache);
                     };
 
-                    it["doesn't update cache when a component was replaced"] = () => {
+                    it["updates cache when a component was replaced"] = () => {
                         e.ReplaceComponentA(new ComponentA());
-                        e.ToString().should_be_same(cache);
+                        e.ToString().should_not_be_same(cache);
                     };
 
                     it["updates cache when all components were removed"] = () => {
