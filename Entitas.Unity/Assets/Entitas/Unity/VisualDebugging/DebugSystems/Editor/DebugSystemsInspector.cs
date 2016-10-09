@@ -232,8 +232,8 @@ namespace Entitas.Unity.VisualDebugging {
 
                         if(drawExecutionDuration) {
                             var avg = string.Format("Ø {0:00.000}", systemInfo.averageExecutionDuration).PadRight(12);
-                            var min = string.Format("▼ {0:00.000}", systemInfo.minDuration).PadRight(12);
-                            var max = string.Format("▲ {0:00.000}", systemInfo.maxDuration);
+                            var min = string.Format("▼ {0:00.000}", systemInfo.minExecutionDuration).PadRight(12);
+                            var max = string.Format("▲ {0:00.000}", systemInfo.maxExecutionDuration);
                             EditorGUILayout.LabelField(systemInfo.systemName, avg + min + max, getSystemStyle(systemInfo));
                         } else {
 							EditorGUILayout.LabelField(systemInfo.systemName, getSystemStyle(systemInfo));
