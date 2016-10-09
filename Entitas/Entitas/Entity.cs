@@ -78,6 +78,7 @@ namespace Entitas {
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
         string _toStringCache;
+        StringBuilder _toStringBuilder;
 
         /// Use pool.CreateEntity() to create a new entity and
         /// pool.DestroyEntity() to destroy it.
@@ -194,6 +195,7 @@ namespace Entitas {
         }
 
         void replaceComponent(int index, IComponent replacement) {
+            _toStringCache = null;
             var previousComponent = _components[index];
             if(replacement != previousComponent) {
                 _components[index] = replacement;
@@ -206,7 +208,6 @@ namespace Entitas {
                     }
                 } else {
                     _componentIndicesCache = null;
-                    _toStringCache = null;
                     if(OnComponentRemoved != null) {
                         OnComponentRemoved(this, index, previousComponent);
                     }
@@ -444,7 +445,11 @@ namespace Entitas {
         /// Entity_{creationIndex}(*{retainCount})({list of components})
         public override string ToString() {
             if(_toStringCache == null) {
-                var sb = new StringBuilder()
+                if(_toStringBuilder == null) {
+                    _toStringBuilder = new StringBuilder();
+                }
+                _toStringBuilder.Length = 0;
+                _toStringBuilder
                     .Append("Entity_")
                     .Append(_creationIndex)
                     .Append("(*")
@@ -456,16 +461,23 @@ namespace Entitas {
                 var components = GetComponents();
                 var lastSeparator = components.Length - 1;
                 for(int i = 0; i < components.Length; i++) {
-                    sb.Append(
-                        components[i].GetType().Name.RemoveComponentSuffix()
+                    var component = components[i];
+                    var type = component.GetType();
+                    var implementsToString = type.GetMethod("ToString")
+                                                 .DeclaringType == type;
+                    _toStringBuilder.Append(
+                        implementsToString
+                            ? component.ToString()
+                            : type.Name.RemoveComponentSuffix()
                     );
+
                     if(i < lastSeparator) {
-                        sb.Append(separator);
+                        _toStringBuilder.Append(separator);
                     }
                 }
 
-                sb.Append(")");
-                _toStringCache = sb.ToString();
+                _toStringBuilder.Append(")");
+                _toStringCache = _toStringBuilder.ToString();
             }
 
             return _toStringCache;
