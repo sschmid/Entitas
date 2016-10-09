@@ -37,9 +37,9 @@ namespace Entitas.Unity.VisualDebugging {
             get { return (_interfaceFlags & SystemInterfaceFlags.IReactiveSystem) == SystemInterfaceFlags.IReactiveSystem; }
         }
 
-        public double accumulatedDuration { get { return _accumulatedExecutionDuration; } }
-        public double minDuration { get { return _minDuration; } }
-        public double maxDuration { get { return _maxDuration; } }
+        public double accumulatedExecutionDuration { get { return _accumulatedExecutionDuration; } }
+        public double minExecutionDuration { get { return _minExecutionDuration; } }
+        public double maxExecutionDuration { get { return _maxExecutionDuration; } }
         public double averageExecutionDuration {
             get { return _durationsCount == 0 ? 0 : _accumulatedExecutionDuration / _durationsCount; }
         }
@@ -51,8 +51,8 @@ namespace Entitas.Unity.VisualDebugging {
         readonly string _systemName;
 
         double _accumulatedExecutionDuration;
-        double _minDuration;
-        double _maxDuration;
+        double _minExecutionDuration;
+        double _maxExecutionDuration;
         int _durationsCount;
 
         const string SYSTEM_SUFFIX = "System";
@@ -84,11 +84,11 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public void AddExecutionDuration(double executionDuration) {
-            if(executionDuration < _minDuration || _minDuration == 0) {
-                _minDuration = executionDuration;
+            if(executionDuration < _minExecutionDuration || _minExecutionDuration == 0) {
+                _minExecutionDuration = executionDuration;
             }
-            if(executionDuration > _maxDuration) {
-                _maxDuration = executionDuration;
+            if(executionDuration > _maxExecutionDuration) {
+                _maxExecutionDuration = executionDuration;
             }
 
             _accumulatedExecutionDuration += executionDuration;
