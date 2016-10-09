@@ -14,13 +14,20 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
         new PoolObserver(_pool);
         #endif
         _systems = createNestedSystems();
+
+        // Test call
         _systems.Initialize();
+        _systems.Execute();
+        _systems.Cleanup();
+        _systems.TearDown();
+
         _pool.CreateEntity().AddMyString("");
     }
 
     void Update() {
         _pool.GetGroup(VisualDebuggingMatcher.MyString).GetSingleEntity().ReplaceMyString(Random.value.ToString());
         _systems.Execute();
+        _systems.Cleanup();
     }
 
     Systems createAllSystemCombinations() {
@@ -84,7 +91,11 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
             .Add(_pool.CreateSystem(new SlowSystem()))
             .Add(_pool.CreateSystem(new RandomDurationSystem()))
             .Add(_pool.CreateSystem(new AReactiveSystem()))
+
             .Add(_pool.CreateSystem(new RandomValueSystem()))
-            .Add(_pool.CreateSystem(new ProcessRandomValueSystem()));
+            .Add(_pool.CreateSystem(new ProcessRandomValueSystem()))
+            .Add(_pool.CreateSystem(new CleanupSystem()))
+            .Add(_pool.CreateSystem(new TearDownSystem()))
+            .Add(_pool.CreateSystem(new MixedSystem()));
     }
 }

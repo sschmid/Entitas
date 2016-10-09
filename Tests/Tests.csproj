@@ -367,6 +367,8 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\PoolCComponentIds.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeOtherPoolComponentIds.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomePoolComponentIds.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestCleanupSystem.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestTearDownSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
