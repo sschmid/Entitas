@@ -2,6 +2,16 @@ using System;
 
 namespace Entitas.Unity.VisualDebugging {
 
+    [Flags]
+    public enum SystemInterfaceFlags {
+        None              = 0,
+        IInitializeSystem = 1 << 1,
+        IExecuteSystem    = 1 << 2,
+        ICleanupSystem    = 1 << 3,
+        ITearDownSystem   = 1 << 4,
+        IReactiveSystem   = 1 << 5
+    }
+
     public class SystemInfo {
 
         public ISystem system { get { return _system; } }
@@ -13,6 +23,14 @@ namespace Entitas.Unity.VisualDebugging {
 
         public bool isExecuteSystems {
             get { return (_interfaceFlags & SystemInterfaceFlags.IExecuteSystem) == SystemInterfaceFlags.IExecuteSystem; }
+        }
+
+        public bool isCleanupSystems {
+            get { return (_interfaceFlags & SystemInterfaceFlags.ICleanupSystem) == SystemInterfaceFlags.ICleanupSystem; }
+        }
+
+        public bool isTearDownSystems {
+            get { return (_interfaceFlags & SystemInterfaceFlags.ITearDownSystem) == SystemInterfaceFlags.ITearDownSystem; }
         }
 
         public bool isReactiveSystems {
@@ -90,19 +108,17 @@ namespace Entitas.Unity.VisualDebugging {
             if(system is IExecuteSystem) {
                 flags |= SystemInterfaceFlags.IExecuteSystem;
             }
+            if(system is ICleanupSystem) {
+                flags |= SystemInterfaceFlags.ICleanupSystem;
+            }
+            if(system is ITearDownSystem) {
+                flags |= SystemInterfaceFlags.ITearDownSystem;
+            }
             if(isReactive) {
                 flags |= SystemInterfaceFlags.IReactiveSystem;
             }
 
             return flags;
-        }
-
-        [Flags]
-        enum SystemInterfaceFlags {
-            None = 0,
-            IInitializeSystem = 1,
-            IExecuteSystem = 2,
-            IReactiveSystem = 4
         }
     }
 }
