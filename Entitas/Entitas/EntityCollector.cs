@@ -19,6 +19,7 @@ namespace Entitas {
         readonly GroupEventType[] _eventTypes;
         Group.GroupChanged _addEntityCache;
         string _toStringCache;
+        StringBuilder _toStringBuilder;
 
         /// Creates an EntityCollector and will collect changed entities
         /// based on the specified eventType.
@@ -100,19 +101,23 @@ namespace Entitas {
 
         public override string ToString() {
             if(_toStringCache == null) {
-                var sb = new StringBuilder().Append("Collector(");
+                if(_toStringBuilder == null) {
+                    _toStringBuilder = new StringBuilder();
+                }
+                _toStringBuilder.Length = 0;
+                _toStringBuilder.Append("Collector(");
 
                 const string separator = ", ";
                 var lastSeparator = _groups.Length - 1;
                 for (int i = 0; i < _groups.Length; i++) {
-                    sb.Append(_groups[i]);
+                    _toStringBuilder.Append(_groups[i]);
                     if(i < lastSeparator) {
-                        sb.Append(separator);
+                        _toStringBuilder.Append(separator);
                     }
                 }
 
-                sb.Append(")");
-                _toStringCache = sb.ToString();
+                _toStringBuilder.Append(")");
+                _toStringCache = _toStringBuilder.ToString();
             }
 
             return _toStringCache;

@@ -7,23 +7,27 @@ namespace Entitas {
         public string[] componentNames;
 
         string _toStringCache;
+        StringBuilder _toStringBuilder;
 
         public override string ToString() {
             if(_toStringCache == null) {
-                var sb = new StringBuilder();
+                if(_toStringBuilder == null) {
+                    _toStringBuilder = new StringBuilder();
+                }
+                _toStringBuilder.Length = 0;
                 if(_allOfIndices != null) {
-                    appendIndices(sb, "AllOf", _allOfIndices, componentNames);
+                    appendIndices(_toStringBuilder, "AllOf", _allOfIndices, componentNames);
                 }
                 if(_anyOfIndices != null) {
                     if(_allOfIndices != null) {
-                        sb.Append(".");
+                        _toStringBuilder.Append(".");
                     }
-                    appendIndices(sb, "AnyOf", _anyOfIndices, componentNames);
+                    appendIndices(_toStringBuilder, "AnyOf", _anyOfIndices, componentNames);
                 }
                 if(_noneOfIndices != null) {
-                    appendIndices(sb, ".NoneOf", _noneOfIndices, componentNames);
+                    appendIndices(_toStringBuilder, ".NoneOf", _noneOfIndices, componentNames);
                 }
-                _toStringCache = sb.ToString();
+                _toStringCache = _toStringBuilder.ToString();
             }
 
             return _toStringCache;

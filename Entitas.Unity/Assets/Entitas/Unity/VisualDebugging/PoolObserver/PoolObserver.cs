@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
@@ -12,6 +13,7 @@ namespace Entitas.Unity.VisualDebugging {
         readonly Pool _pool;
         readonly List<Group> _groups;
         readonly Transform _entitiesContainer;
+        StringBuilder _toStringBuilder = new StringBuilder();
 
         public PoolObserver(Pool pool) {
             _pool = pool;
@@ -45,20 +47,22 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public override string ToString() {
+            _toStringBuilder.Length = 0;
+            _toStringBuilder
+                .Append(_pool.metaData.poolName).Append(" (")
+                .Append(_pool.count).Append(" entities, ")
+                .Append(_pool.reusableEntitiesCount).Append(" reusable, ");
+
             if(_pool.retainedEntitiesCount != 0) {
-                return _entitiesContainer.name = 
-                    _pool.metaData.poolName + " (" +
-                    _pool.count + " entities, " +
-                    _pool.reusableEntitiesCount + " reusable, " +
-                    _pool.retainedEntitiesCount + " retained, " +
-                    _groups.Count + " groups)";
+                _toStringBuilder
+                    .Append(_pool.retainedEntitiesCount).Append(" retained, ");
             }
 
-            return _entitiesContainer.name = 
-                _pool.metaData.poolName + " (" +
-                _pool.count + " entities, " +
-                _pool.reusableEntitiesCount + " reusable, " +
-                _groups.Count + " groups)";
+            _toStringBuilder
+                .Append(_groups.Count)
+                .Append(" groups)");
+
+            return _entitiesContainer.name = _toStringBuilder.ToString();
         }
     }
 }
