@@ -48,7 +48,7 @@ popd > /dev/null
 # generate tree file
 TREE_IGNORE="bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|docs|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties|unity-test-results.xml"
 pushd $ROOT > /dev/null
-  tree -I "$TREE_IGNORE" --noreport -d > tree.txt
-  tree -I "$TREE_IGNORE" --noreport --dirsfirst >> tree.txt
+  tree -I $TREE_IGNORE --noreport -d > tree.txt
+  tree -I $TREE_IGNORE --noreport --dirsfirst >> tree.txt
   cat tree.txt
 popd > /dev/null
