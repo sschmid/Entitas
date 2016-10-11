@@ -20,6 +20,9 @@ bin
 *.userprefs
 test-results
 
+# Visual Studio Code
+.vscode
+
 # Custom
 Build/*
 !Build/deploy/
