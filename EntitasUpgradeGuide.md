@@ -1,7 +1,13 @@
-# General information
+Entitas Upgrade Guide
+=====================
+
 Entitas provides an easy way to make upgrading to new versions a breeze.
 Either use the command line tool `MigrationAssistant.exe` or the Migration menu
 item in Unity. After that generate again.
+
+In some cases manual steps have to be applied BEFORE installing a new version.
+This document contains checklists for every release with breaking changes.
+
 
 Example
 ```
@@ -9,6 +15,7 @@ $ mono MigrationAssistant.exe
 usage:
 [-l]             - print all available versions
 [version] [path] - apply migration of version [version] to source files located at [path]
+
 
 $ mono MigrationAssistant.exe -l
 ========================================
@@ -23,14 +30,14 @@ $ mono MigrationAssistant.exe -l
 etc...
 
 
-// Example from Math-One example project
-$ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/Generated/
+$ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/RequestedFolder
 ```
+---
 
 Entitas 0.35.0 upgrade guide
 ============================
 
-#### Info
+#### Breaking changes
 `IMatcher.Where()` has been removed. See #194
 
 #### Before you install
@@ -39,11 +46,12 @@ Entitas 0.35.0 upgrade guide
 #### After you installed
 - Fix all the errors where you used `matcher.Where()`
 
+---
 
 Entitas 0.34.0 upgrade guide
 ============================
 
-#### Info
+#### Breaking changes
 `GroupObserver` has been renamed to `EntityCollector`. See #168
 
 #### Before you install
@@ -55,11 +63,12 @@ Entitas 0.34.0 upgrade guide
 #### After you installed
 - You're fine - nothing to do for you :heart:
 
+---
 
 Entitas 0.33.0 upgrade guide
 ============================
 
-#### Info
+#### Breaking changes
 `IDeinitializeSystem` has been renamed to `ITearDownSystem`. See #164
 
 #### Before you install
@@ -68,6 +77,7 @@ Entitas 0.33.0 upgrade guide
 #### After you installed
 - You're fine - nothing to do for you :heart:
 
+---
 
 Entitas 0.32.0 upgrade guide
 ============================
@@ -77,12 +87,14 @@ Entitas 0.32.0 introduces a new Pools class. Using the new PoolsGenerator will r
 to update your existing project manually. You can still use the old Pools class in your
 existing project if you want. If so, please use the OldPoolsGenerator instead of the new one.
 
+---
 
 Entitas 0.30.0 upgrade guide
 ============================
 
 Some code generators got renamed. Apply Migration 0.30.0
 
+---
 
 Entitas 0.29.0 upgrade guide
 ============================
@@ -90,6 +102,7 @@ Entitas 0.29.0 upgrade guide
 Marked old PoolMetaData constructor obsolete. If you encounter compile errors
 please apply Migration 0.26.0, open C# project and generate again.
 
+---
 
 Entitas 0.28.0 upgrade guide
 ============================
@@ -100,6 +113,7 @@ Due to some code generator renamings the ComponentIndicesGenerators inactive.
 
 The SystemsGenerator has been removed. Please use `pool.CreateSystem<MySystem>()` instead.
 
+---
 
 Entitas 0.27.0 upgrade guide
 ============================
@@ -109,6 +123,7 @@ sure that all your desired code generators are activated.
 Due to some code generator renamings the ComponentLookupGenerator and
 the ComponentsGenerator are inactive. Activate them (if desired) and generate.
 
+---
 
 Entitas 0.26.0 upgrade guide
 ============================
@@ -116,22 +131,7 @@ Entitas 0.26.0 upgrade guide
 Use the command line tool `MigrationAssistant.exe` to automatically fix compile errors.
 After that generate again.
 
-```
-$ mono MigrationAssistant.exe
-usage:
-[-l]             - print all available versions
-[version] [path] - apply migration of version [version] to source files located at [path]
-
-$ mono MigrationAssistant.exe -l
-0.18.0 - Migrates IReactiveSystem GetXyz methods to getters
-0.19.0 - Migrates IReactiveSystem.Execute to accept List<Entity>
-0.22.0 - Migrates IReactiveSystem to combine trigger and eventTypes to TriggerOnEvent
-0.26.0 - Deactivates code to prevent compile erros
-
-// Example from Math-One example project
-$ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/Generated/
-```
-
+---
 
 Entitas 0.24.0 upgrade guide
 ============================
@@ -147,6 +147,7 @@ UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
 
 and generate again.
 
+---
 
 Entitas 0.23.0 upgrade guide
 ============================
@@ -183,6 +184,8 @@ In generated ...ComponentIds
         }
     }
 
+---
+
 Entitas 0.22.0 upgrade guide
 ============================
 
@@ -190,21 +193,7 @@ Entitas 0.22.0 changed IReactiveSystem and IMultiReactiveSystem and renamed ISta
 
 Use the command line tool `MigrationAssistant.exe` to automatically migrate IReactiveSystem.
 
-```
-$ mono MigrationAssistant.exe
-usage:
-[-l]             - print all available versions
-[version] [path] - apply migration of version [version] to source files located at [path]
-
-$ mono MigrationAssistant.exe -l
-0.18.0 - Migrates IReactiveSystem GetXyz methods to getters
-0.19.0 - Migrates IReactiveSystem.Execute to accept List<Entity>
-0.22.0 - Migrates IReactiveSystem to combine trigger and eventTypes to TriggerOnEvent
-
-// Example from Math-One example project, where all the systems are located in the Features folder
-$ mono MigrationAssistant.exe 0.22.0 /Path/To/Project/Assets/Sources/Features
-```
-
+---
 
 Entitas 0.19.0 upgrade guide
 ============================
@@ -240,6 +229,7 @@ $ mono MigrationAssistant.exe -l
 $ mono MigrationAssistant.exe 0.19.0 /Path/To/Project/Assets/Sources/Features
 ```
 
+---
 
 Entitas 0.18.0 upgrade guide
 ============================
@@ -261,6 +251,7 @@ $ mono MigrationAssistant.exe -l
 $ mono MigrationAssistant.exe 0.18.0 /Path/To/Project/Assets/Sources/Features
 ```
 
+---
 
 Entitas 0.12.0 upgrade guide
 ============================
@@ -316,6 +307,7 @@ public class CoreGameAttribute : PoolAttribute {
 
     Delete all custom PoolAttributes
 
+---
 
 Entitas 0.10.0 upgrade guide
 ============================
