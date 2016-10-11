@@ -51,7 +51,8 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
 
 ---
 
-### **[» Ask a question][ask-a-question]**
+### **[» Download](#download-entitas)**
+### **[» Ask a question][issues-new]**
 ### **[» Wiki, Overview, Roadmap and example projects][wiki]**
 ### **[» Community: Games and Examples #madeWithEntitas][wiki-games-and-examples]**
 
@@ -136,11 +137,7 @@ Entitas deep dive
 Download Entitas
 ================
 
-Each release is published with zip files attached containing all source files you need.
-
-[**Entitas-CSharp.zip**][entitas-csharp-zip]
-
-[**Entitas-Unity.zip**][entitas-unity-zip]
+Each release is published with zip files containing all source files you need.
 
 [Show releases][releases]
 
@@ -149,18 +146,38 @@ Contributing to Entitas
 =======================
 
 The project is hosted on [GitHub][github-entitas] where you can [report issues][issues], fork the project and [submit pull requests][pulls].
+Entitas is developed with [TDD (Test Driven Development)](https://en.wikipedia.org/wiki/Test-driven_development) and [nspec](http://nspec.org). New features are introduced following the [git-flow](https://github.com/nvie/gitflow) conventions.
 
-Entitas.sln contains all projects and tests in one solution. Run Scripts/build.sh to copy all required Entitas source files to all Unity projects.
+Fork the repository, then run
 
-To run the tests, navigate to the project root folder and execute Scripts/runTests.sh.
+```
+$ git clone https://github.com/<username>/Entitas-CSharp.git
+$ cd Entitas-CSharp
+$ git branch master origin/master
+$ git flow init -d
+````
 
-- Check the [issues][issues] to make sure nobody hasn't already requested it and/or contributed it
-- Fork the project
-- Checkout the latest develop
-- Start a feature/yourFeatureOrBugfix branch based on the latest develop
-- Make sure to add/update tests. This is important so nobody will break it in a future version. Please write tests first, followed by the implementation.
-- Commit and push until you are happy with your contribution
-- Create a [pull request][pulls]
+Open `Entitas.sln` and run the Tests project to ensure everything works as expected. Alternatively run the test script
+
+```
+$ ./Scripts/test
+```
+
+If you plan to make changes to the Entitas.Unity project, run
+```
+$ ./Scripts/update
+```
+
+This will copy all required Entitas source files to the Entitas.Unity project's `Library` folder. Entitas must be considered as a dependency. Any changes to Entitas source code within the `Library` folder in the Entitas.Unity project won't be committed and will be overwritten when running `update` again. Changes to Entitas must be done in the `Entitas.sln` project.
+
+[Create a new ticket][issues-new] to let people know what you're working on and to encourage a discussion. Follow the git-flow conventions and create a new feature branch starting with the issue number:
+
+```
+$ git flow feature start <#issue-your-feature>
+```
+
+Write unit tests and make sure all the existing tests pass. If you have many commits please consider using [git rebase](https://git-scm.com/docs/git-rebase) to cleanup the commits. This can simplify reviewing the pull request. 
+Once you're happy with your changes open a [pull request][pulls] to your feature branch.
 
 
 Thanks to
@@ -195,8 +212,6 @@ Entitas is available in
 
 
 [clean-coders]: https://cleancoders.com "Clean Coders"
-[entitas-csharp-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/Build/deploy/Entitas-CSharp.zip?raw=true "Download Entitas-CSharp.zip"
-[entitas-unity-zip]: https://github.com/sschmid/Entitas-CSharp/blob/master/Build/deploy//Entitas-Unity.zip?raw=true "Download Entitas-Unity.zip"
 
 [wiki]: https://github.com/sschmid/Entitas-CSharp/wiki "Entitas Wiki"
 [wiki-code-generator]: https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator "Wiki - Code Generator"
@@ -204,8 +219,6 @@ Entitas is available in
 [wiki-unity-integration]: https://github.com/sschmid/Entitas-CSharp/wiki/Unity-integration "Wiki - Unity Integration"
 [wiki-example-projects]: https://github.com/sschmid/Entitas-CSharp/wiki/Example-projects "Wiki - Example Projects"
 [wiki-games-and-examples]: https://github.com/sschmid/Entitas-CSharp/wiki/Games-and-Examples "Wiki - Games and Examples #madeWithEntitas"
-
-[ask-a-question]: https://github.com/sschmid/Entitas-CSharp/issues/new "Ask a question"
 
 [unite-europe-2015-video-thumbnail]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2015-Video.png "Video: Watch the Entitas Talk at Unite Europe 2015"
 [unite-europe-2015-video]: https://www.youtube.com/watch?v=1wvMXur19M4 "Video: Watch the Entitas Talk at Unite Europe 2015"
@@ -216,6 +229,7 @@ Entitas is available in
 [releases]: https://github.com/sschmid/Entitas-CSharp/releases "Releases"
 [issues]: https://github.com/sschmid/Entitas-CSharp/issues "Issues"
 [pulls]: https://github.com/sschmid/Entitas-CSharp/pulls "Pull Requests"
+[issues-new]: https://github.com/sschmid/Entitas-CSharp/issues/new "New issue"
 
 [twitter-sschmid]: https://twitter.com/s_schmid "s_schmid on Twitter"
 [twitter-entitas_csharp]: https://twitter.com/entitas_csharp "entitas_csharp on Twitter"
