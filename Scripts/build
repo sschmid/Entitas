@@ -1,9 +1,10 @@
 #!/bin/bash -e
+echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
 # build project
-xbuild /target:Clean /property:Configuration=Release /verbosity:minimal $PROJECT
-xbuild /property:Configuration=Release /verbosity:minimal $PROJECT
+xbuild /target:Clean /property:Configuration=Release /verbosity:minimal $SOLUTION
+xbuild /property:Configuration=Release /verbosity:minimal $SOLUTION
 
 # update
 ${SCRIPTS}/update
@@ -12,5 +13,5 @@ ${SCRIPTS}/update
 $UNITY -quit \
        -batchmode \
        -logfile \
-       -projectPath $UNITY_PROJECT \
+       -projectPath $FULL_UNITY_PROJECT \
        -executeMethod $UNITY_EXECUTE_METHOD

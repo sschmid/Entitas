@@ -1,4 +1,5 @@
 #!/bin/bash -e
+echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
 # clean
@@ -8,13 +9,13 @@ rm -rf $BUILD
 mkdir $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
 
 # collect sources
-mkdir "${BUILD_SRC}/${ESU}"
-cpe "${ROOT}/${ES}/${ES}" $BUILD_SRC
+mkdir "${BUILD_SRC}/${UNITY_PROJECT}"
+cpe "${ROOT}/${PROJECT_NAME}/${PROJECT_NAME}" $BUILD_SRC
 cpe "${ROOT}/${MIG}/${MIG}" $BUILD_SRC
-cpe "${ROOT}/${ESU_ASSETS}/${ES}/Unity/" "${BUILD_SRC}/${ESU}"
+cpe "${ROOT}/${UNITY_PROJECT}/Assets/${PROJECT_NAME}/Unity/" "${BUILD_SRC}/${UNITY_PROJECT}"
 
 # update project dependencies
-rm -rf "${ROOT}/${ESU_LIBS}"
-mkdir "${ROOT}/${ESU_LIBS}"
-cpe "${BUILD_SRC}/${ES}" "${ROOT}/${ESU_LIBS}"
-cpe "${BUILD_SRC}/${MIG}" "${ROOT}/${ESU_LIBS}"
+rm -rf "${ROOT}/${UNITY_LIBS}"
+mkdir "${ROOT}/${UNITY_LIBS}"
+cpe "${BUILD_SRC}/${PROJECT_NAME}" "${ROOT}/${UNITY_LIBS}"
+cpe "${BUILD_SRC}/${MIG}" "${ROOT}/${UNITY_LIBS}"
