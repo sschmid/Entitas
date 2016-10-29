@@ -162,7 +162,7 @@ namespace Entitas {
                     "Cannot remove component '" +
                     _poolMetaData.componentNames[index] +
                     "' from " + this + "!",
-                    "You should check if an entity has the component" +
+                    "You should check if an entity has the component " +
                     "before removing it."
                 );
             }
@@ -235,7 +235,7 @@ namespace Entitas {
                     "Cannot get component '" +
                     _poolMetaData.componentNames[index] + "' from " +
                     this + "!",
-                    "You should check if an entity has the component" +
+                    "You should check if an entity has the component " +
                     "before getting it."
                 );
             }
