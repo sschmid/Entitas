@@ -15,6 +15,7 @@ namespace Entitas.Unity {
             _buildTargetToDefSymbol = Enum.GetValues(typeof(BuildTargetGroup))
                 .Cast<BuildTargetGroup>()
                 .Where(buildTargetGroup => buildTargetGroup != BuildTargetGroup.Unknown)
+                .Where(buildTargetGroup => !isBuildTargetObsolete(buildTargetGroup))
                 .Distinct()
                     .ToDictionary(
                     buildTargetGroup => buildTargetGroup,
@@ -36,6 +37,12 @@ namespace Entitas.Unity {
                     kv.Key, kv.Value.Replace(defineSymbol, string.Empty)
                 );
             }
+        }
+
+        bool isBuildTargetObsolete(BuildTargetGroup value) {
+            var fieldInfo = value.GetType().GetField(value.ToString());
+            var attributes = (ObsoleteAttribute[])fieldInfo.GetCustomAttributes(typeof(ObsoleteAttribute), false);
+            return (attributes != null && attributes.Length > 0);
         }
     }
 }
