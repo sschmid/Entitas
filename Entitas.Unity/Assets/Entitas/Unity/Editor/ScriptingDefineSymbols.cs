@@ -39,10 +39,9 @@ namespace Entitas.Unity {
             }
         }
 
-        bool isBuildTargetObsolete(BuildTargetGroup value) {
-            var fieldInfo = value.GetType().GetField(value.ToString());
-            var attributes = (ObsoleteAttribute[])fieldInfo.GetCustomAttributes(typeof(ObsoleteAttribute), false);
-            return (attributes != null && attributes.Length > 0);
+        bool isBuildTargetObsolete(BuildTargetGroup buildTargetGroup) {
+            var fieldInfo = buildTargetGroup.GetType().GetField(buildTargetGroup.ToString());
+            return Attribute.IsDefined(fieldInfo, typeof(ObsoleteAttribute));
         }
     }
 }
