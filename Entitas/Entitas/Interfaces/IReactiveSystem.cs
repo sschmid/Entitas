@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -34,6 +35,7 @@ namespace Entitas {
     /// This is useful when a component triggered the reactive system, but once
     /// the system gets executed the component already has been removed.
     /// Implementing IEnsureComponents can filter these enities.
+    [Obsolete("Since 0.36.0. It's recommended to use IFilterEntities.")]
     public interface IEnsureComponents {
         IMatcher ensureComponents { get; }
     }
@@ -43,6 +45,7 @@ namespace Entitas {
     /// It will exclude all entities which match the specified matcher.
     /// To exclude multiple components use
     /// Matcher.AnyOf(ComponentX, ComponentY, ComponentZ).
+    [Obsolete("Since 0.36.0. It's recommended to use IFilterEntities.")]
     public interface IExcludeComponents {
         IMatcher excludeComponents { get; }
     }
