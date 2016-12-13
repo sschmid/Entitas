@@ -490,6 +490,153 @@ class describe_ReactiveSystem : nspec {
             };
         };
 
+        context["filter entities"] = () => {
+
+            it["filters entities"] = () => {
+                var filterEntitiesSystem = new ReactiveFilterEntitiesSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded,
+                                                    e => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).age > 42);
+
+                reactiveSystem = new ReactiveSystem(_pool, filterEntitiesSystem);
+
+                var eAC = _pool.CreateEntity()
+                                               .AddComponentA()
+                                               .AddComponentC();
+
+                var eAB1 = _pool.CreateEntity()
+                                .AddComponentB()
+                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 10 });
+
+                var eAB2 = _pool.CreateEntity()
+                                .AddComponentB()
+                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 50 });
+                
+                var didExecute = 0;
+                filterEntitiesSystem.executeAction = entities => {
+                    didExecute += 1;
+                    eAB2.retainCount.should_be(3); // retained by pool, group and entity collector
+                };
+
+                reactiveSystem.Execute();
+                didExecute.should_be(1);
+
+                reactiveSystem.Execute();
+
+                filterEntitiesSystem.entities.Length.should_be(1);
+                filterEntitiesSystem.entities[0].should_be_same(eAB2);
+
+                eAB1.retainCount.should_be(2); // retained by pool and group
+                eAB2.retainCount.should_be(2);
+            };
+
+            it["filters entities when ensure"] = () => {
+                var filterEntitiesSystem = new ReactiveEnsureFilterEntitiesSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded, _matcherAB,
+                                                    e => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).age > 42);
+
+                reactiveSystem = new ReactiveSystem(_pool, filterEntitiesSystem);
+
+                var eAC = _pool.CreateEntity()
+                               .AddComponentA()
+                               .AddComponentC();
+
+                var eAB1 = _pool.CreateEntity()
+                                .AddComponentB()
+                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 10 });
+
+                var eAB2 = _pool.CreateEntity()
+                                .AddComponentB()
+                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 50 });
+
+                var didExecute = 0;
+                filterEntitiesSystem.executeAction = entities => {
+                    didExecute += 1;
+                    eAB2.retainCount.should_be(3); // retained by pool, group and entity collector
+                };
+
+                reactiveSystem.Execute();
+                didExecute.should_be(1);
+
+                reactiveSystem.Execute();
+
+                filterEntitiesSystem.entities.Length.should_be(1);
+                filterEntitiesSystem.entities[0].should_be_same(eAB2);
+
+                eAB1.retainCount.should_be(2); // retained by pool and group
+                eAB2.retainCount.should_be(2);
+            };
+
+            it["filters entities when exclude"] = () => {
+                var filterEntitiesSystem = new ReactiveExcludeFilterEntitiesSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded, Matcher.AllOf(CID.ComponentC),
+                                                    e => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).age > 42);
+
+                reactiveSystem = new ReactiveSystem(_pool, filterEntitiesSystem);
+
+                var eAC = _pool.CreateEntity()
+                               .AddComponentA()
+                               .AddComponentC();
+
+                var eAB1 = _pool.CreateEntity()
+                                .AddComponentB()
+                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 10 });
+
+                var eAB2 = _pool.CreateEntity()
+                                .AddComponentB()
+                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 50 });
+
+                var didExecute = 0;
+                filterEntitiesSystem.executeAction = entities => {
+                    didExecute += 1;
+                    eAB2.retainCount.should_be(3); // retained by pool, group and entity collector
+                };
+
+                reactiveSystem.Execute();
+                didExecute.should_be(1);
+
+                reactiveSystem.Execute();
+
+                filterEntitiesSystem.entities.Length.should_be(1);
+                filterEntitiesSystem.entities[0].should_be_same(eAB2);
+
+                eAB1.retainCount.should_be(2); // retained by pool and group
+                eAB2.retainCount.should_be(2);
+            };
+
+            it["filters entities when ensure and exclude"] = () => {
+                var filterEntitiesSystem = new ReactiveEnsureExcludeFilterEntitiesSubSystemSpy(_matcherAB, GroupEventType.OnEntityAdded, _matcherAB, Matcher.AllOf(CID.ComponentC),
+                                                    e => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).age > 42);
+
+                reactiveSystem = new ReactiveSystem(_pool, filterEntitiesSystem);
+
+                var eAC = _pool.CreateEntity()
+                               .AddComponentA()
+                               .AddComponentC();
+
+                var eAB1 = _pool.CreateEntity()
+                                .AddComponentB()
+                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 10 });
+
+                var eAB2 = _pool.CreateEntity()
+                                .AddComponentB()
+                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 50 });
+
+                var didExecute = 0;
+                filterEntitiesSystem.executeAction = entities => {
+                    didExecute += 1;
+                    eAB2.retainCount.should_be(3); // retained by pool, group and entity collector
+                };
+
+                reactiveSystem.Execute();
+                didExecute.should_be(1);
+
+                reactiveSystem.Execute();
+
+                filterEntitiesSystem.entities.Length.should_be(1);
+                filterEntitiesSystem.entities[0].should_be_same(eAB2);
+
+                eAB1.retainCount.should_be(2); // retained by pool and group
+                eAB2.retainCount.should_be(2);
+            };
+        };
+
         context["IClearReactiveSystem"] = () => {
 
             ClearReactiveSubSystemSpy clearSubSystem = null;

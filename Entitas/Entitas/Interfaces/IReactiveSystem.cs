@@ -49,6 +49,13 @@ namespace Entitas {
 
     /// Implement this interface in combination with IReactiveSystem,
     /// IMultiReactiveSystem or IEntityCollectorSystem.
+    /// It will exclude all entities which don't pass the filter.
+    public interface IFilterEntities {
+        bool filter(Entity entity);
+    }
+
+    /// Implement this interface in combination with IReactiveSystem,
+    /// IMultiReactiveSystem or IEntityCollectorSystem.
     /// If a system changes entities which in turn would trigger itself
     /// consider implementing IClearReactiveSystem
     /// which will ignore the changes made by the system.
