@@ -3,7 +3,9 @@ using Entitas;
 
 public class TestReactiveSystem : IReactiveSystem {
 
-    public TriggerOnEvent trigger { get { return Matcher.AllOf(0).OnEntityAdded(); } }
+    public EntityCollector GetTrigger(Pools pools) {
+        return pools.test.CreateEntityCollector(Matcher.AllOf(0));
+    }
 
     public void Execute(List<Entity> entities) {
     }

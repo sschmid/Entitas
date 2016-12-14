@@ -2,24 +2,20 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    /// A ReactiveSystem manages your implementation of a IReactiveSystem,
-    /// IMultiReactiveSystem or IEntityCollectorSystem subsystem.
+    /// A ReactiveSystem manages your implementation of a
+    /// IReactiveSystem subsystem.
     /// It will only call subsystem.Execute() if there were changes based on
     /// the triggers and eventTypes specified by your subsystem
     /// and will only pass in changed entities. A common use-case is to react
     /// to changes, e.g. a change of the position of an entity to update the
     /// gameObject.transform.position of the related gameObject.
-    /// Recommended way to create systems in general:
-    /// pool.CreateSystem(new MySystem()); This will automatically wrap MySystem
-    /// in a ReactiveSystem if it implements IReactiveSystem,
-    /// IMultiReactiveSystem or IEntityCollectorSystem.
     public class ReactiveSystem : IExecuteSystem {
 
         /// Returns the subsystem which will be managed by this
         /// instance of ReactiveSystem.
-        public IReactiveExecuteSystem subsystem { get { return _subsystem; } }
+        public IReactiveSystem subsystem { get { return _subsystem; } }
 
-        readonly IReactiveExecuteSystem _subsystem;
+        readonly IReactiveSystem _subsystem;
         readonly EntityCollector _collector;
         readonly IMatcher _ensureComponents;
         readonly IMatcher _excludeComponents;
@@ -27,27 +23,15 @@ namespace Entitas {
         readonly List<Entity> _buffer;
         string _toStringCache;
 
-        /// Recommended way to create systems in general:
-        /// pool.CreateSystem(new MySystem());
-        public ReactiveSystem(Pool pool, IReactiveSystem subSystem) : this(
-            subSystem, createEntityCollector(pool, new [] { subSystem.trigger })
-        ) {
+        public ReactiveSystem(IReactiveSystem subSystem) :
+            this(subSystem, Pools.sharedInstance) {
         }
 
-        /// Recommended way to create systems in general:
-        /// pool.CreateSystem(new MySystem());
-        public ReactiveSystem(Pool pool, IMultiReactiveSystem subSystem) :
-            this(subSystem, createEntityCollector(pool, subSystem.triggers)) {
+        public ReactiveSystem(IReactiveSystem subSystem, Pools pools) :
+            this(subSystem, subSystem.GetTrigger(pools)) {
         }
 
-        /// Recommended way to create systems in general:
-        /// pool.CreateSystem(new MySystem());
-        public ReactiveSystem(IEntityCollectorSystem subSystem) :
-            this(subSystem, subSystem.entityCollector) {
-        }
-
-        ReactiveSystem(IReactiveExecuteSystem subSystem,
-                       EntityCollector collector) {
+        ReactiveSystem(IReactiveSystem subSystem, EntityCollector collector) {
             _subsystem = subSystem;
             var ensureComponents = subSystem as IEnsureComponents;
             if(ensureComponents != null) {
@@ -62,20 +46,6 @@ namespace Entitas {
 
             _collector = collector;
             _buffer = new List<Entity>();
-        }
-
-        static EntityCollector createEntityCollector(
-            Pool pool, TriggerOnEvent[] triggers) {
-            var triggersLength = triggers.Length;
-            var groups = new Group[triggersLength];
-            var eventTypes = new GroupEventType[triggersLength];
-            for (int i = 0; i < triggersLength; i++) {
-                var trigger = triggers[i];
-                groups[i] = pool.GetGroup(trigger.trigger);
-                eventTypes[i] = trigger.eventType;
-            }
-
-            return new EntityCollector(groups, eventTypes);
         }
 
         /// Activates the ReactiveSystem and starts observing changes

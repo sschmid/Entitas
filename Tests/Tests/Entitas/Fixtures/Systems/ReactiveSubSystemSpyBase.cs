@@ -10,7 +10,7 @@ public interface IReactiveSubSystemSpy {
     Entity[] entities { get; }
 }
 
-public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem {
+public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IReactiveSystem, IInitializeSystem, ICleanupSystem, ITearDownSystem {
 
     public int didInitialize { get { return _didInitialize; } }
     public int didExecute { get { return _didExecute; } }
@@ -25,6 +25,8 @@ public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IInitial
     protected int _didCleanup;
     protected int _didTearDown;
     protected Entity[] _entities;
+
+    public abstract EntityCollector GetTrigger(Pools pools);
 
     public void Initialize() {
         _didInitialize += 1;

@@ -25,12 +25,30 @@ namespace Entitas {
 
         /// Adds the system instance to the systems list.
         public virtual Systems Add(ISystem system) {
+            return Add(system, Pools.sharedInstance);
+        }
+
+        /// Adds the system instance to the systems list.
+        public virtual Systems Add(ISystem system, Pools pools) {
             var reactiveSystem = system as ReactiveSystem;
+            if(reactiveSystem == null) {
+                addSystem(system);
 
-            var initializeSystem = reactiveSystem != null
-                ? reactiveSystem.subsystem as IInitializeSystem
-                : system as IInitializeSystem;
+                var reactiveSubSystem = system as IReactiveSystem;
+                if(reactiveSubSystem != null) {
+                    reactiveSystem = new ReactiveSystem(reactiveSubSystem, pools);
+                    _executeSystems.Add(reactiveSystem);
+                }
+            } else {
+                addSystem(reactiveSystem.subsystem);
+                _executeSystems.Add(reactiveSystem);
+            }
 
+            return this;
+        }
+
+        void addSystem(ISystem system) {
+            var initializeSystem = system as IInitializeSystem;
             if(initializeSystem != null) {
                 _initializeSystems.Add(initializeSystem);
             }
@@ -40,23 +58,15 @@ namespace Entitas {
                 _executeSystems.Add(executeSystem);
             }
 
-            var cleanupSystem = reactiveSystem != null
-                ? reactiveSystem.subsystem as ICleanupSystem
-                : system as ICleanupSystem;
-
+            var cleanupSystem = system as ICleanupSystem;
             if(cleanupSystem != null) {
                 _cleanupSystems.Add(cleanupSystem);
             }
 
-            var tearDownSystem = reactiveSystem != null
-                ? reactiveSystem.subsystem as ITearDownSystem
-                : system as ITearDownSystem;
-
+            var tearDownSystem = system as ITearDownSystem;
             if(tearDownSystem != null) {
                 _tearDownSystems.Add(tearDownSystem);
             }
-
-            return this;
         }
 
         /// Calls Initialize() on all IInitializeSystem, ReactiveSystem and
