@@ -131,9 +131,6 @@
     <Compile Include="..\Entitas\Entitas\Extensions\GroupExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\GroupExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\IMatcherExtension.cs">
-      <Link>Linked Libraries\Entitas\Extensions\IMatcherExtension.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\PoolExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\PoolExtension.cs</Link>
     </Compile>
@@ -172,9 +169,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\MatcherToString.cs">
       <Link>Linked Libraries\Entitas\Matcher\MatcherToString.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\TriggerOnEvent.cs">
-      <Link>Linked Libraries\Entitas\Matcher\TriggerOnEvent.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Serialization\PublicMemberInfo.cs">
       <Link>Linked Libraries\Entitas\Serialization\PublicMemberInfo.cs</Link>

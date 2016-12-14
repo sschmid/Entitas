@@ -3,20 +3,20 @@ using Entitas;
 
 public class ReactiveSubSystemSpy : ReactiveSubSystemSpyBase, IReactiveSystem {
 
-    public TriggerOnEvent trigger { get { return new TriggerOnEvent(_matcher, _eventType); } }
+    readonly EntityCollector _collector;
 
-    readonly IMatcher _matcher;
-    readonly GroupEventType _eventType;
+    public ReactiveSubSystemSpy(EntityCollector collector) {
+        _collector = collector;
+    }
 
-    public ReactiveSubSystemSpy(IMatcher matcher, GroupEventType eventType) {
-        _matcher = matcher;
-        _eventType = eventType;
+    public override EntityCollector GetTrigger(Pools pools) {
+        return _collector;
     }
 }
 
 public class ClearReactiveSubSystemSpy : ReactiveSubSystemSpy, IClearReactiveSystem {
-    public ClearReactiveSubSystemSpy(IMatcher matcher, GroupEventType eventType) :
-        base(matcher, eventType) {
+    public ClearReactiveSubSystemSpy(EntityCollector collector) :
+        base(collector) {
     }
 }
 
@@ -26,8 +26,8 @@ public class ReactiveEnsureSubSystemSpy : ReactiveSubSystemSpy, IEnsureComponent
 
     readonly IMatcher _ensureComponent;
 
-    public ReactiveEnsureSubSystemSpy(IMatcher matcher, GroupEventType eventType, IMatcher ensureComponent) :
-        base(matcher, eventType) {
+    public ReactiveEnsureSubSystemSpy(EntityCollector collector, IMatcher ensureComponent) :
+        base(collector) {
         _ensureComponent = ensureComponent;
     }
 }
@@ -38,8 +38,8 @@ public class ReactiveExcludeSubSystemSpy : ReactiveSubSystemSpy, IExcludeCompone
 
     readonly IMatcher _excludeComponent;
 
-    public ReactiveExcludeSubSystemSpy(IMatcher matcher, GroupEventType eventType, IMatcher excludeComponent) :
-        base(matcher, eventType) {
+    public ReactiveExcludeSubSystemSpy(EntityCollector collector, IMatcher excludeComponent) :
+        base(collector) {
         _excludeComponent = excludeComponent;
     }
 }
@@ -52,8 +52,8 @@ public class ReactiveEnsureExcludeSubSystemSpy : ReactiveSubSystemSpy, IEnsureCo
     readonly IMatcher _ensureComponent;
     readonly IMatcher _excludeComponent;
 
-    public ReactiveEnsureExcludeSubSystemSpy(IMatcher matcher, GroupEventType eventType, IMatcher ensureComponent, IMatcher excludeComponent) :
-        base(matcher, eventType) {
+    public ReactiveEnsureExcludeSubSystemSpy(EntityCollector collector, IMatcher ensureComponent, IMatcher excludeComponent) :
+        base(collector) {
         _ensureComponent = ensureComponent;
         _excludeComponent = excludeComponent;
     }

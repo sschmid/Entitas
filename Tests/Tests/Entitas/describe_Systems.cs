@@ -3,20 +3,20 @@ using Entitas;
 
 class describe_Systems : nspec {
 
-    static ReactiveSystem createReactiveSystem(Pool pool) {
-        var subSystem = new ReactiveSubSystemSpy(Matcher.AllOf(CID.ComponentA), GroupEventType.OnEntityAdded);
-        var reactiveSystem = new ReactiveSystem(pool, subSystem);
-        pool.CreateEntity().AddComponentA();
+    static ReactiveSystem createReactiveSystem(Pools pools) {
+        var subSystem = new ReactiveSubSystemSpy(pools.test.CreateEntityCollector(Matcher.AllOf(CID.ComponentA)));
+        var reactiveSystem = new ReactiveSystem(subSystem, pools);
+        pools.test.CreateEntity().AddComponentA();
 
         return reactiveSystem;
     }
 
     void when_systems() {
 
-        Pool pool = null;
+        Pools pools = null;
 
         before = () => {
-            pool = new Pool(10);
+            pools = new Pools { test = new Pool(10) };
         };
 
         context["fixtures"] = () => {
@@ -70,7 +70,7 @@ class describe_Systems : nspec {
             };
 
             it["executes ReactiveSystemSpy"] = () => {
-                var system = createReactiveSystem(pool);
+                var system = createReactiveSystem(pools);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
 
                 system.Execute();
@@ -105,6 +105,23 @@ class describe_Systems : nspec {
                 system.didExecute.should_be(1);
             };
 
+            it["wraps IReactiveSystem in a ReactiveSystem"] = () => {
+                var system = new ReactiveSubSystemSpy(pools.test.CreateEntityCollector(Matcher.AllOf(CID.ComponentA)));
+                systems.Add(system, pools);
+                pools.test.CreateEntity().AddComponentA();
+                systems.Execute();
+                system.didExecute.should_be(1);
+            };
+
+            it["adds ReactiveSystem"] = () => {
+                var subSystem = new ReactiveSubSystemSpy(pools.test.CreateEntityCollector(Matcher.AllOf(CID.ComponentA)));
+                var system = new ReactiveSystem(subSystem, pools);
+                systems.Add(system, pools);
+                pools.test.CreateEntity().AddComponentA();
+                systems.Execute();
+                subSystem.didExecute.should_be(1);
+            };
+
             it["cleans up ICleanupSystem"] = () => {
                 var system = new CleanupSystemSpy();
                 systems.Add(system);
@@ -114,7 +131,7 @@ class describe_Systems : nspec {
 
             it["initializes, executes, cleans up and tears down InitializeExecuteCleanupTearDownSystemSpy"] = () => {
                 var system = new InitializeExecuteCleanupTearDownSystemSpy();
-                systems.Add(system);
+                systems.Add(system, pools);
 
                 system.didInitialize.should_be(0);
                 systems.Initialize();
@@ -134,7 +151,7 @@ class describe_Systems : nspec {
             };
 
             it["initializes, executes, cleans up and tears down ReactiveSystem"] = () => {
-                var system = createReactiveSystem(pool);
+                var system = createReactiveSystem(pools);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
 
                 systems.Add(system);
@@ -159,7 +176,7 @@ class describe_Systems : nspec {
 
 
             it["initializes, executes, cleans up and tears down systems recursively"] = () => {
-                var system = createReactiveSystem(pool);
+                var system = createReactiveSystem(pools);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
 
                 systems.Add(system);
@@ -186,7 +203,7 @@ class describe_Systems : nspec {
             };
 
             it["clears reactive systems"] = () => {
-                var system = createReactiveSystem(pool);
+                var system = createReactiveSystem(pools);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
 
                 systems.Add(system);
@@ -200,7 +217,7 @@ class describe_Systems : nspec {
             };
 
             it["clears reactive systems recursively"] = () => {
-                var system = createReactiveSystem(pool);
+                var system = createReactiveSystem(pools);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
                 systems.Add(system);
 
@@ -216,7 +233,7 @@ class describe_Systems : nspec {
             };
 
             it["deactivates reactive systems"] = () => {
-                var system = createReactiveSystem(pool);
+                var system = createReactiveSystem(pools);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
 
                 systems.Add(system);
@@ -230,7 +247,7 @@ class describe_Systems : nspec {
             };
 
             it["deactivates reactive systems recursively"] = () => {
-                var system = createReactiveSystem(pool);
+                var system = createReactiveSystem(pools);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
                 systems.Add(system);
 
@@ -246,7 +263,7 @@ class describe_Systems : nspec {
             };
 
             it["activates reactive systems"] = () => {
-                var system = createReactiveSystem(pool);
+                var system = createReactiveSystem(pools);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
 
                 systems.Add(system);
@@ -259,14 +276,14 @@ class describe_Systems : nspec {
                 systems.Execute();
                 spy.didExecute.should_be(0);
 
-                pool.CreateEntity().AddComponentA();
+                pools.test.CreateEntity().AddComponentA();
                 systems.Execute();
 
                 spy.didExecute.should_be(1);
             };
 
             it["activates reactive systems recursively"] = () => {
-                var system = createReactiveSystem(pool);
+                var system = createReactiveSystem(pools);
                 var spy = (ReactiveSubSystemSpy)system.subsystem;
                 systems.Add(system);
 
@@ -281,7 +298,7 @@ class describe_Systems : nspec {
                 parentSystems.Execute();
                 spy.didExecute.should_be(0);
 
-                pool.CreateEntity().AddComponentA();
+                pools.test.CreateEntity().AddComponentA();
                 systems.Execute();
 
                 spy.didExecute.should_be(1);

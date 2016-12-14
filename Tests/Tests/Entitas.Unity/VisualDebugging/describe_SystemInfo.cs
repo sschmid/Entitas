@@ -64,23 +64,10 @@ class describe_SystemInfo : nspec {
         };
 
         it["creates systemInfo for reactive system"] = () => {
-            var system = new ReactiveSystem(new Pool(1), new TestReactiveSystem());
+            var system = new ReactiveSystem(new TestReactiveSystem(), new Pools { test = new Pool(1) });
             var info = new SystemInfo(system);
 
             info.systemName.should_be("TestReactive");
-
-            info.isInitializeSystems.should_be_false();
-            info.isExecuteSystems.should_be_false();
-            info.isCleanupSystems.should_be_false();
-            info.isTearDownSystems.should_be_false();
-            info.isReactiveSystems.should_be_true();
-        };
-
-        it["creates systemInfo for multi reactive system"] = () => {
-            var system = new ReactiveSystem(new Pool(5), new TestMultiReactiveSystem());
-            var info = new SystemInfo(system);
-
-            info.systemName.should_be("TestMultiReactive");
 
             info.isInitializeSystems.should_be_false();
             info.isExecuteSystems.should_be_false();

@@ -93,7 +93,6 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\UserComponent.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestInitializeSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestExecuteSystem.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestMultiReactiveSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestReactiveSystem.cs" />
     <Compile Include="..\Entitas\Entitas\EntitasException.cs">
       <Link>Linked Libraries\Entitas\EntitasException.cs</Link>
@@ -167,9 +166,6 @@
     <Compile Include="..\Entitas\Entitas\Extensions\GroupExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\GroupExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\IMatcherExtension.cs">
-      <Link>Linked Libraries\Entitas\Extensions\IMatcherExtension.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\PoolExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\PoolExtension.cs</Link>
     </Compile>
@@ -208,9 +204,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\MatcherToString.cs">
       <Link>Linked Libraries\Entitas\Matcher\MatcherToString.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\TriggerOnEvent.cs">
-      <Link>Linked Libraries\Entitas\Matcher\TriggerOnEvent.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\Fixtures\AnotherComponentInterface.cs" />
     <Compile Include="..\Entitas\Entitas\Serialization\PublicMemberInfo.cs">
@@ -336,10 +329,8 @@
     <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\TearDownSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ExecuteSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\EntityCollectorSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteCleanupTearDownSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\MultiReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpyBase.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_BlueprintsGenerator.cs" />
@@ -369,6 +360,7 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomePoolComponentIds.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestCleanupSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestTearDownSystem.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Pools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
