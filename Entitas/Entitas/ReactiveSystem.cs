@@ -18,8 +18,6 @@ namespace Entitas {
 
         readonly IReactiveSystem _subsystem;
         readonly EntityCollector _collector;
-        readonly IMatcher _ensureComponents;
-        readonly IMatcher _excludeComponents;
         readonly Func<Entity, bool> _filter;
         readonly bool _clearAfterExecute;
         readonly List<Entity> _buffer;
@@ -35,14 +33,7 @@ namespace Entitas {
 
         ReactiveSystem(IReactiveSystem subSystem, EntityCollector collector) {
             _subsystem = subSystem;
-            var ensureComponents = subSystem as IEnsureComponents;
-            if(ensureComponents != null) {
-                _ensureComponents = ensureComponents.ensureComponents;
-            }
-            var excludeComponents = subSystem as IExcludeComponents;
-            if(excludeComponents != null) {
-                _excludeComponents = excludeComponents.excludeComponents;
-            }
+
             var filterEntities = subSystem as IFilterEntities;
             if(filterEntities != null) {
                 _filter = filterEntities.filter;
@@ -78,33 +69,9 @@ namespace Entitas {
         /// if there are any. Otherwise it will not call subsystem.Execute().
         public void Execute() {
             if(_collector.collectedEntities.Count != 0) {
-                if(_ensureComponents != null) {
-                    if(_excludeComponents != null) {
-                        foreach(var e in _collector.collectedEntities) {
-                            if(_ensureComponents.Matches(e) &&
-                               !_excludeComponents.Matches(e) &&
-                               (_filter == null || _filter(e))) {
-                                _buffer.Add(e.Retain(this));
-                            }
-                        }
-                    } else {
-                        foreach(var e in _collector.collectedEntities) {
-                            if(_ensureComponents.Matches(e) && (_filter == null || _filter(e))) {
-                                _buffer.Add(e.Retain(this));
-                            }
-                        }
-                    }
-                } else if(_excludeComponents != null) {
-                    foreach(var e in _collector.collectedEntities) {
-                        if(!_excludeComponents.Matches(e) && (_filter == null || _filter(e))) {
-                            _buffer.Add(e.Retain(this));
-                        }
-                    }
-                } else {
-                    foreach(var e in _collector.collectedEntities) {
-                        if(_filter == null || _filter(e)) {
-                            _buffer.Add(e.Retain(this));
-                        }
+                foreach(var e in _collector.collectedEntities) {
+                    if(_filter == null || _filter(e)) {
+                        _buffer.Add(e.Retain(this));
                     }
                 }
 

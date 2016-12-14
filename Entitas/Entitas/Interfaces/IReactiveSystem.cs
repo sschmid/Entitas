@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -10,25 +9,6 @@ namespace Entitas {
     public interface IReactiveSystem : ISystem {
         EntityCollector GetTrigger(Pools pools);
         void Execute(List<Entity> entities);
-    }
-
-    /// Implement this interface in combination with IReactiveSystem.
-    /// It will ensure that all entities will match the specified matcher.
-    /// This is useful when a component triggered the reactive system, but once
-    /// the system gets executed the component already has been removed.
-    /// Implementing IEnsureComponents can filter these enities.
-    [Obsolete("Since 0.36.0. It's recommended to use IFilterEntities.")]
-    public interface IEnsureComponents {
-        IMatcher ensureComponents { get; }
-    }
-
-    /// Implement this interface in combination with IReactiveSystem.
-    /// It will exclude all entities which match the specified matcher.
-    /// To exclude multiple components use
-    /// Matcher.AnyOf(ComponentX, ComponentY, ComponentZ).
-    [Obsolete("Since 0.36.0. It's recommended to use IFilterEntities.")]
-    public interface IExcludeComponents {
-        IMatcher excludeComponents { get; }
     }
 
     /// Implement this interface in combination with IReactiveSystem.
