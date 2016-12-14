@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -23,6 +24,7 @@ namespace Entitas {
         readonly EntityCollector _collector;
         readonly IMatcher _ensureComponents;
         readonly IMatcher _excludeComponents;
+        readonly Func<Entity, bool> _filter;
         readonly bool _clearAfterExecute;
         readonly List<Entity> _buffer;
         string _toStringCache;
@@ -56,6 +58,10 @@ namespace Entitas {
             var excludeComponents = subSystem as IExcludeComponents;
             if(excludeComponents != null) {
                 _excludeComponents = excludeComponents.excludeComponents;
+            }
+            var filterEntities = subSystem as IFilterEntities;
+            if(filterEntities != null) {
+                _filter = filterEntities.filter;
             }
 
             _clearAfterExecute = (subSystem as IClearReactiveSystem) != null;
@@ -106,26 +112,29 @@ namespace Entitas {
                     if(_excludeComponents != null) {
                         foreach(var e in _collector.collectedEntities) {
                             if(_ensureComponents.Matches(e) &&
-                               !_excludeComponents.Matches(e)) {
+                               !_excludeComponents.Matches(e) &&
+                               (_filter == null || _filter(e))) {
                                 _buffer.Add(e.Retain(this));
                             }
                         }
                     } else {
                         foreach(var e in _collector.collectedEntities) {
-                            if(_ensureComponents.Matches(e)) {
+                            if(_ensureComponents.Matches(e) && (_filter == null || _filter(e))) {
                                 _buffer.Add(e.Retain(this));
                             }
                         }
                     }
                 } else if(_excludeComponents != null) {
                     foreach(var e in _collector.collectedEntities) {
-                        if(!_excludeComponents.Matches(e)) {
+                        if(!_excludeComponents.Matches(e) && (_filter == null || _filter(e))) {
                             _buffer.Add(e.Retain(this));
                         }
                     }
                 } else {
                     foreach(var e in _collector.collectedEntities) {
-                        _buffer.Add(e.Retain(this));
+                        if(_filter == null || _filter(e)) {
+                            _buffer.Add(e.Retain(this));
+                        }
                     }
                 }
 
