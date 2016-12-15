@@ -67,7 +67,7 @@ namespace Entitas {
 
         public override string ToString() {
             if(_toStringCache == null) {
-                _toStringCache = "ReactiveSystem(" + this + ")";
+                _toStringCache = "ReactiveSystem(" + GetType().Name + ")";
             }
 
             return _toStringCache;
