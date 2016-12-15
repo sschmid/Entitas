@@ -85,7 +85,6 @@
     <Compile Include="Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs" />
     <Compile Include="Entitas\Pools.cs" />
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
-    <Compile Include="Entitas\CodeGenerator\Generators\OldPoolsGenerator.cs" />
     <Compile Include="Entitas\Caching\ObjectCache.cs" />
     <Compile Include="Entitas\Caching\ObjectPool.cs" />
     <Compile Include="Entitas\Caching\EntitasCache.cs" />

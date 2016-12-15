@@ -81,30 +81,19 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
         static Pool[] findAllPools() {
 
-            // Use reflection because there is no generated Pools.cs when you create a new emtpy project.
+            const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
+            var allPoolsProperty = typeof(Pools).GetProperty("allPools", bindingFlags);
+            if(allPoolsProperty != null) {
+                var poolsType = typeof(Pools);
+                var setAllPoolsMethod = poolsType.GetMethod("SetAllPools", bindingFlags);
+                if(setAllPoolsMethod != null) {
+                    var pools = new Pools();
+                    setAllPoolsMethod.Invoke(pools, null);
+                    var allPoolsGetter = poolsType.GetProperty("allPools", bindingFlags);
 
-            var oldPoolsType = Assembly.GetAssembly(typeof(Entity)).GetTypes().SingleOrDefault(type =>
-                type.FullName == "Pools" // Obsolete, last gen PoolsGenerator
-            );
-
-            if(oldPoolsType != null) {
-                var allPoolsProperty = oldPoolsType.GetProperty("allPools", BindingFlags.Public | BindingFlags.Static);
-                return (Pool[])allPoolsProperty.GetValue(oldPoolsType, null);
-            } else {
-                const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
-                var allPoolsProperty = typeof(Pools).GetProperty("allPools", bindingFlags);
-                if(allPoolsProperty != null) {
-                    var poolsType = typeof(Pools);
-                    var setAllPoolsMethod = poolsType.GetMethod("SetAllPools", bindingFlags);
-                    if(setAllPoolsMethod != null) {
-                        var pools = new Pools();
-                        setAllPoolsMethod.Invoke(pools, null);
-                        var allPoolsGetter = poolsType.GetProperty("allPools", bindingFlags);
-
-                        return (Pool[])allPoolsGetter.GetValue(pools, null);
-                    }
+                    return (Pool[])allPoolsGetter.GetValue(pools, null);
                 }
-			}
+            }
 
             return new Pool[0];
         }
