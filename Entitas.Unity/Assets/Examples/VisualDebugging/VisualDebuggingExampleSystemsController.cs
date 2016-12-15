@@ -4,28 +4,37 @@ using Entitas.Unity.VisualDebugging;
 
 public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
+	Pools _pools;
     Systems _systems;
 
-    Pool _pool;
-
     void Start() {
-        _pool = new Pool(VisualDebuggingComponentIds.TotalComponents, 0, new PoolMetaData("Systems Pool", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
+        _pools = new Pools();
+        _pools.visualDebugging = new Pool(
+            VisualDebuggingComponentIds.TotalComponents, 0,
+            new PoolMetaData(
+                "Systems Pool",
+                VisualDebuggingComponentIds.componentNames,
+                VisualDebuggingComponentIds.componentTypes
+            )
+        );
+
         #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-        new PoolObserver(_pool);
+        new PoolObserver(_pools.visualDebugging);
         #endif
+
         _systems = createNestedSystems();
 
-        // Test call
+        //// Test call
         _systems.Initialize();
         _systems.Execute();
         _systems.Cleanup();
         _systems.TearDown();
 
-        _pool.CreateEntity().AddMyString("");
+        _pools.visualDebugging.CreateEntity().AddMyString("");
     }
 
     void Update() {
-        _pool.GetGroup(VisualDebuggingMatcher.MyString).GetSingleEntity()
+        _pools.visualDebugging.GetGroup(VisualDebuggingMatcher.MyString).GetSingleEntity()
              .ReplaceMyString(Random.value.ToString());
 
         _systems.Execute();
@@ -34,11 +43,11 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
     Systems createAllSystemCombinations() {
         return new Feature("All System Combinations")
-            .Add(_pool.CreateSystem(new SomeInitializeSystem()))
-            .Add(_pool.CreateSystem(new SomeExecuteSystem()))
-            .Add(_pool.CreateSystem(new SomeReactiveSystem()))
-            .Add(_pool.CreateSystem(new SomeInitializeExecuteSystem()))
-            .Add(_pool.CreateSystem(new SomeInitializeReactiveSystem()));
+            .Add(new SomeInitializeSystem())
+            .Add(new SomeExecuteSystem())
+            .Add(new SomeReactiveSystem(_pools))
+            .Add(new SomeInitializeExecuteSystem())
+            .Add(new SomeInitializeReactiveSystem(_pools));
     }
 
     Systems createSubSystems() {
@@ -53,7 +62,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
     }
 
     Systems createSameInstance() {
-        var system = _pool.CreateSystem(new RandomDurationSystem());
+        var system = new RandomDurationSystem();
         return new Feature("Same System Instances")
             .Add(system)
             .Add(system)
@@ -87,17 +96,17 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
     Systems createSomeSystems() {
         return new Feature("Some Systems")
-            .Add(_pool.CreateSystem(new SlowInitializeSystem()))
-            .Add(_pool.CreateSystem(new SlowInitializeExecuteSystem()))
-            .Add(_pool.CreateSystem(new FastSystem()))
-            .Add(_pool.CreateSystem(new SlowSystem()))
-            .Add(_pool.CreateSystem(new RandomDurationSystem()))
-            .Add(_pool.CreateSystem(new AReactiveSystem()))
+            .Add(new SlowInitializeSystem())
+            .Add(new SlowInitializeExecuteSystem())
+            .Add(new FastSystem())
+            .Add(new SlowSystem())
+            .Add(new RandomDurationSystem())
+            .Add(new AReactiveSystem(_pools))
 
-            .Add(_pool.CreateSystem(new RandomValueSystem()))
-            .Add(_pool.CreateSystem(new ProcessRandomValueSystem()))
-            .Add(_pool.CreateSystem(new CleanupSystem()))
-            .Add(_pool.CreateSystem(new TearDownSystem()))
-            .Add(_pool.CreateSystem(new MixedSystem()));
+            .Add(new RandomValueSystem(_pools))
+            .Add(new ProcessRandomValueSystem(_pools))
+            .Add(new CleanupSystem())
+            .Add(new TearDownSystem())
+            .Add(new MixedSystem());
     }
 }

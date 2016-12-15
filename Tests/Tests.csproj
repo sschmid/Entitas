@@ -175,17 +175,8 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
       <Link>Linked Libraries\Entitas\Interfaces\IComponent.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IExecuteSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IExecuteSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IInitializeSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IInitializeSystem.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
       <Link>Linked Libraries\Entitas\Interfaces\IMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
       <Link>Linked Libraries\Entitas\Interfaces\ISystem.cs</Link>
@@ -310,12 +301,6 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MultiplePoolAndDefaultPoolComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeStructComponentGeneratedExtension.cs" />
-    <Compile Include="..\Entitas\Entitas\Interfaces\ICleanupSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\ICleanupSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\ITearDownSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\ITearDownSystem.cs</Link>
-    </Compile>
     <Compile Include="Tests\Entitas\describe_Pools.cs" />
     <Compile Include="..\Entitas\Entitas\Pools.cs">
       <Link>Linked Libraries\Entitas\Pools.cs</Link>
@@ -329,10 +314,8 @@
     <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\TearDownSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ExecuteSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeExecuteCleanupTearDownSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSubSystemSpyBase.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSystemSpy.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_BlueprintsGenerator.cs" />
     <Compile Include="Tests\Entitas\Caching\describe_ObjectCache.cs" />
     <Compile Include="Tests\Entitas\Caching\describe_ObjectPool.cs" />

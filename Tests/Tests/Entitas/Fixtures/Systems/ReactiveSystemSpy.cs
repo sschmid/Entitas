@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Entitas;
 
-public interface IReactiveSubSystemSpy {
+public interface IReactiveSystemSpy {
     int didInitialize { get; }
     int didExecute { get; }
     int didCleanup { get; }
@@ -10,7 +10,7 @@ public interface IReactiveSubSystemSpy {
     Entity[] entities { get; }
 }
 
-public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IReactiveSystem, IInitializeSystem, ICleanupSystem, ITearDownSystem {
+public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem {
 
     public int didInitialize { get { return _didInitialize; } }
     public int didExecute { get { return _didExecute; } }
@@ -26,13 +26,24 @@ public abstract class ReactiveSubSystemSpyBase : IReactiveSubSystemSpy, IReactiv
     protected int _didTearDown;
     protected Entity[] _entities;
 
-    public abstract EntityCollector GetTrigger(Pools pools);
+    readonly Func<Entity, bool> _filter;
+
+    public ReactiveSystemSpy(EntityCollector collector) : base(collector) {
+    }
+
+    public ReactiveSystemSpy(EntityCollector collector, Func<Entity, bool> filter) : base(collector) {
+        _filter = filter;
+    }
 
     public void Initialize() {
         _didInitialize += 1;
     }
 
-    public void Execute(List<Entity> entities) {
+    protected override bool Filter(Entity entity) {
+        return _filter == null || _filter(entity);
+    }
+
+    public override void Execute(List<Entity> entities) {
         _didExecute += 1;
 
         if(entities != null) {

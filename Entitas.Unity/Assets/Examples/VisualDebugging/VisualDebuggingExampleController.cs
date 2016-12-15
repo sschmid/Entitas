@@ -14,8 +14,6 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         createTestEntityWithNullValues(pool);
 
         createTestEntityError(pool);
-
-        pool.CreateSystem(new AReactiveSystem());
     }
 
     void createTestGroups(Pool pool) {

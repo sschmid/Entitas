@@ -7,26 +7,9 @@ namespace Entitas {
             return pool.GetGroup(matcher).GetEntities();
         }
 
-        public static EntityCollector CreateEntityCollector(this Pool pool, IMatcher matcher, GroupEventType eventType = GroupEventType.OnEntityAdded) {
+        /// Creates an EntityCollector.
+        public static EntityCollector CreateCollector(this Pool pool, IMatcher matcher, GroupEventType eventType = GroupEventType.OnEntityAdded) {
             return new EntityCollector(pool.GetGroup(matcher), eventType);
-        }
-
-        /// Creates an EntityCollector which observes all specified pools.
-        /// This is useful when you want to create an EntityCollector
-        /// for multiple pools which can be used with IReactiveSystem.
-        public static EntityCollector CreateEntityCollector(
-            this Pool[] pools,
-            IMatcher matcher,
-            GroupEventType eventType = GroupEventType.OnEntityAdded) {
-            var groups = new Group[pools.Length];
-            var eventTypes = new GroupEventType[pools.Length];
-
-            for (int i = 0; i < pools.Length; i++) {
-                groups[i] = pools[i].GetGroup(matcher);
-                eventTypes[i] = eventType;
-            }
-
-            return new EntityCollector(groups, eventTypes);
         }
 
         /// Creates a new entity and adds copies of all

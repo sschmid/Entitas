@@ -36,15 +36,12 @@
     <Compile Include="Entitas\Group.cs" />
     <Compile Include="Entitas\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
-    <Compile Include="Entitas\Interfaces\IExecuteSystem.cs" />
     <Compile Include="Entitas\Interfaces\ISystem.cs" />
     <Compile Include="Entitas\Pool.cs" />
     <Compile Include="Entitas\Extensions\PoolExtension.cs" />
     <Compile Include="Entitas\EntityCollector.cs" />
     <Compile Include="Entitas\Extensions\GroupExtension.cs" />
-    <Compile Include="Entitas\Interfaces\IReactiveSystem.cs" />
     <Compile Include="Entitas\ReactiveSystem.cs" />
-    <Compile Include="Entitas\Interfaces\IInitializeSystem.cs" />
     <Compile Include="Entitas\Systems.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
@@ -87,8 +84,6 @@
     <Compile Include="Entitas\EntityIndex.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs" />
     <Compile Include="Entitas\Pools.cs" />
-    <Compile Include="Entitas\Interfaces\ICleanupSystem.cs" />
-    <Compile Include="Entitas\Interfaces\ITearDownSystem.cs" />
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\OldPoolsGenerator.cs" />
     <Compile Include="Entitas\Caching\ObjectCache.cs" />

@@ -1,12 +1,12 @@
 using Entitas;
 using UnityEngine;
 
-public class RandomValueSystem : IExecuteSystem, ISetPool {
+public class RandomValueSystem : IExecuteSystem {
 
-    Pool _pool;
+    readonly Pool _pool;
 
-    public void SetPool(Pool pool) {
-        _pool = pool;
+    public RandomValueSystem(Pools pools) {
+        _pool = pools.visualDebugging;
     }
 
     public void Execute() {

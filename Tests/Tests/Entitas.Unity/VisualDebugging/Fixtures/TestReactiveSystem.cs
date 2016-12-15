@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using Entitas;
 
-public class TestReactiveSystem : IReactiveSystem {
+public class TestReactiveSystem : ReactiveSystem {
 
-    public EntityCollector GetTrigger(Pools pools) {
-        return pools.test.CreateEntityCollector(Matcher.AllOf(0));
+    public TestReactiveSystem(Pools pools) : base(
+        pools.test.CreateCollector(Matcher.AllOf(0))
+    ) { }
+
+    protected override bool Filter(Entity entity) {
+        return true;
     }
 
-    public void Execute(List<Entity> entities) {
+    public override void Execute(List<Entity> entities) {
     }
 }

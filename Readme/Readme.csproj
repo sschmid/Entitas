@@ -140,17 +140,8 @@
     <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
       <Link>Linked Libraries\Entitas\Interfaces\IComponent.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IExecuteSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IExecuteSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IInitializeSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IInitializeSystem.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
       <Link>Linked Libraries\Entitas\Interfaces\IMatcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IReactiveSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IReactiveSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
       <Link>Linked Libraries\Entitas\Interfaces\ISystem.cs</Link>
@@ -205,12 +196,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\ICleanupSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\ICleanupSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\ITearDownSystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\ITearDownSystem.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Pools.cs">
       <Link>Linked Libraries\Entitas\Pools.cs</Link>

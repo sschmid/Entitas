@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Entitas;
+﻿using Entitas;
 
 public class MixedSystem : IInitializeSystem, IExecuteSystem, ICleanupSystem, ITearDownSystem {
  

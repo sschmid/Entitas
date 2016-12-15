@@ -1,17 +1,21 @@
 using System.Collections.Generic;
 using Entitas;
 
-public class ProcessRandomValueSystem : IReactiveSystem, ISetPool {
+public class ProcessRandomValueSystem : ReactiveSystem {
 
-    public TriggerOnEvent trigger { get { return VisualDebuggingMatcher.MyFloat.OnEntityAdded(); } }
+    readonly Pool _pool;
 
-    Pool _pool;
-
-    public void SetPool(Pool pool) {
-        _pool = pool;
+    public ProcessRandomValueSystem(Pools pools) : base(
+        pools.visualDebugging.CreateCollector(VisualDebuggingMatcher.MyFloat))
+    {
+        _pool = pools.visualDebugging;
     }
 
-    public void Execute(List<Entity> entities) {
+    protected override bool Filter(Entity entity) {
+        return true;
+    }
+
+    public override void Execute(List<Entity> entities) {
         foreach(var e in entities) {
             _pool.DestroyEntity(e);
         }

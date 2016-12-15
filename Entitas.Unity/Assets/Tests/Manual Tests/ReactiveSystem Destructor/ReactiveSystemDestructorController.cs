@@ -8,7 +8,7 @@ public class ReactiveSystemDestructorController : MonoBehaviour {
 
     void Start() {
         var pool = Pools.sharedInstance.visualDebugging = Pools.CreateVisualDebuggingPool();
-        pool.CreateSystem(new TestReactiveSystem());
+        new TestReactiveSystem(Pools.sharedInstance);
         _initialEntity = pool.CreateEntity();
         _initialEntity.isTest = true;
         pool.DestroyEntity(_initialEntity);
