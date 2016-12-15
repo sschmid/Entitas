@@ -81,9 +81,9 @@ namespace Entitas.CodeGenerator {
             }
             foreach(var file in files) {
                 var fileName = directory + file.fileName + ".cs";
-                var fileContent = file.fileContent.Replace("\n", Environment.NewLine);
                 var header = string.Format(AUTO_GENERATED_HEADER_FORMAT, file.generatorName);
-                File.WriteAllText(fileName, header + fileContent);
+                var fileContent = (header + file.fileContent).Replace("\n", Environment.NewLine);
+                File.WriteAllText(fileName, fileContent);
             }
         }
     }
