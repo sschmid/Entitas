@@ -81,13 +81,16 @@
     <Compile Include="Entitas\Serialization\Configuration\EntitasPreferences.cs" />
     <Compile Include="Entitas\Serialization\Configuration\Properties.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs" />
-    <Compile Include="Entitas\EntityIndex.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs" />
     <Compile Include="Entitas\Pools.cs" />
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
     <Compile Include="Entitas\Caching\ObjectCache.cs" />
     <Compile Include="Entitas\Caching\ObjectPool.cs" />
     <Compile Include="Entitas\Caching\EntitasCache.cs" />
+    <Compile Include="Entitas\Index\EntityIndex.cs" />
+    <Compile Include="Entitas\Index\IEntityIndex.cs" />
+    <Compile Include="Entitas\Index\AbstractEntityIndex.cs" />
+    <Compile Include="Entitas\Index\PrimaryEntityIndex.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -104,5 +107,6 @@
     <Folder Include="Entitas\Serialization\Blueprints\" />
     <Folder Include="Entitas\Serialization\Configuration\" />
     <Folder Include="Entitas\Caching\" />
+    <Folder Include="Entitas\Index\" />
   </ItemGroup>
 </Project>
