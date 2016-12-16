@@ -191,9 +191,6 @@
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\SerializableMember.cs">
       <Link>Linked Libraries\Entitas\Serialization\Blueprints\SerializableMember.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Pools.cs">
       <Link>Linked Libraries\Entitas\Pools.cs</Link>
     </Compile>

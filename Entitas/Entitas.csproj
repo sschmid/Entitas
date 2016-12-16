@@ -81,7 +81,6 @@
     <Compile Include="Entitas\Serialization\Configuration\EntitasPreferences.cs" />
     <Compile Include="Entitas\Serialization\Configuration\Properties.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs" />
-    <Compile Include="Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs" />
     <Compile Include="Entitas\Pools.cs" />
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
     <Compile Include="Entitas\Caching\ObjectCache.cs" />
