@@ -191,12 +191,6 @@
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\SerializableMember.cs">
       <Link>Linked Libraries\Entitas\Serialization\Blueprints\SerializableMember.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityIndex.cs">
-      <Link>Linked Libraries\Entitas\EntityIndex.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Pools.cs">
       <Link>Linked Libraries\Entitas\Pools.cs</Link>
     </Compile>
@@ -211,6 +205,18 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Caching\ObjectPool.cs">
       <Link>Linked Libraries\Entitas\Caching\ObjectPool.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\AbstractEntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\AbstractEntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\EntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\EntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\IEntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\IEntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\PrimaryEntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\PrimaryEntityIndex.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Entitas.Unity.Serialization.Blueprints {
 
-    [CreateAssetMenu(menuName = "Entitas/Blueprints", fileName = "Assets/Blueprints.asset")]
+    [CreateAssetMenu(menuName = "Entitas/Blueprints", fileName = "Blueprints.asset")]
     public partial class Blueprints : ScriptableObject {
 
         public BinaryBlueprint[] blueprints;

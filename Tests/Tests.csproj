@@ -283,13 +283,6 @@
     <Compile Include="Tests\Entitas\Serialization\Configuration\describe_EntitasPreferencesConfig.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0320.cs" />
     <Compile Include="Tests\Entitas\describe_EntityIndex.cs" />
-    <Compile Include="..\Entitas\Entitas\EntityIndex.cs">
-      <Link>Linked Libraries\Entitas\EntityIndex.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\IndexKeyAttribute.cs</Link>
-    </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\IndexKeyComponent.cs" />
     <Compile Include="Tests\EntitasTest.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherPoolComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherComponentIds.cs" />
@@ -344,6 +337,19 @@
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestCleanupSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestTearDownSystem.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Pools.cs" />
+    <Compile Include="..\Entitas\Entitas\Index\AbstractEntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\AbstractEntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\EntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\EntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\IEntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\IEntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\PrimaryEntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\PrimaryEntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\SomeAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
