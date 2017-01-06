@@ -3,7 +3,7 @@ using Entitas.Serialization.Blueprints;
 
 public class PoolCreateBlueprint : IPerformanceTest {
     const int n = 100000;
-    Pool _pool;
+    Context _pool;
     Blueprint _blueprint;
 
     public void Before() {

@@ -2,7 +2,7 @@ using Entitas;
 
 public class PoolOnEntityReplaced : IPerformanceTest {
     const int n = 100000;
-    Pool _pool;
+    Context _pool;
     Entity _e;
 
     public void Before() {

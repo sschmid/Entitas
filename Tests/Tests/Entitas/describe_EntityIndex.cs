@@ -7,11 +7,11 @@ class describe_EntityIndex : nspec {
     void when_primary_index() {
 
         PrimaryEntityIndex<string> index = null;
-        Pool pool = null;
+        Context pool = null;
         Group group = null;
 
         before = () => {
-            pool = new Pool(CID.TotalComponents);
+            pool = new Context(CID.TotalComponents);
             group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
             index = new PrimaryEntityIndex<string>(group, (e, c) => {
                 var nameAge = c as NameAgeComponent;
@@ -128,11 +128,11 @@ class describe_EntityIndex : nspec {
     void when_index() {
 
         EntityIndex<string> index = null;
-        Pool pool = null;
+        Context pool = null;
         Group group = null;
 
         before = () => {
-            pool = new Pool(CID.TotalComponents);
+            pool = new Context(CID.TotalComponents);
             group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
             index = new EntityIndex<string>(group, (e, c) => {
                 var nameAge = c as NameAgeComponent;
@@ -239,11 +239,11 @@ class describe_EntityIndex : nspec {
 
         #pragma warning disable
         EntityIndex<string> index = null;
-        Pool pool = null;
+        Context pool = null;
         Group group = null;
 
         before = () => {
-            pool = new Pool(CID.TotalComponents);
+            pool = new Context(CID.TotalComponents);
         };
 
         it["gets last component that triggered adding entity to group"] = () => {

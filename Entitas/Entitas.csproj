@@ -37,7 +37,7 @@
     <Compile Include="Entitas\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
     <Compile Include="Entitas\Interfaces\ISystem.cs" />
-    <Compile Include="Entitas\Pool.cs" />
+    <Compile Include="Entitas\Context.cs" />
     <Compile Include="Entitas\Extensions\PoolExtension.cs" />
     <Compile Include="Entitas\EntityCollector.cs" />
     <Compile Include="Entitas\Extensions\GroupExtension.cs" />

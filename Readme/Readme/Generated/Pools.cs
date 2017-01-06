@@ -10,9 +10,9 @@ using Entitas;
 
 public static class Pools {
 
-    static Pool[] _allPools;
+    static Context[] _allPools;
 
-    public static Pool[] allPools {
+    public static Context[] allPools {
         get {
             if(_allPools == null) {
                 _allPools = new[] { pool };
@@ -22,12 +22,12 @@ public static class Pools {
         }
     }
 
-    static Pool _pool;
+    static Context _pool;
 
-    public static Pool pool {
+    public static Context pool {
         get {
             if(_pool == null) {
-                _pool = new Pool(ComponentIds.TotalComponents, 0, new PoolMetaData("Pool", ComponentIds.componentNames, ComponentIds.componentTypes));
+                _pool = new Context(ComponentIds.TotalComponents, 0, new PoolMetaData("Pool", ComponentIds.componentNames, ComponentIds.componentTypes));
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.gameObject);

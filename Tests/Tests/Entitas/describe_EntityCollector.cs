@@ -3,7 +3,7 @@ using NSpec;
 
 class describe_EntityCollector : nspec {
 
-    Pool _pool;
+    Context _pool;
 
     void when_created() {
 
@@ -13,7 +13,7 @@ class describe_EntityCollector : nspec {
         IMatcher matcherA = Matcher.AllOf(CID.ComponentA);
 
         before = () => {
-            _pool = new Pool(CID.TotalComponents);
+            _pool = new Context(CID.TotalComponents);
             groupA = _pool.GetGroup(matcherA);
         };
 

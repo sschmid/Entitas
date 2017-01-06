@@ -35,7 +35,7 @@ namespace Entitas {
         }
     }
 
-    public partial class Pool {
+    public partial class Context {
 
         public Entity otherPoolEntity { get { return GetGroup(OtherMatcher.OtherPool).GetSingleEntity(); } }
         public OtherPoolComponent otherPool { get { return otherPoolEntity.otherPool; } }

@@ -15,7 +15,7 @@ class describe_Systems : nspec {
         Pools pools = null;
 
         before = () => {
-            pools = new Pools { test = new Pool(10) };
+            pools = new Pools { test = new Context(10) };
         };
 
         context["fixtures"] = () => {

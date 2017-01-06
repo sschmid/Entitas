@@ -2,10 +2,10 @@ using Entitas;
 
 public class ObjectGetProperty : IPerformanceTest {
     const int n = 10000000;
-    Pool _pool;
+    Context _pool;
 
     public void Before() {
-        _pool = new Pool(1);
+        _pool = new Context(1);
     }
 
     public void Run() {

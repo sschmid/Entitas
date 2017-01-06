@@ -4,7 +4,7 @@ public class EntityIndexGetEntity : IPerformanceTest {
 
     const int n = 1000000;
 
-    Pool _pool;
+    Context _pool;
 
     PrimaryEntityIndex<string> _index;
 

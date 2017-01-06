@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class EntityReplaceComponent : IPerformanceTest {
     const int n = 1000000;
-    Pool _pool;
+    Context _pool;
     Entity _e;
 
     public void Before() {

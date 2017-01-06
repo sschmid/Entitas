@@ -5,10 +5,10 @@ class describe_Pool : nspec {
 
     void when_created() {
 
-        Pool pool = null;
+        Context pool = null;
 
         before = () => {
-            pool = new Pool(CID.TotalComponents);
+            pool = new Context(CID.TotalComponents);
         };
 
         it["increments creationIndex"] = () => {
@@ -17,7 +17,7 @@ class describe_Pool : nspec {
         };
 
         it["starts with given creationIndex"] = () => {
-            new Pool(CID.TotalComponents, 42, null).CreateEntity().creationIndex.should_be(42);
+            new Context(CID.TotalComponents, 42, null).CreateEntity().creationIndex.should_be(42);
         };
 
         it["has no entities when no entities were created"] = () => {
@@ -70,7 +70,7 @@ class describe_Pool : nspec {
                 var componentNames = new [] { "Health", "Position", "View" };
                 var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
                 metaData = new PoolMetaData("My Pool", componentNames, componentTypes);
-                pool = new Pool(componentNames.Length, 0, metaData);
+                pool = new Context(componentNames.Length, 0, metaData);
             };
 
             it["has custom PoolMetaData"] = () => {
@@ -82,7 +82,7 @@ class describe_Pool : nspec {
             };
 
             it["throws when componentNames is not same length as totalComponents"] = expect<PoolMetaDataException>(() => {
-                new Pool(metaData.componentNames.Length + 1, 0, metaData);
+                new Context(metaData.componentNames.Length + 1, 0, metaData);
             });
         };
 
@@ -538,7 +538,7 @@ class describe_Pool : nspec {
                 context["event timing"] = () => {
 
                     before = () => {
-                        pool = new Pool(CID.TotalComponents);
+                        pool = new Context(CID.TotalComponents);
                     };
 
                     it["dispatches group.OnEntityAdded events after all groups are updated"] = () => {
@@ -555,7 +555,7 @@ class describe_Pool : nspec {
                     };
 
                     it["dispatches group.OnEntityRemoved events after all groups are updated"] = () => {
-                        pool = new Pool(CID.TotalComponents);
+                        pool = new Context(CID.TotalComponents);
                         var groupB = pool.GetGroup(Matcher.AllOf(CID.ComponentB));
                         var groupAB = pool.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
 

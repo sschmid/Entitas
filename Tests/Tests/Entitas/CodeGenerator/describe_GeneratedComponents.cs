@@ -6,10 +6,10 @@ class describe_GeneratedComponents : nspec {
 
     void when_generated() {
 
-        Pool pool = null;
+        Context pool = null;
 
         before = () => {
-            pool = new Pool(ComponentIds.TotalComponents);
+            pool = new Context(ComponentIds.TotalComponents);
         };
 
         context["component without fields"] = () => {

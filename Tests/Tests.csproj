@@ -106,8 +106,8 @@
     <Compile Include="..\Entitas\Entitas\EntityCollector.cs">
       <Link>Linked Libraries\Entitas\EntityCollector.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Pool.cs">
-      <Link>Linked Libraries\Entitas\Pool.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Context.cs">
+      <Link>Linked Libraries\Entitas\Context.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\ReactiveSystem.cs">
       <Link>Linked Libraries\Entitas\ReactiveSystem.cs</Link>

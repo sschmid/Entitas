@@ -32,7 +32,7 @@ namespace Entitas {
         }
     }
 
-    public partial class Pool {
+    public partial class Context {
         public Entity userEntity { get { return GetGroup(Matcher.User).GetSingleEntity(); } }
 
         public UserComponent user { get { return userEntity.user; } }

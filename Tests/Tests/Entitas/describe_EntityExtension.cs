@@ -33,13 +33,13 @@ class describe_EntityExtension : nspec {
 
         context["when copying components"] = () => {
 
-            Pool pool = null;
+            Context pool = null;
             Entity entity = null;
             Entity target = null;
             NameAgeComponent nameAge = null;
 
             before = () => {
-                pool = new Pool(CID.TotalComponents);
+                pool = new Context(CID.TotalComponents);
                 entity = pool.CreateEntity();
                 target = pool.CreateEntity();
                 nameAge = new NameAgeComponent { name = "Max", age = 42 };

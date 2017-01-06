@@ -2,7 +2,7 @@ using Entitas;
 
 public class PoolGetEntities : IPerformanceTest {
     const int n = 100000;
-    Pool _pool;
+    Context _pool;
 
     public void Before() {
         _pool = Helper.CreatePool();

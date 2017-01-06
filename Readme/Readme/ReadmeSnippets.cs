@@ -21,7 +21,7 @@ namespace Readme {
         }
 
 
-        public static Entity CreateRedGem(this Pool pool, int x, int y) {
+        public static Entity CreateRedGem(this Context pool, int x, int y) {
             return pool.CreateEntity()
                        .IsGameBoardElement(true)
                        .IsMovable(true)
@@ -31,7 +31,7 @@ namespace Readme {
         }
 
 
-        static void moveSystem(Pool pool) {
+        static void moveSystem(Context pool) {
             var entities = pool.GetEntities(Matcher.AllOf(Matcher.Move, Matcher.Position));
             foreach(var entity in entities) {
                 var move = entity.move;
@@ -77,7 +77,7 @@ namespace Readme {
             }
         }
 
-        static void groupExample(Pool pool) {
+        static void groupExample(Context pool) {
             pool.GetGroup(Matcher.Position).GetEntities();
 
             // ----------------------------
@@ -87,7 +87,7 @@ namespace Readme {
             };
         }
 
-        static void entityCollectorExample(Pool pool) {
+        static void entityCollectorExample(Context pool) {
             var group = pool.GetGroup(Matcher.Position);
             var collector = group.CreateCollector(GroupEventType.OnEntityAdded);
 
@@ -112,7 +112,7 @@ namespace Readme {
         }
 
         #pragma warning disable
-        static void userComponent(Pool pool, UserComponent component) {
+        static void userComponent(Context pool, UserComponent component) {
             var e = pool.userEntity;
             var name = pool.user.name;
             var has = pool.hasUser;
@@ -128,7 +128,7 @@ namespace Readme {
             e.isMovable = false;
         }
 
-        static void animatingComponent(Pool pool) {
+        static void animatingComponent(Context pool) {
             var e = pool.animatingEntity;
             var isAnimating = pool.isAnimating;
             pool.isAnimating = true;

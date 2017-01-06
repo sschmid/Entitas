@@ -43,7 +43,7 @@ class describe_ReactiveSystem : nspec {
         ReactiveSystemSpy system = null;
 
         before = () => {
-            _pools = new Pools { test = new Pool(CID.TotalComponents) };
+            _pools = new Pools { test = new Context(CID.TotalComponents) };
         };
 
         context["OnEntityAdded"] = () => {
@@ -208,12 +208,12 @@ class describe_ReactiveSystem : nspec {
 
         context["multiple pools"] = () => {
 
-            Pool pool1 = null;
-            Pool pool2 = null;
+            Context pool1 = null;
+            Context pool2 = null;
 
             before = () => {
-                pool1 = new Pool(CID.TotalComponents);
-                pool2 = new Pool(CID.TotalComponents);
+                pool1 = new Context(CID.TotalComponents);
+                pool2 = new Context(CID.TotalComponents);
 
                 var groupA = pool1.GetGroup(Matcher.AllOf(CID.ComponentA));
                 var groupB = pool2.GetGroup(Matcher.AllOf(CID.ComponentB));

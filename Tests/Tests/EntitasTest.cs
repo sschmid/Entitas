@@ -3,7 +3,7 @@ using Entitas;
 
 class EntitasTest : nspec {
 
-    protected Pool _pool;
+    protected Context _pool;
     protected Entity _entity;
 
     protected Entity createEntity() {
