@@ -3,7 +3,7 @@ using Entitas;
 
 class describe_Systems : nspec {
 
-    static ReactiveSystemSpy createReactiveSystem(Pools pools) {
+    static ReactiveSystemSpy createReactiveSystem(Contexts pools) {
         var system = new ReactiveSystemSpy(pools.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
         pools.test.CreateEntity().AddComponentA();
 
@@ -12,10 +12,10 @@ class describe_Systems : nspec {
 
     void when_systems() {
 
-        Pools pools = null;
+        Contexts pools = null;
 
         before = () => {
-            pools = new Pools { test = new Context(10) };
+            pools = new Contexts { test = new Context(10) };
         };
 
         context["fixtures"] = () => {

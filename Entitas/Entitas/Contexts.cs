@@ -1,11 +1,11 @@
 namespace Entitas {
 
-    public partial class Pools {
+    public partial class Contexts {
 
-        public static Pools sharedInstance {
+        public static Contexts sharedInstance {
             get {
                 if(_sharedInstance == null) {
-                    _sharedInstance = new Pools();
+                    _sharedInstance = new Contexts();
                 }
 
                 return _sharedInstance;
@@ -13,7 +13,7 @@ namespace Entitas {
             set { _sharedInstance = value; }
         }
 
-        static Pools _sharedInstance;
+        static Contexts _sharedInstance;
 
         public static Context CreatePool(string poolName,
                                       int totalComponents,

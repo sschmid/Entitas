@@ -17,7 +17,7 @@ class describe_ReactiveSystem : nspec {
         }
     }
 
-    Pools _pools;
+    Contexts _pools;
 
     Entity createEntityAB() {
         return _pools.test.CreateEntity()
@@ -43,7 +43,7 @@ class describe_ReactiveSystem : nspec {
         ReactiveSystemSpy system = null;
 
         before = () => {
-            _pools = new Pools { test = new Context(CID.TotalComponents) };
+            _pools = new Contexts { test = new Context(CID.TotalComponents) };
         };
 
         context["OnEntityAdded"] = () => {

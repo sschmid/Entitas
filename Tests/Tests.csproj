@@ -295,8 +295,8 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeStructComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\describe_Pools.cs" />
-    <Compile Include="..\Entitas\Entitas\Pools.cs">
-      <Link>Linked Libraries\Entitas\Pools.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Contexts.cs">
+      <Link>Linked Libraries\Entitas\Contexts.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple pools\GComponent.cs" />
     <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">

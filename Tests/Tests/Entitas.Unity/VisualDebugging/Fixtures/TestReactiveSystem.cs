@@ -3,7 +3,7 @@ using Entitas;
 
 public class TestReactiveSystem : ReactiveSystem {
 
-    public TestReactiveSystem(Pools pools) : base(
+    public TestReactiveSystem(Contexts pools) : base(
         pools.test.CreateCollector(Matcher.AllOf(0))
     ) { }
 
