@@ -3,7 +3,7 @@ using NSpec;
 
 class describe_EntityCollector : nspec {
 
-    Context _pool;
+    Context _context;
 
     void when_created() {
 
@@ -13,8 +13,8 @@ class describe_EntityCollector : nspec {
         IMatcher matcherA = Matcher.AllOf(CID.ComponentA);
 
         before = () => {
-            _pool = new Context(CID.TotalComponents);
-            groupA = _pool.GetGroup(matcherA);
+            _context = new Context(CID.TotalComponents);
+            groupA = _context.GetGroup(matcherA);
         };
 
         context["when observing with eventType OnEntityAdded"] = () => {
@@ -103,20 +103,20 @@ class describe_EntityCollector : nspec {
                 it["retains entity even after destroy"] = () => {
                     var didExecute = 0;
                     e.OnEntityReleased += delegate { didExecute += 1; };
-                    _pool.DestroyEntity(e);
+                    _context.DestroyEntity(e);
                     e.retainCount.should_be(1);
                     didExecute.should_be(0);
                 };
                 
                 it["releases entity when clearing collected entities"] = () => {
-                    _pool.DestroyEntity(e);
+                    _context.DestroyEntity(e);
                     collectorA.ClearCollectedEntities();
                     e.retainCount.should_be(0);
                 };
 
                 it["retains entities only once"] = () => {
                     e.ReplaceComponentA(new ComponentA());
-                    _pool.DestroyEntity(e);
+                    _context.DestroyEntity(e);
                     e.retainCount.should_be(1);
                 };
             };
@@ -164,7 +164,7 @@ class describe_EntityCollector : nspec {
             Group groupB = null;
 
             before = () => {
-                groupB = _pool.GetGroup(Matcher.AllOf(CID.ComponentB));
+                groupB = _context.GetGroup(Matcher.AllOf(CID.ComponentB));
             };
 
             it["throws when group count != eventType count"] = expect<EntityCollectorException>(() => {
@@ -288,10 +288,10 @@ class describe_EntityCollector : nspec {
     }
 
     Entity createEA() {
-        return _pool.CreateEntity().AddComponentA();
+        return _context.CreateEntity().AddComponentA();
     }
 
     Entity createEB() {
-        return _pool.CreateEntity().AddComponentB();
+        return _context.CreateEntity().AddComponentB();
     }
 }

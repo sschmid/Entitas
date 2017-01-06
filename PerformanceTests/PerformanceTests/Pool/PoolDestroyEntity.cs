@@ -2,19 +2,19 @@ using Entitas;
 
 public class PoolDestroyEntity : IPerformanceTest {
     const int n = 100000;
-    Context _pool;
+    Context _context;
 
     public void Before() {
-        _pool = Helper.CreatePool();
+        _context = Helper.CreatePool();
         for (int i = 0; i < n; i++) {
-            _pool.CreateEntity();
+            _context.CreateEntity();
         }
     }
 
     public void Run() {
-        var entities = _pool.GetEntities();
+        var entities = _context.GetEntities();
         for (int i = 0; i < entities.Length; i++) {
-            _pool.DestroyEntity(entities[i]);
+            _context.DestroyEntity(entities[i]);
         }
     }
 }

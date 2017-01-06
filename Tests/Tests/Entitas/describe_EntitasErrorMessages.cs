@@ -24,7 +24,7 @@ class describe_EntitasErrorMessages : EntitasTest {
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
             var contextInfo = new ContextInfo("My Pool", componentNames, null);
-            _pool = new Context(componentNames.Length, 42, contextInfo);
+            _context = new Context(componentNames.Length, 42, contextInfo);
             _entity = createEntity();
         };
 
@@ -55,7 +55,7 @@ class describe_EntitasErrorMessages : EntitasTest {
             context["when not enabled"] = () => {
 
                 before = () => {
-                    _pool.DestroyEntity(_entity);
+                    _context.DestroyEntity(_entity);
                 };
 
                 it["add a component"] = () => printErrorMessage(() => _entity.AddComponentA());
@@ -97,8 +97,8 @@ class describe_EntitasErrorMessages : EntitasTest {
                 createEntityA();
                 createEntityA();
                 var matcher = createMatcherA();
-                matcher.componentNames = _pool.contextInfo.componentNames;
-                var group = _pool.GetGroup(matcher);
+                matcher.componentNames = _context.contextInfo.componentNames;
+                var group = _context.GetGroup(matcher);
                 group.GetSingleEntity();
             });
         };
@@ -123,26 +123,26 @@ class describe_EntitasErrorMessages : EntitasTest {
             });
 
             it["destroy entity which is not in pool"] = () => printErrorMessage(() => {
-                _pool.DestroyEntity(new Entity(0, null));
+                _context.DestroyEntity(new Entity(0, null));
             });
 
             it["destroy retained entities"] = () => printErrorMessage(() => {
                 createEntity().Retain(this);
-                _pool.DestroyAllEntities();
+                _context.DestroyAllEntities();
             });
 
             it["releases entity before destroy"] = () => printErrorMessage(() => {
-                _entity.Release(_pool);
+                _entity.Release(_context);
             });
 
             it["unknown entityIndex"] = () => printErrorMessage(() => {
-                _pool.GetEntityIndex("unknown");
+                _context.GetEntityIndex("unknown");
             });
 
             it["duplicate entityIndex"] = () => printErrorMessage(() => {
                 var index = new PrimaryEntityIndex<string>(getGroupA(), null);
-                _pool.AddEntityIndex("duplicate", index);
-                _pool.AddEntityIndex("duplicate", index);
+                _context.AddEntityIndex("duplicate", index);
+                _context.AddEntityIndex("duplicate", index);
             });
         };
 
@@ -188,8 +188,8 @@ class describe_EntitasErrorMessages : EntitasTest {
             it["multiple entities for primary key"] = () => printErrorMessage(() => {
                 createPrimaryIndex();
                 var nameAge = createNameAge();
-                _pool.CreateEntity().AddComponent(CID.ComponentA, nameAge);
-                _pool.CreateEntity().AddComponent(CID.ComponentA, nameAge);
+                _context.CreateEntity().AddComponent(CID.ComponentA, nameAge);
+                _context.CreateEntity().AddComponent(CID.ComponentA, nameAge);
             });
         };
     }

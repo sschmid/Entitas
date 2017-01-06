@@ -2,13 +2,13 @@ using Entitas;
 
 public class PoolOnEntityReplaced : IPerformanceTest {
     const int n = 100000;
-    Context _pool;
+    Context _context;
     Entity _e;
 
     public void Before() {
-        _pool = Helper.CreatePool();
-        _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
-        _e = _pool.CreateEntity();
+        _context = Helper.CreatePool();
+        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
+        _e = _context.CreateEntity();
         _e.AddComponent(CP.ComponentA, new ComponentA());
     }
 

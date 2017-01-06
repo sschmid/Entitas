@@ -22,19 +22,19 @@ public static class Pools {
         }
     }
 
-    static Context _pool;
+    static Context _context;
 
     public static Context pool {
         get {
-            if(_pool == null) {
-                _pool = new Context(ComponentIds.TotalComponents, 0, new ContextInfo("Pool", ComponentIds.componentNames, ComponentIds.componentTypes));
+            if(_context == null) {
+                _context = new Context(ComponentIds.TotalComponents, 0, new ContextInfo("Pool", ComponentIds.componentNames, ComponentIds.componentTypes));
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool);
+                var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_context);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.gameObject);
 #endif
             }
 
-            return _pool;
+            return _context;
         }
     }
 }

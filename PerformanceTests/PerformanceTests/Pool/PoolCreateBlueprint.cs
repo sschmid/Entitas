@@ -1,15 +1,15 @@
-﻿using Entitas;
+using Entitas;
 using Entitas.Serialization.Blueprints;
 
 public class PoolCreateBlueprint : IPerformanceTest {
     const int n = 100000;
-    Context _pool;
+    Context _context;
     Blueprint _blueprint;
 
     public void Before() {
-        _pool = Helper.CreatePool();
+        _context = Helper.CreatePool();
 
-        var e = _pool.CreateEntity();
+        var e = _context.CreateEntity();
         var component = new NameAgeComponent();
         component.name = "Max";
         component.age = 42;
@@ -20,7 +20,7 @@ public class PoolCreateBlueprint : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            _pool.CreateEntity().ApplyBlueprint(_blueprint);
+            _context.CreateEntity().ApplyBlueprint(_blueprint);
         }
     }
 }
