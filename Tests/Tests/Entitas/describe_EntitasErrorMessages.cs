@@ -23,8 +23,8 @@ class describe_EntitasErrorMessages : EntitasTest {
 
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
-            var metaData = new ContextInfo("My Pool", componentNames, null);
-            _pool = new Context(componentNames.Length, 42, metaData);
+            var contextInfo = new ContextInfo("My Pool", componentNames, null);
+            _pool = new Context(componentNames.Length, 42, contextInfo);
             _entity = createEntity();
         };
 
@@ -97,7 +97,7 @@ class describe_EntitasErrorMessages : EntitasTest {
                 createEntityA();
                 createEntityA();
                 var matcher = createMatcherA();
-                matcher.componentNames = _pool.metaData.componentNames;
+                matcher.componentNames = _pool.contextInfo.componentNames;
                 var group = _pool.GetGroup(matcher);
                 group.GetSingleEntity();
             });
@@ -116,10 +116,10 @@ class describe_EntitasErrorMessages : EntitasTest {
 
         context["Pool"] = () => {
 
-            it["wrong PoolMetaData componentNames count"] = () => printErrorMessage(() => {
+            it["wrong ContextInfo componentNames count"] = () => printErrorMessage(() => {
                 var componentNames = new [] { "Health", "Position", "View" };
-                var metaData = new ContextInfo("My Pool", componentNames, null);
-                new Context(1, 0, metaData);
+                var contextInfo = new ContextInfo("My Pool", componentNames, null);
+                new Context(1, 0, contextInfo);
             });
 
             it["destroy entity which is not in pool"] = () => printErrorMessage(() => {

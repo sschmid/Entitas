@@ -62,10 +62,10 @@ namespace Entitas {
             get { return _componentPools; }
         }
 
-        /// The poolMetaData is set by the pool which created the entity and
+        /// The contextInfo is set by the pool which created the entity and
         /// contains information about the pool.
         /// It's used to provide better error messages.
-        public ContextInfo poolMetaData { get { return _poolMetaData; } }
+        public ContextInfo contextInfo { get { return _contextInfo; } }
 
         internal int _creationIndex;
         internal bool _isEnabled = true;
@@ -73,7 +73,7 @@ namespace Entitas {
         readonly int _totalComponents;
         readonly IComponent[] _components;
         readonly Stack<IComponent>[] _componentPools;
-        readonly ContextInfo _poolMetaData;
+        readonly ContextInfo _contextInfo;
 
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
@@ -84,13 +84,13 @@ namespace Entitas {
         /// pool.DestroyEntity() to destroy it.
         public Entity(int totalComponents,
                       Stack<IComponent>[] componentPools,
-                      ContextInfo poolMetaData = null) {
+                      ContextInfo contextInfo = null) {
             _totalComponents = totalComponents;
             _components = new IComponent[totalComponents];
             _componentPools = componentPools;
 
-            if(poolMetaData != null) {
-                _poolMetaData = poolMetaData;
+            if(contextInfo != null) {
+                _contextInfo = contextInfo;
             } else {
 
                 // If pool.CreateEntity() was used to create the entity,
@@ -101,7 +101,7 @@ namespace Entitas {
                 for(int i = 0; i < componentNames.Length; i++) {
                     componentNames[i] = i.ToString();
                 }
-                _poolMetaData = new ContextInfo(
+                _contextInfo = new ContextInfo(
                     "No Pool", componentNames, null
                 );
             }
@@ -116,7 +116,7 @@ namespace Entitas {
             if(!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot add component '" +
-                    _poolMetaData.componentNames[index] +
+                    _contextInfo.componentNames[index] +
                     "' to " + this + "!"
                 );
             }
@@ -125,7 +125,7 @@ namespace Entitas {
                 throw new EntityAlreadyHasComponentException(
                     index,
                     "Cannot add component '" +
-                    _poolMetaData.componentNames[index] +
+                    _contextInfo.componentNames[index] +
                     "' to " + this + "!",
                     "You should check if an entity already has the component " +
                     "before adding it or use entity.ReplaceComponent()."
@@ -151,7 +151,7 @@ namespace Entitas {
             if(!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot remove component '" +
-                    _poolMetaData.componentNames[index] +
+                    _contextInfo.componentNames[index] +
                     "' from " + this + "!"
                 );
             }
@@ -160,7 +160,7 @@ namespace Entitas {
                 throw new EntityDoesNotHaveComponentException(
                     index,
                     "Cannot remove component '" +
-                    _poolMetaData.componentNames[index] +
+                    _contextInfo.componentNames[index] +
                     "' from " + this + "!",
                     "You should check if an entity has the component " +
                     "before removing it."
@@ -180,7 +180,7 @@ namespace Entitas {
             if(!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot replace component '" +
-                    _poolMetaData.componentNames[index] +
+                    _contextInfo.componentNames[index] +
                     "' on " + this + "!"
                 );
             }
@@ -233,7 +233,7 @@ namespace Entitas {
                 throw new EntityDoesNotHaveComponentException(
                     index,
                     "Cannot get component '" +
-                    _poolMetaData.componentNames[index] + "' from " +
+                    _contextInfo.componentNames[index] + "' from " +
                     this + "!",
                     "You should check if an entity has the component " +
                     "before getting it."

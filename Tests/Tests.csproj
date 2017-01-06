@@ -55,7 +55,7 @@
     <Compile Include="Tests\Entitas.Migration\describe_M0180.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0190.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0220.cs" />
-    <Compile Include="Tests\Entitas\describe_PoolMetaData.cs" />
+    <Compile Include="Tests\Entitas\describe_ContextInfo.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0260.cs" />
     <Compile Include="GenerateTestComponents.cs" />

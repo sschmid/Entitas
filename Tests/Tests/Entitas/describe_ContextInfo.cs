@@ -1,7 +1,7 @@
 using NSpec;
 using Entitas;
 
-class describe_PoolMetaData : nspec {
+class describe_ContextInfo : nspec {
 
     void when_created() {
 

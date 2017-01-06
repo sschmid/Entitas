@@ -34,11 +34,11 @@ class describe_Pool : nspec {
             e.GetType().should_be(typeof(Entity));
         };
 
-        it["has default PoolMetaData"] = () => {
-            pool.metaData.name.should_be("Unnamed Pool");
-            pool.metaData.componentNames.Length.should_be(CID.TotalComponents);
-            for (int i = 0; i < pool.metaData.componentNames.Length; i++) {
-                pool.metaData.componentNames[i].should_be("Index " + i);
+        it["has default ContextInfo"] = () => {
+            pool.contextInfo.name.should_be("Unnamed Pool");
+            pool.contextInfo.componentNames.Length.should_be(CID.TotalComponents);
+            for (int i = 0; i < pool.contextInfo.componentNames.Length; i++) {
+                pool.contextInfo.componentNames[i].should_be("Index " + i);
             }
         };
 
@@ -62,27 +62,27 @@ class describe_Pool : nspec {
             pool.ToString().should_be("Unnamed Pool");
         };
 
-        context["when PoolMetaData set"] = () => {
+        context["when ContextInfo set"] = () => {
 
-            ContextInfo metaData = null;
+            ContextInfo contextInfo = null;
 
             before = () => {
                 var componentNames = new [] { "Health", "Position", "View" };
                 var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
-                metaData = new ContextInfo("My Pool", componentNames, componentTypes);
-                pool = new Context(componentNames.Length, 0, metaData);
+                contextInfo = new ContextInfo("My Pool", componentNames, componentTypes);
+                pool = new Context(componentNames.Length, 0, contextInfo);
             };
 
-            it["has custom PoolMetaData"] = () => {
-                pool.metaData.should_be_same(metaData);
+            it["has custom ContextInfo"] = () => {
+                pool.contextInfo.should_be_same(contextInfo);
             };
 
-            it["creates entity with same PoolMetaData"] = () => {
-                pool.CreateEntity().poolMetaData.should_be_same(metaData);
+            it["creates entity with same ContextInfo"] = () => {
+                pool.CreateEntity().contextInfo.should_be_same(contextInfo);
             };
 
             it["throws when componentNames is not same length as totalComponents"] = expect<ContextInfoException>(() => {
-                new Context(metaData.componentNames.Length + 1, 0, metaData);
+                new Context(contextInfo.componentNames.Length + 1, 0, contextInfo);
             });
         };
 

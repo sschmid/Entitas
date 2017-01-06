@@ -48,19 +48,19 @@ class describe_Entity : nspec {
 
         context["initial state"] = () => {
 
-            it["has default PoolMetaData"] = () => {
-                e.poolMetaData.name.should_be("No Pool");
-                e.poolMetaData.componentNames.Length.should_be(CID.TotalComponents);
-                e.poolMetaData.componentTypes.should_be_null();
-                for(int i = 0; i < e.poolMetaData.componentNames.Length; i++) {
-                    e.poolMetaData.componentNames[i].should_be(i.ToString());
+            it["has default ContextInfo"] = () => {
+                e.contextInfo.name.should_be("No Pool");
+                e.contextInfo.componentNames.Length.should_be(CID.TotalComponents);
+                e.contextInfo.componentTypes.should_be_null();
+                for(int i = 0; i < e.contextInfo.componentNames.Length; i++) {
+                    e.contextInfo.componentNames[i].should_be(i.ToString());
                 }
             };
 
-            it["has custom PoolMetaData when set"] = () => {
-                var poolMetaData = new ContextInfo(null, null, null);
-                e = new Entity(0, null, poolMetaData);
-                e.poolMetaData.should_be_same(poolMetaData);
+            it["has custom ContextInfo when set"] = () => {
+                var contextInfo = new ContextInfo(null, null, null);
+                e = new Entity(0, null, contextInfo);
+                e.contextInfo.should_be_same(contextInfo);
             };
 
             it["throws when attempting to get component at index which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {

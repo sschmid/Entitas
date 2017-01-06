@@ -20,7 +20,7 @@ namespace Entitas {
             get { return _componentPools; }
         }
 
-        public ContextInfo metaData { get { return _contextInfo; } }
+        public ContextInfo contextInfo { get { return _contextInfo; } }
 
         public int count { get { return _entities.Count; } }
 
@@ -66,15 +66,15 @@ namespace Entitas {
 
         public Context(int totalComponents,
                     int startCreationIndex,
-                    ContextInfo metaData) {
+                    ContextInfo contextInfo) {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
 
-            if(metaData != null) {
-                _contextInfo = metaData;
+            if(contextInfo != null) {
+                _contextInfo = contextInfo;
 
-                if(metaData.componentNames.Length != totalComponents) {
-                    throw new ContextInfoException(this, metaData);
+                if(contextInfo.componentNames.Length != totalComponents) {
+                    throw new ContextInfoException(this, contextInfo);
                 }
             } else {
 
