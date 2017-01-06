@@ -23,7 +23,7 @@ class describe_EntitasErrorMessages : EntitasTest {
 
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
-            var metaData = new PoolMetaData("My Pool", componentNames, null);
+            var metaData = new ContextInfo("My Pool", componentNames, null);
             _pool = new Context(componentNames.Length, 42, metaData);
             _entity = createEntity();
         };
@@ -118,7 +118,7 @@ class describe_EntitasErrorMessages : EntitasTest {
 
             it["wrong PoolMetaData componentNames count"] = () => printErrorMessage(() => {
                 var componentNames = new [] { "Health", "Position", "View" };
-                var metaData = new PoolMetaData("My Pool", componentNames, null);
+                var metaData = new ContextInfo("My Pool", componentNames, null);
                 new Context(1, 0, metaData);
             });
 

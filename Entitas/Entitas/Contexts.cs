@@ -19,7 +19,7 @@ namespace Entitas {
                                       int totalComponents,
                                       string[] componentNames,
                                       System.Type[] componentTypes) {
-            var pool = new Context(totalComponents, 0, new PoolMetaData(
+            var pool = new Context(totalComponents, 0, new ContextInfo(
                 poolName, componentNames, componentTypes)
             );
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)

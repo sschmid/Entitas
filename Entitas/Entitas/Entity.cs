@@ -65,7 +65,7 @@ namespace Entitas {
         /// The poolMetaData is set by the pool which created the entity and
         /// contains information about the pool.
         /// It's used to provide better error messages.
-        public PoolMetaData poolMetaData { get { return _poolMetaData; } }
+        public ContextInfo poolMetaData { get { return _poolMetaData; } }
 
         internal int _creationIndex;
         internal bool _isEnabled = true;
@@ -73,7 +73,7 @@ namespace Entitas {
         readonly int _totalComponents;
         readonly IComponent[] _components;
         readonly Stack<IComponent>[] _componentPools;
-        readonly PoolMetaData _poolMetaData;
+        readonly ContextInfo _poolMetaData;
 
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
@@ -84,7 +84,7 @@ namespace Entitas {
         /// pool.DestroyEntity() to destroy it.
         public Entity(int totalComponents,
                       Stack<IComponent>[] componentPools,
-                      PoolMetaData poolMetaData = null) {
+                      ContextInfo poolMetaData = null) {
             _totalComponents = totalComponents;
             _components = new IComponent[totalComponents];
             _componentPools = componentPools;
@@ -101,7 +101,7 @@ namespace Entitas {
                 for(int i = 0; i < componentNames.Length; i++) {
                     componentNames[i] = i.ToString();
                 }
-                _poolMetaData = new PoolMetaData(
+                _poolMetaData = new ContextInfo(
                     "No Pool", componentNames, null
                 );
             }

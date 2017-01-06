@@ -35,7 +35,7 @@ class describe_Pool : nspec {
         };
 
         it["has default PoolMetaData"] = () => {
-            pool.metaData.poolName.should_be("Unnamed Pool");
+            pool.metaData.name.should_be("Unnamed Pool");
             pool.metaData.componentNames.Length.should_be(CID.TotalComponents);
             for (int i = 0; i < pool.metaData.componentNames.Length; i++) {
                 pool.metaData.componentNames[i].should_be("Index " + i);
@@ -52,7 +52,7 @@ class describe_Pool : nspec {
             e.componentPools.should_be_same(pool.componentPools);
         };
 
-        it["throws when destroying an entity which the pool doesn't contain"] = expect<PoolDoesNotContainEntityException>(() => {
+        it["throws when destroying an entity which the pool doesn't contain"] = expect<ContextDoesNotContainEntityException>(() => {
             var e = pool.CreateEntity();
             pool.DestroyEntity(e);
             pool.DestroyEntity(e);
@@ -64,12 +64,12 @@ class describe_Pool : nspec {
 
         context["when PoolMetaData set"] = () => {
 
-            PoolMetaData metaData = null;
+            ContextInfo metaData = null;
 
             before = () => {
                 var componentNames = new [] { "Health", "Position", "View" };
                 var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
-                metaData = new PoolMetaData("My Pool", componentNames, componentTypes);
+                metaData = new ContextInfo("My Pool", componentNames, componentTypes);
                 pool = new Context(componentNames.Length, 0, metaData);
             };
 
@@ -81,7 +81,7 @@ class describe_Pool : nspec {
                 pool.CreateEntity().poolMetaData.should_be_same(metaData);
             };
 
-            it["throws when componentNames is not same length as totalComponents"] = expect<PoolMetaDataException>(() => {
+            it["throws when componentNames is not same length as totalComponents"] = expect<ContextInfoException>(() => {
                 new Context(metaData.componentNames.Length + 1, 0, metaData);
             });
         };
@@ -172,7 +172,7 @@ class describe_Pool : nspec {
                 }
             };
 
-            it["throws when destroying all entities and there are still entities retained"] = expect<PoolStillHasRetainedEntitiesException>(() => {
+            it["throws when destroying all entities and there are still entities retained"] = expect<ContextStillHasRetainedEntitiesException>(() => {
                 pool.CreateEntity().Retain(new object());
                 pool.DestroyAllEntities();
             });
@@ -575,7 +575,7 @@ class describe_Pool : nspec {
 
         context["EntityIndex"] = () => {
 
-            it["throws when EntityIndex for key doesn't exist"] = expect<PoolEntityIndexDoesNotExistException>(() => {
+            it["throws when EntityIndex for key doesn't exist"] = expect<ContextEntityIndexDoesNotExistException>(() => {
                 pool.GetEntityIndex("unknown");
             });
 
@@ -586,7 +586,7 @@ class describe_Pool : nspec {
                 pool.GetEntityIndex(componentIndex.ToString()).should_be_same(entityIndex);
             };
 
-            it["throws when adding an EntityIndex with same name"] = expect<PoolEntityIndexDoesAlreadyExistException>(() => {
+            it["throws when adding an EntityIndex with same name"] = expect<ContextEntityIndexDoesAlreadyExistException>(() => {
                 const int componentIndex = 1;
                 var entityIndex = new PrimaryEntityIndex<string>(pool.GetGroup(Matcher.AllOf(componentIndex)), null);
                 pool.AddEntityIndex(componentIndex.ToString(), entityIndex);
@@ -753,7 +753,7 @@ class describe_Pool : nspec {
                     entityIndex.HasEntity("Max").should_be_false();
                 };
 
-                it["removes EntityIndex"] = expect<PoolEntityIndexDoesNotExistException>(() => {
+                it["removes EntityIndex"] = expect<ContextEntityIndexDoesNotExistException>(() => {
                     pool.DeactivateAndRemoveEntityIndices();
                     pool.GetEntityIndex(CID.ComponentA.ToString());
                 });

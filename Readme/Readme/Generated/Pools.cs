@@ -27,7 +27,7 @@ public static class Pools {
     public static Context pool {
         get {
             if(_pool == null) {
-                _pool = new Context(ComponentIds.TotalComponents, 0, new PoolMetaData("Pool", ComponentIds.componentNames, ComponentIds.componentTypes));
+                _pool = new Context(ComponentIds.TotalComponents, 0, new ContextInfo("Pool", ComponentIds.componentNames, ComponentIds.componentTypes));
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_pool);
                 UnityEngine.Object.DontDestroyOnLoad(poolObserver.gameObject);

@@ -5,14 +5,14 @@ namespace Entitas {
 
     public partial class Context {
 
-        public event PoolChanged OnEntityCreated;
-        public event PoolChanged OnEntityWillBeDestroyed;
-        public event PoolChanged OnEntityDestroyed;
+        public event ContextChanged OnEntityCreated;
+        public event ContextChanged OnEntityWillBeDestroyed;
+        public event ContextChanged OnEntityDestroyed;
         public event GroupChanged OnGroupCreated;
         public event GroupChanged OnGroupCleared;
 
-        public delegate void PoolChanged(Context pool, Entity entity);
-        public delegate void GroupChanged(Context pool, Group group);
+        public delegate void ContextChanged(Context context, Entity entity);
+        public delegate void GroupChanged(Context context, Group group);
 
         public int totalComponents { get { return _totalComponents; } }
 
@@ -20,7 +20,7 @@ namespace Entitas {
             get { return _componentPools; }
         }
 
-        public PoolMetaData metaData { get { return _metaData; } }
+        public ContextInfo metaData { get { return _contextInfo; } }
 
         public int count { get { return _entities.Count; } }
 
@@ -46,7 +46,7 @@ namespace Entitas {
 
         Entity[] _entitiesCache;
 
-        readonly PoolMetaData _metaData;
+        readonly ContextInfo _contextInfo;
 
         readonly Dictionary<IMatcher, Group> _groups =
             new Dictionary<IMatcher, Group>();
@@ -66,29 +66,29 @@ namespace Entitas {
 
         public Context(int totalComponents,
                     int startCreationIndex,
-                    PoolMetaData metaData) {
+                    ContextInfo metaData) {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
 
             if(metaData != null) {
-                _metaData = metaData;
+                _contextInfo = metaData;
 
                 if(metaData.componentNames.Length != totalComponents) {
-                    throw new PoolMetaDataException(this, metaData);
+                    throw new ContextInfoException(this, metaData);
                 }
             } else {
 
-                // If Pools.CreatePool() was used to create the pool,
+                // If Contexts.CreateContext() was used to create the context,
                 // we will never end up here.
-                // This is a fallback when the pool is created manually.
+                // This is a fallback when the context is created manually.
 
                 var componentNames = new string[totalComponents];
                 const string prefix = "Index ";
                 for (int i = 0; i < componentNames.Length; i++) {
                     componentNames[i] = prefix + i;
                 }
-                _metaData = new PoolMetaData(
-                    "Unnamed Pool", componentNames, null
+                _contextInfo = new ContextInfo(
+                    "Unnamed Context", componentNames, null
                 );
             }
 
@@ -105,7 +105,7 @@ namespace Entitas {
         public virtual Entity CreateEntity() {
             var entity = _reusableEntities.Count > 0
                     ? _reusableEntities.Pop()
-                    : new Entity( _totalComponents, _componentPools, _metaData);
+                    : new Entity( _totalComponents, _componentPools, _contextInfo);
             entity._isEnabled = true;
             entity._creationIndex = _creationIndex++;
             entity.Retain(this);
@@ -126,9 +126,9 @@ namespace Entitas {
         public virtual void DestroyEntity(Entity entity) {
             var removed = _entities.Remove(entity);
             if(!removed) {
-                throw new PoolDoesNotContainEntityException(
+                throw new ContextDoesNotContainEntityException(
                     "'" + this + "' cannot destroy " + entity + "!",
-                    "Did you call pool.DestroyEntity() on a wrong pool?"
+                    "Did you call context.DestroyEntity() on a wrong context?"
                 );
             }
             _entitiesCache = null;
@@ -165,7 +165,7 @@ namespace Entitas {
             _entities.Clear();
 
             if(_retainedEntities.Count != 0) {
-                throw new PoolStillHasRetainedEntitiesException(this);
+                throw new ContextStillHasRetainedEntitiesException(this);
             }
         }
 
@@ -229,7 +229,7 @@ namespace Entitas {
 
         public void AddEntityIndex(string name, IEntityIndex entityIndex) {
             if(_entityIndices.ContainsKey(name)) {
-                throw new PoolEntityIndexDoesAlreadyExistException(this, name);
+                throw new ContextEntityIndexDoesAlreadyExistException(this, name);
             }
 
             _entityIndices.Add(name, entityIndex);
@@ -238,7 +238,7 @@ namespace Entitas {
         public IEntityIndex GetEntityIndex(string name) {
             IEntityIndex entityIndex;
             if(!_entityIndices.TryGetValue(name, out entityIndex)) {
-                throw new PoolEntityIndexDoesNotExistException(this, name);
+                throw new ContextEntityIndexDoesNotExistException(this, name);
             }
 
             return entityIndex;
@@ -282,7 +282,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            return _metaData.poolName;
+            return _contextInfo.name;
         }
 
         void updateGroupsComponentAddedOrRemoved(
@@ -334,63 +334,63 @@ namespace Entitas {
         }
     }
 
-    public class PoolDoesNotContainEntityException : EntitasException {
-        public PoolDoesNotContainEntityException(string message, string hint) :
-            base(message + "\nPool does not contain entity!", hint) {
+    public class ContextDoesNotContainEntityException : EntitasException {
+        public ContextDoesNotContainEntityException(string message, string hint) :
+            base(message + "\nContext does not contain entity!", hint) {
         }
     }
 
     public class EntityIsNotDestroyedException : EntitasException {
         public EntityIsNotDestroyedException(string message) :
             base(message + "\nEntity is not destroyed yet!",
-                "Did you manually call entity.Release(pool) yourself? " +
+                "Did you manually call entity.Release(context) yourself? " +
                 "If so, please don't :)") {
         }
     }
 
-    public class PoolStillHasRetainedEntitiesException : EntitasException {
-        public PoolStillHasRetainedEntitiesException(Context pool) : base(
-            "'" + pool + "' detected retained entities " +
+    public class ContextStillHasRetainedEntitiesException : EntitasException {
+        public ContextStillHasRetainedEntitiesException(Context context) : base(
+            "'" + context + "' detected retained entities " +
             "although all entities got destroyed!",
-            "Did you release all entities? Try calling pool.ClearGroups() " +
+            "Did you release all entities? Try calling context.ClearGroups() " +
             "and systems.ClearReactiveSystems() before calling " +
-            "pool.DestroyAllEntities() to avoid memory leaks.") {
+            "context.DestroyAllEntities() to avoid memory leaks.") {
         }
     }
 
-    public class PoolMetaDataException : EntitasException {
-        public PoolMetaDataException(Context pool, PoolMetaData poolMetaData) :
-            base("Invalid PoolMetaData for '" + pool + "'!\nExpected " +
-                 pool.totalComponents + " componentName(s) but got " +
-                 poolMetaData.componentNames.Length + ":",
-                 string.Join("\n", poolMetaData.componentNames)) {
+    public class ContextInfoException : EntitasException {
+        public ContextInfoException(Context context, ContextInfo contextInfo) :
+            base("Invalid ContextInfo for '" + context + "'!\nExpected " +
+                 context.totalComponents + " componentName(s) but got " +
+                 contextInfo.componentNames.Length + ":",
+                 string.Join("\n", contextInfo.componentNames)) {
         }
     }
 
-    public class PoolEntityIndexDoesNotExistException : EntitasException {
-        public PoolEntityIndexDoesNotExistException(Context pool, string name) :
-            base("Cannot get EntityIndex '" + name + "' from pool '" +
-                 pool + "'!", "No EntityIndex with this name has been added.") {
+    public class ContextEntityIndexDoesNotExistException : EntitasException {
+        public ContextEntityIndexDoesNotExistException(Context context, string name) :
+            base("Cannot get EntityIndex '" + name + "' from context '" +
+                 context + "'!", "No EntityIndex with this name has been added.") {
         }
     }
 
-    public class PoolEntityIndexDoesAlreadyExistException : EntitasException {
-        public PoolEntityIndexDoesAlreadyExistException(Context pool, string name) :
-            base("Cannot add EntityIndex '" + name + "' to pool '" + pool + "'!",
+    public class ContextEntityIndexDoesAlreadyExistException : EntitasException {
+        public ContextEntityIndexDoesAlreadyExistException(Context context, string name) :
+            base("Cannot add EntityIndex '" + name + "' to context '" + context + "'!",
                  "An EntityIndex with this name has already been added.") {
         }
     }
 
-    public class PoolMetaData {
+    public class ContextInfo {
 
-        public readonly string poolName;
+        public readonly string name;
         public readonly string[] componentNames;
         public readonly Type[] componentTypes;
 
-        public PoolMetaData(string poolName,
+        public ContextInfo(string name,
                             string[] componentNames,
                             Type[] componentTypes) {
-            this.poolName = poolName;
+            this.name = name;
             this.componentNames = componentNames;
             this.componentTypes = componentTypes;
         }
