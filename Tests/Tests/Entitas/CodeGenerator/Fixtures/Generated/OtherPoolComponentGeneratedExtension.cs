@@ -44,7 +44,7 @@ namespace Entitas {
         public Entity SetOtherPool(System.DateTime newTimestamp, bool newIsLoggedIn) {
             if(hasOtherPool) {
                 throw new EntitasException("Could not set otherPool!\n" + this + " already has an entity with OtherPoolComponent!",
-                    "You should check if the pool already has a otherPoolEntity before setting it or use pool.ReplaceOtherPool().");
+                    "You should check if the context already has a otherPoolEntity before setting it or use context.ReplaceOtherPool().");
             }
             var entity = CreateEntity();
             entity.AddOtherPool(newTimestamp, newIsLoggedIn);

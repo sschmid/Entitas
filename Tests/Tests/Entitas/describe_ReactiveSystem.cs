@@ -74,8 +74,8 @@ class describe_ReactiveSystem : nspec {
                 var e = createEntityAB();
                 var retainCount = e.retainCount;
                 system.Execute();
-                retainCount.should_be(3); // retained by pool, group and entity collector
-                e.retainCount.should_be(2); // retained by pool and group
+                retainCount.should_be(3); // retained by context, group and entity collector
+                e.retainCount.should_be(2); // retained by context and group
             };
 
             it["collects changed entities in execute"] = () => {
@@ -266,7 +266,7 @@ class describe_ReactiveSystem : nspec {
                 var didExecute = 0;
                 system.executeAction = entities => {
                     didExecute += 1;
-                    eAB2.retainCount.should_be(3); // retained by pool, group and entity collector
+                    eAB2.retainCount.should_be(3); // retained by context, group and entity collector
                 };
 
                 system.Execute();
@@ -277,7 +277,7 @@ class describe_ReactiveSystem : nspec {
                 system.entities.Length.should_be(1);
                 system.entities[0].should_be_same(eAB2);
 
-                eAB1.retainCount.should_be(2); // retained by pool and group
+                eAB1.retainCount.should_be(2); // retained by context and group
                 eAB2.retainCount.should_be(2);
             };
         };

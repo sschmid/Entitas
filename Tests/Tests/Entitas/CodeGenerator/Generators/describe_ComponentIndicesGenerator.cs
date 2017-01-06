@@ -194,7 +194,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
 
-        it["generates empty lookup with total components when for default pool"] = () => {
+        it["generates empty lookup with total components when for default context"] = () => {
             generatesEmptyLookup(new [] { CodeGenerator.DEFAULT_POOL_NAME }, new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
 
     public const int TotalComponents = 0;
@@ -210,7 +210,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
 
-        it["generates empty lookup with total components when for pool names"] = () => {
+        it["generates empty lookup with total components when for context names"] = () => {
             generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
@@ -226,7 +226,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
 
-        it["generates multiple empty lookup with total components when for pool names"] = () => {
+        it["generates multiple empty lookup with total components when for context names"] = () => {
             generatesEmptyLookup(new [] { "Meta", "Core" },
                 new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG },
                 new [] { @"public static class MetaComponentIds {

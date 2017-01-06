@@ -122,7 +122,7 @@ class describe_EntitasErrorMessages : EntitasTest {
                 new Context(1, 0, contextInfo);
             });
 
-            it["destroy entity which is not in pool"] = () => printErrorMessage(() => {
+            it["destroy entity which is not in context"] = () => printErrorMessage(() => {
                 _context.DestroyEntity(new Entity(0, null));
             });
 

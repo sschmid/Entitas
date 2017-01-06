@@ -6,12 +6,12 @@ class describe_Blueprints : nspec {
 
     void when_creating() {
 
-        Context pool = null;
+        Context ctx = null;
         Entity entity = null;
 
         before = () => {
-            pool = new Context(CID.TotalComponents);
-            entity = pool.CreateEntity();
+            ctx = new Context(CID.TotalComponents);
+            entity = ctx.CreateEntity();
         };
 
         context["ComponentBlueprint"] = () => {

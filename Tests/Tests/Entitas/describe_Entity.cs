@@ -203,12 +203,12 @@ class describe_Entity : nspec {
 
         context["componentPool"] = () => {
 
-            it["gets component pool"] = () => {
+            it["gets component context"] = () => {
                 var componentPool = e.GetComponentPool(CID.ComponentA);
                 componentPool.Count.should_be(0);
             };
 
-            it["gets same component pool instance"] = () => {
+            it["gets same component context instance"] = () => {
                 e.GetComponentPool(CID.ComponentA).should_be_same(e.GetComponentPool(CID.ComponentA));
             };
 
@@ -281,7 +281,7 @@ class describe_Entity : nspec {
                 didDispatch.should_be(1);
             };
 
-            it["dispatches OnComponentRemoved before pushing component to pool"] = () => {
+            it["dispatches OnComponentRemoved before pushing component to context"] = () => {
                 e.AddComponentA();
 
                 e.OnComponentRemoved += (entity, index, component) => {

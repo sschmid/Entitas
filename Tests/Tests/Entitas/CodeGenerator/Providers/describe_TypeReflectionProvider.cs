@@ -20,22 +20,22 @@ class describe_TypeReflectionProvider : nspec {
 
     void when_providing() {
 
-        context["pool names"] = () => {
+        context["context names"] = () => {
 
-            it["has default pool if pool names is empty"] = () => {
+            it["has default context if context names is empty"] = () => {
                 var provider = createProviderWithPoolName();
                 provider.poolNames.Length.should_be(1);
                 provider.poolNames[0].should_be(CodeGenerator.DEFAULT_POOL_NAME);
             };
 
-            it["adds pool names if set"] = () => {
+            it["adds context names if set"] = () => {
                 var provider = createProviderWithPoolName("Pool1", "Pool2");
                 provider.poolNames.Length.should_be(2);
                 provider.poolNames.should_contain("Pool1");
                 provider.poolNames.should_contain("Pool2");
             };
 
-            it["sorts pool names by name"] = () => {
+            it["sorts context names by name"] = () => {
                 var provider = createProviderWithPoolName("Pool2", "Pool1");
                 provider.poolNames.Length.should_be(2);
                 provider.poolNames.should_contain("Pool1");
@@ -49,7 +49,7 @@ class describe_TypeReflectionProvider : nspec {
                 provider.poolNames.should_contain("Pool2");
             };
 
-            it["converts pool names to uppercaseFirst"] = () => {
+            it["converts context names to uppercaseFirst"] = () => {
                 var provider = createProviderWithPoolName("pool1", "pool2");
                 provider.poolNames.Length.should_be(2);
                 provider.poolNames.should_contain("Pool1");
