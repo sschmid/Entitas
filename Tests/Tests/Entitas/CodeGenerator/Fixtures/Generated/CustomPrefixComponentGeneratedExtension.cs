@@ -31,7 +31,7 @@ namespace Entitas {
         }
     }
 
-    public partial class Pool {
+    public partial class Context {
 
         public Entity customPrefixEntity { get { return GetGroup(Matcher.CustomPrefix).GetSingleEntity(); } }
 

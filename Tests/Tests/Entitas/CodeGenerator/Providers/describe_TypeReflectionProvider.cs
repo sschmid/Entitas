@@ -10,8 +10,8 @@ class describe_TypeReflectionProvider : nspec {
         return new TypeReflectionProvider(types, new string[0], new string[0]);
     }
 
-    TypeReflectionProvider createProviderWithPoolName(params string[] poolNames) {
-        return new TypeReflectionProvider(new [] { typeof(object) }, poolNames, new string[0]);
+    TypeReflectionProvider createProviderWithContextName(params string[] names) {
+        return new TypeReflectionProvider(new [] { typeof(object) }, names, new string[0]);
     }
 
     TypeReflectionProvider createProviderWithBlueprintNames(params string[] blueprintNames) {
@@ -20,40 +20,40 @@ class describe_TypeReflectionProvider : nspec {
 
     void when_providing() {
 
-        context["pool names"] = () => {
+        context["context names"] = () => {
 
-            it["has default pool if pool names is empty"] = () => {
-                var provider = createProviderWithPoolName();
-                provider.poolNames.Length.should_be(1);
-                provider.poolNames[0].should_be(CodeGenerator.DEFAULT_POOL_NAME);
+            it["has default context if context names is empty"] = () => {
+                var provider = createProviderWithContextName();
+                provider.contextNames.Length.should_be(1);
+                provider.contextNames[0].should_be(CodeGenerator.DEFAULT_CONTEXT_NAME);
             };
 
-            it["adds pool names if set"] = () => {
-                var provider = createProviderWithPoolName("Pool1", "Pool2");
-                provider.poolNames.Length.should_be(2);
-                provider.poolNames.should_contain("Pool1");
-                provider.poolNames.should_contain("Pool2");
+            it["adds context names if set"] = () => {
+                var provider = createProviderWithContextName("Context1", "Context2");
+                provider.contextNames.Length.should_be(2);
+                provider.contextNames.should_contain("Context1");
+                provider.contextNames.should_contain("Context2");
             };
 
-            it["sorts pool names by name"] = () => {
-                var provider = createProviderWithPoolName("Pool2", "Pool1");
-                provider.poolNames.Length.should_be(2);
-                provider.poolNames.should_contain("Pool1");
-                provider.poolNames.should_contain("Pool2");
+            it["sorts context names by name"] = () => {
+                var provider = createProviderWithContextName("Context2", "Context1");
+                provider.contextNames.Length.should_be(2);
+                provider.contextNames.should_contain("Context1");
+                provider.contextNames.should_contain("Context2");
             };
 
             it["removes duplicates"] = () => {
-                var provider = createProviderWithPoolName("Pool1", "Pool2", "Pool1");
-                provider.poolNames.Length.should_be(2);
-                provider.poolNames.should_contain("Pool1");
-                provider.poolNames.should_contain("Pool2");
+                var provider = createProviderWithContextName("Context1", "Context2", "Context1");
+                provider.contextNames.Length.should_be(2);
+                provider.contextNames.should_contain("Context1");
+                provider.contextNames.should_contain("Context2");
             };
 
-            it["converts pool names to uppercaseFirst"] = () => {
-                var provider = createProviderWithPoolName("pool1", "pool2");
-                provider.poolNames.Length.should_be(2);
-                provider.poolNames.should_contain("Pool1");
-                provider.poolNames.should_contain("Pool2");
+            it["converts context names to uppercaseFirst"] = () => {
+                var provider = createProviderWithContextName("context1", "context2");
+                provider.contextNames.Length.should_be(2);
+                provider.contextNames.should_contain("Context1");
+                provider.contextNames.should_contain("Context2");
             };
         };
 
@@ -74,7 +74,7 @@ class describe_TypeReflectionProvider : nspec {
                     info.memberInfos[0].type.should_be(typeof(SomeClass));
                     info.memberInfos[0].name.should_be("value");
 
-                    info.pools.should_contain("SomePool");
+                    info.contexts.should_contain("SomeContext");
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(true);
@@ -96,7 +96,7 @@ class describe_TypeReflectionProvider : nspec {
                     info.memberInfos[0].type.should_be(typeof(SomeNamespace.SomeOtherClass));
                     info.memberInfos[0].name.should_be("value");
 
-                    info.pools.should_contain("SomePool");
+                    info.contexts.should_contain("SomeContext");
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(true);
@@ -123,7 +123,7 @@ class describe_TypeReflectionProvider : nspec {
                     info.memberInfos[0].type.should_be(typeof(ISomeInterface));
                     info.memberInfos[0].name.should_be("value");
 
-                    info.pools.should_contain("SomePool");
+                    info.contexts.should_contain("SomeContext");
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(true);
@@ -145,7 +145,7 @@ class describe_TypeReflectionProvider : nspec {
                     info.memberInfos[0].type.should_be(typeof(CustomName));
                     info.memberInfos[0].name.should_be("value");
 
-                    info.pools.should_contain("SomePool");
+                    info.contexts.should_contain("SomeContext");
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(true);
@@ -199,8 +199,8 @@ class describe_TypeReflectionProvider : nspec {
                     info.fullTypeName.should_be("ComponentA");
                     info.typeName.should_be("ComponentA");
                     info.memberInfos.should_be_empty();
-                    info.pools.Length.should_be(1);
-                    info.pools.should_contain(CodeGenerator.DEFAULT_POOL_NAME);
+                    info.contexts.Length.should_be(1);
+                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(false);
@@ -217,8 +217,8 @@ class describe_TypeReflectionProvider : nspec {
                     info.fullTypeName.should_be("My.Namespace.NamespaceComponent");
                     info.typeName.should_be("NamespaceComponent");
                     info.memberInfos.should_be_empty();
-                    info.pools.Length.should_be(1);
-                    info.pools.should_contain(CodeGenerator.DEFAULT_POOL_NAME);
+                    info.contexts.Length.should_be(1);
+                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(false);
@@ -227,7 +227,7 @@ class describe_TypeReflectionProvider : nspec {
                     info.isSingletonComponent.should_be(true);
                 };
 
-                it["detects PoolAttribure"] = () => {
+                it["detects ContextAttribure"] = () => {
                     var provider = createProviderWithTypes(typeof(CComponent));
                     provider.componentInfos.Length.should_be(1);
                     var info = provider.componentInfos[0];
@@ -236,10 +236,10 @@ class describe_TypeReflectionProvider : nspec {
                     info.typeName.should_be("CComponent");
                     info.memberInfos.should_be_empty();
 
-                    info.pools.Length.should_be(3);
-                    info.pools.should_contain("PoolA");
-                    info.pools.should_contain("PoolB");
-                    info.pools.should_contain("PoolC");
+                    info.contexts.Length.should_be(3);
+                    info.contexts.should_contain("ContextA");
+                    info.contexts.should_contain("ContextB");
+                    info.contexts.should_contain("ContextC");
 
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
@@ -257,8 +257,8 @@ class describe_TypeReflectionProvider : nspec {
                     info.fullTypeName.should_be("AnimatingComponent");
                     info.typeName.should_be("AnimatingComponent");
                     info.memberInfos.should_be_empty();
-                    info.pools.Length.should_be(1);
-                    info.pools.should_contain(CodeGenerator.DEFAULT_POOL_NAME);
+                    info.contexts.Length.should_be(1);
+                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
                     info.isSingleEntity.should_be_true();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(false);
@@ -275,8 +275,8 @@ class describe_TypeReflectionProvider : nspec {
                     info.fullTypeName.should_be("DontGenerateComponent");
                     info.typeName.should_be("DontGenerateComponent");
                     info.memberInfos.should_be_empty();
-                    info.pools.Length.should_be(1);
-                    info.pools.should_contain(CodeGenerator.DEFAULT_POOL_NAME);
+                    info.contexts.Length.should_be(1);
+                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(false);
@@ -293,8 +293,8 @@ class describe_TypeReflectionProvider : nspec {
                     info.fullTypeName.should_be("DontGenerateIndexComponent");
                     info.typeName.should_be("DontGenerateIndexComponent");
                     info.memberInfos.should_be_empty();
-                    info.pools.Length.should_be(1);
-                    info.pools.should_contain(CodeGenerator.DEFAULT_POOL_NAME);
+                    info.contexts.Length.should_be(1);
+                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(false);
@@ -311,8 +311,8 @@ class describe_TypeReflectionProvider : nspec {
                     info.fullTypeName.should_be("CustomPrefixComponent");
                     info.typeName.should_be("CustomPrefixComponent");
                     info.memberInfos.should_be_empty();
-                    info.pools.Length.should_be(1);
-                    info.pools.should_contain(CodeGenerator.DEFAULT_POOL_NAME);
+                    info.contexts.Length.should_be(1);
+                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
                     info.isSingleEntity.should_be_true();
                     info.singleComponentPrefix.should_be("My");
                     info.generateComponent.should_be(false);
@@ -337,8 +337,8 @@ class describe_TypeReflectionProvider : nspec {
                     info.memberInfos[1].type.should_be(typeof(string));
                     info.memberInfos[1].name.should_be("publicProperty");
 
-                    info.pools.Length.should_be(1);
-                    info.pools.should_contain(CodeGenerator.DEFAULT_POOL_NAME);
+                    info.contexts.Length.should_be(1);
+                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(false);

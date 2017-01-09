@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class RandomValueSystem : IExecuteSystem {
 
-    readonly Pool _pool;
+    readonly Context _context;
 
-    public RandomValueSystem(Pools pools) {
-        _pool = pools.visualDebugging;
+    public RandomValueSystem(Contexts contexts) {
+        _context = contexts.visualDebugging;
     }
 
     public void Execute() {
-        _pool.CreateEntity().AddMyFloat(Random.value);
+        _context.CreateEntity().AddMyFloat(Random.value);
     }
 }

@@ -9,15 +9,15 @@ public class BlueprintsExampleController : MonoBehaviour {
 
     void Start() {
 
-        Pools.sharedInstance.blueprints = Pools.CreateBlueprintsPool();
+        Contexts.sharedInstance.blueprints = Contexts.CreateBlueprintsContext();
 
-        var max = Pools.sharedInstance.blueprints
+        var max = Contexts.sharedInstance.blueprints
             .CreateEntity()
             .ApplyBlueprint(blueprints.Max);
 
         Debug.Log("max: " + max);
 
-        var jack = Pools.sharedInstance.blueprints
+        var jack = Contexts.sharedInstance.blueprints
             .CreateEntity()
             .ApplyBlueprint(blueprints.Jack);
 
@@ -29,7 +29,7 @@ public class BlueprintsExampleController : MonoBehaviour {
     IEnumerator createMax() {
         while (true) {
 
-            var max = Pools.sharedInstance.blueprints
+            var max = Contexts.sharedInstance.blueprints
                 .CreateEntity()
                 .ApplyBlueprint(blueprints.Max);
 

@@ -7,12 +7,12 @@ class describe_EntityIndex : nspec {
     void when_primary_index() {
 
         PrimaryEntityIndex<string> index = null;
-        Pool pool = null;
+        Context ctx = null;
         Group group = null;
 
         before = () => {
-            pool = new Pool(CID.TotalComponents);
-            group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
+            ctx = new Context(CID.TotalComponents);
+            group = ctx.GetGroup(Matcher.AllOf(CID.ComponentA));
             index = new PrimaryEntityIndex<string>(group, (e, c) => {
                 var nameAge = c as NameAgeComponent;
                 return nameAge != null
@@ -44,7 +44,7 @@ class describe_EntityIndex : nspec {
             before = () => {
                 var nameAgeComponent = new NameAgeComponent();
                 nameAgeComponent.name = name;
-                entity = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                entity = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
             };
 
             it["has entity"] = () => {
@@ -60,7 +60,7 @@ class describe_EntityIndex : nspec {
             };
 
             it["retains entity"] = () => {
-                entity.retainCount.should_be(3); // Pool, Group, EntityIndex
+                entity.retainCount.should_be(3); // Context, Group, EntityIndex
             };
 
             it["has existing entity"] = () => {
@@ -76,13 +76,13 @@ class describe_EntityIndex : nspec {
             it["releases and removes entity from index when component gets removed"] = () => {
                 entity.RemoveComponent(CID.ComponentA);
                 index.HasEntity(name).should_be_false();
-                entity.retainCount.should_be(1); // Pool
+                entity.retainCount.should_be(1); // Context
             };
 
             it["throws when adding an entity for the same key"] = expect<EntityIndexException>(() => {
                 var nameAgeComponent = new NameAgeComponent();
                 nameAgeComponent.name = name;
-                entity = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                entity = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
             });
 
             context["when deactivated"] = () => {
@@ -93,13 +93,13 @@ class describe_EntityIndex : nspec {
 
                 it["clears index and releases entity"] = () => {
                     index.HasEntity(name).should_be_false();
-                    entity.retainCount.should_be(2); // Pool, Group
+                    entity.retainCount.should_be(2); // Context, Group
                 };
 
                 it["doesn't add entities anymore"] = () => {
                     var nameAgeComponent = new NameAgeComponent();
                     nameAgeComponent.name = name;
-                    pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                    ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
                     index.HasEntity(name).should_be_false();
                 };
 
@@ -116,7 +116,7 @@ class describe_EntityIndex : nspec {
                     it["adds new entities"] = () => {
                         var nameAgeComponent = new NameAgeComponent();
                         nameAgeComponent.name = "Jack";
-                        entity = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                        entity = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
 
                         index.HasEntity("Jack").should_be_true();
                     };
@@ -128,12 +128,12 @@ class describe_EntityIndex : nspec {
     void when_index() {
 
         EntityIndex<string> index = null;
-        Pool pool = null;
+        Context ctx = null;
         Group group = null;
 
         before = () => {
-            pool = new Pool(CID.TotalComponents);
-            group = pool.GetGroup(Matcher.AllOf(CID.ComponentA));
+            ctx = new Context(CID.TotalComponents);
+            group = ctx.GetGroup(Matcher.AllOf(CID.ComponentA));
             index = new EntityIndex<string>(group, (e, c) => {
                 var nameAge = c as NameAgeComponent;
                 return nameAge != null
@@ -159,8 +159,8 @@ class describe_EntityIndex : nspec {
             before = () => {
                 nameAgeComponent = new NameAgeComponent();
                 nameAgeComponent.name = name;
-                entity1 = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
-                entity2 = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                entity1 = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                entity2 = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
             };
 
             it["gets entities for key"] = () => {
@@ -171,8 +171,8 @@ class describe_EntityIndex : nspec {
             };
 
             it["retains entity"] = () => {
-                entity1.retainCount.should_be(3); // Pool, Group, EntityIndex
-                entity2.retainCount.should_be(3); // Pool, Group, EntityIndex
+                entity1.retainCount.should_be(3); // Context, Group, EntityIndex
+                entity2.retainCount.should_be(3); // Context, Group, EntityIndex
             };
 
             it["has existing entities"] = () => {
@@ -188,7 +188,7 @@ class describe_EntityIndex : nspec {
             it["releases and removes entity from index when component gets removed"] = () => {
                 entity1.RemoveComponent(CID.ComponentA);
                 index.GetEntities(name).Count.should_be(1);
-                entity1.retainCount.should_be(1); // Pool
+                entity1.retainCount.should_be(1); // Context
             };
 
             context["when deactivated"] = () => {
@@ -199,12 +199,12 @@ class describe_EntityIndex : nspec {
 
                 it["clears index and releases entity"] = () => {
                     index.GetEntities(name).should_be_empty();
-                    entity1.retainCount.should_be(2); // Pool, Group
-                    entity2.retainCount.should_be(2); // Pool, Group
+                    entity1.retainCount.should_be(2); // Context, Group
+                    entity2.retainCount.should_be(2); // Context, Group
                 };
 
                 it["doesn't add entities anymore"] = () => {
-                    pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                    ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
                     index.GetEntities(name).should_be_empty();
                 };
 
@@ -222,7 +222,7 @@ class describe_EntityIndex : nspec {
                     };
 
                     it["adds new entities"] = () => {
-                        var entity3 = pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                        var entity3 = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
 
                         var entities = index.GetEntities(name);
                         entities.Count.should_be(3);
@@ -239,18 +239,18 @@ class describe_EntityIndex : nspec {
 
         #pragma warning disable
         EntityIndex<string> index = null;
-        Pool pool = null;
+        Context ctx = null;
         Group group = null;
 
         before = () => {
-            pool = new Pool(CID.TotalComponents);
+            ctx = new Context(CID.TotalComponents);
         };
 
         it["gets last component that triggered adding entity to group"] = () => {
 
             IComponent receivedComponent = null;
 
-            group = pool.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
+            group = ctx.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
             index = new EntityIndex<string>(group, (e, c) => {
                 receivedComponent = c;
                 return ((NameAgeComponent)c).name;
@@ -262,7 +262,7 @@ class describe_EntityIndex : nspec {
             var nameAgeComponent2 = new NameAgeComponent();
             nameAgeComponent2.name = "Jack";
 
-            pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent1)
+            ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent1)
                                .AddComponent(CID.ComponentB, nameAgeComponent2);
 
             receivedComponent.should_be_same(nameAgeComponent2);
@@ -278,7 +278,7 @@ class describe_EntityIndex : nspec {
             var nameAgeComponent2 = new NameAgeComponent();
             nameAgeComponent2.name = "Jack";
 
-            group = pool.GetGroup(Matcher.AllOf(CID.ComponentA).NoneOf(CID.ComponentB));
+            group = ctx.GetGroup(Matcher.AllOf(CID.ComponentA).NoneOf(CID.ComponentB));
             index = new EntityIndex<string>(group, (e, c) => {
                 receivedComponents.Add(c);
 
@@ -289,7 +289,7 @@ class describe_EntityIndex : nspec {
                 return ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
             });
 
-            pool.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent1)
+            ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent1)
                                .AddComponent(CID.ComponentB, nameAgeComponent2);
 
             receivedComponents.Count.should_be(2);

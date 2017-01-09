@@ -84,10 +84,10 @@ $(document).ready(function(){initNavTree('class_entitas_1_1_reactive_system.html
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#properties">Properties</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="class_entitas_1_1_reactive_system-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Entitas.ReactiveSystem Class Reference</div>  </div>
+<div class="title">Entitas.ReactiveSystem Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
@@ -103,12 +103,9 @@ Inheritance diagram for Entitas.ReactiveSystem:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abca6d134f0faa562796d8a5ec622cd90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#abca6d134f0faa562796d8a5ec622cd90">ReactiveSystem</a> (<a class="el" href="class_entitas_1_1_pool.html">Pool</a> pool, <a class="el" href="interface_entitas_1_1_i_reactive_system.html">IReactiveSystem</a> subSystem)</td></tr>
-<tr class="separator:abca6d134f0faa562796d8a5ec622cd90"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4a59b64f503485bc2bfae6ef1686f3e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#ac4a59b64f503485bc2bfae6ef1686f3e">ReactiveSystem</a> (<a class="el" href="class_entitas_1_1_pool.html">Pool</a> pool, <a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html">IMultiReactiveSystem</a> subSystem)</td></tr>
-<tr class="separator:ac4a59b64f503485bc2bfae6ef1686f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab051389ff42cc51b426cc945b932d5ca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#ab051389ff42cc51b426cc945b932d5ca">ReactiveSystem</a> (<a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a> subSystem)</td></tr>
-<tr class="separator:ab051389ff42cc51b426cc945b932d5ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b938ccb7a32d2597197c2bb1faea071"><td class="memItemLeft" align="right" valign="top"><a id="a7b938ccb7a32d2597197c2bb1faea071"></a>
+abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>Execute</b> (List&lt; <a class="el" href="class_entitas_1_1_entity.html">Entity</a> &gt; entities)</td></tr>
+<tr class="separator:a7b938ccb7a32d2597197c2bb1faea071"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0df56c479342d52cff5c2f47c457462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#ae0df56c479342d52cff5c2f47c457462">Activate</a> ()</td></tr>
 <tr class="separator:ae0df56c479342d52cff5c2f47c457462"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84b1f875f0504ab8611f348c5d762e29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#a84b1f875f0504ab8611f348c5d762e29">Deactivate</a> ()</td></tr>
@@ -123,124 +120,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 override string&#160;</td><td class="memItemRight" valign="bottom"><b>ToString</b> ()</td></tr>
 <tr class="separator:a414bd34afdbf9efc47f5f7057da2a81f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
-Properties</h2></td></tr>
-<tr class="memitem:a3cf1892f8b5ee16c89c0c27c7fc5118e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_entitas_1_1_i_reactive_execute_system.html">IReactiveExecuteSystem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#a3cf1892f8b5ee16c89c0c27c7fc5118e">subsystem</a><code> [get]</code></td></tr>
-<tr class="separator:a3cf1892f8b5ee16c89c0c27c7fc5118e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a558c30dfe94de749fe50448e14060e18"><td class="memItemLeft" align="right" valign="top"><a id="a558c30dfe94de749fe50448e14060e18"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ReactiveSystem</b> (<a class="el" href="class_entitas_1_1_entity_collector.html">EntityCollector</a> collector)</td></tr>
+<tr class="separator:a558c30dfe94de749fe50448e14060e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f14acfab2fd7b1b04b56b8621be577a"><td class="memItemLeft" align="right" valign="top"><a id="a6f14acfab2fd7b1b04b56b8621be577a"></a>
+abstract bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#a6f14acfab2fd7b1b04b56b8621be577a">Filter</a> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity)</td></tr>
+<tr class="memdesc:a6f14acfab2fd7b1b04b56b8621be577a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This will exclude all entities which don't pass the filter. <br /></td></tr>
+<tr class="separator:a6f14acfab2fd7b1b04b56b8621be577a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> manages your implementation of a <a class="el" href="interface_entitas_1_1_i_reactive_system.html">IReactiveSystem</a>, <a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html">IMultiReactiveSystem</a> or <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a> subsystem. It will only call subsystem.Execute() if there were changes based on the triggers and eventTypes specified by your subsystem and will only pass in changed entities. A common use-case is to react to changes, e.g. a change of the position of an entity to update the gameObject.transform.position of the related gameObject. Recommended way to create systems in general: pool.CreateSystem(new MySystem()); This will automatically wrap MySystem in a <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> if it implements <a class="el" href="interface_entitas_1_1_i_reactive_system.html">IReactiveSystem</a>, <a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html">IMultiReactiveSystem</a> or <a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>. </p>
+<div class="textblock"><p>A <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> calls Execute(entities) if there were changes based on the specified <a class="el" href="class_entitas_1_1_entity_collector.html">EntityCollector</a> and will only pass in changed entities. A common use-case is to react to changes, e.g. a change of the position of an entity to update the gameObject.transform.position of the related gameObject. </p>
 
-<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00016">16</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="abca6d134f0faa562796d8a5ec622cd90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abca6d134f0faa562796d8a5ec622cd90">&sect;&nbsp;</a></span>ReactiveSystem() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Entitas.ReactiveSystem.ReactiveSystem </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_entitas_1_1_pool.html">Pool</a>&#160;</td>
-          <td class="paramname"><em>pool</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="interface_entitas_1_1_i_reactive_system.html">IReactiveSystem</a>&#160;</td>
-          <td class="paramname"><em>subSystem</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Recommended way to create systems in general: pool.CreateSystem(new MySystem()); </p>
-
-<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00032">32</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
-
-</div>
-</div>
-<a id="ac4a59b64f503485bc2bfae6ef1686f3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4a59b64f503485bc2bfae6ef1686f3e">&sect;&nbsp;</a></span>ReactiveSystem() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Entitas.ReactiveSystem.ReactiveSystem </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_entitas_1_1_pool.html">Pool</a>&#160;</td>
-          <td class="paramname"><em>pool</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="interface_entitas_1_1_i_multi_reactive_system.html">IMultiReactiveSystem</a>&#160;</td>
-          <td class="paramname"><em>subSystem</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Recommended way to create systems in general: pool.CreateSystem(new MySystem()); </p>
-
-<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00039">39</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
-
-</div>
-</div>
-<a id="ab051389ff42cc51b426cc945b932d5ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab051389ff42cc51b426cc945b932d5ca">&sect;&nbsp;</a></span>ReactiveSystem() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Entitas.ReactiveSystem.ReactiveSystem </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="interface_entitas_1_1_i_entity_collector_system.html">IEntityCollectorSystem</a>&#160;</td>
-          <td class="paramname"><em>subSystem</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Recommended way to create systems in general: pool.CreateSystem(new MySystem()); </p>
-
-<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00045">45</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
+<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00010">10</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae0df56c479342d52cff5c2f47c457462"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0df56c479342d52cff5c2f47c457462">&sect;&nbsp;</a></span>Activate()</h2>
 
@@ -263,9 +157,9 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Activates the <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and starts observing changes based on the triggers and eventTypes specified by the subsystem. <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> are activated by default. </p>
+<p>Activates the <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and starts observing changes based on the specified <a class="el" href="class_entitas_1_1_entity_collector.html">EntityCollector</a>. <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> are activated by default. </p>
 
-<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00084">84</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
+<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00029">29</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
 
 </div>
 </div>
@@ -291,9 +185,9 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Deactivates the <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a>. No changes will be tracked while deactivated. This will also clear the ReactiveSystems. <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> are activated by default </p>
+<p>Deactivates the <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a>. No changes will be tracked while deactivated. This will also clear the <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a>. <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> are activated by default. </p>
 
-<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00092">92</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
+<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00037">37</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
 
 </div>
 </div>
@@ -319,37 +213,11 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Will call subsystem.Execute() with changed entities if there are any. Otherwise it will not call subsystem.Execute(). </p>
+<p>Will call Execute(entities) with changed entities if there are any. Otherwise it will not call Execute(entities). </p>
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_execute_system.html">Entitas.IExecuteSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00103">103</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Property Documentation</h2>
-<a id="a3cf1892f8b5ee16c89c0c27c7fc5118e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3cf1892f8b5ee16c89c0c27c7fc5118e">&sect;&nbsp;</a></span>subsystem</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="interface_entitas_1_1_i_reactive_execute_system.html">IReactiveExecuteSystem</a> Entitas.ReactiveSystem.subsystem</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Returns the subsystem which will be managed by this instance of <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a>. </p>
-
-<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00020">20</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
+<p>Definition at line <a class="el" href="_reactive_system_8cs_source.html#l00048">48</a> of file <a class="el" href="_reactive_system_8cs_source.html">ReactiveSystem.cs</a>.</p>
 
 </div>
 </div>

@@ -65,18 +65,18 @@
     <Compile Include="PerformanceTests\GroupObserver\EntityCollectorIterateCollectedEntities.cs" />
     <Compile Include="PerformanceTests\DataStructures\QueueDequeue.cs" />
     <Compile Include="PerformanceTests\DataStructures\ListQueue.cs" />
-    <Compile Include="PerformanceTests\Pool\PoolCreateEntity.cs" />
-    <Compile Include="PerformanceTests\Pool\PoolGetGroup.cs" />
-    <Compile Include="PerformanceTests\Pool\PoolOnEntityReplaced.cs" />
-    <Compile Include="PerformanceTests\Pool\PoolGetEntities.cs" />
-    <Compile Include="PerformanceTests\Pool\PoolHasEntity.cs" />
-    <Compile Include="PerformanceTests\Pool\PoolDestroyAllEntities.cs" />
-    <Compile Include="PerformanceTests\Pool\PoolDestroyEntity.cs" />
+    <Compile Include="PerformanceTests\Context\ContextCreateEntity.cs" />
+    <Compile Include="PerformanceTests\Context\ContextGetGroup.cs" />
+    <Compile Include="PerformanceTests\Context\ContextOnEntityReplaced.cs" />
+    <Compile Include="PerformanceTests\Context\ContextGetEntities.cs" />
+    <Compile Include="PerformanceTests\Context\ContextHasEntity.cs" />
+    <Compile Include="PerformanceTests\Context\ContextDestroyAllEntities.cs" />
+    <Compile Include="PerformanceTests\Context\ContextDestroyEntity.cs" />
     <Compile Include="PerformanceTests\DataStructures\HashSetContainsAdd.cs" />
     <Compile Include="PerformanceTests\Helper.cs" />
     <Compile Include="PerformanceTests\Misc\NewInstanceT.cs" />
     <Compile Include="PerformanceTests\Misc\NewInstanceActivator.cs" />
-    <Compile Include="PerformanceTests\Pool\PoolCreateBlueprint.cs" />
+    <Compile Include="PerformanceTests\Context\ContextCreateBlueprint.cs" />
     <Compile Include="PerformanceTests\Fixtures\NameComponent.cs" />
     <Compile Include="PerformanceTests\EntityIndex\EntityIndexGetEntity.cs" />
     <Compile Include="PerformanceTests\GroupObserver\EntityCollectorActivate.cs" />
@@ -89,7 +89,7 @@
     <Folder Include="PerformanceTests\EntityMatcher\" />
     <Folder Include="PerformanceTests\DataStructures\" />
     <Folder Include="PerformanceTests\GroupObserver\" />
-    <Folder Include="PerformanceTests\Pool\" />
+    <Folder Include="PerformanceTests\Context\" />
     <Folder Include="PerformanceTests\Misc\" />
     <Folder Include="PerformanceTests\EntityIndex\" />
   </ItemGroup>

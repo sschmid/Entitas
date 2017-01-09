@@ -64,7 +64,7 @@ class describe_SystemInfo : nspec {
         };
 
         it["creates systemInfo for reactive system"] = () => {
-            var system = new TestReactiveSystem(new Pools { test = new Pool(1) });
+            var system = new TestReactiveSystem(new Contexts { test = new Context(1) });
             var info = new SystemInfo(system);
 
             info.systemName.should_be("TestReactive");

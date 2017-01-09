@@ -4,18 +4,18 @@ public class EntityIndexGetEntity : IPerformanceTest {
 
     const int n = 1000000;
 
-    Pool _pool;
+    Context _context;
 
     PrimaryEntityIndex<string> _index;
 
     public void Before() {
-        _pool = Helper.CreatePool();
-        _index = new PrimaryEntityIndex<string>(_pool.GetGroup(Matcher.AllOf(CP.ComponentA)), (e, c) => ((NameComponent)c).name);
+        _context = Helper.CreateContext();
+        _index = new PrimaryEntityIndex<string>(_context.GetGroup(Matcher.AllOf(CP.ComponentA)), (e, c) => ((NameComponent)c).name);
 
         for (int i = 0; i < 10; i++) {
             var nameComponent = new NameComponent();
             nameComponent.name = i.ToString();
-            _pool.CreateEntity().AddComponent(CP.ComponentA, nameComponent);
+            _context.CreateEntity().AddComponent(CP.ComponentA, nameComponent);
         }
     }
 

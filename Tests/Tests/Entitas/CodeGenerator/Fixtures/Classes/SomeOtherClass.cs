@@ -2,7 +2,7 @@ using Entitas.CodeGenerator;
 
 namespace SomeNamespace {
 
-    [Pool("SomePool")]
+    [Context("SomeContext")]
     public class SomeOtherClass {
     }
 }

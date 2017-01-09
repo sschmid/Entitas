@@ -1,5 +1,5 @@
 using Entitas.CodeGenerator;
 
-[Pool("SomePool"), CustomComponentName("SomeName", "SomeOtherName")]
+[Context("SomeContext"), CustomComponentName("SomeName", "SomeOtherName")]
 public interface CustomNames {
 }

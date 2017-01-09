@@ -3,8 +3,8 @@ using Entitas;
 
 public class SomeReactiveSystem : ReactiveSystem {
 
-    public SomeReactiveSystem(Pools pools) : base(
-        pools.visualDebugging.CreateCollector(Matcher.AllOf(0))
+    public SomeReactiveSystem(Contexts contexts) : base(
+        contexts.visualDebugging.CreateCollector(Matcher.AllOf(0))
     ) { }
 
     protected override bool Filter(Entity entity) {

@@ -15,8 +15,8 @@ namespace Readme {
             var codeGenerators = new ICodeGenerator[] {
                 new ComponentExtensionsGenerator(),
                 new ComponentIndicesGenerator(),
-                new PoolAttributesGenerator(),
-                new PoolsGenerator()
+                new ContextAttributesGenerator(),
+                new ContextsGenerator()
             };
 
             var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));

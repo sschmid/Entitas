@@ -6,26 +6,26 @@ using UnityEngine;
 public class VisualDebuggingExampleController : MonoBehaviour {
 
     void Start() {
-        var pool = Pools.sharedInstance.visualDebugging = Pools.CreateVisualDebuggingPool();
+        var context = Contexts.sharedInstance.visualDebugging = Contexts.CreateVisualDebuggingContext();
 
-        createTestGroups(pool);
+        createTestGroups(context);
 
-        createTestEntities(pool);
-        createTestEntityWithNullValues(pool);
+        createTestEntities(context);
+        createTestEntityWithNullValues(context);
 
-        createTestEntityError(pool);
+        createTestEntityError(context);
     }
 
-    void createTestGroups(Pool pool) {
-        pool.GetGroup(VisualDebuggingMatcher.Vector3);
-        pool.GetGroup(VisualDebuggingMatcher.GameObject);
-        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
-        pool.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
+    void createTestGroups(Context context) {
+        context.GetGroup(VisualDebuggingMatcher.Vector3);
+        context.GetGroup(VisualDebuggingMatcher.GameObject);
+        context.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
+        context.GetGroup(Matcher.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
     }
 
-    void createTestEntities(Pool pool) {
+    void createTestEntities(Context context) {
         for (int i = 0; i < 2; i++) {
-            var e = pool.CreateEntity();
+            var e = context.CreateEntity();
 
             // Unity's builtIn
             e.AddBounds(new Bounds());
@@ -93,8 +93,8 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         }
     }
 
-    void createTestEntityWithNullValues(Pool pool) {
-        var e = pool.CreateEntity();
+    void createTestEntityWithNullValues(Context context) {
+        var e = context.CreateEntity();
 
         // Unity's builtIn
         AnimationCurve animationCurve = null;
@@ -146,7 +146,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         e.AddPerson(personName, personGender);
     }
 
-    void createTestEntityError(Pool pool) {
-        pool.DestroyEntity(pool.CreateEntity().Retain(this));
+    void createTestEntityError(Context context) {
+        context.DestroyEntity(context.CreateEntity().Retain(this));
     }
 }

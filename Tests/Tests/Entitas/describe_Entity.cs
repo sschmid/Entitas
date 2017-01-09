@@ -48,19 +48,19 @@ class describe_Entity : nspec {
 
         context["initial state"] = () => {
 
-            it["has default PoolMetaData"] = () => {
-                e.poolMetaData.poolName.should_be("No Pool");
-                e.poolMetaData.componentNames.Length.should_be(CID.TotalComponents);
-                e.poolMetaData.componentTypes.should_be_null();
-                for(int i = 0; i < e.poolMetaData.componentNames.Length; i++) {
-                    e.poolMetaData.componentNames[i].should_be(i.ToString());
+            it["has default ContextInfo"] = () => {
+                e.contextInfo.name.should_be("No Context");
+                e.contextInfo.componentNames.Length.should_be(CID.TotalComponents);
+                e.contextInfo.componentTypes.should_be_null();
+                for(int i = 0; i < e.contextInfo.componentNames.Length; i++) {
+                    e.contextInfo.componentNames[i].should_be(i.ToString());
                 }
             };
 
-            it["has custom PoolMetaData when set"] = () => {
-                var poolMetaData = new PoolMetaData(null, null, null);
-                e = new Entity(0, null, poolMetaData);
-                e.poolMetaData.should_be_same(poolMetaData);
+            it["has custom ContextInfo when set"] = () => {
+                var contextInfo = new ContextInfo(null, null, null);
+                e = new Entity(0, null, contextInfo);
+                e.contextInfo.should_be_same(contextInfo);
             };
 
             it["throws when attempting to get component at index which hasn't been added"] = expect<EntityDoesNotHaveComponentException>(() => {
@@ -203,12 +203,12 @@ class describe_Entity : nspec {
 
         context["componentPool"] = () => {
 
-            it["gets component pool"] = () => {
+            it["gets component context"] = () => {
                 var componentPool = e.GetComponentPool(CID.ComponentA);
                 componentPool.Count.should_be(0);
             };
 
-            it["gets same component pool instance"] = () => {
+            it["gets same component context instance"] = () => {
                 e.GetComponentPool(CID.ComponentA).should_be_same(e.GetComponentPool(CID.ComponentA));
             };
 
@@ -281,7 +281,7 @@ class describe_Entity : nspec {
                 didDispatch.should_be(1);
             };
 
-            it["dispatches OnComponentRemoved before pushing component to pool"] = () => {
+            it["dispatches OnComponentRemoved before pushing component to context"] = () => {
                 e.AddComponentA();
 
                 e.OnComponentRemoved += (entity, index, component) => {

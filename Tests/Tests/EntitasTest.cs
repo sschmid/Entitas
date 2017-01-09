@@ -3,11 +3,11 @@ using Entitas;
 
 class EntitasTest : nspec {
 
-    protected Pool _pool;
+    protected Context _context;
     protected Entity _entity;
 
     protected Entity createEntity() {
-        return _pool.CreateEntity();
+        return _context.CreateEntity();
     }
 
     protected Entity createEntityA() {
@@ -19,7 +19,7 @@ class EntitasTest : nspec {
     }
 
     protected Group getGroupA() {
-        return _pool.GetGroup(createMatcherA());
+        return _context.GetGroup(createMatcherA());
     }
 
     protected PrimaryEntityIndex<string> createPrimaryIndex() {

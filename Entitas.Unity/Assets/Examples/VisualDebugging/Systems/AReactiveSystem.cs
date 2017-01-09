@@ -4,8 +4,8 @@ using Entitas;
 
 public class AReactiveSystem : ReactiveSystem {
 
-    public AReactiveSystem(Pools pools) : base(
-        pools.visualDebugging.CreateCollector(VisualDebuggingMatcher.MyString)
+    public AReactiveSystem(Contexts contexts) : base(
+        contexts.visualDebugging.CreateCollector(VisualDebuggingMatcher.MyString)
     ) { }
 
     protected override bool Filter(Entity entity) {

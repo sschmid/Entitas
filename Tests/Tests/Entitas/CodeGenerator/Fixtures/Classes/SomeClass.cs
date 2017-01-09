@@ -1,5 +1,5 @@
 using Entitas.CodeGenerator;
 
-[Pool, Pool("SomePool"), Pool("SomeOtherPool")]
+[Context, Context("SomeContext"), Context("SomeOtherContext")]
 public class SomeClass {
 }

@@ -2,7 +2,7 @@ using Entitas;
 using Entitas.CodeGenerator;
 
 public static class Helper {
-    public static Pool CreatePool() {
-        return new Pool(CP.NumComponents, 0, new PoolMetaData(CodeGenerator.DEFAULT_POOL_NAME, new string[CP.NumComponents], null));
+    public static Context CreateContext() {
+        return new Context(CP.NumComponents, 0, new ContextInfo(CodeGenerator.DEFAULT_CONTEXT_NAME, new string[CP.NumComponents], null));
     }
 }

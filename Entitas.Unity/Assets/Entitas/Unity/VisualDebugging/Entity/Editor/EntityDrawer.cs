@@ -19,7 +19,7 @@ namespace Entitas.Unity.VisualDebugging {
             public Type type;
         }
 
-        static Dictionary<Pool, bool[]> _poolToUnfoldedComponents;
+        static Dictionary<Context, bool[]> _contextToUnfoldedComponents;
         static GUIStyle _foldoutStyle;
         static Dictionary<int, GUIStyle[]> _coloredBoxStyles;
 
@@ -35,7 +35,7 @@ namespace Entitas.Unity.VisualDebugging {
             if(!_isInitialized) {
                 _isInitialized = true;
 
-                _poolToUnfoldedComponents = new Dictionary<Pool, bool[]>();
+                _contextToUnfoldedComponents = new Dictionary<Context, bool[]>();
 
                 var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
                 _defaultInstanceCreators = types
@@ -65,15 +65,15 @@ namespace Entitas.Unity.VisualDebugging {
             _coloredBoxStyles = new Dictionary<int, GUIStyle[]>();
         }
 
-        public static void DrawEntity(Pool pool, Entity entity) {
+        public static void DrawEntity(Context context, Entity entity) {
             var bgColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.red;
             if(GUILayout.Button("Destroy Entity")) {
-                pool.DestroyEntity(entity);
+                context.DestroyEntity(entity);
             }
             GUI.backgroundColor = bgColor;
 
-            DrawComponents(pool, entity);
+            DrawComponents(context, entity);
 
             EditorGUILayout.Space();
 
@@ -99,14 +99,14 @@ namespace Entitas.Unity.VisualDebugging {
             #endif
         }
 
-        public static void DrawComponents(Pool pool, Entity entity, bool hideInBlueprintInspector = false) {
+        public static void DrawComponents(Context context, Entity entity, bool hideInBlueprintInspector = false) {
             bool[] unfoldedComponents;
-            if(!_poolToUnfoldedComponents.TryGetValue(pool, out unfoldedComponents)) {
-                unfoldedComponents = new bool[pool.totalComponents];
+            if(!_contextToUnfoldedComponents.TryGetValue(context, out unfoldedComponents)) {
+                unfoldedComponents = new bool[context.totalComponents];
                 for (int i = 0; i < unfoldedComponents.Length; i++) {
                     unfoldedComponents[i] = true;
                 }
-                _poolToUnfoldedComponents.Add(pool, unfoldedComponents);
+                _contextToUnfoldedComponents.Add(context, unfoldedComponents);
             }
 
             EntitasEditorLayout.BeginVerticalBox();
@@ -131,7 +131,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                 var index = drawAddComponentMenu(entity, hideInBlueprintInspector);
                 if(index >= 0) {
-                    var componentType = entity.poolMetaData.componentTypes[index];
+                    var componentType = entity.contextInfo.componentTypes[index];
                     var component = (IComponent)Activator.CreateInstance(componentType);
                     entity.AddComponent(index, component);
                 }
@@ -162,14 +162,14 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
         }
 
-        public static void DrawMultipleEntities(Pool pool, Entity[] entities, bool hideInBlueprintInspector = false) {
+        public static void DrawMultipleEntities(Context context, Entity[] entities, bool hideInBlueprintInspector = false) {
             EditorGUILayout.Space();
             EntitasEditorLayout.BeginHorizontal();
             {
                 var entity = entities[0];
                 var index = drawAddComponentMenu(entity, hideInBlueprintInspector);
                 if(index >= 0) {
-                    var componentType = entity.poolMetaData.componentTypes[index];
+                    var componentType = entity.contextInfo.componentTypes[index];
                     foreach(var e in entities) {
                         var component = (IComponent)Activator.CreateInstance(componentType);
                         e.AddComponent(index, component);
@@ -185,7 +185,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             if(GUILayout.Button("Destroy selected entities")) {
                 foreach(var e in entities) {
-                    pool.DestroyEntity(e);
+                    context.DestroyEntity(e);
                 }
             }
 
@@ -203,7 +203,7 @@ namespace Entitas.Unity.VisualDebugging {
                     GUI.backgroundColor = Color.red;
 
                     if(GUILayout.Button("Destroy Entity")) {
-                        pool.DestroyEntity(e);
+                        context.DestroyEntity(e);
                     }
 
                     GUI.backgroundColor = bgColor;
@@ -365,10 +365,10 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static ComponentInfo[] getComponentInfos(Entity entity, bool hideInBlueprintInspector) {
-            var infos = new List<ComponentInfo>(entity.poolMetaData.componentTypes.Length);
-            for (int i = 0; i < entity.poolMetaData.componentTypes.Length; ++i) {
-                var type = entity.poolMetaData.componentTypes[i];
-                var name = entity.poolMetaData.componentNames[i];
+            var infos = new List<ComponentInfo>(entity.contextInfo.componentTypes.Length);
+            for (int i = 0; i < entity.contextInfo.componentTypes.Length; ++i) {
+                var type = entity.contextInfo.componentTypes[i];
+                var name = entity.contextInfo.componentNames[i];
                 if(!hideInBlueprintInspector || !Attribute.IsDefined(type, typeof(HideInBlueprintInspectorAttribute))) {
                     infos.Add(new ComponentInfo {
                         index = i,

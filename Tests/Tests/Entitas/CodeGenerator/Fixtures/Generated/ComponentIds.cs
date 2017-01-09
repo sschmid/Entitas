@@ -10,10 +10,10 @@ public static class ComponentIds {
 
     public const int Animating = 0;
     public const int SomeClass = 1;
-    public const int MultiplePoolAndDefaultPool = 2;
+    public const int MultipleContextAndDefaultContext = 2;
     public const int ComponentWithFieldsAndProperties = 3;
     public const int CustomPrefix = 4;
-    public const int DefaultPool = 5;
+    public const int DefaultContext = 5;
     public const int Movable = 6;
     public const int Namespace = 7;
     public const int Person = 8;
@@ -26,10 +26,10 @@ public static class ComponentIds {
     public static readonly string[] componentNames = {
         "Animating",
         "SomeClass",
-        "MultiplePoolAndDefaultPool",
+        "MultipleContextAndDefaultContext",
         "ComponentWithFieldsAndProperties",
         "CustomPrefix",
-        "DefaultPool",
+        "DefaultContext",
         "Movable",
         "Namespace",
         "Person",
@@ -41,10 +41,10 @@ public static class ComponentIds {
     public static readonly System.Type[] componentTypes = {
         typeof(AnimatingComponent),
         typeof(SomeClassComponent),
-        typeof(MultiplePoolAndDefaultPoolComponent),
+        typeof(MultipleContextAndDefaultContextComponent),
         typeof(ComponentWithFieldsAndProperties),
         typeof(CustomPrefixComponent),
-        typeof(DefaultPoolComponent),
+        typeof(DefaultContextComponent),
         typeof(MovableComponent),
         typeof(My.Namespace.NamespaceComponent),
         typeof(PersonComponent),

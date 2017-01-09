@@ -56,15 +56,15 @@ namespace Entitas {
     }
 }
 
-    public partial class SomeOtherPoolMatcher {
+    public partial class SomeContextMatcher {
 
         static IMatcher _matcherSomeClass;
 
         public static IMatcher SomeClass {
             get {
                 if(_matcherSomeClass == null) {
-                    var matcher = (Matcher)Matcher.AllOf(SomeOtherPoolComponentIds.SomeClass);
-                    matcher.componentNames = SomeOtherPoolComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(SomeContextComponentIds.SomeClass);
+                    matcher.componentNames = SomeContextComponentIds.componentNames;
                     _matcherSomeClass = matcher;
                 }
 
@@ -73,15 +73,15 @@ namespace Entitas {
         }
     }
 
-    public partial class SomePoolMatcher {
+    public partial class SomeOtherContextMatcher {
 
         static IMatcher _matcherSomeClass;
 
         public static IMatcher SomeClass {
             get {
                 if(_matcherSomeClass == null) {
-                    var matcher = (Matcher)Matcher.AllOf(SomePoolComponentIds.SomeClass);
-                    matcher.componentNames = SomePoolComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(SomeOtherContextComponentIds.SomeClass);
+                    matcher.componentNames = SomeOtherContextComponentIds.componentNames;
                     _matcherSomeClass = matcher;
                 }
 

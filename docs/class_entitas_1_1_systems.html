@@ -152,9 +152,9 @@ readonly List&lt; <a class="el" href="interface_entitas_1_1_i_tear_down_system.h
 <tr class="separator:ac1b777aaf53a1ab62e057f00e28768e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="class_entitas_1_1_systems.html">Systems</a> provide a convenient way to group systems. You can add <a class="el" href="interface_entitas_1_1_i_initialize_system.html">IInitializeSystem</a>, <a class="el" href="interface_entitas_1_1_i_execute_system.html">IExecuteSystem</a>, <a class="el" href="interface_entitas_1_1_i_cleanup_system.html">ICleanupSystem</a>, <a class="el" href="interface_entitas_1_1_i_tear_down_system.html">ITearDownSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances. All systems will be initialized and executed based on the order you added them. </p>
+<div class="textblock"><p><a class="el" href="class_entitas_1_1_systems.html">Systems</a> provide a convenient way to group systems. You can add <a class="el" href="interface_entitas_1_1_i_initialize_system.html">IInitializeSystem</a>, <a class="el" href="interface_entitas_1_1_i_execute_system.html">IExecuteSystem</a>, <a class="el" href="interface_entitas_1_1_i_cleanup_system.html">ICleanupSystem</a>, <a class="el" href="interface_entitas_1_1_i_tear_down_system.html">ITearDownSystem</a>, ReactiveS ystem and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances. All systems will be initialized and executed based on the order you added them. </p>
 
-<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00010">10</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00011">11</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae9cb3253bb32206b420b4a041ebdcff2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae9cb3253bb32206b420b4a041ebdcff2">&sect;&nbsp;</a></span>Cleanup()</h2>
@@ -178,11 +178,11 @@ readonly List&lt; <a class="el" href="interface_entitas_1_1_i_tear_down_system.h
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Calls <a class="el" href="class_entitas_1_1_systems.html#ae9cb3253bb32206b420b4a041ebdcff2">Cleanup()</a> on all <a class="el" href="interface_entitas_1_1_i_cleanup_system.html">ICleanupSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
+<p>Calls <a class="el" href="class_entitas_1_1_systems.html#ae9cb3253bb32206b420b4a041ebdcff2">Cleanup()</a> on all <a class="el" href="interface_entitas_1_1_i_cleanup_system.html">ICleanupSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_cleanup_system.html">Entitas.ICleanupSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00080">80</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00070">70</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
 
 </div>
 </div>
@@ -210,7 +210,7 @@ readonly List&lt; <a class="el" href="interface_entitas_1_1_i_tear_down_system.h
 </div><div class="memdoc">
 <p>Deactivates all ReactiveSystems in the systems list. This will also clear all ReactiveSystems. This is useful when you want to soft-restart your application and want to reuse your existing system instances. </p>
 
-<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00114">114</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00104">104</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
 
 </div>
 </div>
@@ -236,11 +236,11 @@ readonly List&lt; <a class="el" href="interface_entitas_1_1_i_tear_down_system.h
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Calls <a class="el" href="class_entitas_1_1_systems.html#a5b3a145d250e1a5b8cfa90f9b3c0b716">Execute()</a> on all <a class="el" href="interface_entitas_1_1_i_execute_system.html">IExecuteSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
+<p>Calls <a class="el" href="class_entitas_1_1_systems.html#a5b3a145d250e1a5b8cfa90f9b3c0b716">Execute()</a> on all <a class="el" href="interface_entitas_1_1_i_execute_system.html">IExecuteSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_execute_system.html">Entitas.IExecuteSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00072">72</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00062">62</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
 
 </div>
 </div>
@@ -266,11 +266,11 @@ readonly List&lt; <a class="el" href="interface_entitas_1_1_i_tear_down_system.h
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Calls <a class="el" href="class_entitas_1_1_systems.html#a33b35b3cdbdb16c347086a4ce4a23495">Initialize()</a> on all <a class="el" href="interface_entitas_1_1_i_initialize_system.html">IInitializeSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
+<p>Calls <a class="el" href="class_entitas_1_1_systems.html#a33b35b3cdbdb16c347086a4ce4a23495">Initialize()</a> on all <a class="el" href="interface_entitas_1_1_i_initialize_system.html">IInitializeSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_initialize_system.html">Entitas.IInitializeSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00064">64</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00054">54</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
 
 </div>
 </div>
@@ -296,11 +296,11 @@ readonly List&lt; <a class="el" href="interface_entitas_1_1_i_tear_down_system.h
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Calls <a class="el" href="class_entitas_1_1_systems.html#a7610d89dd9172d6dd881bd73f7cb0b48">TearDown()</a> on all <a class="el" href="interface_entitas_1_1_i_tear_down_system.html">ITearDownSystem</a>, <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
+<p>Calls <a class="el" href="class_entitas_1_1_systems.html#a7610d89dd9172d6dd881bd73f7cb0b48">TearDown()</a> on all <a class="el" href="interface_entitas_1_1_i_tear_down_system.html">ITearDownSystem</a> and other nested <a class="el" href="class_entitas_1_1_systems.html">Systems</a> instances in the order you added them. </p>
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_tear_down_system.html">Entitas.ITearDownSystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00088">88</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
+<p>Definition at line <a class="el" href="_systems_8cs_source.html#l00078">78</a> of file <a class="el" href="_systems_8cs_source.html">Systems.cs</a>.</p>
 
 </div>
 </div>

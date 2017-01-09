@@ -12,8 +12,8 @@ namespace Entitas.Unity.CodeGenerator {
 
         string[] _availableGeneratorNames;
         CodeGeneratorConfig _codeGeneratorConfig;
-        List<string> _pools;
-        UnityEditorInternal.ReorderableList _poolList;
+        List<string> _contexts;
+        UnityEditorInternal.ReorderableList _contextList;
 
         public void Initialize(EntitasPreferencesConfig config) {
             _availableGeneratorNames = UnityCodeGenerator.GetCodeGenerators()
@@ -23,17 +23,17 @@ namespace Entitas.Unity.CodeGenerator {
 
             _codeGeneratorConfig = new CodeGeneratorConfig(config, _availableGeneratorNames);
 
-            _pools = new List<string>(_codeGeneratorConfig.pools);
+            _contexts = new List<string>(_codeGeneratorConfig.contexts);
 
-            _poolList = new UnityEditorInternal.ReorderableList(_pools, typeof(string), true, true, true, true);
-            _poolList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Custom Pools");
-            _poolList.drawElementCallback = (rect, index, isActive, isFocused) => {
+            _contextList = new UnityEditorInternal.ReorderableList(_contexts, typeof(string), true, true, true, true);
+            _contextList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Contexts");
+            _contextList.drawElementCallback = (rect, index, isActive, isFocused) => {
                 rect.width -= 20;
-                _pools[index] = EditorGUI.TextField(rect, _pools[index]);
+                _contexts[index] = EditorGUI.TextField(rect, _contexts[index]);
             };
-            _poolList.onAddCallback = list => list.list.Add("New Pool");
-            _poolList.onCanRemoveCallback = list => true;
-            _poolList.onChangedCallback = list => GUI.changed = true;
+            _contextList.onAddCallback = list => list.list.Add("New Context");
+            _contextList.onCanRemoveCallback = list => true;
+            _contextList.onChangedCallback = list => GUI.changed = true;
         }
 
         public void Draw(EntitasPreferencesConfig config) {
@@ -42,7 +42,7 @@ namespace Entitas.Unity.CodeGenerator {
                 EditorGUILayout.LabelField("Code Generator", EditorStyles.boldLabel);
 
                 drawGeneratedFolderPath();
-                drawPools();
+                drawContexts();
                 drawCodeGenerators();
             }
             EntitasEditorLayout.EndVertical();
@@ -52,19 +52,19 @@ namespace Entitas.Unity.CodeGenerator {
             _codeGeneratorConfig.generatedFolderPath = EditorGUILayout.TextField("Generated Folder", _codeGeneratorConfig.generatedFolderPath);
         }
 
-        void drawPools() {
+        void drawContexts() {
             EditorGUILayout.Space();
 
-            _poolList.DoLayoutList();
+            _contextList.DoLayoutList();
 
-            if(_pools.Count <= 1) {
-                EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple pools. " +
-                "The code generator generates subclasses of PoolAttribute for each pool name. " +
-                "You can assign components to a specific pool with the generated attribute, e.g. [UI] or [MetaGame], " +
-                "otherwise they are assigned to the default pool.", MessageType.Info);
+            if(_contexts.Count <= 1) {
+                EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple contexts. " +
+                "The code generator generates subclasses of ContextAttribute for each context name. " +
+                "You can assign components to a specific context with the generated attribute, e.g. [UI] or [MetaGame], " +
+                "otherwise they are assigned to the default context.", MessageType.Info);
             }
 
-            _codeGeneratorConfig.pools = _pools.ToArray();
+            _codeGeneratorConfig.contexts = _contexts.ToArray();
         }
 
         void drawCodeGenerators() {

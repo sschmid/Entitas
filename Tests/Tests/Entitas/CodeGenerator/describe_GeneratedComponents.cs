@@ -6,10 +6,10 @@ class describe_GeneratedComponents : nspec {
 
     void when_generated() {
 
-        Pool pool = null;
+        Context ctx = null;
 
         before = () => {
-            pool = new Pool(ComponentIds.TotalComponents);
+            ctx = new Context(ComponentIds.TotalComponents);
         };
 
         context["component without fields"] = () => {
@@ -18,7 +18,7 @@ class describe_GeneratedComponents : nspec {
             int index = -1;
 
             before = () => {
-                e = pool.CreateEntity();
+                e = ctx.CreateEntity();
                 e.isMovable = true;
                 index = ComponentIds.Movable;
             };
@@ -45,7 +45,7 @@ class describe_GeneratedComponents : nspec {
             };
 
             it["adds same instance to multiple entities"] = () => {
-                var e2 = pool.CreateEntity();
+                var e2 = ctx.CreateEntity();
                 e2.isMovable = true;
 
                 e.GetComponent(index).should_be_same(e2.GetComponent(index));
@@ -90,7 +90,7 @@ class describe_GeneratedComponents : nspec {
             int index = ComponentIds.Person;
 
             before = () => {
-                e = pool.CreateEntity();
+                e = ctx.CreateEntity();
             };
 
             it["adds component"] = () => {
@@ -155,9 +155,9 @@ class describe_GeneratedComponents : nspec {
                 };
 
                 it["reuses component when destroying entity"] = () => {
-                    pool.DestroyEntity(e);
+                    ctx.DestroyEntity(e);
 
-                    e = pool.CreateEntity();
+                    e = ctx.CreateEntity();
                     e.AddPerson(24, "John");
 
                     e.person.should_be_same(person);
@@ -201,7 +201,7 @@ class describe_GeneratedComponents : nspec {
             context["entity extensions"] = () => {
 
                 before = () => {
-                    e = pool.CreateEntity();
+                    e = ctx.CreateEntity();
                     e.isAnimating = true;
                 };
 
@@ -227,7 +227,7 @@ class describe_GeneratedComponents : nspec {
                 };
 
                 it["adds same instance to multiple entities"] = () => {
-                    var e2 = pool.CreateEntity();
+                    var e2 = ctx.CreateEntity();
                     e2.isAnimating = true;
 
                     e.GetComponent(index).should_be_same(e2.GetComponent(index));
@@ -266,59 +266,59 @@ class describe_GeneratedComponents : nspec {
                 };
             };
 
-            context["pool extensions"] = () => {
+            context["context extensions"] = () => {
 
                 before = () => {
-                    pool.isAnimating = true;
+                    ctx.isAnimating = true;
                 };
 
                 it["creates entity"] = () => {
-                    var singleEntity = pool.GetGroup(Matcher.Animating).GetSingleEntity();
+                    var singleEntity = ctx.GetGroup(Matcher.Animating).GetSingleEntity();
                     singleEntity.should_not_be_null();
 
-                    pool.animatingEntity.should_be_same(singleEntity);
+                    ctx.animatingEntity.should_be_same(singleEntity);
 
-                    pool.isAnimating.should_be_true();
+                    ctx.isAnimating.should_be_true();
                 };
 
                 it["destroys entity"] = () => {
-                    pool.isAnimating = false;
+                    ctx.isAnimating = false;
 
-                    var singleEntity = pool.GetGroup(Matcher.Animating).GetSingleEntity();
+                    var singleEntity = ctx.GetGroup(Matcher.Animating).GetSingleEntity();
                     singleEntity.should_be_null();
 
-                    pool.animatingEntity.should_be_null();
+                    ctx.animatingEntity.should_be_null();
 
-                    pool.isAnimating.should_be_false();
+                    ctx.isAnimating.should_be_false();
 
-                    pool.count.should_be(0);
+                    ctx.count.should_be(0);
                 };
 
                 it["doesn't create entity if it already exists"] = () => {
-                    var animatingEntity = pool.animatingEntity;
-                    pool.isAnimating = true;
-                    pool.animatingEntity.should_be_same(animatingEntity);
-                    pool.isAnimating = true;
-                    pool.animatingEntity.should_be_same(animatingEntity);
-                    pool.GetEntities(Matcher.Animating).Length.should_be(1);
+                    var animatingEntity = ctx.animatingEntity;
+                    ctx.isAnimating = true;
+                    ctx.animatingEntity.should_be_same(animatingEntity);
+                    ctx.isAnimating = true;
+                    ctx.animatingEntity.should_be_same(animatingEntity);
+                    ctx.GetEntities(Matcher.Animating).Length.should_be(1);
                 };
 
                 it["ignores setting to false multiple times"] = () => {
-                    pool.isAnimating = false;
-                    pool.isAnimating = false;
-                    pool.animatingEntity.should_be_null();
+                    ctx.isAnimating = false;
+                    ctx.isAnimating = false;
+                    ctx.animatingEntity.should_be_null();
                 };
 
                 it["destroys entity even if it has other components"] = () => {
-                    pool.animatingEntity.AddPerson(42, "Max");
+                    ctx.animatingEntity.AddPerson(42, "Max");
 
-                    pool.isAnimating = false;
+                    ctx.isAnimating = false;
 
-                    var singleEntity = pool.GetGroup(Matcher.Animating).GetSingleEntity();
+                    var singleEntity = ctx.GetGroup(Matcher.Animating).GetSingleEntity();
                     singleEntity.should_be_null();
-                    pool.animatingEntity.should_be_null();
+                    ctx.animatingEntity.should_be_null();
 
-                    pool.count.should_be(0);
+                    ctx.count.should_be(0);
                 };
             };
         };
@@ -334,7 +334,7 @@ class describe_GeneratedComponents : nspec {
                 Entity e = null;
 
                 before = () => {
-                    e = pool.CreateEntity();
+                    e = ctx.CreateEntity();
                 };
 
                 it["adds component"] = () => {
@@ -399,9 +399,9 @@ class describe_GeneratedComponents : nspec {
                     };
 
                     it["reuses component when destroying entity"] = () => {
-                        pool.DestroyEntity(e);
+                        ctx.DestroyEntity(e);
 
-                        e = pool.CreateEntity();
+                        e = ctx.CreateEntity();
                         e.AddUser(date2, true);
 
                         e.user.should_be_same(user);
@@ -433,75 +433,75 @@ class describe_GeneratedComponents : nspec {
                 };
             };
 
-            context["pool extensions"] = () => {
+            context["context extensions"] = () => {
 
                 it["creates entity"] = () => {
-                    var userEntity = pool.SetUser(date1, false);
+                    var userEntity = ctx.SetUser(date1, false);
 
-                    var singleEntity = pool.GetGroup(Matcher.User).GetSingleEntity();
+                    var singleEntity = ctx.GetGroup(Matcher.User).GetSingleEntity();
                     singleEntity.should_be_same(userEntity);
 
-                    pool.userEntity.should_be_same(userEntity);
-                    pool.hasUser.should_be_true();
-                    pool.user.should_be_same(userEntity.user);
+                    ctx.userEntity.should_be_same(userEntity);
+                    ctx.hasUser.should_be_true();
+                    ctx.user.should_be_same(userEntity.user);
 
                     userEntity.user.timestamp.should_be(date1);
                     userEntity.user.isLoggedIn.should_be_false();
                 };
 
                 it["throws when creating the entity twice"] = expect<EntitasException>(() => {
-                    pool.SetUser(date1, false);
-                    pool.SetUser(date2, true);
+                    ctx.SetUser(date1, false);
+                    ctx.SetUser(date2, true);
                 });
 
                 it["replaces component on existing entity"] = () => {
-                    pool.SetUser(date1, false);
-                    var userEntity = pool.userEntity;
-                    pool.ReplaceUser(date2, true);
+                    ctx.SetUser(date1, false);
+                    var userEntity = ctx.userEntity;
+                    ctx.ReplaceUser(date2, true);
 
-                    pool.userEntity.should_be_same(userEntity);
-                    pool.userEntity.user.timestamp.should_be(date2);
-                    pool.userEntity.user.isLoggedIn.should_be_true();
+                    ctx.userEntity.should_be_same(userEntity);
+                    ctx.userEntity.user.timestamp.should_be(date2);
+                    ctx.userEntity.user.isLoggedIn.should_be_true();
                 };
 
                 it["creates entity when using replace but entity doesn't exist"] = () => {
-                    pool.ReplaceUser(date2, true);
+                    ctx.ReplaceUser(date2, true);
 
-                    pool.userEntity.user.timestamp.should_be(date2);
-                    pool.userEntity.user.isLoggedIn.should_be_true();
+                    ctx.userEntity.user.timestamp.should_be(date2);
+                    ctx.userEntity.user.isLoggedIn.should_be_true();
 
-                    pool.GetEntities(Matcher.User).Length.should_be(1);
+                    ctx.GetEntities(Matcher.User).Length.should_be(1);
                 };
 
                 it["destroys entity"] = () => {
-                    pool.SetUser(date1, false);
-                    pool.RemoveUser();
+                    ctx.SetUser(date1, false);
+                    ctx.RemoveUser();
 
-                    var singleEntity = pool.GetGroup(Matcher.User).GetSingleEntity();
+                    var singleEntity = ctx.GetGroup(Matcher.User).GetSingleEntity();
                     singleEntity.should_be_null();
 
-                    pool.userEntity.should_be_null();
-                    pool.hasUser.should_be_false();
+                    ctx.userEntity.should_be_null();
+                    ctx.hasUser.should_be_false();
 
-                    pool.count.should_be(0);
+                    ctx.count.should_be(0);
                 };
 
                 it["destroys entity even if it has other components"] = () => {
-                    var userEntity = pool.SetUser(date1, false);
+                    var userEntity = ctx.SetUser(date1, false);
                     userEntity.isMovable = true;
-                    pool.RemoveUser();
+                    ctx.RemoveUser();
 
-                    var singleEntity = pool.GetGroup(Matcher.User).GetSingleEntity();
+                    var singleEntity = ctx.GetGroup(Matcher.User).GetSingleEntity();
                     singleEntity.should_be_null();
 
-                    pool.userEntity.should_be_null();
-                    pool.hasUser.should_be_false();
+                    ctx.userEntity.should_be_null();
+                    ctx.hasUser.should_be_false();
 
-                    pool.count.should_be(0);
+                    ctx.count.should_be(0);
                 };
 
                 it["throws when trying to get component but entity doesn't exist"] = expect<NullReferenceException>(() => {
-                    var user = pool.user;
+                    var user = ctx.user;
                 });
             };
         };

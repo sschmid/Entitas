@@ -9,10 +9,10 @@ namespace Entitas {
         OnEntityAddedOrRemoved
     }
 
-    /// Use pool.GetGroup(matcher) to get a group of entities which match
-    /// the specified matcher. Calling pool.GetGroup(matcher) with the
+    /// Use context.GetGroup(matcher) to get a group of entities which match
+    /// the specified matcher. Calling context.GetGroup(matcher) with the
     /// same matcher will always return the same instance of the group.
-    /// The created group is managed by the pool and will always be up to date.
+    /// The created group is managed by the context and will always be up to date.
     /// It will automatically add entities that match the matcher or
     /// remove entities as soon as they don't match the matcher anymore.
     public class Group {
@@ -51,13 +51,13 @@ namespace Entitas {
         Entity _singleEntityCache;
         string _toStringCache;
 
-        /// Use pool.GetGroup(matcher) to get a group of entities which match
+        /// Use context.GetGroup(matcher) to get a group of entities which match
         /// the specified matcher.
         public Group(IMatcher matcher) {
             _matcher = matcher;
         }
 
-        /// This is used by the pool to manage the group.
+        /// This is used by the context to manage the group.
         public void HandleEntitySilently(Entity entity) {
             if(_matcher.Matches(entity)) {
                 addEntitySilently(entity);
@@ -66,7 +66,7 @@ namespace Entitas {
             }
         }
 
-        /// This is used by the pool to manage the group.
+        /// This is used by the context to manage the group.
         public void HandleEntity(
             Entity entity, int index, IComponent component) {
             if(_matcher.Matches(entity)) {
@@ -76,7 +76,7 @@ namespace Entitas {
             }
         }
 
-        /// This is used by the pool to manage the group.
+        /// This is used by the context to manage the group.
         public void UpdateEntity(
             Entity entity,
             int index,
@@ -97,7 +97,7 @@ namespace Entitas {
             }
         }
 
-        /// This is called by pool.Reset() and pool.ClearGroups() to remove
+        /// This is called by context.Reset() and context.ClearGroups() to remove
         /// all event handlers.
         /// This is useful when you want to soft-restart your application.
         public void RemoveAllEventHandlers() {

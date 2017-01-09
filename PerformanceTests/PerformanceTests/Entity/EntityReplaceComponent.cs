@@ -3,32 +3,32 @@ using System.Collections.Generic;
 
 public class EntityReplaceComponent : IPerformanceTest {
     const int n = 1000000;
-    Pool _pool;
+    Context _context;
     Entity _e;
 
     public void Before() {
-        _pool = Helper.CreatePool();
-        _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
-        _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentB }));
-        _pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentC }));
-        _pool.GetGroup(Matcher.AllOf(new [] {
+        _context = Helper.CreateContext();
+        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
+        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentB }));
+        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentC }));
+        _context.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB
         }));
-        _pool.GetGroup(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentC
         }));
-        _pool.GetGroup(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentB,
             CP.ComponentC
         }));
-        _pool.GetGroup(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB,
             CP.ComponentC
         }));
-        _e = _pool.CreateEntity();
+        _e = _context.CreateEntity();
         _e.AddComponent(CP.ComponentA, new ComponentA());
     }
 

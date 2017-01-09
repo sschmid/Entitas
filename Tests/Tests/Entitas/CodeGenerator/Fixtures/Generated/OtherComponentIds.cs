@@ -8,20 +8,20 @@
 //------------------------------------------------------------------------------
 public static class OtherComponentIds {
 
-    public const int OtherPool = 0;
-    public const int MultiplePoolAndDefaultPool = 2;
+    public const int OtherContext = 0;
+    public const int MultipleContextAndDefaultContext = 2;
 
     public const int TotalComponents = 3;
 
     public static readonly string[] componentNames = {
-        "OtherPool",
+        "OtherContext",
         null,
-        "MultiplePoolAndDefaultPool"
+        "MultipleContextAndDefaultContext"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(OtherPoolComponent),
+        typeof(OtherContextComponent),
         null,
-        typeof(MultiplePoolAndDefaultPoolComponent)
+        typeof(MultipleContextAndDefaultContextComponent)
     };
 }

@@ -10,7 +10,7 @@
       <TemplateType>Expansion</TemplateType>
     </Header>
     <Variables>
-      <Variable name="pool">
+      <Variable name="context">
         <Default>Core</Default>
       </Variable>
       <Variable name="name">
@@ -19,7 +19,7 @@
     </Variables>
     <Code><![CDATA[using Entitas;
 
-[$pool$]
+[$context$]
 public sealed class $name$Component : IComponent {
 
     public string someValue;

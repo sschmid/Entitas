@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using UnityEngine;
 
 public class EntityGetComponentIndicesPerformanceTest : MonoBehaviour {
@@ -6,8 +6,8 @@ public class EntityGetComponentIndicesPerformanceTest : MonoBehaviour {
     Entity _entity;
 
     void Start() {
-        Pools.sharedInstance.visualDebugging = Pools.CreateVisualDebuggingPool();
-        _entity = Pools.sharedInstance.visualDebugging.CreateEntity();
+        Contexts.sharedInstance.visualDebugging = Contexts.CreateVisualDebuggingContext();
+        _entity = Contexts.sharedInstance.visualDebugging.CreateEntity();
     }
 
     void Update() {

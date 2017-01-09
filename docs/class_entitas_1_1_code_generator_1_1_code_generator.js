@@ -6,5 +6,5 @@ var class_entitas_1_1_code_generator_1_1_code_generator =
     [ "AUTO_GENERATED_HEADER_FORMAT", "class_entitas_1_1_code_generator_1_1_code_generator.html#af2b9c50ab674f169d2b2750120a7b511", null ],
     [ "COMPONENT_SUFFIX", "class_entitas_1_1_code_generator_1_1_code_generator.html#a05c6f69902e7f9c84f5390c5b78dfabe", null ],
     [ "DEFAULT_COMPONENT_LOOKUP_TAG", "class_entitas_1_1_code_generator_1_1_code_generator.html#ae1d5d74b3b0f4df2e51f79567c85df77", null ],
-    [ "DEFAULT_POOL_NAME", "class_entitas_1_1_code_generator_1_1_code_generator.html#a306b062534dcb6f81f7c9a992ce92386", null ]
+    [ "DEFAULT_CONTEXT_NAME", "class_entitas_1_1_code_generator_1_1_code_generator.html#a7e5df3b52c44ca61199db846a6179c3e", null ]
 ];

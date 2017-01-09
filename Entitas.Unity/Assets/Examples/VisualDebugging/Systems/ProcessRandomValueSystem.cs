@@ -3,12 +3,12 @@ using Entitas;
 
 public class ProcessRandomValueSystem : ReactiveSystem {
 
-    readonly Pool _pool;
+    readonly Context _context;
 
-    public ProcessRandomValueSystem(Pools pools) : base(
-        pools.visualDebugging.CreateCollector(VisualDebuggingMatcher.MyFloat))
+    public ProcessRandomValueSystem(Contexts contexts) : base(
+        contexts.visualDebugging.CreateCollector(VisualDebuggingMatcher.MyFloat))
     {
-        _pool = pools.visualDebugging;
+        _context = contexts.visualDebugging;
     }
 
     protected override bool Filter(Entity entity) {
@@ -17,7 +17,7 @@ public class ProcessRandomValueSystem : ReactiveSystem {
 
     public override void Execute(List<Entity> entities) {
         foreach(var e in entities) {
-            _pool.DestroyEntity(e);
+            _context.DestroyEntity(e);
         }
     }
 }

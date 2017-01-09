@@ -39,9 +39,9 @@ class describe_ComponentIndicesGenerator : nspec {
         }
     }
 
-    static void generatesEmptyLookup(string[] poolNames, string[] expectedLookupNames, string[] expectedLookupCodes) {
-        var files = new ComponentIndicesGenerator().Generate(poolNames);
-        files.Length.should_be(poolNames.Length);
+    static void generatesEmptyLookup(string[] contextNames, string[] expectedLookupNames, string[] expectedLookupCodes) {
+        var files = new ComponentIndicesGenerator().Generate(contextNames);
+        files.Length.should_be(contextNames.Length);
 
         for(int i = 0; i < expectedLookupNames.Length; i++) {
             var expectedLookupName = expectedLookupNames[i];
@@ -102,19 +102,19 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates lookup with name from attribute"] = () => {
-            generates(typeof(OtherPoolComponent), "OtherComponentIds",
+            generates(typeof(OtherContextComponent), "OtherComponentIds",
                 @"public static class OtherComponentIds {
 
-    public const int OtherPool = 0;
+    public const int OtherContext = 0;
 
     public const int TotalComponents = 1;
 
     public static readonly string[] componentNames = {
-        ""OtherPool""
+        ""OtherContext""
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(OtherPoolComponent)
+        typeof(OtherContextComponent)
     };
 }
 ");
@@ -194,8 +194,8 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
 
-        it["generates empty lookup with total components when for default pool"] = () => {
-            generatesEmptyLookup(new [] { CodeGenerator.DEFAULT_POOL_NAME }, new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
+        it["generates empty lookup with total components when for default context"] = () => {
+            generatesEmptyLookup(new [] { CodeGenerator.DEFAULT_CONTEXT_NAME }, new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -210,7 +210,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
 
-        it["generates empty lookup with total components when for pool names"] = () => {
+        it["generates empty lookup with total components when for context names"] = () => {
             generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
@@ -226,7 +226,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
 
-        it["generates multiple empty lookup with total components when for pool names"] = () => {
+        it["generates multiple empty lookup with total components when for context names"] = () => {
             generatesEmptyLookup(new [] { "Meta", "Core" },
                 new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG },
                 new [] { @"public static class MetaComponentIds {
@@ -254,14 +254,14 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
 
-        context["when component is in multiple pools"] = () => {
+        context["when component is in multiple contexts"] = () => {
 
-            it["rearranges ids to have the same index in every lookup (2 pools)"] = () => {
+            it["rearranges ids to have the same index in every lookup (2 contexts)"] = () => {
                 generates(new [] {
                         typeof(AComponent),
                         typeof(BComponent)
-                    }, new [] { "PoolAComponentIds", "PoolBComponentIds" }, new [] {
-                    @"public static class PoolAComponentIds {
+                    }, new [] { "ContextAComponentIds", "ContextBComponentIds" }, new [] {
+                    @"public static class ContextAComponentIds {
 
     public const int B = 0;
     public const int A = 1;
@@ -279,7 +279,7 @@ class describe_ComponentIndicesGenerator : nspec {
     };
 }
 ",
-                    @"public static class PoolBComponentIds {
+                    @"public static class ContextBComponentIds {
 
     public const int B = 0;
 
@@ -299,7 +299,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
 
-            it["rearranges ids to have the same index in every lookup (3 pools)"] = () => {
+            it["rearranges ids to have the same index in every lookup (3 contexts)"] = () => {
                 generates(new [] {
                         typeof(AComponent),
                         typeof(BComponent),
@@ -308,11 +308,11 @@ class describe_ComponentIndicesGenerator : nspec {
                         typeof(EComponent),
                         typeof(FComponent)
                     }, new [] {
-                        "PoolAComponentIds",
-                        "PoolBComponentIds",
-                        "PoolCComponentIds",
+                        "ContextAComponentIds",
+                        "ContextBComponentIds",
+                        "ContextCComponentIds",
                     }, new [] {
-                        @"public static class PoolAComponentIds {
+                        @"public static class ContextAComponentIds {
 
     public const int C = 0;
     public const int B = 1;
@@ -333,7 +333,7 @@ class describe_ComponentIndicesGenerator : nspec {
     };
 }
 ",
-                    @"public static class PoolBComponentIds {
+                    @"public static class ContextBComponentIds {
 
     public const int C = 0;
     public const int B = 1;
@@ -354,7 +354,7 @@ class describe_ComponentIndicesGenerator : nspec {
     };
 }
 ",
-                    @"public static class PoolCComponentIds {
+                    @"public static class ContextCComponentIds {
 
     public const int C = 0;
     public const int E = 1;
@@ -388,11 +388,11 @@ class describe_ComponentIndicesGenerator : nspec {
                         typeof(GComponent),
                         typeof(BComponent),
                     }, new [] {
-                        "PoolAComponentIds",
-                        "PoolBComponentIds",
-                        "PoolCComponentIds",
+                        "ContextAComponentIds",
+                        "ContextBComponentIds",
+                        "ContextCComponentIds",
                     }, new [] {
-                @"public static class PoolAComponentIds {
+                @"public static class ContextAComponentIds {
 
     public const int B = 0;
     public const int G = 2;
@@ -412,7 +412,7 @@ class describe_ComponentIndicesGenerator : nspec {
     };
 }
 ",
-                @"public static class PoolBComponentIds {
+                @"public static class ContextBComponentIds {
 
     public const int B = 0;
     public const int D = 1;
@@ -430,7 +430,7 @@ class describe_ComponentIndicesGenerator : nspec {
     };
 }
 ",
-                @"public static class PoolCComponentIds {
+                @"public static class ContextCComponentIds {
 
     public const int D = 1;
     public const int G = 2;

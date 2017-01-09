@@ -3,19 +3,19 @@ using Entitas;
 
 class describe_Systems : nspec {
 
-    static ReactiveSystemSpy createReactiveSystem(Pools pools) {
-        var system = new ReactiveSystemSpy(pools.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
-        pools.test.CreateEntity().AddComponentA();
+    static ReactiveSystemSpy createReactiveSystem(Contexts contexts) {
+        var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+        contexts.test.CreateEntity().AddComponentA();
 
         return system;
     }
 
     void when_systems() {
 
-        Pools pools = null;
+        Contexts contexts = null;
 
         before = () => {
-            pools = new Pools { test = new Pool(10) };
+            contexts = new Contexts { test = new Context(10) };
         };
 
         context["fixtures"] = () => {
@@ -49,8 +49,8 @@ class describe_Systems : nspec {
             };
 
             it["initializes, executes, cleans up and tears down system"] = () => {
-                var system = new ReactiveSystemSpy(pools.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
-                pools.test.CreateEntity().AddComponentA();
+                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+                contexts.test.CreateEntity().AddComponentA();
 
                 system.didInitialize.should_be(0);
                 system.Initialize();
@@ -70,7 +70,7 @@ class describe_Systems : nspec {
             };
 
             it["executes ReactiveSystemSpy"] = () => {
-                var system = createReactiveSystem(pools);
+                var system = createReactiveSystem(contexts);
 
                 system.Execute();
 
@@ -105,17 +105,17 @@ class describe_Systems : nspec {
             };
 
             it["wraps IReactiveSystem in a ReactiveSystem"] = () => {
-                var system = new ReactiveSystemSpy(pools.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
                 systems.Add(system);
-                pools.test.CreateEntity().AddComponentA();
+                contexts.test.CreateEntity().AddComponentA();
                 systems.Execute();
                 system.didExecute.should_be(1);
             };
 
             it["adds ReactiveSystem"] = () => {
-                var system = new ReactiveSystemSpy(pools.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
                 systems.Add(system);
-                pools.test.CreateEntity().AddComponentA();
+                contexts.test.CreateEntity().AddComponentA();
                 systems.Execute();
                 system.didExecute.should_be(1);
             };
@@ -128,8 +128,8 @@ class describe_Systems : nspec {
             };
 
             it["initializes, executes, cleans up and tears down InitializeExecuteCleanupTearDownSystemSpy"] = () => {
-                var system = new ReactiveSystemSpy(pools.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
-                pools.test.CreateEntity().AddComponentA();
+                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+                contexts.test.CreateEntity().AddComponentA();
 
                 systems.Add(system);
 
@@ -151,7 +151,7 @@ class describe_Systems : nspec {
             };
 
             it["initializes, executes, cleans up and tears down ReactiveSystem"] = () => {
-                var system = createReactiveSystem(pools);
+                var system = createReactiveSystem(contexts);
 
                 systems.Add(system);
 
@@ -175,7 +175,7 @@ class describe_Systems : nspec {
 
 
             it["initializes, executes, cleans up and tears down systems recursively"] = () => {
-                var system = createReactiveSystem(pools);
+                var system = createReactiveSystem(contexts);
 
                 systems.Add(system);
 
@@ -201,7 +201,7 @@ class describe_Systems : nspec {
             };
 
             it["clears reactive systems"] = () => {
-                var system = createReactiveSystem(pools);
+                var system = createReactiveSystem(contexts);
 
                 systems.Add(system);
 
@@ -214,7 +214,7 @@ class describe_Systems : nspec {
             };
 
             it["clears reactive systems recursively"] = () => {
-                var system = createReactiveSystem(pools);
+                var system = createReactiveSystem(contexts);
                 systems.Add(system);
 
                 var parentSystems = new Systems();
@@ -229,7 +229,7 @@ class describe_Systems : nspec {
             };
 
             it["deactivates reactive systems"] = () => {
-                var system = createReactiveSystem(pools);
+                var system = createReactiveSystem(contexts);
 
                 systems.Add(system);
 
@@ -242,7 +242,7 @@ class describe_Systems : nspec {
             };
 
             it["deactivates reactive systems recursively"] = () => {
-                var system = createReactiveSystem(pools);
+                var system = createReactiveSystem(contexts);
                 systems.Add(system);
 
                 var parentSystems = new Systems();
@@ -257,7 +257,7 @@ class describe_Systems : nspec {
             };
 
             it["activates reactive systems"] = () => {
-                var system = createReactiveSystem(pools);
+                var system = createReactiveSystem(contexts);
 
                 systems.Add(system);
 
@@ -269,14 +269,14 @@ class describe_Systems : nspec {
                 systems.Execute();
                 system.didExecute.should_be(0);
 
-                pools.test.CreateEntity().AddComponentA();
+                contexts.test.CreateEntity().AddComponentA();
                 systems.Execute();
 
                 system.didExecute.should_be(1);
             };
 
             it["activates reactive systems recursively"] = () => {
-                var system = createReactiveSystem(pools);
+                var system = createReactiveSystem(contexts);
                 systems.Add(system);
 
                 var parentSystems = new Systems();
@@ -290,7 +290,7 @@ class describe_Systems : nspec {
                 parentSystems.Execute();
                 system.didExecute.should_be(0);
 
-                pools.test.CreateEntity().AddComponentA();
+                contexts.test.CreateEntity().AddComponentA();
                 systems.Execute();
 
                 system.didExecute.should_be(1);

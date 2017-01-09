@@ -21,8 +21,8 @@ namespace Readme {
         }
 
 
-        public static Entity CreateRedGem(this Pool pool, int x, int y) {
-            return pool.CreateEntity()
+        public static Entity CreateRedGem(this Context context, int x, int y) {
+            return context.CreateEntity()
                        .IsGameBoardElement(true)
                        .IsMovable(true)
                        .AddPosition(x, y)
@@ -31,8 +31,8 @@ namespace Readme {
         }
 
 
-        static void moveSystem(Pool pool) {
-            var entities = pool.GetEntities(Matcher.AllOf(Matcher.Move, Matcher.Position));
+        static void moveSystem(Context context) {
+            var entities = context.GetEntities(Matcher.AllOf(Matcher.Move, Matcher.Position));
             foreach(var entity in entities) {
                 var move = entity.move;
                 var pos = entity.position;
@@ -63,32 +63,33 @@ namespace Readme {
             var movable = entity.isMovable;
         }
 
-        static void poolExample() {
-            // Pools.pool is kindly generated for you by the code generator
-            var pool = Pools.pool;
-            var entity = pool.CreateEntity();
+        static void contextExample() {
+            // contexts.context is kindly generated for you by the code generator
+            var contexts = Contexts.sharedInstance; 
+            var context = contexts.context;
+            var entity = context.CreateEntity();
             entity.isMovable = true;
 
             // Returns all entities having MovableComponent and PositionComponent.
             // Matchers are also generated for you.
-            var entities = pool.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
+            var entities = context.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
             foreach(var e in entities) {
                 // do something
             }
         }
 
-        static void groupExample(Pool pool) {
-            pool.GetGroup(Matcher.Position).GetEntities();
+        static void groupExample(Context context) {
+            context.GetGroup(Matcher.Position).GetEntities();
 
             // ----------------------------
 
-            pool.GetGroup(Matcher.Position).OnEntityAdded += (group, entity, index, component) => {
+            context.GetGroup(Matcher.Position).OnEntityAdded += (group, entity, index, component) => {
                 // Do something
             };
         }
 
-        static void entityCollectorExample(Pool pool) {
-            var group = pool.GetGroup(Matcher.Position);
+        static void entityCollectorExample(Context context) {
+            var group = context.GetGroup(Matcher.Position);
             var collector = group.CreateCollector(GroupEventType.OnEntityAdded);
 
             // ----------------------------
@@ -112,14 +113,14 @@ namespace Readme {
         }
 
         #pragma warning disable
-        static void userComponent(Pool pool, UserComponent component) {
-            var e = pool.userEntity;
-            var name = pool.user.name;
-            var has = pool.hasUser;
+        static void userComponent(Context context, UserComponent component) {
+            var e = context.userEntity;
+            var name = context.user.name;
+            var has = context.hasUser;
 
-            pool.SetUser("John", 42);
-            pool.ReplaceUser("Max", 24);
-            pool.RemoveUser();
+            context.SetUser("John", 42);
+            context.ReplaceUser("Max", 24);
+            context.RemoveUser();
         }
 
         static void movableComponent(Entity e) {
@@ -128,11 +129,11 @@ namespace Readme {
             e.isMovable = false;
         }
 
-        static void animatingComponent(Pool pool) {
-            var e = pool.animatingEntity;
-            var isAnimating = pool.isAnimating;
-            pool.isAnimating = true;
-            pool.isAnimating = false;
+        static void animatingComponent(Context context) {
+            var e = context.animatingEntity;
+            var isAnimating = context.isAnimating;
+            context.isAnimating = true;
+            context.isAnimating = false;
         }
     }
 }

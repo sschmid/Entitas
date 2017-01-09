@@ -33,7 +33,7 @@ namespace Entitas {
         }
     }
 
-    public partial class Pool {
+    public partial class Context {
 
         public Entity userEntity { get { return GetGroup(Matcher.User).GetSingleEntity(); } }
         public UserComponent user { get { return userEntity.user; } }
@@ -42,7 +42,7 @@ namespace Entitas {
         public Entity SetUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
             if(hasUser) {
                 throw new EntitasException("Could not set user!\n" + this + " already has an entity with UserComponent!",
-                    "You should check if the pool already has a userEntity before setting it or use pool.ReplaceUser().");
+                    "You should check if the context already has a userEntity before setting it or use context.ReplaceUser().");
             }
             var entity = CreateEntity();
             entity.AddUser(newTimestamp, newIsLoggedIn);

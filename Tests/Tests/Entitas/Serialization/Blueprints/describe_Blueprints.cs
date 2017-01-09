@@ -6,12 +6,12 @@ class describe_Blueprints : nspec {
 
     void when_creating() {
 
-        Pool pool = null;
+        Context ctx = null;
         Entity entity = null;
 
         before = () => {
-            pool = new Pool(CID.TotalComponents);
-            entity = pool.CreateEntity();
+            ctx = new Context(CID.TotalComponents);
+            entity = ctx.CreateEntity();
         };
 
         context["ComponentBlueprint"] = () => {
@@ -95,8 +95,8 @@ class describe_Blueprints : nspec {
 
                 entity.AddComponent(CID.ComponentB, component);
 
-                var blueprint = new Blueprint("My Pool", "Hero", entity);
-                blueprint.poolIdentifier.should_be("My Pool");
+                var blueprint = new Blueprint("My Context", "Hero", entity);
+                blueprint.contextIdentifier.should_be("My Context");
                 blueprint.name.should_be("Hero");
                 blueprint.components.Length.should_be(2);
 

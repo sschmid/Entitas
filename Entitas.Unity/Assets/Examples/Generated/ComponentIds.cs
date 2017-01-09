@@ -10,7 +10,7 @@ public static class ComponentIds {
 
     public const int Position = 0;
     public const int Velocity = 1;
-    public const int DefaultPool = 2;
+    public const int DefaultContext = 2;
     public const int SomeClass = 3;
     public const int SomeStruct = 4;
 
@@ -19,7 +19,7 @@ public static class ComponentIds {
     public static readonly string[] componentNames = {
         "Position",
         "Velocity",
-        "DefaultPool",
+        "DefaultContext",
         "SomeClass",
         "SomeStruct"
     };
@@ -27,7 +27,7 @@ public static class ComponentIds {
     public static readonly System.Type[] componentTypes = {
         typeof(PositionComponent),
         typeof(VelocityComponent),
-        typeof(DefaultPoolComponent),
+        typeof(DefaultContextComponent),
         typeof(SomeClassComponent),
         typeof(SomeStructComponent)
     };

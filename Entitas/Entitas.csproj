@@ -37,8 +37,8 @@
     <Compile Include="Entitas\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
     <Compile Include="Entitas\Interfaces\ISystem.cs" />
-    <Compile Include="Entitas\Pool.cs" />
-    <Compile Include="Entitas\Extensions\PoolExtension.cs" />
+    <Compile Include="Entitas\Context.cs" />
+    <Compile Include="Entitas\Extensions\ContextExtension.cs" />
     <Compile Include="Entitas\EntityCollector.cs" />
     <Compile Include="Entitas\Extensions\GroupExtension.cs" />
     <Compile Include="Entitas\ReactiveSystem.cs" />
@@ -51,14 +51,14 @@
     <Compile Include="Entitas\EntitasException.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\DontGenerateAttribute.cs" />
-    <Compile Include="Entitas\CodeGenerator\Attributes\PoolAttribute.cs" />
+    <Compile Include="Entitas\CodeGenerator\Attributes\ContextAttribute.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\SingleEntityAttribute.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Generators\PoolsGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\ContextsGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Interfaces\ICodeGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Interfaces\ICodeGeneratorDataProvider.cs" />
     <Compile Include="Entitas\CodeGenerator\Interfaces\IComponentCodeGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Interfaces\IPoolCodeGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Interfaces\IContextCodeGenerator.cs" />
     <Compile Include="Entitas\CodeGenerator\Intermediate\CodeGenFile.cs" />
     <Compile Include="Entitas\CodeGenerator\Intermediate\ComponentInfo.cs" />
     <Compile Include="Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs" />
@@ -68,7 +68,7 @@
     <Compile Include="Entitas\Serialization\PublicMemberInfo.cs" />
     <Compile Include="Entitas\Serialization\TypeSerializationExtension.cs" />
     <Compile Include="Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Generators\PoolAttributesGenerator.cs" />
+    <Compile Include="Entitas\CodeGenerator\Generators\ContextAttributesGenerator.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\Blueprint.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\ComponentBlueprint.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\SerializableMember.cs" />
@@ -81,7 +81,7 @@
     <Compile Include="Entitas\Serialization\Configuration\EntitasPreferences.cs" />
     <Compile Include="Entitas\Serialization\Configuration\Properties.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs" />
-    <Compile Include="Entitas\Pools.cs" />
+    <Compile Include="Entitas\Contexts.cs" />
     <Compile Include="Entitas\Extensions\EntityExtension.cs" />
     <Compile Include="Entitas\Caching\ObjectCache.cs" />
     <Compile Include="Entitas\Caching\ObjectPool.cs" />

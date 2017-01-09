@@ -7,17 +7,17 @@ public class ReactiveSystemDestructorController : MonoBehaviour {
     Entity _initialEntity;
 
     void Start() {
-        var pool = Pools.sharedInstance.visualDebugging = Pools.CreateVisualDebuggingPool();
-        new TestReactiveSystem(Pools.sharedInstance);
-        _initialEntity = pool.CreateEntity();
+        var context = Contexts.sharedInstance.visualDebugging = Contexts.CreateVisualDebuggingContext();
+        new TestReactiveSystem(Contexts.sharedInstance);
+        _initialEntity = context.CreateEntity();
         _initialEntity.isTest = true;
-        pool.DestroyEntity(_initialEntity);
+        context.DestroyEntity(_initialEntity);
     }
 	
     void Update() {
-        var pool = Pools.sharedInstance.visualDebugging;
+        var context = Contexts.sharedInstance.visualDebugging;
         for (int i = 0; i < 5000; i++) {
-            var e = pool.CreateEntity();
+            var e = context.CreateEntity();
             if(e == _initialEntity) {
                 Debug.Log("Success: Reusing entity!");
                 EditorApplication.isPlaying = false;

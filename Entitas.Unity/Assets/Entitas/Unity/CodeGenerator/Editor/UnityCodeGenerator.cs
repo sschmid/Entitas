@@ -32,7 +32,7 @@ namespace Entitas.Unity.CodeGenerator {
                 .ToArray();
 
             var assembly = Assembly.GetAssembly(typeof(Entity));
-            var generatedFiles = TypeReflectionCodeGenerator.Generate(assembly, config.pools,
+            var generatedFiles = TypeReflectionCodeGenerator.Generate(assembly, config.contexts,
                 blueprintNames, config.generatedFolderPath, enabledCodeGenerators);
 
             foreach(var file in generatedFiles) {

@@ -40,7 +40,7 @@ class describe_ComponentExtensionsGenerator : nspec {
         it["component with fields"] = () => generates<PersonComponent>();
         it["single component without fields"] = () => generates<AnimatingComponent>();
         it["single component with fields"] = () => generates<UserComponent>();
-        it["component for custom pool"] = () => generates<OtherPoolComponent>();
+        it["component for custom context"] = () => generates<OtherContextComponent>();
         it["supports properties"] = () => generates<ComponentWithFieldsAndProperties>();
         it["ignores [DontGenerate]"] = () => {
             var info = TypeReflectionProvider.GetComponentInfos(typeof(DontGenerateComponent))[0];
@@ -49,10 +49,10 @@ class describe_ComponentExtensionsGenerator : nspec {
         };
 
         it["works with namespaces"] = () => generates<NamespaceComponent>();
-        it["generates matchers for each pool"] = () => generates<CComponent>();
+        it["generates matchers for each context"] = () => generates<CComponent>();
         it["generates custom prefix"] = () => generates<CustomPrefixComponent>();
-        it["generates component with default pool"] = () => generates<DefaultPoolComponent>();
-        it["generates component with default pool and others"] = () => generates<MultiplePoolAndDefaultPoolComponent>();
+        it["generates component with default context"] = () => generates<DefaultContextComponent>();
+        it["generates component with default context and others"] = () => generates<MultipleContextAndDefaultContextComponent>();
 
         it["generates component for class"] = () => generates<SomeClass>("SomeClassComponent");
         it["generates component for struct"] = () => generates<SomeStruct>("SomeStructComponent");
