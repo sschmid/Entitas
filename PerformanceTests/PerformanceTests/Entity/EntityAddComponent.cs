@@ -7,8 +7,8 @@ public class EntityAddComponent : IPerformanceTest {
     ComponentA _componentA;
 
     public void Before() {
-        var pool = Helper.CreateContext();
-        _e = pool.CreateEntity();
+        var context = Helper.CreateContext();
+        _e = context.CreateEntity();
         _componentA = new ComponentA();
     }
 

@@ -1,6 +1,6 @@
 using Entitas;
 
-public class PoolGetEntities : IPerformanceTest {
+public class ContextDestroyAllEntities : IPerformanceTest {
     const int n = 100000;
     Context _context;
 
@@ -12,6 +12,6 @@ public class PoolGetEntities : IPerformanceTest {
     }
 
     public void Run() {
-        _context.GetEntities();
+        _context.DestroyAllEntities();
     }
 }

@@ -1,7 +1,7 @@
 using Entitas;
 using Entitas.Serialization.Blueprints;
 
-public class PoolCreateBlueprint : IPerformanceTest {
+public class ContextCreateBlueprint : IPerformanceTest {
     const int n = 100000;
     Context _context;
     Blueprint _blueprint;

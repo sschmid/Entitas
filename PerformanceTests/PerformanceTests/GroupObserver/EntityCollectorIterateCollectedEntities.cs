@@ -6,12 +6,12 @@ public class EntityCollectorIterateCollectedEntities : IPerformanceTest {
     EntityCollector _collector;
 
     public void Before() {
-        var pool = Helper.CreateContext();
-        var group = pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
+        var context = Helper.CreateContext();
+        var group = context.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
         _collector = group.CreateCollector();
 
         for(int i = 0; i < 1000; i++) {
-            var e = pool.CreateEntity();
+            var e = context.CreateEntity();
             e.AddComponent(CP.ComponentA, new ComponentA());
         }
     }

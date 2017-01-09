@@ -1,6 +1,6 @@
 using Entitas;
 
-public class PoolGetGroup : IPerformanceTest {
+public class ContextCreateEntity : IPerformanceTest {
     const int n = 100000;
     Context _context;
 
@@ -9,9 +9,8 @@ public class PoolGetGroup : IPerformanceTest {
     }
 
     public void Run() {
-        var m = Matcher.AllOf(new [] { CP.ComponentA });
         for (int i = 0; i < n; i++) {
-            _context.GetGroup(m);
+            _context.CreateEntity();
         }
     }
 }

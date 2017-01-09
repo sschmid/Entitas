@@ -7,13 +7,13 @@ namespace PerformanceTests {
             Console.WriteLine("Running performance tests...");
             Thread.Sleep(1500);
 
-            run<PoolCreateEntity>();
-            run<PoolDestroyEntity>();
-            run<PoolDestroyAllEntities>();
-            run<PoolGetGroup>();
-            run<PoolGetEntities>();
-            run<PoolHasEntity>();
-            run<PoolOnEntityReplaced>();
+            run<ContextCreateEntity>();
+            run<ContextDestroyEntity>();
+            run<ContextDestroyAllEntities>();
+            run<ContextGetGroup>();
+            run<ContextGetEntities>();
+            run<ContextHasEntity>();
+            run<ContextOnEntityReplaced>();
             run<EmptyTest>();
 
             run<EntityAddComponent>();
@@ -24,40 +24,40 @@ namespace PerformanceTests {
             run<EntityReplaceComponent>();
             run<EmptyTest>();
 
-            //run<MatcherEquals>();
-            //run<MatcherGetHashCode>();
+            run<MatcherEquals>();
+            run<MatcherGetHashCode>();
 
-            //run<PoolCreateBlueprint>();
+            run<ContextCreateBlueprint>();
 
-            //run<NewInstanceT>();
-            //run<NewInstanceActivator>();
+            run<NewInstanceT>();
+            run<NewInstanceActivator>();
 
-            //run<EntityIndexGetEntity>();
-            //run<EmptyTest>();
+            run<EntityIndexGetEntity>();
+            run<EmptyTest>();
 
-            //run<IterateHashetToArray>();
-            //run<IterateHashSet>();
-            //run<EmptyTest>();
+            run<IterateHashetToArray>();
+            run<IterateHashSet>();
+            run<EmptyTest>();
 
-            //run<ObjectGetProperty>();
-            //run<EmptyTest>();
-            //run<EntityCollectorIterateCollectedEntities>();
-            //run<EntityCollectorActivate>();
+            run<ObjectGetProperty>();
+            run<EmptyTest>();
+            run<EntityCollectorIterateCollectedEntities>();
+            run<EntityCollectorActivate>();
 
-            //run<HashSetContainsAdd>();
-            //run<ArrayGetItem>();
-            //run<DictionaryGetItem>();
-            //run<QueueDequeue>();
-            //run<ListQueue>();
-            //run<LinkedListAdd>();
-            //run<LinkedListRemove>();
-            //run<ListAdd>();
-            //run<ListGetItem>();
-            //run<ListRemove>();
-            //run<OrderedDictionaryAdd>();
-            //run<OrderedDictionaryGetItemByIndex>();
-            //run<OrderedDictionaryGetItemByKey>();
-            //run<OrderedDictionaryRemove>();
+            run<HashSetContainsAdd>();
+            run<ArrayGetItem>();
+            run<DictionaryGetItem>();
+            run<QueueDequeue>();
+            run<ListQueue>();
+            run<LinkedListAdd>();
+            run<LinkedListRemove>();
+            run<ListAdd>();
+            run<ListGetItem>();
+            run<ListRemove>();
+            run<OrderedDictionaryAdd>();
+            run<OrderedDictionaryGetItemByIndex>();
+            run<OrderedDictionaryGetItemByKey>();
+            run<OrderedDictionaryRemove>();
 
             Console.WriteLine("\nPress any key...");
             Console.Read();
