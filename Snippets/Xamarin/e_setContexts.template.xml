@@ -5,15 +5,15 @@
       <_Group>C#</_Group>
       <Version />
       <MimeType>text/x-csharp</MimeType>
-      <Shortcut>e_setPool</Shortcut>
-      <_Description>SetPool</_Description>
+      <Shortcut>e_setContexts</Shortcut>
+      <_Description>SetContexts</_Description>
       <TemplateType>Unknown</TemplateType>
     </Header>
     <Variables />
-    <Code><![CDATA[Pool _pool;
+    <Code><![CDATA[Contexts _contexts;
 
-public void SetPool(Pool pool) {
-    _pool = pool;
+public void SetContexts(Contexts contexts) {
+    _contexts = contexts;
 }
 ]]></Code>
   </CodeTemplate>
