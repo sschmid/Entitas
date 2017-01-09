@@ -74,7 +74,7 @@ class describe_ReactiveSystem : nspec {
                 var e = createEntityAB();
                 var retainCount = e.retainCount;
                 system.Execute();
-                retainCount.should_be(3); // retained by context, group and entity collector
+                retainCount.should_be(3); // retained by context, group and collector
                 e.retainCount.should_be(2); // retained by context and group
             };
 
@@ -223,12 +223,12 @@ class describe_ReactiveSystem : nspec {
                     GroupEventType.OnEntityAdded,
                     GroupEventType.OnEntityRemoved
                 };
-                var entityCollector = new EntityCollector(groups, eventTypes);
+                var collector = new Collector(groups, eventTypes);
 
-                system = new ReactiveSystemSpy(entityCollector);
+                system = new ReactiveSystemSpy(collector);
             };
 
-            it["executes when a triggered by entityCollector"] = () => {
+            it["executes when a triggered by collector"] = () => {
                 var eA1 = context1.CreateEntity().AddComponentA();
                 context2.CreateEntity().AddComponentA();
 
@@ -266,7 +266,7 @@ class describe_ReactiveSystem : nspec {
                 var didExecute = 0;
                 system.executeAction = entities => {
                     didExecute += 1;
-                    eAB2.retainCount.should_be(3); // retained by context, group and entity collector
+                    eAB2.retainCount.should_be(3); // retained by context, group and collector
                 };
 
                 system.Execute();

@@ -1,14 +1,14 @@
 using Entitas;
 using NSpec;
 
-class describe_EntityCollector : nspec {
+class describe_Collector : nspec {
 
     Context _context;
 
     void when_created() {
 
         Group groupA = null;
-        EntityCollector collectorA = null;
+        Collector collectorA = null;
 
         IMatcher matcherA = Matcher.AllOf(CID.ComponentA);
 
@@ -20,7 +20,7 @@ class describe_EntityCollector : nspec {
         context["when observing with eventType OnEntityAdded"] = () => {
             
             before = () => {
-                collectorA = new EntityCollector(groupA, GroupEventType.OnEntityAdded);
+                collectorA = new Collector(groupA, GroupEventType.OnEntityAdded);
             };
 
             it["is empty when nothing happend"] = () => {
@@ -125,7 +125,7 @@ class describe_EntityCollector : nspec {
         context["when observing with eventType OnEntityRemoved"] = () => {
 
             before = () => {
-                collectorA = new EntityCollector(groupA, GroupEventType.OnEntityRemoved);
+                collectorA = new Collector(groupA, GroupEventType.OnEntityRemoved);
             };
 
             it["returns collected entities"] = () => {
@@ -142,7 +142,7 @@ class describe_EntityCollector : nspec {
         context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
 
             before = () => {
-                collectorA = new EntityCollector(groupA, GroupEventType.OnEntityAddedOrRemoved);
+                collectorA = new Collector(groupA, GroupEventType.OnEntityAddedOrRemoved);
             };
 
             it["returns collected entities"] = () => {
@@ -167,8 +167,8 @@ class describe_EntityCollector : nspec {
                 groupB = _context.GetGroup(Matcher.AllOf(CID.ComponentB));
             };
 
-            it["throws when group count != eventType count"] = expect<EntityCollectorException>(() => {
-                collectorA = new EntityCollector(
+            it["throws when group count != eventType count"] = expect<CollectorException>(() => {
+                collectorA = new Collector(
                     new [] { groupA },
                     new [] {
                         GroupEventType.OnEntityAdded,
@@ -180,7 +180,7 @@ class describe_EntityCollector : nspec {
             context["when observing with eventType OnEntityAdded"] = () => {
 
                 before = () => {
-                    collectorA = new EntityCollector(
+                    collectorA = new Collector(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEventType.OnEntityAdded,
@@ -207,7 +207,7 @@ class describe_EntityCollector : nspec {
             context["when observing with eventType OnEntityRemoved"] = () => {
 
                 before = () => {
-                    collectorA = new EntityCollector(
+                    collectorA = new Collector(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEventType.OnEntityRemoved,
@@ -232,7 +232,7 @@ class describe_EntityCollector : nspec {
             context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
 
                 before = () => {
-                    collectorA = new EntityCollector(
+                    collectorA = new Collector(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEventType.OnEntityAddedOrRemoved,
@@ -261,7 +261,7 @@ class describe_EntityCollector : nspec {
             context["when observing with mixed eventTypes"] = () => {
 
                 before = () => {
-                    collectorA = new EntityCollector(
+                    collectorA = new Collector(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEventType.OnEntityAdded,

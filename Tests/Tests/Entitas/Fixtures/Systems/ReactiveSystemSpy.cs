@@ -28,10 +28,10 @@ public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitialize
 
     readonly Func<Entity, bool> _filter;
 
-    public ReactiveSystemSpy(EntityCollector collector) : base(collector) {
+    public ReactiveSystemSpy(Collector collector) : base(collector) {
     }
 
-    public ReactiveSystemSpy(EntityCollector collector, Func<Entity, bool> filter) : base(collector) {
+    public ReactiveSystemSpy(Collector collector, Func<Entity, bool> filter) : base(collector) {
         _filter = filter;
     }
 

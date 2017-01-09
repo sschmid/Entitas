@@ -7,9 +7,9 @@ namespace Entitas {
             return context.GetGroup(matcher).GetEntities();
         }
 
-        /// Creates an EntityCollector.
-        public static EntityCollector CreateCollector(this Context context, IMatcher matcher, GroupEventType eventType = GroupEventType.OnEntityAdded) {
-            return new EntityCollector(context.GetGroup(matcher), eventType);
+        /// Creates an Collector.
+        public static Collector CreateCollector(this Context context, IMatcher matcher, GroupEventType eventType = GroupEventType.OnEntityAdded) {
+            return new Collector(context.GetGroup(matcher), eventType);
         }
 
         /// Creates a new entity and adds copies of all

@@ -103,14 +103,14 @@ class describe_EntitasErrorMessages : EntitasTest {
             });
         };
 
-        context["EntityCollector"] = () => {
+        context["Collector"] = () => {
 
             it["unbalanced goups"] = () => printErrorMessage(() => {
                 var g1 = new Group(Matcher.AllOf(CID.ComponentA));
                 var g2 = new Group(Matcher.AllOf(CID.ComponentB));
                 var e1 = GroupEventType.OnEntityAdded;
 
-                new EntityCollector(new [] { g1, g2 }, new [] { e1 });
+                new Collector(new [] { g1, g2 }, new [] { e1 });
             });
         };
 
