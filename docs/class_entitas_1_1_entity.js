@@ -1,6 +1,6 @@
 var class_entitas_1_1_entity =
 [
-    [ "Entity", "class_entitas_1_1_entity.html#abac8db101d60f0f4e8aa020b9b46a468", null ],
+    [ "Entity", "class_entitas_1_1_entity.html#a4450fc8001cfab892e87974409e8a002", null ],
     [ "AddComponent", "class_entitas_1_1_entity.html#a2b2ee8c741f1e3bec1ba8d3bfefaaf86", null ],
     [ "ApplyBlueprint", "class_entitas_1_1_entity.html#afe334d8c847625bac0d1d69141dd4f80", null ],
     [ "ComponentReplaced", "class_entitas_1_1_entity.html#a7aec19d56ee26420187daea02dd20203", null ],
@@ -23,9 +23,9 @@ var class_entitas_1_1_entity =
     [ "ToString", "class_entitas_1_1_entity.html#a062ae860c3528091f8c0fd5b88667694", null ],
     [ "owners", "class_entitas_1_1_entity.html#ad0aefa732e6c3cb99be6530b26024b63", null ],
     [ "componentPools", "class_entitas_1_1_entity.html#ab8bb69649e83e05c595d006d205f11b2", null ],
+    [ "contextInfo", "class_entitas_1_1_entity.html#ae8347b174468c55c485e0265254d9c91", null ],
     [ "creationIndex", "class_entitas_1_1_entity.html#a35644f781a2567877dade3e39932e405", null ],
     [ "isEnabled", "class_entitas_1_1_entity.html#a93e43dc3a3668ca457db9d3609405ff9", null ],
-    [ "poolMetaData", "class_entitas_1_1_entity.html#a242ca061f78a188f84b730d2ccd4ab32", null ],
     [ "retainCount", "class_entitas_1_1_entity.html#a55d42d47d2678137c14a693f2039cd6c", null ],
     [ "totalComponents", "class_entitas_1_1_entity.html#ad3deee62c9a0392eea6b93e5356f9107", null ],
     [ "OnComponentAdded", "class_entitas_1_1_entity.html#ae19db05e0f3d0c58839653bcd92d7bcb", null ],

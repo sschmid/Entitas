@@ -104,15 +104,15 @@ delegate void&#160;</td><td class="memItemRight" valign="bottom"><b>GroupUpdated
 <tr class="separator:a281e23e9e99cd2ee19e3913f0b70156e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c5a38fa1862c272039577f389966c6f"><td class="memItemLeft" align="right" valign="top"><a id="a9c5a38fa1862c272039577f389966c6f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_group.html#a9c5a38fa1862c272039577f389966c6f">HandleEntitySilently</a> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity)</td></tr>
-<tr class="memdesc:a9c5a38fa1862c272039577f389966c6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is used by the pool to manage the group. <br /></td></tr>
+<tr class="memdesc:a9c5a38fa1862c272039577f389966c6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is used by the context to manage the group. <br /></td></tr>
 <tr class="separator:a9c5a38fa1862c272039577f389966c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9e00d30bfdf3a2c42d3bb1898fb2b4be"><td class="memItemLeft" align="right" valign="top"><a id="a9e00d30bfdf3a2c42d3bb1898fb2b4be"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_group.html#a9e00d30bfdf3a2c42d3bb1898fb2b4be">HandleEntity</a> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity, int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
-<tr class="memdesc:a9e00d30bfdf3a2c42d3bb1898fb2b4be"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is used by the pool to manage the group. <br /></td></tr>
+<tr class="memdesc:a9e00d30bfdf3a2c42d3bb1898fb2b4be"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is used by the context to manage the group. <br /></td></tr>
 <tr class="separator:a9e00d30bfdf3a2c42d3bb1898fb2b4be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32a677c3dcbb49779d66cf154c6db714"><td class="memItemLeft" align="right" valign="top"><a id="a32a677c3dcbb49779d66cf154c6db714"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_group.html#a32a677c3dcbb49779d66cf154c6db714">UpdateEntity</a> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity, int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> previousComponent, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> newComponent)</td></tr>
-<tr class="memdesc:a32a677c3dcbb49779d66cf154c6db714"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is used by the pool to manage the group. <br /></td></tr>
+<tr class="memdesc:a32a677c3dcbb49779d66cf154c6db714"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is used by the context to manage the group. <br /></td></tr>
 <tr class="separator:a32a677c3dcbb49779d66cf154c6db714"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c4ae152da02c48b9a149fc66a9776b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_group.html#a8c4ae152da02c48b9a149fc66a9776b6">RemoveAllEventHandlers</a> ()</td></tr>
 <tr class="separator:a8c4ae152da02c48b9a149fc66a9776b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -157,7 +157,7 @@ GroupUpdated&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
 <tr class="separator:a5f32d578bb0af4f57a4d3b20a5f9ab4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Use pool.GetGroup(matcher) to get a group of entities which match the specified matcher. Calling pool.GetGroup(matcher) with the same matcher will always return the same instance of the group. The created group is managed by the pool and will always be up to date. It will automatically add entities that match the matcher or remove entities as soon as they don't match the matcher anymore. </p>
+<div class="textblock"><p>Use context.GetGroup(matcher) to get a group of entities which match the specified matcher. Calling context.GetGroup(matcher) with the same matcher will always return the same instance of the group. The created group is managed by the context and will always be up to date. It will automatically add entities that match the matcher or remove entities as soon as they don't match the matcher anymore. </p>
 
 <p>Definition at line <a class="el" href="_group_8cs_source.html#l00018">18</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -184,7 +184,7 @@ GroupUpdated&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Use pool.GetGroup(matcher) to get a group of entities which match the specified matcher. </p>
+<p>Use context.GetGroup(matcher) to get a group of entities which match the specified matcher. </p>
 
 <p>Definition at line <a class="el" href="_group_8cs_source.html#l00056">56</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
 
@@ -241,7 +241,7 @@ GroupUpdated&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hr
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This is called by pool.Reset() and pool.ClearGroups() to remove all event handlers. This is useful when you want to soft-restart your application. </p>
+<p>This is called by context.Reset() and context.ClearGroups() to remove all event handlers. This is useful when you want to soft-restart your application. </p>
 
 <p>Definition at line <a class="el" href="_group_8cs_source.html#l00103">103</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
 

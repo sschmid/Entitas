@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['implementsinterface_3c_20t_20_3e',['ImplementsInterface&lt; T &gt;',['../class_entitas_1_1_type_extension.html#ad378941eb1727d00fd7774428dbd5883',1,'Entitas::TypeExtension']]],
-  ['initialize',['Initialize',['../class_entitas_1_1_systems.html#a33b35b3cdbdb16c347086a4ce4a23495',1,'Entitas::Systems']]]
+  ['handleentity',['HandleEntity',['../class_entitas_1_1_group.html#a9e00d30bfdf3a2c42d3bb1898fb2b4be',1,'Entitas::Group']]],
+  ['handleentitysilently',['HandleEntitySilently',['../class_entitas_1_1_group.html#a9c5a38fa1862c272039577f389966c6f',1,'Entitas::Group']]],
+  ['hasanycomponent',['HasAnyComponent',['../class_entitas_1_1_entity.html#a9e941463e3273213aee9a6d1071a8d6d',1,'Entitas::Entity']]],
+  ['hascomponent',['HasComponent',['../class_entitas_1_1_entity.html#a30a8ae77453c6878d45f3c1cbe31bb03',1,'Entitas::Entity']]],
+  ['hascomponents',['HasComponents',['../class_entitas_1_1_entity.html#aee5ffe85bc1fa4fb5dc21c0a13058ffe',1,'Entitas::Entity']]]
 ];

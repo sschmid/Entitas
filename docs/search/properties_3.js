@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['poolmetadata',['poolMetaData',['../class_entitas_1_1_entity.html#a242ca061f78a188f84b730d2ccd4ab32',1,'Entitas::Entity']]]
+  ['retaincount',['retainCount',['../class_entitas_1_1_entity.html#a55d42d47d2678137c14a693f2039cd6c',1,'Entitas::Entity']]]
 ];

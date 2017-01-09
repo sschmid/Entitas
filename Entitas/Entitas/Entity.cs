@@ -4,29 +4,29 @@ using System.Text;
 
 namespace Entitas {
 
-    /// Use pool.CreateEntity() to create a new entity and
-    /// pool.DestroyEntity() to destroy it.
+    /// Use context.CreateEntity() to create a new entity and
+    /// context.DestroyEntity() to destroy it.
     /// You can add, replace and remove IComponent to an entity.
     public partial class Entity {
 
         /// Occurs when a component gets added.
         /// All event handlers will be removed when
-        /// the entity gets destroyed by the pool.
+        /// the entity gets destroyed by the context.
         public event EntityChanged OnComponentAdded;
 
         /// Occurs when a component gets removed.
         /// All event handlers will be removed when
-        /// the entity gets destroyed by the pool.
+        /// the entity gets destroyed by the context.
         public event EntityChanged OnComponentRemoved;
 
         /// Occurs when a component gets replaced.
         /// All event handlers will be removed when
-        /// the entity gets destroyed by the pool.
+        /// the entity gets destroyed by the context.
         public event ComponentReplaced OnComponentReplaced;
 
         /// Occurs when an entity gets released and is not retained anymore.
         /// All event handlers will be removed when
-        /// the entity gets destroyed by the pool.
+        /// the entity gets destroyed by the context.
         public event EntityReleased OnEntityReleased;
 
         public delegate void EntityChanged(
@@ -44,14 +44,14 @@ namespace Entitas {
         public int totalComponents { get { return _totalComponents; } }
 
         /// Each entity has its own unique creationIndex which will be set by
-        /// the pool when you create the entity.
+        /// the context when you create the entity.
         public int creationIndex { get { return _creationIndex; } }
 
-        /// The pool manages the state of an entity.
+        /// The context manages the state of an entity.
         /// Active entities are enabled, destroyed entities are not.
         public bool isEnabled { get { return _isEnabled; } }
 
-        /// componentPools is set by the pool which created the entity and
+        /// componentPools is set by the context which created the entity and
         /// is used to reuse removed components.
         /// Removed components will be pushed to the componentPool.
         /// Use entity.CreateComponent(index, type) to get a new or
@@ -62,8 +62,8 @@ namespace Entitas {
             get { return _componentPools; }
         }
 
-        /// The contextInfo is set by the pool which created the entity and
-        /// contains information about the pool.
+        /// The contextInfo is set by the context which created the entity and
+        /// contains information about the context.
         /// It's used to provide better error messages.
         public ContextInfo contextInfo { get { return _contextInfo; } }
 
@@ -80,8 +80,8 @@ namespace Entitas {
         string _toStringCache;
         StringBuilder _toStringBuilder;
 
-        /// Use pool.CreateEntity() to create a new entity and
-        /// pool.DestroyEntity() to destroy it.
+        /// Use context.CreateEntity() to create a new entity and
+        /// context.DestroyEntity() to destroy it.
         public Entity(int totalComponents,
                       Stack<IComponent>[] componentPools,
                       ContextInfo contextInfo = null) {
@@ -93,7 +93,7 @@ namespace Entitas {
                 _contextInfo = contextInfo;
             } else {
 
-                // If pool.CreateEntity() was used to create the entity,
+                // If context.CreateEntity() was used to create the entity,
                 // we will never end up here.
                 // This is a fallback when entities are created manually.
 
@@ -323,7 +323,7 @@ namespace Entitas {
         }
 
         /// Returns the componentPool for the specified component index.
-        /// componentPools is set by the pool which created the entity and
+        /// componentPools is set by the context which created the entity and
         /// is used to reuse removed components.
         /// Removed components will be pushed to the componentPool.
         /// Use entity.CreateComponent(index, type) to get a new or
@@ -426,7 +426,7 @@ namespace Entitas {
         }
 
         // This method is used internally. Don't call it yourself.
-        // Use pool.DestroyEntity(entity);
+        // Use context.DestroyEntity(entity);
         internal void destroy() {
             _isEnabled = false;
             RemoveAllComponents();
@@ -435,7 +435,7 @@ namespace Entitas {
             OnComponentRemoved = null;
         }
 
-        // Do not call this method manually. This method is called by the pool.
+        // Do not call this method manually. This method is called by the context.
         internal void removeAllOnEntityReleasedHandlers() {
             OnEntityReleased = null;
         }

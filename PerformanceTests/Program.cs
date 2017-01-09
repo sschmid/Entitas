@@ -64,13 +64,13 @@ namespace PerformanceTests {
         }
 
         //Running performance tests...
-        //PoolCreateEntity:                       30 ms
-        //PoolDestroyEntity:                      29 ms
-        //PoolDestroyAllEntities:                 25 ms
-        //PoolGetGroup:                           5 ms
-        //PoolGetEntities:                        2 ms
-        //PoolHasEntity:                          10 ms
-        //PoolOnEntityReplaced:                   6 ms
+        //ContextCreateEntity:                       30 ms
+        //ContextDestroyEntity:                      29 ms
+        //ContextDestroyAllEntities:                 25 ms
+        //ContextGetGroup:                           5 ms
+        //ContextGetEntities:                        2 ms
+        //ContextHasEntity:                          10 ms
+        //ContextOnEntityReplaced:                   6 ms
 
         //EntityAddComponent:                     257 ms
         //EntityGetComponent:                     44 ms
@@ -82,7 +82,7 @@ namespace PerformanceTests {
         //MatcherEquals:                          171 ms
         //MatcherGetHashCode:                     17 ms
 
-        //PoolCreateBlueprint:                    256 ms
+        //ContextCreateBlueprint:                    256 ms
 
         //NewInstanceT:                           393 ms
         //NewInstanceActivator:                   542 ms

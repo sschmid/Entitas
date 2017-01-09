@@ -5,9 +5,9 @@ namespace Entitas.CodeGenerator {
         ComponentInfo[] componentInfos { get; }
 
         // Expected behaviour:
-        // - Make pool names distinct
-        // - Sort pools by name
-        // - Add CodeGenerator.DEFAULT_POOL_NAME if no custom pools are set
+        // - Make context names distinct
+        // - Sort contexts by name
+        // - Add CodeGenerator.DEFAULT_CONTEXT_NAME if no custom contexts are set
         string[] contextNames { get; }
 
         string[] blueprintNames { get; }

@@ -103,9 +103,9 @@ Inheritance diagram for Entitas.CodeGenerator.TypeReflectionProvider:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab175b48d40d86861892101de8db29558"><td class="memItemLeft" align="right" valign="top"><a id="ab175b48d40d86861892101de8db29558"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>TypeReflectionProvider</b> (Type[] types, string[] poolNames, string[] blueprintNames)</td></tr>
-<tr class="separator:ab175b48d40d86861892101de8db29558"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72997b34521e0f1f0561a106609e123e"><td class="memItemLeft" align="right" valign="top"><a id="a72997b34521e0f1f0561a106609e123e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>TypeReflectionProvider</b> (Type[] types, string[] contextNames, string[] blueprintNames)</td></tr>
+<tr class="separator:a72997b34521e0f1f0561a106609e123e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -121,9 +121,9 @@ static <a class="el" href="class_entitas_1_1_code_generator_1_1_component_info.h
 <tr class="memitem:a7b8733551eb3aab29f6699f6c0074ba2"><td class="memItemLeft" align="right" valign="top"><a id="a7b8733551eb3aab29f6699f6c0074ba2"></a>
 static List&lt; <a class="el" href="class_entitas_1_1_serialization_1_1_public_member_info.html">PublicMemberInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetPublicMemberInfo</b> (Type type)</td></tr>
 <tr class="separator:a7b8733551eb3aab29f6699f6c0074ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1abe66b59bb97f7d945c713f6b775736"><td class="memItemLeft" align="right" valign="top"><a id="a1abe66b59bb97f7d945c713f6b775736"></a>
-static string []&#160;</td><td class="memItemRight" valign="bottom"><b>GetPools</b> (Type type, bool defaultIfEmpty)</td></tr>
-<tr class="separator:a1abe66b59bb97f7d945c713f6b775736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b86102b3852d7134dacd9777a8f1a3c"><td class="memItemLeft" align="right" valign="top"><a id="a4b86102b3852d7134dacd9777a8f1a3c"></a>
+static string []&#160;</td><td class="memItemRight" valign="bottom"><b>GetContexts</b> (Type type, bool defaultIfEmpty)</td></tr>
+<tr class="separator:a4b86102b3852d7134dacd9777a8f1a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a229bc8f2a54fb290c567dcd769567dd3"><td class="memItemLeft" align="right" valign="top"><a id="a229bc8f2a54fb290c567dcd769567dd3"></a>
 static bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetIsSingleEntity</b> (Type type)</td></tr>
 <tr class="separator:a229bc8f2a54fb290c567dcd769567dd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,9 +148,9 @@ Properties</h2></td></tr>
 <tr class="memitem:a5bc9f4721cb89f906b57c4e02aa5b10c"><td class="memItemLeft" align="right" valign="top"><a id="a5bc9f4721cb89f906b57c4e02aa5b10c"></a>
 <a class="el" href="class_entitas_1_1_code_generator_1_1_component_info.html">ComponentInfo</a> []&#160;</td><td class="memItemRight" valign="bottom"><b>componentInfos</b><code> [get]</code></td></tr>
 <tr class="separator:a5bc9f4721cb89f906b57c4e02aa5b10c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a938274bd83ef0d4fa91d76d38e461bb6"><td class="memItemLeft" align="right" valign="top"><a id="a938274bd83ef0d4fa91d76d38e461bb6"></a>
-string []&#160;</td><td class="memItemRight" valign="bottom"><b>poolNames</b><code> [get]</code></td></tr>
-<tr class="separator:a938274bd83ef0d4fa91d76d38e461bb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc31dc75277fdec18bde4c65e3402ed3"><td class="memItemLeft" align="right" valign="top"><a id="afc31dc75277fdec18bde4c65e3402ed3"></a>
+string []&#160;</td><td class="memItemRight" valign="bottom"><b>contextNames</b><code> [get]</code></td></tr>
+<tr class="separator:afc31dc75277fdec18bde4c65e3402ed3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52a9d8c11f18add103642d3488c6b46c"><td class="memItemLeft" align="right" valign="top"><a id="a52a9d8c11f18add103642d3488c6b46c"></a>
 string []&#160;</td><td class="memItemRight" valign="bottom"><b>blueprintNames</b><code> [get]</code></td></tr>
 <tr class="separator:a52a9d8c11f18add103642d3488c6b46c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -158,9 +158,9 @@ string []&#160;</td><td class="memItemRight" valign="bottom"><b>blueprintNames</
 <tr class="memitem:a3dd2eb191531a46cb35cf18c2dde7526 inherit properties_interface_entitas_1_1_code_generator_1_1_i_code_generator_data_provider"><td class="memItemLeft" align="right" valign="top"><a id="a3dd2eb191531a46cb35cf18c2dde7526"></a>
 <a class="el" href="class_entitas_1_1_code_generator_1_1_component_info.html">ComponentInfo</a> []&#160;</td><td class="memItemRight" valign="bottom"><b>componentInfos</b><code> [get]</code></td></tr>
 <tr class="separator:a3dd2eb191531a46cb35cf18c2dde7526 inherit properties_interface_entitas_1_1_code_generator_1_1_i_code_generator_data_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d03f9a1bd82dfcce86107117f022d93 inherit properties_interface_entitas_1_1_code_generator_1_1_i_code_generator_data_provider"><td class="memItemLeft" align="right" valign="top"><a id="a9d03f9a1bd82dfcce86107117f022d93"></a>
-string []&#160;</td><td class="memItemRight" valign="bottom"><b>poolNames</b><code> [get]</code></td></tr>
-<tr class="separator:a9d03f9a1bd82dfcce86107117f022d93 inherit properties_interface_entitas_1_1_code_generator_1_1_i_code_generator_data_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e99d509f6a597379d38610bb54fdae4 inherit properties_interface_entitas_1_1_code_generator_1_1_i_code_generator_data_provider"><td class="memItemLeft" align="right" valign="top"><a id="a9e99d509f6a597379d38610bb54fdae4"></a>
+string []&#160;</td><td class="memItemRight" valign="bottom"><b>contextNames</b><code> [get]</code></td></tr>
+<tr class="separator:a9e99d509f6a597379d38610bb54fdae4 inherit properties_interface_entitas_1_1_code_generator_1_1_i_code_generator_data_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80609195ccbe2479664680a15cffdf99 inherit properties_interface_entitas_1_1_code_generator_1_1_i_code_generator_data_provider"><td class="memItemLeft" align="right" valign="top"><a id="a80609195ccbe2479664680a15cffdf99"></a>
 string []&#160;</td><td class="memItemRight" valign="bottom"><b>blueprintNames</b><code> [get]</code></td></tr>
 <tr class="separator:a80609195ccbe2479664680a15cffdf99 inherit properties_interface_entitas_1_1_code_generator_1_1_i_code_generator_data_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>

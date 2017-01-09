@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['onentityadded',['OnEntityAdded',['../class_entitas_1_1_i_matcher_extension.html#a13ee57ed2b36a08e530f97bcc7b61abd',1,'Entitas::IMatcherExtension']]],
-  ['onentityaddedorremoved',['OnEntityAddedOrRemoved',['../class_entitas_1_1_i_matcher_extension.html#aae82da31a25463240cf11de1cd55c6b1',1,'Entitas::IMatcherExtension']]],
-  ['onentityremoved',['OnEntityRemoved',['../class_entitas_1_1_i_matcher_extension.html#aca64868b160502b29dbb2fa3d13f4a3b',1,'Entitas::IMatcherExtension']]]
+  ['implementsinterface_3c_20t_20_3e',['ImplementsInterface&lt; T &gt;',['../class_entitas_1_1_type_extension.html#ad378941eb1727d00fd7774428dbd5883',1,'Entitas::TypeExtension']]],
+  ['initialize',['Initialize',['../class_entitas_1_1_systems.html#a33b35b3cdbdb16c347086a4ce4a23495',1,'Entitas::Systems']]]
 ];

@@ -73,8 +73,8 @@ First glimpse
 The optional [code generator][wiki-code-generator] lets you write code that is super fast, safe and literally screams its intent.
 
 ```csharp
-public static Entity CreateRedGem(this Pool pool, int x, int y) {
-    return pool.CreateEntity()
+public static Entity CreateRedGem(this Context context, int x, int y) {
+    return context.CreateEntity()
                .IsGameBoardElement(true)
                .IsMovable(true)
                .AddPosition(x, y)
@@ -84,7 +84,7 @@ public static Entity CreateRedGem(this Pool pool, int x, int y) {
 ```
 
 ```csharp
-var entities = pool.GetEntities(Matcher.AllOf(Matcher.Move, Matcher.Position));
+var entities = context.GetEntities(Matcher.AllOf(Matcher.Move, Matcher.Position));
 foreach (var entity in entities) {
     var move = entity.move;
     var pos = entity.position;
@@ -117,7 +117,7 @@ The Code Generator generates classes and methods for you, so you can focus on ge
 Unity integration
 =================
 
-The optional Unity module integrates Entitas nicely into Unity and provides powerful editor extensions to inspect and debug pools, groups, entities, components and systems.
+The optional Unity module integrates Entitas nicely into Unity and provides powerful editor extensions to inspect and debug contexts, groups, entities, components and systems.
 
 [Read more...][wiki-unity-integration]
 
@@ -176,7 +176,7 @@ This will copy all required Entitas source files to the Entitas.Unity project's 
 $ git flow feature start <#issue-your-feature>
 ```
 
-Write unit tests and make sure all the existing tests pass. If you have many commits please consider using [git rebase](https://git-scm.com/docs/git-rebase) to cleanup the commits. This can simplify reviewing the pull request. 
+Write unit tests and make sure all the existing tests pass. If you have many commits please consider using [git rebase](https://git-scm.com/docs/git-rebase) to cleanup the commits. This can simplify reviewing the pull request.
 Once you're happy with your changes open a [pull request][pulls] to your feature branch.
 
 
