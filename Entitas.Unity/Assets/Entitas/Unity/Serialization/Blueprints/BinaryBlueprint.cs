@@ -27,7 +27,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
         }
 
         public void Serialize(Entity entity) {
-            var blueprint = new Blueprint(entity.poolMetaData.poolName, name, entity);
+            var blueprint = new Blueprint(entity.contextInfo.name, name, entity);
             Serialize(blueprint);
         }
 

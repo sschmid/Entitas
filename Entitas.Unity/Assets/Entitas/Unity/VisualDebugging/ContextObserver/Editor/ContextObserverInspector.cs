@@ -4,19 +4,19 @@ using System.Linq;
 
 namespace Entitas.Unity.VisualDebugging {
 
-    [CustomEditor(typeof(PoolObserverBehaviour))]
-    public class PoolObserverInspector : Editor {
+    [CustomEditor(typeof(ContextObserverBehaviour))]
+    public class ContextObserverInspector : Editor {
 
         public override void OnInspectorGUI() {
-            var poolObserver = ((PoolObserverBehaviour)target).poolObserver;
+            var contextObserver = ((ContextObserverBehaviour)target).contextObserver;
 
             EntitasEditorLayout.BeginVerticalBox();
             {
-                EditorGUILayout.LabelField(poolObserver.pool.metaData.poolName, EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Entities", poolObserver.pool.count.ToString());
-                EditorGUILayout.LabelField("Reusable entities", poolObserver.pool.reusableEntitiesCount.ToString());
+                EditorGUILayout.LabelField(contextObserver.context.contextInfo.name, EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Entities", contextObserver.context.count.ToString());
+                EditorGUILayout.LabelField("Reusable entities", contextObserver.context.reusableEntitiesCount.ToString());
 
-                var retainedEntitiesCount = poolObserver.pool.retainedEntitiesCount;
+                var retainedEntitiesCount = contextObserver.context.retainedEntitiesCount;
                 if(retainedEntitiesCount != 0) {
                     var c = GUI.contentColor;
                     GUI.color = Color.red;
@@ -28,7 +28,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EntitasEditorLayout.BeginHorizontal();
                 {
                     if(GUILayout.Button("Create Entity")) {
-                        var entity = poolObserver.pool.CreateEntity();
+                        var entity = contextObserver.context.CreateEntity();
                         var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
                                                     .Single(eb => eb.entity == entity);
 
@@ -38,7 +38,7 @@ namespace Entitas.Unity.VisualDebugging {
                     var bgColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.red;
                     if(GUILayout.Button("Destroy All Entities")) {
-                        poolObserver.pool.DestroyAllEntities();
+                        contextObserver.context.DestroyAllEntities();
                     }
                     GUI.backgroundColor = bgColor;
                 }
@@ -46,7 +46,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
             EntitasEditorLayout.EndVertical();
 
-            var groups = poolObserver.groups;
+            var groups = contextObserver.groups;
             if(groups.Length != 0) {
                 EntitasEditorLayout.BeginVerticalBox();
                 {
@@ -60,7 +60,7 @@ namespace Entitas.Unity.VisualDebugging {
                         EntitasEditorLayout.EndHorizontal();
                     }
                     if(GUILayout.Button("Clear Groups")) {
-                        poolObserver.pool.ClearGroups();
+                        contextObserver.context.ClearGroups();
                     }
                 }
                 EntitasEditorLayout.EndVertical();

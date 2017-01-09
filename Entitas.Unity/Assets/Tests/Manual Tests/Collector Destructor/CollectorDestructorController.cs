@@ -7,18 +7,18 @@ public class CollectorDestructorController : MonoBehaviour {
     Entity _initialEntity;
 
     void Start() {
-        var pool = Pools.sharedInstance.visualDebugging = Pools.CreateVisualDebuggingPool();
-        pool.GetGroup(VisualDebuggingMatcher.Test).CreateCollector();
-        _initialEntity = pool.CreateEntity();
+        var context = Contexts.sharedInstance.visualDebugging = Contexts.CreateVisualDebuggingContext();
+        context.GetGroup(VisualDebuggingMatcher.Test).CreateCollector();
+        _initialEntity = context.CreateEntity();
         _initialEntity.isTest = true;
-        pool.DestroyEntity(_initialEntity);
-        pool.ClearGroups();
+        context.DestroyEntity(_initialEntity);
+        context.ClearGroups();
     }
 	
     void Update() {
-        var pool = Pools.sharedInstance.visualDebugging;
+        var context = Contexts.sharedInstance.visualDebugging;
         for (int i = 0; i < 5000; i++) {
-            var e = pool.CreateEntity();
+            var e = context.CreateEntity();
             if(e == _initialEntity) {
                 Debug.Log("Reusing entity!");
                 EditorApplication.isPlaying = false;

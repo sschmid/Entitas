@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
@@ -110,6 +110,6 @@ public class PersonComponent : IComponent {
     public string gender;
 }
 
-[Pool]
-public class DefaultPoolComponent : IComponent {
+[Context]
+public class DefaultContextComponent : IComponent {
 }

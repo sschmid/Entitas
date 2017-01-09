@@ -1,6 +1,6 @@
-﻿using Entitas;
+using Entitas;
 using Entitas.CodeGenerator;
 
-[Pool("Test")]
+[Context("Test")]
 public class SomeComponent : IComponent {
 }

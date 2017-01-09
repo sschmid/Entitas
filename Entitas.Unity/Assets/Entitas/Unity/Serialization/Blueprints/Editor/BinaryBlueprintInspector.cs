@@ -23,16 +23,16 @@ namespace Entitas.Unity.Serialization.Blueprints {
         [DidReloadScripts, MenuItem(EntitasMenuItems.blueprints_update_all_blueprints, false, EntitasMenuItemPriorities.blueprints_update_all_blueprints)]
         public static void UpdateAllBinaryBlueprints() {
             if(!EditorApplication.isPlayingOrWillChangePlaymode) {
-                var allPools = findAllPools();
-                if(allPools == null) {
+                var allContexts = findAllContexts();
+                if(allContexts == null) {
                     return;
                 }
 
                 var binaryBlueprints = FindAllBlueprints();
-                var allPoolNames = allPools.Select(pool => pool.metaData.poolName).ToArray();
+                var allContextNames = allContexts.Select(context => context.contextInfo.name).ToArray();
                 var updated = 0;
                 foreach(var binaryBlueprint in binaryBlueprints) {
-                    var didUpdate = UpdateBinaryBlueprint(binaryBlueprint, allPools, allPoolNames);
+                    var didUpdate = UpdateBinaryBlueprint(binaryBlueprint, allContexts, allContextNames);
                     if(didUpdate) {
                         updated += 1;
                     }
@@ -44,22 +44,22 @@ namespace Entitas.Unity.Serialization.Blueprints {
             }
         }
 
-        public static bool UpdateBinaryBlueprint(BinaryBlueprint binaryBlueprint, Pool[] allPools, string[] allPoolNames) {
+        public static bool UpdateBinaryBlueprint(BinaryBlueprint binaryBlueprint, Context[] allContexts, string[] allContextNames) {
             var blueprint = binaryBlueprint.Deserialize();
             var needsUpdate = false;
 
-            var poolIndex = Array.IndexOf(allPoolNames, blueprint.poolIdentifier);
-            if(poolIndex < 0) {
-                poolIndex = 0;
+            var contextIndex = Array.IndexOf(allContextNames, blueprint.contextIdentifier);
+            if(contextIndex < 0) {
+                contextIndex = 0;
                 needsUpdate = true;
             }
 
-            var pool = allPools[poolIndex];
-            blueprint.poolIdentifier = pool.metaData.poolName;
+            var context = allContexts[contextIndex];
+            blueprint.contextIdentifier = context.contextInfo.name;
 
             foreach(var component in blueprint.components) {
                 var type = component.fullTypeName.ToType();
-                var index = Array.IndexOf(pool.metaData.componentTypes, type);
+                var index = Array.IndexOf(context.contextInfo.componentTypes, type);
 
                 if(index != component.index) {
                     Debug.Log(string.Format(
@@ -79,52 +79,52 @@ namespace Entitas.Unity.Serialization.Blueprints {
             return needsUpdate;
         }
 
-        static Pool[] findAllPools() {
+        static Context[] findAllContexts() {
 
             const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
-            var allPoolsProperty = typeof(Pools).GetProperty("allPools", bindingFlags);
-            if(allPoolsProperty != null) {
-                var poolsType = typeof(Pools);
-                var setAllPoolsMethod = poolsType.GetMethod("SetAllPools", bindingFlags);
-                if(setAllPoolsMethod != null) {
-                    var pools = new Pools();
-                    setAllPoolsMethod.Invoke(pools, null);
-                    var allPoolsGetter = poolsType.GetProperty("allPools", bindingFlags);
+            var allContextsProperty = typeof(Contexts).GetProperty("allContexts", bindingFlags);
+            if(allContextsProperty != null) {
+                var contextsType = typeof(Contexts);
+                var setAllContextsMethod = contextsType.GetMethod("SetAllContexts", bindingFlags);
+                if(setAllContextsMethod != null) {
+                    var contexts = new Contexts();
+                    setAllContextsMethod.Invoke(contexts, null);
+                    var allContextsGetter = contextsType.GetProperty("allContexts", bindingFlags);
 
-                    return (Pool[])allPoolsGetter.GetValue(pools, null);
+                    return (Context[])allContextsGetter.GetValue(contexts, null);
                 }
             }
 
-            return new Pool[0];
+            return new Context[0];
         }
 
         Blueprint _blueprint;
 
-        Pool[] _allPools;
-        string[] _allPoolNames;
-        int _poolIndex;
+        Context[] _allContexts;
+        string[] _allContextNames;
+        int _contextIndex;
 
-        Pool _pool;
+        Context _context;
         Entity _entity;
 
         void Awake() {
-            _allPools = findAllPools();
-            if(_allPools == null) {
+            _allContexts = findAllContexts();
+            if(_allContexts == null) {
                 return;
             }
 
             var binaryBlueprint = ((BinaryBlueprint)target);
 
-            _allPoolNames = _allPools.Select(pool => pool.metaData.poolName).ToArray();
+            _allContextNames = _allContexts.Select(context => context.contextInfo.name).ToArray();
 
-            BinaryBlueprintInspector.UpdateBinaryBlueprint(binaryBlueprint, _allPools, _allPoolNames);
+            BinaryBlueprintInspector.UpdateBinaryBlueprint(binaryBlueprint, _allContexts, _allContextNames);
 
             _blueprint = binaryBlueprint.Deserialize();
 
             AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(target), _blueprint.name);
 
-            _poolIndex = Array.IndexOf(_allPoolNames, _blueprint.poolIdentifier);
-            switchToPool();
+            _contextIndex = Array.IndexOf(_allContextNames, _blueprint.contextIdentifier);
+            switchToContext();
 
             _entity.ApplyBlueprint(_blueprint);
 
@@ -132,8 +132,8 @@ namespace Entitas.Unity.Serialization.Blueprints {
         }
 
         void OnDisable() {
-            if(_pool != null) {
-                _pool.Reset();
+            if(_context != null) {
+                _context.Reset();
             }
         }
 
@@ -147,15 +147,15 @@ namespace Entitas.Unity.Serialization.Blueprints {
 
                 EntitasEditorLayout.BeginHorizontal();
                 {
-                    _poolIndex = EditorGUILayout.Popup(_poolIndex, _allPoolNames);
+                    _contextIndex = EditorGUILayout.Popup(_contextIndex, _allContextNames);
 
-                    if(GUILayout.Button("Switch")) {
-                        switchToPool();
+                    if(GUILayout.Button("Switch Context")) {
+                        switchToContext();
                     }
                 }
                 EntitasEditorLayout.EndHorizontal();
 
-                EntityDrawer.DrawComponents(_pool, _entity, true);
+                EntityDrawer.DrawComponents(_context, _entity, true);
             }
             var changed = EditorGUI.EndChangeCheck();
             if(changed) {
@@ -165,13 +165,13 @@ namespace Entitas.Unity.Serialization.Blueprints {
             }
         }
 
-        void switchToPool() {
-            if(_pool != null) {
-                _pool.Reset();
+        void switchToContext() {
+            if(_context != null) {
+                _context.Reset();
             }
-            var targetPool = _allPools[_poolIndex];
-            _pool = new Pool(targetPool.totalComponents, 0, targetPool.metaData);
-            _entity = _pool.CreateEntity();
+            var targetContext = _allContexts[_contextIndex];
+            _context = new Context(targetContext.totalComponents, 0, targetContext.contextInfo);
+            _entity = _context.CreateEntity();
         }
     }
 }

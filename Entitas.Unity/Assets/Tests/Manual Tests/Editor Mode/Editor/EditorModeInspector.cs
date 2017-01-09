@@ -9,20 +9,20 @@ public class EditorModeInspector : Editor {
 
         var controller = (EditorModeController)target;
 
-        if(controller.pool == null) {
-            controller.pool = Pools.CreateVisualDebuggingPool();
-            new Entitas.Unity.VisualDebugging.PoolObserver(controller.pool);
+        if(controller.context == null) {
+            controller.context = Contexts.CreateVisualDebuggingContext();
+            new Entitas.Unity.VisualDebugging.ContextObserver(controller.context);
         }
 
-        if(GUILayout.Button("Reset pool")) {
-            controller.pool.Reset();
+        if(GUILayout.Button("Reset context")) {
+            controller.context.Reset();
         }
 
         if(GUILayout.Button("Create entitiy")) {
-            var e = controller.pool.CreateEntity();
+            var e = controller.context.CreateEntity();
             e.AddMyString("Editor Mode");
 
-            Debug.Log("Entities count: " + controller.pool.count);
+            Debug.Log("Entities count: " + controller.context.count);
         }
     }
 }

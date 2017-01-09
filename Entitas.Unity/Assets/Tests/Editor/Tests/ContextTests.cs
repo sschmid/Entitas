@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Entitas;
 
 [TestFixtureAttribute]
-class PoolTests {
+class ContextTests {
 
 	[SetUp]
 	public void BeforeEach() {
@@ -11,28 +11,28 @@ class PoolTests {
 
 	[Test]
 	public void ensures_same_deterministic_order_when_getting_entities_after_DestroyAllEntities() {
-		var pool = new Pool(1);
+		var context = new Context(1);
 
 		const int numEntities = 10;
 		for (int i = 0; i < numEntities; i++) {
-			pool.CreateEntity();
+			context.CreateEntity();
 		}
 
 		var order1 = new int[numEntities];
-		var entities1 = pool.GetEntities();
+		var entities1 = context.GetEntities();
 		for (int i = 0; i < numEntities; i++) {
 			order1[i] = entities1[i].creationIndex;
 		}
 
-		pool.DestroyAllEntities();
-		pool.ResetCreationIndex();
+		context.DestroyAllEntities();
+		context.ResetCreationIndex();
 
 		for (int i = 0; i < numEntities; i++) {
-			pool.CreateEntity();
+			context.CreateEntity();
 		}
 
 		var order2 = new int[numEntities];
-		var entities2 = pool.GetEntities();
+		var entities2 = context.GetEntities();
 		for (int i = 0; i < numEntities; i++) {
 			order2[i] = entities2[i].creationIndex;
 		}

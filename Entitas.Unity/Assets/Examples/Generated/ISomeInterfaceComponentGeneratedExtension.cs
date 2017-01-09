@@ -38,7 +38,7 @@ namespace Entitas {
         }
     }
 
-    public partial class Pool {
+    public partial class Context {
 
         public Entity iSomeInterfaceEntity { get { return GetGroup(VisualDebuggingMatcher.ISomeInterface).GetSingleEntity(); } }
         public ISomeInterfaceComponent iSomeInterface { get { return iSomeInterfaceEntity.iSomeInterface; } }
@@ -47,7 +47,7 @@ namespace Entitas {
         public Entity SetISomeInterface(ISomeInterface newValue) {
             if(hasISomeInterface) {
                 throw new EntitasException("Could not set iSomeInterface!\n" + this + " already has an entity with ISomeInterfaceComponent!",
-                    "You should check if the pool already has a iSomeInterfaceEntity before setting it or use pool.ReplaceISomeInterface().");
+                    "You should check if the context already has a iSomeInterfaceEntity before setting it or use context.ReplaceISomeInterface().");
             }
             var entity = CreateEntity();
             entity.AddISomeInterface(newValue);
