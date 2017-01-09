@@ -3,17 +3,17 @@ using System.Collections.Generic;
 namespace Entitas {
 
     /// A ReactiveSystem calls Execute(entities) if there were changes based on
-    /// the specified EntityCollector and will only pass in changed entities.
+    /// the specified Collector and will only pass in changed entities.
     /// A common use-case is to react to changes, e.g. a change of the position
     /// of an entity to update the gameObject.transform.position
     /// of the related gameObject.
     public abstract class ReactiveSystem : IExecuteSystem {
 
-        readonly EntityCollector _collector;
+        readonly Collector _collector;
         readonly List<Entity> _buffer;
         string _toStringCache;
 
-        protected ReactiveSystem(EntityCollector collector) {
+        protected ReactiveSystem(Collector collector) {
             _collector = collector;
             _buffer = new List<Entity>();
         }
@@ -24,7 +24,7 @@ namespace Entitas {
         public abstract void Execute(List<Entity> entities);
 
         /// Activates the ReactiveSystem and starts observing changes
-        /// based on the specified EntityCollector.
+        /// based on the specified Collector.
         /// ReactiveSystem are activated by default.
         public void Activate() {
             _collector.Activate();

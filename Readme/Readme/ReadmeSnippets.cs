@@ -88,7 +88,7 @@ namespace Readme {
             };
         }
 
-        static void entityCollectorExample(Context context) {
+        static void collectorExample(Context context) {
             var group = context.GetGroup(Matcher.Position);
             var collector = group.CreateCollector(GroupEventType.OnEntityAdded);
 

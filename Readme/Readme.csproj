@@ -68,8 +68,8 @@
     <Compile Include="..\Entitas\Entitas\Group.cs">
       <Link>Linked Libraries\Entitas\Group.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\EntityCollector.cs">
-      <Link>Linked Libraries\Entitas\EntityCollector.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Collector.cs">
+      <Link>Linked Libraries\Entitas\Collector.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Context.cs">
       <Link>Linked Libraries\Entitas\Context.cs</Link>

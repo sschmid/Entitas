@@ -39,7 +39,7 @@
     <Compile Include="Entitas\Interfaces\ISystem.cs" />
     <Compile Include="Entitas\Context.cs" />
     <Compile Include="Entitas\Extensions\ContextExtension.cs" />
-    <Compile Include="Entitas\EntityCollector.cs" />
+    <Compile Include="Entitas\Collector.cs" />
     <Compile Include="Entitas\Extensions\GroupExtension.cs" />
     <Compile Include="Entitas\ReactiveSystem.cs" />
     <Compile Include="Entitas\Systems.cs" />

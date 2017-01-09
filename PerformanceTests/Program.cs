@@ -41,8 +41,8 @@ namespace PerformanceTests {
 
             run<ObjectGetProperty>();
             run<EmptyTest>();
-            run<EntityCollectorIterateCollectedEntities>();
-            run<EntityCollectorActivate>();
+            run<CollectorIterateCollectedEntities>();
+            run<CollectorActivate>();
 
             run<HashSetContainsAdd>();
             run<ArrayGetItem>();
@@ -93,8 +93,8 @@ namespace PerformanceTests {
 
         //ObjectGetProperty:                      6 ms
 
-        //EntityCollectorIterateCollectedEntities:957 ms
-        //EntityCollectorActivate:                1 ms
+        //CollectorIterateCollectedEntities:957 ms
+        //CollectorActivate:                1 ms
         //PropertiesCreate:                       251 ms
 
         //HashSetContainsAdd:                     173 ms

@@ -3,9 +3,9 @@ using System.Text;
 
 namespace Entitas {
 
-    /// An EntityCollector can observe one or more groups and collects
+    /// An Collector can observe one or more groups and collects
     /// changed entities based on the specified eventType.
-    public class EntityCollector {
+    public class Collector {
 
         /// Returns all collected entities.
         /// Call collector.ClearCollectedEntities()
@@ -21,15 +21,15 @@ namespace Entitas {
         string _toStringCache;
         StringBuilder _toStringBuilder;
 
-        /// Creates an EntityCollector and will collect changed entities
+        /// Creates an Collector and will collect changed entities
         /// based on the specified eventType.
-        public EntityCollector(Group group, GroupEventType eventType)
+        public Collector(Group group, GroupEventType eventType)
             : this(new [] { group }, new [] { eventType }) {
         }
 
-        /// Creates an EntityCollector and will collect changed entities
+        /// Creates an Collector and will collect changed entities
         /// based on the specified eventTypes.
-        public EntityCollector(Group[] groups, GroupEventType[] eventTypes) {
+        public Collector(Group[] groups, GroupEventType[] eventTypes) {
             _groups = groups;
             _collectedEntities = new HashSet<Entity>(
                 EntityEqualityComparer.comparer
@@ -37,7 +37,7 @@ namespace Entitas {
             _eventTypes = eventTypes;
 
             if(groups.Length != eventTypes.Length) {
-                throw new EntityCollectorException(
+                throw new CollectorException(
                     "Unbalanced count with groups (" + groups.Length +
                     ") and event types (" + eventTypes.Length + ").",
                     "Group and event type count must be equal."
@@ -48,8 +48,8 @@ namespace Entitas {
             Activate();
         }
 
-        /// Activates the EntityCollector and will start collecting
-        /// changed entities. EntityCollectors are activated by default.
+        /// Activates the Collector and will start collecting
+        /// changed entities. Collectors are activated by default.
         public void Activate() {
             for (int i = 0; i < _groups.Length; i++) {
                 var group = _groups[i];
@@ -69,9 +69,9 @@ namespace Entitas {
             }
         }
 
-        /// Deactivates the EntityCollector.
+        /// Deactivates the Collector.
         /// This will also clear all collected entities.
-        /// EntityCollectors are activated by default.
+        /// Collectors are activated by default.
         public void Deactivate() {
             for (int i = 0; i < _groups.Length; i++) {
                 var group = _groups[i];
@@ -123,13 +123,13 @@ namespace Entitas {
             return _toStringCache;
         }
 
-        ~EntityCollector () {
+        ~Collector () {
             Deactivate();
         }
     }
 
-    public class EntityCollectorException : EntitasException {
-        public EntityCollectorException(string message, string hint) :
+    public class CollectorException : EntitasException {
+        public CollectorException(string message, string hint) :
             base(message, hint) {
         }
     }
