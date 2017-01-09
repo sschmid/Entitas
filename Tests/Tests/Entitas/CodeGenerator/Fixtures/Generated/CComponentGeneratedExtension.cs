@@ -15,13 +15,13 @@ namespace Entitas {
         static readonly CComponent cComponent = new CComponent();
 
         public bool isC {
-            get { return HasComponent(PoolAComponentIds.C); }
+            get { return HasComponent(ContextAComponentIds.C); }
             set {
                 if(value != isC) {
                     if(value) {
-                        AddComponent(PoolAComponentIds.C, cComponent);
+                        AddComponent(ContextAComponentIds.C, cComponent);
                     } else {
-                        RemoveComponent(PoolAComponentIds.C);
+                        RemoveComponent(ContextAComponentIds.C);
                     }
                 }
             }
@@ -34,15 +34,15 @@ namespace Entitas {
     }
 }
 
-    public partial class PoolAMatcher {
+    public partial class ContextAMatcher {
 
         static IMatcher _matcherC;
 
         public static IMatcher C {
             get {
                 if(_matcherC == null) {
-                    var matcher = (Matcher)Matcher.AllOf(PoolAComponentIds.C);
-                    matcher.componentNames = PoolAComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(ContextAComponentIds.C);
+                    matcher.componentNames = ContextAComponentIds.componentNames;
                     _matcherC = matcher;
                 }
 
@@ -51,15 +51,15 @@ namespace Entitas {
         }
     }
 
-    public partial class PoolBMatcher {
+    public partial class ContextBMatcher {
 
         static IMatcher _matcherC;
 
         public static IMatcher C {
             get {
                 if(_matcherC == null) {
-                    var matcher = (Matcher)Matcher.AllOf(PoolBComponentIds.C);
-                    matcher.componentNames = PoolBComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(ContextBComponentIds.C);
+                    matcher.componentNames = ContextBComponentIds.componentNames;
                     _matcherC = matcher;
                 }
 
@@ -68,15 +68,15 @@ namespace Entitas {
         }
     }
 
-    public partial class PoolCMatcher {
+    public partial class ContextCMatcher {
 
         static IMatcher _matcherC;
 
         public static IMatcher C {
             get {
                 if(_matcherC == null) {
-                    var matcher = (Matcher)Matcher.AllOf(PoolCComponentIds.C);
-                    matcher.componentNames = PoolCComponentIds.componentNames;
+                    var matcher = (Matcher)Matcher.AllOf(ContextCComponentIds.C);
+                    matcher.componentNames = ContextCComponentIds.componentNames;
                     _matcherC = matcher;
                 }
 

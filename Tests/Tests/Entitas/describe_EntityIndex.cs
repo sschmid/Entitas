@@ -60,7 +60,7 @@ class describe_EntityIndex : nspec {
             };
 
             it["retains entity"] = () => {
-                entity.retainCount.should_be(3); // Pool, Group, EntityIndex
+                entity.retainCount.should_be(3); // Context, Group, EntityIndex
             };
 
             it["has existing entity"] = () => {
@@ -76,7 +76,7 @@ class describe_EntityIndex : nspec {
             it["releases and removes entity from index when component gets removed"] = () => {
                 entity.RemoveComponent(CID.ComponentA);
                 index.HasEntity(name).should_be_false();
-                entity.retainCount.should_be(1); // Pool
+                entity.retainCount.should_be(1); // Context
             };
 
             it["throws when adding an entity for the same key"] = expect<EntityIndexException>(() => {
@@ -93,7 +93,7 @@ class describe_EntityIndex : nspec {
 
                 it["clears index and releases entity"] = () => {
                     index.HasEntity(name).should_be_false();
-                    entity.retainCount.should_be(2); // Pool, Group
+                    entity.retainCount.should_be(2); // Context, Group
                 };
 
                 it["doesn't add entities anymore"] = () => {
@@ -171,8 +171,8 @@ class describe_EntityIndex : nspec {
             };
 
             it["retains entity"] = () => {
-                entity1.retainCount.should_be(3); // Pool, Group, EntityIndex
-                entity2.retainCount.should_be(3); // Pool, Group, EntityIndex
+                entity1.retainCount.should_be(3); // Context, Group, EntityIndex
+                entity2.retainCount.should_be(3); // Context, Group, EntityIndex
             };
 
             it["has existing entities"] = () => {
@@ -188,7 +188,7 @@ class describe_EntityIndex : nspec {
             it["releases and removes entity from index when component gets removed"] = () => {
                 entity1.RemoveComponent(CID.ComponentA);
                 index.GetEntities(name).Count.should_be(1);
-                entity1.retainCount.should_be(1); // Pool
+                entity1.retainCount.should_be(1); // Context
             };
 
             context["when deactivated"] = () => {
@@ -199,8 +199,8 @@ class describe_EntityIndex : nspec {
 
                 it["clears index and releases entity"] = () => {
                     index.GetEntities(name).should_be_empty();
-                    entity1.retainCount.should_be(2); // Pool, Group
-                    entity2.retainCount.should_be(2); // Pool, Group
+                    entity1.retainCount.should_be(2); // Context, Group
+                    entity2.retainCount.should_be(2); // Context, Group
                 };
 
                 it["doesn't add entities anymore"] = () => {

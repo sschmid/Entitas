@@ -17,22 +17,22 @@ class describe_ReactiveSystem : nspec {
         }
     }
 
-    Contexts _pools;
+    Contexts _contexts;
 
     Entity createEntityAB() {
-        return _pools.test.CreateEntity()
+        return _contexts.test.CreateEntity()
             .AddComponentA()
             .AddComponentB();
     }
 
     Entity createEntityAC() {
-        return _pools.test.CreateEntity()
+        return _contexts.test.CreateEntity()
             .AddComponentA()
             .AddComponentC();
     }
 
     Entity createEntityABC() {
-        return _pools.test.CreateEntity()
+        return _contexts.test.CreateEntity()
             .AddComponentA()
             .AddComponentB()
             .AddComponentC();
@@ -43,13 +43,13 @@ class describe_ReactiveSystem : nspec {
         ReactiveSystemSpy system = null;
 
         before = () => {
-            _pools = new Contexts { test = new Context(CID.TotalComponents) };
+            _contexts = new Contexts { test = new Context(CID.TotalComponents) };
         };
 
         context["OnEntityAdded"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_pools.test.CreateCollector(_matcherAB));
+                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB));
             };
 
             it["does not execute when no entities were collected"] = () => {
@@ -106,7 +106,7 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["doesn't execute when not triggered"] = () => {
-                _pools.test.CreateEntity().AddComponentA();
+                _contexts.test.CreateEntity().AddComponentA();
                 system.Execute();
                 assertEntities(system, null);
             };
@@ -141,7 +141,7 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityRemoved"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_pools.test.CreateCollector(_matcherAB, GroupEventType.OnEntityRemoved));
+                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB, GroupEventType.OnEntityRemoved));
             };
 
             it["executes when triggered"] = () => {
@@ -178,7 +178,7 @@ class describe_ReactiveSystem : nspec {
                     entities[0].retainCount.should_be(1);
                 };
 
-                _pools.test.DestroyEntity(e);
+                _contexts.test.DestroyEntity(e);
                 system.Execute();
                 didExecute.should_be(1);
                 e.retainCount.should_be(0);
@@ -188,7 +188,7 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityAddedOrRemoved"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_pools.test.CreateCollector(_matcherAB, GroupEventType.OnEntityAddedOrRemoved));
+                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB, GroupEventType.OnEntityAddedOrRemoved));
             };
 
             it["executes when added"] = () => {
@@ -206,17 +206,17 @@ class describe_ReactiveSystem : nspec {
             };
         };
 
-        context["multiple pools"] = () => {
+        context["multiple contexts"] = () => {
 
-            Context pool1 = null;
-            Context pool2 = null;
+            Context context1 = null;
+            Context context2 = null;
 
             before = () => {
-                pool1 = new Context(CID.TotalComponents);
-                pool2 = new Context(CID.TotalComponents);
+                context1 = new Context(CID.TotalComponents);
+                context2 = new Context(CID.TotalComponents);
 
-                var groupA = pool1.GetGroup(Matcher.AllOf(CID.ComponentA));
-                var groupB = pool2.GetGroup(Matcher.AllOf(CID.ComponentB));
+                var groupA = context1.GetGroup(Matcher.AllOf(CID.ComponentA));
+                var groupB = context2.GetGroup(Matcher.AllOf(CID.ComponentB));
 
                 var groups = new [] { groupA, groupB };
                 var eventTypes = new [] {
@@ -229,11 +229,11 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["executes when a triggered by entityCollector"] = () => {
-                var eA1 = pool1.CreateEntity().AddComponentA();
-                pool2.CreateEntity().AddComponentA();
+                var eA1 = context1.CreateEntity().AddComponentA();
+                context2.CreateEntity().AddComponentA();
 
-                var eB1 = pool1.CreateEntity().AddComponentB();
-                var eB2 = pool2.CreateEntity().AddComponentB();
+                var eB1 = context1.CreateEntity().AddComponentB();
+                var eB2 = context2.CreateEntity().AddComponentB();
 
                 system.Execute();
                 assertEntities(system, eA1);
@@ -248,18 +248,18 @@ class describe_ReactiveSystem : nspec {
         context["filter entities"] = () => {
 
             it["filters entities"] = () => {
-                system = new ReactiveSystemSpy( _pools.test.CreateCollector(_matcherAB),
+                system = new ReactiveSystemSpy( _contexts.test.CreateCollector(_matcherAB),
                                                e => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).age > 42);
 
-                _pools.test.CreateEntity()
+                _contexts.test.CreateEntity()
                                    .AddComponentA()
                                    .AddComponentC();
 
-                var eAB1 = _pools.test.CreateEntity()
+                var eAB1 = _contexts.test.CreateEntity()
                                 .AddComponentB()
                                 .AddComponent(CID.ComponentA, new NameAgeComponent { age = 10 });
 
-                var eAB2 = _pools.test.CreateEntity()
+                var eAB2 = _contexts.test.CreateEntity()
                                 .AddComponentB()
                                 .AddComponent(CID.ComponentA, new NameAgeComponent { age = 50 });
                 
@@ -285,7 +285,7 @@ class describe_ReactiveSystem : nspec {
         context["clear"] = () => {
 
             it["clears reactive system after execute"] = () => {
-                system = new ReactiveSystemSpy(_pools.test.CreateCollector(_matcherAB));
+                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB));
 
                 system.executeAction = entities => {
                     entities[0].ReplaceComponentA(Component.A);

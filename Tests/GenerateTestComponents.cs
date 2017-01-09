@@ -14,8 +14,8 @@ namespace Tests {
             var codeGenerators = new ICodeGenerator[] {
                 new ComponentExtensionsGenerator(),
                 new ComponentIndicesGenerator(),
-                new PoolAttributesGenerator(),
-                new PoolsGenerator(),
+                new ContextAttributesGenerator(),
+                new ContextsGenerator(),
                 new BlueprintsGenerator()
             };
 
@@ -24,11 +24,11 @@ namespace Tests {
                 typeof(CComponent),
                 typeof(ComponentWithFieldsAndProperties),
                 typeof(CustomPrefixComponent),
-                typeof(DefaultPoolComponent),
+                typeof(DefaultContextComponent),
                 typeof(MovableComponent),
-                typeof(MultiplePoolAndDefaultPoolComponent),
+                typeof(MultipleContextAndDefaultContextComponent),
                 typeof(NamespaceComponent),
-                typeof(OtherPoolComponent),
+                typeof(OtherContextComponent),
                 typeof(PersonComponent),
                 typeof(SomeClass),
                 typeof(SomeClassHideInBlueprintInspector),
@@ -36,13 +36,13 @@ namespace Tests {
                 typeof(UserComponent)
             };
 
-            var pools = new [] {
-                "PoolA",
-                "PoolB",
-                "PoolC",
-                "OtherPool",
-                "SomePool",
-                "SomeOtherPool"
+            var contexts = new [] {
+                "ContextA",
+                "ContextB",
+                "ContextC",
+                "OtherContext",
+                "SomeContext",
+                "SomeOtherContext"
             };
 
             var blueprints = new [] {
@@ -50,7 +50,7 @@ namespace Tests {
                 "Blocker"
             };
 
-            var provider = new TypeReflectionProvider(types, pools, blueprints);
+            var provider = new TypeReflectionProvider(types, contexts, blueprints);
             var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
 
             foreach(var file in files) {

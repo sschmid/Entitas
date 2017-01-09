@@ -1,5 +1,5 @@
 using Entitas.CodeGenerator;
 
-[Pool("SomePool")]
+[Context("SomeContext")]
 public interface ISomeInterface {
 }

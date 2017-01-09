@@ -102,7 +102,7 @@ namespace Entitas {
                     componentNames[i] = i.ToString();
                 }
                 _contextInfo = new ContextInfo(
-                    "No Pool", componentNames, null
+                    "No Context", componentNames, null
                 );
             }
         }

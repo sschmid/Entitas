@@ -65,7 +65,7 @@ namespace Readme {
 
         static void poolExample() {
             // Pools.pool is kindly generated for you by the code generator
-            var pool = Pools.pool;
+            var pool = Contexts.pool;
             var entity = pool.CreateEntity();
             entity.isMovable = true;
 

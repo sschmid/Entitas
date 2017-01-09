@@ -7,7 +7,7 @@ namespace Entitas.CodeGenerator {
 
         public readonly string fullTypeName;
         public readonly List<PublicMemberInfo> memberInfos;
-        public readonly string[] pools;
+        public readonly string[] contexts;
         public readonly bool isSingleEntity;
         public readonly string singleComponentPrefix;
         public readonly bool generateComponent;
@@ -18,13 +18,13 @@ namespace Entitas.CodeGenerator {
         public readonly string typeName;
         public readonly bool isSingletonComponent;
 
-        public ComponentInfo(string fullTypeName, List<PublicMemberInfo> memberInfos, string[] pools,
+        public ComponentInfo(string fullTypeName, List<PublicMemberInfo> memberInfos, string[] contexts,
                             bool isSingleEntity, string singleComponentPrefix,
                             bool generateComponent, bool generateMethods, bool generateIndex, bool hideInBlueprintInspector) {
 
             this.fullTypeName = fullTypeName;
             this.memberInfos = memberInfos;
-            this.pools = pools;
+            this.contexts = contexts;
             this.isSingleEntity = isSingleEntity;
             this.singleComponentPrefix = singleComponentPrefix;
             this.generateComponent = generateComponent;

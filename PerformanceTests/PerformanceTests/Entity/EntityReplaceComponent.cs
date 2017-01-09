@@ -7,7 +7,7 @@ public class EntityReplaceComponent : IPerformanceTest {
     Entity _e;
 
     public void Before() {
-        _context = Helper.CreatePool();
+        _context = Helper.CreateContext();
         _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
         _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentB }));
         _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentC }));

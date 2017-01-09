@@ -5,7 +5,7 @@ public class PoolDestroyAllEntities : IPerformanceTest {
     Context _context;
 
     public void Before() {
-        _context = Helper.CreatePool();
+        _context = Helper.CreateContext();
         for (int i = 0; i < n; i++) {
             _context.CreateEntity();
         }

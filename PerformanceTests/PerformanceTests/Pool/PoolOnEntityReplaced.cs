@@ -6,7 +6,7 @@ public class PoolOnEntityReplaced : IPerformanceTest {
     Entity _e;
 
     public void Before() {
-        _context = Helper.CreatePool();
+        _context = Helper.CreateContext();
         _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
         _e = _context.CreateEntity();
         _e.AddComponent(CP.ComponentA, new ComponentA());

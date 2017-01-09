@@ -9,7 +9,7 @@ public class EntityIndexGetEntity : IPerformanceTest {
     PrimaryEntityIndex<string> _index;
 
     public void Before() {
-        _context = Helper.CreatePool();
+        _context = Helper.CreateContext();
         _index = new PrimaryEntityIndex<string>(_context.GetGroup(Matcher.AllOf(CP.ComponentA)), (e, c) => ((NameComponent)c).name);
 
         for (int i = 0; i < 10; i++) {

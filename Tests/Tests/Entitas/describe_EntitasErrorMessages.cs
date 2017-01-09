@@ -23,7 +23,7 @@ class describe_EntitasErrorMessages : EntitasTest {
 
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
-            var contextInfo = new ContextInfo("My Pool", componentNames, null);
+            var contextInfo = new ContextInfo("My Context", componentNames, null);
             _context = new Context(componentNames.Length, 42, contextInfo);
             _entity = createEntity();
         };
@@ -114,11 +114,11 @@ class describe_EntitasErrorMessages : EntitasTest {
             });
         };
 
-        context["Pool"] = () => {
+        context["Context"] = () => {
 
             it["wrong ContextInfo componentNames count"] = () => printErrorMessage(() => {
                 var componentNames = new [] { "Health", "Position", "View" };
-                var contextInfo = new ContextInfo("My Pool", componentNames, null);
+                var contextInfo = new ContextInfo("My Context", componentNames, null);
                 new Context(1, 0, contextInfo);
             });
 

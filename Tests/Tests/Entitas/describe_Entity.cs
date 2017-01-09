@@ -49,7 +49,7 @@ class describe_Entity : nspec {
         context["initial state"] = () => {
 
             it["has default ContextInfo"] = () => {
-                e.contextInfo.name.should_be("No Pool");
+                e.contextInfo.name.should_be("No Context");
                 e.contextInfo.componentNames.Length.should_be(CID.TotalComponents);
                 e.contextInfo.componentTypes.should_be_null();
                 for(int i = 0; i < e.contextInfo.componentNames.Length; i++) {

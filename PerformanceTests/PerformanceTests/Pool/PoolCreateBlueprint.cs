@@ -7,7 +7,7 @@ public class PoolCreateBlueprint : IPerformanceTest {
     Blueprint _blueprint;
 
     public void Before() {
-        _context = Helper.CreatePool();
+        _context = Helper.CreateContext();
 
         var e = _context.CreateEntity();
         var component = new NameAgeComponent();

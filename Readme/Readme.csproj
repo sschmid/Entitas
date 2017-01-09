@@ -53,7 +53,7 @@
     <Compile Include="Readme\Generated\MetaComponentIds.cs" />
     <Compile Include="Readme\Generated\MovableComponentGeneratedExtension.cs" />
     <Compile Include="Readme\Generated\MoveComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Pools.cs" />
+    <Compile Include="Readme\Generated\Contexts.cs" />
     <Compile Include="Readme\Generated\PositionComponentGeneratedExtension.cs" />
     <Compile Include="Readme\Generated\ResourceComponentGeneratedExtension.cs" />
     <Compile Include="Readme\Generated\UIComponentIds.cs" />
@@ -92,8 +92,8 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\DontGenerateAttribute.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\PoolAttribute.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\PoolAttribute.cs</Link>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\ContextAttribute.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\ContextAttribute.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\SingleEntityAttribute.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
@@ -101,8 +101,8 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\PoolsGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\PoolsGenerator.cs</Link>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ContextsGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ContextsGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\ICodeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\ICodeGenerator.cs</Link>
@@ -113,8 +113,8 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IComponentCodeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IComponentCodeGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IPoolCodeGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IPoolCodeGenerator.cs</Link>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IContextCodeGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IContextCodeGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Intermediate\CodeGenFile.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Intermediate\CodeGenFile.cs</Link>
@@ -131,8 +131,8 @@
     <Compile Include="..\Entitas\Entitas\Extensions\GroupExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\GroupExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\PoolExtension.cs">
-      <Link>Linked Libraries\Entitas\Extensions\PoolExtension.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Extensions\ContextExtension.cs">
+      <Link>Linked Libraries\Entitas\Extensions\ContextExtension.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\TypeExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\TypeExtension.cs</Link>
@@ -170,8 +170,8 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\PoolAttributesGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\PoolAttributesGenerator.cs</Link>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ContextAttributesGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ContextAttributesGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs</Link>

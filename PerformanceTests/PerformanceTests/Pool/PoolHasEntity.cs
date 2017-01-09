@@ -6,7 +6,7 @@ public class PoolHasEntity : IPerformanceTest {
     Entity _e;
 
     public void Before() {
-        _context = Helper.CreatePool();
+        _context = Helper.CreateContext();
         for (int i = 0; i < n; i++) {
             _context.CreateEntity();
         }

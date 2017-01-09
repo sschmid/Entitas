@@ -3,15 +3,15 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
-    public class ComponentIndicesGenerator : IPoolCodeGenerator, IComponentCodeGenerator {
+    public class ComponentIndicesGenerator : IContextCodeGenerator, IComponentCodeGenerator {
 
         // Important: This method should be called before Generate(componentInfos)
-        // This will generate empty lookups for all pools.
-        public CodeGenFile[] Generate(string[] poolNames) {
+        // This will generate empty lookups for all contexts.
+        public CodeGenFile[] Generate(string[] contextNames) {
             var emptyInfos = new ComponentInfo[0];
             var generatorName = GetType().FullName;
-            return poolNames
-                .Select(poolName => poolName.PoolPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
+            return contextNames
+                .Select(contextName => contextName.ContextPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
                 .Select(lookupTag => new CodeGenFile(
                     lookupTag,
                     generateIndicesLookup(lookupTag, emptyInfos),
@@ -19,7 +19,7 @@ namespace Entitas.CodeGenerator {
                 )).ToArray();
         }
 
-        // Important: This method should be called after Generate(poolNames)
+        // Important: This method should be called after Generate(contextNames)
         // This will overwrite the empty lookups with the actual content.
         public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
             var orderedComponentInfos = componentInfos.OrderBy(info => info.typeName).ToArray();
@@ -36,7 +36,7 @@ namespace Entitas.CodeGenerator {
         static Dictionary<string, ComponentInfo[]> getLookupTagToComponentInfosMap(ComponentInfo[] componentInfos) {
             var currentIndex = 0;
 
-            // order componentInfos by pool count
+            // order componentInfos by context count
             var orderedComponentInfoToLookupTagsMap = componentInfos
                 .Where(info => info.generateIndex)
                 .ToDictionary(info => info, info => info.ComponentLookupTags())
@@ -46,7 +46,7 @@ namespace Entitas.CodeGenerator {
                 .Aggregate(new Dictionary<string, ComponentInfo[]>(), (map, kv) => {
                     var info = kv.Key;
                     var lookupTags = kv.Value;
-                    var componentIsAssignedToMultiplePools = lookupTags.Length > 1;
+                    var componentIsAssignedToMultipleContexts = lookupTags.Length > 1;
                     var incrementIndex = false;
                     foreach(var lookupTag in lookupTags) {
                         if(!map.ContainsKey(lookupTag)) {
@@ -54,7 +54,7 @@ namespace Entitas.CodeGenerator {
                         }
 
                         var infos = map[lookupTag];
-                        if(componentIsAssignedToMultiplePools) {
+                        if(componentIsAssignedToMultipleContexts) {
                             // Component has multiple lookupTags. Set at current index in all lookups.
                             infos[currentIndex] = info;
                             incrementIndex = true;

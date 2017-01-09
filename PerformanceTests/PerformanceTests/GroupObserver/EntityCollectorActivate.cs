@@ -6,7 +6,7 @@ public class EntityCollectorActivate : IPerformanceTest {
     EntityCollector _collector;
 
     public void Before() {
-        var pool = Helper.CreatePool();
+        var pool = Helper.CreateContext();
         var group = pool.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
         _collector = group.CreateCollector();
     }

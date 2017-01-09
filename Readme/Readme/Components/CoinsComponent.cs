@@ -1,7 +1,7 @@
 using Entitas.CodeGenerator;
 using Entitas;
 
-[Pool("Meta"), SingleEntity]
+[Context("Meta"), SingleEntity]
 public class CoinsComponent : IComponent {
     public int count;
 }

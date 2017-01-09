@@ -5,7 +5,7 @@ public class EntityGetComponents : IPerformanceTest {
     Entity _e;
 
     public void Before() {
-        var pool = Helper.CreatePool();
+        var pool = Helper.CreateContext();
         _e = pool.CreateEntity();
         _e.AddComponent(CP.ComponentA, new ComponentA());
         _e.AddComponent(CP.ComponentB, new ComponentB());

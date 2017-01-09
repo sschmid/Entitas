@@ -5,7 +5,7 @@ public class PoolCreateEntity : IPerformanceTest {
     Context _context;
 
     public void Before() {
-        _context = Helper.CreatePool();
+        _context = Helper.CreateContext();
     }
 
     public void Run() {
