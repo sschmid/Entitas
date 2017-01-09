@@ -350,6 +350,7 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\DefaultContextComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MultipleContextAndDefaultContextComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherContextComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0360.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
