@@ -9,9 +9,10 @@
 using Entitas;
 
 namespace Entitas {
-    public partial class Entity {
-        public UIPositionComponent uIPosition { get { return (UIPositionComponent)GetComponent(UIComponentIds.UIPosition); } }
 
+    public partial class Entity {
+
+        public UIPositionComponent uIPosition { get { return (UIPositionComponent)GetComponent(UIComponentIds.UIPosition); } }
         public bool hasUIPosition { get { return HasComponent(UIComponentIds.UIPosition); } }
 
         public Entity AddUIPosition(int newX, int newY) {
@@ -36,11 +37,12 @@ namespace Entitas {
 }
 
     public partial class UIMatcher {
+
         static IMatcher _matcherUIPosition;
 
         public static IMatcher UIPosition {
             get {
-                if (_matcherUIPosition == null) {
+                if(_matcherUIPosition == null) {
                     var matcher = (Matcher)Matcher.AllOf(UIComponentIds.UIPosition);
                     matcher.componentNames = UIComponentIds.componentNames;
                     _matcherUIPosition = matcher;

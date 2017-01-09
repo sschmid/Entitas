@@ -7,9 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
-    public partial class Entity {
-        public MoveComponent move { get { return (MoveComponent)GetComponent(ComponentIds.Move); } }
 
+    public partial class Entity {
+
+        public MoveComponent move { get { return (MoveComponent)GetComponent(ComponentIds.Move); } }
         public bool hasMove { get { return HasComponent(ComponentIds.Move); } }
 
         public Entity AddMove(int newSpeed) {
@@ -31,11 +32,12 @@ namespace Entitas {
     }
 
     public partial class Matcher {
+
         static IMatcher _matcherMove;
 
         public static IMatcher Move {
             get {
-                if (_matcherMove == null) {
+                if(_matcherMove == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.Move);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherMove = matcher;

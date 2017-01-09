@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public static class MetaComponentIds {
+
     public const int Coins = 0;
 
     public const int TotalComponents = 1;

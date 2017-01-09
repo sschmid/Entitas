@@ -7,9 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 namespace Entitas {
-    public partial class Entity {
-        public UserComponent user { get { return (UserComponent)GetComponent(ComponentIds.User); } }
 
+    public partial class Entity {
+
+        public UserComponent user { get { return (UserComponent)GetComponent(ComponentIds.User); } }
         public bool hasUser { get { return HasComponent(ComponentIds.User); } }
 
         public Entity AddUser(string newName, int newAge) {
@@ -33,16 +34,15 @@ namespace Entitas {
     }
 
     public partial class Context {
+
         public Entity userEntity { get { return GetGroup(Matcher.User).GetSingleEntity(); } }
-
         public UserComponent user { get { return userEntity.user; } }
-
         public bool hasUser { get { return userEntity != null; } }
 
         public Entity SetUser(string newName, int newAge) {
-            if (hasUser) {
+            if(hasUser) {
                 throw new EntitasException("Could not set user!\n" + this + " already has an entity with UserComponent!",
-                    "You should check if the pool already has a userEntity before setting it or use pool.ReplaceUser().");
+                    "You should check if the context already has a userEntity before setting it or use context.ReplaceUser().");
             }
             var entity = CreateEntity();
             entity.AddUser(newName, newAge);
@@ -51,7 +51,7 @@ namespace Entitas {
 
         public Entity ReplaceUser(string newName, int newAge) {
             var entity = userEntity;
-            if (entity == null) {
+            if(entity == null) {
                 entity = SetUser(newName, newAge);
             } else {
                 entity.ReplaceUser(newName, newAge);
@@ -66,11 +66,12 @@ namespace Entitas {
     }
 
     public partial class Matcher {
+
         static IMatcher _matcherUser;
 
         public static IMatcher User {
             get {
-                if (_matcherUser == null) {
+                if(_matcherUser == null) {
                     var matcher = (Matcher)Matcher.AllOf(ComponentIds.User);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherUser = matcher;

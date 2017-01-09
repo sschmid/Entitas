@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public static class ComponentIds {
+
     public const int Animating = 0;
     public const int GameBoardElement = 1;
     public const int Health = 2;
