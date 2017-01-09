@@ -3,10 +3,10 @@ using System.Linq;
 
 namespace Entitas {
 
-    public enum GroupEventType : byte {
-        OnEntityAdded,
-        OnEntityRemoved,
-        OnEntityAddedOrRemoved
+    public enum GroupEvent : byte {
+        Added,
+        Removed,
+        AddedOrRemoved
     }
 
     /// Use context.GetGroup(matcher) to get a group of entities which match

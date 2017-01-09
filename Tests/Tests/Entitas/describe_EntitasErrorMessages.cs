@@ -108,7 +108,7 @@ class describe_EntitasErrorMessages : EntitasTest {
             it["unbalanced goups"] = () => printErrorMessage(() => {
                 var g1 = new Group(Matcher.AllOf(CID.ComponentA));
                 var g2 = new Group(Matcher.AllOf(CID.ComponentB));
-                var e1 = GroupEventType.OnEntityAdded;
+                var e1 = GroupEvent.Added;
 
                 new Collector(new [] { g1, g2 }, new [] { e1 });
             });

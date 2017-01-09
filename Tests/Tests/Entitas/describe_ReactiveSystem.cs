@@ -141,7 +141,7 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityRemoved"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB, GroupEventType.OnEntityRemoved));
+                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB, GroupEvent.Removed));
             };
 
             it["executes when triggered"] = () => {
@@ -188,7 +188,7 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityAddedOrRemoved"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB, GroupEventType.OnEntityAddedOrRemoved));
+                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB, GroupEvent.AddedOrRemoved));
             };
 
             it["executes when added"] = () => {
@@ -219,11 +219,11 @@ class describe_ReactiveSystem : nspec {
                 var groupB = context2.GetGroup(Matcher.AllOf(CID.ComponentB));
 
                 var groups = new [] { groupA, groupB };
-                var eventTypes = new [] {
-                    GroupEventType.OnEntityAdded,
-                    GroupEventType.OnEntityRemoved
+                var groupEvents = new [] {
+                    GroupEvent.Added,
+                    GroupEvent.Removed
                 };
-                var collector = new Collector(groups, eventTypes);
+                var collector = new Collector(groups, groupEvents);
 
                 system = new ReactiveSystemSpy(collector);
             };

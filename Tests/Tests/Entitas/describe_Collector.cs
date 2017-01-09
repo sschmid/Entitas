@@ -17,10 +17,10 @@ class describe_Collector : nspec {
             groupA = _context.GetGroup(matcherA);
         };
 
-        context["when observing with eventType OnEntityAdded"] = () => {
+        context["when observing with groupEvent OnEntityAdded"] = () => {
             
             before = () => {
-                collectorA = new Collector(groupA, GroupEventType.OnEntityAdded);
+                collectorA = new Collector(groupA, GroupEvent.Added);
             };
 
             it["is empty when nothing happend"] = () => {
@@ -122,10 +122,10 @@ class describe_Collector : nspec {
             };
         };
 
-        context["when observing with eventType OnEntityRemoved"] = () => {
+        context["when observing with groupEvent OnEntityRemoved"] = () => {
 
             before = () => {
-                collectorA = new Collector(groupA, GroupEventType.OnEntityRemoved);
+                collectorA = new Collector(groupA, GroupEvent.Removed);
             };
 
             it["returns collected entities"] = () => {
@@ -139,10 +139,10 @@ class describe_Collector : nspec {
             };
         };
 
-        context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
+        context["when observing with groupEvent OnEntityAddedOrRemoved"] = () => {
 
             before = () => {
-                collectorA = new Collector(groupA, GroupEventType.OnEntityAddedOrRemoved);
+                collectorA = new Collector(groupA, GroupEvent.AddedOrRemoved);
             };
 
             it["returns collected entities"] = () => {
@@ -167,24 +167,24 @@ class describe_Collector : nspec {
                 groupB = _context.GetGroup(Matcher.AllOf(CID.ComponentB));
             };
 
-            it["throws when group count != eventType count"] = expect<CollectorException>(() => {
+            it["throws when group count != groupEvent count"] = expect<CollectorException>(() => {
                 collectorA = new Collector(
                     new [] { groupA },
                     new [] {
-                        GroupEventType.OnEntityAdded,
-                        GroupEventType.OnEntityAdded
+                        GroupEvent.Added,
+                        GroupEvent.Added
                     }
                 );
             });
 
-            context["when observing with eventType OnEntityAdded"] = () => {
+            context["when observing with groupEvent OnEntityAdded"] = () => {
 
                 before = () => {
                     collectorA = new Collector(
                         new [] { groupA, groupB },
                         new [] {
-                            GroupEventType.OnEntityAdded,
-                            GroupEventType.OnEntityAdded
+                            GroupEvent.Added,
+                            GroupEvent.Added
                         }
                     );
                 };
@@ -204,14 +204,14 @@ class describe_Collector : nspec {
                 };
             };
 
-            context["when observing with eventType OnEntityRemoved"] = () => {
+            context["when observing with groupEvent OnEntityRemoved"] = () => {
 
                 before = () => {
                     collectorA = new Collector(
                         new [] { groupA, groupB },
                         new [] {
-                            GroupEventType.OnEntityRemoved,
-                            GroupEventType.OnEntityRemoved
+                            GroupEvent.Removed,
+                            GroupEvent.Removed
                         }
                     );
                 };
@@ -229,14 +229,14 @@ class describe_Collector : nspec {
                 };
             };
 
-            context["when observing with eventType OnEntityAddedOrRemoved"] = () => {
+            context["when observing with groupEvent OnEntityAddedOrRemoved"] = () => {
 
                 before = () => {
                     collectorA = new Collector(
                         new [] { groupA, groupB },
                         new [] {
-                            GroupEventType.OnEntityAddedOrRemoved,
-                            GroupEventType.OnEntityAddedOrRemoved
+                            GroupEvent.AddedOrRemoved,
+                            GroupEvent.AddedOrRemoved
                         }
                     );
                 };
@@ -258,14 +258,14 @@ class describe_Collector : nspec {
                 };
             };
 
-            context["when observing with mixed eventTypes"] = () => {
+            context["when observing with mixed groupEvents"] = () => {
 
                 before = () => {
                     collectorA = new Collector(
                         new [] { groupA, groupB },
                         new [] {
-                            GroupEventType.OnEntityAdded,
-                            GroupEventType.OnEntityRemoved
+                            GroupEvent.Added,
+                            GroupEvent.Removed
                         }
                     );
                 };

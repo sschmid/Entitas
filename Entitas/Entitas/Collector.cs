@@ -4,7 +4,7 @@ using System.Text;
 namespace Entitas {
 
     /// An Collector can observe one or more groups and collects
-    /// changed entities based on the specified eventType.
+    /// changed entities based on the specified groupEvent.
     public class Collector {
 
         /// Returns all collected entities.
@@ -16,31 +16,31 @@ namespace Entitas {
 
         readonly HashSet<Entity> _collectedEntities;
         readonly Group[] _groups;
-        readonly GroupEventType[] _eventTypes;
+        readonly GroupEvent[] _groupEvents;
         Group.GroupChanged _addEntityCache;
         string _toStringCache;
         StringBuilder _toStringBuilder;
 
         /// Creates an Collector and will collect changed entities
-        /// based on the specified eventType.
-        public Collector(Group group, GroupEventType eventType)
-            : this(new [] { group }, new [] { eventType }) {
+        /// based on the specified groupEvent.
+        public Collector(Group group, GroupEvent groupEvent)
+            : this(new [] { group }, new [] { groupEvent }) {
         }
 
         /// Creates an Collector and will collect changed entities
-        /// based on the specified eventTypes.
-        public Collector(Group[] groups, GroupEventType[] eventTypes) {
+        /// based on the specified groupEvents.
+        public Collector(Group[] groups, GroupEvent[] groupEvents) {
             _groups = groups;
             _collectedEntities = new HashSet<Entity>(
                 EntityEqualityComparer.comparer
             );
-            _eventTypes = eventTypes;
+            _groupEvents = groupEvents;
 
-            if(groups.Length != eventTypes.Length) {
+            if(groups.Length != groupEvents.Length) {
                 throw new CollectorException(
                     "Unbalanced count with groups (" + groups.Length +
-                    ") and event types (" + eventTypes.Length + ").",
-                    "Group and event type count must be equal."
+                    ") and group events (" + groupEvents.Length + ").",
+                    "Group and group events count must be equal."
                 );
             }
 
@@ -53,14 +53,14 @@ namespace Entitas {
         public void Activate() {
             for (int i = 0; i < _groups.Length; i++) {
                 var group = _groups[i];
-                var eventType = _eventTypes[i];
-                if(eventType == GroupEventType.OnEntityAdded) {
+                var groupEvent = _groupEvents[i];
+                if(groupEvent == GroupEvent.Added) {
                     group.OnEntityAdded -= _addEntityCache;
                     group.OnEntityAdded += _addEntityCache;
-                } else if(eventType == GroupEventType.OnEntityRemoved) {
+                } else if(groupEvent == GroupEvent.Removed) {
                     group.OnEntityRemoved -= _addEntityCache;
                     group.OnEntityRemoved += _addEntityCache;
-                } else if(eventType == GroupEventType.OnEntityAddedOrRemoved) {
+                } else if(groupEvent == GroupEvent.AddedOrRemoved) {
                     group.OnEntityAdded -= _addEntityCache;
                     group.OnEntityAdded += _addEntityCache;
                     group.OnEntityRemoved -= _addEntityCache;

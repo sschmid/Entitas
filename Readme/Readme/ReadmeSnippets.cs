@@ -90,7 +90,7 @@ namespace Readme {
 
         static void collectorExample(Context context) {
             var group = context.GetGroup(Matcher.Position);
-            var collector = group.CreateCollector(GroupEventType.OnEntityAdded);
+            var collector = group.CreateCollector(GroupEvent.Added);
 
             // ----------------------------
             foreach(var e in collector.collectedEntities) {

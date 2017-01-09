@@ -8,8 +8,8 @@ namespace Entitas {
         }
 
         /// Creates an Collector.
-        public static Collector CreateCollector(this Context context, IMatcher matcher, GroupEventType eventType = GroupEventType.OnEntityAdded) {
-            return new Collector(context.GetGroup(matcher), eventType);
+        public static Collector CreateCollector(this Context context, IMatcher matcher, GroupEvent groupEvent = GroupEvent.Added) {
+            return new Collector(context.GetGroup(matcher), groupEvent);
         }
 
         /// Creates a new entity and adds copies of all
