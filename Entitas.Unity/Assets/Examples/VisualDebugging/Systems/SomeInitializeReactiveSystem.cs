@@ -3,9 +3,11 @@ using Entitas;
 
 public class SomeInitializeReactiveSystem : ReactiveSystem, IInitializeSystem {
 
-    public SomeInitializeReactiveSystem(Contexts contexts) : base(
-        contexts.visualDebugging.CreateCollector(Matcher.AllOf(0))
-    ) { }
+    public SomeInitializeReactiveSystem(Contexts contexts) : base(contexts.visualDebugging) { }
+
+    protected override Collector GetTrigger(Context context) {
+        return context.CreateCollector(Matcher.AllOf(0));
+    }
 
     protected override bool Filter(Entity entity) {
         return true;

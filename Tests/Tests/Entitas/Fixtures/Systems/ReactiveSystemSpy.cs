@@ -31,16 +31,20 @@ public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitialize
     public ReactiveSystemSpy(Collector collector) : base(collector) {
     }
 
-    public ReactiveSystemSpy(Collector collector, Func<Entity, bool> filter) : base(collector) {
+    public ReactiveSystemSpy(Collector collector, Func<Entity, bool> filter) : this(collector) {
         _filter = filter;
     }
 
-    public void Initialize() {
-        _didInitialize += 1;
+    protected override Collector GetTrigger(Context context) {
+        return null;
     }
 
     protected override bool Filter(Entity entity) {
         return _filter == null || _filter(entity);
+    }
+
+    public void Initialize() {
+        _didInitialize += 1;
     }
 
     public override void Execute(List<Entity> entities) {

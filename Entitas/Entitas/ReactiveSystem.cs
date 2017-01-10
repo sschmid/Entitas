@@ -13,10 +13,18 @@ namespace Entitas {
         readonly List<Entity> _buffer;
         string _toStringCache;
 
+        protected ReactiveSystem(Context context) {
+            _collector = GetTrigger(context);
+            _buffer = new List<Entity>();
+        }
+
         protected ReactiveSystem(Collector collector) {
             _collector = collector;
             _buffer = new List<Entity>();
         }
+
+        /// Specify the collector that will trigger the ReactiveSystem.
+        protected abstract Collector GetTrigger(Context context);
 
         /// This will exclude all entities which don't pass the filter.
         protected abstract bool Filter(Entity entity);

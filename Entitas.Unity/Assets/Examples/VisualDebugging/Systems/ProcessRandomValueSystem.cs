@@ -5,10 +5,13 @@ public class ProcessRandomValueSystem : ReactiveSystem {
 
     readonly Context _context;
 
-    public ProcessRandomValueSystem(Contexts contexts) : base(
-        contexts.visualDebugging.CreateCollector(VisualDebuggingMatcher.MyFloat))
+    public ProcessRandomValueSystem(Contexts contexts) : base(contexts.visualDebugging)
     {
         _context = contexts.visualDebugging;
+    }
+
+    protected override Collector GetTrigger(Context context) {
+        return context.CreateCollector(VisualDebuggingMatcher.MyFloat);
     }
 
     protected override bool Filter(Entity entity) {

@@ -4,9 +4,11 @@ using Entitas;
 
 public class AReactiveSystem : ReactiveSystem {
 
-    public AReactiveSystem(Contexts contexts) : base(
-        contexts.visualDebugging.CreateCollector(VisualDebuggingMatcher.MyString)
-    ) { }
+    public AReactiveSystem(Contexts contexts) : base(contexts.visualDebugging) { }
+
+    protected override Collector GetTrigger(Context context) {
+        return context.CreateCollector(VisualDebuggingMatcher.MyString);
+    }
 
     protected override bool Filter(Entity entity) {
         return true;
