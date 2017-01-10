@@ -47,7 +47,7 @@ public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitialize
         _didInitialize += 1;
     }
 
-    public override void Execute(List<Entity> entities) {
+    protected override void Execute(List<Entity> entities) {
         _didExecute += 1;
 
         if(entities != null) {

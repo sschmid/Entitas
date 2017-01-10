@@ -29,7 +29,7 @@ namespace Entitas {
         /// This will exclude all entities which don't pass the filter.
         protected abstract bool Filter(Entity entity);
 
-        public abstract void Execute(List<Entity> entities);
+        protected abstract void Execute(List<Entity> entities);
 
         /// Activates the ReactiveSystem and starts observing changes
         /// based on the specified Collector.

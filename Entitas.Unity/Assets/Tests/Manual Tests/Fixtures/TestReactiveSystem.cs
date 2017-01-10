@@ -13,6 +13,6 @@ public class TestReactiveSystem : ReactiveSystem {
         return true;
     }
 
-    public override void Execute(List<Entity> entities) {
+    protected override void Execute(List<Entity> entities) {
     }
 }

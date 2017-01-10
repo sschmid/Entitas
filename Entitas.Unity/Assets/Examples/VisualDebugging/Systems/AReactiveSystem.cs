@@ -14,7 +14,7 @@ public class AReactiveSystem : ReactiveSystem {
         return true;
     }
 
-    public override void Execute(List<Entity> entities) {
+    protected override void Execute(List<Entity> entities) {
         Thread.Sleep(2);
     }
 }

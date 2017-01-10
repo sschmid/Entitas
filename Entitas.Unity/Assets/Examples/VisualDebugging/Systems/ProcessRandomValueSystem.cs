@@ -18,7 +18,7 @@ public class ProcessRandomValueSystem : ReactiveSystem {
         return true;
     }
 
-    public override void Execute(List<Entity> entities) {
+    protected override void Execute(List<Entity> entities) {
         foreach(var e in entities) {
             _context.DestroyEntity(e);
         }

@@ -16,6 +16,6 @@ public class SomeInitializeReactiveSystem : ReactiveSystem, IInitializeSystem {
     public void Initialize() {
     }
 
-    public override void Execute(List<Entity> entities) {
+    protected override void Execute(List<Entity> entities) {
     }
 }
