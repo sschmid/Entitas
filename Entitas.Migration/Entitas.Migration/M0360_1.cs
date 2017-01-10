@@ -1,8 +1,8 @@
 ﻿namespace Entitas.Migration {
 
-    public class M0360 : IMigration {
+    public class M0360_1 : IMigration {
 
-        public string version { get { return "0.36.0"; } }
+        public string version { get { return "0.36.0-1"; } }
 
         public string workingDirectory { get { return "project root"; } }
 

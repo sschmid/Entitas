@@ -11,7 +11,9 @@ namespace Entitas.Migration {
                 new M0220(),
                 new M0260(),
                 new M0300(),
-                new M0320()
+                new M0320(),
+                new M0360_1(),
+                new M0360_2()
             };
 
             if(args == null) {

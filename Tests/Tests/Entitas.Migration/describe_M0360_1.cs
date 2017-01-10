@@ -3,7 +3,7 @@ using System.Linq;
 using Entitas.Migration;
 using NSpec;
 
-class describe_M0360 : nspec {
+class describe_M0360_1 : nspec {
 
     void when_migrating() {
 
@@ -12,7 +12,7 @@ class describe_M0360 : nspec {
         IMigration m = null;
 
         before = () => {
-            m = new M0360();
+            m = new M0360_1();
         };
 
         it["finds all files"] = () => {
