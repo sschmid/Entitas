@@ -6,8 +6,6 @@ var searchData=
   ['entitaspreferencesconfig',['EntitasPreferencesConfig',['../class_entitas_1_1_serialization_1_1_configuration_1_1_entitas_preferences_config.html',1,'Entitas::Serialization::Configuration']]],
   ['entity',['Entity',['../class_entitas_1_1_entity.html',1,'Entitas']]],
   ['entityalreadyhascomponentexception',['EntityAlreadyHasComponentException',['../class_entitas_1_1_entity_already_has_component_exception.html',1,'Entitas']]],
-  ['entitycollector',['EntityCollector',['../class_entitas_1_1_entity_collector.html',1,'Entitas']]],
-  ['entitycollectorexception',['EntityCollectorException',['../class_entitas_1_1_entity_collector_exception.html',1,'Entitas']]],
   ['entitydoesnothavecomponentexception',['EntityDoesNotHaveComponentException',['../class_entitas_1_1_entity_does_not_have_component_exception.html',1,'Entitas']]],
   ['entityequalitycomparer',['EntityEqualityComparer',['../class_entitas_1_1_entity_equality_comparer.html',1,'Entitas']]],
   ['entityextension',['EntityExtension',['../class_entitas_1_1_entity_extension.html',1,'Entitas']]],

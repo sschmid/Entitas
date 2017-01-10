@@ -1,3 +1,36 @@
+# 0.36.0
+
+See and discuss changes in [Milestone 0.36.0](https://github.com/sschmid/Entitas-CSharp/milestone/6)
+
+#### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+#### Entitas
+- Removed pool.CreateSystem() (#233 #237)
+- Removed `IEnsureComponents`, `IExcludeComponents`, `ISetPools`, `ISetPool`, `IReactiveSystem`, `IMultiReactiveSystem`, `IEntityCollectorSystem`
+- Changed the ReactiveSystem to be an abstract class instead of `IReactiveSystem`. You need to override `GetTrigger`, `Filter` and `Execute`.
+This enables filtering entities based on component values (#234)
+- Renamed the term Pool to Context (#99 #250)
+- Renamed `EntityCollector` to `Collector` (#252 #253)
+- Renamed `GroupEventType` to `GroupEvent` and removed the prefix `OnEntity`
+- entity.ToString uses component.ToString(). Override ToString() in your components
+to get a nice description, e.g. `Health(42)` (#203 #196)
+
+#### Entitas.CodeGenerator
+- Removed OldPoolsGenerator
+- Fixed code generator line ending for header
+
+#### Entitas.Unity.VisualDebugging
+- Improved VisualDebugging performance by reusing StringBuilders
+- Added support for `ICleanupSystem` and `ITearDownSystem`
+- Changed SystemsMonitor.axisRounding to 1
+- Fix error when turning visual debugging on/off in Unity 5.4 or newer (#222)
+- Changed default blueprint creation location (#206 #248)
+
+### Other
+- Simplified build pipeline
+
+
 # 0.35.0
 
 See and discuss changes in [Milestone 0.35.0](https://github.com/sschmid/Entitas-CSharp/milestone/5)

@@ -6,6 +6,7 @@ var searchData=
   ['getcomponents',['GetComponents',['../class_entitas_1_1_entity.html#a78627b36ab878dde662b3d8267641ef2',1,'Entitas::Entity']]],
   ['getentities',['GetEntities',['../class_entitas_1_1_context_extension.html#a4d8b507b1bfa163af31a68bacb8acf6f',1,'Entitas.ContextExtension.GetEntities()'],['../class_entitas_1_1_group.html#a5df13ffbcf1c1c04da246e7ce8fd8539',1,'Entitas.Group.GetEntities()']]],
   ['getsingleentity',['GetSingleEntity',['../class_entitas_1_1_group.html#afd8fa504cf0ec39097931d90acd23592',1,'Entitas::Group']]],
+  ['gettrigger',['GetTrigger',['../class_entitas_1_1_reactive_system.html#a0d77a7d110e55068222b422c2060e885',1,'Entitas::ReactiveSystem']]],
   ['group',['Group',['../class_entitas_1_1_group.html',1,'Entitas']]],
   ['group',['Group',['../class_entitas_1_1_group.html#a281e23e9e99cd2ee19e3913f0b70156e',1,'Entitas::Group']]],
   ['groupextension',['GroupExtension',['../class_entitas_1_1_group_extension.html',1,'Entitas']]],

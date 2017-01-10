@@ -5,6 +5,8 @@ var searchData=
   ['codegeneratorextensions',['CodeGeneratorExtensions',['../class_entitas_1_1_code_generator_1_1_code_generator_extensions.html',1,'Entitas::CodeGenerator']]],
   ['codegenfile',['CodeGenFile',['../class_entitas_1_1_code_generator_1_1_code_gen_file.html',1,'Entitas::CodeGenerator']]],
   ['collectionextension',['CollectionExtension',['../class_entitas_1_1_collection_extension.html',1,'Entitas']]],
+  ['collector',['Collector',['../class_entitas_1_1_collector.html',1,'Entitas']]],
+  ['collectorexception',['CollectorException',['../class_entitas_1_1_collector_exception.html',1,'Entitas']]],
   ['componentblueprint',['ComponentBlueprint',['../class_entitas_1_1_serialization_1_1_blueprints_1_1_component_blueprint.html',1,'Entitas::Serialization::Blueprints']]],
   ['componentblueprintexception',['ComponentBlueprintException',['../class_entitas_1_1_serialization_1_1_blueprints_1_1_component_blueprint_exception.html',1,'Entitas::Serialization::Blueprints']]],
   ['componentextensionsgenerator',['ComponentExtensionsGenerator',['../class_entitas_1_1_code_generator_1_1_component_extensions_generator.html',1,'Entitas::CodeGenerator']]],

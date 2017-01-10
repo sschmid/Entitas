@@ -1,4 +1,5 @@
 .
+├── CodeGenerator
 ├── Entitas
 │   └── Entitas
 │       ├── Caching
@@ -9,6 +10,7 @@
 │       │   ├── Intermediate
 │       │   └── Providers
 │       ├── Extensions
+│       ├── Index
 │       ├── Interfaces
 │       ├── Matcher
 │       └── Serialization
@@ -30,21 +32,22 @@
 │               │   └── Blueprints
 │               │       └── Editor
 │               └── VisualDebugging
+│                   ├── ContextObserver
+│                   │   └── Editor
 │                   ├── DebugSystems
 │                   │   └── Editor
 │                   ├── Editor
-│                   ├── Entity
-│                   │   └── Editor
-│                   │       ├── DefaultInstanceCreator
-│                   │       └── TypeDrawer
-│                   └── PoolObserver
+│                   └── Entity
 │                       └── Editor
+│                           ├── DefaultInstanceCreator
+│                           └── TypeDrawer
 ├── Scripts
-│   └── Docs
+│   └── docs_resources
 └── Snippets
     ├── VisualStudio
     └── Xamarin
 .
+├── CodeGenerator
 ├── Entitas
 │   └── Entitas
 │       ├── Caching
@@ -53,25 +56,23 @@
 │       │   └── ObjectPool.cs
 │       ├── CodeGenerator
 │       │   ├── Attributes
+│       │   │   ├── ContextAttribute.cs
 │       │   │   ├── CustomComponentNameAttribute.cs
 │       │   │   ├── CustomPrefixAttribute.cs
 │       │   │   ├── DontGenerateAttribute.cs
-│       │   │   ├── IndexKeyAttribute.cs
-│       │   │   ├── PoolAttribute.cs
 │       │   │   └── SingleEntityAttribute.cs
 │       │   ├── Generators
 │       │   │   ├── BlueprintsGenerator.cs
 │       │   │   ├── ComponentExtensionsGenerator.cs
 │       │   │   ├── ComponentIndicesGenerator.cs
-│       │   │   ├── OldPoolsGenerator.cs
-│       │   │   ├── PoolAttributesGenerator.cs
-│       │   │   └── PoolsGenerator.cs
+│       │   │   ├── ContextAttributesGenerator.cs
+│       │   │   └── ContextsGenerator.cs
 │       │   ├── Interfaces
 │       │   │   ├── IBlueprintsCodeGenerator.cs
 │       │   │   ├── ICodeGenerator.cs
 │       │   │   ├── ICodeGeneratorDataProvider.cs
 │       │   │   ├── IComponentCodeGenerator.cs
-│       │   │   └── IPoolCodeGenerator.cs
+│       │   │   └── IContextCodeGenerator.cs
 │       │   ├── Intermediate
 │       │   │   ├── CodeGenFile.cs
 │       │   │   └── ComponentInfo.cs
@@ -81,27 +82,25 @@
 │       │   └── TypeReflectionCodeGenerator.cs
 │       ├── Extensions
 │       │   ├── CollectionExtension.cs
+│       │   ├── ContextExtension.cs
 │       │   ├── EntityExtension.cs
 │       │   ├── GroupExtension.cs
-│       │   ├── IMatcherExtension.cs
-│       │   ├── PoolExtension.cs
 │       │   └── TypeExtension.cs
+│       ├── Index
+│       │   ├── AbstractEntityIndex.cs
+│       │   ├── EntityIndex.cs
+│       │   ├── IEntityIndex.cs
+│       │   └── PrimaryEntityIndex.cs
 │       ├── Interfaces
-│       │   ├── ICleanupSystem.cs
 │       │   ├── IComponent.cs
-│       │   ├── IExecuteSystem.cs
-│       │   ├── IInitializeSystem.cs
 │       │   ├── IMatcher.cs
-│       │   ├── IReactiveSystem.cs
-│       │   ├── ISystem.cs
-│       │   └── ITearDownSystem.cs
+│       │   └── ISystem.cs
 │       ├── Matcher
 │       │   ├── Matcher.cs
 │       │   ├── MatcherEquals.cs
 │       │   ├── MatcherInterfaces.cs
 │       │   ├── MatcherStatic.cs
-│       │   ├── MatcherToString.cs
-│       │   └── TriggerOnEvent.cs
+│       │   └── MatcherToString.cs
 │       ├── Serialization
 │       │   ├── Blueprints
 │       │   │   ├── Blueprint.cs
@@ -116,16 +115,15 @@
 │       │   │   └── Properties.cs
 │       │   ├── PublicMemberInfo.cs
 │       │   └── TypeSerializationExtension.cs
+│       ├── Collector.cs
+│       ├── Context.cs
+│       ├── Contexts.cs
 │       ├── EntitasException.cs
 │       ├── Entity.cs
-│       ├── EntityCollector.cs
-│       ├── EntityIndex.cs
 │       ├── Group.cs
-│       ├── Pool.cs
-│       ├── Pools.cs
 │       ├── ReactiveSystem.cs
 │       ├── Systems.cs
-│       └── entitas_version
+│       └── version
 ├── Entitas.Migration
 │   ├── Entitas.Migration
 │   │   ├── IMigration.cs
@@ -135,6 +133,8 @@
 │   │   ├── M0260.cs
 │   │   ├── M0300.cs
 │   │   ├── M0320.cs
+│   │   ├── M0360_1.cs
+│   │   ├── M0360_2.cs
 │   │   ├── MigrationFile.cs
 │   │   └── MigrationUtils.cs
 │   └── Program.cs
@@ -171,6 +171,11 @@
 │               │       ├── BinaryBlueprint.cs
 │               │       └── Blueprints.cs
 │               └── VisualDebugging
+│                   ├── ContextObserver
+│                   │   ├── Editor
+│                   │   │   └── ContextObserverInspector.cs
+│                   │   ├── ContextObserver.cs
+│                   │   └── ContextObserverBehaviour.cs
 │                   ├── DebugSystems
 │                   │   ├── Editor
 │                   │   │   ├── DebugSystemsInspector.cs
@@ -180,11 +185,11 @@
 │                   │   ├── Feature.cs
 │                   │   └── SystemInfo.cs
 │                   ├── Editor
+│                   │   ├── EntitasContextErrorHierarchyIcon.png
+│                   │   ├── EntitasContextHierarchyIcon.png
 │                   │   ├── EntitasEntityErrorHierarchyIcon.png
 │                   │   ├── EntitasEntityHierarchyIcon.png
 │                   │   ├── EntitasHierarchyIcon.cs
-│                   │   ├── EntitasPoolErrorHierarchyIcon.png
-│                   │   ├── EntitasPoolHierarchyIcon.png
 │                   │   ├── EntitasStats.cs
 │                   │   ├── EntitasSystemsHierarchyIcon.png
 │                   │   ├── VisualDebuggingConfig.cs
@@ -221,36 +226,21 @@
 │                   │   │   ├── EntityInspector.cs
 │                   │   │   └── IComponentDrawer.cs
 │                   │   └── EntityBehaviour.cs
-│                   ├── PoolObserver
-│                   │   ├── Editor
-│                   │   │   └── PoolObserverInspector.cs
-│                   │   ├── PoolObserver.cs
-│                   │   └── PoolObserverBehaviour.cs
 │                   └── GameObjectDestroyExtension.cs
 ├── Scripts
-│   ├── Docs
+│   ├── docs_resources
 │   │   ├── docs-logo.png
 │   │   ├── docset.doxyfile
 │   │   ├── html.doxyfile
 │   │   ├── icon.png
 │   │   └── icon@2x.png
-│   ├── build_project
-│   ├── clean
-│   ├── collect_sources
-│   ├── deploy
-│   ├── generate_docs
-│   ├── generate_tree_file
-│   ├── generate_unity_csharp_project
-│   ├── get_milestone_issues
-│   ├── post_build_collect
-│   ├── release
+│   ├── build
+│   ├── consts
+│   ├── pack
 │   ├── rsync_exclude.txt
 │   ├── rsync_include.txt
-│   ├── run_tests
-│   ├── run_unity_tests
-│   ├── tree.txt
-│   ├── update_project_dependencies
-│   └── vars
+│   ├── test
+│   └── update
 ├── Snippets
 │   ├── VisualStudio
 │   │   ├── e_cleanup.snippet
@@ -260,8 +250,8 @@
 │   │   ├── e_execute.snippet
 │   │   ├── e_initialize.snippet
 │   │   ├── e_rexecute.snippet
-│   │   ├── e_setPool.snippet
-│   │   ├── e_setPools.snippet
+│   │   ├── e_setContext.snippet
+│   │   ├── e_setContexts.snippet
 │   │   ├── e_system.snippet
 │   │   ├── e_teardown.snippet
 │   │   └── e_trigger.snippet
@@ -273,8 +263,8 @@
 │       ├── e_execute.template.xml
 │       ├── e_initialize.template.xml
 │       ├── e_rexecute.template.xml
-│       ├── e_setPool.template.xml
-│       ├── e_setPools.template.xml
+│       ├── e_setContext.template.xml
+│       ├── e_setContexts.template.xml
 │       ├── e_system.template.xml
 │       ├── e_teardown.template.xml
 │       └── e_trigger.template.xml

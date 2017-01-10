@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="docs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Entitas
-   &#160;<span id="projectnumber">0.35.0</span>
+   &#160;<span id="projectnumber">0.36.0</span>
    </div>
    <div id="projectbrief">Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity</div>
   </td>
@@ -100,6 +100,10 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_collection_extension.html">CollectionExtension</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_collector.html">Collector</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_collector_exception.html">CollectorException</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context.html">Context</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context_does_not_contain_entity_exception.html">ContextDoesNotContainEntityException</a></td></tr>
@@ -126,10 +130,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html">Entity</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity_already_has_component_exception.html">EntityAlreadyHasComponentException</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity_collector.html">EntityCollector</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity_collector_exception.html">EntityCollectorException</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity_does_not_have_component_exception.html">EntityDoesNotHaveComponentException</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,11 +200,11 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a506f1b8bae1ff76ff39f9a0596be837c"><td class="memItemLeft" align="right" valign="top"><a id="a506f1b8bae1ff76ff39f9a0596be837c"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>GroupEventType</b> : byte { <b>OnEntityAdded</b>, 
-<b>OnEntityRemoved</b>, 
-<b>OnEntityAddedOrRemoved</b>
+<tr class="memitem:aa67beedae1bb437bfae54fc3fdf88f28"><td class="memItemLeft" align="right" valign="top"><a id="aa67beedae1bb437bfae54fc3fdf88f28"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>GroupEvent</b> : byte { <b>Added</b>, 
+<b>Removed</b>, 
+<b>AddedOrRemoved</b>
  }</td></tr>
-<tr class="separator:a506f1b8bae1ff76ff39f9a0596be837c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:aa67beedae1bb437bfae54fc3fdf88f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
