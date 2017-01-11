@@ -13,21 +13,20 @@ namespace Entitas {
         public MoveComponent move { get { return (MoveComponent)GetComponent(ComponentIds.Move); } }
         public bool hasMove { get { return HasComponent(ComponentIds.Move); } }
 
-        public Entity AddMove(int newSpeed) {
+        public void AddMove(int newSpeed) {
             var component = CreateComponent<MoveComponent>(ComponentIds.Move);
             component.speed = newSpeed;
-            return AddComponent(ComponentIds.Move, component);
+            AddComponent(ComponentIds.Move, component);
         }
 
-        public Entity ReplaceMove(int newSpeed) {
+        public void ReplaceMove(int newSpeed) {
             var component = CreateComponent<MoveComponent>(ComponentIds.Move);
             component.speed = newSpeed;
             ReplaceComponent(ComponentIds.Move, component);
-            return this;
         }
 
-        public Entity RemoveMove() {
-            return RemoveComponent(ComponentIds.Move);
+        public void RemoveMove() {
+            RemoveComponent(ComponentIds.Move);
         }
     }
 

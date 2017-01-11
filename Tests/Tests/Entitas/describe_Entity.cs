@@ -91,10 +91,6 @@ class describe_Entity : nspec {
                 e.HasAnyComponent(_indicesA).should_be_false();
             };
 
-            it["returns entity when adding a component"] = () => {
-                e.AddComponent(0, null).should_be_same(e);
-            };
-
             it["adds a component"] = () => {
                 e.AddComponentA();
                 assertHasComponentA(e);
@@ -120,17 +116,9 @@ class describe_Entity : nspec {
                 e.AddComponentA();
             });
 
-            it["returns entity when removing a component"] = () => {
-                e.RemoveComponent(CID.ComponentA).should_be_same(e);
-            };
-
             it["removes a component at index"] = () => {
                 e.RemoveComponentA();
                 assertHasNotComponentA(e);
-            };
-
-            it["returns entity when replacing a component"] = () => {
-                e.ReplaceComponent(CID.ComponentA, null).should_be_same(e);
             };
 
             it["replaces existing component"] = () => {

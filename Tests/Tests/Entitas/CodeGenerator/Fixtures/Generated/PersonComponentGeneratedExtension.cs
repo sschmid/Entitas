@@ -13,23 +13,22 @@ namespace Entitas {
         public PersonComponent person { get { return (PersonComponent)GetComponent(ComponentIds.Person); } }
         public bool hasPerson { get { return HasComponent(ComponentIds.Person); } }
 
-        public Entity AddPerson(int newAge, string newName) {
+        public void AddPerson(int newAge, string newName) {
             var component = CreateComponent<PersonComponent>(ComponentIds.Person);
             component.age = newAge;
             component.name = newName;
-            return AddComponent(ComponentIds.Person, component);
+            AddComponent(ComponentIds.Person, component);
         }
 
-        public Entity ReplacePerson(int newAge, string newName) {
+        public void ReplacePerson(int newAge, string newName) {
             var component = CreateComponent<PersonComponent>(ComponentIds.Person);
             component.age = newAge;
             component.name = newName;
             ReplaceComponent(ComponentIds.Person, component);
-            return this;
         }
 
-        public Entity RemovePerson() {
-            return RemoveComponent(ComponentIds.Person);
+        public void RemovePerson() {
+            RemoveComponent(ComponentIds.Person);
         }
     }
 

@@ -15,21 +15,20 @@ namespace Entitas {
         public CoinsComponent coins { get { return (CoinsComponent)GetComponent(MetaComponentIds.Coins); } }
         public bool hasCoins { get { return HasComponent(MetaComponentIds.Coins); } }
 
-        public Entity AddCoins(int newCount) {
+        public void AddCoins(int newCount) {
             var component = CreateComponent<CoinsComponent>(MetaComponentIds.Coins);
             component.count = newCount;
-            return AddComponent(MetaComponentIds.Coins, component);
+            AddComponent(MetaComponentIds.Coins, component);
         }
 
-        public Entity ReplaceCoins(int newCount) {
+        public void ReplaceCoins(int newCount) {
             var component = CreateComponent<CoinsComponent>(MetaComponentIds.Coins);
             component.count = newCount;
             ReplaceComponent(MetaComponentIds.Coins, component);
-            return this;
         }
 
-        public Entity RemoveCoins() {
-            return RemoveComponent(MetaComponentIds.Coins);
+        public void RemoveCoins() {
+            RemoveComponent(MetaComponentIds.Coins);
         }
     }
 

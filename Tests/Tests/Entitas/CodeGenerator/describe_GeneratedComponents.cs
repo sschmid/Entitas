@@ -130,7 +130,8 @@ class describe_GeneratedComponents : nspec {
                 PersonComponent person = null;
 
                 before = () => {
-                    person = e.AddPerson(42, "Max").person;
+                    e.AddPerson(42, "Max");
+                    person = e.person;
                 };
 
                 it["reuses component when remove"] = () => {
@@ -374,7 +375,8 @@ class describe_GeneratedComponents : nspec {
                     UserComponent user = null;
 
                     before = () => {
-                        user = e.AddUser(date1, false).user;
+                        e.AddUser(date1, false);
+                        user = e.user;
                     };
 
                     it["reuses component when remove"] = () => {

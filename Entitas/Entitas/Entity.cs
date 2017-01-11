@@ -112,7 +112,7 @@ namespace Entitas {
         /// Each component type must have its own constant index.
         /// The prefered way is to use the
         /// generated methods from the code generator.
-        public Entity AddComponent(int index, IComponent component) {
+        public void AddComponent(int index, IComponent component) {
             if(!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot add component '" +
@@ -139,15 +139,13 @@ namespace Entitas {
             if(OnComponentAdded != null) {
                 OnComponentAdded(this, index, component);
             }
-
-            return this;
         }
 
         /// Removes a component at the specified index.
         /// You can only remove a component at an index if it exists.
         /// The prefered way is to use the
         /// generated methods from the code generator.
-        public Entity RemoveComponent(int index) {
+        public void RemoveComponent(int index) {
             if(!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot remove component '" +
@@ -168,15 +166,13 @@ namespace Entitas {
             }
 
             replaceComponent(index, null);
-
-            return this;
         }
 
         /// Replaces an existing component at the specified index
         /// or adds it if it doesn't exist yet.
         /// The prefered way is to use the
         /// generated methods from the code generator.
-        public Entity ReplaceComponent(int index, IComponent component) {
+        public void ReplaceComponent(int index, IComponent component) {
             if(!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot replace component '" +
@@ -190,8 +186,6 @@ namespace Entitas {
             } else if(component != null) {
                 AddComponent(index, component);
             }
-
-            return this;
         }
 
         void replaceComponent(int index, IComponent replacement) {
@@ -375,7 +369,7 @@ namespace Entitas {
         /// and is used internally to prevent pooling retained entities.
         /// If you use retain manually you also have to
         /// release it manually at some point.
-        public Entity Retain(object owner) {
+        public void Retain(object owner) {
 
 #if ENTITAS_FAST_AND_UNSAFE
             
@@ -390,8 +384,6 @@ namespace Entitas {
 #endif
 
             _toStringCache = null;
-
-            return this;
         }
 
         /// Releases the entity. An owner can only release an entity

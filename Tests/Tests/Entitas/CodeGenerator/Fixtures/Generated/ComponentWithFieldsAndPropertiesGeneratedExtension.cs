@@ -13,23 +13,22 @@ namespace Entitas {
         public ComponentWithFieldsAndProperties componentWithFieldsAndProperties { get { return (ComponentWithFieldsAndProperties)GetComponent(ComponentIds.ComponentWithFieldsAndProperties); } }
         public bool hasComponentWithFieldsAndProperties { get { return HasComponent(ComponentIds.ComponentWithFieldsAndProperties); } }
 
-        public Entity AddComponentWithFieldsAndProperties(string newPublicField, string newPublicProperty) {
+        public void AddComponentWithFieldsAndProperties(string newPublicField, string newPublicProperty) {
             var component = CreateComponent<ComponentWithFieldsAndProperties>(ComponentIds.ComponentWithFieldsAndProperties);
             component.publicField = newPublicField;
             component.publicProperty = newPublicProperty;
-            return AddComponent(ComponentIds.ComponentWithFieldsAndProperties, component);
+            AddComponent(ComponentIds.ComponentWithFieldsAndProperties, component);
         }
 
-        public Entity ReplaceComponentWithFieldsAndProperties(string newPublicField, string newPublicProperty) {
+        public void ReplaceComponentWithFieldsAndProperties(string newPublicField, string newPublicProperty) {
             var component = CreateComponent<ComponentWithFieldsAndProperties>(ComponentIds.ComponentWithFieldsAndProperties);
             component.publicField = newPublicField;
             component.publicProperty = newPublicProperty;
             ReplaceComponent(ComponentIds.ComponentWithFieldsAndProperties, component);
-            return this;
         }
 
-        public Entity RemoveComponentWithFieldsAndProperties() {
-            return RemoveComponent(ComponentIds.ComponentWithFieldsAndProperties);
+        public void RemoveComponentWithFieldsAndProperties() {
+            RemoveComponent(ComponentIds.ComponentWithFieldsAndProperties);
         }
     }
 

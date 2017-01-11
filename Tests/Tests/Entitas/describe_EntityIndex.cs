@@ -44,7 +44,8 @@ class describe_EntityIndex : nspec {
             before = () => {
                 var nameAgeComponent = new NameAgeComponent();
                 nameAgeComponent.name = name;
-                entity = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                entity = ctx.CreateEntity();
+                entity.AddComponent(CID.ComponentA, nameAgeComponent);
             };
 
             it["has entity"] = () => {
@@ -82,7 +83,8 @@ class describe_EntityIndex : nspec {
             it["throws when adding an entity for the same key"] = expect<EntityIndexException>(() => {
                 var nameAgeComponent = new NameAgeComponent();
                 nameAgeComponent.name = name;
-                entity = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                entity = ctx.CreateEntity();
+                entity.AddComponent(CID.ComponentA, nameAgeComponent);
             });
 
             context["when deactivated"] = () => {
@@ -116,7 +118,8 @@ class describe_EntityIndex : nspec {
                     it["adds new entities"] = () => {
                         var nameAgeComponent = new NameAgeComponent();
                         nameAgeComponent.name = "Jack";
-                        entity = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                        entity = ctx.CreateEntity();
+                        entity.AddComponent(CID.ComponentA, nameAgeComponent);
 
                         index.HasEntity("Jack").should_be_true();
                     };
@@ -159,8 +162,10 @@ class describe_EntityIndex : nspec {
             before = () => {
                 nameAgeComponent = new NameAgeComponent();
                 nameAgeComponent.name = name;
-                entity1 = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
-                entity2 = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                entity1 = ctx.CreateEntity();
+                entity1.AddComponent(CID.ComponentA, nameAgeComponent);
+                entity2 = ctx.CreateEntity();
+                entity2.AddComponent(CID.ComponentA, nameAgeComponent);
             };
 
             it["gets entities for key"] = () => {
@@ -222,7 +227,8 @@ class describe_EntityIndex : nspec {
                     };
 
                     it["adds new entities"] = () => {
-                        var entity3 = ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
+                        var entity3 = ctx.CreateEntity();
+                        entity3.AddComponent(CID.ComponentA, nameAgeComponent);
 
                         var entities = index.GetEntities(name);
                         entities.Count.should_be(3);
@@ -262,8 +268,9 @@ class describe_EntityIndex : nspec {
             var nameAgeComponent2 = new NameAgeComponent();
             nameAgeComponent2.name = "Jack";
 
-            ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent1)
-                               .AddComponent(CID.ComponentB, nameAgeComponent2);
+            var entity = ctx.CreateEntity();
+            entity.AddComponent(CID.ComponentA, nameAgeComponent1);
+            entity.AddComponent(CID.ComponentB, nameAgeComponent2);
 
             receivedComponent.should_be_same(nameAgeComponent2);
         };
@@ -289,8 +296,9 @@ class describe_EntityIndex : nspec {
                 return ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
             });
 
-            ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent1)
-                               .AddComponent(CID.ComponentB, nameAgeComponent2);
+            var entity = ctx.CreateEntity();
+            entity.AddComponent(CID.ComponentA, nameAgeComponent1);
+            entity.AddComponent(CID.ComponentB, nameAgeComponent2);
 
             receivedComponents.Count.should_be(2);
             receivedComponents[0].should_be(nameAgeComponent1);

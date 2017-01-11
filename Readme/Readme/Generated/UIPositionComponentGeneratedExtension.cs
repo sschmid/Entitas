@@ -15,23 +15,22 @@ namespace Entitas {
         public UIPositionComponent uIPosition { get { return (UIPositionComponent)GetComponent(UIComponentIds.UIPosition); } }
         public bool hasUIPosition { get { return HasComponent(UIComponentIds.UIPosition); } }
 
-        public Entity AddUIPosition(int newX, int newY) {
+        public void AddUIPosition(int newX, int newY) {
             var component = CreateComponent<UIPositionComponent>(UIComponentIds.UIPosition);
             component.x = newX;
             component.y = newY;
-            return AddComponent(UIComponentIds.UIPosition, component);
+            AddComponent(UIComponentIds.UIPosition, component);
         }
 
-        public Entity ReplaceUIPosition(int newX, int newY) {
+        public void ReplaceUIPosition(int newX, int newY) {
             var component = CreateComponent<UIPositionComponent>(UIComponentIds.UIPosition);
             component.x = newX;
             component.y = newY;
             ReplaceComponent(UIComponentIds.UIPosition, component);
-            return this;
         }
 
-        public Entity RemoveUIPosition() {
-            return RemoveComponent(UIComponentIds.UIPosition);
+        public void RemoveUIPosition() {
+            RemoveComponent(UIComponentIds.UIPosition);
         }
     }
 }

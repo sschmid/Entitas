@@ -15,23 +15,22 @@ namespace Entitas {
         public OtherContextComponent otherContext { get { return (OtherContextComponent)GetComponent(OtherComponentIds.OtherContext); } }
         public bool hasOtherContext { get { return HasComponent(OtherComponentIds.OtherContext); } }
 
-        public Entity AddOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public void AddOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
             var component = CreateComponent<OtherContextComponent>(OtherComponentIds.OtherContext);
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
-            return AddComponent(OtherComponentIds.OtherContext, component);
+            AddComponent(OtherComponentIds.OtherContext, component);
         }
 
-        public Entity ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public void ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
             var component = CreateComponent<OtherContextComponent>(OtherComponentIds.OtherContext);
             component.timestamp = newTimestamp;
             component.isLoggedIn = newIsLoggedIn;
             ReplaceComponent(OtherComponentIds.OtherContext, component);
-            return this;
         }
 
-        public Entity RemoveOtherContext() {
-            return RemoveComponent(OtherComponentIds.OtherContext);
+        public void RemoveOtherContext() {
+            RemoveComponent(OtherComponentIds.OtherContext);
         }
     }
 

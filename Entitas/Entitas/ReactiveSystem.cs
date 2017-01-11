@@ -57,7 +57,8 @@ namespace Entitas {
             if(_collector.collectedEntities.Count != 0) {
                 foreach(var e in _collector.collectedEntities) {
                     if(Filter(e)) {
-                        _buffer.Add(e.Retain(this));
+                        e.Retain(this);
+                        _buffer.Add(e);
                     }
                 }
 

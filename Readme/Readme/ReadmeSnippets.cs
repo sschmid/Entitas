@@ -22,12 +22,13 @@ namespace Readme {
 
 
         public static Entity CreateRedGem(this Context context, int x, int y) {
-            return context.CreateEntity()
-                       .IsGameBoardElement(true)
-                       .IsMovable(true)
-                       .AddPosition(x, y)
-                       .AddResource(Res.redGem)
-                       .IsInteractive(true);
+            var entity = context.CreateEntity();
+            entity.IsGameBoardElement(true);
+            entity.IsMovable(true);
+            entity.AddPosition(x, y);
+            entity.AddResource(Res.redGem);
+            entity.IsInteractive(true);
+            return entity;
         }
 
 

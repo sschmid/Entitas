@@ -255,13 +255,13 @@ class describe_ReactiveSystem : nspec {
                                    .AddComponentA()
                                    .AddComponentC();
 
-                var eAB1 = _contexts.test.CreateEntity()
-                                .AddComponentB()
-                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 10 });
+                var eAB1 = _contexts.test.CreateEntity();
+                eAB1.AddComponentB();
+                eAB1.AddComponent(CID.ComponentA, new NameAgeComponent { age = 10 });
 
-                var eAB2 = _contexts.test.CreateEntity()
-                                .AddComponentB()
-                                .AddComponent(CID.ComponentA, new NameAgeComponent { age = 50 });
+                var eAB2 = _contexts.test.CreateEntity();
+                eAB2.AddComponentB();
+                eAB2.AddComponent(CID.ComponentA, new NameAgeComponent { age = 50 });
                 
                 var didExecute = 0;
                 system.executeAction = entities => {

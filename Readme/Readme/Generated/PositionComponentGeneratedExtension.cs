@@ -13,23 +13,22 @@ namespace Entitas {
         public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
         public bool hasPosition { get { return HasComponent(ComponentIds.Position); } }
 
-        public Entity AddPosition(int newX, int newY) {
+        public void AddPosition(int newX, int newY) {
             var component = CreateComponent<PositionComponent>(ComponentIds.Position);
             component.x = newX;
             component.y = newY;
-            return AddComponent(ComponentIds.Position, component);
+            AddComponent(ComponentIds.Position, component);
         }
 
-        public Entity ReplacePosition(int newX, int newY) {
+        public void ReplacePosition(int newX, int newY) {
             var component = CreateComponent<PositionComponent>(ComponentIds.Position);
             component.x = newX;
             component.y = newY;
             ReplaceComponent(ComponentIds.Position, component);
-            return this;
         }
 
-        public Entity RemovePosition() {
-            return RemoveComponent(ComponentIds.Position);
+        public void RemovePosition() {
+            RemoveComponent(ComponentIds.Position);
         }
     }
 
