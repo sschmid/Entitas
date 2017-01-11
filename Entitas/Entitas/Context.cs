@@ -3,16 +3,13 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    public partial class Context {
+    public class Context : IContext {
 
         public event ContextChanged OnEntityCreated;
         public event ContextChanged OnEntityWillBeDestroyed;
         public event ContextChanged OnEntityDestroyed;
         public event GroupChanged OnGroupCreated;
         public event GroupChanged OnGroupCleared;
-
-        public delegate void ContextChanged(Context context, IEntity entity);
-        public delegate void GroupChanged(Context context, Group group);
 
         public int totalComponents { get { return _totalComponents; } }
 
