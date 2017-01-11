@@ -20,21 +20,20 @@ namespace Entitas {
         public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
         public bool hasPosition { get { return HasComponent(ComponentIds.Position); } }
 
-        public Entity AddPosition(IntVector2 newValue) {
+        public void AddPosition(IntVector2 newValue) {
             var component = CreateComponent<PositionComponent>(ComponentIds.Position);
             component.value = newValue;
-            return AddComponent(ComponentIds.Position, component);
+            AddComponent(ComponentIds.Position, component);
         }
 
-        public Entity ReplacePosition(IntVector2 newValue) {
+        public void ReplacePosition(IntVector2 newValue) {
             var component = CreateComponent<PositionComponent>(ComponentIds.Position);
             component.value = newValue;
             ReplaceComponent(ComponentIds.Position, component);
-            return this;
         }
 
-        public Entity RemovePosition() {
-            return RemoveComponent(ComponentIds.Position);
+        public void RemovePosition() {
+            RemoveComponent(ComponentIds.Position);
         }
     }
 

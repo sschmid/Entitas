@@ -15,21 +15,20 @@ namespace Entitas {
         public MonoBehaviourSubClassComponent monoBehaviourSubClass { get { return (MonoBehaviourSubClassComponent)GetComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass); } }
         public bool hasMonoBehaviourSubClass { get { return HasComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass); } }
 
-        public Entity AddMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
+        public void AddMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
             var component = CreateComponent<MonoBehaviourSubClassComponent>(VisualDebuggingComponentIds.MonoBehaviourSubClass);
             component.monoBehaviour = newMonoBehaviour;
-            return AddComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass, component);
+            AddComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass, component);
         }
 
-        public Entity ReplaceMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
+        public void ReplaceMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
             var component = CreateComponent<MonoBehaviourSubClassComponent>(VisualDebuggingComponentIds.MonoBehaviourSubClass);
             component.monoBehaviour = newMonoBehaviour;
             ReplaceComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass, component);
-            return this;
         }
 
-        public Entity RemoveMonoBehaviourSubClass() {
-            return RemoveComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass);
+        public void RemoveMonoBehaviourSubClass() {
+            RemoveComponent(VisualDebuggingComponentIds.MonoBehaviourSubClass);
         }
     }
 }

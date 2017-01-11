@@ -20,21 +20,20 @@ namespace Entitas {
         public ISomeInterfaceComponent iSomeInterface { get { return (ISomeInterfaceComponent)GetComponent(VisualDebuggingComponentIds.ISomeInterface); } }
         public bool hasISomeInterface { get { return HasComponent(VisualDebuggingComponentIds.ISomeInterface); } }
 
-        public Entity AddISomeInterface(ISomeInterface newValue) {
+        public void AddISomeInterface(ISomeInterface newValue) {
             var component = CreateComponent<ISomeInterfaceComponent>(VisualDebuggingComponentIds.ISomeInterface);
             component.value = newValue;
-            return AddComponent(VisualDebuggingComponentIds.ISomeInterface, component);
+            AddComponent(VisualDebuggingComponentIds.ISomeInterface, component);
         }
 
-        public Entity ReplaceISomeInterface(ISomeInterface newValue) {
+        public void ReplaceISomeInterface(ISomeInterface newValue) {
             var component = CreateComponent<ISomeInterfaceComponent>(VisualDebuggingComponentIds.ISomeInterface);
             component.value = newValue;
             ReplaceComponent(VisualDebuggingComponentIds.ISomeInterface, component);
-            return this;
         }
 
-        public Entity RemoveISomeInterface() {
-            return RemoveComponent(VisualDebuggingComponentIds.ISomeInterface);
+        public void RemoveISomeInterface() {
+            RemoveComponent(VisualDebuggingComponentIds.ISomeInterface);
         }
     }
 

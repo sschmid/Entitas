@@ -15,21 +15,20 @@ namespace Entitas {
         public Array2DComponent array2D { get { return (Array2DComponent)GetComponent(VisualDebuggingComponentIds.Array2D); } }
         public bool hasArray2D { get { return HasComponent(VisualDebuggingComponentIds.Array2D); } }
 
-        public Entity AddArray2D(string[,] newArray2d) {
+        public void AddArray2D(string[,] newArray2d) {
             var component = CreateComponent<Array2DComponent>(VisualDebuggingComponentIds.Array2D);
             component.array2d = newArray2d;
-            return AddComponent(VisualDebuggingComponentIds.Array2D, component);
+            AddComponent(VisualDebuggingComponentIds.Array2D, component);
         }
 
-        public Entity ReplaceArray2D(string[,] newArray2d) {
+        public void ReplaceArray2D(string[,] newArray2d) {
             var component = CreateComponent<Array2DComponent>(VisualDebuggingComponentIds.Array2D);
             component.array2d = newArray2d;
             ReplaceComponent(VisualDebuggingComponentIds.Array2D, component);
-            return this;
         }
 
-        public Entity RemoveArray2D() {
-            return RemoveComponent(VisualDebuggingComponentIds.Array2D);
+        public void RemoveArray2D() {
+            RemoveComponent(VisualDebuggingComponentIds.Array2D);
         }
     }
 }

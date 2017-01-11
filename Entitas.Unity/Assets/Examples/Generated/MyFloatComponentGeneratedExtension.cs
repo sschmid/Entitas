@@ -15,21 +15,20 @@ namespace Entitas {
         public MyFloatComponent myFloat { get { return (MyFloatComponent)GetComponent(VisualDebuggingComponentIds.MyFloat); } }
         public bool hasMyFloat { get { return HasComponent(VisualDebuggingComponentIds.MyFloat); } }
 
-        public Entity AddMyFloat(float newMyFloat) {
+        public void AddMyFloat(float newMyFloat) {
             var component = CreateComponent<MyFloatComponent>(VisualDebuggingComponentIds.MyFloat);
             component.myFloat = newMyFloat;
-            return AddComponent(VisualDebuggingComponentIds.MyFloat, component);
+            AddComponent(VisualDebuggingComponentIds.MyFloat, component);
         }
 
-        public Entity ReplaceMyFloat(float newMyFloat) {
+        public void ReplaceMyFloat(float newMyFloat) {
             var component = CreateComponent<MyFloatComponent>(VisualDebuggingComponentIds.MyFloat);
             component.myFloat = newMyFloat;
             ReplaceComponent(VisualDebuggingComponentIds.MyFloat, component);
-            return this;
         }
 
-        public Entity RemoveMyFloat() {
-            return RemoveComponent(VisualDebuggingComponentIds.MyFloat);
+        public void RemoveMyFloat() {
+            RemoveComponent(VisualDebuggingComponentIds.MyFloat);
         }
     }
 }

@@ -26,11 +26,6 @@ namespace Entitas {
                 }
             }
         }
-
-        public Entity IsHideInBlueprintInspector(bool value) {
-            isHideInBlueprintInspector = value;
-            return this;
-        }
     }
 }
 

@@ -15,21 +15,20 @@ namespace Entitas {
         public TextureComponent texture { get { return (TextureComponent)GetComponent(VisualDebuggingComponentIds.Texture); } }
         public bool hasTexture { get { return HasComponent(VisualDebuggingComponentIds.Texture); } }
 
-        public Entity AddTexture(UnityEngine.Texture newTexture) {
+        public void AddTexture(UnityEngine.Texture newTexture) {
             var component = CreateComponent<TextureComponent>(VisualDebuggingComponentIds.Texture);
             component.texture = newTexture;
-            return AddComponent(VisualDebuggingComponentIds.Texture, component);
+            AddComponent(VisualDebuggingComponentIds.Texture, component);
         }
 
-        public Entity ReplaceTexture(UnityEngine.Texture newTexture) {
+        public void ReplaceTexture(UnityEngine.Texture newTexture) {
             var component = CreateComponent<TextureComponent>(VisualDebuggingComponentIds.Texture);
             component.texture = newTexture;
             ReplaceComponent(VisualDebuggingComponentIds.Texture, component);
-            return this;
         }
 
-        public Entity RemoveTexture() {
-            return RemoveComponent(VisualDebuggingComponentIds.Texture);
+        public void RemoveTexture() {
+            RemoveComponent(VisualDebuggingComponentIds.Texture);
         }
     }
 }

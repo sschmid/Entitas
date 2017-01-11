@@ -15,21 +15,20 @@ namespace Entitas {
         public UnityObjectComponent unityObject { get { return (UnityObjectComponent)GetComponent(VisualDebuggingComponentIds.UnityObject); } }
         public bool hasUnityObject { get { return HasComponent(VisualDebuggingComponentIds.UnityObject); } }
 
-        public Entity AddUnityObject(UnityEngine.Object newUnityObject) {
+        public void AddUnityObject(UnityEngine.Object newUnityObject) {
             var component = CreateComponent<UnityObjectComponent>(VisualDebuggingComponentIds.UnityObject);
             component.unityObject = newUnityObject;
-            return AddComponent(VisualDebuggingComponentIds.UnityObject, component);
+            AddComponent(VisualDebuggingComponentIds.UnityObject, component);
         }
 
-        public Entity ReplaceUnityObject(UnityEngine.Object newUnityObject) {
+        public void ReplaceUnityObject(UnityEngine.Object newUnityObject) {
             var component = CreateComponent<UnityObjectComponent>(VisualDebuggingComponentIds.UnityObject);
             component.unityObject = newUnityObject;
             ReplaceComponent(VisualDebuggingComponentIds.UnityObject, component);
-            return this;
         }
 
-        public Entity RemoveUnityObject() {
-            return RemoveComponent(VisualDebuggingComponentIds.UnityObject);
+        public void RemoveUnityObject() {
+            RemoveComponent(VisualDebuggingComponentIds.UnityObject);
         }
     }
 }

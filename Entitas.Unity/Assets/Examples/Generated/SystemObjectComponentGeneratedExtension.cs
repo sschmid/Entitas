@@ -15,21 +15,20 @@ namespace Entitas {
         public SystemObjectComponent systemObject { get { return (SystemObjectComponent)GetComponent(VisualDebuggingComponentIds.SystemObject); } }
         public bool hasSystemObject { get { return HasComponent(VisualDebuggingComponentIds.SystemObject); } }
 
-        public Entity AddSystemObject(object newSystemObject) {
+        public void AddSystemObject(object newSystemObject) {
             var component = CreateComponent<SystemObjectComponent>(VisualDebuggingComponentIds.SystemObject);
             component.systemObject = newSystemObject;
-            return AddComponent(VisualDebuggingComponentIds.SystemObject, component);
+            AddComponent(VisualDebuggingComponentIds.SystemObject, component);
         }
 
-        public Entity ReplaceSystemObject(object newSystemObject) {
+        public void ReplaceSystemObject(object newSystemObject) {
             var component = CreateComponent<SystemObjectComponent>(VisualDebuggingComponentIds.SystemObject);
             component.systemObject = newSystemObject;
             ReplaceComponent(VisualDebuggingComponentIds.SystemObject, component);
-            return this;
         }
 
-        public Entity RemoveSystemObject() {
-            return RemoveComponent(VisualDebuggingComponentIds.SystemObject);
+        public void RemoveSystemObject() {
+            RemoveComponent(VisualDebuggingComponentIds.SystemObject);
         }
     }
 }

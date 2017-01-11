@@ -20,21 +20,20 @@ namespace Entitas {
         public SomeOtherClassComponent someOtherClass { get { return (SomeOtherClassComponent)GetComponent(VisualDebuggingComponentIds.SomeOtherClass); } }
         public bool hasSomeOtherClass { get { return HasComponent(VisualDebuggingComponentIds.SomeOtherClass); } }
 
-        public Entity AddSomeOtherClass(SomeNamespace.SomeOtherClass newValue) {
+        public void AddSomeOtherClass(SomeNamespace.SomeOtherClass newValue) {
             var component = CreateComponent<SomeOtherClassComponent>(VisualDebuggingComponentIds.SomeOtherClass);
             component.value = newValue;
-            return AddComponent(VisualDebuggingComponentIds.SomeOtherClass, component);
+            AddComponent(VisualDebuggingComponentIds.SomeOtherClass, component);
         }
 
-        public Entity ReplaceSomeOtherClass(SomeNamespace.SomeOtherClass newValue) {
+        public void ReplaceSomeOtherClass(SomeNamespace.SomeOtherClass newValue) {
             var component = CreateComponent<SomeOtherClassComponent>(VisualDebuggingComponentIds.SomeOtherClass);
             component.value = newValue;
             ReplaceComponent(VisualDebuggingComponentIds.SomeOtherClass, component);
-            return this;
         }
 
-        public Entity RemoveSomeOtherClass() {
-            return RemoveComponent(VisualDebuggingComponentIds.SomeOtherClass);
+        public void RemoveSomeOtherClass() {
+            RemoveComponent(VisualDebuggingComponentIds.SomeOtherClass);
         }
     }
 }

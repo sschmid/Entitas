@@ -20,21 +20,20 @@ namespace Entitas {
         public VelocityComponent velocity { get { return (VelocityComponent)GetComponent(ComponentIds.Velocity); } }
         public bool hasVelocity { get { return HasComponent(ComponentIds.Velocity); } }
 
-        public Entity AddVelocity(IntVector2 newValue) {
+        public void AddVelocity(IntVector2 newValue) {
             var component = CreateComponent<VelocityComponent>(ComponentIds.Velocity);
             component.value = newValue;
-            return AddComponent(ComponentIds.Velocity, component);
+            AddComponent(ComponentIds.Velocity, component);
         }
 
-        public Entity ReplaceVelocity(IntVector2 newValue) {
+        public void ReplaceVelocity(IntVector2 newValue) {
             var component = CreateComponent<VelocityComponent>(ComponentIds.Velocity);
             component.value = newValue;
             ReplaceComponent(ComponentIds.Velocity, component);
-            return this;
         }
 
-        public Entity RemoveVelocity() {
-            return RemoveComponent(ComponentIds.Velocity);
+        public void RemoveVelocity() {
+            RemoveComponent(ComponentIds.Velocity);
         }
     }
 

@@ -15,21 +15,20 @@ namespace Entitas {
         public ColorComponent color { get { return (ColorComponent)GetComponent(VisualDebuggingComponentIds.Color); } }
         public bool hasColor { get { return HasComponent(VisualDebuggingComponentIds.Color); } }
 
-        public Entity AddColor(UnityEngine.Color newColor) {
+        public void AddColor(UnityEngine.Color newColor) {
             var component = CreateComponent<ColorComponent>(VisualDebuggingComponentIds.Color);
             component.color = newColor;
-            return AddComponent(VisualDebuggingComponentIds.Color, component);
+            AddComponent(VisualDebuggingComponentIds.Color, component);
         }
 
-        public Entity ReplaceColor(UnityEngine.Color newColor) {
+        public void ReplaceColor(UnityEngine.Color newColor) {
             var component = CreateComponent<ColorComponent>(VisualDebuggingComponentIds.Color);
             component.color = newColor;
             ReplaceComponent(VisualDebuggingComponentIds.Color, component);
-            return this;
         }
 
-        public Entity RemoveColor() {
-            return RemoveComponent(VisualDebuggingComponentIds.Color);
+        public void RemoveColor() {
+            RemoveComponent(VisualDebuggingComponentIds.Color);
         }
     }
 }

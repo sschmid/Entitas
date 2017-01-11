@@ -15,21 +15,20 @@ namespace Entitas {
         public UnsupportedObjectComponent unsupportedObject { get { return (UnsupportedObjectComponent)GetComponent(VisualDebuggingComponentIds.UnsupportedObject); } }
         public bool hasUnsupportedObject { get { return HasComponent(VisualDebuggingComponentIds.UnsupportedObject); } }
 
-        public Entity AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
+        public void AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
             var component = CreateComponent<UnsupportedObjectComponent>(VisualDebuggingComponentIds.UnsupportedObject);
             component.unsupportedObject = newUnsupportedObject;
-            return AddComponent(VisualDebuggingComponentIds.UnsupportedObject, component);
+            AddComponent(VisualDebuggingComponentIds.UnsupportedObject, component);
         }
 
-        public Entity ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
+        public void ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
             var component = CreateComponent<UnsupportedObjectComponent>(VisualDebuggingComponentIds.UnsupportedObject);
             component.unsupportedObject = newUnsupportedObject;
             ReplaceComponent(VisualDebuggingComponentIds.UnsupportedObject, component);
-            return this;
         }
 
-        public Entity RemoveUnsupportedObject() {
-            return RemoveComponent(VisualDebuggingComponentIds.UnsupportedObject);
+        public void RemoveUnsupportedObject() {
+            RemoveComponent(VisualDebuggingComponentIds.UnsupportedObject);
         }
     }
 }

@@ -15,21 +15,20 @@ namespace Entitas {
         public DictionaryComponent dictionary { get { return (DictionaryComponent)GetComponent(VisualDebuggingComponentIds.Dictionary); } }
         public bool hasDictionary { get { return HasComponent(VisualDebuggingComponentIds.Dictionary); } }
 
-        public Entity AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
+        public void AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
             var component = CreateComponent<DictionaryComponent>(VisualDebuggingComponentIds.Dictionary);
             component.dict = newDict;
-            return AddComponent(VisualDebuggingComponentIds.Dictionary, component);
+            AddComponent(VisualDebuggingComponentIds.Dictionary, component);
         }
 
-        public Entity ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
+        public void ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
             var component = CreateComponent<DictionaryComponent>(VisualDebuggingComponentIds.Dictionary);
             component.dict = newDict;
             ReplaceComponent(VisualDebuggingComponentIds.Dictionary, component);
-            return this;
         }
 
-        public Entity RemoveDictionary() {
-            return RemoveComponent(VisualDebuggingComponentIds.Dictionary);
+        public void RemoveDictionary() {
+            RemoveComponent(VisualDebuggingComponentIds.Dictionary);
         }
     }
 }

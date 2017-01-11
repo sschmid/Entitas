@@ -15,21 +15,20 @@ namespace Entitas {
         public MyFlagsComponent myFlags { get { return (MyFlagsComponent)GetComponent(VisualDebuggingComponentIds.MyFlags); } }
         public bool hasMyFlags { get { return HasComponent(VisualDebuggingComponentIds.MyFlags); } }
 
-        public Entity AddMyFlags(MyFlagsComponent.MyFlags newMyFlags) {
+        public void AddMyFlags(MyFlagsComponent.MyFlags newMyFlags) {
             var component = CreateComponent<MyFlagsComponent>(VisualDebuggingComponentIds.MyFlags);
             component.myFlags = newMyFlags;
-            return AddComponent(VisualDebuggingComponentIds.MyFlags, component);
+            AddComponent(VisualDebuggingComponentIds.MyFlags, component);
         }
 
-        public Entity ReplaceMyFlags(MyFlagsComponent.MyFlags newMyFlags) {
+        public void ReplaceMyFlags(MyFlagsComponent.MyFlags newMyFlags) {
             var component = CreateComponent<MyFlagsComponent>(VisualDebuggingComponentIds.MyFlags);
             component.myFlags = newMyFlags;
             ReplaceComponent(VisualDebuggingComponentIds.MyFlags, component);
-            return this;
         }
 
-        public Entity RemoveMyFlags() {
-            return RemoveComponent(VisualDebuggingComponentIds.MyFlags);
+        public void RemoveMyFlags() {
+            RemoveComponent(VisualDebuggingComponentIds.MyFlags);
         }
     }
 }

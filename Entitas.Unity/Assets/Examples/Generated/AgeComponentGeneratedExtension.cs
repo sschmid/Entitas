@@ -15,21 +15,20 @@ namespace Entitas {
         public AgeComponent age { get { return (AgeComponent)GetComponent(BlueprintsComponentIds.Age); } }
         public bool hasAge { get { return HasComponent(BlueprintsComponentIds.Age); } }
 
-        public Entity AddAge(int newValue) {
+        public void AddAge(int newValue) {
             var component = CreateComponent<AgeComponent>(BlueprintsComponentIds.Age);
             component.value = newValue;
-            return AddComponent(BlueprintsComponentIds.Age, component);
+            AddComponent(BlueprintsComponentIds.Age, component);
         }
 
-        public Entity ReplaceAge(int newValue) {
+        public void ReplaceAge(int newValue) {
             var component = CreateComponent<AgeComponent>(BlueprintsComponentIds.Age);
             component.value = newValue;
             ReplaceComponent(BlueprintsComponentIds.Age, component);
-            return this;
         }
 
-        public Entity RemoveAge() {
-            return RemoveComponent(BlueprintsComponentIds.Age);
+        public void RemoveAge() {
+            RemoveComponent(BlueprintsComponentIds.Age);
         }
     }
 }

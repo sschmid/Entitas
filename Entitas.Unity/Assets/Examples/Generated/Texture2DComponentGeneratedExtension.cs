@@ -15,21 +15,20 @@ namespace Entitas {
         public Texture2DComponent texture2D { get { return (Texture2DComponent)GetComponent(VisualDebuggingComponentIds.Texture2D); } }
         public bool hasTexture2D { get { return HasComponent(VisualDebuggingComponentIds.Texture2D); } }
 
-        public Entity AddTexture2D(UnityEngine.Texture2D newTexture2D) {
+        public void AddTexture2D(UnityEngine.Texture2D newTexture2D) {
             var component = CreateComponent<Texture2DComponent>(VisualDebuggingComponentIds.Texture2D);
             component.texture2D = newTexture2D;
-            return AddComponent(VisualDebuggingComponentIds.Texture2D, component);
+            AddComponent(VisualDebuggingComponentIds.Texture2D, component);
         }
 
-        public Entity ReplaceTexture2D(UnityEngine.Texture2D newTexture2D) {
+        public void ReplaceTexture2D(UnityEngine.Texture2D newTexture2D) {
             var component = CreateComponent<Texture2DComponent>(VisualDebuggingComponentIds.Texture2D);
             component.texture2D = newTexture2D;
             ReplaceComponent(VisualDebuggingComponentIds.Texture2D, component);
-            return this;
         }
 
-        public Entity RemoveTexture2D() {
-            return RemoveComponent(VisualDebuggingComponentIds.Texture2D);
+        public void RemoveTexture2D() {
+            RemoveComponent(VisualDebuggingComponentIds.Texture2D);
         }
     }
 }

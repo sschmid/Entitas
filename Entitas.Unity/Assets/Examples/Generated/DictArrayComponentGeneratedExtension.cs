@@ -15,23 +15,22 @@ namespace Entitas {
         public DictArrayComponent dictArray { get { return (DictArrayComponent)GetComponent(VisualDebuggingComponentIds.DictArray); } }
         public bool hasDictArray { get { return HasComponent(VisualDebuggingComponentIds.DictArray); } }
 
-        public Entity AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
+        public void AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
             var component = CreateComponent<DictArrayComponent>(VisualDebuggingComponentIds.DictArray);
             component.dict = newDict;
             component.dictArray = newDictArray;
-            return AddComponent(VisualDebuggingComponentIds.DictArray, component);
+            AddComponent(VisualDebuggingComponentIds.DictArray, component);
         }
 
-        public Entity ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
+        public void ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
             var component = CreateComponent<DictArrayComponent>(VisualDebuggingComponentIds.DictArray);
             component.dict = newDict;
             component.dictArray = newDictArray;
             ReplaceComponent(VisualDebuggingComponentIds.DictArray, component);
-            return this;
         }
 
-        public Entity RemoveDictArray() {
-            return RemoveComponent(VisualDebuggingComponentIds.DictArray);
+        public void RemoveDictArray() {
+            RemoveComponent(VisualDebuggingComponentIds.DictArray);
         }
     }
 }

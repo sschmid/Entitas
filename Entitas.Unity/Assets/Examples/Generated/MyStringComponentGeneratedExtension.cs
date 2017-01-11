@@ -15,21 +15,20 @@ namespace Entitas {
         public MyStringComponent myString { get { return (MyStringComponent)GetComponent(VisualDebuggingComponentIds.MyString); } }
         public bool hasMyString { get { return HasComponent(VisualDebuggingComponentIds.MyString); } }
 
-        public Entity AddMyString(string newMyString) {
+        public void AddMyString(string newMyString) {
             var component = CreateComponent<MyStringComponent>(VisualDebuggingComponentIds.MyString);
             component.myString = newMyString;
-            return AddComponent(VisualDebuggingComponentIds.MyString, component);
+            AddComponent(VisualDebuggingComponentIds.MyString, component);
         }
 
-        public Entity ReplaceMyString(string newMyString) {
+        public void ReplaceMyString(string newMyString) {
             var component = CreateComponent<MyStringComponent>(VisualDebuggingComponentIds.MyString);
             component.myString = newMyString;
             ReplaceComponent(VisualDebuggingComponentIds.MyString, component);
-            return this;
         }
 
-        public Entity RemoveMyString() {
-            return RemoveComponent(VisualDebuggingComponentIds.MyString);
+        public void RemoveMyString() {
+            RemoveComponent(VisualDebuggingComponentIds.MyString);
         }
     }
 }

@@ -20,21 +20,20 @@ namespace Entitas {
         public CoolNameComponent coolName { get { return (CoolNameComponent)GetComponent(VisualDebuggingComponentIds.CoolName); } }
         public bool hasCoolName { get { return HasComponent(VisualDebuggingComponentIds.CoolName); } }
 
-        public Entity AddCoolName(BadName newValue) {
+        public void AddCoolName(BadName newValue) {
             var component = CreateComponent<CoolNameComponent>(VisualDebuggingComponentIds.CoolName);
             component.value = newValue;
-            return AddComponent(VisualDebuggingComponentIds.CoolName, component);
+            AddComponent(VisualDebuggingComponentIds.CoolName, component);
         }
 
-        public Entity ReplaceCoolName(BadName newValue) {
+        public void ReplaceCoolName(BadName newValue) {
             var component = CreateComponent<CoolNameComponent>(VisualDebuggingComponentIds.CoolName);
             component.value = newValue;
             ReplaceComponent(VisualDebuggingComponentIds.CoolName, component);
-            return this;
         }
 
-        public Entity RemoveCoolName() {
-            return RemoveComponent(VisualDebuggingComponentIds.CoolName);
+        public void RemoveCoolName() {
+            RemoveComponent(VisualDebuggingComponentIds.CoolName);
         }
     }
 }

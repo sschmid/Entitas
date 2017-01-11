@@ -15,21 +15,20 @@ namespace Entitas {
         public DateTimeComponent dateTime { get { return (DateTimeComponent)GetComponent(VisualDebuggingComponentIds.DateTime); } }
         public bool hasDateTime { get { return HasComponent(VisualDebuggingComponentIds.DateTime); } }
 
-        public Entity AddDateTime(System.DateTime newDate) {
+        public void AddDateTime(System.DateTime newDate) {
             var component = CreateComponent<DateTimeComponent>(VisualDebuggingComponentIds.DateTime);
             component.date = newDate;
-            return AddComponent(VisualDebuggingComponentIds.DateTime, component);
+            AddComponent(VisualDebuggingComponentIds.DateTime, component);
         }
 
-        public Entity ReplaceDateTime(System.DateTime newDate) {
+        public void ReplaceDateTime(System.DateTime newDate) {
             var component = CreateComponent<DateTimeComponent>(VisualDebuggingComponentIds.DateTime);
             component.date = newDate;
             ReplaceComponent(VisualDebuggingComponentIds.DateTime, component);
-            return this;
         }
 
-        public Entity RemoveDateTime() {
-            return RemoveComponent(VisualDebuggingComponentIds.DateTime);
+        public void RemoveDateTime() {
+            RemoveComponent(VisualDebuggingComponentIds.DateTime);
         }
     }
 }

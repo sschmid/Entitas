@@ -24,11 +24,6 @@ namespace Entitas {
                 }
             }
         }
-
-        public Entity IsDefaultContext(bool value) {
-            isDefaultContext = value;
-            return this;
-        }
     }
 
     public partial class Matcher {

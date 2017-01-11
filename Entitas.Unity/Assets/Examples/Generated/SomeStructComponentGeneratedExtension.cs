@@ -20,21 +20,20 @@ namespace Entitas {
         public SomeStructComponent someStruct { get { return (SomeStructComponent)GetComponent(ComponentIds.SomeStruct); } }
         public bool hasSomeStruct { get { return HasComponent(ComponentIds.SomeStruct); } }
 
-        public Entity AddSomeStruct(SomeStruct newValue) {
+        public void AddSomeStruct(SomeStruct newValue) {
             var component = CreateComponent<SomeStructComponent>(ComponentIds.SomeStruct);
             component.value = newValue;
-            return AddComponent(ComponentIds.SomeStruct, component);
+            AddComponent(ComponentIds.SomeStruct, component);
         }
 
-        public Entity ReplaceSomeStruct(SomeStruct newValue) {
+        public void ReplaceSomeStruct(SomeStruct newValue) {
             var component = CreateComponent<SomeStructComponent>(ComponentIds.SomeStruct);
             component.value = newValue;
             ReplaceComponent(ComponentIds.SomeStruct, component);
-            return this;
         }
 
-        public Entity RemoveSomeStruct() {
-            return RemoveComponent(ComponentIds.SomeStruct);
+        public void RemoveSomeStruct() {
+            RemoveComponent(ComponentIds.SomeStruct);
         }
     }
 

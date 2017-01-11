@@ -15,21 +15,20 @@ namespace Entitas {
         public Vector2Component vector2 { get { return (Vector2Component)GetComponent(VisualDebuggingComponentIds.Vector2); } }
         public bool hasVector2 { get { return HasComponent(VisualDebuggingComponentIds.Vector2); } }
 
-        public Entity AddVector2(UnityEngine.Vector2 newVector2) {
+        public void AddVector2(UnityEngine.Vector2 newVector2) {
             var component = CreateComponent<Vector2Component>(VisualDebuggingComponentIds.Vector2);
             component.vector2 = newVector2;
-            return AddComponent(VisualDebuggingComponentIds.Vector2, component);
+            AddComponent(VisualDebuggingComponentIds.Vector2, component);
         }
 
-        public Entity ReplaceVector2(UnityEngine.Vector2 newVector2) {
+        public void ReplaceVector2(UnityEngine.Vector2 newVector2) {
             var component = CreateComponent<Vector2Component>(VisualDebuggingComponentIds.Vector2);
             component.vector2 = newVector2;
             ReplaceComponent(VisualDebuggingComponentIds.Vector2, component);
-            return this;
         }
 
-        public Entity RemoveVector2() {
-            return RemoveComponent(VisualDebuggingComponentIds.Vector2);
+        public void RemoveVector2() {
+            RemoveComponent(VisualDebuggingComponentIds.Vector2);
         }
     }
 }

@@ -147,6 +147,8 @@ public class VisualDebuggingExampleController : MonoBehaviour {
     }
 
     void createTestEntityError(Context context) {
-        context.DestroyEntity(context.CreateEntity().Retain(this));
+        var entity = context.CreateEntity();
+        entity.Retain(this);
+        context.DestroyEntity(entity);
     }
 }

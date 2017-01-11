@@ -15,21 +15,20 @@ namespace Entitas {
         public PropertyComponent property { get { return (PropertyComponent)GetComponent(VisualDebuggingComponentIds.Property); } }
         public bool hasProperty { get { return HasComponent(VisualDebuggingComponentIds.Property); } }
 
-        public Entity AddProperty(string newValue) {
+        public void AddProperty(string newValue) {
             var component = CreateComponent<PropertyComponent>(VisualDebuggingComponentIds.Property);
             component.value = newValue;
-            return AddComponent(VisualDebuggingComponentIds.Property, component);
+            AddComponent(VisualDebuggingComponentIds.Property, component);
         }
 
-        public Entity ReplaceProperty(string newValue) {
+        public void ReplaceProperty(string newValue) {
             var component = CreateComponent<PropertyComponent>(VisualDebuggingComponentIds.Property);
             component.value = newValue;
             ReplaceComponent(VisualDebuggingComponentIds.Property, component);
-            return this;
         }
 
-        public Entity RemoveProperty() {
-            return RemoveComponent(VisualDebuggingComponentIds.Property);
+        public void RemoveProperty() {
+            RemoveComponent(VisualDebuggingComponentIds.Property);
         }
     }
 }

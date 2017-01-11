@@ -15,21 +15,20 @@ namespace Entitas {
         public RectComponent rect { get { return (RectComponent)GetComponent(VisualDebuggingComponentIds.Rect); } }
         public bool hasRect { get { return HasComponent(VisualDebuggingComponentIds.Rect); } }
 
-        public Entity AddRect(UnityEngine.Rect newRect) {
+        public void AddRect(UnityEngine.Rect newRect) {
             var component = CreateComponent<RectComponent>(VisualDebuggingComponentIds.Rect);
             component.rect = newRect;
-            return AddComponent(VisualDebuggingComponentIds.Rect, component);
+            AddComponent(VisualDebuggingComponentIds.Rect, component);
         }
 
-        public Entity ReplaceRect(UnityEngine.Rect newRect) {
+        public void ReplaceRect(UnityEngine.Rect newRect) {
             var component = CreateComponent<RectComponent>(VisualDebuggingComponentIds.Rect);
             component.rect = newRect;
             ReplaceComponent(VisualDebuggingComponentIds.Rect, component);
-            return this;
         }
 
-        public Entity RemoveRect() {
-            return RemoveComponent(VisualDebuggingComponentIds.Rect);
+        public void RemoveRect() {
+            RemoveComponent(VisualDebuggingComponentIds.Rect);
         }
     }
 }

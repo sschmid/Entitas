@@ -15,21 +15,20 @@ namespace Entitas {
         public JaggedArrayComponent jaggedArray { get { return (JaggedArrayComponent)GetComponent(VisualDebuggingComponentIds.JaggedArray); } }
         public bool hasJaggedArray { get { return HasComponent(VisualDebuggingComponentIds.JaggedArray); } }
 
-        public Entity AddJaggedArray(string[][] newJaggedArray) {
+        public void AddJaggedArray(string[][] newJaggedArray) {
             var component = CreateComponent<JaggedArrayComponent>(VisualDebuggingComponentIds.JaggedArray);
             component.jaggedArray = newJaggedArray;
-            return AddComponent(VisualDebuggingComponentIds.JaggedArray, component);
+            AddComponent(VisualDebuggingComponentIds.JaggedArray, component);
         }
 
-        public Entity ReplaceJaggedArray(string[][] newJaggedArray) {
+        public void ReplaceJaggedArray(string[][] newJaggedArray) {
             var component = CreateComponent<JaggedArrayComponent>(VisualDebuggingComponentIds.JaggedArray);
             component.jaggedArray = newJaggedArray;
             ReplaceComponent(VisualDebuggingComponentIds.JaggedArray, component);
-            return this;
         }
 
-        public Entity RemoveJaggedArray() {
-            return RemoveComponent(VisualDebuggingComponentIds.JaggedArray);
+        public void RemoveJaggedArray() {
+            RemoveComponent(VisualDebuggingComponentIds.JaggedArray);
         }
     }
 }

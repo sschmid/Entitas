@@ -15,21 +15,20 @@ namespace Entitas {
         public MyEnumComponent myEnum { get { return (MyEnumComponent)GetComponent(VisualDebuggingComponentIds.MyEnum); } }
         public bool hasMyEnum { get { return HasComponent(VisualDebuggingComponentIds.MyEnum); } }
 
-        public Entity AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
+        public void AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
             var component = CreateComponent<MyEnumComponent>(VisualDebuggingComponentIds.MyEnum);
             component.myEnum = newMyEnum;
-            return AddComponent(VisualDebuggingComponentIds.MyEnum, component);
+            AddComponent(VisualDebuggingComponentIds.MyEnum, component);
         }
 
-        public Entity ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
+        public void ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
             var component = CreateComponent<MyEnumComponent>(VisualDebuggingComponentIds.MyEnum);
             component.myEnum = newMyEnum;
             ReplaceComponent(VisualDebuggingComponentIds.MyEnum, component);
-            return this;
         }
 
-        public Entity RemoveMyEnum() {
-            return RemoveComponent(VisualDebuggingComponentIds.MyEnum);
+        public void RemoveMyEnum() {
+            RemoveComponent(VisualDebuggingComponentIds.MyEnum);
         }
     }
 }

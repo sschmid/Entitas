@@ -15,21 +15,20 @@ namespace Entitas {
         public NameComponent name { get { return (NameComponent)GetComponent(BlueprintsComponentIds.Name); } }
         public bool hasName { get { return HasComponent(BlueprintsComponentIds.Name); } }
 
-        public Entity AddName(string newValue) {
+        public void AddName(string newValue) {
             var component = CreateComponent<NameComponent>(BlueprintsComponentIds.Name);
             component.value = newValue;
-            return AddComponent(BlueprintsComponentIds.Name, component);
+            AddComponent(BlueprintsComponentIds.Name, component);
         }
 
-        public Entity ReplaceName(string newValue) {
+        public void ReplaceName(string newValue) {
             var component = CreateComponent<NameComponent>(BlueprintsComponentIds.Name);
             component.value = newValue;
             ReplaceComponent(BlueprintsComponentIds.Name, component);
-            return this;
         }
 
-        public Entity RemoveName() {
-            return RemoveComponent(BlueprintsComponentIds.Name);
+        public void RemoveName() {
+            RemoveComponent(BlueprintsComponentIds.Name);
         }
     }
 }

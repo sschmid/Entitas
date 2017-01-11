@@ -15,21 +15,20 @@ namespace Entitas {
         public AnArrayComponent anArray { get { return (AnArrayComponent)GetComponent(VisualDebuggingComponentIds.AnArray); } }
         public bool hasAnArray { get { return HasComponent(VisualDebuggingComponentIds.AnArray); } }
 
-        public Entity AddAnArray(string[] newArray) {
+        public void AddAnArray(string[] newArray) {
             var component = CreateComponent<AnArrayComponent>(VisualDebuggingComponentIds.AnArray);
             component.array = newArray;
-            return AddComponent(VisualDebuggingComponentIds.AnArray, component);
+            AddComponent(VisualDebuggingComponentIds.AnArray, component);
         }
 
-        public Entity ReplaceAnArray(string[] newArray) {
+        public void ReplaceAnArray(string[] newArray) {
             var component = CreateComponent<AnArrayComponent>(VisualDebuggingComponentIds.AnArray);
             component.array = newArray;
             ReplaceComponent(VisualDebuggingComponentIds.AnArray, component);
-            return this;
         }
 
-        public Entity RemoveAnArray() {
-            return RemoveComponent(VisualDebuggingComponentIds.AnArray);
+        public void RemoveAnArray() {
+            RemoveComponent(VisualDebuggingComponentIds.AnArray);
         }
     }
 }

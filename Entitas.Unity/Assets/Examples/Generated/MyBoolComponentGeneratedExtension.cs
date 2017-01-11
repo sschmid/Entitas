@@ -15,21 +15,20 @@ namespace Entitas {
         public MyBoolComponent myBool { get { return (MyBoolComponent)GetComponent(VisualDebuggingComponentIds.MyBool); } }
         public bool hasMyBool { get { return HasComponent(VisualDebuggingComponentIds.MyBool); } }
 
-        public Entity AddMyBool(bool newMyBool) {
+        public void AddMyBool(bool newMyBool) {
             var component = CreateComponent<MyBoolComponent>(VisualDebuggingComponentIds.MyBool);
             component.myBool = newMyBool;
-            return AddComponent(VisualDebuggingComponentIds.MyBool, component);
+            AddComponent(VisualDebuggingComponentIds.MyBool, component);
         }
 
-        public Entity ReplaceMyBool(bool newMyBool) {
+        public void ReplaceMyBool(bool newMyBool) {
             var component = CreateComponent<MyBoolComponent>(VisualDebuggingComponentIds.MyBool);
             component.myBool = newMyBool;
             ReplaceComponent(VisualDebuggingComponentIds.MyBool, component);
-            return this;
         }
 
-        public Entity RemoveMyBool() {
-            return RemoveComponent(VisualDebuggingComponentIds.MyBool);
+        public void RemoveMyBool() {
+            RemoveComponent(VisualDebuggingComponentIds.MyBool);
         }
     }
 }

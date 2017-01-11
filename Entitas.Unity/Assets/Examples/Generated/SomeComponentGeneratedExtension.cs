@@ -26,11 +26,6 @@ namespace Entitas {
                 }
             }
         }
-
-        public Entity IsSome(bool value) {
-            isSome = value;
-            return this;
-        }
     }
 }
 

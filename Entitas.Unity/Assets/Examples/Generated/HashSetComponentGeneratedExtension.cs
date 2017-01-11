@@ -15,21 +15,20 @@ namespace Entitas {
         public HashSetComponent hashSet { get { return (HashSetComponent)GetComponent(VisualDebuggingComponentIds.HashSet); } }
         public bool hasHashSet { get { return HasComponent(VisualDebuggingComponentIds.HashSet); } }
 
-        public Entity AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
+        public void AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
             var component = CreateComponent<HashSetComponent>(VisualDebuggingComponentIds.HashSet);
             component.hashset = newHashset;
-            return AddComponent(VisualDebuggingComponentIds.HashSet, component);
+            AddComponent(VisualDebuggingComponentIds.HashSet, component);
         }
 
-        public Entity ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
+        public void ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
             var component = CreateComponent<HashSetComponent>(VisualDebuggingComponentIds.HashSet);
             component.hashset = newHashset;
             ReplaceComponent(VisualDebuggingComponentIds.HashSet, component);
-            return this;
         }
 
-        public Entity RemoveHashSet() {
-            return RemoveComponent(VisualDebuggingComponentIds.HashSet);
+        public void RemoveHashSet() {
+            RemoveComponent(VisualDebuggingComponentIds.HashSet);
         }
     }
 }

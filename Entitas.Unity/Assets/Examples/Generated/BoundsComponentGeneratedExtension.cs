@@ -15,21 +15,20 @@ namespace Entitas {
         public BoundsComponent bounds { get { return (BoundsComponent)GetComponent(VisualDebuggingComponentIds.Bounds); } }
         public bool hasBounds { get { return HasComponent(VisualDebuggingComponentIds.Bounds); } }
 
-        public Entity AddBounds(UnityEngine.Bounds newBounds) {
+        public void AddBounds(UnityEngine.Bounds newBounds) {
             var component = CreateComponent<BoundsComponent>(VisualDebuggingComponentIds.Bounds);
             component.bounds = newBounds;
-            return AddComponent(VisualDebuggingComponentIds.Bounds, component);
+            AddComponent(VisualDebuggingComponentIds.Bounds, component);
         }
 
-        public Entity ReplaceBounds(UnityEngine.Bounds newBounds) {
+        public void ReplaceBounds(UnityEngine.Bounds newBounds) {
             var component = CreateComponent<BoundsComponent>(VisualDebuggingComponentIds.Bounds);
             component.bounds = newBounds;
             ReplaceComponent(VisualDebuggingComponentIds.Bounds, component);
-            return this;
         }
 
-        public Entity RemoveBounds() {
-            return RemoveComponent(VisualDebuggingComponentIds.Bounds);
+        public void RemoveBounds() {
+            RemoveComponent(VisualDebuggingComponentIds.Bounds);
         }
     }
 }

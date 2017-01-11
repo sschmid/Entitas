@@ -15,21 +15,20 @@ namespace Entitas {
         public ListComponent list { get { return (ListComponent)GetComponent(VisualDebuggingComponentIds.List); } }
         public bool hasList { get { return HasComponent(VisualDebuggingComponentIds.List); } }
 
-        public Entity AddList(System.Collections.Generic.List<string> newList) {
+        public void AddList(System.Collections.Generic.List<string> newList) {
             var component = CreateComponent<ListComponent>(VisualDebuggingComponentIds.List);
             component.list = newList;
-            return AddComponent(VisualDebuggingComponentIds.List, component);
+            AddComponent(VisualDebuggingComponentIds.List, component);
         }
 
-        public Entity ReplaceList(System.Collections.Generic.List<string> newList) {
+        public void ReplaceList(System.Collections.Generic.List<string> newList) {
             var component = CreateComponent<ListComponent>(VisualDebuggingComponentIds.List);
             component.list = newList;
             ReplaceComponent(VisualDebuggingComponentIds.List, component);
-            return this;
         }
 
-        public Entity RemoveList() {
-            return RemoveComponent(VisualDebuggingComponentIds.List);
+        public void RemoveList() {
+            RemoveComponent(VisualDebuggingComponentIds.List);
         }
     }
 }

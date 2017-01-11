@@ -15,21 +15,20 @@ namespace Entitas {
         public AnimationCurveComponent animationCurve { get { return (AnimationCurveComponent)GetComponent(VisualDebuggingComponentIds.AnimationCurve); } }
         public bool hasAnimationCurve { get { return HasComponent(VisualDebuggingComponentIds.AnimationCurve); } }
 
-        public Entity AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
+        public void AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
             var component = CreateComponent<AnimationCurveComponent>(VisualDebuggingComponentIds.AnimationCurve);
             component.animationCurve = newAnimationCurve;
-            return AddComponent(VisualDebuggingComponentIds.AnimationCurve, component);
+            AddComponent(VisualDebuggingComponentIds.AnimationCurve, component);
         }
 
-        public Entity ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
+        public void ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
             var component = CreateComponent<AnimationCurveComponent>(VisualDebuggingComponentIds.AnimationCurve);
             component.animationCurve = newAnimationCurve;
             ReplaceComponent(VisualDebuggingComponentIds.AnimationCurve, component);
-            return this;
         }
 
-        public Entity RemoveAnimationCurve() {
-            return RemoveComponent(VisualDebuggingComponentIds.AnimationCurve);
+        public void RemoveAnimationCurve() {
+            RemoveComponent(VisualDebuggingComponentIds.AnimationCurve);
         }
     }
 }

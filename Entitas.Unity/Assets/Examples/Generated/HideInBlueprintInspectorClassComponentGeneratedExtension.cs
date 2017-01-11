@@ -21,21 +21,20 @@ namespace Entitas {
         public HideInBlueprintInspectorClassComponent hideInBlueprintInspectorClass { get { return (HideInBlueprintInspectorClassComponent)GetComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass); } }
         public bool hasHideInBlueprintInspectorClass { get { return HasComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass); } }
 
-        public Entity AddHideInBlueprintInspectorClass(HideInBlueprintInspectorClass newValue) {
+        public void AddHideInBlueprintInspectorClass(HideInBlueprintInspectorClass newValue) {
             var component = CreateComponent<HideInBlueprintInspectorClassComponent>(BlueprintsComponentIds.HideInBlueprintInspectorClass);
             component.value = newValue;
-            return AddComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass, component);
+            AddComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass, component);
         }
 
-        public Entity ReplaceHideInBlueprintInspectorClass(HideInBlueprintInspectorClass newValue) {
+        public void ReplaceHideInBlueprintInspectorClass(HideInBlueprintInspectorClass newValue) {
             var component = CreateComponent<HideInBlueprintInspectorClassComponent>(BlueprintsComponentIds.HideInBlueprintInspectorClass);
             component.value = newValue;
             ReplaceComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass, component);
-            return this;
         }
 
-        public Entity RemoveHideInBlueprintInspectorClass() {
-            return RemoveComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass);
+        public void RemoveHideInBlueprintInspectorClass() {
+            RemoveComponent(BlueprintsComponentIds.HideInBlueprintInspectorClass);
         }
     }
 }
