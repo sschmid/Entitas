@@ -57,9 +57,9 @@ namespace Entitas {
         readonly Dictionary<string, IEntityIndex> _entityIndices;
 
         // Cache delegates to avoid gc allocations
-        Entity.EntityChanged _cachedEntityChanged;
-        Entity.ComponentReplaced _cachedComponentReplaced;
-        Entity.EntityReleased _cachedEntityReleased;
+        EntityChanged _cachedEntityChanged;
+        ComponentReplaced _cachedComponentReplaced;
+        EntityReleased _cachedEntityReleased;
 
         public Context(int totalComponents) : this(totalComponents, 0, null) {
         }

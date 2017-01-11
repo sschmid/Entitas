@@ -218,6 +218,9 @@
     <Compile Include="..\Entitas\Entitas\Index\PrimaryEntityIndex.cs">
       <Link>Linked Libraries\Entitas\Index\PrimaryEntityIndex.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\IEntity.cs">
+      <Link>Linked Libraries\Entitas\IEntity.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -352,6 +352,9 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherContextComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0360_1.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0360_2.cs" />
+    <Compile Include="..\Entitas\Entitas\IEntity.cs">
+      <Link>Linked Libraries\Entitas\IEntity.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

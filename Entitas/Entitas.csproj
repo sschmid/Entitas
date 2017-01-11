@@ -90,6 +90,7 @@
     <Compile Include="Entitas\Index\IEntityIndex.cs" />
     <Compile Include="Entitas\Index\AbstractEntityIndex.cs" />
     <Compile Include="Entitas\Index\PrimaryEntityIndex.cs" />
+    <Compile Include="Entitas\IEntity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
