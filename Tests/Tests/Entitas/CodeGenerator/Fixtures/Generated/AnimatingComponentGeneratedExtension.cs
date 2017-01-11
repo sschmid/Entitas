@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         static readonly AnimatingComponent animatingComponent = new AnimatingComponent();
 
@@ -28,7 +28,7 @@ namespace Entitas {
 
     public partial class Context {
 
-        public Entity animatingEntity { get { return GetGroup(Matcher.Animating).GetSingleEntity(); } }
+        public IEntity animatingEntity { get { return GetGroup(Matcher.Animating).GetSingleEntity(); } }
 
         public bool isAnimating {
             get { return animatingEntity != null; }

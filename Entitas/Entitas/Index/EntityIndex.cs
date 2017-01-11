@@ -5,19 +5,19 @@ namespace Entitas {
 
     public class EntityIndex<T> : AbstractEntityIndex<T> {
 
-        readonly Dictionary<T, HashSet<Entity>> _index;
+        readonly Dictionary<T, HashSet<IEntity>> _index;
 
-        public EntityIndex(Group group, Func<Entity, IComponent, T> getKey) :
+        public EntityIndex(Group group, Func<IEntity, IComponent, T> getKey) :
             base(group, getKey) {
-            _index = new Dictionary<T, HashSet<Entity>>();
+            _index = new Dictionary<T, HashSet<IEntity>>();
             Activate();
         }
 
         public EntityIndex(
             Group group,
-            Func<Entity, IComponent, T> getKey,
+            Func<IEntity, IComponent, T> getKey,
             IEqualityComparer<T> comparer) : base(group, getKey) {
-            _index = new Dictionary<T, HashSet<Entity>>(comparer);
+            _index = new Dictionary<T, HashSet<IEntity>>(comparer);
             Activate();
         }
 
@@ -26,10 +26,10 @@ namespace Entitas {
             indexEntities(_group);
         }
 
-        public HashSet<Entity> GetEntities(T key) {
-            HashSet<Entity> entities;
+        public HashSet<IEntity> GetEntities(T key) {
+            HashSet<IEntity> entities;
             if(!_index.TryGetValue(key, out entities)) {
-                entities = new HashSet<Entity>(EntityEqualityComparer.comparer);
+                entities = new HashSet<IEntity>(EntityEqualityComparer.comparer);
                 _index.Add(key, entities);
             }
 
@@ -46,13 +46,13 @@ namespace Entitas {
             _index.Clear();
         }
 
-        protected override void addEntity(Entity entity, IComponent component) {
+        protected override void addEntity(IEntity entity, IComponent component) {
             GetEntities(_getKey(entity, component)).Add(entity);
             entity.Retain(this);
         }
 
         protected override void removeEntity(
-            Entity entity, IComponent component) {
+            IEntity entity, IComponent component) {
             GetEntities(_getKey(entity, component)).Remove(entity);
             entity.Release(this);
         }

@@ -33,7 +33,7 @@ namespace Entitas.Serialization.Blueprints {
             }
         }
 
-        public IComponent CreateComponent(Entity entity) {
+        public IComponent CreateComponent(IEntity entity) {
             if(_type == null) {
                 _type = fullTypeName.ToType();
 

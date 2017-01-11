@@ -3,9 +3,13 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    public delegate void EntityChanged(Entity entity, int index, IComponent component);
-    public delegate void ComponentReplaced(Entity entity, int index, IComponent previousComponent, IComponent newComponent);
-    public delegate void EntityReleased(Entity entity);
+    public delegate void EntityChanged(
+        IEntity entity, int index, IComponent component
+    );
+    public delegate void ComponentReplaced(
+        IEntity entity, int index, IComponent previousComponent, IComponent newComponent
+    );
+    public delegate void EntityReleased(IEntity entity);
 
     public interface IEntity {
 
@@ -20,6 +24,15 @@ namespace Entitas {
 
         Stack<IComponent>[] componentPools { get; }
         ContextInfo contextInfo { get; }
+
+        // TODO UNIT TEST
+        // Check isEnable == true
+        // Check creationIndex
+        void Initialize(int creationIndex, int totalComponents,
+                        Stack<IComponent>[] componentPools,
+                        ContextInfo contextInfo = null);
+
+        void Reactivate(int creationIndex);
 
         void AddComponent(int index, IComponent component);
         void RemoveComponent(int index);
@@ -42,5 +55,9 @@ namespace Entitas {
         int retainCount { get; }
         void Retain(object owner);
         void Release(object owner);
+
+        // TODO #254
+        void destroy();
+        void removeAllOnEntityReleasedHandlers();
     }
 }

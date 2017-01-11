@@ -5,7 +5,7 @@ class describe_Group : nspec {
 
     Group _groupA;
 
-    void assertContains(params Entity[] expectedEntities) {
+    void assertContains(params IEntity[] expectedEntities) {
         _groupA.count.should_be(expectedEntities.Length);
 
         var entities = _groupA.GetEntities();
@@ -17,7 +17,7 @@ class describe_Group : nspec {
         }
     }
 
-    void assertContainsNot(Entity entity) {
+    void assertContainsNot(IEntity entity) {
         _groupA.count.should_be(0);
         _groupA.GetEntities().should_be_empty();
         _groupA.ContainsEntity(entity).should_be_false();
@@ -25,8 +25,8 @@ class describe_Group : nspec {
 
     void when_created() {
 
-        Entity eA1 = null;
-        Entity eA2 = null;
+        IEntity eA1 = null;
+        IEntity eA2 = null;
 
         before = () => {
             _groupA = new Group(Matcher.AllOf(CID.ComponentA));
@@ -78,7 +78,7 @@ class describe_Group : nspec {
         context["when entity is not enabled"] = () => {
 
             it["doesn't add entity"] = () => {
-                eA1._isEnabled = false;
+                eA1.destroy();
                 handleSilently(eA1);
                 assertContainsNot(eA1);
             };
@@ -237,7 +237,7 @@ class describe_Group : nspec {
 
             context["GetEntities()"] = () => {
 
-                Entity[] cache = null;
+                IEntity[] cache = null;
 
                 before = () => {
                     handleSilently(eA1);
@@ -279,7 +279,7 @@ class describe_Group : nspec {
 
             context["SingleEntity()"] = () => {
 
-                Entity cache = null;
+                IEntity cache = null;
 
                 before = () => {
                     handleSilently(eA1);
@@ -399,27 +399,27 @@ class describe_Group : nspec {
         };
     }
 
-    void handleSilently(Entity entity) {
+    void handleSilently(IEntity entity) {
         _groupA.HandleEntitySilently(entity);
     }
 
-    void handle(Entity entity, int index, IComponent component) {
+    void handle(IEntity entity, int index, IComponent component) {
         _groupA.HandleEntity(entity, index, component);
     }
 
-    void handleAddEA(Entity entity) {
+    void handleAddEA(IEntity entity) {
         handle(entity, CID.ComponentA, entity.GetComponentA());
     }
 
-    void handleAddEB(Entity entity) {
+    void handleAddEB(IEntity entity) {
         handle(entity, CID.ComponentB, entity.GetComponentB());
     }
 
-    void handleRemoveEA(Entity entity, IComponent component) {
+    void handleRemoveEA(IEntity entity, IComponent component) {
         handle(entity, CID.ComponentA, component);
     }
 
-    void updateEA(Entity entity, IComponent component) {
+    void updateEA(IEntity entity, IComponent component) {
         _groupA.UpdateEntity(entity, CID.ComponentA, Component.A, component);
     }
 }

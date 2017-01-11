@@ -20,7 +20,11 @@ public class ContextCreateBlueprint : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            _context.CreateEntity().ApplyBlueprint(_blueprint);
+
+            // TODO Once this method moved to IEntity
+            // uncomment this code
+
+            //_context.CreateEntity().ApplyBlueprint(_blueprint);
         }
     }
 }

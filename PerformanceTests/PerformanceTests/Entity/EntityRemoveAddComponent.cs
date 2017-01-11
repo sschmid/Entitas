@@ -3,7 +3,7 @@ using Entitas;
 public class EntityRemoveAddComponent : IPerformanceTest {
     const int n = 1000000;
     Context _context;
-    Entity _e;
+    IEntity _e;
     ComponentA _componentA;
 
     public void Before() {

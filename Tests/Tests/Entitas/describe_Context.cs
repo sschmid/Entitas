@@ -31,13 +31,13 @@ class describe_Context : nspec {
         it["creates entity"] = () => {
             var e = ctx.CreateEntity();
             e.should_not_be_null();
-            e.GetType().should_be(typeof(Entity));
+            e.GetType().should_be(typeof(IEntity));
         };
 
         it["has default ContextInfo"] = () => {
             ctx.contextInfo.name.should_be("Unnamed Context");
             ctx.contextInfo.componentNames.Length.should_be(CID.TotalComponents);
-            for (int i = 0; i < ctx.contextInfo.componentNames.Length; i++) {
+            for(int i = 0; i < ctx.contextInfo.componentNames.Length; i++) {
                 ctx.contextInfo.componentNames[i].should_be("Index " + i);
             }
         };
@@ -67,8 +67,8 @@ class describe_Context : nspec {
             ContextInfo contextInfo = null;
 
             before = () => {
-                var componentNames = new [] { "Health", "Position", "View" };
-                var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
+                var componentNames = new[] { "Health", "Position", "View" };
+                var componentTypes = new[] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
                 contextInfo = new ContextInfo("My Context", componentNames, componentTypes);
                 ctx = new Context(componentNames.Length, 0, contextInfo);
             };
@@ -88,7 +88,7 @@ class describe_Context : nspec {
 
         context["when entity created"] = () => {
 
-            Entity e = null;
+            IEntity e = null;
 
             before = () => {
                 e = ctx.CreateEntity();
@@ -142,30 +142,30 @@ class describe_Context : nspec {
 
                 const int numEntities = 10;
 
-                for (int i = 0; i < numEntities; i++) {
+                for(int i = 0; i < numEntities; i++) {
                     ctx.CreateEntity();
                 }
 
                 var order1 = new int[numEntities];
                 var entities1 = ctx.GetEntities();
-                for (int i = 0; i < numEntities; i++) {
+                for(int i = 0; i < numEntities; i++) {
                     order1[i] = entities1[i].creationIndex;
                 }
 
                 ctx.DestroyAllEntities();
                 ctx.ResetCreationIndex();
 
-                for (int i = 0; i < numEntities; i++) {
+                for(int i = 0; i < numEntities; i++) {
                     ctx.CreateEntity();
                 }
 
                 var order2 = new int[numEntities];
                 var entities2 = ctx.GetEntities();
-                for (int i = 0; i < numEntities; i++) {
+                for(int i = 0; i < numEntities; i++) {
                     order2[i] = entities2[i].creationIndex;
                 }
 
-                for (int i = 0; i < numEntities; i++) {
+                for(int i = 0; i < numEntities; i++) {
                     var index1 = order1[i];
                     var index2 = order2[i];
                     index1.should_be(index2);
@@ -208,7 +208,7 @@ class describe_Context : nspec {
             };
 
             it["dispatches OnEntityCreated when creating a new entity"] = () => {
-                Entity eventEntity = null;
+                IEntity eventEntity = null;
                 ctx.OnEntityCreated += (p, entity) => {
                     didDispatch += 1;
                     eventEntity = entity;
@@ -355,7 +355,7 @@ class describe_Context : nspec {
             it["gets entity from object pool"] = () => {
                 var e = ctx.CreateEntity();
                 e.should_not_be_null();
-                e.GetType().should_be(typeof(Entity));
+                e.GetType().should_be(typeof(IEntity));
             };
 
             it["destroys entity when pushing back to object pool"] = () => {
@@ -405,7 +405,7 @@ class describe_Context : nspec {
 
             context["when entity gets destroyed"] = () => {
 
-                Entity e = null;
+                IEntity e = null;
 
                 before = () => {
                     e = ctx.CreateEntity();
@@ -430,11 +430,11 @@ class describe_Context : nspec {
 
             context["when entities created"] = () => {
 
-                Entity eAB1 = null;
-                Entity eAB2 = null;
-                Entity eA = null;
+                IEntity eAB1 = null;
+                IEntity eAB2 = null;
+                IEntity eA = null;
 
-                IMatcher matcherAB = Matcher.AllOf(new [] {
+                IMatcher matcherAB = Matcher.AllOf(new[] {
                     CID.ComponentA,
                     CID.ComponentB
                 });

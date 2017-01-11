@@ -29,7 +29,7 @@ class describe_Collector : nspec {
 
             context["when entity collected"] = () => {
 
-                Entity e = null;
+                IEntity e = null;
 
                 before = () => {
                     e = createEA();
@@ -94,7 +94,7 @@ class describe_Collector : nspec {
 
             context["reference counting"] = () => {
 
-                Entity e = null;
+                IEntity e = null;
 
                 before = () => {
                     e = createEA();
@@ -287,11 +287,11 @@ class describe_Collector : nspec {
         };
     }
 
-    Entity createEA() {
+    IEntity createEA() {
         return _context.CreateEntity().AddComponentA();
     }
 
-    Entity createEB() {
+    IEntity createEB() {
         return _context.CreateEntity().AddComponentB();
     }
 }

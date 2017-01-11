@@ -11,7 +11,7 @@ namespace Entitas {
         public event GroupChanged OnGroupCreated;
         public event GroupChanged OnGroupCleared;
 
-        public delegate void ContextChanged(Context context, Entity entity);
+        public delegate void ContextChanged(Context context, IEntity entity);
         public delegate void GroupChanged(Context context, Group group);
 
         public int totalComponents { get { return _totalComponents; } }
@@ -35,16 +35,16 @@ namespace Entitas {
         readonly int _totalComponents;
         int _creationIndex;
 
-        readonly HashSet<Entity> _entities = new HashSet<Entity>(
+        readonly HashSet<IEntity> _entities = new HashSet<IEntity>(
             EntityEqualityComparer.comparer
         );
 
-        readonly Stack<Entity> _reusableEntities = new Stack<Entity>();
-        readonly HashSet<Entity> _retainedEntities = new HashSet<Entity>(
+        readonly Stack<IEntity> _reusableEntities = new Stack<IEntity>();
+        readonly HashSet<IEntity> _retainedEntities = new HashSet<IEntity>(
             EntityEqualityComparer.comparer
         );
 
-        Entity[] _entitiesCache;
+        IEntity[] _entitiesCache;
 
         readonly ContextInfo _contextInfo;
 
@@ -102,12 +102,22 @@ namespace Entitas {
             _cachedEntityReleased = onEntityReleased;
         }
 
-        public virtual Entity CreateEntity() {
-            var entity = _reusableEntities.Count > 0
-                    ? _reusableEntities.Pop()
-                    : new Entity( _totalComponents, _componentPools, _contextInfo);
-            entity._isEnabled = true;
-            entity._creationIndex = _creationIndex++;
+        public virtual IEntity CreateEntity() {
+            IEntity entity;
+
+            // TODO UNIT TEST
+            // Test Reactivate
+            // Test Initialize
+            if(_reusableEntities.Count > 0) {
+                entity = _reusableEntities.Pop();
+                // TODO
+                //entity.Reactivate(_creationIndex++);
+            } else {
+                entity = new XXXEntity();
+                // TODO
+                //entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo);
+            }
+
             entity.Retain(this);
             _entities.Add(entity);
             _entitiesCache = null;
@@ -123,7 +133,7 @@ namespace Entitas {
             return entity;
         }
 
-        public virtual void DestroyEntity(Entity entity) {
+        public virtual void DestroyEntity(IEntity entity) {
             var removed = _entities.Remove(entity);
             if(!removed) {
                 throw new ContextDoesNotContainEntityException(
@@ -169,13 +179,13 @@ namespace Entitas {
             }
         }
 
-        public virtual bool HasEntity(Entity entity) {
+        public virtual bool HasEntity(IEntity entity) {
             return _entities.Contains(entity);
         }
 
-        public virtual Entity[] GetEntities() {
+        public virtual IEntity[] GetEntities() {
             if(_entitiesCache == null) {
-                _entitiesCache = new Entity[_entities.Count];
+                _entitiesCache = new IEntity[_entities.Count];
                 _entities.CopyTo(_entitiesCache);
             }
 
@@ -286,7 +296,7 @@ namespace Entitas {
         }
 
         void updateGroupsComponentAddedOrRemoved(
-            Entity entity, int index, IComponent component) {
+            IEntity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if(groups != null) {
                 var events = EntitasCache.GetGroupChangedList();
@@ -308,7 +318,7 @@ namespace Entitas {
             }
         }
 
-        void updateGroupsComponentReplaced(Entity entity,
+        void updateGroupsComponentReplaced(IEntity entity,
                                            int index,
                                            IComponent previousComponent,
                                            IComponent newComponent) {
@@ -322,8 +332,8 @@ namespace Entitas {
             }
         }
 
-        void onEntityReleased(Entity entity) {
-            if(entity._isEnabled) {
+        void onEntityReleased(IEntity entity) {
+            if(entity.isEnabled) {
                 throw new EntityIsNotDestroyedException(
                     "Cannot release " + entity + "!"
                 );

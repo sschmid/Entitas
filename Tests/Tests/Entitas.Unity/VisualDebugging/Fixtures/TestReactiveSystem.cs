@@ -9,10 +9,10 @@ public class TestReactiveSystem : ReactiveSystem {
         return context.CreateCollector(Matcher.AllOf(0));
     }
 
-    protected override bool Filter(Entity entity) {
+    protected override bool Filter(IEntity entity) {
         return true;
     }
 
-    protected override void Execute(List<Entity> entities) {
+    protected override void Execute(List<IEntity> entities) {
     }
 }

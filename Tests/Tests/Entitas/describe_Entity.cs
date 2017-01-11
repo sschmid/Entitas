@@ -7,7 +7,7 @@ class describe_Entity : nspec {
     readonly int[] _indicesA = { CID.ComponentA };
     readonly int[] _indicesAB = { CID.ComponentA, CID.ComponentB };
 
-    void assertHasComponentA(Entity e, IComponent componentA = null) {
+    void assertHasComponentA(IEntity e, IComponent componentA = null) {
         if(componentA == null) {
             componentA = Component.A;
         }
@@ -27,7 +27,7 @@ class describe_Entity : nspec {
         e.HasAnyComponent(_indicesA).should_be_true();
     }
 
-    void assertHasNotComponentA(Entity e) {
+    void assertHasNotComponentA(IEntity e) {
         var components = e.GetComponents();
         components.Length.should_be(0);
 
@@ -41,7 +41,7 @@ class describe_Entity : nspec {
 
     void when_created() {
 
-        Entity e = null;
+        IEntity e = null;
         before = () => {
             e = this.CreateEntity();
         };
@@ -59,7 +59,8 @@ class describe_Entity : nspec {
 
             it["has custom ContextInfo when set"] = () => {
                 var contextInfo = new ContextInfo(null, null, null);
-                e = new Entity(0, null, contextInfo);
+                e = new XXXEntity();
+                e.Initialize(0, 0, null, contextInfo);
                 e.contextInfo.should_be_same(contextInfo);
             };
 

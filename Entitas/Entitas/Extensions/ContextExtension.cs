@@ -3,7 +3,7 @@ namespace Entitas {
     public static class ContextExtension {
 
         /// Returns all entities matching the specified matcher.
-        public static Entity[] GetEntities(this Context context, IMatcher matcher) {
+        public static IEntity[] GetEntities(this Context context, IMatcher matcher) {
             return context.GetGroup(matcher).GetEntities();
         }
 
@@ -15,10 +15,10 @@ namespace Entitas {
         /// Creates a new entity and adds copies of all
         /// specified components to it.
         /// If replaceExisting is true it will replace exisintg components.
-        public static Entity CloneEntity(this Context context,
-                                         Entity entity,
-                                         bool replaceExisting = false,
-                                         params int[] indices) {
+        public static IEntity CloneEntity(this Context context,
+                                          IEntity entity,
+                                          bool replaceExisting = false,
+                                          params int[] indices) {
             var target = context.CreateEntity();
             entity.CopyTo(target, replaceExisting, indices);
             return target;

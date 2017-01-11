@@ -10,26 +10,26 @@ namespace Entitas {
     public abstract class ReactiveSystem : IExecuteSystem {
 
         readonly Collector _collector;
-        readonly List<Entity> _buffer;
+        readonly List<IEntity> _buffer;
         string _toStringCache;
 
         protected ReactiveSystem(Context context) {
             _collector = GetTrigger(context);
-            _buffer = new List<Entity>();
+            _buffer = new List<IEntity>();
         }
 
         protected ReactiveSystem(Collector collector) {
             _collector = collector;
-            _buffer = new List<Entity>();
+            _buffer = new List<IEntity>();
         }
 
         /// Specify the collector that will trigger the ReactiveSystem.
         protected abstract Collector GetTrigger(Context context);
 
         /// This will exclude all entities which don't pass the filter.
-        protected abstract bool Filter(Entity entity);
+        protected abstract bool Filter(IEntity entity);
 
-        protected abstract void Execute(List<Entity> entities);
+        protected abstract void Execute(List<IEntity> entities);
 
         /// Activates the ReactiveSystem and starts observing changes
         /// based on the specified Collector.

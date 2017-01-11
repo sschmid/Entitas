@@ -10,11 +10,11 @@ namespace Entitas {
         /// Returns all collected entities.
         /// Call collector.ClearCollectedEntities()
         /// once you processed all entities.
-        public HashSet<Entity> collectedEntities {
+        public HashSet<IEntity> collectedEntities {
             get { return _collectedEntities; }
         }
 
-        readonly HashSet<Entity> _collectedEntities;
+        readonly HashSet<IEntity> _collectedEntities;
         readonly Group[] _groups;
         readonly GroupEvent[] _groupEvents;
         Group.GroupChanged _addEntityCache;
@@ -31,7 +31,7 @@ namespace Entitas {
         /// based on the specified groupEvents.
         public Collector(Group[] groups, GroupEvent[] groupEvents) {
             _groups = groups;
-            _collectedEntities = new HashSet<Entity>(
+            _collectedEntities = new HashSet<IEntity>(
                 EntityEqualityComparer.comparer
             );
             _groupEvents = groupEvents;
@@ -90,7 +90,7 @@ namespace Entitas {
         }
 
         void addEntity(Group group,
-                       Entity entity,
+                       IEntity entity,
                        int index,
                        IComponent component) {
             var added = _collectedEntities.Add(entity);

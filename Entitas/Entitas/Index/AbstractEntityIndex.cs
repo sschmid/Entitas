@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 
 namespace Entitas {
 
     public abstract class AbstractEntityIndex<T> : IEntityIndex {
 
         protected readonly Group _group;
-        protected readonly Func<Entity, IComponent, T> _getKey;
+        protected readonly Func<IEntity, IComponent, T> _getKey;
 
         protected AbstractEntityIndex(
             Group group,
-            Func<Entity,
+            Func<IEntity,
             IComponent, T> getKey) {
             _group = group;
             _getKey = getKey;
@@ -34,19 +34,19 @@ namespace Entitas {
         }
 
         protected void onEntityAdded(
-            Group group, Entity entity, int index, IComponent component) {
+            Group group, IEntity entity, int index, IComponent component) {
             addEntity(entity, component);
         }
 
         protected void onEntityRemoved(
-            Group group, Entity entity, int index, IComponent component) {
+            Group group, IEntity entity, int index, IComponent component) {
             removeEntity(entity, component);
         }
 
-        protected abstract void addEntity(Entity entity, IComponent component);
+        protected abstract void addEntity(IEntity entity, IComponent component);
 
         protected abstract void removeEntity(
-            Entity entity, IComponent component
+            IEntity entity, IComponent component
         );
 
         protected abstract void clear();

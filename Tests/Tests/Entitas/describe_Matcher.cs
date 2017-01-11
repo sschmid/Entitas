@@ -12,11 +12,11 @@ class describe_Matcher : nspec {
 
     void when_creating_matcher() {
 
-        Entity eA = null;
-        Entity eB = null;
-        Entity eC = null;
-        Entity eAB = null;
-        Entity eABC = null;
+        IEntity eA = null;
+        IEntity eB = null;
+        IEntity eC = null;
+        IEntity eAB = null;
+        IEntity eABC = null;
 
         before = () => {
             eA = this.CreateEntity();

@@ -35,29 +35,10 @@ namespace PerformanceTests {
             run<EntityIndexGetEntity>();
             run<EmptyTest>();
 
-            run<IterateHashetToArray>();
-            run<IterateHashSet>();
-            run<EmptyTest>();
-
             run<ObjectGetProperty>();
             run<EmptyTest>();
             run<CollectorIterateCollectedEntities>();
             run<CollectorActivate>();
-
-            run<HashSetContainsAdd>();
-            run<ArrayGetItem>();
-            run<DictionaryGetItem>();
-            run<QueueDequeue>();
-            run<ListQueue>();
-            run<LinkedListAdd>();
-            run<LinkedListRemove>();
-            run<ListAdd>();
-            run<ListGetItem>();
-            run<ListRemove>();
-            run<OrderedDictionaryAdd>();
-            run<OrderedDictionaryGetItemByIndex>();
-            run<OrderedDictionaryGetItemByKey>();
-            run<OrderedDictionaryRemove>();
 
             Console.WriteLine("\nPress any key...");
             Console.Read();
@@ -96,19 +77,6 @@ namespace PerformanceTests {
         //CollectorIterateCollectedEntities:957 ms
         //CollectorActivate:                1 ms
         //PropertiesCreate:                       251 ms
-
-        //HashSetContainsAdd:                     173 ms
-        //ArrayGetItem:                           2 ms
-        //DictionaryGetItem:                      7 ms
-        //LinkedListAdd:                          17 ms
-        //LinkedListRemove:                       4 ms
-        //ListAdd:                                14 ms
-        //ListGetItem:                            2 ms
-        //ListRemove:                             8647 ms
-        //OrderedDictionaryAdd:                   30 ms
-        //OrderedDictionaryGetItemByIndex:        4 ms
-        //OrderedDictionaryGetItemByKey:          4 ms
-        //OrderedDictionaryRemove:                7 ms
 
         static void run<T>() where T : IPerformanceTest, new() {
             Thread.Sleep(100);

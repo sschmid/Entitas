@@ -1,10 +1,9 @@
 using Entitas;
-using System.Collections.Generic;
 
 public class EntityReplaceComponent : IPerformanceTest {
     const int n = 1000000;
     Context _context;
-    Entity _e;
+    IEntity _e;
 
     public void Before() {
         _context = Helper.CreateContext();

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         static readonly MovableComponent movableComponent = new MovableComponent();
 

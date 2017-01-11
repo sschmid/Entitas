@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         static readonly MultipleContextAndDefaultContextComponent multipleContextAndDefaultContextComponent = new MultipleContextAndDefaultContextComponent();
 

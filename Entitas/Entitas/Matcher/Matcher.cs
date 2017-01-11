@@ -45,7 +45,7 @@ namespace Entitas {
             return NoneOf(mergeIndices(matchers));
         }
 
-        public bool Matches(Entity entity) {
+        public bool Matches(IEntity entity) {
             return (_allOfIndices == null || entity.HasComponents(_allOfIndices))
                 && (_anyOfIndices == null || entity.HasAnyComponent(_anyOfIndices))
                 && (_noneOfIndices == null || !entity.HasAnyComponent(_noneOfIndices));

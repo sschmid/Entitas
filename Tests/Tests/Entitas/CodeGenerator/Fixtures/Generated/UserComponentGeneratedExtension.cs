@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         public UserComponent user { get { return (UserComponent)GetComponent(ComponentIds.User); } }
         public bool hasUser { get { return HasComponent(ComponentIds.User); } }
@@ -34,11 +34,11 @@ namespace Entitas {
 
     public partial class Context {
 
-        public Entity userEntity { get { return GetGroup(Matcher.User).GetSingleEntity(); } }
+        public IEntity userEntity { get { return GetGroup(Matcher.User).GetSingleEntity(); } }
         public UserComponent user { get { return userEntity.user; } }
         public bool hasUser { get { return userEntity != null; } }
 
-        public Entity SetUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public IEntity SetUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
             if(hasUser) {
                 throw new EntitasException("Could not set user!\n" + this + " already has an entity with UserComponent!",
                     "You should check if the context already has a userEntity before setting it or use context.ReplaceUser().");
@@ -48,7 +48,7 @@ namespace Entitas {
             return entity;
         }
 
-        public Entity ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public IEntity ReplaceUser(System.DateTime newTimestamp, bool newIsLoggedIn) {
             var entity = userEntity;
             if(entity == null) {
                 entity = SetUser(newTimestamp, newIsLoggedIn);

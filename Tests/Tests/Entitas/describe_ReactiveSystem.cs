@@ -5,7 +5,7 @@ class describe_ReactiveSystem : nspec {
 
     readonly IMatcher _matcherAB = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
 
-    static void assertEntities(IReactiveSystemSpy system, Entity entity, int didExecute = 1) {
+    static void assertEntities(IReactiveSystemSpy system, IEntity entity, int didExecute = 1) {
         if(entity == null) {
             system.didExecute.should_be(0);
             system.entities.should_be_null();
@@ -19,19 +19,19 @@ class describe_ReactiveSystem : nspec {
 
     Contexts _contexts;
 
-    Entity createEntityAB() {
+    IEntity createEntityAB() {
         return _contexts.test.CreateEntity()
             .AddComponentA()
             .AddComponentB();
     }
 
-    Entity createEntityAC() {
+    IEntity createEntityAC() {
         return _contexts.test.CreateEntity()
             .AddComponentA()
             .AddComponentC();
     }
 
-    Entity createEntityABC() {
+    IEntity createEntityABC() {
         return _contexts.test.CreateEntity()
             .AddComponentA()
             .AddComponentB()
@@ -91,7 +91,7 @@ class describe_ReactiveSystem : nspec {
 
             it["collects created entities in execute"] = () => {
                 var e1 = createEntityAB();
-                Entity e2 = null;
+                IEntity e2 = null;
                 system.executeAction = entities => {
                     if(e2 == null) {
                         e2 = createEntityAB();

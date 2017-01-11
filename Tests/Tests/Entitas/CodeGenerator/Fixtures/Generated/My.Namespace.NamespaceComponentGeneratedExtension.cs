@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         static readonly My.Namespace.NamespaceComponent namespaceComponent = new My.Namespace.NamespaceComponent();
 

@@ -1,25 +1,25 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
 
     public class PrimaryEntityIndex<T> : AbstractEntityIndex<T> {
 
-        readonly Dictionary<T, Entity> _index;
+        readonly Dictionary<T, IEntity> _index;
 
         public PrimaryEntityIndex(
             Group group,
-            Func<Entity, IComponent, T> getKey
+            Func<IEntity, IComponent, T> getKey
         ) : base(group, getKey) {
-            _index = new Dictionary<T, Entity>();
+            _index = new Dictionary<T, IEntity>();
             Activate();
         }
 
         public PrimaryEntityIndex(
-            Group group, Func<Entity,
+            Group group, Func<IEntity,
             IComponent, T> getKey,
             IEqualityComparer<T> comparer) : base(group, getKey) {
-            _index = new Dictionary<T, Entity>(comparer);
+            _index = new Dictionary<T, IEntity>(comparer);
             Activate();
         }
 
@@ -32,7 +32,7 @@ namespace Entitas {
             return _index.ContainsKey(key);
         }
 
-        public Entity GetEntity(T key) {
+        public IEntity GetEntity(T key) {
             var entity = TryGetEntity(key);
             if(entity == null) {
                 throw new EntityIndexException(
@@ -45,8 +45,8 @@ namespace Entitas {
             return entity;
         }
 
-        public Entity TryGetEntity(T key) {
-            Entity entity;
+        public IEntity TryGetEntity(T key) {
+            IEntity entity;
             _index.TryGetValue(key, out entity);
             return entity;
         }
@@ -60,7 +60,7 @@ namespace Entitas {
         }
 
         protected override void addEntity(
-            Entity entity, IComponent component) {
+            IEntity entity, IComponent component) {
             var key = _getKey(entity, component);
             if(_index.ContainsKey(key)) {
                 throw new EntityIndexException(
@@ -73,7 +73,7 @@ namespace Entitas {
         }
 
         protected override void removeEntity(
-            Entity entity, IComponent component) {
+            IEntity entity, IComponent component) {
             _index.Remove(_getKey(entity, component));
             entity.Release(this);
         }

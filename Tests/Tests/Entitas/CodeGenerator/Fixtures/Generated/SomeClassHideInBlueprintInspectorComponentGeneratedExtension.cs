@@ -16,7 +16,7 @@ public class SomeClassHideInBlueprintInspectorComponent : IComponent {
 
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         public SomeClassHideInBlueprintInspectorComponent someClassHideInBlueprintInspector { get { return (SomeClassHideInBlueprintInspectorComponent)GetComponent(ComponentIds.SomeClassHideInBlueprintInspector); } }
         public bool hasSomeClassHideInBlueprintInspector { get { return HasComponent(ComponentIds.SomeClassHideInBlueprintInspector); } }

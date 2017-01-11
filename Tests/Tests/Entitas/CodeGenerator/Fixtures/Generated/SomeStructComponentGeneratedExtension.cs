@@ -15,7 +15,7 @@ public class SomeStructComponent : IComponent {
 
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         public SomeStructComponent someStruct { get { return (SomeStructComponent)GetComponent(ComponentIds.SomeStruct); } }
         public bool hasSomeStruct { get { return HasComponent(ComponentIds.SomeStruct); } }

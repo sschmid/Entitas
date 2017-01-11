@@ -123,7 +123,7 @@ class describe_EntitasErrorMessages : EntitasTest {
             });
 
             it["destroy entity which is not in context"] = () => printErrorMessage(() => {
-                _context.DestroyEntity(new Entity(0, null));
+                _context.DestroyEntity(new XXXEntity());
             });
 
             it["destroy retained entities"] = () => printErrorMessage(() => {
@@ -149,7 +149,7 @@ class describe_EntitasErrorMessages : EntitasTest {
         context["CollectionExtension"] = () => {
 
             it["get single entity when more than one exist"] = () => printErrorMessage(() => {
-                new Entity[2].SingleEntity();
+                new IEntity[2].SingleEntity();
             });
         };
 

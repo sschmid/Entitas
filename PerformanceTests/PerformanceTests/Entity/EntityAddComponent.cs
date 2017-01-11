@@ -3,7 +3,7 @@ using Entitas;
 #pragma warning disable
 public class EntityAddComponent : IPerformanceTest {
     const int n = 10000000;
-    Entity _e;
+    IEntity _e;
     ComponentA _componentA;
 
     public void Before() {

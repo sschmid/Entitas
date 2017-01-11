@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         public OtherContextComponent otherContext { get { return (OtherContextComponent)GetComponent(OtherComponentIds.OtherContext); } }
         public bool hasOtherContext { get { return HasComponent(OtherComponentIds.OtherContext); } }
@@ -36,11 +36,11 @@ namespace Entitas {
 
     public partial class Context {
 
-        public Entity otherContextEntity { get { return GetGroup(OtherMatcher.OtherContext).GetSingleEntity(); } }
+        public IEntity otherContextEntity { get { return GetGroup(OtherMatcher.OtherContext).GetSingleEntity(); } }
         public OtherContextComponent otherContext { get { return otherContextEntity.otherContext; } }
         public bool hasOtherContext { get { return otherContextEntity != null; } }
 
-        public Entity SetOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public IEntity SetOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
             if(hasOtherContext) {
                 throw new EntitasException("Could not set otherContext!\n" + this + " already has an entity with OtherContextComponent!",
                     "You should check if the context already has a otherContextEntity before setting it or use context.ReplaceOtherContext().");
@@ -50,7 +50,7 @@ namespace Entitas {
             return entity;
         }
 
-        public Entity ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public IEntity ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
             var entity = otherContextEntity;
             if(entity == null) {
                 entity = SetOtherContext(newTimestamp, newIsLoggedIn);

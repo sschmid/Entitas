@@ -7,7 +7,7 @@ namespace Entitas {
     /// Use context.CreateEntity() to create a new entity and
     /// context.DestroyEntity() to destroy it.
     /// You can add, replace and remove IComponent to an entity.
-    public partial class Entity : IEntity {
+    public partial class XXXEntity : IEntity {
 
         /// Occurs when a component gets added.
         /// All event handlers will be removed when
@@ -56,24 +56,24 @@ namespace Entitas {
         /// It's used to provide better error messages.
         public ContextInfo contextInfo { get { return _contextInfo; } }
 
-        internal int _creationIndex;
-        internal bool _isEnabled = true;
+        int _creationIndex;
+        bool _isEnabled = true;
 
-        readonly int _totalComponents;
-        readonly IComponent[] _components;
-        readonly Stack<IComponent>[] _componentPools;
-        readonly ContextInfo _contextInfo;
+        int _totalComponents;
+        IComponent[] _components;
+        Stack<IComponent>[] _componentPools;
+        ContextInfo _contextInfo;
 
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
         string _toStringCache;
         StringBuilder _toStringBuilder;
 
-        /// Use context.CreateEntity() to create a new entity and
-        /// context.DestroyEntity() to destroy it.
-        public Entity(int totalComponents,
-                      Stack<IComponent>[] componentPools,
-                      ContextInfo contextInfo = null) {
+        public void Initialize(int creationIndex, int totalComponents, Stack<IComponent>[] componentPools, ContextInfo contextInfo = null) {
+            // TODO UNIT Test
+            // Should set creation index
+            // shoud set isEnabled = true
+
             _totalComponents = totalComponents;
             _components = new IComponent[totalComponents];
             _componentPools = componentPools;
@@ -94,6 +94,12 @@ namespace Entitas {
                     "No Context", componentNames, null
                 );
             }
+        }
+
+        public void Reactivate(int creationIndex) {
+            // TODO UNIT TEST
+            // Set creation index
+            // Set isEnabled = true
         }
 
         /// Adds a component at the specified index.
@@ -408,7 +414,7 @@ namespace Entitas {
 
         // This method is used internally. Don't call it yourself.
         // Use context.DestroyEntity(entity);
-        internal void destroy() {
+        public void destroy() {
             _isEnabled = false;
             RemoveAllComponents();
             OnComponentAdded = null;
@@ -417,7 +423,7 @@ namespace Entitas {
         }
 
         // Do not call this method manually. This method is called by the context.
-        internal void removeAllOnEntityReleasedHandlers() {
+        public void removeAllOnEntityReleasedHandlers() {
             OnEntityReleased = null;
         }
 
@@ -502,24 +508,24 @@ namespace Entitas {
         }
     }
 
-    public class EntityEqualityComparer : IEqualityComparer<Entity> {
+    public class EntityEqualityComparer : IEqualityComparer<IEntity> {
 
         public static readonly EntityEqualityComparer comparer =
             new EntityEqualityComparer();
 
-        public bool Equals(Entity x, Entity y) {
+        public bool Equals(IEntity x, IEntity y) {
             return x == y;
         }
 
-        public int GetHashCode(Entity obj) {
-            return obj._creationIndex;
+        public int GetHashCode(IEntity obj) {
+            return obj.creationIndex;
         }
     }
 
     public class EntityIsAlreadyRetainedByOwnerException : EntitasException {
 
         public EntityIsAlreadyRetainedByOwnerException(
-            Entity entity, object owner
+            IEntity entity, object owner
         ) : base(
                 "'" + owner + "' cannot retain " + entity + "!\n" +
                 "Entity is already retained by this object!",
@@ -530,7 +536,7 @@ namespace Entitas {
 
     public class EntityIsNotRetainedByOwnerException : EntitasException {
 
-        public EntityIsNotRetainedByOwnerException(Entity entity, object owner) :
+        public EntityIsNotRetainedByOwnerException(IEntity entity, object owner) :
             base(
                 "'" + owner + "' cannot release " + entity + "!\n" +
                 "Entity is not retained by this object!",

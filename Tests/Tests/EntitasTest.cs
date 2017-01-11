@@ -4,13 +4,13 @@ using Entitas;
 class EntitasTest : nspec {
 
     protected Context _context;
-    protected Entity _entity;
+    protected IEntity _entity;
 
-    protected Entity createEntity() {
+    protected IEntity createEntity() {
         return _context.CreateEntity();
     }
 
-    protected Entity createEntityA() {
+    protected IEntity createEntityA() {
         return createEntity().AddComponentA();
     }
 
@@ -33,7 +33,7 @@ class EntitasTest : nspec {
         return nameAgeComponent;
     }
 
-    protected void addNameAge(Entity entity) {
+    protected void addNameAge(IEntity entity) {
         entity.AddComponent(CID.ComponentA, createNameAge());
     }
 }

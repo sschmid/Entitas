@@ -7,7 +7,7 @@ public interface IReactiveSystemSpy {
     int didExecute { get; }
     int didCleanup { get; }
     int didTearDown { get; }
-    Entity[] entities { get; }
+    IEntity[] entities { get; }
 }
 
 public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem {
@@ -16,22 +16,22 @@ public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitialize
     public int didExecute { get { return _didExecute; } }
     public int didCleanup { get { return _didCleanup; } }
     public int didTearDown { get { return _didTearDown; } }
-    public Entity[] entities { get { return _entities; } }
+    public IEntity[] entities { get { return _entities; } }
 
-    public Action<List<Entity>> executeAction;
+    public Action<List<IEntity>> executeAction;
 
     protected int _didInitialize;
     protected int _didExecute;
     protected int _didCleanup;
     protected int _didTearDown;
-    protected Entity[] _entities;
+    protected IEntity[] _entities;
 
-    readonly Func<Entity, bool> _filter;
+    readonly Func<IEntity, bool> _filter;
 
     public ReactiveSystemSpy(Collector collector) : base(collector) {
     }
 
-    public ReactiveSystemSpy(Collector collector, Func<Entity, bool> filter) : this(collector) {
+    public ReactiveSystemSpy(Collector collector, Func<IEntity, bool> filter) : this(collector) {
         _filter = filter;
     }
 
@@ -39,7 +39,7 @@ public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitialize
         return null;
     }
 
-    protected override bool Filter(Entity entity) {
+    protected override bool Filter(IEntity entity) {
         return _filter == null || _filter(entity);
     }
 
@@ -47,7 +47,7 @@ public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitialize
         _didInitialize += 1;
     }
 
-    protected override void Execute(List<Entity> entities) {
+    protected override void Execute(List<IEntity> entities) {
         _didExecute += 1;
 
         if(entities != null) {

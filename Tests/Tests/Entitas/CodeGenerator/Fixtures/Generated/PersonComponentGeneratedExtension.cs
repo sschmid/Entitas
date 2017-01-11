@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         public PersonComponent person { get { return (PersonComponent)GetComponent(ComponentIds.Person); } }
         public bool hasPerson { get { return HasComponent(ComponentIds.Person); } }

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class XXXEntity {
 
         static readonly CustomPrefixComponent customPrefixComponent = new CustomPrefixComponent();
 
@@ -28,7 +28,7 @@ namespace Entitas {
 
     public partial class Context {
 
-        public Entity customPrefixEntity { get { return GetGroup(Matcher.CustomPrefix).GetSingleEntity(); } }
+        public IEntity customPrefixEntity { get { return GetGroup(Matcher.CustomPrefix).GetSingleEntity(); } }
 
         public bool myCustomPrefix {
             get { return customPrefixEntity != null; }

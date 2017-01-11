@@ -2,7 +2,7 @@ using Entitas;
 
 public class EntityGetComponent : IPerformanceTest {
     const int n = 10000000;
-    Entity _e;
+    IEntity _e;
 
     public void Before() {
         var context = Helper.CreateContext();
