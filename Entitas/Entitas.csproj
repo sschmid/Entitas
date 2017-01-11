@@ -47,7 +47,6 @@
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
     <Compile Include="Entitas\Matcher\MatcherStatic.cs" />
-    <Compile Include="Entitas\Matcher\MatcherInterfaces.cs" />
     <Compile Include="Entitas\EntitasException.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
     <Compile Include="Entitas\CodeGenerator\Attributes\DontGenerateAttribute.cs" />

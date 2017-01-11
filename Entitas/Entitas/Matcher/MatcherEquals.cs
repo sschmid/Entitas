@@ -1,6 +1,6 @@
 namespace Entitas {
 
-    public partial class Matcher {
+    public partial class Matcher<TEntity> {
 
         public override bool Equals(object obj) {
             if(obj == null || obj.GetType() != GetType() ||
@@ -8,7 +8,7 @@ namespace Entitas {
                 return false;
             }
 
-            var matcher = (Matcher)obj;
+            var matcher = (Matcher<TEntity>)obj;
             if(!equalIndices(matcher.allOfIndices, _allOfIndices)) {
                 return false;
             }
@@ -45,6 +45,8 @@ namespace Entitas {
         int _hash;
         bool _isHashCached;
 
+        // TODO UNITE TEST
+        // change indices should recalculate hash
         public override int GetHashCode() {
             if(!_isHashCached) {
                 var hash = GetType().GetHashCode();

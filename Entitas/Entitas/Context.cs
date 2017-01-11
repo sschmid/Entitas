@@ -45,8 +45,8 @@ namespace Entitas {
 
         readonly ContextInfo _contextInfo;
 
-        readonly Dictionary<IMatcher, IGroup<TEntity>> _groups =
-            new Dictionary<IMatcher, IGroup<TEntity>>();
+        readonly Dictionary<IMatcher<TEntity>, IGroup<TEntity>> _groups =
+            new Dictionary<IMatcher<TEntity>, IGroup<TEntity>>();
 
         readonly List<IGroup<TEntity>>[] _groupsForIndex;
 
@@ -189,7 +189,7 @@ namespace Entitas {
             return _entitiesCache;
         }
 
-        public virtual IGroup<TEntity> GetGroup(IMatcher matcher) {
+        public virtual IGroup<TEntity> GetGroup(IMatcher<TEntity> matcher) {
             IGroup<TEntity> group;
             if(!_groups.TryGetValue(matcher, out group)) {
                 group = new XXXGroup<TEntity>(matcher);

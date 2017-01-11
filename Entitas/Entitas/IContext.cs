@@ -44,6 +44,6 @@ namespace Entitas {
         bool HasEntity(TEntity entity);
         TEntity[] GetEntities();
 
-        IGroup<TEntity> GetGroup(IMatcher matcher);
+        IGroup<TEntity> GetGroup(IMatcher<TEntity> matcher);
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace Entitas {
 
-    public partial class Matcher : IAllOfMatcher, IAnyOfMatcher, INoneOfMatcher {
+    public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : IEntity {
 
         public int[] indices {
             get {
@@ -17,6 +17,8 @@ namespace Entitas {
         public int[] anyOfIndices { get { return _anyOfIndices; } }
         public int[] noneOfIndices { get { return _noneOfIndices; } }
 
+        public string[] componentNames { get; set; }
+
         int[] _indices;
         int[] _allOfIndices;
         int[] _anyOfIndices;
@@ -25,27 +27,27 @@ namespace Entitas {
         Matcher() {
         }
 
-        IAnyOfMatcher IAllOfMatcher.AnyOf(params int[] indices) {
+        IAnyOfMatcher<TEntity> IAllOfMatcher<TEntity>.AnyOf(params int[] indices) {
             _anyOfIndices = distinctIndices(indices);
             _indices = null;
             return this;
         }
 
-        IAnyOfMatcher IAllOfMatcher.AnyOf(params IMatcher[] matchers) {
-            return ((IAllOfMatcher)this).AnyOf(mergeIndices(matchers));
+        IAnyOfMatcher<TEntity> IAllOfMatcher<TEntity>.AnyOf(params IMatcher<TEntity>[] matchers) {
+            return ((IAllOfMatcher<TEntity>)this).AnyOf(mergeIndices(matchers));
         }
 
-        public INoneOfMatcher NoneOf(params int[] indices) {
+        public INoneOfMatcher<TEntity> NoneOf(params int[] indices) {
             _noneOfIndices = distinctIndices(indices);
             _indices = null;
             return this;
         }
 
-        public INoneOfMatcher NoneOf(params IMatcher[] matchers) {
+        public INoneOfMatcher<TEntity> NoneOf(params IMatcher<TEntity>[] matchers) {
             return NoneOf(mergeIndices(matchers));
         }
 
-        public bool Matches(IEntity entity) {
+        public bool Matches(TEntity entity) {
             return (_allOfIndices == null || entity.HasComponents(_allOfIndices))
                 && (_anyOfIndices == null || entity.HasAnyComponent(_anyOfIndices))
                 && (_noneOfIndices == null || !entity.HasAnyComponent(_noneOfIndices));
@@ -73,8 +75,8 @@ namespace Entitas {
     }
 
     public class MatcherException : Exception {
-        public MatcherException(IMatcher matcher) : base(
-            "matcher.indices.Length must be 1 but was " + matcher.indices.Length) {
+        public MatcherException(int indices) : base(
+            "matcher.indices.Length must be 1 but was " + indices) {
         }
     }
 }
