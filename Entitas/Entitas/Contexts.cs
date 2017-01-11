@@ -15,11 +15,12 @@ namespace Entitas {
 
         static Contexts _sharedInstance;
 
-        public static Context CreateContext(string name,
+        public static IContext CreateContext<TEntity>(string name,
                                       int totalComponents,
                                       string[] componentNames,
-                                      System.Type[] componentTypes) {
-            var context = new Context(totalComponents, 0, new ContextInfo(
+                                      System.Type[] componentTypes)
+            where TEntity : class, IEntity, new() {
+            var context = new XXXContext<TEntity>(totalComponents, 0, new ContextInfo(
                 name, componentNames, componentTypes)
             );
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)

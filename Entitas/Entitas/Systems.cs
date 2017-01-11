@@ -85,7 +85,7 @@ namespace Entitas {
         public virtual void ActivateReactiveSystems() {
             for (int i = 0; i < _executeSystems.Count; i++) {
                 var system = _executeSystems[i];
-                var reactiveSystem = system as ReactiveSystem;
+                var reactiveSystem = system as IReactiveSystem;
                 if(reactiveSystem != null) {
                     reactiveSystem.Activate();
                 }
@@ -104,7 +104,7 @@ namespace Entitas {
         public virtual void DeactivateReactiveSystems() {
             for (int i = 0; i < _executeSystems.Count; i++) {
                 var system = _executeSystems[i];
-                var reactiveSystem = system as ReactiveSystem;
+                var reactiveSystem = system as IReactiveSystem;
                 if(reactiveSystem != null) {
                     reactiveSystem.Deactivate();
                 }
@@ -120,7 +120,7 @@ namespace Entitas {
         public virtual void ClearReactiveSystems() {
             for (int i = 0; i < _executeSystems.Count; i++) {
                 var system = _executeSystems[i];
-                var reactiveSystem = system as ReactiveSystem;
+                var reactiveSystem = system as IReactiveSystem;
                 if(reactiveSystem != null) {
                     reactiveSystem.Clear();
                 }

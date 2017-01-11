@@ -92,6 +92,8 @@
     <Compile Include="Entitas\Index\PrimaryEntityIndex.cs" />
     <Compile Include="Entitas\IEntity.cs" />
     <Compile Include="Entitas\IContext.cs" />
+    <Compile Include="Entitas\IGroup.cs" />
+    <Compile Include="Entitas\IReactiveSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -2,16 +2,10 @@
 
 namespace Entitas {
 
-    public delegate void ContextChanged(Context context, IEntity entity);
-    public delegate void GroupChanged(Context context, Group group);
+    public delegate void ContextChanged<TEntity>(IContext<TEntity> context, IEntity entity) where TEntity : IEntity;
+    public delegate void ContextGroupChanged<TEntity>(IContext<TEntity> context, IGroup<TEntity> group) where TEntity : IEntity;
 
     public interface IContext {
-
-        event ContextChanged OnEntityCreated;
-        event ContextChanged OnEntityWillBeDestroyed;
-        event ContextChanged OnEntityDestroyed;
-        event GroupChanged OnGroupCreated;
-        event GroupChanged OnGroupCleared;
 
         int totalComponents { get; }
 
@@ -22,22 +16,34 @@ namespace Entitas {
         int reusableEntitiesCount { get; }
         int retainedEntitiesCount { get; }
 
-        IEntity CreateEntity();
-        void DestroyEntity(IEntity entity);
         void DestroyAllEntities();
-        bool HasEntity(IEntity entity);
-        IEntity[] GetEntities();
 
-        Group GetGroup(IMatcher matcher);
         void ClearGroups();
 
         void AddEntityIndex(string name, IEntityIndex entityIndex);
         IEntityIndex GetEntityIndex(string name);
+
         void DeactivateAndRemoveEntityIndices();
 
         void ResetCreationIndex();
         void ClearComponentPool(int index);
         void ClearComponentPools();
         void Reset();
+    }
+
+    public interface IContext<TEntity> : IContext where TEntity : IEntity {
+
+        event ContextChanged<TEntity> OnEntityCreated;
+        event ContextChanged<TEntity> OnEntityWillBeDestroyed;
+        event ContextChanged<TEntity> OnEntityDestroyed;
+        event ContextGroupChanged<TEntity> OnGroupCreated;
+        event ContextGroupChanged<TEntity> OnGroupCleared;
+
+        TEntity CreateEntity();
+        void DestroyEntity(TEntity entity);
+        bool HasEntity(TEntity entity);
+        TEntity[] GetEntities();
+
+        IGroup<TEntity> GetGroup(IMatcher matcher);
     }
 }

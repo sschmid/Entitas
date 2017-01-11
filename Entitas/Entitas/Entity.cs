@@ -508,16 +508,16 @@ namespace Entitas {
         }
     }
 
-    public class EntityEqualityComparer : IEqualityComparer<IEntity> {
+    public class EntityEqualityComparer<TEntity> : IEqualityComparer<TEntity> where TEntity : class, IEntity {
 
-        public static readonly EntityEqualityComparer comparer =
-            new EntityEqualityComparer();
+        public static readonly IEqualityComparer<TEntity> comparer =
+            new EntityEqualityComparer<TEntity>();
 
-        public bool Equals(IEntity x, IEntity y) {
+        public bool Equals(TEntity x, TEntity y) {
             return x == y;
         }
 
-        public int GetHashCode(IEntity obj) {
+        public int GetHashCode(TEntity obj) {
             return obj.creationIndex;
         }
     }

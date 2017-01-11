@@ -2,15 +2,15 @@ using System;
 
 namespace Entitas {
 
-    public abstract class AbstractEntityIndex<T> : IEntityIndex {
+    public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : IEntity {
 
-        protected readonly Group _group;
-        protected readonly Func<IEntity, IComponent, T> _getKey;
+        protected readonly IGroup<TEntity> _group;
+        protected readonly Func<TEntity, IComponent, TKey> _getKey;
 
         protected AbstractEntityIndex(
-            Group group,
-            Func<IEntity,
-            IComponent, T> getKey) {
+            IGroup<TEntity> group,
+            Func<TEntity,
+            IComponent, TKey> getKey) {
             _group = group;
             _getKey = getKey;
         }
@@ -26,7 +26,7 @@ namespace Entitas {
             clear();
         }
 
-        protected void indexEntities(Group group) {
+        protected void indexEntities(IGroup<TEntity> group) {
             var entities = group.GetEntities();
             for (int i = 0; i < entities.Length; i++) {
                 addEntity(entities[i], null);
@@ -34,19 +34,19 @@ namespace Entitas {
         }
 
         protected void onEntityAdded(
-            Group group, IEntity entity, int index, IComponent component) {
+            IGroup<TEntity> group, TEntity entity, int index, IComponent component) {
             addEntity(entity, component);
         }
 
         protected void onEntityRemoved(
-            Group group, IEntity entity, int index, IComponent component) {
+            IGroup<TEntity> group, TEntity entity, int index, IComponent component) {
             removeEntity(entity, component);
         }
 
-        protected abstract void addEntity(IEntity entity, IComponent component);
+        protected abstract void addEntity(TEntity entity, IComponent component);
 
         protected abstract void removeEntity(
-            IEntity entity, IComponent component
+            TEntity entity, IComponent component
         );
 
         protected abstract void clear();

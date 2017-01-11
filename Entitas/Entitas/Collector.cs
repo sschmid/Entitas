@@ -5,34 +5,34 @@ namespace Entitas {
 
     /// An Collector can observe one or more groups and collects
     /// changed entities based on the specified groupEvent.
-    public class Collector {
+    public class Collector<TEntity> where TEntity : class, IEntity {
 
         /// Returns all collected entities.
         /// Call collector.ClearCollectedEntities()
         /// once you processed all entities.
-        public HashSet<IEntity> collectedEntities {
+        public HashSet<TEntity> collectedEntities {
             get { return _collectedEntities; }
         }
 
-        readonly HashSet<IEntity> _collectedEntities;
-        readonly Group[] _groups;
+        readonly HashSet<TEntity> _collectedEntities;
+        readonly IGroup<TEntity>[] _groups;
         readonly GroupEvent[] _groupEvents;
-        Group.GroupChanged _addEntityCache;
+        GroupChanged<TEntity> _addEntityCache;
         string _toStringCache;
         StringBuilder _toStringBuilder;
 
         /// Creates an Collector and will collect changed entities
         /// based on the specified groupEvent.
-        public Collector(Group group, GroupEvent groupEvent)
+        public Collector(IGroup<TEntity> group, GroupEvent groupEvent)
             : this(new [] { group }, new [] { groupEvent }) {
         }
 
         /// Creates an Collector and will collect changed entities
         /// based on the specified groupEvents.
-        public Collector(Group[] groups, GroupEvent[] groupEvents) {
+        public Collector(IGroup<TEntity>[] groups, GroupEvent[] groupEvents) {
             _groups = groups;
-            _collectedEntities = new HashSet<IEntity>(
-                EntityEqualityComparer.comparer
+            _collectedEntities = new HashSet<TEntity>(
+                EntityEqualityComparer<TEntity>.comparer
             );
             _groupEvents = groupEvents;
 
@@ -89,8 +89,8 @@ namespace Entitas {
             _collectedEntities.Clear();
         }
 
-        void addEntity(Group group,
-                       IEntity entity,
+        void addEntity(IGroup<TEntity> group,
+                       TEntity entity,
                        int index,
                        IComponent component) {
             var added = _collectedEntities.Add(entity);

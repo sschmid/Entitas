@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    public class PrimaryEntityIndex<T> : AbstractEntityIndex<T> {
+    public class PrimaryEntityIndex<TEntity, TKey> : AbstractEntityIndex<TEntity, TKey> where TEntity : class, IEntity {
 
-        readonly Dictionary<T, IEntity> _index;
+        readonly Dictionary<TKey, TEntity> _index;
 
         public PrimaryEntityIndex(
-            Group group,
-            Func<IEntity, IComponent, T> getKey
+            IGroup<TEntity> group,
+            Func<TEntity, IComponent, TKey> getKey
         ) : base(group, getKey) {
-            _index = new Dictionary<T, IEntity>();
+            _index = new Dictionary<TKey, TEntity>();
             Activate();
         }
 
         public PrimaryEntityIndex(
-            Group group, Func<IEntity,
-            IComponent, T> getKey,
-            IEqualityComparer<T> comparer) : base(group, getKey) {
-            _index = new Dictionary<T, IEntity>(comparer);
+            IGroup<TEntity> group, Func<TEntity,
+            IComponent, TKey> getKey,
+            IEqualityComparer<TKey> comparer) : base(group, getKey) {
+            _index = new Dictionary<TKey, TEntity>(comparer);
             Activate();
         }
 
@@ -28,11 +28,11 @@ namespace Entitas {
             indexEntities(_group);
         }
 
-        public bool HasEntity(T key) {
+        public bool HasEntity(TKey key) {
             return _index.ContainsKey(key);
         }
 
-        public IEntity GetEntity(T key) {
+        public TEntity GetEntity(TKey key) {
             var entity = TryGetEntity(key);
             if(entity == null) {
                 throw new EntityIndexException(
@@ -45,8 +45,8 @@ namespace Entitas {
             return entity;
         }
 
-        public IEntity TryGetEntity(T key) {
-            IEntity entity;
+        public TEntity TryGetEntity(TKey key) {
+            TEntity entity;
             _index.TryGetValue(key, out entity);
             return entity;
         }
@@ -60,7 +60,7 @@ namespace Entitas {
         }
 
         protected override void addEntity(
-            IEntity entity, IComponent component) {
+            TEntity entity, IComponent component) {
             var key = _getKey(entity, component);
             if(_index.ContainsKey(key)) {
                 throw new EntityIndexException(
@@ -73,7 +73,7 @@ namespace Entitas {
         }
 
         protected override void removeEntity(
-            IEntity entity, IComponent component) {
+            TEntity entity, IComponent component) {
             _index.Remove(_getKey(entity, component));
             entity.Release(this);
         }

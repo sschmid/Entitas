@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    public class EntityIndex<T> : AbstractEntityIndex<T> {
+    public class EntityIndex<TEntity, TKey> : AbstractEntityIndex<TEntity, TKey> where TEntity : class, IEntity {
 
-        readonly Dictionary<T, HashSet<IEntity>> _index;
+        readonly Dictionary<TKey, HashSet<TEntity>> _index;
 
-        public EntityIndex(Group group, Func<IEntity, IComponent, T> getKey) :
+        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) :
             base(group, getKey) {
-            _index = new Dictionary<T, HashSet<IEntity>>();
+            _index = new Dictionary<TKey, HashSet<TEntity>>();
             Activate();
         }
 
         public EntityIndex(
-            Group group,
-            Func<IEntity, IComponent, T> getKey,
-            IEqualityComparer<T> comparer) : base(group, getKey) {
-            _index = new Dictionary<T, HashSet<IEntity>>(comparer);
+            IGroup<TEntity> group,
+            Func<TEntity, IComponent, TKey> getKey,
+            IEqualityComparer<TKey> comparer) : base(group, getKey) {
+            _index = new Dictionary<TKey, HashSet<TEntity>>(comparer);
             Activate();
         }
 
@@ -26,10 +26,10 @@ namespace Entitas {
             indexEntities(_group);
         }
 
-        public HashSet<IEntity> GetEntities(T key) {
-            HashSet<IEntity> entities;
+        public HashSet<TEntity> GetEntities(TKey key) {
+            HashSet<TEntity> entities;
             if(!_index.TryGetValue(key, out entities)) {
-                entities = new HashSet<IEntity>(EntityEqualityComparer.comparer);
+                entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
                 _index.Add(key, entities);
             }
 
@@ -46,13 +46,13 @@ namespace Entitas {
             _index.Clear();
         }
 
-        protected override void addEntity(IEntity entity, IComponent component) {
+        protected override void addEntity(TEntity entity, IComponent component) {
             GetEntities(_getKey(entity, component)).Add(entity);
             entity.Retain(this);
         }
 
         protected override void removeEntity(
-            IEntity entity, IComponent component) {
+            TEntity entity, IComponent component) {
             GetEntities(_getKey(entity, component)).Remove(entity);
             entity.Release(this);
         }

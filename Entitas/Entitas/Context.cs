@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    public class Context : IContext {
+    public class XXXContext<TEntity> : IContext<TEntity> where TEntity : class, IEntity, new() {
 
-        public event ContextChanged OnEntityCreated;
-        public event ContextChanged OnEntityWillBeDestroyed;
-        public event ContextChanged OnEntityDestroyed;
-        public event GroupChanged OnGroupCreated;
-        public event GroupChanged OnGroupCleared;
+        public event ContextChanged<TEntity> OnEntityCreated;
+        public event ContextChanged<TEntity> OnEntityWillBeDestroyed;
+        public event ContextChanged<TEntity> OnEntityDestroyed;
+        public event ContextGroupChanged<TEntity> OnGroupCreated;
+        public event ContextGroupChanged<TEntity> OnGroupCleared;
 
         public int totalComponents { get { return _totalComponents; } }
 
@@ -32,23 +32,23 @@ namespace Entitas {
         readonly int _totalComponents;
         int _creationIndex;
 
-        readonly HashSet<IEntity> _entities = new HashSet<IEntity>(
-            EntityEqualityComparer.comparer
+        readonly HashSet<TEntity> _entities = new HashSet<TEntity>(
+            EntityEqualityComparer<TEntity>.comparer
         );
 
-        readonly Stack<IEntity> _reusableEntities = new Stack<IEntity>();
-        readonly HashSet<IEntity> _retainedEntities = new HashSet<IEntity>(
-            EntityEqualityComparer.comparer
+        readonly Stack<TEntity> _reusableEntities = new Stack<TEntity>();
+        readonly HashSet<TEntity> _retainedEntities = new HashSet<TEntity>(
+            EntityEqualityComparer<TEntity>.comparer
         );
 
-        IEntity[] _entitiesCache;
+        TEntity[] _entitiesCache;
 
         readonly ContextInfo _contextInfo;
 
-        readonly Dictionary<IMatcher, Group> _groups =
-            new Dictionary<IMatcher, Group>();
+        readonly Dictionary<IMatcher, IGroup<TEntity>> _groups =
+            new Dictionary<IMatcher, IGroup<TEntity>>();
 
-        readonly List<Group>[] _groupsForIndex;
+        readonly List<IGroup<TEntity>>[] _groupsForIndex;
 
         readonly Stack<IComponent>[] _componentPools;
         readonly Dictionary<string, IEntityIndex> _entityIndices;
@@ -58,10 +58,10 @@ namespace Entitas {
         ComponentReplaced _cachedComponentReplaced;
         EntityReleased _cachedEntityReleased;
 
-        public Context(int totalComponents) : this(totalComponents, 0, null) {
+        public XXXContext(int totalComponents) : this(totalComponents, 0, null) {
         }
 
-        public Context(int totalComponents,
+        public XXXContext(int totalComponents,
                     int startCreationIndex,
                     ContextInfo contextInfo) {
             _totalComponents = totalComponents;
@@ -89,7 +89,7 @@ namespace Entitas {
                 );
             }
 
-            _groupsForIndex = new List<Group>[totalComponents];
+            _groupsForIndex = new List<IGroup<TEntity>>[totalComponents];
             _componentPools = new Stack<IComponent>[totalComponents];
             _entityIndices = new Dictionary<string, IEntityIndex>();
 
@@ -99,8 +99,8 @@ namespace Entitas {
             _cachedEntityReleased = onEntityReleased;
         }
 
-        public virtual IEntity CreateEntity() {
-            IEntity entity;
+        public virtual TEntity CreateEntity() {
+            TEntity entity;
 
             // TODO UNIT TEST
             // Test Reactivate
@@ -110,7 +110,7 @@ namespace Entitas {
                 // TODO
                 //entity.Reactivate(_creationIndex++);
             } else {
-                entity = new XXXEntity();
+                entity = new TEntity();
                 // TODO
                 //entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo);
             }
@@ -130,7 +130,7 @@ namespace Entitas {
             return entity;
         }
 
-        public virtual void DestroyEntity(IEntity entity) {
+        public virtual void DestroyEntity(TEntity entity) {
             var removed = _entities.Remove(entity);
             if(!removed) {
                 throw new ContextDoesNotContainEntityException(
@@ -176,23 +176,23 @@ namespace Entitas {
             }
         }
 
-        public virtual bool HasEntity(IEntity entity) {
+        public virtual bool HasEntity(TEntity entity) {
             return _entities.Contains(entity);
         }
 
-        public virtual IEntity[] GetEntities() {
+        public virtual TEntity[] GetEntities() {
             if(_entitiesCache == null) {
-                _entitiesCache = new IEntity[_entities.Count];
+                _entitiesCache = new TEntity[_entities.Count];
                 _entities.CopyTo(_entitiesCache);
             }
 
             return _entitiesCache;
         }
 
-        public virtual Group GetGroup(IMatcher matcher) {
-            Group group;
+        public virtual IGroup<TEntity> GetGroup(IMatcher matcher) {
+            IGroup<TEntity> group;
             if(!_groups.TryGetValue(matcher, out group)) {
-                group = new Group(matcher);
+                group = new XXXGroup<TEntity>(matcher);
                 var entities = GetEntities();
                 for (int i = 0; i < entities.Length; i++) {
                     group.HandleEntitySilently(entities[i]);
@@ -202,7 +202,7 @@ namespace Entitas {
                 for (int i = 0; i < matcher.indices.Length; i++) {
                     var index = matcher.indices[i];
                     if(_groupsForIndex[index] == null) {
-                        _groupsForIndex[index] = new List<Group>();
+                        _groupsForIndex[index] = new List<IGroup<TEntity>>();
                     }
                     _groupsForIndex[index].Add(group);
                 }
@@ -296,22 +296,24 @@ namespace Entitas {
             IEntity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if(groups != null) {
-                var events = EntitasCache.GetGroupChangedList();
+                var events = EntitasCache.GetGroupChangedList<TEntity>();
+
+                    var tEntity = (TEntity) entity;
 
                     for(int i = 0; i < groups.Count; i++) {
-                        events.Add(groups[i].handleEntity(entity));
+                        events.Add(groups[i].handleEntity(tEntity));
                     }
 
                     for(int i = 0; i < events.Count; i++) {
                         var groupChangedEvent = events[i];
                         if(groupChangedEvent != null) {
                             groupChangedEvent(
-                                groups[i], entity, index, component
+                                groups[i], tEntity, index, component
                             );
                         }
                     }
 
-                EntitasCache.PushGroupChangedList(events);
+                EntitasCache.PushGroupChangedList<TEntity>(events);
             }
         }
 
@@ -321,9 +323,12 @@ namespace Entitas {
                                            IComponent newComponent) {
             var groups = _groupsForIndex[index];
             if(groups != null) {
+
+                var tEntity = (TEntity) entity;
+
                 for (int i = 0; i < groups.Count; i++) {
                     groups[i].UpdateEntity(
-                        entity, index, previousComponent, newComponent
+                        tEntity, index, previousComponent, newComponent
                     );
                 }
             }
@@ -335,9 +340,10 @@ namespace Entitas {
                     "Cannot release " + entity + "!"
                 );
             }
+            var tEntity = (TEntity)entity;
             entity.removeAllOnEntityReleasedHandlers();
-            _retainedEntities.Remove(entity);
-            _reusableEntities.Push(entity);
+            _retainedEntities.Remove(tEntity);
+            _reusableEntities.Push(tEntity);
         }
     }
 
@@ -356,7 +362,7 @@ namespace Entitas {
     }
 
     public class ContextStillHasRetainedEntitiesException : EntitasException {
-        public ContextStillHasRetainedEntitiesException(Context context) : base(
+        public ContextStillHasRetainedEntitiesException(IContext context) : base(
             "'" + context + "' detected retained entities " +
             "although all entities got destroyed!",
             "Did you release all entities? Try calling context.ClearGroups() " +
@@ -366,7 +372,7 @@ namespace Entitas {
     }
 
     public class ContextInfoException : EntitasException {
-        public ContextInfoException(Context context, ContextInfo contextInfo) :
+        public ContextInfoException(IContext context, ContextInfo contextInfo) :
             base("Invalid ContextInfo for '" + context + "'!\nExpected " +
                  context.totalComponents + " componentName(s) but got " +
                  contextInfo.componentNames.Length + ":",
@@ -375,14 +381,14 @@ namespace Entitas {
     }
 
     public class ContextEntityIndexDoesNotExistException : EntitasException {
-        public ContextEntityIndexDoesNotExistException(Context context, string name) :
+        public ContextEntityIndexDoesNotExistException(IContext context, string name) :
             base("Cannot get EntityIndex '" + name + "' from context '" +
                  context + "'!", "No EntityIndex with this name has been added.") {
         }
     }
 
     public class ContextEntityIndexDoesAlreadyExistException : EntitasException {
-        public ContextEntityIndexDoesAlreadyExistException(Context context, string name) :
+        public ContextEntityIndexDoesAlreadyExistException(IContext context, string name) :
             base("Cannot add EntityIndex '" + name + "' to context '" + context + "'!",
                  "An EntityIndex with this name has already been added.") {
         }
