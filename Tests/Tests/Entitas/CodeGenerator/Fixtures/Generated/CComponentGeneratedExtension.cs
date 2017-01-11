@@ -26,11 +26,6 @@ namespace Entitas {
                 }
             }
         }
-
-        public Entity IsC(bool value) {
-            isC = value;
-            return this;
-        }
     }
 }
 

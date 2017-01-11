@@ -24,11 +24,6 @@ namespace Entitas {
                 }
             }
         }
-
-        public Entity IsNamespace(bool value) {
-            isNamespace = value;
-            return this;
-        }
     }
 
     public partial class Matcher {

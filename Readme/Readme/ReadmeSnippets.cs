@@ -24,7 +24,7 @@ namespace Readme {
         public static Entity CreateRedGem(this Context context, int x, int y) {
             var entity = context.CreateEntity();
             entity.IsGameBoardElement(true);
-            entity.IsMovable(true);
+            entity.isMovable = true;
             entity.AddPosition(x, y);
             entity.AddResource(Res.redGem);
             entity.IsInteractive(true);

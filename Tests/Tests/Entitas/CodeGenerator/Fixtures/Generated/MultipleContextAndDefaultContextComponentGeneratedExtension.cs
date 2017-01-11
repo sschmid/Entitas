@@ -26,11 +26,6 @@ namespace Entitas {
                 }
             }
         }
-
-        public Entity IsMultipleContextAndDefaultContext(bool value) {
-            isMultipleContextAndDefaultContext = value;
-            return this;
-        }
     }
 
     public partial class Matcher {

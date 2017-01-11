@@ -24,11 +24,6 @@ namespace Entitas {
                 }
             }
         }
-
-        public Entity MyCustomPrefix(bool value) {
-            myCustomPrefix = value;
-            return this;
-        }
     }
 
     public partial class Context {
