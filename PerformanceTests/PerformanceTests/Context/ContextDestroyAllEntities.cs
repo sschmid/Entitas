@@ -2,7 +2,7 @@ using Entitas;
 
 public class ContextDestroyAllEntities : IPerformanceTest {
     const int n = 100000;
-    Context _context;
+    IContext<XXXEntity> _context;
 
     public void Before() {
         _context = Helper.CreateContext();

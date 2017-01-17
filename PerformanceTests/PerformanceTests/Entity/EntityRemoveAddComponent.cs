@@ -2,28 +2,28 @@ using Entitas;
 
 public class EntityRemoveAddComponent : IPerformanceTest {
     const int n = 1000000;
-    Context _context;
+    IContext<XXXEntity> _context;
     IEntity _e;
     ComponentA _componentA;
 
     public void Before() {
         _context = Helper.CreateContext();
-        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentA }));
-        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentB }));
-        _context.GetGroup(Matcher.AllOf(new [] { CP.ComponentC }));
-        _context.GetGroup(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher<XXXEntity>.AllOf(new [] { CP.ComponentA }));
+        _context.GetGroup(Matcher<XXXEntity>.AllOf(new [] { CP.ComponentB }));
+        _context.GetGroup(Matcher<XXXEntity>.AllOf(new [] { CP.ComponentC }));
+        _context.GetGroup(Matcher<XXXEntity>.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB
         }));
-        _context.GetGroup(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher<XXXEntity>.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentC
         }));
-        _context.GetGroup(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher<XXXEntity>.AllOf(new [] {
             CP.ComponentB,
             CP.ComponentC
         }));
-        _context.GetGroup(Matcher.AllOf(new [] {
+        _context.GetGroup(Matcher<XXXEntity>.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB,
             CP.ComponentC

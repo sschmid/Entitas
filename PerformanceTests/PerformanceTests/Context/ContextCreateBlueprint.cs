@@ -3,7 +3,7 @@ using Entitas.Serialization.Blueprints;
 
 public class ContextCreateBlueprint : IPerformanceTest {
     const int n = 100000;
-    Context _context;
+    IContext<XXXEntity> _context;
     Blueprint _blueprint;
 
     public void Before() {
@@ -20,11 +20,7 @@ public class ContextCreateBlueprint : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-
-            // TODO Once this method moved to IEntity
-            // uncomment this code
-
-            //_context.CreateEntity().ApplyBlueprint(_blueprint);
+            _context.CreateEntity().ApplyBlueprint(_blueprint);
         }
     }
 }
