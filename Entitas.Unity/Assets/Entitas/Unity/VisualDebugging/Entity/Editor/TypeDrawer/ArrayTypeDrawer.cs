@@ -11,7 +11,7 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsArray;
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
             var array = (Array)value;
             var elementType = memberType.GetElementType();
             var indent = EditorGUI.indentLevel;

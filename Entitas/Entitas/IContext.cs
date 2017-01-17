@@ -2,10 +2,17 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
-    public delegate void ContextChanged<TEntity>(IContext<TEntity> context, IEntity entity) where TEntity : class, IEntity, new();
-    public delegate void ContextGroupChanged<TEntity>(IContext<TEntity> context, IGroup<TEntity> group) where TEntity : class, IEntity, new();
+    public delegate void ContextChanged(IContext context, IEntity entity);
+    public delegate void ContextGroupChanged(IContext context, IGroup group);
 
     public interface IContext {
+
+        event ContextChanged OnEntityCreated;
+        event ContextChanged OnEntityWillBeDestroyed;
+        event ContextChanged OnEntityDestroyed;
+
+        event ContextGroupChanged OnGroupCreated;
+        event ContextGroupChanged OnGroupCleared;
 
         int totalComponents { get; }
 
@@ -32,12 +39,6 @@ namespace Entitas {
     }
 
     public interface IContext<TEntity> : IContext where TEntity : class, IEntity, new() {
-
-        event ContextChanged<TEntity> OnEntityCreated;
-        event ContextChanged<TEntity> OnEntityWillBeDestroyed;
-        event ContextChanged<TEntity> OnEntityDestroyed;
-        event ContextGroupChanged<TEntity> OnGroupCreated;
-        event ContextGroupChanged<TEntity> OnGroupCleared;
 
         TEntity CreateEntity();
         void DestroyEntity(TEntity entity);

@@ -5,21 +5,21 @@ namespace Entitas.Unity.VisualDebugging {
     [ExecuteInEditMode]
     public class EntityBehaviour : MonoBehaviour {
 
-        public Context context { get { return _context; } }
-        public Entity entity { get { return _entity; } }
+        public IContext context { get { return _context; } }
+        public IEntity entity { get { return _entity; } }
 
-        Context _context;
-        Entity _entity;
+        IContext _context;
+        IEntity _entity;
         string _cachedName;
 
-        public void Init(Context context, Entity entity) {
+        public void Init(IContext context, IEntity entity) {
             _context = context;
             _entity = entity;
             _entity.OnEntityReleased += onEntityReleased;
             Update();
         }
 
-        void onEntityReleased(Entity e) {
+        void onEntityReleased(IEntity e) {
             gameObject.DestroyGameObject();
         }
 

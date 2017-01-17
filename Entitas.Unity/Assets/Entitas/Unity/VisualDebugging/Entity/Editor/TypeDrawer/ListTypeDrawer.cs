@@ -12,7 +12,7 @@ namespace Entitas.Unity.VisualDebugging {
             return type.GetInterfaces().Contains(typeof(IList));
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
             var list = (IList)value;
             var elementType = memberType.GetGenericArguments()[0];
             if(list.Count == 0) {

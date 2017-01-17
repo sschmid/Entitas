@@ -60,7 +60,7 @@ namespace Entitas.Unity.VisualDebugging {
         public SystemInfo(ISystem system) {
             _system = system;
 
-            var reactiveSystem = system as ReactiveSystem;
+            var reactiveSystem = system as IReactiveSystem;
             var isReactive = reactiveSystem != null;
             Type systemType;
             if(isReactive) {

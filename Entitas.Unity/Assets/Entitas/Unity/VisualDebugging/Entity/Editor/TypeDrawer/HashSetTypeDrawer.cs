@@ -12,7 +12,7 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(HashSet<>);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
             var elementType = memberType.GetGenericArguments()[0];
             var itemsToRemove = new ArrayList();
             var itemsToAdd = new ArrayList();

@@ -5,11 +5,11 @@ namespace Entitas {
 
     public class XXXContext<TEntity> : IContext<TEntity> where TEntity : class, IEntity, new() {
 
-        public event ContextChanged<TEntity> OnEntityCreated;
-        public event ContextChanged<TEntity> OnEntityWillBeDestroyed;
-        public event ContextChanged<TEntity> OnEntityDestroyed;
-        public event ContextGroupChanged<TEntity> OnGroupCreated;
-        public event ContextGroupChanged<TEntity> OnGroupCleared;
+        public event ContextChanged OnEntityCreated;
+        public event ContextChanged OnEntityWillBeDestroyed;
+        public event ContextChanged OnEntityDestroyed;
+        public event ContextGroupChanged OnGroupCreated;
+        public event ContextGroupChanged OnGroupCleared;
 
         public int totalComponents { get { return _totalComponents; } }
 

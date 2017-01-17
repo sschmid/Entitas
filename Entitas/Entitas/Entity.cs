@@ -355,7 +355,8 @@ namespace Entitas {
         public int retainCount { get { return owners.Count; } }
 
         /// Returns all the objects that retain this entity.
-        public readonly HashSet<object> owners = new HashSet<object>();
+        public HashSet<object> owners { get { return _owners; } }
+        HashSet<object> _owners = new HashSet<object>();
 
 #endif
 

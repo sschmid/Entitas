@@ -12,7 +12,7 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
             var dictionary = (IDictionary)value;
             var keyType = memberType.GetGenericArguments()[0];
             var valueType = memberType.GetGenericArguments()[1];

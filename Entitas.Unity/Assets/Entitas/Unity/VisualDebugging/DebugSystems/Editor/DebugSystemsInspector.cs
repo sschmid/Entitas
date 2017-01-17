@@ -221,7 +221,7 @@ namespace Entitas.Unity.VisualDebugging {
                         }
                         EditorGUI.EndDisabledGroup();
 
-                        var reactiveSystem = systemInfo.system as ReactiveSystem;
+                        var reactiveSystem = systemInfo.system as IReactiveSystem;
                         if(reactiveSystem != null) {
                             if(systemInfo.isActive) {
                                 reactiveSystem.Activate();

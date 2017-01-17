@@ -18,7 +18,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public static Dictionary<string, int> GetStats() {
-            var types = Assembly.GetAssembly(typeof(Entity)).GetTypes();
+            var types = Assembly.GetAssembly(typeof(IEntity)).GetTypes();
             var components = types.Where(type => type.ImplementsInterface<IComponent>()).ToArray();
             var contexts = getContexts(components);
 
@@ -53,7 +53,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         static bool implementsSystem(Type type) {
             return type.ImplementsInterface<ISystem>()
-                && type != typeof(ReactiveSystem)
+                && type != typeof(ReactiveSystem<>)
                 && type != typeof(Systems)
                 && type != typeof(DebugSystems)
                 && type != typeof(Feature);

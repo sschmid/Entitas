@@ -19,7 +19,7 @@ namespace Entitas.Unity.VisualDebugging {
             public Type type;
         }
 
-        static Dictionary<Context, bool[]> _contextToUnfoldedComponents;
+        static Dictionary<IContext, bool[]> _contextToUnfoldedComponents;
         static GUIStyle _foldoutStyle;
         static Dictionary<int, GUIStyle[]> _coloredBoxStyles;
 
@@ -35,7 +35,7 @@ namespace Entitas.Unity.VisualDebugging {
             if(!_isInitialized) {
                 _isInitialized = true;
 
-                _contextToUnfoldedComponents = new Dictionary<Context, bool[]>();
+                _contextToUnfoldedComponents = new Dictionary<IContext, bool[]>();
 
                 var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
                 _defaultInstanceCreators = types
@@ -65,11 +65,12 @@ namespace Entitas.Unity.VisualDebugging {
             _coloredBoxStyles = new Dictionary<int, GUIStyle[]>();
         }
 
-        public static void DrawEntity(Context context, Entity entity) {
+        public static void DrawEntity(IContext context, IEntity entity) {
             var bgColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.red;
             if(GUILayout.Button("Destroy Entity")) {
-                context.DestroyEntity(entity);
+                // TODO
+                //context.DestroyEntity(entity);
             }
             GUI.backgroundColor = bgColor;
 
@@ -99,7 +100,7 @@ namespace Entitas.Unity.VisualDebugging {
             #endif
         }
 
-        public static void DrawComponents(Context context, Entity entity, bool hideInBlueprintInspector = false) {
+        public static void DrawComponents(IContext context, IEntity entity, bool hideInBlueprintInspector = false) {
             bool[] unfoldedComponents;
             if(!_contextToUnfoldedComponents.TryGetValue(context, out unfoldedComponents)) {
                 unfoldedComponents = new bool[context.totalComponents];
@@ -162,7 +163,7 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVertical();
         }
 
-        public static void DrawMultipleEntities(Context context, Entity[] entities, bool hideInBlueprintInspector = false) {
+        public static void DrawMultipleEntities(IContext context, IEntity[] entities, bool hideInBlueprintInspector = false) {
             EditorGUILayout.Space();
             EntitasEditorLayout.BeginHorizontal();
             {
@@ -185,7 +186,8 @@ namespace Entitas.Unity.VisualDebugging {
 
             if(GUILayout.Button("Destroy selected entities")) {
                 foreach(var e in entities) {
-                    context.DestroyEntity(e);
+                    // TODO
+                    //context.DestroyEntity(e);
                 }
             }
 
@@ -203,7 +205,8 @@ namespace Entitas.Unity.VisualDebugging {
                     GUI.backgroundColor = Color.red;
 
                     if(GUILayout.Button("Destroy Entity")) {
-                        context.DestroyEntity(e);
+                        // TODO
+                        //context.DestroyEntity(e);
                     }
 
                     GUI.backgroundColor = bgColor;
@@ -212,7 +215,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public static void DrawComponent(bool[] unfoldedComponents, Entity entity, int index, IComponent component) {
+        public static void DrawComponent(bool[] unfoldedComponents, IEntity entity, int index, IComponent component) {
             var componentType = component.GetType();
 
             var componentName = componentType.Name.RemoveComponentSuffix();
@@ -263,7 +266,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public static void DrawAndSetElement(Type memberType, string memberName, object value, Entity entity, int index, IComponent component, Action<IComponent, object> setValue) {
+        public static void DrawAndSetElement(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component, Action<IComponent, object> setValue) {
             var newValue = DrawAndGetNewValue(memberType, memberName, value, entity, index, component);
             if(DidValueChange(value, newValue)) {
                 var newComponent = entity.CreateComponent(index, component.GetType());
@@ -279,7 +282,7 @@ namespace Entitas.Unity.VisualDebugging {
                 || ((value != null && newValue != null && !newValue.Equals(value)));
         }
 
-        public static object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {
+        public static object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
             if(value == null) {
                 var isUnityObject = memberType == typeof(UnityEngine.Object) || memberType.IsSubclassOf(typeof(UnityEngine.Object));
                 EntitasEditorLayout.BeginHorizontal();
@@ -353,7 +356,7 @@ namespace Entitas.Unity.VisualDebugging {
             return false;
         }
 
-        static int drawAddComponentMenu(Entity entity, bool hideInBlueprintInspector) {
+        static int drawAddComponentMenu(IEntity entity, bool hideInBlueprintInspector) {
             var componentInfos = getComponentInfos(entity, hideInBlueprintInspector);
             var componentNames = componentInfos.Select(info => info.name).ToArray();
             var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
@@ -364,7 +367,7 @@ namespace Entitas.Unity.VisualDebugging {
             return -1;
         }
 
-        static ComponentInfo[] getComponentInfos(Entity entity, bool hideInBlueprintInspector) {
+        static ComponentInfo[] getComponentInfos(IEntity entity, bool hideInBlueprintInspector) {
             var infos = new List<ComponentInfo>(entity.contextInfo.componentTypes.Length);
             for (int i = 0; i < entity.contextInfo.componentTypes.Length; ++i) {
                 var type = entity.contextInfo.componentTypes[i];

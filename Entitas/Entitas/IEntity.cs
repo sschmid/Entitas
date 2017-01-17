@@ -52,6 +52,7 @@ namespace Entitas {
         IComponent CreateComponent(int index, Type type);
         T CreateComponent<T>(int index) where T : new();
 
+        HashSet<object> owners { get; }
         int retainCount { get; }
         void Retain(object owner);
         void Release(object owner);

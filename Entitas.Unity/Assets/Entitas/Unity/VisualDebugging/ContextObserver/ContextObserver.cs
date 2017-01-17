@@ -6,18 +6,18 @@ namespace Entitas.Unity.VisualDebugging {
 
     public class ContextObserver {
 
-        public Context context { get { return _context; } }
-        public Group[] groups { get { return _groups.ToArray(); }}
+        public IContext context { get { return _context; } }
+        public IGroup[] groups { get { return _groups.ToArray(); }}
         public GameObject gameObject { get { return _gameObject; } }
 
-        readonly Context _context;
-        readonly List<Group> _groups;
+        readonly IContext _context;
+        readonly List<IGroup> _groups;
         readonly GameObject _gameObject;
         StringBuilder _toStringBuilder = new StringBuilder();
 
-        public ContextObserver(Context context) {
+        public ContextObserver(IContext context) {
             _context = context;
-            _groups = new List<Group>();
+            _groups = new List<IGroup>();
             _gameObject = new GameObject();
             _gameObject.AddComponent<ContextObserverBehaviour>().Init(this);
 
@@ -32,17 +32,17 @@ namespace Entitas.Unity.VisualDebugging {
             _context.OnGroupCleared -= onGroupCleared;
         }
 
-        void onEntityCreated(Context context, Entity entity) {
+        void onEntityCreated(IContext context, IEntity entity) {
             var entityBehaviour = new GameObject().AddComponent<EntityBehaviour>();
             entityBehaviour.Init(context, entity);
             entityBehaviour.transform.SetParent(_gameObject.transform, false);
         }
 
-        void onGroupCreated(Context context, Group group) {
+        void onGroupCreated(IContext context, IGroup group) {
             _groups.Add(group);
         }
 
-        void onGroupCleared(Context context, Group group) {
+        void onGroupCleared(IContext context, IGroup group) {
             _groups.Remove(group);
         }
 
