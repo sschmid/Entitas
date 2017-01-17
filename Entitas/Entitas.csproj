@@ -114,6 +114,8 @@
     <Compile Include="Entitas\Entity\Exceptions\EntityIsAlreadyRetainedByOwnerException.cs" />
     <Compile Include="Entitas\Entity\Exceptions\EntityIsNotEnabledException.cs" />
     <Compile Include="Entitas\Entity\Exceptions\EntityIsNotRetainedByOwnerException.cs" />
+    <Compile Include="Entitas\Group\GroupSingleEntityException.cs" />
+    <Compile Include="Entitas\Index\EntityIndexException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
