@@ -32,7 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
-    <Compile Include="Entitas\Collector.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
@@ -117,6 +116,8 @@
     <Compile Include="Entitas\Group\GroupSingleEntityException.cs" />
     <Compile Include="Entitas\Index\EntityIndexException.cs" />
     <Compile Include="Entitas\Matcher\MatcherException.cs" />
+    <Compile Include="Entitas\Collector\Collector.cs" />
+    <Compile Include="Entitas\Collector\CollectorException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -139,5 +140,6 @@
     <Folder Include="Entitas\Systems\" />
     <Folder Include="Entitas\Context\Exceptions\" />
     <Folder Include="Entitas\Entity\Exceptions\" />
+    <Folder Include="Entitas\Collector\" />
   </ItemGroup>
 </Project>
