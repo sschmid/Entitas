@@ -44,7 +44,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
             }
         }
 
-        public static bool UpdateBinaryBlueprint(BinaryBlueprint binaryBlueprint, Context[] allContexts, string[] allContextNames) {
+        public static bool UpdateBinaryBlueprint(BinaryBlueprint binaryBlueprint, IContext[] allContexts, string[] allContextNames) {
             var blueprint = binaryBlueprint.Deserialize();
             var needsUpdate = false;
 
@@ -79,7 +79,7 @@ namespace Entitas.Unity.Serialization.Blueprints {
             return needsUpdate;
         }
 
-        static Context[] findAllContexts() {
+        static IContext[] findAllContexts() {
 
             const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
             var allContextsProperty = typeof(Contexts).GetProperty("allContexts", bindingFlags);
@@ -91,21 +91,21 @@ namespace Entitas.Unity.Serialization.Blueprints {
                     setAllContextsMethod.Invoke(contexts, null);
                     var allContextsGetter = contextsType.GetProperty("allContexts", bindingFlags);
 
-                    return (Context[])allContextsGetter.GetValue(contexts, null);
+                    return (IContext[])allContextsGetter.GetValue(contexts, null);
                 }
             }
 
-            return new Context[0];
+            return new IContext[0];
         }
 
         Blueprint _blueprint;
 
-        Context[] _allContexts;
+        IContext[] _allContexts;
         string[] _allContextNames;
         int _contextIndex;
 
-        Context _context;
-        Entity _entity;
+        IContext _context;
+        IEntity _entity;
 
         void Awake() {
             _allContexts = findAllContexts();
@@ -170,8 +170,9 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 _context.Reset();
             }
             var targetContext = _allContexts[_contextIndex];
-            _context = new Context(targetContext.totalComponents, 0, targetContext.contextInfo);
-            _entity = _context.CreateEntity();
+            // TODO
+            //_context = new Context(targetContext.totalComponents, 0, targetContext.contextInfo);
+            //_entity = _context.CreateEntity();
         }
     }
 }
