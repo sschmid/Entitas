@@ -31,13 +31,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas\Interfaces\IComponent.cs" />
-    <Compile Include="Entitas\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
-    <Compile Include="Entitas\Interfaces\ISystem.cs" />
-    <Compile Include="Entitas\Extensions\ContextExtension.cs" />
     <Compile Include="Entitas\Collector.cs" />
-    <Compile Include="Entitas\Extensions\GroupExtension.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
@@ -75,7 +70,6 @@
     <Compile Include="Entitas\Serialization\Configuration\EntitasPreferences.cs" />
     <Compile Include="Entitas\Serialization\Configuration\Properties.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs" />
-    <Compile Include="Entitas\Extensions\EntityExtension.cs" />
     <Compile Include="Entitas\Caching\ObjectCache.cs" />
     <Compile Include="Entitas\Caching\ObjectPool.cs" />
     <Compile Include="Entitas\Caching\EntitasCache.cs" />
@@ -92,12 +86,26 @@
     <Compile Include="Entitas\Systems\Systems.cs" />
     <Compile Include="Entitas\Systems\ReactiveSystem.cs" />
     <Compile Include="Entitas\Systems\IReactiveSystem.cs" />
+    <Compile Include="Entitas\IComponent.cs" />
+    <Compile Include="Entitas\Matcher\IMatcher.cs" />
+    <Compile Include="Entitas\Systems\ISystem.cs" />
+    <Compile Include="Entitas\Systems\IInitializeSystem.cs" />
+    <Compile Include="Entitas\Systems\IExecuteSystem.cs" />
+    <Compile Include="Entitas\Systems\ICleanupSystem.cs" />
+    <Compile Include="Entitas\Systems\ITearDownSystem.cs" />
+    <Compile Include="Entitas\Matcher\IAllOfMatcher.cs" />
+    <Compile Include="Entitas\Matcher\IAnyOfMatcher.cs" />
+    <Compile Include="Entitas\Matcher\ICompoundMatcher.cs" />
+    <Compile Include="Entitas\Matcher\INoneOfMatcher.cs" />
+    <Compile Include="Entitas\Group\GroupEvent.cs" />
+    <Compile Include="Entitas\Context\ContextExtension.cs" />
+    <Compile Include="Entitas\Entity\EntityExtension.cs" />
+    <Compile Include="Entitas\Group\GroupExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Entitas\" />
     <Folder Include="Entitas\Extensions\" />
-    <Folder Include="Entitas\Interfaces\" />
     <Folder Include="Entitas\Matcher\" />
     <Folder Include="Entitas\CodeGenerator\" />
     <Folder Include="Entitas\CodeGenerator\Attributes\" />

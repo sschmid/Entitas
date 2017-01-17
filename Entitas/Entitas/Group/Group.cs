@@ -3,12 +3,6 @@ using System.Linq;
 
 namespace Entitas {
 
-    public enum GroupEvent : byte {
-        Added,
-        Removed,
-        AddedOrRemoved
-    }
-
     /// Use context.GetGroup(matcher) to get a group of entities which match
     /// the specified matcher. Calling context.GetGroup(matcher) with the
     /// same matcher will always return the same instance of the group.
