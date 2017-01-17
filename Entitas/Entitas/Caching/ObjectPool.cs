@@ -5,27 +5,27 @@ namespace Entitas {
 
     public class ObjectPool<T> {
 
-        Func<T> _factoryMethod;
-        Action<T> _resetMethod;
-        Stack<T> _context;
+        readonly Func<T> _factoryMethod;
+        readonly Action<T> _resetMethod;
+        readonly Stack<T> _objectPool;
 
         public ObjectPool(Func<T> factoryMethod, Action<T> resetMethod = null) {
             _factoryMethod = factoryMethod;
             _resetMethod = resetMethod;
-            _context = new Stack<T>();
+            _objectPool = new Stack<T>();
         }
 
         public T Get() {
-            return _context.Count == 0
+            return _objectPool.Count == 0
                 ? _factoryMethod()
-                : _context.Pop();
+                : _objectPool.Pop();
         }
 
         public void Push(T obj) {
             if(_resetMethod != null) {
                 _resetMethod(obj);
             }
-            _context.Push(obj);
+            _objectPool.Push(obj);
         }
     }
 }
