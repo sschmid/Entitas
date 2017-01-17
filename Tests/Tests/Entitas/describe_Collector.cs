@@ -13,7 +13,7 @@ class describe_Collector : nspec {
         IMatcher<TestEntity> matcherA = Matcher<TestEntity>.AllOf(CID.ComponentA);
 
         before = () => {
-            _context = new TestContext(CID.TotalComponents);
+            _context = new TestContext();
             groupA = _context.GetGroup(matcherA);
         };
 

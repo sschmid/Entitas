@@ -8,7 +8,7 @@ class describe_Context : nspec {
         IContext<TestEntity> ctx = null;
 
         before = () => {
-            ctx = TestContext(CID.TotalComponents);
+            ctx = new TestContext();
         };
 
         it["increments creationIndex"] = () => {
@@ -538,7 +538,7 @@ class describe_Context : nspec {
                 context["event timing"] = () => {
 
                     before = () => {
-                        ctx = new TestContext(CID.TotalComponents);
+                        ctx = new TestContext();
                     };
 
                     it["dispatches group.OnEntityAdded events after all groups are updated"] = () => {
@@ -555,7 +555,7 @@ class describe_Context : nspec {
                     };
 
                     it["dispatches group.OnEntityRemoved events after all groups are updated"] = () => {
-                        ctx = new TestContext(CID.TotalComponents);
+                        ctx = new TestContext();
                         var groupB = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
                         var groupAB = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
 
