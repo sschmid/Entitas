@@ -7,7 +7,7 @@ namespace Entitas {
     /// Use context.CreateEntity() to create a new entity and
     /// context.DestroyEntity() to destroy it.
     /// You can add, replace and remove IComponent to an entity.
-    public partial class XXXEntity : IEntity {
+    public class XXXEntity : IEntity {
 
         /// Occurs when a component gets added.
         /// All event handlers will be removed when
@@ -472,80 +472,6 @@ namespace Entitas {
             }
 
             return _toStringCache;
-        }
-    }
-
-    public class EntityAlreadyHasComponentException : EntitasException {
-
-        public EntityAlreadyHasComponentException(
-            int index, string message, string hint
-        ) : base(
-                message +
-                "\nEntity already has a component at index "
-                + index + "!",
-                hint
-            ) {
-        }
-    }
-
-    public class EntityDoesNotHaveComponentException : EntitasException {
-
-        public EntityDoesNotHaveComponentException(
-            int index, string message, string hint
-        ) : base(
-                message +
-                "\nEntity does not have a component at index "
-                + index + "!",
-                hint
-            ) {
-        }
-    }
-
-    public class EntityIsNotEnabledException : EntitasException {
-
-        public EntityIsNotEnabledException(string message) :
-            base(
-                message + "\nEntity is not enabled!",
-                "The entity has already been destroyed. " +
-                "You cannot modify destroyed entities."
-            ) {
-        }
-    }
-
-    public class EntityEqualityComparer<TEntity> : IEqualityComparer<TEntity> where TEntity : class, IEntity, new() {
-
-        public static readonly IEqualityComparer<TEntity> comparer =
-            new EntityEqualityComparer<TEntity>();
-
-        public bool Equals(TEntity x, TEntity y) {
-            return x == y;
-        }
-
-        public int GetHashCode(TEntity obj) {
-            return obj.creationIndex;
-        }
-    }
-
-    public class EntityIsAlreadyRetainedByOwnerException : EntitasException {
-
-        public EntityIsAlreadyRetainedByOwnerException(
-            IEntity entity, object owner
-        ) : base(
-                "'" + owner + "' cannot retain " + entity + "!\n" +
-                "Entity is already retained by this object!",
-                "The entity must be released by this object first."
-            ) {
-        }
-    }
-
-    public class EntityIsNotRetainedByOwnerException : EntitasException {
-
-        public EntityIsNotRetainedByOwnerException(IEntity entity, object owner) :
-            base(
-                "'" + owner + "' cannot release " + entity + "!\n" +
-                "Entity is not retained by this object!",
-                "An entity can only be released from objects that retain it."
-            ) {
         }
     }
 }

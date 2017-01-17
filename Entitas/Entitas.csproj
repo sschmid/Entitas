@@ -108,6 +108,12 @@
     <Compile Include="Entitas\Context\Exceptions\ContextStillHasRetainedEntitiesException.cs" />
     <Compile Include="Entitas\Context\Exceptions\EntityIsNotDestroyedException.cs" />
     <Compile Include="Entitas\Context\Exceptions\ContextInfoException.cs" />
+    <Compile Include="Entitas\Entity\EntityEqualityComparer.cs" />
+    <Compile Include="Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs" />
+    <Compile Include="Entitas\Entity\Exceptions\EntityDoesNotHaveComponentException.cs" />
+    <Compile Include="Entitas\Entity\Exceptions\EntityIsAlreadyRetainedByOwnerException.cs" />
+    <Compile Include="Entitas\Entity\Exceptions\EntityIsNotEnabledException.cs" />
+    <Compile Include="Entitas\Entity\Exceptions\EntityIsNotRetainedByOwnerException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -129,5 +135,6 @@
     <Folder Include="Entitas\Context\" />
     <Folder Include="Entitas\Systems\" />
     <Folder Include="Entitas\Context\Exceptions\" />
+    <Folder Include="Entitas\Entity\Exceptions\" />
   </ItemGroup>
 </Project>
