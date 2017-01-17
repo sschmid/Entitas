@@ -108,11 +108,11 @@ namespace Entitas {
             if(_reusableEntities.Count > 0) {
                 entity = _reusableEntities.Pop();
                 // TODO
-                //entity.Reactivate(_creationIndex++);
+                entity.Reactivate(_creationIndex++);
             } else {
                 entity = new TEntity();
                 // TODO
-                //entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo);
+                entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo);
             }
 
             entity.Retain(this);

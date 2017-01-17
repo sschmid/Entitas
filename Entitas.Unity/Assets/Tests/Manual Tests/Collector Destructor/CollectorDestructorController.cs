@@ -4,7 +4,7 @@ using UnityEditor;
 
 public class CollectorDestructorController : MonoBehaviour {
 
-    Entity _initialEntity;
+    VisualDebuggingEntity _initialEntity;
 
     void Start() {
         var context = Contexts.sharedInstance.visualDebugging = Contexts.CreateVisualDebuggingContext();

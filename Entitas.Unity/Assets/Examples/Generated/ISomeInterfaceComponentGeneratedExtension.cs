@@ -37,13 +37,13 @@ namespace Entitas {
         }
     }
 
-    public partial class Context {
+    public partial class VisualDebuggingContext {
 
-        public Entity iSomeInterfaceEntity { get { return GetGroup(VisualDebuggingMatcher.ISomeInterface).GetSingleEntity(); } }
+        public VisualDebuggingEntity iSomeInterfaceEntity { get { return GetGroup(VisualDebuggingMatcher.ISomeInterface).GetSingleEntity(); } }
         public ISomeInterfaceComponent iSomeInterface { get { return iSomeInterfaceEntity.iSomeInterface; } }
         public bool hasISomeInterface { get { return iSomeInterfaceEntity != null; } }
 
-        public Entity SetISomeInterface(ISomeInterface newValue) {
+        public VisualDebuggingEntity SetISomeInterface(ISomeInterface newValue) {
             if(hasISomeInterface) {
                 throw new EntitasException("Could not set iSomeInterface!\n" + this + " already has an entity with ISomeInterfaceComponent!",
                     "You should check if the context already has a iSomeInterfaceEntity before setting it or use context.ReplaceISomeInterface().");
@@ -53,7 +53,7 @@ namespace Entitas {
             return entity;
         }
 
-        public Entity ReplaceISomeInterface(ISomeInterface newValue) {
+        public VisualDebuggingEntity ReplaceISomeInterface(ISomeInterface newValue) {
             var entity = iSomeInterfaceEntity;
             if(entity == null) {
                 entity = SetISomeInterface(newValue);

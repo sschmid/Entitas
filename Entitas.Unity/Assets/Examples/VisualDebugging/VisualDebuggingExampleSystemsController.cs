@@ -9,7 +9,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
     void Start() {
         _contexts = new Contexts();
-        _contexts.visualDebugging = new Context(
+        _contexts.visualDebugging = new XXXContext<VisualDebuggingEntity>(
             VisualDebuggingComponentIds.TotalComponents, 0,
             new ContextInfo(
                 "Systems Context",

@@ -15,7 +15,7 @@ namespace Entitas {
 
         static Contexts _sharedInstance;
 
-        public static IContext CreateContext<TEntity>(string name,
+        public static IContext<TEntity> CreateContext<TEntity>(string name,
                                       int totalComponents,
                                       string[] componentNames,
                                       System.Type[] componentTypes)

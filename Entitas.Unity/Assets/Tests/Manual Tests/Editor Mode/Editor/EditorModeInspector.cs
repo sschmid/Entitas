@@ -19,8 +19,9 @@ public class EditorModeInspector : Editor {
         }
 
         if(GUILayout.Button("Create entitiy")) {
-            var e = controller.context.CreateEntity();
-            e.AddMyString("Editor Mode");
+            // TODO
+            //var e = controller.context.CreateEntity();
+            //e.AddMyString("Editor Mode");
 
             Debug.Log("Entities count: " + controller.context.count);
         }

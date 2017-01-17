@@ -3,5 +3,5 @@ using Entitas;
 
 public class EditorModeController : MonoBehaviour {
 
-    public Context context;
+    public IContext context;
 }

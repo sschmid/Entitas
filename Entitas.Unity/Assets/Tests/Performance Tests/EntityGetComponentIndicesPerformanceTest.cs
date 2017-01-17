@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EntityGetComponentIndicesPerformanceTest : MonoBehaviour {
 
-    Entity _entity;
+    VisualDebuggingEntity _entity;
 
     void Start() {
         Contexts.sharedInstance.visualDebugging = Contexts.CreateVisualDebuggingContext();

@@ -10,18 +10,18 @@ namespace Entitas {
 
     public partial class Contexts {
 
-        public static Context CreateBlueprintsContext() {
-            return CreateContext("Blueprints", BlueprintsComponentIds.TotalComponents, BlueprintsComponentIds.componentNames, BlueprintsComponentIds.componentTypes);
+        public static IContext<BlueprintsEntity> CreateBlueprintsContext() {
+            return CreateContext<BlueprintsEntity>("Blueprints", BlueprintsComponentIds.TotalComponents, BlueprintsComponentIds.componentNames, BlueprintsComponentIds.componentTypes);
         }
 
-        public static Context CreateVisualDebuggingContext() {
-            return CreateContext("VisualDebugging", VisualDebuggingComponentIds.TotalComponents, VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes);
+        public static IContext<VisualDebuggingEntity> CreateVisualDebuggingContext() {
+            return CreateContext<VisualDebuggingEntity>("VisualDebugging", VisualDebuggingComponentIds.TotalComponents, VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes);
         }
 
-        public Context[] allContexts { get { return new [] { blueprints, visualDebugging }; } }
+        public IContext[] allContexts { get { return new IContext [] { blueprints, visualDebugging }; } }
 
-        public Context blueprints;
-        public Context visualDebugging;
+        public IContext<BlueprintsEntity> blueprints;
+        public IContext<VisualDebuggingEntity> visualDebugging;
 
         public void SetAllContexts() {
             blueprints = CreateBlueprintsContext();
