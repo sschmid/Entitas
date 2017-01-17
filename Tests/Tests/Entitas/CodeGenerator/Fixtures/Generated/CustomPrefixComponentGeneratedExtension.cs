@@ -26,7 +26,7 @@ namespace Entitas {
         }
     }
 
-    public sealed partial class TestContext : XXXContext<TestEntity> {
+    public sealed partial class TestContext : Context<TestEntity> {
 
         public TestEntity customPrefixEntity { get { return GetGroup(Matcher.CustomPrefix).GetSingleEntity(); } }
 

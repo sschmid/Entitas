@@ -10,7 +10,7 @@ class describe_Blueprints : nspec {
         TestEntity entity = null;
 
         before = () => {
-            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+            ctx = new TestContext(CID.TotalComponents);
             entity = ctx.CreateEntity();
         };
 

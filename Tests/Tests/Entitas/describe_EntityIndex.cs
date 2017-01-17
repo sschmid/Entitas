@@ -11,7 +11,7 @@ class describe_EntityIndex : nspec {
         IGroup<TestEntity> group = null;
 
         before = () => {
-            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+            ctx = new TestContext(CID.TotalComponents);
             group = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
             index = new PrimaryEntityIndex<TestEntity, string>(group, (e, c) => {
                 var nameAge = c as NameAgeComponent;
@@ -135,7 +135,7 @@ class describe_EntityIndex : nspec {
         IGroup<TestEntity> group = null;
 
         before = () => {
-            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+            ctx = new TestContext(CID.TotalComponents);
             group = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
             index = new EntityIndex<TestEntity, string>(group, (e, c) => {
                 var nameAge = c as NameAgeComponent;
@@ -249,7 +249,7 @@ class describe_EntityIndex : nspec {
         IGroup<TestEntity> group = null;
 
         before = () => {
-            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+            ctx = new TestContext(CID.TotalComponents);
         };
 
         it["gets last component that triggered adding entity to group"] = () => {

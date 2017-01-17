@@ -43,7 +43,7 @@ class describe_ReactiveSystem : nspec {
         ReactiveSystemSpy system = null;
 
         before = () => {
-            _contexts = new Contexts { test = new XXXContext<TestEntity>(CID.TotalComponents) };
+            _contexts = new Contexts { test = new TestContext(CID.TotalComponents) };
         };
 
         context["OnEntityAdded"] = () => {
@@ -212,8 +212,8 @@ class describe_ReactiveSystem : nspec {
             IContext<TestEntity> context2 = null;
 
             before = () => {
-                context1 = new XXXContext<TestEntity>(CID.TotalComponents);
-                context2 = new XXXContext<TestEntity>(CID.TotalComponents);
+                context1 = new TestContext(CID.TotalComponents);
+                context2 = new TestContext(CID.TotalComponents);
 
                 var groupA = context1.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
                 var groupB = context2.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));

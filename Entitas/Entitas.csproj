@@ -101,6 +101,13 @@
     <Compile Include="Entitas\Context\ContextExtension.cs" />
     <Compile Include="Entitas\Entity\EntityExtension.cs" />
     <Compile Include="Entitas\Group\GroupExtension.cs" />
+    <Compile Include="Entitas\Context\ContextInfo.cs" />
+    <Compile Include="Entitas\Context\Exceptions\ContextDoesNotContainEntityException.cs" />
+    <Compile Include="Entitas\Context\Exceptions\ContextEntityIndexDoesAlreadyExistException.cs" />
+    <Compile Include="Entitas\Context\Exceptions\ContextEntityIndexDoesNotExistException.cs" />
+    <Compile Include="Entitas\Context\Exceptions\ContextStillHasRetainedEntitiesException.cs" />
+    <Compile Include="Entitas\Context\Exceptions\EntityIsNotDestroyedException.cs" />
+    <Compile Include="Entitas\Context\Exceptions\ContextInfoException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -121,5 +128,6 @@
     <Folder Include="Entitas\Group\" />
     <Folder Include="Entitas\Context\" />
     <Folder Include="Entitas\Systems\" />
+    <Folder Include="Entitas\Context\Exceptions\" />
   </ItemGroup>
 </Project>

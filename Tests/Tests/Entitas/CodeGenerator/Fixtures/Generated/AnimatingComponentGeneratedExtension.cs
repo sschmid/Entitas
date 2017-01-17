@@ -26,7 +26,7 @@ namespace Entitas {
         }
     }
 
-    public sealed partial class TestContext : XXXContext<TestEntity> {
+    public sealed partial class TestContext : Context<TestEntity> {
 
         public TestEntity animatingEntity { get { return GetGroup(Matcher.Animating).GetSingleEntity(); } }
 

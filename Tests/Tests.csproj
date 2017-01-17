@@ -94,26 +94,109 @@
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestInitializeSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestExecuteSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestReactiveSystem.cs" />
-    <Compile Include="..\Entitas\Entitas\EntitasException.cs">
-      <Link>Linked Libraries\Entitas\EntitasException.cs</Link>
+    <Compile Include="Tests\Entitas\Fixtures\AnotherComponentInterface.cs" />
+    <Compile Include="Tests\Entitas\Serialization\describe_TypeSerializationExtension.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithFields.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithProperties.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\NestedClass.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\SomeEnum.cs" />
+    <Compile Include="Tests\Entitas\Serialization\describe_PublicMemberInfo.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystems.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystems.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity.cs">
-      <Link>Linked Libraries\Entitas\Entity.cs</Link>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Group.cs">
-      <Link>Linked Libraries\Entitas\Group.cs</Link>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\SystemInfo.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\SystemInfo.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ComponentExtensionsGenerator.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0300.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ContextAttributesGenerator.cs" />
+    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\Feature.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\Feature.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\AbstractComponent.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeClass.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeOtherClass.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeGenericClass.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\ISomeInterface.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomName.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\GeneratedComponent.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\DefaultContextComponent.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\MultipleContextAndDefaultContextComponent.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomNames.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeStruct.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Configuration\describe_CodeGeneratorConfig.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Configuration\describe_Properties.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Configuration\describe_EntitasPreferencesConfig.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0320.cs" />
+    <Compile Include="Tests\Entitas\describe_EntityIndex.cs" />
+    <Compile Include="Tests\EntitasTest.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ComponentWithFieldsAndPropertiesGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\My.Namespace.NamespaceComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\CComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\CustomPrefixComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeStructComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\describe_Contexts.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple contexts\GComponent.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Blueprints\describe_Blueprints.cs" />
+    <Compile Include="Tests\Entitas\describe_Systems.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\TearDownSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\ExecuteSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSystemSpy.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_BlueprintsGenerator.cs" />
+    <Compile Include="Tests\Entitas\Caching\describe_ObjectCache.cs" />
+    <Compile Include="Tests\Entitas\Caching\describe_ObjectPool.cs" />
+    <Compile Include="Tests\Entitas\Caching\describe_EntitasCache.cs" />
+    <Compile Include="TestRunner.cs" />
+    <Compile Include="Tests\Entitas\describe_EntityExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeClassHideInBlueprintInspector.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextAComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassHideInBlueprintInspectorComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextBComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextCComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeOtherContextComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeContextComponentIds.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestCleanupSystem.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestTearDownSystem.cs" />
+    <Compile Include="Tests\Entitas\Fixtures\Contexts.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\SomeAttribute.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\DefaultContextComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MultipleContextAndDefaultContextComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherContextComponentGeneratedExtension.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0360_1.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0360_2.cs" />
+    <Compile Include="..\Entitas\Entitas\IGroup.cs">
+      <Link>Tests\Entitas\IGroup.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\Fixtures\TestEntity.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\TestContext.cs" />
     <Compile Include="..\Entitas\Entitas\Collector.cs">
       <Link>Linked Libraries\Entitas\Collector.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Context.cs">
-      <Link>Linked Libraries\Entitas\Context.cs</Link>
+    <Compile Include="..\Entitas\Entitas\EntitasException.cs">
+      <Link>Linked Libraries\Entitas\EntitasException.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\ReactiveSystem.cs">
-      <Link>Linked Libraries\Entitas\ReactiveSystem.cs</Link>
+    <Compile Include="..\Entitas\Entitas\IComponent.cs">
+      <Link>Linked Libraries\Entitas\IComponent.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Systems.cs">
-      <Link>Linked Libraries\Entitas\Systems.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Caching\EntitasCache.cs">
+      <Link>Linked Libraries\Entitas\Caching\EntitasCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Caching\ObjectCache.cs">
+      <Link>Linked Libraries\Entitas\Caching\ObjectCache.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Caching\ObjectPool.cs">
+      <Link>Linked Libraries\Entitas\Caching\ObjectPool.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\CodeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\CodeGenerator.cs</Link>
@@ -121,23 +204,38 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\TypeReflectionCodeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\TypeReflectionCodeGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\ContextAttribute.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\ContextAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs</Link>
+    </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\CustomPrefixAttribute.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\CustomPrefixAttribute.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\DontGenerateAttribute.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\DontGenerateAttribute.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\ContextAttribute.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\ContextAttribute.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\SingleEntityAttribute.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\SingleEntityAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ContextAttributesGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ContextAttributesGenerator.cs</Link>
+    </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ContextsGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ContextsGenerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs">
+      <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\ICodeGenerator.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\ICodeGenerator.cs</Link>
@@ -160,26 +258,68 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\Context\Context.cs">
+      <Link>Linked Libraries\Entitas\Context\Context.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Context\ContextExtension.cs">
+      <Link>Linked Libraries\Entitas\Context\ContextExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Context\IContext.cs">
+      <Link>Linked Libraries\Entitas\Context\IContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Entity\Entity.cs">
+      <Link>Linked Libraries\Entitas\Entity\Entity.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Entity\EntityExtension.cs">
+      <Link>Linked Libraries\Entitas\Entity\EntityExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Entity\IEntity.cs">
+      <Link>Linked Libraries\Entitas\Entity\IEntity.cs</Link>
+    </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\CollectionExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\GroupExtension.cs">
-      <Link>Linked Libraries\Entitas\Extensions\GroupExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\ContextExtension.cs">
-      <Link>Linked Libraries\Entitas\Extensions\ContextExtension.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\TypeExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\TypeExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IComponent.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IComponent.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Group\Group.cs">
+      <Link>Linked Libraries\Entitas\Group\Group.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\IMatcher.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\IMatcher.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Group\GroupEvent.cs">
+      <Link>Linked Libraries\Entitas\Group\GroupEvent.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Interfaces\ISystem.cs">
-      <Link>Linked Libraries\Entitas\Interfaces\ISystem.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Group\GroupExtension.cs">
+      <Link>Linked Libraries\Entitas\Group\GroupExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Group\IGroup.cs">
+      <Link>Linked Libraries\Entitas\Group\IGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\AbstractEntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\AbstractEntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\EntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\EntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\IEntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\IEntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Index\PrimaryEntityIndex.cs">
+      <Link>Linked Libraries\Entitas\Index\PrimaryEntityIndex.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\IAllOfMatcher.cs">
+      <Link>Linked Libraries\Entitas\Matcher\IAllOfMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\IAnyOfMatcher.cs">
+      <Link>Linked Libraries\Entitas\Matcher\IAnyOfMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\ICompoundMatcher.cs">
+      <Link>Linked Libraries\Entitas\Matcher\ICompoundMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\IMatcher.cs">
+      <Link>Linked Libraries\Entitas\Matcher\IMatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\Matcher\INoneOfMatcher.cs">
+      <Link>Linked Libraries\Entitas\Matcher\INoneOfMatcher.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
       <Link>Linked Libraries\Entitas\Matcher\Matcher.cs</Link>
@@ -193,76 +333,27 @@
     <Compile Include="..\Entitas\Entitas\Matcher\MatcherToString.cs">
       <Link>Linked Libraries\Entitas\Matcher\MatcherToString.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\Fixtures\AnotherComponentInterface.cs" />
     <Compile Include="..\Entitas\Entitas\Serialization\PublicMemberInfo.cs">
       <Link>Linked Libraries\Entitas\Serialization\PublicMemberInfo.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Serialization\TypeSerializationExtension.cs">
       <Link>Linked Libraries\Entitas\Serialization\TypeSerializationExtension.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\Serialization\describe_TypeSerializationExtension.cs" />
-    <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithFields.cs" />
-    <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithProperties.cs" />
-    <Compile Include="Tests\Entitas\Serialization\Fixtures\NestedClass.cs" />
-    <Compile Include="Tests\Entitas\Serialization\Fixtures\SomeEnum.cs" />
-    <Compile Include="Tests\Entitas\Serialization\describe_PublicMemberInfo.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
-    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystems.cs">
-      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystems.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
-      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\SystemInfo.cs">
-      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\SystemInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs">
-      <Link>Linked Libraries\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs</Link>
-    </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ComponentExtensionsGenerator.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0300.cs" />
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\ContextAttributesGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\ContextAttributesGenerator.cs</Link>
-    </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_ContextAttributesGenerator.cs" />
-    <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\Feature.cs">
-      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\Feature.cs</Link>
-    </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\AbstractComponent.cs" />
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\Blueprint.cs">
       <Link>Linked Libraries\Entitas\Serialization\Blueprints\Blueprint.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\ComponentBlueprint.cs">
-      <Link>Linked Libraries\Entitas\Serialization\Blueprints\ComponentBlueprint.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\SerializableMember.cs">
-      <Link>Linked Libraries\Entitas\Serialization\Blueprints\SerializableMember.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs">
       <Link>Linked Libraries\Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\ComponentBlueprint.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\ComponentBlueprint.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Interfaces\IBlueprintsCodeGenerator.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeClass.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeOtherClass.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeGenericClass.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\ISomeInterface.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomName.cs" />
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs">
-      <Link>Linked Libraries\Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\SerializableMember.cs">
+      <Link>Linked Libraries\Entitas\Serialization\Blueprints\SerializableMember.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\GeneratedComponent.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\DefaultContextComponent.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\MultipleContextAndDefaultContextComponent.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomNames.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeStruct.cs" />
     <Compile Include="..\Entitas\Entitas\Serialization\Configuration\CodeGeneratorConfig.cs">
       <Link>Linked Libraries\Entitas\Serialization\Configuration\CodeGeneratorConfig.cs</Link>
     </Compile>
@@ -275,91 +366,30 @@
     <Compile Include="..\Entitas\Entitas\Serialization\Configuration\Properties.cs">
       <Link>Linked Libraries\Entitas\Serialization\Configuration\Properties.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\Serialization\Configuration\describe_CodeGeneratorConfig.cs" />
-    <Compile Include="Tests\Entitas\Serialization\Configuration\describe_Properties.cs" />
-    <Compile Include="Tests\Entitas\Serialization\Configuration\describe_EntitasPreferencesConfig.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0320.cs" />
-    <Compile Include="Tests\Entitas\describe_EntityIndex.cs" />
-    <Compile Include="Tests\EntitasTest.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherComponentIds.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ComponentWithFieldsAndPropertiesGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\My.Namespace.NamespaceComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\CComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\CustomPrefixComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeStructComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\describe_Contexts.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple contexts\GComponent.cs" />
-    <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">
-      <Link>Linked Libraries\Entitas\Extensions\EntityExtension.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Systems\ICleanupSystem.cs">
+      <Link>Linked Libraries\Entitas\Systems\ICleanupSystem.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\Serialization\Blueprints\describe_Blueprints.cs" />
-    <Compile Include="Tests\Entitas\describe_Systems.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\TearDownSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ExecuteSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSystemSpy.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_BlueprintsGenerator.cs" />
-    <Compile Include="Tests\Entitas\Caching\describe_ObjectCache.cs" />
-    <Compile Include="Tests\Entitas\Caching\describe_ObjectPool.cs" />
-    <Compile Include="..\Entitas\Entitas\Caching\ObjectCache.cs">
-      <Link>Linked Libraries\Entitas\Caching\ObjectCache.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Systems\IExecuteSystem.cs">
+      <Link>Linked Libraries\Entitas\Systems\IExecuteSystem.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Caching\ObjectPool.cs">
-      <Link>Linked Libraries\Entitas\Caching\ObjectPool.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Systems\IInitializeSystem.cs">
+      <Link>Linked Libraries\Entitas\Systems\IInitializeSystem.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Caching\EntitasCache.cs">
-      <Link>Linked Libraries\Entitas\Caching\EntitasCache.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Systems\IReactiveSystem.cs">
+      <Link>Linked Libraries\Entitas\Systems\IReactiveSystem.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\Caching\describe_EntitasCache.cs" />
-    <Compile Include="TestRunner.cs" />
-    <Compile Include="Tests\Entitas\describe_EntityExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeClassHideInBlueprintInspector.cs" />
-    <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs">
-      <Link>Linked Libraries\Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Systems\ISystem.cs">
+      <Link>Linked Libraries\Entitas\Systems\ISystem.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextAComponentIds.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassHideInBlueprintInspectorComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextBComponentIds.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextCComponentIds.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeOtherContextComponentIds.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeContextComponentIds.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestCleanupSystem.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestTearDownSystem.cs" />
-    <Compile Include="Tests\Entitas\Fixtures\Contexts.cs" />
-    <Compile Include="..\Entitas\Entitas\Index\AbstractEntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\AbstractEntityIndex.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Systems\ITearDownSystem.cs">
+      <Link>Linked Libraries\Entitas\Systems\ITearDownSystem.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\EntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\EntityIndex.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Systems\ReactiveSystem.cs">
+      <Link>Linked Libraries\Entitas\Systems\ReactiveSystem.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\IEntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\IEntityIndex.cs</Link>
+    <Compile Include="..\Entitas\Entitas\Systems\Systems.cs">
+      <Link>Linked Libraries\Entitas\Systems\Systems.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\PrimaryEntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\PrimaryEntityIndex.cs</Link>
-    </Compile>
-    <Compile Include="Tests\Entitas\Serialization\Fixtures\SomeAttribute.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\DefaultContextComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MultipleContextAndDefaultContextComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherContextComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0360_1.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0360_2.cs" />
-    <Compile Include="..\Entitas\Entitas\IEntity.cs">
-      <Link>Linked Libraries\Entitas\IEntity.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\IContext.cs">
-      <Link>Linked Libraries\Entitas\IContext.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\IGroup.cs">
-      <Link>Tests\Entitas\IGroup.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\IReactiveSystem.cs">
-      <Link>Linked Libraries\Entitas\IReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="Tests\Entitas\Fixtures\TestEntity.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\TestContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -387,6 +417,9 @@
     <None Include="Libraries\NSpec.dll" />
     <None Include="Libraries\NSpecRunner.dll" />
     <None Include="Libraries\nunit.framework.dll" />
+    <None Include="..\Entitas\Entitas\version">
+      <Link>Linked Libraries\Entitas\version</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj">

@@ -8,7 +8,7 @@ class describe_Context : nspec {
         IContext<TestEntity> ctx = null;
 
         before = () => {
-            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+            ctx = TestContext(CID.TotalComponents);
         };
 
         it["increments creationIndex"] = () => {
@@ -17,7 +17,7 @@ class describe_Context : nspec {
         };
 
         it["starts with given creationIndex"] = () => {
-            new XXXContext<TestEntity>(CID.TotalComponents, 42, null).CreateEntity().creationIndex.should_be(42);
+            new TestContext(CID.TotalComponents, 42, null).CreateEntity().creationIndex.should_be(42);
         };
 
         it["has no entities when no entities were created"] = () => {
@@ -70,7 +70,7 @@ class describe_Context : nspec {
                 var componentNames = new[] { "Health", "Position", "View" };
                 var componentTypes = new[] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
                 contextInfo = new ContextInfo("My Context", componentNames, componentTypes);
-                ctx = new XXXContext<TestEntity>(componentNames.Length, 0, contextInfo);
+                ctx = new TestContext(componentNames.Length, 0, contextInfo);
             };
 
             it["has custom ContextInfo"] = () => {
@@ -82,7 +82,7 @@ class describe_Context : nspec {
             };
 
             it["throws when componentNames is not same length as totalComponents"] = expect<ContextInfoException>(() => {
-                new XXXContext<TestEntity>(contextInfo.componentNames.Length + 1, 0, contextInfo);
+                new TestContext(contextInfo.componentNames.Length + 1, 0, contextInfo);
             });
         };
 
@@ -538,7 +538,7 @@ class describe_Context : nspec {
                 context["event timing"] = () => {
 
                     before = () => {
-                        ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+                        ctx = new TestContext(CID.TotalComponents);
                     };
 
                     it["dispatches group.OnEntityAdded events after all groups are updated"] = () => {
@@ -555,7 +555,7 @@ class describe_Context : nspec {
                     };
 
                     it["dispatches group.OnEntityRemoved events after all groups are updated"] = () => {
-                        ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+                        ctx = new TestContext(CID.TotalComponents);
                         var groupB = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
                         var groupAB = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
 

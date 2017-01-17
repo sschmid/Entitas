@@ -34,7 +34,7 @@ namespace Entitas {
         }
     }
 
-    public sealed partial class TestContext : XXXContext<TestEntity> {
+    public sealed partial class TestContext : Context<TestEntity> {
 
         public TestEntity otherContextEntity { get { return GetGroup(OtherMatcher.OtherContext).GetSingleEntity(); } }
         public OtherContextComponent otherContext { get { return otherContextEntity.otherContext; } }

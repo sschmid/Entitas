@@ -15,7 +15,7 @@ class describe_Systems : nspec {
         Contexts contexts = null;
 
         before = () => {
-            contexts = new Contexts { test = new XXXContext<TestEntity>(10) };
+            contexts = new Contexts { test = new TestContext(10) };
         };
 
         context["fixtures"] = () => {

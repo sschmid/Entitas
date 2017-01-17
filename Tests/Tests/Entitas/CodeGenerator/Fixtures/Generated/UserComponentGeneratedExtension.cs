@@ -32,7 +32,7 @@ namespace Entitas {
         }
     }
 
-    public sealed partial class TestContext : XXXContext<TestEntity> {
+    public sealed partial class TestContext : Context<TestEntity> {
 
         public TestEntity userEntity { get { return GetGroup(Matcher.User).GetSingleEntity(); } }
         public UserComponent user { get { return userEntity.user; } }

@@ -39,7 +39,7 @@ class describe_EntityExtension : nspec {
             NameAgeComponent nameAge = null;
 
             before = () => {
-                ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+                ctx = new TestContext(CID.TotalComponents);
                 entity = ctx.CreateEntity();
                 target = ctx.CreateEntity();
                 nameAge = new NameAgeComponent { name = "Max", age = 42 };

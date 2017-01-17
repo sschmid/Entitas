@@ -24,7 +24,7 @@ class describe_EntitasErrorMessages : EntitasTest {
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
             var contextInfo = new ContextInfo("My Context", componentNames, null);
-            _context = new XXXContext<TestEntity>(componentNames.Length, 42, contextInfo);
+            _context = new TestContext(componentNames.Length, 42, contextInfo);
             _entity = createEntity();
         };
 
@@ -119,7 +119,7 @@ class describe_EntitasErrorMessages : EntitasTest {
             it["wrong ContextInfo componentNames count"] = () => printErrorMessage(() => {
                 var componentNames = new [] { "Health", "Position", "View" };
                 var contextInfo = new ContextInfo("My Context", componentNames, null);
-                new XXXContext<TestEntity>(1, 0, contextInfo);
+                new TestContext(1, 0, contextInfo);
             });
 
             it["destroy entity which is not in context"] = () => printErrorMessage(() => {

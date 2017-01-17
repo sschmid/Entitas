@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 
 namespace Entitas {
 
-    public class XXXContext<TEntity> : IContext<TEntity> where TEntity : class, IEntity, new() {
+    public class Context<TEntity> : IContext<TEntity> where TEntity : class, IEntity, new() {
 
         public event ContextChanged OnEntityCreated;
         public event ContextChanged OnEntityWillBeDestroyed;
@@ -58,10 +57,10 @@ namespace Entitas {
         ComponentReplaced _cachedComponentReplaced;
         EntityReleased _cachedEntityReleased;
 
-        public XXXContext(int totalComponents) : this(totalComponents, 0, null) {
+        public Context(int totalComponents) : this(totalComponents, 0, null) {
         }
 
-        public XXXContext(int totalComponents,
+        public Context(int totalComponents,
                     int startCreationIndex,
                     ContextInfo contextInfo) {
             _totalComponents = totalComponents;
@@ -344,68 +343,6 @@ namespace Entitas {
             entity.removeAllOnEntityReleasedHandlers();
             _retainedEntities.Remove(tEntity);
             _reusableEntities.Push(tEntity);
-        }
-    }
-
-    public class ContextDoesNotContainEntityException : EntitasException {
-        public ContextDoesNotContainEntityException(string message, string hint) :
-            base(message + "\nContext does not contain entity!", hint) {
-        }
-    }
-
-    public class EntityIsNotDestroyedException : EntitasException {
-        public EntityIsNotDestroyedException(string message) :
-            base(message + "\nEntity is not destroyed yet!",
-                "Did you manually call entity.Release(context) yourself? " +
-                "If so, please don't :)") {
-        }
-    }
-
-    public class ContextStillHasRetainedEntitiesException : EntitasException {
-        public ContextStillHasRetainedEntitiesException(IContext context) : base(
-            "'" + context + "' detected retained entities " +
-            "although all entities got destroyed!",
-            "Did you release all entities? Try calling context.ClearGroups() " +
-            "and systems.ClearReactiveSystems() before calling " +
-            "context.DestroyAllEntities() to avoid memory leaks.") {
-        }
-    }
-
-    public class ContextInfoException : EntitasException {
-        public ContextInfoException(IContext context, ContextInfo contextInfo) :
-            base("Invalid ContextInfo for '" + context + "'!\nExpected " +
-                 context.totalComponents + " componentName(s) but got " +
-                 contextInfo.componentNames.Length + ":",
-                 string.Join("\n", contextInfo.componentNames)) {
-        }
-    }
-
-    public class ContextEntityIndexDoesNotExistException : EntitasException {
-        public ContextEntityIndexDoesNotExistException(IContext context, string name) :
-            base("Cannot get EntityIndex '" + name + "' from context '" +
-                 context + "'!", "No EntityIndex with this name has been added.") {
-        }
-    }
-
-    public class ContextEntityIndexDoesAlreadyExistException : EntitasException {
-        public ContextEntityIndexDoesAlreadyExistException(IContext context, string name) :
-            base("Cannot add EntityIndex '" + name + "' to context '" + context + "'!",
-                 "An EntityIndex with this name has already been added.") {
-        }
-    }
-
-    public class ContextInfo {
-
-        public readonly string name;
-        public readonly string[] componentNames;
-        public readonly Type[] componentTypes;
-
-        public ContextInfo(string name,
-                            string[] componentNames,
-                            Type[] componentTypes) {
-            this.name = name;
-            this.componentNames = componentNames;
-            this.componentTypes = componentTypes;
         }
     }
 }
