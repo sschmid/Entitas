@@ -31,7 +31,7 @@ namespace Entitas.Unity.CodeGenerator {
                 .Select(b => b.Deserialize().name)
                 .ToArray();
 
-            var assembly = Assembly.GetAssembly(typeof(Entity));
+            var assembly = Assembly.GetAssembly(typeof(IEntity));
             var generatedFiles = TypeReflectionCodeGenerator.Generate(assembly, config.contexts,
                 blueprintNames, config.generatedFolderPath, enabledCodeGenerators);
 
