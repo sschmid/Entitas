@@ -131,6 +131,7 @@ class describe_Blueprints : nspec {
                 };
 
                 it["applies blueprint to entity"] = () => {
+                    entity.ApplyBlueprint(blueprint);
                     entity.GetComponents().Length.should_be(2);
 
                     entity.GetComponent(CID.ComponentA).GetType().should_be(typeof(ComponentA));

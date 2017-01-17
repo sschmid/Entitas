@@ -31,7 +31,7 @@ class describe_Context : nspec {
         it["creates entity"] = () => {
             var e = ctx.CreateEntity();
             e.should_not_be_null();
-            e.GetType().should_be(typeof(IEntity));
+            e.GetType().should_be(typeof(TestEntity));
         };
 
         it["has default ContextInfo"] = () => {
@@ -355,7 +355,7 @@ class describe_Context : nspec {
             it["gets entity from object pool"] = () => {
                 var e = ctx.CreateEntity();
                 e.should_not_be_null();
-                e.GetType().should_be(typeof(IEntity));
+                e.GetType().should_be(typeof(TestEntity));
             };
 
             it["destroys entity when pushing back to object pool"] = () => {

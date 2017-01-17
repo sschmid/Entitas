@@ -289,9 +289,6 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeClassComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\SomeStructComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\describe_Contexts.cs" />
-    <Compile Include="..\Entitas\Entitas\Contexts.cs">
-      <Link>Linked Libraries\Entitas\Contexts.cs</Link>
-    </Compile>
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple contexts\GComponent.cs" />
     <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\EntityExtension.cs</Link>

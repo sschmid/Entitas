@@ -395,7 +395,7 @@ class describe_Group : nspec {
         it["can ToString"] = () => {
             var m = Matcher<TestEntity>.AllOf(Matcher<TestEntity>.AllOf(0), Matcher<TestEntity>.AllOf(1));
             var group = new XXXGroup<TestEntity>(m);
-            group.ToString().should_be("IGroup<TestEntity>(AllOf(0, 1))");
+            group.ToString().should_be("Group(AllOf(0, 1))");
         };
     }
 

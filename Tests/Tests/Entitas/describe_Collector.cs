@@ -200,7 +200,7 @@ class describe_Collector : nspec {
                 };
 
                 it["can ToString"] = () => {
-                    collectorA.ToString().should_be("Collector<TestEntity>(Group(AllOf(1)), IGroup<TestEntity>(AllOf(2)))");
+                    collectorA.ToString().should_be("Collector(Group(AllOf(1)), Group(AllOf(2)))");
                 };
             };
 

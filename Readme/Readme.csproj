@@ -188,9 +188,6 @@
     <Compile Include="..\Entitas\Entitas\Serialization\Blueprints\SerializableMember.cs">
       <Link>Linked Libraries\Entitas\Serialization\Blueprints\SerializableMember.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Contexts.cs">
-      <Link>Linked Libraries\Entitas\Contexts.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Extensions\EntityExtension.cs">
       <Link>Linked Libraries\Entitas\Extensions\EntityExtension.cs</Link>
     </Compile>
