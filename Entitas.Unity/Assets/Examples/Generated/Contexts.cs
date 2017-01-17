@@ -8,20 +8,48 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Contexts {
+    public sealed class Contexts {
 
-        public static IContext<BlueprintsEntity> CreateBlueprintsContext() {
-            return CreateContext<BlueprintsEntity>("Blueprints", BlueprintsComponentIds.TotalComponents, BlueprintsComponentIds.componentNames, BlueprintsComponentIds.componentTypes);
+        public static Contexts sharedInstance {
+            get {
+                if(_sharedInstance == null) {
+                    _sharedInstance = new Contexts();
+                }
+
+                return _sharedInstance;
+            }
+            set { _sharedInstance = value; }
         }
 
-        public static IContext<VisualDebuggingEntity> CreateVisualDebuggingContext() {
-            return CreateContext<VisualDebuggingEntity>("VisualDebugging", VisualDebuggingComponentIds.TotalComponents, VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes);
+        static Contexts _sharedInstance;
+
+        public static void ObserveContext(IContext context) {
+            #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+            if(UnityEngine.Application.isPlaying) {
+                var observer = new Entitas.Unity.VisualDebugging.ContextObserver(context);
+                UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
+            }
+            #endif
+        }
+
+        public static BlueprintsContext CreateBlueprintsContext() {
+            var info = new ContextInfo("Blueprints", BlueprintsComponentIds.componentNames, BlueprintsComponentIds.componentTypes);
+            var context = new BlueprintsContext(BlueprintsComponentIds.TotalComponents, 0, info);
+            ObserveContext(context);
+            return context;
+        }
+
+        public static VisualDebuggingContext CreateVisualDebuggingContext() {
+            var info = new ContextInfo("VisualDebugging", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes);
+            var context = new VisualDebuggingContext(VisualDebuggingComponentIds.TotalComponents, 0, info);
+            ObserveContext(context);
+            return context;
         }
 
         public IContext[] allContexts { get { return new IContext [] { blueprints, visualDebugging }; } }
 
-        public IContext<BlueprintsEntity> blueprints;
-        public IContext<VisualDebuggingEntity> visualDebugging;
+        public BlueprintsContext blueprints;
+        public VisualDebuggingContext visualDebugging;
 
         public void SetAllContexts() {
             blueprints = CreateBlueprintsContext();

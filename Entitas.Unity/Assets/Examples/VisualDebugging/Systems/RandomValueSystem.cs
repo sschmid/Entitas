@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RandomValueSystem : IExecuteSystem {
 
-    readonly IContext<VisualDebuggingEntity> _context;
+    readonly VisualDebuggingContext _context;
 
     public RandomValueSystem(Contexts contexts) {
         _context = contexts.visualDebugging;

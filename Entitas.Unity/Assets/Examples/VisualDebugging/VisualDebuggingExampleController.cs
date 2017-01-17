@@ -16,14 +16,14 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         createTestEntityError(context);
     }
 
-    void createTestGroups(IContext<VisualDebuggingEntity> context) {
+    void createTestGroups(VisualDebuggingContext context) {
         context.GetGroup(VisualDebuggingMatcher.Vector3);
         context.GetGroup(VisualDebuggingMatcher.GameObject);
         context.GetGroup(Matcher<VisualDebuggingEntity>.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
         context.GetGroup(Matcher<VisualDebuggingEntity>.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
     }
 
-    void createTestEntities(IContext<VisualDebuggingEntity> context) {
+    void createTestEntities(VisualDebuggingContext context) {
         for (int i = 0; i < 2; i++) {
             var e = context.CreateEntity();
 
@@ -93,7 +93,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         }
     }
 
-    void createTestEntityWithNullValues(IContext<VisualDebuggingEntity> context) {
+    void createTestEntityWithNullValues(VisualDebuggingContext context) {
         var e = context.CreateEntity();
 
         // Unity's builtIn
@@ -146,7 +146,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         e.AddPerson(personName, personGender);
     }
 
-    void createTestEntityError(IContext<VisualDebuggingEntity> context) {
+    void createTestEntityError(VisualDebuggingContext context) {
         var entity = context.CreateEntity();
         entity.Retain(this);
         context.DestroyEntity(entity);

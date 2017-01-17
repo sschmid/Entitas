@@ -1,6 +1,5 @@
 using Entitas;
 using UnityEngine;
-using Entitas.Unity.VisualDebugging;
 
 public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
@@ -9,18 +8,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
     void Start() {
         _contexts = new Contexts();
-        _contexts.visualDebugging = new XXXContext<VisualDebuggingEntity>(
-            VisualDebuggingComponentIds.TotalComponents, 0,
-            new ContextInfo(
-                "Systems Context",
-                VisualDebuggingComponentIds.componentNames,
-                VisualDebuggingComponentIds.componentTypes
-            )
-        );
-
-        #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-        new ContextObserver(_contexts.visualDebugging);
-        #endif
+        _contexts.visualDebugging = Contexts.CreateVisualDebuggingContext();
 
         _systems = createNestedSystems();
 

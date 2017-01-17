@@ -3,7 +3,7 @@ using Entitas;
 
 public class ProcessRandomValueSystem : ReactiveSystem<VisualDebuggingEntity> {
 
-    readonly IContext<VisualDebuggingEntity> _context;
+    readonly VisualDebuggingContext _context;
 
     public ProcessRandomValueSystem(Contexts contexts) : base(contexts.visualDebugging)
     {

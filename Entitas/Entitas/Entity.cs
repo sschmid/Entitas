@@ -73,6 +73,7 @@ namespace Entitas {
             // TODO UNIT Test
             // Should set creation index
             // shoud set isEnabled = true
+            Reactivate(creationIndex);
 
             _totalComponents = totalComponents;
             _components = new IComponent[totalComponents];
@@ -100,6 +101,8 @@ namespace Entitas {
             // TODO UNIT TEST
             // Set creation index
             // Set isEnabled = true
+            _creationIndex = creationIndex;
+            _isEnabled = true;
         }
 
         /// Adds a component at the specified index.
