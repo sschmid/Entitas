@@ -2,7 +2,7 @@ using System;
 
 namespace Entitas {
 
-    public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : IEntity {
+    public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : class, IEntity, new() {
 
         protected readonly IGroup<TEntity> _group;
         protected readonly Func<TEntity, IComponent, TKey> _getKey;

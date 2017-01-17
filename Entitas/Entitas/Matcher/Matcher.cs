@@ -2,7 +2,7 @@ using System;
 
 namespace Entitas {
 
-    public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : IEntity {
+    public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : class, IEntity, new() {
 
         public int[] indices {
             get {

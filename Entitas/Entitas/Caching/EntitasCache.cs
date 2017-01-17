@@ -15,8 +15,8 @@ namespace Entitas {
         public static HashSet<int> GetIntHashSet() { return _cache.Get<HashSet<int>>(); }
         public static void PushIntHashSet(HashSet<int> hashSet) { hashSet.Clear(); _cache.Push(hashSet); }
 
-        public static List<GroupChanged<TEntity>> GetGroupChangedList<TEntity>() where TEntity : IEntity { return _cache.Get<List<GroupChanged<TEntity>>>(); }
-        public static void PushGroupChangedList<TEntity>(List<GroupChanged<TEntity>> list) where TEntity : IEntity { list.Clear(); _cache.Push(list); }
+        public static List<GroupChanged<TEntity>> GetGroupChangedList<TEntity>() where TEntity : class, IEntity, new() { return _cache.Get<List<GroupChanged<TEntity>>>(); }
+        public static void PushGroupChangedList<TEntity>(List<GroupChanged<TEntity>> list) where TEntity : class, IEntity, new() { list.Clear(); _cache.Push(list); }
 
         public static void Reset() {
             _cache.Reset();

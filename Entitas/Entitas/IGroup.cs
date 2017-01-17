@@ -1,13 +1,13 @@
-﻿namespace Entitas {
+namespace Entitas {
 
     public delegate void GroupChanged<TEntitiy>(
         IGroup<TEntitiy> group, TEntitiy entity, int index, IComponent component
-    ) where TEntitiy : IEntity;
+    ) where TEntitiy : class, IEntity, new();
 
     public delegate void GroupUpdated<TEntitiy>(
         IGroup<TEntitiy> group, TEntitiy entity, int index,
         IComponent previousComponent, IComponent newComponent
-    ) where TEntitiy : IEntity;
+    ) where TEntitiy : class, IEntity, new();
 
     public interface IGroup {
 
@@ -16,7 +16,7 @@
         void RemoveAllEventHandlers();
     }
 
-    public interface IGroup<TEntity> : IGroup where TEntity : IEntity {
+    public interface IGroup<TEntity> : IGroup where TEntity : class, IEntity, new() {
 
         event GroupChanged<TEntity> OnEntityAdded;
         event GroupChanged<TEntity> OnEntityRemoved;

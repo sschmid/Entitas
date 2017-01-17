@@ -6,7 +6,7 @@ namespace Entitas {
         public static Collector<TEntity> CreateCollector<TEntity>(
             this IGroup<TEntity> group,
             GroupEvent groupEvent = GroupEvent.Added)
-            where TEntity : class, IEntity{
+            where TEntity : class, IEntity, new() {
             return new Collector<TEntity>(group, groupEvent);
         }
     }

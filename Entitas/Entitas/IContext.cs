@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Entitas {
 
-    public delegate void ContextChanged<TEntity>(IContext<TEntity> context, IEntity entity) where TEntity : IEntity;
-    public delegate void ContextGroupChanged<TEntity>(IContext<TEntity> context, IGroup<TEntity> group) where TEntity : IEntity;
+    public delegate void ContextChanged<TEntity>(IContext<TEntity> context, IEntity entity) where TEntity : class, IEntity, new();
+    public delegate void ContextGroupChanged<TEntity>(IContext<TEntity> context, IGroup<TEntity> group) where TEntity : class, IEntity, new();
 
     public interface IContext {
 
@@ -31,7 +31,7 @@ namespace Entitas {
         void Reset();
     }
 
-    public interface IContext<TEntity> : IContext where TEntity : IEntity {
+    public interface IContext<TEntity> : IContext where TEntity : class, IEntity, new() {
 
         event ContextChanged<TEntity> OnEntityCreated;
         event ContextChanged<TEntity> OnEntityWillBeDestroyed;
