@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         static readonly CComponent cComponent = new CComponent();
 
@@ -31,12 +31,12 @@ namespace Entitas {
 
     public partial class ContextAMatcher {
 
-        static IMatcher _matcherC;
+        static IMatcher<TestEntity> _matcherC;
 
-        public static IMatcher C {
+        public static IMatcher<TestEntity> C {
             get {
                 if(_matcherC == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ContextAComponentIds.C);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ContextAComponentIds.C);
                     matcher.componentNames = ContextAComponentIds.componentNames;
                     _matcherC = matcher;
                 }
@@ -48,12 +48,12 @@ namespace Entitas {
 
     public partial class ContextBMatcher {
 
-        static IMatcher _matcherC;
+        static IMatcher<TestEntity> _matcherC;
 
-        public static IMatcher C {
+        public static IMatcher<TestEntity> C {
             get {
                 if(_matcherC == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ContextBComponentIds.C);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ContextBComponentIds.C);
                     matcher.componentNames = ContextBComponentIds.componentNames;
                     _matcherC = matcher;
                 }
@@ -65,12 +65,12 @@ namespace Entitas {
 
     public partial class ContextCMatcher {
 
-        static IMatcher _matcherC;
+        static IMatcher<TestEntity> _matcherC;
 
-        public static IMatcher C {
+        public static IMatcher<TestEntity> C {
             get {
                 if(_matcherC == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ContextCComponentIds.C);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ContextCComponentIds.C);
                     matcher.componentNames = ContextCComponentIds.componentNames;
                     _matcherC = matcher;
                 }

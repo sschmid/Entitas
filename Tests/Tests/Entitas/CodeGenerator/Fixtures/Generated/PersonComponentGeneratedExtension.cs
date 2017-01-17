@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         public PersonComponent person { get { return (PersonComponent)GetComponent(ComponentIds.Person); } }
         public bool hasPerson { get { return HasComponent(ComponentIds.Person); } }
@@ -34,12 +34,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherPerson;
+        static IMatcher<TestEntity> _matcherPerson;
 
-        public static IMatcher Person {
+        public static IMatcher<TestEntity> Person {
             get {
                 if(_matcherPerson == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Person);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.Person);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherPerson = matcher;
                 }

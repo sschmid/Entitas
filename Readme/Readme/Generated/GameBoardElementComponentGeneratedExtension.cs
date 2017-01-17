@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class GameEntity : XXXEntity {
 
         static readonly GameBoardElementComponent gameBoardElementComponent = new GameBoardElementComponent();
 
@@ -24,21 +24,16 @@ namespace Entitas {
                 }
             }
         }
-
-        public Entity IsGameBoardElement(bool value) {
-            isGameBoardElement = value;
-            return this;
-        }
     }
 
-    public partial class Matcher {
+    public partial class GameMatcher {
 
-        static IMatcher _matcherGameBoardElement;
+        static IMatcher<GameEntity> _matcherGameBoardElement;
 
-        public static IMatcher GameBoardElement {
+        public static IMatcher<GameEntity> GameBoardElement {
             get {
                 if(_matcherGameBoardElement == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.GameBoardElement);
+                    var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.GameBoardElement);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherGameBoardElement = matcher;
                 }

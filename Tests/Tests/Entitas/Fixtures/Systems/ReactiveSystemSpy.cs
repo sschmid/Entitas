@@ -10,7 +10,7 @@ public interface IReactiveSystemSpy {
     IEntity[] entities { get; }
 }
 
-public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem {
+public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem {
 
     public int didInitialize { get { return _didInitialize; } }
     public int didExecute { get { return _didExecute; } }
@@ -18,7 +18,7 @@ public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitialize
     public int didTearDown { get { return _didTearDown; } }
     public IEntity[] entities { get { return _entities; } }
 
-    public Action<List<IEntity>> executeAction;
+    public Action<List<TestEntity>> executeAction;
 
     protected int _didInitialize;
     protected int _didExecute;
@@ -26,20 +26,20 @@ public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitialize
     protected int _didTearDown;
     protected IEntity[] _entities;
 
-    readonly Func<IEntity, bool> _filter;
+    readonly Func<TestEntity, bool> _filter;
 
-    public ReactiveSystemSpy(Collector collector) : base(collector) {
+    public ReactiveSystemSpy(Collector<TestEntity> collector) : base(collector) {
     }
 
-    public ReactiveSystemSpy(Collector collector, Func<IEntity, bool> filter) : this(collector) {
+    public ReactiveSystemSpy(Collector<TestEntity> collector, Func<IEntity, bool> filter) : this(collector) {
         _filter = filter;
     }
 
-    protected override Collector GetTrigger(Context context) {
+    protected override Collector<TestEntity> GetTrigger(IContext<TestEntity> context) {
         return null;
     }
 
-    protected override bool Filter(IEntity entity) {
+    protected override bool Filter(TestEntity entity) {
         return _filter == null || _filter(entity);
     }
 
@@ -47,7 +47,7 @@ public class ReactiveSystemSpy : ReactiveSystem, IReactiveSystemSpy, IInitialize
         _didInitialize += 1;
     }
 
-    protected override void Execute(List<IEntity> entities) {
+    protected override void Execute(List<TestEntity> entities) {
         _didExecute += 1;
 
         if(entities != null) {

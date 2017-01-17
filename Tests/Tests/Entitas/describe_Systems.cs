@@ -4,7 +4,7 @@ using Entitas;
 class describe_Systems : nspec {
 
     static ReactiveSystemSpy createReactiveSystem(Contexts contexts) {
-        var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+        var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA)));
         contexts.test.CreateEntity().AddComponentA();
 
         return system;
@@ -15,7 +15,7 @@ class describe_Systems : nspec {
         Contexts contexts = null;
 
         before = () => {
-            contexts = new Contexts { test = new Context(10) };
+            contexts = new Contexts { test = new XXXContext<TestEntity>(10) };
         };
 
         context["fixtures"] = () => {
@@ -49,7 +49,7 @@ class describe_Systems : nspec {
             };
 
             it["initializes, executes, cleans up and tears down system"] = () => {
-                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA)));
                 contexts.test.CreateEntity().AddComponentA();
 
                 system.didInitialize.should_be(0);
@@ -105,7 +105,7 @@ class describe_Systems : nspec {
             };
 
             it["wraps IReactiveSystem in a ReactiveSystem"] = () => {
-                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA)));
                 systems.Add(system);
                 contexts.test.CreateEntity().AddComponentA();
                 systems.Execute();
@@ -113,7 +113,7 @@ class describe_Systems : nspec {
             };
 
             it["adds ReactiveSystem"] = () => {
-                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA)));
                 systems.Add(system);
                 contexts.test.CreateEntity().AddComponentA();
                 systems.Execute();
@@ -128,7 +128,7 @@ class describe_Systems : nspec {
             };
 
             it["initializes, executes, cleans up and tears down InitializeExecuteCleanupTearDownSystemSpy"] = () => {
-                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher.AllOf(CID.ComponentA)));
+                var system = new ReactiveSystemSpy(contexts.test.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA)));
                 contexts.test.CreateEntity().AddComponentA();
 
                 systems.Add(system);

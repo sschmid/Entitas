@@ -5,10 +5,10 @@ class describe_Context : nspec {
 
     void when_created() {
 
-        Context ctx = null;
+        IContext<TestEntity> ctx = null;
 
         before = () => {
-            ctx = new Context(CID.TotalComponents);
+            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
         };
 
         it["increments creationIndex"] = () => {
@@ -17,7 +17,7 @@ class describe_Context : nspec {
         };
 
         it["starts with given creationIndex"] = () => {
-            new Context(CID.TotalComponents, 42, null).CreateEntity().creationIndex.should_be(42);
+            new XXXContext<TestEntity>(CID.TotalComponents, 42, null).CreateEntity().creationIndex.should_be(42);
         };
 
         it["has no entities when no entities were created"] = () => {
@@ -70,7 +70,7 @@ class describe_Context : nspec {
                 var componentNames = new[] { "Health", "Position", "View" };
                 var componentTypes = new[] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
                 contextInfo = new ContextInfo("My Context", componentNames, componentTypes);
-                ctx = new Context(componentNames.Length, 0, contextInfo);
+                ctx = new XXXContext<TestEntity>(componentNames.Length, 0, contextInfo);
             };
 
             it["has custom ContextInfo"] = () => {
@@ -82,13 +82,13 @@ class describe_Context : nspec {
             };
 
             it["throws when componentNames is not same length as totalComponents"] = expect<ContextInfoException>(() => {
-                new Context(contextInfo.componentNames.Length + 1, 0, contextInfo);
+                new XXXContext<TestEntity>(contextInfo.componentNames.Length + 1, 0, contextInfo);
             });
         };
 
         context["when entity created"] = () => {
 
-            IEntity e = null;
+            TestEntity e = null;
 
             before = () => {
                 e = ctx.CreateEntity();
@@ -223,14 +223,14 @@ class describe_Context : nspec {
             it["dispatches OnEntityWillBeDestroyed when destroying an entity"] = () => {
                 var e = ctx.CreateEntity();
                 e.AddComponentA();
-                ctx.OnEntityWillBeDestroyed += (p, entity) => {
+                ctx.OnEntityWillBeDestroyed += (c, entity) => {
                     didDispatch += 1;
-                    p.should_be_same(ctx);
+                    c.should_be_same(ctx);
                     entity.should_be_same(e);
                     entity.HasComponentA().should_be_true();
                     entity.isEnabled.should_be_true();
 
-                    p.GetEntities().Length.should_be(0);
+                    ((IContext<TestEntity>)c).GetEntities().Length.should_be(0);
                 };
                 ctx.GetEntities();
                 ctx.DestroyEntity(e);
@@ -271,32 +271,32 @@ class describe_Context : nspec {
             });
 
             it["dispatches OnGroupCreated when creating a new group"] = () => {
-                Group eventGroup = null;
+                IGroup eventGroup = null;
                 ctx.OnGroupCreated += (p, g) => {
                     didDispatch += 1;
                     p.should_be_same(ctx);
                     eventGroup = g;
                 };
-                var group = ctx.GetGroup(Matcher.AllOf(0));
+                var group = ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
                 didDispatch.should_be(1);
                 eventGroup.should_be_same(group);
             };
 
             it["doesn't dispatch OnGroupCreated when group alredy exists"] = () => {
-                ctx.GetGroup(Matcher.AllOf(0));
+                ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
                 ctx.OnGroupCreated += delegate { this.Fail(); };
-                ctx.GetGroup(Matcher.AllOf(0));
+                ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
             };
 
             it["dispatches OnGroupCleared when clearing groups"] = () => {
-                Group eventGroup = null;
+                IGroup eventGroup = null;
                 ctx.OnGroupCleared += (p, g) => {
                     didDispatch += 1;
                     p.should_be_same(ctx);
                     eventGroup = g;
                 };
-                ctx.GetGroup(Matcher.AllOf(0));
-                var group2 = ctx.GetGroup(Matcher.AllOf(1));
+                ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
+                var group2 = ctx.GetGroup(Matcher<TestEntity>.AllOf(1));
                 ctx.ClearGroups();
 
                 didDispatch.should_be(2);
@@ -397,7 +397,7 @@ class describe_Context : nspec {
 
             it["sets up entity from pool"] = () => {
                 ctx.DestroyEntity(ctx.CreateEntity());
-                var g = ctx.GetGroup(Matcher.AllOf(CID.ComponentA));
+                var g = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
                 var e = ctx.CreateEntity();
                 e.AddComponentA();
                 g.GetEntities().should_contain(e);
@@ -405,7 +405,7 @@ class describe_Context : nspec {
 
             context["when entity gets destroyed"] = () => {
 
-                IEntity e = null;
+                TestEntity e = null;
 
                 before = () => {
                     e = ctx.CreateEntity();
@@ -423,18 +423,18 @@ class describe_Context : nspec {
         context["groups"] = () => {
 
             it["gets empty group for matcher when no entities were created"] = () => {
-                var g = ctx.GetGroup(Matcher.AllOf(CID.ComponentA));
+                var g = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
                 g.should_not_be_null();
                 g.GetEntities().should_be_empty();
             };
 
             context["when entities created"] = () => {
 
-                IEntity eAB1 = null;
-                IEntity eAB2 = null;
-                IEntity eA = null;
+                TestEntity eAB1 = null;
+                TestEntity eAB2 = null;
+                TestEntity eA = null;
 
-                IMatcher matcherAB = Matcher.AllOf(new[] {
+                IMatcher<TestEntity> matcherAB = Matcher<TestEntity>.AllOf(new[] {
                     CID.ComponentA,
                     CID.ComponentB
                 });
@@ -510,7 +510,7 @@ class describe_Context : nspec {
                     var updated = 0;
                     var prevComp = eA.GetComponent(CID.ComponentA);
                     var newComp = new ComponentA();
-                    var g = ctx.GetGroup(Matcher.AllOf(CID.ComponentA));
+                    var g = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
                     g.OnEntityUpdated += (group, entity, index, previousComponent, newComponent) => {
                         updated += 1;
                         group.should_be_same(g);
@@ -529,7 +529,7 @@ class describe_Context : nspec {
                     var e = ctx.CreateEntity()
                                 .AddComponentA()
                                 .AddComponentB();
-                    var matcher = Matcher.AllOf(CID.ComponentB).NoneOf(CID.ComponentA);
+                    var matcher = Matcher<TestEntity>.AllOf(CID.ComponentB).NoneOf(CID.ComponentA);
                     var g = ctx.GetGroup(matcher);
                     g.OnEntityAdded += delegate { this.Fail(); };
                     ctx.DestroyEntity(e);
@@ -538,12 +538,12 @@ class describe_Context : nspec {
                 context["event timing"] = () => {
 
                     before = () => {
-                        ctx = new Context(CID.TotalComponents);
+                        ctx = new XXXContext<TestEntity>(CID.TotalComponents);
                     };
 
                     it["dispatches group.OnEntityAdded events after all groups are updated"] = () => {
-                        var groupA = ctx.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
-                        var groupB = ctx.GetGroup(Matcher.AllOf(CID.ComponentB));
+                        var groupA = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
+                        var groupB = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
 
                         groupA.OnEntityAdded += delegate {
                             groupB.count.should_be(1);
@@ -555,9 +555,9 @@ class describe_Context : nspec {
                     };
 
                     it["dispatches group.OnEntityRemoved events after all groups are updated"] = () => {
-                        ctx = new Context(CID.TotalComponents);
-                        var groupB = ctx.GetGroup(Matcher.AllOf(CID.ComponentB));
-                        var groupAB = ctx.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
+                        ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+                        var groupB = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
+                        var groupAB = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
 
                         groupB.OnEntityRemoved += delegate {
                             groupAB.count.should_be(0);
@@ -581,14 +581,14 @@ class describe_Context : nspec {
 
             it["adds and EntityIndex"] = () => {
                 const int componentIndex = 1;
-                var entityIndex = new PrimaryEntityIndex<string>(ctx.GetGroup(Matcher.AllOf(componentIndex)), null);
+                var entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), null);
                 ctx.AddEntityIndex(componentIndex.ToString(), entityIndex);
                 ctx.GetEntityIndex(componentIndex.ToString()).should_be_same(entityIndex);
             };
 
             it["throws when adding an EntityIndex with same name"] = expect<ContextEntityIndexDoesAlreadyExistException>(() => {
                 const int componentIndex = 1;
-                var entityIndex = new PrimaryEntityIndex<string>(ctx.GetGroup(Matcher.AllOf(componentIndex)), null);
+                var entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), null);
                 ctx.AddEntityIndex(componentIndex.ToString(), entityIndex);
                 ctx.AddEntityIndex(componentIndex.ToString(), entityIndex);
             });
@@ -600,9 +600,9 @@ class describe_Context : nspec {
 
                 it["resets and removes groups from context"] = () => {
 
-                    var m = Matcher.AllOf(CID.ComponentA);
+                    var m = Matcher<TestEntity>.AllOf(CID.ComponentA);
                     var groupsCreated = 0;
-                    Group createdGroup = null;
+                    IGroup createdGroup = null;
                     ctx.OnGroupCreated += (p, g) => {
                         groupsCreated += 1;
                         createdGroup = g;
@@ -624,7 +624,7 @@ class describe_Context : nspec {
                 };
 
                 it["removes all event handlers from groups"] = () => {
-                    var m = Matcher.AllOf(CID.ComponentA);
+                    var m = Matcher<TestEntity>.AllOf(CID.ComponentA);
                     var group = ctx.GetGroup(m);
 
                     group.OnEntityAdded += delegate { this.Fail(); };
@@ -637,7 +637,7 @@ class describe_Context : nspec {
                 };
 
                 it["releases entities in groups"] = () => {
-                    var m = Matcher.AllOf(CID.ComponentA);
+                    var m = Matcher<TestEntity>.AllOf(CID.ComponentA);
                     ctx.GetGroup(m);
                     var entity = ctx.CreateEntity();
                     entity.AddComponentA();
@@ -686,13 +686,13 @@ class describe_Context : nspec {
                         ctx.OnGroupCreated += delegate { this.Fail(); };
                         ctx.Reset();
 
-                        ctx.GetGroup(Matcher.AllOf(0));
+                        ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
                     };
 
                     it["removes OnGroupCleared"] = () => {
                         ctx.OnGroupCleared += delegate { this.Fail(); };
                         ctx.Reset();
-                        ctx.GetGroup(Matcher.AllOf(0));
+                        ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
 
                         ctx.ClearGroups();
                     };
@@ -733,10 +733,10 @@ class describe_Context : nspec {
 
             context["EntityIndex"] = () => {
 
-                PrimaryEntityIndex<string> entityIndex = null;
+                PrimaryEntityIndex<TestEntity, string> entityIndex = null;
 
                 before = () => {
-                    entityIndex = new PrimaryEntityIndex<string>(ctx.GetGroup(Matcher.AllOf(CID.ComponentA)),
+                    entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
                         (e, c) => ((NameAgeComponent)(c)).name);
                     ctx.AddEntityIndex(CID.ComponentA.ToString(), entityIndex);
                 };
@@ -763,9 +763,9 @@ class describe_Context : nspec {
         context["EntitasCache"] = () => {
 
             it["pops new list from list pool"] = () => {
-                var groupA = ctx.GetGroup(Matcher.AllOf(CID.ComponentA));
-                var groupAB = ctx.GetGroup(Matcher.AnyOf(CID.ComponentA, CID.ComponentB));
-                var groupABC = ctx.GetGroup(Matcher.AnyOf(CID.ComponentA, CID.ComponentB, CID.ComponentC));
+                var groupA = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
+                var groupAB = ctx.GetGroup(Matcher<TestEntity>.AnyOf(CID.ComponentA, CID.ComponentB));
+                var groupABC = ctx.GetGroup(Matcher<TestEntity>.AnyOf(CID.ComponentA, CID.ComponentB, CID.ComponentC));
 
                 var didExecute = 0;
 

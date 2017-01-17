@@ -21,19 +21,19 @@ namespace Readme {
         }
 
 
-        public static Entity CreateRedGem(this Context context, int x, int y) {
+        public static GameEntity CreateRedGem(this GameContext context, int x, int y) {
             var entity = context.CreateEntity();
-            entity.IsGameBoardElement(true);
+            entity.isGameBoardElement = true;
             entity.isMovable = true;
             entity.AddPosition(x, y);
             entity.AddResource(Res.redGem);
-            entity.IsInteractive(true);
+            entity.isInteractive = true;
             return entity;
         }
 
 
-        static void moveSystem(Context context) {
-            var entities = context.GetEntities(Matcher.AllOf(Matcher.Move, Matcher.Position));
+        static void moveSystem(GameContext context) {
+            var entities = context.GetEntities(Matcher<GameEntity>.AllOf(GameMatcher.Move, GameMatcher.Position));
             foreach(var entity in entities) {
                 var move = entity.move;
                 var pos = entity.position;
@@ -49,7 +49,7 @@ namespace Readme {
          * 
          */
 
-        static void entityExample(Entity entity) {
+        static void entityExample(GameEntity entity) {
             entity.AddPosition(3, 7);
             entity.AddHealth(100);
             entity.isMovable = true;
@@ -67,30 +67,30 @@ namespace Readme {
         static void contextExample() {
             // contexts.context is kindly generated for you by the code generator
             var contexts = Contexts.sharedInstance; 
-            var context = contexts.context;
+            var context = contexts.game;
             var entity = context.CreateEntity();
             entity.isMovable = true;
 
             // Returns all entities having MovableComponent and PositionComponent.
             // Matchers are also generated for you.
-            var entities = context.GetEntities(Matcher.AllOf(Matcher.Movable, Matcher.Position));
+            var entities = context.GetEntities(Matcher<GameEntity>.AllOf(GameMatcher.Movable, GameMatcher.Position));
             foreach(var e in entities) {
                 // do something
             }
         }
 
-        static void groupExample(Context context) {
-            context.GetGroup(Matcher.Position).GetEntities();
+        static void groupExample(GameContext context) {
+            context.GetGroup(GameMatcher.Position).GetEntities();
 
             // ----------------------------
 
-            context.GetGroup(Matcher.Position).OnEntityAdded += (group, entity, index, component) => {
+            context.GetGroup(GameMatcher.Position).OnEntityAdded += (group, entity, index, component) => {
                 // Do something
             };
         }
 
-        static void collectorExample(Context context) {
-            var group = context.GetGroup(Matcher.Position);
+        static void collectorExample(GameContext context) {
+            var group = context.GetGroup(GameMatcher.Position);
             var collector = group.CreateCollector(GroupEvent.Added);
 
             // ----------------------------
@@ -104,7 +104,7 @@ namespace Readme {
             collector.Deactivate();
         }
 
-        static void positionComponent(Entity e, PositionComponent component, int x, int y) {
+        static void positionComponent(GameEntity e, PositionComponent component, int x, int y) {
             var pos = e.position;
             var has = e.hasPosition;
 
@@ -114,7 +114,7 @@ namespace Readme {
         }
 
         #pragma warning disable
-        static void userComponent(Context context, UserComponent component) {
+        static void userComponent(GameContext context, UserComponent component) {
             var e = context.userEntity;
             var name = context.user.name;
             var has = context.hasUser;
@@ -124,13 +124,13 @@ namespace Readme {
             context.RemoveUser();
         }
 
-        static void movableComponent(Entity e) {
+        static void movableComponent(GameEntity e) {
             var movable = e.isMovable;
             e.isMovable = true;
             e.isMovable = false;
         }
 
-        static void animatingComponent(Context context) {
+        static void animatingComponent(GameContext context) {
             var e = context.animatingEntity;
             var isAnimating = context.isAnimating;
             context.isAnimating = true;

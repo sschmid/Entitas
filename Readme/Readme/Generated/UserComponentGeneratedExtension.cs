@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class GameEntity : XXXEntity {
 
         public UserComponent user { get { return (UserComponent)GetComponent(ComponentIds.User); } }
         public bool hasUser { get { return HasComponent(ComponentIds.User); } }
@@ -32,13 +32,13 @@ namespace Entitas {
         }
     }
 
-    public partial class Context {
+    public sealed partial class GameContext {
 
-        public Entity userEntity { get { return GetGroup(Matcher.User).GetSingleEntity(); } }
+        public GameEntity userEntity { get { return GetGroup(GameMatcher.User).GetSingleEntity(); } }
         public UserComponent user { get { return userEntity.user; } }
         public bool hasUser { get { return userEntity != null; } }
 
-        public Entity SetUser(string newName, int newAge) {
+        public GameEntity SetUser(string newName, int newAge) {
             if(hasUser) {
                 throw new EntitasException("Could not set user!\n" + this + " already has an entity with UserComponent!",
                     "You should check if the context already has a userEntity before setting it or use context.ReplaceUser().");
@@ -48,15 +48,13 @@ namespace Entitas {
             return entity;
         }
 
-        public Entity ReplaceUser(string newName, int newAge) {
+        public void ReplaceUser(string newName, int newAge) {
             var entity = userEntity;
             if(entity == null) {
                 entity = SetUser(newName, newAge);
             } else {
                 entity.ReplaceUser(newName, newAge);
             }
-
-            return entity;
         }
 
         public void RemoveUser() {
@@ -64,14 +62,14 @@ namespace Entitas {
         }
     }
 
-    public partial class Matcher {
+    public partial class GameMatcher {
 
-        static IMatcher _matcherUser;
+        static IMatcher<GameEntity> _matcherUser;
 
-        public static IMatcher User {
+        public static IMatcher<GameEntity> User {
             get {
                 if(_matcherUser == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.User);
+                    var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.User);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherUser = matcher;
                 }

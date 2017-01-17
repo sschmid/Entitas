@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class GameEntity : XXXEntity {
 
         public UIPositionComponent uIPosition { get { return (UIPositionComponent)GetComponent(UIComponentIds.UIPosition); } }
         public bool hasUIPosition { get { return HasComponent(UIComponentIds.UIPosition); } }
@@ -37,12 +37,12 @@ namespace Entitas {
 
     public partial class UIMatcher {
 
-        static IMatcher _matcherUIPosition;
+        static IMatcher<GameEntity> _matcherUIPosition;
 
-        public static IMatcher UIPosition {
+        public static IMatcher<GameEntity> UIPosition {
             get {
                 if(_matcherUIPosition == null) {
-                    var matcher = (Matcher)Matcher.AllOf(UIComponentIds.UIPosition);
+                    var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(UIComponentIds.UIPosition);
                     matcher.componentNames = UIComponentIds.componentNames;
                     _matcherUIPosition = matcher;
                 }

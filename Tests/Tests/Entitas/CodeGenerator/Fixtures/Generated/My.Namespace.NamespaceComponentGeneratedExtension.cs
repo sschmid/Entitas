@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         static readonly My.Namespace.NamespaceComponent namespaceComponent = new My.Namespace.NamespaceComponent();
 
@@ -28,12 +28,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherNamespace;
+        static IMatcher<TestEntity> _matcherNamespace;
 
-        public static IMatcher Namespace {
+        public static IMatcher<TestEntity> Namespace {
             get {
                 if(_matcherNamespace == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Namespace);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.Namespace);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherNamespace = matcher;
                 }

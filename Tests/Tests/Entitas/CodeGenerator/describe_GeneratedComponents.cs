@@ -14,7 +14,7 @@
 
 //        context["component without fields"] = () => {
 
-//            IEntity e = null;
+//            TestEntity e = null;
 //            int index = -1;
 
 //            before = () => {
@@ -63,7 +63,7 @@
 
 //            context["matcher"] = () => {
 
-//                IMatcher matcher = null;
+//                IMatcher<TestEntity> matcher = null;
 
 //                before = () => {
 //                    matcher = Matcher.Movable;
@@ -86,7 +86,7 @@
 
 //        context["component with fields"] = () => {
 
-//            IEntity e = null;
+//            TestEntity e = null;
 //            int index = ComponentIds.Person;
 
 //            before = () => {
@@ -169,7 +169,7 @@
 
 //            context["matcher"] = () => {
 
-//                IMatcher matcher = null;
+//                IMatcher<TestEntity> matcher = null;
 
 //                before = () => {
 //                    matcher = Matcher.Person;
@@ -192,7 +192,7 @@
 
 //        context["single component without fields"] = () => {
 
-//            IEntity e = null;
+//            TestEntity e = null;
 //            int index = -1;
 
 //            before = () => {
@@ -246,7 +246,7 @@
 
 //                context["matcher"] = () => {
 
-//                    IMatcher matcher = null;
+//                    IMatcher<TestEntity> matcher = null;
 
 //                    before = () => {
 //                        matcher = Matcher.Animating;
@@ -332,7 +332,7 @@
 
 //            context["entity extensions"] = () => {
 
-//                IEntity e = null;
+//                TestEntity e = null;
 
 //                before = () => {
 //                    e = ctx.CreateEntity();
@@ -414,7 +414,7 @@
 
 //                context["matcher"] = () => {
 
-//                    IMatcher matcher = null;
+//                    IMatcher<TestEntity> matcher = null;
 
 //                    before = () => {
 //                        matcher = Matcher.User;

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class GameEntity : XXXEntity {
 
         public HealthComponent health { get { return (HealthComponent)GetComponent(ComponentIds.Health); } }
         public bool hasHealth { get { return HasComponent(ComponentIds.Health); } }
@@ -30,14 +30,14 @@ namespace Entitas {
         }
     }
 
-    public partial class Matcher {
+    public partial class GameMatcher {
 
-        static IMatcher _matcherHealth;
+        static IMatcher<GameEntity> _matcherHealth;
 
-        public static IMatcher Health {
+        public static IMatcher<GameEntity> Health {
             get {
                 if(_matcherHealth == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Health);
+                    var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Health);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherHealth = matcher;
                 }

@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         static readonly DefaultContextComponent defaultContextComponent = new DefaultContextComponent();
 
@@ -28,12 +28,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherDefaultContext;
+        static IMatcher<TestEntity> _matcherDefaultContext;
 
-        public static IMatcher DefaultContext {
+        public static IMatcher<TestEntity> DefaultContext {
             get {
                 if(_matcherDefaultContext == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.DefaultContext);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.DefaultContext);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherDefaultContext = matcher;
                 }

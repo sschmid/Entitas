@@ -6,14 +6,14 @@ class describe_EntityIndex : nspec {
 
     void when_primary_index() {
 
-        PrimaryEntityIndex<string> index = null;
-        Context ctx = null;
-        Group group = null;
+        PrimaryEntityIndex<TestEntity, string> index = null;
+        IContext<TestEntity> ctx = null;
+        IGroup<TestEntity> group = null;
 
         before = () => {
-            ctx = new Context(CID.TotalComponents);
-            group = ctx.GetGroup(Matcher.AllOf(CID.ComponentA));
-            index = new PrimaryEntityIndex<string>(group, (e, c) => {
+            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+            group = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
+            index = new PrimaryEntityIndex<TestEntity, string>(group, (e, c) => {
                 var nameAge = c as NameAgeComponent;
                 return nameAge != null
                     ? nameAge.name
@@ -39,7 +39,7 @@ class describe_EntityIndex : nspec {
         context["when entity for key exists"] = () => {
 
             const string name = "Max";
-            Entity entity = null;
+            TestEntity entity = null;
 
             before = () => {
                 var nameAgeComponent = new NameAgeComponent();
@@ -65,7 +65,7 @@ class describe_EntityIndex : nspec {
             };
 
             it["has existing entity"] = () => {
-                var newIndex = new PrimaryEntityIndex<string>(group, (e, c) => {
+                var newIndex = new PrimaryEntityIndex<TestEntity, string>(group, (e, c) => {
                     var nameAge = c as NameAgeComponent;
                     return nameAge != null
                         ? nameAge.name
@@ -130,14 +130,14 @@ class describe_EntityIndex : nspec {
 
     void when_index() {
 
-        EntityIndex<string> index = null;
-        Context ctx = null;
-        Group group = null;
+        EntityIndex<TestEntity, string> index = null;
+        IContext<TestEntity> ctx = null;
+        IGroup<TestEntity> group = null;
 
         before = () => {
-            ctx = new Context(CID.TotalComponents);
-            group = ctx.GetGroup(Matcher.AllOf(CID.ComponentA));
-            index = new EntityIndex<string>(group, (e, c) => {
+            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
+            group = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
+            index = new EntityIndex<TestEntity, string>(group, (e, c) => {
                 var nameAge = c as NameAgeComponent;
                 return nameAge != null
                     ? nameAge.name
@@ -156,8 +156,8 @@ class describe_EntityIndex : nspec {
 
             const string name = "Max";
             NameAgeComponent nameAgeComponent = null;
-            Entity entity1 = null;
-            Entity entity2 = null;
+            TestEntity entity1 = null;
+            TestEntity entity2 = null;
 
             before = () => {
                 nameAgeComponent = new NameAgeComponent();
@@ -181,7 +181,7 @@ class describe_EntityIndex : nspec {
             };
 
             it["has existing entities"] = () => {
-                var newIndex = new EntityIndex<string>(group, (e, c) => {
+                var newIndex = new EntityIndex<TestEntity, string>(group, (e, c) => {
                     var nameAge = c as NameAgeComponent;
                     return nameAge != null
                         ? nameAge.name
@@ -244,20 +244,20 @@ class describe_EntityIndex : nspec {
     void when_index_multiple_components() {
 
         #pragma warning disable
-        EntityIndex<string> index = null;
-        Context ctx = null;
-        Group group = null;
+        EntityIndex<TestEntity, string> index = null;
+        IContext<TestEntity> ctx = null;
+        IGroup<TestEntity> group = null;
 
         before = () => {
-            ctx = new Context(CID.TotalComponents);
+            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
         };
 
         it["gets last component that triggered adding entity to group"] = () => {
 
             IComponent receivedComponent = null;
 
-            group = ctx.GetGroup(Matcher.AllOf(CID.ComponentA, CID.ComponentB));
-            index = new EntityIndex<string>(group, (e, c) => {
+            group = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB));
+            index = new EntityIndex<TestEntity, string>(group, (e, c) => {
                 receivedComponent = c;
                 return ((NameAgeComponent)c).name;
             });
@@ -285,8 +285,8 @@ class describe_EntityIndex : nspec {
             var nameAgeComponent2 = new NameAgeComponent();
             nameAgeComponent2.name = "Jack";
 
-            group = ctx.GetGroup(Matcher.AllOf(CID.ComponentA).NoneOf(CID.ComponentB));
-            index = new EntityIndex<string>(group, (e, c) => {
+            group = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA).NoneOf(CID.ComponentB));
+            index = new EntityIndex<TestEntity, string>(group, (e, c) => {
                 receivedComponents.Add(c);
 
                 if(c == nameAgeComponent1) {

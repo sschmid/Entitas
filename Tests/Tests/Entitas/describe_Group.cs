@@ -3,9 +3,9 @@ using NSpec;
 
 class describe_Group : nspec {
 
-    Group _groupA;
+    IGroup<TestEntity> _groupA;
 
-    void assertContains(params IEntity[] expectedEntities) {
+    void assertContains(params TestEntity[] expectedEntities) {
         _groupA.count.should_be(expectedEntities.Length);
 
         var entities = _groupA.GetEntities();
@@ -17,7 +17,7 @@ class describe_Group : nspec {
         }
     }
 
-    void assertContainsNot(IEntity entity) {
+    void assertContainsNot(TestEntity entity) {
         _groupA.count.should_be(0);
         _groupA.GetEntities().should_be_empty();
         _groupA.ContainsEntity(entity).should_be_false();
@@ -25,11 +25,11 @@ class describe_Group : nspec {
 
     void when_created() {
 
-        IEntity eA1 = null;
-        IEntity eA2 = null;
+        TestEntity eA1 = null;
+        TestEntity eA2 = null;
 
         before = () => {
-            _groupA = new Group(Matcher.AllOf(CID.ComponentA));
+            _groupA = new XXXGroup<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentA));
             eA1 = this.CreateEntity().AddComponentA();
             eA2 = this.CreateEntity().AddComponentA();
         };
@@ -99,7 +99,7 @@ class describe_Group : nspec {
             _groupA.GetSingleEntity().should_be_same(eA1);
         };
 
-        it["throws when attempting to get single entity and multiple matching entities exist"] = expect<GroupSingleEntityException>(() => {
+        it["throws when attempting to get single entity and multiple matching entities exist"] = expect<GroupSingleEntityException<TestEntity>>(() => {
             handleSilently(eA1);
             handleSilently(eA2);
             _groupA.GetSingleEntity();
@@ -393,33 +393,33 @@ class describe_Group : nspec {
         };
 
         it["can ToString"] = () => {
-            var m = Matcher.AllOf(Matcher.AllOf(0), Matcher.AllOf(1));
-            var group = new Group(m);
-            group.ToString().should_be("Group(AllOf(0, 1))");
+            var m = Matcher<TestEntity>.AllOf(Matcher<TestEntity>.AllOf(0), Matcher<TestEntity>.AllOf(1));
+            var group = new XXXGroup<TestEntity>(m);
+            group.ToString().should_be("IGroup<TestEntity>(AllOf(0, 1))");
         };
     }
 
-    void handleSilently(IEntity entity) {
+    void handleSilently(TestEntity entity) {
         _groupA.HandleEntitySilently(entity);
     }
 
-    void handle(IEntity entity, int index, IComponent component) {
+    void handle(TestEntity entity, int index, IComponent component) {
         _groupA.HandleEntity(entity, index, component);
     }
 
-    void handleAddEA(IEntity entity) {
+    void handleAddEA(TestEntity entity) {
         handle(entity, CID.ComponentA, entity.GetComponentA());
     }
 
-    void handleAddEB(IEntity entity) {
+    void handleAddEB(TestEntity entity) {
         handle(entity, CID.ComponentB, entity.GetComponentB());
     }
 
-    void handleRemoveEA(IEntity entity, IComponent component) {
+    void handleRemoveEA(TestEntity entity, IComponent component) {
         handle(entity, CID.ComponentA, component);
     }
 
-    void updateEA(IEntity entity, IComponent component) {
+    void updateEA(TestEntity entity, IComponent component) {
         _groupA.UpdateEntity(entity, CID.ComponentA, Component.A, component);
     }
 }

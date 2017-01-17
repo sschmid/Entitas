@@ -12,7 +12,7 @@ public sealed class AddViewFromObjectPoolSystem : ISetPool, IReactiveSystem, IEn
     public IMatcher excludeComponents {
         get
         {
-            return Matcher.AnyOf(BulletsMatcher.Destroy, BulletsMatcher.Destroy);
+            return Matcher<TestEntity>.AnyOf(BulletsMatcher.Destroy, BulletsMatcher.Destroy);
         }
     }
 

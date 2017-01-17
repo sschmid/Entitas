@@ -6,11 +6,11 @@ class describe_Blueprints : nspec {
 
     void when_creating() {
 
-        Context ctx = null;
-        Entity entity = null;
+        IContext<TestEntity> ctx = null;
+        TestEntity entity = null;
 
         before = () => {
-            ctx = new Context(CID.TotalComponents);
+            ctx = new XXXContext<TestEntity>(CID.TotalComponents);
             entity = ctx.CreateEntity();
         };
 
@@ -131,8 +131,6 @@ class describe_Blueprints : nspec {
                 };
 
                 it["applies blueprint to entity"] = () => {
-                    entity.ApplyBlueprint(blueprint).should_be(entity);
-
                     entity.GetComponents().Length.should_be(2);
 
                     entity.GetComponent(CID.ComponentA).GetType().should_be(typeof(ComponentA));

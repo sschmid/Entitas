@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class GameEntity : XXXEntity {
 
         static readonly InteractiveComponent interactiveComponent = new InteractiveComponent();
 
@@ -24,21 +24,16 @@ namespace Entitas {
                 }
             }
         }
-
-        public Entity IsInteractive(bool value) {
-            isInteractive = value;
-            return this;
-        }
     }
 
-    public partial class Matcher {
+    public partial class GameMatcher {
 
-        static IMatcher _matcherInteractive;
+        static IMatcher<GameEntity> _matcherInteractive;
 
-        public static IMatcher Interactive {
+        public static IMatcher<GameEntity> Interactive {
             get {
                 if(_matcherInteractive == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Interactive);
+                    var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Interactive);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherInteractive = matcher;
                 }

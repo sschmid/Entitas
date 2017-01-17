@@ -1,4 +1,4 @@
-public enum TestEnum {
+public enum SomeEnum {
     Test1,
     Test2,
     Test3

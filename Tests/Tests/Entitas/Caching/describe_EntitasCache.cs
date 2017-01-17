@@ -34,11 +34,11 @@ class describe_EntitasCache : nspec {
         };
 
         it["clears GroupChanged hashSet"] = () => {
-            var list = EntitasCache.GetGroupChangedList();
+            var list = EntitasCache.GetGroupChangedList<TestEntity>();
             list.Add((group, entity, index, component) => {});
-            EntitasCache.PushGroupChangedList(list);
+            EntitasCache.PushGroupChangedList<TestEntity>(list);
 
-            EntitasCache.GetGroupChangedList().Count.should_be(0);
+            EntitasCache.GetGroupChangedList<TestEntity>().Count.should_be(0);
         };
     }
 }

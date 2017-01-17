@@ -15,7 +15,7 @@ public class SomeStructComponent : IComponent {
 
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         public SomeStructComponent someStruct { get { return (SomeStructComponent)GetComponent(ComponentIds.SomeStruct); } }
         public bool hasSomeStruct { get { return HasComponent(ComponentIds.SomeStruct); } }
@@ -39,12 +39,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherSomeStruct;
+        static IMatcher<TestEntity> _matcherSomeStruct;
 
-        public static IMatcher SomeStruct {
+        public static IMatcher<TestEntity> SomeStruct {
             get {
                 if(_matcherSomeStruct == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.SomeStruct);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.SomeStruct);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherSomeStruct = matcher;
                 }

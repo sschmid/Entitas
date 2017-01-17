@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         static readonly AnimatingComponent animatingComponent = new AnimatingComponent();
 
@@ -26,9 +26,9 @@ namespace Entitas {
         }
     }
 
-    public partial class Context {
+    public sealed partial class TestContext : XXXContext<TestEntity> {
 
-        public IEntity animatingEntity { get { return GetGroup(Matcher.Animating).GetSingleEntity(); } }
+        public TestEntity animatingEntity { get { return GetGroup(Matcher.Animating).GetSingleEntity(); } }
 
         public bool isAnimating {
             get { return animatingEntity != null; }
@@ -47,12 +47,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherAnimating;
+        static IMatcher<TestEntity> _matcherAnimating;
 
-        public static IMatcher Animating {
+        public static IMatcher<TestEntity> Animating {
             get {
                 if(_matcherAnimating == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Animating);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.Animating);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherAnimating = matcher;
                 }

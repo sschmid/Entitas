@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using Entitas.Migration;
 using NSpec;
@@ -32,7 +32,7 @@ using UnityEngine;
 
 public sealed class AddViewFromObjectPoolSystem : IInitializeSystem, ReactiveSystem {
 
-    public Collector GetTrigger(Context context) {
+    public Collector<TestEntity> GetTrigger(Context context) {
         return context.CreateCollector(BulletsMatcher.ViewObjectPool, GroupEvent.Removed);
     }
 
@@ -44,7 +44,7 @@ public sealed class AddViewFromObjectPoolSystem : IInitializeSystem, ReactiveSys
 
         // ensure was: Matcher.AllOf(BulletsMatcher.ViewObjectPool, BulletsMatcher.Position)
 
-        // exclude was: Matcher.AnyOf(BulletsMatcher.Destroy, BulletsMatcher.Destroy)
+        // exclude was: Matcher<TestEntity>.AnyOf(BulletsMatcher.Destroy, BulletsMatcher.Destroy)
 
         return ((entitas.hasViewObjectPool && entitas.hasPosition)) && !((entitas.hasDestroy || entitas.hasDestroy));
     }

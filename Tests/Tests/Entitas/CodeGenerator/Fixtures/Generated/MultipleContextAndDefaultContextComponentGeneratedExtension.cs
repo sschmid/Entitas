@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         static readonly MultipleContextAndDefaultContextComponent multipleContextAndDefaultContextComponent = new MultipleContextAndDefaultContextComponent();
 
@@ -30,12 +30,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherMultipleContextAndDefaultContext;
+        static IMatcher<TestEntity> _matcherMultipleContextAndDefaultContext;
 
-        public static IMatcher MultipleContextAndDefaultContext {
+        public static IMatcher<TestEntity> MultipleContextAndDefaultContext {
             get {
                 if(_matcherMultipleContextAndDefaultContext == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.MultipleContextAndDefaultContext);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.MultipleContextAndDefaultContext);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherMultipleContextAndDefaultContext = matcher;
                 }
@@ -48,12 +48,12 @@ namespace Entitas {
 
     public partial class OtherMatcher {
 
-        static IMatcher _matcherMultipleContextAndDefaultContext;
+        static IMatcher<TestEntity> _matcherMultipleContextAndDefaultContext;
 
-        public static IMatcher MultipleContextAndDefaultContext {
+        public static IMatcher<TestEntity> MultipleContextAndDefaultContext {
             get {
                 if(_matcherMultipleContextAndDefaultContext == null) {
-                    var matcher = (Matcher)Matcher.AllOf(OtherComponentIds.MultipleContextAndDefaultContext);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(OtherComponentIds.MultipleContextAndDefaultContext);
                     matcher.componentNames = OtherComponentIds.componentNames;
                     _matcherMultipleContextAndDefaultContext = matcher;
                 }

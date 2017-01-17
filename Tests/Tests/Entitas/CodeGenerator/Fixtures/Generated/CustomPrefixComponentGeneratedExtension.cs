@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         static readonly CustomPrefixComponent customPrefixComponent = new CustomPrefixComponent();
 
@@ -26,9 +26,9 @@ namespace Entitas {
         }
     }
 
-    public partial class Context {
+    public sealed partial class TestContext : XXXContext<TestEntity> {
 
-        public IEntity customPrefixEntity { get { return GetGroup(Matcher.CustomPrefix).GetSingleEntity(); } }
+        public TestEntity customPrefixEntity { get { return GetGroup(Matcher.CustomPrefix).GetSingleEntity(); } }
 
         public bool myCustomPrefix {
             get { return customPrefixEntity != null; }
@@ -47,12 +47,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherCustomPrefix;
+        static IMatcher<TestEntity> _matcherCustomPrefix;
 
-        public static IMatcher CustomPrefix {
+        public static IMatcher<TestEntity> CustomPrefix {
             get {
                 if(_matcherCustomPrefix == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.CustomPrefix);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.CustomPrefix);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherCustomPrefix = matcher;
                 }

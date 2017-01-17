@@ -3,24 +3,24 @@ using NSpec;
 
 class describe_Collector : nspec {
 
-    Context _context;
+    IContext<TestEntity> _context;
 
     void when_created() {
 
-        Group groupA = null;
-        Collector collectorA = null;
+        IGroup<TestEntity> groupA = null;
+        Collector<TestEntity> collectorA = null;
 
-        IMatcher matcherA = Matcher.AllOf(CID.ComponentA);
+        IMatcher<TestEntity> matcherA = Matcher<TestEntity>.AllOf(CID.ComponentA);
 
         before = () => {
-            _context = new Context(CID.TotalComponents);
+            _context = new XXXContext<TestEntity>(CID.TotalComponents);
             groupA = _context.GetGroup(matcherA);
         };
 
         context["when observing with groupEvent OnEntityAdded"] = () => {
             
             before = () => {
-                collectorA = new Collector(groupA, GroupEvent.Added);
+                collectorA = new Collector<TestEntity>(groupA, GroupEvent.Added);
             };
 
             it["is empty when nothing happend"] = () => {
@@ -29,7 +29,7 @@ class describe_Collector : nspec {
 
             context["when entity collected"] = () => {
 
-                IEntity e = null;
+                TestEntity e = null;
 
                 before = () => {
                     e = createEA();
@@ -94,7 +94,7 @@ class describe_Collector : nspec {
 
             context["reference counting"] = () => {
 
-                IEntity e = null;
+                TestEntity e = null;
 
                 before = () => {
                     e = createEA();
@@ -125,7 +125,7 @@ class describe_Collector : nspec {
         context["when observing with groupEvent OnEntityRemoved"] = () => {
 
             before = () => {
-                collectorA = new Collector(groupA, GroupEvent.Removed);
+                collectorA = new Collector<TestEntity>(groupA, GroupEvent.Removed);
             };
 
             it["returns collected entities"] = () => {
@@ -142,7 +142,7 @@ class describe_Collector : nspec {
         context["when observing with groupEvent OnEntityAddedOrRemoved"] = () => {
 
             before = () => {
-                collectorA = new Collector(groupA, GroupEvent.AddedOrRemoved);
+                collectorA = new Collector<TestEntity>(groupA, GroupEvent.AddedOrRemoved);
             };
 
             it["returns collected entities"] = () => {
@@ -161,14 +161,14 @@ class describe_Collector : nspec {
 
         context["when observing multiple groups"] = () => {
 
-            Group groupB = null;
+            IGroup<TestEntity> groupB = null;
 
             before = () => {
-                groupB = _context.GetGroup(Matcher.AllOf(CID.ComponentB));
+                groupB = _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
             };
 
             it["throws when group count != groupEvent count"] = expect<CollectorException>(() => {
-                collectorA = new Collector(
+                collectorA = new Collector<TestEntity>(
                     new [] { groupA },
                     new [] {
                         GroupEvent.Added,
@@ -180,7 +180,7 @@ class describe_Collector : nspec {
             context["when observing with groupEvent OnEntityAdded"] = () => {
 
                 before = () => {
-                    collectorA = new Collector(
+                    collectorA = new Collector<TestEntity>(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEvent.Added,
@@ -200,14 +200,14 @@ class describe_Collector : nspec {
                 };
 
                 it["can ToString"] = () => {
-                    collectorA.ToString().should_be("Collector(Group(AllOf(1)), Group(AllOf(2)))");
+                    collectorA.ToString().should_be("Collector<TestEntity>(Group(AllOf(1)), IGroup<TestEntity>(AllOf(2)))");
                 };
             };
 
             context["when observing with groupEvent OnEntityRemoved"] = () => {
 
                 before = () => {
-                    collectorA = new Collector(
+                    collectorA = new Collector<TestEntity>(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEvent.Removed,
@@ -232,7 +232,7 @@ class describe_Collector : nspec {
             context["when observing with groupEvent OnEntityAddedOrRemoved"] = () => {
 
                 before = () => {
-                    collectorA = new Collector(
+                    collectorA = new Collector<TestEntity>(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEvent.AddedOrRemoved,
@@ -261,7 +261,7 @@ class describe_Collector : nspec {
             context["when observing with mixed groupEvents"] = () => {
 
                 before = () => {
-                    collectorA = new Collector(
+                    collectorA = new Collector<TestEntity>(
                         new [] { groupA, groupB },
                         new [] {
                             GroupEvent.Added,
@@ -287,11 +287,11 @@ class describe_Collector : nspec {
         };
     }
 
-    IEntity createEA() {
+    TestEntity createEA() {
         return _context.CreateEntity().AddComponentA();
     }
 
-    IEntity createEB() {
+    TestEntity createEB() {
         return _context.CreateEntity().AddComponentB();
     }
 }

@@ -24,7 +24,7 @@ class describe_EntitasErrorMessages : EntitasTest {
         before = () => {
             var componentNames = new [] { "Health", "Position", "View" };
             var contextInfo = new ContextInfo("My Context", componentNames, null);
-            _context = new Context(componentNames.Length, 42, contextInfo);
+            _context = new XXXContext<TestEntity>(componentNames.Length, 42, contextInfo);
             _entity = createEntity();
         };
 
@@ -103,14 +103,14 @@ class describe_EntitasErrorMessages : EntitasTest {
             });
         };
 
-        context["Collector"] = () => {
+        context["Collector<TestEntity>"] = () => {
 
             it["unbalanced goups"] = () => printErrorMessage(() => {
-                var g1 = new Group(Matcher.AllOf(CID.ComponentA));
-                var g2 = new Group(Matcher.AllOf(CID.ComponentB));
+                var g1 = new XXXGroup<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentA));
+                var g2 = new XXXGroup<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentB));
                 var e1 = GroupEvent.Added;
 
-                new Collector(new [] { g1, g2 }, new [] { e1 });
+                new Collector<TestEntity>(new [] { g1, g2 }, new [] { e1 });
             });
         };
 
@@ -119,11 +119,11 @@ class describe_EntitasErrorMessages : EntitasTest {
             it["wrong ContextInfo componentNames count"] = () => printErrorMessage(() => {
                 var componentNames = new [] { "Health", "Position", "View" };
                 var contextInfo = new ContextInfo("My Context", componentNames, null);
-                new Context(1, 0, contextInfo);
+                new XXXContext<TestEntity>(1, 0, contextInfo);
             });
 
             it["destroy entity which is not in context"] = () => printErrorMessage(() => {
-                _context.DestroyEntity(new XXXEntity());
+                _context.DestroyEntity(new TestEntity());
             });
 
             it["destroy retained entities"] = () => printErrorMessage(() => {
@@ -140,7 +140,7 @@ class describe_EntitasErrorMessages : EntitasTest {
             });
 
             it["duplicate entityIndex"] = () => printErrorMessage(() => {
-                var index = new PrimaryEntityIndex<string>(getGroupA(), null);
+                var index = new PrimaryEntityIndex<TestEntity, string>(getGroupA(), null);
                 _context.AddEntityIndex("duplicate", index);
                 _context.AddEntityIndex("duplicate", index);
             });

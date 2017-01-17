@@ -16,7 +16,7 @@ public class SomeClassHideInBlueprintInspectorComponent : IComponent {
 
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         public SomeClassHideInBlueprintInspectorComponent someClassHideInBlueprintInspector { get { return (SomeClassHideInBlueprintInspectorComponent)GetComponent(ComponentIds.SomeClassHideInBlueprintInspector); } }
         public bool hasSomeClassHideInBlueprintInspector { get { return HasComponent(ComponentIds.SomeClassHideInBlueprintInspector); } }
@@ -40,12 +40,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherSomeClassHideInBlueprintInspector;
+        static IMatcher<TestEntity> _matcherSomeClassHideInBlueprintInspector;
 
-        public static IMatcher SomeClassHideInBlueprintInspector {
+        public static IMatcher<TestEntity> SomeClassHideInBlueprintInspector {
             get {
                 if(_matcherSomeClassHideInBlueprintInspector == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.SomeClassHideInBlueprintInspector);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.SomeClassHideInBlueprintInspector);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherSomeClassHideInBlueprintInspector = matcher;
                 }

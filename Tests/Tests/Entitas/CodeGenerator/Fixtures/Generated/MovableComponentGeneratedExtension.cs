@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         static readonly MovableComponent movableComponent = new MovableComponent();
 
@@ -28,12 +28,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherMovable;
+        static IMatcher<TestEntity> _matcherMovable;
 
-        public static IMatcher Movable {
+        public static IMatcher<TestEntity> Movable {
             get {
                 if(_matcherMovable == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Movable);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.Movable);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherMovable = matcher;
                 }

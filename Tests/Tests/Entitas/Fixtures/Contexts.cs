@@ -1,9 +1,22 @@
-﻿namespace Entitas {
+namespace Entitas {
 
     public partial class Contexts {
 
-        public Context[] allContexts { get { return new [] { test }; } }
+        static Contexts _sharedInstance;
 
-        public Context test;
+        public static Contexts sharedInstance {
+            get {
+                if(_sharedInstance == null) {
+                    _sharedInstance = new Contexts();
+                }
+
+                return _sharedInstance;
+            }
+            set { _sharedInstance = value; }
+        }
+
+        public IContext[] allContexts { get { return new IContext[] { test }; } }
+
+        public IContext<TestEntity> test;
     }
 }

@@ -3,9 +3,9 @@ using NSpec;
 
 class describe_ReactiveSystem : nspec {
 
-    readonly IMatcher _matcherAB = Matcher.AllOf(CID.ComponentA, CID.ComponentB);
+    readonly IMatcher<TestEntity> _matcherAB = Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB);
 
-    static void assertEntities(IReactiveSystemSpy system, IEntity entity, int didExecute = 1) {
+    static void assertEntities(IReactiveSystemSpy system, TestEntity entity, int didExecute = 1) {
         if(entity == null) {
             system.didExecute.should_be(0);
             system.entities.should_be_null();
@@ -19,19 +19,19 @@ class describe_ReactiveSystem : nspec {
 
     Contexts _contexts;
 
-    IEntity createEntityAB() {
+    TestEntity createEntityAB() {
         return _contexts.test.CreateEntity()
             .AddComponentA()
             .AddComponentB();
     }
 
-    IEntity createEntityAC() {
+    TestEntity createEntityAC() {
         return _contexts.test.CreateEntity()
             .AddComponentA()
             .AddComponentC();
     }
 
-    IEntity createEntityABC() {
+    TestEntity createEntityABC() {
         return _contexts.test.CreateEntity()
             .AddComponentA()
             .AddComponentB()
@@ -43,13 +43,13 @@ class describe_ReactiveSystem : nspec {
         ReactiveSystemSpy system = null;
 
         before = () => {
-            _contexts = new Contexts { test = new Context(CID.TotalComponents) };
+            _contexts = new Contexts { test = new XXXContext<TestEntity>(CID.TotalComponents) };
         };
 
         context["OnEntityAdded"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB));
+                system = new ReactiveSystemSpy(_contexts.test.CreateCollector<TestEntity>(_matcherAB));
             };
 
             it["does not execute when no entities were collected"] = () => {
@@ -91,7 +91,7 @@ class describe_ReactiveSystem : nspec {
 
             it["collects created entities in execute"] = () => {
                 var e1 = createEntityAB();
-                IEntity e2 = null;
+                TestEntity e2 = null;
                 system.executeAction = entities => {
                     if(e2 == null) {
                         e2 = createEntityAB();
@@ -208,22 +208,22 @@ class describe_ReactiveSystem : nspec {
 
         context["multiple contexts"] = () => {
 
-            Context context1 = null;
-            Context context2 = null;
+            IContext<TestEntity> context1 = null;
+            IContext<TestEntity> context2 = null;
 
             before = () => {
-                context1 = new Context(CID.TotalComponents);
-                context2 = new Context(CID.TotalComponents);
+                context1 = new XXXContext<TestEntity>(CID.TotalComponents);
+                context2 = new XXXContext<TestEntity>(CID.TotalComponents);
 
-                var groupA = context1.GetGroup(Matcher.AllOf(CID.ComponentA));
-                var groupB = context2.GetGroup(Matcher.AllOf(CID.ComponentB));
+                var groupA = context1.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
+                var groupB = context2.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
 
                 var groups = new [] { groupA, groupB };
                 var groupEvents = new [] {
                     GroupEvent.Added,
                     GroupEvent.Removed
                 };
-                var collector = new Collector(groups, groupEvents);
+                var collector = new Collector<TestEntity>(groups, groupEvents);
 
                 system = new ReactiveSystemSpy(collector);
             };

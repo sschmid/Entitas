@@ -187,9 +187,6 @@
     <Compile Include="..\Entitas\Entitas\Matcher\MatcherEquals.cs">
       <Link>Linked Libraries\Entitas\Matcher\MatcherEquals.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherInterfaces.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherInterfaces.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\MatcherStatic.cs">
       <Link>Linked Libraries\Entitas\Matcher\MatcherStatic.cs</Link>
     </Compile>
@@ -207,7 +204,7 @@
     <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithFields.cs" />
     <Compile Include="Tests\Entitas\Serialization\Fixtures\ComponentWithProperties.cs" />
     <Compile Include="Tests\Entitas\Serialization\Fixtures\NestedClass.cs" />
-    <Compile Include="Tests\Entitas\Serialization\Fixtures\TestEnum.cs" />
+    <Compile Include="Tests\Entitas\Serialization\Fixtures\SomeEnum.cs" />
     <Compile Include="Tests\Entitas\Serialization\describe_PublicMemberInfo.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
     <Compile Include="..\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystems.cs">
@@ -355,6 +352,17 @@
     <Compile Include="..\Entitas\Entitas\IEntity.cs">
       <Link>Linked Libraries\Entitas\IEntity.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\IContext.cs">
+      <Link>Linked Libraries\Entitas\IContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\IGroup.cs">
+      <Link>Tests\Entitas\IGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\IReactiveSystem.cs">
+      <Link>Linked Libraries\Entitas\IReactiveSystem.cs</Link>
+    </Compile>
+    <Compile Include="Tests\Entitas\Fixtures\TestEntity.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\TestContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

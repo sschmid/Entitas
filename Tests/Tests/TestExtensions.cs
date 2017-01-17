@@ -10,8 +10,8 @@ public static class TestExtensions {
         "but did".should_be("should not happen");
     }
 
-    public static IEntity CreateEntity(this nspec spec) {
-        var entity = new XXXEntity();
+    public static TestEntity CreateEntity(this nspec spec) {
+        var entity = new TestEntity();
         entity.Initialize(0, CID.TotalComponents, new Stack<IComponent>[CID.TotalComponents]);
         return entity;
     }

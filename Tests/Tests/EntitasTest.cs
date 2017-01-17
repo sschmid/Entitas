@@ -3,10 +3,10 @@ using Entitas;
 
 class EntitasTest : nspec {
 
-    protected Context _context;
-    protected IEntity _entity;
+    protected IContext<TestEntity> _context;
+    protected TestEntity _entity;
 
-    protected IEntity createEntity() {
+    protected TestEntity createEntity() {
         return _context.CreateEntity();
     }
 
@@ -14,16 +14,16 @@ class EntitasTest : nspec {
         return createEntity().AddComponentA();
     }
 
-    protected Matcher createMatcherA() {
-        return (Matcher)Matcher.AllOf(CID.ComponentA);
+    protected Matcher<TestEntity> createMatcherA() {
+        return (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA);
     }
 
-    protected Group getGroupA() {
+    protected IGroup<TestEntity> getGroupA() {
         return _context.GetGroup(createMatcherA());
     }
 
-    protected PrimaryEntityIndex<string> createPrimaryIndex() {
-        return new PrimaryEntityIndex<string>(getGroupA(), (e, c) => ((NameAgeComponent)c).name);
+    protected PrimaryEntityIndex<TestEntity, string> createPrimaryIndex() {
+        return new PrimaryEntityIndex<TestEntity, string>(getGroupA(), (e, c) => ((NameAgeComponent)c).name);
     }
 
     protected NameAgeComponent createNameAge(string name = "Max", int age = 42) {
@@ -33,7 +33,7 @@ class EntitasTest : nspec {
         return nameAgeComponent;
     }
 
-    protected void addNameAge(IEntity entity) {
+    protected void addNameAge(TestEntity entity) {
         entity.AddComponent(CID.ComponentA, createNameAge());
     }
 }

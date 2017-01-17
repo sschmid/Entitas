@@ -152,9 +152,6 @@
     <Compile Include="..\Entitas\Entitas\Matcher\MatcherEquals.cs">
       <Link>Linked Libraries\Entitas\Matcher\MatcherEquals.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherInterfaces.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherInterfaces.cs</Link>
-    </Compile>
     <Compile Include="..\Entitas\Entitas\Matcher\MatcherStatic.cs">
       <Link>Linked Libraries\Entitas\Matcher\MatcherStatic.cs</Link>
     </Compile>
@@ -221,6 +218,17 @@
     <Compile Include="..\Entitas\Entitas\IEntity.cs">
       <Link>Linked Libraries\Entitas\IEntity.cs</Link>
     </Compile>
+    <Compile Include="..\Entitas\Entitas\IGroup.cs">
+      <Link>Linked Libraries\Entitas\IGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\IContext.cs">
+      <Link>Linked Libraries\Entitas\IContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Entitas\Entitas\IReactiveSystem.cs">
+      <Link>Linked Libraries\Entitas\IReactiveSystem.cs</Link>
+    </Compile>
+    <Compile Include="Readme\Generated\GameEntity.cs" />
+    <Compile Include="Readme\Generated\GameContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

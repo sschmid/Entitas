@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class XXXEntity {
+    public sealed partial class TestEntity : XXXEntity {
 
         public OtherContextComponent otherContext { get { return (OtherContextComponent)GetComponent(OtherComponentIds.OtherContext); } }
         public bool hasOtherContext { get { return HasComponent(OtherComponentIds.OtherContext); } }
@@ -34,13 +34,13 @@ namespace Entitas {
         }
     }
 
-    public partial class Context {
+    public sealed partial class TestContext : XXXContext<TestEntity> {
 
-        public IEntity otherContextEntity { get { return GetGroup(OtherMatcher.OtherContext).GetSingleEntity(); } }
+        public TestEntity otherContextEntity { get { return GetGroup(OtherMatcher.OtherContext).GetSingleEntity(); } }
         public OtherContextComponent otherContext { get { return otherContextEntity.otherContext; } }
         public bool hasOtherContext { get { return otherContextEntity != null; } }
 
-        public IEntity SetOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public TestEntity SetOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
             if(hasOtherContext) {
                 throw new EntitasException("Could not set otherContext!\n" + this + " already has an entity with OtherContextComponent!",
                     "You should check if the context already has a otherContextEntity before setting it or use context.ReplaceOtherContext().");
@@ -50,15 +50,13 @@ namespace Entitas {
             return entity;
         }
 
-        public IEntity ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        public void ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
             var entity = otherContextEntity;
             if(entity == null) {
                 entity = SetOtherContext(newTimestamp, newIsLoggedIn);
             } else {
                 entity.ReplaceOtherContext(newTimestamp, newIsLoggedIn);
             }
-
-            return entity;
         }
 
         public void RemoveOtherContext() {
@@ -69,12 +67,12 @@ namespace Entitas {
 
     public partial class OtherMatcher {
 
-        static IMatcher _matcherOtherContext;
+        static IMatcher<TestEntity> _matcherOtherContext;
 
-        public static IMatcher OtherContext {
+        public static IMatcher<TestEntity> OtherContext {
             get {
                 if(_matcherOtherContext == null) {
-                    var matcher = (Matcher)Matcher.AllOf(OtherComponentIds.OtherContext);
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(OtherComponentIds.OtherContext);
                     matcher.componentNames = OtherComponentIds.componentNames;
                     _matcherOtherContext = matcher;
                 }

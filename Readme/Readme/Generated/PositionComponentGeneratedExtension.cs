@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public partial class GameEntity : XXXEntity {
 
         public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
         public bool hasPosition { get { return HasComponent(ComponentIds.Position); } }
@@ -32,14 +32,14 @@ namespace Entitas {
         }
     }
 
-    public partial class Matcher {
+    public partial class GameMatcher {
 
-        static IMatcher _matcherPosition;
+        static IMatcher<GameEntity> _matcherPosition;
 
-        public static IMatcher Position {
+        public static IMatcher<GameEntity> Position {
             get {
                 if(_matcherPosition == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Position);
+                    var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Position);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherPosition = matcher;
                 }
