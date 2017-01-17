@@ -29,6 +29,26 @@ namespace Entitas {
             return anyOfMatcher;
         }
 
+        static int[] mergeIndices(int[] allOfIndices, int[] anyOfIndices, int[] noneOfIndices) {
+            var indicesList = EntitasCache.GetIntList();
+
+                if(allOfIndices != null) {
+                    indicesList.AddRange(allOfIndices);
+                }
+                if(anyOfIndices != null) {
+                    indicesList.AddRange(anyOfIndices);
+                }
+                if(noneOfIndices != null) {
+                    indicesList.AddRange(noneOfIndices);
+                }
+
+                var mergedIndices = distinctIndices(indicesList);
+
+            EntitasCache.PushIntList(indicesList);
+
+            return mergedIndices;
+        }
+
         static int[] mergeIndices(IMatcher<TEntity>[] matchers) {
             var indices = new int[matchers.Length];
             for (int i = 0; i < matchers.Length; i++) {

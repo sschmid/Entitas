@@ -116,6 +116,7 @@
     <Compile Include="Entitas\Entity\Exceptions\EntityIsNotRetainedByOwnerException.cs" />
     <Compile Include="Entitas\Group\GroupSingleEntityException.cs" />
     <Compile Include="Entitas\Index\EntityIndexException.cs" />
+    <Compile Include="Entitas\Matcher\MatcherException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
