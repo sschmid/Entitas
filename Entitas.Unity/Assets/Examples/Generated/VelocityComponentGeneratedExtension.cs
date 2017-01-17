@@ -15,7 +15,7 @@ public class VelocityComponent : IComponent {
 
 namespace Entitas {
 
-    public partial class Entity {
+    public sealed partial class VisualDebuggingEntity : XXXEntity {
 
         public VelocityComponent velocity { get { return (VelocityComponent)GetComponent(ComponentIds.Velocity); } }
         public bool hasVelocity { get { return HasComponent(ComponentIds.Velocity); } }
@@ -39,12 +39,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherVelocity;
+        static IMatcher<VisualDebuggingEntity> _matcherVelocity;
 
-        public static IMatcher Velocity {
+        public static IMatcher<VisualDebuggingEntity> Velocity {
             get {
                 if(_matcherVelocity == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Velocity);
+                    var matcher = (Matcher<VisualDebuggingEntity>)Matcher<VisualDebuggingEntity>.AllOf(ComponentIds.Velocity);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherVelocity = matcher;
                 }
@@ -57,12 +57,12 @@ namespace Entitas {
 
     public partial class VisualDebuggingMatcher {
 
-        static IMatcher _matcherVelocity;
+        static IMatcher<VisualDebuggingEntity> _matcherVelocity;
 
-        public static IMatcher Velocity {
+        public static IMatcher<VisualDebuggingEntity> Velocity {
             get {
                 if(_matcherVelocity == null) {
-                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Velocity);
+                    var matcher = (Matcher<VisualDebuggingEntity>)Matcher<VisualDebuggingEntity>.AllOf(VisualDebuggingComponentIds.Velocity);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherVelocity = matcher;
                 }

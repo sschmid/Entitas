@@ -15,7 +15,7 @@ public class SomeClassComponent : IComponent {
 
 namespace Entitas {
 
-    public partial class Entity {
+    public sealed partial class VisualDebuggingEntity : XXXEntity {
 
         public SomeClassComponent someClass { get { return (SomeClassComponent)GetComponent(ComponentIds.SomeClass); } }
         public bool hasSomeClass { get { return HasComponent(ComponentIds.SomeClass); } }
@@ -39,12 +39,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherSomeClass;
+        static IMatcher<VisualDebuggingEntity> _matcherSomeClass;
 
-        public static IMatcher SomeClass {
+        public static IMatcher<VisualDebuggingEntity> SomeClass {
             get {
                 if(_matcherSomeClass == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.SomeClass);
+                    var matcher = (Matcher<VisualDebuggingEntity>)Matcher<VisualDebuggingEntity>.AllOf(ComponentIds.SomeClass);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherSomeClass = matcher;
                 }

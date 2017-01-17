@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class Entity {
+    public sealed partial class VisualDebuggingEntity : XXXEntity {
 
         static readonly DefaultContextComponent defaultContextComponent = new DefaultContextComponent();
 
@@ -28,12 +28,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherDefaultContext;
+        static IMatcher<VisualDebuggingEntity> _matcherDefaultContext;
 
-        public static IMatcher DefaultContext {
+        public static IMatcher<VisualDebuggingEntity> DefaultContext {
             get {
                 if(_matcherDefaultContext == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.DefaultContext);
+                    var matcher = (Matcher<VisualDebuggingEntity>)Matcher<VisualDebuggingEntity>.AllOf(ComponentIds.DefaultContext);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherDefaultContext = matcher;
                 }

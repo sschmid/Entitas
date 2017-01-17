@@ -15,7 +15,7 @@ public class PositionComponent : IComponent {
 
 namespace Entitas {
 
-    public partial class Entity {
+    public sealed partial class VisualDebuggingEntity : XXXEntity {
 
         public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
         public bool hasPosition { get { return HasComponent(ComponentIds.Position); } }
@@ -39,12 +39,12 @@ namespace Entitas {
 
     public partial class Matcher {
 
-        static IMatcher _matcherPosition;
+        static IMatcher<VisualDebuggingEntity> _matcherPosition;
 
-        public static IMatcher Position {
+        public static IMatcher<VisualDebuggingEntity> Position {
             get {
                 if(_matcherPosition == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Position);
+                    var matcher = (Matcher<VisualDebuggingEntity>)Matcher<VisualDebuggingEntity>.AllOf(ComponentIds.Position);
                     matcher.componentNames = ComponentIds.componentNames;
                     _matcherPosition = matcher;
                 }
@@ -57,12 +57,12 @@ namespace Entitas {
 
     public partial class VisualDebuggingMatcher {
 
-        static IMatcher _matcherPosition;
+        static IMatcher<VisualDebuggingEntity> _matcherPosition;
 
-        public static IMatcher Position {
+        public static IMatcher<VisualDebuggingEntity> Position {
             get {
                 if(_matcherPosition == null) {
-                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.Position);
+                    var matcher = (Matcher<VisualDebuggingEntity>)Matcher<VisualDebuggingEntity>.AllOf(VisualDebuggingComponentIds.Position);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherPosition = matcher;
                 }

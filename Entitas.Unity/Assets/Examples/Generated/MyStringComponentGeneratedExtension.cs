@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class Entity {
+    public sealed partial class VisualDebuggingEntity : XXXEntity {
 
         public MyStringComponent myString { get { return (MyStringComponent)GetComponent(VisualDebuggingComponentIds.MyString); } }
         public bool hasMyString { get { return HasComponent(VisualDebuggingComponentIds.MyString); } }
@@ -35,12 +35,12 @@ namespace Entitas {
 
     public partial class VisualDebuggingMatcher {
 
-        static IMatcher _matcherMyString;
+        static IMatcher<VisualDebuggingEntity> _matcherMyString;
 
-        public static IMatcher MyString {
+        public static IMatcher<VisualDebuggingEntity> MyString {
             get {
                 if(_matcherMyString == null) {
-                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.MyString);
+                    var matcher = (Matcher<VisualDebuggingEntity>)Matcher<VisualDebuggingEntity>.AllOf(VisualDebuggingComponentIds.MyString);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherMyString = matcher;
                 }

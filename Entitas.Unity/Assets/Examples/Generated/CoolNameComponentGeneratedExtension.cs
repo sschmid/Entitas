@@ -15,7 +15,7 @@ public class CoolNameComponent : IComponent {
 
 namespace Entitas {
 
-    public partial class Entity {
+    public sealed partial class VisualDebuggingEntity : XXXEntity {
 
         public CoolNameComponent coolName { get { return (CoolNameComponent)GetComponent(VisualDebuggingComponentIds.CoolName); } }
         public bool hasCoolName { get { return HasComponent(VisualDebuggingComponentIds.CoolName); } }
@@ -40,12 +40,12 @@ namespace Entitas {
 
     public partial class VisualDebuggingMatcher {
 
-        static IMatcher _matcherCoolName;
+        static IMatcher<VisualDebuggingEntity> _matcherCoolName;
 
-        public static IMatcher CoolName {
+        public static IMatcher<VisualDebuggingEntity> CoolName {
             get {
                 if(_matcherCoolName == null) {
-                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.CoolName);
+                    var matcher = (Matcher<VisualDebuggingEntity>)Matcher<VisualDebuggingEntity>.AllOf(VisualDebuggingComponentIds.CoolName);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherCoolName = matcher;
                 }

@@ -15,7 +15,7 @@ public class ISomeInterfaceComponent : IComponent {
 
 namespace Entitas {
 
-    public partial class Entity {
+    public sealed partial class VisualDebuggingEntity : XXXEntity {
 
         public ISomeInterfaceComponent iSomeInterface { get { return (ISomeInterfaceComponent)GetComponent(VisualDebuggingComponentIds.ISomeInterface); } }
         public bool hasISomeInterface { get { return HasComponent(VisualDebuggingComponentIds.ISomeInterface); } }
@@ -72,12 +72,12 @@ namespace Entitas {
 
     public partial class VisualDebuggingMatcher {
 
-        static IMatcher _matcherISomeInterface;
+        static IMatcher<VisualDebuggingEntity> _matcherISomeInterface;
 
-        public static IMatcher ISomeInterface {
+        public static IMatcher<VisualDebuggingEntity> ISomeInterface {
             get {
                 if(_matcherISomeInterface == null) {
-                    var matcher = (Matcher)Matcher.AllOf(VisualDebuggingComponentIds.ISomeInterface);
+                    var matcher = (Matcher<VisualDebuggingEntity>)Matcher<VisualDebuggingEntity>.AllOf(VisualDebuggingComponentIds.ISomeInterface);
                     matcher.componentNames = VisualDebuggingComponentIds.componentNames;
                     _matcherISomeInterface = matcher;
                 }

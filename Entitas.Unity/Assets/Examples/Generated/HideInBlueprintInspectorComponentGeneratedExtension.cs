@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class Entity {
+    public sealed partial class BlueprintsEntity : XXXEntity {
 
         static readonly HideInBlueprintInspectorComponent hideInBlueprintInspectorComponent = new HideInBlueprintInspectorComponent();
 
@@ -31,12 +31,12 @@ namespace Entitas {
 
     public partial class BlueprintsMatcher {
 
-        static IMatcher _matcherHideInBlueprintInspector;
+        static IMatcher<BlueprintsEntity> _matcherHideInBlueprintInspector;
 
-        public static IMatcher HideInBlueprintInspector {
+        public static IMatcher<BlueprintsEntity> HideInBlueprintInspector {
             get {
                 if(_matcherHideInBlueprintInspector == null) {
-                    var matcher = (Matcher)Matcher.AllOf(BlueprintsComponentIds.HideInBlueprintInspector);
+                    var matcher = (Matcher<BlueprintsEntity>)Matcher<BlueprintsEntity>.AllOf(BlueprintsComponentIds.HideInBlueprintInspector);
                     matcher.componentNames = BlueprintsComponentIds.componentNames;
                     _matcherHideInBlueprintInspector = matcher;
                 }

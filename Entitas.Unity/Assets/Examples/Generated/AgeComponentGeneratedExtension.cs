@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class Entity {
+    public sealed partial class BlueprintsEntity : XXXEntity {
 
         public AgeComponent age { get { return (AgeComponent)GetComponent(BlueprintsComponentIds.Age); } }
         public bool hasAge { get { return HasComponent(BlueprintsComponentIds.Age); } }
@@ -35,12 +35,12 @@ namespace Entitas {
 
     public partial class BlueprintsMatcher {
 
-        static IMatcher _matcherAge;
+        static IMatcher<BlueprintsEntity> _matcherAge;
 
-        public static IMatcher Age {
+        public static IMatcher<BlueprintsEntity> Age {
             get {
                 if(_matcherAge == null) {
-                    var matcher = (Matcher)Matcher.AllOf(BlueprintsComponentIds.Age);
+                    var matcher = (Matcher<BlueprintsEntity>)Matcher<BlueprintsEntity>.AllOf(BlueprintsComponentIds.Age);
                     matcher.componentNames = BlueprintsComponentIds.componentNames;
                     _matcherAge = matcher;
                 }
