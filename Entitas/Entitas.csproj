@@ -31,18 +31,13 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas\Entity.cs" />
     <Compile Include="Entitas\Interfaces\IComponent.cs" />
-    <Compile Include="Entitas\Group.cs" />
     <Compile Include="Entitas\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
     <Compile Include="Entitas\Interfaces\ISystem.cs" />
-    <Compile Include="Entitas\Context.cs" />
     <Compile Include="Entitas\Extensions\ContextExtension.cs" />
     <Compile Include="Entitas\Collector.cs" />
     <Compile Include="Entitas\Extensions\GroupExtension.cs" />
-    <Compile Include="Entitas\ReactiveSystem.cs" />
-    <Compile Include="Entitas\Systems.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
@@ -88,10 +83,15 @@
     <Compile Include="Entitas\Index\IEntityIndex.cs" />
     <Compile Include="Entitas\Index\AbstractEntityIndex.cs" />
     <Compile Include="Entitas\Index\PrimaryEntityIndex.cs" />
-    <Compile Include="Entitas\IEntity.cs" />
-    <Compile Include="Entitas\IContext.cs" />
-    <Compile Include="Entitas\IGroup.cs" />
-    <Compile Include="Entitas\IReactiveSystem.cs" />
+    <Compile Include="Entitas\Entity\Entity.cs" />
+    <Compile Include="Entitas\Entity\IEntity.cs" />
+    <Compile Include="Entitas\Group\IGroup.cs" />
+    <Compile Include="Entitas\Group\Group.cs" />
+    <Compile Include="Entitas\Context\Context.cs" />
+    <Compile Include="Entitas\Context\IContext.cs" />
+    <Compile Include="Entitas\Systems\Systems.cs" />
+    <Compile Include="Entitas\Systems\ReactiveSystem.cs" />
+    <Compile Include="Entitas\Systems\IReactiveSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -109,5 +109,9 @@
     <Folder Include="Entitas\Serialization\Configuration\" />
     <Folder Include="Entitas\Caching\" />
     <Folder Include="Entitas\Index\" />
+    <Folder Include="Entitas\Entity\" />
+    <Folder Include="Entitas\Group\" />
+    <Folder Include="Entitas\Context\" />
+    <Folder Include="Entitas\Systems\" />
   </ItemGroup>
 </Project>
