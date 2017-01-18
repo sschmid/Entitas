@@ -15,7 +15,7 @@ public class PositionComponent : IComponent {
 
 namespace Entitas {
 
-    public sealed partial class VisualDebuggingEntity : XXXEntity {
+    public sealed partial class VisualDebuggingEntity : Entity {
 
         public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
         public bool hasPosition { get { return HasComponent(ComponentIds.Position); } }

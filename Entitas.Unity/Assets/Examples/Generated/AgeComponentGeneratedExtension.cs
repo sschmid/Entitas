@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public sealed partial class BlueprintsEntity : XXXEntity {
+    public sealed partial class BlueprintsEntity : Entity {
 
         public AgeComponent age { get { return (AgeComponent)GetComponent(BlueprintsComponentIds.Age); } }
         public bool hasAge { get { return HasComponent(BlueprintsComponentIds.Age); } }

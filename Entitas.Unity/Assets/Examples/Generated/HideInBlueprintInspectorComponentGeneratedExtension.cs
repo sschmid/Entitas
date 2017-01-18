@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public sealed partial class BlueprintsEntity : XXXEntity {
+    public sealed partial class BlueprintsEntity : Entity {
 
         static readonly HideInBlueprintInspectorComponent hideInBlueprintInspectorComponent = new HideInBlueprintInspectorComponent();
 

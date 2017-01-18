@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public sealed partial class VisualDebuggingEntity : XXXEntity {
+    public sealed partial class VisualDebuggingEntity : Entity {
 
         public Vector3Component vector3 { get { return (Vector3Component)GetComponent(VisualDebuggingComponentIds.Vector3); } }
         public bool hasVector3 { get { return HasComponent(VisualDebuggingComponentIds.Vector3); } }

@@ -15,7 +15,7 @@ public class CoolNameComponent : IComponent {
 
 namespace Entitas {
 
-    public sealed partial class VisualDebuggingEntity : XXXEntity {
+    public sealed partial class VisualDebuggingEntity : Entity {
 
         public CoolNameComponent coolName { get { return (CoolNameComponent)GetComponent(VisualDebuggingComponentIds.CoolName); } }
         public bool hasCoolName { get { return HasComponent(VisualDebuggingComponentIds.CoolName); } }

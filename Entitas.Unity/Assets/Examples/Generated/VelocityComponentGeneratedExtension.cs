@@ -15,7 +15,7 @@ public class VelocityComponent : IComponent {
 
 namespace Entitas {
 
-    public sealed partial class VisualDebuggingEntity : XXXEntity {
+    public sealed partial class VisualDebuggingEntity : Entity {
 
         public VelocityComponent velocity { get { return (VelocityComponent)GetComponent(ComponentIds.Velocity); } }
         public bool hasVelocity { get { return HasComponent(ComponentIds.Velocity); } }

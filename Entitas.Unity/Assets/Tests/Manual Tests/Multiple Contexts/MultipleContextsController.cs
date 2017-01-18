@@ -8,10 +8,10 @@ public class MultipleContextsController : MonoBehaviour {
 
 	void Start () {
 	
-        _contextA = new XXXContext<VisualDebuggingEntity>(VisualDebuggingComponentIds.TotalComponents, 0, new ContextInfo("Context A", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
+        _contextA = new Context<VisualDebuggingEntity>(VisualDebuggingComponentIds.TotalComponents, 0, new ContextInfo("Context A", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
         new Entitas.Unity.VisualDebugging.ContextObserver(_contextA);
 
-        _contextB = new XXXContext<VisualDebuggingEntity>(VisualDebuggingComponentIds.TotalComponents, 0, new ContextInfo("Context B", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
+        _contextB = new Context<VisualDebuggingEntity>(VisualDebuggingComponentIds.TotalComponents, 0, new ContextInfo("Context B", VisualDebuggingComponentIds.componentNames, VisualDebuggingComponentIds.componentTypes));
         new Entitas.Unity.VisualDebugging.ContextObserver(_contextB);
 
 

@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public sealed partial class BlueprintsEntity : XXXEntity {
+    public sealed partial class BlueprintsEntity : Entity {
 
         public NameComponent name { get { return (NameComponent)GetComponent(BlueprintsComponentIds.Name); } }
         public bool hasName { get { return HasComponent(BlueprintsComponentIds.Name); } }
