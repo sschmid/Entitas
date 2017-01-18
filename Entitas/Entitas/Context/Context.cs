@@ -191,7 +191,7 @@ namespace Entitas {
         public virtual IGroup<TEntity> GetGroup(IMatcher<TEntity> matcher) {
             IGroup<TEntity> group;
             if(!_groups.TryGetValue(matcher, out group)) {
-                group = new XXXGroup<TEntity>(matcher);
+                group = new Group<TEntity>(matcher);
                 var entities = GetEntities();
                 for (int i = 0; i < entities.Length; i++) {
                     group.HandleEntitySilently(entities[i]);

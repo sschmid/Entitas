@@ -29,7 +29,7 @@ class describe_Group : nspec {
         TestEntity eA2 = null;
 
         before = () => {
-            _groupA = new XXXGroup<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentA));
+            _groupA = new Group<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentA));
             eA1 = this.CreateEntity().AddComponentA();
             eA2 = this.CreateEntity().AddComponentA();
         };
@@ -394,7 +394,7 @@ class describe_Group : nspec {
 
         it["can ToString"] = () => {
             var m = Matcher<TestEntity>.AllOf(Matcher<TestEntity>.AllOf(0), Matcher<TestEntity>.AllOf(1));
-            var group = new XXXGroup<TestEntity>(m);
+            var group = new Group<TestEntity>(m);
             group.ToString().should_be("Group(AllOf(0, 1))");
         };
     }
