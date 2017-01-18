@@ -2,7 +2,7 @@ using System;
 using Entitas;
 using Entitas.CodeGenerator;
 
-[SingleEntity, Context("Test")]
+[Context("Test"), SingleEntity]
 public class UserComponent : IComponent {
     public DateTime timestamp;
     public bool isLoggedIn;

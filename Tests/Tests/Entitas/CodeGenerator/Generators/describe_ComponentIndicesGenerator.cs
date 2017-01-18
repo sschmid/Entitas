@@ -6,7 +6,7 @@ using NSpec;
 
 class describe_ComponentIndicesGenerator : nspec {
 
-    const bool logResults = !false;
+    const bool logResults = false;
 
     static void generates(Type type, string expectedLookupName, string expectedLookupCode) {
         generates(new [] { type }, expectedLookupName, expectedLookupCode);
@@ -62,7 +62,7 @@ class describe_ComponentIndicesGenerator : nspec {
     void when_generating() {
 
         it["generates default lookup"] = () => {
-            generates(typeof(SomeComponent), CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
+            generates(typeof(SomeComponent), CodeGenerator.COMPONENT_LOOKUP,
                 @"public static class ComponentIds {
 
     public const int Some = 0;
@@ -83,7 +83,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates compatible field names for components with namespace"] = () => {
-            generates(typeof(NamespaceComponent), "Test" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
+            generates(typeof(NamespaceComponent), "Test" + CodeGenerator.COMPONENT_LOOKUP,
                 @"public static class TestComponentIds {
 
     public const int Namespace = 0;
@@ -125,7 +125,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates id for [DontGenerate]"] = () => {
-            generates(typeof(DontGenerateComponent), CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
+            generates(typeof(DontGenerateComponent), CodeGenerator.COMPONENT_LOOKUP,
                 @"public static class ComponentIds {
 
     public const int DontGenerate = 0;
@@ -149,7 +149,7 @@ class describe_ComponentIndicesGenerator : nspec {
             generates(new [] {
                 typeof(SomeComponent),
                 typeof(DontGenerateIndexComponent)
-            }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
+            }, CodeGenerator.COMPONENT_LOOKUP,
                 @"public static class ComponentIds {
 
     public const int Some = 0;
@@ -173,7 +173,7 @@ class describe_ComponentIndicesGenerator : nspec {
             generates(new [] {
                     typeof(SomeComponent),
                     typeof(DontGenerateComponent)
-                }, CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
+                }, CodeGenerator.COMPONENT_LOOKUP,
                 @"public static class ComponentIds {
 
     public const int DontGenerate = 0;
@@ -197,7 +197,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates empty lookup with total components when for default context"] = () => {
-            generatesEmptyLookup(new [] { CodeGenerator.DEFAULT_CONTEXT_NAME }, new [] { CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class ComponentIds {
+            generatesEmptyLookup(new [] { CodeGenerator.DEFAULT_CONTEXT_NAME }, new [] { CodeGenerator.COMPONENT_LOOKUP }, new [] { @"public static class ComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -213,7 +213,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates empty lookup with total components when for context names"] = () => {
-            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG }, new [] { @"public static class MetaComponentIds {
+            generatesEmptyLookup(new [] { "Meta" }, new [] { "Meta" + CodeGenerator.COMPONENT_LOOKUP }, new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;
 
@@ -230,7 +230,7 @@ class describe_ComponentIndicesGenerator : nspec {
 
         it["generates multiple empty lookup with total components when for context names"] = () => {
             generatesEmptyLookup(new [] { "Meta", "Core" },
-                new [] { "Meta" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG, "Core" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG },
+                new [] { "Meta" + CodeGenerator.COMPONENT_LOOKUP, "Core" + CodeGenerator.COMPONENT_LOOKUP },
                 new [] { @"public static class MetaComponentIds {
 
     public const int TotalComponents = 0;

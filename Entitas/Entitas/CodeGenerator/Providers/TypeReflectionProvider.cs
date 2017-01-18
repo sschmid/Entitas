@@ -17,9 +17,6 @@ namespace Entitas.CodeGenerator {
 
         public TypeReflectionProvider(Type[] types, string[] contextNames, string[] blueprintNames) {
             var contexts = new HashSet<string>(contextNames);
-            if(contextNames.Length == 0) {
-                contexts.Add(CodeGenerator.DEFAULT_CONTEXT_NAME);
-            }
             _componentInfos = GetComponentInfos(types);
             _contextNames = contexts
                 .Select(contextName => contextName.UppercaseFirst())

@@ -18,14 +18,14 @@ class describe_TypeReflectionProvider : nspec {
         return new TypeReflectionProvider(new [] { typeof(object) }, new string[0], blueprintNames);
     }
 
+    [Tag("focus")]
     void when_providing() {
 
         context["context names"] = () => {
 
-            it["has default context if context names is empty"] = () => {
+            it["has no contexts if context names is empty"] = () => {
                 var provider = createProviderWithContextName();
-                provider.contextNames.Length.should_be(1);
-                provider.contextNames[0].should_be(CodeGenerator.DEFAULT_CONTEXT_NAME);
+                provider.contextNames.Length.should_be(0);
             };
 
             it["adds context names if set"] = () => {

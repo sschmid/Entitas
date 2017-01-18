@@ -10,45 +10,50 @@ namespace Entitas.CodeGenerator {
             var generatorName = GetType().FullName;
             return componentInfos
                 .Where(info => info.generateMethods)
-                .Select(info => new CodeGenFile(
-                    info.fullTypeName + "GeneratedExtension",
-                    generateComponentExtension(info),
-                    generatorName
-                )).ToArray();
+                .Select(info => generateComponentExtensions(info, generatorName))
+                .SelectMany(codeGenFile => codeGenFile)
+                .ToArray();
         }
 
-        static string generateComponentExtension(ComponentInfo componentInfo) {
-            var code = addEntityMethods(componentInfo);
-            if(componentInfo.isSingleEntity) {
-                code += addContextMethods(componentInfo);
-            }
+        static CodeGenFile[] generateComponentExtensions(ComponentInfo componentInfo, string generatorName) {
+            return componentInfo.contexts
+                        .Select(context => generateComponentExtension(componentInfo, context, generatorName))
+                        .SelectMany(codeGenFile => codeGenFile)
+                        .GroupBy(file => file.fileName)
+                        .Select(group => group.First())
+                        .ToArray();
+        }
+
+        static CodeGenFile[] generateComponentExtension(ComponentInfo componentInfo, string context, string generatorName) {
+            var codeGenFiles = new List<CodeGenFile>();
 
             if(componentInfo.generateComponent) {
-                // Add default matcher
-                code += addMatcher(componentInfo, true);
-                // Add custom matchers
-                code += addMatcher(componentInfo);
-                return addUsings("Entitas") + generateComponent(componentInfo)
-                    + code;
+                codeGenFiles.Add(new CodeGenFile(
+                    "Components/" + componentInfo.fullTypeName,
+                    addUsings("Entitas") + generateComponent(componentInfo),
+                    generatorName));
             }
 
-            code += addMatcher(componentInfo, true);
-
-            var hasCustomcContexts = componentInfo.contexts.Length > 1 || !componentInfo.contexts[0].IsDefaultContextName();
-            if(hasCustomcContexts) {
-                code += addMatcher(componentInfo);
+            var code = addUsings("Entitas");
+            code += addEntityMethods(componentInfo, context);
+            if(componentInfo.isSingleEntity) {
+                code += addContextMethods(componentInfo, context);
             }
+            code += addMatcher(componentInfo, context);
 
-            return addUsings("Entitas") + code;
+            codeGenFiles.Add(new CodeGenFile(
+                context + "/Components/" + context + componentInfo.fullTypeName,
+                code, generatorName));
+
+            return codeGenFiles.ToArray();
         }
 
         static string generateComponent(ComponentInfo componentInfo) {
-            const string hideInBlueprintInspector = "[Entitas.Serialization.Blueprints.HideInBlueprintInspectorAttribute]\n";
+            const string hideInBlueprintInspector = "[Entitas.Serialization.Blueprints.HideInBlueprintInspector]\n";
             const string componentFormat = @"public class {0} : IComponent {{
 
     public {1} {2};
 }}
-
 ";
             var memberInfo = componentInfo.memberInfos[0];
             var code = string.Format(componentFormat, componentInfo.fullTypeName, memberInfo.type, memberInfo.name);
@@ -69,29 +74,29 @@ namespace Entitas.CodeGenerator {
          *
          */
 
-        static string addEntityMethods(ComponentInfo componentInfo) {
-            return addEntityClassHeader(componentInfo)
-                    + addGetMethods(componentInfo)
-                    + addHasMethods(componentInfo)
-                    + addAddMethods(componentInfo)
-                    + addReplaceMethods(componentInfo)
-                    + addRemoveMethods(componentInfo)
+        static string addEntityMethods(ComponentInfo componentInfo, string context) {
+            return addEntityClassHeader(componentInfo, context)
+                    + addGetMethods(componentInfo, context)
+                    + addHasMethods(componentInfo, context)
+                    + addAddMethods(componentInfo, context)
+                    + addReplaceMethods(componentInfo, context)
+                    + addRemoveMethods(componentInfo, context)
                     + addCloseClass();
         }
 
-        static string addEntityClassHeader(ComponentInfo componentInfo) {
-            return buildString(componentInfo, "public sealed partial class $TagEntity : Entity {\n");
+        static string addEntityClassHeader(ComponentInfo componentInfo, string context) {
+            return buildString(componentInfo, "public sealed partial class $TagEntity : Entity {\n", context);
         }
 
-        static string addGetMethods(ComponentInfo componentInfo) {
+        static string addGetMethods(ComponentInfo componentInfo, string context) {
             var getMethod = componentInfo.isSingletonComponent
                     ? "\n    static readonly $Type $nameComponent = new $Type();\n"
                     : "\n    public $Type $name { get { return ($Type)GetComponent($Ids.$Name); } }\n";
 
-            return buildString(componentInfo, getMethod);
+            return buildString(componentInfo, getMethod, context);
         }
 
-        static string addHasMethods(ComponentInfo componentInfo) {
+        static string addHasMethods(ComponentInfo componentInfo, string context) {
             var hasMethod = componentInfo.isSingletonComponent ? @"
     public bool $prefix$Name {
         get { return HasComponent($Ids.$Name); }
@@ -107,35 +112,35 @@ namespace Entitas.CodeGenerator {
     }
 " : @"    public bool has$Name { get { return HasComponent($Ids.$Name); } }
 ";
-            return buildString(componentInfo, hasMethod);
+            return buildString(componentInfo, hasMethod, context);
         }
 
-        static string addAddMethods(ComponentInfo componentInfo) {
+        static string addAddMethods(ComponentInfo componentInfo, string context) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
     public void Add$Name($typedArgs) {
         var component = CreateComponent<$Type>($Ids.$Name);
 $assign
         AddComponent($Ids.$Name, component);
     }
-");
+", context);
         }
 
-        static string addReplaceMethods(ComponentInfo componentInfo) {
+        static string addReplaceMethods(ComponentInfo componentInfo, string context) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
     public void Replace$Name($typedArgs) {
         var component = CreateComponent<$Type>($Ids.$Name);
 $assign
         ReplaceComponent($Ids.$Name, component);
     }
-");
+", context);
         }
 
-        static string addRemoveMethods(ComponentInfo componentInfo) {
+        static string addRemoveMethods(ComponentInfo componentInfo, string context) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
     public void Remove$Name() {
         RemoveComponent($Ids.$Name);
     }
-");
+", context);
         }
 
         /*
@@ -144,31 +149,31 @@ $assign
          *
          */
 
-        static string addContextMethods(ComponentInfo componentInfo) {
-            return addContextClassHeader(componentInfo)
-                    + addContextGetMethods(componentInfo)
-                    + addContextHasMethods(componentInfo)
-                    + addContextAddMethods(componentInfo)
-                    + addContextReplaceMethods(componentInfo)
-                    + addContextRemoveMethods(componentInfo)
+        static string addContextMethods(ComponentInfo componentInfo, string context) {
+            return addContextClassHeader(componentInfo, context)
+                    + addContextGetMethods(componentInfo, context)
+                    + addContextHasMethods(componentInfo, context)
+                    + addContextAddMethods(componentInfo, context)
+                    + addContextReplaceMethods(componentInfo, context)
+                    + addContextRemoveMethods(componentInfo, context)
                     + addCloseClass();
         }
 
-        static string addContextClassHeader(ComponentInfo componentInfo) {
-            return buildString(componentInfo, "\npublic sealed partial class $TagContext : Context<$TagEntity> {\n");
+        static string addContextClassHeader(ComponentInfo componentInfo, string context) {
+            return buildString(componentInfo, "\npublic sealed partial class $TagContext : Context<$TagEntity> {\n", context);
         }
 
-        static string addContextGetMethods(ComponentInfo componentInfo) {
+        static string addContextGetMethods(ComponentInfo componentInfo, string context) {
             var getMehod = componentInfo.isSingletonComponent ? @"
     public $TagEntity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
 " : @"
     public $TagEntity $nameEntity { get { return GetGroup($TagMatcher.$Name).GetSingleEntity(); } }
     public $Type $name { get { return $nameEntity.$name; } }
 ";
-            return buildString(componentInfo, getMehod);
+            return buildString(componentInfo, getMehod, context);
         }
 
-        static string addContextHasMethods(ComponentInfo componentInfo) {
+        static string addContextHasMethods(ComponentInfo componentInfo, string context) {
             var hasMethod = componentInfo.isSingletonComponent ? @"
     public bool $prefix$Name {
         get { return $nameEntity != null; }
@@ -185,10 +190,10 @@ $assign
     }
 " : @"    public bool has$Name { get { return $nameEntity != null; } }
 ";
-            return buildString(componentInfo, hasMethod);
+            return buildString(componentInfo, hasMethod, context);
         }
 
-        static object addContextAddMethods(ComponentInfo componentInfo) {
+        static object addContextAddMethods(ComponentInfo componentInfo, string context) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
     public $TagEntity Set$Name($typedArgs) {
         if(has$Name) {
@@ -199,10 +204,10 @@ $assign
         entity.Add$Name($args);
         return entity;
     }
-");
+", context);
         }
 
-        static string addContextReplaceMethods(ComponentInfo componentInfo) {
+        static string addContextReplaceMethods(ComponentInfo componentInfo, string context) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
     public void Replace$Name($typedArgs) {
         var entity = $nameEntity;
@@ -212,15 +217,15 @@ $assign
             entity.Replace$Name($args);
         }
     }
-");
+", context);
         }
 
-        static string addContextRemoveMethods(ComponentInfo componentInfo) {
+        static string addContextRemoveMethods(ComponentInfo componentInfo, string context) {
             return componentInfo.isSingletonComponent ? string.Empty : buildString(componentInfo, @"
     public void Remove$Name() {
         DestroyEntity($nameEntity);
     }
-");
+", context);
         }
 
         /*
@@ -229,7 +234,7 @@ $assign
         *
         */
 
-       static string addMatcher(ComponentInfo componentInfo, bool onlyDefault = false) {
+       static string addMatcher(ComponentInfo componentInfo, string context) {
             const string matcherFormat = @"
 public sealed partial class $TagMatcher {
 
@@ -249,25 +254,7 @@ public sealed partial class $TagMatcher {
 }
 ";
 
-            if(onlyDefault) {
-                if(componentInfo.contexts.Contains(CodeGenerator.DEFAULT_CONTEXT_NAME)) {
-                    return buildString(componentInfo, matcherFormat);
-                } else {
-                    return string.Empty;
-                }
-            } else {
-                var contextIndex = 0;
-                var matchers = componentInfo.contexts.Aggregate(string.Empty, (acc, contextName) => {
-                    if(!contextName.IsDefaultContextName()) {
-                        return acc + buildString(componentInfo, matcherFormat, contextIndex++);
-                    } else {
-                        contextIndex += 1;
-                        return acc;
-                    }
-                });
-
-                return buildString(componentInfo, matchers);
-            }
+            return buildString(componentInfo, matcherFormat, context);
         }
 
         /*
@@ -276,15 +263,13 @@ public sealed partial class $TagMatcher {
          *
          */
 
-        static string buildString(ComponentInfo componentInfo, string format, int contextIndex = 0) {
+        static string buildString(ComponentInfo componentInfo, string format, string context) {
             format = createFormatString(format);
             var a0_type = componentInfo.fullTypeName;
             var a1_name = componentInfo.typeName.RemoveComponentSuffix();
             var a2_lowercaseName = a1_name.LowercaseFirst();
-            var contextNames = componentInfo.contexts;
-            var a3_tag = contextNames[contextIndex].ContextPrefix();
-            var lookupTags = componentInfo.ComponentLookupTags();
-            var a4_ids = lookupTags.Length == 0 ? string.Empty : lookupTags[contextIndex];
+            var a3_context = context;
+            var a4_componentLookup = context + CodeGenerator.COMPONENT_LOOKUP;
             var memberInfos = componentInfo.memberInfos;
             var a5_memberNamesWithType = memberNamesWithType(memberInfos);
             var a6_memberAssigns = memberAssignments(memberInfos);
@@ -294,7 +279,7 @@ public sealed partial class $TagMatcher {
             var a9_lowercasePrefix = prefix.LowercaseFirst();
 
             return string.Format(format, a0_type, a1_name, a2_lowercaseName,
-                a3_tag, a4_ids, a5_memberNamesWithType, a6_memberAssigns, a7_memberNames,
+                a3_context, a4_componentLookup, a5_memberNamesWithType, a6_memberAssigns, a7_memberNames,
                 a8_prefix, a9_lowercasePrefix);
         }
 

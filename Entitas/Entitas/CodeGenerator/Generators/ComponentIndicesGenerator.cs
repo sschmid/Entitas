@@ -11,7 +11,7 @@ namespace Entitas.CodeGenerator {
             var emptyInfos = new ComponentInfo[0];
             var generatorName = GetType().FullName;
             return contextNames
-                .Select(contextName => contextName.ContextPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
+                .Select(contextName => contextName + CodeGenerator.COMPONENT_LOOKUP)
                 .Select(lookupTag => new CodeGenFile(
                     lookupTag,
                     generateIndicesLookup(lookupTag, emptyInfos),
@@ -39,7 +39,7 @@ namespace Entitas.CodeGenerator {
             // order componentInfos by context count
             var orderedComponentInfoToLookupTagsMap = componentInfos
                 .Where(info => info.generateIndex)
-                .ToDictionary(info => info, info => info.ComponentLookupTags())
+                .ToDictionary(info => info, info => info.ComponentLookups())
                 .OrderByDescending(kv => kv.Value.Length);
 
             var lookupTagToComponentInfosMap = orderedComponentInfoToLookupTagsMap

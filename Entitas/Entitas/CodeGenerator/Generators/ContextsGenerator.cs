@@ -27,7 +27,7 @@ namespace Entitas.CodeGenerator {
 
         public CodeGenFile[] Generate(string[] contextNames) {
             var createContextMethods = contextNames.Aggregate(string.Empty, (acc, contextName) =>
-                acc + string.Format(CREATE_CONTEXT_TEMPLATE, contextName, contextName.ContextPrefix(), contextName.ContextPrefix() + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG)
+                acc + string.Format(CREATE_CONTEXT_TEMPLATE, contextName, contextName, contextName + CodeGenerator.COMPONENT_LOOKUP)
             );
 
             var allContextsList = string.Join(", ", contextNames.Select(contextName => contextName.LowercaseFirst()).ToArray());
@@ -35,7 +35,7 @@ namespace Entitas.CodeGenerator {
                 "        public Context " + contextName.LowercaseFirst() + ";").ToArray());
 
             var setAllContexts = string.Join("\n", contextNames.Select(contextName =>
-                "            " + contextName.LowercaseFirst() + " = Create" + contextName.ContextPrefix() + "Context();").ToArray());
+                "            " + contextName.LowercaseFirst() + " = Create" + contextName + "Context();").ToArray());
 
             return new [] { new CodeGenFile(
                 "Contexts",

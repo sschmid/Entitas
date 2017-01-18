@@ -8,11 +8,6 @@
 //------------------------------------------------------------------------------
 using Entitas;
 
-public class SomeClassComponent : IComponent {
-
-    public SomeClass value;
-}
-
 public sealed partial class SomeContextEntity : Entity {
 
     public SomeClassComponent someClass { get { return (SomeClassComponent)GetComponent(SomeContextComponentIds.SomeClass); } }
@@ -44,23 +39,6 @@ public sealed partial class SomeContextMatcher {
             if(_matcherSomeClass == null) {
                 var matcher = (Matcher<SomeContextEntity>)Matcher<SomeContextEntity>.AllOf(SomeContextComponentIds.SomeClass);
                 matcher.componentNames = SomeContextComponentIds.componentNames;
-                _matcherSomeClass = matcher;
-            }
-
-            return _matcherSomeClass;
-        }
-    }
-}
-
-public sealed partial class SomeOtherContextMatcher {
-
-    static IMatcher<SomeContextEntity> _matcherSomeClass;
-
-    public static IMatcher<SomeContextEntity> SomeClass {
-        get {
-            if(_matcherSomeClass == null) {
-                var matcher = (Matcher<SomeContextEntity>)Matcher<SomeContextEntity>.AllOf(SomeOtherContextComponentIds.SomeClass);
-                matcher.componentNames = SomeOtherContextComponentIds.componentNames;
                 _matcherSomeClass = matcher;
             }
 

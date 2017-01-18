@@ -1,6 +1,6 @@
 ﻿using Entitas;
 using Entitas.CodeGenerator;
 
-[SingleEntity, CustomPrefix("My"), Context("Test")]
+[Context("Test"), SingleEntity, CustomPrefix("My")]
 public class CustomPrefixComponent : IComponent {
 }

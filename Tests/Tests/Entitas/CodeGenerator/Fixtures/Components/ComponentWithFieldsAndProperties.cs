@@ -2,6 +2,7 @@ using Entitas;
 using Entitas.CodeGenerator;
 
 #pragma warning disable
+
 [Context("Test")]
 public class ComponentWithFieldsAndProperties : IComponent {
 

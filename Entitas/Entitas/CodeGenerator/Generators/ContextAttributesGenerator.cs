@@ -6,7 +6,6 @@ namespace Entitas.CodeGenerator {
 
         public CodeGenFile[] Generate(string[] contextNames) {
             return contextNames
-                .Where(contextName => !contextName.IsDefaultContextName())
                 .Select(contextName => contextName.UppercaseFirst())
                 .Select(contextName => new CodeGenFile(
                     contextName + "Attribute",

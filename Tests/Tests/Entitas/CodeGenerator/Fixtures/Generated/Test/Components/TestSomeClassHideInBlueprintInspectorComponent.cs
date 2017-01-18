@@ -8,12 +8,6 @@
 //------------------------------------------------------------------------------
 using Entitas;
 
-[Entitas.Serialization.Blueprints.HideInBlueprintInspectorAttribute]
-public class SomeClassHideInBlueprintInspectorComponent : IComponent {
-
-    public SomeClassHideInBlueprintInspector value;
-}
-
 public sealed partial class TestEntity : Entity {
 
     public SomeClassHideInBlueprintInspectorComponent someClassHideInBlueprintInspector { get { return (SomeClassHideInBlueprintInspectorComponent)GetComponent(TestComponentIds.SomeClassHideInBlueprintInspector); } }
@@ -36,7 +30,7 @@ public sealed partial class TestEntity : Entity {
     }
 }
 
-public partial class Matcher {
+public sealed partial class TestMatcher {
 
     static IMatcher<TestEntity> _matcherSomeClassHideInBlueprintInspector;
 

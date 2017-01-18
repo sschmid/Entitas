@@ -2,8 +2,9 @@
 using Entitas;
 using Entitas.CodeGenerator;
 
-[SingleEntity, Context("Other")]
+[Context("Other"), SingleEntity]
 public class OtherContextComponent : IComponent {
+
     public DateTime timestamp;
     public bool isLoggedIn;
 }
