@@ -6,40 +6,39 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
 
-    public sealed partial class TestEntity : Entity {
+public sealed partial class TestEntity : Entity {
 
-        static readonly MovableComponent movableComponent = new MovableComponent();
+    static readonly MovableComponent movableComponent = new MovableComponent();
 
-        public bool isMovable {
-            get { return HasComponent(ComponentIds.Movable); }
-            set {
-                if(value != isMovable) {
-                    if(value) {
-                        AddComponent(ComponentIds.Movable, movableComponent);
-                    } else {
-                        RemoveComponent(ComponentIds.Movable);
-                    }
+    public bool isMovable {
+        get { return HasComponent(TestComponentIds.Movable); }
+        set {
+            if(value != isMovable) {
+                if(value) {
+                    AddComponent(TestComponentIds.Movable, movableComponent);
+                } else {
+                    RemoveComponent(TestComponentIds.Movable);
                 }
             }
         }
     }
+}
 
-    public partial class Matcher {
+public sealed partial class TestMatcher {
 
-        static IMatcher<TestEntity> _matcherMovable;
+    static IMatcher<TestEntity> _matcherMovable;
 
-        public static IMatcher<TestEntity> Movable {
-            get {
-                if(_matcherMovable == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.Movable);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherMovable = matcher;
-                }
-
-                return _matcherMovable;
+    public static IMatcher<TestEntity> Movable {
+        get {
+            if(_matcherMovable == null) {
+                var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(TestComponentIds.Movable);
+                matcher.componentNames = TestComponentIds.componentNames;
+                _matcherMovable = matcher;
             }
+
+            return _matcherMovable;
         }
     }
 }

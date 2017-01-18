@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class ComponentIds {
+public static class TestComponentIds {
 
     public const int Animating = 0;
     public const int SomeClass = 1;
@@ -41,10 +41,8 @@ public static class ComponentIds {
     public static readonly System.Type[] componentTypes = {
         typeof(AnimatingComponent),
         typeof(SomeClassComponent),
-        typeof(MultipleContextAndDefaultContextComponent),
         typeof(ComponentWithFieldsAndProperties),
         typeof(CustomPrefixComponent),
-        typeof(DefaultContextComponent),
         typeof(MovableComponent),
         typeof(My.Namespace.NamespaceComponent),
         typeof(PersonComponent),

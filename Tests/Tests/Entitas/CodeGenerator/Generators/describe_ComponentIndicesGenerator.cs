@@ -6,7 +6,7 @@ using NSpec;
 
 class describe_ComponentIndicesGenerator : nspec {
 
-    const bool logResults = false;
+    const bool logResults = !false;
 
     static void generates(Type type, string expectedLookupName, string expectedLookupCode) {
         generates(new [] { type }, expectedLookupName, expectedLookupCode);
@@ -23,12 +23,14 @@ class describe_ComponentIndicesGenerator : nspec {
 
         files.Length.should_be(expectedLookupNames.Length);
 
+
         for(int i = 0; i < expectedLookupNames.Length; i++) {
             var expectedLookupName = expectedLookupNames[i];
             var expectedLookupCode = expectedLookupCodes[i].ToUnixLineEndings();
 
             files.Any(f => f.fileName == expectedLookupName).should_be_true();
             var file = files.Single(f => f.fileName == expectedLookupName);
+
 #pragma warning disable
             if(logResults) {
                 Console.WriteLine("should:\n" + expectedLookupCode);
@@ -81,8 +83,8 @@ class describe_ComponentIndicesGenerator : nspec {
 
 
         it["generates compatible field names for components with namespace"] = () => {
-            generates(typeof(NamespaceComponent), CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
-                @"public static class ComponentIds {
+            generates(typeof(NamespaceComponent), "Test" + CodeGenerator.DEFAULT_COMPONENT_LOOKUP_TAG,
+                @"public static class TestComponentIds {
 
     public const int Namespace = 0;
 

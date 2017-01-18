@@ -6,59 +6,58 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
 
-    public sealed partial class TestEntity : Entity {
+public sealed partial class TestEntity : Entity {
 
-        static readonly CustomPrefixComponent customPrefixComponent = new CustomPrefixComponent();
+    static readonly CustomPrefixComponent customPrefixComponent = new CustomPrefixComponent();
 
-        public bool myCustomPrefix {
-            get { return HasComponent(ComponentIds.CustomPrefix); }
-            set {
-                if(value != myCustomPrefix) {
-                    if(value) {
-                        AddComponent(ComponentIds.CustomPrefix, customPrefixComponent);
-                    } else {
-                        RemoveComponent(ComponentIds.CustomPrefix);
-                    }
+    public bool myCustomPrefix {
+        get { return HasComponent(TestComponentIds.CustomPrefix); }
+        set {
+            if(value != myCustomPrefix) {
+                if(value) {
+                    AddComponent(TestComponentIds.CustomPrefix, customPrefixComponent);
+                } else {
+                    RemoveComponent(TestComponentIds.CustomPrefix);
                 }
             }
         }
     }
+}
 
-    public sealed partial class TestContext : Context<TestEntity> {
+public sealed partial class TestContext : Context<TestEntity> {
 
-        public TestEntity customPrefixEntity { get { return GetGroup(Matcher.CustomPrefix).GetSingleEntity(); } }
+    public TestEntity customPrefixEntity { get { return GetGroup(TestMatcher.CustomPrefix).GetSingleEntity(); } }
 
-        public bool myCustomPrefix {
-            get { return customPrefixEntity != null; }
-            set {
-                var entity = customPrefixEntity;
-                if(value != (entity != null)) {
-                    if(value) {
-                        CreateEntity().myCustomPrefix = true;
-                    } else {
-                        DestroyEntity(entity);
-                    }
+    public bool myCustomPrefix {
+        get { return customPrefixEntity != null; }
+        set {
+            var entity = customPrefixEntity;
+            if(value != (entity != null)) {
+                if(value) {
+                    CreateEntity().myCustomPrefix = true;
+                } else {
+                    DestroyEntity(entity);
                 }
             }
         }
     }
+}
 
-    public partial class Matcher {
+public sealed partial class TestMatcher {
 
-        static IMatcher<TestEntity> _matcherCustomPrefix;
+    static IMatcher<TestEntity> _matcherCustomPrefix;
 
-        public static IMatcher<TestEntity> CustomPrefix {
-            get {
-                if(_matcherCustomPrefix == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.CustomPrefix);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherCustomPrefix = matcher;
-                }
-
-                return _matcherCustomPrefix;
+    public static IMatcher<TestEntity> CustomPrefix {
+        get {
+            if(_matcherCustomPrefix == null) {
+                var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(TestComponentIds.CustomPrefix);
+                matcher.componentNames = TestComponentIds.componentNames;
+                _matcherCustomPrefix = matcher;
             }
+
+            return _matcherCustomPrefix;
         }
     }
 }

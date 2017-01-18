@@ -6,40 +6,39 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
 
-    public sealed partial class TestEntity : Entity {
+public sealed partial class TestEntity : Entity {
 
-        static readonly My.Namespace.NamespaceComponent namespaceComponent = new My.Namespace.NamespaceComponent();
+    static readonly My.Namespace.NamespaceComponent namespaceComponent = new My.Namespace.NamespaceComponent();
 
-        public bool isNamespace {
-            get { return HasComponent(ComponentIds.Namespace); }
-            set {
-                if(value != isNamespace) {
-                    if(value) {
-                        AddComponent(ComponentIds.Namespace, namespaceComponent);
-                    } else {
-                        RemoveComponent(ComponentIds.Namespace);
-                    }
+    public bool isNamespace {
+        get { return HasComponent(TestComponentIds.Namespace); }
+        set {
+            if(value != isNamespace) {
+                if(value) {
+                    AddComponent(TestComponentIds.Namespace, namespaceComponent);
+                } else {
+                    RemoveComponent(TestComponentIds.Namespace);
                 }
             }
         }
     }
+}
 
-    public partial class Matcher {
+public sealed partial class TestMatcher {
 
-        static IMatcher<TestEntity> _matcherNamespace;
+    static IMatcher<TestEntity> _matcherNamespace;
 
-        public static IMatcher<TestEntity> Namespace {
-            get {
-                if(_matcherNamespace == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.Namespace);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherNamespace = matcher;
-                }
-
-                return _matcherNamespace;
+    public static IMatcher<TestEntity> Namespace {
+        get {
+            if(_matcherNamespace == null) {
+                var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(TestComponentIds.Namespace);
+                matcher.componentNames = TestComponentIds.componentNames;
+                _matcherNamespace = matcher;
             }
+
+            return _matcherNamespace;
         }
     }
 }

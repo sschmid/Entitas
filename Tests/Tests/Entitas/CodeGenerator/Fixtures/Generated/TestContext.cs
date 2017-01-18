@@ -1,12 +1,11 @@
-﻿namespace Entitas {
+﻿using Entitas;
 
-    public sealed partial class TestContext : Context<TestEntity> {
+public sealed partial class TestContext : Context<TestEntity> {
 
-        public TestContext() : base(CID.TotalComponents) {
-        }
+    public TestContext() : base(CID.TotalComponents) {
+    }
 
-        public TestContext(int totalComponents, int startCreationIndex, ContextInfo contextInfo)
-            : base(totalComponents, startCreationIndex, contextInfo) {
-        }
+    public TestContext(int totalComponents, int startCreationIndex, ContextInfo contextInfo)
+        : base(totalComponents, startCreationIndex, contextInfo) {
     }
 }

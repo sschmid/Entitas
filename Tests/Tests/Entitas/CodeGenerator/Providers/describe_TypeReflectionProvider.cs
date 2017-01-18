@@ -218,7 +218,7 @@ class describe_TypeReflectionProvider : nspec {
                     info.typeName.should_be("NamespaceComponent");
                     info.memberInfos.should_be_empty();
                     info.contexts.Length.should_be(1);
-                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
+                    info.contexts.should_contain("Test");
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(false);
@@ -258,7 +258,7 @@ class describe_TypeReflectionProvider : nspec {
                     info.typeName.should_be("AnimatingComponent");
                     info.memberInfos.should_be_empty();
                     info.contexts.Length.should_be(1);
-                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
+                    info.contexts.should_contain("Test");
                     info.isSingleEntity.should_be_true();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(false);
@@ -312,7 +312,7 @@ class describe_TypeReflectionProvider : nspec {
                     info.typeName.should_be("CustomPrefixComponent");
                     info.memberInfos.should_be_empty();
                     info.contexts.Length.should_be(1);
-                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
+                    info.contexts.should_contain("Test");
                     info.isSingleEntity.should_be_true();
                     info.singleComponentPrefix.should_be("My");
                     info.generateComponent.should_be(false);
@@ -338,7 +338,7 @@ class describe_TypeReflectionProvider : nspec {
                     info.memberInfos[1].name.should_be("publicProperty");
 
                     info.contexts.Length.should_be(1);
-                    info.contexts.should_contain(CodeGenerator.DEFAULT_CONTEXT_NAME);
+                    info.contexts.should_contain("Test");
                     info.isSingleEntity.should_be_false();
                     info.singleComponentPrefix.should_be("is");
                     info.generateComponent.should_be(false);

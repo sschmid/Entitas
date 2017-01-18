@@ -8,74 +8,71 @@
 //------------------------------------------------------------------------------
 using Entitas;
 
-namespace Entitas {
+public sealed partial class ContextAEntity : Entity {
 
-    public sealed partial class TestEntity : Entity {
+    static readonly CComponent cComponent = new CComponent();
 
-        static readonly CComponent cComponent = new CComponent();
-
-        public bool isC {
-            get { return HasComponent(ContextAComponentIds.C); }
-            set {
-                if(value != isC) {
-                    if(value) {
-                        AddComponent(ContextAComponentIds.C, cComponent);
-                    } else {
-                        RemoveComponent(ContextAComponentIds.C);
-                    }
+    public bool isC {
+        get { return HasComponent(ContextAComponentIds.C); }
+        set {
+            if(value != isC) {
+                if(value) {
+                    AddComponent(ContextAComponentIds.C, cComponent);
+                } else {
+                    RemoveComponent(ContextAComponentIds.C);
                 }
             }
         }
     }
 }
 
-    public partial class ContextAMatcher {
+public sealed partial class ContextAMatcher {
 
-        static IMatcher<TestEntity> _matcherC;
+    static IMatcher<ContextAEntity> _matcherC;
 
-        public static IMatcher<TestEntity> C {
-            get {
-                if(_matcherC == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ContextAComponentIds.C);
-                    matcher.componentNames = ContextAComponentIds.componentNames;
-                    _matcherC = matcher;
-                }
-
-                return _matcherC;
+    public static IMatcher<ContextAEntity> C {
+        get {
+            if(_matcherC == null) {
+                var matcher = (Matcher<ContextAEntity>)Matcher<ContextAEntity>.AllOf(ContextAComponentIds.C);
+                matcher.componentNames = ContextAComponentIds.componentNames;
+                _matcherC = matcher;
             }
+
+            return _matcherC;
         }
     }
+}
 
-    public partial class ContextBMatcher {
+public sealed partial class ContextBMatcher {
 
-        static IMatcher<TestEntity> _matcherC;
+    static IMatcher<ContextAEntity> _matcherC;
 
-        public static IMatcher<TestEntity> C {
-            get {
-                if(_matcherC == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ContextBComponentIds.C);
-                    matcher.componentNames = ContextBComponentIds.componentNames;
-                    _matcherC = matcher;
-                }
-
-                return _matcherC;
+    public static IMatcher<ContextAEntity> C {
+        get {
+            if(_matcherC == null) {
+                var matcher = (Matcher<ContextAEntity>)Matcher<ContextAEntity>.AllOf(ContextBComponentIds.C);
+                matcher.componentNames = ContextBComponentIds.componentNames;
+                _matcherC = matcher;
             }
+
+            return _matcherC;
         }
     }
+}
 
-    public partial class ContextCMatcher {
+public sealed partial class ContextCMatcher {
 
-        static IMatcher<TestEntity> _matcherC;
+    static IMatcher<ContextAEntity> _matcherC;
 
-        public static IMatcher<TestEntity> C {
-            get {
-                if(_matcherC == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ContextCComponentIds.C);
-                    matcher.componentNames = ContextCComponentIds.componentNames;
-                    _matcherC = matcher;
-                }
-
-                return _matcherC;
+    public static IMatcher<ContextAEntity> C {
+        get {
+            if(_matcherC == null) {
+                var matcher = (Matcher<ContextAEntity>)Matcher<ContextAEntity>.AllOf(ContextCComponentIds.C);
+                matcher.componentNames = ContextCComponentIds.componentNames;
+                _matcherC = matcher;
             }
+
+            return _matcherC;
         }
     }
+}

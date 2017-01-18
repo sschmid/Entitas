@@ -13,78 +13,58 @@ public class SomeClassComponent : IComponent {
     public SomeClass value;
 }
 
-namespace Entitas {
+public sealed partial class SomeContextEntity : Entity {
 
-    public sealed partial class TestEntity : Entity {
+    public SomeClassComponent someClass { get { return (SomeClassComponent)GetComponent(SomeContextComponentIds.SomeClass); } }
+    public bool hasSomeClass { get { return HasComponent(SomeContextComponentIds.SomeClass); } }
 
-        public SomeClassComponent someClass { get { return (SomeClassComponent)GetComponent(ComponentIds.SomeClass); } }
-        public bool hasSomeClass { get { return HasComponent(ComponentIds.SomeClass); } }
-
-        public void AddSomeClass(SomeClass newValue) {
-            var component = CreateComponent<SomeClassComponent>(ComponentIds.SomeClass);
-            component.value = newValue;
-            AddComponent(ComponentIds.SomeClass, component);
-        }
-
-        public void ReplaceSomeClass(SomeClass newValue) {
-            var component = CreateComponent<SomeClassComponent>(ComponentIds.SomeClass);
-            component.value = newValue;
-            ReplaceComponent(ComponentIds.SomeClass, component);
-        }
-
-        public void RemoveSomeClass() {
-            RemoveComponent(ComponentIds.SomeClass);
-        }
+    public void AddSomeClass(SomeClass newValue) {
+        var component = CreateComponent<SomeClassComponent>(SomeContextComponentIds.SomeClass);
+        component.value = newValue;
+        AddComponent(SomeContextComponentIds.SomeClass, component);
     }
 
-    public partial class Matcher {
+    public void ReplaceSomeClass(SomeClass newValue) {
+        var component = CreateComponent<SomeClassComponent>(SomeContextComponentIds.SomeClass);
+        component.value = newValue;
+        ReplaceComponent(SomeContextComponentIds.SomeClass, component);
+    }
 
-        static IMatcher<TestEntity> _matcherSomeClass;
+    public void RemoveSomeClass() {
+        RemoveComponent(SomeContextComponentIds.SomeClass);
+    }
+}
 
-        public static IMatcher<TestEntity> SomeClass {
-            get {
-                if(_matcherSomeClass == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.SomeClass);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherSomeClass = matcher;
-                }
+public sealed partial class SomeContextMatcher {
 
-                return _matcherSomeClass;
+    static IMatcher<SomeContextEntity> _matcherSomeClass;
+
+    public static IMatcher<SomeContextEntity> SomeClass {
+        get {
+            if(_matcherSomeClass == null) {
+                var matcher = (Matcher<SomeContextEntity>)Matcher<SomeContextEntity>.AllOf(SomeContextComponentIds.SomeClass);
+                matcher.componentNames = SomeContextComponentIds.componentNames;
+                _matcherSomeClass = matcher;
             }
+
+            return _matcherSomeClass;
         }
     }
 }
 
-    public partial class SomeContextMatcher {
+public sealed partial class SomeOtherContextMatcher {
 
-        static IMatcher<TestEntity> _matcherSomeClass;
+    static IMatcher<SomeContextEntity> _matcherSomeClass;
 
-        public static IMatcher<TestEntity> SomeClass {
-            get {
-                if(_matcherSomeClass == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(SomeContextComponentIds.SomeClass);
-                    matcher.componentNames = SomeContextComponentIds.componentNames;
-                    _matcherSomeClass = matcher;
-                }
-
-                return _matcherSomeClass;
+    public static IMatcher<SomeContextEntity> SomeClass {
+        get {
+            if(_matcherSomeClass == null) {
+                var matcher = (Matcher<SomeContextEntity>)Matcher<SomeContextEntity>.AllOf(SomeOtherContextComponentIds.SomeClass);
+                matcher.componentNames = SomeOtherContextComponentIds.componentNames;
+                _matcherSomeClass = matcher;
             }
+
+            return _matcherSomeClass;
         }
     }
-
-    public partial class SomeOtherContextMatcher {
-
-        static IMatcher<TestEntity> _matcherSomeClass;
-
-        public static IMatcher<TestEntity> SomeClass {
-            get {
-                if(_matcherSomeClass == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(SomeOtherContextComponentIds.SomeClass);
-                    matcher.componentNames = SomeOtherContextComponentIds.componentNames;
-                    _matcherSomeClass = matcher;
-                }
-
-                return _matcherSomeClass;
-            }
-        }
-    }
+}

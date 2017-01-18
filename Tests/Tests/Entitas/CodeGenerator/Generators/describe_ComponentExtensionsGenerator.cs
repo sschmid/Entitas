@@ -7,7 +7,7 @@ using NSpec;
 
 class describe_ComponentExtensionsGenerator : nspec {
 
-    const bool logResults = false;
+    const bool logResults = !false;
 
     const string classSuffix = "GeneratedExtension";
 
@@ -23,15 +23,15 @@ class describe_ComponentExtensionsGenerator : nspec {
         var codeGenFiles = new ComponentExtensionsGenerator().Generate(new [] { info });
         codeGenFiles.Length.should_be(1);
         var codeGenFile = codeGenFiles.Single();
+        var header = string.Format(CodeGenerator.AUTO_GENERATED_HEADER_FORMAT, typeof(ComponentExtensionsGenerator));
 
         #pragma warning disable
-        if(logResults) {
+        if(logResults && (header + codeGenFile.fileContent != expectedFileContent)) {
             Console.WriteLine("should:\n" + expectedFileContent);
             Console.WriteLine("was:\n" + codeGenFile.fileContent);
         }
 
         codeGenFile.fileName.should_be(expectedFileName);
-        var header = string.Format(CodeGenerator.AUTO_GENERATED_HEADER_FORMAT, typeof(ComponentExtensionsGenerator));
         (header + codeGenFile.fileContent).should_be(expectedFileContent);
     }
 
@@ -49,10 +49,9 @@ class describe_ComponentExtensionsGenerator : nspec {
         };
 
         it["works with namespaces"] = () => generates<NamespaceComponent>();
+        // TODO Actually create new files, each with component and matcher
         it["generates matchers for each context"] = () => generates<CComponent>();
         it["generates custom prefix"] = () => generates<CustomPrefixComponent>();
-        it["generates component with default context"] = () => generates<DefaultContextComponent>();
-        it["generates component with default context and others"] = () => generates<MultipleContextAndDefaultContextComponent>();
 
         it["generates component for class"] = () => generates<SomeClass>("SomeClassComponent");
         it["generates component for struct"] = () => generates<SomeStruct>("SomeStructComponent");

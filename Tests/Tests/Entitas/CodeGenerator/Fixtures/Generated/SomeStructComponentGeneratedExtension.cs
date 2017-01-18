@@ -17,23 +17,23 @@ namespace Entitas {
 
     public sealed partial class TestEntity : Entity {
 
-        public SomeStructComponent someStruct { get { return (SomeStructComponent)GetComponent(ComponentIds.SomeStruct); } }
-        public bool hasSomeStruct { get { return HasComponent(ComponentIds.SomeStruct); } }
+        public SomeStructComponent someStruct { get { return (SomeStructComponent)GetComponent(TestComponentIds.SomeStruct); } }
+        public bool hasSomeStruct { get { return HasComponent(TestComponentIds.SomeStruct); } }
 
         public void AddSomeStruct(SomeStruct newValue) {
-            var component = CreateComponent<SomeStructComponent>(ComponentIds.SomeStruct);
+            var component = CreateComponent<SomeStructComponent>(TestComponentIds.SomeStruct);
             component.value = newValue;
-            AddComponent(ComponentIds.SomeStruct, component);
+            AddComponent(TestComponentIds.SomeStruct, component);
         }
 
         public void ReplaceSomeStruct(SomeStruct newValue) {
-            var component = CreateComponent<SomeStructComponent>(ComponentIds.SomeStruct);
+            var component = CreateComponent<SomeStructComponent>(TestComponentIds.SomeStruct);
             component.value = newValue;
-            ReplaceComponent(ComponentIds.SomeStruct, component);
+            ReplaceComponent(TestComponentIds.SomeStruct, component);
         }
 
         public void RemoveSomeStruct() {
-            RemoveComponent(ComponentIds.SomeStruct);
+            RemoveComponent(TestComponentIds.SomeStruct);
         }
     }
 
@@ -44,8 +44,8 @@ namespace Entitas {
         public static IMatcher<TestEntity> SomeStruct {
             get {
                 if(_matcherSomeStruct == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.SomeStruct);
-                    matcher.componentNames = ComponentIds.componentNames;
+                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(TestComponentIds.SomeStruct);
+                    matcher.componentNames = TestComponentIds.componentNames;
                     _matcherSomeStruct = matcher;
                 }
 

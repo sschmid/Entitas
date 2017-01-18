@@ -14,44 +14,41 @@ public class SomeClassHideInBlueprintInspectorComponent : IComponent {
     public SomeClassHideInBlueprintInspector value;
 }
 
-namespace Entitas {
+public sealed partial class TestEntity : Entity {
 
-    public sealed partial class TestEntity : Entity {
+    public SomeClassHideInBlueprintInspectorComponent someClassHideInBlueprintInspector { get { return (SomeClassHideInBlueprintInspectorComponent)GetComponent(TestComponentIds.SomeClassHideInBlueprintInspector); } }
+    public bool hasSomeClassHideInBlueprintInspector { get { return HasComponent(TestComponentIds.SomeClassHideInBlueprintInspector); } }
 
-        public SomeClassHideInBlueprintInspectorComponent someClassHideInBlueprintInspector { get { return (SomeClassHideInBlueprintInspectorComponent)GetComponent(ComponentIds.SomeClassHideInBlueprintInspector); } }
-        public bool hasSomeClassHideInBlueprintInspector { get { return HasComponent(ComponentIds.SomeClassHideInBlueprintInspector); } }
-
-        public void AddSomeClassHideInBlueprintInspector(SomeClassHideInBlueprintInspector newValue) {
-            var component = CreateComponent<SomeClassHideInBlueprintInspectorComponent>(ComponentIds.SomeClassHideInBlueprintInspector);
-            component.value = newValue;
-            AddComponent(ComponentIds.SomeClassHideInBlueprintInspector, component);
-        }
-
-        public void ReplaceSomeClassHideInBlueprintInspector(SomeClassHideInBlueprintInspector newValue) {
-            var component = CreateComponent<SomeClassHideInBlueprintInspectorComponent>(ComponentIds.SomeClassHideInBlueprintInspector);
-            component.value = newValue;
-            ReplaceComponent(ComponentIds.SomeClassHideInBlueprintInspector, component);
-        }
-
-        public void RemoveSomeClassHideInBlueprintInspector() {
-            RemoveComponent(ComponentIds.SomeClassHideInBlueprintInspector);
-        }
+    public void AddSomeClassHideInBlueprintInspector(SomeClassHideInBlueprintInspector newValue) {
+        var component = CreateComponent<SomeClassHideInBlueprintInspectorComponent>(TestComponentIds.SomeClassHideInBlueprintInspector);
+        component.value = newValue;
+        AddComponent(TestComponentIds.SomeClassHideInBlueprintInspector, component);
     }
 
-    public partial class Matcher {
+    public void ReplaceSomeClassHideInBlueprintInspector(SomeClassHideInBlueprintInspector newValue) {
+        var component = CreateComponent<SomeClassHideInBlueprintInspectorComponent>(TestComponentIds.SomeClassHideInBlueprintInspector);
+        component.value = newValue;
+        ReplaceComponent(TestComponentIds.SomeClassHideInBlueprintInspector, component);
+    }
 
-        static IMatcher<TestEntity> _matcherSomeClassHideInBlueprintInspector;
+    public void RemoveSomeClassHideInBlueprintInspector() {
+        RemoveComponent(TestComponentIds.SomeClassHideInBlueprintInspector);
+    }
+}
 
-        public static IMatcher<TestEntity> SomeClassHideInBlueprintInspector {
-            get {
-                if(_matcherSomeClassHideInBlueprintInspector == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.SomeClassHideInBlueprintInspector);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherSomeClassHideInBlueprintInspector = matcher;
-                }
+public partial class Matcher {
 
-                return _matcherSomeClassHideInBlueprintInspector;
+    static IMatcher<TestEntity> _matcherSomeClassHideInBlueprintInspector;
+
+    public static IMatcher<TestEntity> SomeClassHideInBlueprintInspector {
+        get {
+            if(_matcherSomeClassHideInBlueprintInspector == null) {
+                var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(TestComponentIds.SomeClassHideInBlueprintInspector);
+                matcher.componentNames = TestComponentIds.componentNames;
+                _matcherSomeClassHideInBlueprintInspector = matcher;
             }
+
+            return _matcherSomeClassHideInBlueprintInspector;
         }
     }
 }

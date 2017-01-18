@@ -21,7 +21,6 @@ public static class OtherComponentIds {
 
     public static readonly System.Type[] componentTypes = {
         typeof(OtherContextComponent),
-        null,
-        typeof(MultipleContextAndDefaultContextComponent)
+        null
     };
 }

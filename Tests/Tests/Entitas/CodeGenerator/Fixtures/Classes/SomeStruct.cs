@@ -1,5 +1,5 @@
 using Entitas.CodeGenerator;
 
-[Context]
+[Context("Test")]
 public struct SomeStruct {
 }

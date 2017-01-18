@@ -6,59 +6,58 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
 
-    public sealed partial class TestEntity : Entity {
+public sealed partial class TestEntity : Entity {
 
-        static readonly AnimatingComponent animatingComponent = new AnimatingComponent();
+    static readonly AnimatingComponent animatingComponent = new AnimatingComponent();
 
-        public bool isAnimating {
-            get { return HasComponent(ComponentIds.Animating); }
-            set {
-                if(value != isAnimating) {
-                    if(value) {
-                        AddComponent(ComponentIds.Animating, animatingComponent);
-                    } else {
-                        RemoveComponent(ComponentIds.Animating);
-                    }
+    public bool isAnimating {
+        get { return HasComponent(TestComponentIds.Animating); }
+        set {
+            if(value != isAnimating) {
+                if(value) {
+                    AddComponent(TestComponentIds.Animating, animatingComponent);
+                } else {
+                    RemoveComponent(TestComponentIds.Animating);
                 }
             }
         }
     }
+}
 
-    public sealed partial class TestContext : Context<TestEntity> {
+public sealed partial class TestContext : Context<TestEntity> {
 
-        public TestEntity animatingEntity { get { return GetGroup(Matcher.Animating).GetSingleEntity(); } }
+    public TestEntity animatingEntity { get { return GetGroup(TestMatcher.Animating).GetSingleEntity(); } }
 
-        public bool isAnimating {
-            get { return animatingEntity != null; }
-            set {
-                var entity = animatingEntity;
-                if(value != (entity != null)) {
-                    if(value) {
-                        CreateEntity().isAnimating = true;
-                    } else {
-                        DestroyEntity(entity);
-                    }
+    public bool isAnimating {
+        get { return animatingEntity != null; }
+        set {
+            var entity = animatingEntity;
+            if(value != (entity != null)) {
+                if(value) {
+                    CreateEntity().isAnimating = true;
+                } else {
+                    DestroyEntity(entity);
                 }
             }
         }
     }
+}
 
-    public partial class Matcher {
+public sealed partial class TestMatcher {
 
-        static IMatcher<TestEntity> _matcherAnimating;
+    static IMatcher<TestEntity> _matcherAnimating;
 
-        public static IMatcher<TestEntity> Animating {
-            get {
-                if(_matcherAnimating == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.Animating);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherAnimating = matcher;
-                }
-
-                return _matcherAnimating;
+    public static IMatcher<TestEntity> Animating {
+        get {
+            if(_matcherAnimating == null) {
+                var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(TestComponentIds.Animating);
+                matcher.componentNames = TestComponentIds.componentNames;
+                _matcherAnimating = matcher;
             }
+
+            return _matcherAnimating;
         }
     }
 }

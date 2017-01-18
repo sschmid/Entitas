@@ -17,6 +17,6 @@ namespace Entitas {
 
         public IContext[] allContexts { get { return new IContext[] { test }; } }
 
-        public IContext<TestEntity> test;
+        public TestContext test;
     }
 }

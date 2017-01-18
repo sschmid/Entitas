@@ -7,9 +7,7 @@ namespace Entitas.CodeGenerator {
 
         public readonly string contextName;
 
-        // TODO Try to use this again as soon Unity updates to newer mono
-        //public ContextAttribute(string contextName = CodeGenerator.DEFAULT_CONTEXT_NAME) {
-        public ContextAttribute(string contextName = "Context") {
+        public ContextAttribute(string contextName) {
             this.contextName = contextName;
         }
     }

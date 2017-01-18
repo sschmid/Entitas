@@ -8,76 +8,73 @@
 //------------------------------------------------------------------------------
 using Entitas;
 
-namespace Entitas {
+public sealed partial class OtherEntity : Entity {
 
-    public sealed partial class TestEntity : Entity {
+    public OtherContextComponent otherContext { get { return (OtherContextComponent)GetComponent(OtherComponentIds.OtherContext); } }
+    public bool hasOtherContext { get { return HasComponent(OtherComponentIds.OtherContext); } }
 
-        public OtherContextComponent otherContext { get { return (OtherContextComponent)GetComponent(OtherComponentIds.OtherContext); } }
-        public bool hasOtherContext { get { return HasComponent(OtherComponentIds.OtherContext); } }
-
-        public void AddOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var component = CreateComponent<OtherContextComponent>(OtherComponentIds.OtherContext);
-            component.timestamp = newTimestamp;
-            component.isLoggedIn = newIsLoggedIn;
-            AddComponent(OtherComponentIds.OtherContext, component);
-        }
-
-        public void ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var component = CreateComponent<OtherContextComponent>(OtherComponentIds.OtherContext);
-            component.timestamp = newTimestamp;
-            component.isLoggedIn = newIsLoggedIn;
-            ReplaceComponent(OtherComponentIds.OtherContext, component);
-        }
-
-        public void RemoveOtherContext() {
-            RemoveComponent(OtherComponentIds.OtherContext);
-        }
+    public void AddOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        var component = CreateComponent<OtherContextComponent>(OtherComponentIds.OtherContext);
+        component.timestamp = newTimestamp;
+        component.isLoggedIn = newIsLoggedIn;
+        AddComponent(OtherComponentIds.OtherContext, component);
     }
 
-    public sealed partial class TestContext : Context<TestEntity> {
+    public void ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        var component = CreateComponent<OtherContextComponent>(OtherComponentIds.OtherContext);
+        component.timestamp = newTimestamp;
+        component.isLoggedIn = newIsLoggedIn;
+        ReplaceComponent(OtherComponentIds.OtherContext, component);
+    }
 
-        public TestEntity otherContextEntity { get { return GetGroup(OtherMatcher.OtherContext).GetSingleEntity(); } }
-        public OtherContextComponent otherContext { get { return otherContextEntity.otherContext; } }
-        public bool hasOtherContext { get { return otherContextEntity != null; } }
-
-        public TestEntity SetOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            if(hasOtherContext) {
-                throw new EntitasException("Could not set otherContext!\n" + this + " already has an entity with OtherContextComponent!",
-                    "You should check if the context already has a otherContextEntity before setting it or use context.ReplaceOtherContext().");
-            }
-            var entity = CreateEntity();
-            entity.AddOtherContext(newTimestamp, newIsLoggedIn);
-            return entity;
-        }
-
-        public void ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
-            var entity = otherContextEntity;
-            if(entity == null) {
-                entity = SetOtherContext(newTimestamp, newIsLoggedIn);
-            } else {
-                entity.ReplaceOtherContext(newTimestamp, newIsLoggedIn);
-            }
-        }
-
-        public void RemoveOtherContext() {
-            DestroyEntity(otherContextEntity);
-        }
+    public void RemoveOtherContext() {
+        RemoveComponent(OtherComponentIds.OtherContext);
     }
 }
 
-    public partial class OtherMatcher {
+public sealed partial class OtherContext : Context<OtherEntity> {
 
-        static IMatcher<TestEntity> _matcherOtherContext;
+    public OtherEntity otherContextEntity { get { return GetGroup(OtherMatcher.OtherContext).GetSingleEntity(); } }
+    public OtherContextComponent otherContext { get { return otherContextEntity.otherContext; } }
+    public bool hasOtherContext { get { return otherContextEntity != null; } }
 
-        public static IMatcher<TestEntity> OtherContext {
-            get {
-                if(_matcherOtherContext == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(OtherComponentIds.OtherContext);
-                    matcher.componentNames = OtherComponentIds.componentNames;
-                    _matcherOtherContext = matcher;
-                }
+    public OtherEntity SetOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        if(hasOtherContext) {
+            throw new EntitasException("Could not set otherContext!\n" + this + " already has an entity with OtherContextComponent!",
+                "You should check if the context already has a otherContextEntity before setting it or use context.ReplaceOtherContext().");
+        }
+        var entity = CreateEntity();
+        entity.AddOtherContext(newTimestamp, newIsLoggedIn);
+        return entity;
+    }
 
-                return _matcherOtherContext;
-            }
+    public void ReplaceOtherContext(System.DateTime newTimestamp, bool newIsLoggedIn) {
+        var entity = otherContextEntity;
+        if(entity == null) {
+            entity = SetOtherContext(newTimestamp, newIsLoggedIn);
+        } else {
+            entity.ReplaceOtherContext(newTimestamp, newIsLoggedIn);
         }
     }
+
+    public void RemoveOtherContext() {
+        DestroyEntity(otherContextEntity);
+    }
+}
+
+public sealed partial class OtherMatcher {
+
+    static IMatcher<OtherEntity> _matcherOtherContext;
+
+    public static IMatcher<OtherEntity> OtherContext {
+        get {
+            if(_matcherOtherContext == null) {
+                var matcher = (Matcher<OtherEntity>)Matcher<OtherEntity>.AllOf(OtherComponentIds.OtherContext);
+                matcher.componentNames = OtherComponentIds.componentNames;
+                _matcherOtherContext = matcher;
+            }
+
+            return _matcherOtherContext;
+        }
+    }
+}

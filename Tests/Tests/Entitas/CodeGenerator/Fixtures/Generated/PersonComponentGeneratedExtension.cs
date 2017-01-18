@@ -6,46 +6,45 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
 
-    public sealed partial class TestEntity : Entity {
+public sealed partial class TestEntity : Entity {
 
-        public PersonComponent person { get { return (PersonComponent)GetComponent(ComponentIds.Person); } }
-        public bool hasPerson { get { return HasComponent(ComponentIds.Person); } }
+    public PersonComponent person { get { return (PersonComponent)GetComponent(TestComponentIds.Person); } }
+    public bool hasPerson { get { return HasComponent(TestComponentIds.Person); } }
 
-        public void AddPerson(int newAge, string newName) {
-            var component = CreateComponent<PersonComponent>(ComponentIds.Person);
-            component.age = newAge;
-            component.name = newName;
-            AddComponent(ComponentIds.Person, component);
-        }
-
-        public void ReplacePerson(int newAge, string newName) {
-            var component = CreateComponent<PersonComponent>(ComponentIds.Person);
-            component.age = newAge;
-            component.name = newName;
-            ReplaceComponent(ComponentIds.Person, component);
-        }
-
-        public void RemovePerson() {
-            RemoveComponent(ComponentIds.Person);
-        }
+    public void AddPerson(int newAge, string newName) {
+        var component = CreateComponent<PersonComponent>(TestComponentIds.Person);
+        component.age = newAge;
+        component.name = newName;
+        AddComponent(TestComponentIds.Person, component);
     }
 
-    public partial class Matcher {
+    public void ReplacePerson(int newAge, string newName) {
+        var component = CreateComponent<PersonComponent>(TestComponentIds.Person);
+        component.age = newAge;
+        component.name = newName;
+        ReplaceComponent(TestComponentIds.Person, component);
+    }
 
-        static IMatcher<TestEntity> _matcherPerson;
+    public void RemovePerson() {
+        RemoveComponent(TestComponentIds.Person);
+    }
+}
 
-        public static IMatcher<TestEntity> Person {
-            get {
-                if(_matcherPerson == null) {
-                    var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(ComponentIds.Person);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherPerson = matcher;
-                }
+public sealed partial class TestMatcher {
 
-                return _matcherPerson;
+    static IMatcher<TestEntity> _matcherPerson;
+
+    public static IMatcher<TestEntity> Person {
+        get {
+            if(_matcherPerson == null) {
+                var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(TestComponentIds.Person);
+                matcher.componentNames = TestComponentIds.componentNames;
+                _matcherPerson = matcher;
             }
+
+            return _matcherPerson;
         }
     }
 }

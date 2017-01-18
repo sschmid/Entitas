@@ -68,7 +68,7 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple contexts\EComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple contexts\FComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\AnimatingComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ComponentIds.cs" />
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\TestComponentIds.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MovableComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\PersonComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\UserComponentGeneratedExtension.cs" />
@@ -127,8 +127,6 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\ISomeInterface.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomName.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\GeneratedComponent.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\DefaultContextComponent.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components\MultipleContextAndDefaultContextComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\CustomNames.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeStruct.cs" />
     <Compile Include="Tests\Entitas\Serialization\Configuration\describe_CodeGeneratorConfig.cs" />
@@ -170,8 +168,6 @@
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestTearDownSystem.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Contexts.cs" />
     <Compile Include="Tests\Entitas\Serialization\Fixtures\SomeAttribute.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\DefaultContextComponentGeneratedExtension.cs" />
-    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\MultipleContextAndDefaultContextComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherContextComponentGeneratedExtension.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0360_1.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0360_2.cs" />
@@ -438,6 +434,7 @@
     <Compile Include="..\Entitas\Entitas\Systems\Systems.cs">
       <Link>Linked Libraries\Entitas\Systems\Systems.cs</Link>
     </Compile>
+    <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\OtherContext.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
