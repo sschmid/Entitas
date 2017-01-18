@@ -2,8 +2,8 @@ using Entitas;
 
 public class ContextHasEntity : IPerformanceTest {
     const int n = 100000;
-    IContext<XXXEntity> _context;
-    XXXEntity _e;
+    IContext<Entity> _context;
+    Entity _e;
 
     public void Before() {
         _context = Helper.CreateContext();

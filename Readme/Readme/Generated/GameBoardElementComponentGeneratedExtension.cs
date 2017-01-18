@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public partial class GameEntity : XXXEntity {
+    public partial class GameEntity : Entity {
 
         static readonly GameBoardElementComponent gameBoardElementComponent = new GameBoardElementComponent();
 

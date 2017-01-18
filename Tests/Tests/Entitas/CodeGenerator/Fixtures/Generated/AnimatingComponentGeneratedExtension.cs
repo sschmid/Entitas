@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 namespace Entitas {
 
-    public sealed partial class TestEntity : XXXEntity {
+    public sealed partial class TestEntity : Entity {
 
         static readonly AnimatingComponent animatingComponent = new AnimatingComponent();
 

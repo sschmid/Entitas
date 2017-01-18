@@ -1,5 +1,5 @@
 ﻿namespace Entitas {
 
-    public sealed partial class GameEntity : XXXEntity {
+    public sealed partial class GameEntity : Entity {
     }
 }

@@ -2,10 +2,10 @@ using Entitas;
 
 public class ObjectGetProperty : IPerformanceTest {
     const int n = 10000000;
-    IContext<XXXEntity> _context;
+    IContext<Entity> _context;
 
     public void Before() {
-        _context = new Context<XXXEntity>(1);
+        _context = new Context<Entity>(1);
     }
 
     public void Run() {

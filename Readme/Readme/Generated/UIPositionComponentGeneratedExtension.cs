@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class GameEntity : XXXEntity {
+    public partial class GameEntity : Entity {
 
         public UIPositionComponent uIPosition { get { return (UIPositionComponent)GetComponent(UIComponentIds.UIPosition); } }
         public bool hasUIPosition { get { return HasComponent(UIComponentIds.UIPosition); } }

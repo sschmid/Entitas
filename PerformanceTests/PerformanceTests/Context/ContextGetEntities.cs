@@ -2,7 +2,7 @@ using Entitas;
 
 public class ContextGetEntities : IPerformanceTest {
     const int n = 100000;
-    IContext<XXXEntity> _context;
+    IContext<Entity> _context;
 
     public void Before() {
         _context = Helper.CreateContext();

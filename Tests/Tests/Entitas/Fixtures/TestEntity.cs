@@ -1,6 +1,6 @@
 ﻿
 namespace Entitas {
 
-    public sealed partial class TestEntity : XXXEntity {
+    public sealed partial class TestEntity : Entity {
     }
 }

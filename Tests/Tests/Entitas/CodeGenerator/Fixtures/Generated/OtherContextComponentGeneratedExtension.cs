@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public sealed partial class TestEntity : XXXEntity {
+    public sealed partial class TestEntity : Entity {
 
         public OtherContextComponent otherContext { get { return (OtherContextComponent)GetComponent(OtherComponentIds.OtherContext); } }
         public bool hasOtherContext { get { return HasComponent(OtherComponentIds.OtherContext); } }

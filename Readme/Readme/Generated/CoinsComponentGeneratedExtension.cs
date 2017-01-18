@@ -10,7 +10,7 @@ using Entitas;
 
 namespace Entitas {
 
-    public partial class GameEntity : XXXEntity {
+    public partial class GameEntity : Entity {
 
         public CoinsComponent coins { get { return (CoinsComponent)GetComponent(MetaComponentIds.Coins); } }
         public bool hasCoins { get { return HasComponent(MetaComponentIds.Coins); } }

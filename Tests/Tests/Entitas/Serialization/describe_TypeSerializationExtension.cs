@@ -43,7 +43,7 @@ class describe_TypeSerializationExtension : nspec {
             };
 
             context["custom types"] = () => {
-                it["generates type string with namespace"] = () => toCompilable<XXXEntity>().should_be("Entitas.XXXEntity");
+                it["generates type string with namespace"] = () => toCompilable<Entity>().should_be("Entitas.XXXEntity");
             };
 
             context["array"] = () => {
@@ -55,8 +55,8 @@ class describe_TypeSerializationExtension : nspec {
 
             context["generics"] = () => {
                 it["generates List<T>"] = () => toCompilable<List<int>>().should_be("System.Collections.Generic.List<int>");
-                it["generates HashSet<T>"] = () => toCompilable<HashSet<XXXEntity>>().should_be("System.Collections.Generic.HashSet<Entitas.XXXEntity>");
-                it["generates Dictionary<T1, T2>"] = () => toCompilable<Dictionary<string, XXXEntity>>().should_be("System.Collections.Generic.Dictionary<string, Entitas.XXXEntity>");
+                it["generates HashSet<T>"] = () => toCompilable<HashSet<Entity>>().should_be("System.Collections.Generic.HashSet<Entitas.XXXEntity>");
+                it["generates Dictionary<T1, T2>"] = () => toCompilable<Dictionary<string, Entity>>().should_be("System.Collections.Generic.Dictionary<string, Entitas.XXXEntity>");
             };
 
             context["enum"] = () => {
@@ -70,7 +70,7 @@ class describe_TypeSerializationExtension : nspec {
 
             context["mixed"] = () => {
                 it["generates List<T>[,]"] = () => toCompilable<List<int>[,]>().should_be("System.Collections.Generic.List<int>[,]");
-                it["generates Dictionary<List<T>[,], T2>[]"] = () => toCompilable<Dictionary<List<NestedTest.NestedTestEnum>[,], XXXEntity>[]>().should_be("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest.NestedTestEnum>[,], Entitas.XXXEntity>[]");
+                it["generates Dictionary<List<T>[,], T2>[]"] = () => toCompilable<Dictionary<List<NestedTest.NestedTestEnum>[,], Entity>[]>().should_be("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest.NestedTestEnum>[,], Entitas.XXXEntity>[]");
             };
         };
 
@@ -97,7 +97,7 @@ class describe_TypeSerializationExtension : nspec {
             };
 
             context["custom types"] = () => {
-                it["generates type string with namespace"] = () => toReadable<XXXEntity>().should_be("Entitas.XXXEntity");
+                it["generates type string with namespace"] = () => toReadable<Entity>().should_be("Entitas.XXXEntity");
             };
 
             context["array"] = () => {
@@ -109,8 +109,8 @@ class describe_TypeSerializationExtension : nspec {
 
             context["generics"] = () => {
                 it["generates List<T>"] = () => toReadable<List<int>>().should_be("System.Collections.Generic.List<int>");
-                it["generates HashSet<T>"] = () => toReadable<HashSet<XXXEntity>>().should_be("System.Collections.Generic.HashSet<Entitas.XXXEntity>");
-                it["generates Dictionary<T1, T2>"] = () => toReadable<Dictionary<string, XXXEntity>>().should_be("System.Collections.Generic.Dictionary<string, Entitas.XXXEntity>");
+                it["generates HashSet<T>"] = () => toReadable<HashSet<Entity>>().should_be("System.Collections.Generic.HashSet<Entitas.XXXEntity>");
+                it["generates Dictionary<T1, T2>"] = () => toReadable<Dictionary<string, Entity>>().should_be("System.Collections.Generic.Dictionary<string, Entitas.XXXEntity>");
             };
 
             context["enum"] = () => {
@@ -124,7 +124,7 @@ class describe_TypeSerializationExtension : nspec {
 
             context["mixed"] = () => {
                 it["generates List<T>[,]"] = () => toReadable<List<int>[,]>().should_be("System.Collections.Generic.List<int>[,]");
-                it["generates Dictionary<List<T>[,], T2>[]"] = () => toReadable<Dictionary<List<NestedTest.NestedTestEnum>[,], XXXEntity>[]>().should_be("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest+NestedTestEnum>[,], Entitas.XXXEntity>[]");
+                it["generates Dictionary<List<T>[,], T2>[]"] = () => toReadable<Dictionary<List<NestedTest.NestedTestEnum>[,], Entity>[]>().should_be("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest+NestedTestEnum>[,], Entitas.XXXEntity>[]");
             };
         };
 
@@ -150,7 +150,7 @@ class describe_TypeSerializationExtension : nspec {
             };
 
             context["custom types"] = () => {
-                it["finds type"] = () => toType("Entitas.XXXEntity").should_be(typeof(XXXEntity));
+                it["finds type"] = () => toType("Entitas.XXXEntity").should_be(typeof(Entity));
             };
 
             context["array"] = () => {
@@ -162,8 +162,8 @@ class describe_TypeSerializationExtension : nspec {
 
             context["generics"] = () => {
                 it["finds List<T>"] = () => toType("System.Collections.Generic.List<int>").should_be(typeof(List<int>));
-                xit["finds HashSet<T>"] = () => toType("System.Collections.Generic.HashSet<Entitas.Entity>").should_be(typeof(HashSet<XXXEntity>));
-                xit["finds Dictionary<T1, T2>"] = () => toType("System.Collections.Generic.Dictionary<string, Entitas.Entity>").should_be(typeof(Dictionary<string, XXXEntity>));
+                xit["finds HashSet<T>"] = () => toType("System.Collections.Generic.HashSet<Entitas.Entity>").should_be(typeof(HashSet<Entity>));
+                xit["finds Dictionary<T1, T2>"] = () => toType("System.Collections.Generic.Dictionary<string, Entitas.Entity>").should_be(typeof(Dictionary<string, Entity>));
             };
 
             context["enum"] = () => {
@@ -177,7 +177,7 @@ class describe_TypeSerializationExtension : nspec {
 
             context["mixed"] = () => {
                 it["generates List<T>[,]"] = () => toType("System.Collections.Generic.List<int>[,]").should_be(typeof(List<int>[,]));
-                xit["generates Dictionary<List<T>[,], T2>[]"] = () => toType("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest+NestedTestEnum>[,], Entitas.Entity>[]").should_be(typeof(Dictionary<List<NestedTest.NestedTestEnum>[,], XXXEntity>[]));
+                xit["generates Dictionary<List<T>[,], T2>[]"] = () => toType("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest+NestedTestEnum>[,], Entitas.Entity>[]").should_be(typeof(Dictionary<List<NestedTest.NestedTestEnum>[,], Entity>[]));
             };
         };
     }

@@ -4,13 +4,13 @@ public class EntityIndexGetEntity : IPerformanceTest {
 
     const int n = 1000000;
 
-    IContext<XXXEntity> _context;
+    IContext<Entity> _context;
 
-    PrimaryEntityIndex<XXXEntity, string> _index;
+    PrimaryEntityIndex<Entity, string> _index;
 
     public void Before() {
         _context = Helper.CreateContext();
-        _index = new PrimaryEntityIndex<XXXEntity, string>(_context.GetGroup(Matcher<XXXEntity>.AllOf(CP.ComponentA)), (e, c) => ((NameComponent)c).name);
+        _index = new PrimaryEntityIndex<Entity, string>(_context.GetGroup(Matcher<Entity>.AllOf(CP.ComponentA)), (e, c) => ((NameComponent)c).name);
 
         for (int i = 0; i < 10; i++) {
             var nameComponent = new NameComponent();

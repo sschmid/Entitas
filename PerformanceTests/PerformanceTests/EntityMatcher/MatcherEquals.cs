@@ -2,16 +2,16 @@ using Entitas;
 
 public class MatcherEquals : IPerformanceTest {
     const int n = 10000000;
-    IMatcher<XXXEntity> _m1;
-    IMatcher<XXXEntity> _m2;
+    IMatcher<Entity> _m1;
+    IMatcher<Entity> _m2;
 
     public void Before() {
-        _m1 = Matcher<XXXEntity>.AllOf(new [] {
+        _m1 = Matcher<Entity>.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB,
             CP.ComponentC
         });
-        _m2 = Matcher<XXXEntity>.AllOf(new [] {
+        _m2 = Matcher<Entity>.AllOf(new [] {
             CP.ComponentA,
             CP.ComponentB,
             CP.ComponentC
