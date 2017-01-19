@@ -1,8 +1,9 @@
+using System;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
-    public class ContextsGenerator : IContextCodeGenerator {
+    public class ContextsGenerator : ICodeGenerator {
 
         const string CLASS_TEMPLATE = @"namespace Entitas {{
 
@@ -25,9 +26,13 @@ namespace Entitas.CodeGenerator {
         }}
 ";
 
-        public CodeGenFile[] Generate(string[] contextNames) {
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+            var contextNames = data.Where(d => d.ContainsKey(ContextDataProvider.CONTEXT_NAME))
+                                   .Select(d => d.GetContextName())
+                                   .ToArray();
+
             var createContextMethods = contextNames.Aggregate(string.Empty, (acc, contextName) =>
-                acc + string.Format(CREATE_CONTEXT_TEMPLATE, contextName, contextName, contextName + CodeGenerator.COMPONENT_LOOKUP)
+                acc + string.Format(CREATE_CONTEXT_TEMPLATE, contextName, contextName, contextName + ComponentIndicesGenerator.COMPONENT_LOOKUP)
             );
 
             var allContextsList = string.Join(", ", contextNames.Select(contextName => contextName.LowercaseFirst()).ToArray());
@@ -37,7 +42,7 @@ namespace Entitas.CodeGenerator {
             var setAllContexts = string.Join("\n", contextNames.Select(contextName =>
                 "            " + contextName.LowercaseFirst() + " = Create" + contextName + "Context();").ToArray());
 
-            return new [] { new CodeGenFile(
+            return new[] { new CodeGenFile(
                 "Contexts",
                 string.Format(CLASS_TEMPLATE, createContextMethods, allContextsList, contextFields, setAllContexts),
                 GetType().FullName

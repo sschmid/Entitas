@@ -1,7 +1,7 @@
 using System;
 using Entitas.CodeGenerator;
 
-[Context]
+[VisualDebugging]
 public class SomeClass {
 
     public string name;
@@ -11,7 +11,7 @@ public class SomeClass {
     }
 }
 
-[Context]
+[VisualDebugging]
 public struct SomeStruct {
 
     public string name;
@@ -47,7 +47,7 @@ public class ISomeInterface {
 public class BadName {
 }
     
-[Serializable, Context, VisualDebugging, CustomComponentName("PositionComponent", "VelocityComponent")]
+[Serializable, VisualDebugging, CustomComponentName("PositionComponent", "VelocityComponent")]
 public struct IntVector2 {
     public int x;
     public int y;

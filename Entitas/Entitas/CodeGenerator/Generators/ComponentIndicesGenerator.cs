@@ -3,27 +3,34 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
-    public class ComponentIndicesGenerator : IContextCodeGenerator, IComponentCodeGenerator {
+    public class ComponentIndicesGenerator : ICodeGenerator {
 
-        // Important: This method should be called before Generate(componentInfos)
-        // This will generate empty lookups for all contexts.
-        public CodeGenFile[] Generate(string[] contextNames) {
-            var emptyInfos = new ComponentInfo[0];
+        public const string COMPONENT_LOOKUP = "ComponentIds";
+
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+            var files = new List<CodeGenFile>();
+            files.AddRange(generateEmptyLookupsForContexts(data));
+            files.AddRange(generateLookupsForContexts(data));
+            return files.ToArray();
+        }
+
+        CodeGenFile[] generateEmptyLookupsForContexts(CodeGeneratorData[] data) {
             var generatorName = GetType().FullName;
-            return contextNames
-                .Select(contextName => contextName + CodeGenerator.COMPONENT_LOOKUP)
-                .Select(lookupTag => new CodeGenFile(
-                    lookupTag,
-                    generateIndicesLookup(lookupTag, emptyInfos),
+            var emptyData = new CodeGeneratorData[0];
+            return data
+                .Where(d => d.ContainsKey(ComponentDataProvider.CONTEXTS))
+                .SelectMany(d => d.GetContexts())
+                .Select(contextName => contextName + COMPONENT_LOOKUP)
+                .Select(lookupName => new CodeGenFile(
+                    lookupName,
+                    generateIndicesLookup(lookupName, emptyData),
                     generatorName
                 )).ToArray();
         }
 
-        // Important: This method should be called after Generate(contextNames)
-        // This will overwrite the empty lookups with the actual content.
-        public CodeGenFile[] Generate(ComponentInfo[] componentInfos) {
-            var orderedComponentInfos = componentInfos.OrderBy(info => info.typeName).ToArray();
-            var lookupTagToComponentInfosMap = getLookupTagToComponentInfosMap(orderedComponentInfos);
+        CodeGenFile[] generateLookupsForContexts(CodeGeneratorData[] data) {
+            var orderedData = data.OrderBy(d => d.GetTypeName()).ToArray();
+            var lookupTagToComponentInfosMap = getLookupNameToDataMap(orderedData);
             var generatorName = GetType().FullName;
             return lookupTagToComponentInfosMap
                 .Select(kv => new CodeGenFile(
@@ -33,70 +40,48 @@ namespace Entitas.CodeGenerator {
                 )).ToArray();
         }
 
-        static Dictionary<string, ComponentInfo[]> getLookupTagToComponentInfosMap(ComponentInfo[] componentInfos) {
-            var currentIndex = 0;
-
-            // order componentInfos by context count
-            var orderedComponentInfoToLookupTagsMap = componentInfos
-                .Where(info => info.generateIndex)
-                .ToDictionary(info => info, info => info.ComponentLookups())
-                .OrderByDescending(kv => kv.Value.Length);
-
-            var lookupTagToComponentInfosMap = orderedComponentInfoToLookupTagsMap
-                .Aggregate(new Dictionary<string, ComponentInfo[]>(), (map, kv) => {
-                    var info = kv.Key;
-                    var lookupTags = kv.Value;
-                    var componentIsAssignedToMultipleContexts = lookupTags.Length > 1;
-                    var incrementIndex = false;
-                    foreach(var lookupTag in lookupTags) {
-                        if(!map.ContainsKey(lookupTag)) {
-                            map.Add(lookupTag, new ComponentInfo[componentInfos.Length]);
+        static Dictionary<string, CodeGeneratorData[]> getLookupNameToDataMap(CodeGeneratorData[] data) {
+            var lookupNameToData = data.Where(d => d.ShouldGenerateIndex())
+                .Aggregate(new Dictionary<string, CodeGeneratorData[]>(), (map, d) => {
+                    foreach(var contextName in d.GetContexts()) {
+                        var lookupName = contextName + COMPONENT_LOOKUP;
+                        if(!map.ContainsKey(lookupName)) {
+                            map.Add(lookupName, new CodeGeneratorData[data.Length]);
                         }
-
-                        var infos = map[lookupTag];
-                        if(componentIsAssignedToMultipleContexts) {
-                            // Component has multiple lookupTags. Set at current index in all lookups.
-                            infos[currentIndex] = info;
-                            incrementIndex = true;
-                        } else {
-                            // Component has only one lookupTag. Insert at next free slot.
-                            for(int i = 0; i < infos.Length; i++) {
-                                if(infos[i] == null) {
-                                    infos[i] = info;
-                                    break;
-                                }
+                        var entries = map[lookupName];
+                        for(int i = 0; i < entries.Length; i++) {
+                            if(entries[i] == null) {
+                                entries[i] = d;
+                                break;
                             }
                         }
-                    }
-                    if(incrementIndex) {
-                        currentIndex++;
                     }
 
                     return map;
                 });
 
 
-            foreach(var key in lookupTagToComponentInfosMap.Keys.ToArray()) {
-                var infoList = lookupTagToComponentInfosMap[key].ToList();
-                while(infoList.Count != 0) {
-                    var last = infoList.Count - 1;
-                    if(infoList[last] == null) {
-                        infoList.RemoveAt(last);
+            foreach(var key in lookupNameToData.Keys.ToArray()) {
+                var dataList = lookupNameToData[key].ToList();
+                while(dataList.Count != 0) {
+                    var last = dataList.Count - 1;
+                    if(dataList[last] == null) {
+                        dataList.RemoveAt(last);
                     } else {
                         break;
                     }
                 }
-                lookupTagToComponentInfosMap[key] = infoList.ToArray();
+                lookupNameToData[key] = dataList.ToArray();
             }
 
-            return lookupTagToComponentInfosMap;
+            return lookupNameToData;
         }
 
-        static string generateIndicesLookup(string lookupTag, ComponentInfo[] componentInfos) {
+        static string generateIndicesLookup(string lookupTag, CodeGeneratorData[] data) {
             return addClassHeader(lookupTag)
-                    + addIndices(componentInfos)
-                    + addComponentNames(componentInfos)
-                    + addComponentTypes(componentInfos)
+                    + addIndices(data)
+                    + addComponentNames(data)
+                    + addComponentTypes(data)
                     + addCloseClass();
         }
 
@@ -104,14 +89,14 @@ namespace Entitas.CodeGenerator {
             return string.Format("public static class {0} {{\n", lookupTag);
         }
 
-        static string addIndices(ComponentInfo[] componentInfos) {
+        static string addIndices(CodeGeneratorData[] data) {
             const string fieldFormat = "    public const int {0} = {1};\n";
             const string totalFormat = "    public const int TotalComponents = {0};";
             var code = string.Empty;
-            for(int i = 0; i < componentInfos.Length; i++) {
-                var info = componentInfos[i];
+            for(int i = 0; i < data.Length; i++) {
+                var info = data[i];
                 if(info != null) {
-                    code += string.Format(fieldFormat, info.typeName.RemoveComponentSuffix(), i);
+                    code += string.Format(fieldFormat, info.GetTypeName().RemoveComponentSuffix(), i);
                 }
             }
 
@@ -119,18 +104,18 @@ namespace Entitas.CodeGenerator {
                 code = "\n" + code;
             }
 
-            var totalComponents = string.Format(totalFormat, componentInfos.Length);
+            var totalComponents = string.Format(totalFormat, data.Length);
             return code + "\n" + totalComponents;
         }
 
-        static string addComponentNames(ComponentInfo[] componentInfos) {
+        static string addComponentNames(CodeGeneratorData[] data) {
             const string format = "        \"{1}\",\n";
             const string nullFormat = "        null,\n";
             var code = string.Empty;
-            for(int i = 0; i < componentInfos.Length; i++) {
-                var info = componentInfos[i];
+            for(int i = 0; i < data.Length; i++) {
+                var info = data[i];
                 if(info != null) {
-                    code += string.Format(format, i, info.typeName.RemoveComponentSuffix());
+                    code += string.Format(format, i, info.GetTypeName().RemoveComponentSuffix());
                 } else {
                     code += nullFormat;
                 }
@@ -145,14 +130,14 @@ namespace Entitas.CodeGenerator {
 {0}    }};", code);
         }
 
-        static string addComponentTypes(ComponentInfo[] componentInfos) {
+        static string addComponentTypes(CodeGeneratorData[] data) {
             const string format = "        typeof({1}),\n";
             const string nullFormat = "        null,\n";
             var code = string.Empty;
-            for(int i = 0; i < componentInfos.Length; i++) {
-                var info = componentInfos[i];
+            for(int i = 0; i < data.Length; i++) {
+                var info = data[i];
                 if(info != null) {
-                    code += string.Format(format, i, info.fullTypeName);
+                    code += string.Format(format, i, info.GetFullTypeName());
                 } else {
                     code += nullFormat;
                 }

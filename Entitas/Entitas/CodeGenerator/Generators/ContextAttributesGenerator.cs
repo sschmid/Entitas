@@ -2,16 +2,16 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
-    public class ContextAttributesGenerator : IContextCodeGenerator {
+    public class ContextAttributesGenerator : ICodeGenerator {
 
-        public CodeGenFile[] Generate(string[] contextNames) {
-            return contextNames
-                .Select(contextName => contextName.UppercaseFirst())
-                .Select(contextName => new CodeGenFile(
-                    contextName + "Attribute",
-                    generateContextAttributes(contextName),
-                    GetType().FullName
-                )).ToArray();
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+            return data.Where(d => d.ContainsKey(ContextDataProvider.CONTEXT_NAME))
+                       .Select(d => d.GetContextName())
+                       .Select(contextName => new CodeGenFile(
+                            contextName + "Attribute",
+                            generateContextAttributes(contextName),
+                            GetType().FullName
+                        )).ToArray();
         }
 
         static string generateContextAttributes(string contextName) {

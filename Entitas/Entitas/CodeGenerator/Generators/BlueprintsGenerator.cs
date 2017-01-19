@@ -2,7 +2,7 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
-    public class BlueprintsGenerator : IBlueprintsCodeGenerator {
+    public class BlueprintsGenerator : ICodeGenerator {
 
         const string CLASS_FORMAT = @"using Entitas.Serialization.Blueprints;
 
@@ -16,13 +16,19 @@ namespace Entitas.Unity.Serialization.Blueprints {{
 ";
         const string GETTER_FORMAT = "        public Blueprint {0} {{ get {{ return GetBlueprint(\"{1}\"); }} }}";
 
-        public CodeGenFile[] Generate(string[] blueprintNames) {
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+            const string blueprintName = BlueprintDataProvider.BLUEPRINT_NAME;
+            var blueprintNames = data
+                .Where(d => d.ContainsKey(blueprintName))
+                .Select(d => d.GetBlueprintName())
+                .OrderBy(name => name)
+                .ToArray();
+
             if(blueprintNames.Length == 0) {
                 return new CodeGenFile[0];
             }
 
-            var orderedBlueprintNames = blueprintNames.OrderBy(name => name).ToArray();
-            var blueprints = string.Format(CLASS_FORMAT, generateBlueprintGetters(orderedBlueprintNames));
+            var blueprints = string.Format(CLASS_FORMAT, generateBlueprintGetters(blueprintNames));
             return new [] { new CodeGenFile(
                 "BlueprintsGeneratedExtension",
                 blueprints,

@@ -225,7 +225,7 @@
     <Compile Include="..\Entitas\Entitas\CodeGenerator\Intermediate\ComponentInfo.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Intermediate\ComponentInfo.cs</Link>
     </Compile>
-    <Compile Include="..\Entitas\Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs">
+    <Compile Include="..\Entitas\Entitas\CodeGenerator\DataProviders\TypeReflectionProvider.cs">
       <Link>Linked Libraries\Entitas\CodeGenerator\Providers\TypeReflectionProvider.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Collector\Collector.cs">

@@ -110,6 +110,6 @@ public class PersonComponent : IComponent {
     public string gender;
 }
 
-[Context]
+[VisualDebugging]
 public class DefaultContextComponent : IComponent {
 }
