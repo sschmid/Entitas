@@ -2,7 +2,7 @@ using System;
 
 namespace Entitas.CodeGenerator {
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct)]
     public class DontGenerateAttribute : Attribute {
 
         public readonly bool generateIndex;

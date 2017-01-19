@@ -2,7 +2,7 @@ using System;
 
 namespace Entitas.CodeGenerator {
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct, AllowMultiple = true)]
     public class ContextAttribute : Attribute {
 
         public readonly string contextName;

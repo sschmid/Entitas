@@ -2,7 +2,7 @@
 
 namespace Entitas.CodeGenerator {
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct)]
+    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct)]
     public class CustomComponentNameAttribute : Attribute {
 
         public readonly string[] componentNames;
