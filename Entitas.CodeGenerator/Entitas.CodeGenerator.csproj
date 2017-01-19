@@ -34,7 +34,7 @@
     <Compile Include="Entitas.CodeGenerator\Attributes\CustomComponentNameAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs" />
-    <Compile Include="Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\UniqueAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\BlueprintDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\CodeGeneratorData.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentDataProvider.cs" />

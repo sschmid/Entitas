@@ -3,6 +3,6 @@ using System;
 namespace Entitas.CodeGenerator {
 
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct)]
-    public class SingleEntityAttribute : Attribute {
+    public class UniqueAttribute : Attribute {
     }
 }

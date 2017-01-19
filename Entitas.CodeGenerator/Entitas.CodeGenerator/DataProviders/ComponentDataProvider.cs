@@ -102,7 +102,7 @@ namespace Entitas.CodeGenerator {
             data[MEMBER_INFOS] = type.GetPublicMemberInfos();
 
             data[CONTEXTS] = getContexts(type);
-            data[IS_UNIQUE] = getIsSingleEntity(type);
+            data[IS_UNIQUE] = getIsUnique(type);
             data[UNIQUE_COMPONENT_PREFIX] = getUniqueComponentPrefix(type);
 
             data[IS_COMPONENT] = false;
@@ -123,7 +123,7 @@ namespace Entitas.CodeGenerator {
                 data[MEMBER_INFOS] = new List<PublicMemberInfo> { new PublicMemberInfo(type, "value") };
 
                 data[CONTEXTS] = getContexts(type);
-                data[IS_UNIQUE] = getIsSingleEntity(type);
+                data[IS_UNIQUE] = getIsUnique(type);
                 data[UNIQUE_COMPONENT_PREFIX] = getUniqueComponentPrefix(type);
 
                 data[IS_COMPONENT] = true;
@@ -144,9 +144,9 @@ namespace Entitas.CodeGenerator {
                             .ToArray();
         }
 
-        bool getIsSingleEntity(Type type) {
+        bool getIsUnique(Type type) {
             return Attribute.GetCustomAttributes(type)
-                            .Any(attr => attr.GetType().FullName == "Entitas.CodeGenerator.SingleEntityAttribute");
+                            .Any(attr => attr.GetType().FullName == "Entitas.CodeGenerator.UniqueAttribute");
         }
 
         string getUniqueComponentPrefix(Type type) {
