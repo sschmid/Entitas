@@ -18,6 +18,7 @@ ProjectVersion.txt
 obj
 bin
 *.userprefs
+*.user
 test-results
 
 # Visual Studio Code

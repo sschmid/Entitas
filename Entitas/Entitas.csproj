@@ -37,26 +37,13 @@
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
     <Compile Include="Entitas\Matcher\MatcherStatic.cs" />
     <Compile Include="Entitas\EntitasException.cs" />
-    <Compile Include="Entitas\CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
-    <Compile Include="Entitas\CodeGenerator\Attributes\DontGenerateAttribute.cs" />
-    <Compile Include="Entitas\CodeGenerator\Attributes\ContextAttribute.cs" />
-    <Compile Include="Entitas\CodeGenerator\Attributes\SingleEntityAttribute.cs" />
-    <Compile Include="Entitas\CodeGenerator\Generators\ComponentIndicesGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Generators\ContextsGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Interfaces\ICodeGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Intermediate\CodeGenFile.cs" />
-    <Compile Include="Entitas\CodeGenerator\CodeGenerator.cs" />
     <Compile Include="Entitas\Extensions\TypeExtension.cs" />
     <Compile Include="Entitas\Serialization\PublicMemberInfo.cs" />
     <Compile Include="Entitas\Serialization\TypeSerializationExtension.cs" />
-    <Compile Include="Entitas\CodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Generators\ContextAttributesGenerator.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\Blueprint.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\ComponentBlueprint.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\SerializableMember.cs" />
     <Compile Include="Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs" />
-    <Compile Include="Entitas\CodeGenerator\Generators\BlueprintsGenerator.cs" />
-    <Compile Include="Entitas\CodeGenerator\Attributes\CustomComponentNameAttribute.cs" />
     <Compile Include="Entitas\Serialization\Configuration\CodeGeneratorConfig.cs" />
     <Compile Include="Entitas\Serialization\Configuration\EntitasPreferencesConfig.cs" />
     <Compile Include="Entitas\Serialization\Configuration\EntitasPreferences.cs" />
@@ -111,27 +98,12 @@
     <Compile Include="Entitas\Matcher\MatcherException.cs" />
     <Compile Include="Entitas\Collector\Collector.cs" />
     <Compile Include="Entitas\Collector\CollectorException.cs" />
-    <Compile Include="Entitas\CodeGenerator\DataProviders\ComponentDataProvider.cs" />
-    <Compile Include="Entitas\CodeGenerator\DataProviders\CodeGeneratorData.cs" />
-    <Compile Include="Entitas\CodeGenerator\DataProviders\ContextDataProvider.cs" />
-    <Compile Include="Entitas\CodeGenerator\DataProviders\BlueprintDataProvider.cs" />
-    <Compile Include="Entitas\CodeGenerator\Interfaces\ICodeGeneratorDataProvider.cs" />
-    <Compile Include="Entitas\CodeGenerator\PostProcessors\ICodeGenFilePostProcessor.cs" />
-    <Compile Include="Entitas\CodeGenerator\PostProcessors\AddFileHeaderPostProcessor.cs" />
-    <Compile Include="Entitas\CodeGenerator\PostProcessors\WriteToDiskPostProcessor.cs" />
-    <Compile Include="Entitas\CodeGenerator\PostProcessors\NewLinePostProcessor.cs" />
-    <Compile Include="Entitas\CodeGenerator\CodeGeneratorStringExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Entitas\" />
     <Folder Include="Entitas\Extensions\" />
     <Folder Include="Entitas\Matcher\" />
-    <Folder Include="Entitas\CodeGenerator\" />
-    <Folder Include="Entitas\CodeGenerator\Attributes\" />
-    <Folder Include="Entitas\CodeGenerator\Generators\" />
-    <Folder Include="Entitas\CodeGenerator\Interfaces\" />
-    <Folder Include="Entitas\CodeGenerator\Intermediate\" />
     <Folder Include="Entitas\Serialization\Blueprints\" />
     <Folder Include="Entitas\Serialization\Configuration\" />
     <Folder Include="Entitas\Caching\" />
@@ -143,7 +115,5 @@
     <Folder Include="Entitas\Context\Exceptions\" />
     <Folder Include="Entitas\Entity\Exceptions\" />
     <Folder Include="Entitas\Collector\" />
-    <Folder Include="Entitas\CodeGenerator\DataProviders\" />
-    <Folder Include="Entitas\CodeGenerator\PostProcessors\" />
   </ItemGroup>
 </Project>

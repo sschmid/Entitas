@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Entitas.CodeGenerator</RootNamespace>
+    <AssemblyName>Entitas.CodeGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entitas.CodeGenerator\Attributes\ContextAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\CustomComponentNameAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\CustomPrefixAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\DontGenerateAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\Attributes\SingleEntityAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\BlueprintDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\CodeGeneratorData.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ContextDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\BlueprintsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentExtensionsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentIndicesGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ContextAttributesGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ContextsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Interfaces\ICodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Interfaces\ICodeGeneratorDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\Intermediate\CodeGenFile.cs" />
+    <Compile Include="Entitas.CodeGenerator\PostProcessors\AddFileHeaderPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGenerator\PostProcessors\ICodeGenFilePostProcessor.cs" />
+    <Compile Include="Entitas.CodeGenerator\PostProcessors\NewLinePostProcessor.cs" />
+    <Compile Include="Entitas.CodeGenerator\PostProcessors\WriteToDiskPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGenerator\CodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\CodeGeneratorStringExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas.CodeGenerator\" />
+    <Folder Include="Entitas.CodeGenerator\Attributes\" />
+    <Folder Include="Entitas.CodeGenerator\DataProviders\" />
+    <Folder Include="Entitas.CodeGenerator\Generators\" />
+    <Folder Include="Entitas.CodeGenerator\Interfaces\" />
+    <Folder Include="Entitas.CodeGenerator\Intermediate\" />
+    <Folder Include="Entitas.CodeGenerator\PostProcessors\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
