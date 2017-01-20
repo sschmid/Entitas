@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Tests\Entitas\describe_Entity.cs" />
     <Compile Include="Tests\Entitas\describe_Group.cs" />
-    <Compile Include="Tests\Entitas\describe_Collector.cs" />
     <Compile Include="Tests\Entitas\describe_Matcher.cs" />
     <Compile Include="Tests\Entitas\describe_Context.cs" />
     <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
@@ -288,6 +287,7 @@
     <Compile Include="Tests\__NEW\Entitas.Utils\Extensions\describe_InterfaceTypeExtension.cs" />
     <Compile Include="Tests\__NEW\Entitas.Utils\Extensions\describe_TypeSerializationExtension.cs" />
     <Compile Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfo.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_Collector.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -329,6 +329,7 @@
     <Folder Include="Tests\__NEW\Entitas.Utils\Configuration\" />
     <Folder Include="Tests\__NEW\Entitas.Utils\Extensions\" />
     <Folder Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\" />
+    <Folder Include="Tests\__NEW\Entitas\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\UnityEngine.dll" />

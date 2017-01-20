@@ -4,16 +4,14 @@ using Entitas.Api;
 
 namespace Entitas {
 
-    /// An Collector can observe one or more groups and collects
-    /// changed entities based on the specified groupEvent.
+    /// A Collector can observe one or more groups from the same context
+    /// and collects changed entities based on the specified groupEvent.
     public class Collector<TEntity> where TEntity : class, IEntity, new() {
 
         /// Returns all collected entities.
         /// Call collector.ClearCollectedEntities()
         /// once you processed all entities.
-        public HashSet<TEntity> collectedEntities {
-            get { return _collectedEntities; }
-        }
+        public HashSet<TEntity> collectedEntities { get { return _collectedEntities; } }
 
         readonly HashSet<TEntity> _collectedEntities;
         readonly IGroup<TEntity>[] _groups;
@@ -22,19 +20,17 @@ namespace Entitas {
         string _toStringCache;
         StringBuilder _toStringBuilder;
 
-        /// Creates an Collector and will collect changed entities
+        /// Creates a Collector and will collect changed entities
         /// based on the specified groupEvent.
         public Collector(IGroup<TEntity> group, GroupEvent groupEvent)
-            : this(new [] { group }, new [] { groupEvent }) {
+            : this(new[] { group }, new[] { groupEvent }) {
         }
 
-        /// Creates an Collector and will collect changed entities
+        /// Creates a Collector and will collect changed entities
         /// based on the specified groupEvents.
         public Collector(IGroup<TEntity>[] groups, GroupEvent[] groupEvents) {
             _groups = groups;
-            _collectedEntities = new HashSet<TEntity>(
-                EntityEqualityComparer<TEntity>.comparer
-            );
+            _collectedEntities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
             _groupEvents = groupEvents;
 
             if(groups.Length != groupEvents.Length) {
@@ -52,20 +48,24 @@ namespace Entitas {
         /// Activates the Collector and will start collecting
         /// changed entities. Collectors are activated by default.
         public void Activate() {
-            for (int i = 0; i < _groups.Length; i++) {
+            for(int i = 0; i < _groups.Length; i++) {
                 var group = _groups[i];
                 var groupEvent = _groupEvents[i];
-                if(groupEvent == GroupEvent.Added) {
-                    group.OnEntityAdded -= _addEntityCache;
-                    group.OnEntityAdded += _addEntityCache;
-                } else if(groupEvent == GroupEvent.Removed) {
-                    group.OnEntityRemoved -= _addEntityCache;
-                    group.OnEntityRemoved += _addEntityCache;
-                } else if(groupEvent == GroupEvent.AddedOrRemoved) {
-                    group.OnEntityAdded -= _addEntityCache;
-                    group.OnEntityAdded += _addEntityCache;
-                    group.OnEntityRemoved -= _addEntityCache;
-                    group.OnEntityRemoved += _addEntityCache;
+                switch(groupEvent) {
+                    case GroupEvent.Added:
+                        group.OnEntityAdded -= _addEntityCache;
+                        group.OnEntityAdded += _addEntityCache;
+                        break;
+                    case GroupEvent.Removed:
+                        group.OnEntityRemoved -= _addEntityCache;
+                        group.OnEntityRemoved += _addEntityCache;
+                        break;
+                    case GroupEvent.AddedOrRemoved:
+                        group.OnEntityAdded -= _addEntityCache;
+                        group.OnEntityAdded += _addEntityCache;
+                        group.OnEntityRemoved -= _addEntityCache;
+                        group.OnEntityRemoved += _addEntityCache;
+                        break;
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace Entitas {
         /// This will also clear all collected entities.
         /// Collectors are activated by default.
         public void Deactivate() {
-            for (int i = 0; i < _groups.Length; i++) {
+            for(int i = 0; i < _groups.Length; i++) {
                 var group = _groups[i];
                 group.OnEntityAdded -= _addEntityCache;
                 group.OnEntityRemoved -= _addEntityCache;
@@ -90,10 +90,7 @@ namespace Entitas {
             _collectedEntities.Clear();
         }
 
-        void addEntity(IGroup<TEntity> group,
-                       TEntity entity,
-                       int index,
-                       IComponent component) {
+        void addEntity(IGroup<TEntity> group, TEntity entity, int index, IComponent component) {
             var added = _collectedEntities.Add(entity);
             if(added) {
                 entity.Retain(this);
@@ -110,7 +107,7 @@ namespace Entitas {
 
                 const string separator = ", ";
                 var lastSeparator = _groups.Length - 1;
-                for (int i = 0; i < _groups.Length; i++) {
+                for(int i = 0; i < _groups.Length; i++) {
                     _toStringBuilder.Append(_groups[i]);
                     if(i < lastSeparator) {
                         _toStringBuilder.Append(separator);
@@ -124,7 +121,7 @@ namespace Entitas {
             return _toStringCache;
         }
 
-        ~Collector () {
+        ~Collector() {
             Deactivate();
         }
     }

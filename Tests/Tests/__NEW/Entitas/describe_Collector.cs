@@ -10,7 +10,6 @@ class describe_Collector : nspec {
 
         IGroup<TestEntity> groupA = null;
         Collector<TestEntity> collectorA = null;
-
         IMatcher<TestEntity> matcherA = Matcher<TestEntity>.AllOf(CID.ComponentA);
 
         before = () => {
@@ -18,8 +17,8 @@ class describe_Collector : nspec {
             groupA = _context.GetGroup(matcherA);
         };
 
-        context["when observing with groupEvent OnEntityAdded"] = () => {
-            
+        context["when observing with GroupEvent.Added"] = () => {
+
             before = () => {
                 collectorA = new Collector<TestEntity>(groupA, GroupEvent.Added);
             };
@@ -44,7 +43,7 @@ class describe_Collector : nspec {
 
                 it["only collects matching entities"] = () => {
                     createEB();
-                
+
                     var entities = collectorA.collectedEntities;
                     entities.Count.should_be(1);
                     entities.should_contain(e);
@@ -59,6 +58,11 @@ class describe_Collector : nspec {
                     entities.should_contain(e);
                 };
 
+                it["clears collected entities"] = () => {
+                    collectorA.ClearCollectedEntities();
+                    collectorA.collectedEntities.should_be_empty();
+                };
+
                 it["clears collected entities on deactivation"] = () => {
                     collectorA.Deactivate();
                     collectorA.collectedEntities.should_be_empty();
@@ -69,7 +73,7 @@ class describe_Collector : nspec {
                     createEA();
                     collectorA.collectedEntities.should_be_empty();
                 };
-                
+
                 it["continues collecting when activated"] = () => {
                     collectorA.Deactivate();
                     createEA();
@@ -81,11 +85,6 @@ class describe_Collector : nspec {
                     var entities = collectorA.collectedEntities;
                     entities.Count.should_be(1);
                     entities.should_contain(e2);
-                };
-
-                it["clears collected entities"] = () => {
-                    collectorA.ClearCollectedEntities();
-                    collectorA.collectedEntities.should_be_empty();
                 };
 
                 it["can ToString"] = () => {
@@ -106,9 +105,10 @@ class describe_Collector : nspec {
                     e.OnEntityReleased += delegate { didExecute += 1; };
                     _context.DestroyEntity(e);
                     e.retainCount.should_be(1);
+                    e.owners.should_contain(collectorA);
                     didExecute.should_be(0);
                 };
-                
+
                 it["releases entity when clearing collected entities"] = () => {
                     _context.DestroyEntity(e);
                     collectorA.ClearCollectedEntities();
@@ -123,7 +123,7 @@ class describe_Collector : nspec {
             };
         };
 
-        context["when observing with groupEvent OnEntityRemoved"] = () => {
+        context["when observing with GroupEvent.Removed"] = () => {
 
             before = () => {
                 collectorA = new Collector<TestEntity>(groupA, GroupEvent.Removed);
@@ -140,7 +140,7 @@ class describe_Collector : nspec {
             };
         };
 
-        context["when observing with groupEvent OnEntityAddedOrRemoved"] = () => {
+        context["when observing with GroupEvent.AddedOrRemoved"] = () => {
 
             before = () => {
                 collectorA = new Collector<TestEntity>(groupA, GroupEvent.AddedOrRemoved);
@@ -170,20 +170,20 @@ class describe_Collector : nspec {
 
             it["throws when group count != groupEvent count"] = expect<CollectorException>(() => {
                 collectorA = new Collector<TestEntity>(
-                    new [] { groupA },
-                    new [] {
+                    new[] { groupA },
+                    new[] {
                         GroupEvent.Added,
                         GroupEvent.Added
                     }
                 );
             });
 
-            context["when observing with groupEvent OnEntityAdded"] = () => {
+            context["when observing with GroupEvent.Added"] = () => {
 
                 before = () => {
                     collectorA = new Collector<TestEntity>(
-                        new [] { groupA, groupB },
-                        new [] {
+                        new[] { groupA, groupB },
+                        new[] {
                             GroupEvent.Added,
                             GroupEvent.Added
                         }
@@ -205,12 +205,12 @@ class describe_Collector : nspec {
                 };
             };
 
-            context["when observing with groupEvent OnEntityRemoved"] = () => {
+            context["when observing with GroupEvent.Removed"] = () => {
 
                 before = () => {
                     collectorA = new Collector<TestEntity>(
-                        new [] { groupA, groupB },
-                        new [] {
+                        new[] { groupA, groupB },
+                        new[] {
                             GroupEvent.Removed,
                             GroupEvent.Removed
                         }
@@ -230,12 +230,12 @@ class describe_Collector : nspec {
                 };
             };
 
-            context["when observing with groupEvent OnEntityAddedOrRemoved"] = () => {
+            context["when observing with GroupEvent.AddedOrRemoved"] = () => {
 
                 before = () => {
                     collectorA = new Collector<TestEntity>(
-                        new [] { groupA, groupB },
-                        new [] {
+                        new[] { groupA, groupB },
+                        new[] {
                             GroupEvent.AddedOrRemoved,
                             GroupEvent.AddedOrRemoved
                         }
@@ -263,8 +263,8 @@ class describe_Collector : nspec {
 
                 before = () => {
                     collectorA = new Collector<TestEntity>(
-                        new [] { groupA, groupB },
-                        new [] {
+                        new[] { groupA, groupB },
+                        new[] {
                             GroupEvent.Added,
                             GroupEvent.Removed
                         }
