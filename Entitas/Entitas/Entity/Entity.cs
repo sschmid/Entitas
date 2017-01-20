@@ -49,9 +49,7 @@ namespace Entitas {
         /// reusable component from the componentPool.
         /// Use entity.GetComponentPool(index) to get a componentPool for
         /// a specific component index.
-        public Stack<IComponent>[] componentPools {
-            get { return _componentPools; }
-        }
+        public Stack<IComponent>[] componentPools { get { return _componentPools; } }
 
         /// The contextInfo is set by the context which created the entity and
         /// contains information about the context.
@@ -81,22 +79,16 @@ namespace Entitas {
             _components = new IComponent[totalComponents];
             _componentPools = componentPools;
 
-            if(contextInfo != null) {
-                _contextInfo = contextInfo;
-            } else {
+            _contextInfo = contextInfo ?? createDefaultContextInfo();
+        }
 
-                // If context.CreateEntity() was used to create the entity,
-                // we will never end up here.
-                // This is a fallback when entities are created manually.
-
-                var componentNames = new string[totalComponents];
-                for(int i = 0; i < componentNames.Length; i++) {
-                    componentNames[i] = i.ToString();
-                }
-                _contextInfo = new ContextInfo(
-                    "No Context", componentNames, null
-                );
+        ContextInfo createDefaultContextInfo() {
+            var componentNames = new string[totalComponents];
+            for(int i = 0; i < componentNames.Length; i++) {
+                componentNames[i] = i.ToString();
             }
+
+            return new ContextInfo("No Context", componentNames, null);
         }
 
         public void Reactivate(int creationIndex) {
@@ -116,17 +108,14 @@ namespace Entitas {
             if(!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot add component '" +
-                    _contextInfo.componentNames[index] +
-                    "' to " + this + "!"
+                    _contextInfo.componentNames[index] + "' to " + this + "!"
                 );
             }
 
             if(HasComponent(index)) {
                 throw new EntityAlreadyHasComponentException(
-                    index,
-                    "Cannot add component '" +
-                    _contextInfo.componentNames[index] +
-                    "' to " + this + "!",
+                    index, "Cannot add component '" +
+                    _contextInfo.componentNames[index] + "' to " + this + "!",
                     "You should check if an entity already has the component " +
                     "before adding it or use entity.ReplaceComponent()."
                 );
@@ -149,17 +138,14 @@ namespace Entitas {
             if(!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot remove component '" +
-                    _contextInfo.componentNames[index] +
-                    "' from " + this + "!"
+                    _contextInfo.componentNames[index] + "' from " + this + "!"
                 );
             }
 
             if(!HasComponent(index)) {
                 throw new EntityDoesNotHaveComponentException(
-                    index,
-                    "Cannot remove component '" +
-                    _contextInfo.componentNames[index] +
-                    "' from " + this + "!",
+                    index, "Cannot remove component '" +
+                    _contextInfo.componentNames[index] + "' from " + this + "!",
                     "You should check if an entity has the component " +
                     "before removing it."
                 );
@@ -176,8 +162,7 @@ namespace Entitas {
             if(!_isEnabled) {
                 throw new EntityIsNotEnabledException(
                     "Cannot replace component '" +
-                    _contextInfo.componentNames[index] +
-                    "' on " + this + "!"
+                    _contextInfo.componentNames[index] + "' on " + this + "!"
                 );
             }
 
@@ -225,10 +210,8 @@ namespace Entitas {
         public IComponent GetComponent(int index) {
             if(!HasComponent(index)) {
                 throw new EntityDoesNotHaveComponentException(
-                    index,
-                    "Cannot get component '" +
-                    _contextInfo.componentNames[index] + "' from " +
-                    this + "!",
+                    index, "Cannot get component '" +
+                    _contextInfo.componentNames[index] + "' from " + this + "!",
                     "You should check if an entity has the component " +
                     "before getting it."
                 );
@@ -348,22 +331,12 @@ namespace Entitas {
             return componentPool.Count > 0 ? (T)componentPool.Pop() : new T();
         }
 
-#if ENTITAS_FAST_AND_UNSAFE
-        
-        /// Returns the number of objects that retain this entity.
-        public int retainCount { get { return _retainCount; } }
-        int _retainCount;
-
-#else
-
         /// Returns the number of objects that retain this entity.
         public int retainCount { get { return owners.Count; } }
 
         /// Returns all the objects that retain this entity.
         public HashSet<object> owners { get { return _owners; } }
-        HashSet<object> _owners = new HashSet<object>();
-
-#endif
+        readonly HashSet<object> _owners = new HashSet<object>();
 
         /// Retains the entity. An owner can only retain the same entity once.
         /// Retain/Release is part of AERC (Automatic Entity Reference Counting)
@@ -371,18 +344,9 @@ namespace Entitas {
         /// If you use retain manually you also have to
         /// release it manually at some point.
         public void Retain(object owner) {
-
-#if ENTITAS_FAST_AND_UNSAFE
-            
-            _retainCount += 1;
-
-#else
-
             if(!owners.Add(owner)) {
                 throw new EntityIsAlreadyRetainedByOwnerException(this, owner);
             }
-
-#endif
 
             _toStringCache = null;
         }
@@ -394,22 +358,11 @@ namespace Entitas {
         /// If you use retain manually you also have to
         /// release it manually at some point.
         public void Release(object owner) {
-
-#if ENTITAS_FAST_AND_UNSAFE
-            
-            _retainCount -= 1;
-            if(_retainCount == 0) {
-
-#else
-
             if(!owners.Remove(owner)) {
                 throw new EntityIsNotRetainedByOwnerException(this, owner);
             }
 
             if(owners.Count == 0) {
-
-#endif
-
                 _toStringCache = null;
 
                 if(OnEntityReleased != null) {

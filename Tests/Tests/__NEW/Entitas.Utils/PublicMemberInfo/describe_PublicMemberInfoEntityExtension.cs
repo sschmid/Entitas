@@ -2,7 +2,7 @@
 using Entitas.Api;
 using NSpec;
 
-class describe_EntityExtension : nspec {
+class describe_PublicMemberInfoEntityExtension : nspec {
 
     void when_extending() {
 

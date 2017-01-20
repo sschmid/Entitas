@@ -43,7 +43,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tests\Entitas\describe_Entity.cs" />
     <Compile Include="Tests\Entitas\describe_Group.cs" />
     <Compile Include="Tests\Entitas\describe_Matcher.cs" />
     <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
@@ -277,7 +276,6 @@
     </Compile>
     <Compile Include="Tests\__NEW\Entitas.Api\describe_ContextInfo.cs" />
     <Compile Include="Tests\__NEW\Entitas.Api\describe_EntitasException.cs" />
-    <Compile Include="Tests\Entitas\describe_EntityExtension.cs" />
     <Compile Include="Tests\__NEW\Entitas.Utils\Caching\describe_ObjectCache.cs" />
     <Compile Include="Tests\__NEW\Entitas.Utils\Caching\describe_ObjectPool.cs" />
     <Compile Include="Tests\__NEW\Entitas.Utils\Configuration\describe_EntitasPreferencesConfig.cs" />
@@ -288,6 +286,8 @@
     <Compile Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfo.cs" />
     <Compile Include="Tests\__NEW\Entitas\describe_Collector.cs" />
     <Compile Include="Tests\__NEW\Entitas\describe_Context.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_Entity.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfoEntityExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -49,6 +49,13 @@
     <Compile Include="Entitas.Utils\Configuration\EntitasPreferences.cs" />
     <Compile Include="Entitas.Utils\Configuration\EntitasPreferencesConfig.cs" />
     <Compile Include="Entitas.Utils\Configuration\Properties.cs" />
+    <Compile Include="Entitas.Utils\PublicMemberInfo\PublicMemberInfoEntityExtension.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas.Api\Entitas.Api.csproj">
+      <Project>{124A01F2-AB29-438A-BB4A-1CDA48A8E5C9}</Project>
+      <Name>Entitas.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
