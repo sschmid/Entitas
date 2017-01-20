@@ -285,6 +285,7 @@
     </Compile>
     <Compile Include="Tests\__NEW\Entitas\describe_ReactiveSystem.cs" />
     <Compile Include="Tests\__NEW\Entitas\describe_Systems.cs" />
+    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\describe_BlueprintDataProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

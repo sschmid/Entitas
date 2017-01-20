@@ -16,7 +16,9 @@ namespace Entitas.CodeGenerator {
         readonly string[] _blueprintNames;
 
         public BlueprintDataProvider(string[] blueprintNames) {
-            _blueprintNames = blueprintNames;
+            _blueprintNames = blueprintNames
+                .OrderBy(name => name)
+                .ToArray();
         }
 
         public CodeGeneratorData[] GetData() {
