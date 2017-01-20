@@ -1,4 +1,3 @@
-using Entitas;
 using Entitas.Api;
 using Entitas.CodeGenerator;
 

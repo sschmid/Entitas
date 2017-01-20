@@ -7,7 +7,7 @@ namespace Entitas.CodeGenerator {
 
     public static class ComponentCodeGeneratorDataExtension {
 
-        public static Type GetType(this CodeGeneratorData data) {
+        public static Type GetComponentType(this CodeGeneratorData data) {
             return (Type)data[ComponentDataProvider.COMPONENT_TYPE];
         }
 
@@ -38,7 +38,7 @@ namespace Entitas.CodeGenerator {
         }
 
         public static bool IsComponent(this CodeGeneratorData data) {
-            return (bool)data[ComponentDataProvider.COMPONENT_GENERATE_COMPONENT];
+            return !(bool)data[ComponentDataProvider.COMPONENT_GENERATE_COMPONENT];
         }
 
         public static bool ShouldGenerateMethods(this CodeGeneratorData data) {
@@ -77,12 +77,12 @@ namespace Entitas.CodeGenerator {
             var dataFromComponents = _types
                 .Where(type => !type.IsInterface)
                 .Where(type => !type.IsAbstract)
-                .Where(type => type.GetInterfaces().Any(i => i.FullName == "Entitas.IComponent"))
+                .Where(type => type.GetInterfaces().Any(i => i.FullName == "Entitas.Api.IComponent"))
                 .Select(type => createDataForComponent(type));
 
             var dataFromNonComponents = _types
                 .Where(type => !type.IsGenericType)
-                .Where(type => !type.GetInterfaces().Any(i => i.FullName == "Entitas.IComponent"))
+                .Where(type => !type.GetInterfaces().Any(i => i.FullName == "Entitas.Api.IComponent"))
                 .Where(type => getContexts(type).Length > 0)
                 .SelectMany(type => createDataForNonComponent(type));
 
@@ -170,7 +170,7 @@ namespace Entitas.CodeGenerator {
 
         bool getHideInBlueprintInspector(Type type) {
             var attr = Attribute.GetCustomAttributes(type)
-                                .SingleOrDefault(a => isTypeOrHasBaseType(a.GetType(), "Entitas.Serialization.Blueprints.HideInBlueprintInspectorAttribute"));
+                                .SingleOrDefault(a => isTypeOrHasBaseType(a.GetType(), "Entitas.CodeGenerator.HideInBlueprintInspectorAttribute"));
 
             return attr != null;
         }

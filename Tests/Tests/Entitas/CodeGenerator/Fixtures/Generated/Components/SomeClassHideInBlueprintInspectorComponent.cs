@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 using Entitas.Api;
 
-[Entitas.Blueprints.HideInBlueprintInspector]
+[Entitas.CodeGenerator.HideInBlueprintInspector]
 public class SomeClassHideInBlueprintInspectorComponent : IComponent {
 
     public SomeClassHideInBlueprintInspector value;

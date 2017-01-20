@@ -38,7 +38,6 @@
     <Compile Include="Entitas.Blueprints\Blueprints\Blueprint.cs" />
     <Compile Include="Entitas.Blueprints\Blueprints\BlueprintEntityExtension.cs" />
     <Compile Include="Entitas.Blueprints\Blueprints\ComponentBlueprint.cs" />
-    <Compile Include="Entitas.Blueprints\Blueprints\HideInBlueprintInspectorAttribute.cs" />
     <Compile Include="Entitas.Blueprints\Blueprints\SerializableMember.cs" />
   </ItemGroup>
   <ItemGroup>
