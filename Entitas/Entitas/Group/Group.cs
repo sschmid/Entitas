@@ -31,7 +31,7 @@ namespace Entitas {
         readonly HashSet<TEntity> _entities = new HashSet<TEntity>(
             EntityEqualityComparer<TEntity>.comparer
         );
-        
+
         TEntity[] _entitiesCache;
         TEntity _singleEntityCache;
         string _toStringCache;
@@ -163,7 +163,7 @@ namespace Entitas {
             if(_singleEntityCache == null) {
                 var c = _entities.Count;
                 if(c == 1) {
-                    using (var enumerator = _entities.GetEnumerator()) {
+                    using(var enumerator = _entities.GetEnumerator()) {
                         enumerator.MoveNext();
                         _singleEntityCache = enumerator.Current;
                     }
