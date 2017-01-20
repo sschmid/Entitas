@@ -1,7 +1,7 @@
 using Entitas.Api;
 using Entitas.Utils;
 
-namespace Entitas {
+namespace Entitas.Utils {
 
     public static class PublicMemberInfoEntityExtension {
 

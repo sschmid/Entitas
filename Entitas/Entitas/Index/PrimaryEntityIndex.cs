@@ -8,18 +8,14 @@ namespace Entitas {
 
         readonly Dictionary<TKey, TEntity> _index;
 
-        public PrimaryEntityIndex(
-            IGroup<TEntity> group,
-            Func<TEntity, IComponent, TKey> getKey
-        ) : base(group, getKey) {
+        public PrimaryEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey)
+            : base(group, getKey) {
             _index = new Dictionary<TKey, TEntity>();
             Activate();
         }
 
-        public PrimaryEntityIndex(
-            IGroup<TEntity> group, Func<TEntity,
-            IComponent, TKey> getKey,
-            IEqualityComparer<TKey> comparer) : base(group, getKey) {
+        public PrimaryEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey, IEqualityComparer<TKey> comparer)
+            : base(group, getKey) {
             _index = new Dictionary<TKey, TEntity>(comparer);
             Activate();
         }

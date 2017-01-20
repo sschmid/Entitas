@@ -35,7 +35,7 @@ class describe_EntitasCache : nspec {
 
         it["clears GroupChanged hashSet"] = () => {
             var list = EntitasCache.GetGroupChangedList<TestEntity>();
-            list.Add((group, entity, index, component) => {});
+            list.Add((group, entity, index, component) => { });
             EntitasCache.PushGroupChangedList<TestEntity>(list);
 
             EntitasCache.GetGroupChangedList<TestEntity>().Count.should_be(0);

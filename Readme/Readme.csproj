@@ -61,6 +61,7 @@
     <Compile Include="Readme\Generated\UserComponentGeneratedExtension.cs" />
     <Compile Include="Readme\Generated\GameEntity.cs" />
     <Compile Include="Readme\Generated\GameContext.cs" />
+    <Compile Include="Readme\Generated\GameContext_1.cs" />
     <Compile Include="..\Entitas\Entitas\EntitasCache.cs">
       <Link>Linked Libraries\Entitas\EntitasCache.cs</Link>
     </Compile>
@@ -99,9 +100,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Entity\EntityEqualityComparer.cs">
       <Link>Linked Libraries\Entitas\Entity\EntityEqualityComparer.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\EntityExtension.cs">
-      <Link>Linked Libraries\Entitas\Entity\EntityExtension.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs">
       <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs</Link>
@@ -166,18 +164,12 @@
     <Compile Include="..\Entitas\Entitas\Systems\Systems.cs">
       <Link>Linked Libraries\Entitas\Systems\Systems.cs</Link>
     </Compile>
-    <Compile Include="Readme\Generated\GameContext_1.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Readme\" />
     <Folder Include="Readme\Generated\" />
     <Folder Include="Linked Libraries\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Entitas\Entitas\version">
-      <Link>Linked Libraries\Entitas\version</Link>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Utils\Entitas.Utils.csproj">
@@ -192,5 +184,10 @@
       <Project>{124A01F2-AB29-438A-BB4A-1CDA48A8E5C9}</Project>
       <Name>Entitas.Api</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Entitas\Entitas\version">
+      <Link>Linked Libraries\Entitas\version</Link>
+    </None>
   </ItemGroup>
 </Project>

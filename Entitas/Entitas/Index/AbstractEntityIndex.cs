@@ -8,10 +8,7 @@ namespace Entitas {
         protected readonly IGroup<TEntity> _group;
         protected readonly Func<TEntity, IComponent, TKey> _getKey;
 
-        protected AbstractEntityIndex(
-            IGroup<TEntity> group,
-            Func<TEntity,
-            IComponent, TKey> getKey) {
+        protected AbstractEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) {
             _group = group;
             _getKey = getKey;
         }
@@ -29,7 +26,7 @@ namespace Entitas {
 
         protected void indexEntities(IGroup<TEntity> group) {
             var entities = group.GetEntities();
-            for (int i = 0; i < entities.Length; i++) {
+            for(int i = 0; i < entities.Length; i++) {
                 addEntity(entities[i], null);
             }
         }
@@ -52,7 +49,7 @@ namespace Entitas {
 
         protected abstract void clear();
 
-        ~AbstractEntityIndex () {
+        ~AbstractEntityIndex() {
             Deactivate();
         }
     }

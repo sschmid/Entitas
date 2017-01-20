@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using Entitas.Api;
+using Entitas.Utils;
 using NSpec;
 
 class describe_PublicMemberInfoEntityExtension : nspec {

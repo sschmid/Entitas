@@ -43,7 +43,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tests\Entitas\describe_Matcher.cs" />
     <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
@@ -118,7 +117,6 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeStruct.cs" />
     <Compile Include="Tests\Entitas\Serialization\Configuration\describe_CodeGeneratorConfig.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0320.cs" />
-    <Compile Include="Tests\Entitas\describe_EntityIndex.cs" />
     <Compile Include="Tests\EntitasTest.cs" />
     <Compile Include="Tests\Entitas\describe_Contexts.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple contexts\GComponent.cs" />
@@ -130,7 +128,6 @@
     <Compile Include="Tests\Entitas\Fixtures\Systems\InitializeSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ReactiveSystemSpy.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Generators\describe_BlueprintsGenerator.cs" />
-    <Compile Include="Tests\Entitas\Caching\describe_EntitasCache.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Classes\SomeClassHideInBlueprintInspector.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestCleanupSystem.cs" />
@@ -168,6 +165,24 @@
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextC\Components\ContextCCComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextA\Components\ContextACComponent.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextB\Components\ContextBCComponent.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Api\describe_ContextInfo.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Api\describe_EntitasException.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\Caching\describe_ObjectCache.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\Caching\describe_ObjectPool.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\Configuration\describe_EntitasPreferencesConfig.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\Configuration\describe_Properties.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\Extensions\describe_ComponentStringExtension.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\Extensions\describe_InterfaceTypeExtension.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\Extensions\describe_TypeSerializationExtension.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfo.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_Collector.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_Context.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_Entity.cs" />
+    <Compile Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfoEntityExtension.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_Group.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_EntityIndex.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_Matcher.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_EntitasCache.cs" />
     <Compile Include="..\Entitas\Entitas\EntitasCache.cs">
       <Link>Linked Libraries\Entitas\EntitasCache.cs</Link>
     </Compile>
@@ -206,9 +221,6 @@
     </Compile>
     <Compile Include="..\Entitas\Entitas\Entity\EntityEqualityComparer.cs">
       <Link>Linked Libraries\Entitas\Entity\EntityEqualityComparer.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\EntityExtension.cs">
-      <Link>Linked Libraries\Entitas\Entity\EntityExtension.cs</Link>
     </Compile>
     <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs">
       <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs</Link>
@@ -273,21 +285,6 @@
     <Compile Include="..\Entitas\Entitas\Systems\Systems.cs">
       <Link>Linked Libraries\Entitas\Systems\Systems.cs</Link>
     </Compile>
-    <Compile Include="Tests\__NEW\Entitas.Api\describe_ContextInfo.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Api\describe_EntitasException.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Utils\Caching\describe_ObjectCache.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Utils\Caching\describe_ObjectPool.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Utils\Configuration\describe_EntitasPreferencesConfig.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Utils\Configuration\describe_Properties.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Utils\Extensions\describe_ComponentStringExtension.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Utils\Extensions\describe_InterfaceTypeExtension.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Utils\Extensions\describe_TypeSerializationExtension.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfo.cs" />
-    <Compile Include="Tests\__NEW\Entitas\describe_Collector.cs" />
-    <Compile Include="Tests\__NEW\Entitas\describe_Context.cs" />
-    <Compile Include="Tests\__NEW\Entitas\describe_Entity.cs" />
-    <Compile Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfoEntityExtension.cs" />
-    <Compile Include="Tests\__NEW\Entitas\describe_Group.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -308,7 +305,6 @@
     <Folder Include="Tests\Entitas\Serialization\Configuration\" />
     <Folder Include="Tests\Entitas\Serialization\Blueprints\" />
     <Folder Include="Tests\Entitas\Fixtures\Systems\" />
-    <Folder Include="Tests\Entitas\Caching\" />
     <Folder Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextA\" />
     <Folder Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextB\" />
     <Folder Include="Tests\Entitas\CodeGenerator\Fixtures\Generated\ContextC\" />
