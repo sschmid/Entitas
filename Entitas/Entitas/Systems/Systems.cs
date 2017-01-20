@@ -9,8 +9,7 @@ namespace Entitas {
     /// ystem and other nested Systems instances.
     /// All systems will be initialized and executed based on the order
     /// you added them.
-    public class Systems : IInitializeSystem, IExecuteSystem,
-                           ICleanupSystem, ITearDownSystem {
+    public class Systems : IInitializeSystem, IExecuteSystem, ICleanupSystem, ITearDownSystem {
 
         protected readonly List<IInitializeSystem> _initializeSystems;
         protected readonly List<IExecuteSystem> _executeSystems;

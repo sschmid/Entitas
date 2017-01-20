@@ -219,8 +219,8 @@ class describe_ReactiveSystem : nspec {
                 var groupA = context1.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
                 var groupB = context2.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
 
-                var groups = new [] { groupA, groupB };
-                var groupEvents = new [] {
+                var groups = new[] { groupA, groupB };
+                var groupEvents = new[] {
                     GroupEvent.Added,
                     GroupEvent.Removed
                 };
@@ -249,7 +249,7 @@ class describe_ReactiveSystem : nspec {
         context["filter entities"] = () => {
 
             it["filters entities"] = () => {
-                system = new ReactiveSystemSpy( _contexts.test.CreateCollector(_matcherAB),
+                system = new ReactiveSystemSpy(_contexts.test.CreateCollector(_matcherAB),
                                                e => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).age > 42);
 
                 _contexts.test.CreateEntity()
@@ -263,7 +263,7 @@ class describe_ReactiveSystem : nspec {
                 var eAB2 = _contexts.test.CreateEntity();
                 eAB2.AddComponentB();
                 eAB2.AddComponent(CID.ComponentA, new NameAgeComponent { age = 50 });
-                
+
                 var didExecute = 0;
                 system.executeAction = entities => {
                     didExecute += 1;

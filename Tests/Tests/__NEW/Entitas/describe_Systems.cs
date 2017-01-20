@@ -219,7 +219,7 @@ class describe_Systems : nspec {
 
                 var parentSystems = new Systems();
                 parentSystems.Add(systems);
-                
+
                 parentSystems.Initialize();
                 system.didInitialize.should_be(1);
 

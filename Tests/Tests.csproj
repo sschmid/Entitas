@@ -43,7 +43,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
@@ -121,7 +120,6 @@
     <Compile Include="Tests\Entitas\describe_Contexts.cs" />
     <Compile Include="Tests\Entitas\CodeGenerator\Fixtures\Components in multiple contexts\GComponent.cs" />
     <Compile Include="Tests\Entitas\Serialization\Blueprints\describe_Blueprints.cs" />
-    <Compile Include="Tests\Entitas\describe_Systems.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\CleanupSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\TearDownSystemSpy.cs" />
     <Compile Include="Tests\Entitas\Fixtures\Systems\ExecuteSystemSpy.cs" />
@@ -285,6 +283,8 @@
     <Compile Include="..\Entitas\Entitas\Systems\Systems.cs">
       <Link>Linked Libraries\Entitas\Systems\Systems.cs</Link>
     </Compile>
+    <Compile Include="Tests\__NEW\Entitas\describe_ReactiveSystem.cs" />
+    <Compile Include="Tests\__NEW\Entitas\describe_Systems.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -326,6 +326,7 @@
     <Folder Include="Tests\__NEW\Entitas.Utils\Extensions\" />
     <Folder Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\" />
     <Folder Include="Tests\__NEW\Entitas\" />
+    <Folder Include="Tests\__NEW\Entitas.CodeGenerator\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\UnityEngine.dll" />
