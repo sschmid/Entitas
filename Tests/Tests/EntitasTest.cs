@@ -1,5 +1,6 @@
 using NSpec;
 using Entitas;
+using Entitas.Api;
 
 class EntitasTest : nspec {
 

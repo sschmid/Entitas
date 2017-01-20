@@ -1,4 +1,5 @@
 using Entitas;
+using Entitas.Api;
 
 #pragma warning disable
 public class EntityAddComponent : IPerformanceTest {

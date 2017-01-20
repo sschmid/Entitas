@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using Entitas.Api;
 
 public sealed partial class ContextA : Context<ContextAEntity> {
 

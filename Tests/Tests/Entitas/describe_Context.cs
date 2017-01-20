@@ -1,4 +1,5 @@
 using Entitas;
+using Entitas.Api;
 using NSpec;
 
 class describe_Context : nspec {

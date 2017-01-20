@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Entitas;
+using Entitas.Api;
 
 public class SomeStructComponent : IComponent {
 

@@ -6,40 +6,40 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
+using Entitas.Api;
 
-    public partial class GameEntity : Entity {
+public partial class GameEntity : Entity {
 
-        static readonly MovableComponent movableComponent = new MovableComponent();
+    static readonly MovableComponent movableComponent = new MovableComponent();
 
-        public bool isMovable {
-            get { return HasComponent(ComponentIds.Movable); }
-            set {
-                if(value != isMovable) {
-                    if(value) {
-                        AddComponent(ComponentIds.Movable, movableComponent);
-                    } else {
-                        RemoveComponent(ComponentIds.Movable);
-                    }
+    public bool isMovable {
+        get { return HasComponent(ComponentIds.Movable); }
+        set {
+            if(value != isMovable) {
+                if(value) {
+                    AddComponent(ComponentIds.Movable, movableComponent);
+                } else {
+                    RemoveComponent(ComponentIds.Movable);
                 }
             }
         }
     }
+}
 
-    public partial class GameMatcher {
+public partial class GameMatcher {
 
-        static IMatcher<GameEntity> _matcherMovable;
+    static IMatcher<GameEntity> _matcherMovable;
 
-        public static IMatcher<GameEntity> Movable {
-            get {
-                if(_matcherMovable == null) {
-                    var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Movable);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherMovable = matcher;
-                }
-
-                return _matcherMovable;
+    public static IMatcher<GameEntity> Movable {
+        get {
+            if(_matcherMovable == null) {
+                var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Movable);
+                matcher.componentNames = ComponentIds.componentNames;
+                _matcherMovable = matcher;
             }
+
+            return _matcherMovable;
         }
     }
 }

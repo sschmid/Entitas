@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Entitas.Api;
+using Entitas.Utils;
 
 namespace Entitas {
 
@@ -12,17 +14,17 @@ namespace Entitas {
         /// Occurs when a component gets added.
         /// All event handlers will be removed when
         /// the entity gets destroyed by the context.
-        public event EntityChanged OnComponentAdded;
+        public event EntityComponentChanged OnComponentAdded;
 
         /// Occurs when a component gets removed.
         /// All event handlers will be removed when
         /// the entity gets destroyed by the context.
-        public event EntityChanged OnComponentRemoved;
+        public event EntityComponentChanged OnComponentRemoved;
 
         /// Occurs when a component gets replaced.
         /// All event handlers will be removed when
         /// the entity gets destroyed by the context.
-        public event ComponentReplaced OnComponentReplaced;
+        public event EntityComponentReplaced OnComponentReplaced;
 
         /// Occurs when an entity gets released and is not retained anymore.
         /// All event handlers will be removed when

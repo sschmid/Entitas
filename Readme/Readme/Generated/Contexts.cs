@@ -6,28 +6,27 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas.Api;
 
-    public partial class Contexts {
+public partial class Contexts {
 
-        public static Contexts sharedInstance {
-            get {
-                if(_sharedInstance == null) {
-                    _sharedInstance = new Contexts();
-                }
-
-                return _sharedInstance;
+    public static Contexts sharedInstance {
+        get {
+            if(_sharedInstance == null) {
+                _sharedInstance = new Contexts();
             }
-            set { _sharedInstance = value; }
+
+            return _sharedInstance;
         }
+        set { _sharedInstance = value; }
+    }
 
-        static Contexts _sharedInstance;
+    static Contexts _sharedInstance;
 
-        public IContext[] allContexts { get { return new IContext [] { game }; } }
+    public IContext[] allContexts { get { return new IContext[] { game }; } }
 
-        public GameContext game;
+    public GameContext game;
 
-        public void SetAllContexts() {
-        }
+    public void SetAllContexts() {
     }
 }

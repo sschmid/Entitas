@@ -7,6 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Entitas;
+using Entitas.Api;
 
 public sealed partial class SomeOtherContextEntity : Entity {
 

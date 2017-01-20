@@ -6,76 +6,76 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
+using Entitas.Api;
 
-    public partial class GameEntity : Entity {
+public partial class GameEntity : Entity {
 
-        public UserComponent user { get { return (UserComponent)GetComponent(ComponentIds.User); } }
-        public bool hasUser { get { return HasComponent(ComponentIds.User); } }
+    public UserComponent user { get { return (UserComponent)GetComponent(ComponentIds.User); } }
+    public bool hasUser { get { return HasComponent(ComponentIds.User); } }
 
-        public void AddUser(string newName, int newAge) {
-            var component = CreateComponent<UserComponent>(ComponentIds.User);
-            component.name = newName;
-            component.age = newAge;
-            AddComponent(ComponentIds.User, component);
+    public void AddUser(string newName, int newAge) {
+        var component = CreateComponent<UserComponent>(ComponentIds.User);
+        component.name = newName;
+        component.age = newAge;
+        AddComponent(ComponentIds.User, component);
+    }
+
+    public void ReplaceUser(string newName, int newAge) {
+        var component = CreateComponent<UserComponent>(ComponentIds.User);
+        component.name = newName;
+        component.age = newAge;
+        ReplaceComponent(ComponentIds.User, component);
+    }
+
+    public void RemoveUser() {
+        RemoveComponent(ComponentIds.User);
+    }
+}
+
+public sealed partial class GameContext : Context<GameEntity> {
+
+    public GameEntity userEntity { get { return GetGroup(GameMatcher.User).GetSingleEntity(); } }
+    public UserComponent user { get { return userEntity.user; } }
+    public bool hasUser { get { return userEntity != null; } }
+
+    public GameEntity SetUser(string newName, int newAge) {
+        if(hasUser) {
+            throw new EntitasException("Could not set user!\n" + this + " already has an entity with UserComponent!",
+                "You should check if the context already has a userEntity before setting it or use context.ReplaceUser().");
         }
+        var entity = CreateEntity();
+        entity.AddUser(newName, newAge);
+        return entity;
+    }
 
-        public void ReplaceUser(string newName, int newAge) {
-            var component = CreateComponent<UserComponent>(ComponentIds.User);
-            component.name = newName;
-            component.age = newAge;
-            ReplaceComponent(ComponentIds.User, component);
-        }
-
-        public void RemoveUser() {
-            RemoveComponent(ComponentIds.User);
+    public void ReplaceUser(string newName, int newAge) {
+        var entity = userEntity;
+        if(entity == null) {
+            entity = SetUser(newName, newAge);
+        } else {
+            entity.ReplaceUser(newName, newAge);
         }
     }
 
-    public sealed partial class GameContext {
-
-        public GameEntity userEntity { get { return GetGroup(GameMatcher.User).GetSingleEntity(); } }
-        public UserComponent user { get { return userEntity.user; } }
-        public bool hasUser { get { return userEntity != null; } }
-
-        public GameEntity SetUser(string newName, int newAge) {
-            if(hasUser) {
-                throw new EntitasException("Could not set user!\n" + this + " already has an entity with UserComponent!",
-                    "You should check if the context already has a userEntity before setting it or use context.ReplaceUser().");
-            }
-            var entity = CreateEntity();
-            entity.AddUser(newName, newAge);
-            return entity;
-        }
-
-        public void ReplaceUser(string newName, int newAge) {
-            var entity = userEntity;
-            if(entity == null) {
-                entity = SetUser(newName, newAge);
-            } else {
-                entity.ReplaceUser(newName, newAge);
-            }
-        }
-
-        public void RemoveUser() {
-            DestroyEntity(userEntity);
-        }
+    public void RemoveUser() {
+        DestroyEntity(userEntity);
     }
+}
 
-    public partial class GameMatcher {
+public partial class GameMatcher {
 
-        static IMatcher<GameEntity> _matcherUser;
+    static IMatcher<GameEntity> _matcherUser;
 
-        public static IMatcher<GameEntity> User {
-            get {
-                if(_matcherUser == null) {
-                    var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.User);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherUser = matcher;
-                }
-
-                return _matcherUser;
+    public static IMatcher<GameEntity> User {
+        get {
+            if(_matcherUser == null) {
+                var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.User);
+                matcher.componentNames = ComponentIds.componentNames;
+                _matcherUser = matcher;
             }
+
+            return _matcherUser;
         }
     }
 }

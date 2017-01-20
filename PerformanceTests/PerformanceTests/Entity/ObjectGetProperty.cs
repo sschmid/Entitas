@@ -1,4 +1,5 @@
 using Entitas;
+using Entitas.Api;
 
 public class ObjectGetProperty : IPerformanceTest {
     const int n = 10000000;

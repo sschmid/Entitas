@@ -1,3 +1,5 @@
+using Entitas.Api;
+
 namespace Entitas {
 
     public static class ContextExtension {

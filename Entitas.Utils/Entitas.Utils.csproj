@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9FEAE5CD-2FA2-44BE-BFED-CF3569182C7F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Entitas.Utils</RootNamespace>
+    <AssemblyName>Entitas.Utils</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas.Utils\" />
+    <Folder Include="Entitas.Utils\PublicMemberInfo\" />
+    <Folder Include="Entitas.Utils\Caching\" />
+    <Folder Include="Entitas.Utils\Extensions\" />
+    <Folder Include="Entitas.Utils\Configuration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entitas.Utils\PublicMemberInfo\PublicMemberInfo.cs" />
+    <Compile Include="Entitas.Utils\PublicMemberInfo\AttributeInfo.cs" />
+    <Compile Include="Entitas.Utils\PublicMemberInfo\PublicMemberInfoExtension.cs" />
+    <Compile Include="Entitas.Utils\Caching\ObjectCache.cs" />
+    <Compile Include="Entitas.Utils\Caching\ObjectPool.cs" />
+    <Compile Include="Entitas.Utils\Extensions\InterfaceTypeExtension.cs" />
+    <Compile Include="Entitas.Utils\Extensions\TypeSerializationExtension.cs" />
+    <Compile Include="Entitas.Utils\Extensions\ComponentStringExtension.cs" />
+    <Compile Include="Entitas.Utils\Configuration\EntitasPreferences.cs" />
+    <Compile Include="Entitas.Utils\Configuration\EntitasPreferencesConfig.cs" />
+    <Compile Include="Entitas.Utils\Configuration\Properties.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

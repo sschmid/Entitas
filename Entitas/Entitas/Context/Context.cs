@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using Entitas.Api;
 
 namespace Entitas {
 
     public class Context<TEntity> : IContext<TEntity> where TEntity : class, IEntity, new() {
 
-        public event ContextChanged OnEntityCreated;
-        public event ContextChanged OnEntityWillBeDestroyed;
-        public event ContextChanged OnEntityDestroyed;
+        public event ContextEntityChanged OnEntityCreated;
+        public event ContextEntityChanged OnEntityWillBeDestroyed;
+        public event ContextEntityChanged OnEntityDestroyed;
         public event ContextGroupChanged OnGroupCreated;
         public event ContextGroupChanged OnGroupCleared;
 
@@ -53,8 +54,8 @@ namespace Entitas {
         readonly Dictionary<string, IEntityIndex> _entityIndices;
 
         // Cache delegates to avoid gc allocations
-        EntityChanged _cachedEntityChanged;
-        ComponentReplaced _cachedComponentReplaced;
+        EntityComponentChanged _cachedEntityChanged;
+        EntityComponentReplaced _cachedComponentReplaced;
         EntityReleased _cachedEntityReleased;
 
         public Context(int totalComponents) : this(totalComponents, 0, null) {

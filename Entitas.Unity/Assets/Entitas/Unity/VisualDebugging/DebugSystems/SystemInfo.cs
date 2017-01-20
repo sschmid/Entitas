@@ -1,4 +1,5 @@
 using System;
+using Entitas.Api;
 
 namespace Entitas.Unity.VisualDebugging {
 

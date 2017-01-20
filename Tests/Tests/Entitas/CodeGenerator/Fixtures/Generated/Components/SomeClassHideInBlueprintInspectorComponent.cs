@@ -6,9 +6,9 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Entitas;
+using Entitas.Api;
 
-[Entitas.Serialization.Blueprints.HideInBlueprintInspector]
+[Entitas.Blueprints.HideInBlueprintInspector]
 public class SomeClassHideInBlueprintInspectorComponent : IComponent {
 
     public SomeClassHideInBlueprintInspector value;

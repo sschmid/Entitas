@@ -1,5 +1,6 @@
 using Entitas;
-using Entitas.Serialization.Blueprints;
+using Entitas.Api;
+using Entitas.Blueprints;
 
 public class ContextCreateBlueprint : IPerformanceTest {
     const int n = 100000;

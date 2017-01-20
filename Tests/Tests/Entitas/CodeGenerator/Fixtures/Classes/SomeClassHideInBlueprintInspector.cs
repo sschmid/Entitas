@@ -1,5 +1,5 @@
 ﻿using Entitas.CodeGenerator;
-using Entitas.Serialization.Blueprints;
+using Entitas.Blueprints;
 
 [Context("Test"), HideInBlueprintInspector]
 public class SomeClassHideInBlueprintInspector {

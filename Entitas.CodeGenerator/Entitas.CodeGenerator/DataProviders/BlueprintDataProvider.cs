@@ -2,7 +2,7 @@
 
 namespace Entitas.CodeGenerator {
 
-    public static class BlueprintCodeGeneratorDataExtensions {
+    public static class BlueprintCodeGeneratorDataExtension {
 
         public static string GetBlueprintName(this CodeGeneratorData data) {
             return (string)data[BlueprintDataProvider.BLUEPRINT_NAME];
@@ -11,7 +11,7 @@ namespace Entitas.CodeGenerator {
 
     public class BlueprintDataProvider : ICodeGeneratorDataProvider {
 
-        public const string BLUEPRINT_NAME = "blueprintName";
+        public const string BLUEPRINT_NAME = "blueprint_name";
 
         readonly string[] _blueprintNames;
 

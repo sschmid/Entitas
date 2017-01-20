@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Entitas.Utils;
 
 namespace Entitas.CodeGenerator {
 
@@ -18,7 +19,7 @@ namespace Entitas.CodeGenerator {
             var generatorName = GetType().FullName;
             var emptyData = new CodeGeneratorData[0];
             return data
-                .Where(d => d.ContainsKey(ComponentDataProvider.CONTEXTS))
+                .Where(d => d.ContainsKey(ComponentDataProvider.COMPONENT_CONTEXTS))
                 .SelectMany(d => d.GetContexts())
                 .Select(contextName => contextName + COMPONENT_LOOKUP)
                 .Select(lookupName => new CodeGenFile(
@@ -29,7 +30,7 @@ namespace Entitas.CodeGenerator {
         }
 
         CodeGenFile[] generateLookupsForContexts(CodeGeneratorData[] data) {
-            var orderedData = data.OrderBy(d => d.GetTypeName()).ToArray();
+            var orderedData = data.OrderBy(d => d.GetShortTypeName()).ToArray();
             var lookupTagToComponentInfosMap = getLookupNameToDataMap(orderedData);
             var generatorName = GetType().FullName;
             return lookupTagToComponentInfosMap
@@ -96,7 +97,7 @@ namespace Entitas.CodeGenerator {
             for(int i = 0; i < data.Length; i++) {
                 var info = data[i];
                 if(info != null) {
-                    code += string.Format(fieldFormat, info.GetTypeName().RemoveComponentSuffix(), i);
+                    code += string.Format(fieldFormat, info.GetShortTypeName().RemoveComponentSuffix(), i);
                 }
             }
 
@@ -115,7 +116,7 @@ namespace Entitas.CodeGenerator {
             for(int i = 0; i < data.Length; i++) {
                 var info = data[i];
                 if(info != null) {
-                    code += string.Format(format, i, info.GetTypeName().RemoveComponentSuffix());
+                    code += string.Format(format, i, info.GetShortTypeName().RemoveComponentSuffix());
                 } else {
                     code += nullFormat;
                 }

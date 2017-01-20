@@ -1,5 +1,5 @@
-using Entitas.Serialization.Configuration;
 using Entitas.Unity.VisualDebugging;
+using Entitas.Utils;
 using NSpec;
 
 class describe_VisualDebuggingConfig : nspec {

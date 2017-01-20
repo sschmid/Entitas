@@ -2,7 +2,7 @@
 
 namespace Entitas.CodeGenerator {
 
-    public static class ContextCodeGeneratorDataExtensions {
+    public static class ContextCodeGeneratorDataExtension {
 
         public static string GetContextName(this CodeGeneratorData data) {
             return (string)data[ContextDataProvider.CONTEXT_NAME];
@@ -11,7 +11,7 @@ namespace Entitas.CodeGenerator {
 
     public class ContextDataProvider : ICodeGeneratorDataProvider {
 
-        public const string CONTEXT_NAME = "contextName";
+        public const string CONTEXT_NAME = "context_name";
 
         readonly string[] _contextNames;
 

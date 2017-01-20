@@ -1,4 +1,5 @@
 using Entitas;
+using Entitas.Api;
 
 public class ContextDestroyEntity : IPerformanceTest {
     const int n = 100000;

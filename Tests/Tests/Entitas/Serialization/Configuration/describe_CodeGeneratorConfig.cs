@@ -1,4 +1,5 @@
-using Entitas.Serialization.Configuration;
+using Entitas.CodeGenerator;
+using Entitas.Utils;
 using NSpec;
 
 class describe_CodeGeneratorConfig : nspec {

@@ -1,6 +1,7 @@
 using Entitas;
 using NSpec;
 using My.Namespace;
+using Entitas.Api;
 
 class describe_Entity : nspec {
 

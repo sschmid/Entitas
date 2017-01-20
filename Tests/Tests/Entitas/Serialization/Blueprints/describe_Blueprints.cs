@@ -1,5 +1,6 @@
 using Entitas;
-using Entitas.Serialization.Blueprints;
+using Entitas.Api;
+using Entitas.Blueprints;
 using NSpec;
 
 class describe_Blueprints : nspec {

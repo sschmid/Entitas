@@ -1,4 +1,4 @@
-using Entitas.Serialization.Configuration;
+using Entitas.Utils;
 
 namespace Entitas.Unity.VisualDebugging {
 

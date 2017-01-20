@@ -1,6 +1,7 @@
 using Entitas;
 using NSpec;
 using System.Collections.Generic;
+using Entitas.Api;
 
 class describe_EntityIndex : nspec {
 

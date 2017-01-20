@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Entitas.Serialization;
+using Entitas.Utils;
 
 namespace Entitas.CodeGenerator {
 
@@ -267,7 +267,7 @@ public sealed partial class $TagMatcher {
         static string buildString(CodeGeneratorData data, string format, string context) {
             format = createFormatString(format);
             var a0_type = data.GetFullTypeName();
-            var typeName = data.GetTypeName();
+            var typeName = data.GetShortTypeName();
             var a1_name = typeName.RemoveComponentSuffix();
             var a2_lowercaseName = a1_name.LowercaseFirst();
             var a3_context = context;

@@ -1,4 +1,5 @@
 using Entitas;
+using Entitas.Api;
 
 public class EntityRemoveAddComponent : IPerformanceTest {
     const int n = 1000000;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Api;
 
 public class TestReactiveSystem : ReactiveSystem<TestEntity> {
 

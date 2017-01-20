@@ -6,46 +6,46 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
+using Entitas.Api;
 
-    public partial class GameEntity : Entity {
+public partial class GameEntity : Entity {
 
-        public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
-        public bool hasPosition { get { return HasComponent(ComponentIds.Position); } }
+    public PositionComponent position { get { return (PositionComponent)GetComponent(ComponentIds.Position); } }
+    public bool hasPosition { get { return HasComponent(ComponentIds.Position); } }
 
-        public void AddPosition(int newX, int newY) {
-            var component = CreateComponent<PositionComponent>(ComponentIds.Position);
-            component.x = newX;
-            component.y = newY;
-            AddComponent(ComponentIds.Position, component);
-        }
-
-        public void ReplacePosition(int newX, int newY) {
-            var component = CreateComponent<PositionComponent>(ComponentIds.Position);
-            component.x = newX;
-            component.y = newY;
-            ReplaceComponent(ComponentIds.Position, component);
-        }
-
-        public void RemovePosition() {
-            RemoveComponent(ComponentIds.Position);
-        }
+    public void AddPosition(int newX, int newY) {
+        var component = CreateComponent<PositionComponent>(ComponentIds.Position);
+        component.x = newX;
+        component.y = newY;
+        AddComponent(ComponentIds.Position, component);
     }
 
-    public partial class GameMatcher {
+    public void ReplacePosition(int newX, int newY) {
+        var component = CreateComponent<PositionComponent>(ComponentIds.Position);
+        component.x = newX;
+        component.y = newY;
+        ReplaceComponent(ComponentIds.Position, component);
+    }
 
-        static IMatcher<GameEntity> _matcherPosition;
+    public void RemovePosition() {
+        RemoveComponent(ComponentIds.Position);
+    }
+}
 
-        public static IMatcher<GameEntity> Position {
-            get {
-                if(_matcherPosition == null) {
-                    var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Position);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherPosition = matcher;
-                }
+public partial class GameMatcher {
 
-                return _matcherPosition;
+    static IMatcher<GameEntity> _matcherPosition;
+
+    public static IMatcher<GameEntity> Position {
+        get {
+            if(_matcherPosition == null) {
+                var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Position);
+                matcher.componentNames = ComponentIds.componentNames;
+                _matcherPosition = matcher;
             }
+
+            return _matcherPosition;
         }
     }
 }

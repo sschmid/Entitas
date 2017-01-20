@@ -42,8 +42,7 @@ class check_namespaces : nspec {
                 .Replace(entitasUnitySourceDir + dir("Serialization", "Blueprints"), "Entitas.Unity.Serialization.Blueprints/")
                 .Replace(entitasUnitySourceDir + "Migration", "Entitas.Unity.Migration");
 
-            if(file.Key.Contains(typeof(Entitas.Feature).Name) ||
-                file.Key.Contains("BlueprintEntityExtension")) {
+            if(file.Key.Contains(typeof(Entitas.Feature).Name)) {
                 expectedNamespace = "Entitas";
             } else {
                 expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)

@@ -81,5 +81,17 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Entitas.Api\Entitas.Api.csproj">
+      <Project>{124A01F2-AB29-438A-BB4A-1CDA48A8E5C9}</Project>
+      <Name>Entitas.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.Blueprints\Entitas.Blueprints.csproj">
+      <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
+      <Name>Entitas.Blueprints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.Utils\Entitas.Utils.csproj">
+      <Project>{9FEAE5CD-2FA2-44BE-BFED-CF3569182C7F}</Project>
+      <Name>Entitas.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

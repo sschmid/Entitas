@@ -1,4 +1,5 @@
 using Entitas;
+using Entitas.Api;
 
 public class ContextGetEntities : IPerformanceTest {
     const int n = 100000;

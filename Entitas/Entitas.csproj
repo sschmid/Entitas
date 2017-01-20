@@ -36,51 +36,18 @@
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
     <Compile Include="Entitas\Matcher\MatcherStatic.cs" />
-    <Compile Include="Entitas\EntitasException.cs" />
-    <Compile Include="Entitas\Extensions\TypeExtension.cs" />
-    <Compile Include="Entitas\Serialization\PublicMemberInfo.cs" />
-    <Compile Include="Entitas\Serialization\TypeSerializationExtension.cs" />
-    <Compile Include="Entitas\Serialization\Blueprints\Blueprint.cs" />
-    <Compile Include="Entitas\Serialization\Blueprints\ComponentBlueprint.cs" />
-    <Compile Include="Entitas\Serialization\Blueprints\SerializableMember.cs" />
-    <Compile Include="Entitas\Serialization\Blueprints\BlueprintEntityExtension.cs" />
-    <Compile Include="Entitas\Serialization\Configuration\CodeGeneratorConfig.cs" />
-    <Compile Include="Entitas\Serialization\Configuration\EntitasPreferencesConfig.cs" />
-    <Compile Include="Entitas\Serialization\Configuration\EntitasPreferences.cs" />
-    <Compile Include="Entitas\Serialization\Configuration\Properties.cs" />
-    <Compile Include="Entitas\Serialization\Blueprints\HideInBlueprintInspectorAttribute.cs" />
-    <Compile Include="Entitas\Caching\ObjectCache.cs" />
-    <Compile Include="Entitas\Caching\ObjectPool.cs" />
-    <Compile Include="Entitas\Caching\EntitasCache.cs" />
     <Compile Include="Entitas\Index\EntityIndex.cs" />
-    <Compile Include="Entitas\Index\IEntityIndex.cs" />
     <Compile Include="Entitas\Index\AbstractEntityIndex.cs" />
     <Compile Include="Entitas\Index\PrimaryEntityIndex.cs" />
     <Compile Include="Entitas\Entity\Entity.cs" />
-    <Compile Include="Entitas\Entity\IEntity.cs" />
-    <Compile Include="Entitas\Group\IGroup.cs" />
     <Compile Include="Entitas\Group\Group.cs" />
     <Compile Include="Entitas\Context\Context.cs" />
-    <Compile Include="Entitas\Context\IContext.cs" />
     <Compile Include="Entitas\Systems\Systems.cs" />
     <Compile Include="Entitas\Systems\ReactiveSystem.cs" />
-    <Compile Include="Entitas\Systems\IReactiveSystem.cs" />
-    <Compile Include="Entitas\IComponent.cs" />
-    <Compile Include="Entitas\Matcher\IMatcher.cs" />
-    <Compile Include="Entitas\Systems\ISystem.cs" />
-    <Compile Include="Entitas\Systems\IInitializeSystem.cs" />
-    <Compile Include="Entitas\Systems\IExecuteSystem.cs" />
-    <Compile Include="Entitas\Systems\ICleanupSystem.cs" />
-    <Compile Include="Entitas\Systems\ITearDownSystem.cs" />
-    <Compile Include="Entitas\Matcher\IAllOfMatcher.cs" />
-    <Compile Include="Entitas\Matcher\IAnyOfMatcher.cs" />
-    <Compile Include="Entitas\Matcher\ICompoundMatcher.cs" />
-    <Compile Include="Entitas\Matcher\INoneOfMatcher.cs" />
     <Compile Include="Entitas\Group\GroupEvent.cs" />
     <Compile Include="Entitas\Context\ContextExtension.cs" />
     <Compile Include="Entitas\Entity\EntityExtension.cs" />
     <Compile Include="Entitas\Group\GroupExtension.cs" />
-    <Compile Include="Entitas\Context\ContextInfo.cs" />
     <Compile Include="Entitas\Context\Exceptions\ContextDoesNotContainEntityException.cs" />
     <Compile Include="Entitas\Context\Exceptions\ContextEntityIndexDoesAlreadyExistException.cs" />
     <Compile Include="Entitas\Context\Exceptions\ContextEntityIndexDoesNotExistException.cs" />
@@ -98,15 +65,13 @@
     <Compile Include="Entitas\Matcher\MatcherException.cs" />
     <Compile Include="Entitas\Collector\Collector.cs" />
     <Compile Include="Entitas\Collector\CollectorException.cs" />
+    <Compile Include="Entitas\EntitasCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Entitas\" />
     <Folder Include="Entitas\Extensions\" />
     <Folder Include="Entitas\Matcher\" />
-    <Folder Include="Entitas\Serialization\Blueprints\" />
-    <Folder Include="Entitas\Serialization\Configuration\" />
-    <Folder Include="Entitas\Caching\" />
     <Folder Include="Entitas\Index\" />
     <Folder Include="Entitas\Entity\" />
     <Folder Include="Entitas\Group\" />
@@ -115,5 +80,15 @@
     <Folder Include="Entitas\Context\Exceptions\" />
     <Folder Include="Entitas\Entity\Exceptions\" />
     <Folder Include="Entitas\Collector\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas.Utils\Entitas.Utils.csproj">
+      <Project>{9FEAE5CD-2FA2-44BE-BFED-CF3569182C7F}</Project>
+      <Name>Entitas.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.Api\Entitas.Api.csproj">
+      <Project>{124A01F2-AB29-438A-BB4A-1CDA48A8E5C9}</Project>
+      <Name>Entitas.Api</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

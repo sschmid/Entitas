@@ -1,6 +1,7 @@
 using System;
 using Entitas;
-using Entitas.Serialization.Blueprints;
+using Entitas.Api;
+using Entitas.Blueprints;
 using NSpec;
 
 class describe_EntitasErrorMessages : EntitasTest {
@@ -26,28 +27,6 @@ class describe_EntitasErrorMessages : EntitasTest {
             var contextInfo = new ContextInfo("My Context", componentNames, null);
             _context = new TestContext(componentNames.Length, 42, contextInfo);
             _entity = createEntity();
-        };
-
-        it["creates exception with hint separated by newLine"] = () => {
-
-            // given
-            const string msg = "Message";
-            const string hint = "Hint";
-            var ex = new EntitasException(msg, hint);
-
-            // then
-            ex.Message.should_be(msg + "\n" + hint);
-        };
-
-        it["ignores hint when null"] = () => {
-
-            // given
-            const string msg = "Message";
-            string hint = null;
-            var ex = new EntitasException(msg, hint);
-
-            // then
-            ex.Message.should_be(msg);
         };
 
         context["Entity"] = () => {
