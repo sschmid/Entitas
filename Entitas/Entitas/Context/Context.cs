@@ -13,45 +13,30 @@ namespace Entitas {
 
         public int totalComponents { get { return _totalComponents; } }
 
-        public Stack<IComponent>[] componentPools {
-            get { return _componentPools; }
-        }
-
+        public Stack<IComponent>[] componentPools { get { return _componentPools; } }
         public ContextInfo contextInfo { get { return _contextInfo; } }
-
+        
         public int count { get { return _entities.Count; } }
-
-        public int reusableEntitiesCount {
-            get { return _reusableEntities.Count; }
-        }
-
-        public int retainedEntitiesCount {
-            get { return _retainedEntities.Count; }
-        }
+        public int reusableEntitiesCount { get { return _reusableEntities.Count; } }
+        public int retainedEntitiesCount { get { return _retainedEntities.Count; } }
 
         readonly int _totalComponents;
-        int _creationIndex;
-
-        readonly HashSet<TEntity> _entities = new HashSet<TEntity>(
-            EntityEqualityComparer<TEntity>.comparer
-        );
-
-        readonly Stack<TEntity> _reusableEntities = new Stack<TEntity>();
-        readonly HashSet<TEntity> _retainedEntities = new HashSet<TEntity>(
-            EntityEqualityComparer<TEntity>.comparer
-        );
-
-        TEntity[] _entitiesCache;
-
-        readonly ContextInfo _contextInfo;
-
-        readonly Dictionary<IMatcher<TEntity>, IGroup<TEntity>> _groups =
-            new Dictionary<IMatcher<TEntity>, IGroup<TEntity>>();
-
-        readonly List<IGroup<TEntity>>[] _groupsForIndex;
 
         readonly Stack<IComponent>[] _componentPools;
+        readonly ContextInfo _contextInfo;
+
+        readonly HashSet<TEntity> _entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
+        readonly Stack<TEntity> _reusableEntities = new Stack<TEntity>();
+        readonly HashSet<TEntity> _retainedEntities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
+
+        readonly Dictionary<IMatcher<TEntity>, IGroup<TEntity>> _groups = new Dictionary<IMatcher<TEntity>, IGroup<TEntity>>();
+        readonly List<IGroup<TEntity>>[] _groupsForIndex;
+
         readonly Dictionary<string, IEntityIndex> _entityIndices;
+
+        int _creationIndex;
+
+        TEntity[] _entitiesCache;
 
         // Cache delegates to avoid gc allocations
         EntityComponentChanged _cachedEntityChanged;
@@ -61,32 +46,17 @@ namespace Entitas {
         public Context(int totalComponents) : this(totalComponents, 0, null) {
         }
 
-        public Context(int totalComponents,
-                    int startCreationIndex,
-                    ContextInfo contextInfo) {
+        public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo) {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
 
             if(contextInfo != null) {
                 _contextInfo = contextInfo;
-
                 if(contextInfo.componentNames.Length != totalComponents) {
                     throw new ContextInfoException(this, contextInfo);
                 }
             } else {
-
-                // If Contexts.CreateContext() was used to create the context,
-                // we will never end up here.
-                // This is a fallback when the context is created manually.
-
-                var componentNames = new string[totalComponents];
-                const string prefix = "Index ";
-                for (int i = 0; i < componentNames.Length; i++) {
-                    componentNames[i] = prefix + i;
-                }
-                _contextInfo = new ContextInfo(
-                    "Unnamed Context", componentNames, null
-                );
+                _contextInfo = createDefaultContextInfo();
             }
 
             _groupsForIndex = new List<IGroup<TEntity>>[totalComponents];
@@ -97,6 +67,16 @@ namespace Entitas {
             _cachedEntityChanged = updateGroupsComponentAddedOrRemoved;
             _cachedComponentReplaced = updateGroupsComponentReplaced;
             _cachedEntityReleased = onEntityReleased;
+        }
+
+        ContextInfo createDefaultContextInfo() {
+            var componentNames = new string[_totalComponents];
+            const string prefix = "Index ";
+            for(int i = 0; i < componentNames.Length; i++) {
+                componentNames[i] = prefix + i;
+            }
+
+            return new ContextInfo("Unnamed Context", componentNames, null);
         }
 
         public virtual TEntity CreateEntity() {
@@ -115,10 +95,10 @@ namespace Entitas {
                 entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo);
             }
 
-            entity.Retain(this);
             _entities.Add(entity);
+            entity.Retain(this);
             _entitiesCache = null;
-            entity.OnComponentAdded +=_cachedEntityChanged;
+            entity.OnComponentAdded += _cachedEntityChanged;
             entity.OnComponentRemoved += _cachedEntityChanged;
             entity.OnComponentReplaced += _cachedComponentReplaced;
             entity.OnEntityReleased += _cachedEntityReleased;
@@ -165,7 +145,7 @@ namespace Entitas {
 
         public virtual void DestroyAllEntities() {
             var entities = GetEntities();
-            for (int i = 0; i < entities.Length; i++) {
+            for(int i = 0; i < entities.Length; i++) {
                 DestroyEntity(entities[i]);
             }
 
@@ -194,12 +174,12 @@ namespace Entitas {
             if(!_groups.TryGetValue(matcher, out group)) {
                 group = new Group<TEntity>(matcher);
                 var entities = GetEntities();
-                for (int i = 0; i < entities.Length; i++) {
+                for(int i = 0; i < entities.Length; i++) {
                     group.HandleEntitySilently(entities[i]);
                 }
                 _groups.Add(matcher, group);
 
-                for (int i = 0; i < matcher.indices.Length; i++) {
+                for(int i = 0; i < matcher.indices.Length; i++) {
                     var index = matcher.indices[i];
                     if(_groupsForIndex[index] == null) {
                         _groupsForIndex[index] = new List<IGroup<TEntity>>();
@@ -219,7 +199,7 @@ namespace Entitas {
             foreach(var group in _groups.Values) {
                 group.RemoveAllEventHandlers();
                 var entities = group.GetEntities();
-                for (int i = 0; i < entities.Length; i++) {
+                for(int i = 0; i < entities.Length; i++) {
                     entities[i].Release(group);
                 }
 
@@ -229,7 +209,7 @@ namespace Entitas {
             }
             _groups.Clear();
 
-            for (int i = 0; i < _groupsForIndex.Length; i++) {
+            for(int i = 0; i < _groupsForIndex.Length; i++) {
                 _groupsForIndex[i] = null;
             }
         }
@@ -271,7 +251,7 @@ namespace Entitas {
         }
 
         public void ClearComponentPools() {
-            for (int i = 0; i < _componentPools.Length; i++) {
+            for(int i = 0; i < _componentPools.Length; i++) {
                 ClearComponentPool(i);
             }
         }
@@ -292,13 +272,12 @@ namespace Entitas {
             return _contextInfo.name;
         }
 
-        void updateGroupsComponentAddedOrRemoved(
-            IEntity entity, int index, IComponent component) {
+        void updateGroupsComponentAddedOrRemoved(IEntity entity, int index, IComponent component) {
             var groups = _groupsForIndex[index];
             if(groups != null) {
                 var events = EntitasCache.GetGroupChangedList<TEntity>();
 
-                    var tEntity = (TEntity) entity;
+                    var tEntity = (TEntity)entity;
 
                     for(int i = 0; i < groups.Count; i++) {
                         events.Add(groups[i].handleEntity(tEntity));
@@ -317,16 +296,13 @@ namespace Entitas {
             }
         }
 
-        void updateGroupsComponentReplaced(IEntity entity,
-                                           int index,
-                                           IComponent previousComponent,
-                                           IComponent newComponent) {
+        void updateGroupsComponentReplaced(IEntity entity, int index, IComponent previousComponent, IComponent newComponent) {
             var groups = _groupsForIndex[index];
             if(groups != null) {
 
-                var tEntity = (TEntity) entity;
+                var tEntity = (TEntity)entity;
 
-                for (int i = 0; i < groups.Count; i++) {
+                for(int i = 0; i < groups.Count; i++) {
                     groups[i].UpdateEntity(
                         tEntity, index, previousComponent, newComponent
                     );
