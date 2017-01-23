@@ -9,7 +9,7 @@ class describe_ContextDataProvider : nspec {
             var names = new[] { "GameState", "Input" };
             var provider = new ContextDataProvider(names);
 
-            var data = provider.GetData();
+            var data = (ContextData[])provider.GetData();
 
             data.Length.should_be(names.Length);
             data[0].GetContextName().should_be(names[0]);
@@ -20,7 +20,7 @@ class describe_ContextDataProvider : nspec {
             var names = new[] { "Input", "GameState" };
             var provider = new ContextDataProvider(names);
 
-            var data = provider.GetData();
+            var data = (ContextData[])provider.GetData();
 
             data.Length.should_be(names.Length);
             data[0].GetContextName().should_be(names[1]);
@@ -31,14 +31,14 @@ class describe_ContextDataProvider : nspec {
             var names = new[] { "gameState" };
             var provider = new ContextDataProvider(names);
 
-            provider.GetData()[0].GetContextName().should_be("GameState");
+            ((ContextData[])provider.GetData())[0].GetContextName().should_be("GameState");
         };
 
         it["removes duplicates"] = () => {
             var names = new[] { "gameState", "GameState", "Input" };
             var provider = new ContextDataProvider(names);
 
-            var data = provider.GetData();
+            var data = (ContextData[])provider.GetData();
 
             data.Length.should_be(2);
             data[0].GetContextName().should_be("GameState");

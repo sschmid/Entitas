@@ -14,8 +14,8 @@ namespace Tests {
             //format();
             //Tests.GenerateTestComponents.Generate();
 
-            //var tagOrClassName = "focus";
-            var tagOrClassName = string.Empty;
+            var tagOrClassName = "focus";
+            //var tagOrClassName = string.Empty;
 
             var types = Assembly.GetAssembly(typeof(describe_Entity)).GetTypes();
 

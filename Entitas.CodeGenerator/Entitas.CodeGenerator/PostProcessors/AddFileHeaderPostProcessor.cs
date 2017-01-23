@@ -13,15 +13,9 @@
 //------------------------------------------------------------------------------
 ";
 
-        readonly string _generatorName;
-
-        public AddFileHeaderPostProcessor(string generatorName) {
-            _generatorName = generatorName;
-        }
-
         public void PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {
-                file.fileContent = string.Format(AUTO_GENERATED_HEADER_FORMAT, _generatorName) + file.fileContent;
+                file.fileContent = string.Format(AUTO_GENERATED_HEADER_FORMAT, file.generatorName) + file.fileContent;
             }
         }
     }

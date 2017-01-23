@@ -15,7 +15,7 @@ namespace Entitas.CodeGenerator {
             cleanDir();
 
             foreach(var file in files) {
-                var fileName = _directory + file.fileName + ".cs";
+                var fileName = _directory + file.fileName;
                 var targetDir = Path.GetDirectoryName(fileName);
                 if(!Directory.Exists(targetDir)) {
                     Directory.CreateDirectory(targetDir);

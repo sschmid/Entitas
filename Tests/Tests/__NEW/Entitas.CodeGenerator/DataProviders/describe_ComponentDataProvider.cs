@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Entitas.CodeGenerator;
 using Entitas.Utils;
 using NSpec;
+using System.Linq;
 
 class describe_ComponentDataProvider : nspec {
 
@@ -11,22 +12,18 @@ class describe_ComponentDataProvider : nspec {
         context["component"] = () => {
 
             Type[] types = null;
-            CodeGeneratorData[] data = null;
-            CodeGeneratorData d = null;
+            ComponentData[] data = null;
+            ComponentData d = null;
 
             before = () => {
                 types = new[] { typeof(NameAgeComponent) };
                 var provider = new ComponentDataProvider(types);
-                data = provider.GetData();
+                data = (ComponentData[])provider.GetData();
                 d = data[0];
             };
 
             it["get data"] = () => {
                 data.Length.should_be(1);
-            };
-
-            it["gets component type"] = () => {
-                d.GetComponentType().should_be(types[0]);
             };
 
             it["gets full type name"] = () => {
@@ -40,10 +37,10 @@ class describe_ComponentDataProvider : nspec {
             };
 
             it["gets contexts"] = () => {
-                d.GetContexts().GetType().should_be(typeof(string[]));
-                d.GetContexts().Length.should_be(2);
-                d.GetContexts()[0].should_be("Test");
-                d.GetContexts()[1].should_be("Test2");
+                d.GetContextNames().GetType().should_be(typeof(string[]));
+                d.GetContextNames().Length.should_be(2);
+                d.GetContextNames()[0].should_be("Test");
+                d.GetContextNames()[1].should_be("Test2");
             };
 
             it["gets unique"] = () => {
@@ -51,7 +48,7 @@ class describe_ComponentDataProvider : nspec {
                 d.IsUnique().should_be_false();
 
                 var provider = new ComponentDataProvider(new Type[] { typeof(UserComponent) });
-                data = provider.GetData();
+                data = (ComponentData[])provider.GetData();
                 data[0].IsUnique().should_be_true();
             };
 
@@ -60,7 +57,7 @@ class describe_ComponentDataProvider : nspec {
                 d.GetUniqueComponentPrefix().should_be("is");
 
                 var provider = new ComponentDataProvider(new Type[] { typeof(CustomPrefixComponent) });
-                data = provider.GetData();
+                data = (ComponentData[])provider.GetData();
                 data[0].GetUniqueComponentPrefix().should_be("My");
             };
 
@@ -69,7 +66,7 @@ class describe_ComponentDataProvider : nspec {
                 d.IsComponent().should_be_true();
 
                 var provider = new ComponentDataProvider(new Type[] { typeof(SomeClass) });
-                data = provider.GetData();
+                data = (ComponentData[])provider.GetData();
                 data[0].IsComponent().should_be_false();
             };
 
@@ -78,7 +75,7 @@ class describe_ComponentDataProvider : nspec {
                 d.ShouldGenerateMethods().should_be_true();
 
                 var provider = new ComponentDataProvider(new Type[] { typeof(DontGenerateComponent) });
-                data = provider.GetData();
+                data = (ComponentData[])provider.GetData();
                 data[0].ShouldGenerateMethods().should_be_false();
             };
 
@@ -87,7 +84,7 @@ class describe_ComponentDataProvider : nspec {
                 d.ShouldGenerateIndex().should_be_true();
 
                 var provider = new ComponentDataProvider(new Type[] { typeof(DontGenerateIndexComponent) });
-                data = provider.GetData();
+                data = (ComponentData[])provider.GetData();
                 data[0].ShouldGenerateIndex().should_be_false();
             };
 
@@ -96,7 +93,7 @@ class describe_ComponentDataProvider : nspec {
                 d.ShouldHideInBlueprintInspector().should_be_false();
 
                 var provider = new ComponentDataProvider(new Type[] { typeof(SomeClassHideInBlueprintInspectorComponent) });
-                data = provider.GetData();
+                data = (ComponentData[])provider.GetData();
                 data[0].ShouldHideInBlueprintInspector().should_be_true();
             };
         };
@@ -104,22 +101,18 @@ class describe_ComponentDataProvider : nspec {
         context["non component"] = () => {
 
             Type[] types = null;
-            CodeGeneratorData[] data = null;
-            CodeGeneratorData d = null;
+            ComponentData[] data = null;
+            ComponentData d = null;
 
             before = () => {
                 types = new[] { typeof(SomeClass) };
                 var provider = new ComponentDataProvider(types);
-                data = provider.GetData();
+                data = (ComponentData[])provider.GetData();
                 d = data[0];
             };
 
             it["get data"] = () => {
                 data.Length.should_be(1);
-            };
-
-            it["gets component type"] = () => {
-                d.GetComponentType().should_be(types[0]);
             };
 
             it["gets full type name"] = () => {
@@ -133,10 +126,10 @@ class describe_ComponentDataProvider : nspec {
             };
 
             it["gets contexts"] = () => {
-                d.GetContexts().GetType().should_be(typeof(string[]));
-                d.GetContexts().Length.should_be(2);
-                d.GetContexts()[0].should_be("SomeContext");
-                d.GetContexts()[1].should_be("SomeOtherContext");
+                d.GetContextNames().GetType().should_be(typeof(string[]));
+                d.GetContextNames().Length.should_be(2);
+                d.GetContextNames()[0].should_be("SomeContext");
+                d.GetContextNames()[1].should_be("SomeOtherContext");
             };
 
             it["gets unique"] = () => {
@@ -169,7 +162,7 @@ class describe_ComponentDataProvider : nspec {
                 d.ShouldHideInBlueprintInspector().should_be_false();
 
                 var provider = new ComponentDataProvider(new Type[] { typeof(SomeClassHideInBlueprintInspector) });
-                data = provider.GetData();
+                data = (ComponentData[])provider.GetData();
                 data[0].ShouldHideInBlueprintInspector().should_be_true();
             };
         };

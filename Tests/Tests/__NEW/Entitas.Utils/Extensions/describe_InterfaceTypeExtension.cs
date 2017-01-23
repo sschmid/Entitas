@@ -19,7 +19,7 @@ class describe_InterfaceTypeExtension : nspec {
         };
 
         it["return true if type implements interface"] = () => {
-            typeof(SomeComponent).ImplementsInterface<IComponent>().should_be_true();
+            typeof(MovableComponent).ImplementsInterface<IComponent>().should_be_true();
         };
     }
 }

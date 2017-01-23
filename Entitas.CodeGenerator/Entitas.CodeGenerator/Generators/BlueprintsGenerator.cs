@@ -4,7 +4,8 @@ namespace Entitas.CodeGenerator {
 
     public class BlueprintsGenerator : ICodeGenerator {
 
-        const string CLASS_FORMAT = @"using Entitas.Serialization.Blueprints;
+        const string CLASS_FORMAT =
+@"using Entitas.Serialization.Blueprints;
 
 namespace Entitas.Unity.Serialization.Blueprints {{
 
@@ -17,9 +18,8 @@ namespace Entitas.Unity.Serialization.Blueprints {{
         const string GETTER_FORMAT = "        public Blueprint {0} {{ get {{ return GetBlueprint(\"{1}\"); }} }}";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            const string blueprintName = BlueprintDataProvider.BLUEPRINT_NAME;
             var blueprintNames = data
-                .Where(d => d.ContainsKey(blueprintName))
+                .OfType<BlueprintData>()
                 .Select(d => d.GetBlueprintName())
                 .OrderBy(name => name)
                 .ToArray();
@@ -29,7 +29,7 @@ namespace Entitas.Unity.Serialization.Blueprints {{
             }
 
             var blueprints = string.Format(CLASS_FORMAT, generateBlueprintGetters(blueprintNames));
-            return new [] { new CodeGenFile(
+            return new[] { new CodeGenFile(
                 "BlueprintsGeneratedExtension",
                 blueprints,
                 GetType().FullName) };

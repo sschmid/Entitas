@@ -1,5 +1,6 @@
 ﻿using NSpec;
 using Entitas.CodeGenerator;
+using System.Linq;
 
 class describe_BlueprintDataProvider : nspec {
 
@@ -9,7 +10,7 @@ class describe_BlueprintDataProvider : nspec {
             var names = new[] { "Player", "Ship" };
             var provider = new BlueprintDataProvider(names);
 
-            var data = provider.GetData();
+            var data = provider.GetData().OfType<BlueprintData>().ToArray();
 
             data.Length.should_be(names.Length);
             data[0].GetBlueprintName().should_be(names[0]);
@@ -20,7 +21,7 @@ class describe_BlueprintDataProvider : nspec {
             var names = new[] { "Ship", "Player" };
             var provider = new BlueprintDataProvider(names);
 
-            var data = provider.GetData();
+            var data = provider.GetData().OfType<BlueprintData>().ToArray();
 
             data[0].GetBlueprintName().should_be(names[1]);
             data[1].GetBlueprintName().should_be(names[0]);

@@ -285,10 +285,11 @@
     </Compile>
     <Compile Include="Tests\__NEW\Entitas\describe_ReactiveSystem.cs" />
     <Compile Include="Tests\__NEW\Entitas\describe_Systems.cs" />
-    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\describe_BlueprintDataProvider.cs" />
-    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\describe_CodeGeneratorData.cs" />
-    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\describe_ComponentDataProvider.cs" />
-    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\describe_ContextDataProvider.cs" />
+    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\DataProviders\describe_BlueprintDataProvider.cs" />
+    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\DataProviders\describe_CodeGeneratorData.cs" />
+    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\DataProviders\describe_ComponentDataProvider.cs" />
+    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\DataProviders\describe_ContextDataProvider.cs" />
+    <Compile Include="Tests\__NEW\Entitas.CodeGenerator\Generators\SomeTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -331,6 +332,8 @@
     <Folder Include="Tests\__NEW\Entitas.Utils\PublicMemberInfo\" />
     <Folder Include="Tests\__NEW\Entitas\" />
     <Folder Include="Tests\__NEW\Entitas.CodeGenerator\" />
+    <Folder Include="Tests\__NEW\Entitas.CodeGenerator\DataProviders\" />
+    <Folder Include="Tests\__NEW\Entitas.CodeGenerator\Generators\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\UnityEngine.dll" />

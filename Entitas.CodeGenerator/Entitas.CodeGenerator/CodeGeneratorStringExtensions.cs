@@ -1,6 +1,6 @@
 namespace Entitas.CodeGenerator {
 
-    public static class CodeGeneratorExtensions {
+    public static class CodeGeneratorStringExtensions {
 
         public static string UppercaseFirst(this string str) {
             return char.ToUpper(str[0]) + str.Substring(1);

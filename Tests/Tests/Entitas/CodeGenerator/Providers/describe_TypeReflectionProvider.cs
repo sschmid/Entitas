@@ -18,7 +18,6 @@
 //        return new TypeReflectionProvider(new [] { typeof(object) }, new string[0], blueprintNames);
 //    }
 
-//    [Tag("focus")]
 //    void when_providing() {
 
 //        context["context names"] = () => {
