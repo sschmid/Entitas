@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using Entitas.Utils;
 using System.IO;
 
 namespace Entitas.CodeGenerator {
 
     public class ComponentsLookupGenerator : ICodeGenerator {
 
-        public const string COMPONENTS_LOOKUP = "ComponenstLookup";
+        public const string COMPONENTS_LOOKUP = "ComponentsLookup";
 
         const string componentsLookupTemplate =
 @"public static class ${Lookup} {
@@ -30,7 +29,7 @@ ${componentTypes}
 @"    public const int ${Name} = ${Index};";
 
         const string totalComponentsConstantTemplate =
-@"    public const int TOTAL_COMPONENTS = ${totalComponents};";
+@"    public const int TotalComponents = ${totalComponents};";
 
         const string componentNamesTemplate =
 @"        ""${Name}""";
@@ -63,22 +62,23 @@ ${componentTypes}
         }
 
         CodeGenFile[] generateLookup(ComponentData[] data) {
-            var contextNameToComponentData = data.Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) => {
-                var contextNames = d.GetContextNames();
-                foreach(var contextName in contextNames) {
-                    if(!dict.ContainsKey(contextName)) {
-                        dict.Add(contextName, new List<ComponentData>());
+            var contextNameToComponentData = data
+                .Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) => {
+                    var contextNames = d.GetContextNames();
+                    foreach(var contextName in contextNames) {
+                        if(!dict.ContainsKey(contextName)) {
+                            dict.Add(contextName, new List<ComponentData>());
+                        }
+
+                        dict[contextName].Add(d);
                     }
 
-                    dict[contextName].Add(d);
-                 }
-
-                return dict;
-            });
+                    return dict;
+                });
 
             foreach(var key in contextNameToComponentData.Keys.ToArray()) {
                 contextNameToComponentData[key] = contextNameToComponentData[key]
-                    .OrderBy(d => d.GetShortTypeName())
+                    .OrderBy(d => d.GetComponentName())
                     .ToList();
             }
 
@@ -91,7 +91,7 @@ ${componentTypes}
             var componentConstants = string.Join("\n", data
                 .Select((d, index) => {
                     return componentConstantsTemplate
-                    .Replace("${Name}", d.GetShortTypeName().RemoveComponentSuffix().ToUpper())
+                    .Replace("${Name}", d.GetComponentName())
                     .Replace("${Index}", index.ToString());
                 }).ToArray());
 
@@ -100,7 +100,7 @@ ${componentTypes}
 
             var componentNames = string.Join(",\n", data
                 .Select(d => componentNamesTemplate
-                        .Replace("${Name}", d.GetShortTypeName().RemoveComponentSuffix())
+                        .Replace("${Name}", d.GetComponentName())
                 ).ToArray());
 
             var componentTypes = string.Join(",\n", data

@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Entitas.Utils;
 
 namespace Entitas.CodeGenerator {
 
@@ -23,12 +22,11 @@ public sealed partial class ${Name} : IComponent {
         }
 
         CodeGenFile generateComponentClass(ComponentData data) {
-            var name = data.GetShortTypeName().AddComponentSuffix();
             return new CodeGenFile(
-                "Components" + Path.DirectorySeparatorChar + name + ".cs",
+                "Components" + Path.DirectorySeparatorChar + data.GetFullComponentName() + ".cs",
                 componentTemplate
-                    .Replace("${Name}", name)
-                    .Replace("${Type}", data.GetFullTypeName()),
+                    .Replace("${Name}", data.GetFullComponentName())
+                    .Replace("${Type}", data.GetObjectType()),
                 GetType().FullName
             );
         }

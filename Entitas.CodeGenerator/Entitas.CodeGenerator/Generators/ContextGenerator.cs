@@ -13,7 +13,7 @@ public sealed partial class ${Context}Context : Context<${Context}Entity> {
 
     public ${Context}Context()
         : base(
-            ${Lookup}.TOTAL_COMPONENTS,
+            ${Lookup}.TotalComponents,
             0,
             new ContextInfo(
                 ""${Context} Context"",

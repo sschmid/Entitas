@@ -3,14 +3,14 @@ using Entitas.Utils;
 
 namespace Entitas.CodeGenerator {
 
-    public class FullTypeNameComponentDataProvider : IComponentDataProvider {
+    public class ComponentTypeComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
             data.SetFullTypeName(type.ToCompilableString());
         }
     }
 
-    public static class FullTypeNameComponentDataProviderExtension {
+    public static class ComponentTypeComponentDataProviderExtension {
 
         public const string COMPONENT_FULL_TYPE_NAME = "component_fullTypeName";
 
@@ -20,12 +20,6 @@ namespace Entitas.CodeGenerator {
 
         public static void SetFullTypeName(this ComponentData data, string fullTypeName) {
             data[COMPONENT_FULL_TYPE_NAME] = fullTypeName;
-        }
-
-        public static string GetShortTypeName(this ComponentData data) {
-            var fullTypeName = GetFullTypeName(data);
-            var nameSplit = fullTypeName.Split('.');
-            return nameSplit[nameSplit.Length - 1];
         }
     }
 }

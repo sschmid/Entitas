@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Api;
 using Entitas.CodeGenerator.Api;
@@ -9,31 +10,19 @@ namespace Entitas.CodeGenerator {
     public class ComponentDataProvider : ICodeGeneratorDataProvider {
 
         readonly Type[] _types;
-        readonly IComponentDataProvider[] _componentDataProviders;
-        readonly IComponentDataProvider[] _nonComponentDataProviders;
+        readonly IComponentDataProvider[] _dataProviders;
 
         public ComponentDataProvider(Type[] types) {
             _types = types;
 
-            _componentDataProviders = new IComponentDataProvider[] {
-                new FullTypeNameComponentDataProvider(),
+            _dataProviders = new IComponentDataProvider[] {
+                new ComponentTypeComponentDataProvider(),
+                new ComponentNameComponentDataProvider(),
                 new MemberInfosComponentDataProvider(),
                 new ContextsComponentDataProvider(),
                 new IsUniqueComponentDataProvider(),
                 new UniquePrefixComponentDataProvider(),
-                new ShouldGenerateComponentComponentDataProvider(false),
-                new ShouldGenerateMethodsComponentDataProvider(),
-                new ShouldGenerateComponentIndexComponentDataProvider(),
-                new ShouldHideInBlueprintInspectorComponentDataProvider()
-            };
-
-            _nonComponentDataProviders = new IComponentDataProvider[] {
-                new FullTypeNameComponentDataProvider(),
-                new MemberInfosComponentDataProvider(),
-                new ContextsComponentDataProvider(),
-                new IsUniqueComponentDataProvider(),
-                new UniquePrefixComponentDataProvider(),
-                new ShouldGenerateComponentComponentDataProvider(true),
+                new ShouldGenerateComponentComponentDataProvider(),
                 new ShouldGenerateMethodsComponentDataProvider(),
                 new ShouldGenerateComponentIndexComponentDataProvider(),
                 new ShouldHideInBlueprintInspectorComponentDataProvider()
@@ -52,16 +41,16 @@ namespace Entitas.CodeGenerator {
                 .Where(type => hasContexts(type))
                 .SelectMany(type => createDataForNonComponent(type));
 
-            var generatedComponentsLookup = dataFromNonComponents.ToLookup(data => data.GetFullTypeName());
+            var generatedComponentsLookup = dataFromNonComponents.ToLookup(data => data.GetFullComponentName());
             return dataFromComponents
-                .Where(data => !generatedComponentsLookup.Contains(data.GetFullTypeName()))
+                .Where(data => !generatedComponentsLookup.Contains(data.GetFullComponentName()))
                 .Concat(dataFromNonComponents)
                 .ToArray();
         }
 
         ComponentData createDataForComponent(Type type) {
             var data = new ComponentData();
-            foreach(var provider in _componentDataProviders) {
+            foreach(var provider in _dataProviders) {
                 provider.Provide(type, data);
             }
 
@@ -69,14 +58,19 @@ namespace Entitas.CodeGenerator {
         }
 
         ComponentData[] createDataForNonComponent(Type type) {
-            return getComponentNames(type).Select(componentName => {
-                var data = new ComponentData();
-                foreach(var provider in _nonComponentDataProviders) {
-                    provider.Provide(type, data);
-                }
+            return getComponentNames(type)
+                .Select(componentName => {
+                    var data = createDataForComponent(type);
+                    data.SetFullTypeName(componentName.AddComponentSuffix());
+                    data.SetFullComponentName(componentName.AddComponentSuffix());
+                    data.SetComponentName(componentName.RemoveComponentSuffix());
+                    data.SetMemberInfos(new List<PublicMemberInfo> {
+                        new PublicMemberInfo(type, "value")
+                    });
 
-                return data;
-            }).ToArray();
+                    return data;
+                })
+                .ToArray();
         }
 
         bool hasContexts(Type type) {

@@ -44,7 +44,7 @@
     <Compile Include="Entitas.CodeGenerator\Generators\ICodeGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\ComponentData.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\ComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\FullTypeNameComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ComponentTypeComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\IComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\MemberInfosComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ContextsComponentDataProvider.cs" />
@@ -58,15 +58,16 @@
     <Compile Include="Entitas.CodeGenerator\DataProviders\BlueprintData\BlueprintDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\ContextData\ContextData.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\ContextData\ContextDataProvider.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\New\EntityGenerator.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\New\ContextAttributesGenerator.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\New\ContextGenerator.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\New\ComponentsLookupGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\CodeGenFile.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\New\MatcherGenerator.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\New\ComponentEntityGenerator.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\New\ComponentContextGenerator.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\New\ComponentGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ComponentNameComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentContextGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentEntityGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentsLookupGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ContextAttributeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ContextGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\EntityGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\MatcherGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator\" />
@@ -77,7 +78,6 @@
     <Folder Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\" />
     <Folder Include="Entitas.CodeGenerator\DataProviders\BlueprintData\" />
     <Folder Include="Entitas.CodeGenerator\DataProviders\ContextData\" />
-    <Folder Include="Entitas.CodeGenerator\Generators\New\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Utils\Entitas.Utils.csproj">

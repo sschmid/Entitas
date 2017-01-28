@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
-    public class ContextAttributesGenerator : ICodeGenerator {
+    public class ContextAttributeGenerator : ICodeGenerator {
 
         const string attributeTemplate =
 @"using Entitas.CodeGenerator.Api;

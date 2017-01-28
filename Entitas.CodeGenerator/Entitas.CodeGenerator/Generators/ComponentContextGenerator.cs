@@ -18,7 +18,7 @@ public partial class ${Context}Context {
 
     public ${Context}Entity Set${Name}(${memberArgs}) {
         if(has${Name}) {
-            throw new EntitasException(""Could not set ${name}!\n"" + this + "" already has an entity with ${Name}Component!"",
+            throw new EntitasException(""Could not set ${name}!\n"" + this + "" already has an entity with ${FullName}!"",
                 ""You should check if the context already has a ${name}Entity before setting it or use context.Replace${Name}()."");
         }
         var entity = CreateEntity();
@@ -73,8 +73,7 @@ public partial class ${Context}Context {
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
                 .Where(d => d.IsUnique())
-                .Select(d => generateExtensions(d))
-                .SelectMany(files => files)
+                .SelectMany(d => generateExtensions(d))
                 .ToArray();
         }
 
@@ -85,26 +84,24 @@ public partial class ${Context}Context {
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var fullComponentName = data.GetShortTypeName();
-            var shortComponentName = fullComponentName.RemoveComponentSuffix();
             var memberInfos = data.GetMemberInfos();
-
             var template = memberInfos.Count == 0
                                       ? flagComponentTemplate
                                       : normalComponentTemplate;
 
             var fileContent = template
                 .Replace("${Context}", contextName)
-                .Replace("${Name}", shortComponentName)
-                .Replace("${name}", shortComponentName.LowercaseFirst())
-                .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + shortComponentName)
+                .Replace("${Name}", data.GetComponentName())
+                .Replace("${name}", data.GetComponentName().LowercaseFirst())
+                .Replace("${FullName}", data.GetFullComponentName())
+                .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + data.GetComponentName())
                 .Replace("${Type}", data.GetFullTypeName())
                 .Replace("${memberArgs}", getMemberArgs(memberInfos))
                 .Replace("${methodArgs}", getMethodArgs(memberInfos));
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar + "Components" +
-                Path.DirectorySeparatorChar + "Unique" + contextName + fullComponentName + ".cs",
+                Path.DirectorySeparatorChar + "Unique" + contextName + data.GetFullComponentName() + ".cs",
                 fileContent,
                 GetType().FullName
             );
@@ -113,7 +110,7 @@ public partial class ${Context}Context {
         string getMemberArgs(List<PublicMemberInfo> memberInfos) {
             var args = memberInfos
                 .Select(info => memberArgsTemplate
-                        .Replace("${MemberType}", info.type.FullName)
+                        .Replace("${MemberType}", info.type.ToCompilableString())
                         .Replace("${MemberName}", info.name.UppercaseFirst()))
                 .ToArray();
 

@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Entitas.Utils;
 
 namespace Entitas.CodeGenerator {
 
@@ -32,8 +31,7 @@ public sealed partial class ${Context}Matcher {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateIndex())
-                .Select(d => generateMatcher(d))
-                .SelectMany(files => files)
+                .SelectMany(d => generateMatcher(d))
                 .ToArray();
         }
 
@@ -44,19 +42,18 @@ public sealed partial class ${Context}Matcher {
         }
 
         CodeGenFile generateMatcher(string contextName, ComponentData data) {
-            var shortComponentName = data.GetShortTypeName().RemoveComponentSuffix();
-            var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + shortComponentName.ToUpper();
+            var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + data.GetComponentName();
             var componentNames = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + ".componentNames";
 
             var fileContent = matcherTemplate
                 .Replace("${Context}", contextName)
-                .Replace("${Name}", shortComponentName)
+                .Replace("${Name}", data.GetComponentName())
                 .Replace("${Index}", index)
                 .Replace("${ComponentNames}", componentNames);
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar + "Matchers" +
-                Path.DirectorySeparatorChar + contextName + "Matcher" + shortComponentName + ".cs",
+                Path.DirectorySeparatorChar + contextName + "Matcher" + data.GetComponentName() + ".cs",
                 fileContent,
                 GetType().FullName
             );
