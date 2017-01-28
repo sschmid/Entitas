@@ -56,7 +56,7 @@ class describe_TypeSerializationExtension : nspec {
             };
 
             context["enum"] = () => {
-                it["generates enum"] = () => toCompilable<SomeEnum>().should_be("SomeEnum");
+                it["generates enum"] = () => toCompilable<TestEnum>().should_be("SomeEnum");
                 it["generates nested enum"] = () => toCompilable<NestedTest.NestedTestEnum>().should_be("NestedTest.NestedTestEnum");
             };
 
@@ -109,7 +109,7 @@ class describe_TypeSerializationExtension : nspec {
             };
 
             context["enum"] = () => {
-                it["generates enum"] = () => toType("SomeEnum").should_be(typeof(SomeEnum));
+                it["generates enum"] = () => toType("SomeEnum").should_be(typeof(TestEnum));
                 it["generates nested enum"] = () => toType("NestedTest+NestedTestEnum").should_be(typeof(NestedTest.NestedTestEnum));
             };
 

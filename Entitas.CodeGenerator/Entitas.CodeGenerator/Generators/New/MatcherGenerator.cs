@@ -31,6 +31,7 @@ public sealed partial class ${Context}Matcher {
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
+                .Where(d => d.ShouldGenerateIndex())
                 .Select(d => generateMatcher(d))
                 .SelectMany(files => files)
                 .ToArray();

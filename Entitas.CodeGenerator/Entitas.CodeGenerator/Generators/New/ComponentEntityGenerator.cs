@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Entitas.Utils;
@@ -7,12 +8,34 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentEntityGenerator : ICodeGenerator {
 
+        const string generatedComponentTemplate =
+@"public partial class ${Context}Entity {
+
+    public ${ComponentType} ${name} { get { return (${ComponentType})GetComponent(${Index}); } }
+    public bool has${Name} { get { return HasComponent(${Index}); } }
+
+    public void Add${Name}(${Type} newValue) {
+        var component = CreateComponent<${ComponentType}>(${Index});
+        component.value = newValue;
+        AddComponent(${Index}, component);
+    }
+
+    public void Replace${Name}(${Type} newValue) {
+        var component = CreateComponent<${ComponentType}>(${Index});
+        component.value = newValue;
+        ReplaceComponent(${Index}, component);
+    }
+
+    public void Remove${Name}() {
+        RemoveComponent(${Index});
+    }
+}
+";
+
         const string normalComponentTemplate =
-@"using Entitas;
+@"public partial class ${Context}Entity {
 
-public sealed partial class ${Context}Entity : Entity {
-
-    public ${Name}Component ${name} { get { return (${Type})GetComponent(${Index}); } }
+    public ${Type} ${name} { get { return (${Type})GetComponent(${Index}); } }
     public bool has${Name} { get { return HasComponent(${Index}); } }
 
     public void Add${Name}(${memberArgs}) {
@@ -40,16 +63,14 @@ ${memberAssignment}
 @"        component.${memberName} = new${MemberName};";
 
         const string flagComponentTemplate =
-@"using Entitas;
+@"public partial class ${Context}Entity {
 
-public sealed partial class ${Context}Entity : Entity {
+    static readonly ${Type} ${name}Component = new ${Type}();
 
-    static readonly ${Name}Component ${name}Component = new ${Name}Component();
-
-    public bool is${Name} {
+    public bool ${prefixedName} {
         get { return HasComponent(${Index}); }
         set {
-            if(value != is${Name}) {
+            if(value != ${prefixedName}) {
                 if(value) {
                     AddComponent(${Index}, ${name}Component);
                 } else {
@@ -77,10 +98,37 @@ public sealed partial class ${Context}Entity : Entity {
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var fullComponentName = data.GetShortTypeName();
+            return data.ShouldGenerateComponent()
+                       ? generateExtensionForGeneratedComponent(contextName, data)
+                       : generateExtensionForComponent(contextName, data);
+        }
+
+        CodeGenFile generateExtensionForGeneratedComponent(string contextName, ComponentData data) {
+            var fullComponentName = data.GetShortTypeName().AddComponentSuffix();
             var shortComponentName = fullComponentName.RemoveComponentSuffix();
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + shortComponentName.ToUpper();
+
+            var fileContent = generatedComponentTemplate
+                .Replace("${Context}", contextName)
+                .Replace("${Name}", shortComponentName)
+                .Replace("${name}", shortComponentName.LowercaseFirst())
+                .Replace("${ComponentType}", fullComponentName)
+                .Replace("${Type}", data.GetFullTypeName())
+                .Replace("${Index}", index);
+
+            return new CodeGenFile(
+                contextName + Path.DirectorySeparatorChar + "Components" +
+                Path.DirectorySeparatorChar + contextName + fullComponentName + ".cs",
+                fileContent,
+                GetType().FullName
+            );
+        }
+
+        CodeGenFile generateExtensionForComponent(string contextName, ComponentData data) {
+            var fullComponentName = data.GetShortTypeName();
+            var shortComponentName = fullComponentName.RemoveComponentSuffix();
             var memberInfos = data.GetMemberInfos();
+            var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + shortComponentName.ToUpper();
 
             var template = memberInfos.Count == 0
                                       ? flagComponentTemplate
@@ -90,6 +138,7 @@ public sealed partial class ${Context}Entity : Entity {
                 .Replace("${Context}", contextName)
                 .Replace("${Name}", shortComponentName)
                 .Replace("${name}", shortComponentName.LowercaseFirst())
+                .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + shortComponentName)
                 .Replace("${Type}", data.GetFullTypeName())
                 .Replace("${Index}", index)
                 .Replace("${memberArgs}", getMemberArgs(memberInfos))

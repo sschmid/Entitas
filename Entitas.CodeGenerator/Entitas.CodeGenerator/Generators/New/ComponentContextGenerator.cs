@@ -8,13 +8,12 @@ namespace Entitas.CodeGenerator {
     public class ComponentContextGenerator : ICodeGenerator {
 
         const string normalComponentTemplate =
-@"using Entitas;
-using Entitas.Api;
+@"using Entitas.Api;
 
-public sealed partial class ${Context}Context : Context<GameEntity> {
+public partial class ${Context}Context {
 
     public ${Context}Entity ${name}Entity { get { return GetGroup(${Context}Matcher.${Name}).GetSingleEntity(); } }
-    public ${Name}Component ${name} { get { return ${name}Entity.${name}; } }
+    public ${Type} ${name} { get { return ${name}Entity.${name}; } }
     public bool has${Name} { get { return ${name}Entity != null; } }
 
     public ${Context}Entity Set${Name}(${memberArgs}) {
@@ -49,17 +48,17 @@ public sealed partial class ${Context}Context : Context<GameEntity> {
 @"new${MemberName}";
 
         const string flagComponentTemplate =
-@"public sealed partial class ${Context}Context {
+@"public partial class ${Context}Context {
 
     public ${Context}Entity ${name}Entity { get { return GetGroup(${Context}Matcher.${Name}).GetSingleEntity(); } }
 
-    public bool is${Name} {
+    public bool ${prefixedName} {
         get { return ${name}Entity != null; }
         set {
             var entity = ${name}Entity;
             if(value != (entity != null)) {
                 if(value) {
-                    CreateEntity().is${Name} = true;
+                    CreateEntity().${prefixedName} = true;
                 } else {
                     DestroyEntity(entity);
                 }
@@ -98,6 +97,8 @@ public sealed partial class ${Context}Context : Context<GameEntity> {
                 .Replace("${Context}", contextName)
                 .Replace("${Name}", shortComponentName)
                 .Replace("${name}", shortComponentName.LowercaseFirst())
+                .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + shortComponentName)
+                .Replace("${Type}", data.GetFullTypeName())
                 .Replace("${memberArgs}", getMemberArgs(memberInfos))
                 .Replace("${methodArgs}", getMethodArgs(memberInfos));
 
@@ -113,8 +114,7 @@ public sealed partial class ${Context}Context : Context<GameEntity> {
             var args = memberInfos
                 .Select(info => memberArgsTemplate
                         .Replace("${MemberType}", info.type.FullName)
-                        .Replace("${MemberName}", info.name.UppercaseFirst())
-                       )
+                        .Replace("${MemberName}", info.name.UppercaseFirst()))
                 .ToArray();
 
             return string.Join(", ", args);

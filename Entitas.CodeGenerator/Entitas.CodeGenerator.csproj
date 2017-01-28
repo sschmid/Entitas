@@ -66,6 +66,7 @@
     <Compile Include="Entitas.CodeGenerator\Generators\New\MatcherGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\New\ComponentEntityGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\New\ComponentContextGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\New\ComponentGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator\" />
