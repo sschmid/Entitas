@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using Entitas.Serialization.Blueprints;
+using Entitas.Api;
+using Entitas.Blueprints;
 using UnityEngine;
 
 namespace Entitas.Unity.Serialization.Blueprints {
@@ -65,8 +66,8 @@ namespace Entitas.Unity.Serialization.Blueprints {
     }
 
     public class BlueprintsNotFoundException : EntitasException {
-        public BlueprintsNotFoundException(string blueprintName) :
-            base("'" + blueprintName + "' does not exist!", "Did you update the Blueprints ScriptableObject?") {
+        public BlueprintsNotFoundException(string blueprintName)
+            : base("'" + blueprintName + "' does not exist!", "Did you update the Blueprints ScriptableObject?") {
         }
     }
 }

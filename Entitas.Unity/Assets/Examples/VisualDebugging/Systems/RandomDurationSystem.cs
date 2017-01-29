@@ -1,4 +1,4 @@
-using Entitas;
+using Entitas.Api;
 using System.Threading;
 using UnityEngine;
 

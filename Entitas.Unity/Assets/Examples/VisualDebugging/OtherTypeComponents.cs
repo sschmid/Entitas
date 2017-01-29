@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Entitas;
+using Entitas.Api;
 using UnityEngine;
-using Entitas.CodeGenerator;
 
 public class CustomObject {
     public string name;

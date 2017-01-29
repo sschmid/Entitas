@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Entitas.Api;
 using UnityEditor;
 using UnityEngine;
 

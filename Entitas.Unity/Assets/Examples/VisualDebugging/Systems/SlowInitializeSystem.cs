@@ -1,4 +1,4 @@
-using Entitas;
+using Entitas.Api;
 using System.Threading;
 
 public class SlowInitializeSystem : IInitializeSystem {

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Api;
 
 public class ProcessRandomValueSystem : ReactiveSystem<VisualDebuggingEntity> {
 
     readonly VisualDebuggingContext _context;
 
-    public ProcessRandomValueSystem(Contexts contexts) : base(contexts.visualDebugging)
-    {
+    public ProcessRandomValueSystem(Contexts contexts) : base(contexts.visualDebugging) {
         _context = contexts.visualDebugging;
     }
 

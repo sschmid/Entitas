@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Entitas.Api;
 using Entitas.CodeGenerator;
+using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,20 +37,26 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static Dictionary<string, int> getContexts(Type[] components) {
-            return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
-                var lookupTags = TypeReflectionProvider.GetContexts(type, false);
-                if(lookupTags.Length == 0) {
-                    lookupTags = new [] { "Context" };
-                }
-                foreach(var lookupTag in lookupTags) {
-                    if(!lookups.ContainsKey(lookupTag)) {
-                        lookups.Add(lookupTag, 0);
-                    }
 
-                    lookups[lookupTag] += 1;
-                }
-                return lookups;
-            });
+
+            // TODO
+
+            return null;
+
+            //return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
+            //    var lookupTags = TypeReflectionProvider.GetContexts(type, false);
+            //    if(lookupTags.Length == 0) {
+            //        lookupTags = new [] { "Context" };
+            //    }
+            //    foreach(var lookupTag in lookupTags) {
+            //        if(!lookups.ContainsKey(lookupTag)) {
+            //            lookups.Add(lookupTag, 0);
+            //        }
+
+            //        lookups[lookupTag] += 1;
+            //    }
+            //    return lookups;
+            //});
         }
 
         static bool implementsSystem(Type type) {

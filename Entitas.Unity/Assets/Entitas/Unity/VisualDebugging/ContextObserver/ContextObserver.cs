@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using Entitas.Api;
 using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {

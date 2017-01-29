@@ -1,5 +1,6 @@
 ﻿using System;
 using Entitas;
+using Entitas.Api;
 using Entitas.Unity.VisualDebugging;
 
 public class CustomObjectTypeDrawer : ITypeDrawer, IDefaultInstanceCreator {

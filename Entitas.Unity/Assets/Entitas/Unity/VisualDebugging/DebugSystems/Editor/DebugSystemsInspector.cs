@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Entitas.Api;
 using UnityEditor;
 using UnityEngine;
 

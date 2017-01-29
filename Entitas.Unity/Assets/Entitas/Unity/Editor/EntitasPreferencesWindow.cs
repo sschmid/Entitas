@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Entitas.Serialization.Configuration;
+using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
 

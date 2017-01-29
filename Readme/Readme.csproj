@@ -62,114 +62,11 @@
     <Compile Include="Readme\Generated\GameEntity.cs" />
     <Compile Include="Readme\Generated\GameContext.cs" />
     <Compile Include="Readme\Generated\GameContext_1.cs" />
-    <Compile Include="..\Entitas\Entitas\EntitasCache.cs">
-      <Link>Linked Libraries\Entitas\EntitasCache.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Collector\Collector.cs">
-      <Link>Linked Libraries\Entitas\Collector\Collector.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Collector\CollectorException.cs">
-      <Link>Linked Libraries\Entitas\Collector\CollectorException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Context.cs">
-      <Link>Linked Libraries\Entitas\Context\Context.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\ContextExtension.cs">
-      <Link>Linked Libraries\Entitas\Context\ContextExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextDoesNotContainEntityException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextDoesNotContainEntityException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextEntityIndexDoesAlreadyExistException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextEntityIndexDoesAlreadyExistException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextEntityIndexDoesNotExistException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextEntityIndexDoesNotExistException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextInfoException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextInfoException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextStillHasRetainedEntitiesException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextStillHasRetainedEntitiesException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\EntityIsNotDestroyedException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\EntityIsNotDestroyedException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Entity.cs">
-      <Link>Linked Libraries\Entitas\Entity\Entity.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\EntityEqualityComparer.cs">
-      <Link>Linked Libraries\Entitas\Entity\EntityEqualityComparer.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityDoesNotHaveComponentException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityDoesNotHaveComponentException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityIsAlreadyRetainedByOwnerException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityIsAlreadyRetainedByOwnerException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityIsNotEnabledException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityIsNotEnabledException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityIsNotRetainedByOwnerException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityIsNotRetainedByOwnerException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\CollectionExtension.cs">
-      <Link>Linked Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Group\Group.cs">
-      <Link>Linked Libraries\Entitas\Group\Group.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Group\GroupEvent.cs">
-      <Link>Linked Libraries\Entitas\Group\GroupEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Group\GroupExtension.cs">
-      <Link>Linked Libraries\Entitas\Group\GroupExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Group\GroupSingleEntityException.cs">
-      <Link>Linked Libraries\Entitas\Group\GroupSingleEntityException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\AbstractEntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\AbstractEntityIndex.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\EntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\EntityIndex.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\EntityIndexException.cs">
-      <Link>Linked Libraries\Entitas\Index\EntityIndexException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\PrimaryEntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\PrimaryEntityIndex.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
-      <Link>Linked Libraries\Entitas\Matcher\Matcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherEquals.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherEquals.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherException.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherStatic.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherStatic.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherToString.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherToString.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Systems\ReactiveSystem.cs">
-      <Link>Linked Libraries\Entitas\Systems\ReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Systems\Systems.cs">
-      <Link>Linked Libraries\Entitas\Systems\Systems.cs</Link>
-    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Readme\" />
     <Folder Include="Readme\Generated\" />
-    <Folder Include="Linked Libraries\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Utils\Entitas.Utils.csproj">
@@ -184,10 +81,5 @@
       <Project>{124A01F2-AB29-438A-BB4A-1CDA48A8E5C9}</Project>
       <Name>Entitas.Api</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Entitas\Entitas\version">
-      <Link>Linked Libraries\Entitas\version</Link>
-    </None>
   </ItemGroup>
 </Project>

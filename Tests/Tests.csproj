@@ -181,108 +181,6 @@
     <Compile Include="Tests\__NEW\Entitas\describe_EntityIndex.cs" />
     <Compile Include="Tests\__NEW\Entitas\describe_Matcher.cs" />
     <Compile Include="Tests\__NEW\Entitas\describe_EntitasCache.cs" />
-    <Compile Include="..\Entitas\Entitas\EntitasCache.cs">
-      <Link>Linked Libraries\Entitas\EntitasCache.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Collector\Collector.cs">
-      <Link>Linked Libraries\Entitas\Collector\Collector.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Collector\CollectorException.cs">
-      <Link>Linked Libraries\Entitas\Collector\CollectorException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Context.cs">
-      <Link>Linked Libraries\Entitas\Context\Context.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\ContextExtension.cs">
-      <Link>Linked Libraries\Entitas\Context\ContextExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextDoesNotContainEntityException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextDoesNotContainEntityException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextEntityIndexDoesAlreadyExistException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextEntityIndexDoesAlreadyExistException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextEntityIndexDoesNotExistException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextEntityIndexDoesNotExistException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextInfoException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextInfoException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\ContextStillHasRetainedEntitiesException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\ContextStillHasRetainedEntitiesException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Context\Exceptions\EntityIsNotDestroyedException.cs">
-      <Link>Linked Libraries\Entitas\Context\Exceptions\EntityIsNotDestroyedException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Entity.cs">
-      <Link>Linked Libraries\Entitas\Entity\Entity.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\EntityEqualityComparer.cs">
-      <Link>Linked Libraries\Entitas\Entity\EntityEqualityComparer.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityDoesNotHaveComponentException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityDoesNotHaveComponentException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityIsAlreadyRetainedByOwnerException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityIsAlreadyRetainedByOwnerException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityIsNotEnabledException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityIsNotEnabledException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Entity\Exceptions\EntityIsNotRetainedByOwnerException.cs">
-      <Link>Linked Libraries\Entitas\Entity\Exceptions\EntityIsNotRetainedByOwnerException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Extensions\CollectionExtension.cs">
-      <Link>Linked Libraries\Entitas\Extensions\CollectionExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Group\Group.cs">
-      <Link>Linked Libraries\Entitas\Group\Group.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Group\GroupEvent.cs">
-      <Link>Linked Libraries\Entitas\Group\GroupEvent.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Group\GroupExtension.cs">
-      <Link>Linked Libraries\Entitas\Group\GroupExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Group\GroupSingleEntityException.cs">
-      <Link>Linked Libraries\Entitas\Group\GroupSingleEntityException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\AbstractEntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\AbstractEntityIndex.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\EntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\EntityIndex.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\EntityIndexException.cs">
-      <Link>Linked Libraries\Entitas\Index\EntityIndexException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Index\PrimaryEntityIndex.cs">
-      <Link>Linked Libraries\Entitas\Index\PrimaryEntityIndex.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\Matcher.cs">
-      <Link>Linked Libraries\Entitas\Matcher\Matcher.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherEquals.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherEquals.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherException.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherException.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherStatic.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherStatic.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Matcher\MatcherToString.cs">
-      <Link>Linked Libraries\Entitas\Matcher\MatcherToString.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Systems\ReactiveSystem.cs">
-      <Link>Linked Libraries\Entitas\Systems\ReactiveSystem.cs</Link>
-    </Compile>
-    <Compile Include="..\Entitas\Entitas\Systems\Systems.cs">
-      <Link>Linked Libraries\Entitas\Systems\Systems.cs</Link>
-    </Compile>
     <Compile Include="Tests\__NEW\Entitas\describe_ReactiveSystem.cs" />
     <Compile Include="Tests\__NEW\Entitas\describe_Systems.cs" />
     <Compile Include="Tests\__NEW\Entitas.CodeGenerator\DataProviders\describe_BlueprintDataProvider.cs" />
@@ -290,6 +188,81 @@
     <Compile Include="Tests\__NEW\Entitas.CodeGenerator\DataProviders\describe_ComponentDataProvider.cs" />
     <Compile Include="Tests\__NEW\Entitas.CodeGenerator\DataProviders\describe_ContextDataProvider.cs" />
     <Compile Include="Tests\__NEW\Entitas.CodeGenerator\Generators\SomeTest.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\AbstractComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\ComponentWithFields.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\ComponentWithProperties.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\CustomName.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\CustomPrefixFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\DontGenerateIndexComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\DontGenerateMethodsComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\FlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\MyNamespaceComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\MyNamespaceFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\StandardComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\Test2ContextComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\UniqueFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\UniqueMyNamespaceComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\UniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Components\UniqueStandardComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\ObjectsToGenerate\ClassToGenerate.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\ObjectsToGenerate\InterfaceToGenerate.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\ObjectsToGenerate\StructToGenerate.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\TestMemberAttribute.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Components\ClassToGenerateComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Components\InterfaceToGenerateComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Components\NewCustomNameComponent1Component.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Components\NewCustomNameComponent2Component.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Components\StructToGenerateComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\TestAttribute.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\TestComponentsLookup.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\TestContext.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\TestEntity.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestClassToGenerateComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestComponentWithFieldsComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestComponentWithPropertiesComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestInterfaceToGenerateComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestMyNamespaceMyNamespaceComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestMyNamespaceMyNamespaceFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestNewCustomNameComponent1Component.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestNewCustomNameComponent2Component.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestStandardComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestStructToGenerateComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestTest2ContextComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestUniqueFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\TestUniqueStandardComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\UniqueTestCustomPrefixFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\UniqueTestMyNamespaceUniqueMyNamespaceComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\UniqueTestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\UniqueTestUniqueFlagComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Components\UniqueTestUniqueStandardComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherClassToGenerate.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherComponentWithFields.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherComponentWithProperties.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherCustomPrefixFlag.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherDontGenerateMethods.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherFlag.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherInterfaceToGenerate.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherMyNamespaceMyNamespace.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherMyNamespaceMyNamespaceFlag.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherMyNamespaceUniqueMyNamespace.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherMyNamespaceUniqueMyNamespaceFlag.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherNewCustomNameComponent1.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherNewCustomNameComponent2.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherStandard.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherStructToGenerate.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherTest2Context.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherUniqueFlag.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test\Matchers\TestMatcherUniqueStandard.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test2\Test2Attribute.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test2\Test2ComponentsLookup.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test2\Test2Context.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test2\Test2Entity.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test2\Components\Test2Test2ContextComponent.cs" />
+    <Compile Include="Tests\__NEW\Fixtures\Generated\Test2\Matchers\Test2MatcherTest2Context.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -334,15 +307,15 @@
     <Folder Include="Tests\__NEW\Entitas.CodeGenerator\" />
     <Folder Include="Tests\__NEW\Entitas.CodeGenerator\DataProviders\" />
     <Folder Include="Tests\__NEW\Entitas.CodeGenerator\Generators\" />
+    <Folder Include="Tests\__NEW\Entitas.CodeGenerator.Api\" />
+    <Folder Include="Tests\__NEW\Fixtures\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\UnityEngine.dll" />
     <None Include="Libraries\NSpec.dll" />
     <None Include="Libraries\NSpecRunner.dll" />
     <None Include="Libraries\nunit.framework.dll" />
-    <None Include="..\Entitas\Entitas\version">
-      <Link>Linked Libraries\Entitas\version</Link>
-    </None>
+    <None Include="Tests\__NEW\Fixtures\Generated\Test\.DS_Store" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj">
@@ -364,6 +337,14 @@
     <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
       <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
       <Name>Entitas.CodeGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGenerator.Api</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

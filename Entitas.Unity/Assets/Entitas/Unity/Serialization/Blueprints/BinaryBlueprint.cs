@@ -1,6 +1,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Entitas.Serialization.Blueprints;
+using Entitas.Api;
+using Entitas.Blueprints;
 using UnityEngine;
 
 namespace Entitas.Unity.Serialization.Blueprints {

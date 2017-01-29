@@ -5,8 +5,8 @@ namespace Entitas.CodeGenerator {
 
     public class EntityGenerator : ICodeGenerator {
 
-        const string entityTemplate = @"
-using Entitas;
+        const string entityTemplate =
+@"using Entitas;
 
 public sealed partial class ${Context}Entity : Entity {
 }

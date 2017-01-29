@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Entitas;
+using Entitas.Blueprints;
 using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
 
@@ -11,15 +12,17 @@ public class BlueprintsExampleController : MonoBehaviour {
 
         Contexts.sharedInstance.blueprints = Contexts.CreateBlueprintsContext();
 
-        var max = Contexts.sharedInstance.blueprints.CreateEntity();
-        max.ApplyBlueprint(blueprints.Max);
+        // TODO
 
-        Debug.Log("max: " + max);
+        //var max = Contexts.sharedInstance.blueprints.CreateEntity();
+        //max.ApplyBlueprint(blueprints.Max);
 
-        var jack = Contexts.sharedInstance.blueprints.CreateEntity();
-        jack.ApplyBlueprint(blueprints.Jack);
+        //Debug.Log("max: " + max);
 
-        Debug.Log("jack: " + jack);
+        //var jack = Contexts.sharedInstance.blueprints.CreateEntity();
+        //jack.ApplyBlueprint(blueprints.Jack);
+
+        //Debug.Log("jack: " + jack);
 
         StartCoroutine(createMax());
     }
@@ -27,10 +30,12 @@ public class BlueprintsExampleController : MonoBehaviour {
     IEnumerator createMax() {
         while (true) {
 
-            var max = Contexts.sharedInstance.blueprints.CreateEntity();
-            max.ApplyBlueprint(blueprints.Max);
 
-            Debug.Log(max.name.value + " is " + max.age.value);
+            // TODO
+            //var max = Contexts.sharedInstance.blueprints.CreateEntity();
+            //max.ApplyBlueprint(blueprints.Max);
+
+            //Debug.Log(max.name.value + " is " + max.age.value);
 
             yield return new WaitForSeconds(1f);
         }

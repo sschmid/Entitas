@@ -1,4 +1,4 @@
-using Entitas;
+using Entitas.Api;
 
 public class SomeInitializeSystem : IInitializeSystem {
 

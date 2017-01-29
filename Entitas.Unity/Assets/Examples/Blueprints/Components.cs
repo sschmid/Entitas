@@ -1,5 +1,5 @@
-using Entitas;
-using Entitas.Serialization.Blueprints;
+using Entitas.Api;
+using Entitas.CodeGenerator.Api;
 
 [Blueprints]
 public class NameComponent : IComponent {

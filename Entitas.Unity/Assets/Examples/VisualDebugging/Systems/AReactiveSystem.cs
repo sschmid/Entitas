@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Entitas;
+using Entitas.Api;
 
 public class AReactiveSystem : ReactiveSystem<VisualDebuggingEntity> {
 

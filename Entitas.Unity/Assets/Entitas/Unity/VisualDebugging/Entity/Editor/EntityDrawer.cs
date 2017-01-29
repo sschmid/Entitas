@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Entitas.Serialization;
-using Entitas.Serialization.Configuration;
 using UnityEditor;
 using UnityEngine;
-using Entitas.Serialization.Blueprints;
+using Entitas.Api;
+using Entitas.Utils;
+using Entitas.CodeGenerator.Api;
 
 namespace Entitas.Unity.VisualDebugging {
 

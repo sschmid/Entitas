@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Entitas.CodeGenerator;
-using Entitas.Serialization.Configuration;
 using Entitas.Unity.Serialization.Blueprints;
+using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,32 +15,75 @@ namespace Entitas.Unity.CodeGenerator {
         public static void Generate() {
             checkCanGenerate();
 
-            Debug.Log("Generating...");
+            //Debug.Log("Generating...");
 
-            var codeGenerators = GetCodeGenerators();
-            var codeGeneratorNames = codeGenerators.Select(cg => cg.Name).ToArray();
-            var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(), codeGeneratorNames);
+            //var codeGenerators = GetCodeGenerators();
+            //var codeGeneratorNames = codeGenerators.Select(cg => cg.Name).ToArray();
+            //var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(), codeGeneratorNames);
 
-            var enabledCodeGeneratorNames = config.enabledCodeGenerators;
-            var enabledCodeGenerators = codeGenerators
-                .Where(type => enabledCodeGeneratorNames.Contains(type.Name))
-                .Select(type => (ICodeGenerator)Activator.CreateInstance(type))
-                .ToArray();
+            //var enabledCodeGeneratorNames = config.enabledCodeGenerators;
+            //var enabledCodeGenerators = codeGenerators
+            //    .Where(type => enabledCodeGeneratorNames.Contains(type.Name))
+            //    .Select(type => (ICodeGenerator)Activator.CreateInstance(type))
+            //    .ToArray();
 
-            var blueprintNames = BinaryBlueprintInspector.FindAllBlueprints()
-                .Select(b => b.Deserialize().name)
-                .ToArray();
+            //var blueprintNames = BinaryBlueprintInspector.FindAllBlueprints()
+            //    .Select(b => b.Deserialize().name)
+            //    .ToArray();
 
-            var assembly = Assembly.GetAssembly(typeof(IEntity));
-            var generatedFiles = TypeReflectionCodeGenerator.Generate(assembly, config.contexts,
-                blueprintNames, config.generatedFolderPath, enabledCodeGenerators);
+            //var assembly = Assembly.GetAssembly(typeof(IEntity));
+            //var generatedFiles = TypeReflectionCodeGenerator.Generate(assembly, config.contexts,
+            //    blueprintNames, config.generatedFolderPath, enabledCodeGenerators);
 
-            foreach(var file in generatedFiles) {
+            //foreach(var file in generatedFiles) {
+            //    Debug.Log(file.generatorName + ": " + file.fileName);
+            //}
+
+            //var totalGeneratedFiles = generatedFiles.Select(file => file.fileName).Distinct().Count();
+            //Debug.Log("Generated " + totalGeneratedFiles + " files.");
+
+
+
+
+            var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(), new string[0]);
+            var types = Assembly.GetAssembly(typeof(VisualDebuggingExampleController)).GetTypes();
+
+            var dataProviders = new ICodeGeneratorDataProvider[] {
+                new ContextDataProvider(config.contexts),
+                new ComponentDataProvider(types)
+            };
+
+            var codeGenerators = new ICodeGenerator[] {
+                new EntityGenerator(),
+                new ContextGenerator(),
+                new ContextAttributeGenerator(),
+                new ComponentsLookupGenerator(),
+                new ComponentEntityGenerator(),
+                new ComponentContextGenerator(),
+                new ComponentGenerator(),
+                new MatcherGenerator()
+            };
+
+            var postProcessors = new ICodeGenFilePostProcessor [] {
+                new AddFileHeaderPostProcessor(),
+                new NewLinePostProcessor(),
+                new WriteToDiskPostProcessor(config.generatedFolderPath),
+            };
+
+            var codeGenerator = new Entitas.CodeGenerator.CodeGenerator(dataProviders, codeGenerators, postProcessors);
+            var files = codeGenerator.Generate();
+
+
+
+            foreach(var file in files) {
                 Debug.Log(file.generatorName + ": " + file.fileName);
             }
 
-            var totalGeneratedFiles = generatedFiles.Select(file => file.fileName).Distinct().Count();
+            var totalGeneratedFiles = files.Select(file => file.fileName).Distinct().Count();
             Debug.Log("Generated " + totalGeneratedFiles + " files.");
+
+
+
 
             AssetDatabase.Refresh();
         }

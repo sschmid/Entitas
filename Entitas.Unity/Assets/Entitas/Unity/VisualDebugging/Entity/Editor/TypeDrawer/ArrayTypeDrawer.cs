@@ -2,6 +2,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using System.Collections;
+using Entitas.Api;
 
 namespace Entitas.Unity.VisualDebugging {
 
