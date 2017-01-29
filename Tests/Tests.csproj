@@ -115,6 +115,7 @@
     <Compile Include="Fixtures\NestedClass.cs" />
     <Compile Include="Fixtures\SomeEnum.cs" />
     <Compile Include="Fixtures\MyTestContext.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator.Api\describe_ContextAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -72,7 +72,7 @@ public sealed class AddViewFromObjectPoolSystem : IInitializeSystem, ReactiveSys
                 //System.Console.WriteLine(systemFile.fileContent);
             //}
 
-            //systemFile.fileContent.should_be(expected);
+            systemFile.fileContent.should_be(expected);
         };
     }
 }

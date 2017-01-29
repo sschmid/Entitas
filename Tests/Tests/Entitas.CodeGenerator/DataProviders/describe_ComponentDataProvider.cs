@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Entitas.CodeGenerator;
 using Entitas.Utils;
 using NSpec;
-using System.Linq;
 using My.Namespace;
 
 class describe_ComponentDataProvider : nspec {
@@ -129,8 +128,8 @@ class describe_ComponentDataProvider : nspec {
             it["gets contexts"] = () => {
                 d.GetContextNames().GetType().should_be(typeof(string[]));
                 d.GetContextNames().Length.should_be(2);
-                d.GetContextNames()[0].should_be("SomeContext");
-                d.GetContextNames()[1].should_be("SomeOtherContext");
+                d.GetContextNames()[0].should_be("Test");
+                d.GetContextNames()[1].should_be("Test2");
             };
 
             it["gets unique"] = () => {
