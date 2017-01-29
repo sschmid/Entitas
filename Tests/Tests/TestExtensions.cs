@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Entitas;
 using Entitas.Api;
 using NSpec;
 

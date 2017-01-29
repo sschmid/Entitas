@@ -4,7 +4,7 @@ using Entitas.Api;
 
 public class TestReactiveSystem : ReactiveSystem<TestEntity> {
 
-    public TestReactiveSystem(Contexts contexts) : base(contexts.test) { }
+    public TestReactiveSystem(IContext<TestEntity> context) : base(context) { }
 
     protected override Collector<TestEntity> GetTrigger(IContext<TestEntity> context) {
         return context.CreateCollector(Matcher<TestEntity>.AllOf(0));

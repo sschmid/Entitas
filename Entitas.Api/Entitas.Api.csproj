@@ -54,6 +54,7 @@
     <Compile Include="Entitas.Api\Systems\ISystem.cs" />
     <Compile Include="Entitas.Api\Systems\ITearDownSystem.cs" />
     <Compile Include="Entitas.Api\Matcher\ICompoundMatcher.cs" />
+    <Compile Include="Entitas.Api\IContexts.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
