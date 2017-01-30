@@ -51,19 +51,19 @@
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestInitializeSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestExecuteSystem.cs" />
     <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestReactiveSystem.cs" />
-    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystems.cs">
+    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystems.cs">
       <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystems.cs</Link>
     </Compile>
-    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
+    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
       <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
     </Compile>
-    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\SystemInfo.cs">
+    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs">
       <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\SystemInfo.cs</Link>
     </Compile>
-    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs">
+    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\Editor\VisualDebuggingConfig.cs">
       <Link>Linked Libraries\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
     </Compile>
-    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\Feature.cs">
+    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\Feature.cs">
       <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\Feature.cs</Link>
     </Compile>
     <Compile Include="TestRunner.cs" />
