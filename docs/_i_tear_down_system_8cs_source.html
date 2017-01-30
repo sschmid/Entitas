@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Entitas: Entitas/Entitas/Interfaces/ITearDownSystem.cs Source File</title>
+<title>Entitas: Entitas/Entitas/Interfaces/Systems/ITearDownSystem.cs Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="docs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Entitas
-   &#160;<span id="projectnumber">0.35.0</span>
+   &#160;<span id="projectnumber">0.36.0</span>
    </div>
    <div id="projectbrief">Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity</div>
   </td>
@@ -86,15 +86,15 @@ $(document).ready(function(){initNavTree('_i_tear_down_system_8cs_source.html','
 <div class="title">ITearDownSystem.cs</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_entitas.html">Entitas</a> {</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"></span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">    /// Implement this interface if you want to create a system which should</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">    /// tear down once in the end.</span></div><div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="interface_entitas_1_1_i_tear_down_system.html">    5</a></span>&#160;<span class="comment"></span>    <span class="keyword">public</span> <span class="keyword">interface </span><a class="code" href="interface_entitas_1_1_i_tear_down_system.html">ITearDownSystem</a> : <a class="code" href="interface_entitas_1_1_i_system.html">ISystem</a> {</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;        <span class="keywordtype">void</span> TearDown();</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    }</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;}</div><div class="ttc" id="namespace_entitas_html"><div class="ttname"><a href="namespace_entitas.html">Entitas</a></div><div class="ttdef"><b>Definition:</b> <a href="_entitas_cache_8cs_source.html#l00003">EntitasCache.cs:3</a></div></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_entitas.html">Entitas</a> {</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="comment"></span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="comment">    /// Implement this interface if you want to create a system which should</span></div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">    /// tear down once in the end.</span></div><div class="line"><a name="l00005"></a><span class="lineno"><a class="line" href="interface_entitas_1_1_i_tear_down_system.html">    5</a></span>&#160;<span class="comment"></span>    <span class="keyword">public</span> <span class="keyword">interface </span><a class="code" href="interface_entitas_1_1_i_tear_down_system.html">ITearDownSystem</a> : <a class="code" href="interface_entitas_1_1_i_system.html">ISystem</a> {</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;        <span class="keywordtype">void</span> TearDown();</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;    }</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;}</div><div class="ttc" id="namespace_entitas_html"><div class="ttname"><a href="namespace_entitas.html">Entitas</a></div><div class="ttdef"><b>Definition:</b> <a href="_collector_8cs_source.html#l00004">Collector.cs:4</a></div></div>
 <div class="ttc" id="interface_entitas_1_1_i_tear_down_system_html"><div class="ttname"><a href="interface_entitas_1_1_i_tear_down_system.html">Entitas.ITearDownSystem</a></div><div class="ttdef"><b>Definition:</b> <a href="_i_tear_down_system_8cs_source.html#l00005">ITearDownSystem.cs:5</a></div></div>
-<div class="ttc" id="interface_entitas_1_1_i_system_html"><div class="ttname"><a href="interface_entitas_1_1_i_system.html">Entitas.ISystem</a></div><div class="ttdef"><b>Definition:</b> <a href="_i_system_8cs_source.html#l00008">ISystem.cs:8</a></div></div>
+<div class="ttc" id="interface_entitas_1_1_i_system_html"><div class="ttname"><a href="interface_entitas_1_1_i_system.html">Entitas.ISystem</a></div><div class="ttdef"><b>Definition:</b> <a href="_i_system_8cs_source.html#l00007">ISystem.cs:7</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_2445fa600638ca0377a838c43b60c5d0.html">Entitas</a></li><li class="navelem"><a class="el" href="dir_18d0583636d1f7adc70f46fa7dc6fd22.html">Entitas</a></li><li class="navelem"><a class="el" href="dir_b4d3ecafd9849fd76c2839b0ca942f82.html">Interfaces</a></li><li class="navelem"><b>ITearDownSystem.cs</b></li>
+    <li class="navelem"><a class="el" href="dir_2445fa600638ca0377a838c43b60c5d0.html">Entitas</a></li><li class="navelem"><a class="el" href="dir_18d0583636d1f7adc70f46fa7dc6fd22.html">Entitas</a></li><li class="navelem"><a class="el" href="dir_b4d3ecafd9849fd76c2839b0ca942f82.html">Interfaces</a></li><li class="navelem"><a class="el" href="dir_55712bf37b5a9c0aa749d5ea772c295b.html">Systems</a></li><li class="navelem"><b>ITearDownSystem.cs</b></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>

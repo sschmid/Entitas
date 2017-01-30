@@ -1,9 +1,26 @@
 var searchData=
 [
-  ['handleentity',['HandleEntity',['../class_entitas_1_1_group.html#a9e00d30bfdf3a2c42d3bb1898fb2b4be',1,'Entitas::Group']]],
-  ['handleentitysilently',['HandleEntitySilently',['../class_entitas_1_1_group.html#a9c5a38fa1862c272039577f389966c6f',1,'Entitas::Group']]],
-  ['hasanycomponent',['HasAnyComponent',['../class_entitas_1_1_entity.html#a9e941463e3273213aee9a6d1071a8d6d',1,'Entitas::Entity']]],
-  ['hascomponent',['HasComponent',['../class_entitas_1_1_entity.html#a30a8ae77453c6878d45f3c1cbe31bb03',1,'Entitas::Entity']]],
-  ['hascomponents',['HasComponents',['../class_entitas_1_1_entity.html#aee5ffe85bc1fa4fb5dc21c0a13058ffe',1,'Entitas::Entity']]],
-  ['hideinblueprintinspectorattribute',['HideInBlueprintInspectorAttribute',['../class_entitas_1_1_serialization_1_1_blueprints_1_1_hide_in_blueprint_inspector_attribute.html',1,'Entitas::Serialization::Blueprints']]]
+  ['iallofmatcher',['IAllOfMatcher',['../interface_entitas_1_1_i_all_of_matcher.html',1,'Entitas']]],
+  ['ianyofmatcher',['IAnyOfMatcher',['../interface_entitas_1_1_i_any_of_matcher.html',1,'Entitas']]],
+  ['icleanupsystem',['ICleanupSystem',['../interface_entitas_1_1_i_cleanup_system.html',1,'Entitas']]],
+  ['icomponent',['IComponent',['../interface_entitas_1_1_i_component.html',1,'Entitas']]],
+  ['icompoundmatcher',['ICompoundMatcher',['../interface_entitas_1_1_i_compound_matcher.html',1,'Entitas']]],
+  ['icontext',['IContext',['../interface_entitas_1_1_i_context.html',1,'Entitas.IContext&lt; TEntity &gt;'],['../interface_entitas_1_1_i_context.html',1,'Entitas.IContext']]],
+  ['icontext_3c_20tentity_20_3e',['IContext&lt; TEntity &gt;',['../interface_entitas_1_1_i_context.html',1,'Entitas']]],
+  ['icontexts',['IContexts',['../interface_entitas_1_1_i_contexts.html',1,'Entitas']]],
+  ['ientity',['IEntity',['../interface_entitas_1_1_i_entity.html',1,'Entitas']]],
+  ['ientityindex',['IEntityIndex',['../interface_entitas_1_1_i_entity_index.html',1,'Entitas']]],
+  ['iexecutesystem',['IExecuteSystem',['../interface_entitas_1_1_i_execute_system.html',1,'Entitas']]],
+  ['igroup',['IGroup',['../interface_entitas_1_1_i_group.html',1,'Entitas.IGroup&lt; TEntity &gt;'],['../interface_entitas_1_1_i_group.html',1,'Entitas.IGroup']]],
+  ['igroup_3c_20tentity_20_3e',['IGroup&lt; TEntity &gt;',['../interface_entitas_1_1_i_group.html',1,'Entitas']]],
+  ['iinitializesystem',['IInitializeSystem',['../interface_entitas_1_1_i_initialize_system.html',1,'Entitas']]],
+  ['imatcher',['IMatcher',['../interface_entitas_1_1_i_matcher.html',1,'Entitas']]],
+  ['implementsinterface_3c_20t_20_3e',['ImplementsInterface&lt; T &gt;',['../class_entitas_1_1_interface_type_extension.html#a1e23f4d88940c01bb6e88e57fb422292',1,'Entitas::InterfaceTypeExtension']]],
+  ['initialize',['Initialize',['../class_entitas_1_1_systems.html#a33b35b3cdbdb16c347086a4ce4a23495',1,'Entitas::Systems']]],
+  ['inoneofmatcher',['INoneOfMatcher',['../interface_entitas_1_1_i_none_of_matcher.html',1,'Entitas']]],
+  ['interfacetypeextension',['InterfaceTypeExtension',['../class_entitas_1_1_interface_type_extension.html',1,'Entitas']]],
+  ['ireactivesystem',['IReactiveSystem',['../interface_entitas_1_1_i_reactive_system.html',1,'Entitas']]],
+  ['isenabled',['isEnabled',['../class_entitas_1_1_entity.html#a93e43dc3a3668ca457db9d3609405ff9',1,'Entitas::Entity']]],
+  ['isystem',['ISystem',['../interface_entitas_1_1_i_system.html',1,'Entitas']]],
+  ['iteardownsystem',['ITearDownSystem',['../interface_entitas_1_1_i_tear_down_system.html',1,'Entitas']]]
 ];

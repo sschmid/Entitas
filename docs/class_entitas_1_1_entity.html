@@ -84,7 +84,6 @@ $(document).ready(function(){initNavTree('class_entitas_1_1_entity.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
 <a href="#events">Events</a> &#124;
 <a href="class_entitas_1_1_entity-members.html">List of all members</a>  </div>
@@ -92,26 +91,30 @@ $(document).ready(function(){initNavTree('class_entitas_1_1_entity.html','');});
 <div class="title">Entitas.Entity Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Inheritance diagram for Entitas.Entity:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_entitas_1_1_entity.png" usemap="#Entitas.Entity_map" alt=""/>
+  <map id="Entitas.Entity_map" name="Entitas.Entity_map">
+<area href="interface_entitas_1_1_i_entity.html" alt="Entitas.IEntity" shape="rect" coords="0,0,87,24"/>
+</map>
+ </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6726901ec41235f153a2c00fae232783"><td class="memItemLeft" align="right" valign="top"><a id="a6726901ec41235f153a2c00fae232783"></a>
-delegate void&#160;</td><td class="memItemRight" valign="bottom"><b>EntityChanged</b> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity, int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
-<tr class="separator:a6726901ec41235f153a2c00fae232783"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7aec19d56ee26420187daea02dd20203"><td class="memItemLeft" align="right" valign="top"><a id="a7aec19d56ee26420187daea02dd20203"></a>
-delegate void&#160;</td><td class="memItemRight" valign="bottom"><b>ComponentReplaced</b> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity, int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> previousComponent, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> newComponent)</td></tr>
-<tr class="separator:a7aec19d56ee26420187daea02dd20203"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dcc3bdcac587714d41beda9a16b04eb"><td class="memItemLeft" align="right" valign="top"><a id="a4dcc3bdcac587714d41beda9a16b04eb"></a>
-delegate void&#160;</td><td class="memItemRight" valign="bottom"><b>EntityReleased</b> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity)</td></tr>
-<tr class="separator:a4dcc3bdcac587714d41beda9a16b04eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4450fc8001cfab892e87974409e8a002"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a4450fc8001cfab892e87974409e8a002">Entity</a> (int <a class="el" href="class_entitas_1_1_entity.html#ad3deee62c9a0392eea6b93e5356f9107">totalComponents</a>, Stack&lt; <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> &gt;[] <a class="el" href="class_entitas_1_1_entity.html#ab8bb69649e83e05c595d006d205f11b2">componentPools</a>, <a class="el" href="class_entitas_1_1_context_info.html">ContextInfo</a> <a class="el" href="class_entitas_1_1_entity.html#ae8347b174468c55c485e0265254d9c91">contextInfo</a>=null)</td></tr>
-<tr class="separator:a4450fc8001cfab892e87974409e8a002"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b2ee8c741f1e3bec1ba8d3bfefaaf86"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_entitas_1_1_entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a2b2ee8c741f1e3bec1ba8d3bfefaaf86">AddComponent</a> (int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
-<tr class="separator:a2b2ee8c741f1e3bec1ba8d3bfefaaf86"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7559c4d7ba030a77a80f92c8f506547c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_entitas_1_1_entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a7559c4d7ba030a77a80f92c8f506547c">RemoveComponent</a> (int index)</td></tr>
-<tr class="separator:a7559c4d7ba030a77a80f92c8f506547c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74a244126a734f28b781f46ffdb550b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_entitas_1_1_entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a74a244126a734f28b781f46ffdb550b2">ReplaceComponent</a> (int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
-<tr class="separator:a74a244126a734f28b781f46ffdb550b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac805c1c2a43749e4c6c9a224b11c78fa"><td class="memItemLeft" align="right" valign="top"><a id="ac805c1c2a43749e4c6c9a224b11c78fa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Initialize</b> (int <a class="el" href="class_entitas_1_1_entity.html#a35644f781a2567877dade3e39932e405">creationIndex</a>, int <a class="el" href="class_entitas_1_1_entity.html#ad3deee62c9a0392eea6b93e5356f9107">totalComponents</a>, Stack&lt; <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> &gt;[] <a class="el" href="class_entitas_1_1_entity.html#ab8bb69649e83e05c595d006d205f11b2">componentPools</a>, <a class="el" href="class_entitas_1_1_context_info.html">ContextInfo</a> <a class="el" href="class_entitas_1_1_entity.html#ae8347b174468c55c485e0265254d9c91">contextInfo</a>=null)</td></tr>
+<tr class="separator:ac805c1c2a43749e4c6c9a224b11c78fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2efb82aa6e7266b71492ef694b712fd"><td class="memItemLeft" align="right" valign="top"><a id="ab2efb82aa6e7266b71492ef694b712fd"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Reactivate</b> (int <a class="el" href="class_entitas_1_1_entity.html#a35644f781a2567877dade3e39932e405">creationIndex</a>)</td></tr>
+<tr class="separator:ab2efb82aa6e7266b71492ef694b712fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a684593bfe766e01ff4776bfbf841156a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a684593bfe766e01ff4776bfbf841156a">AddComponent</a> (int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
+<tr class="separator:a684593bfe766e01ff4776bfbf841156a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a288fdf38196ce4d54597f08bf5989a19"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a288fdf38196ce4d54597f08bf5989a19">RemoveComponent</a> (int index)</td></tr>
+<tr class="separator:a288fdf38196ce4d54597f08bf5989a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf6272815f51c3ca69115c62772836df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#adf6272815f51c3ca69115c62772836df">ReplaceComponent</a> (int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
+<tr class="separator:adf6272815f51c3ca69115c62772836df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a193c4b6412a24c9461424b060ab15506"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a193c4b6412a24c9461424b060ab15506">GetComponent</a> (int index)</td></tr>
 <tr class="separator:a193c4b6412a24c9461424b060ab15506"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78627b36ab878dde662b3d8267641ef2"><td class="memItemLeft" align="right" valign="top"><a id="a78627b36ab878dde662b3d8267641ef2"></a>
@@ -138,21 +141,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a244cbd513f258aa8778198e8270dde06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa39f7df6971b2436c7775c71c6ab24bd"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#aa39f7df6971b2436c7775c71c6ab24bd">CreateComponent&lt; T &gt;</a> (int index)</td></tr>
 <tr class="separator:aa39f7df6971b2436c7775c71c6ab24bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ebd8e5293c287b69b6051f3ea52cc91"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_entitas_1_1_entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a8ebd8e5293c287b69b6051f3ea52cc91">Retain</a> (object owner)</td></tr>
-<tr class="separator:a8ebd8e5293c287b69b6051f3ea52cc91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9fc81e2607c8ee24521d9b27019ef328"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a9fc81e2607c8ee24521d9b27019ef328">Retain</a> (object owner)</td></tr>
+<tr class="separator:a9fc81e2607c8ee24521d9b27019ef328"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad38c42d47e73ad68c4e93db53665aa61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#ad38c42d47e73ad68c4e93db53665aa61">Release</a> (object owner)</td></tr>
 <tr class="separator:ad38c42d47e73ad68c4e93db53665aa61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3cad68ad8af9672d1543b5a74a1fc82"><td class="memItemLeft" align="right" valign="top"><a id="aa3cad68ad8af9672d1543b5a74a1fc82"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>destroy</b> ()</td></tr>
+<tr class="separator:aa3cad68ad8af9672d1543b5a74a1fc82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b101e521b0af41dd8cf23f8e035145a"><td class="memItemLeft" align="right" valign="top"><a id="a9b101e521b0af41dd8cf23f8e035145a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>removeAllOnEntityReleasedHandlers</b> ()</td></tr>
+<tr class="separator:a9b101e521b0af41dd8cf23f8e035145a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a062ae860c3528091f8c0fd5b88667694"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a062ae860c3528091f8c0fd5b88667694">ToString</a> ()</td></tr>
 <tr class="separator:a062ae860c3528091f8c0fd5b88667694"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe334d8c847625bac0d1d69141dd4f80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_entitas_1_1_entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#afe334d8c847625bac0d1d69141dd4f80">ApplyBlueprint</a> (<a class="el" href="class_entitas_1_1_serialization_1_1_blueprints_1_1_blueprint.html">Blueprint</a> blueprint, bool replaceComponents=false)</td></tr>
-<tr class="separator:afe334d8c847625bac0d1d69141dd4f80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ad0aefa732e6c3cb99be6530b26024b63"><td class="memItemLeft" align="right" valign="top"><a id="ad0aefa732e6c3cb99be6530b26024b63"></a>
-readonly HashSet&lt; object &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#ad0aefa732e6c3cb99be6530b26024b63">owners</a> = new HashSet&lt;object&gt;()</td></tr>
-<tr class="memdesc:ad0aefa732e6c3cb99be6530b26024b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all the objects that retain this entity. <br /></td></tr>
-<tr class="separator:ad0aefa732e6c3cb99be6530b26024b63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -172,25 +172,64 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a55d42d47d2678137c14a693f2039cd6c">retainCount</a><code> [get]</code></td></tr>
 <tr class="memdesc:a55d42d47d2678137c14a693f2039cd6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of objects that retain this entity. <br /></td></tr>
 <tr class="separator:a55d42d47d2678137c14a693f2039cd6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa22ac53a43e919909a1330d035cc1ec4"><td class="memItemLeft" align="right" valign="top"><a id="aa22ac53a43e919909a1330d035cc1ec4"></a>
+HashSet&lt; object &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#aa22ac53a43e919909a1330d035cc1ec4">owners</a><code> [get]</code></td></tr>
+<tr class="memdesc:aa22ac53a43e919909a1330d035cc1ec4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all the objects that retain this entity. <br /></td></tr>
+<tr class="separator:aa22ac53a43e919909a1330d035cc1ec4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header properties_interface_entitas_1_1_i_entity"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_entitas_1_1_i_entity')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a></td></tr>
+<tr class="memitem:aaa92759ead347e847a51a8baaf8f8133 inherit properties_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="aaa92759ead347e847a51a8baaf8f8133"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>totalComponents</b><code> [get]</code></td></tr>
+<tr class="separator:aaa92759ead347e847a51a8baaf8f8133 inherit properties_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a469432b11a3e1707a603405f0f00bb7b inherit properties_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a469432b11a3e1707a603405f0f00bb7b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>creationIndex</b><code> [get]</code></td></tr>
+<tr class="separator:a469432b11a3e1707a603405f0f00bb7b inherit properties_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ec2744f6c871c5b7ae994b836337729 inherit properties_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a3ec2744f6c871c5b7ae994b836337729"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isEnabled</b><code> [get]</code></td></tr>
+<tr class="separator:a3ec2744f6c871c5b7ae994b836337729 inherit properties_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6f616d85bdf233da0e7b7a47033a8d5 inherit properties_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="ac6f616d85bdf233da0e7b7a47033a8d5"></a>
+Stack&lt; <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> &gt; []&#160;</td><td class="memItemRight" valign="bottom"><b>componentPools</b><code> [get]</code></td></tr>
+<tr class="separator:ac6f616d85bdf233da0e7b7a47033a8d5 inherit properties_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a051774adf86cf321d82e04e3b228a879 inherit properties_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a051774adf86cf321d82e04e3b228a879"></a>
+<a class="el" href="class_entitas_1_1_context_info.html">ContextInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><b>contextInfo</b><code> [get]</code></td></tr>
+<tr class="separator:a051774adf86cf321d82e04e3b228a879 inherit properties_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad57ba6f1e9bacf1d6d2e47be387c3e12 inherit properties_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="ad57ba6f1e9bacf1d6d2e47be387c3e12"></a>
+HashSet&lt; object &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>owners</b><code> [get]</code></td></tr>
+<tr class="separator:ad57ba6f1e9bacf1d6d2e47be387c3e12 inherit properties_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf7e7c7717675ea47a6816004170bf69 inherit properties_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="acf7e7c7717675ea47a6816004170bf69"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>retainCount</b><code> [get]</code></td></tr>
+<tr class="separator:acf7e7c7717675ea47a6816004170bf69 inherit properties_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="events"></a>
 Events</h2></td></tr>
-<tr class="memitem:ae19db05e0f3d0c58839653bcd92d7bcb"><td class="memItemLeft" align="right" valign="top">EntityChanged&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#ae19db05e0f3d0c58839653bcd92d7bcb">OnComponentAdded</a></td></tr>
-<tr class="separator:ae19db05e0f3d0c58839653bcd92d7bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea8769222eecc35c7af460f20c54bce5"><td class="memItemLeft" align="right" valign="top">EntityChanged&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#aea8769222eecc35c7af460f20c54bce5">OnComponentRemoved</a></td></tr>
-<tr class="separator:aea8769222eecc35c7af460f20c54bce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92b008c85886dd43b94d8cc4f0299507"><td class="memItemLeft" align="right" valign="top">ComponentReplaced&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a92b008c85886dd43b94d8cc4f0299507">OnComponentReplaced</a></td></tr>
-<tr class="separator:a92b008c85886dd43b94d8cc4f0299507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae32e6949d12be079ed24181dca78f928"><td class="memItemLeft" align="right" valign="top">EntityComponentChanged&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#ae32e6949d12be079ed24181dca78f928">OnComponentAdded</a></td></tr>
+<tr class="separator:ae32e6949d12be079ed24181dca78f928"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16e5c42416751abe64cfd86a9b9da887"><td class="memItemLeft" align="right" valign="top">EntityComponentChanged&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a16e5c42416751abe64cfd86a9b9da887">OnComponentRemoved</a></td></tr>
+<tr class="separator:a16e5c42416751abe64cfd86a9b9da887"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83ffb44d61d4c3c137bd9377c0866e6a"><td class="memItemLeft" align="right" valign="top">EntityComponentReplaced&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a83ffb44d61d4c3c137bd9377c0866e6a">OnComponentReplaced</a></td></tr>
+<tr class="separator:a83ffb44d61d4c3c137bd9377c0866e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf35ed67ac2785651eb54b1eaddfcc73"><td class="memItemLeft" align="right" valign="top">EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#acf35ed67ac2785651eb54b1eaddfcc73">OnEntityReleased</a></td></tr>
 <tr class="separator:acf35ed67ac2785651eb54b1eaddfcc73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header events_interface_entitas_1_1_i_entity"><td colspan="2" onclick="javascript:toggleInherit('events_interface_entitas_1_1_i_entity')"><img src="closed.png" alt="-"/>&#160;Events inherited from <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a></td></tr>
+<tr class="memitem:a8c27842b69b103f8e3ca59ba0e730656 inherit events_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a8c27842b69b103f8e3ca59ba0e730656"></a>
+EntityComponentChanged&#160;</td><td class="memItemRight" valign="bottom"><b>OnComponentAdded</b></td></tr>
+<tr class="separator:a8c27842b69b103f8e3ca59ba0e730656 inherit events_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94545eff3bf90fb9823f454f5b1f2fea inherit events_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a94545eff3bf90fb9823f454f5b1f2fea"></a>
+EntityComponentChanged&#160;</td><td class="memItemRight" valign="bottom"><b>OnComponentRemoved</b></td></tr>
+<tr class="separator:a94545eff3bf90fb9823f454f5b1f2fea inherit events_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f74d92aff907c6ae54c22e71133430d inherit events_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a8f74d92aff907c6ae54c22e71133430d"></a>
+EntityComponentReplaced&#160;</td><td class="memItemRight" valign="bottom"><b>OnComponentReplaced</b></td></tr>
+<tr class="separator:a8f74d92aff907c6ae54c22e71133430d inherit events_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cfd9f8b9aa42875a91a80942a6a0d27 inherit events_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a2cfd9f8b9aa42875a91a80942a6a0d27"></a>
+EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityReleased</b></td></tr>
+<tr class="separator:a2cfd9f8b9aa42875a91a80942a6a0d27 inherit events_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Use context.CreateEntity() to create a new entity and context.DestroyEntity() to destroy it. You can add, replace and remove <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> to an entity. </p>
 
 <p>Definition at line <a class="el" href="_entity_8cs_source.html#l00010">10</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a4450fc8001cfab892e87974409e8a002"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4450fc8001cfab892e87974409e8a002">&sect;&nbsp;</a></span>Entity()</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a684593bfe766e01ff4776bfbf841156a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a684593bfe766e01ff4776bfbf841156a">&sect;&nbsp;</a></span>AddComponent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -199,53 +238,7 @@ Events</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Entitas.Entity.Entity </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>totalComponents</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Stack&lt; <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> &gt; []&#160;</td>
-          <td class="paramname"><em>componentPools</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_entitas_1_1_context_info.html">ContextInfo</a>&#160;</td>
-          <td class="paramname"><em>contextInfo</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Use context.CreateEntity() to create a new entity and context.DestroyEntity() to destroy it. </p>
-
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00085">85</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2b2ee8c741f1e3bec1ba8d3bfefaaf86"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b2ee8c741f1e3bec1ba8d3bfefaaf86">&sect;&nbsp;</a></span>AddComponent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_entitas_1_1_entity.html">Entity</a> Entitas.Entity.AddComponent </td>
+          <td class="memname">void Entitas.Entity.AddComponent </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>index</em>, </td>
@@ -270,46 +263,9 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Adds a component at the specified index. You can only have one component at an index. Each component type must have its own constant index. The prefered way is to use the generated methods from the code generator. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00115">115</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-</div>
-</div>
-<a id="afe334d8c847625bac0d1d69141dd4f80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe334d8c847625bac0d1d69141dd4f80">&sect;&nbsp;</a></span>ApplyBlueprint()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_entitas_1_1_entity.html">Entity</a> Entitas.Entity.ApplyBlueprint </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_entitas_1_1_serialization_1_1_blueprints_1_1_blueprint.html">Blueprint</a>&#160;</td>
-          <td class="paramname"><em>blueprint</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>replaceComponents</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Adds all components from the blueprint to the entity. When 'replaceComponents' is set to true entity.ReplaceComponent() will be used instead of entity.AddComponent(). </p>
-
-<p>Definition at line <a class="el" href="_blueprint_entity_extension_8cs_source.html#l00010">10</a> of file <a class="el" href="_blueprint_entity_extension_8cs_source.html">BlueprintEntityExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00105">105</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -348,7 +304,9 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns a new or reusable component from the componentPool for the specified component index. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00343">343</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00318">318</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -376,6 +334,8 @@ Events</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Returns a new or reusable component from the componentPool for the specified component index. </p>
+
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 <div class="typeconstraint">
 <dl><dt><b>Type Constraints</b></dt><dd>
 <table border="0" cellspacing="2" cellpadding="0">
@@ -385,7 +345,7 @@ Events</h2></td></tr>
 </dl>
 </div>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00352">352</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00327">327</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -414,7 +374,9 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns a component at the specified index. You can only get a component at an index if it exists. The prefered way is to use the generated methods from the code generator. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00231">231</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00208">208</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -443,7 +405,9 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns the componentPool for the specified component index. componentPools is set by the context which created the entity and is used to reuse removed components. Removed components will be pushed to the componentPool. Use entity.CreateComponent(index, type) to get a new or reusable component from the componentPool. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00331">331</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00306">306</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -472,7 +436,9 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Determines whether this entity has a component at any of the specified indices. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00305">305</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00280">280</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -501,7 +467,9 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Determines whether this entity has a component at the specified index. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00287">287</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00262">262</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -530,7 +498,9 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Determines whether this entity has components at all the specified indices. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00293">293</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00268">268</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -559,12 +529,14 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Releases the entity. An owner can only release an entity if it retains it. Retain/Release is part of AERC (Automatic <a class="el" href="class_entitas_1_1_entity.html">Entity</a> Reference Counting) and is used internally to prevent pooling retained entities. If you use retain manually you also have to release it manually at some point. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00403">403</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00361">361</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
-<a id="a7559c4d7ba030a77a80f92c8f506547c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7559c4d7ba030a77a80f92c8f506547c">&sect;&nbsp;</a></span>RemoveComponent()</h2>
+<a id="a288fdf38196ce4d54597f08bf5989a19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a288fdf38196ce4d54597f08bf5989a19">&sect;&nbsp;</a></span>RemoveComponent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -573,7 +545,7 @@ Events</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_entitas_1_1_entity.html">Entity</a> Entitas.Entity.RemoveComponent </td>
+          <td class="memname">void Entitas.Entity.RemoveComponent </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>index</em></td><td>)</td>
@@ -588,12 +560,14 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Removes a component at the specified index. You can only remove a component at an index if it exists. The prefered way is to use the generated methods from the code generator. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00150">150</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00135">135</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
-<a id="a74a244126a734f28b781f46ffdb550b2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74a244126a734f28b781f46ffdb550b2">&sect;&nbsp;</a></span>ReplaceComponent()</h2>
+<a id="adf6272815f51c3ca69115c62772836df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf6272815f51c3ca69115c62772836df">&sect;&nbsp;</a></span>ReplaceComponent()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -602,7 +576,7 @@ Events</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_entitas_1_1_entity.html">Entity</a> Entitas.Entity.ReplaceComponent </td>
+          <td class="memname">void Entitas.Entity.ReplaceComponent </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>index</em>, </td>
@@ -627,12 +601,14 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Replaces an existing component at the specified index or adds it if it doesn't exist yet. The prefered way is to use the generated methods from the code generator. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00179">179</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00159">159</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
-<a id="a8ebd8e5293c287b69b6051f3ea52cc91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ebd8e5293c287b69b6051f3ea52cc91">&sect;&nbsp;</a></span>Retain()</h2>
+<a id="a9fc81e2607c8ee24521d9b27019ef328"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fc81e2607c8ee24521d9b27019ef328">&sect;&nbsp;</a></span>Retain()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -641,7 +617,7 @@ Events</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_entitas_1_1_entity.html">Entity</a> Entitas.Entity.Retain </td>
+          <td class="memname">void Entitas.Entity.Retain </td>
           <td>(</td>
           <td class="paramtype">object&#160;</td>
           <td class="paramname"><em>owner</em></td><td>)</td>
@@ -656,7 +632,9 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Retains the entity. An owner can only retain the same entity once. Retain/Release is part of AERC (Automatic <a class="el" href="class_entitas_1_1_entity.html">Entity</a> Reference Counting) and is used internally to prevent pooling retained entities. If you use retain manually you also have to release it manually at some point. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00378">378</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
+
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00347">347</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -684,7 +662,7 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Returns a cached string to describe the entity with the following format: Entity_{creationIndex}(*{retainCount})({list of components}) </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00446">446</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00393">393</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -710,7 +688,7 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>componentPools is set by the context which created the entity and is used to reuse removed components. Removed components will be pushed to the componentPool. Use entity.CreateComponent(index, type) to get a new or reusable component from the componentPool. Use entity.GetComponentPool(index) to get a componentPool for a specific component index. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00061">61</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00050">50</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -735,7 +713,7 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>The contextInfo is set by the context which created the entity and contains information about the context. It's used to provide better error messages. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00068">68</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00055">55</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -760,7 +738,7 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>Each entity has its own unique creationIndex which will be set by the context when you create the entity. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00048">48</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00037">37</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -785,19 +763,19 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 <p>The context manages the state of an entity. Active entities are enabled, destroyed entities are not. </p>
 
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00052">52</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00041">41</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Event Documentation</h2>
-<a id="ae19db05e0f3d0c58839653bcd92d7bcb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae19db05e0f3d0c58839653bcd92d7bcb">&sect;&nbsp;</a></span>OnComponentAdded</h2>
+<a id="ae32e6949d12be079ed24181dca78f928"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae32e6949d12be079ed24181dca78f928">&sect;&nbsp;</a></span>OnComponentAdded</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">EntityChanged Entitas.Entity.OnComponentAdded</td>
+          <td class="memname">EntityComponentChanged Entitas.Entity.OnComponentAdded</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -807,14 +785,14 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<a id="aea8769222eecc35c7af460f20c54bce5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea8769222eecc35c7af460f20c54bce5">&sect;&nbsp;</a></span>OnComponentRemoved</h2>
+<a id="a16e5c42416751abe64cfd86a9b9da887"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16e5c42416751abe64cfd86a9b9da887">&sect;&nbsp;</a></span>OnComponentRemoved</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">EntityChanged Entitas.Entity.OnComponentRemoved</td>
+          <td class="memname">EntityComponentChanged Entitas.Entity.OnComponentRemoved</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -824,14 +802,14 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<a id="a92b008c85886dd43b94d8cc4f0299507"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92b008c85886dd43b94d8cc4f0299507">&sect;&nbsp;</a></span>OnComponentReplaced</h2>
+<a id="a83ffb44d61d4c3c137bd9377c0866e6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83ffb44d61d4c3c137bd9377c0866e6a">&sect;&nbsp;</a></span>OnComponentReplaced</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ComponentReplaced Entitas.Entity.OnComponentReplaced</td>
+          <td class="memname">EntityComponentReplaced Entitas.Entity.OnComponentReplaced</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -858,9 +836,8 @@ Events</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
-<li>Entitas/Entitas/<a class="el" href="_entity_8cs_source.html">Entity.cs</a></li>
-<li>Entitas/Entitas/Serialization/Blueprints/<a class="el" href="_blueprint_entity_extension_8cs_source.html">BlueprintEntityExtension.cs</a></li>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>Entitas/Entitas/Entity/<a class="el" href="_entity_8cs_source.html">Entity.cs</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

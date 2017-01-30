@@ -1,14 +1,8 @@
 var searchData=
 [
-  ['getcomponent',['GetComponent',['../class_entitas_1_1_entity.html#a193c4b6412a24c9461424b060ab15506',1,'Entitas::Entity']]],
-  ['getcomponentindices',['GetComponentIndices',['../class_entitas_1_1_entity.html#a1cdd88f321c07186540515ed37d07d85',1,'Entitas::Entity']]],
-  ['getcomponentpool',['GetComponentPool',['../class_entitas_1_1_entity.html#a6fe0a1767dd738efda0dfb787ad9aaa7',1,'Entitas::Entity']]],
-  ['getcomponents',['GetComponents',['../class_entitas_1_1_entity.html#a78627b36ab878dde662b3d8267641ef2',1,'Entitas::Entity']]],
-  ['getentities',['GetEntities',['../class_entitas_1_1_context_extension.html#a4d8b507b1bfa163af31a68bacb8acf6f',1,'Entitas.ContextExtension.GetEntities()'],['../class_entitas_1_1_group.html#a5df13ffbcf1c1c04da246e7ce8fd8539',1,'Entitas.Group.GetEntities()']]],
-  ['getsingleentity',['GetSingleEntity',['../class_entitas_1_1_group.html#afd8fa504cf0ec39097931d90acd23592',1,'Entitas::Group']]],
-  ['gettrigger',['GetTrigger',['../class_entitas_1_1_reactive_system.html#a0d77a7d110e55068222b422c2060e885',1,'Entitas::ReactiveSystem']]],
-  ['group',['Group',['../class_entitas_1_1_group.html',1,'Entitas']]],
-  ['group',['Group',['../class_entitas_1_1_group.html#a281e23e9e99cd2ee19e3913f0b70156e',1,'Entitas::Group']]],
-  ['groupextension',['GroupExtension',['../class_entitas_1_1_group_extension.html',1,'Entitas']]],
-  ['groupsingleentityexception',['GroupSingleEntityException',['../class_entitas_1_1_group_single_entity_exception.html',1,'Entitas']]]
+  ['handleentity',['HandleEntity',['../class_entitas_1_1_group.html#a62e1246c95b7c4bcbd45c57e2e8acd0f',1,'Entitas::Group']]],
+  ['handleentitysilently',['HandleEntitySilently',['../class_entitas_1_1_group.html#a78fe027e276b048903cd9eae363eb2db',1,'Entitas::Group']]],
+  ['hasanycomponent',['HasAnyComponent',['../class_entitas_1_1_entity.html#a9e941463e3273213aee9a6d1071a8d6d',1,'Entitas::Entity']]],
+  ['hascomponent',['HasComponent',['../class_entitas_1_1_entity.html#a30a8ae77453c6878d45f3c1cbe31bb03',1,'Entitas::Entity']]],
+  ['hascomponents',['HasComponents',['../class_entitas_1_1_entity.html#aee5ffe85bc1fa4fb5dc21c0a13058ffe',1,'Entitas::Entity']]]
 ];

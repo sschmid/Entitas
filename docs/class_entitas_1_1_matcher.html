@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Entitas: Entitas.Matcher Class Reference</title>
+<title>Entitas: Entitas.Matcher&lt; TEntity &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,113 +82,25 @@ $(document).ready(function(){initNavTree('class_entitas_1_1_matcher.html','');})
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#properties">Properties</a> &#124;
-<a href="class_entitas_1_1_matcher-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Entitas.Matcher Class Reference</div>  </div>
+<div class="title">Entitas.Matcher&lt; TEntity &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for Entitas.Matcher:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="class_entitas_1_1_matcher.png" usemap="#Entitas.Matcher_map" alt=""/>
-  <map id="Entitas.Matcher_map" name="Entitas.Matcher_map">
-<area href="interface_entitas_1_1_i_all_of_matcher.html" alt="Entitas.IAllOfMatcher" shape="rect" coords="0,112,163,136"/>
-<area href="interface_entitas_1_1_i_any_of_matcher.html" alt="Entitas.IAnyOfMatcher" shape="rect" coords="173,112,336,136"/>
-<area href="interface_entitas_1_1_i_none_of_matcher.html" alt="Entitas.INoneOfMatcher" shape="rect" coords="346,112,509,136"/>
-<area href="interface_entitas_1_1_i_compound_matcher.html" alt="Entitas.ICompoundMatcher" shape="rect" coords="0,56,163,80"/>
-<area href="interface_entitas_1_1_i_compound_matcher.html" alt="Entitas.ICompoundMatcher" shape="rect" coords="173,56,336,80"/>
-<area href="interface_entitas_1_1_i_compound_matcher.html" alt="Entitas.ICompoundMatcher" shape="rect" coords="346,56,509,80"/>
-<area href="interface_entitas_1_1_i_matcher.html" alt="Entitas.IMatcher" shape="rect" coords="0,0,163,24"/>
-<area href="interface_entitas_1_1_i_matcher.html" alt="Entitas.IMatcher" shape="rect" coords="173,0,336,24"/>
-<area href="interface_entitas_1_1_i_matcher.html" alt="Entitas.IMatcher" shape="rect" coords="346,0,509,24"/>
-</map>
- </div></div>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:acc38592ee2cb09bbd14cce4130b0dc55"><td class="memItemLeft" align="right" valign="top"><a id="acc38592ee2cb09bbd14cce4130b0dc55"></a>
-<a class="el" href="interface_entitas_1_1_i_none_of_matcher.html">INoneOfMatcher</a>&#160;</td><td class="memItemRight" valign="bottom"><b>NoneOf</b> (params int[] indices)</td></tr>
-<tr class="separator:acc38592ee2cb09bbd14cce4130b0dc55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8aca555e5a2d23f3be11f2a9e251c9a"><td class="memItemLeft" align="right" valign="top"><a id="aa8aca555e5a2d23f3be11f2a9e251c9a"></a>
-<a class="el" href="interface_entitas_1_1_i_none_of_matcher.html">INoneOfMatcher</a>&#160;</td><td class="memItemRight" valign="bottom"><b>NoneOf</b> (params <a class="el" href="interface_entitas_1_1_i_matcher.html">IMatcher</a>[] matchers)</td></tr>
-<tr class="separator:aa8aca555e5a2d23f3be11f2a9e251c9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e96274e87dd56183213f235ca058c0f"><td class="memItemLeft" align="right" valign="top"><a id="a3e96274e87dd56183213f235ca058c0f"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Matches</b> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity)</td></tr>
-<tr class="separator:a3e96274e87dd56183213f235ca058c0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe627fd808bbd614f19f3eadd8ccd14f"><td class="memItemLeft" align="right" valign="top"><a id="afe627fd808bbd614f19f3eadd8ccd14f"></a>
-override bool&#160;</td><td class="memItemRight" valign="bottom"><b>Equals</b> (object obj)</td></tr>
-<tr class="separator:afe627fd808bbd614f19f3eadd8ccd14f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13ca2e70122771fcffe6599344d3c750"><td class="memItemLeft" align="right" valign="top"><a id="a13ca2e70122771fcffe6599344d3c750"></a>
-override int&#160;</td><td class="memItemRight" valign="bottom"><b>GetHashCode</b> ()</td></tr>
-<tr class="separator:a13ca2e70122771fcffe6599344d3c750"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56de37952db8b209702f09f70240d218"><td class="memItemLeft" align="right" valign="top"><a id="a56de37952db8b209702f09f70240d218"></a>
-override string&#160;</td><td class="memItemRight" valign="bottom"><b>ToString</b> ()</td></tr>
-<tr class="separator:a56de37952db8b209702f09f70240d218"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a04025c4da0d5e93324f1404af5bd6a7d"><td class="memItemLeft" align="right" valign="top"><a id="a04025c4da0d5e93324f1404af5bd6a7d"></a>
-static <a class="el" href="interface_entitas_1_1_i_all_of_matcher.html">IAllOfMatcher</a>&#160;</td><td class="memItemRight" valign="bottom"><b>AllOf</b> (params int[] indices)</td></tr>
-<tr class="separator:a04025c4da0d5e93324f1404af5bd6a7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0165f3355965ff11f8d71d74dada1367"><td class="memItemLeft" align="right" valign="top"><a id="a0165f3355965ff11f8d71d74dada1367"></a>
-static <a class="el" href="interface_entitas_1_1_i_all_of_matcher.html">IAllOfMatcher</a>&#160;</td><td class="memItemRight" valign="bottom"><b>AllOf</b> (params <a class="el" href="interface_entitas_1_1_i_matcher.html">IMatcher</a>[] matchers)</td></tr>
-<tr class="separator:a0165f3355965ff11f8d71d74dada1367"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16115123a90af69af4c755cf86411f30"><td class="memItemLeft" align="right" valign="top"><a id="a16115123a90af69af4c755cf86411f30"></a>
-static <a class="el" href="interface_entitas_1_1_i_any_of_matcher.html">IAnyOfMatcher</a>&#160;</td><td class="memItemRight" valign="bottom"><b>AnyOf</b> (params int[] indices)</td></tr>
-<tr class="separator:a16115123a90af69af4c755cf86411f30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afea7b60516bbd73a6cd6cf9f5004cd4a"><td class="memItemLeft" align="right" valign="top"><a id="afea7b60516bbd73a6cd6cf9f5004cd4a"></a>
-static <a class="el" href="interface_entitas_1_1_i_any_of_matcher.html">IAnyOfMatcher</a>&#160;</td><td class="memItemRight" valign="bottom"><b>AnyOf</b> (params <a class="el" href="interface_entitas_1_1_i_matcher.html">IMatcher</a>[] matchers)</td></tr>
-<tr class="separator:afea7b60516bbd73a6cd6cf9f5004cd4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:aa3fb719157862c0439d8342683e28832"><td class="memItemLeft" align="right" valign="top"><a id="aa3fb719157862c0439d8342683e28832"></a>
-string []&#160;</td><td class="memItemRight" valign="bottom"><b>componentNames</b></td></tr>
-<tr class="separator:aa3fb719157862c0439d8342683e28832"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
-Properties</h2></td></tr>
-<tr class="memitem:a0eae37dec3d073d8867f9f6a2304967c"><td class="memItemLeft" align="right" valign="top"><a id="a0eae37dec3d073d8867f9f6a2304967c"></a>
-int []&#160;</td><td class="memItemRight" valign="bottom"><b>indices</b><code> [get]</code></td></tr>
-<tr class="separator:a0eae37dec3d073d8867f9f6a2304967c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca55b58ee7053169d8db50e4415857af"><td class="memItemLeft" align="right" valign="top"><a id="aca55b58ee7053169d8db50e4415857af"></a>
-int []&#160;</td><td class="memItemRight" valign="bottom"><b>allOfIndices</b><code> [get]</code></td></tr>
-<tr class="separator:aca55b58ee7053169d8db50e4415857af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bcc41dc54652e742539b10f1e74659e"><td class="memItemLeft" align="right" valign="top"><a id="a3bcc41dc54652e742539b10f1e74659e"></a>
-int []&#160;</td><td class="memItemRight" valign="bottom"><b>anyOfIndices</b><code> [get]</code></td></tr>
-<tr class="separator:a3bcc41dc54652e742539b10f1e74659e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a11d4a0335bb5705efd8b1b6c84624e4d"><td class="memItemLeft" align="right" valign="top"><a id="a11d4a0335bb5705efd8b1b6c84624e4d"></a>
-int []&#160;</td><td class="memItemRight" valign="bottom"><b>noneOfIndices</b><code> [get]</code></td></tr>
-<tr class="separator:a11d4a0335bb5705efd8b1b6c84624e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header properties_interface_entitas_1_1_i_compound_matcher"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_entitas_1_1_i_compound_matcher')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_entitas_1_1_i_compound_matcher.html">Entitas.ICompoundMatcher</a></td></tr>
-<tr class="memitem:a5cd99e4cd25f2b742da426b71401bec0 inherit properties_interface_entitas_1_1_i_compound_matcher"><td class="memItemLeft" align="right" valign="top"><a id="a5cd99e4cd25f2b742da426b71401bec0"></a>
-int []&#160;</td><td class="memItemRight" valign="bottom"><b>allOfIndices</b><code> [get]</code></td></tr>
-<tr class="separator:a5cd99e4cd25f2b742da426b71401bec0 inherit properties_interface_entitas_1_1_i_compound_matcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89ec5e02eee02b59d232fb3b9d273310 inherit properties_interface_entitas_1_1_i_compound_matcher"><td class="memItemLeft" align="right" valign="top"><a id="a89ec5e02eee02b59d232fb3b9d273310"></a>
-int []&#160;</td><td class="memItemRight" valign="bottom"><b>anyOfIndices</b><code> [get]</code></td></tr>
-<tr class="separator:a89ec5e02eee02b59d232fb3b9d273310 inherit properties_interface_entitas_1_1_i_compound_matcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e4e868f39351f25ed9169715593f27d inherit properties_interface_entitas_1_1_i_compound_matcher"><td class="memItemLeft" align="right" valign="top"><a id="a7e4e868f39351f25ed9169715593f27d"></a>
-int []&#160;</td><td class="memItemRight" valign="bottom"><b>noneOfIndices</b><code> [get]</code></td></tr>
-<tr class="separator:a7e4e868f39351f25ed9169715593f27d inherit properties_interface_entitas_1_1_i_compound_matcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="inherit_header properties_interface_entitas_1_1_i_matcher"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_entitas_1_1_i_matcher')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_entitas_1_1_i_matcher.html">Entitas.IMatcher</a></td></tr>
-<tr class="memitem:a7479d79274d3dea4bc5b8339879c63bc inherit properties_interface_entitas_1_1_i_matcher"><td class="memItemLeft" align="right" valign="top"><a id="a7479d79274d3dea4bc5b8339879c63bc"></a>
-int []&#160;</td><td class="memItemRight" valign="bottom"><b>indices</b><code> [get]</code></td></tr>
-<tr class="separator:a7479d79274d3dea4bc5b8339879c63bc inherit properties_interface_entitas_1_1_i_matcher"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="_matcher_8cs_source.html#l00005">5</a> of file <a class="el" href="_matcher_8cs_source.html">Matcher.cs</a>.</p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+<div class="textblock"><div class="typeconstraint">
+<dl><dt><b>Type Constraints</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>class</em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>new()</em></td><td>&#160;</td></tr>
+</table>
+</dd>
+</dl>
+</div>
+
+<p>Definition at line <a class="el" href="_matcher_8cs_source.html#l00003">3</a> of file <a class="el" href="_matcher_8cs_source.html">Matcher.cs</a>.</p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>Entitas/Entitas/Matcher/<a class="el" href="_matcher_8cs_source.html">Matcher.cs</a></li>
-<li>Entitas/Entitas/Matcher/<a class="el" href="_matcher_equals_8cs_source.html">MatcherEquals.cs</a></li>
-<li>Entitas/Entitas/Matcher/<a class="el" href="_matcher_to_string_8cs_source.html">MatcherToString.cs</a></li>
-<li>Entitas/Entitas/Matcher/<a class="el" href="_matcher_static_8cs_source.html">MatcherStatic.cs</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
