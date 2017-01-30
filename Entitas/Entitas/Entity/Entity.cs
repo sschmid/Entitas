@@ -331,6 +331,9 @@ namespace Entitas {
             return componentPool.Count > 0 ? (T)componentPool.Pop() : new T();
         }
 
+
+        // TODO update tests to check if contains owner
+
         /// Returns the number of objects that retain this entity.
         public int retainCount { get { return owners.Count; } }
 

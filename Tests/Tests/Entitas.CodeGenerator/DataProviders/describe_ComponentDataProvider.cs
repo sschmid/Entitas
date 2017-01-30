@@ -7,6 +7,11 @@ using My.Namespace;
 
 class describe_ComponentDataProvider : nspec {
 
+    ComponentData getData<T>() {
+        var provider = new ComponentDataProvider(new Type[] { typeof(T) });
+        return (ComponentData)provider.GetData()[0];
+    }
+
     void when_providing() {
 
         context["component"] = () => {
@@ -16,7 +21,7 @@ class describe_ComponentDataProvider : nspec {
             ComponentData d = null;
 
             before = () => {
-                types = new[] { typeof(NameAgeComponent) };
+                types = new[] { typeof(MyNamespaceComponent) };
                 var provider = new ComponentDataProvider(types);
                 data = (ComponentData[])provider.GetData();
                 d = data[0];
@@ -26,14 +31,17 @@ class describe_ComponentDataProvider : nspec {
                 data.Length.should_be(1);
             };
 
-            it["gets full type name"] = () => {
-                d.GetFullTypeName().GetType().should_be(typeof(string));
-                d.GetFullTypeName().should_be(types[0].FullName);
+            it["gets component name"] = () => {
+                d.GetComponentName().GetType().should_be(typeof(string));
+                d.GetComponentName().should_be("MyNamespaceMyNamespace");
+
+                d.GetFullComponentName().GetType().should_be(typeof(string));
+                d.GetFullComponentName().should_be("MyNamespaceMyNamespaceComponent");
             };
 
-            it["gets member infos"] = () => {
-                d.GetMemberInfos().GetType().should_be(typeof(List<PublicMemberInfo>));
-                d.GetMemberInfos().Count.should_be(2);
+            it["gets full type name"] = () => {
+                d.GetFullTypeName().GetType().should_be(typeof(string));
+                d.GetFullTypeName().should_be(types[0].ToCompilableString());
             };
 
             it["gets contexts"] = () => {
@@ -47,54 +55,46 @@ class describe_ComponentDataProvider : nspec {
                 d.IsUnique().GetType().should_be(typeof(bool));
                 d.IsUnique().should_be_false();
 
-                var provider = new ComponentDataProvider(new Type[] { typeof(UniqueStandardComponent) });
-                data = (ComponentData[])provider.GetData();
-                data[0].IsUnique().should_be_true();
+                getData<UniqueStandardComponent>().IsUnique().should_be_true();
             };
 
-            it["gets unique prefix"] = () => {
-                d.GetUniqueComponentPrefix().GetType().should_be(typeof(string));
-                d.GetUniqueComponentPrefix().should_be("is");
-
-                var provider = new ComponentDataProvider(new Type[] { typeof(CustomPrefixFlagComponent) });
-                data = (ComponentData[])provider.GetData();
-                data[0].GetUniqueComponentPrefix().should_be("My");
+            it["gets member infos"] = () => {
+                d.GetMemberInfos().GetType().should_be(typeof(List<PublicMemberInfo>));
+                d.GetMemberInfos().Count.should_be(1);
             };
 
-            it["gets isComponent"] = () => {
+            it["gets generate component"] = () => {
                 d.ShouldGenerateComponent().GetType().should_be(typeof(bool));
                 d.ShouldGenerateComponent().should_be_false();
-
-                var provider = new ComponentDataProvider(new Type[] { typeof(ClassToGenerate) });
-                data = (ComponentData[])provider.GetData();
-                data[0].ShouldGenerateComponent().should_be_true();
-            };
-
-            it["gets generate methods"] = () => {
-                d.ShouldGenerateMethods().GetType().should_be(typeof(bool));
-                d.ShouldGenerateMethods().should_be_true();
-
-                var provider = new ComponentDataProvider(new Type[] { typeof(DontGenerateMethodsComponent) });
-                data = (ComponentData[])provider.GetData();
-                data[0].ShouldGenerateMethods().should_be_false();
+                d.ContainsKey(ShouldGenerateComponentComponentDataProviderExtension.COMPONENT_OBJECT_TYPE).should_be_false();
             };
 
             it["gets generate index"] = () => {
                 d.ShouldGenerateIndex().GetType().should_be(typeof(bool));
                 d.ShouldGenerateIndex().should_be_true();
 
-                var provider = new ComponentDataProvider(new Type[] { typeof(DontGenerateIndexComponent) });
-                data = (ComponentData[])provider.GetData();
-                data[0].ShouldGenerateIndex().should_be_false();
+                getData<DontGenerateIndexComponent>().ShouldGenerateIndex().should_be_false();
+            };
+
+            it["gets generate methods"] = () => {
+                d.ShouldGenerateMethods().GetType().should_be(typeof(bool));
+                d.ShouldGenerateMethods().should_be_true();
+
+                getData<DontGenerateMethodsComponent>().ShouldGenerateMethods().should_be_false();
             };
 
             it["gets hide in blueprints inspector"] = () => {
                 d.ShouldHideInBlueprintInspector().GetType().should_be(typeof(bool));
                 d.ShouldHideInBlueprintInspector().should_be_false();
 
-                var provider = new ComponentDataProvider(new Type[] { typeof(HideInBlueprintInspectorComponent) });
-                data = (ComponentData[])provider.GetData();
-                data[0].ShouldHideInBlueprintInspector().should_be_true();
+                getData<HideInBlueprintInspectorComponent>().ShouldHideInBlueprintInspector().should_be_true();
+            };
+
+            it["gets unique prefix"] = () => {
+                d.GetUniqueComponentPrefix().GetType().should_be(typeof(string));
+                d.GetUniqueComponentPrefix().should_be("is");
+
+                getData<CustomPrefixFlagComponent>().GetUniqueComponentPrefix().should_be("My");
             };
         };
 
@@ -115,14 +115,26 @@ class describe_ComponentDataProvider : nspec {
                 data.Length.should_be(1);
             };
 
-            it["gets full type name"] = () => {
-                d.GetFullTypeName().GetType().should_be(typeof(string));
-                d.GetFullTypeName().should_be(types[0].FullName.AddComponentSuffix());
+            it["gets component name"] = () => {
+                d.GetComponentName().GetType().should_be(typeof(string));
+
+                // Not the type, but the component that should be generated
+                // See: no namespace
+                d.GetComponentName().should_be("ClassToGenerate");
+
+                d.GetFullComponentName().GetType().should_be(typeof(string));
+
+                // Not the type, but the component that should be generated
+                // See: no namespace
+                d.GetFullComponentName().should_be("ClassToGenerateComponent");
             };
 
-            it["gets member infos"] = () => {
-                d.GetMemberInfos().GetType().should_be(typeof(List<PublicMemberInfo>));
-                d.GetMemberInfos().Count.should_be(1);
+            it["gets full type name"] = () => {
+                d.GetFullTypeName().GetType().should_be(typeof(string));
+
+                // Not the type, but the component that should be generated
+                // See: no namespace
+                d.GetFullTypeName().should_be("ClassToGenerateComponent");
             };
 
             it["gets contexts"] = () => {
@@ -137,19 +149,16 @@ class describe_ComponentDataProvider : nspec {
                 d.IsUnique().should_be_false();
             };
 
-            it["gets unique prefix"] = () => {
-                d.GetUniqueComponentPrefix().GetType().should_be(typeof(string));
-                d.GetUniqueComponentPrefix().should_be("is");
+            it["gets member infos"] = () => {
+                d.GetMemberInfos().GetType().should_be(typeof(List<PublicMemberInfo>));
+                d.GetMemberInfos().Count.should_be(1);
+                d.GetMemberInfos()[0].type.should_be(typeof(ClassToGenerate));
             };
 
-            it["gets isComponent"] = () => {
+            it["gets generate component"] = () => {
                 d.ShouldGenerateComponent().GetType().should_be(typeof(bool));
                 d.ShouldGenerateComponent().should_be_true();
-            };
-
-            it["gets generate methods"] = () => {
-                d.ShouldGenerateMethods().GetType().should_be(typeof(bool));
-                d.ShouldGenerateMethods().should_be_true();
+                d.GetObjectType().should_be(typeof(ClassToGenerate).ToCompilableString());
             };
 
             it["gets generate index"] = () => {
@@ -157,13 +166,21 @@ class describe_ComponentDataProvider : nspec {
                 d.ShouldGenerateIndex().should_be_true();
             };
 
+            it["gets generate methods"] = () => {
+                d.ShouldGenerateMethods().GetType().should_be(typeof(bool));
+                d.ShouldGenerateMethods().should_be_true();
+            };
+
             it["gets hide in blueprints inspector"] = () => {
                 d.ShouldHideInBlueprintInspector().GetType().should_be(typeof(bool));
                 d.ShouldHideInBlueprintInspector().should_be_false();
 
-                var provider = new ComponentDataProvider(new Type[] { typeof(ClassHideInBlueprintsInspector) });
-                data = (ComponentData[])provider.GetData();
-                data[0].ShouldHideInBlueprintInspector().should_be_true();
+                getData<ClassHideInBlueprintsInspector>().ShouldHideInBlueprintInspector().should_be_true();
+            };
+
+            it["gets unique prefix"] = () => {
+                d.GetUniqueComponentPrefix().GetType().should_be(typeof(string));
+                d.GetUniqueComponentPrefix().should_be("is");
             };
         };
 
@@ -174,6 +191,43 @@ class describe_ComponentDataProvider : nspec {
                 var provider = new ComponentDataProvider(types);
                 var data = provider.GetData();
                 data.Length.should_be(types.Length);
+            };
+        };
+
+        context["multiple custom component names"] = () => {
+            
+            Type[] types = null;
+            ComponentData[] data = null;
+            ComponentData d1 = null;
+            ComponentData d2 = null;
+
+            before = () => {
+                types = new[] { typeof(CustomName) };
+                var provider = new ComponentDataProvider(types);
+                data = (ComponentData[])provider.GetData();
+                d1 = data[0];
+                d2 = data[1];
+            };
+
+            it["get data"] = () => {
+                data.Length.should_be(2);
+            };
+
+            it["creates data for each custom component name"] = () => {
+                d1.GetComponentName().should_be("NewCustomNameComponent1");
+                d2.GetComponentName().should_be("NewCustomNameComponent2");
+
+                d1.GetObjectType().should_be(types[0].ToCompilableString());
+                d2.GetObjectType().should_be(types[0].ToCompilableString());
+
+                d1.GetFullTypeName().should_be("NewCustomNameComponent1Component");
+                d2.GetFullTypeName().should_be("NewCustomNameComponent2Component");
+
+                d1.GetComponentName().should_be("NewCustomNameComponent1");
+                d2.GetComponentName().should_be("NewCustomNameComponent2");
+
+                d1.GetFullComponentName().should_be("NewCustomNameComponent1Component");
+                d2.GetFullComponentName().should_be("NewCustomNameComponent2Component");
             };
         };
     }

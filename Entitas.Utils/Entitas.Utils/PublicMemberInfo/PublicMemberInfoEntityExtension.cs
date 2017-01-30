@@ -1,5 +1,4 @@
 using Entitas.Api;
-using Entitas.Utils;
 
 namespace Entitas.Utils {
 

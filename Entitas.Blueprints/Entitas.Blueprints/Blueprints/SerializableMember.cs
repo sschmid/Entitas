@@ -4,6 +4,7 @@ namespace Entitas.Blueprints {
 
     [Serializable]
     public class SerializableMember {
+
         public string name;
         public object value;
 

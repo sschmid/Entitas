@@ -1,5 +1,4 @@
-﻿using Entitas;
-using Entitas.Api;
+﻿using Entitas.Api;
 
 public class TestCleanupSystem : ICleanupSystem {
 

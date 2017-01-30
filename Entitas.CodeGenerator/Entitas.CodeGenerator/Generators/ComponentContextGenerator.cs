@@ -7,7 +7,7 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentContextGenerator : ICodeGenerator {
 
-        const string normalComponentTemplate =
+        const string standardComponentTemplate =
 @"using Entitas.Api;
 
 public partial class ${Context}Context {
@@ -87,7 +87,7 @@ public partial class ${Context}Context {
             var memberInfos = data.GetMemberInfos();
             var template = memberInfos.Count == 0
                                       ? flagComponentTemplate
-                                      : normalComponentTemplate;
+                                      : standardComponentTemplate;
 
             var fileContent = template
                 .Replace("${Context}", contextName)
@@ -100,8 +100,9 @@ public partial class ${Context}Context {
                 .Replace("${methodArgs}", getMethodArgs(memberInfos));
 
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar + "Components" +
-                Path.DirectorySeparatorChar + "Unique" + contextName + data.GetFullComponentName() + ".cs",
+                contextName + Path.DirectorySeparatorChar +
+                "Components" + Path.DirectorySeparatorChar +
+                "Unique" + contextName + data.GetFullComponentName() + ".cs",
                 fileContent,
                 GetType().FullName
             );

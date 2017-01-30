@@ -9,7 +9,7 @@ namespace Entitas.Api {
     /// [MyContextName, MyOtherContextName]: You can make this component to be
     /// available only in the specified contexts.
     /// The code generator can generate these attributes for you.
-    /// More available Attributes can be found in CodeGenerator/Attributes.
+    /// More available Attributes can be found in Entitas.CodeGenerator.Api/Attributes.
     public interface IComponent {
     }
 }

@@ -39,6 +39,7 @@
     <Compile Include="Entitas.Blueprints\Blueprints\BlueprintEntityExtension.cs" />
     <Compile Include="Entitas.Blueprints\Blueprints\ComponentBlueprint.cs" />
     <Compile Include="Entitas.Blueprints\Blueprints\SerializableMember.cs" />
+    <Compile Include="Entitas.Blueprints\Blueprints\ComponentBlueprintException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Api\Entitas.Api.csproj">

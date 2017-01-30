@@ -28,7 +28,6 @@ namespace Entitas {
         protected abstract Collector<TEntity> GetTrigger(IContext<TEntity> context);
 
         /// This will exclude all entities which don't pass the filter.
-        // TODO UNIT TEST
         protected abstract bool Filter(TEntity entity);
 
         protected abstract void Execute(List<TEntity> entities);

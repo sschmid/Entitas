@@ -5,6 +5,7 @@ namespace Entitas.Migration {
     class MainClass {
         public static void Main(string[] args) {
 
+            // TODO Find all migrations with reflection and sort them
             var allMigrations = new IMigration[] {
                 new M0180(),
                 new M0190(),

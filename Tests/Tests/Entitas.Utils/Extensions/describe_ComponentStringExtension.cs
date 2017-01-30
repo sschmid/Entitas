@@ -20,7 +20,7 @@ class describe_ComponentStringExtension : nspec {
             };
         };
 
-        context["when removeing ComponentSuffix"] = () => {
+        context["when removing ComponentSuffix"] = () => {
 
             it["doesn't change string when not ending with ComponentSuffix"] = () => {
                 const string str = "Position";
