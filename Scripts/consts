@@ -6,20 +6,28 @@ ROOT="${SCRIPTS}/.."
 UNITY="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
 PROJECT_NAME="Entitas"
 
-CG="${PROJECT_NAME}.CodeGenerator"
-MIG="${PROJECT_NAME}.Migration"
+PLUGINS="${ROOT}/Plugins"
+
+ES="${PROJECT_NAME}"
+BP="${ES}.Blueprints"
+CG="${ES}.CodeGenerator"
+CGA="${ES}.CodeGenerator.Api"
+MIG="${ES}.Migration"
+
+EU="${ES}.Unity"
+UBP="${EU}.Blueprints"
+UCG="${EU}.CodeGenerator"
+UMIG="${EU}.Migration"
+UVD="${EU}.VisualDebugging"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 SOLUTION="${ROOT}/${PROJECT_NAME}.sln"
 PROJECT_VERSION=`cat ${ROOT}/${PROJECT_NAME}/${PROJECT_NAME}/version`
 
-UNITY_PROJECT="${PROJECT_NAME}.Unity"
-UNITY_LIBS="${UNITY_PROJECT}/Assets/Libraries"
-FULL_UNITY_PROJECT="${ROOT}/${UNITY_PROJECT}/Assets/../"
 UNITY_EXECUTE_METHOD="Commands.GenerateCSharpProject"
 
-TEST_PROJECT="${ROOT}/Tests/Tests.csproj"
-TEST_RUNNER="${ROOT}/Tests/bin/Release/Tests.exe"
+TEST_PROJECT="${ROOT}/Tests/Tests/Tests.csproj"
+TEST_RUNNER="${ROOT}/Tests/Tests/bin/Release/Tests.exe"
 
 # build
 BUILD="${ROOT}/Build"

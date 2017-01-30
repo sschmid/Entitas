@@ -7,35 +7,46 @@ ${SCRIPTS}/test
 ${SCRIPTS}/docs
 
 # collect
-cp -v "${ROOT}/${MIG}/bin/Release/Entitas.Migration.exe" "${BUILD_SRC}/MigrationAssistant.exe"
+cp -v "${PLUGINS}/${MIG}/bin/Release/Entitas.Migration.exe" "${BUILD_SRC}/MigrationAssistant.exe"
 cp -v "${ROOT}/README.md" "$BUILD_SRC/README.md"
 cp -v "${ROOT}/RELEASE_NOTES.md" "$BUILD_SRC/RELEASE_NOTES.md"
 cp -v "${ROOT}/EntitasUpgradeGuide.md" "$BUILD_SRC/EntitasUpgradeGuide.md"
 cp -v "${ROOT}/LICENSE.txt" "$BUILD_SRC/LICENSE.txt"
 
 TMP_DIR="${BUILD}/tmp"
+TMP_PLUGINS="${TMP_DIR}/Plugins"
 
-# create zip
-mkdir $TMP_DIR
-cp -r "${BUILD_SRC}/${PROJECT_NAME}" $TMP_DIR
+# create c# zip
+mkdir $TMP_DIR $TMP_PLUGINS
+cp -r "${BUILD_SRC}/${ES}" $TMP_DIR
+cp -r "${BUILD_SRC}/${CG}" $TMP_PLUGINS
+cp -r "${BUILD_SRC}/${CGA}" $TMP_DIR
+cp -r "${BUILD_SRC}/${MIG}" $TMP_PLUGINS
 cp "${BUILD_SRC}/"* $TMP_DIR || true
-cp -r "$BUILD_DOCS/html/" "${TMP_DIR}/Documentation"
+
+cp -r $DOCS "${TMP_DIR}/Documentation"
 pushd $TMP_DIR > /dev/null
   zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-CSharp.zip" ./
 popd > /dev/null
 rm -rf $TMP_DIR
 
 # create unity zip
-mkdir $TMP_DIR
-cp -r "${BUILD_SRC}/"* $TMP_DIR || true
-EDITOR="${TMP_DIR}/Editor"
-mkdir $EDITOR
-mv "${TMP_DIR}/Entitas/CodeGenerator/"* $EDITOR
-mv {"${EDITOR}/Attributes",$EDITOR} "${TMP_DIR}/Entitas/CodeGenerator"
-mkdir "${TMP_DIR}/${PROJECT_NAME}/Migration/"
-mv "${TMP_DIR}/${MIG}/" "${TMP_DIR}/${PROJECT_NAME}/Migration/Editor/"
-mv "${TMP_DIR}/${UNITY_PROJECT}/" "${TMP_DIR}/${PROJECT_NAME}/Unity/"
-cp -r "$BUILD_DOCS/html/" "${TMP_DIR}/Documentation"
+TMP_EDITOR="${TMP_PLUGINS}/Editor"
+mkdir $TMP_DIR $TMP_PLUGINS $TMP_EDITOR
+cp -r "${BUILD_SRC}/${ES}" $TMP_DIR
+cp -r "${BUILD_SRC}/${CG}" $TMP_EDITOR
+cp -r "${BUILD_SRC}/${CGA}" $TMP_PLUGINS
+cp -r "${BUILD_SRC}/${MIG}" $TMP_EDITOR
+
+cp -r "${BUILD_SRC}/${EU}" $TMP_PLUGINS
+cp -r "${BUILD_SRC}/${UBP}" $TMP_PLUGINS
+cp -r "${BUILD_SRC}/${UCG}" $TMP_PLUGINS
+cp -r "${BUILD_SRC}/${UMIG}" $TMP_PLUGINS
+cp -r "${BUILD_SRC}/${UVD}" $TMP_PLUGINS
+
+cp "${BUILD_SRC}/"* $TMP_DIR || true
+
+cp -r $DOCS "${TMP_DIR}/Documentation"
 pushd $TMP_DIR > /dev/null
   zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-Unity.zip" ./
 popd > /dev/null

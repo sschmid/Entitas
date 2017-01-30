@@ -9,13 +9,62 @@ rm -rf $BUILD
 mkdir $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
 
 # collect sources
-mkdir "${BUILD_SRC}/${UNITY_PROJECT}"
-cpe "${ROOT}/${PROJECT_NAME}/${PROJECT_NAME}" $BUILD_SRC
-cpe "${ROOT}/${MIG}/${MIG}" $BUILD_SRC
-cpe "${ROOT}/${UNITY_PROJECT}/Assets/${PROJECT_NAME}/Unity/" "${BUILD_SRC}/${UNITY_PROJECT}"
+cpe "${ROOT}/${ES}/${ES}" $BUILD_SRC
+
+cpe "${PLUGINS}/${BP}/${BP}" $BUILD_SRC
+cpe "${PLUGINS}/${CG}/${CG}" $BUILD_SRC
+cpe "${PLUGINS}/${CGA}/${CGA}" $BUILD_SRC
+cpe "${PLUGINS}/${MIG}/${MIG}" $BUILD_SRC
+
+cpe "${PLUGINS}/${EU}/Assets/${EU}/" "${BUILD_SRC}/${EU}"
+cpe "${PLUGINS}/${UBP}/Assets/${UBP}/" "${BUILD_SRC}/${UBP}"
+cpe "${PLUGINS}/${UCG}/Assets/${UCG}/" "${BUILD_SRC}/${UCG}"
+cpe "${PLUGINS}/${UMIG}/Assets/${UMIG}/" "${BUILD_SRC}/${UMIG}"
+cpe "${PLUGINS}/${UVD}/Assets/${UVD}/" "${BUILD_SRC}/${UVD}"
 
 # update project dependencies
-rm -rf "${ROOT}/${UNITY_LIBS}"
-mkdir "${ROOT}/${UNITY_LIBS}"
-cpe "${BUILD_SRC}/${PROJECT_NAME}" "${ROOT}/${UNITY_LIBS}"
-cpe "${BUILD_SRC}/${MIG}" "${ROOT}/${UNITY_LIBS}"
+
+# Entitas.Unity.Blueprints
+libDir="${PLUGINS}/${EU}/Assets/Libraries"
+rm -rf ${libDir}
+mkdir ${libDir}
+cpe "${BUILD_SRC}/${ES}" ${libDir}
+
+# Entitas.Unity.Blueprints
+libDir="${PLUGINS}/${UBP}/Assets/Libraries"
+rm -rf ${libDir}
+mkdir ${libDir}
+cpe "${BUILD_SRC}/${ES}" ${libDir}
+cpe "${BUILD_SRC}/${BP}" ${libDir}
+cpe "${BUILD_SRC}/${CG}" "${libDir}/Editor"
+cpe "${BUILD_SRC}/${CGA}" ${libDir}
+cpe "${BUILD_SRC}/${EU}" ${libDir}
+cpe "${BUILD_SRC}/${UCG}" ${libDir}
+cpe "${BUILD_SRC}/${UVD}" ${libDir}
+
+# Entitas.Unity.CodeGenerator
+libDir="${PLUGINS}/${UCG}/Assets/Libraries"
+rm -rf ${libDir}
+mkdir ${libDir}
+cpe "${BUILD_SRC}/${ES}" ${libDir}
+cpe "${BUILD_SRC}/${CG}" "${libDir}/Editor"
+cpe "${BUILD_SRC}/${CGA}" ${libDir}
+cpe "${BUILD_SRC}/${EU}" ${libDir}
+
+# Entitas.Unity.Migration
+libDir="${PLUGINS}/${UMIG}/Assets/Libraries"
+rm -rf ${libDir}
+mkdir ${libDir}
+cpe "${BUILD_SRC}/${ES}" ${libDir}
+cpe "${BUILD_SRC}/${MIG}" ${libDir}
+cpe "${BUILD_SRC}/${EU}" ${libDir}
+
+# Entitas.Unity.VisualDebugging
+libDir="${PLUGINS}/${UVD}/Assets/Libraries"
+rm -rf ${libDir}
+mkdir ${libDir}
+cpe "${BUILD_SRC}/${ES}" ${libDir}
+cpe "${BUILD_SRC}/${CG}" "${libDir}/Editor"
+cpe "${BUILD_SRC}/${CGA}" ${libDir}
+cpe "${BUILD_SRC}/${EU}" ${libDir}
+cpe "${BUILD_SRC}/${UCG}" ${libDir}
