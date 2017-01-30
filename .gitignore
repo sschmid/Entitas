@@ -27,6 +27,23 @@ test-results
 # Custom
 Build/*
 !Build/deploy/
-Entitas.Unity/Entitas.Unity.sln
-Entitas.Unity/Assets/Libraries
-Entitas.Unity/Assets/Libraries.meta
+
+Plugins/Entitas.Unity/Entitas.Unity.sln
+Plugins/Entitas.Unity/Assets/Libraries
+Plugins/Entitas.Unity/Assets/Libraries.meta
+
+Plugins/Entitas.Unity.CodeGenerator/Entitas.Unity.CodeGeneration.sln
+Plugins/Entitas.Unity.CodeGenerator/Assets/Libraries
+Plugins/Entitas.Unity.CodeGenerator/Assets/Libraries.meta
+
+Plugins/Entitas.Unity.Blueprints/Entitas.Unity.Blueprints.sln
+Plugins/Entitas.Unity.Blueprints/Assets/Libraries
+Plugins/Entitas.Unity.Blueprints/Assets/Libraries.meta
+
+Plugins/Entitas.Unity.Migration/Entitas.Unity.Migration.sln
+Plugins/Entitas.Unity.Migration/Assets/Libraries
+Plugins/Entitas.Unity.Migration/Assets/Libraries.meta
+
+Plugins/Entitas.Unity.VisualDebugging/Entitas.Unity.Migration.sln
+Plugins/Entitas.Unity.VisualDebugging/Assets/Libraries
+Plugins/Entitas.Unity.VisualDebugging/Assets/Libraries.meta
