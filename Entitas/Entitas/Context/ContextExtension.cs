@@ -1,6 +1,3 @@
-using Entitas.Api;
-using Entitas.Utils;
-
 namespace Entitas {
 
     public static class ContextExtension {

@@ -65,6 +65,37 @@
     <Compile Include="Entitas\Collector\Collector.cs" />
     <Compile Include="Entitas\Collector\CollectorException.cs" />
     <Compile Include="Entitas\EntitasCache.cs" />
+    <Compile Include="Entitas\Interfaces\Matcher\IAllOfMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Matcher\IAnyOfMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Matcher\ICompoundMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Matcher\IMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Matcher\INoneOfMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\ICleanupSystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\IExecuteSystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\IInitializeSystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\IReactiveSystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\ISystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\ITearDownSystem.cs" />
+    <Compile Include="Entitas\Interfaces\IComponent.cs" />
+    <Compile Include="Entitas\Interfaces\IContext.cs" />
+    <Compile Include="Entitas\Interfaces\IContexts.cs" />
+    <Compile Include="Entitas\Interfaces\IEntity.cs" />
+    <Compile Include="Entitas\Interfaces\IEntityIndex.cs" />
+    <Compile Include="Entitas\Interfaces\IGroup.cs" />
+    <Compile Include="Entitas\Context\ContextInfo.cs" />
+    <Compile Include="Entitas\EntitasException.cs" />
+    <Compile Include="Entitas\Utils\Caching\ObjectCache.cs" />
+    <Compile Include="Entitas\Utils\Caching\ObjectPool.cs" />
+    <Compile Include="Entitas\Utils\Configuration\EntitasPreferences.cs" />
+    <Compile Include="Entitas\Utils\Configuration\EntitasPreferencesConfig.cs" />
+    <Compile Include="Entitas\Utils\Configuration\Properties.cs" />
+    <Compile Include="Entitas\Utils\PublicMemberInfo\AttributeInfo.cs" />
+    <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfo.cs" />
+    <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfoEntityExtension.cs" />
+    <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfoExtension.cs" />
+    <Compile Include="Entitas\Extensions\ComponentStringExtension.cs" />
+    <Compile Include="Entitas\Extensions\InterfaceTypeExtension.cs" />
+    <Compile Include="Entitas\Extensions\TypeSerializationExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -79,15 +110,12 @@
     <Folder Include="Entitas\Context\Exceptions\" />
     <Folder Include="Entitas\Entity\Exceptions\" />
     <Folder Include="Entitas\Collector\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entitas.Utils\Entitas.Utils.csproj">
-      <Project>{9FEAE5CD-2FA2-44BE-BFED-CF3569182C7F}</Project>
-      <Name>Entitas.Utils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.Api\Entitas.Api.csproj">
-      <Project>{124A01F2-AB29-438A-BB4A-1CDA48A8E5C9}</Project>
-      <Name>Entitas.Api</Name>
-    </ProjectReference>
+    <Folder Include="Entitas\Interfaces\" />
+    <Folder Include="Entitas\Interfaces\Matcher\" />
+    <Folder Include="Entitas\Interfaces\Systems\" />
+    <Folder Include="Entitas\Utils\" />
+    <Folder Include="Entitas\Utils\Caching\" />
+    <Folder Include="Entitas\Utils\Configuration\" />
+    <Folder Include="Entitas\Utils\PublicMemberInfo\" />
   </ItemGroup>
 </Project>

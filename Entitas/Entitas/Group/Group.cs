@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Entitas.Api;
 
 namespace Entitas {
 

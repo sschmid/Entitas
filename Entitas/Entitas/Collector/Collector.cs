@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Text;
-using Entitas.Api;
 
 namespace Entitas {
 

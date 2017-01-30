@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Entitas.CodeGenerator</RootNamespace>
+    <AssemblyName>Entitas.CodeGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entitas.CodeGenerator\DataProviders\CodeGeneratorData.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\BlueprintsGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\PostProcessors\AddFileHeaderPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGenerator\PostProcessors\ICodeGenFilePostProcessor.cs" />
+    <Compile Include="Entitas.CodeGenerator\PostProcessors\NewLinePostProcessor.cs" />
+    <Compile Include="Entitas.CodeGenerator\PostProcessors\WriteToDiskPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGenerator\CodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\CodeGeneratorStringExtensions.cs" />
+    <Compile Include="Entitas.CodeGenerator\CodeGeneratorConfig.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ICodeGeneratorDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ICodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\ComponentData.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\ComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ComponentTypeComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\IComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\MemberInfosComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ContextsComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\IsUniqueComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\UniquePrefixComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ShouldGenerateComponentComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ShouldGenerateMethodsComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ShouldGenerateComponentIndexComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ShouldHideInBlueprintInspectorComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\BlueprintData\BlueprintData.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\BlueprintData\BlueprintDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ContextData\ContextData.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ContextData\ContextDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\CodeGenFile.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\ComponentNameComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentContextGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentEntityGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentsLookupGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ContextAttributeGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ContextGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\EntityGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\MatcherGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas.CodeGenerator\" />
+    <Folder Include="Entitas.CodeGenerator\DataProviders\" />
+    <Folder Include="Entitas.CodeGenerator\Generators\" />
+    <Folder Include="Entitas.CodeGenerator\PostProcessors\" />
+    <Folder Include="Entitas.CodeGenerator\DataProviders\ComponentData\" />
+    <Folder Include="Entitas.CodeGenerator\DataProviders\ComponentData\Providers\" />
+    <Folder Include="Entitas.CodeGenerator\DataProviders\BlueprintData\" />
+    <Folder Include="Entitas.CodeGenerator\DataProviders\ContextData\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGenerator.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,5 +1,3 @@
-using Entitas.Api;
-
 namespace Entitas {
 
     public class EntityIsAlreadyRetainedByOwnerException : EntitasException {

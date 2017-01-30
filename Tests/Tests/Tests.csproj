@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E2247925-03D6-40FC-AFA4-D7DA01FA6F4E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Tests</RootNamespace>
+    <AssemblyName>Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine">
+      <HintPath>Libraries\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="NSpec">
+      <HintPath>Libraries\NSpec.dll</HintPath>
+    </Reference>
+    <Reference Include="NSpecRunner">
+      <HintPath>Libraries\NSpecRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>Libraries\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tests\TestExtensions.cs" />
+    <Compile Include="Tests\check_namespaces.cs" />
+    <Compile Include="GenerateTestComponents.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_SystemInfo.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_VisualDebuggingConfig.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestInitializeSystem.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestExecuteSystem.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestReactiveSystem.cs" />
+    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystems.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystems.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\SystemInfo.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\SystemInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Plugins\Entitas.Unity\Assets\Entitas\Unity\VisualDebugging\DebugSystems\Feature.cs">
+      <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\Feature.cs</Link>
+    </Compile>
+    <Compile Include="TestRunner.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestCleanupSystem.cs" />
+    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestTearDownSystem.cs" />
+    <Compile Include="Fixtures\Systems\CleanupSystemSpy.cs" />
+    <Compile Include="Fixtures\Systems\ExecuteSystemSpy.cs" />
+    <Compile Include="Fixtures\Systems\InitializeSystemSpy.cs" />
+    <Compile Include="Fixtures\Systems\ReactiveSystemSpy.cs" />
+    <Compile Include="Fixtures\Systems\TearDownSystemSpy.cs" />
+    <Compile Include="Fixtures\AnotherComponentInterface.cs" />
+    <Compile Include="Fixtures\Components.cs" />
+    <Compile Include="Fixtures\NestedClass.cs" />
+    <Compile Include="Fixtures\SomeEnum.cs" />
+    <Compile Include="Fixtures\MyTestContext.cs" />
+    <Compile Include="Tests\Entitas\describe_Collector.cs" />
+    <Compile Include="Tests\Entitas\describe_Context.cs" />
+    <Compile Include="Tests\Entitas\describe_EntitasCache.cs" />
+    <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
+    <Compile Include="Tests\Entitas\describe_Entity.cs" />
+    <Compile Include="Tests\Entitas\describe_EntityIndex.cs" />
+    <Compile Include="Tests\Entitas\describe_Group.cs" />
+    <Compile Include="Tests\Entitas\describe_Matcher.cs" />
+    <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
+    <Compile Include="Tests\Entitas\describe_Systems.cs" />
+    <Compile Include="Tests\Entitas.Api\describe_ContextInfo.cs" />
+    <Compile Include="Tests\Entitas.Api\describe_EntitasException.cs" />
+    <Compile Include="Tests\Entitas.Blueprints\describe_Blueprints.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_BlueprintDataProvider.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_CodeGeneratorData.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_ComponentDataProvider.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_ContextDataProvider.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGeneratorConfig.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGenFile.cs" />
+    <Compile Include="Tests\Entitas.Utils\Caching\describe_ObjectCache.cs" />
+    <Compile Include="Tests\Entitas.Utils\Caching\describe_ObjectPool.cs" />
+    <Compile Include="Tests\Entitas.Utils\Configuration\describe_EntitasPreferencesConfig.cs" />
+    <Compile Include="Tests\Entitas.Utils\Configuration\describe_Properties.cs" />
+    <Compile Include="Tests\Entitas.Utils\Extensions\describe_ComponentStringExtension.cs" />
+    <Compile Include="Tests\Entitas.Utils\Extensions\describe_InterfaceTypeExtension.cs" />
+    <Compile Include="Tests\Entitas.Utils\Extensions\describe_TypeSerializationExtension.cs" />
+    <Compile Include="Tests\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfo.cs" />
+    <Compile Include="Tests\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfoEntityExtension.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0180.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0190.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0220.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0260.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0300.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0320.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0360_1.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_M0360_2.cs" />
+    <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Tests\" />
+    <Folder Include="Libraries\" />
+    <Folder Include="Tests\Entitas.Unity\" />
+    <Folder Include="Linked Libraries\" />
+    <Folder Include="Tests\Entitas.Unity\VisualDebugging\" />
+    <Folder Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\" />
+    <Folder Include="Fixtures\" />
+    <Folder Include="Fixtures\Systems\" />
+    <Folder Include="Tests\Entitas\" />
+    <Folder Include="Tests\Entitas.Api\" />
+    <Folder Include="Tests\Entitas.CodeGenerator\" />
+    <Folder Include="Tests\Entitas.Utils\" />
+    <Folder Include="Tests\Entitas.Migration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Libraries\UnityEngine.dll" />
+    <None Include="Libraries\NSpec.dll" />
+    <None Include="Libraries\NSpecRunner.dll" />
+    <None Include="Libraries\nunit.framework.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Plugins\Entitas.Blueprints\Entitas.Blueprints.csproj">
+      <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
+      <Name>Entitas.Blueprints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Plugins\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
+      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
+      <Name>Entitas.CodeGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Plugins\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGenerator.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Plugins\Entitas.Migration\Entitas.Migration.csproj">
+      <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
+      <Name>Entitas.Migration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tests.Fixtures\Tests.Fixtures.csproj">
+      <Project>{6F01CC45-F951-43A5-923E-D3778F9DD435}</Project>
+      <Name>Tests.Fixtures</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
