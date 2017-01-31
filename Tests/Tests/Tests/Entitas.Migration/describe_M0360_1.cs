@@ -7,7 +7,7 @@ class describe_M0360_1 : nspec {
 
     void when_migrating() {
 
-        var dir = TestExtensions.GetProjectRoot() + "/Tests/Tests/Entitas.Migration/Fixtures/M0360";
+        var dir = TestExtensions.GetProjectRoot() + "/Tests/Tests/Tests/Entitas.Migration/Fixtures/M0360";
 
         IMigration m = null;
 

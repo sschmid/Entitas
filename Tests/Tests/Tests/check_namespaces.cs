@@ -18,30 +18,22 @@ class check_namespaces : nspec {
             sourceFiles.Count.should_be_less_than(200);
         };
 
+        System.Console.WriteLine("sourceFiles: " + sourceFiles.Count);
+
         const string namespacePattern = @"(?:^namespace)\s.*\b";
         string expectedNamespacePattern = string.Format(@"[^\{0}]*", Path.DirectorySeparatorChar);
 
         var entitasSourceDir = dir("Entitas", "Entitas");
-        var entitasUnitySourceDir = dir("Entitas.Unity", "Assets", "Entitas", "Unity");
+        var pluginsDir = dir("Plugins");
 
         var each = new Each<string, string, string>();
 
         foreach(var file in sourceFiles) {
-
-            string expectedNamespace;
-
             var fileName = file.Key
-                .Replace(dir(projectRoot), string.Empty)
-                .Replace(entitasSourceDir + "CodeGenerator", "Entitas.CodeGenerator")
-                .Replace(entitasSourceDir + dir("Serialization", "Blueprints"), "Entitas.Serialization.Blueprints/")
-                .Replace(entitasSourceDir + dir("Serialization", "Configuration"), "Entitas.Serialization.Configuration/")
-                .Replace(entitasSourceDir + "Serialization", "Entitas.Serialization")
-
-                .Replace(entitasUnitySourceDir + "CodeGenerator", "Entitas.Unity.CodeGenerator")
-                .Replace(entitasUnitySourceDir + "VisualDebugging", "Entitas.Unity.VisualDebugging")
-                .Replace(entitasUnitySourceDir + dir("Serialization", "Blueprints"), "Entitas.Unity.Serialization.Blueprints/")
-                .Replace(entitasUnitySourceDir + "Migration", "Entitas.Unity.Migration");
-
+                               .Replace(dir(projectRoot), string.Empty)
+                               .Replace(pluginsDir, string.Empty);
+                
+            string expectedNamespace;
             if(file.Key.Contains(typeof(Entitas.Feature).Name)) {
                 expectedNamespace = "Entitas";
             } else {

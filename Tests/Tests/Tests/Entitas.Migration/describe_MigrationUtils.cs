@@ -7,7 +7,7 @@ class describe_MigrationUtils : nspec {
 
     void when_migrating() {
 
-        var dir = TestExtensions.GetProjectRoot() + "/Tests/Tests/Entitas.Migration/Fixtures/M0180";
+        var dir = TestExtensions.GetProjectRoot() + "/Tests/Tests/Tests/Entitas.Migration/Fixtures/M0180";
 
         it["gets only *.cs source files"] = () => {
             var files = MigrationUtils.GetFiles(dir);
