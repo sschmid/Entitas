@@ -405,12 +405,14 @@ class describe_Entity : nspec {
                 e.retainCount.should_be(0);
                 e.Retain(this);
                 e.retainCount.should_be(1);
+                e.owners.should_contain(this);
             };
 
             it["releases entity"] = () => {
                 e.Retain(this);
                 e.Release(this);
                 e.retainCount.should_be(0);
+                e.owners.should_not_contain(this);
             };
 
             it["throws when releasing more than it has been retained"] = expect<EntityIsNotRetainedByOwnerException>(() => {
