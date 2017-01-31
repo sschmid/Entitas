@@ -19,8 +19,9 @@ TMP_PLUGINS="${TMP_DIR}/Plugins"
 # create c# zip
 mkdir $TMP_DIR $TMP_PLUGINS
 cp -r "${BUILD_SRC}/${ES}" $TMP_DIR
+cp -r "${BUILD_SRC}/${BP}" $TMP_PLUGINS
 cp -r "${BUILD_SRC}/${CG}" $TMP_PLUGINS
-cp -r "${BUILD_SRC}/${CGA}" $TMP_DIR
+cp -r "${BUILD_SRC}/${CGA}" $TMP_PLUGINS
 cp -r "${BUILD_SRC}/${MIG}" $TMP_PLUGINS
 cp "${BUILD_SRC}/"* $TMP_DIR || true
 
@@ -34,6 +35,7 @@ rm -rf $TMP_DIR
 TMP_EDITOR="${TMP_PLUGINS}/Editor"
 mkdir $TMP_DIR $TMP_PLUGINS $TMP_EDITOR
 cp -r "${BUILD_SRC}/${ES}" $TMP_DIR
+cp -r "${BUILD_SRC}/${BP}" $TMP_PLUGINS
 cp -r "${BUILD_SRC}/${CG}" $TMP_EDITOR
 cp -r "${BUILD_SRC}/${CGA}" $TMP_PLUGINS
 cp -r "${BUILD_SRC}/${MIG}" $TMP_EDITOR
