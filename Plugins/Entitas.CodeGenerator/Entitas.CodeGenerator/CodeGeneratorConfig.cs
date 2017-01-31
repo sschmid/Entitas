@@ -5,37 +5,56 @@ namespace Entitas.CodeGenerator {
 
     public class CodeGeneratorConfig {
 
-        public const string GENERATED_FOLDER_PATH_KEY = "Entitas.CodeGenerator.GeneratedFolderPath";
-        const string DEFAULT_GENERATED_FOLDER_PATH = "Assets/Generated/";
-        public string generatedFolderPath { 
-            get { return _config.GetValueOrDefault(GENERATED_FOLDER_PATH_KEY, DEFAULT_GENERATED_FOLDER_PATH); }
-            set { _config[GENERATED_FOLDER_PATH_KEY] = value; }
+        public const string TARGET_DIRECTORY_KEY = "Entitas.CodeGenerator.TargetDirectory";
+        const string DEFAULT_TARGET_DIRECTORY = "Assets/Generated/";
+        public string targetDirectory { 
+            get { return _config.GetValueOrDefault(TARGET_DIRECTORY_KEY, DEFAULT_TARGET_DIRECTORY); }
+            set { _config[TARGET_DIRECTORY_KEY] = value; }
         }
 
         public const string CONTEXS_KEY = "Entitas.CodeGenerator.Contexts";
+        const string DEFAULT_CONTETS = "Game,GameState,Input";
         public string[] contexts {
-            get { return separateValues(_config.GetValueOrDefault(CONTEXS_KEY, string.Empty)); }
+            get { return separateValues(_config.GetValueOrDefault(CONTEXS_KEY, DEFAULT_CONTETS)); }
             set { _config[CONTEXS_KEY] = joinValues(value); }
         }
 
-        public const string ENABLED_CODE_GENERATORS_KEY = "Entitas.CodeGenerator.EnabledCodeGenerators";
-        public string[] enabledCodeGenerators {
-            get {  return separateValues(_config.GetValueOrDefault(ENABLED_CODE_GENERATORS_KEY, _defaultEnabledCodeGenerators)); }
-            set { _config[ENABLED_CODE_GENERATORS_KEY] = joinValues(value); }
+        public const string DATA_PROVIDERS_KEY = "Entitas.CodeGenerator.DataProviders";
+        public string[] dataProviders {
+            get {  return separateValues(_config.GetValueOrDefault(DATA_PROVIDERS_KEY, _defaultDataProviders)); }
+            set { _config[DATA_PROVIDERS_KEY] = joinValues(value); }
         }
 
-        readonly string _defaultEnabledCodeGenerators;
+        public const string CODE_GENERATORS_KEY = "Entitas.CodeGenerator.CodeGenerators";
+        public string[] codeGenerators {
+            get {  return separateValues(_config.GetValueOrDefault(CODE_GENERATORS_KEY, _defaultCodeGenerators)); }
+            set { _config[CODE_GENERATORS_KEY] = joinValues(value); }
+        }
+
+        public const string POST_PROCESSORS_KEY = "Entitas.CodeGenerator.PostProcessors";
+        public string[] postProcessors {
+            get {  return separateValues(_config.GetValueOrDefault(POST_PROCESSORS_KEY, _defaultPostProcessors)); }
+            set { _config[POST_PROCESSORS_KEY] = joinValues(value); }
+        }
+
+        readonly string _defaultDataProviders;
+        readonly string _defaultCodeGenerators;
+        readonly string _defaultPostProcessors;
 
         readonly EntitasPreferencesConfig _config;
 
-        public CodeGeneratorConfig(EntitasPreferencesConfig config, string[] codeGenerators) {
+        public CodeGeneratorConfig(EntitasPreferencesConfig config, string[] dataProviders, string[] codeGenerators, string[] postProcessors) {
             _config = config;
-            _defaultEnabledCodeGenerators = joinValues(codeGenerators);
+            _defaultDataProviders = joinValues(dataProviders);
+            _defaultCodeGenerators = joinValues(codeGenerators);
+            _defaultPostProcessors = joinValues(postProcessors);
 
             // Assigning will apply default values to missing keys
-            generatedFolderPath = generatedFolderPath;
+            targetDirectory = targetDirectory;
             contexts = contexts;
-            enabledCodeGenerators = enabledCodeGenerators;
+            this.dataProviders = this.dataProviders;
+            this.codeGenerators = this.codeGenerators;
+            this.postProcessors = this.postProcessors;
         }
 
         static string joinValues(string[] values) {
