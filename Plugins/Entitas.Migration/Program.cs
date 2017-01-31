@@ -1,21 +1,20 @@
 using System;
 using System.Linq;
+using System.Reflection;
 
 namespace Entitas.Migration {
+
     class MainClass {
+
         public static void Main(string[] args) {
 
-            // TODO Find all migrations with reflection and sort them
-            var allMigrations = new IMigration[] {
-                new M0180(),
-                new M0190(),
-                new M0220(),
-                new M0260(),
-                new M0300(),
-                new M0320(),
-                new M0360_1(),
-                new M0360_2()
-            };
+            var allMigrations = Assembly
+                .GetAssembly(typeof(IMigration))
+                .GetTypes()
+                .Where(type => type.GetInterfaces().Contains(typeof(IMigration)))
+                .OrderBy(type => type.FullName)
+                .Select(type => (IMigration)Activator.CreateInstance(type))
+                .ToArray();
 
             if(args == null) {
                 printUsage(allMigrations);
