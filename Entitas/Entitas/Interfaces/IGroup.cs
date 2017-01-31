@@ -27,8 +27,7 @@ namespace Entitas {
         void HandleEntitySilently(TEntity entity);
         void HandleEntity(TEntity entity, int index, IComponent component);
 
-        // TODO
-        GroupChanged<TEntity> handleEntity(TEntity entity);
+        GroupChanged<TEntity> HandleEntity(TEntity entity);
 
         void UpdateEntity(TEntity entity, int index, IComponent previousComponent, IComponent newComponent);
 

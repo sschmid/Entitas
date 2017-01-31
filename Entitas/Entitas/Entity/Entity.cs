@@ -368,7 +368,7 @@ namespace Entitas {
 
         // This method is used internally. Don't call it yourself.
         // Use context.DestroyEntity(entity);
-        public void destroy() {
+        public void Destroy() {
             _isEnabled = false;
             RemoveAllComponents();
             OnComponentAdded = null;
@@ -377,7 +377,7 @@ namespace Entitas {
         }
 
         // Do not call this method manually. This method is called by the context.
-        public void removeAllOnEntityReleasedHandlers() {
+        public void RemoveAllOnEntityReleasedHandlers() {
             OnEntityReleased = null;
         }
 

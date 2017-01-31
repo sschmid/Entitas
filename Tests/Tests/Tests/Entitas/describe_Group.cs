@@ -78,7 +78,7 @@ class describe_Group : nspec {
         context["when entity is not enabled"] = () => {
 
             it["doesn't add entity"] = () => {
-                eA1.destroy();
+                eA1.Destroy();
                 handleSilently(eA1);
                 assertContainsNot(eA1);
             };

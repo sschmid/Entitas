@@ -55,8 +55,7 @@ namespace Entitas {
         void Retain(object owner);
         void Release(object owner);
 
-        // TODO #254
-        void destroy();
-        void removeAllOnEntityReleasedHandlers();
+        void Destroy();
+        void RemoveAllOnEntityReleasedHandlers();
     }
 }

@@ -90,7 +90,7 @@ namespace Entitas {
             OnEntityUpdated = null;
         }
 
-        public GroupChanged<TEntity> handleEntity(TEntity entity) {
+        public GroupChanged<TEntity> HandleEntity(TEntity entity) {
             return _matcher.Matches(entity)
                        ? (addEntitySilently(entity) ? OnEntityAdded : null)
                        : (removeEntitySilently(entity) ? OnEntityRemoved : null);

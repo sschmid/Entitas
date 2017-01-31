@@ -77,7 +77,7 @@ class describe_Entity : nspec {
                 e = new TestEntity();
                 e.Initialize(1, 2, componentPools, contextInfo);
 
-                e.destroy();
+                e.Destroy();
 
                 e.Reactivate(42);
 
