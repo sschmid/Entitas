@@ -169,8 +169,8 @@ class describe_Collector : nspec {
 
             it["throws when group count != groupEvent count"] = expect<CollectorException>(() => {
                 collectorA = new Collector<TestEntity>(
-                    new[] { groupA },
-                    new[] {
+                    new [] { groupA },
+                    new [] {
                         GroupEvent.Added,
                         GroupEvent.Added
                     }
@@ -181,8 +181,8 @@ class describe_Collector : nspec {
 
                 before = () => {
                     collectorA = new Collector<TestEntity>(
-                        new[] { groupA, groupB },
-                        new[] {
+                        new [] { groupA, groupB },
+                        new [] {
                             GroupEvent.Added,
                             GroupEvent.Added
                         }
@@ -208,8 +208,8 @@ class describe_Collector : nspec {
 
                 before = () => {
                     collectorA = new Collector<TestEntity>(
-                        new[] { groupA, groupB },
-                        new[] {
+                        new [] { groupA, groupB },
+                        new [] {
                             GroupEvent.Removed,
                             GroupEvent.Removed
                         }
@@ -233,8 +233,8 @@ class describe_Collector : nspec {
 
                 before = () => {
                     collectorA = new Collector<TestEntity>(
-                        new[] { groupA, groupB },
-                        new[] {
+                        new [] { groupA, groupB },
+                        new [] {
                             GroupEvent.AddedOrRemoved,
                             GroupEvent.AddedOrRemoved
                         }
@@ -262,8 +262,8 @@ class describe_Collector : nspec {
 
                 before = () => {
                     collectorA = new Collector<TestEntity>(
-                        new[] { groupA, groupB },
-                        new[] {
+                        new [] { groupA, groupB },
+                        new [] {
                             GroupEvent.Added,
                             GroupEvent.Removed
                         }

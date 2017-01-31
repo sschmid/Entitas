@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.CodeGenerator;
 using NSpec;
 
@@ -8,9 +8,9 @@ class describe_CodeGenerator : nspec {
 
         it["executes data providers, generators and post processors"] = () => {
             var generator = new CodeGenerator(
-                new[] { new TestDataProvider() },
-                new[] { new TestCodeGenerator() },
-                new[] { new TestPostProcessor() }
+                new [] { new TestDataProvider() },
+                new [] { new TestCodeGenerator() },
+                new [] { new TestPostProcessor() }
             );
 
             var files = generator.Generate();
@@ -32,7 +32,7 @@ public class TestDataProvider : ICodeGeneratorDataProvider {
         var data2 = new CodeGeneratorData();
         data2.Add("testKey", "value2");
 
-        return new[] {
+        return new [] {
             data1,
             data2
         };

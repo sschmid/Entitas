@@ -1,6 +1,7 @@
 using Entitas;
 
 public class ObjectGetProperty : IPerformanceTest {
+
     const int n = 10000000;
     IContext<Entity> _context;
 

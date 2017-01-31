@@ -1,6 +1,7 @@
 using System;
 
 public class NewInstanceActivator : IPerformanceTest {
+
     const int n = 1000000;
 
     Type _type;

@@ -1,6 +1,7 @@
 using Entitas;
 
 public class MatcherEquals : IPerformanceTest {
+
     const int n = 10000000;
     IMatcher<Entity> _m1;
     IMatcher<Entity> _m2;

@@ -2,7 +2,9 @@ using System;
 using System.Threading;
 
 namespace PerformanceTests {
+
     class MainClass {
+
         public static void Main(string[] args) {
             Console.WriteLine("Running performance tests...");
             Thread.Sleep(1500);
@@ -45,37 +47,37 @@ namespace PerformanceTests {
         }
 
         //Running performance tests...
-        //ContextCreateEntity:                       30 ms
-        //ContextDestroyEntity:                      29 ms
-        //ContextDestroyAllEntities:                 25 ms
-        //ContextGetGroup:                           5 ms
-        //ContextGetEntities:                        2 ms
-        //ContextHasEntity:                          10 ms
-        //ContextOnEntityReplaced:                   6 ms
+        //ContextCreateEntity:                     30 ms
+        //ContextDestroyEntity:                    29 ms
+        //ContextDestroyAllEntities:               25 ms
+        //ContextGetGroup:                          5 ms
+        //ContextGetEntities:                       2 ms
+        //ContextHasEntity:                        10 ms
+        //ContextOnEntityReplaced:                  6 ms
 
         //EntityAddComponent:                     257 ms
-        //EntityGetComponent:                     44 ms
-        //EntityGetComponents:                    4 ms
-        //EntityHasComponent:                     2 ms
+        //EntityGetComponent:                      44 ms
+        //EntityGetComponents:                      4 ms
+        //EntityHasComponent:                       2 ms
         //EntityRemoveAddComponent:               289 ms
-        //EntityReplaceComponent:                 20 ms
+        //EntityReplaceComponent:                  20 ms
 
         //MatcherEquals:                          171 ms
-        //MatcherGetHashCode:                     17 ms
+        //MatcherGetHashCode:                      17 ms
 
-        //ContextCreateBlueprint:                    256 ms
+        //ContextCreateBlueprint:                 256 ms
 
         //NewInstanceT:                           393 ms
         //NewInstanceActivator:                   542 ms
-        //EntityIndexGetEntity:                   59 ms
+        //EntityIndexGetEntity:                    59 ms
 
         //IterateHashetToArray:                   456 ms
         //IterateHashSet:                         774 ms
 
-        //ObjectGetProperty:                      6 ms
+        //ObjectGetProperty:                        6 ms
 
-        //CollectorIterateCollectedEntities:957 ms
-        //CollectorActivate:                1 ms
+        //CollectorIterateCollectedEntities:      957 ms
+        //CollectorActivate:                        1 ms
         //PropertiesCreate:                       251 ms
 
         static void run<T>() where T : IPerformanceTest, new() {

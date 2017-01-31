@@ -1,6 +1,7 @@
 using Entitas;
 
 public class ContextDestroyAllEntities : IPerformanceTest {
+
     const int n = 100000;
     IContext<Entity> _context;
 

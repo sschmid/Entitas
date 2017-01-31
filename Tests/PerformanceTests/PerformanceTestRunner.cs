@@ -1,6 +1,7 @@
 using System.Diagnostics;
 
 public static class PerformanceTestRunner {
+
     static readonly Stopwatch _stopwatch;
 
     static PerformanceTestRunner() {

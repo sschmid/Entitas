@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGenerator;
+using Entitas.CodeGenerator;
 using NSpec;
 
 class describe_ContextDataProvider : nspec {
@@ -6,7 +6,7 @@ class describe_ContextDataProvider : nspec {
     void when_providing() {
 
         it["creates data for each context name"] = () => {
-            var names = new[] { "Input", "GameState" };
+            var names = new [] { "Input", "GameState" };
             var provider = new ContextDataProvider(names);
 
             var data = (ContextData[])provider.GetData();

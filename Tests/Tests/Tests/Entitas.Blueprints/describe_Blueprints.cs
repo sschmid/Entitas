@@ -62,7 +62,7 @@ class describe_Blueprints : nspec {
                 var componentBlueprint = new ComponentBlueprint();
                 componentBlueprint.fullTypeName = typeof(ComponentWithFieldsAndProperties).FullName;
                 componentBlueprint.index = CID.ComponentB;
-                componentBlueprint.members = new[] {
+                componentBlueprint.members = new [] {
                     new SerializableMember("publicField", "publicFieldValue"),
                     new SerializableMember("publicProperty", "publicPropertyValue")
                 };
@@ -76,7 +76,7 @@ class describe_Blueprints : nspec {
                 var componentBlueprint = new ComponentBlueprint();
                 componentBlueprint.index = 0;
                 componentBlueprint.fullTypeName = typeof(NameAgeComponent).FullName;
-                componentBlueprint.members = new[] {
+                componentBlueprint.members = new [] {
                     new SerializableMember("xxx", "publicFieldValue"),
                     new SerializableMember("publicProperty", "publicPropertyValue")
                 };
@@ -120,14 +120,14 @@ class describe_Blueprints : nspec {
                     var component2 = new ComponentBlueprint();
                     component2.index = CID.ComponentB;
                     component2.fullTypeName = typeof(NameAgeComponent).FullName;
-                    component2.members = new[] {
+                    component2.members = new [] {
                         new SerializableMember("name", "Max"),
                         new SerializableMember("age", 42)
                     };
 
                     blueprint = new Blueprint();
                     blueprint.name = "Hero";
-                    blueprint.components = new[] { component1, component2 };
+                    blueprint.components = new [] { component1, component2 };
                 };
 
                 it["applies blueprint to entity"] = () => {
@@ -164,7 +164,7 @@ class describe_Blueprints : nspec {
 
                     blueprint = new Blueprint();
                     blueprint.name = "Hero";
-                    blueprint.components = new[] { component };
+                    blueprint.components = new [] { component };
 
                     var componentA = entity.CreateComponent<ComponentA>(CID.ComponentA);
                     entity.AddComponent(CID.ComponentA, componentA);

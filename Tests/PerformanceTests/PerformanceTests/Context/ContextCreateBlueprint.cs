@@ -2,6 +2,7 @@ using Entitas;
 using Entitas.Blueprints;
 
 public class ContextCreateBlueprint : IPerformanceTest {
+
     const int n = 100000;
     IContext<Entity> _context;
     Blueprint _blueprint;

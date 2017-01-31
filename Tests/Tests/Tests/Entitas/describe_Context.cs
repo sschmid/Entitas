@@ -70,8 +70,8 @@ class describe_Context : nspec {
             ContextInfo contextInfo = null;
 
             before = () => {
-                var componentNames = new[] { "Health", "Position", "View" };
-                var componentTypes = new[] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
+                var componentNames = new [] { "Health", "Position", "View" };
+                var componentTypes = new [] { typeof(ComponentA), typeof(ComponentB), typeof(ComponentC) };
                 contextInfo = new ContextInfo("My Context", componentNames, componentTypes);
                 ctx = new MyTestContext(componentNames.Length, 0, contextInfo);
             };
@@ -443,7 +443,7 @@ class describe_Context : nspec {
                 TestEntity eAB2 = null;
                 TestEntity eA = null;
 
-                IMatcher<TestEntity> matcherAB = Matcher<TestEntity>.AllOf(new[] {
+                IMatcher<TestEntity> matcherAB = Matcher<TestEntity>.AllOf(new [] {
                     CID.ComponentA,
                     CID.ComponentB
                 });

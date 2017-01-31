@@ -1,4 +1,5 @@
 public class EmptyTest : IPerformanceTest {
+
     public void Before() {
     }
 

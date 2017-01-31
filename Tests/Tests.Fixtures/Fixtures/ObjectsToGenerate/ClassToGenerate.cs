@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGenerator.Api;
+using Entitas.CodeGenerator.Api;
 
 namespace My.Namespace {
 

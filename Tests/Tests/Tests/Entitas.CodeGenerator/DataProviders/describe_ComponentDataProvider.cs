@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Entitas.CodeGenerator;
 using NSpec;
@@ -21,7 +21,7 @@ class describe_ComponentDataProvider : nspec {
             ComponentData d = null;
 
             before = () => {
-                types = new[] { typeof(MyNamespaceComponent) };
+                types = new [] { typeof(MyNamespaceComponent) };
                 var provider = new ComponentDataProvider(types);
                 data = (ComponentData[])provider.GetData();
                 d = data[0];
@@ -105,7 +105,7 @@ class describe_ComponentDataProvider : nspec {
             ComponentData d = null;
 
             before = () => {
-                types = new[] { typeof(ClassToGenerate) };
+                types = new [] { typeof(ClassToGenerate) };
                 var provider = new ComponentDataProvider(types);
                 data = (ComponentData[])provider.GetData();
                 d = data[0];
@@ -187,7 +187,7 @@ class describe_ComponentDataProvider : nspec {
         context["multiple types"] = () => {
 
             it["creates data for each type"] = () => {
-                var types = new[] { typeof(NameAgeComponent), typeof(Test2ContextComponent) };
+                var types = new [] { typeof(NameAgeComponent), typeof(Test2ContextComponent) };
                 var provider = new ComponentDataProvider(types);
                 var data = provider.GetData();
                 data.Length.should_be(types.Length);
@@ -202,7 +202,7 @@ class describe_ComponentDataProvider : nspec {
             ComponentData d2 = null;
 
             before = () => {
-                types = new[] { typeof(CustomName) };
+                types = new [] { typeof(CustomName) };
                 var provider = new ComponentDataProvider(types);
                 data = (ComponentData[])provider.GetData();
                 d1 = data[0];
