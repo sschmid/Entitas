@@ -1,176 +1,185 @@
-// TODO
+using System;
+using Entitas;
+using Entitas.Blueprints;
+using NSpec;
 
-//using System;
-//using Entitas;
-//using Entitas.Blueprints;
-//using NSpec;
+class describe_EntitasErrorMessages : nspec {
 
-//class describe_EntitasErrorMessages : nspec {
+    static void printErrorMessage(Action action) {
+        try {
+            action();
+        } catch(Exception exception) {
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("================================================================================");
+            Console.WriteLine("Exception preview for: " + exception.GetType());
+            Console.WriteLine("--------------------------------------------------------------------------------");
+            Console.WriteLine(exception.Message);
+            Console.WriteLine("================================================================================");
+            Console.ResetColor();
+        }
+    }
 
-//    static void printErrorMessage(Action action) {
-//        try {
-//            action();
-//        } catch(Exception exception) {
-//            Console.ForegroundColor = ConsoleColor.DarkCyan;
-//            Console.WriteLine("================================================================================");
-//            Console.WriteLine("Exception preview for: " + exception.GetType());
-//            Console.WriteLine("--------------------------------------------------------------------------------");
-//            Console.WriteLine(exception.Message);
-//            Console.WriteLine("================================================================================");
-//            Console.ResetColor();
-//        }
-//    }
+    void when_throwing() {
 
-//    void when_throwing() {
+        MyTestContext ctx = null;
+        TestEntity entity = null;
 
-//        before = () => {
-//            var componentNames = new [] { "Health", "Position", "View" };
-//            var contextInfo = new ContextInfo("My Context", componentNames, null);
-//            _context = new TestContext(componentNames.Length, 42, contextInfo);
-//            _entity = createEntity();
-//        };
+        before = () => {
+            var componentNames = new [] { "Health", "Position", "View" };
+            var contextInfo = new ContextInfo("My Context", componentNames, null);
+            ctx = new MyTestContext(componentNames.Length, 42, contextInfo);
+            entity = ctx.CreateEntity();
+        };
 
-//        context["Entity"] = () => {
+        context["Entity"] = () => {
 
-//            context["when not enabled"] = () => {
+            context["when not enabled"] = () => {
 
-//                before = () => {
-//                    _context.DestroyEntity(_entity);
-//                };
+                before = () => {
+                    ctx.DestroyEntity(entity);
+                };
 
-//                it["add a component"] = () => printErrorMessage(() => _entity.AddComponentA());
-//                it["remove a component"] = () => printErrorMessage(() => _entity.RemoveComponentA());
-//                it["replace a component"] = () => printErrorMessage(() => _entity.ReplaceComponentA(Component.A));
-//            };
+                it["add a component"] = () => printErrorMessage(() => entity.AddComponentA());
+                it["remove a component"] = () => printErrorMessage(() => entity.RemoveComponentA());
+                it["replace a component"] = () => printErrorMessage(() => entity.ReplaceComponentA(Component.A));
+            };
 
-//            context["when enabled"] = () => {
+            context["when enabled"] = () => {
 
-//                it["add a component twice"] = () => printErrorMessage(() => {
-//                    _entity.AddComponentA();
-//                    _entity.AddComponentA();
-//                });
+                it["add a component twice"] = () => printErrorMessage(() => {
+                    entity.AddComponentA();
+                    entity.AddComponentA();
+                });
 
-//                it["remove a component that doesn't exist"] = () => printErrorMessage(() => {
-//                    _entity.RemoveComponentA();
-//                });
+                it["remove a component that doesn't exist"] = () => printErrorMessage(() => {
+                    entity.RemoveComponentA();
+                });
 
-//                it["get a component that doesn't exist"] = () => printErrorMessage(() => {
-//                    _entity.GetComponentA();
-//                });
+                it["get a component that doesn't exist"] = () => printErrorMessage(() => {
+                    entity.GetComponentA();
+                });
 
-//                it["retain an entity twice"] = () => printErrorMessage(() => {
-//                    var owner = new object();
-//                    _entity.Retain(owner);
-//                    _entity.Retain(owner);
-//                });
+                it["retain an entity twice"] = () => printErrorMessage(() => {
+                    var owner = new object();
+                    entity.Retain(owner);
+                    entity.Retain(owner);
+                });
 
-//                it["release an entity with wrong owner"] = () => printErrorMessage(() => {
-//                    var owner = new object();
-//                    _entity.Release(owner);
-//                });
-//            };
-//        };
+                it["release an entity with wrong owner"] = () => printErrorMessage(() => {
+                    var owner = new object();
+                    entity.Release(owner);
+                });
+            };
+        };
 
-//        context["Group"] = () => {
+        context["Group"] = () => {
 
-//            it["get single entity when multiple exist"] = () => printErrorMessage(() => {
-//                createEntityA();
-//                createEntityA();
-//                var matcher = createMatcherA();
-//                matcher.componentNames = _context.contextInfo.componentNames;
-//                var group = _context.GetGroup(matcher);
-//                group.GetSingleEntity();
-//            });
-//        };
+            it["get single entity when multiple exist"] = () => printErrorMessage(() => {
+                ctx.CreateEntity().AddComponentA();
+                ctx.CreateEntity().AddComponentA();
+                var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA);
+                matcher.componentNames = ctx.contextInfo.componentNames;
+                var group = ctx.GetGroup(matcher);
+                group.GetSingleEntity();
+            });
+        };
 
-//        context["Collector<TestEntity>"] = () => {
+        context["Collector<TestEntity>"] = () => {
 
-//            it["unbalanced goups"] = () => printErrorMessage(() => {
-//                var g1 = new Group<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentA));
-//                var g2 = new Group<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentB));
-//                var e1 = GroupEvent.Added;
+            it["unbalanced goups"] = () => printErrorMessage(() => {
+                var g1 = new Group<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentA));
+                var g2 = new Group<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentB));
+                var e1 = GroupEvent.Added;
 
-//                new Collector<TestEntity>(new [] { g1, g2 }, new [] { e1 });
-//            });
-//        };
+                new Collector<TestEntity>(new [] { g1, g2 }, new [] { e1 });
+            });
+        };
 
-//        context["Context"] = () => {
+        context["Context"] = () => {
 
-//            it["wrong ContextInfo componentNames count"] = () => printErrorMessage(() => {
-//                var componentNames = new [] { "Health", "Position", "View" };
-//                var contextInfo = new ContextInfo("My Context", componentNames, null);
-//                new TestContext(1, 0, contextInfo);
-//            });
+            it["wrong ContextInfo componentNames count"] = () => printErrorMessage(() => {
+                var componentNames = new [] { "Health", "Position", "View" };
+                var contextInfo = new ContextInfo("My Context", componentNames, null);
+                new MyTestContext(1, 0, contextInfo);
+            });
 
-//            it["destroy entity which is not in context"] = () => printErrorMessage(() => {
-//                _context.DestroyEntity(new TestEntity());
-//            });
+            it["destroy entity which is not in context"] = () => printErrorMessage(() => {
+                ctx.DestroyEntity(new TestEntity());
+            });
 
-//            it["destroy retained entities"] = () => printErrorMessage(() => {
-//                createEntity().Retain(this);
-//                _context.DestroyAllEntities();
-//            });
+            it["destroy retained entities"] = () => printErrorMessage(() => {
+                ctx.CreateEntity().Retain(this);
+                ctx.DestroyAllEntities();
+            });
 
-//            it["releases entity before destroy"] = () => printErrorMessage(() => {
-//                _entity.Release(_context);
-//            });
+            it["releases entity before destroy"] = () => printErrorMessage(() => {
+                entity.Release(ctx);
+            });
 
-//            it["unknown entityIndex"] = () => printErrorMessage(() => {
-//                _context.GetEntityIndex("unknown");
-//            });
+            it["unknown entityIndex"] = () => printErrorMessage(() => {
+                ctx.GetEntityIndex("unknown");
+            });
 
-//            it["duplicate entityIndex"] = () => printErrorMessage(() => {
-//                var index = new PrimaryEntityIndex<TestEntity, string>(getGroupA(), null);
-//                _context.AddEntityIndex("duplicate", index);
-//                _context.AddEntityIndex("duplicate", index);
-//            });
-//        };
+            it["duplicate entityIndex"] = () => printErrorMessage(() => {
+                var groupA = ctx.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA));
+                var index = new PrimaryEntityIndex<TestEntity, string>(groupA, null);
+                ctx.AddEntityIndex("duplicate", index);
+                ctx.AddEntityIndex("duplicate", index);
+            });
+        };
 
-//        context["CollectionExtension"] = () => {
+        context["CollectionExtension"] = () => {
 
-//            it["get single entity when more than one exist"] = () => printErrorMessage(() => {
-//                new IEntity[2].SingleEntity();
-//            });
-//        };
+            it["get single entity when more than one exist"] = () => printErrorMessage(() => {
+                new IEntity[2].SingleEntity();
+            });
+        };
 
-//        context["ComponentBlueprint"] = () => {
+        context["ComponentBlueprint"] = () => {
 
-//            it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
-//                var componentBlueprint = new ComponentBlueprint();
-//                componentBlueprint.fullTypeName = "string";
-//                componentBlueprint.CreateComponent(_entity);
-//            });
+            it["type doesn't implement IComponent"] = () => printErrorMessage(() => {
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.fullTypeName = "string";
+                componentBlueprint.CreateComponent(entity);
+            });
 
-//            it["type doesn't exist"] = () => printErrorMessage(() => {
-//                var componentBlueprint = new ComponentBlueprint();
-//                componentBlueprint.fullTypeName = "UnknownType";
-//                componentBlueprint.CreateComponent(_entity);
-//            });
+            it["type doesn't exist"] = () => printErrorMessage(() => {
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.fullTypeName = "UnknownType";
+                componentBlueprint.CreateComponent(entity);
+            });
 
-//            it["invalid field name"] = () => printErrorMessage(() => {
-//                var componentBlueprint = new ComponentBlueprint();
-//                componentBlueprint.index = 0;
-//                componentBlueprint.fullTypeName = typeof(NameAgeComponent).FullName;
-//                componentBlueprint.members = new [] {
-//                    new SerializableMember("xxx", "publicFieldValue"),
-//                    new SerializableMember("publicProperty", "publicPropertyValue")
-//                };
-//                componentBlueprint.CreateComponent(_entity);
-//            });
-//        };
+            it["invalid field name"] = () => printErrorMessage(() => {
+                var componentBlueprint = new ComponentBlueprint();
+                componentBlueprint.index = 0;
+                componentBlueprint.fullTypeName = typeof(NameAgeComponent).FullName;
+                componentBlueprint.members = new [] {
+                    new SerializableMember("xxx", "publicFieldValue"),
+                    new SerializableMember("publicProperty", "publicPropertyValue")
+                };
+                componentBlueprint.CreateComponent(entity);
+            });
+        };
 
-//        context["EntityIndex"] = () => {
+        context["EntityIndex"] = () => {
 
-//            it["no entity with key"] = () => printErrorMessage(() => {
-//                createPrimaryIndex().GetEntity("unknownKey");
-//            });
+            it["no entity with key"] = () => printErrorMessage(() => {
+                var groupA = ctx.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA));
+                var index = new PrimaryEntityIndex<TestEntity, string>(groupA, (e, c) => ((NameAgeComponent)c).name);
+                index.GetEntity("unknownKey");
+            });
 
-//            it["multiple entities for primary key"] = () => printErrorMessage(() => {
-//                createPrimaryIndex();
-//                var nameAge = createNameAge();
-//                _context.CreateEntity().AddComponent(CID.ComponentA, nameAge);
-//                _context.CreateEntity().AddComponent(CID.ComponentA, nameAge);
-//            });
-//        };
-//    }
-//}
+            it["multiple entities for primary key"] = () => printErrorMessage(() => {
+                var groupA = ctx.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA));
+                var index = new PrimaryEntityIndex<TestEntity, string>(groupA, (e, c) => ((NameAgeComponent)c).name);
+
+                var nameAge = new NameAgeComponent();
+                nameAge.name = "Max";
+                nameAge.age = 42;
+
+                ctx.CreateEntity().AddComponent(CID.ComponentA, nameAge);
+                ctx.CreateEntity().AddComponent(CID.ComponentA, nameAge);
+            });
+        };
+    }
+}
