@@ -45,8 +45,6 @@ namespace Entitas {
         int _hash;
         bool _isHashCached;
 
-        // TODO UNIT TEST
-        // change indices should recalculate hash
         public override int GetHashCode() {
             if(!_isHashCached) {
                 var hash = GetType().GetHashCode();

@@ -358,6 +358,20 @@ class describe_Matcher : nspec {
 
         context["equals"] = () => {
 
+            it["updates hash when changed with anyOf"] = () => {
+                var m1 = allOfAB();
+                var hash = m1.GetHashCode();
+
+                m1.AnyOf(42).GetHashCode().should_not_be(hash);
+            };
+
+            it["updates hash when changed with noneOf"] = () => {
+                var m1 = allOfAB();
+                var hash = m1.GetHashCode();
+
+                m1.NoneOf(42).GetHashCode().should_not_be(hash);
+            };
+
             it["equals equal AllOfMatcher"] = () => {
                 var m1 = allOfAB();
                 var m2 = allOfAB();
@@ -426,11 +440,11 @@ class describe_Matcher : nspec {
         };
     }
 
-    static IMatcher<TestEntity> allOfAB() {
+    static IAllOfMatcher<TestEntity> allOfAB() {
         return Matcher<TestEntity>.AllOf(new[] { CID.ComponentA, CID.ComponentB });
     }
 
-    static IMatcher<TestEntity> allOfBA() {
+    static IAllOfMatcher<TestEntity> allOfBA() {
         return Matcher<TestEntity>.AllOf(new[] { CID.ComponentB, CID.ComponentA });
     }
 }

@@ -28,6 +28,7 @@ namespace Entitas {
         IAnyOfMatcher<TEntity> IAllOfMatcher<TEntity>.AnyOf(params int[] indices) {
             _anyOfIndices = distinctIndices(indices);
             _indices = null;
+            _isHashCached = false;
             return this;
         }
 
@@ -38,6 +39,7 @@ namespace Entitas {
         public INoneOfMatcher<TEntity> NoneOf(params int[] indices) {
             _noneOfIndices = distinctIndices(indices);
             _indices = null;
+            _isHashCached = false;
             return this;
         }
 
