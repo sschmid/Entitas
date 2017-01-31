@@ -25,9 +25,6 @@ namespace Entitas {
         Stack<IComponent>[] componentPools { get; }
         ContextInfo contextInfo { get; }
 
-        // TODO UNIT TEST
-        // Check isEnable == true
-        // Check creationIndex
         void Initialize(int creationIndex,
                         int totalComponents,
                         Stack<IComponent>[] componentPools,

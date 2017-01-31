@@ -32,6 +32,9 @@ class describe_Context : nspec {
             var e = ctx.CreateEntity();
             e.should_not_be_null();
             e.GetType().should_be(typeof(TestEntity));
+
+            e.totalComponents.should_be(ctx.totalComponents);
+            e.isEnabled.should_be_true();
         };
 
         it["has default ContextInfo"] = () => {
@@ -396,9 +399,15 @@ class describe_Context : nspec {
             };
 
             it["sets up entity from pool"] = () => {
-                ctx.DestroyEntity(ctx.CreateEntity());
-                var g = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
                 var e = ctx.CreateEntity();
+                var creationIndex = e.creationIndex;
+                ctx.DestroyEntity(e);
+                var g = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
+
+                e = ctx.CreateEntity();
+                e.creationIndex.should_be(creationIndex + 1);
+                e.isEnabled.should_be_true();
+
                 e.AddComponentA();
                 g.GetEntities().should_contain(e);
             };

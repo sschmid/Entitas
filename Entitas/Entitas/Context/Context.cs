@@ -81,16 +81,11 @@ namespace Entitas {
         public virtual TEntity CreateEntity() {
             TEntity entity;
 
-            // TODO UNIT TEST
-            // Test Reactivate
-            // Test Initialize
             if(_reusableEntities.Count > 0) {
                 entity = _reusableEntities.Pop();
-                // TODO
                 entity.Reactivate(_creationIndex++);
             } else {
                 entity = new TEntity();
-                // TODO
                 entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo);
             }
 
