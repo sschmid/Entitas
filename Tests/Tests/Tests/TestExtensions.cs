@@ -20,7 +20,7 @@ public static class TestExtensions {
         var current = new DirectoryInfo(Directory.GetCurrentDirectory());
         if(current.Parent.Parent.Name == "Tests") {
             // This happens if you run the TestRunner from your IDE
-            return current.Parent.Parent.Parent.FullName;
+            return current.Parent.Parent.Parent.Parent.FullName;
         }
 
         if(current.Name == "Scripts") {
