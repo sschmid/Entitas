@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Entitas: Entitas.AbstractEntityIndex&lt; T &gt; Class Template Reference</title>
+<title>Entitas: Entitas.AbstractEntityIndex&lt; TEntity, TKey &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,65 +88,75 @@ $(document).ready(function(){initNavTree('class_entitas_1_1_abstract_entity_inde
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="class_entitas_1_1_abstract_entity_index-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Entitas.AbstractEntityIndex&lt; T &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">Entitas.AbstractEntityIndex&lt; TEntity, TKey &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for Entitas.AbstractEntityIndex&lt; T &gt;:</div>
+Inheritance diagram for Entitas.AbstractEntityIndex&lt; TEntity, TKey &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="class_entitas_1_1_abstract_entity_index.png" usemap="#Entitas.AbstractEntityIndex_3C_20T_20_3E_map" alt=""/>
-  <map id="Entitas.AbstractEntityIndex_3C_20T_20_3E_map" name="Entitas.AbstractEntityIndex&lt; T &gt;_map">
-<area href="interface_entitas_1_1_i_entity_index.html" alt="Entitas.IEntityIndex" shape="rect" coords="101,0,293,24"/>
-<area href="class_entitas_1_1_entity_index.html" alt="Entitas.EntityIndex&lt; T &gt;" shape="rect" coords="0,112,192,136"/>
-<area href="class_entitas_1_1_primary_entity_index.html" alt="Entitas.PrimaryEntityIndex&lt; T &gt;" shape="rect" coords="202,112,394,136"/>
+  <img src="class_entitas_1_1_abstract_entity_index.png" usemap="#Entitas.AbstractEntityIndex_3C_20TEntity_2C_20TKey_20_3E_map" alt=""/>
+  <map id="Entitas.AbstractEntityIndex_3C_20TEntity_2C_20TKey_20_3E_map" name="Entitas.AbstractEntityIndex&lt; TEntity, TKey &gt;_map">
+<area href="interface_entitas_1_1_i_entity_index.html" alt="Entitas.IEntityIndex" shape="rect" coords="135,0,396,24"/>
+<area href="class_entitas_1_1_entity_index.html" alt="Entitas.EntityIndex&lt; TEntity, TKey &gt;" shape="rect" coords="0,112,261,136"/>
+<area href="class_entitas_1_1_primary_entity_index.html" alt="Entitas.PrimaryEntityIndex&lt; TEntity, TKey &gt;" shape="rect" coords="271,112,532,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab00c2d489386a01116caa6ae89848b30"><td class="memItemLeft" align="right" valign="top"><a id="ab00c2d489386a01116caa6ae89848b30"></a>
+<tr class="memitem:af992536c4124be8160b42453eb182ab6"><td class="memItemLeft" align="right" valign="top"><a id="af992536c4124be8160b42453eb182ab6"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Activate</b> ()</td></tr>
-<tr class="separator:ab00c2d489386a01116caa6ae89848b30"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab95de436fe50bc51628e15a758492a6f"><td class="memItemLeft" align="right" valign="top"><a id="ab95de436fe50bc51628e15a758492a6f"></a>
+<tr class="separator:af992536c4124be8160b42453eb182ab6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62d5c1e00379906ba6afaa7c7b84786b"><td class="memItemLeft" align="right" valign="top"><a id="a62d5c1e00379906ba6afaa7c7b84786b"></a>
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>Deactivate</b> ()</td></tr>
-<tr class="separator:ab95de436fe50bc51628e15a758492a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a62d5c1e00379906ba6afaa7c7b84786b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:aadf1ef30152755c2cd18df6003acd1ac"><td class="memItemLeft" align="right" valign="top"><a id="aadf1ef30152755c2cd18df6003acd1ac"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractEntityIndex</b> (<a class="el" href="class_entitas_1_1_group.html">Group</a> group, Func&lt; <a class="el" href="class_entitas_1_1_entity.html">Entity</a>, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a>, T &gt; getKey)</td></tr>
-<tr class="separator:aadf1ef30152755c2cd18df6003acd1ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f573f4e5e9f099d7f6f01d0577c8490"><td class="memItemLeft" align="right" valign="top"><a id="a3f573f4e5e9f099d7f6f01d0577c8490"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>indexEntities</b> (<a class="el" href="class_entitas_1_1_group.html">Group</a> group)</td></tr>
-<tr class="separator:a3f573f4e5e9f099d7f6f01d0577c8490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb93f5de4676145f9fa819ca4a008dec"><td class="memItemLeft" align="right" valign="top"><a id="adb93f5de4676145f9fa819ca4a008dec"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onEntityAdded</b> (<a class="el" href="class_entitas_1_1_group.html">Group</a> group, <a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity, int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
-<tr class="separator:adb93f5de4676145f9fa819ca4a008dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca927df94a9eb49facb32c8be28800df"><td class="memItemLeft" align="right" valign="top"><a id="aca927df94a9eb49facb32c8be28800df"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>onEntityRemoved</b> (<a class="el" href="class_entitas_1_1_group.html">Group</a> group, <a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity, int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
-<tr class="separator:aca927df94a9eb49facb32c8be28800df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae4e00501348255caeb17646158ac6aa9"><td class="memItemLeft" align="right" valign="top"><a id="ae4e00501348255caeb17646158ac6aa9"></a>
-abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>addEntity</b> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
-<tr class="separator:ae4e00501348255caeb17646158ac6aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa05a2bb01ce6213f62faa81a69bd6cf0"><td class="memItemLeft" align="right" valign="top"><a id="aa05a2bb01ce6213f62faa81a69bd6cf0"></a>
-abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>removeEntity</b> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
-<tr class="separator:aa05a2bb01ce6213f62faa81a69bd6cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3607889cde959ae04af67063e477e524"><td class="memItemLeft" align="right" valign="top"><a id="a3607889cde959ae04af67063e477e524"></a>
+<tr class="memitem:a1be2214bb6911f99f92cf7aa339d445f"><td class="memItemLeft" align="right" valign="top"><a id="a1be2214bb6911f99f92cf7aa339d445f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>AbstractEntityIndex</b> (<a class="el" href="interface_entitas_1_1_i_group.html">IGroup</a>&lt; TEntity &gt; group, Func&lt; TEntity, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a>, TKey &gt; getKey)</td></tr>
+<tr class="separator:a1be2214bb6911f99f92cf7aa339d445f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48ac8a005ad7152d5c92e8370d428657"><td class="memItemLeft" align="right" valign="top"><a id="a48ac8a005ad7152d5c92e8370d428657"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>indexEntities</b> (<a class="el" href="interface_entitas_1_1_i_group.html">IGroup</a>&lt; TEntity &gt; group)</td></tr>
+<tr class="separator:a48ac8a005ad7152d5c92e8370d428657"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f16f308c65d1b79630aefb407074ad3"><td class="memItemLeft" align="right" valign="top"><a id="a3f16f308c65d1b79630aefb407074ad3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>onEntityAdded</b> (<a class="el" href="interface_entitas_1_1_i_group.html">IGroup</a>&lt; TEntity &gt; group, TEntity entity, int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
+<tr class="separator:a3f16f308c65d1b79630aefb407074ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add16160c20055874017a749a19a41119"><td class="memItemLeft" align="right" valign="top"><a id="add16160c20055874017a749a19a41119"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>onEntityRemoved</b> (<a class="el" href="interface_entitas_1_1_i_group.html">IGroup</a>&lt; TEntity &gt; group, TEntity entity, int index, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
+<tr class="separator:add16160c20055874017a749a19a41119"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b40bf91ad187199b1eb951514014a2"><td class="memItemLeft" align="right" valign="top"><a id="a06b40bf91ad187199b1eb951514014a2"></a>
+abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>addEntity</b> (TEntity entity, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
+<tr class="separator:a06b40bf91ad187199b1eb951514014a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a2f8f33a4394808506383a72a9dfb45"><td class="memItemLeft" align="right" valign="top"><a id="a4a2f8f33a4394808506383a72a9dfb45"></a>
+abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>removeEntity</b> (TEntity entity, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> component)</td></tr>
+<tr class="separator:a4a2f8f33a4394808506383a72a9dfb45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d8152fb602e1fcd28e340ebcc0c213b"><td class="memItemLeft" align="right" valign="top"><a id="a5d8152fb602e1fcd28e340ebcc0c213b"></a>
 abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> ()</td></tr>
-<tr class="separator:a3607889cde959ae04af67063e477e524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a5d8152fb602e1fcd28e340ebcc0c213b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:ac76fb5403d6987356e145a930b7dd728"><td class="memItemLeft" align="right" valign="top"><a id="ac76fb5403d6987356e145a930b7dd728"></a>
-readonly <a class="el" href="class_entitas_1_1_group.html">Group</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_group</b></td></tr>
-<tr class="separator:ac76fb5403d6987356e145a930b7dd728"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfe86b63b69a8ae08284ecc932d05290"><td class="memItemLeft" align="right" valign="top"><a id="abfe86b63b69a8ae08284ecc932d05290"></a>
-readonly Func&lt; <a class="el" href="class_entitas_1_1_entity.html">Entity</a>, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a>, T &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_getKey</b></td></tr>
-<tr class="separator:abfe86b63b69a8ae08284ecc932d05290"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a098906c4efdea7a5c7377478afe21ed8"><td class="memItemLeft" align="right" valign="top"><a id="a098906c4efdea7a5c7377478afe21ed8"></a>
+readonly <a class="el" href="interface_entitas_1_1_i_group.html">IGroup</a>&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_group</b></td></tr>
+<tr class="separator:a098906c4efdea7a5c7377478afe21ed8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4eceaa0a05afff46770e544fc55c6728"><td class="memItemLeft" align="right" valign="top"><a id="a4eceaa0a05afff46770e544fc55c6728"></a>
+readonly Func&lt; TEntity, <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a>, TKey &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>_getKey</b></td></tr>
+<tr class="separator:a4eceaa0a05afff46770e544fc55c6728"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
+<div class="textblock"><div class="typeconstraint">
+<dl><dt><b>Type Constraints</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>class</em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>new()</em></td><td>&#160;</td></tr>
+</table>
+</dd>
+</dl>
+</div>
+
 <p>Definition at line <a class="el" href="_abstract_entity_index_8cs_source.html#l00005">5</a> of file <a class="el" href="_abstract_entity_index_8cs_source.html">AbstractEntityIndex.cs</a>.</p>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>Entitas/Entitas/Index/<a class="el" href="_abstract_entity_index_8cs_source.html">AbstractEntityIndex.cs</a></li>

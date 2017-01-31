@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['retaincount',['retainCount',['../class_entitas_1_1_entity.html#a55d42d47d2678137c14a693f2039cd6c',1,'Entitas::Entity']]]
+  ['owners',['owners',['../class_entitas_1_1_entity.html#aa22ac53a43e919909a1330d035cc1ec4',1,'Entitas::Entity']]]
 ];

@@ -1,5 +1,6 @@
 ﻿using Entitas;
+using Entitas.Api;
 using Entitas.CodeGenerator;
 
-[SingleEntity]
+[Unique]
 public class AnimatingComponent : IComponent {}

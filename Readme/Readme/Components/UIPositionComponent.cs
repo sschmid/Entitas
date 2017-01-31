@@ -1,4 +1,5 @@
 using Entitas;
+using Entitas.Api;
 using Entitas.CodeGenerator;
 
 [Context("UI")]

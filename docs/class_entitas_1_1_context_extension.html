@@ -92,23 +92,23 @@ $(document).ready(function(){initNavTree('class_entitas_1_1_context_extension.ht
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a4d8b507b1bfa163af31a68bacb8acf6f"><td class="memItemLeft" align="right" valign="top"><a id="a4d8b507b1bfa163af31a68bacb8acf6f"></a>
-static <a class="el" href="class_entitas_1_1_entity.html">Entity</a> []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context_extension.html#a4d8b507b1bfa163af31a68bacb8acf6f">GetEntities</a> (this <a class="el" href="class_entitas_1_1_context.html">Context</a> context, <a class="el" href="interface_entitas_1_1_i_matcher.html">IMatcher</a> matcher)</td></tr>
-<tr class="memdesc:a4d8b507b1bfa163af31a68bacb8acf6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all entities matching the specified matcher. <br /></td></tr>
-<tr class="separator:a4d8b507b1bfa163af31a68bacb8acf6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3a7f13281cff6cf9792c33bd7776d2e"><td class="memItemLeft" align="right" valign="top"><a id="ac3a7f13281cff6cf9792c33bd7776d2e"></a>
-static <a class="el" href="class_entitas_1_1_collector.html">Collector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context_extension.html#ac3a7f13281cff6cf9792c33bd7776d2e">CreateCollector</a> (this <a class="el" href="class_entitas_1_1_context.html">Context</a> context, <a class="el" href="interface_entitas_1_1_i_matcher.html">IMatcher</a> matcher, GroupEvent groupEvent=GroupEvent.Added)</td></tr>
-<tr class="memdesc:ac3a7f13281cff6cf9792c33bd7776d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an <a class="el" href="class_entitas_1_1_collector.html">Collector</a>. <br /></td></tr>
-<tr class="separator:ac3a7f13281cff6cf9792c33bd7776d2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2fa6720418e1a1f6a3d6f1e18e2d02a7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_entitas_1_1_entity.html">Entity</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context_extension.html#a2fa6720418e1a1f6a3d6f1e18e2d02a7">CloneEntity</a> (this <a class="el" href="class_entitas_1_1_context.html">Context</a> context, <a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity, bool replaceExisting=false, params int[] indices)</td></tr>
-<tr class="separator:a2fa6720418e1a1f6a3d6f1e18e2d02a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab25d48b0938653d8abbe661f46b6b971"><td class="memItemLeft" align="right" valign="top"><a id="ab25d48b0938653d8abbe661f46b6b971"></a>
+static TEntity []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context_extension.html#ab25d48b0938653d8abbe661f46b6b971">GetEntities&lt; TEntity &gt;</a> (this <a class="el" href="interface_entitas_1_1_i_context.html">IContext</a>&lt; TEntity &gt; context, <a class="el" href="interface_entitas_1_1_i_matcher.html">IMatcher</a>&lt; TEntity &gt; matcher)</td></tr>
+<tr class="memdesc:ab25d48b0938653d8abbe661f46b6b971"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all entities matching the specified matcher. <br /></td></tr>
+<tr class="separator:ab25d48b0938653d8abbe661f46b6b971"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab73231c56bb0be5ea9e80be5a783a1f3"><td class="memItemLeft" align="right" valign="top"><a id="ab73231c56bb0be5ea9e80be5a783a1f3"></a>
+static <a class="el" href="class_entitas_1_1_collector.html">Collector</a>&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context_extension.html#ab73231c56bb0be5ea9e80be5a783a1f3">CreateCollector&lt; TEntity &gt;</a> (this <a class="el" href="interface_entitas_1_1_i_context.html">IContext</a>&lt; TEntity &gt; context, <a class="el" href="interface_entitas_1_1_i_matcher.html">IMatcher</a>&lt; TEntity &gt; matcher, GroupEvent groupEvent=GroupEvent.Added)</td></tr>
+<tr class="memdesc:ab73231c56bb0be5ea9e80be5a783a1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an <a class="el" href="class_entitas_1_1_collector.html">Collector</a>. <br /></td></tr>
+<tr class="separator:ab73231c56bb0be5ea9e80be5a783a1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfebf72578085b093aea4321d371cd32"><td class="memItemLeft" align="right" valign="top">static TEntity&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context_extension.html#acfebf72578085b093aea4321d371cd32">CloneEntity&lt; TEntity &gt;</a> (this <a class="el" href="interface_entitas_1_1_i_context.html">IContext</a>&lt; TEntity &gt; context, <a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a> entity, bool replaceExisting=false, params int[] indices)</td></tr>
+<tr class="separator:acfebf72578085b093aea4321d371cd32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
 <p>Definition at line <a class="el" href="_context_extension_8cs_source.html#l00003">3</a> of file <a class="el" href="_context_extension_8cs_source.html">ContextExtension.cs</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2fa6720418e1a1f6a3d6f1e18e2d02a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fa6720418e1a1f6a3d6f1e18e2d02a7">&sect;&nbsp;</a></span>CloneEntity()</h2>
+<a id="acfebf72578085b093aea4321d371cd32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfebf72578085b093aea4321d371cd32">&sect;&nbsp;</a></span>CloneEntity< TEntity >()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -117,15 +117,15 @@ static <a class="el" href="class_entitas_1_1_collector.html">Collector</a>&#160;
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="class_entitas_1_1_entity.html">Entity</a> Entitas.ContextExtension.CloneEntity </td>
+          <td class="memname">static TEntity Entitas.ContextExtension.CloneEntity&lt; TEntity &gt; </td>
           <td>(</td>
-          <td class="paramtype">this <a class="el" href="class_entitas_1_1_context.html">Context</a>&#160;</td>
+          <td class="paramtype">this <a class="el" href="interface_entitas_1_1_i_context.html">IContext</a>&lt; TEntity &gt;&#160;</td>
           <td class="paramname"><em>context</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_entitas_1_1_entity.html">Entity</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a>&#160;</td>
           <td class="paramname"><em>entity</em>, </td>
         </tr>
         <tr>
@@ -153,13 +153,23 @@ static <a class="el" href="class_entitas_1_1_collector.html">Collector</a>&#160;
 </table>
 </div><div class="memdoc">
 <p>Creates a new entity and adds copies of all specified components to it. If replaceExisting is true it will replace exisintg components. </p>
+<div class="typeconstraint">
+<dl><dt><b>Type Constraints</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>class</em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>IEntity</em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>new()</em></td><td>&#160;</td></tr>
+</table>
+</dd>
+</dl>
+</div>
 
-<p>Definition at line <a class="el" href="_context_extension_8cs_source.html#l00018">18</a> of file <a class="el" href="_context_extension_8cs_source.html">ContextExtension.cs</a>.</p>
+<p>Definition at line <a class="el" href="_context_extension_8cs_source.html#l00020">20</a> of file <a class="el" href="_context_extension_8cs_source.html">ContextExtension.cs</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Entitas/Entitas/Extensions/<a class="el" href="_context_extension_8cs_source.html">ContextExtension.cs</a></li>
+<li>Entitas/Entitas/Context/<a class="el" href="_context_extension_8cs_source.html">ContextExtension.cs</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

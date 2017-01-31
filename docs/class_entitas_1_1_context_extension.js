@@ -1,6 +1,6 @@
 var class_entitas_1_1_context_extension =
 [
-    [ "CloneEntity", "class_entitas_1_1_context_extension.html#a2fa6720418e1a1f6a3d6f1e18e2d02a7", null ],
-    [ "CreateCollector", "class_entitas_1_1_context_extension.html#ac3a7f13281cff6cf9792c33bd7776d2e", null ],
-    [ "GetEntities", "class_entitas_1_1_context_extension.html#a4d8b507b1bfa163af31a68bacb8acf6f", null ]
+    [ "CloneEntity< TEntity >", "class_entitas_1_1_context_extension.html#acfebf72578085b093aea4321d371cd32", null ],
+    [ "CreateCollector< TEntity >", "class_entitas_1_1_context_extension.html#ab73231c56bb0be5ea9e80be5a783a1f3", null ],
+    [ "GetEntities< TEntity >", "class_entitas_1_1_context_extension.html#ab25d48b0938653d8abbe661f46b6b971", null ]
 ];

@@ -6,45 +6,40 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
+using Entitas.Api;
 
-    public partial class Entity {
+public partial class GameEntity : Entity {
 
-        static readonly InteractiveComponent interactiveComponent = new InteractiveComponent();
+    static readonly InteractiveComponent interactiveComponent = new InteractiveComponent();
 
-        public bool isInteractive {
-            get { return HasComponent(ComponentIds.Interactive); }
-            set {
-                if(value != isInteractive) {
-                    if(value) {
-                        AddComponent(ComponentIds.Interactive, interactiveComponent);
-                    } else {
-                        RemoveComponent(ComponentIds.Interactive);
-                    }
+    public bool isInteractive {
+        get { return HasComponent(ComponentIds.Interactive); }
+        set {
+            if(value != isInteractive) {
+                if(value) {
+                    AddComponent(ComponentIds.Interactive, interactiveComponent);
+                } else {
+                    RemoveComponent(ComponentIds.Interactive);
                 }
             }
-        }
-
-        public Entity IsInteractive(bool value) {
-            isInteractive = value;
-            return this;
         }
     }
+}
 
-    public partial class Matcher {
+public partial class GameMatcher {
 
-        static IMatcher _matcherInteractive;
+    static IMatcher<GameEntity> _matcherInteractive;
 
-        public static IMatcher Interactive {
-            get {
-                if(_matcherInteractive == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Interactive);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherInteractive = matcher;
-                }
-
-                return _matcherInteractive;
+    public static IMatcher<GameEntity> Interactive {
+        get {
+            if(_matcherInteractive == null) {
+                var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Interactive);
+                matcher.componentNames = ComponentIds.componentNames;
+                _matcherInteractive = matcher;
             }
+
+            return _matcherInteractive;
         }
     }
 }

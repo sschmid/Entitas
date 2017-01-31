@@ -6,44 +6,44 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
+using Entitas.Api;
 
-    public partial class Entity {
+public partial class GameEntity : Entity {
 
-        public ResourceComponent resource { get { return (ResourceComponent)GetComponent(ComponentIds.Resource); } }
-        public bool hasResource { get { return HasComponent(ComponentIds.Resource); } }
+    public ResourceComponent resource { get { return (ResourceComponent)GetComponent(ComponentIds.Resource); } }
+    public bool hasResource { get { return HasComponent(ComponentIds.Resource); } }
 
-        public void AddResource(string newName) {
-            var component = CreateComponent<ResourceComponent>(ComponentIds.Resource);
-            component.name = newName;
-            AddComponent(ComponentIds.Resource, component);
-        }
-
-        public void ReplaceResource(string newName) {
-            var component = CreateComponent<ResourceComponent>(ComponentIds.Resource);
-            component.name = newName;
-            ReplaceComponent(ComponentIds.Resource, component);
-        }
-
-        public void RemoveResource() {
-            RemoveComponent(ComponentIds.Resource);
-        }
+    public void AddResource(string newName) {
+        var component = CreateComponent<ResourceComponent>(ComponentIds.Resource);
+        component.name = newName;
+        AddComponent(ComponentIds.Resource, component);
     }
 
-    public partial class Matcher {
+    public void ReplaceResource(string newName) {
+        var component = CreateComponent<ResourceComponent>(ComponentIds.Resource);
+        component.name = newName;
+        ReplaceComponent(ComponentIds.Resource, component);
+    }
 
-        static IMatcher _matcherResource;
+    public void RemoveResource() {
+        RemoveComponent(ComponentIds.Resource);
+    }
+}
 
-        public static IMatcher Resource {
-            get {
-                if(_matcherResource == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Resource);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherResource = matcher;
-                }
+public partial class GameMatcher {
 
-                return _matcherResource;
+    static IMatcher<GameEntity> _matcherResource;
+
+    public static IMatcher<GameEntity> Resource {
+        get {
+            if(_matcherResource == null) {
+                var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Resource);
+                matcher.componentNames = ComponentIds.componentNames;
+                _matcherResource = matcher;
             }
+
+            return _matcherResource;
         }
     }
 }

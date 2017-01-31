@@ -13,5 +13,29 @@ ${SCRIPTS}/update
 $UNITY -quit \
        -batchmode \
        -logfile \
-       -projectPath $FULL_UNITY_PROJECT \
+       -projectPath "${PLUGINS}/${EU}/Assets/../" \
+       -executeMethod $UNITY_EXECUTE_METHOD
+
+$UNITY -quit \
+       -batchmode \
+       -logfile \
+       -projectPath "${PLUGINS}/${UBP}/" \
+       -executeMethod $UNITY_EXECUTE_METHOD
+
+$UNITY -quit \
+       -batchmode \
+       -logfile \
+       -projectPath "${PLUGINS}/${UCG}/" \
+       -executeMethod $UNITY_EXECUTE_METHOD
+
+$UNITY -quit \
+       -batchmode \
+       -logfile \
+       -projectPath "${PLUGINS}/${UMIG}/" \
+       -executeMethod $UNITY_EXECUTE_METHOD
+
+$UNITY -quit \
+       -batchmode \
+       -logfile \
+       -projectPath "${PLUGINS}/${UVD}/" \
        -executeMethod $UNITY_EXECUTE_METHOD

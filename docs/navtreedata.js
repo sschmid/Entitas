@@ -11,7 +11,6 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ],
         [ "Properties", "functions_prop.html", null ],
         [ "Events", "functions_evnt.html", null ]
       ] ]
@@ -25,8 +24,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_entity_index_8cs_source.html",
-"class_entitas_1_1_entity.html#ad3deee62c9a0392eea6b93e5356f9107",
-"interface_entitas_1_1_i_entity_index.html#a8b7e3929f65a5a2d64d33a05ebabf2b8"
+"class_entitas_1_1_object_cache.html#a13d8b7667f6067a5e3607c5b253ea659"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

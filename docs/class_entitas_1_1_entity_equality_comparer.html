@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Entitas: Entitas.EntityEqualityComparer Class Reference</title>
+<title>Entitas: Entitas.EntityEqualityComparer&lt; TEntity &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,62 +87,48 @@ $(document).ready(function(){initNavTree('class_entitas_1_1_entity_equality_comp
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="class_entitas_1_1_entity_equality_comparer-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Entitas.EntityEqualityComparer Class Reference</div>  </div>
+<div class="title">Entitas.EntityEqualityComparer&lt; TEntity &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for Entitas.EntityEqualityComparer:</div>
+Inheritance diagram for Entitas.EntityEqualityComparer&lt; TEntity &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="class_entitas_1_1_entity_equality_comparer.png" usemap="#Entitas.EntityEqualityComparer_map" alt=""/>
-  <map id="Entitas.EntityEqualityComparer_map" name="Entitas.EntityEqualityComparer_map">
+  <img src="class_entitas_1_1_entity_equality_comparer.png" usemap="#Entitas.EntityEqualityComparer_3C_20TEntity_20_3E_map" alt=""/>
+  <map id="Entitas.EntityEqualityComparer_3C_20TEntity_20_3E_map" name="Entitas.EntityEqualityComparer&lt; TEntity &gt;_map">
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2187f54110cedff3db892c70dd4091b2"><td class="memItemLeft" align="right" valign="top"><a id="a2187f54110cedff3db892c70dd4091b2"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Equals</b> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> x, <a class="el" href="class_entitas_1_1_entity.html">Entity</a> y)</td></tr>
-<tr class="separator:a2187f54110cedff3db892c70dd4091b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0d89528804d7937cbe6be7cec95e861"><td class="memItemLeft" align="right" valign="top"><a id="ae0d89528804d7937cbe6be7cec95e861"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetHashCode</b> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> obj)</td></tr>
-<tr class="separator:ae0d89528804d7937cbe6be7cec95e861"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b1cda621289fd3e56b6ef9293dbb522"><td class="memItemLeft" align="right" valign="top"><a id="a2b1cda621289fd3e56b6ef9293dbb522"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Equals</b> (TEntity x, TEntity y)</td></tr>
+<tr class="separator:a2b1cda621289fd3e56b6ef9293dbb522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b72d94d90fa400bc06f04bd8738fc91"><td class="memItemLeft" align="right" valign="top"><a id="a7b72d94d90fa400bc06f04bd8738fc91"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>GetHashCode</b> (TEntity obj)</td></tr>
+<tr class="separator:a7b72d94d90fa400bc06f04bd8738fc91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a2a19f550609290fbb150754bbad1b227"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_entitas_1_1_entity_equality_comparer.html">EntityEqualityComparer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>comparer</b></td></tr>
-<tr class="separator:a2a19f550609290fbb150754bbad1b227"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a723134fd52d3ac7722278632de6fb62d"><td class="memItemLeft" align="right" valign="top"><a id="a723134fd52d3ac7722278632de6fb62d"></a>
+static readonly IEqualityComparer&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>comparer</b> = new <a class="el" href="class_entitas_1_1_entity_equality_comparer.html">EntityEqualityComparer</a>&lt;TEntity&gt;()</td></tr>
+<tr class="separator:a723134fd52d3ac7722278632de6fb62d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00524">524</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a2a19f550609290fbb150754bbad1b227"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a19f550609290fbb150754bbad1b227">&sect;&nbsp;</a></span>comparer</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">readonly <a class="el" href="class_entitas_1_1_entity_equality_comparer.html">EntityEqualityComparer</a> Entitas.EntityEqualityComparer.comparer</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
+<div class="textblock"><div class="typeconstraint">
+<dl><dt><b>Type Constraints</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>class</em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>new()</em></td><td>&#160;</td></tr>
 </table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">            <span class="keyword">new</span> EntityEqualityComparer()</div></div><!-- fragment -->
-<p>Definition at line <a class="el" href="_entity_8cs_source.html#l00526">526</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+</dd>
+</dl>
+</div>
 
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>Entitas/Entitas/<a class="el" href="_entity_8cs_source.html">Entity.cs</a></li>
+<p>Definition at line <a class="el" href="_entity_equality_comparer_8cs_source.html#l00005">5</a> of file <a class="el" href="_entity_equality_comparer_8cs_source.html">EntityEqualityComparer.cs</a>.</p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
+<li>Entitas/Entitas/Entity/<a class="el" href="_entity_equality_comparer_8cs_source.html">EntityEqualityComparer.cs</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

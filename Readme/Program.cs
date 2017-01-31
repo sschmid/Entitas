@@ -10,26 +10,26 @@ namespace Readme {
         }
 
         static void generate() {
-            var generatedFolder = getEntitasProjectDir() + "/Readme/Readme/Generated/";
+            //var generatedFolder = getEntitasProjectDir() + "/Readme/Readme/Generated/";
 
-            var codeGenerators = new ICodeGenerator[] {
-                new ComponentExtensionsGenerator(),
-                new ComponentIndicesGenerator(),
-                new ContextAttributesGenerator(),
-                new ContextsGenerator()
-            };
+            //var codeGenerators = new ICodeGenerator[] {
+            //    new ComponentExtensionsGenerator(),
+            //    new ComponentIndicesGenerator(),
+            //    new ContextAttributesGenerator(),
+            //    new ContextsGenerator()
+            //};
 
-            var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
+            //var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
 
-            var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
-            var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
+            //var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
+            //var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
 
-            foreach(var file in files) {
-                Console.WriteLine("Generated: " + file.fileName);
-            }
+            //foreach(var file in files) {
+            //    Console.WriteLine("Generated: " + file.fileName);
+            //}
 
-            Console.WriteLine("Done. Press any key...");
-            Console.Read();
+            //Console.WriteLine("Done. Press any key...");
+            //Console.Read();
         }
 
         static string getEntitasProjectDir() {

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Entitas: Entitas.IMatcher Interface Reference</title>
+<title>Entitas: Entitas.IMatcher&lt; TEntity &gt; Interface Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -87,42 +87,50 @@ $(document).ready(function(){initNavTree('interface_entitas_1_1_i_matcher.html',
 <a href="#properties">Properties</a> &#124;
 <a href="interface_entitas_1_1_i_matcher-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Entitas.IMatcher Interface Reference</div>  </div>
+<div class="title">Entitas.IMatcher&lt; TEntity &gt; Interface Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="dynheader">
-Inheritance diagram for Entitas.IMatcher:</div>
+Inheritance diagram for Entitas.IMatcher&lt; TEntity &gt;:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="interface_entitas_1_1_i_matcher.png" usemap="#Entitas.IMatcher_map" alt=""/>
-  <map id="Entitas.IMatcher_map" name="Entitas.IMatcher_map">
-<area href="interface_entitas_1_1_i_compound_matcher.html" alt="Entitas.ICompoundMatcher" shape="rect" coords="173,56,336,80"/>
-<area href="interface_entitas_1_1_i_all_of_matcher.html" alt="Entitas.IAllOfMatcher" shape="rect" coords="0,112,163,136"/>
-<area href="interface_entitas_1_1_i_any_of_matcher.html" alt="Entitas.IAnyOfMatcher" shape="rect" coords="173,112,336,136"/>
-<area href="interface_entitas_1_1_i_none_of_matcher.html" alt="Entitas.INoneOfMatcher" shape="rect" coords="346,112,509,136"/>
-<area href="class_entitas_1_1_matcher.html" alt="Entitas.Matcher" shape="rect" coords="0,168,163,192"/>
-<area href="class_entitas_1_1_matcher.html" alt="Entitas.Matcher" shape="rect" coords="173,168,336,192"/>
-<area href="class_entitas_1_1_matcher.html" alt="Entitas.Matcher" shape="rect" coords="346,168,509,192"/>
+  <img src="interface_entitas_1_1_i_matcher.png" usemap="#Entitas.IMatcher_3C_20TEntity_20_3E_map" alt=""/>
+  <map id="Entitas.IMatcher_3C_20TEntity_20_3E_map" name="Entitas.IMatcher&lt; TEntity &gt;_map">
+<area href="interface_entitas_1_1_i_compound_matcher.html" alt="Entitas.ICompoundMatcher&lt; TEntity &gt;" shape="rect" coords="0,56,225,80"/>
+<area href="interface_entitas_1_1_i_none_of_matcher.html" alt="Entitas.INoneOfMatcher&lt; TEntity &gt;" shape="rect" coords="0,112,225,136"/>
+<area href="interface_entitas_1_1_i_any_of_matcher.html" alt="Entitas.IAnyOfMatcher&lt; TEntity &gt;" shape="rect" coords="0,168,225,192"/>
+<area href="interface_entitas_1_1_i_all_of_matcher.html" alt="Entitas.IAllOfMatcher&lt; TEntity &gt;" shape="rect" coords="0,224,225,248"/>
+<area href="class_entitas_1_1_matcher.html" alt="Entitas.Matcher&lt; TEntity &gt;" shape="rect" coords="0,280,225,304"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4c837e3fb870be527a045246477e64fc"><td class="memItemLeft" align="right" valign="top"><a id="a4c837e3fb870be527a045246477e64fc"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>Matches</b> (<a class="el" href="class_entitas_1_1_entity.html">Entity</a> entity)</td></tr>
-<tr class="separator:a4c837e3fb870be527a045246477e64fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab564e286004287ff3fc8f6c2255e38f0"><td class="memItemLeft" align="right" valign="top"><a id="ab564e286004287ff3fc8f6c2255e38f0"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Matches</b> (TEntity entity)</td></tr>
+<tr class="separator:ab564e286004287ff3fc8f6c2255e38f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a7479d79274d3dea4bc5b8339879c63bc"><td class="memItemLeft" align="right" valign="top"><a id="a7479d79274d3dea4bc5b8339879c63bc"></a>
+<tr class="memitem:a8a7a90f8d2b24f09115c36415c52a670"><td class="memItemLeft" align="right" valign="top"><a id="a8a7a90f8d2b24f09115c36415c52a670"></a>
 int []&#160;</td><td class="memItemRight" valign="bottom"><b>indices</b><code> [get]</code></td></tr>
-<tr class="separator:a7479d79274d3dea4bc5b8339879c63bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a8a7a90f8d2b24f09115c36415c52a670"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock">
+<div class="textblock"><div class="typeconstraint">
+<dl><dt><b>Type Constraints</b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>class</em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a></em></td><td>&#160;</td></tr>
+<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>new()</em></td><td>&#160;</td></tr>
+</table>
+</dd>
+</dl>
+</div>
+
 <p>Definition at line <a class="el" href="_i_matcher_8cs_source.html#l00003">3</a> of file <a class="el" href="_i_matcher_8cs_source.html">IMatcher.cs</a>.</p>
 </div><hr/>The documentation for this interface was generated from the following file:<ul>
-<li>Entitas/Entitas/Interfaces/<a class="el" href="_i_matcher_8cs_source.html">IMatcher.cs</a></li>
+<li>Entitas/Entitas/Interfaces/Matcher/<a class="el" href="_i_matcher_8cs_source.html">IMatcher.cs</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

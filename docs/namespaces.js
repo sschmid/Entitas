@@ -1,4 +1,4 @@
 var namespaces =
 [
-    [ "Entitas", "namespace_entitas.html", "namespace_entitas" ]
+    [ "Entitas", "namespace_entitas.html", null ]
 ];

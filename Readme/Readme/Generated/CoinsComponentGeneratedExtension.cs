@@ -7,77 +7,73 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using Entitas;
+using Entitas.Api;
 
-namespace Entitas {
+public partial class GameEntity : Entity {
 
-    public partial class Entity {
+    public CoinsComponent coins { get { return (CoinsComponent)GetComponent(MetaComponentIds.Coins); } }
+    public bool hasCoins { get { return HasComponent(MetaComponentIds.Coins); } }
 
-        public CoinsComponent coins { get { return (CoinsComponent)GetComponent(MetaComponentIds.Coins); } }
-        public bool hasCoins { get { return HasComponent(MetaComponentIds.Coins); } }
-
-        public void AddCoins(int newCount) {
-            var component = CreateComponent<CoinsComponent>(MetaComponentIds.Coins);
-            component.count = newCount;
-            AddComponent(MetaComponentIds.Coins, component);
-        }
-
-        public void ReplaceCoins(int newCount) {
-            var component = CreateComponent<CoinsComponent>(MetaComponentIds.Coins);
-            component.count = newCount;
-            ReplaceComponent(MetaComponentIds.Coins, component);
-        }
-
-        public void RemoveCoins() {
-            RemoveComponent(MetaComponentIds.Coins);
-        }
+    public void AddCoins(int newCount) {
+        var component = CreateComponent<CoinsComponent>(MetaComponentIds.Coins);
+        component.count = newCount;
+        AddComponent(MetaComponentIds.Coins, component);
     }
 
-    public partial class Context {
+    public void ReplaceCoins(int newCount) {
+        var component = CreateComponent<CoinsComponent>(MetaComponentIds.Coins);
+        component.count = newCount;
+        ReplaceComponent(MetaComponentIds.Coins, component);
+    }
 
-        public Entity coinsEntity { get { return GetGroup(MetaMatcher.Coins).GetSingleEntity(); } }
-        public CoinsComponent coins { get { return coinsEntity.coins; } }
-        public bool hasCoins { get { return coinsEntity != null; } }
-
-        public Entity SetCoins(int newCount) {
-            if(hasCoins) {
-                throw new EntitasException("Could not set coins!\n" + this + " already has an entity with CoinsComponent!",
-                    "You should check if the context already has a coinsEntity before setting it or use context.ReplaceCoins().");
-            }
-            var entity = CreateEntity();
-            entity.AddCoins(newCount);
-            return entity;
-        }
-
-        public Entity ReplaceCoins(int newCount) {
-            var entity = coinsEntity;
-            if(entity == null) {
-                entity = SetCoins(newCount);
-            } else {
-                entity.ReplaceCoins(newCount);
-            }
-
-            return entity;
-        }
-
-        public void RemoveCoins() {
-            DestroyEntity(coinsEntity);
-        }
+    public void RemoveCoins() {
+        RemoveComponent(MetaComponentIds.Coins);
     }
 }
 
-    public partial class MetaMatcher {
+public sealed partial class GameContext {
 
-        static IMatcher _matcherCoins;
+    public GameEntity coinsEntity { get { return GetGroup(MetaMatcher.Coins).GetSingleEntity(); } }
+    public CoinsComponent coins { get { return coinsEntity.coins; } }
+    public bool hasCoins { get { return coinsEntity != null; } }
 
-        public static IMatcher Coins {
-            get {
-                if(_matcherCoins == null) {
-                    var matcher = (Matcher)Matcher.AllOf(MetaComponentIds.Coins);
-                    matcher.componentNames = MetaComponentIds.componentNames;
-                    _matcherCoins = matcher;
-                }
+    public GameEntity SetCoins(int newCount) {
+        if(hasCoins) {
+            throw new EntitasException("Could not set coins!\n" + this + " already has an entity with CoinsComponent!",
+                "You should check if the context already has a coinsEntity before setting it or use context.ReplaceCoins().");
+        }
+        var entity = CreateEntity();
+        entity.AddCoins(newCount);
+        return entity;
+    }
 
-                return _matcherCoins;
-            }
+    public void ReplaceCoins(int newCount) {
+        var entity = coinsEntity;
+        if(entity == null) {
+            entity = SetCoins(newCount);
+        } else {
+            entity.ReplaceCoins(newCount);
         }
     }
+
+    public void RemoveCoins() {
+        DestroyEntity(coinsEntity);
+    }
+}
+
+public partial class MetaMatcher {
+
+    static IMatcher<GameEntity> _matcherCoins;
+
+    public static IMatcher<GameEntity> Coins {
+        get {
+            if(_matcherCoins == null) {
+                var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(MetaComponentIds.Coins);
+                matcher.componentNames = MetaComponentIds.componentNames;
+                _matcherCoins = matcher;
+            }
+
+            return _matcherCoins;
+        }
+    }
+}

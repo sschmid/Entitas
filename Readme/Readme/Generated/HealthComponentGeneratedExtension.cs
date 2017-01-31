@@ -6,44 +6,44 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-namespace Entitas {
+using Entitas;
+using Entitas.Api;
 
-    public partial class Entity {
+public partial class GameEntity : Entity {
 
-        public HealthComponent health { get { return (HealthComponent)GetComponent(ComponentIds.Health); } }
-        public bool hasHealth { get { return HasComponent(ComponentIds.Health); } }
+    public HealthComponent health { get { return (HealthComponent)GetComponent(ComponentIds.Health); } }
+    public bool hasHealth { get { return HasComponent(ComponentIds.Health); } }
 
-        public void AddHealth(int newValue) {
-            var component = CreateComponent<HealthComponent>(ComponentIds.Health);
-            component.value = newValue;
-            AddComponent(ComponentIds.Health, component);
-        }
-
-        public void ReplaceHealth(int newValue) {
-            var component = CreateComponent<HealthComponent>(ComponentIds.Health);
-            component.value = newValue;
-            ReplaceComponent(ComponentIds.Health, component);
-        }
-
-        public void RemoveHealth() {
-            RemoveComponent(ComponentIds.Health);
-        }
+    public void AddHealth(int newValue) {
+        var component = CreateComponent<HealthComponent>(ComponentIds.Health);
+        component.value = newValue;
+        AddComponent(ComponentIds.Health, component);
     }
 
-    public partial class Matcher {
+    public void ReplaceHealth(int newValue) {
+        var component = CreateComponent<HealthComponent>(ComponentIds.Health);
+        component.value = newValue;
+        ReplaceComponent(ComponentIds.Health, component);
+    }
 
-        static IMatcher _matcherHealth;
+    public void RemoveHealth() {
+        RemoveComponent(ComponentIds.Health);
+    }
+}
 
-        public static IMatcher Health {
-            get {
-                if(_matcherHealth == null) {
-                    var matcher = (Matcher)Matcher.AllOf(ComponentIds.Health);
-                    matcher.componentNames = ComponentIds.componentNames;
-                    _matcherHealth = matcher;
-                }
+public partial class GameMatcher {
 
-                return _matcherHealth;
+    static IMatcher<GameEntity> _matcherHealth;
+
+    public static IMatcher<GameEntity> Health {
+        get {
+            if(_matcherHealth == null) {
+                var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(ComponentIds.Health);
+                matcher.componentNames = ComponentIds.componentNames;
+                _matcherHealth = matcher;
             }
+
+            return _matcherHealth;
         }
     }
 }
