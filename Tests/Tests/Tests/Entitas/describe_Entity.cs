@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Entitas;
 using My.Namespace;
 using NSpec;
@@ -57,10 +58,33 @@ class describe_Entity : nspec {
                 }
             };
 
-            it["has custom ContextInfo when set"] = () => {
+            it["initializes"] = () => {
                 var contextInfo = new ContextInfo(null, null, null);
+                var componentPools = new Stack<IComponent>[42];
                 e = new TestEntity();
-                e.Initialize(0, 0, null, contextInfo);
+                e.Initialize(1, 2, componentPools, contextInfo);
+
+                e.isEnabled.should_be_true();
+                e.creationIndex.should_be(1);
+                e.totalComponents.should_be(2);
+                e.componentPools.should_be_same(componentPools);
+                e.contextInfo.should_be_same(contextInfo);
+            };
+
+            it["reactivates after being desroyed"] = () => {
+                var contextInfo = new ContextInfo(null, null, null);
+                var componentPools = new Stack<IComponent>[42];
+                e = new TestEntity();
+                e.Initialize(1, 2, componentPools, contextInfo);
+
+                e.destroy();
+
+                e.Reactivate(42);
+
+                e.isEnabled.should_be_true();
+                e.creationIndex.should_be(42);
+                e.totalComponents.should_be(2);
+                e.componentPools.should_be_same(componentPools);
                 e.contextInfo.should_be_same(contextInfo);
             };
 

@@ -55,7 +55,7 @@ namespace Entitas {
         public ContextInfo contextInfo { get { return _contextInfo; } }
 
         int _creationIndex;
-        bool _isEnabled = true;
+        bool _isEnabled;
 
         int _totalComponents;
         IComponent[] _components;
@@ -68,9 +68,6 @@ namespace Entitas {
         StringBuilder _toStringBuilder;
 
         public void Initialize(int creationIndex, int totalComponents, Stack<IComponent>[] componentPools, ContextInfo contextInfo = null) {
-            // TODO UNIT Test
-            // Should set creation index
-            // shoud set isEnabled = true
             Reactivate(creationIndex);
 
             _totalComponents = totalComponents;
@@ -90,9 +87,6 @@ namespace Entitas {
         }
 
         public void Reactivate(int creationIndex) {
-            // TODO UNIT TEST
-            // Set creation index
-            // Set isEnabled = true
             _creationIndex = creationIndex;
             _isEnabled = true;
         }
