@@ -22,6 +22,7 @@ namespace Tests.Fixtures {
                 new EntityGenerator(),
                 new ContextGenerator(),
                 new ContextAttributeGenerator(),
+                new ContextsGenerator(),
                 new ComponentsLookupGenerator(),
                 new ComponentEntityGenerator(),
                 new ComponentContextGenerator(),

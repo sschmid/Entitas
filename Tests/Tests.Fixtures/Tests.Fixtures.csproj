@@ -58,6 +58,7 @@
     <Compile Include="Fixtures\ObjectsToGenerate\ClassHideInBlueprintsInspector.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\*.cs" />
     <Compile Include="Generated\*\*.cs" />
   </ItemGroup>
   <ItemGroup>
