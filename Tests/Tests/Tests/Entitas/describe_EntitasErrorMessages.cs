@@ -171,7 +171,7 @@ class describe_EntitasErrorMessages : nspec {
 
             it["multiple entities for primary key"] = () => printErrorMessage(() => {
                 var groupA = ctx.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA));
-                var index = new PrimaryEntityIndex<TestEntity, string>(groupA, (e, c) => ((NameAgeComponent)c).name);
+                new PrimaryEntityIndex<TestEntity, string>(groupA, (e, c) => ((NameAgeComponent)c).name);
 
                 var nameAge = new NameAgeComponent();
                 nameAge.name = "Max";

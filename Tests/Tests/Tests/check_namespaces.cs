@@ -23,7 +23,6 @@ class check_namespaces : nspec {
         const string namespacePattern = @"(?:^namespace)\s.*\b";
         string expectedNamespacePattern = string.Format(@"[^\{0}]*", Path.DirectorySeparatorChar);
 
-        var entitasSourceDir = dir("Entitas", "Entitas");
         var pluginsDir = dir("Plugins");
 
         var each = new Each<string, string, string>();
