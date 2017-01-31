@@ -5,7 +5,7 @@ namespace Entitas.CodeGenerator {
 
     public class MatcherGenerator : ICodeGenerator {
 
-        const string matcherTemplate =
+        const string MATCHER_TEMPLATE =
 @"using Entitas;
 
 public sealed partial class ${Context}Matcher {
@@ -44,7 +44,7 @@ public sealed partial class ${Context}Matcher {
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + data.GetComponentName();
             var componentNames = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + ".componentNames";
 
-            var fileContent = matcherTemplate
+            var fileContent = MATCHER_TEMPLATE
                 .Replace("${Context}", contextName)
                 .Replace("${Name}", data.GetComponentName())
                 .Replace("${Index}", index)

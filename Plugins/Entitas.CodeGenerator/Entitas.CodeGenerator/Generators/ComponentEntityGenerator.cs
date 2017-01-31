@@ -6,7 +6,7 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentEntityGenerator : ICodeGenerator {
 
-        const string normalComponentTemplate =
+        const string STANDARD_COMPONENT_TEMPLATE =
 @"public partial class ${Context}Entity {
 
     public ${Type} ${name} { get { return (${Type})GetComponent(${Index}); } }
@@ -30,13 +30,13 @@ ${memberAssignment}
 }
 ";
 
-        const string memberArgsTemplate =
+        const string MEMBER_ARGS_TEMPLATE =
 @"${MemberType} new${MemberName}";
 
-        const string memberAssignmentTemplate =
+        const string MEMBER_ASSIGNMENT_TEMPLATE =
 @"        component.${memberName} = new${MemberName};";
 
-        const string flagComponentTemplate =
+        const string FLAG_COMPONENT_TEMPLATE =
 @"public partial class ${Context}Entity {
 
     static readonly ${Type} ${name}Component = new ${Type}();
@@ -74,8 +74,8 @@ ${memberAssignment}
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + data.GetComponentName();
             var memberInfos = data.GetMemberInfos();
             var template = memberInfos.Count == 0
-                                      ? flagComponentTemplate
-                                      : normalComponentTemplate;
+                                      ? FLAG_COMPONENT_TEMPLATE
+                                      : STANDARD_COMPONENT_TEMPLATE;
 
             var fileContent = template
                 .Replace("${Context}", contextName)
@@ -97,7 +97,7 @@ ${memberAssignment}
 
         string getMemberArgs(List<PublicMemberInfo> memberInfos) {
             var args = memberInfos
-                .Select(info => memberArgsTemplate
+                .Select(info => MEMBER_ARGS_TEMPLATE
                         .Replace("${MemberType}", info.type.ToCompilableString())
                         .Replace("${MemberName}", info.name.UppercaseFirst())
                        )
@@ -108,7 +108,7 @@ ${memberAssignment}
 
         string getMemberAssignment(List<PublicMemberInfo> memberInfos) {
             var assignments = memberInfos
-                .Select(info => memberAssignmentTemplate
+                .Select(info => MEMBER_ASSIGNMENT_TEMPLATE
                         .Replace("${MemberType}", info.type.ToCompilableString())
                         .Replace("${memberName}", info.name)
                         .Replace("${MemberName}", info.name.UppercaseFirst())

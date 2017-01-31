@@ -6,7 +6,7 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentContextGenerator : ICodeGenerator {
 
-        const string standardComponentTemplate =
+        const string STANDARD_COMPONENT_TEMPLATE =
 @"using Entitas;
 
 public partial class ${Context}Context {
@@ -40,13 +40,13 @@ public partial class ${Context}Context {
 }
 ";
 
-        const string memberArgsTemplate =
+        const string MEMBER_ARGS_TEMPLATE =
 @"${MemberType} new${MemberName}";
 
-        const string methodArgsTemplate =
+        const string METHOD_ARGS_TEMPLATE =
 @"new${MemberName}";
 
-        const string flagComponentTemplate =
+        const string FLAG_COMPONENT_TEMPLATE =
 @"public partial class ${Context}Context {
 
     public ${Context}Entity ${name}Entity { get { return GetGroup(${Context}Matcher.${Name}).GetSingleEntity(); } }
@@ -85,8 +85,8 @@ public partial class ${Context}Context {
         CodeGenFile generateExtension(string contextName, ComponentData data) {
             var memberInfos = data.GetMemberInfos();
             var template = memberInfos.Count == 0
-                                      ? flagComponentTemplate
-                                      : standardComponentTemplate;
+                                      ? FLAG_COMPONENT_TEMPLATE
+                                      : STANDARD_COMPONENT_TEMPLATE;
 
             var fileContent = template
                 .Replace("${Context}", contextName)
@@ -109,7 +109,7 @@ public partial class ${Context}Context {
 
         string getMemberArgs(List<PublicMemberInfo> memberInfos) {
             var args = memberInfos
-                .Select(info => memberArgsTemplate
+                .Select(info => MEMBER_ARGS_TEMPLATE
                         .Replace("${MemberType}", info.type.ToCompilableString())
                         .Replace("${MemberName}", info.name.UppercaseFirst()))
                 .ToArray();
@@ -119,7 +119,7 @@ public partial class ${Context}Context {
 
         string getMethodArgs(List<PublicMemberInfo> memberInfos) {
             var args = memberInfos
-                .Select(info => methodArgsTemplate.Replace("${MemberName}", info.name.UppercaseFirst()))
+                .Select(info => METHOD_ARGS_TEMPLATE.Replace("${MemberName}", info.name.UppercaseFirst()))
                 .ToArray();
 
             return string.Join(", ", args);

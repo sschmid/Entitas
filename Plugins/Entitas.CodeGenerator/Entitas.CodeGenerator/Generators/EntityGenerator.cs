@@ -5,7 +5,7 @@ namespace Entitas.CodeGenerator {
 
     public class EntityGenerator : ICodeGenerator {
 
-        const string entityTemplate =
+        const string ENTITY_TEMPLATE =
 @"using Entitas;
 
 public sealed partial class ${Context}Entity : Entity {
@@ -23,7 +23,7 @@ public sealed partial class ${Context}Entity : Entity {
             var contextName = data.GetContextName();
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar + contextName + "Entity.cs",
-                entityTemplate.Replace("${Context}", contextName),
+                ENTITY_TEMPLATE.Replace("${Context}", contextName),
                 GetType().FullName
             );
         }

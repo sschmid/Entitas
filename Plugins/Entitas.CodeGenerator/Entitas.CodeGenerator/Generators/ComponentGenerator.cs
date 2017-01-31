@@ -5,7 +5,7 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentGenerator : ICodeGenerator {
 
-        const string componentTemplate =
+        const string COMPONENT_TEMPLATE =
 @"using Entitas;
 
 public sealed partial class ${Name} : IComponent {
@@ -24,7 +24,7 @@ public sealed partial class ${Name} : IComponent {
         CodeGenFile generateComponentClass(ComponentData data) {
             return new CodeGenFile(
                 "Components" + Path.DirectorySeparatorChar + data.GetFullComponentName() + ".cs",
-                componentTemplate
+                COMPONENT_TEMPLATE
                     .Replace("${Name}", data.GetFullComponentName())
                     .Replace("${Type}", data.GetObjectType()),
                 GetType().FullName

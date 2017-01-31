@@ -8,7 +8,7 @@ namespace Entitas.CodeGenerator {
 
         public const string COMPONENTS_LOOKUP = "ComponentsLookup";
 
-        const string componentsLookupTemplate =
+        const string COMPONENTS_LOOKUP_TEMPLATE =
 @"public static class ${Lookup} {
 
 ${componentConstants}
@@ -25,16 +25,16 @@ ${componentTypes}
 }
 ";
 
-        const string componentConstantsTemplate =
+        const string COMPONENT_CONSTANTS_TEMPLATE =
 @"    public const int ${Name} = ${Index};";
 
-        const string totalComponentsConstantTemplate =
+        const string TOTAL_COMPONENTS_CONSTANT_TEMPLATE =
 @"    public const int TotalComponents = ${totalComponents};";
 
-        const string componentNamesTemplate =
+        const string COMPONENT_NAMES_TEMPLATE =
 @"        ""${Name}""";
 
-        const string componentTypesTemplate =
+        const string COMPONENT_TYPES_TEMPLATE =
 @"        typeof(${Type})";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
@@ -90,25 +90,25 @@ ${componentTypes}
         CodeGenFile generateComponentsLookupClass(string contextName, ComponentData[] data) {
             var componentConstants = string.Join("\n", data
                 .Select((d, index) => {
-                    return componentConstantsTemplate
+                    return COMPONENT_CONSTANTS_TEMPLATE
                     .Replace("${Name}", d.GetComponentName())
                     .Replace("${Index}", index.ToString());
                 }).ToArray());
 
-            var totalComponentsConstant = totalComponentsConstantTemplate
+            var totalComponentsConstant = TOTAL_COMPONENTS_CONSTANT_TEMPLATE
                 .Replace("${totalComponents}", data.Length.ToString());
 
             var componentNames = string.Join(",\n", data
-                .Select(d => componentNamesTemplate
+                .Select(d => COMPONENT_NAMES_TEMPLATE
                         .Replace("${Name}", d.GetComponentName())
                 ).ToArray());
 
             var componentTypes = string.Join(",\n", data
-                .Select(d => componentTypesTemplate
+                .Select(d => COMPONENT_TYPES_TEMPLATE
                     .Replace("${Type}", d.GetFullTypeName())
                 ).ToArray());
 
-            var fileContent = componentsLookupTemplate
+            var fileContent = COMPONENTS_LOOKUP_TEMPLATE
                 .Replace("${Lookup}", contextName + COMPONENTS_LOOKUP)
                 .Replace("${componentConstants}", componentConstants)
                 .Replace("${totalComponentsConstant}", totalComponentsConstant)

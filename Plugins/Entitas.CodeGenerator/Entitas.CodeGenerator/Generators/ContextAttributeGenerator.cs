@@ -5,7 +5,7 @@ namespace Entitas.CodeGenerator {
 
     public class ContextAttributeGenerator : ICodeGenerator {
 
-        const string attributeTemplate =
+        const string ATTRIBUTE_TEMPLATE =
 @"using Entitas.CodeGenerator.Api;
 
 public sealed class ${Context}Attribute : ContextAttribute {
@@ -26,7 +26,7 @@ public sealed class ${Context}Attribute : ContextAttribute {
             var contextName = data.GetContextName();
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar + contextName + "Attribute.cs",
-                attributeTemplate.Replace("${Context}", contextName),
+                ATTRIBUTE_TEMPLATE.Replace("${Context}", contextName),
                 GetType().FullName
             );
         }

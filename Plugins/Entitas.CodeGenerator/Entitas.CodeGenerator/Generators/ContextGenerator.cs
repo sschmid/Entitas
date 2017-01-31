@@ -5,7 +5,7 @@ namespace Entitas.CodeGenerator {
 
     public class ContextGenerator : ICodeGenerator {
 
-        const string contextTemplate =
+        const string CONTEXT_TEMPLATE =
 @"using Entitas;
 
 public sealed partial class ${Context}Context : Context<${Context}Entity> {
@@ -35,7 +35,7 @@ public sealed partial class ${Context}Context : Context<${Context}Entity> {
             var contextName = data.GetContextName();
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar + contextName + "Context.cs",
-                contextTemplate
+                CONTEXT_TEMPLATE
                     .Replace("${Context}", contextName)
                     .Replace("${Lookup}", contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP),
                 GetType().FullName

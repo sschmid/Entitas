@@ -4,7 +4,7 @@ namespace Entitas.CodeGenerator {
 
     public class ContextsGenerator : ICodeGenerator {
 
-        const string contextsClassTemplate =
+        const string CONTEXTS_TEMPLATE =
 @"using Entitas;
             
 public partial class Contexts {
@@ -51,15 +51,15 @@ ${contextAssignments}
 }
 ";
 
-        const string contextMethodTemplate =
+        const string CONTEXT_METHOD_TEMPLATE =
 @"    public static IContext<${Context}Entity> Create${Context}Context() {
         return CreateContext<${Context}Entity>(""${Context}"", ${Lookup}.TotalComponents, ${Lookup}.componentNames, ${Lookup}.componentTypes);
     }
 ";
 
-        const string contextPropertyTemplate = @"    public IContext<${Context}Entity> ${context} { get; set; }";
-        const string contextListTemplate = @"${context}";
-        const string contextAssignmentTemplate = @"        ${context} = Create${Context}Context();";
+        const string CONTEXT_PROPERTY_TEMPLATE = @"    public IContext<${Context}Entity> ${context} { get; set; }";
+        const string CONTEXT_LIST_TEMPLATE = @"${context}";
+        const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${context} = Create${Context}Context();";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var contextNames = data
@@ -77,27 +77,27 @@ ${contextAssignments}
 
         string generateContextsClass(string[] contextNames) {
             var contextMethods = string.Join("\n", contextNames
-                .Select(contextName => contextMethodTemplate
+                .Select(contextName => CONTEXT_METHOD_TEMPLATE
                         .Replace("${Context}", contextName)
                         .Replace("${Lookup}", contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP)
                        ).ToArray());
 
             var contextProperties = string.Join("\n", contextNames
-                .Select(contextName => contextPropertyTemplate
+                .Select(contextName => CONTEXT_PROPERTY_TEMPLATE
                         .Replace("${Context}", contextName)
                         .Replace("${context}", contextName.LowercaseFirst())
                        ).ToArray());
 
             var contextList = string.Join(", ", contextNames
-                .Select(contextName => contextListTemplate.Replace("${context}", contextName.LowercaseFirst())).ToArray());
+                .Select(contextName => CONTEXT_LIST_TEMPLATE.Replace("${context}", contextName.LowercaseFirst())).ToArray());
 
             var contextAssignments = string.Join("\n", contextNames
-                .Select(contextName => contextAssignmentTemplate
+                .Select(contextName => CONTEXT_ASSIGNMENT_TEMPLATE
                         .Replace("${Context}", contextName)
                         .Replace("${context}", contextName.LowercaseFirst())
                        ).ToArray());
 
-            return contextsClassTemplate
+            return CONTEXTS_TEMPLATE
                 .Replace("${contextMethodTemplate}", contextMethods)
                 .Replace("${contextProperties}", contextProperties)
                 .Replace("${contextList}", contextList)
