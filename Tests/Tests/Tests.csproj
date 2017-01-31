@@ -46,11 +46,6 @@
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
     <Compile Include="GenerateTestComponents.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_SystemInfo.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\describe_VisualDebuggingConfig.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestInitializeSystem.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestExecuteSystem.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestReactiveSystem.cs" />
     <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystems.cs">
       <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\DebugSystems.cs</Link>
     </Compile>
@@ -67,8 +62,6 @@
       <Link>Linked Libraries\Unity\VisualDebugging\DebugSystems\Feature.cs</Link>
     </Compile>
     <Compile Include="TestRunner.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestCleanupSystem.cs" />
-    <Compile Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\TestTearDownSystem.cs" />
     <Compile Include="Fixtures\Systems\CleanupSystemSpy.cs" />
     <Compile Include="Fixtures\Systems\ExecuteSystemSpy.cs" />
     <Compile Include="Fixtures\Systems\InitializeSystemSpy.cs" />
@@ -117,15 +110,19 @@
     <Compile Include="Tests\Entitas.Migration\describe_M0360_1.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0360_2.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_SystemInfo.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_VisualDebuggingConfig.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestCleanupSystem.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestExecuteSystem.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestInitializeSystem.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestReactiveSystem.cs" />
+    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestTearDownSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Tests\" />
     <Folder Include="Libraries\" />
-    <Folder Include="Tests\Entitas.Unity\" />
     <Folder Include="Linked Libraries\" />
-    <Folder Include="Tests\Entitas.Unity\VisualDebugging\" />
-    <Folder Include="Tests\Entitas.Unity\VisualDebugging\Fixtures\" />
     <Folder Include="Fixtures\" />
     <Folder Include="Fixtures\Systems\" />
     <Folder Include="Tests\Entitas\" />
@@ -133,6 +130,7 @@
     <Folder Include="Tests\Entitas.CodeGenerator\" />
     <Folder Include="Tests\Entitas.Utils\" />
     <Folder Include="Tests\Entitas.Migration\" />
+    <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\UnityEngine.dll" />
