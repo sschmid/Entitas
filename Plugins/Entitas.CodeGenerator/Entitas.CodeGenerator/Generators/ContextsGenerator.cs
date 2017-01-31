@@ -22,44 +22,31 @@ public partial class Contexts {
 
     static Contexts _sharedInstance;
 
-    public static IContext<TEntity> CreateContext<TEntity>(string name,
-                                                           int totalComponents,
-                                                           string[] componentNames,
-                                                           System.Type[] componentTypes)
-        where TEntity : class, IEntity, new() {
-        var context = new Context<TEntity>(totalComponents, 0, new ContextInfo(
-            name, componentNames, componentTypes));
-
+    public static void CreateContextObserver(IContext context) {
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
         if(UnityEngine.Application.isPlaying) {
             var observer = new Entitas.Unity.VisualDebugging.ContextObserver(context);
             UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
         }
 #endif
-
-        return context;
     }
 
-${contextMethodTemplate}
 ${contextProperties}
 
     public IContext[] allContexts { get { return new IContext [] { ${contextList} }; } }
 
     public virtual void SetAllContexts() {
 ${contextAssignments}
+
+${contextObservers}
     }
 }
 ";
 
-        const string CONTEXT_METHOD_TEMPLATE =
-@"    public static IContext<${Context}Entity> Create${Context}Context() {
-        return CreateContext<${Context}Entity>(""${Context}"", ${Lookup}.TotalComponents, ${Lookup}.componentNames, ${Lookup}.componentTypes);
-    }
-";
-
-        const string CONTEXT_PROPERTY_TEMPLATE = @"    public IContext<${Context}Entity> ${context} { get; set; }";
+        const string CONTEXT_PROPERTY_TEMPLATE = @"    public ${Context}Context ${context} { get; set; }";
         const string CONTEXT_LIST_TEMPLATE = @"${context}";
-        const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${context} = Create${Context}Context();";
+        const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${context} = new ${Context}Context();";
+        const string CONTEXT_OBSERVER_TEMPLATE = @"        CreateContextObserver(${context});";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var contextNames = data
@@ -76,12 +63,6 @@ ${contextAssignments}
         }
 
         string generateContextsClass(string[] contextNames) {
-            var contextMethods = string.Join("\n", contextNames
-                .Select(contextName => CONTEXT_METHOD_TEMPLATE
-                        .Replace("${Context}", contextName)
-                        .Replace("${Lookup}", contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP)
-                       ).ToArray());
-
             var contextProperties = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_PROPERTY_TEMPLATE
                         .Replace("${Context}", contextName)
@@ -89,7 +70,9 @@ ${contextAssignments}
                        ).ToArray());
 
             var contextList = string.Join(", ", contextNames
-                .Select(contextName => CONTEXT_LIST_TEMPLATE.Replace("${context}", contextName.LowercaseFirst())).ToArray());
+                .Select(contextName => CONTEXT_LIST_TEMPLATE
+                        .Replace("${context}", contextName.LowercaseFirst())
+                       ).ToArray());
 
             var contextAssignments = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_ASSIGNMENT_TEMPLATE
@@ -97,11 +80,16 @@ ${contextAssignments}
                         .Replace("${context}", contextName.LowercaseFirst())
                        ).ToArray());
 
+            var contextObservers = string.Join("\n", contextNames
+                .Select(contextName => CONTEXT_OBSERVER_TEMPLATE
+                        .Replace("${context}", contextName.LowercaseFirst())
+                       ).ToArray());
+
             return CONTEXTS_TEMPLATE
-                .Replace("${contextMethodTemplate}", contextMethods)
                 .Replace("${contextProperties}", contextProperties)
                 .Replace("${contextList}", contextList)
-                .Replace("${contextAssignments}", contextAssignments);
+                .Replace("${contextAssignments}", contextAssignments)
+                .Replace("${contextObservers}", contextObservers);
         }
     }
 }

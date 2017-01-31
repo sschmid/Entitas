@@ -15,7 +15,7 @@ public sealed partial class ${Context}Context : Context<${Context}Entity> {
             ${Lookup}.TotalComponents,
             0,
             new ContextInfo(
-                ""${Context} Context"",
+                ""${Context}"",
                 ${Lookup}.componentNames,
                 ${Lookup}.componentTypes
             )
