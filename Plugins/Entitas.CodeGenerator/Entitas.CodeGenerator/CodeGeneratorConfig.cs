@@ -43,6 +43,9 @@ namespace Entitas.CodeGenerator {
 
         readonly EntitasPreferencesConfig _config;
 
+        public CodeGeneratorConfig(EntitasPreferencesConfig config) : this(config, new string[0], new string[0], new string[0]) {
+        }
+
         public CodeGeneratorConfig(EntitasPreferencesConfig config, string[] dataProviders, string[] codeGenerators, string[] postProcessors) {
             _config = config;
             _defaultDataProviders = joinValues(dataProviders);

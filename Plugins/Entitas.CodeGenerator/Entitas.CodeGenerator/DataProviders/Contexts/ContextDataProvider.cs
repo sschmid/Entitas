@@ -6,6 +6,9 @@ namespace Entitas.CodeGenerator {
 
         readonly string[] _contextNames;
 
+        public ContextDataProvider() : this(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).contexts) {
+        }
+
         public ContextDataProvider(string[] contextNames) {
             _contextNames = contextNames;
         }

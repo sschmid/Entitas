@@ -1,6 +1,7 @@
 using System.Linq;
+using Entitas.CodeGenerator;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.Unity.Blueprints {
 
     public class BlueprintsGenerator : ICodeGenerator {
 

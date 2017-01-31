@@ -14,7 +14,7 @@ class describe_CodeGeneratorConfig : nspec {
     void when_creating_config() {
 
         it["creates config from EntitasPreferencesConfig"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString), new string[0], new string[0], new string[0]);
+            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
 
             config.targetDirectory.should_be("path/to/folder/");
             config.contexts.should_be(new [] { "Core", "Meta", "UI" });
@@ -48,7 +48,7 @@ class describe_CodeGeneratorConfig : nspec {
         };
 
         it["gets string"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString), new string[0], new string[0], new string[0]);
+            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
             config.targetDirectory = "new/path/";
             config.contexts = new [] { "Other1", "Other2" };
             config.dataProviders = new [] { "Data4", "Data5" };
@@ -65,7 +65,7 @@ class describe_CodeGeneratorConfig : nspec {
         };
 
         it["gets string from empty config"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new string[0], new string[0], new string[0]);
+            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.ToString().should_be(
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
                 "Entitas.CodeGenerator.Contexts = Game,GameState,Input\n" +
@@ -77,18 +77,18 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["removes empty contexts"] = () => {
             const string configString = "Entitas.CodeGenerator.Contexts = ,,Core,,UI,,";
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString), new string[0], new string[0], new string[0]);
+            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
             config.contexts.should_be(new [] { "Core", "UI" });
         };
 
         it["removes empty enabled code generators"] = () => {
             const string configString = "Entitas.CodeGenerator.CodeGenerators = ,,Gen1,,Gen2,,";
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString), new string[0], new string[0], new string[0]);
+            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
             config.codeGenerators.should_be(new [] { "Gen1", "Gen2" });
         };
 
         it["removes trailing comma in contexts string"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new string[0], new string[0], new string[0]);
+            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.contexts = new [] { "Meta", string.Empty };
             config.ToString().should_be(
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
@@ -100,7 +100,7 @@ class describe_CodeGeneratorConfig : nspec {
         };
 
         it["removes trailing comma in enabled code generators string"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new string[0], new string[0], new string[0]);
+            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.codeGenerators = new [] { "Gen1", string.Empty };
             config.ToString().should_be(
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +

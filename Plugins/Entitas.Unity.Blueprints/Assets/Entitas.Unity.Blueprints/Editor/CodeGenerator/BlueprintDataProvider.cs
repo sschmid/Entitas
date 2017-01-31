@@ -1,13 +1,17 @@
 ﻿using System.Linq;
+using Entitas.CodeGenerator;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.Unity.Blueprints {
 
     public class BlueprintDataProvider : ICodeGeneratorDataProvider {
 
         readonly string[] _blueprintNames;
 
-        public BlueprintDataProvider(string[] blueprintNames) {
-            _blueprintNames = blueprintNames;
+        public BlueprintDataProvider() {
+            _blueprintNames = BinaryBlueprintInspector
+                .FindAllBlueprints()
+                .Select(b => b.Deserialize().name)
+                .ToArray();
         }
 
         public CodeGeneratorData[] GetData() {

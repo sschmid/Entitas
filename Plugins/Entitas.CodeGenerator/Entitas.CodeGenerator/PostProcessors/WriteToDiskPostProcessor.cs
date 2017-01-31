@@ -7,6 +7,9 @@ namespace Entitas.CodeGenerator {
 
         readonly string _directory;
 
+        public WriteToDiskPostProcessor() : this(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).targetDirectory) {
+        }
+
         public WriteToDiskPostProcessor(string directory) {
             _directory = getSafeDir(directory);
         }
