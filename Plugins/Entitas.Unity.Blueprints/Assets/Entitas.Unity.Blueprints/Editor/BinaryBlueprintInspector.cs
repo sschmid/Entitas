@@ -62,7 +62,7 @@ namespace Entitas.Unity.Blueprints {
 
                 if(index != component.index) {
                     Debug.Log(string.Format(
-                        "Blueprint '{0}' has invalid or outdated component index for '{1}'. Index was {2} but should be {3}. This will be fixed now!",
+                        "Blueprint '{0}' has invalid or outdated component index for '{1}'. Index was {2} but should be {3}. Updated index.",
                         blueprint.name, component.fullTypeName, component.index, index));
 
                     component.index = index;
@@ -79,24 +79,19 @@ namespace Entitas.Unity.Blueprints {
         }
 
         static IContext[] findAllContexts() {
+            var contextsType = Assembly
+                .GetAssembly(typeof(IContexts))
+                .GetTypes()
+                .Where(type => type.ImplementsInterface<IContexts>())
+                .SingleOrDefault();
 
-            // TODO
+            if(contextsType != null) {
+                var contexts = (IContexts)Activator.CreateInstance(contextsType);
+                contexts.SetAllContexts();
+                return contexts.allContexts;
+            }
 
-            //const BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance;
-            //var allContextsProperty = typeof(Contexts).GetProperty("allContexts", bindingFlags);
-            //if(allContextsProperty != null) {
-            //    var contextsType = typeof(Contexts);
-            //    var setAllContextsMethod = contextsType.GetMethod("SetAllContexts", bindingFlags);
-            //    if(setAllContextsMethod != null) {
-            //        var contexts = new Contexts();
-            //        setAllContextsMethod.Invoke(contexts, null);
-            //        var allContextsGetter = contextsType.GetProperty("allContexts", bindingFlags);
-
-            //        return (IContext[])allContextsGetter.GetValue(contexts, null);
-            //    }
-            //}
-
-            return new IContext[0];
+            return null;
         }
 
         Blueprint _blueprint;
@@ -118,7 +113,7 @@ namespace Entitas.Unity.Blueprints {
 
             _allContextNames = _allContexts.Select(context => context.contextInfo.name).ToArray();
 
-            BinaryBlueprintInspector.UpdateBinaryBlueprint(binaryBlueprint, _allContexts, _allContextNames);
+            UpdateBinaryBlueprint(binaryBlueprint, _allContexts, _allContextNames);
 
             _blueprint = binaryBlueprint.Deserialize();
 
@@ -146,17 +141,21 @@ namespace Entitas.Unity.Blueprints {
                 EditorGUILayout.LabelField("Blueprint", EditorStyles.boldLabel);
                 binaryBlueprint.name = EditorGUILayout.TextField("Name", binaryBlueprint.name);
 
-                EntitasEditorLayout.BeginHorizontal();
-                {
-                    _contextIndex = EditorGUILayout.Popup(_contextIndex, _allContextNames);
+				if(_context != null) {
+                    EntitasEditorLayout.BeginHorizontal();
+                    {
+                        _contextIndex = EditorGUILayout.Popup(_contextIndex, _allContextNames);
 
-                    if(GUILayout.Button("Switch Context")) {
-                        switchToContext();
+                        if(GUILayout.Button("Switch Context")) {
+                            switchToContext();
+                        }
                     }
-                }
-                EntitasEditorLayout.EndHorizontal();
+                    EntitasEditorLayout.EndHorizontal();
 
-                EntityDrawer.DrawComponents(_context, _entity, true);
+					EntityDrawer.DrawComponents(_context, _entity, true);
+                } else {
+                    EditorGUILayout.LabelField("No contexts found!");
+                }
             }
             var changed = EditorGUI.EndChangeCheck();
             if(changed) {
@@ -171,9 +170,8 @@ namespace Entitas.Unity.Blueprints {
                 _context.Reset();
             }
             var targetContext = _allContexts[_contextIndex];
-            // TODO
-            //_context = new Context(targetContext.totalComponents, 0, targetContext.contextInfo);
-            //_entity = _context.CreateEntity();
+            _context = (IContext)Activator.CreateInstance(targetContext.GetType());
+            _entity = (IEntity)_context.GetType().GetMethod("CreateEntity").Invoke(_context, null);
         }
     }
 }

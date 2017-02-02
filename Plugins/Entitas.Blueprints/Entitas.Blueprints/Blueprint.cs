@@ -16,13 +16,17 @@ namespace Entitas.Blueprints {
             this.contextIdentifier = contextIdentifier;
             this.name = name;
 
-            var allComponents = entity.GetComponents();
-            var componentIndices = entity.GetComponentIndices();
-            components = new ComponentBlueprint[allComponents.Length];
-            for (int i = 0; i < allComponents.Length; i++) {
-                components[i] = new ComponentBlueprint(
-                    componentIndices[i], allComponents[i]
-                );
+            if(entity != null) {
+                var allComponents = entity.GetComponents();
+                var componentIndices = entity.GetComponentIndices();
+                components = new ComponentBlueprint[allComponents.Length];
+                for (int i = 0; i < allComponents.Length; i++) {
+                    components[i] = new ComponentBlueprint(
+                        componentIndices[i], allComponents[i]
+                    );
+                }
+            } else {
+                components = new ComponentBlueprint[0];
             }
         }
     }

@@ -14,6 +14,17 @@ namespace Entitas {
 
             return System.Linq.Enumerable.First(collection);
         }
+
+        /// Returns the only entity in the collection.
+        /// It will throw an exception if the collection doesn't have
+        /// exactly one entity.
+        public static TEntity SingleEntity<TEntity>(this ICollection<TEntity> collection) where TEntity : class, IEntity, new() {
+            if(collection.Count != 1) {
+                throw new SingleEntityException(collection.Count);
+            }
+
+            return System.Linq.Enumerable.First(collection);
+        }
     }
 
     public class SingleEntityException : EntitasException {

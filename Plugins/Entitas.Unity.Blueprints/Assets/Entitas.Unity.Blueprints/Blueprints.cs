@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Entitas.Unity.Blueprints {
 
     [CreateAssetMenu(menuName = "Entitas/Blueprints", fileName = "Blueprints.asset")]
-    public partial class Blueprints : ScriptableObject {
+    public class Blueprints : ScriptableObject {
 
         public BinaryBlueprint[] blueprints;
 
@@ -62,11 +62,5 @@ namespace Entitas.Unity.Blueprints {
         }
 
         #endif
-    }
-
-    public class BlueprintsNotFoundException : EntitasException {
-        public BlueprintsNotFoundException(string blueprintName)
-            : base("'" + blueprintName + "' does not exist!", "Did you update the Blueprints ScriptableObject?") {
-        }
     }
 }

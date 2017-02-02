@@ -7,7 +7,7 @@ namespace Entitas.CodeGenerator {
         const string CONTEXTS_TEMPLATE =
 @"using Entitas;
             
-public partial class Contexts {
+public partial class Contexts : IContexts {
 
     public static Contexts sharedInstance {
         get {

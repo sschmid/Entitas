@@ -86,6 +86,13 @@ class describe_Blueprints : nspec {
 
         context["Blueprint"] = () => {
 
+            it["creates an empty blueprint from a null entity"] = () => {
+                var blueprint = new Blueprint("My Context", "Hero", null);
+                blueprint.contextIdentifier.should_be("My Context");
+                blueprint.name.should_be("Hero");
+                blueprint.components.Length.should_be(0);
+            };
+
             it["creates a blueprint from an entity"] = () => {
                 entity.AddComponentA();
 

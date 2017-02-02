@@ -7,16 +7,18 @@ namespace Entitas.Unity.Blueprints {
 
         const string CLASS_TEMPLATE =
 @"using Entitas.Blueprints;
+using Entitas.Unity.Blueprints;
 
-namespace Entitas.Unity.Blueprints {{
+public static class BlueprintsExtension {
 
-    public partial class Blueprints {{
-
-{0}
-    }}
-}}
+${blueprints}
+}
 ";
-        const string GETTER_TEMPLATE = "        public Blueprint {0} {{ get {{ return GetBlueprint(\"{1}\"); }} }}";
+
+        const string GETTER_TEMPLATE =
+@"    public static Blueprint ${ValidPropertyName}(this Blueprints blueprints) {
+        return blueprints.GetBlueprint(""${Name}"");
+    }";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var blueprintNames = data
@@ -29,9 +31,9 @@ namespace Entitas.Unity.Blueprints {{
                 return new CodeGenFile[0];
             }
 
-            var blueprints = string.Format(CLASS_TEMPLATE, generateBlueprintGetters(blueprintNames));
+            var blueprints = CLASS_TEMPLATE.Replace("${blueprints}", generateBlueprintGetters(blueprintNames));
             return new[] { new CodeGenFile(
-                "BlueprintsGeneratedExtension",
+                "GeneratedBlueprints.cs",
                 blueprints,
                 GetType().FullName)
             };
@@ -39,7 +41,10 @@ namespace Entitas.Unity.Blueprints {{
 
         string generateBlueprintGetters(string[] blueprintNames) {
             return string.Join("\n", blueprintNames
-                .Select(name => string.Format(GETTER_TEMPLATE, validPropertyName(name), name)).ToArray());
+                               .Select(name => GETTER_TEMPLATE
+                                       .Replace("${ValidPropertyName}", validPropertyName(name))
+                                       .Replace("${Name}", name))
+                               .ToArray());
         }
 
         static string validPropertyName(string name) {

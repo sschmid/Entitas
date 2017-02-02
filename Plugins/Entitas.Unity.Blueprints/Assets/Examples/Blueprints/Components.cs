@@ -1,22 +1,20 @@
 using Entitas;
 using Entitas.CodeGenerator.Api;
 
-// TODO
+[Game]
+public class NameComponent : IComponent {
+    public string value;
+}
 
-//[Blueprints]
-//public class NameComponent : IComponent {
-//    public string value;
-//}
+[Game]
+public class AgeComponent : IComponent {
+    public int value;
+}
 
-//[Blueprints]
-//public class AgeComponent : IComponent {
-//    public int value;
-//}
+[Game, HideInBlueprintInspector]
+public class HideInBlueprintInspectorComponent : IComponent {
+}
 
-//[Blueprints, HideInBlueprintInspector]
-//public class HideInBlueprintInspectorComponent : IComponent {
-//}
-
-//[Blueprints, HideInBlueprintInspector]
-//public class HideInBlueprintInspectorClass {
-//}
+[Game, HideInBlueprintInspector]
+public class HideInBlueprintInspectorClass {
+}
