@@ -33,7 +33,9 @@ namespace Entitas.Unity {
             // will return wrong width and height (1, 1) every other call
             // workaround: hardcode scrollBarWidth
 
-            const int scollBarWidth = 15;
+            // const int scollBarWidth = 15;
+            const int scollBarWidth = 0;
+
             var ratio = texture.width / texture.height;
             var width = window.position.width - 8 - scollBarWidth;
             var height = width / ratio;
