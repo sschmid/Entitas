@@ -2,7 +2,7 @@ using System;
 using Entitas.CodeGenerator;
 using Entitas.CodeGenerator.Api;
 
-[VisualDebugging]
+[Game]
 public class SomeClass {
 
     public string name;
@@ -12,7 +12,7 @@ public class SomeClass {
     }
 }
 
-[VisualDebugging]
+[Game]
 public struct SomeStruct {
 
     public string name;
@@ -24,7 +24,7 @@ public struct SomeStruct {
 
 namespace SomeNamespace {
 
-    [VisualDebugging]
+    [Game]
     public class SomeOtherClass {
 
         public string name;
@@ -35,20 +35,20 @@ namespace SomeNamespace {
     }
 }
 
-[VisualDebugging]
+[Game]
 public class SomeGenericClass<T> {
     public T value;
 }
 
-[VisualDebugging, Unique]
+[Game, Unique]
 public class ISomeInterface {
 }
 
-[VisualDebugging, CustomComponentName("CoolNameComponent")]
+[Game, CustomComponentName("CoolNameComponent")]
 public class BadName {
 }
     
-[Serializable, VisualDebugging, CustomComponentName("PositionComponent", "VelocityComponent")]
+[Serializable, Game, CustomComponentName("PositionComponent", "VelocityComponent")]
 public struct IntVector2 {
     public int x;
     public int y;

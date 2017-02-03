@@ -4,11 +4,12 @@ using UnityEditor;
 
 public class CollectorDestructorController : MonoBehaviour {
 
-    VisualDebuggingEntity _initialEntity;
+    GameEntity _initialEntity;
 
     void Start() {
-        var context = Contexts.sharedInstance.visualDebugging = Contexts.CreateVisualDebuggingContext();
-        context.GetGroup(VisualDebuggingMatcher.Test).CreateCollector();
+        Contexts.sharedInstance.SetAllContexts();
+        var context = Contexts.sharedInstance.game;
+        context.GetGroup(GameMatcher.Test).CreateCollector();
         _initialEntity = context.CreateEntity();
         _initialEntity.isTest = true;
         context.DestroyEntity(_initialEntity);
@@ -16,7 +17,7 @@ public class CollectorDestructorController : MonoBehaviour {
     }
 	
     void Update() {
-        var context = Contexts.sharedInstance.visualDebugging;
+        var context = Contexts.sharedInstance.game;
         for (int i = 0; i < 5000; i++) {
             var e = context.CreateEntity();
             if(e == _initialEntity) {

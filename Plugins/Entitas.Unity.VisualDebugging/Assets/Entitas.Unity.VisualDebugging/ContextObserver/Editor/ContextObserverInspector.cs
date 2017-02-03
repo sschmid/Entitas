@@ -28,12 +28,11 @@ namespace Entitas.Unity.VisualDebugging {
                 EntitasEditorLayout.BeginHorizontal();
                 {
                     if(GUILayout.Button("Create Entity")) {
-                        // TODO
-                        //var entity = contextObserver.context.CreateEntity();
-                        //var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
-                        //                            .Single(eb => eb.entity == entity);
+                        var entity = contextObserver.context.CreateEntity();
+                        var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
+                                                    .Single(eb => eb.entity == entity);
 
-                        //Selection.activeGameObject = entityBehaviour.gameObject;
+                        Selection.activeGameObject = entityBehaviour.gameObject;
                     }
 
                     var bgColor = GUI.backgroundColor;

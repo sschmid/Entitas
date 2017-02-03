@@ -1,22 +1,22 @@
 ﻿using Entitas;
 using UnityEngine;
 
-[VisualDebugging]
+[Game]
 public class BoundsComponent : IComponent {
     public Bounds bounds;
 }
 
-[VisualDebugging]
+[Game]
 public class ColorComponent : IComponent {
     public Color color;
 }
 
-[VisualDebugging]
+[Game]
 public class AnimationCurveComponent : IComponent {
     public AnimationCurve animationCurve;
 }
 
-[VisualDebugging]
+[Game]
 public class MyEnumComponent : IComponent {
 
     public enum MyEnum {
@@ -28,7 +28,7 @@ public class MyEnumComponent : IComponent {
     public MyEnum myEnum;
 }
 
-[VisualDebugging]
+[Game]
 public class MyFlagsComponent : IComponent {
 
     [System.Flags]
@@ -42,27 +42,27 @@ public class MyFlagsComponent : IComponent {
     public MyFlags myFlags;
 }
 
-[VisualDebugging]
+[Game]
 public class MyDoubleComponent : IComponent {
     public double myDouble;
 }
 
-[VisualDebugging]
+[Game]
 public class MyFloatComponent : IComponent {
     public float myFloat;
 }
 
-[VisualDebugging]
+[Game]
 public class MyIntComponent : IComponent {
     public int myInt;
 }
 
-[VisualDebugging]
+[Game]
 public class RectComponent : IComponent {
     public Rect rect;
 }
 
-[VisualDebugging]
+[Game]
 public class MyStringComponent : IComponent {
     public string myString;
 
@@ -71,42 +71,42 @@ public class MyStringComponent : IComponent {
     }
 }
 
-[VisualDebugging]
+[Game]
 public class Vector2Component : IComponent {
     public Vector2 vector2;
 }
 
-[VisualDebugging]
+[Game]
 public class Vector3Component : IComponent {
     public Vector3 vector3;
 }
 
-[VisualDebugging]
+[Game]
 public class Vector4Component : IComponent {
     public Vector4 vector4;
 }
 
-[VisualDebugging]
+[Game]
 public class MyBoolComponent : IComponent {
     public bool myBool;
 }
 
-[VisualDebugging]
+[Game]
 public class UnityObjectComponent : IComponent {
     public Object unityObject;
 }
 
-[VisualDebugging]
+[Game]
 public class GameObjectComponent : IComponent {
     public GameObject gameObject;
 }
 
-[VisualDebugging]
+[Game]
 public class TextureComponent : IComponent {
     public Texture texture;
 }
 
-[VisualDebugging]
+[Game]
 public class Texture2DComponent : IComponent {
     public Texture2D texture2D;
 }

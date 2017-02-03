@@ -2,19 +2,19 @@ using System.Collections.Generic;
 using System.Threading;
 using Entitas;
 
-public class AReactiveSystem : ReactiveSystem<VisualDebuggingEntity> {
+public class AReactiveSystem : ReactiveSystem<GameEntity> {
 
-    public AReactiveSystem(Contexts contexts) : base(contexts.visualDebugging) { }
+    public AReactiveSystem(Contexts contexts) : base(contexts.game) { }
 
-    protected override Collector<VisualDebuggingEntity> GetTrigger(IContext<VisualDebuggingEntity> context) {
-        return context.CreateCollector(VisualDebuggingMatcher.MyString);
+    protected override Collector<GameEntity> GetTrigger(IContext<GameEntity> context) {
+        return context.CreateCollector(GameMatcher.MyString);
     }
 
-    protected override bool Filter(VisualDebuggingEntity entity) {
+    protected override bool Filter(GameEntity entity) {
         return true;
     }
 
-    protected override void Execute(List<VisualDebuggingEntity> entities) {
+    protected override void Execute(List<GameEntity> entities) {
         Thread.Sleep(2);
     }
 }

@@ -8,7 +8,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
     void Start() {
         _contexts = new Contexts();
-        _contexts.visualDebugging = Contexts.CreateVisualDebuggingContext();
+        _contexts.SetAllContexts();
 
         _systems = createNestedSystems();
 
@@ -18,11 +18,11 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
         _systems.Cleanup();
         _systems.TearDown();
 
-        _contexts.visualDebugging.CreateEntity().AddMyString("");
+        _contexts.game.CreateEntity().AddMyString("");
     }
 
     void Update() {
-        _contexts.visualDebugging.GetGroup(VisualDebuggingMatcher.MyString).GetSingleEntity()
+        _contexts.game.GetGroup(GameMatcher.MyString).GetSingleEntity()
              .ReplaceMyString(Random.value.ToString());
 
         _systems.Execute();

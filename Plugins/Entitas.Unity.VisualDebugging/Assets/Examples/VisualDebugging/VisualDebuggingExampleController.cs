@@ -6,7 +6,8 @@ using UnityEngine;
 public class VisualDebuggingExampleController : MonoBehaviour {
 
     void Start() {
-        var context = Contexts.sharedInstance.visualDebugging = Contexts.CreateVisualDebuggingContext();
+		Contexts.sharedInstance.SetAllContexts();
+        var context = Contexts.sharedInstance.game;
 
         createTestGroups(context);
 
@@ -16,14 +17,14 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         createTestEntityError(context);
     }
 
-    void createTestGroups(VisualDebuggingContext context) {
-        context.GetGroup(VisualDebuggingMatcher.Vector3);
-        context.GetGroup(VisualDebuggingMatcher.GameObject);
-        context.GetGroup(Matcher<VisualDebuggingEntity>.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
-        context.GetGroup(Matcher<VisualDebuggingEntity>.AllOf(VisualDebuggingMatcher.GameObject, VisualDebuggingMatcher.Vector3));
+    void createTestGroups(GameContext context) {
+        context.GetGroup(GameMatcher.Vector3);
+        context.GetGroup(GameMatcher.GameObject);
+        context.GetGroup(Matcher<GameEntity>.AllOf(GameMatcher.GameObject, GameMatcher.Vector3));
+        context.GetGroup(Matcher<GameEntity>.AllOf(GameMatcher.GameObject, GameMatcher.Vector3));
     }
 
-    void createTestEntities(VisualDebuggingContext context) {
+    void createTestEntities(GameContext context) {
         for (int i = 0; i < 2; i++) {
             var e = context.CreateEntity();
 
@@ -93,7 +94,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         }
     }
 
-    void createTestEntityWithNullValues(VisualDebuggingContext context) {
+    void createTestEntityWithNullValues(GameContext context) {
         var e = context.CreateEntity();
 
         // Unity's builtIn
@@ -146,7 +147,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         e.AddPerson(personName, personGender);
     }
 
-    void createTestEntityError(VisualDebuggingContext context) {
+    void createTestEntityError(GameContext context) {
         var entity = context.CreateEntity();
         entity.Retain(this);
         context.DestroyEntity(entity);

@@ -8,13 +8,13 @@ public class MultipleContextsController : MonoBehaviour {
 
 	void Start () {
 	
-        _contextA = new Context<VisualDebuggingEntity>(VisualDebuggingComponentsLookup.TotalComponents, 0, new ContextInfo("Context A", VisualDebuggingComponentsLookup.componentNames, VisualDebuggingComponentsLookup.componentTypes));
+        _contextA = new Context<GameEntity>(GameComponentsLookup.TotalComponents, 0, new ContextInfo("Context A", GameComponentsLookup.componentNames, GameComponentsLookup.componentTypes));
         new Entitas.Unity.VisualDebugging.ContextObserver(_contextA);
 
-        _contextB = new Context<VisualDebuggingEntity>(VisualDebuggingComponentsLookup.TotalComponents, 0, new ContextInfo("Context B", VisualDebuggingComponentsLookup.componentNames, VisualDebuggingComponentsLookup.componentTypes));
+        _contextB = new Context<GameEntity>(GameComponentsLookup.TotalComponents, 0, new ContextInfo("Context B", GameComponentsLookup.componentNames, GameComponentsLookup.componentTypes));
         new Entitas.Unity.VisualDebugging.ContextObserver(_contextB);
 
 
-        _contextA.OnEntityCreated += (context, entity) => ((VisualDebuggingEntity)entity).AddMyInt(42);
+        _contextA.OnEntityCreated += (context, entity) => ((GameEntity)entity).AddMyInt(42);
 	}
 }

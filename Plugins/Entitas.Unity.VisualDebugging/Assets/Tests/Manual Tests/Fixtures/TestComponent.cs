@@ -1,6 +1,6 @@
 ﻿using Entitas;
 
-[VisualDebugging]
+[Game]
 public class TestComponent : IComponent
 {
 }

@@ -14,73 +14,73 @@ public class CustomObject {
 public class MonoBehaviourSubClass : MonoBehaviour {
 }
 
-[VisualDebugging]
+[Game]
 public class MonoBehaviourSubClassComponent : IComponent {
     public MonoBehaviourSubClass monoBehaviour;
 }
 
-[VisualDebugging]
+[Game]
 public class CustomObjectComponent : IComponent {
     public CustomObject customObject;
 }
 
-[VisualDebugging]
+[Game]
 public class SystemObjectComponent : IComponent {
     public System.Object systemObject;
 }
 
-[VisualDebugging]
+[Game]
 public class DateTimeComponent : IComponent {
     public DateTime date;
 }
 
-[VisualDebugging]
+[Game]
 public class AnArrayComponent : IComponent {
     public string[] array;
 }
 
-[VisualDebugging]
+[Game]
 public class Array2DComponent : IComponent {
     public string[,] array2d;
 }
 
-[VisualDebugging]
+[Game]
 public class Array3DComponent : IComponent {
     public string[,,] array3d;
 }
 
-[VisualDebugging]
+[Game]
 public class JaggedArrayComponent : IComponent {
     public string[][] jaggedArray;
 }
 
-[VisualDebugging]
+[Game]
 public class ListArrayComponent : IComponent {
     public List<string>[] listArray;
 }
 
-[VisualDebugging]
+[Game]
 public class ListComponent : IComponent {
     public List<string> list;
 }
 
-[VisualDebugging]
+[Game]
 public class DictionaryComponent : IComponent {
     public Dictionary<string, string> dict;
 }
 
-[VisualDebugging]
+[Game]
 public class DictArrayComponent : IComponent {
     public Dictionary<int, string[]> dict;
     public Dictionary<int, string[]>[] dictArray;
 }
 
-[VisualDebugging]
+[Game]
 public class HashSetComponent : IComponent {
     public HashSet<string> hashset;
 }
 
-[VisualDebugging]
+[Game]
 public class MyCharComponent : IComponent {
     public char myChar;
 }
@@ -93,22 +93,22 @@ public class UnsupportedObject {
     }
 }
 
-[VisualDebugging]
+[Game]
 public class UnsupportedObjectComponent : IComponent {
     public UnsupportedObject unsupportedObject;
 }
 
-[VisualDebugging]
+[Game]
 public class PropertyComponent : IComponent {
     public string value { get; set; }
 }
 
-[VisualDebugging]
+[Game]
 public class PersonComponent : IComponent {
     public string name;
     public string gender;
 }
 
-[VisualDebugging]
+[Game]
 public class DefaultContextComponent : IComponent {
 }

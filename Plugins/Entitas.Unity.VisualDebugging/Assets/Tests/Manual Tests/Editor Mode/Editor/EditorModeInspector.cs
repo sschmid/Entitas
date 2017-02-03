@@ -1,6 +1,5 @@
 using UnityEditor;
 using UnityEngine;
-using Entitas;
 
 [CustomEditor(typeof(EditorModeController))]
 public class EditorModeInspector : Editor {
@@ -10,7 +9,7 @@ public class EditorModeInspector : Editor {
         var controller = (EditorModeController)target;
 
         if(controller.context == null) {
-            controller.context = Contexts.CreateVisualDebuggingContext();
+            controller.context = new GameContext();
             new Entitas.Unity.VisualDebugging.ContextObserver(controller.context);
         }
 
