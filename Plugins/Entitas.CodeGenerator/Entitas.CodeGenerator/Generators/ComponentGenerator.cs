@@ -8,7 +8,7 @@ namespace Entitas.CodeGenerator {
         const string COMPONENT_TEMPLATE =
 @"using Entitas;
 
-${HideInBlueprintsInspector}
+${Contexts}${Unique}${HideInBlueprintsInspector}
 public sealed partial class ${Name} : IComponent {
     public ${Type} value;
 }
@@ -23,6 +23,12 @@ public sealed partial class ${Name} : IComponent {
         }
 
         CodeGenFile generateComponentClass(ComponentData data) {
+            var contexts = string.Join(", ", data.GetContextNames());
+            var unique = data.IsUnique() ? "[Entitas.CodeGenerator.Api.UniqueAttribute]" : string.Empty;
+            if(!string.IsNullOrEmpty(contexts)) {
+                contexts = "[" + contexts + "]";
+            }
+
             var hide = data.ShouldHideInBlueprintInspector()
                            ? "[Entitas.CodeGenerator.Api.HideInBlueprintInspectorAttribute]"
                            : string.Empty;
@@ -32,7 +38,9 @@ public sealed partial class ${Name} : IComponent {
                 COMPONENT_TEMPLATE
                     .Replace("${Name}", data.GetFullComponentName())
                     .Replace("${Type}", data.GetObjectType())
-                .Replace("${HideInBlueprintsInspector}", hide),
+                    .Replace("${Contexts}", contexts)
+                    .Replace("${Unique}", unique)
+                    .Replace("${HideInBlueprintsInspector}", hide),
                 GetType().FullName
             );
         }

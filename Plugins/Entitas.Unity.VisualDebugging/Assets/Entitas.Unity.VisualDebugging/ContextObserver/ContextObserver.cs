@@ -13,6 +13,7 @@ namespace Entitas.Unity.VisualDebugging {
         readonly IContext _context;
         readonly List<IGroup> _groups;
         readonly GameObject _gameObject;
+
         StringBuilder _toStringBuilder = new StringBuilder();
 
         public ContextObserver(IContext context) {

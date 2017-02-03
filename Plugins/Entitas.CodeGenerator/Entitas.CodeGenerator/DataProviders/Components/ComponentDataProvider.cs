@@ -76,10 +76,7 @@ namespace Entitas.CodeGenerator {
         }
 
         bool hasContexts(Type type) {
-            return Attribute
-                .GetCustomAttributes(type)
-                .OfType<ContextAttribute>()
-                .Any();
+            return ContextsComponentDataProvider.GetContextNames(type).Length != 0;
         }
 
         string[] getComponentNames(Type type) {

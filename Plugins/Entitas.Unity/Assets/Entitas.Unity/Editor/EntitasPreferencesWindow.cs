@@ -6,12 +6,6 @@ using UnityEngine;
 
 namespace Entitas.Unity {
 
-    public interface IEntitasPreferencesDrawer {
-        int priority { get; }
-        void Initialize(EntitasPreferencesConfig config);
-        void Draw(EntitasPreferencesConfig config);
-    }
-
     public class EntitasPreferencesWindow : EditorWindow {
 
         [MenuItem(EntitasMenuItems.preferences, false, EntitasMenuItemPriorities.preferences)]

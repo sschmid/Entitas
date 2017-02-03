@@ -7,13 +7,15 @@ namespace Entitas.CodeGenerator {
     public class ContextsComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
-            var contextNames = Attribute
+            data.SetContextNames(GetContextNames(type));
+        }
+
+        public static string[] GetContextNames(Type type) {
+            return Attribute
                 .GetCustomAttributes(type)
                 .OfType<ContextAttribute>()
                 .Select(attr => attr.contextName)
                 .ToArray();
-
-            data.SetContextNames(contextNames);
         }
     }
 

@@ -1,3 +1,4 @@
+using Entitas.Unity.VisualDebugging;
 using UnityEditor;
 using UnityEngine;
 
@@ -18,9 +19,8 @@ public class EditorModeInspector : Editor {
         }
 
         if(GUILayout.Button("Create entitiy")) {
-            // TODO
-            //var e = controller.context.CreateEntity();
-            //e.AddMyString("Editor Mode");
+            var e = (GameEntity)controller.context.CreateEntity();
+            e.AddMyString("Editor Mode");
 
             Debug.Log("Entities count: " + controller.context.count);
         }

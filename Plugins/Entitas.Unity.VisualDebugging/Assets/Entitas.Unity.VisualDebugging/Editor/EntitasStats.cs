@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Entitas.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ namespace Entitas.Unity.VisualDebugging {
 
     public static class EntitasStats {
 
-        [MenuItem(EntitasMenuItems.log_stats, false, EntitasMenuItemPriorities.log_stats)]
+        [MenuItem("Entitas/Log Stats", false, 200)]
         public static void LogStats() {
             foreach(var stat in GetStats()) {
                 Debug.Log(stat.Key + ": " + stat.Value);
@@ -34,26 +35,20 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static Dictionary<string, int> getContexts(Type[] components) {
+            return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {
+                var contextNames = ContextsComponentDataProvider.GetContextNames(type);
+                if(contextNames.Length == 0) {
+                    contextNames = new [] { "Unassigned" };
+                }
+                foreach(var contextName in contextNames) {
+                    if(!contexts.ContainsKey(contextName)) {
+                        contexts.Add(contextName, 0);
+                    }
 
-
-            // TODO
-
-            return null;
-
-            //return components.Aggregate(new Dictionary<string, int>(), (lookups, type) => {
-            //    var lookupTags = TypeReflectionProvider.GetContexts(type, false);
-            //    if(lookupTags.Length == 0) {
-            //        lookupTags = new [] { "Context" };
-            //    }
-            //    foreach(var lookupTag in lookupTags) {
-            //        if(!lookups.ContainsKey(lookupTag)) {
-            //            lookups.Add(lookupTag, 0);
-            //        }
-
-            //        lookups[lookupTag] += 1;
-            //    }
-            //    return lookups;
-            //});
+                    contexts[contextName] += 1;
+                }
+                return contexts;
+            });
         }
 
         static bool implementsSystem(Type type) {

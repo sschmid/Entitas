@@ -12,13 +12,7 @@ namespace Entitas.Unity {
         public const string feedback_entitas_wiki            = "Entitas/Feedback/Entitas wiki...";
         public const string feedback_donate                  = "Entitas/Feedback/Donate...";
 
-        public const string generate                         = "Entitas/Generate #%g";
-
-        public const string log_stats                        = "Entitas/Log Stats";
-
-		public const string blueprints_update_all_blueprints = "Entitas/Blueprints/Update all Blueprints";
-
-        public const string migrate                          = "Entitas/Migrate...";
+		public const string log_stats                        = "Entitas/Log Stats";
     }
 
     public static class EntitasMenuItemPriorities {
@@ -33,12 +27,6 @@ namespace Entitas.Unity {
         public const int feedback_entitas_wiki               = 23;
         public const int feedback_donate                     = 24;
 
-        public const int generate                            = 100;
-
-        public const int log_stats                           = 200;
-
-        public const int blueprints_update_all_blueprints    = 300;
-
-        public const int migrate                             = 1000;
+		public const int log_stats                           = 100;
     }
 }

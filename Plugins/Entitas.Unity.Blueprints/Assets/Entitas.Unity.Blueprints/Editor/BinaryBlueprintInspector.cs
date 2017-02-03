@@ -19,7 +19,7 @@ namespace Entitas.Unity.Blueprints {
                 .ToArray();
         }
 
-        [DidReloadScripts, MenuItem(EntitasMenuItems.blueprints_update_all_blueprints, false, EntitasMenuItemPriorities.blueprints_update_all_blueprints)]
+        [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, 300)]
         public static void UpdateAllBinaryBlueprints() {
             if(!EditorApplication.isPlayingOrWillChangePlaymode) {
                 var allContexts = findAllContexts();

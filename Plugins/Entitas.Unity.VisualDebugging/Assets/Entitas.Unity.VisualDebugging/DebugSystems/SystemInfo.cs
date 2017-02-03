@@ -59,22 +59,13 @@ namespace Entitas.Unity.VisualDebugging {
 
         public SystemInfo(ISystem system) {
             _system = system;
-
-            var reactiveSystem = system as IReactiveSystem;
-            var isReactive = reactiveSystem != null;
-            Type systemType;
-            if(isReactive) {
-                _interfaceFlags = getInterfaceFlags(reactiveSystem, isReactive);
-                systemType = reactiveSystem.GetType();
-            } else {
-                _interfaceFlags = getInterfaceFlags(system, isReactive);
-                systemType = system.GetType();
-            }
+            _interfaceFlags = getInterfaceFlags(system);
 
             var debugSystem = system as DebugSystems;
             if(debugSystem != null) {
                 _systemName = debugSystem.name;
             } else {
+				var systemType = system.GetType();
                 _systemName = systemType.Name.EndsWith(SYSTEM_SUFFIX, StringComparison.Ordinal)
                     ? systemType.Name.Substring(0, systemType.Name.Length - SYSTEM_SUFFIX.Length)
                     : systemType.Name;
@@ -100,12 +91,12 @@ namespace Entitas.Unity.VisualDebugging {
             _durationsCount = 0;
         }
 
-        static SystemInterfaceFlags getInterfaceFlags(ISystem system, bool isReactive) {
+        static SystemInterfaceFlags getInterfaceFlags(ISystem system) {
             var flags = SystemInterfaceFlags.None;
             if(system is IInitializeSystem) {
                 flags |= SystemInterfaceFlags.IInitializeSystem;
             }
-            if(isReactive) {
+            if(system is IReactiveSystem) {
                 flags |= SystemInterfaceFlags.IReactiveSystem;
             } else if(system is IExecuteSystem) {
                 flags |= SystemInterfaceFlags.IExecuteSystem;

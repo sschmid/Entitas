@@ -9,7 +9,7 @@ namespace Entitas.Unity.CodeGenerator {
 
     public static class UnityCodeGenerator {
 
-        [MenuItem(EntitasMenuItems.generate, false, EntitasMenuItemPriorities.generate)]
+        [MenuItem("Entitas/Generate #%g", false, 100)]
         public static void Generate() {
             checkCanGenerate();
 

@@ -5,7 +5,7 @@ namespace Entitas.Unity.VisualDebugging {
 
     public class VisualDebuggingPreferencesDrawer : IEntitasPreferencesDrawer {
 
-        public int priority { get { return EntitasPreferencesDrawerPriorities.visualDebugging; } }
+        public int priority { get { return 20; } }
 
         const string ENTITAS_DISABLE_VISUAL_DEBUGGING = "ENTITAS_DISABLE_VISUAL_DEBUGGING";
 

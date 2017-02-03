@@ -8,30 +8,34 @@ namespace Entitas.Unity.CodeGenerator {
 
     public class CodeGeneratorPreferencesDrawer : IEntitasPreferencesDrawer {
 
-        public int priority { get { return EntitasPreferencesDrawerPriorities.codeGenerator; } }
+        public int priority { get { return 10; } }
 
         string[] _availableDataProviderNames;
         string[] _availableGeneratorNames;
         string[] _availablePostProcessorNames;
+
         CodeGeneratorConfig _codeGeneratorConfig;
         List<string> _contexts;
         UnityEditorInternal.ReorderableList _contextList;
 
         public void Initialize(EntitasPreferencesConfig config) {
-            _availableDataProviderNames = UnityCodeGenerator.GetTypes<ICodeGeneratorDataProvider>()
-                                                            .Select(type => type.Name)
-                                                            .OrderBy(name => name)
-                                                            .ToArray();
+            _availableDataProviderNames = UnityCodeGenerator
+                .GetTypes<ICodeGeneratorDataProvider>()
+                .Select(type => type.Name)
+                .OrderBy(name => name)
+                .ToArray();
 
-            _availableGeneratorNames = UnityCodeGenerator.GetTypes<ICodeGenerator>()
-                                                         .Select(type => type.Name)
-                                                         .OrderBy(name => name)
-                                                         .ToArray();
+            _availableGeneratorNames = UnityCodeGenerator
+                .GetTypes<ICodeGenerator>()
+                .Select(type => type.Name)
+                .OrderBy(name => name)
+                .ToArray();
 
-            _availablePostProcessorNames = UnityCodeGenerator.GetTypes<ICodeGenFilePostProcessor>()
-                                                             .Select(type => type.Name)
-                                                             .OrderBy(name => name)
-                                                             .ToArray();
+            _availablePostProcessorNames = UnityCodeGenerator
+                .GetTypes<ICodeGenFilePostProcessor>()
+                .Select(type => type.Name)
+                .OrderBy(name => name)
+                .ToArray();
 
             _codeGeneratorConfig = new CodeGeneratorConfig(config, _availableDataProviderNames, _availableGeneratorNames, _availablePostProcessorNames);
 
@@ -44,7 +48,7 @@ namespace Entitas.Unity.CodeGenerator {
                 _contexts[index] = EditorGUI.TextField(rect, _contexts[index]);
             };
             _contextList.onAddCallback = list => list.list.Add("New Context");
-            _contextList.onCanRemoveCallback = list => true;
+            _contextList.onCanRemoveCallback = list => list.count > 1;
             _contextList.onChangedCallback = list => GUI.changed = true;
         }
 
@@ -55,9 +59,10 @@ namespace Entitas.Unity.CodeGenerator {
 
                 drawGeneratedFolderPath();
                 drawContexts();
-                drawDataProviders();
-                drawCodeGenerators();
-                drawPostProcessors();
+
+                _codeGeneratorConfig.dataProviders = drawMaskField(_availableDataProviderNames, _codeGeneratorConfig.dataProviders);
+                _codeGeneratorConfig.codeGenerators = drawMaskField(_availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
+                _codeGeneratorConfig.postProcessors = drawMaskField(_availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
 
                 var bgColor = GUI.backgroundColor;
                 GUI.backgroundColor = Color.green;
@@ -81,75 +86,33 @@ namespace Entitas.Unity.CodeGenerator {
             if(_contexts.Count <= 1) {
                 EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple contexts. " +
                 "The code generator generates subclasses of ContextAttribute for each context name. " +
-                "You can assign components to a specific context with the generated attribute, e.g. [UI] or [MetaGame], " +
-                "otherwise they are assigned to the default context.", MessageType.Info);
+                "You have to assign components to one or more contexts with the generated attribute, e.g. [Game] or [Input], " +
+                "otherwise they will be ignored by the code generator.", MessageType.Info);
             }
 
             _codeGeneratorConfig.contexts = _contexts.ToArray();
         }
 
-        void drawDataProviders() {
+        static string[] drawMaskField(string[] names, string[] input) {
             var mask = 0;
 
-            for(int i = 0; i < _availableDataProviderNames.Length; i++) {
-                if(_codeGeneratorConfig.dataProviders.Contains(_availableDataProviderNames[i])) {
+            for(int i = 0; i < names.Length; i++) {
+                if(input.Contains(names[i])) {
                     mask += (1 << i);
                 }
             }
 
-            mask = EditorGUILayout.MaskField("Data Providers", mask, _availableDataProviderNames);
+            mask = EditorGUILayout.MaskField("Data Providers", mask, names);
 
             var selected = new List<string>();
-            for(int i = 0; i < _availableDataProviderNames.Length; i++) {
+            for(int i = 0; i < names.Length; i++) {
                 var index = 1 << i;
                 if((index & mask) == index) {
-                    selected.Add(_availableDataProviderNames[i]);
+                    selected.Add(names[i]);
                 }
             }
 
-            _codeGeneratorConfig.dataProviders = selected.ToArray();
-        }
-
-        void drawCodeGenerators() {
-            var mask = 0;
-            for(int i = 0; i < _availableGeneratorNames.Length; i++) {
-                if(_codeGeneratorConfig.codeGenerators.Contains(_availableGeneratorNames[i])) {
-                    mask += (1 << i);
-                }
-            }
-
-            mask = EditorGUILayout.MaskField("Code Generators", mask, _availableGeneratorNames);
-
-            var selected = new List<string>();
-            for(int i = 0; i < _availableGeneratorNames.Length; i++) {
-                var index = 1 << i;
-                if((index & mask) == index) {
-                    selected.Add(_availableGeneratorNames[i]);
-                }
-            }
-
-            _codeGeneratorConfig.codeGenerators = selected.ToArray();
-        }
-
-        void drawPostProcessors() {
-            var mask = 0;
-            for(int i = 0; i < _availablePostProcessorNames.Length; i++) {
-                if(_codeGeneratorConfig.postProcessors.Contains(_availablePostProcessorNames[i])) {
-                    mask += (1 << i);
-                }
-            }
-
-            mask = EditorGUILayout.MaskField("Post Processors", mask, _availablePostProcessorNames);
-
-            var selected = new List<string>();
-            for(int i = 0; i < _availablePostProcessorNames.Length; i++) {
-                var index = 1 << i;
-                if((index & mask) == index) {
-                    selected.Add(_availablePostProcessorNames[i]);
-                }
-            }
-
-            _codeGeneratorConfig.postProcessors = selected.ToArray();
+            return selected.ToArray();
         }
     }
 }

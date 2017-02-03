@@ -22,11 +22,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var total = 0;
                 foreach(var system in _initializeSystems) {
                     var debugSystems = system as DebugSystems;
-                    if(debugSystems != null) {
-                        total += debugSystems.totalInitializeSystemsCount;
-                    } else {
-                        total += 1;
-                    }
+                    total += debugSystems != null ? debugSystems.totalInitializeSystemsCount : 1;
                 }
                 return total;
             }
@@ -37,11 +33,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var total = 0;
                 foreach(var system in _executeSystems) {
                     var debugSystems = system as DebugSystems;
-                    if(debugSystems != null) {
-                        total += debugSystems.totalExecuteSystemsCount;
-                    } else {
-                        total += 1;
-                    }
+                    total += debugSystems != null ? debugSystems.totalExecuteSystemsCount : 1;
                 }
                 return total;
             }
@@ -52,11 +44,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var total = 0;
                 foreach(var system in _cleanupSystems) {
                     var debugSystems = system as DebugSystems;
-                    if(debugSystems != null) {
-                        total += debugSystems.totalCleanupSystemsCount;
-                    } else {
-                        total += 1;
-                    }
+                    total += debugSystems != null ? debugSystems.totalCleanupSystemsCount : 1;
                 }
                 return total;
             }
@@ -67,11 +55,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var total = 0;
                 foreach(var system in _tearDownSystems) {
                     var debugSystems = system as DebugSystems;
-                    if(debugSystems != null) {
-                        total += debugSystems.totalTearDownSystemsCount;
-                    } else {
-                        total += 1;
-                    }
+                    total += debugSystems != null ? debugSystems.totalTearDownSystemsCount : 1;
                 }
                 return total;
             }
@@ -82,11 +66,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var total = 0;
                 foreach(var system in _systems) {
                     var debugSystems = system as DebugSystems;
-                    if(debugSystems != null) {
-                        total += debugSystems.totalSystemsCount;
-                    } else {
-                        total += 1;
-                    }
+                    total += debugSystems != null ? debugSystems.totalSystemsCount : 1;
                 }
                 return total;
             }
@@ -198,10 +178,9 @@ namespace Entitas.Unity.VisualDebugging {
                 ResetDurations();
             }
             for (int i = 0; i < _executeSystems.Count; i++) {
-                var system = _executeSystems[i];
                 var systemInfo = _executeSystemInfos[i];
                 if(systemInfo.isActive) {
-                    var duration = monitorSystemExecutionDuration(system);
+                    var duration = monitorSystemExecutionDuration(_executeSystems[i]);
                     _executeDuration += duration;
                     systemInfo.AddExecutionDuration(duration);
                 }
