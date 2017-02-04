@@ -1,39 +1,41 @@
 ﻿using System.Linq;
-using Entitas.Unity.VisualDebugging;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(EntityLink))]
-public class EntityLinkInspector : Editor {
+namespace Entitas.Unity.VisualDebugging {
 
-    void Awake() {
-        EntityDrawer.Initialize();
-    }
+    [CustomEditor(typeof(EntityLink))]
+    public class EntityLinkInspector : Editor {
 
-    public override void OnInspectorGUI() {
-        var link = (EntityLink)target;
-
-        if(link.entity != null) {
-            if(GUILayout.Button("Unlink")) {
-                link.Unlink();
-            }
+        void Awake() {
+            EntityDrawer.Initialize();
         }
-		
-        if(link.entity != null) {
-            EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField(link.entity.ToString());
+        public override void OnInspectorGUI() {
+            var link = (EntityLink)target;
 
-            if(GUILayout.Button("Show entity")) {
-                Selection.activeGameObject = FindObjectsOfType<EntityBehaviour>()
-                    .Single(e => e.entity == link.entity).gameObject;
+            if(link.entity != null) {
+                if(GUILayout.Button("Unlink")) {
+                    link.Unlink();
+                }
             }
 
-            EditorGUILayout.Space();
+            if(link.entity != null) {
+                EditorGUILayout.Space();
 
-            EntityDrawer.DrawEntity(link.context, link.entity);
-        } else {
-            EditorGUILayout.LabelField("Not linked to an entity");
+                EditorGUILayout.LabelField(link.entity.ToString());
+
+                if(GUILayout.Button("Show entity")) {
+                    Selection.activeGameObject = FindObjectsOfType<EntityBehaviour>()
+                        .Single(e => e.entity == link.entity).gameObject;
+                }
+
+                EditorGUILayout.Space();
+
+                EntityDrawer.DrawEntity(link.context, link.entity);
+            } else {
+                EditorGUILayout.LabelField("Not linked to an entity");
+            }
         }
     }
 }

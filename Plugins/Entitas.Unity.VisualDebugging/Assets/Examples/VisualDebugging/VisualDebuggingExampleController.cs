@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Unity;
 using UnityEngine;
 
 public class VisualDebuggingExampleController : MonoBehaviour {

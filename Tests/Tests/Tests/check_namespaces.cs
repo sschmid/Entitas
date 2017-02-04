@@ -35,6 +35,8 @@ class check_namespaces : nspec {
             string expectedNamespace;
             if(file.Key.Contains(typeof(Entitas.Feature).Name)) {
                 expectedNamespace = "Entitas";
+            } else if(file.Key.Contains("EntityLink.cs")) {
+                expectedNamespace = "Entitas.Unity";
             } else {
                 expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
                     .ToString()
