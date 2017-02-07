@@ -25,6 +25,8 @@ class describe_CodeGenerator : nspec {
 
 public class TestDataProvider : ICodeGeneratorDataProvider {
 
+    public bool IsEnabledByDefault { get { return true; } }
+
     public CodeGeneratorData[] GetData() {
         var data1 = new CodeGeneratorData();
         data1.Add("testKey", "value1");
@@ -40,6 +42,8 @@ public class TestDataProvider : ICodeGeneratorDataProvider {
 }
 
 public class TestCodeGenerator : ICodeGenerator {
+
+    public bool IsEnabledByDefault { get { return true; } }
 
     public CodeGenFile[] Generate(CodeGeneratorData[] data) {
         return data

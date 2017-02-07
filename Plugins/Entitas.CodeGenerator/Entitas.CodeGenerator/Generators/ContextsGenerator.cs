@@ -4,6 +4,8 @@ namespace Entitas.CodeGenerator {
 
     public class ContextsGenerator : ICodeGenerator {
 
+        public bool IsEnabledByDefault { get { return true; } }
+
         const string CONTEXTS_TEMPLATE =
 @"using Entitas;
             

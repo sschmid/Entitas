@@ -5,6 +5,8 @@ namespace Entitas.CodeGenerator {
 
     public class MatcherGenerator : ICodeGenerator {
 
+        public bool IsEnabledByDefault { get { return true; } }
+
         const string MATCHER_TEMPLATE =
 @"using Entitas;
 

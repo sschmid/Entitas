@@ -6,6 +6,8 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentEntityGenerator : ICodeGenerator {
 
+        public bool IsEnabledByDefault { get { return true; } }
+
         const string STANDARD_COMPONENT_TEMPLATE =
 @"public partial class ${Context}Entity {
 

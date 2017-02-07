@@ -5,6 +5,8 @@ namespace Entitas.CodeGenerator {
 
     public class ContextAttributeGenerator : ICodeGenerator {
 
+        public bool IsEnabledByDefault { get { return true; } }
+
         const string ATTRIBUTE_TEMPLATE =
 @"using Entitas.CodeGenerator.Api;
 
