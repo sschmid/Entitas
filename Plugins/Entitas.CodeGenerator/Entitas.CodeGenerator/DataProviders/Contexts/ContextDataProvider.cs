@@ -4,6 +4,8 @@ namespace Entitas.CodeGenerator {
 
     public class ContextDataProvider : ICodeGeneratorDataProvider {
 
+        public bool IsEnabledByDefault { get { return true; } }
+
         readonly string[] _contextNames;
 
         public ContextDataProvider() : this(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).contexts) {

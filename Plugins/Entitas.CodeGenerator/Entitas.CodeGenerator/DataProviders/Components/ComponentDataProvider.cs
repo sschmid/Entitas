@@ -8,6 +8,8 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentDataProvider : ICodeGeneratorDataProvider {
 
+        public bool IsEnabledByDefault { get { return true; } }
+
         readonly Type[] _types;
         readonly IComponentDataProvider[] _dataProviders;
 
