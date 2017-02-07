@@ -5,6 +5,8 @@ namespace Entitas.CodeGenerator {
 
     public class WriteToDiskPostProcessor : ICodeGenFilePostProcessor {
 
+        public bool IsEnabledByDefault { get { return true; } }
+
         readonly string _directory;
 
         public WriteToDiskPostProcessor() : this(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).targetDirectory) {

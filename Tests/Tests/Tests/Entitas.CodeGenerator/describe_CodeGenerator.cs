@@ -57,6 +57,8 @@ public class TestCodeGenerator : ICodeGenerator {
 
 public class TestPostProcessor : ICodeGenFilePostProcessor {
 
+    public bool IsEnabledByDefault { get { return true; } }
+
     public void PostProcess(CodeGenFile[] files) {
         foreach(var file in files) {
             file.fileName += "-Approved!";
