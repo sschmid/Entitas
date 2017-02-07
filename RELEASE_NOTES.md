@@ -1,7 +1,40 @@
 # 0.37.0
 
+See and discuss changes in [Milestone 0.37.0](https://github.com/sschmid/Entitas-CSharp/milestone/7)
+
+#### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+The deed is done. Entitas went type-safe! This was a huge task and I'm happy to finally share this with you guys!
+This feature makes Entitas safer to use in growing code bases and will eliminate certain kind of bugs. Thanks to @mstrchrstphr
+for starting the conversation and proposing solutions.
+
 #### Entitas
-- Entity API doesn't return Entity anymore
+- Entitas went type-safe! (#257 #266)
+- Entity API doesn't return Entity anymore (e.g. e.AddComponent())
+- Fixed matchers not recalculating hash when changed
+
+#### Entitas.CodeGenerator
+- Entitas went type-safe! (#257 #266)
+- Rewrote code generator architecture (#265 #274 #275)
+- ComponentsGenerator doesn't generate `e.IsMoveble(value)`. Only `e.isMoveble = value`
+- ComponentsGenerator Entity API doesn't return Entity anymore (e.g. e.AddPosition())
+
+#### Entitas.Blueprints
+- Entitas went type-safe! (#257 #266)
+
+#### Entitas.Migration
+- Automatically embedding all migrations to Entitas.Migration.exe
+
+#### Entitas.Unity
+- Added EntityLink (#271)
+
+#### Entitas.Unity.VisualDebugging
+- Entitas went type-safe! (#257 #266)
+
+#### Other
+- New folder structure with Entitas as the core and everything else as Plugins
+
 
 # 0.36.0
 
