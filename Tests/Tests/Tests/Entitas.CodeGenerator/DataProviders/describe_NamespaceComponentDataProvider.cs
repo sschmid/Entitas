@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Entitas.CodeGenerator;
 using NSpec;
 using My.Namespace;
 using Entitas;
 
-class describe_ComponentDataProvider : nspec {
+class describe_NamespaceComponentDataProvider : nspec {
 
     ComponentData getData<T>() {
         var provider = new ComponentDataProvider(new Type[] { typeof(T) });
@@ -22,7 +22,7 @@ class describe_ComponentDataProvider : nspec {
 
             before = () => {
                 types = new [] { typeof(MyNamespaceComponent) };
-                var provider = new ComponentDataProvider(types);
+                var provider = new NamespaceComponentDataProvider(types);
                 data = (ComponentData[])provider.GetData();
                 d = data[0];
             };
@@ -33,10 +33,10 @@ class describe_ComponentDataProvider : nspec {
 
             it["gets component name"] = () => {
                 d.GetComponentName().GetType().should_be(typeof(string));
-                d.GetComponentName().should_be("MyNamespace");
+                d.GetComponentName().should_be("MyNamespaceMyNamespace");
 
                 d.GetFullComponentName().GetType().should_be(typeof(string));
-                d.GetFullComponentName().should_be("MyNamespaceComponent");
+                d.GetFullComponentName().should_be("MyNamespaceMyNamespaceComponent");
             };
 
             it["gets full type name"] = () => {
@@ -195,7 +195,7 @@ class describe_ComponentDataProvider : nspec {
         };
 
         context["multiple custom component names"] = () => {
-            
+
             Type[] types = null;
             ComponentData[] data = null;
             ComponentData d1 = null;
