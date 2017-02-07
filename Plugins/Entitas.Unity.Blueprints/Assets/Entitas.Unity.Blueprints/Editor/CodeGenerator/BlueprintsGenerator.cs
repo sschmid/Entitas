@@ -5,6 +5,8 @@ namespace Entitas.Unity.Blueprints {
 
     public class BlueprintsGenerator : ICodeGenerator {
 
+		public bool IsEnabledByDefault { get { return true; } }
+
         const string CLASS_TEMPLATE =
 @"using Entitas.Blueprints;
 using Entitas.Unity.Blueprints;

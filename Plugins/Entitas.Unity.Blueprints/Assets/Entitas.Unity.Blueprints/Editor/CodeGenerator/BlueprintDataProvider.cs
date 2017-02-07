@@ -5,6 +5,8 @@ namespace Entitas.Unity.Blueprints {
 
     public class BlueprintDataProvider : ICodeGeneratorDataProvider {
 
+		public bool IsEnabledByDefault { get { return true; } }
+
         readonly string[] _blueprintNames;
 
         public BlueprintDataProvider() {
