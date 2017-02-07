@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
-    public class ComponentEntityGenerator : ICodeGenerator {
+    public class NamespaceComponentEntityGenerator : ICodeGenerator {
 
-        public bool IsEnabledByDefault { get { return true; } }
+        public bool IsEnabledByDefault { get { return false; } }
 
         const string STANDARD_COMPONENT_TEMPLATE =
 @"public partial class ${Context}Entity {
@@ -73,8 +73,6 @@ ${memberAssignment}
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var nameSplit = data.GetComponentName().Split('.');
-            var name = nameSplit[nameSplit.Length - 1];
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + data.GetComponentName();
             var memberInfos = data.GetMemberInfos();
             var template = memberInfos.Count == 0
@@ -83,8 +81,8 @@ ${memberAssignment}
 
             var fileContent = template
                 .Replace("${Context}", contextName)
-                .Replace("${Name}", name)
-                .Replace("${name}", name)
+                .Replace("${Name}", data.GetComponentName())
+                .Replace("${name}", data.GetComponentName().LowercaseFirst())
                 .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + data.GetComponentName())
                 .Replace("${Type}", data.GetFullTypeName())
                 .Replace("${Index}", index)
