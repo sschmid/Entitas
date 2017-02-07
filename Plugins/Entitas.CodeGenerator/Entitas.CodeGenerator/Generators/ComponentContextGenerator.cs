@@ -85,8 +85,6 @@ public partial class ${Context}Context {
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var nameSplit = data.GetComponentName().Split('.');
-            var name = nameSplit[nameSplit.Length - 1];
             var memberInfos = data.GetMemberInfos();
             var template = memberInfos.Count == 0
                                       ? FLAG_COMPONENT_TEMPLATE
@@ -94,8 +92,8 @@ public partial class ${Context}Context {
 
             var fileContent = template
                 .Replace("${Context}", contextName)
-                .Replace("${Name}", name)
-                .Replace("${name}", name.LowercaseFirst())
+                .Replace("${Name}", data.GetComponentName())
+                .Replace("${name}", data.GetComponentName().LowercaseFirst())
                 .Replace("${FullName}", data.GetFullComponentName())
                 .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + data.GetComponentName())
                 .Replace("${Type}", data.GetFullTypeName())
