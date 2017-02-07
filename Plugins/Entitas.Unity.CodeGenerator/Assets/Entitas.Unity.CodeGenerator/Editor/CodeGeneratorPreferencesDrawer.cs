@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGenerator;
@@ -21,7 +22,7 @@ namespace Entitas.Unity.CodeGenerator {
         public void Initialize(EntitasPreferencesConfig config) {
             _availableDataProviderNames = UnityCodeGenerator
                 .GetTypes<ICodeGeneratorDataProvider>()
-                .Select(type => type.Name)
+				.Select(type => type.Name)
                 .OrderBy(name => name)
                 .ToArray();
 
@@ -37,7 +38,28 @@ namespace Entitas.Unity.CodeGenerator {
                 .OrderBy(name => name)
                 .ToArray();
 
-            _codeGeneratorConfig = new CodeGeneratorConfig(config, _availableDataProviderNames, _availableGeneratorNames, _availablePostProcessorNames);
+            var enabledDataProviderNames = UnityCodeGenerator
+                .GetTypes<ICodeGeneratorDataProvider>()
+				.Where(type => ((ICodeGeneratorDataProvider)Activator.CreateInstance(type)).IsEnabledByDefault)
+				.Select(type => type.Name)
+                .OrderBy(name => name)
+                .ToArray();
+
+			var enabledGeneratorNames = UnityCodeGenerator
+                .GetTypes<ICodeGenerator>()
+				.Where(type => ((ICodeGenerator)Activator.CreateInstance(type)).IsEnabledByDefault)
+                .Select(type => type.Name)
+                .OrderBy(name => name)
+                .ToArray();
+
+			var enabledPostProcessorNames = UnityCodeGenerator
+                .GetTypes<ICodeGenFilePostProcessor>()
+				.Where(type => ((ICodeGenFilePostProcessor)Activator.CreateInstance(type)).IsEnabledByDefault)
+                .Select(type => type.Name)
+                .OrderBy(name => name)
+                .ToArray();
+
+			_codeGeneratorConfig = new CodeGeneratorConfig(config, enabledDataProviderNames, enabledGeneratorNames, enabledPostProcessorNames);
 
             _contexts = new List<string>(_codeGeneratorConfig.contexts);
 
