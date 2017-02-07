@@ -60,9 +60,9 @@ namespace Entitas.Unity.CodeGenerator {
                 drawGeneratedFolderPath();
                 drawContexts();
 
-                _codeGeneratorConfig.dataProviders = drawMaskField(_availableDataProviderNames, _codeGeneratorConfig.dataProviders);
-                _codeGeneratorConfig.codeGenerators = drawMaskField(_availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
-                _codeGeneratorConfig.postProcessors = drawMaskField(_availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
+                _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
+                _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
+                _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
 
                 var bgColor = GUI.backgroundColor;
                 GUI.backgroundColor = Color.green;
@@ -93,7 +93,7 @@ namespace Entitas.Unity.CodeGenerator {
             _codeGeneratorConfig.contexts = _contexts.ToArray();
         }
 
-        static string[] drawMaskField(string[] names, string[] input) {
+        static string[] drawMaskField(string title, string[] names, string[] input) {
             var mask = 0;
 
             for(int i = 0; i < names.Length; i++) {
@@ -102,7 +102,7 @@ namespace Entitas.Unity.CodeGenerator {
                 }
             }
 
-            mask = EditorGUILayout.MaskField("Data Providers", mask, names);
+            mask = EditorGUILayout.MaskField(title, mask, names);
 
             var selected = new List<string>();
             for(int i = 0; i < names.Length; i++) {

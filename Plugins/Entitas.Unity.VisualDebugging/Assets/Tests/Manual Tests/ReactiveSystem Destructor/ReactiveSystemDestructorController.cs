@@ -1,5 +1,4 @@
 using UnityEngine;
-using Entitas;
 using UnityEditor;
 
 public class ReactiveSystemDestructorController : MonoBehaviour {
