@@ -3,17 +3,17 @@ using System.Reflection;
 
 namespace Entitas.CodeGenerator {
 
-    public class ComponentDataProvider : AbstractComponentDataProvider {
+    public class NamespaceComponentDataProvider : AbstractComponentDataProvider {
 
-        public override bool IsEnabledByDefault { get { return true; } }
+        public override bool IsEnabledByDefault { get { return false; } }
 
-        public ComponentDataProvider() : this(Assembly.GetAssembly(typeof(IEntity)).GetTypes()) {
+        public NamespaceComponentDataProvider() : this(Assembly.GetAssembly(typeof(IEntity)).GetTypes()) {
         }
 
-        public ComponentDataProvider(Type[] types)
+        public NamespaceComponentDataProvider(Type[] types)
             : base(new IComponentDataProvider[] {
                 new ComponentTypeComponentDataProvider(),
-                new ComponentNameComponentDataProvider(),
+                new NamespaceComponentNameComponentDataProvider(),
                 new MemberInfosComponentDataProvider(),
                 new ContextsComponentDataProvider(),
                 new IsUniqueComponentDataProvider(),
