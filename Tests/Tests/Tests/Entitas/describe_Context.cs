@@ -590,14 +590,14 @@ class describe_Context : nspec {
 
             it["adds and EntityIndex"] = () => {
                 const int componentIndex = 1;
-                var entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), null);
+                var entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), (arg1, arg2) => string.Empty);
                 ctx.AddEntityIndex(componentIndex.ToString(), entityIndex);
                 ctx.GetEntityIndex(componentIndex.ToString()).should_be_same(entityIndex);
             };
 
             it["throws when adding an EntityIndex with same name"] = expect<ContextEntityIndexDoesAlreadyExistException>(() => {
                 const int componentIndex = 1;
-                var entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), null);
+                var entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), (arg1, arg2) => string.Empty);
                 ctx.AddEntityIndex(componentIndex.ToString(), entityIndex);
                 ctx.AddEntityIndex(componentIndex.ToString(), entityIndex);
             });

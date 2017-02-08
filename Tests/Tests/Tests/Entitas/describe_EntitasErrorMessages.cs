@@ -122,7 +122,7 @@ class describe_EntitasErrorMessages : nspec {
 
             it["duplicate entityIndex"] = () => printErrorMessage(() => {
                 var groupA = ctx.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA));
-                var index = new PrimaryEntityIndex<TestEntity, string>(groupA, null);
+                var index = new PrimaryEntityIndex<TestEntity, string>(groupA, (arg1, arg2) => string.Empty);
                 ctx.AddEntityIndex("duplicate", index);
                 ctx.AddEntityIndex("duplicate", index);
             });

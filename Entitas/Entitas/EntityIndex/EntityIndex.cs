@@ -7,14 +7,22 @@ namespace Entitas {
 
         readonly Dictionary<TKey, HashSet<TEntity>> _index;
 
-        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey)
-            : base(group, getKey) {
+        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) : base(group, getKey) {
             _index = new Dictionary<TKey, HashSet<TEntity>>();
             Activate();
         }
 
-        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey, IEqualityComparer<TKey> comparer)
-            : base(group, getKey) {
+        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys) : base(group, getKeys) {
+            _index = new Dictionary<TKey, HashSet<TEntity>>();
+            Activate();
+        }
+
+        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey, IEqualityComparer<TKey> comparer) : base(group, getKey) {
+            _index = new Dictionary<TKey, HashSet<TEntity>>(comparer);
+            Activate();
+        }
+
+        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys, IEqualityComparer<TKey> comparer) : base(group, getKeys) {
             _index = new Dictionary<TKey, HashSet<TEntity>>(comparer);
             Activate();
         }
@@ -37,22 +45,27 @@ namespace Entitas {
         protected override void clear() {
             foreach(var entities in _index.Values) {
                 foreach(var entity in entities) {
-                    entity.Release(this);
+                    if(entity.owners.Contains(this)) {
+                        entity.Release(this);
+                    }
                 }
             }
 
             _index.Clear();
         }
 
-        protected override void addEntity(TEntity entity, IComponent component) {
-            GetEntities(_getKey(entity, component)).Add(entity);
-            entity.Retain(this);
+        protected override void addEntity(TKey key, TEntity entity) {
+            GetEntities(key).Add(entity);
+            if(!entity.owners.Contains(this)) {
+                entity.Retain(this);
+            }
         }
 
-        protected override void removeEntity(
-            TEntity entity, IComponent component) {
-            GetEntities(_getKey(entity, component)).Remove(entity);
-            entity.Release(this);
+        protected override void removeEntity(TKey key, TEntity entity) {
+            GetEntities(key).Remove(entity);
+            if(entity.owners.Contains(this)) {
+                entity.Release(this);
+            }
         }
     }
 }

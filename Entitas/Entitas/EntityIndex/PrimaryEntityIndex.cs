@@ -7,14 +7,22 @@ namespace Entitas {
 
         readonly Dictionary<TKey, TEntity> _index;
 
-        public PrimaryEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey)
-            : base(group, getKey) {
+        public PrimaryEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) : base(group, getKey) {
             _index = new Dictionary<TKey, TEntity>();
             Activate();
         }
 
-        public PrimaryEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey, IEqualityComparer<TKey> comparer)
-            : base(group, getKey) {
+        public PrimaryEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys) : base(group, getKeys) {
+            _index = new Dictionary<TKey, TEntity>();
+            Activate();
+        }
+
+        public PrimaryEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey, IEqualityComparer<TKey> comparer) : base(group, getKey) {
+            _index = new Dictionary<TKey, TEntity>(comparer);
+            Activate();
+        }
+
+        public PrimaryEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys, IEqualityComparer<TKey> comparer) : base(group, getKeys) {
             _index = new Dictionary<TKey, TEntity>(comparer);
             Activate();
         }
@@ -49,15 +57,15 @@ namespace Entitas {
 
         protected override void clear() {
             foreach(var entity in _index.Values) {
-                entity.Release(this);
+                if(entity.owners.Contains(this)) {
+                    entity.Release(this);
+                }
             }
 
             _index.Clear();
         }
 
-        protected override void addEntity(
-            TEntity entity, IComponent component) {
-            var key = _getKey(entity, component);
+        protected override void addEntity(TKey key, TEntity entity) {
             if(_index.ContainsKey(key)) {
                 throw new EntityIndexException(
                     "Entity for key '" + key + "' already exists!",
@@ -65,13 +73,16 @@ namespace Entitas {
             }
 
             _index.Add(key, entity);
-            entity.Retain(this);
+            if(!entity.owners.Contains(this)) {
+                entity.Retain(this);
+            }
         }
 
-        protected override void removeEntity(
-            TEntity entity, IComponent component) {
-            _index.Remove(_getKey(entity, component));
-            entity.Release(this);
+        protected override void removeEntity(TKey key, TEntity entity) {
+            _index.Remove(key);
+            if(entity.owners.Contains(this)) {
+                entity.Release(this);
+            }
         }
     }
 }
