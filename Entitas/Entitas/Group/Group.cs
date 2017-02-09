@@ -51,8 +51,7 @@ namespace Entitas {
         }
 
         /// This is used by the context to manage the group.
-        public void HandleEntity(
-            TEntity entity, int index, IComponent component) {
+        public void HandleEntity(TEntity entity, int index, IComponent component) {
             if(_matcher.Matches(entity)) {
                 addEntity(entity, index, component);
             } else {
@@ -61,11 +60,7 @@ namespace Entitas {
         }
 
         /// This is used by the context to manage the group.
-        public void UpdateEntity(
-            TEntity entity,
-            int index,
-            IComponent previousComponent,
-            IComponent newComponent) {
+        public void UpdateEntity(TEntity entity, int index, IComponent previousComponent, IComponent newComponent) {
             if(_entities.Contains(entity)) {
                 if(OnEntityRemoved != null) {
                     OnEntityRemoved(this, entity, index, previousComponent);
