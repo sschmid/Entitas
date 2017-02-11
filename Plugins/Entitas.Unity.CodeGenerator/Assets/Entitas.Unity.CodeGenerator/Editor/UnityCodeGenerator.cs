@@ -15,20 +15,30 @@ namespace Entitas.Unity.CodeGenerator {
 
             Debug.Log("Generating...");
 
-			var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(), new string[0], new string[0], new string[0]);
+			var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
 
-            var files = new Entitas.CodeGenerator.CodeGenerator(
+            var codeGenerator = new Entitas.CodeGenerator.CodeGenerator(
                 getEnabled<ICodeGeneratorDataProvider>(config.dataProviders),
                 getEnabled<ICodeGenerator>(config.codeGenerators),
                 getEnabled<ICodeGenFilePostProcessor>(config.postProcessors)
-            ).Generate();
+            );
+
+            var dryFiles = codeGenerator.DryRun();
+            var sloc = dryFiles
+                .Select(file => file.fileContent.ToUnixLineEndings())
+                .Sum(content => content.Split(new [] { '\n' }, StringSplitOptions.RemoveEmptyEntries).Length);
+
+            var files = codeGenerator.Generate();
+            var totalGeneratedFiles = files.Select(file => file.fileName).Distinct().Count();
+            var loc = files
+                .Select(file => file.fileContent.ToUnixLineEndings())
+                .Sum(content => content.Split(new [] { '\n' }).Length);
 
             foreach(var file in files) {
                 Debug.Log(file.generatorName + ": " + file.fileName);
             }
 
-            var totalGeneratedFiles = files.Select(file => file.fileName).Distinct().Count();
-            Debug.Log("Generated " + totalGeneratedFiles + " files.");
+            Debug.Log("Generated " + totalGeneratedFiles + " files (" + sloc + " sloc, " + loc + " loc)");
 
             AssetDatabase.Refresh();
         }

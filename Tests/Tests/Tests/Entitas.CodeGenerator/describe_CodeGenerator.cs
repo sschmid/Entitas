@@ -20,6 +20,21 @@ class describe_CodeGenerator : nspec {
             files[0].fileName.should_be("FileName0-Approved!");
             files[1].fileName.should_be("FileName1-Approved!");
         };
+
+        it["performs a dry run (no post processors)"] = () => {
+            var generator = new CodeGenerator(
+                new [] { new TestDataProvider() },
+                new [] { new TestCodeGenerator() },
+                new [] { new TestPostProcessor() }
+            );
+
+            var files = generator.DryRun();
+
+            files.Length.should_be(2);
+
+            files[0].fileName.should_be("FileName0");
+            files[1].fileName.should_be("FileName1");
+        };
     }
 }
 
