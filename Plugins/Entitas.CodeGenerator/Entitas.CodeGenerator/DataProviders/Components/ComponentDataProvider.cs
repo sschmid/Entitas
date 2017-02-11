@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.Reflection;
 
 namespace Entitas.CodeGenerator {
 
     public class ComponentDataProvider : AbstractComponentDataProvider {
 
-        public override bool IsEnabledByDefault { get { return true; } }
+        public override string name { get { return "Component (without namespace)"; } }
+        public override bool isEnabledByDefault { get { return true; } }
 
         public ComponentDataProvider() : this(Assembly.GetAssembly(typeof(IEntity)).GetTypes()) {
         }

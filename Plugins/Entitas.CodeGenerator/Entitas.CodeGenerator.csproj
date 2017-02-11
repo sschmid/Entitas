@@ -69,6 +69,7 @@
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\AbstractComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\NamespaceComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\NamespaceComponentNameComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\ICodeGeneratorInterface.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator\" />

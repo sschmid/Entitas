@@ -1,11 +1,12 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
     public class EntityGenerator : ICodeGenerator {
 
-        public bool IsEnabledByDefault { get { return true; } }
+        public string name { get { return "Entity"; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         const string ENTITY_TEMPLATE =
 @"using Entitas;

@@ -6,7 +6,8 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentsLookupGenerator : ICodeGenerator {
 
-        public bool IsEnabledByDefault { get { return true; } }
+        public string name { get { return "Components Lookup"; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         public const string COMPONENTS_LOOKUP = "ComponentsLookup";
 

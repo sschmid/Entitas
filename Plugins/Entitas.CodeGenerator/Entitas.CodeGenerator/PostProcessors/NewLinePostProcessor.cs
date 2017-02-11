@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 
 namespace Entitas.CodeGenerator {
 
     public class NewLinePostProcessor : ICodeGenFilePostProcessor {
 
-        public bool IsEnabledByDefault { get { return true; } }
+        public string name { get { return "Convert newlines"; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         public void PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {

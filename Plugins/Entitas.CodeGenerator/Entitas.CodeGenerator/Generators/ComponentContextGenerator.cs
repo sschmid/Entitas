@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -6,7 +6,8 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentContextGenerator : ICodeGenerator {
 
-        public bool IsEnabledByDefault { get { return true; } }
+        public string name { get { return "Component (Context API)"; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         const string STANDARD_COMPONENT_TEMPLATE =
 @"using Entitas;

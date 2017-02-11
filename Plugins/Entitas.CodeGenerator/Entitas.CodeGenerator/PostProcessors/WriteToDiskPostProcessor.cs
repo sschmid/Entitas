@@ -1,11 +1,12 @@
-﻿using System;
+using System;
 using System.IO;
 
 namespace Entitas.CodeGenerator {
 
     public class WriteToDiskPostProcessor : ICodeGenFilePostProcessor {
 
-        public bool IsEnabledByDefault { get { return true; } }
+        public string name { get { return "Write to disk"; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         readonly string _directory;
 

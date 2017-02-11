@@ -33,9 +33,9 @@ namespace Entitas.Unity.CodeGenerator {
             AssetDatabase.Refresh();
         }
 
-        static T[] getEnabled<T>(string[] names) {
+        static T[] getEnabled<T>(string[] types) {
             return GetTypes<T>()
-                    .Where(type => names.Contains(type.Name))
+                    .Where(type => types.Contains(type.Name))
                     .Select(type => (T)Activator.CreateInstance(type))
                     .ToArray();
         }

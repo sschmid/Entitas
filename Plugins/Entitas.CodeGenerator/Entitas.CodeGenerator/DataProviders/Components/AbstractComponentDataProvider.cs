@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGenerator.Api;
@@ -8,7 +8,8 @@ namespace Entitas.CodeGenerator {
 
     public abstract class AbstractComponentDataProvider : ICodeGeneratorDataProvider {
 
-        public abstract bool IsEnabledByDefault { get; }
+        public abstract string name { get; }
+        public abstract bool isEnabledByDefault { get; }
 
         readonly Type[] _types;
         readonly IComponentDataProvider[] _dataProviders;

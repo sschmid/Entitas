@@ -15,6 +15,7 @@ namespace Entitas {
         readonly HashSet<TEntity> _collectedEntities;
         readonly IGroup<TEntity>[] _groups;
         readonly GroupEvent[] _groupEvents;
+
         GroupChanged<TEntity> _addEntityCache;
         string _toStringCache;
         StringBuilder _toStringBuilder;

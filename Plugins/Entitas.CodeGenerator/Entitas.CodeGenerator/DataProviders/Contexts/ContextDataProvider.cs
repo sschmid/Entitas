@@ -1,10 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
     public class ContextDataProvider : ICodeGeneratorDataProvider {
 
-        public bool IsEnabledByDefault { get { return true; } }
+        public string name { get { return "Context"; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         readonly string[] _contextNames;
 

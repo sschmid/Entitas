@@ -11,6 +11,10 @@ namespace Entitas.Unity.CodeGenerator {
 
         public int priority { get { return 10; } }
 
+        string[] _availableDataProviderTypes;
+        string[] _availableGeneratorTypes;
+        string[] _availablePostProcessorTypes;
+
         string[] _availableDataProviderNames;
         string[] _availableGeneratorNames;
         string[] _availablePostProcessorNames;
@@ -20,50 +24,9 @@ namespace Entitas.Unity.CodeGenerator {
         UnityEditorInternal.ReorderableList _contextList;
 
         public void Initialize(EntitasPreferencesConfig config) {
-            _availableDataProviderNames = UnityCodeGenerator
-                .GetTypes<ICodeGeneratorDataProvider>()
-				.Where(type => !type.IsAbstract)
-				.Select(type => type.Name)
-                .OrderBy(name => name)
-                .ToArray();
-
-            _availableGeneratorNames = UnityCodeGenerator
-                .GetTypes<ICodeGenerator>()
-				.Where(type => !type.IsAbstract)
-                .Select(type => type.Name)
-                .OrderBy(name => name)
-                .ToArray();
-
-            _availablePostProcessorNames = UnityCodeGenerator
-                .GetTypes<ICodeGenFilePostProcessor>()
-				.Where(type => !type.IsAbstract)
-                .Select(type => type.Name)
-                .OrderBy(name => name)
-                .ToArray();
-
-            var enabledDataProviderNames = UnityCodeGenerator
-                .GetTypes<ICodeGeneratorDataProvider>()
-				.Where(type => !type.IsAbstract)
-				.Where(type => ((ICodeGeneratorDataProvider)Activator.CreateInstance(type)).IsEnabledByDefault)
-				.Select(type => type.Name)
-                .OrderBy(name => name)
-                .ToArray();
-
-			var enabledGeneratorNames = UnityCodeGenerator
-                .GetTypes<ICodeGenerator>()
-				.Where(type => !type.IsAbstract)
-				.Where(type => ((ICodeGenerator)Activator.CreateInstance(type)).IsEnabledByDefault)
-                .Select(type => type.Name)
-                .OrderBy(name => name)
-                .ToArray();
-
-			var enabledPostProcessorNames = UnityCodeGenerator
-                .GetTypes<ICodeGenFilePostProcessor>()
-				.Where(type => !type.IsAbstract)
-				.Where(type => ((ICodeGenFilePostProcessor)Activator.CreateInstance(type)).IsEnabledByDefault)
-                .Select(type => type.Name)
-                .OrderBy(name => name)
-                .ToArray();
+            var enabledDataProviderNames = initPhase<ICodeGeneratorDataProvider>(out _availableDataProviderTypes, out _availableDataProviderNames);
+            var enabledGeneratorNames = initPhase<ICodeGenerator>(out _availableGeneratorTypes, out _availableGeneratorNames);
+            var enabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(out _availablePostProcessorTypes, out _availablePostProcessorNames);
 
 			_codeGeneratorConfig = new CodeGeneratorConfig(config, enabledDataProviderNames, enabledGeneratorNames, enabledPostProcessorNames);
 
@@ -88,9 +51,9 @@ namespace Entitas.Unity.CodeGenerator {
                 drawGeneratedFolderPath();
                 drawContexts();
 
-                _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
-                _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
-                _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
+                _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
+                _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
+                _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
 
                 var bgColor = GUI.backgroundColor;
                 GUI.backgroundColor = Color.green;
@@ -121,11 +84,32 @@ namespace Entitas.Unity.CodeGenerator {
             _codeGeneratorConfig.contexts = _contexts.ToArray();
         }
 
-        static string[] drawMaskField(string title, string[] names, string[] input) {
+        static string[] initPhase<T>(out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {
+            var instances = UnityCodeGenerator
+                .GetTypes<T>()
+                .Where(type => !type.IsAbstract)
+                .Select(type => (T)Activator.CreateInstance(type))
+                .OrderBy(instance => instance.name);
+
+            availableTypes = instances
+                .Select(instance => instance.GetType().Name)
+                .ToArray();
+
+            availableNames = instances
+                .Select(instance => instance.name)
+                .ToArray();
+
+            return instances
+                .Where(instance => instance.isEnabledByDefault)
+                .Select(instance => instance.GetType().Name)
+                .ToArray();
+        }
+
+        static string[] drawMaskField(string title, string[] types, string[] names, string[] input) {
             var mask = 0;
 
-            for(int i = 0; i < names.Length; i++) {
-                if(input.Contains(names[i])) {
+            for(int i = 0; i < types.Length; i++) {
+                if(input.Contains(types[i])) {
                     mask += (1 << i);
                 }
             }
@@ -133,10 +117,10 @@ namespace Entitas.Unity.CodeGenerator {
             mask = EditorGUILayout.MaskField(title, mask, names);
 
             var selected = new List<string>();
-            for(int i = 0; i < names.Length; i++) {
+            for(int i = 0; i < types.Length; i++) {
                 var index = 1 << i;
                 if((index & mask) == index) {
-                    selected.Add(names[i]);
+                    selected.Add(types[i]);
                 }
             }
 

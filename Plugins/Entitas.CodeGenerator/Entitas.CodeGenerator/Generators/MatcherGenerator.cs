@@ -1,11 +1,12 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
     public class MatcherGenerator : ICodeGenerator {
 
-        public bool IsEnabledByDefault { get { return true; } }
+        public string name { get { return "Matcher"; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         const string MATCHER_TEMPLATE =
 @"using Entitas;

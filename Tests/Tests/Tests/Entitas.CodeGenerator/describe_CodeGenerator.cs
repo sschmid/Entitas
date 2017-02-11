@@ -25,7 +25,8 @@ class describe_CodeGenerator : nspec {
 
 public class TestDataProvider : ICodeGeneratorDataProvider {
 
-    public bool IsEnabledByDefault { get { return true; } }
+    public string name { get { return ""; } }
+    public bool isEnabledByDefault { get { return true; } }
 
     public CodeGeneratorData[] GetData() {
         var data1 = new CodeGeneratorData();
@@ -43,7 +44,8 @@ public class TestDataProvider : ICodeGeneratorDataProvider {
 
 public class TestCodeGenerator : ICodeGenerator {
 
-    public bool IsEnabledByDefault { get { return true; } }
+    public string name { get { return ""; } }
+    public bool isEnabledByDefault { get { return true; } }
 
     public CodeGenFile[] Generate(CodeGeneratorData[] data) {
         return data
@@ -57,7 +59,8 @@ public class TestCodeGenerator : ICodeGenerator {
 
 public class TestPostProcessor : ICodeGenFilePostProcessor {
 
-    public bool IsEnabledByDefault { get { return true; } }
+    public string name { get { return ""; } }
+    public bool isEnabledByDefault { get { return true; } }
 
     public void PostProcess(CodeGenFile[] files) {
         foreach(var file in files) {

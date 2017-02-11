@@ -1,8 +1,9 @@
-﻿namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGenerator {
 
     public class AddFileHeaderPostProcessor : ICodeGenFilePostProcessor {
 
-        public bool IsEnabledByDefault { get { return true; } }
+        public string name { get { return "Add file header"; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         public const string AUTO_GENERATED_HEADER_FORMAT =
 @"//------------------------------------------------------------------------------
