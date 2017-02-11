@@ -25,7 +25,7 @@ namespace Entitas.Unity.VisualDebugging {
         static ITypeDrawer[] _typeDrawers;
         static IComponentDrawer[] _componentDrawers;
 
-        static string _componentNameSearchTerm = string.Empty;
+        static string _componentNameSearchString = string.Empty;
 
         static bool _isInitialized;
 
@@ -136,18 +136,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                EntitasEditorLayout.BeginHorizontal();
-                {
-                    _componentNameSearchTerm = EditorGUILayout.TextField("Search", _componentNameSearchTerm);
-
-                    const string clearButtonControlName = "Clear Button";
-                    GUI.SetNextControlName(clearButtonControlName);
-                    if(GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
-                        _componentNameSearchTerm = string.Empty;
-                        GUI.FocusControl(clearButtonControlName);
-                    }
-                }
-                EntitasEditorLayout.EndHorizontal();
+                _componentNameSearchString = EntitasEditorLayout.SearchTextField(_componentNameSearchString);
 
                 EditorGUILayout.Space();
 
@@ -214,7 +203,7 @@ namespace Entitas.Unity.VisualDebugging {
             var componentType = component.GetType();
 
             var componentName = componentType.Name.RemoveComponentSuffix();
-            if(componentName.ToLower().Contains(_componentNameSearchTerm.ToLower())) {
+            if(componentName.ToLower().Contains(_componentNameSearchString.ToLower())) {
 
                 var boxStyle = getColoredBoxStyle(entity.totalComponents, index);
                 EntitasEditorLayout.BeginVerticalBox(boxStyle);

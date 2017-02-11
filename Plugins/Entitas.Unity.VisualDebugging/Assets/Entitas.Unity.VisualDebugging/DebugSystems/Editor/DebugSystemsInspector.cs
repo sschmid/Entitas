@@ -27,7 +27,7 @@ namespace Entitas.Unity.VisualDebugging {
         static bool _showCleanupSystems = true;
         static bool _showTearDownSystems = true;
         static bool _hideEmptySystems = true;
-        static string _systemNameSearchTerm = string.Empty;
+        static string _systemNameSearchString = string.Empty;
         
         float _threshold;
         SortMethod _systemSortMethod;
@@ -113,18 +113,8 @@ namespace Entitas.Unity.VisualDebugging {
                 _hideEmptySystems = EditorGUILayout.Toggle("Hide empty systems", _hideEmptySystems);
                 EditorGUILayout.Space();
 
-                EntitasEditorLayout.BeginHorizontal();
-                {
-                    _systemNameSearchTerm = EditorGUILayout.TextField("Search", _systemNameSearchTerm);
-
-                    const string clearButtonControlName = "Clear Button";
-                    GUI.SetNextControlName(clearButtonControlName);
-                    if(GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
-                        _systemNameSearchTerm = string.Empty;
-                        GUI.FocusControl(clearButtonControlName);
-                    }
-                }
-                EntitasEditorLayout.EndHorizontal();
+                _systemNameSearchString = EntitasEditorLayout.SearchTextField(_systemNameSearchString);
+                EditorGUILayout.Space();
 
                 _showInitializeSystems = EntitasEditorLayout.Foldout(_showInitializeSystems, "Initialize Systems");
                 if(_showInitializeSystems && shouldShowSystems(systems, SystemInterfaceFlags.IInitializeSystem)) {
@@ -212,7 +202,7 @@ namespace Entitas.Unity.VisualDebugging {
                     }
                 }
 
-                if(systemInfo.systemName.ToLower().Contains(_systemNameSearchTerm.ToLower())) {
+                if(systemInfo.systemName.ToLower().Contains(_systemNameSearchString.ToLower())) {
                     EntitasEditorLayout.BeginHorizontal();
                     {
                         EditorGUI.BeginDisabledGroup(isChildSystem);
