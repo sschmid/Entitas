@@ -203,8 +203,9 @@ namespace Entitas.Unity.VisualDebugging {
             var componentType = component.GetType();
 
             var componentName = componentType.Name.RemoveComponentSuffix();
-            if(componentName.ToLower().Contains(_componentNameSearchString.ToLower())) {
 
+
+            if(EntitasEditorLayout.MatchesSearchString(componentName.ToLower(), _componentNameSearchString.ToLower())) {
                 var boxStyle = getColoredBoxStyle(entity.totalComponents, index);
                 EntitasEditorLayout.BeginVerticalBox(boxStyle);
                 {

@@ -202,7 +202,7 @@ namespace Entitas.Unity.VisualDebugging {
                     }
                 }
 
-                if(systemInfo.systemName.ToLower().Contains(_systemNameSearchString.ToLower())) {
+                if(EntitasEditorLayout.MatchesSearchString(systemInfo.systemName.ToLower(), _systemNameSearchString.ToLower())) {
                     EntitasEditorLayout.BeginHorizontal();
                     {
                         EditorGUI.BeginDisabledGroup(isChildSystem);

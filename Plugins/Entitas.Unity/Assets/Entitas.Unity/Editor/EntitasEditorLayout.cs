@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -85,6 +86,21 @@ namespace Entitas.Unity {
             GUILayout.EndHorizontal();
 
             return searchString;
+        }
+
+        public static bool MatchesSearchString(string str, string search) {
+            var searches = search.Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if(searches.Length == 0) {
+                return true;
+            }
+
+            for(int i = 0; i < searches.Length; i++) {
+                if(str.Contains(searches[i])) {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
