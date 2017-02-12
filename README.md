@@ -201,6 +201,7 @@ Entitas is available in
 - [C++](https://github.com/JuDelCo/Entitas-Cpp)
 - [Objective-C](https://github.com/wooga/entitas)
 - [Java](https://github.com/Rubentxu/entitas-java)
+- [Python](https://github.com/Aenyhm/entitas-python)
 - [Scala](https://github.com/darkoverlordofdata/entitas-scala)
 - [Go](https://github.com/wooga/go-entitas)
 - [F#](https://github.com/darkoverlordofdata/entitas-fsharp)
