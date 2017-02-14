@@ -115,7 +115,7 @@ namespace Entitas {
 
         /// Creates a new entity or gets a reusable entity from the
         /// internal ObjectPool for entities.
-        public virtual TEntity CreateEntity() {
+        public TEntity CreateEntity() {
             TEntity entity;
 
             if(_reusableEntities.Count > 0) {
@@ -143,7 +143,7 @@ namespace Entitas {
 
         /// Destroys the entity, removes all its components and pushs it back
         /// to the internal ObjectPool for entities.
-        public virtual void DestroyEntity(TEntity entity) {
+        public void DestroyEntity(TEntity entity) {
             var removed = _entities.Remove(entity);
             if(!removed) {
                 throw new ContextDoesNotContainEntityException(
@@ -178,7 +178,7 @@ namespace Entitas {
 
         /// Destroys all entities in the context.
         /// Throws an exception if there are still retained entities.
-        public virtual void DestroyAllEntities() {
+        public void DestroyAllEntities() {
             var entities = GetEntities();
             for(int i = 0; i < entities.Length; i++) {
                 DestroyEntity(entities[i]);
@@ -192,12 +192,12 @@ namespace Entitas {
         }
 
         /// Determines whether the context has the specified entity.
-        public virtual bool HasEntity(TEntity entity) {
+        public bool HasEntity(TEntity entity) {
             return _entities.Contains(entity);
         }
 
         /// Returns all entities which are currently in the context.
-        public virtual TEntity[] GetEntities() {
+        public TEntity[] GetEntities() {
             if(_entitiesCache == null) {
                 _entitiesCache = new TEntity[_entities.Count];
                 _entities.CopyTo(_entitiesCache);
@@ -209,7 +209,7 @@ namespace Entitas {
         /// Returns a group for the specified matcher.
         /// Calling context.GetGroup(matcher) with the same matcher will always
         /// return the same instance of the group.
-        public virtual IGroup<TEntity> GetGroup(IMatcher<TEntity> matcher) {
+        public IGroup<TEntity> GetGroup(IMatcher<TEntity> matcher) {
             IGroup<TEntity> group;
             if(!_groups.TryGetValue(matcher, out group)) {
                 group = new Group<TEntity>(matcher);

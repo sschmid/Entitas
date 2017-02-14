@@ -38,7 +38,7 @@ ${contextProperties}
 
     public IContext[] allContexts { get { return new IContext [] { ${contextList} }; } }
 
-    public virtual void SetAllContexts() {
+    public void SetAllContexts() {
 ${contextAssignments}
 
 ${contextObservers}

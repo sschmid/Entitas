@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 using Entitas;
 
-
+[Game]
 public sealed partial class CoolNameComponent : IComponent {
     public BadName value;
 }

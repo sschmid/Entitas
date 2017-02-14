@@ -54,7 +54,7 @@ public partial class Contexts {
 
     public IContext[] allContexts { get { return new IContext [] { test, test2 }; } }
 
-    public virtual void SetAllContexts() {
+    public void SetAllContexts() {
         test = CreateTestContext();
         test2 = CreateTest2Context();
     }

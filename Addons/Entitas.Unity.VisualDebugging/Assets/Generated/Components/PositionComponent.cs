@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 using Entitas;
 
-
+[Game]
 public sealed partial class PositionComponent : IComponent {
     public IntVector2 value;
 }

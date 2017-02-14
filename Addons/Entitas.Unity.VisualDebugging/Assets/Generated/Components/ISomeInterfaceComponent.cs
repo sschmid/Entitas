@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 using Entitas;
 
-
+[Game][Entitas.CodeGenerator.Api.UniqueAttribute]
 public sealed partial class ISomeInterfaceComponent : IComponent {
     public ISomeInterface value;
 }

@@ -36,7 +36,7 @@ public partial class Contexts : IContexts {
 
     public IContext[] allContexts { get { return new IContext [] { game }; } }
 
-    public virtual void SetAllContexts() {
+    public void SetAllContexts() {
         game = new GameContext();
 
         CreateContextObserver(game);

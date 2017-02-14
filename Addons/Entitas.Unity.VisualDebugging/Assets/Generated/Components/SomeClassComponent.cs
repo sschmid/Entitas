@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 using Entitas;
 
-
+[Game]
 public sealed partial class SomeClassComponent : IComponent {
     public SomeClass value;
 }
