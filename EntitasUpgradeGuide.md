@@ -32,6 +32,71 @@ etc...
 
 $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/RequestedFolder
 ```
+
+---
+
+Entitas 0.37.0 upgrade guide
+============================
+
+#### Breaking changes
+Entitas went type-safe! This was a huge task and I'm happy to finally share this with you guys!
+This feature makes Entitas safer and more managable in growing code bases and will eliminate certain kind of bugs.
+This change breaks existing projects! It is possible to manually migrate existing projects but there is no special workflow
+other than manually use find / replace to fix all compile errors. I use Entitas 0.37.0 in my current project (500+ systems)
+and was able to migrate within less than two days. If you have less systems and components you should be able to migrate within one day.
+
+Reminder: If you're updating from versions < 0.36.0 you should update to 0.36.0 first. Be aware that existing Blueprints(Beta) are breaking
+because of the renaming from `Pool` to `Context`. Existing Binary Blueprints have to be manually updated.
+
+If you're not sure if you should update you can wait another week. I plan to make a video to show how to upgrade existing projects.
+After this you should be able to decide if you want to update or not.
+
+#### Before you install
+- Rename `SingleEntityAttribute` to `UniqueAttribute`
+- Change namespace of all attributes in CodeGenerator/Attributes to `Entitas.CodeGenerator.Api`
+- Find / replace `using Entitas.CodeGenerator` to `using Entitas.CodeGenerator.Api` in all generated context attributes
+- Find / replace `using Entitas.CodeGenerator;` to `using Entitas.CodeGenerator.Api;` in all generated components
+
+#### After you installed
+
+After installing Entitas 0.37.0 you most likely end up having lots of compiler errors. The 2 biggest issues are:
+- Generated components
+- Systems
+
+There migh also be other issues depending how you used Entitas before, but fixing the generated components and the systems
+might already do most of the work.
+
+##### Problem 1 (Components):
+The old generated components extend Entitas.Entity by using `partial class`.
+The new version inherits Entitas.Entity to have a new entity type and to get rid of `partial class` to enable
+having Entitas as a precompiled dll.
+
+##### Solution 1 (Components)
+The goal is to update the generated components. I see 3 possible workflows to fix them:
+1. Delete all components and generated components and use the EntitasLang DSL https://github.com/mzaks/ECS-Lang
+2. Temporarily move all the logic (systems) out of your Unity project and delete the generated components.
+After this there shouldn't be any compile errors anymore (if so, temporarily move them out if your Unity project).
+Now you should be able to re-generate. After that, move all the files back to your Unity project.
+3. Manually use find / replace in the generated components folder to migrate the components
+
+##### Problem 2 (Systems)
+All reactive systems need to be updated to be type-safe.
+
+##### Solution 2 (Systems)
+Manually use find / replace to migrate e.g. method signatures and other issues
+Take a look at [Match-One AnimatePositionSystem.cs](https://github.com/sschmid/Match-One/blob/develop/Assets/Sources/Logic/View/Systems/AnimatePositionSystem.cs)
+to see how the new reactive systems look like.
+
+##### Other issues
+There might be other issues related to the type-safety. Rule of thumb:
+- Every occurrences of `Entity` must be typed now, e.g. `GameEntity`
+- Every occurrences of `Group` must be typed now, e.g. `IGroup<GameEntity>`
+- Every occurrences of `Context` must be typed now, e.g. `IContext<GameEntity>` or `GameContext` if possible
+- Every occurrences of `Collector` must be typed now, e.g. `Collector<GameEntity>`
+- Every occurrences of `Matcher` must be typed now, e.g. `Matcher<GameEntity>.AllOf(...)`
+
+I recommend using find / replace on ceratin folders to fix those issues efficiently.
+
 ---
 
 Entitas 0.36.0 upgrade guide

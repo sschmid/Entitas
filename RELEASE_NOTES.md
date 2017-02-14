@@ -6,19 +6,22 @@ See and discuss changes in [Milestone 0.37.0](https://github.com/sschmid/Entitas
 Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
 
 The deed is done. Entitas went type-safe! This was a huge task and I'm happy to finally share this with you guys!
-This feature makes Entitas safer to use in growing code bases and will eliminate certain kind of bugs. Thanks to @mstrchrstphr
+This feature makes Entitas safer and more managable in growing code bases and will eliminate certain kind of bugs. Thanks to @mstrchrstphr
 for starting the conversation and proposing solutions.
 
 #### Entitas
 - Entitas went type-safe! (#257 #266)
 - Entity API doesn't return Entity anymore (e.g. e.AddComponent())
 - Fixed matchers not recalculating hash when changed
+- Added EntityIndex support for multiple keys (#279 #281)
+- Removed as many virtual keywords as possible
 
 #### Entitas.CodeGenerator
 - Entitas went type-safe! (#257 #266)
 - Rewrote code generator architecture (#265 #274 #275)
 - ComponentsGenerator doesn't generate `e.IsMoveble(value)`. Only `e.isMoveble = value`
 - ComponentsGenerator Entity API doesn't return Entity anymore (e.g. e.AddPosition())
+- Added additional ComponentGenerator which respects namespaces (#274)
 
 #### Entitas.Blueprints
 - Entitas went type-safe! (#257 #266)
@@ -26,14 +29,17 @@ for starting the conversation and proposing solutions.
 #### Entitas.Migration
 - Automatically embedding all migrations to Entitas.Migration.exe
 
-#### Entitas.Unity
-- Added EntityLink (#271)
+#### Entitas.Unity.Codegenerator
+- Added sloc (Source Lines Of Code) and loc (Lines Of Code) info
 
 #### Entitas.Unity.VisualDebugging
 - Entitas went type-safe! (#257 #266)
+- Added EntityLink (#271)
+- Prettier search fields that support multiple search strings
 
 #### Other
-- New folder structure with Entitas as the core and everything else as Plugins
+- New folder structure with Entitas as the core and everything else as Addons
+- Complete reorganization of the project structure (more modular and easier to reason about)
 
 
 # 0.36.0
