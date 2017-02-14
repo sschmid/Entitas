@@ -6,7 +6,7 @@ ROOT="${SCRIPTS}/.."
 UNITY="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
 PROJECT_NAME="Entitas"
 
-PLUGINS="${ROOT}/Plugins"
+ADDONS="${ROOT}/Addons"
 
 ES="${PROJECT_NAME}"
 BP="${ES}.Blueprints"

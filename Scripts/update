@@ -11,27 +11,27 @@ mkdir $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
 # collect sources
 cpe "${ROOT}/${ES}/${ES}" $BUILD_SRC
 
-cpe "${PLUGINS}/${BP}/${BP}" $BUILD_SRC
-cpe "${PLUGINS}/${CG}/${CG}" $BUILD_SRC
-cpe "${PLUGINS}/${CGA}/${CGA}" $BUILD_SRC
-cpe "${PLUGINS}/${MIG}/${MIG}" $BUILD_SRC
+cpe "${ADDONS}/${BP}/${BP}" $BUILD_SRC
+cpe "${ADDONS}/${CG}/${CG}" $BUILD_SRC
+cpe "${ADDONS}/${CGA}/${CGA}" $BUILD_SRC
+cpe "${ADDONS}/${MIG}/${MIG}" $BUILD_SRC
 
-cpe "${PLUGINS}/${EU}/Assets/${EU}/" "${BUILD_SRC}/${EU}"
-cpe "${PLUGINS}/${UBP}/Assets/${UBP}/" "${BUILD_SRC}/${UBP}"
-cpe "${PLUGINS}/${UCG}/Assets/${UCG}/" "${BUILD_SRC}/${UCG}"
-cpe "${PLUGINS}/${UMIG}/Assets/${UMIG}/" "${BUILD_SRC}/${UMIG}"
-cpe "${PLUGINS}/${UVD}/Assets/${UVD}/" "${BUILD_SRC}/${UVD}"
+cpe "${ADDONS}/${EU}/Assets/${EU}/" "${BUILD_SRC}/${EU}"
+cpe "${ADDONS}/${UBP}/Assets/${UBP}/" "${BUILD_SRC}/${UBP}"
+cpe "${ADDONS}/${UCG}/Assets/${UCG}/" "${BUILD_SRC}/${UCG}"
+cpe "${ADDONS}/${UMIG}/Assets/${UMIG}/" "${BUILD_SRC}/${UMIG}"
+cpe "${ADDONS}/${UVD}/Assets/${UVD}/" "${BUILD_SRC}/${UVD}"
 
 # update project dependencies
 
 # Entitas.Unity.Blueprints
-libDir="${PLUGINS}/${EU}/Assets/Libraries"
+libDir="${ADDONS}/${EU}/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
 cpe "${BUILD_SRC}/${ES}" ${libDir}
 
 # Entitas.Unity.Blueprints
-libDir="${PLUGINS}/${UBP}/Assets/Libraries"
+libDir="${ADDONS}/${UBP}/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
 cpe "${BUILD_SRC}/${ES}" ${libDir}
@@ -43,7 +43,7 @@ cpe "${BUILD_SRC}/${UCG}" ${libDir}
 cpe "${BUILD_SRC}/${UVD}" ${libDir}
 
 # Entitas.Unity.CodeGenerator
-libDir="${PLUGINS}/${UCG}/Assets/Libraries"
+libDir="${ADDONS}/${UCG}/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
 cpe "${BUILD_SRC}/${ES}" ${libDir}
@@ -52,7 +52,7 @@ cpe "${BUILD_SRC}/${CGA}" ${libDir}
 cpe "${BUILD_SRC}/${EU}" ${libDir}
 
 # Entitas.Unity.Migration
-libDir="${PLUGINS}/${UMIG}/Assets/Libraries"
+libDir="${ADDONS}/${UMIG}/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
 cpe "${BUILD_SRC}/${ES}" ${libDir}
@@ -60,7 +60,7 @@ cpe "${BUILD_SRC}/${MIG}" ${libDir}
 cpe "${BUILD_SRC}/${EU}" ${libDir}
 
 # Entitas.Unity.VisualDebugging
-libDir="${PLUGINS}/${UVD}/Assets/Libraries"
+libDir="${ADDONS}/${UVD}/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
 cpe "${BUILD_SRC}/${ES}" ${libDir}

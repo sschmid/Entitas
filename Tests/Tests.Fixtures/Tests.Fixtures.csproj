@@ -65,11 +65,11 @@
     <Folder Include="Fixtures\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Plugins\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
       <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
       <Name>Entitas.CodeGenerator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Plugins\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
       <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
       <Name>Entitas.CodeGenerator.Api</Name>
     </ProjectReference>

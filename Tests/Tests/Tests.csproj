@@ -99,19 +99,19 @@
     <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestInitializeSystem.cs" />
     <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestReactiveSystem.cs" />
     <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestTearDownSystem.cs" />
-    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystems.cs">
+    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystems.cs">
       <Link>Linked Libraries\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystems.cs</Link>
     </Compile>
-    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
+    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
       <Link>Linked Libraries\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
     </Compile>
-    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\Feature.cs">
+    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\Feature.cs">
       <Link>Linked Libraries\Entitas.Unity.VisualDebugging\DebugSystems\Feature.cs</Link>
     </Compile>
-    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs">
+    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs">
       <Link>Linked Libraries\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs</Link>
     </Compile>
-    <Compile Include="..\..\Plugins\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\Editor\VisualDebuggingConfig.cs">
+    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\Editor\VisualDebuggingConfig.cs">
       <Link>Linked Libraries\Entitas.Unity.VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
     </Compile>
     <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_NamespaceComponentDataProvider.cs" />
@@ -142,19 +142,19 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Plugins\Entitas.Blueprints\Entitas.Blueprints.csproj">
+    <ProjectReference Include="..\..\Addons\Entitas.Blueprints\Entitas.Blueprints.csproj">
       <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
       <Name>Entitas.Blueprints</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Plugins\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
       <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
       <Name>Entitas.CodeGenerator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Plugins\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
       <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
       <Name>Entitas.CodeGenerator.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Plugins\Entitas.Migration\Entitas.Migration.csproj">
+    <ProjectReference Include="..\..\Addons\Entitas.Migration\Entitas.Migration.csproj">
       <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
       <Name>Entitas.Migration</Name>
     </ProjectReference>

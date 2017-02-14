@@ -23,14 +23,14 @@ class check_namespaces : nspec {
         const string namespacePattern = @"(?:^namespace)\s.*\b";
         string expectedNamespacePattern = string.Format(@"[^\{0}]*", Path.DirectorySeparatorChar);
 
-        var pluginsDir = dir("Plugins");
+        var addonsDir = dir("Addons");
 
         var each = new Each<string, string, string>();
 
         foreach(var file in sourceFiles) {
             var fileName = file.Key
                                .Replace(dir(projectRoot), string.Empty)
-                               .Replace(pluginsDir, string.Empty);
+                               .Replace(addonsDir, string.Empty);
                 
             string expectedNamespace;
             if(file.Key.Contains(typeof(Entitas.Feature).Name)) {

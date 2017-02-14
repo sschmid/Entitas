@@ -9,33 +9,33 @@ xbuild /property:Configuration=Release /verbosity:minimal $SOLUTION
 # update
 ${SCRIPTS}/update
 
-# generate unity csharp project
+# generate unity csharp projects
 $UNITY -quit \
        -batchmode \
        -logfile \
-       -projectPath "${PLUGINS}/${EU}/Assets/../" \
+       -projectPath "${ADDONS}/${EU}/Assets/../" \
        -executeMethod $UNITY_EXECUTE_METHOD
 
 $UNITY -quit \
        -batchmode \
        -logfile \
-       -projectPath "${PLUGINS}/${UBP}/" \
+       -projectPath "${ADDONS}/${UBP}/" \
        -executeMethod $UNITY_EXECUTE_METHOD
 
 $UNITY -quit \
        -batchmode \
        -logfile \
-       -projectPath "${PLUGINS}/${UCG}/" \
+       -projectPath "${ADDONS}/${UCG}/" \
        -executeMethod $UNITY_EXECUTE_METHOD
 
 $UNITY -quit \
        -batchmode \
        -logfile \
-       -projectPath "${PLUGINS}/${UMIG}/" \
+       -projectPath "${ADDONS}/${UMIG}/" \
        -executeMethod $UNITY_EXECUTE_METHOD
 
 $UNITY -quit \
        -batchmode \
        -logfile \
-       -projectPath "${PLUGINS}/${UVD}/" \
+       -projectPath "${ADDONS}/${UVD}/" \
        -executeMethod $UNITY_EXECUTE_METHOD

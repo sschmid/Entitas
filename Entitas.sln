@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{B68761FF-EFF7-4611-9F1E-6B0127C89301}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{B68761FF-EFF7-4611-9F1E-6B0127C89301}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{663F8023-1E6F-49FE-83D0-F60871AD282D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas", "Entitas\Entitas.csproj", "{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGenerator.Api", "Plugins\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj", "{76A16CFD-7488-41D3-989B-CA2F1840E638}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGenerator.Api", "Addons\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj", "{76A16CFD-7488-41D3-989B-CA2F1840E638}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGenerator", "Plugins\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj", "{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGenerator", "Addons\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj", "{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Migration", "Plugins\Entitas.Migration\Entitas.Migration.csproj", "{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Migration", "Addons\Entitas.Migration\Entitas.Migration.csproj", "{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints", "Plugins\Entitas.Blueprints\Entitas.Blueprints.csproj", "{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints", "Addons\Entitas.Blueprints\Entitas.Blueprints.csproj", "{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceTests", "Tests\PerformanceTests\PerformanceTests.csproj", "{3F97DA95-DF04-49BF-BB3C-961A516680F3}"
 EndProject
@@ -106,7 +106,7 @@ Global
 		$4.IndentSwitchSection = True
 		$4.SpaceAfterControlFlowStatementKeyword = False
 		$0.StandardHeader = $5
-		$5.Text = 
+		$5.Text =
 		$5.IncludeInNewFiles = True
 		$0.NameConventionPolicy = $6
 		$6.Rules = $7
