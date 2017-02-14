@@ -13,7 +13,7 @@ public class ReactiveSystemDestructorController : MonoBehaviour {
         _initialEntity.isTest = true;
         context.DestroyEntity(_initialEntity);
     }
-	
+
     void Update() {
         var context = Contexts.sharedInstance.game;
         for (int i = 0; i < 5000; i++) {

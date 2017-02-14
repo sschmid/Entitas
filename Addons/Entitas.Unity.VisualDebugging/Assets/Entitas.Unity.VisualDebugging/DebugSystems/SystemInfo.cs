@@ -65,7 +65,7 @@ namespace Entitas.Unity.VisualDebugging {
             if(debugSystem != null) {
                 _systemName = debugSystem.name;
             } else {
-				var systemType = system.GetType();
+                var systemType = system.GetType();
                 _systemName = systemType.Name.EndsWith(SYSTEM_SUFFIX, StringComparison.Ordinal)
                     ? systemType.Name.Substring(0, systemType.Name.Length - SYSTEM_SUFFIX.Length)
                     : systemType.Name;

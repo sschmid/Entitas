@@ -15,7 +15,7 @@ namespace Entitas.Unity.CodeGenerator {
 
             Debug.Log("Generating...");
 
-			var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
+            var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
 
             var codeGenerator = new Entitas.CodeGenerator.CodeGenerator(
                 getEnabled<ICodeGeneratorDataProvider>(config.dataProviders),

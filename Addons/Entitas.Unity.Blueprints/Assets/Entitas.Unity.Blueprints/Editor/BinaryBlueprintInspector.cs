@@ -141,7 +141,7 @@ namespace Entitas.Unity.Blueprints {
                 EditorGUILayout.LabelField("Blueprint", EditorStyles.boldLabel);
                 binaryBlueprint.name = EditorGUILayout.TextField("Name", binaryBlueprint.name);
 
-				if(_context != null) {
+                if(_context != null) {
                     EntitasEditorLayout.BeginHorizontal();
                     {
                         _contextIndex = EditorGUILayout.Popup(_contextIndex, _allContextNames);
@@ -152,7 +152,7 @@ namespace Entitas.Unity.Blueprints {
                     }
                     EntitasEditorLayout.EndHorizontal();
 
-					EntityDrawer.DrawComponents(_context, _entity, true);
+                    EntityDrawer.DrawComponents(_context, _entity, true);
                 } else {
                     EditorGUILayout.LabelField("No contexts found!");
                 }

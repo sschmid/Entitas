@@ -15,7 +15,7 @@ public class CollectorDestructorController : MonoBehaviour {
         context.DestroyEntity(_initialEntity);
         context.ClearGroups();
     }
-	
+
     void Update() {
         var context = Contexts.sharedInstance.game;
         for (int i = 0; i < 5000; i++) {

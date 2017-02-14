@@ -3,7 +3,7 @@
     public static class VisualDebuggingEntitasExtension {
 
         public static IEntity CreateEntity(this IContext context) {
-			return (IEntity)context.GetType().GetMethod("CreateEntity").Invoke(context, null);
+            return (IEntity)context.GetType().GetMethod("CreateEntity").Invoke(context, null);
         }
 
         public static void DestroyEntity(this IContext context, IEntity entity) {

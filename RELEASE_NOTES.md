@@ -1014,19 +1014,19 @@ pool.CreateEntity()
 
 ##### General
 - Split into multiple modules and seperate projects. Entitas now consists of
-	- Entitas
-	- Entitas.CodeGenerator
-	- Entitas.Unity
-	- Entitas.Unity.CodeGenerator
-	- Entitas.Unity.VisualDebugging
+  - Entitas
+  - Entitas.CodeGenerator
+  - Entitas.Unity
+  - Entitas.Unity.CodeGenerator
+  - Entitas.Unity.VisualDebugging
 
 ##### Entitas.Unity
 - Added IEntitasPreferencesDrawer to be able to extend the Entitas preferences panel
 
 ##### Entitas.Unity.CodeGenerator
 - Entitas preferences internal keys changed. Please check your settings in projectRoot/Entitas.properties and update keys
-	- Entitas.CodeGenerator.GeneratedFolderPath -> Entitas.Unity.CodeGenerator.GeneratedFolderPath
-	- Entitas.CodeGenerator.Pools 				-> Entitas.Unity.CodeGenerator.Pools
+  - Entitas.CodeGenerator.GeneratedFolderPath -> Entitas.Unity.CodeGenerator.GeneratedFolderPath
+  - Entitas.CodeGenerator.Pools               -> Entitas.Unity.CodeGenerator.Pools
 
 ##### Entitas.Unity.VisualDebugging
 - Added support to set fields to null
@@ -1069,8 +1069,8 @@ pool.CreateEntity()
 
 ##### Code Generator
 - Added Code Generator PreferenceItem
-	- set generated folder path
-	- define multiple pools
+  - set generated folder path
+  - define multiple pools
 
 ![Entitas.Unity.CodeGenerator-Preferences](https://cloud.githubusercontent.com/assets/233700/7296726/8d74bb5a-e9c2-11e4-8324-10a0db7191ff.png)
 - Added PoolAttributeGenerator

@@ -28,7 +28,7 @@ namespace Entitas.Unity.CodeGenerator {
             var enabledGeneratorNames = initPhase<ICodeGenerator>(out _availableGeneratorTypes, out _availableGeneratorNames);
             var enabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(out _availablePostProcessorTypes, out _availablePostProcessorNames);
 
-			_codeGeneratorConfig = new CodeGeneratorConfig(config, enabledDataProviderNames, enabledGeneratorNames, enabledPostProcessorNames);
+            _codeGeneratorConfig = new CodeGeneratorConfig(config, enabledDataProviderNames, enabledGeneratorNames, enabledPostProcessorNames);
 
             _contexts = new List<string>(_codeGeneratorConfig.contexts);
 

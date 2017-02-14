@@ -6,7 +6,7 @@ namespace Entitas.Unity.Blueprints {
     public class BlueprintsGenerator : ICodeGenerator {
 
         public string name { get { return "Blueprint"; } }
-		public bool isEnabledByDefault { get { return true; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         const string CLASS_TEMPLATE =
 @"using Entitas.Blueprints;

@@ -91,7 +91,7 @@ namespace Entitas.Unity.VisualDebugging {
                 if(!EditorApplication.isPaused && !systems.paused) {
                     addDuration((float)systems.executeDuration);
                 }
-				_systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
+                _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
             }
             EntitasEditorLayout.EndVertical();
         }
@@ -151,7 +151,7 @@ namespace Entitas.Unity.VisualDebugging {
                     }
                     EntitasEditorLayout.EndVertical();
                 }
-				
+
                 _showTearDownSystems = EntitasEditorLayout.Foldout(_showTearDownSystems, "TearDown Systems");
                 if(_showTearDownSystems && shouldShowSystems(systems, SystemInterfaceFlags.ITearDownSystem)) {
                     EntitasEditorLayout.BeginVerticalBox();
@@ -226,7 +226,7 @@ namespace Entitas.Unity.VisualDebugging {
                             var max = string.Format("▲ {0:00.000}", systemInfo.maxExecutionDuration);
                             EditorGUILayout.LabelField(systemInfo.systemName, avg + min + max, getSystemStyle(systemInfo));
                         } else {
-							EditorGUILayout.LabelField(systemInfo.systemName, getSystemStyle(systemInfo));
+                            EditorGUILayout.LabelField(systemInfo.systemName, getSystemStyle(systemInfo));
                         }
                     }
                     EntitasEditorLayout.EndHorizontal();

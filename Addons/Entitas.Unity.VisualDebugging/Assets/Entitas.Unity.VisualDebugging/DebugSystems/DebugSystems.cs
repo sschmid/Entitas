@@ -61,7 +61,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-		public int totalSystemsCount {
+        public int totalSystemsCount {
             get {
                 var total = 0;
                 foreach(var system in _systems) {
@@ -107,7 +107,7 @@ namespace Entitas.Unity.VisualDebugging {
             _gameObject = new GameObject(name);
             _gameObject.AddComponent<DebugSystemsBehaviour>().Init(this);
 
-			_systems = new List<ISystem>();
+            _systems = new List<ISystem>();
             _initializeSystemInfos = new List<SystemInfo>();
             _executeSystemInfos = new List<SystemInfo>();
             _cleanupSystemInfos = new List<SystemInfo>();

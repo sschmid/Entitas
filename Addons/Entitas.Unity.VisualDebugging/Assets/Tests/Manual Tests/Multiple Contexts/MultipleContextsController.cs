@@ -6,8 +6,8 @@ public class MultipleContextsController : MonoBehaviour {
     IContext _contextA;
     IContext _contextB;
 
-	void Start () {
-	
+    void Start() {
+
         _contextA = new Context<GameEntity>(GameComponentsLookup.TotalComponents, 0, new ContextInfo("Context A", GameComponentsLookup.componentNames, GameComponentsLookup.componentTypes));
         new Entitas.Unity.VisualDebugging.ContextObserver(_contextA);
 
@@ -16,5 +16,5 @@ public class MultipleContextsController : MonoBehaviour {
 
 
         _contextA.OnEntityCreated += (context, entity) => ((GameEntity)entity).AddMyInt(42);
-	}
+    }
 }
