@@ -81,7 +81,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             EntitasEditorLayout.BeginVerticalBox();
             {
-                foreach(var owner in entity.owners.ToArray()) {
+                foreach(var owner in entity.owners.OrderBy(o => o.GetType().Name)) {
                     EntitasEditorLayout.BeginHorizontal();
                     {
                         EditorGUILayout.LabelField(owner.ToString());

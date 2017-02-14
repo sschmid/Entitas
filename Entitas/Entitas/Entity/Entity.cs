@@ -324,11 +324,14 @@ namespace Entitas {
         }
 
         /// Returns the number of objects that retain this entity.
-        public int retainCount { get { return owners.Count; } }
+        public int retainCount { get { return _retainCount; } }
+        int _retainCount;
 
+#if !ENTITAS_FAST_AND_UNSAFE
         /// Returns all the objects that retain this entity.
         public HashSet<object> owners { get { return _owners; } }
         readonly HashSet<object> _owners = new HashSet<object>();
+#endif
 
         /// Retains the entity. An owner can only retain the same entity once.
         /// Retain/Release is part of AERC (Automatic Entity Reference Counting)
@@ -336,9 +339,13 @@ namespace Entitas {
         /// If you use retain manually you also have to
         /// release it manually at some point.
         public void Retain(object owner) {
+            _retainCount += 1;
+
+#if !ENTITAS_FAST_AND_UNSAFE
             if(!owners.Add(owner)) {
                 throw new EntityIsAlreadyRetainedByOwnerException(this, owner);
             }
+#endif
 
             _toStringCache = null;
         }
@@ -350,11 +357,16 @@ namespace Entitas {
         /// If you use retain manually you also have to
         /// release it manually at some point.
         public void Release(object owner) {
+            _retainCount -= 1;
+
+#if !ENTITAS_FAST_AND_UNSAFE
             if(!owners.Remove(owner)) {
                 throw new EntityIsNotRetainedByOwnerException(this, owner);
             }
+#endif
 
-            if(owners.Count == 0) {
+            if(_retainCount == 0) {
+                // TODO Test, should be outside of condition?
                 _toStringCache = null;
 
                 if(OnEntityReleased != null) {

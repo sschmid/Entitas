@@ -50,7 +50,9 @@ namespace Entitas {
         IComponent CreateComponent(int index, Type type);
         T CreateComponent<T>(int index) where T : new();
 
+#if !ENTITAS_FAST_AND_UNSAFE
         HashSet<object> owners { get; }
+#endif
         int retainCount { get; }
         void Retain(object owner);
         void Release(object owner);

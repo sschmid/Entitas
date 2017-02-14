@@ -161,7 +161,10 @@ class describe_EntityIndex : nspec {
                 };
 
                 it["retains entity"] = () => {
+                    entity.retainCount.should_be(3);
+                    #if !ENTITAS_FAST_AND_UNSAFE
                     entity.owners.should_contain(index);
+                    #endif
                 };
 
                 it["has entity"] = () => {
@@ -178,7 +181,10 @@ class describe_EntityIndex : nspec {
                     entity.RemoveComponent(CID.ComponentA);
                     index.HasEntity(name + "1").should_be_false();
                     index.HasEntity(name + "2").should_be_false();
+                    entity.retainCount.should_be(1);
+                    #if !ENTITAS_FAST_AND_UNSAFE
                     entity.owners.should_not_contain(index);
+                    #endif
                 };
 
                 it["has existing entity"] = () => {
@@ -334,8 +340,12 @@ class describe_EntityIndex : nspec {
                 };
 
                 it["retains entity"] = () => {
+                    entity1.retainCount.should_be(3);
+                    entity2.retainCount.should_be(3);
+                    #if !ENTITAS_FAST_AND_UNSAFE
                     entity1.owners.should_contain(index);
                     entity2.owners.should_contain(index);
+                    #endif
                 };
 
                 it["has entity"] = () => {
@@ -356,8 +366,12 @@ class describe_EntityIndex : nspec {
                     index.GetEntities("1").Count.should_be(0);
                     index.GetEntities("2").Count.should_be(1);
                     index.GetEntities("3").Count.should_be(1);
+                    entity1.retainCount.should_be(1);
+                    entity2.retainCount.should_be(3);
+                    #if !ENTITAS_FAST_AND_UNSAFE
                     entity1.owners.should_not_contain(index);
                     entity2.owners.should_contain(index);
+                    #endif
                 };
 
                 it["has existing entities"] = () => {

@@ -33,7 +33,9 @@ public class EntityLinkTests {
         Assert.AreSame(_entity, _link.entity);
         Assert.AreSame(_context, _link.context);
         Assert.AreEqual(retainCount + 1, _entity.retainCount);
+        #if !ENTITAS_FAST_AND_UNSAFE
         Assert.IsTrue(_entity.owners.Contains(_link));
+        #endif
     }
 
     [Test, ExpectedException(typeof(Exception))]
@@ -57,7 +59,9 @@ public class EntityLinkTests {
         Assert.AreEqual(retainCount - 1, _entity.retainCount);
         Assert.IsNull(_link.entity);
         Assert.IsNull(_link.context);
+        #if !ENTITAS_FAST_AND_UNSAFE
         Assert.IsFalse(_entity.owners.Contains(_link));
+        #endif
     }
 
     [Test, ExpectedException(typeof(Exception))]

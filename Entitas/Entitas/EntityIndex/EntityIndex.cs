@@ -45,9 +45,14 @@ namespace Entitas {
         protected override void clear() {
             foreach(var entities in _index.Values) {
                 foreach(var entity in entities) {
+
+#if ENTITAS_FAST_AND_UNSAFE
+                    entity.Release(this);
+#else
                     if(entity.owners.Contains(this)) {
                         entity.Release(this);
                     }
+#endif
                 }
             }
 
@@ -56,16 +61,26 @@ namespace Entitas {
 
         protected override void addEntity(TKey key, TEntity entity) {
             GetEntities(key).Add(entity);
+
+#if ENTITAS_FAST_AND_UNSAFE
+            entity.Retain(this);
+#else
             if(!entity.owners.Contains(this)) {
                 entity.Retain(this);
             }
+#endif
         }
 
         protected override void removeEntity(TKey key, TEntity entity) {
             GetEntities(key).Remove(entity);
+
+#if ENTITAS_FAST_AND_UNSAFE
+            entity.Release(this);
+#else
             if(entity.owners.Contains(this)) {
                 entity.Release(this);
             }
+#endif
         }
     }
 }

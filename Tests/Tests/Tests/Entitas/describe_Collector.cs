@@ -104,7 +104,9 @@ class describe_Collector : nspec {
                     e.OnEntityReleased += delegate { didExecute += 1; };
                     _context.DestroyEntity(e);
                     e.retainCount.should_be(1);
+                    #if !ENTITAS_FAST_AND_UNSAFE
                     e.owners.should_contain(collectorA);
+                    #endif
                     didExecute.should_be(0);
                 };
 
