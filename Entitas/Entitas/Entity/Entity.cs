@@ -414,7 +414,7 @@ namespace Entitas {
                     var component = components[i];
                     var type = component.GetType();
                     var implementsToString = type.GetMethod("ToString")
-                                                 .DeclaringType == type;
+                                                 .DeclaringType.ImplementsInterface<IComponent>();
                     _toStringBuilder.Append(
                         implementsToString
                             ? component.ToString()
