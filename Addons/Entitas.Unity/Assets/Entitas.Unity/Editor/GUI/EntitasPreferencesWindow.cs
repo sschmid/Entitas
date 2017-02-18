@@ -52,7 +52,7 @@ namespace Entitas.Unity {
         void drawToolbar() {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
-                if(GUILayout.Button("Check for Updates", EditorStyles.toolbarButton)) {
+                if(GUILayout.Button(_localVersion + " - Check for Updates", EditorStyles.toolbarButton)) {
                     EntitasCheckForUpdates.CheckForUpdates();
                 }
                 if(GUILayout.Button("Chat", EditorStyles.toolbarButton)) {
@@ -69,16 +69,15 @@ namespace Entitas.Unity {
         }
 
         void drawHeader() {
-            var offsetY = EntitasEditorLayout.DrawHeaderTexture(this, _headerTexture);
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Version: " + _localVersion);
-            GUILayout.Space(offsetY - 34);
+            EntitasEditorLayout.DrawTexture(_headerTexture);
         }
 
         void drawPreferencesDrawers() {
-            foreach(var drawer in _preferencesDrawers) {
-                EditorGUILayout.Space();
-                drawer.Draw(_config);
+            for(int i = 0; i < _preferencesDrawers.Length; i++) {
+                _preferencesDrawers[i].Draw(_config);
+                if(i < _preferencesDrawers.Length -1) {
+                    EditorGUILayout.Space();
+                }
             }
         }
     }

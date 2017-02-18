@@ -34,25 +34,10 @@ namespace Entitas.Unity {
 
         static float lastTextureHeight;
 
-        public static float DrawHeaderTexture(EditorWindow window, Texture2D texture) {
-            const int offsetX = 0;
-            const int offsetY = -2;
-            var ratio = texture.width / texture.height;
-
-            var rect = GUILayoutUtility.GetRect(0, 0, GUILayout.ExpandWidth(true));
-            var width = rect.width - 2 * offsetX;
-            var height = width / ratio;
-
-            if(Event.current.type == EventType.Layout) {
-                height = lastTextureHeight;
-            } else {
-                lastTextureHeight = height;
-            }
-
-            window.Repaint();
-            GUI.DrawTexture(new Rect(rect.x + offsetX, rect.y + offsetY, width, height), texture, ScaleMode.ScaleToFit);
-
-            return height + offsetY;
+        public static void DrawTexture(Texture2D texture) {
+            var ratio = (float)texture.width / (float)texture.height;
+            var rect = GUILayoutUtility.GetAspectRect(ratio, GUILayout.ExpandWidth(true));
+            GUI.DrawTexture(rect, texture, ScaleMode.ScaleAndCrop);
         }
 
         /*
