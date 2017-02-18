@@ -142,7 +142,7 @@ namespace Entitas.Unity.Blueprints {
                 binaryBlueprint.name = EditorGUILayout.TextField("Name", binaryBlueprint.name);
 
                 if(_context != null) {
-                    EntitasEditorLayout.BeginHorizontal();
+                    EditorGUILayout.BeginHorizontal();
                     {
                         _contextIndex = EditorGUILayout.Popup(_contextIndex, _allContextNames);
 
@@ -150,7 +150,7 @@ namespace Entitas.Unity.Blueprints {
                             switchToContext();
                         }
                     }
-                    EntitasEditorLayout.EndHorizontal();
+                    EditorGUILayout.EndHorizontal();
 
                     EntityDrawer.DrawComponents(_context, _entity, true);
                 } else {
