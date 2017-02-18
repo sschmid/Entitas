@@ -11,18 +11,19 @@ namespace Entitas.Unity.Migration {
 
         [MenuItem("Entitas/Migrate...", false, 1000)]
         public static void OpenMigrate() {
-            EntitasEditorLayout.ShowWindow<EntitasMigrationWindow>("Entitas Migration");
+            EntitasEditorLayout.ShowWindow<EntitasMigrationWindow>("Entitas Migration - " + EntitasCheckForUpdates.GetLocalVersion());
         }
 
         Texture2D _headerTexture;
-        string _localVersion;
         IMigration[] _migrations;
+        bool[] _showMigration;
         Vector2 _scrollViewPosition;
 
         void OnEnable() {
             _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasMigrationHeader");
-            _localVersion = EntitasCheckForUpdates.GetLocalVersion();
             _migrations = getMigrations();
+            _showMigration = new bool[_migrations.Length];
+            _showMigration[0] = true;
         }
 
         static IMigration[] getMigrations() {
@@ -36,29 +37,29 @@ namespace Entitas.Unity.Migration {
         void OnGUI() {
             _scrollViewPosition = EditorGUILayout.BeginScrollView(_scrollViewPosition);
             {
-                var offsetY = EntitasEditorLayout.DrawHeaderTexture(this, _headerTexture);
-                EditorGUILayout.Space();
-                EditorGUILayout.LabelField("Version: " + _localVersion);
-                GUILayout.Space(offsetY - 24);
+                EntitasEditorLayout.DrawTexture(_headerTexture);
 
                 var descriptionStyle = new GUIStyle(GUI.skin.label);
                 descriptionStyle.wordWrap = true;
-                foreach(var migration in _migrations) {
-                    EntitasEditorLayout.BeginVerticalBox();
-                    {
-                        EditorGUILayout.LabelField(migration.version, EditorStyles.boldLabel);
-                        EditorGUILayout.LabelField(migration.description, descriptionStyle);
-                        if(GUILayout.Button("Apply migration " + migration.version)) {
-                            migrate(migration);
+                for(int i = 0; i < _migrations.Length; i++) {
+                    var migration = _migrations[i];
+                    _showMigration[i] = EntitasEditorLayout.DrawSectionHeaderToggle(migration.version, _showMigration[i]);
+                    if(_showMigration[i]) {
+                        EntitasEditorLayout.BeginSectionContent();
+                        {
+                            EditorGUILayout.LabelField(migration.description, descriptionStyle);
+                            if(GUILayout.Button("Apply migration " + migration.version)) {
+                                migrate(migration, this);
+                            }
                         }
+                        EntitasEditorLayout.EndSectionContent();
                     }
-                    EntitasEditorLayout.EndVertical();
                 }
             }
             EditorGUILayout.EndScrollView();
         }
 
-        static void migrate(IMigration migration) {
+        static void migrate(IMigration migration, EntitasMigrationWindow window) {
             var shouldMigrate = EditorUtility.DisplayDialog("Migrate",
                                     "You are about to migrate your source files. " +
                                     "Make sure that you have committed your current project or that you have a backup of your project before you proceed.",
@@ -67,6 +68,7 @@ namespace Entitas.Unity.Migration {
                                 );
 
             if(shouldMigrate) {
+                window.Close();
                 EditorUtility.DisplayDialog("Migrate",
                     "Please select the folder, " + migration.workingDirectory + ".",
                     "I will select the requested folder"
