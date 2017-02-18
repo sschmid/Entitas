@@ -10,18 +10,16 @@ namespace Entitas.Unity {
 
         [MenuItem(EntitasMenuItems.preferences, false, EntitasMenuItemPriorities.preferences)]
         public static void OpenPreferences() {
-            EntitasEditorLayout.ShowWindow<EntitasPreferencesWindow>("Entitas Preferences");
+            EntitasEditorLayout.ShowWindow<EntitasPreferencesWindow>("Entitas " + EntitasCheckForUpdates.GetLocalVersion());
         }
 
         Texture2D _headerTexture;
-        string _localVersion;
         EntitasPreferencesConfig _config;
         IEntitasPreferencesDrawer[] _preferencesDrawers;
         Vector2 _scrollViewPosition;
 
         void OnEnable() {
             _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasHeader");
-            _localVersion = EntitasCheckForUpdates.GetLocalVersion();
             _config = EntitasPreferences.LoadConfig();
             _preferencesDrawers = Assembly.GetAssembly(typeof(IEntitasPreferencesDrawer)).GetTypes()
                 .Where(type => type.ImplementsInterface<IEntitasPreferencesDrawer>())
@@ -52,7 +50,7 @@ namespace Entitas.Unity {
         void drawToolbar() {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
-                if(GUILayout.Button(_localVersion + " - Check for Updates", EditorStyles.toolbarButton)) {
+                if(GUILayout.Button("Check for Updates", EditorStyles.toolbarButton)) {
                     EntitasCheckForUpdates.CheckForUpdates();
                 }
                 if(GUILayout.Button("Chat", EditorStyles.toolbarButton)) {
