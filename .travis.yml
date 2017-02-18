@@ -1,3 +1,11 @@
 language: csharp
+os: 
+    - osx
+before_install:
+    - brew update
+    - brew install doxygen
 script:
-- ./Scripts/test
+    - ./Scripts/test
+after_success:
+    - chmod +x ./Scripts/upload && ./Scripts/upload $TRAVIS_COMMIT $UPLOAD_TOKEN
+
