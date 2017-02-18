@@ -37,12 +37,24 @@ namespace Entitas.Unity.VisualDebugging {
             get { return (_interfaceFlags & SystemInterfaceFlags.IReactiveSystem) == SystemInterfaceFlags.IReactiveSystem; }
         }
 
+        public double initializationDuration { get; set; }
+
         public double accumulatedExecutionDuration { get { return _accumulatedExecutionDuration; } }
         public double minExecutionDuration { get { return _minExecutionDuration; } }
         public double maxExecutionDuration { get { return _maxExecutionDuration; } }
         public double averageExecutionDuration {
-            get { return _durationsCount == 0 ? 0 : _accumulatedExecutionDuration / _durationsCount; }
+            get { return _executionDurationsCount == 0 ? 0 : _accumulatedExecutionDuration / _executionDurationsCount; }
         }
+
+        public double accumulatedCleanupDuration { get { return _accumulatedCleanupDuration; } }
+        public double minCleanupDuration { get { return _minCleanupDuration; } }
+        public double maxCleanupDuration { get { return _maxCleanupDuration; } }
+        public double averageCleanupDuration {
+            get { return _cleanupDurationsCount == 0 ? 0 : _accumulatedCleanupDuration / _cleanupDurationsCount; }
+        }
+
+        public double cleanupDuration { get; set; }
+        public double teardownDuration { get; set; }
 
         public bool isActive;
 
@@ -53,7 +65,12 @@ namespace Entitas.Unity.VisualDebugging {
         double _accumulatedExecutionDuration;
         double _minExecutionDuration;
         double _maxExecutionDuration;
-        int _durationsCount;
+        int _executionDurationsCount;
+
+        double _accumulatedCleanupDuration;
+        double _minCleanupDuration;
+        double _maxCleanupDuration;
+        int _cleanupDurationsCount;
 
         const string SYSTEM_SUFFIX = "System";
 
@@ -83,12 +100,27 @@ namespace Entitas.Unity.VisualDebugging {
             }
 
             _accumulatedExecutionDuration += executionDuration;
-            _durationsCount += 1;
+            _executionDurationsCount += 1;
+        }
+
+        public void AddCleanupDuration(double cleanupDuration) {
+            if(cleanupDuration < _minCleanupDuration || _minCleanupDuration == 0) {
+                _minCleanupDuration = cleanupDuration;
+            }
+            if(cleanupDuration > _maxCleanupDuration) {
+                _maxCleanupDuration = cleanupDuration;
+            }
+
+            _accumulatedCleanupDuration += cleanupDuration;
+            _cleanupDurationsCount += 1;
         }
 
         public void ResetDurations() {
             _accumulatedExecutionDuration = 0;
-            _durationsCount = 0;
+            _executionDurationsCount = 0;
+
+            _accumulatedCleanupDuration = 0;
+            _cleanupDurationsCount = 0;
         }
 
         static SystemInterfaceFlags getInterfaceFlags(ISystem system) {

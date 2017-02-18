@@ -81,6 +81,7 @@ namespace Entitas.Unity.VisualDebugging {
         public GameObject gameObject { get { return _gameObject; } }
 
         public double executeDuration { get { return _executeDuration; } }
+        public double cleanupDuration { get { return _cleanupDuration; } }
 
         public SystemInfo[] initializeSystemInfos { get { return _initializeSystemInfos.ToArray(); } }
         public SystemInfo[] executeSystemInfos { get { return _executeSystemInfos.ToArray(); } }
@@ -101,6 +102,7 @@ namespace Entitas.Unity.VisualDebugging {
         readonly Stopwatch _stopwatch;
 
         double _executeDuration;
+        double _cleanupDuration;
 
         public DebugSystems(string name = "Systems") {
             _name = name;
@@ -154,8 +156,13 @@ namespace Entitas.Unity.VisualDebugging {
 
         public override void Initialize() {
             for (int i = 0; i < _initializeSystems.Count; i++) {
-                if(_initializeSystemInfos[i].isActive) {
+                var systemInfo = _initializeSystemInfos[i];
+                if(systemInfo.isActive) {
+                    _stopwatch.Reset();
+                    _stopwatch.Start();
                     _initializeSystems[i].Initialize();
+                    _stopwatch.Stop();
+                    systemInfo.initializationDuration = _stopwatch.Elapsed.TotalMilliseconds;
                 }
             }
         }
@@ -180,7 +187,11 @@ namespace Entitas.Unity.VisualDebugging {
             for (int i = 0; i < _executeSystems.Count; i++) {
                 var systemInfo = _executeSystemInfos[i];
                 if(systemInfo.isActive) {
-                    var duration = monitorSystemExecutionDuration(_executeSystems[i]);
+                    _stopwatch.Reset();
+                    _stopwatch.Start();
+                    _executeSystems[i].Execute();
+                    _stopwatch.Stop();
+                    var duration = _stopwatch.Elapsed.TotalMilliseconds;
                     _executeDuration += duration;
                     systemInfo.AddExecutionDuration(duration);
                 }
@@ -188,27 +199,32 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public void StepCleanup() {
+            _cleanupDuration = 0;
             for (int i = 0; i < _cleanupSystems.Count; i++) {
-                if(_cleanupSystemInfos[i].isActive) {
+                var systemInfo = _cleanupSystemInfos[i];
+                if(systemInfo.isActive) {
+                    _stopwatch.Reset();
+                    _stopwatch.Start();
                     _cleanupSystems[i].Cleanup();
+                    _stopwatch.Stop();
+                    var duration = _stopwatch.Elapsed.TotalMilliseconds;
+                    _cleanupDuration += duration;
+                    systemInfo.AddCleanupDuration(duration);
                 }
             }
         }
 
         public override void TearDown() {
             for (int i = 0; i < _tearDownSystems.Count; i++) {
-                if(_tearDownSystemInfos[i].isActive) {
+                var systemInfo = _tearDownSystemInfos[i];
+                if(systemInfo.isActive) {
+                    _stopwatch.Reset();
+                    _stopwatch.Start();
                     _tearDownSystems[i].TearDown();
+                    _stopwatch.Stop();
+                    systemInfo.teardownDuration = _stopwatch.Elapsed.TotalMilliseconds;
                 }
             }
-        }
-
-        double monitorSystemExecutionDuration(IExecuteSystem system) {
-            _stopwatch.Reset();
-            _stopwatch.Start();
-            system.Execute();
-            _stopwatch.Stop();
-            return _stopwatch.Elapsed.TotalMilliseconds;
         }
     }
 }
