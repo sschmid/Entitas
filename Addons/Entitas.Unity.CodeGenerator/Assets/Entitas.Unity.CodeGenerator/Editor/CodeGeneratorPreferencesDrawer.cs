@@ -4,12 +4,14 @@ using System.Linq;
 using Entitas.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
 
 namespace Entitas.Unity.CodeGenerator {
 
-    public class CodeGeneratorPreferencesDrawer : IEntitasPreferencesDrawer {
+    public class CodeGeneratorPreferencesDrawer : AbstractEntitasPreferencesDrawer {
 
-        public int priority { get { return 10; } }
+        public override int priority { get { return 10; } }
+        public override string title { get { return "Code Generator"; } }
 
         string[] _availableDataProviderTypes;
         string[] _availableGeneratorTypes;
@@ -23,7 +25,7 @@ namespace Entitas.Unity.CodeGenerator {
         List<string> _contexts;
         UnityEditorInternal.ReorderableList _contextList;
 
-        public void Initialize(EntitasPreferencesConfig config) {
+        public override void Initialize(EntitasPreferencesConfig config) {
             var enabledDataProviderNames = initPhase<ICodeGeneratorDataProvider>(out _availableDataProviderTypes, out _availableDataProviderNames);
             var enabledGeneratorNames = initPhase<ICodeGenerator>(out _availableGeneratorTypes, out _availableGeneratorNames);
             var enabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(out _availablePostProcessorTypes, out _availablePostProcessorNames);
@@ -43,36 +45,38 @@ namespace Entitas.Unity.CodeGenerator {
             _contextList.onChangedCallback = list => GUI.changed = true;
         }
 
-        public void Draw(EntitasPreferencesConfig config) {
-            EntitasEditorLayout.BeginVerticalBox();
-            {
-                EditorGUILayout.LabelField("Code Generator", EditorStyles.boldLabel);
+        protected override void drawContent(EntitasPreferencesConfig config) {
+            drawTargetFolder();
+            drawContexts();
 
-                drawGeneratedFolderPath();
-                drawContexts();
+            _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
+            _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
+            _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
 
-                _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
-                _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
-                _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
-
-                var bgColor = GUI.backgroundColor;
-                GUI.backgroundColor = Color.green;
-                if(GUILayout.Button("Generate", GUILayout.Height(32))) {
-                    UnityCodeGenerator.Generate();
-                }
-                GUI.backgroundColor = bgColor;
-            }
-            EntitasEditorLayout.EndVertical();
+            drawGenerateButton();
         }
 
-        void drawGeneratedFolderPath() {
-            _codeGeneratorConfig.targetDirectory = EditorGUILayout.TextField("Target Directory", _codeGeneratorConfig.targetDirectory);
+        void drawTargetFolder() {
+            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel("Target Directory", _codeGeneratorConfig.targetDirectory);
+            if(!string.IsNullOrEmpty(path)) {
+                _codeGeneratorConfig.targetDirectory = path;
+            }
         }
 
         void drawContexts() {
             EditorGUILayout.Space();
 
-            _contextList.DoLayoutList();
+            EditorGUILayout.BeginHorizontal();
+            {
+                GUILayout.Space(5);
+                EditorGUILayout.BeginVertical();
+                {
+                    _contextList.DoLayoutList();
+                }
+                EditorGUILayout.EndVertical();
+                GUILayout.Space(4);
+            }
+            EditorGUILayout.EndHorizontal();
 
             if(_contexts.Count <= 1) {
                 EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple contexts. " +
@@ -125,6 +129,15 @@ namespace Entitas.Unity.CodeGenerator {
             }
 
             return selected.ToArray();
+        }
+
+        void drawGenerateButton() {
+            var bgColor = GUI.backgroundColor;
+            GUI.backgroundColor = Color.green;
+            if(GUILayout.Button("Generate", GUILayout.Height(32))) {
+                UnityCodeGenerator.Generate();
+            }
+            GUI.backgroundColor = bgColor;
         }
     }
 }

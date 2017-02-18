@@ -3,9 +3,10 @@ using UnityEditor;
 
 namespace Entitas.Unity.VisualDebugging {
 
-    public class VisualDebuggingPreferencesDrawer : IEntitasPreferencesDrawer {
+    public class VisualDebuggingPreferencesDrawer : AbstractEntitasPreferencesDrawer {
 
-        public int priority { get { return 20; } }
+        public override int priority { get { return 20; } }
+        public override string title { get { return "Visual Debugging"; } }
 
         const string ENTITAS_DISABLE_VISUAL_DEBUGGING = "ENTITAS_DISABLE_VISUAL_DEBUGGING";
 
@@ -14,41 +15,50 @@ namespace Entitas.Unity.VisualDebugging {
 
         bool _enableVisualDebugging;
 
-        public void Initialize(EntitasPreferencesConfig config) {
+        public override void Initialize(EntitasPreferencesConfig config) {
             _visualDebuggingConfig = new VisualDebuggingConfig(config);
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _enableVisualDebugging = !_scriptingDefineSymbols.buildTargetToDefSymbol.Values
                 .All<string>(defs => defs.Contains(ENTITAS_DISABLE_VISUAL_DEBUGGING));
         }
 
-        public void Draw(EntitasPreferencesConfig config) {
-            EntitasEditorLayout.BeginVerticalBox();
+        protected override void drawContent(EntitasPreferencesConfig config) {
+            drawVisualDebugging();
+
+            EditorGUILayout.Space();
+
+            drawDefaultInstanceCreator();
+            drawTypeDrawerFolder();
+        }
+
+        void drawVisualDebugging() {
+            EditorGUI.BeginChangeCheck();
             {
-                EditorGUILayout.LabelField("Visual Debugging", EditorStyles.boldLabel);
-
-                EditorGUI.BeginChangeCheck();
-                {
-                    _enableVisualDebugging = EditorGUILayout.Toggle("Enable Visual Debugging", _enableVisualDebugging);
-                }
-                var changed = EditorGUI.EndChangeCheck();
-
-                if(changed) {
-                    if(_enableVisualDebugging) {
-                        _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
-                    } else {
-                        _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
-                    }
-                }
-
-                EditorGUILayout.Space();
-
-                _visualDebuggingConfig.defaultInstanceCreatorFolderPath =
-                    EditorGUILayout.TextField("Default Instance Creators", _visualDebuggingConfig.defaultInstanceCreatorFolderPath);
-
-                _visualDebuggingConfig.typeDrawerFolderPath =
-                    EditorGUILayout.TextField("Type Drawers", _visualDebuggingConfig.typeDrawerFolderPath);
+                _enableVisualDebugging = EditorGUILayout.Toggle("Enable Visual Debugging", _enableVisualDebugging);
             }
-            EntitasEditorLayout.EndVertical();
+            var changed = EditorGUI.EndChangeCheck();
+
+            if(changed) {
+                if(_enableVisualDebugging) {
+                    _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
+                } else {
+                    _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
+                }
+            }
+        }
+
+        void drawDefaultInstanceCreator() {
+            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel("Default Instance Creators", _visualDebuggingConfig.defaultInstanceCreatorFolderPath);
+            if(!string.IsNullOrEmpty(path)) {
+                _visualDebuggingConfig.defaultInstanceCreatorFolderPath = path;
+            }
+        }
+
+        void drawTypeDrawerFolder() {
+            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel("Type Drawers", _visualDebuggingConfig.typeDrawerFolderPath);
+            if(!string.IsNullOrEmpty(path)) {
+                _visualDebuggingConfig.typeDrawerFolderPath = path;
+            }
         }
     }
 }

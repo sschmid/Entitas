@@ -25,7 +25,7 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.HelpBox("WARNING: There are retained entities.\nDid you call entity.Retain(owner) and forgot to call entity.Release(owner)?", MessageType.Warning);
                 }
 
-                EntitasEditorLayout.BeginHorizontal();
+                EditorGUILayout.BeginHorizontal();
                 {
                     if(GUILayout.Button("Create Entity")) {
                         var entity = contextObserver.context.CreateEntity();
@@ -42,9 +42,9 @@ namespace Entitas.Unity.VisualDebugging {
                     }
                     GUI.backgroundColor = bgColor;
                 }
-                EntitasEditorLayout.EndHorizontal();
+                EditorGUILayout.EndHorizontal();
             }
-            EntitasEditorLayout.EndVertical();
+            EntitasEditorLayout.EndVerticalBox();
 
             var groups = contextObserver.groups;
             if(groups.Length != 0) {
@@ -52,18 +52,18 @@ namespace Entitas.Unity.VisualDebugging {
                 {
                     EditorGUILayout.LabelField("Groups (" + groups.Length + ")", EditorStyles.boldLabel);
                     foreach(var group in groups.OrderByDescending(g => g.count)) {
-                        EntitasEditorLayout.BeginHorizontal();
+                        EditorGUILayout.BeginHorizontal();
                         {
                             EditorGUILayout.LabelField(group.ToString());
                             EditorGUILayout.LabelField(group.count.ToString(), GUILayout.Width(48));
                         }
-                        EntitasEditorLayout.EndHorizontal();
+                        EditorGUILayout.EndHorizontal();
                     }
                     if(GUILayout.Button("Clear Groups")) {
                         contextObserver.context.ClearGroups();
                     }
                 }
-                EntitasEditorLayout.EndVertical();
+                EntitasEditorLayout.EndVerticalBox();
             }
 
             EditorUtility.SetDirty(target);

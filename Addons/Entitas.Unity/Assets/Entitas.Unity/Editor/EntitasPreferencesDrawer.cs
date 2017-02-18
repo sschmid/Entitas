@@ -1,11 +1,13 @@
 using System.Linq;
 using UnityEditor;
+using UnityEngine;
 
 namespace Entitas.Unity {
 
-    public class EntitasPreferencesDrawer : IEntitasPreferencesDrawer {
+    public class EntitasPreferencesDrawer : AbstractEntitasPreferencesDrawer {
 
-        public int priority { get { return 0; } }
+        public override int priority { get { return 0; } }
+        public override string title { get { return "Entitas"; } }
 
         const string ENTITAS_FAST_AND_UNSAFE = "ENTITAS_FAST_AND_UNSAFE";
 
@@ -17,7 +19,7 @@ namespace Entitas.Unity {
         ScriptingDefineSymbols _scriptingDefineSymbols;
         ScriptCallOptimization _scriptCallOptimization;
 
-        public void Initialize(EntitasPreferencesConfig config) {
+        public override void Initialize(EntitasPreferencesConfig config) {
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _scriptCallOptimization = _scriptingDefineSymbols.buildTargetToDefSymbol.Values
                                             .All<string>(defs => defs.Contains(ENTITAS_FAST_AND_UNSAFE))
@@ -25,27 +27,29 @@ namespace Entitas.Unity {
                                                 : ScriptCallOptimization.Disabled;
         }
 
-        public void Draw(EntitasPreferencesConfig config) {
-            EditorGUI.BeginChangeCheck();
+        protected override void drawContent(EntitasPreferencesConfig config) {
+            EditorGUILayout.BeginHorizontal();
             {
-                EntitasEditorLayout.BeginVerticalBox();
-                {
-                    EditorGUILayout.LabelField("Entitas", EditorStyles.boldLabel);
-
-                    _scriptCallOptimization = (ScriptCallOptimization)EditorGUILayout
-                        .EnumPopup("Optimizations", _scriptCallOptimization);
-                }
-                EntitasEditorLayout.EndVertical();
-            }
-            var changed = EditorGUI.EndChangeCheck();
-
-            if(changed) {
+                EditorGUILayout.LabelField("Optimizations");
+                var buttonStyle = new GUIStyle(EditorStyles.miniButtonLeft);
                 if(_scriptCallOptimization == ScriptCallOptimization.Disabled) {
+                    buttonStyle.normal = buttonStyle.active;
+                }
+                if(GUILayout.Button("Disabled", buttonStyle)) {
+                    _scriptCallOptimization = ScriptCallOptimization.Disabled;
                     _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
-                } else {
+                }
+
+                buttonStyle = new GUIStyle(EditorStyles.miniButtonRight);
+                if(_scriptCallOptimization == ScriptCallOptimization.FastAndUnsafe) {
+                    buttonStyle.normal = buttonStyle.active;
+                }
+                if(GUILayout.Button("Fast And Unsafe", buttonStyle)) {
+                    _scriptCallOptimization = ScriptCallOptimization.FastAndUnsafe;
                     _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }
             }
+            EditorGUILayout.EndHorizontal();
         }
     }
 }

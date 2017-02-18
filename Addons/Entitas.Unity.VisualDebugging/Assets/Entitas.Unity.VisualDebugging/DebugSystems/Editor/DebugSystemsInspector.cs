@@ -55,7 +55,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.LabelField("TearDown Systems", systems.totalTearDownSystemsCount.ToString());
                 EditorGUILayout.LabelField("Total Systems", systems.totalSystemsCount.ToString());
             }
-            EntitasEditorLayout.EndVertical();
+            EntitasEditorLayout.EndVerticalBox();
         }
 
         void drawSystemsMonitor(DebugSystems systems) {
@@ -68,7 +68,7 @@ namespace Entitas.Unity.VisualDebugging {
             {
                 EditorGUILayout.LabelField("Execution duration", EditorStyles.boldLabel);
 
-                EntitasEditorLayout.BeginHorizontal();
+                EditorGUILayout.BeginHorizontal();
                 {
                     EditorGUILayout.LabelField("Execution duration", systems.executeDuration.ToString());
 
@@ -86,27 +86,27 @@ namespace Entitas.Unity.VisualDebugging {
                         addDuration((float)systems.executeDuration);
                     }
                 }
-                EntitasEditorLayout.EndHorizontal();
+                EditorGUILayout.EndHorizontal();
 
                 if(!EditorApplication.isPaused && !systems.paused) {
                     addDuration((float)systems.executeDuration);
                 }
                 _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
             }
-            EntitasEditorLayout.EndVertical();
+            EntitasEditorLayout.EndVerticalBox();
         }
 
         void drawSystemList(DebugSystems systems) {
             EntitasEditorLayout.BeginVerticalBox();
             {
-                EntitasEditorLayout.BeginHorizontal();
+                EditorGUILayout.BeginHorizontal();
                 {
                     DebugSystems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", DebugSystems.avgResetInterval);
                     if(GUILayout.Button("Reset Ø now", GUILayout.Width(88), GUILayout.Height(14))) {
                         systems.ResetDurations();
                     }
                 }
-                EntitasEditorLayout.EndHorizontal();
+                EditorGUILayout.EndHorizontal();
 
                 _threshold = EditorGUILayout.Slider("Threshold Ø ms", _threshold, 0f, 33f);
                 _systemSortMethod = (SortMethod)EditorGUILayout.EnumPopup("Sort by ", _systemSortMethod);
@@ -125,7 +125,7 @@ namespace Entitas.Unity.VisualDebugging {
                             EditorGUILayout.LabelField(string.Empty);
                         }
                     }
-                    EntitasEditorLayout.EndVertical();
+                    EntitasEditorLayout.EndVerticalBox();
                 }
 
                 _showExecuteSystems = EntitasEditorLayout.Foldout(_showExecuteSystems, "Execute Systems");
@@ -137,7 +137,7 @@ namespace Entitas.Unity.VisualDebugging {
                             EditorGUILayout.LabelField(string.Empty);
                         }
                     }
-                    EntitasEditorLayout.EndVertical();
+                    EntitasEditorLayout.EndVerticalBox();
                 }
 
                 _showCleanupSystems = EntitasEditorLayout.Foldout(_showCleanupSystems, "Cleanup Systems");
@@ -149,7 +149,7 @@ namespace Entitas.Unity.VisualDebugging {
                             EditorGUILayout.LabelField(string.Empty);
                         }
                     }
-                    EntitasEditorLayout.EndVertical();
+                    EntitasEditorLayout.EndVerticalBox();
                 }
 
                 _showTearDownSystems = EntitasEditorLayout.Foldout(_showTearDownSystems, "TearDown Systems");
@@ -161,10 +161,10 @@ namespace Entitas.Unity.VisualDebugging {
                             EditorGUILayout.LabelField(string.Empty);
                         }
                     }
-                    EntitasEditorLayout.EndVertical();
+                    EntitasEditorLayout.EndVerticalBox();
                 }
             }
-            EntitasEditorLayout.EndVertical();
+            EntitasEditorLayout.EndVerticalBox();
         }
 
         int drawSystemInfos(DebugSystems systems, SystemInterfaceFlags type, bool isChildSystem) {
@@ -203,7 +203,7 @@ namespace Entitas.Unity.VisualDebugging {
                 }
 
                 if(EntitasEditorLayout.MatchesSearchString(systemInfo.systemName.ToLower(), _systemNameSearchString.ToLower())) {
-                    EntitasEditorLayout.BeginHorizontal();
+                    EditorGUILayout.BeginHorizontal();
                     {
                         EditorGUI.BeginDisabledGroup(isChildSystem);
                         {
@@ -229,7 +229,7 @@ namespace Entitas.Unity.VisualDebugging {
                             EditorGUILayout.LabelField(systemInfo.systemName, getSystemStyle(systemInfo));
                         }
                     }
-                    EntitasEditorLayout.EndHorizontal();
+                    EditorGUILayout.EndHorizontal();
 
                     systemsDrawn += 1;
                 }
