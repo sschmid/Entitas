@@ -24,6 +24,7 @@ namespace Entitas.Unity.VisualDebugging {
         static IDefaultInstanceCreator[] _defaultInstanceCreators;
         static ITypeDrawer[] _typeDrawers;
         static IComponentDrawer[] _componentDrawers;
+        static ITypeEqualityComparer[] _typeEqualityComparers;
 
         static string _componentNameSearchString = string.Empty;
 
@@ -49,6 +50,11 @@ namespace Entitas.Unity.VisualDebugging {
                 _componentDrawers = types
                     .Where(type => type.ImplementsInterface<IComponentDrawer>())
                     .Select(type => (IComponentDrawer)Activator.CreateInstance(type))
+                    .ToArray();
+
+                _typeEqualityComparers = types
+                    .Where(type => type.ImplementsInterface<ITypeEqualityComparer>())
+                    .Select(type => (ITypeEqualityComparer)Activator.CreateInstance(type))
                     .ToArray();
             }
 
@@ -262,9 +268,13 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public static bool DidValueChange(object value, object newValue) {
+            var type = value.GetType();
+            var typeEquatable = getTypeEqualityComparer(type);
+
             return (value == null && newValue != null)
                 || (value != null && newValue == null)
-                || ((value != null && newValue != null && !newValue.Equals(value)));
+                || (value != null && newValue != null && typeEquatable != null && typeEquatable.Equals(value, newValue))
+                || (value != null && newValue != null && !newValue.Equals(value));
         }
 
         public static object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
@@ -412,6 +422,16 @@ namespace Entitas.Unity.VisualDebugging {
             foreach(var drawer in _componentDrawers) {
                 if(drawer.HandlesType(type)) {
                     return drawer;
+                }
+            }
+
+            return null;
+        }
+
+        static ITypeEqualityComparer getTypeEqualityComparer(Type type) {
+            foreach(var equatable in _typeEqualityComparers) {
+                if(equatable.HandlesType(type)) {
+                    return equatable;
                 }
             }
 
