@@ -1,13 +1,13 @@
 namespace Entitas {
 
-    public delegate void GroupChanged<TEntitiy>(
-        IGroup<TEntitiy> group, TEntitiy entity, int index, IComponent component
-    ) where TEntitiy : class, IEntity, new();
+    public delegate void GroupChanged<TEntity>(
+        IGroup<TEntity> group, TEntity entity, int index, IComponent component
+    ) where TEntity : class, IEntity, new();
 
-    public delegate void GroupUpdated<TEntitiy>(
-        IGroup<TEntitiy> group, TEntitiy entity, int index,
+    public delegate void GroupUpdated<TEntity>(
+        IGroup<TEntity> group, TEntity entity, int index,
         IComponent previousComponent, IComponent newComponent
-    ) where TEntitiy : class, IEntity, new();
+    ) where TEntity : class, IEntity, new();
 
     public interface IGroup {
 
