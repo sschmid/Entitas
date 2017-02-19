@@ -111,26 +111,50 @@ namespace Entitas.Unity {
 
         public static bool MiniButton(string c) {
             if(c.Length == 1) {
-                return GUILayout.Button(c, EditorStyles.miniButton, GUILayout.Width(19));
+                var clicked = GUILayout.Button(c, EditorStyles.miniButton, GUILayout.Width(19));
+                if(clicked) {
+                    GUI.FocusControl(null);
+                }
+                return clicked;
             }
 
-            return GUILayout.Button(c, EditorStyles.miniButton);
+            var pressed = GUILayout.Button(c, EditorStyles.miniButton);
+            if(pressed) {
+                GUI.FocusControl(null);
+            }
+            return pressed;
         }
 
         public static bool MiniButtonLeft(string c) {
             if(c.Length == 1) {
-                return GUILayout.Button(c, EditorStyles.miniButtonLeft, GUILayout.Width(19));
+                var clicked = GUILayout.Button(c, EditorStyles.miniButtonLeft, GUILayout.Width(19));
+                if(clicked) {
+                    GUI.FocusControl(null);
+                }
+                return clicked;
             }
 
-            return GUILayout.Button(c, EditorStyles.miniButtonLeft);
+            var pressed = GUILayout.Button(c, EditorStyles.miniButtonLeft);
+            if(pressed ) {
+                GUI.FocusControl(null);
+            }
+            return pressed ;
         }
 
         public static bool MiniButtonRight(string c) {
             if(c.Length == 1) {
-                return GUILayout.Button(c, EditorStyles.miniButtonRight, GUILayout.Width(19));
+                var clicked = GUILayout.Button(c, EditorStyles.miniButtonRight, GUILayout.Width(19));
+                if(clicked) {
+                    GUI.FocusControl(null);
+                }
+                return clicked;
             }
 
-            return GUILayout.Button(c, EditorStyles.miniButtonRight);
+            var pressed = GUILayout.Button(c, EditorStyles.miniButtonRight);
+            if(pressed) {
+                GUI.FocusControl(null);
+            }
+            return pressed;
         }
 
         const int DEFAULT_FOLDOUT_MARGIN = 11;
