@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
 
@@ -26,7 +25,7 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.LabelField(memberName);
                 }
 
-                if(GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
+                if(EntitasEditorLayout.MiniButton("new " + elementType.ToCompilableString().ShortTypeName())) {
                     object defaultValue;
                     if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                         itemsToAdd.Add(defaultValue);
@@ -48,7 +47,7 @@ namespace Entitas.Unity.VisualDebugging {
                             itemsToAdd.Add(newItem);
                         }
 
-                        if(GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
+                        if(EntitasEditorLayout.MiniButton("-")) {
                             itemsToRemove.Add(item);
                         }
                     }

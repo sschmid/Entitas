@@ -121,5 +121,16 @@ class describe_TypeSerializationExtension : nspec {
                 xit["generates Dictionary<List<T>[,], T2>[]"] = () => toType("System.Collections.Generic.Dictionary<System.Collections.Generic.List<NestedTest+NestedTestEnum>[,], Entitas.Entity>[]").should_be(typeof(Dictionary<List<NestedTest.NestedSomeEnum>[,], Entity>[]));
             };
         };
+
+        context["short type name"] = () => {
+
+            it["returns short type name for short type name"] = () => {
+                "MyClass".ShortTypeName().should_be("MyClass");
+            };
+
+            it["returns short type name for full type name"] = () => {
+                "Namespace.Module.MyClass".ShortTypeName().should_be("MyClass");
+            };
+        };
     }
 }

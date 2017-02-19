@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
 
@@ -24,7 +23,9 @@ namespace Entitas.Unity.VisualDebugging {
                 } else {
                     EditorGUILayout.LabelField(memberName);
                 }
-                if(GUILayout.Button("+", GUILayout.Width(19), GUILayout.Height(14))) {
+                var keyTypeName = keyType.ToCompilableString().ShortTypeName();
+                var valueTypeName = valueType.ToCompilableString().ShortTypeName();
+                if(EntitasEditorLayout.MiniButton("new <" + keyTypeName + ", " + valueTypeName + ">")) {
                     object defaultKey;
                     if(EntityDrawer.CreateDefault(keyType, out defaultKey)) {
                         object defaultValue;

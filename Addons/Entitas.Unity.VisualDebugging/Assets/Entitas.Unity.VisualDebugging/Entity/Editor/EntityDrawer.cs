@@ -85,7 +85,7 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.BeginHorizontal();
                     {
                         EditorGUILayout.LabelField(owner.ToString());
-                        if(GUILayout.Button("Release", GUILayout.Width(88), GUILayout.Height(14))) {
+                        if(EntitasEditorLayout.MiniButton("Release")) {
                             entity.Release(owner);
                         }
                         EditorGUILayout.EndHorizontal();
@@ -112,12 +112,12 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.BeginHorizontal();
                 {
                     EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
-                    if(GUILayout.Button("▸", GUILayout.Width(21), GUILayout.Height(14))) {
+                    if(EntitasEditorLayout.MiniButtonLeft("▸")) {
                         for (int i = 0; i < unfoldedComponents.Length; i++) {
                             unfoldedComponents[i] = false;
                         }
                     }
-                    if(GUILayout.Button("▾", GUILayout.Width(21), GUILayout.Height(14))) {
+                    if(EntitasEditorLayout.MiniButtonRight("▾")) {
                         for (int i = 0; i < unfoldedComponents.Length; i++) {
                             unfoldedComponents[i] = true;
                         }
@@ -189,7 +189,7 @@ namespace Entitas.Unity.VisualDebugging {
                     bgColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.red;
 
-                    if(GUILayout.Button("Destroy Entity")) {
+                    if(EntitasEditorLayout.MiniButton("Destroy Entity")) {
                         context.DestroyEntity(e);
                     }
 
@@ -217,7 +217,7 @@ namespace Entitas.Unity.VisualDebugging {
                         } else {
                             unfoldedComponents[index] = EntitasEditorLayout.Foldout(unfoldedComponents[index], componentName, _foldoutStyle);
                         }
-                        if(GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
+                        if(EntitasEditorLayout.MiniButton("-")) {
                             entity.RemoveComponent(index);
                         }
                     }
@@ -278,7 +278,7 @@ namespace Entitas.Unity.VisualDebugging {
                         EditorGUILayout.LabelField(memberName, "null");
                     }
 
-                    if(GUILayout.Button("Create", GUILayout.Height(14))) {
+                    if(EntitasEditorLayout.MiniButton("new " + memberType.ToCompilableString().ShortTypeName())) {
                         object defaultValue;
                         if(CreateDefault(memberType, out defaultValue)) {
                             value = defaultValue;
@@ -303,7 +303,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             if(!memberType.IsValueType) {
                 EditorGUILayout.EndVertical();
-                if(GUILayout.Button("x", GUILayout.Width(19), GUILayout.Height(14))) {
+                if(EntitasEditorLayout.MiniButton("x")) {
                     value = null;
                 }
                 EditorGUILayout.EndHorizontal();
@@ -422,7 +422,7 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.LabelField(memberName, value.ToString());
-                if(GUILayout.Button("Missing ITypeDrawer", GUILayout.Height(14))) {
+                if(EntitasEditorLayout.MiniButton("Missing ITypeDrawer")) {
                     var typeName = memberType.ToCompilableString();
                     if(EditorUtility.DisplayDialog(
                             "No ITypeDrawer found",

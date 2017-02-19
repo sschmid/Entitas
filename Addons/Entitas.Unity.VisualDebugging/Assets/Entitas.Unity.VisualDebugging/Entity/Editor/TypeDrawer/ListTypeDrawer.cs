@@ -16,17 +16,7 @@ namespace Entitas.Unity.VisualDebugging {
             var list = (IList)value;
             var elementType = memberType.GetGenericArguments()[0];
             if(list.Count == 0) {
-                EditorGUILayout.BeginHorizontal();
-                {
-                    EditorGUILayout.LabelField(memberName, "empty");
-                    if(GUILayout.Button("Add element", GUILayout.Height(14))) {
-                        object defaultValue;
-                        if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
-                            list.Add(defaultValue);
-                        }
-                    }
-                }
-                EditorGUILayout.EndHorizontal();
+                list = drawAddElement(list, memberName, elementType);
             } else {
                 EditorGUILayout.LabelField(memberName);
             }
@@ -40,23 +30,23 @@ namespace Entitas.Unity.VisualDebugging {
                     EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + i + "]", list[i],
                         entity, index, component, (newComponent, newValue) => list[i] = newValue);
 
-                    if(GUILayout.Button("-", GUILayout.Width(19), GUILayout.Height(14))) {
-                        var removeAt = i;
-                        editAction = () => list.RemoveAt(removeAt);
-                    }
-                    if(GUILayout.Button("▴", GUILayout.Width(19), GUILayout.Height(14))) {
+                    if(EntitasEditorLayout.MiniButtonLeft("▴")) {
                         object defaultValue;
                         if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                             var insertAt = i;
                             editAction = () => list.Insert(insertAt, defaultValue);
                         }
                     }
-                    if(GUILayout.Button("▾", GUILayout.Width(19), GUILayout.Height(14))) {
+                    if(EntitasEditorLayout.MiniButton("▾")) {
                         object defaultValue;
                         if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                             var insertAt = i + 1;
                             editAction = () => list.Insert(insertAt, defaultValue);
                         }
+                    }
+                    if(EntitasEditorLayout.MiniButtonRight("-")) {
+                        var removeAt = i;
+                        editAction = () => list.RemoveAt(removeAt);
                     }
                 }
                 EditorGUILayout.EndHorizontal();
@@ -69,5 +59,21 @@ namespace Entitas.Unity.VisualDebugging {
 
             return list;
         }
-    }
+
+        IList drawAddElement(IList list, string memberName, Type elementType) {
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.LabelField(memberName, "empty");
+                if(EntitasEditorLayout.MiniButton("add " + elementType.ToCompilableString().ShortTypeName())) {
+                    object defaultValue;
+                    if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                        list.Add(defaultValue);
+                    }
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+
+            return list;
+        }
+   }
 }

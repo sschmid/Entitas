@@ -106,6 +106,30 @@ namespace Entitas.Unity {
             return null;
         }
 
+        public static bool MiniButton(string c) {
+            if(c.Length == 1) {
+                return GUILayout.Button(c, EditorStyles.miniButton, GUILayout.Width(19));
+            }
+
+            return GUILayout.Button(c, EditorStyles.miniButton);
+        }
+
+        public static bool MiniButtonLeft(string c) {
+            if(c.Length == 1) {
+                return GUILayout.Button(c, EditorStyles.miniButtonLeft, GUILayout.Width(19));
+            }
+
+            return GUILayout.Button(c, EditorStyles.miniButtonLeft);
+        }
+
+        public static bool MiniButtonRight(string c) {
+            if(c.Length == 1) {
+                return GUILayout.Button(c, EditorStyles.miniButtonRight, GUILayout.Width(19));
+            }
+
+            return GUILayout.Button(c, EditorStyles.miniButtonRight);
+        }
+
         const int DEFAULT_FOLDOUT_MARGIN = 11;
 
         public static bool Foldout(bool foldout, string content, int leftMargin = DEFAULT_FOLDOUT_MARGIN) {

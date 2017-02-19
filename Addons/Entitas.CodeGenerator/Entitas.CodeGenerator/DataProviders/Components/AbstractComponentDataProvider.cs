@@ -77,9 +77,7 @@ namespace Entitas.CodeGenerator {
                 .SingleOrDefault();
 
             if(attr == null) {
-                var nameSplit = type.ToCompilableString().Split('.');
-                var componentName = nameSplit[nameSplit.Length - 1].AddComponentSuffix();
-                return new[] { componentName };
+                return new[] { type.ToCompilableString().ShortTypeName().AddComponentSuffix() };
             }
 
             return attr.componentNames;
