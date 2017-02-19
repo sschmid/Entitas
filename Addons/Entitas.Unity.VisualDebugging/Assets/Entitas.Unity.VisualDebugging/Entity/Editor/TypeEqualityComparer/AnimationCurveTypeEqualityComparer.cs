@@ -11,7 +11,7 @@ namespace Entitas.Unity.VisualDebugging {
             return type == typeof(AnimationCurve);
         }
 
-        public bool Equals(object x, object y) {
+        new public bool Equals(object x, object y) {
             if(x == y) {
                 return true;
             }

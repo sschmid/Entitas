@@ -269,11 +269,11 @@ namespace Entitas.Unity.VisualDebugging {
 
         public static bool DidValueChange(object value, object newValue) {
             var type = value.GetType();
-            var typeEquatable = getTypeEqualityComparer(type);
+            var comparer = getTypeEqualityComparer(type);
 
             return (value == null && newValue != null)
                 || (value != null && newValue == null)
-                || (value != null && newValue != null && typeEquatable != null && typeEquatable.Equals(value, newValue))
+                || (value != null && newValue != null && comparer != null && comparer.Equals(value, newValue))
                 || (value != null && newValue != null && !newValue.Equals(value));
         }
 
@@ -429,9 +429,9 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static ITypeEqualityComparer getTypeEqualityComparer(Type type) {
-            foreach(var equatable in _typeEqualityComparers) {
-                if(equatable.HandlesType(type)) {
-                    return equatable;
+            foreach(var comparer in _typeEqualityComparers) {
+                if(comparer.HandlesType(type)) {
+                    return comparer;
                 }
             }
 
