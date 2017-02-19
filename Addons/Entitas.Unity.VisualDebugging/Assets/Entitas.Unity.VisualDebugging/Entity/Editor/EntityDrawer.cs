@@ -268,13 +268,22 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         public static bool DidValueChange(object value, object newValue) {
-            var type = value.GetType();
-            var comparer = getTypeEqualityComparer(type);
+            if((value == null && newValue != null) || (value != null && newValue == null)) {
+                return true;
+            }
 
-            return (value == null && newValue != null)
-                || (value != null && newValue == null)
-                || (value != null && newValue != null && comparer != null && comparer.Equals(value, newValue))
-                || (value != null && newValue != null && !newValue.Equals(value));
+            if(value != null && newValue != null) {
+                var comparer = getTypeEqualityComparer(value.GetType());
+                if(comparer != null && !comparer.Equals(value, newValue)) {
+                    return true;
+                }
+
+                if(!newValue.Equals(value)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
