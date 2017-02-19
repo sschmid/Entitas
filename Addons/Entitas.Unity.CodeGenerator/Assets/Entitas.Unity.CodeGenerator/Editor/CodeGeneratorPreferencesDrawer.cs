@@ -57,7 +57,11 @@ namespace Entitas.Unity.CodeGenerator {
         }
 
         void drawTargetFolder() {
-            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel("Target Directory", _codeGeneratorConfig.targetDirectory);
+            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel(
+                "Target Directory",
+                _codeGeneratorConfig.targetDirectory,
+                _codeGeneratorConfig.targetDirectory
+            );
             if(!string.IsNullOrEmpty(path)) {
                 _codeGeneratorConfig.targetDirectory = path;
             }

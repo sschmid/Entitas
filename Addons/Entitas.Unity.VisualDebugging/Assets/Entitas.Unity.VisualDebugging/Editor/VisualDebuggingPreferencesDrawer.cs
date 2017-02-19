@@ -48,14 +48,22 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         void drawDefaultInstanceCreator() {
-            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel("Default Instance Creators", _visualDebuggingConfig.defaultInstanceCreatorFolderPath);
+            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel(
+                "Default Instance Creators",
+                _visualDebuggingConfig.defaultInstanceCreatorFolderPath,
+                _visualDebuggingConfig.defaultInstanceCreatorFolderPath
+            );
             if(!string.IsNullOrEmpty(path)) {
                 _visualDebuggingConfig.defaultInstanceCreatorFolderPath = path;
             }
         }
 
         void drawTypeDrawerFolder() {
-            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel("Type Drawers", _visualDebuggingConfig.typeDrawerFolderPath);
+            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel(
+                "Type Drawers",
+                _visualDebuggingConfig.typeDrawerFolderPath,
+                _visualDebuggingConfig.typeDrawerFolderPath
+            );
             if(!string.IsNullOrEmpty(path)) {
                 _visualDebuggingConfig.typeDrawerFolderPath = path;
             }

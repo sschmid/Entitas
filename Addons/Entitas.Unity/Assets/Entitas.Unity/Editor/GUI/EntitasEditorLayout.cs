@@ -96,9 +96,12 @@ namespace Entitas.Unity {
             return clicked;
         }
 
-        public static string ObjectFieldOpenFolderPanel(string label, string buttonText) {
+        public static string ObjectFieldOpenFolderPanel(string label, string buttonText, string defaultPath) {
             if(ObjectFieldButton(label, buttonText)) {
-                var path = "Assets/";
+                var path = defaultPath ?? "Assets/";
+                if(!Directory.Exists(path)) {
+                    path = "Assets/";
+                }
                 path = EditorUtility.OpenFolderPanel(label, path, string.Empty);
                 return path.Replace(Directory.GetCurrentDirectory() + "/", string.Empty);
             }
