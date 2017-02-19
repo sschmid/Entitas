@@ -41,11 +41,11 @@ namespace Entitas.Unity.VisualDebugging {
                 foreach(var item in (IEnumerable)value) {
                     EditorGUILayout.BeginHorizontal();
                     {
-                        var newItem = EntityDrawer.DrawAndGetNewValue(elementType, string.Empty, item, entity, index, component);
-                        if(EntityDrawer.DidValueChange(item, newItem)) {
+                        EntityDrawer.DrawAndSetElement(elementType, string.Empty, item,
+                                                       entity, index, component, (newComponent, newValue) => {
                             itemsToRemove.Add(item);
-                            itemsToAdd.Add(newItem);
-                        }
+                            itemsToAdd.Add(newValue);
+                        });
 
                         if(EntitasEditorLayout.MiniButton("-")) {
                             itemsToRemove.Add(item);
