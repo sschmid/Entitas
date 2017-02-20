@@ -7,6 +7,7 @@ namespace Entitas.CodeGenerator {
 
         public string name { get { return "Write to disk"; } }
         public bool isEnabledByDefault { get { return true; } }
+        public int priority { get { return 100; } }
 
         readonly string _directory;
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Entitas.CodeGenerator {
 
@@ -14,7 +15,9 @@ namespace Entitas.CodeGenerator {
 
             _dataProviders = dataProviders;
             _codeGenerators = codeGenerators;
-            _postProcessors = postProcessors;
+            _postProcessors = postProcessors
+                .OrderBy(pp => pp.priority)
+                .ToArray();
         }
 
         public CodeGenFile[] DryRun() {

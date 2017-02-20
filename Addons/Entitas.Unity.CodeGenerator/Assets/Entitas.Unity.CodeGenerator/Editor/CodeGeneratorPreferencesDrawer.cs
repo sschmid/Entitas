@@ -96,8 +96,15 @@ namespace Entitas.Unity.CodeGenerator {
             var instances = UnityCodeGenerator
                 .GetTypes<T>()
                 .Where(type => !type.IsAbstract)
-                .Select(type => (T)Activator.CreateInstance(type))
-                .OrderBy(instance => instance.name);
+                .Select(type => (T)Activator.CreateInstance(type));
+
+            if(typeof(T) == typeof(ICodeGenFilePostProcessor)) {
+                instances = instances
+                    .OrderBy(instance => ((ICodeGenFilePostProcessor)instance).priority);
+            } else {
+                instances = instances
+                    .OrderBy(instance => instance.name);
+            }
 
             availableTypes = instances
                 .Select(instance => instance.GetType().Name)

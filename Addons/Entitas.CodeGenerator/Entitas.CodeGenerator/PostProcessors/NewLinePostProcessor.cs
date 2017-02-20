@@ -6,6 +6,7 @@ namespace Entitas.CodeGenerator {
 
         public string name { get { return "Convert newlines"; } }
         public bool isEnabledByDefault { get { return true; } }
+        public int priority { get { return 90; } }
 
         public void PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {

@@ -35,6 +35,21 @@ class describe_CodeGenerator : nspec {
             files[0].fileName.should_be("FileName0");
             files[1].fileName.should_be("FileName1");
         };
+
+        it["runs post processors based on priority"] = () => {
+            var generator = new CodeGenerator(
+                new [] { new TestDataProvider() },
+                new [] { new TestCodeGenerator() },
+                new ICodeGenFilePostProcessor[] { new TestPostProcessor(), new Test2PostProcessor() }
+            );
+
+            var files = generator.Generate();
+
+            files.Length.should_be(2);
+
+            files[0].fileName.should_be("FileName0First!-Approved!");
+            files[1].fileName.should_be("FileName1First!-Approved!");
+        };
     }
 }
 
@@ -76,10 +91,24 @@ public class TestPostProcessor : ICodeGenFilePostProcessor {
 
     public string name { get { return ""; } }
     public bool isEnabledByDefault { get { return true; } }
+    public int priority { get { return 10; } }
 
     public void PostProcess(CodeGenFile[] files) {
         foreach(var file in files) {
             file.fileName += "-Approved!";
+        }
+    }
+}
+
+public class Test2PostProcessor : ICodeGenFilePostProcessor {
+
+    public string name { get { return ""; } }
+    public bool isEnabledByDefault { get { return true; } }
+    public int priority { get { return 0; } }
+
+    public void PostProcess(CodeGenFile[] files) {
+        foreach(var file in files) {
+            file.fileName += "First!";
         }
     }
 }
