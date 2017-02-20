@@ -34,10 +34,6 @@ namespace Entitas.Unity.CodeGenerator {
                 .Select(file => file.fileContent.ToUnixLineEndings())
                 .Sum(content => content.Split(new [] { '\n' }).Length);
 
-            foreach(var file in files) {
-                Debug.Log(file.generatorName + ": " + file.fileName);
-            }
-
             Debug.Log("Generated " + totalGeneratedFiles + " files (" + sloc + " sloc, " + loc + " loc)");
 
             AssetDatabase.Refresh();
