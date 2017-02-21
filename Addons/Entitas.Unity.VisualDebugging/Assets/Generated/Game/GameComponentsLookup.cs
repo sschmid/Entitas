@@ -17,15 +17,15 @@ public static class GameComponentsLookup {
     public const int CoolName = 6;
     public const int CustomObject = 7;
     public const int DateTime = 8;
-    public const int DefaultContext = 9;
-    public const int DictArray = 10;
-    public const int Dictionary = 11;
-    public const int GameObject = 12;
-    public const int HashSet = 13;
-    public const int ISomeInterface = 14;
-    public const int JaggedArray = 15;
-    public const int List = 16;
-    public const int ListArray = 17;
+    public const int DictArray = 9;
+    public const int Dictionary = 10;
+    public const int GameObject = 11;
+    public const int HashSet = 12;
+    public const int ISomeInterface = 13;
+    public const int JaggedArray = 14;
+    public const int List = 15;
+    public const int ListArray = 16;
+    public const int ManyMembers = 17;
     public const int MonoBehaviourSubClass = 18;
     public const int MyBool = 19;
     public const int MyChar = 20;
@@ -65,7 +65,6 @@ public static class GameComponentsLookup {
         "CoolName",
         "CustomObject",
         "DateTime",
-        "DefaultContext",
         "DictArray",
         "Dictionary",
         "GameObject",
@@ -74,6 +73,7 @@ public static class GameComponentsLookup {
         "JaggedArray",
         "List",
         "ListArray",
+        "ManyMembers",
         "MonoBehaviourSubClass",
         "MyBool",
         "MyChar",
@@ -112,7 +112,6 @@ public static class GameComponentsLookup {
         typeof(CoolNameComponent),
         typeof(CustomObjectComponent),
         typeof(DateTimeComponent),
-        typeof(DefaultContextComponent),
         typeof(DictArrayComponent),
         typeof(DictionaryComponent),
         typeof(GameObjectComponent),
@@ -121,6 +120,7 @@ public static class GameComponentsLookup {
         typeof(JaggedArrayComponent),
         typeof(ListComponent),
         typeof(ListArrayComponent),
+        typeof(ManyMembersComponent),
         typeof(MonoBehaviourSubClassComponent),
         typeof(MyBoolComponent),
         typeof(MyCharComponent),

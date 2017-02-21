@@ -18,6 +18,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static Dictionary<IContext, bool[]> _contextToUnfoldedComponents;
+        static Dictionary<IContext, string[]> _contextToComponentMemberSearch;
         static GUIStyle _foldoutStyle;
         static Dictionary<int, GUIStyle[]> _coloredBoxStyles;
 
@@ -35,6 +36,7 @@ namespace Entitas.Unity.VisualDebugging {
                 _isInitialized = true;
 
                 _contextToUnfoldedComponents = new Dictionary<IContext, bool[]>();
+                _contextToComponentMemberSearch = new Dictionary<IContext, string[]>();
 
                 var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
                 _defaultInstanceCreators = types
@@ -113,6 +115,15 @@ namespace Entitas.Unity.VisualDebugging {
                 _contextToUnfoldedComponents.Add(context, unfoldedComponents);
             }
 
+            string[] componentMemberSearch;
+            if(!_contextToComponentMemberSearch.TryGetValue(context, out componentMemberSearch)) {
+                componentMemberSearch = new string[context.totalComponents];
+                for (int i = 0; i < componentMemberSearch.Length; i++) {
+                    componentMemberSearch[i] = string.Empty;
+                }
+                _contextToComponentMemberSearch.Add(context, componentMemberSearch);
+            }
+
             EntitasEditorLayout.BeginVerticalBox();
             {
                 EditorGUILayout.BeginHorizontal();
@@ -149,7 +160,7 @@ namespace Entitas.Unity.VisualDebugging {
                 var indices = entity.GetComponentIndices();
                 var components = entity.GetComponents();
                 for (int i = 0; i < components.Length; i++) {
-                    DrawComponent(unfoldedComponents, entity, indices[i], components[i]);
+                    DrawComponent(unfoldedComponents, componentMemberSearch, entity, indices[i], components[i]);
                 }
             }
             EntitasEditorLayout.EndVerticalBox();
@@ -205,7 +216,7 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public static void DrawComponent(bool[] unfoldedComponents, IEntity entity, int index, IComponent component) {
+        public static void DrawComponent(bool[] unfoldedComponents, string[] componentMemberSearch, IEntity entity, int index, IComponent component) {
             var componentType = component.GetType();
             var componentName = componentType.Name.RemoveComponentSuffix();
             if(EntitasEditorLayout.MatchesSearchString(componentName.ToLower(), _componentNameSearchString.ToLower())) {
@@ -219,6 +230,11 @@ namespace Entitas.Unity.VisualDebugging {
                             EditorGUILayout.LabelField(componentName, EditorStyles.boldLabel);
                         } else {
                             unfoldedComponents[index] = EntitasEditorLayout.Foldout(unfoldedComponents[index], componentName, _foldoutStyle);
+                            if(memberInfos.Count > 5) {
+                                componentMemberSearch[index] = EntitasEditorLayout.SearchTextField(componentMemberSearch[index]);
+                            } else {
+                                componentMemberSearch[index] = string.Empty;
+                            }
                         }
                         if(EntitasEditorLayout.MiniButton("-")) {
                             entity.RemoveComponent(index);
@@ -243,8 +259,10 @@ namespace Entitas.Unity.VisualDebugging {
                             }
                         } else {
                             foreach(var info in memberInfos) {
-                                DrawAndSetElement(info.type, info.name, info.GetValue(component),
-                                    entity, index, component, info.SetValue);
+                                if(EntitasEditorLayout.MatchesSearchString(info.name, componentMemberSearch[index])) {
+                                    DrawAndSetElement(info.type, info.name, info.GetValue(component),
+                                        entity, index, component, info.SetValue);
+                                }
                             }
                         }
                     }

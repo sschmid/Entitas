@@ -10,17 +10,17 @@ using Entitas;
 
 public sealed partial class GameMatcher {
 
-    static IMatcher<GameEntity> _matcherDefaultContext;
+    static IMatcher<GameEntity> _matcherManyMembers;
 
-    public static IMatcher<GameEntity> DefaultContext {
+    public static IMatcher<GameEntity> ManyMembers {
         get {
-            if(_matcherDefaultContext == null) {
-                var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(GameComponentsLookup.DefaultContext);
+            if(_matcherManyMembers == null) {
+                var matcher = (Matcher<GameEntity>)Matcher<GameEntity>.AllOf(GameComponentsLookup.ManyMembers);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherDefaultContext = matcher;
+                _matcherManyMembers = matcher;
             }
 
-            return _matcherDefaultContext;
+            return _matcherManyMembers;
         }
     }
 }

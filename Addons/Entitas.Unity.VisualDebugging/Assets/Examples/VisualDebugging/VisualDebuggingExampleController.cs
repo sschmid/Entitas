@@ -94,6 +94,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddUnsupportedObject(new UnsupportedObject("Unsupported Object"));
             e.AddProperty("My Property");
             e.AddPerson("Max", "Male");
+            e.AddManyMembers("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
         }
     }
 
