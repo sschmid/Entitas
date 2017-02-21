@@ -207,10 +207,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         public static void DrawComponent(bool[] unfoldedComponents, IEntity entity, int index, IComponent component) {
             var componentType = component.GetType();
-
             var componentName = componentType.Name.RemoveComponentSuffix();
-
-
             if(EntitasEditorLayout.MatchesSearchString(componentName.ToLower(), _componentNameSearchString.ToLower())) {
                 var boxStyle = getColoredBoxStyle(entity.totalComponents, index);
                 EditorGUILayout.BeginVertical(boxStyle);
@@ -230,7 +227,6 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.EndHorizontal();
 
                     if(unfoldedComponents[index]) {
-
                         var componentDrawer = getComponentDrawer(componentType);
                         if(componentDrawer != null) {
                             var newComponent = entity.CreateComponent(index, componentType);
