@@ -259,7 +259,7 @@ namespace Entitas.Unity.VisualDebugging {
                             }
                         } else {
                             foreach(var info in memberInfos) {
-                                if(EntitasEditorLayout.MatchesSearchString(info.name, componentMemberSearch[index])) {
+                                if(EntitasEditorLayout.MatchesSearchString(info.name.ToLower(), componentMemberSearch[index].ToLower())) {
                                     DrawAndSetElement(info.type, info.name, info.GetValue(component),
                                         entity, index, component, info.SetValue);
                                 }
