@@ -73,11 +73,22 @@ public class VisualDebuggingExampleController : MonoBehaviour {
                 { "1", "One" },
                 { "2", "Two" },
                 { "3", "Three" },
+                { "4", "One" },
+                { "5", "Two" },
+                { "6", "Three" },
+                { "7", "One" },
+                { "8", "Two" },
+                { "9", "Three" }
             };
             e.AddDictionary(dict);
             var dict2 = new Dictionary<int, string[]> {
                 { 1, new [] { "One", "Two", "Three" } },
-                { 2, new [] { "Four", "Five", "Six" } }
+                { 2, new [] { "Four", "Five", "Six" } },
+                { 3, new [] { "One", "Two", "Three" } },
+                { 4, new [] { "Four", "Five", "Six" } },
+                { 5, new [] { "One", "Two", "Three" } },
+                { 6, new [] { "Four", "Five", "Six" } },
+                { 7, new [] { "One", "Two", "Three" } }
             };
             var dictArray = new Dictionary<int, string[]>[] {
                 new Dictionary<int, string[]> {
