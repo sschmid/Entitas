@@ -54,12 +54,10 @@
     <Compile Include="Fixtures\Components\NameAgeComponent.cs" />
     <Compile Include="Fixtures\TestMemberAttribute.cs" />
     <Compile Include="Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
-    <Compile Include="Fixtures\Components\HideInBlueprintInspectorComponent.cs" />
-    <Compile Include="Fixtures\ObjectsToGenerate\ClassHideInBlueprintsInspector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generated\*.cs" />
-    <Compile Include="Generated\*\*.cs" />
+    <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fixtures\" />

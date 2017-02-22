@@ -151,7 +151,7 @@ namespace Entitas.Unity.Blueprints {
                     }
                     EditorGUILayout.EndHorizontal();
 
-                    EntityDrawer.DrawComponents(_context, _entity, true);
+                    EntityDrawer.DrawComponents(_context, _entity);
                 } else {
                     EditorGUILayout.LabelField("No contexts found!");
                 }
