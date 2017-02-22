@@ -105,7 +105,7 @@ namespace Entitas.Unity.VisualDebugging {
             #endif
         }
 
-        public static void DrawComponents(IContext context, IEntity entity, bool hideInBlueprintInspector = false) {
+        public static void DrawComponents(IContext context, IEntity entity) {
             bool[] unfoldedComponents;
             if(!_contextToUnfoldedComponents.TryGetValue(context, out unfoldedComponents)) {
                 unfoldedComponents = new bool[context.totalComponents];
@@ -144,7 +144,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                 EditorGUILayout.Space();
 
-                var index = drawAddComponentMenu(entity, hideInBlueprintInspector);
+                var index = drawAddComponentMenu(entity);
                 if(index >= 0) {
                     var componentType = entity.contextInfo.componentTypes[index];
                     var component = (IComponent)Activator.CreateInstance(componentType);
@@ -166,12 +166,12 @@ namespace Entitas.Unity.VisualDebugging {
             EntitasEditorLayout.EndVerticalBox();
         }
 
-        public static void DrawMultipleEntities(IContext context, IEntity[] entities, bool hideInBlueprintInspector = false) {
+        public static void DrawMultipleEntities(IContext context, IEntity[] entities) {
             EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var index = drawAddComponentMenu(entity, hideInBlueprintInspector);
+                var index = drawAddComponentMenu(entity);
                 if(index >= 0) {
                     var componentType = entity.contextInfo.componentTypes[index];
                     foreach(var e in entities) {
@@ -374,8 +374,8 @@ namespace Entitas.Unity.VisualDebugging {
             return false;
         }
 
-        static int drawAddComponentMenu(IEntity entity, bool hideInBlueprintInspector) {
-            var componentInfos = getComponentInfos(entity, hideInBlueprintInspector);
+        static int drawAddComponentMenu(IEntity entity) {
+            var componentInfos = getComponentInfos(entity);
             var componentNames = componentInfos.Select(info => info.name).ToArray();
             var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
             if(index >= 0) {
@@ -385,18 +385,16 @@ namespace Entitas.Unity.VisualDebugging {
             return -1;
         }
 
-        static ComponentInfo[] getComponentInfos(IEntity entity, bool hideInBlueprintInspector) {
+        static ComponentInfo[] getComponentInfos(IEntity entity) {
             var infos = new List<ComponentInfo>(entity.contextInfo.componentTypes.Length);
             for (int i = 0; i < entity.contextInfo.componentTypes.Length; ++i) {
                 var type = entity.contextInfo.componentTypes[i];
                 var name = entity.contextInfo.componentNames[i];
-                if(!hideInBlueprintInspector || !Attribute.IsDefined(type, typeof(HideInBlueprintInspectorAttribute))) {
-                    infos.Add(new ComponentInfo {
-                        index = i,
-                        name = name,
-                        type = type
-                    });
-                }
+                infos.Add(new ComponentInfo {
+                    index = i,
+                    name = name,
+                    type = type
+                });
             }
 
             return infos.ToArray();

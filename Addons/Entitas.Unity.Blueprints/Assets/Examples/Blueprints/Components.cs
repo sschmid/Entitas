@@ -10,11 +10,3 @@ public class NameComponent : IComponent {
 public class AgeComponent : IComponent {
     public int value;
 }
-
-[Game, HideInBlueprintInspector]
-public class HideInBlueprintInspectorComponent : IComponent {
-}
-
-[Game, HideInBlueprintInspector]
-public class HideInBlueprintInspectorClass {
-}
