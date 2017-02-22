@@ -9,7 +9,6 @@ public class BlueprintsExampleController : MonoBehaviour {
 
     void Start() {
 
-        Contexts.sharedInstance.SetAllContexts();
         var context = Contexts.sharedInstance.game;
 
         var max = context.CreateEntity();

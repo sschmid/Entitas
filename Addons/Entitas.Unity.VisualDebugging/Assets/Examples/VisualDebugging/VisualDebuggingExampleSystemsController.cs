@@ -8,7 +8,6 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
 
     void Start() {
         _contexts = new Contexts();
-        _contexts.SetAllContexts();
 
         _systems = createNestedSystems();
 

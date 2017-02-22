@@ -7,7 +7,6 @@ using UnityEngine;
 public class VisualDebuggingExampleController : MonoBehaviour {
 
     void Start() {
-        Contexts.sharedInstance.SetAllContexts();
         var context = Contexts.sharedInstance.game;
 
         createTestGroups(context);

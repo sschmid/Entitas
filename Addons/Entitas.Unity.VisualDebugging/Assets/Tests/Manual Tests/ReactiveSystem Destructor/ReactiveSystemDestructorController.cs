@@ -6,7 +6,6 @@ public class ReactiveSystemDestructorController : MonoBehaviour {
     GameEntity _initialEntity;
 
     void Start() {
-        Contexts.sharedInstance.SetAllContexts();
         var context = Contexts.sharedInstance.game;
         new TestReactiveSystem(Contexts.sharedInstance);
         _initialEntity = context.CreateEntity();

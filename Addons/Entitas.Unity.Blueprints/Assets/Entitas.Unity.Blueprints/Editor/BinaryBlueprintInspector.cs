@@ -87,7 +87,6 @@ namespace Entitas.Unity.Blueprints {
 
             if(contextsType != null) {
                 var contexts = (IContexts)Activator.CreateInstance(contextsType);
-                contexts.SetAllContexts();
                 return contexts.allContexts;
             }
 

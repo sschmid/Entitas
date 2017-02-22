@@ -7,7 +7,6 @@ public class CollectorDestructorController : MonoBehaviour {
     GameEntity _initialEntity;
 
     void Start() {
-        Contexts.sharedInstance.SetAllContexts();
         var context = Contexts.sharedInstance.game;
         context.GetGroup(GameMatcher.Test).CreateCollector();
         _initialEntity = context.CreateEntity();

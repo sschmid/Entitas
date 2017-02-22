@@ -36,7 +36,7 @@ ${contextProperties}
 
     public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { ${contextList} }; } }
 
-    public void SetAllContexts() {
+    public Contexts() {
 ${contextAssignments}
 
 ${contextObservers}

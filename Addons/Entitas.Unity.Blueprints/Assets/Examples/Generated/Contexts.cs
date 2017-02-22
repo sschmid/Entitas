@@ -35,7 +35,7 @@ public partial class Contexts : Entitas.IContexts {
 
     public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game, gameState }; } }
 
-    public void SetAllContexts() {
+    public Contexts() {
         game = new GameContext();
         gameState = new GameStateContext();
 

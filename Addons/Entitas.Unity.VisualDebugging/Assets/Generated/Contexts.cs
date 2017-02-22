@@ -34,7 +34,7 @@ public partial class Contexts : Entitas.IContexts {
 
     public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game }; } }
 
-    public void SetAllContexts() {
+    public Contexts() {
         game = new GameContext();
 
         CreateContextObserver(game);
