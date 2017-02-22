@@ -104,6 +104,13 @@ namespace Entitas.Unity.VisualDebugging {
         double _executeDuration;
         double _cleanupDuration;
 
+        public DebugSystems(string name) {
+            initialize(name);
+        }
+
+        protected DebugSystems(bool noInit) {
+        }
+
         protected void initialize(string name) {
             _name = name;
             _gameObject = new GameObject(name);

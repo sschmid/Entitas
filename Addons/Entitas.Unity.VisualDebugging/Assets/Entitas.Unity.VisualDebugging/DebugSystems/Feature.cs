@@ -4,11 +4,10 @@ namespace Entitas {
 
     public class Feature : Entitas.Unity.VisualDebugging.DebugSystems {
 
-        public Feature(string name) {
-            initialize(name);
+        public Feature(string name) : base(name) {
         }
 
-        public Feature() {
+        public Feature() : base(true) {
             initialize(toSpacedCamelCase(GetType().ToCompilableString().ShortTypeName()));
         }
 
