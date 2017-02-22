@@ -1,5 +1,4 @@
 using System;
-using Entitas.CodeGenerator;
 using Entitas.CodeGenerator.Api;
 
 [Game]
