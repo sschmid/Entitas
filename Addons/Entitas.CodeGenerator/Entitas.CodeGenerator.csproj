@@ -52,7 +52,6 @@
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\ShouldGenerateComponentComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\ShouldGenerateMethodsComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\ShouldGenerateComponentIndexComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\ShouldHideInBlueprintInspectorComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Contexts\ContextData.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Contexts\ContextDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\CodeGenFile.cs" />

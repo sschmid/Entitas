@@ -35,7 +35,6 @@
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\CustomComponentNameAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\CustomPrefixAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\DontGenerateAttribute.cs" />
-    <Compile Include="Entitas.CodeGenerator.Api\Attributes\HideInBlueprintInspectorAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\UniqueAttribute.cs" />
   </ItemGroup>
   <ItemGroup>

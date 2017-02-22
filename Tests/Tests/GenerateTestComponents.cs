@@ -28,7 +28,6 @@
 //                typeof(OtherContextComponent),
 //                typeof(PersonComponent),
 //                typeof(SomeClass),
-//                typeof(SomeClassHideInBlueprintInspector),
 //                typeof(SomeStruct),
 //                typeof(UserComponent)
 //            };

@@ -9,7 +9,7 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string COMPONENT_TEMPLATE =
-@"${Contexts}${Unique}${HideInBlueprintsInspector}
+@"${Contexts}${Unique}
 public sealed partial class ${Name} : Entitas.IComponent {
     public ${Type} value;
 }
@@ -30,18 +30,13 @@ public sealed partial class ${Name} : Entitas.IComponent {
                 contexts = "[" + contexts + "]";
             }
 
-            var hide = data.ShouldHideInBlueprintInspector()
-                           ? "[Entitas.CodeGenerator.Api.HideInBlueprintInspectorAttribute]"
-                           : string.Empty;
-
             return new CodeGenFile(
                 "Components" + Path.DirectorySeparatorChar + data.GetFullComponentName() + ".cs",
                 COMPONENT_TEMPLATE
                     .Replace("${Name}", data.GetFullComponentName())
                     .Replace("${Type}", data.GetObjectType())
                     .Replace("${Contexts}", contexts)
-                    .Replace("${Unique}", unique)
-                    .Replace("${HideInBlueprintsInspector}", hide),
+                    .Replace("${Unique}", unique),
                 GetType().FullName
             );
         }

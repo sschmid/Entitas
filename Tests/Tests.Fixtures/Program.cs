@@ -19,19 +19,19 @@ namespace Tests.Fixtures {
             };
 
             var codeGenerators = new ICodeGenerator[] {
-                new EntityGenerator(),
-                new ContextGenerator(),
-                new ContextAttributeGenerator(),
-                new ContextsGenerator(),
-                new ComponentsLookupGenerator(),
-                new ComponentEntityGenerator(),
                 new ComponentContextGenerator(),
+                new ComponentEntityGenerator(),
                 new ComponentGenerator(),
+                new ComponentsLookupGenerator(),
+                new ContextAttributeGenerator(),
+                new ContextGenerator(),
+                new ContextsGenerator(),
+                new EntityGenerator(),
                 new MatcherGenerator()
             };
 
             var postProcessors = new ICodeGenFilePostProcessor [] {
-                new AddFileHeaderPostProcessor(),
+                new MergeFilesPostProcessor(),
                 new NewLinePostProcessor(),
                 new WriteToDiskPostProcessor(path),
             };

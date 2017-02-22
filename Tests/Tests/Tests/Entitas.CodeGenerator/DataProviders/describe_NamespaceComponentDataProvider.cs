@@ -83,13 +83,6 @@ class describe_NamespaceComponentDataProvider : nspec {
                 getData<DontGenerateMethodsComponent>().ShouldGenerateMethods().should_be_false();
             };
 
-            it["gets hide in blueprints inspector"] = () => {
-                d.ShouldHideInBlueprintInspector().GetType().should_be(typeof(bool));
-                d.ShouldHideInBlueprintInspector().should_be_false();
-
-                getData<HideInBlueprintInspectorComponent>().ShouldHideInBlueprintInspector().should_be_true();
-            };
-
             it["gets unique prefix"] = () => {
                 d.GetUniqueComponentPrefix().GetType().should_be(typeof(string));
                 d.GetUniqueComponentPrefix().should_be("is");
@@ -169,13 +162,6 @@ class describe_NamespaceComponentDataProvider : nspec {
             it["gets generate methods"] = () => {
                 d.ShouldGenerateMethods().GetType().should_be(typeof(bool));
                 d.ShouldGenerateMethods().should_be_true();
-            };
-
-            it["gets hide in blueprints inspector"] = () => {
-                d.ShouldHideInBlueprintInspector().GetType().should_be(typeof(bool));
-                d.ShouldHideInBlueprintInspector().should_be_false();
-
-                getData<ClassHideInBlueprintsInspector>().ShouldHideInBlueprintInspector().should_be_true();
             };
 
             it["gets unique prefix"] = () => {

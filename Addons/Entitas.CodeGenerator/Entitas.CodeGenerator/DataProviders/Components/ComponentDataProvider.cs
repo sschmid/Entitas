@@ -21,8 +21,7 @@ namespace Entitas.CodeGenerator {
                 new UniquePrefixComponentDataProvider(),
                 new ShouldGenerateComponentComponentDataProvider(),
                 new ShouldGenerateMethodsComponentDataProvider(),
-                new ShouldGenerateComponentIndexComponentDataProvider(),
-                new ShouldHideInBlueprintInspectorComponentDataProvider()
+                new ShouldGenerateComponentIndexComponentDataProvider()
             }, types) {
         }
     }
