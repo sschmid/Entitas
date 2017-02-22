@@ -9,10 +9,12 @@ namespace Entitas.Unity.CodeGenerator {
         public bool isEnabledByDefault { get { return false; } }
         public int priority { get { return 200; } }
 
-        public void PostProcess(CodeGenFile[] files) {
+        public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {
                 Debug.Log(file.generatorName + ": " + file.fileName);
             }
+
+            return files;
         }
     }
 }

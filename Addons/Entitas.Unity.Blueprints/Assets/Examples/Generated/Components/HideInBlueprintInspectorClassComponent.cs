@@ -6,9 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Entitas;
-
 [Game][Entitas.CodeGenerator.Api.HideInBlueprintInspectorAttribute]
-public sealed partial class HideInBlueprintInspectorClassComponent : IComponent {
+public sealed partial class HideInBlueprintInspectorClassComponent : Entitas.IComponent {
     public HideInBlueprintInspectorClass value;
 }

@@ -50,6 +50,20 @@ class describe_CodeGenerator : nspec {
             files[0].fileName.should_be("FileName0First!-Approved!");
             files[1].fileName.should_be("FileName1First!-Approved!");
         };
+
+        it["uses returned CodeGenFiles"] = () => {
+            var generator = new CodeGenerator(
+                new [] { new TestDataProvider() },
+                new [] { new TestCodeGenerator() },
+                new ICodeGenFilePostProcessor[] { new Test3PostProcessor(), new TestPostProcessor() }
+            );
+
+            var files = generator.Generate();
+
+            files.Length.should_be(1);
+
+            files[0].fileName.should_be("FileName0-Approved!");
+        };
     }
 }
 
@@ -93,10 +107,12 @@ public class TestPostProcessor : ICodeGenFilePostProcessor {
     public bool isEnabledByDefault { get { return true; } }
     public int priority { get { return 10; } }
 
-    public void PostProcess(CodeGenFile[] files) {
+    public CodeGenFile[] PostProcess(CodeGenFile[] files) {
         foreach(var file in files) {
             file.fileName += "-Approved!";
         }
+
+        return files;
     }
 }
 
@@ -106,9 +122,22 @@ public class Test2PostProcessor : ICodeGenFilePostProcessor {
     public bool isEnabledByDefault { get { return true; } }
     public int priority { get { return 0; } }
 
-    public void PostProcess(CodeGenFile[] files) {
+    public CodeGenFile[] PostProcess(CodeGenFile[] files) {
         foreach(var file in files) {
             file.fileName += "First!";
         }
+
+        return files;
+    }
+}
+
+public class Test3PostProcessor : ICodeGenFilePostProcessor {
+
+    public string name { get { return ""; } }
+    public bool isEnabledByDefault { get { return true; } }
+    public int priority { get { return 0; } }
+
+    public CodeGenFile[] PostProcess(CodeGenFile[] files) {
+        return new [] { files[0] };
     }
 }

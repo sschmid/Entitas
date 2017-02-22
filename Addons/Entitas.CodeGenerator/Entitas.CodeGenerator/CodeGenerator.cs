@@ -47,7 +47,7 @@ namespace Entitas.CodeGenerator {
 
             var generatedFiles = files.ToArray();
             foreach(var postProcessor in _postProcessors) {
-                postProcessor.PostProcess(generatedFiles);
+                generatedFiles = postProcessor.PostProcess(generatedFiles);
             }
 
             return generatedFiles;

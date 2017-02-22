@@ -9,15 +9,13 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string CONTEXT_TEMPLATE =
-@"using Entitas;
-
-public sealed partial class ${Context}Context : Context<${Context}Entity> {
+@"public sealed partial class ${Context}Context : Entitas.Context<${Context}Entity> {
 
     public ${Context}Context()
         : base(
             ${Lookup}.TotalComponents,
             0,
-            new ContextInfo(
+            new Entitas.ContextInfo(
                 ""${Context}"",
                 ${Lookup}.componentNames,
                 ${Lookup}.componentTypes

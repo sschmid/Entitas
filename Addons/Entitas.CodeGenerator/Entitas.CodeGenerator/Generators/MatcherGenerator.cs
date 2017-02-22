@@ -9,16 +9,14 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string MATCHER_TEMPLATE =
-@"using Entitas;
+@"public sealed partial class ${Context}Matcher {
 
-public sealed partial class ${Context}Matcher {
+    static Entitas.IMatcher<${Context}Entity> _matcher${Name};
 
-    static IMatcher<${Context}Entity> _matcher${Name};
-
-    public static IMatcher<${Context}Entity> ${Name} {
+    public static Entitas.IMatcher<${Context}Entity> ${Name} {
         get {
             if(_matcher${Name} == null) {
-                var matcher = (Matcher<${Context}Entity>)Matcher<${Context}Entity>.AllOf(${Index});
+                var matcher = (Entitas.Matcher<${Context}Entity>)Entitas.Matcher<${Context}Entity>.AllOf(${Index});
                 matcher.componentNames = ${ComponentNames};
                 _matcher${Name} = matcher;
             }
@@ -54,8 +52,9 @@ public sealed partial class ${Context}Matcher {
                 .Replace("${ComponentNames}", componentNames);
 
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar + "Matchers" +
-                Path.DirectorySeparatorChar + contextName + "Matcher" + data.GetComponentName() + ".cs",
+                contextName + Path.DirectorySeparatorChar +
+                "Components" + Path.DirectorySeparatorChar +
+                contextName + data.GetFullComponentName() + ".cs",
                 fileContent,
                 GetType().FullName
             );

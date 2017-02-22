@@ -6,15 +6,13 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Entitas;
-
-public sealed partial class GameContext : Context<GameEntity> {
+public sealed partial class GameContext : Entitas.Context<GameEntity> {
 
     public GameContext()
         : base(
             GameComponentsLookup.TotalComponents,
             0,
-            new ContextInfo(
+            new Entitas.ContextInfo(
                 "Game",
                 GameComponentsLookup.componentNames,
                 GameComponentsLookup.componentTypes

@@ -6,9 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Entitas;
-
 [Game][Entitas.CodeGenerator.Api.UniqueAttribute]
-public sealed partial class ISomeInterfaceComponent : IComponent {
+public sealed partial class ISomeInterfaceComponent : Entitas.IComponent {
     public ISomeInterface value;
 }

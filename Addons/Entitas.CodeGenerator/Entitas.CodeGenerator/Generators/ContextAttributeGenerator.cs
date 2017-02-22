@@ -9,9 +9,7 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string ATTRIBUTE_TEMPLATE =
-@"using Entitas.CodeGenerator.Api;
-
-public sealed class ${Context}Attribute : ContextAttribute {
+@"public sealed class ${Context}Attribute : Entitas.CodeGenerator.Api.ContextAttribute {
 
     public ${Context}Attribute() : base(""${Context}"") {
     }

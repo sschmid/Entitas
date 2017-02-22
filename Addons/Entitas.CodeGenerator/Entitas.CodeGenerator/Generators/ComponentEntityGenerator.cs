@@ -91,8 +91,9 @@ ${memberAssignment}
                 .Replace("${memberAssignment}", getMemberAssignment(memberInfos));
 
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar + "Components" +
-                Path.DirectorySeparatorChar + contextName + data.GetFullComponentName() + ".cs",
+                contextName + Path.DirectorySeparatorChar +
+                "Components" + Path.DirectorySeparatorChar +
+                contextName + data.GetFullComponentName() + ".cs",
                 fileContent,
                 GetType().FullName
             );

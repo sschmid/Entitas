@@ -9,9 +9,7 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string ENTITY_TEMPLATE =
-@"using Entitas;
-
-public sealed partial class ${Context}Entity : Entity {
+@"public sealed partial class ${Context}Entity : Entitas.Entity {
 }
 ";
 

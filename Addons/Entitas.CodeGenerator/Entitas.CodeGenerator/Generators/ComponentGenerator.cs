@@ -9,10 +9,8 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string COMPONENT_TEMPLATE =
-@"using Entitas;
-
-${Contexts}${Unique}${HideInBlueprintsInspector}
-public sealed partial class ${Name} : IComponent {
+@"${Contexts}${Unique}${HideInBlueprintsInspector}
+public sealed partial class ${Name} : Entitas.IComponent {
     public ${Type} value;
 }
 ";

@@ -46,13 +46,22 @@ ${componentTypes}
             var contextData = data
                 .OfType<ContextData>()
                 .ToArray();
+
             files.AddRange(generateEmptyLookup(contextData));
 
             var componentData = data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateIndex())
                 .ToArray();
-            files.AddRange(generateLookup(componentData));
+
+            var lookup = generateLookup(componentData);
+            var fileNames = new HashSet<string>(lookup.Select(file => file.fileName));
+
+            files = files
+                .Where(file => !fileNames.Contains(file.fileName))
+                .ToList();
+
+            files.AddRange(lookup);
 
             return files.ToArray();
         }

@@ -46,14 +46,15 @@ public static class GameComponentsLookup {
     public const int Test = 35;
     public const int Texture = 36;
     public const int Texture2D = 37;
-    public const int UnityObject = 38;
-    public const int UnsupportedObject = 39;
-    public const int Vector2 = 40;
-    public const int Vector3 = 41;
-    public const int Vector4 = 42;
-    public const int Velocity = 43;
+    public const int Unique = 38;
+    public const int UnityObject = 39;
+    public const int UnsupportedObject = 40;
+    public const int Vector2 = 41;
+    public const int Vector3 = 42;
+    public const int Vector4 = 43;
+    public const int Velocity = 44;
 
-    public const int TotalComponents = 44;
+    public const int TotalComponents = 45;
 
     public static readonly string[] componentNames = {
         "AnArray",
@@ -94,6 +95,7 @@ public static class GameComponentsLookup {
         "Test",
         "Texture",
         "Texture2D",
+        "Unique",
         "UnityObject",
         "UnsupportedObject",
         "Vector2",
@@ -141,6 +143,7 @@ public static class GameComponentsLookup {
         typeof(TestComponent),
         typeof(TextureComponent),
         typeof(Texture2DComponent),
+        typeof(UniqueComponent),
         typeof(UnityObjectComponent),
         typeof(UnsupportedObjectComponent),
         typeof(Vector2Component),

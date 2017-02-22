@@ -10,9 +10,7 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string STANDARD_COMPONENT_TEMPLATE =
-@"using Entitas;
-
-public partial class ${Context}Context {
+@"public partial class ${Context}Context {
 
     public ${Context}Entity ${name}Entity { get { return GetGroup(${Context}Matcher.${Name}).GetSingleEntity(); } }
     public ${Type} ${name} { get { return ${name}Entity.${name}; } }
@@ -20,7 +18,7 @@ public partial class ${Context}Context {
 
     public ${Context}Entity Set${Name}(${memberArgs}) {
         if(has${Name}) {
-            throw new EntitasException(""Could not set ${name}!\n"" + this + "" already has an entity with ${FullName}!"",
+            throw new Entitas.EntitasException(""Could not set ${name}!\n"" + this + "" already has an entity with ${FullName}!"",
                 ""You should check if the context already has a ${name}Entity before setting it or use context.Replace${Name}()."");
         }
         var entity = CreateEntity();
@@ -104,7 +102,7 @@ public partial class ${Context}Context {
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
-                "Unique" + contextName + data.GetFullComponentName() + ".cs",
+                contextName + data.GetFullComponentName() + ".cs",
                 fileContent,
                 GetType().FullName
             );

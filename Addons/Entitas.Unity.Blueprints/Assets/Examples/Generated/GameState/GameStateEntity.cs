@@ -6,7 +6,5 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Entitas;
-
-public sealed partial class GameStateEntity : Entity {
+public sealed partial class GameStateEntity : Entitas.Entity {
 }

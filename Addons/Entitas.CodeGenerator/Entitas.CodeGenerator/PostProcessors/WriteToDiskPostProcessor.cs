@@ -18,7 +18,7 @@ namespace Entitas.CodeGenerator {
             _directory = getSafeDir(directory);
         }
 
-        public void PostProcess(CodeGenFile[] files) {
+        public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             cleanDir();
 
             foreach(var file in files) {
@@ -29,6 +29,8 @@ namespace Entitas.CodeGenerator {
                 }
                 File.WriteAllText(fileName, file.fileContent);
             }
+
+            return files;
         }
 
         static string getSafeDir(string directory) {

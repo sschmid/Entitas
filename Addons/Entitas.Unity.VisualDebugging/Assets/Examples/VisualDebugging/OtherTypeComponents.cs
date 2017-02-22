@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Entitas;
+using Entitas.CodeGenerator.Api;
 using UnityEngine;
 
 public class CustomObject {
@@ -107,6 +108,11 @@ public class PropertyComponent : IComponent {
 public class PersonComponent : IComponent {
     public string name;
     public string gender;
+}
+
+[Game, Unique]
+public class UniqueComponent : IComponent {
+    public string value;
 }
 
 [Game]

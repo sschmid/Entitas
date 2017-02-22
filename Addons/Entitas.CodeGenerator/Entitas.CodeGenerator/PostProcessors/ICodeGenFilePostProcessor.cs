@@ -4,6 +4,6 @@
     public interface ICodeGenFilePostProcessor : ICodeGeneratorInterface{
 
         int priority { get; }
-        void PostProcess(CodeGenFile[] files);
+        CodeGenFile[] PostProcess(CodeGenFile[] files);
     }
 }

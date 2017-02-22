@@ -8,10 +8,12 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
         public int priority { get { return 90; } }
 
-        public void PostProcess(CodeGenFile[] files) {
+        public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {
                 file.fileContent = file.fileContent.Replace("\n", Environment.NewLine);
             }
+
+            return files;
         }
     }
 }

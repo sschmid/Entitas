@@ -6,9 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-using Entitas;
-
 [Game]
-public sealed partial class SomeStructComponent : IComponent {
+public sealed partial class SomeStructComponent : Entitas.IComponent {
     public SomeStruct value;
 }
