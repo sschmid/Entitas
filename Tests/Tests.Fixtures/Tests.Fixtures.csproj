@@ -56,7 +56,6 @@
     <Compile Include="Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generated\*.cs" />
     <Compile Include="Generated\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
