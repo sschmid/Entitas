@@ -83,18 +83,24 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
     }
 
     Systems createSomeSystems() {
-        return new Feature("Some Systems")
-            .Add(new SlowInitializeSystem())
-            .Add(new SlowInitializeExecuteSystem())
-            .Add(new FastSystem())
-            .Add(new SlowSystem())
-            .Add(new RandomDurationSystem())
-            .Add(new AReactiveSystem(_contexts))
+        return new SomeSystems(_contexts);
+    }
 
-            .Add(new RandomValueSystem(_contexts))
-            .Add(new ProcessRandomValueSystem(_contexts))
-            .Add(new CleanupSystem())
-            .Add(new TearDownSystem())
-            .Add(new MixedSystem());
+    class SomeSystems : Feature {
+
+        public SomeSystems(Contexts contexts) {
+            Add(new SlowInitializeSystem());
+            Add(new SlowInitializeExecuteSystem());
+            Add(new FastSystem());
+            Add(new SlowSystem());
+            Add(new RandomDurationSystem());
+            Add(new AReactiveSystem(contexts));
+
+            Add(new RandomValueSystem(contexts));
+            Add(new ProcessRandomValueSystem(contexts));
+            Add(new CleanupSystem());
+            Add(new TearDownSystem());
+            Add(new MixedSystem());
+        }
     }
 }

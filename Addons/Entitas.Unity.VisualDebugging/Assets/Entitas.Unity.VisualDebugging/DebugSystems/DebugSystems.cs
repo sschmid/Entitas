@@ -90,21 +90,21 @@ namespace Entitas.Unity.VisualDebugging {
 
         public bool paused;
 
-        readonly string _name;
+        string _name;
 
-        readonly List<ISystem> _systems;
-        readonly GameObject _gameObject;
-        readonly List<SystemInfo> _initializeSystemInfos;
-        readonly List<SystemInfo> _executeSystemInfos;
-        readonly List<SystemInfo> _cleanupSystemInfos;
-        readonly List<SystemInfo> _tearDownSystemInfos;
+        List<ISystem> _systems;
+        GameObject _gameObject;
+        List<SystemInfo> _initializeSystemInfos;
+        List<SystemInfo> _executeSystemInfos;
+        List<SystemInfo> _cleanupSystemInfos;
+        List<SystemInfo> _tearDownSystemInfos;
 
-        readonly Stopwatch _stopwatch;
+        Stopwatch _stopwatch;
 
         double _executeDuration;
         double _cleanupDuration;
 
-        public DebugSystems(string name = "Systems") {
+        protected void initialize(string name) {
             _name = name;
             _gameObject = new GameObject(name);
             _gameObject.AddComponent<DebugSystemsBehaviour>().Init(this);
