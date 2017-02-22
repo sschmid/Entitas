@@ -511,14 +511,15 @@ namespace Entitas.Unity.VisualDebugging {
         const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT = @"using System;
 using Entitas.Unity.VisualDebugging;
 
-// Please rename class name and file name
+// Please rename the class and the file
 public class Default_type_InstanceCreator : IDefaultInstanceCreator {{
+
     public bool HandlesType(Type type) {{
         return type == typeof({0});
     }}
 
     public object CreateDefault(Type type) {{
-        // return your implementation to create an instance of type {0}
+        // return an instance of type {0}
         throw new NotImplementedException();
     }}
 }}
@@ -528,13 +529,15 @@ public class Default_type_InstanceCreator : IDefaultInstanceCreator {{
 using Entitas;
 using Entitas.Unity.VisualDebugging;
 
+// Please rename the class and the file
 public class Type_TypeDrawer : ITypeDrawer {{
+
     public bool HandlesType(Type type) {{
         return type == typeof({0});
     }}
 
-    public object DrawAndGetNewValue(Type memberType, string memberName, object value, Entity entity, int index, IComponent component) {{
-        // return your implementation to draw the type {0}
+    public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {{
+        // draw the type {0}
         throw new NotImplementedException();
     }}
 }}";
