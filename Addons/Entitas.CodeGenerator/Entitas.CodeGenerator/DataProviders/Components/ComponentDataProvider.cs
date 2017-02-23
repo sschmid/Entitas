@@ -8,21 +8,30 @@ namespace Entitas.CodeGenerator {
         public override string name { get { return "Component (without namespace)"; } }
         public override bool isEnabledByDefault { get { return true; } }
 
-        public ComponentDataProvider() : this(Assembly.GetAssembly(typeof(IEntity)).GetTypes()) {
+        public ComponentDataProvider()
+            : this(Assembly.GetAssembly(typeof(IEntity)).GetTypes()) {
+        }
+        
+        public ComponentDataProvider(Type[] types)
+            : this(types, new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).contexts[0]) {
         }
 
-        public ComponentDataProvider(Type[] types)
-            : base(new IComponentDataProvider[] {
+        public ComponentDataProvider(Type[] types, string defaultContextName)
+            : base(getComponentDataProviders(defaultContextName), types) {
+        }
+
+        static IComponentDataProvider[] getComponentDataProviders(string defaultContextName) {
+            return new IComponentDataProvider[] {
                 new ComponentTypeComponentDataProvider(),
                 new ComponentNameComponentDataProvider(),
                 new MemberInfosComponentDataProvider(),
-                new ContextsComponentDataProvider(),
+                new ContextsComponentDataProvider(defaultContextName),
                 new IsUniqueComponentDataProvider(),
                 new UniquePrefixComponentDataProvider(),
                 new ShouldGenerateComponentComponentDataProvider(),
                 new ShouldGenerateMethodsComponentDataProvider(),
                 new ShouldGenerateComponentIndexComponentDataProvider()
-            }, types) {
+            };
         }
     }
 }

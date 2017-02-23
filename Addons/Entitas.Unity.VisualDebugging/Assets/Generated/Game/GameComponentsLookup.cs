@@ -35,26 +35,27 @@ public static class GameComponentsLookup {
     public const int MyFloat = 24;
     public const int MyInt = 25;
     public const int MyString = 26;
-    public const int Person = 27;
-    public const int Position = 28;
-    public const int Property = 29;
-    public const int Rect = 30;
-    public const int SomeClass = 31;
-    public const int SomeOtherClass = 32;
-    public const int SomeStruct = 33;
-    public const int SystemObject = 34;
-    public const int Test = 35;
-    public const int Texture = 36;
-    public const int Texture2D = 37;
-    public const int Unique = 38;
-    public const int UnityObject = 39;
-    public const int UnsupportedObject = 40;
-    public const int Vector2 = 41;
-    public const int Vector3 = 42;
-    public const int Vector4 = 43;
-    public const int Velocity = 44;
+    public const int NoContext = 27;
+    public const int Person = 28;
+    public const int Position = 29;
+    public const int Property = 30;
+    public const int Rect = 31;
+    public const int SomeClass = 32;
+    public const int SomeOtherClass = 33;
+    public const int SomeStruct = 34;
+    public const int SystemObject = 35;
+    public const int Test = 36;
+    public const int Texture = 37;
+    public const int Texture2D = 38;
+    public const int Unique = 39;
+    public const int UnityObject = 40;
+    public const int UnsupportedObject = 41;
+    public const int Vector2 = 42;
+    public const int Vector3 = 43;
+    public const int Vector4 = 44;
+    public const int Velocity = 45;
 
-    public const int TotalComponents = 45;
+    public const int TotalComponents = 46;
 
     public static readonly string[] componentNames = {
         "AnArray",
@@ -84,6 +85,7 @@ public static class GameComponentsLookup {
         "MyFloat",
         "MyInt",
         "MyString",
+        "NoContext",
         "Person",
         "Position",
         "Property",
@@ -132,6 +134,7 @@ public static class GameComponentsLookup {
         typeof(MyFloatComponent),
         typeof(MyIntComponent),
         typeof(MyStringComponent),
+        typeof(NoContextComponent),
         typeof(PersonComponent),
         typeof(PositionComponent),
         typeof(PropertyComponent),

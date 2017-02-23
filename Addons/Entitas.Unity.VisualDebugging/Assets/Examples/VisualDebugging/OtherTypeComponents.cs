@@ -115,6 +115,9 @@ public class UniqueComponent : IComponent {
     public string value;
 }
 
+public class NoContextComponent : IComponent {
+}
+
 [Game]
 public class ManyMembersComponent : IComponent {
     public string field1;

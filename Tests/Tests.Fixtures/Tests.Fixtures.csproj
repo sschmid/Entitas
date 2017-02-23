@@ -54,6 +54,7 @@
     <Compile Include="Fixtures\Components\NameAgeComponent.cs" />
     <Compile Include="Fixtures\TestMemberAttribute.cs" />
     <Compile Include="Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
+    <Compile Include="Fixtures\Components\NoContextComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generated\**\*.cs" />

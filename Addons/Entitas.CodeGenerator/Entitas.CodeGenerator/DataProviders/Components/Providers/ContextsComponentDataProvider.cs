@@ -6,8 +6,18 @@ namespace Entitas.CodeGenerator {
 
     public class ContextsComponentDataProvider : IComponentDataProvider {
 
+        readonly string _defaultContextName;
+
+        public ContextsComponentDataProvider(string defaultContextName) {
+            _defaultContextName = defaultContextName;
+        }
+
         public void Provide(Type type, ComponentData data) {
-            data.SetContextNames(GetContextNames(type));
+            var contextNames = GetContextNames(type);
+            if(contextNames.Length == 0) {
+                contextNames = new [] { _defaultContextName };
+            }
+            data.SetContextNames(contextNames);
         }
 
         public static string[] GetContextNames(Type type) {

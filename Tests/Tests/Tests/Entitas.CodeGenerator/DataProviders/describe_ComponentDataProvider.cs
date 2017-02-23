@@ -51,6 +51,12 @@ class describe_ComponentDataProvider : nspec {
                 d.GetContextNames()[1].should_be("Test2");
             };
 
+            it["sets first context as default when component has no context"] = () => {
+                var contextNames = getData<NoContextComponent>().GetContextNames();
+                contextNames.Length.should_be(1);
+                contextNames[0].should_be("Game");
+            };
+
             it["gets unique"] = () => {
                 d.IsUnique().GetType().should_be(typeof(bool));
                 d.IsUnique().should_be_false();

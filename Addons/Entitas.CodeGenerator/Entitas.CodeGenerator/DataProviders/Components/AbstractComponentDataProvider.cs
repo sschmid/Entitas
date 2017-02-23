@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGenerator.Api;
-using System.Reflection;
 
 namespace Entitas.CodeGenerator {
 
@@ -13,9 +12,6 @@ namespace Entitas.CodeGenerator {
 
         readonly Type[] _types;
         readonly IComponentDataProvider[] _dataProviders;
-
-        protected AbstractComponentDataProvider(IComponentDataProvider[] dataProviders) : this(dataProviders, Assembly.GetAssembly(typeof(IEntity)).GetTypes()) {
-        }
 
         protected AbstractComponentDataProvider(IComponentDataProvider[] dataProviders, Type[] types) {
             _types = types;
