@@ -134,13 +134,13 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static Func<Array> drawEditActions(Array array, Type elementType, int index) {
-            if(EntitasEditorLayout.MiniButtonLeft("▴")) {
+            if(EntitasEditorLayout.MiniButtonLeft("➚")) {
                 object defaultValue;
                 if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                     return () => arrayInsertAt(array, elementType, defaultValue, index);
                 }
             }
-            if(EntitasEditorLayout.MiniButton("▾")) {
+            if(EntitasEditorLayout.MiniButtonMid("➘")) {
                 object defaultValue;
                 if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                     return () => arrayInsertAt(array, elementType, defaultValue, index + 1);

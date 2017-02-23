@@ -336,7 +336,7 @@ namespace Entitas.Unity.VisualDebugging {
 
             if(!memberType.IsValueType) {
                 EditorGUILayout.EndVertical();
-                if(EntitasEditorLayout.MiniButton("x")) {
+                if(EntitasEditorLayout.MiniButton("×")) {
                     value = null;
                 }
                 EditorGUILayout.EndHorizontal();

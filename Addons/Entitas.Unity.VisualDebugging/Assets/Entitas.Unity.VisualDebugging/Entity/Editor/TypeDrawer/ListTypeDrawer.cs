@@ -30,14 +30,14 @@ namespace Entitas.Unity.VisualDebugging {
                     EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + i + "]", list[i],
                         entity, index, component, (newComponent, newValue) => list[i] = newValue);
 
-                    if(EntitasEditorLayout.MiniButtonLeft("▴")) {
+                    if(EntitasEditorLayout.MiniButtonLeft("➚")) {
                         object defaultValue;
                         if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                             var insertAt = i;
                             editAction = () => list.Insert(insertAt, defaultValue);
                         }
                     }
-                    if(EntitasEditorLayout.MiniButton("▾")) {
+                    if(EntitasEditorLayout.MiniButtonMid("➘")) {
                         object defaultValue;
                         if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                             var insertAt = i + 1;
