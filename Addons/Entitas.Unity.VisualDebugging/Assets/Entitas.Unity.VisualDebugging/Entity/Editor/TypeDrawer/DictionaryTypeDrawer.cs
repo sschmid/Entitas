@@ -29,10 +29,6 @@ namespace Entitas.Unity.VisualDebugging {
                     _keySearchTexts[componentType] = string.Empty;
                 } else {
                     EditorGUILayout.LabelField(memberName);
-
-                    if(dictionary.Count > 5) {
-                        _keySearchTexts[componentType] = EntitasEditorLayout.SearchTextField(_keySearchTexts[componentType]);
-                    }
                 }
 
                 var keyTypeName = keyType.ToCompilableString().ShortTypeName();
@@ -50,6 +46,12 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.EndHorizontal();
 
             if(dictionary.Count > 0) {
+
+                if(dictionary.Count > 5) {
+                    EditorGUILayout.Space();
+                    _keySearchTexts[componentType] = EntitasEditorLayout.SearchTextField(_keySearchTexts[componentType]);
+                }
+
                 EditorGUILayout.Space();
                 var indent = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = indent + 1;
