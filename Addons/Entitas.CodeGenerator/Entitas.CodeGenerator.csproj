@@ -71,6 +71,9 @@
     <Compile Include="Entitas.CodeGenerator\ICodeGeneratorInterface.cs" />
     <Compile Include="Entitas.CodeGenerator\PostProcessors\MergeFilesPostProcessor.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\MemberData.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\EntityIndex\EntityIndexData.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\EntityIndex\EntityIndexDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\EntityIndexGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator\" />
@@ -80,6 +83,7 @@
     <Folder Include="Entitas.CodeGenerator\DataProviders\Components\" />
     <Folder Include="Entitas.CodeGenerator\DataProviders\Components\Providers\" />
     <Folder Include="Entitas.CodeGenerator\DataProviders\Contexts\" />
+    <Folder Include="Entitas.CodeGenerator\DataProviders\EntityIndex\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">

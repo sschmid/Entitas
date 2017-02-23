@@ -36,6 +36,9 @@
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\CustomPrefixAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\DontGenerateAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\UniqueAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator.Api\Attributes\EntityIndexAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator.Api\Attributes\PrimaryEntityIndexAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator.Api\Attributes\AbstractEntityIndexAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator.Api\" />

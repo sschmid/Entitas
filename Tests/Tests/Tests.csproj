@@ -117,6 +117,7 @@
     <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_NamespaceComponentDataProvider.cs" />
     <Compile Include="Tests\Entitas\describe_ContextInfo.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasException.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_EntityIndexDataProvider.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
