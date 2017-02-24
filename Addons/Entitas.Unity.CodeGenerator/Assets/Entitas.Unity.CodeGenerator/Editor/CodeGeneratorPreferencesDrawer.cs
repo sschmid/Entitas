@@ -107,7 +107,7 @@ namespace Entitas.Unity.CodeGenerator {
             }
 
             availableTypes = instances
-                .Select(instance => instance.GetType().Name)
+                .Select(instance => instance.GetType().FullName)
                 .ToArray();
 
             availableNames = instances
@@ -116,7 +116,7 @@ namespace Entitas.Unity.CodeGenerator {
 
             return instances
                 .Where(instance => instance.isEnabledByDefault)
-                .Select(instance => instance.GetType().Name)
+                .Select(instance => instance.GetType().FullName)
                 .ToArray();
         }
 

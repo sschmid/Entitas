@@ -41,7 +41,7 @@ namespace Entitas.Unity.CodeGenerator {
 
         static T[] getEnabled<T>(string[] types) {
             return GetTypes<T>()
-                    .Where(type => types.Contains(type.Name))
+                    .Where(type => types.Contains(type.FullName))
                     .Select(type => (T)Activator.CreateInstance(type))
                     .ToArray();
         }
