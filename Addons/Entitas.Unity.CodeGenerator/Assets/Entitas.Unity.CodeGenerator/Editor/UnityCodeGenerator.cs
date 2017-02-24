@@ -23,13 +23,23 @@ namespace Entitas.Unity.CodeGenerator {
                 getEnabled<ICodeGenFilePostProcessor>(config.postProcessors)
             );
 
+            var progressOffset = 0f;
+
+            codeGenerator.OnProgress += (title, info, progress) => {
+                EditorUtility.DisplayProgressBar(title, info, progressOffset + progress / 2);
+            };
+
             var dryFiles = codeGenerator.DryRun();
+            progressOffset = 0.5f;
+            var files = codeGenerator.Generate();
+            EditorUtility.ClearProgressBar();
+
+            var totalGeneratedFiles = files.Select(file => file.fileName).Distinct().Count();
+
             var sloc = dryFiles
                 .Select(file => file.fileContent.ToUnixLineEndings())
                 .Sum(content => content.Split(new [] { '\n' }, StringSplitOptions.RemoveEmptyEntries).Length);
 
-            var files = codeGenerator.Generate();
-            var totalGeneratedFiles = files.Select(file => file.fileName).Distinct().Count();
             var loc = files
                 .Select(file => file.fileContent.ToUnixLineEndings())
                 .Sum(content => content.Split(new [] { '\n' }).Length);

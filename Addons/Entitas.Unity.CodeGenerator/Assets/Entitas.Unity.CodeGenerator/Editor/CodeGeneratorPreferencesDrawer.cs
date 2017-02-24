@@ -4,7 +4,6 @@ using System.Linq;
 using Entitas.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
-using System.IO;
 
 namespace Entitas.Unity.CodeGenerator {
 
