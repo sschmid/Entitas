@@ -47,14 +47,15 @@ namespace Entitas.Unity.VisualDebugging {
 
             if(dictionary.Count > 0) {
 
+                var indent = EditorGUI.indentLevel;
+                EditorGUI.indentLevel = indent + 1;
+
                 if(dictionary.Count > 5) {
                     EditorGUILayout.Space();
                     _keySearchTexts[componentType] = EntitasEditorLayout.SearchTextField(_keySearchTexts[componentType]);
                 }
 
                 EditorGUILayout.Space();
-                var indent = EditorGUI.indentLevel;
-                EditorGUI.indentLevel = indent + 1;
 
                 var keys = new ArrayList(dictionary.Keys);
                 for (int i = 0; i < keys.Count; i++) {
