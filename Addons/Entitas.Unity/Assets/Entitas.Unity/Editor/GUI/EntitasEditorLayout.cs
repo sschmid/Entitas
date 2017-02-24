@@ -110,51 +110,31 @@ namespace Entitas.Unity {
         }
 
         public static bool MiniButton(string c) {
-            if(c.Length == 1) {
-                var clicked = GUILayout.Button(c, EditorStyles.miniButton, GUILayout.Width(19));
-                if(clicked) {
-                    GUI.FocusControl(null);
-                }
-                return clicked;
-            }
-
-            var pressed = GUILayout.Button(c, EditorStyles.miniButton);
-            if(pressed) {
-                GUI.FocusControl(null);
-            }
-            return pressed;
+            return miniButton(c, EditorStyles.miniButton);
         }
 
         public static bool MiniButtonLeft(string c) {
-            if(c.Length == 1) {
-                var clicked = GUILayout.Button(c, EditorStyles.miniButtonLeft, GUILayout.Width(19));
-                if(clicked) {
-                    GUI.FocusControl(null);
-                }
-                return clicked;
-            }
+            return miniButton(c, EditorStyles.miniButtonLeft);
+        }
 
-            var pressed = GUILayout.Button(c, EditorStyles.miniButtonLeft);
-            if(pressed ) {
-                GUI.FocusControl(null);
-            }
-            return pressed ;
+        public static bool MiniButtonMid(string c) {
+            return miniButton(c, EditorStyles.miniButtonMid);
         }
 
         public static bool MiniButtonRight(string c) {
-            if(c.Length == 1) {
-                var clicked = GUILayout.Button(c, EditorStyles.miniButtonRight, GUILayout.Width(19));
-                if(clicked) {
-                    GUI.FocusControl(null);
-                }
-                return clicked;
-            }
+            return miniButton(c, EditorStyles.miniButtonRight);
+        }
 
-            var pressed = GUILayout.Button(c, EditorStyles.miniButtonRight);
-            if(pressed) {
+        static bool miniButton(string c, GUIStyle style) {
+            var options = c.Length == 1
+                           ? new [] { GUILayout.Width(19) }
+                           : new GUILayoutOption[0];
+
+            var clicked = GUILayout.Button(c, style, options);
+            if(clicked) {
                 GUI.FocusControl(null);
             }
-            return pressed;
+            return clicked;
         }
 
         const int DEFAULT_FOLDOUT_MARGIN = 11;
