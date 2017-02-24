@@ -53,8 +53,8 @@ namespace Entitas.CodeGenerator {
                 data.SetFullTypeName(componentName.AddComponentSuffix());
                 data.SetFullComponentName(componentName.AddComponentSuffix());
                 data.SetComponentName(componentName.RemoveComponentSuffix());
-                data.SetMemberInfos(new List<PublicMemberInfo> {
-                    new PublicMemberInfo(type, "value")
+                data.SetMemberData(new [] {
+                    new MemberData(type.ToCompilableString(), "value")
                 });
 
                 return data;

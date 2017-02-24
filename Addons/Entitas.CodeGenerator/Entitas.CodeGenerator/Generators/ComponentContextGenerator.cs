@@ -84,8 +84,8 @@ namespace Entitas.CodeGenerator {
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var memberInfos = data.GetMemberInfos();
-            var template = memberInfos.Count == 0
+            var memberData = data.GetMemberData();
+            var template = memberData.Length == 0
                                       ? FLAG_COMPONENT_TEMPLATE
                                       : STANDARD_COMPONENT_TEMPLATE;
 
@@ -96,8 +96,8 @@ namespace Entitas.CodeGenerator {
                 .Replace("${FullName}", data.GetFullComponentName())
                 .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + data.GetComponentName())
                 .Replace("${Type}", data.GetFullTypeName())
-                .Replace("${memberArgs}", getMemberArgs(memberInfos))
-                .Replace("${methodArgs}", getMethodArgs(memberInfos));
+                .Replace("${memberArgs}", getMemberArgs(memberData))
+                .Replace("${methodArgs}", getMethodArgs(memberData));
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
@@ -108,18 +108,18 @@ namespace Entitas.CodeGenerator {
             );
         }
 
-        string getMemberArgs(List<PublicMemberInfo> memberInfos) {
-            var args = memberInfos
+        string getMemberArgs(MemberData[] memberData) {
+            var args = memberData
                 .Select(info => MEMBER_ARGS_TEMPLATE
-                        .Replace("${MemberType}", info.type.ToCompilableString())
+                        .Replace("${MemberType}", info.type)
                         .Replace("${MemberName}", info.name.UppercaseFirst()))
                 .ToArray();
 
             return string.Join(", ", args);
         }
 
-        string getMethodArgs(List<PublicMemberInfo> memberInfos) {
-            var args = memberInfos
+        string getMethodArgs(MemberData[] memberData) {
+            var args = memberData
                 .Select(info => METHOD_ARGS_TEMPLATE.Replace("${MemberName}", info.name.UppercaseFirst()))
                 .ToArray();
 

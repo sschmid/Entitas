@@ -64,9 +64,9 @@ class describe_ComponentDataProvider : nspec {
                 getData<UniqueStandardComponent>().IsUnique().should_be_true();
             };
 
-            it["gets member infos"] = () => {
-                d.GetMemberInfos().GetType().should_be(typeof(List<PublicMemberInfo>));
-                d.GetMemberInfos().Count.should_be(1);
+            it["gets member data"] = () => {
+                d.GetMemberData().GetType().should_be(typeof(MemberData[]));
+                d.GetMemberData().Length.should_be(1);
             };
 
             it["gets generate component"] = () => {
@@ -148,10 +148,9 @@ class describe_ComponentDataProvider : nspec {
                 d.IsUnique().should_be_false();
             };
 
-            it["gets member infos"] = () => {
-                d.GetMemberInfos().GetType().should_be(typeof(List<PublicMemberInfo>));
-                d.GetMemberInfos().Count.should_be(1);
-                d.GetMemberInfos()[0].type.should_be(typeof(ClassToGenerate));
+            it["gets member data"] = () => {
+                d.GetMemberData().Length.should_be(1);
+                d.GetMemberData()[0].type.should_be(typeof(ClassToGenerate).ToCompilableString());
             };
 
             it["gets generate component"] = () => {

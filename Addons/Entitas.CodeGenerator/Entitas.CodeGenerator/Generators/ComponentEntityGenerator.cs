@@ -75,8 +75,8 @@ ${memberAssignment}
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + data.GetComponentName();
-            var memberInfos = data.GetMemberInfos();
-            var template = memberInfos.Count == 0
+            var memberData = data.GetMemberData();
+            var template = memberData.Length == 0
                                       ? FLAG_COMPONENT_TEMPLATE
                                       : STANDARD_COMPONENT_TEMPLATE;
 
@@ -87,8 +87,8 @@ ${memberAssignment}
                 .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + data.GetComponentName())
                 .Replace("${Type}", data.GetFullTypeName())
                 .Replace("${Index}", index)
-                .Replace("${memberArgs}", getMemberArgs(memberInfos))
-                .Replace("${memberAssignment}", getMemberAssignment(memberInfos));
+                .Replace("${memberArgs}", getMemberArgs(memberData))
+                .Replace("${memberAssignment}", getMemberAssignment(memberData));
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
@@ -99,10 +99,10 @@ ${memberAssignment}
             );
         }
 
-        string getMemberArgs(List<PublicMemberInfo> memberInfos) {
-            var args = memberInfos
+        string getMemberArgs(MemberData[] memberData) {
+            var args = memberData
                 .Select(info => MEMBER_ARGS_TEMPLATE
-                        .Replace("${MemberType}", info.type.ToCompilableString())
+                        .Replace("${MemberType}", info.type)
                         .Replace("${MemberName}", info.name.UppercaseFirst())
                        )
                 .ToArray();
@@ -110,10 +110,10 @@ ${memberAssignment}
             return string.Join(", ", args);
         }
 
-        string getMemberAssignment(List<PublicMemberInfo> memberInfos) {
-            var assignments = memberInfos
+        string getMemberAssignment(MemberData[] memberData) {
+            var assignments = memberData
                 .Select(info => MEMBER_ASSIGNMENT_TEMPLATE
-                        .Replace("${MemberType}", info.type.ToCompilableString())
+                        .Replace("${MemberType}", info.type)
                         .Replace("${memberName}", info.name)
                         .Replace("${MemberName}", info.name.UppercaseFirst())
                        )

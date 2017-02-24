@@ -45,7 +45,7 @@
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\ComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\ComponentTypeComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\IComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\MemberInfosComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\MemberDataComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\ContextsComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\IsUniqueComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\UniquePrefixComponentDataProvider.cs" />
@@ -70,6 +70,7 @@
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\NamespaceComponentNameComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\ICodeGeneratorInterface.cs" />
     <Compile Include="Entitas.CodeGenerator\PostProcessors\MergeFilesPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\MemberData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator\" />
