@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Linq;
 using UnityEditor;
-using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
 
@@ -23,41 +22,75 @@ namespace Entitas.Unity.VisualDebugging {
 
             var indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = indent + 1;
-            Action editAction = null;
+            Func<IList> editAction = null;
             for (int i = 0; i < list.Count; i++) {
+                var localIndex = i;
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + i + "]", list[i],
-                        entity, index, component, (newComponent, newValue) => list[i] = newValue);
+                    EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + localIndex + "]", list[localIndex],
+                                                   entity, index, component, (newComponent, newValue) => list[localIndex] = newValue);
 
-                    if(EntitasEditorLayout.MiniButtonLeft("➚")) {
-                        object defaultValue;
-                        if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
-                            var insertAt = i;
-                            editAction = () => list.Insert(insertAt, defaultValue);
-                        }
-                    }
-                    if(EntitasEditorLayout.MiniButtonMid("➘")) {
-                        object defaultValue;
-                        if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
-                            var insertAt = i + 1;
-                            editAction = () => list.Insert(insertAt, defaultValue);
-                        }
-                    }
-                    if(EntitasEditorLayout.MiniButtonRight("-")) {
-                        var removeAt = i;
-                        editAction = () => list.RemoveAt(removeAt);
+                    var action = drawEditActions(list, elementType, localIndex);
+                    if(action != null) {
+                        editAction = action;
                     }
                 }
                 EditorGUILayout.EndHorizontal();
             }
 
             if(editAction != null) {
-                editAction();
+                list = editAction();
             }
             EditorGUI.indentLevel = indent;
 
             return list;
+        }
+
+        static Func<IList> drawEditActions(IList list, Type elementType, int index) {
+            if(EntitasEditorLayout.MiniButtonLeft("↑")) {
+                if(index > 0) {
+                    return () => {
+                        var otherIndex = index - 1;
+                        var other = list[otherIndex];
+                        list[otherIndex] = list[index];
+                        list[index] = other;
+                        return list;
+                    };
+                }
+            }
+
+            if(EntitasEditorLayout.MiniButtonMid("↓")) {
+                if(index < list.Count - 1) {
+                    return () => {
+                        var otherIndex = index + 1;
+                        var other = list[otherIndex];
+                        list[otherIndex] = list[index];
+                        list[index] = other;
+                        return list;
+                    };
+                }
+            }
+
+            if(EntitasEditorLayout.MiniButtonMid("+")) {
+                object defaultValue;
+                if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                    var insertAt = index + 1;
+                    return () => {
+                        list.Insert(insertAt, defaultValue);
+                        return list;
+                    };
+                }
+            }
+
+            if(EntitasEditorLayout.MiniButtonRight("-")) {
+                var removeAt = index;
+                return () => {
+                    list.RemoveAt(removeAt);
+                    return list;
+                };
+            }
+
+            return null;
         }
 
         IList drawAddElement(IList list, string memberName, Type elementType) {

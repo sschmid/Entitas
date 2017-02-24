@@ -50,7 +50,7 @@ namespace Entitas.Unity.VisualDebugging {
                 EditorGUILayout.BeginHorizontal();
                 {
                     EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + localIndex + "]", array.GetValue(localIndex),
-                                                       entity, index, component, (newComponent, newValue) => array.SetValue(newValue, localIndex));
+                                                   entity, index, component, (newComponent, newValue) => array.SetValue(newValue, localIndex));
 
                     var action = drawEditActions(array, elementType, localIndex);
                     if(action != null) {
@@ -134,18 +134,37 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static Func<Array> drawEditActions(Array array, Type elementType, int index) {
-            if(EntitasEditorLayout.MiniButtonLeft("➚")) {
-                object defaultValue;
-                if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
-                    return () => arrayInsertAt(array, elementType, defaultValue, index);
+            if(EntitasEditorLayout.MiniButtonLeft("↑")) {
+                if(index > 0) {
+                    return () => {
+                        var otherIndex = index - 1;
+                        var other = array.GetValue(otherIndex);
+                        array.SetValue(array.GetValue(index), otherIndex);
+                        array.SetValue(other, index);
+                        return array;
+                    };
                 }
             }
-            if(EntitasEditorLayout.MiniButtonMid("➘")) {
+
+            if(EntitasEditorLayout.MiniButtonMid("↓")) {
+                if(index < array.Length - 1) {
+                    return () => {
+                        var otherIndex = index + 1;
+                        var other = array.GetValue(otherIndex);
+                        array.SetValue(array.GetValue(index), otherIndex);
+                        array.SetValue(other, index);
+                        return array;
+                    };
+                }
+            }
+
+            if(EntitasEditorLayout.MiniButtonMid("+")) {
                 object defaultValue;
                 if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                     return () => arrayInsertAt(array, elementType, defaultValue, index + 1);
                 }
             }
+
             if(EntitasEditorLayout.MiniButtonRight("-")) {
                 return () => arrayRemoveAt(array, elementType, index);
             }
