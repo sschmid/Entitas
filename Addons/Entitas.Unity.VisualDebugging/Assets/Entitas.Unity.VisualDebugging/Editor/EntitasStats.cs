@@ -11,10 +11,13 @@ namespace Entitas.Unity.VisualDebugging {
     public static class EntitasStats {
 
         [MenuItem("Entitas/Log Stats", false, 200)]
-        public static void LogStats() {
-            foreach(var stat in GetStats()) {
-                Debug.Log(stat.Key + ": " + stat.Value);
-            }
+        public static void ShowStats() {
+            var stats = string.Join("\n", GetStats()
+                                    .Select(kv => kv.Key + ": " + kv.Value)
+                                    .ToArray());
+
+            EditorUtility.DisplayDialog("Entitas Stats", stats, "Close");
+            Debug.Log(stats);
         }
 
         public static Dictionary<string, int> GetStats() {

@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEditor;
+using UnityEngine;
 
 namespace Entitas.Unity.VisualDebugging {
 
@@ -23,7 +24,15 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         protected override void drawContent(EntitasPreferencesConfig config) {
-            drawVisualDebugging();
+            EditorGUILayout.BeginHorizontal();
+            {
+                drawVisualDebugging();
+                if(GUILayout.Button("Log Stats", EditorStyles.miniButton)) {
+                    EntitasStats.ShowStats();
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+
 
             EditorGUILayout.Space();
 
