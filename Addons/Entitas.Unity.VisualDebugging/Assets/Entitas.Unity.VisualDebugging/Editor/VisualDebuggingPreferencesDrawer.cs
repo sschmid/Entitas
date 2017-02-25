@@ -27,7 +27,7 @@ namespace Entitas.Unity.VisualDebugging {
             EditorGUILayout.BeginHorizontal();
             {
                 drawVisualDebugging();
-                if(GUILayout.Button("Log Stats", EditorStyles.miniButton)) {
+                if(GUILayout.Button("Show Stats", EditorStyles.miniButton)) {
                     EntitasStats.ShowStats();
                 }
             }

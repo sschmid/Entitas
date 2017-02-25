@@ -11,8 +11,6 @@ namespace Entitas.Unity {
         public const string feedback_join_the_entitas_chat   = "Entitas/Feedback/Join the Entitas chat...";
         public const string feedback_entitas_wiki            = "Entitas/Feedback/Entitas wiki...";
         public const string feedback_donate                  = "Entitas/Feedback/Donate...";
-
-        public const string log_stats                        = "Entitas/Log Stats";
     }
 
     public static class EntitasMenuItemPriorities {
@@ -26,7 +24,5 @@ namespace Entitas.Unity {
         public const int feedback_join_the_entitas_chat      = 22;
         public const int feedback_entitas_wiki               = 23;
         public const int feedback_donate                     = 24;
-
-        public const int log_stats                           = 100;
     }
 }

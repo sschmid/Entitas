@@ -10,7 +10,7 @@ namespace Entitas.Unity.VisualDebugging {
 
     public static class EntitasStats {
 
-        [MenuItem("Entitas/Log Stats", false, 200)]
+        [MenuItem("Entitas/Show Stats", false, 200)]
         public static void ShowStats() {
             var stats = string.Join("\n", GetStats()
                                     .Select(kv => kv.Key + ": " + kv.Value)
@@ -38,10 +38,11 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         static Dictionary<string, int> getContexts(Type[] components) {
+            var defaultContext = new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).contexts[0];
             return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {
                 var contextNames = ContextsComponentDataProvider.GetContextNames(type);
                 if(contextNames.Length == 0) {
-                    contextNames = new [] { "Unassigned" };
+                    contextNames = new [] { defaultContext };
                 }
                 foreach(var contextName in contextNames) {
                     if(!contexts.ContainsKey(contextName)) {
