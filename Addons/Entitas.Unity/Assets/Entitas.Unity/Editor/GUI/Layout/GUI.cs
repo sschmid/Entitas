@@ -1,96 +1,20 @@
-using System;
+﻿using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity {
 
-    public static class EntitasEditorLayout {
-
-        /*
-         * 
-         * Editor Window
-         * 
-         */
-
-        public static void ShowWindow<T>(string title) where T : EditorWindow {
-            var window = EditorWindow.GetWindow<T>(true, title);
-            window.minSize = window.maxSize = new Vector2(415f, 520f);
-            window.Show();
-        }
-
-        public static Texture2D LoadTexture(string label) {
-            var assets = AssetDatabase.FindAssets(label);
-            if(assets.Length > 0) {
-                var guid = assets[0];
-                if(guid != null) {
-                    var path = AssetDatabase.GUIDToAssetPath(guid);
-                    return AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-                }
-            }
-
-            return null;
-        }
-
-        static float lastTextureHeight;
-
-        public static void DrawTexture(Texture2D texture) {
-            var ratio = (float)texture.width / (float)texture.height;
-            var rect = GUILayoutUtility.GetAspectRect(ratio, GUILayout.ExpandWidth(true));
-            GUI.DrawTexture(rect, texture, ScaleMode.ScaleAndCrop);
-        }
-
-        /*
-         * 
-         * Section
-         * 
-         */
-
-        public static bool DrawSectionHeaderToggle(string header, bool value) {
-            return GUILayout.Toggle(value, header, EntitasStyles.sectionHeader);
-        }
-
-        public static void BeginSectionContent() {
-            EditorGUILayout.BeginVertical(EntitasStyles.sectionContent);
-        }
-
-        public static void EndSectionContent() {
-            EditorGUILayout.EndVertical();
-        }
-
-        /*
-         * 
-         * Layout
-         * 
-         */
-
-        public static Rect BeginVerticalBox() {
-            return EditorGUILayout.BeginVertical(GUI.skin.box);
-        }
-
-        public static void EndVerticalBox() {
-            EditorGUILayout.EndVertical();
-        }
-
-        /*
-         * 
-         * GUI
-         * 
-         */
+    public static partial class EntitasEditorLayout {
 
         public static bool ObjectFieldButton(string label, string buttonText) {
             var clicked = false;
             EditorGUILayout.BeginHorizontal();
-            {
-
-                EditorGUILayout.LabelField(label, GUILayout.Width(146));
-
-                if(buttonText.Length > 24) {
-                    buttonText = "..." + buttonText.Substring(buttonText.Length - 24);
-                }
-
-                clicked = (GUILayout.Button(buttonText, EditorStyles.objectField));
+            EditorGUILayout.LabelField(label, GUILayout.Width(146));
+            if(buttonText.Length > 24) {
+                buttonText = "..." + buttonText.Substring(buttonText.Length - 24);
             }
+            clicked = (GUILayout.Button(buttonText, EditorStyles.objectField));
             EditorGUILayout.EndHorizontal();
 
             return clicked;
@@ -128,7 +52,7 @@ namespace Entitas.Unity {
         static bool miniButton(string c, GUIStyle style) {
             var options = c.Length == 1
                            ? new [] { GUILayout.Width(19) }
-                           : new GUILayoutOption[0];
+                : new GUILayoutOption[0];
 
             var clicked = GUILayout.Button(c, style, options);
             if(clicked) {
