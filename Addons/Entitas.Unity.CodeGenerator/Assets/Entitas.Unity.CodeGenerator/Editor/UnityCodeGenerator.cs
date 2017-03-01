@@ -26,12 +26,17 @@ namespace Entitas.Unity.CodeGenerator {
             var progressOffset = 0f;
 
             codeGenerator.OnProgress += (title, info, progress) => {
-                EditorUtility.DisplayProgressBar(title, info, progressOffset + progress / 2);
+                var cancel = EditorUtility.DisplayCancelableProgressBar(title, info, progressOffset + progress / 2);
+                if(cancel) {
+                    codeGenerator.Cancel();
+                }
             };
 
             var dryFiles = codeGenerator.DryRun();
+
             progressOffset = 0.5f;
             var files = codeGenerator.Generate();
+
             EditorUtility.ClearProgressBar();
 
             var totalGeneratedFiles = files.Select(file => file.fileName).Distinct().Count();

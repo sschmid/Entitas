@@ -64,6 +64,72 @@ class describe_CodeGenerator : nspec {
 
             files[0].fileName.should_be("FileName0-Approved!");
         };
+
+        it["cancels"] = () => {
+            var generator = new CodeGenerator(
+                new [] { new TestDataProvider() },
+                new [] { new TestCodeGenerator() },
+                new [] { new TestPostProcessor() }
+            );
+
+            generator.OnProgress += (title, info, progress) => generator.Cancel();
+
+            var files = generator.Generate();
+
+            files.Length.should_be(0);
+        };
+
+        it["cancels dry run"] = () => {
+            var generator = new CodeGenerator(
+                new [] { new TestDataProvider() },
+                new [] { new TestCodeGenerator() },
+                new [] { new TestPostProcessor() }
+            );
+
+            generator.OnProgress += (title, info, progress) => generator.Cancel();
+
+            var files = generator.DryRun();
+
+            files.Length.should_be(0);
+        };
+
+        it["can generate again after cancel"] = () => {
+            var generator = new CodeGenerator(
+                new [] { new TestDataProvider() },
+                new [] { new TestCodeGenerator() },
+                new [] { new TestPostProcessor() }
+            );
+
+            GeneratorProgress onProgress = (title, info, progress) => generator.Cancel();
+            generator.OnProgress += onProgress;
+
+            generator.Generate();
+
+            generator.OnProgress -= onProgress;
+
+            var files = generator.Generate();
+
+            files.Length.should_be(2);
+        };
+
+        it["can do dry run after cancel"] = () => {
+            var generator = new CodeGenerator(
+                new [] { new TestDataProvider() },
+                new [] { new TestCodeGenerator() },
+                new [] { new TestPostProcessor() }
+            );
+
+            GeneratorProgress onProgress = (title, info, progress) => generator.Cancel();
+            generator.OnProgress += onProgress;
+
+            generator.Generate();
+
+            generator.OnProgress -= onProgress;
+
+            var files = generator.DryRun();
+
+            files.Length.should_be(2);
+        };
     }
 }
 
