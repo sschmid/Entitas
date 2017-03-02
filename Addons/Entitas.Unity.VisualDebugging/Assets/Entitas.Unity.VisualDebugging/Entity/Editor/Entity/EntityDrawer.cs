@@ -2,74 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Entitas.CodeGenerator.Api;
 
 namespace Entitas.Unity.VisualDebugging {
 
-    public static class EntityDrawer {
-
-        struct ComponentInfo {
-            public int index;
-            public string name;
-            public Type type;
-        }
-
-        static Dictionary<IContext, bool[]> _contextToUnfoldedComponents;
-        static Dictionary<IContext, string[]> _contextToComponentMemberSearch;
-        static GUIStyle _foldoutStyle;
-        static Dictionary<int, GUIStyle[]> _coloredBoxStyles;
-
-        static IDefaultInstanceCreator[] _defaultInstanceCreators;
-        static ITypeDrawer[] _typeDrawers;
-        static IComponentDrawer[] _componentDrawers;
-        static ITypeEqualityComparer[] _typeEqualityComparers;
-
-        static string _componentNameSearchString = string.Empty;
-
-        static bool _isInitialized;
-
-        public static void Initialize() {
-            if(!_isInitialized) {
-                _isInitialized = true;
-
-                _contextToUnfoldedComponents = new Dictionary<IContext, bool[]>();
-                _contextToComponentMemberSearch = new Dictionary<IContext, string[]>();
-
-                var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
-                _defaultInstanceCreators = types
-                    .Where(type => type.ImplementsInterface<IDefaultInstanceCreator>())
-                    .Select(type => (IDefaultInstanceCreator)Activator.CreateInstance(type))
-                    .ToArray();
-
-                _typeDrawers = types
-                    .Where(type => type.ImplementsInterface<ITypeDrawer>())
-                    .Select(type => (ITypeDrawer)Activator.CreateInstance(type))
-                    .ToArray();
-
-                _componentDrawers = types
-                    .Where(type => type.ImplementsInterface<IComponentDrawer>())
-                    .Select(type => (IComponentDrawer)Activator.CreateInstance(type))
-                    .ToArray();
-
-                _typeEqualityComparers = types
-                    .Where(type => type.ImplementsInterface<ITypeEqualityComparer>())
-                    .Select(type => (ITypeEqualityComparer)Activator.CreateInstance(type))
-                    .ToArray();
-            }
-
-            // Unity bug
-            // NullReferenceException at EditorStyles.cs:136 when entering play-mode
-            try {
-                _foldoutStyle = new GUIStyle(EditorStyles.foldout);
-                _foldoutStyle.fontStyle = FontStyle.Bold;
-            } catch (Exception) {
-            }
-
-            _coloredBoxStyles = new Dictionary<int, GUIStyle[]>();
-        }
+    public static partial class EntityDrawer {
 
         public static void DrawEntity(IContext context, IEntity entity) {
             var bgColor = GUI.backgroundColor;
@@ -105,77 +43,16 @@ namespace Entitas.Unity.VisualDebugging {
             #endif
         }
 
-        public static void DrawComponents(IContext context, IEntity entity) {
-            bool[] unfoldedComponents;
-            if(!_contextToUnfoldedComponents.TryGetValue(context, out unfoldedComponents)) {
-                unfoldedComponents = new bool[context.totalComponents];
-                for (int i = 0; i < unfoldedComponents.Length; i++) {
-                    unfoldedComponents[i] = true;
-                }
-                _contextToUnfoldedComponents.Add(context, unfoldedComponents);
-            }
-
-            string[] componentMemberSearch;
-            if(!_contextToComponentMemberSearch.TryGetValue(context, out componentMemberSearch)) {
-                componentMemberSearch = new string[context.totalComponents];
-                for (int i = 0; i < componentMemberSearch.Length; i++) {
-                    componentMemberSearch[i] = string.Empty;
-                }
-                _contextToComponentMemberSearch.Add(context, componentMemberSearch);
-            }
-
-            EntitasEditorLayout.BeginVerticalBox();
-            {
-                EditorGUILayout.BeginHorizontal();
-                {
-                    EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
-                    if(EntitasEditorLayout.MiniButtonLeft("▸")) {
-                        for (int i = 0; i < unfoldedComponents.Length; i++) {
-                            unfoldedComponents[i] = false;
-                        }
-                    }
-                    if(EntitasEditorLayout.MiniButtonRight("▾")) {
-                        for (int i = 0; i < unfoldedComponents.Length; i++) {
-                            unfoldedComponents[i] = true;
-                        }
-                    }
-                }
-                EditorGUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                var index = drawAddComponentMenu(entity);
-                if(index >= 0) {
-                    var componentType = entity.contextInfo.componentTypes[index];
-                    var component = (IComponent)Activator.CreateInstance(componentType);
-                    entity.AddComponent(index, component);
-                }
-
-                EditorGUILayout.Space();
-
-                _componentNameSearchString = EntitasEditorLayout.SearchTextField(_componentNameSearchString);
-
-                EditorGUILayout.Space();
-
-                var indices = entity.GetComponentIndices();
-                var components = entity.GetComponents();
-                for (int i = 0; i < components.Length; i++) {
-                    DrawComponent(unfoldedComponents, componentMemberSearch, entity, indices[i], components[i]);
-                }
-            }
-            EntitasEditorLayout.EndVerticalBox();
-        }
-
         public static void DrawMultipleEntities(IContext context, IEntity[] entities) {
             EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var index = drawAddComponentMenu(entity);
+                var index = drawAddComponentMenu(context);
                 if(index >= 0) {
                     var componentType = entity.contextInfo.componentTypes[index];
                     foreach(var e in entities) {
-                        var component = (IComponent)Activator.CreateInstance(componentType);
+                        var component = e.CreateComponent(index, componentType);
                         e.AddComponent(index, component);
                     }
                 }
@@ -216,11 +93,57 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public static void DrawComponent(bool[] unfoldedComponents, string[] componentMemberSearch, IEntity entity, int index, IComponent component) {
+        public static void DrawComponents(IContext context, IEntity entity) {
+            var unfoldedComponents = getUnfoldedComponents(context);
+            var componentMemberSearch = getComponentMemberSearch(context);
+
+            EntitasEditorLayout.BeginVerticalBox();
+            {
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
+                    if(EntitasEditorLayout.MiniButtonLeft("▸")) {
+                        for (int i = 0; i < unfoldedComponents.Length; i++) {
+                            unfoldedComponents[i] = false;
+                        }
+                    }
+                    if(EntitasEditorLayout.MiniButtonRight("▾")) {
+                        for (int i = 0; i < unfoldedComponents.Length; i++) {
+                            unfoldedComponents[i] = true;
+                        }
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                var index = drawAddComponentMenu(context);
+                if(index >= 0) {
+                    var componentType = entity.contextInfo.componentTypes[index];
+                    var component = entity.CreateComponent(index, componentType);
+                    entity.AddComponent(index, component);
+                }
+
+                EditorGUILayout.Space();
+
+                componentNameSearchString = EntitasEditorLayout.SearchTextField(componentNameSearchString);
+
+                EditorGUILayout.Space();
+
+                var indices = entity.GetComponentIndices();
+                var components = entity.GetComponents();
+                for (int i = 0; i < components.Length; i++) {
+                    DrawComponent(unfoldedComponents, componentMemberSearch, context, entity, indices[i], components[i]);
+                }
+            }
+            EntitasEditorLayout.EndVerticalBox();
+        }
+
+        public static void DrawComponent(bool[] unfoldedComponents, string[] componentMemberSearch, IContext context, IEntity entity, int index, IComponent component) {
             var componentType = component.GetType();
             var componentName = componentType.Name.RemoveComponentSuffix();
-            if(EntitasEditorLayout.MatchesSearchString(componentName.ToLower(), _componentNameSearchString.ToLower())) {
-                var boxStyle = getColoredBoxStyle(entity.totalComponents, index);
+            if(EntitasEditorLayout.MatchesSearchString(componentName.ToLower(), componentNameSearchString.ToLower())) {
+                var boxStyle = getColoredBoxStyle(context, index);
                 EditorGUILayout.BeginVertical(boxStyle);
                 {
                     var memberInfos = componentType.GetPublicMemberInfos();
@@ -229,12 +152,10 @@ namespace Entitas.Unity.VisualDebugging {
                         if(memberInfos.Count == 0) {
                             EditorGUILayout.LabelField(componentName, EditorStyles.boldLabel);
                         } else {
-                            unfoldedComponents[index] = EntitasEditorLayout.Foldout(unfoldedComponents[index], componentName, _foldoutStyle);
-                            if(memberInfos.Count > 5) {
-                                componentMemberSearch[index] = EntitasEditorLayout.SearchTextField(componentMemberSearch[index]);
-                            } else {
-                                componentMemberSearch[index] = string.Empty;
-                            }
+                            unfoldedComponents[index] = EntitasEditorLayout.Foldout(unfoldedComponents[index], componentName, foldoutStyle);
+                            componentMemberSearch[index] = memberInfos.Count > 5
+                                                                      ? EntitasEditorLayout.SearchTextField(componentMemberSearch[index])
+                                                                      : string.Empty;
                         }
                         if(EntitasEditorLayout.MiniButton("-")) {
                             entity.RemoveComponent(index);
@@ -374,8 +295,8 @@ namespace Entitas.Unity.VisualDebugging {
             return false;
         }
 
-        static int drawAddComponentMenu(IEntity entity) {
-            var componentInfos = getComponentInfos(entity);
+        static int drawAddComponentMenu(IContext context) {
+            var componentInfos = getComponentInfos(context);
             var componentNames = componentInfos.Select(info => info.name).ToArray();
             var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
             if(index >= 0) {
@@ -383,80 +304,6 @@ namespace Entitas.Unity.VisualDebugging {
             }
 
             return -1;
-        }
-
-        static ComponentInfo[] getComponentInfos(IEntity entity) {
-            var infos = new List<ComponentInfo>(entity.contextInfo.componentTypes.Length);
-            for (int i = 0; i < entity.contextInfo.componentTypes.Length; ++i) {
-                var type = entity.contextInfo.componentTypes[i];
-                var name = entity.contextInfo.componentNames[i];
-                infos.Add(new ComponentInfo {
-                    index = i,
-                    name = name,
-                    type = type
-                });
-            }
-
-            return infos.ToArray();
-        }
-
-        static GUIStyle getColoredBoxStyle(int totalComponents, int index) {
-            GUIStyle[] styles;
-            if(!_coloredBoxStyles.TryGetValue(totalComponents, out styles)) {
-                styles = new GUIStyle[totalComponents];
-                for (int i = 0; i < styles.Length; i++) {
-                    var hue = (float)i / (float)totalComponents;
-                    var componentColor = Color.HSVToRGB(hue, 0.7f, 1f);
-                    componentColor.a = 0.15f;
-                    var style = new GUIStyle(GUI.skin.box);
-                    style.normal.background = createTexture(2, 2, componentColor);
-                    styles[i] = style;
-                }
-                _coloredBoxStyles.Add(totalComponents, styles);
-            }
-
-            return styles[index];
-        }
-
-        static Texture2D createTexture(int width, int height, Color color) {
-            var pixels = new Color[width * height];
-            for (int i = 0; i < pixels.Length; ++i) {
-                pixels[i] = color;
-            }
-            var result = new Texture2D(width, height);
-            result.SetPixels(pixels);
-            result.Apply();
-            return result;
-        }
-
-        static ITypeDrawer getTypeDrawer(Type type) {
-            foreach(var drawer in _typeDrawers) {
-                if(drawer.HandlesType(type)) {
-                    return drawer;
-                }
-            }
-
-            return null;
-        }
-
-        static IComponentDrawer getComponentDrawer(Type type) {
-            foreach(var drawer in _componentDrawers) {
-                if(drawer.HandlesType(type)) {
-                    return drawer;
-                }
-            }
-
-            return null;
-        }
-
-        static ITypeEqualityComparer getTypeEqualityComparer(Type type) {
-            foreach(var comparer in _typeEqualityComparers) {
-                if(comparer.HandlesType(type)) {
-                    return comparer;
-                }
-            }
-
-            return null;
         }
 
         static void drawUnsupportedType(Type memberType, string memberName, object value) {

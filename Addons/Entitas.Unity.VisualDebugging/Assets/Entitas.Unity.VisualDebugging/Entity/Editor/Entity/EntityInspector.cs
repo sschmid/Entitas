@@ -6,10 +6,6 @@ namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(EntityBehaviour)), CanEditMultipleObjects]
     public class EntityInspector : Editor {
 
-        void Awake() {
-            EntityDrawer.Initialize();
-        }
-
         public override void OnInspectorGUI() {
             if(targets.Length == 1) {
                 var entityBehaviour = (EntityBehaviour)target;

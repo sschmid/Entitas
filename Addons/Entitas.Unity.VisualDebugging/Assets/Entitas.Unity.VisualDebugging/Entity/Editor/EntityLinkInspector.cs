@@ -7,10 +7,6 @@ namespace Entitas.Unity.VisualDebugging {
     [CustomEditor(typeof(EntityLink))]
     public class EntityLinkInspector : Editor {
 
-        void Awake() {
-            EntityDrawer.Initialize();
-        }
-
         public override void OnInspectorGUI() {
             var link = (EntityLink)target;
 
