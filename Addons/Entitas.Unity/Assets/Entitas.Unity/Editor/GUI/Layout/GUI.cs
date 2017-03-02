@@ -76,12 +76,14 @@ namespace Entitas.Unity {
         }
 
         public static string SearchTextField(string searchString) {
+            var guiChanged = GUI.changed;
             GUILayout.BeginHorizontal();
             searchString = GUILayout.TextField(searchString, GUI.skin.FindStyle("ToolbarSeachTextField"));
             if(GUILayout.Button(string.Empty, GUI.skin.FindStyle("ToolbarSeachCancelButton"))) {
                 searchString = string.Empty;
             }
             GUILayout.EndHorizontal();
+            GUI.changed = guiChanged;
 
             return searchString;
         }
