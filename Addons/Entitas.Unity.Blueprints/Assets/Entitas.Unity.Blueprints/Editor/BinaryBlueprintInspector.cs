@@ -122,8 +122,6 @@ namespace Entitas.Unity.Blueprints {
             switchToContext();
 
             _entity.ApplyBlueprint(_blueprint);
-
-            EntityDrawer.Initialize();
         }
 
         void OnDisable() {

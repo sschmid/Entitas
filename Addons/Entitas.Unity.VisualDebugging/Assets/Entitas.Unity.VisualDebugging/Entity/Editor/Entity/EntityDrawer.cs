@@ -222,13 +222,13 @@ namespace Entitas.Unity.VisualDebugging {
                 return EditorGUI.EndChangeCheck();
             }
 
+            if(!memberType.IsValueType) {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.BeginVertical();
+            }
+
             EditorGUI.BeginChangeCheck();
             {
-                if(!memberType.IsValueType) {
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.BeginVertical();
-                }
-
                 var typeDrawer = getTypeDrawer(memberType);
                 if(typeDrawer != null) {
                     setValue(component, typeDrawer.DrawAndGetNewValue(memberType, memberName, value, component));
