@@ -11,7 +11,7 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(HashSet<>);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
             var elementType = memberType.GetGenericArguments()[0];
             var itemsToRemove = new ArrayList();
             var itemsToAdd = new ArrayList();
@@ -41,8 +41,8 @@ namespace Entitas.Unity.VisualDebugging {
                 foreach(var item in (IEnumerable)value) {
                     EditorGUILayout.BeginHorizontal();
                     {
-                        EntityDrawer.DrawAndSetElement(elementType, string.Empty, item,
-                                                       entity, index, component, (newComponent, newValue) => {
+                        EntityDrawer.DrawComponentMember(elementType, string.Empty, item,
+                                                         component, (newComponent, newValue) => {
                             itemsToRemove.Add(item);
                             itemsToAdd.Add(newValue);
                         });

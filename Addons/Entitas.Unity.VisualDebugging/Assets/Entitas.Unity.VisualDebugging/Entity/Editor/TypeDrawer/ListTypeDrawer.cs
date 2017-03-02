@@ -11,7 +11,7 @@ namespace Entitas.Unity.VisualDebugging {
             return type.GetInterfaces().Contains(typeof(IList));
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
             var list = (IList)value;
             var elementType = memberType.GetGenericArguments()[0];
             if(list.Count == 0) {
@@ -27,8 +27,8 @@ namespace Entitas.Unity.VisualDebugging {
                 var localIndex = i;
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + localIndex + "]", list[localIndex],
-                                                   entity, index, component, (newComponent, newValue) => list[localIndex] = newValue);
+                    EntityDrawer.DrawComponentMember(elementType, memberName + "[" + localIndex + "]", list[localIndex],
+                                                     component, (newComponent, newValue) => list[localIndex] = newValue);
 
                     var action = drawEditActions(list, elementType, localIndex);
                     if(action != null) {

@@ -13,7 +13,7 @@ public class CustomObjectDrawer : ITypeDrawer, IDefaultInstanceCreator {
         return new CustomObject("Default");
     }
 
-    public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
+    public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
         var myObject = (CustomObject)value;
         myObject.name = EditorGUILayout.TextField(memberName, myObject.name);
         return myObject;

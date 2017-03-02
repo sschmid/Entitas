@@ -9,7 +9,7 @@ namespace Entitas.Unity.VisualDebugging {
             return type == typeof(char);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
             var str = EditorGUILayout.TextField(memberName, ((char)value).ToString());
             return str.Length > 0 ? str[0] : default(char);
         }

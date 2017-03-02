@@ -10,7 +10,7 @@ namespace Entitas.Unity.VisualDebugging {
             return type == typeof(Bounds);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
             return EditorGUILayout.BoundsField(memberName, (Bounds)value);
         }
     }

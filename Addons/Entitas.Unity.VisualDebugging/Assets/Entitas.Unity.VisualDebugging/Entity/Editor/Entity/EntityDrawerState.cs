@@ -49,7 +49,6 @@ namespace Entitas.Unity.VisualDebugging {
         public static readonly IDefaultInstanceCreator[] _defaultInstanceCreators;
         public static readonly ITypeDrawer[] _typeDrawers;
         public static readonly IComponentDrawer[] _componentDrawers;
-        public static readonly ITypeEqualityComparer[] _typeEqualityComparers;
 
         static EntityDrawer() {
             var types = Assembly.GetAssembly(typeof(EntityInspector)).GetTypes();
@@ -66,11 +65,6 @@ namespace Entitas.Unity.VisualDebugging {
             _componentDrawers = types
                 .Where(type => type.ImplementsInterface<IComponentDrawer>())
                 .Select(type => (IComponentDrawer)Activator.CreateInstance(type))
-                .ToArray();
-
-            _typeEqualityComparers = types
-                .Where(type => type.ImplementsInterface<ITypeEqualityComparer>())
-                .Select(type => (ITypeEqualityComparer)Activator.CreateInstance(type))
                 .ToArray();
         }
 
@@ -162,16 +156,6 @@ namespace Entitas.Unity.VisualDebugging {
             foreach(var drawer in _typeDrawers) {
                 if(drawer.HandlesType(type)) {
                     return drawer;
-                }
-            }
-
-            return null;
-        }
-
-        static ITypeEqualityComparer getTypeEqualityComparer(Type type) {
-            foreach(var comparer in _typeEqualityComparers) {
-                if(comparer.HandlesType(type)) {
-                    return comparer;
                 }
             }
 

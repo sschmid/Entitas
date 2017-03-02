@@ -164,27 +164,31 @@ namespace Entitas.Unity.VisualDebugging {
                     EditorGUILayout.EndHorizontal();
 
                     if(unfoldedComponents[index]) {
+                        var newComponent = entity.CreateComponent(index, componentType);
+                        component.CopyPublicMemberValues(newComponent);
+
+                        var changed = false;
                         var componentDrawer = getComponentDrawer(componentType);
                         if(componentDrawer != null) {
-                            var newComponent = entity.CreateComponent(index, componentType);
-                            component.CopyPublicMemberValues(newComponent);
                             EditorGUI.BeginChangeCheck();
                             {
                                 componentDrawer.DrawComponent(newComponent);
                             }
-                            var changed = EditorGUI.EndChangeCheck();
-                            if(changed) {
-                                entity.ReplaceComponent(index, newComponent);
-                            } else {
-                                entity.GetComponentPool(index).Push(newComponent);
-                            }
+                            changed = EditorGUI.EndChangeCheck();
                         } else {
                             foreach(var info in memberInfos) {
                                 if(EntitasEditorLayout.MatchesSearchString(info.name.ToLower(), componentMemberSearch[index].ToLower())) {
-                                    DrawAndSetElement(info.type, info.name, info.GetValue(component),
-                                        entity, index, component, info.SetValue);
+                                    if(DrawComponentMember(info.type, info.name, info.GetValue(newComponent), newComponent, info.SetValue)) {
+                                        changed = true;
+                                    }
                                 }
                             }
+                        }
+
+                        if(changed) {
+                            entity.ReplaceComponent(index, newComponent);
+                        } else {
+                            entity.GetComponentPool(index).Push(newComponent);
                         }
                     }
                 }
@@ -192,78 +196,56 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        public static void DrawAndSetElement(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component, Action<IComponent, object> setValue) {
-            var newValue = DrawAndGetNewValue(memberType, memberName, value, entity, index, component);
-            if(DidValueChange(value, newValue)) {
-                var newComponent = entity.CreateComponent(index, component.GetType());
-                component.CopyPublicMemberValues(newComponent);
-                setValue(newComponent, newValue);
-                entity.ReplaceComponent(index, newComponent);
-            }
-        }
-
-        public static bool DidValueChange(object value, object newValue) {
-            if((value == null && newValue != null) || (value != null && newValue == null)) {
-                return true;
-            }
-
-            if(value != null && newValue != null) {
-                var comparer = getTypeEqualityComparer(value.GetType());
-                if(comparer != null && !comparer.Equals(value, newValue)) {
-                    return true;
-                }
-
-                if(!newValue.Equals(value)) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
+        public static bool DrawComponentMember(Type memberType, string memberName, object value, IComponent component, Action<IComponent, object> setValue) {
             if(value == null) {
-                var isUnityObject = memberType == typeof(UnityEngine.Object) || memberType.IsSubclassOf(typeof(UnityEngine.Object));
-                EditorGUILayout.BeginHorizontal();
+                EditorGUI.BeginChangeCheck();
                 {
-                    if(isUnityObject) {
-                        value = EditorGUILayout.ObjectField(memberName, (UnityEngine.Object)value, memberType, true);
-                    } else {
-                        EditorGUILayout.LabelField(memberName, "null");
-                    }
+                    var isUnityObject = memberType == typeof(UnityEngine.Object) || memberType.IsSubclassOf(typeof(UnityEngine.Object));
+                    EditorGUILayout.BeginHorizontal();
+                    {
+                        if(isUnityObject) {
+                            setValue(component, EditorGUILayout.ObjectField(memberName, (UnityEngine.Object)value, memberType, true));
+                        } else {
+                            EditorGUILayout.LabelField(memberName, "null");
+                        }
 
-                    if(EntitasEditorLayout.MiniButton("new " + memberType.ToCompilableString().ShortTypeName())) {
-                        object defaultValue;
-                        if(CreateDefault(memberType, out defaultValue)) {
-                            value = defaultValue;
+                        if(EntitasEditorLayout.MiniButton("new " + memberType.ToCompilableString().ShortTypeName())) {
+                            object defaultValue;
+                            if(CreateDefault(memberType, out defaultValue)) {
+                                setValue(component, defaultValue);
+                            }
                         }
                     }
+                    EditorGUILayout.EndHorizontal();
                 }
-                EditorGUILayout.EndHorizontal();
-                return value;
+
+                return EditorGUI.EndChangeCheck();
             }
 
-            if(!memberType.IsValueType) {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.BeginVertical();
-            }
-
-            var typeDrawer = getTypeDrawer(memberType);
-            if(typeDrawer != null) {
-                value = typeDrawer.DrawAndGetNewValue(memberType, memberName, value, entity, index, component);
-            } else {
-                drawUnsupportedType(memberType, memberName, value);
-            }
-
-            if(!memberType.IsValueType) {
-                EditorGUILayout.EndVertical();
-                if(EntitasEditorLayout.MiniButton("×")) {
-                    value = null;
+            EditorGUI.BeginChangeCheck();
+            {
+                if(!memberType.IsValueType) {
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.BeginVertical();
                 }
-                EditorGUILayout.EndHorizontal();
+
+                var typeDrawer = getTypeDrawer(memberType);
+                if(typeDrawer != null) {
+                    setValue(component, typeDrawer.DrawAndGetNewValue(memberType, memberName, value, component));
+                } else {
+                    drawUnsupportedType(memberType, memberName, value);
+                }
+
+                if(!memberType.IsValueType) {
+                    EditorGUILayout.EndVertical();
+                    if(EntitasEditorLayout.MiniButton("×")) {
+                        setValue(component, null);
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
             }
 
-            return value;
+            return EditorGUI.EndChangeCheck();
         }
 
         public static bool CreateDefault(Type type, out object defaultValue) {

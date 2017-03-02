@@ -10,17 +10,17 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsArray;
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
             var array = (Array)value;
             var elementType = memberType.GetElementType();
             var indent = EditorGUI.indentLevel;
 
             if(array.Rank == 1) {
-                array = drawRank1(array, memberName, elementType, indent, entity, index, component);
+                array = drawRank1(array, memberName, elementType, indent, component);
             } else if(array.Rank == 2) {
-                array = drawRank2(array, memberName, elementType, entity, index, component);
+                array = drawRank2(array, memberName, elementType, component);
             } else if(array.Rank == 3) {
-                array = drawRank3(array, memberName, elementType, entity, index, component);
+                array = drawRank3(array, memberName, elementType, component);
             }
 
             EditorGUI.indentLevel = indent;
@@ -34,7 +34,7 @@ namespace Entitas.Unity.VisualDebugging {
          *
          */
 
-        Array drawRank1(Array array, string memberName, Type elementType, int indent, IEntity entity, int index, IComponent component) {
+        Array drawRank1(Array array, string memberName, Type elementType, int indent, IComponent component) {
             var length = array.GetLength(0);
             if(length == 0) {
                 array = drawAddElement(array, memberName, elementType);
@@ -49,8 +49,8 @@ namespace Entitas.Unity.VisualDebugging {
                 var localIndex = i;
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + localIndex + "]", array.GetValue(localIndex),
-                                                   entity, index, component, (newComponent, newValue) => array.SetValue(newValue, localIndex));
+                    EntityDrawer.DrawComponentMember(elementType, memberName + "[" + localIndex + "]", array.GetValue(localIndex),
+                                                     component, (newComponent, newValue) => array.SetValue(newValue, localIndex));
 
                     var action = drawEditActions(array, elementType, localIndex);
                     if(action != null) {
@@ -91,15 +91,15 @@ namespace Entitas.Unity.VisualDebugging {
          *
          */
 
-        Array drawRank2(Array array, string memberName, Type elementType, IEntity entity, int index, IComponent component) {
+        Array drawRank2(Array array, string memberName, Type elementType, IComponent component) {
             EditorGUILayout.LabelField(memberName);
 
             for (int i = 0; i < array.GetLength(0); i++) {
                 var localIndex1 = i;
                 for (int j = 0; j < array.GetLength(1); j++) {
                     var localIndex2 = j;
-                    EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + localIndex1 + ", " + localIndex2 + "]", array.GetValue(localIndex1, localIndex2),
-                                                       entity, index, component, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2));
+                    EntityDrawer.DrawComponentMember(elementType, memberName + "[" + localIndex1 + ", " + localIndex2 + "]", array.GetValue(localIndex1, localIndex2),
+                                                     component, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2));
                 }
                 EditorGUILayout.Space();
             }
@@ -113,7 +113,7 @@ namespace Entitas.Unity.VisualDebugging {
          *
          */
 
-        Array drawRank3(Array array, string memberName, Type elementType, IEntity entity, int index, IComponent component) {
+        Array drawRank3(Array array, string memberName, Type elementType, IComponent component) {
             EditorGUILayout.LabelField(memberName);
 
             for (int i = 0; i < array.GetLength(0); i++) {
@@ -122,8 +122,8 @@ namespace Entitas.Unity.VisualDebugging {
                     var localIndex2 = j;
                     for (int k = 0; k < array.GetLength(2); k++) {
                         var localIndex3 = k;
-                        EntityDrawer.DrawAndSetElement(elementType, memberName + "[" + localIndex1 + ", " + localIndex2 + " ," + localIndex3 + "]", array.GetValue(localIndex1, localIndex2, localIndex3),
-                                                           entity, index, component, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2, localIndex3));
+                        EntityDrawer.DrawComponentMember(elementType, memberName + "[" + localIndex1 + ", " + localIndex2 + " ," + localIndex3 + "]", array.GetValue(localIndex1, localIndex2, localIndex3),
+                                                         component, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2, localIndex3));
                     }
                     EditorGUILayout.Space();
                 }
