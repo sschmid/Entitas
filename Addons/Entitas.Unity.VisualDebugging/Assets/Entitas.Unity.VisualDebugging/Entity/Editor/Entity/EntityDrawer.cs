@@ -233,7 +233,17 @@ namespace Entitas.Unity.VisualDebugging {
                 if(typeDrawer != null) {
                     setValue(component, typeDrawer.DrawAndGetNewValue(memberType, memberName, value, component));
                 } else {
-                    drawUnsupportedType(memberType, memberName, value);
+					drawUnsupportedType(memberType, memberName, value);
+					EditorGUILayout.BeginVertical();
+					{
+						EditorGUILayout.Space();
+						var infos = memberType.GetPublicMemberInfos();
+						for(int i = 0; i < infos.Count; i++) {
+							var info = infos[i];
+							EditorGUILayout.LabelField(info.name, info.GetValue(value).ToString());
+						}
+					}
+					EditorGUILayout.EndVertical();
                 }
 
                 if(!memberType.IsValueType) {
