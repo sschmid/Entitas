@@ -322,16 +322,20 @@ namespace Entitas.Unity.VisualDebugging {
         static void generateIDefaultInstanceCreator(string typeName) {
             var config = new VisualDebuggingConfig(EntitasPreferences.LoadConfig());
             var folder = config.defaultInstanceCreatorFolderPath;
-            var filePath = folder + "Default_type_InstanceCreator.cs";
-            var template = string.Format(DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT, typeName);
+            var filePath = folder + "Default" + typeName.ShortTypeName() + "InstanceCreator.cs";
+            var template = DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT
+                .Replace("${Type}", typeName)
+                .Replace("${ShortType}", typeName.ShortTypeName());
             generateTemplate(folder, filePath, template);
         }
 
         static void generateITypeDrawer(string typeName) {
             var config = new VisualDebuggingConfig(EntitasPreferences.LoadConfig());
             var folder = config.typeDrawerFolderPath;
-            var filePath = folder + "Type_TypeDrawer.cs";
-            var template = string.Format(TYPE_DRAWER_TEMPLATE_FORMAT, typeName);
+            var filePath = folder + typeName.ShortTypeName() + "TypeDrawer.cs";
+            var template = TYPE_DRAWER_TEMPLATE_FORMAT
+                .Replace("${Type}", typeName)
+                .Replace("${ShortType}", typeName.ShortTypeName());
             generateTemplate(folder, filePath, template);
         }
 
@@ -340,43 +344,44 @@ namespace Entitas.Unity.VisualDebugging {
                 Directory.CreateDirectory(folder);
             }
             File.WriteAllText(filePath, template);
-            AssetDatabase.Refresh();
             EditorApplication.isPlaying = false;
+            AssetDatabase.Refresh();
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(filePath);
         }
 
-        const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT = @"using System;
+        const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT =
+@"using System;
 using Entitas.Unity.VisualDebugging;
 
-// Please rename the class and the file
-public class Default_type_InstanceCreator : IDefaultInstanceCreator {{
+public class Default${ShortType}InstanceCreator : IDefaultInstanceCreator {
 
-    public bool HandlesType(Type type) {{
-        return type == typeof({0});
-    }}
+    public bool HandlesType(Type type) {
+        return type == typeof(${Type});
+    }
 
-    public object CreateDefault(Type type) {{
-        // return an instance of type {0}
+    public object CreateDefault(Type type) {
+        // TODO return an instance of type ${Type}
         throw new NotImplementedException();
-    }}
-}}
+    }
+}
 ";
 
-        const string TYPE_DRAWER_TEMPLATE_FORMAT = @"using System;
+        const string TYPE_DRAWER_TEMPLATE_FORMAT =
+@"using System;
 using Entitas;
 using Entitas.Unity.VisualDebugging;
 
-// Please rename the class and the file
-public class Type_TypeDrawer : ITypeDrawer {{
+public class ${ShortType}TypeDrawer : ITypeDrawer {
 
-    public bool HandlesType(Type type) {{
-        return type == typeof({0});
-    }}
+    public bool HandlesType(Type type) {
+        return type == typeof(${Type});
+    }
 
-    public object DrawAndGetNewValue(Type memberType, string memberName, object value, IEntity entity, int index, IComponent component) {{
-        // draw the type {0}
+    public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
+        // TODO draw the type ${Type}
         throw new NotImplementedException();
-    }}
-}}";
+    }
+}
+";
     }
 }
