@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Entitas.CodeGenerator;
 using NSpec;
 using My.Namespace;
@@ -186,7 +185,7 @@ class describe_ComponentDataProvider : nspec {
         };
 
         context["multiple custom component names"] = () => {
-            
+
             Type[] types = null;
             ComponentData[] data = null;
             ComponentData d1 = null;
