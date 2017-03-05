@@ -1,5 +1,5 @@
-﻿using NSpec;
-using Entitas.CodeGenerator;
+﻿using Entitas.CodeGenerator;
+using NSpec;
 
 class describe_EntityIndexDataProvider : nspec {
 
@@ -32,6 +32,9 @@ class describe_EntityIndexDataProvider : nspec {
             d.GetComponentType().GetType().should_be(typeof(string));
             d.GetComponentType().should_be("EntityIndexComponent");
 
+            d.GetComponentName().GetType().should_be(typeof(string));
+            d.GetComponentName().should_be("EntityIndex");
+
             d.GetMemberName().GetType().should_be(typeof(string));
             d.GetMemberName().should_be("value");
         };
@@ -51,6 +54,7 @@ class describe_EntityIndexDataProvider : nspec {
             d.GetContextNames()[0].should_be("Game");
             d.GetKeyType().should_be("string");
             d.GetComponentType().should_be("PrimaryEntityIndexComponent");
+            d.GetComponentName().should_be("PrimaryEntityIndex");
             d.GetMemberName().should_be("value");
         };
 
