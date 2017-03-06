@@ -153,9 +153,11 @@ namespace Entitas.Unity.VisualDebugging {
                             EditorGUILayout.LabelField(componentName, EditorStyles.boldLabel);
                         } else {
                             unfoldedComponents[index] = EntitasEditorLayout.Foldout(unfoldedComponents[index], componentName, foldoutStyle);
-                            componentMemberSearch[index] = memberInfos.Count > 5
-                                                                      ? EntitasEditorLayout.SearchTextField(componentMemberSearch[index])
-                                                                      : string.Empty;
+                            if(unfoldedComponents[index]) {
+                                componentMemberSearch[index] = memberInfos.Count > 5
+                                                                          ? EntitasEditorLayout.SearchTextField(componentMemberSearch[index])
+                                                                          : string.Empty;
+                            }
                         }
                         if(EntitasEditorLayout.MiniButton("-")) {
                             entity.RemoveComponent(index);
