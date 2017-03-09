@@ -41,6 +41,13 @@ ${contextAssignments}
 
 ${contextObservers}
     }
+
+    public void Reset() {
+        IContext[] contexts = allContexts;
+        for (int i = 0; i < contexts.Length; i++) {
+            contexts[i].Reset();
+        }
+    }
 }
 ";
 
