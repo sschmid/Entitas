@@ -40,6 +40,9 @@
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\PrimaryEntityIndexAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\AbstractEntityIndexAttribute.cs" />
     <Compile Include="Entitas.CodeGenerator.Api\Attributes\PostConstructorAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator.Api\Attributes\EntityIndexGetMethodAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator.Api\Attributes\CustomEntityIndexAttribute.cs" />
+    <Compile Include="Entitas.CodeGenerator.Api\Attributes\EntityIndexType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator.Api\" />

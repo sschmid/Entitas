@@ -1,4 +1,6 @@
-﻿using Entitas.CodeGenerator;
+﻿using System.Reflection;
+using Entitas.CodeGenerator;
+using MyNamespace;
 using NSpec;
 
 class describe_EntityIndexDataProvider : nspec {
@@ -13,18 +15,19 @@ class describe_EntityIndexDataProvider : nspec {
             data.Length.should_be(1);
             var d = ((EntityIndexData)data[0]);
 
-            d.IsPrimary().GetType().should_be(typeof(bool));
-            d.IsPrimary().should_be_false();
-
             d.GetEntityIndexType().GetType().should_be(typeof(string));
-            d.GetEntityIndexType().should_be("EntityIndex");
+            d.GetEntityIndexType().should_be("Entitas.EntityIndex");
 
-            d.GetEntityIndexName().should_be("EntityIndex");
+            d.IsCustom().GetType().should_be(typeof(bool));
+            d.IsCustom().should_be_false();
+
             d.GetEntityIndexName().GetType().should_be(typeof(string));
+            d.GetEntityIndexName().should_be("EntityIndex");
 
             d.GetContextNames().GetType().should_be(typeof(string[]));
-            d.GetContextNames().Length.should_be(1);
-            d.GetContextNames()[0].should_be("Game");
+            d.GetContextNames().Length.should_be(2);
+            d.GetContextNames()[0].should_be("Test");
+            d.GetContextNames()[1].should_be("Test2");
 
             d.GetKeyType().GetType().should_be(typeof(string));
             d.GetKeyType().should_be("string");
@@ -47,8 +50,8 @@ class describe_EntityIndexDataProvider : nspec {
             data.Length.should_be(1);
             var d = ((EntityIndexData)data[0]);
 
-            d.IsPrimary().should_be_true();
-            d.GetEntityIndexType().should_be("PrimaryEntityIndex");
+            d.GetEntityIndexType().should_be("Entitas.PrimaryEntityIndex");
+            d.IsCustom().should_be_false();
             d.GetEntityIndexName().should_be("PrimaryEntityIndex");
             d.GetContextNames().Length.should_be(1);
             d.GetContextNames()[0].should_be("Game");
@@ -63,6 +66,26 @@ class describe_EntityIndexDataProvider : nspec {
             var provider = new EntityIndexDataProvider(types);
             var data = provider.GetData();
             data.Length.should_be(0);
+        };
+
+        it["creates data for custom entity index class"] = () => {
+            var types = new [] { typeof(CustomEntityIndex) };
+            var provider = new EntityIndexDataProvider(types);
+            var data = provider.GetData();
+
+            data.Length.should_be(1);
+            var d = ((EntityIndexData)data[0]);
+
+            d.GetEntityIndexType().should_be("MyNamespace.CustomEntityIndex");
+            d.IsCustom().should_be_true();
+            d.GetEntityIndexName().should_be("MyNamespaceCustomEntityIndex");
+            d.GetContextNames().Length.should_be(1);
+            d.GetContextNames()[0].should_be("Test");
+
+            var methods = d.GetCustomMethods();
+            methods.GetType().should_be(typeof(MethodInfo[]));
+            methods.Length.should_be(2);
+        };
         };
     }
 }

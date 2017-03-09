@@ -41,5 +41,14 @@ public partial class Contexts : Entitas.IContexts {
 
         CreateContextObserver(game);
         CreateContextObserver(gameState);
+
+        var postConstructors = System.Linq.Enumerable.Where(
+            GetType().GetMethods(),
+            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGenerator.Api.PostConstructorAttribute))
+        );
+
+        foreach(var postConstructor in postConstructors) {
+            postConstructor.Invoke(this, null);
+        }
     }
 }

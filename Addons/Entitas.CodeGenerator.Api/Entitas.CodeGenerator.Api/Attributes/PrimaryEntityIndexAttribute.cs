@@ -2,10 +2,10 @@
 
 namespace Entitas.CodeGenerator.Api {
 
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class)]
     public class PrimaryEntityIndexAttribute : AbstractEntityIndexAttribute {
 
-        public PrimaryEntityIndexAttribute() : base("PrimaryEntityIndex", true) {
+        public PrimaryEntityIndexAttribute() : base(EntityIndexType.PrimaryEntityIndex) {
         }
     }
 }
