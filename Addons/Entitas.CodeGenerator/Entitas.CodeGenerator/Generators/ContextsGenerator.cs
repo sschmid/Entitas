@@ -50,6 +50,13 @@ ${contextObservers}
             postConstructor.Invoke(this, null);
         }
     }
+
+    public void Reset() {
+        Entitas.IContext[] contexts = allContexts;
+        for (int i = 0; i < contexts.Length; i++) {
+            contexts[i].Reset();
+        }
+    }
 }
 ";
 

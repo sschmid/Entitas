@@ -305,10 +305,9 @@ namespace Entitas {
             }
         }
 
-        /// Resets the context (clears all groups, destroys all entities and
+        /// Resets the context (destroys all entities and
         /// resets creationIndex back to 0).
         public void Reset() {
-            ClearGroups();
             DestroyAllEntities();
             ResetCreationIndex();
 
