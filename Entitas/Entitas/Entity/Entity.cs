@@ -358,6 +358,7 @@ namespace Entitas {
         /// release it manually at some point.
         public void Release(object owner) {
             _retainCount -= 1;
+            _toStringCache = null;
 
 #if !ENTITAS_FAST_AND_UNSAFE
             if(!owners.Remove(owner)) {
@@ -366,9 +367,6 @@ namespace Entitas {
 #endif
 
             if(_retainCount == 0) {
-                // TODO Test, should be outside of condition?
-                _toStringCache = null;
-
                 if(OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }

@@ -592,6 +592,7 @@ class describe_Entity : nspec {
 
                     it["updates cache when entity gets released"] = () => {
                         e.Retain(this);
+                        e.Retain(new object());
                         cache = e.ToString();
                         e.Release(this);
                         e.ToString().should_not_be_same(cache);
