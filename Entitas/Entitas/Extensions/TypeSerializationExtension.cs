@@ -59,7 +59,6 @@ namespace Entitas {
             return split[split.Length - 1];
         }
 
-        // TODO Use eveywhere
         public static string RemoveDots(this string fullTypeName) {
             return fullTypeName.Replace(".", string.Empty);
         }
