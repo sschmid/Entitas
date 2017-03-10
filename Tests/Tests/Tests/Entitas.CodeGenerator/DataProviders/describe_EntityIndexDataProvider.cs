@@ -86,6 +86,13 @@ class describe_EntityIndexDataProvider : nspec {
             methods.GetType().should_be(typeof(MethodInfo[]));
             methods.Length.should_be(2);
         };
+
+        it["ignores non IComponent"] = () => {
+            var types = new [] { typeof(ClassWithEntitIndexAttribute) };
+            var provider = new EntityIndexDataProvider(types);
+            var data = provider.GetData();
+
+            data.Length.should_be(0);
         };
     }
 }

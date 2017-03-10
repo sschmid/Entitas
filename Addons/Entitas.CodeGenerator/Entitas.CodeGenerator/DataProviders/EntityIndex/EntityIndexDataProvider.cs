@@ -28,10 +28,9 @@ namespace Entitas.CodeGenerator {
         }
 
         public CodeGeneratorData[] GetData() {
-
-            // TODO Only on IComponents
             var entityIndexData = _types
                 .Where(type => !type.IsAbstract)
+                .Where(type => type.ImplementsInterface<IComponent>())
                 .ToDictionary(
                     type => type,
                     type => type.GetPublicMemberInfos())
