@@ -52,7 +52,7 @@ ${contextObservers}
     }
 
     public void Reset() {
-        Entitas.IContext[] contexts = allContexts;
+        var contexts = allContexts;
         for (int i = 0; i < contexts.Length; i++) {
             contexts[i].Reset();
         }
