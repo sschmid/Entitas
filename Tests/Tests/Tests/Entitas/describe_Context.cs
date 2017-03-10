@@ -754,12 +754,14 @@ class describe_Context : nspec {
                     var nameAgeComponent = new NameAgeComponent();
                     nameAgeComponent.name = "Max";
 
-                    ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
-                    entityIndex.HasEntity("Max").should_be_true();
+                    var e = ctx.CreateEntity();
+                    e.AddComponent(CID.ComponentA, nameAgeComponent);
+                    
+                    entityIndex.GetEntity("Max").should_be_same(e);
 
                     ctx.DeactivateAndRemoveEntityIndices();
 
-                    entityIndex.HasEntity("Max").should_be_false();
+                    entityIndex.GetEntity("Max").should_be_null();
                 };
 
                 it["removes EntityIndex"] = expect<ContextEntityIndexDoesNotExistException>(() => {

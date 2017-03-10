@@ -26,16 +26,8 @@ class describe_EntityIndex : nspec {
 
             context["when entity for key doesn't exist"] = () => {
 
-                it["doesn't have entity"] = () => {
-                    index.HasEntity("unknownKey").should_be_false();
-                };
-
-                it["throws exception when attempting to get entity"] = expect<EntityIndexException>(() => {
-                    index.GetEntity("unknownKey");
-                });
-
-                it["returns null when trying to get entity"] = () => {
-                    index.TryGetEntity("unknownKey").should_be_null();
+                it["returns null when getting entity for unknown key"] = () => {
+                    index.GetEntity("unknownKey").should_be_null();
                 };
             };
 
@@ -51,16 +43,8 @@ class describe_EntityIndex : nspec {
                     entity.AddComponent(CID.ComponentA, nameAgeComponent);
                 };
 
-                it["has entity"] = () => {
-                    index.HasEntity(name).should_be_true();
-                };
-
                 it["gets entity for key"] = () => {
                     index.GetEntity(name).should_be_same(entity);
-                };
-
-                it["gets entity when trying"] = () => {
-                    index.TryGetEntity(name).should_be_same(entity);
                 };
 
                 it["retains entity"] = () => {
@@ -74,12 +58,12 @@ class describe_EntityIndex : nspec {
                             ? nameAge.name
                             : ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
                     });
-                    newIndex.HasEntity(name).should_be_true();
+                    newIndex.GetEntity(name).should_be_same(entity);
                 };
 
                 it["releases and removes entity from index when component gets removed"] = () => {
                     entity.RemoveComponent(CID.ComponentA);
-                    index.HasEntity(name).should_be_false();
+                    index.GetEntity(name).should_be_null();
                     entity.retainCount.should_be(1); // Context
                 };
 
@@ -97,7 +81,7 @@ class describe_EntityIndex : nspec {
                     };
 
                     it["clears index and releases entity"] = () => {
-                        index.HasEntity(name).should_be_false();
+                        index.GetEntity(name).should_be_null();
                         entity.retainCount.should_be(2); // Context, Group
                     };
 
@@ -105,7 +89,7 @@ class describe_EntityIndex : nspec {
                         var nameAgeComponent = new NameAgeComponent();
                         nameAgeComponent.name = name;
                         ctx.CreateEntity().AddComponent(CID.ComponentA, nameAgeComponent);
-                        index.HasEntity(name).should_be_false();
+                        index.GetEntity(name).should_be_null();
                     };
 
                     context["when activated"] = () => {
@@ -115,7 +99,7 @@ class describe_EntityIndex : nspec {
                         };
 
                         it["has existing entity"] = () => {
-                            index.HasEntity(name).should_be_true();
+                            index.GetEntity(name).should_be_same(entity);
                         };
 
                         it["adds new entities"] = () => {
@@ -124,7 +108,7 @@ class describe_EntityIndex : nspec {
                             entity = ctx.CreateEntity();
                             entity.AddComponent(CID.ComponentA, nameAgeComponent);
 
-                            index.HasEntity("Jack").should_be_true();
+                            index.GetEntity("Jack").should_be_same(entity);
                         };
                     };
                 };
@@ -167,11 +151,6 @@ class describe_EntityIndex : nspec {
                     #endif
                 };
 
-                it["has entity"] = () => {
-                    index.HasEntity(name + "1").should_be_true();
-                    index.HasEntity(name + "2").should_be_true();
-                };
-
                 it["gets entity for key"] = () => {
                     index.GetEntity(name + "1").should_be_same(entity);
                     index.GetEntity(name + "2").should_be_same(entity);
@@ -179,8 +158,8 @@ class describe_EntityIndex : nspec {
 
                 it["releases and removes entity from index when component gets removed"] = () => {
                     entity.RemoveComponent(CID.ComponentA);
-                    index.HasEntity(name + "1").should_be_false();
-                    index.HasEntity(name + "2").should_be_false();
+                    index.GetEntity(name + "1").should_be_null();
+                    index.GetEntity(name + "2").should_be_null();
                     entity.retainCount.should_be(1);
                     #if !ENTITAS_FAST_AND_UNSAFE
                     entity.owners.should_not_contain(index);

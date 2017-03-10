@@ -132,5 +132,16 @@ class describe_TypeSerializationExtension : nspec {
                 "Namespace.Module.MyClass".ShortTypeName().should_be("MyClass");
             };
         };
+
+        context["removing dots"] = () => {
+
+            it["returns type name for short type name"] = () => {
+                "MyClass".RemoveDots().should_be("MyClass");
+            };
+
+            it["returns type name without dots for full type name"] = () => {
+                "Namespace.Module.MyClass".RemoveDots().should_be("NamespaceModuleMyClass");
+            };
+        };
     }
 }

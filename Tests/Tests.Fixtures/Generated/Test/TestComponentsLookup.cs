@@ -13,15 +13,17 @@ public static class TestComponentsLookup {
     public const int NameAge = 10;
     public const int NewCustomNameComponent1 = 11;
     public const int NewCustomNameComponent2 = 12;
-    public const int Standard = 13;
-    public const int StructToGenerate = 14;
-    public const int Test2Context = 15;
-    public const int UniqueFlag = 16;
-    public const int UniqueMyNamespace = 17;
-    public const int UniqueMyNamespaceFlag = 18;
-    public const int UniqueStandard = 19;
+    public const int Position = 13;
+    public const int Size = 14;
+    public const int Standard = 15;
+    public const int StructToGenerate = 16;
+    public const int Test2Context = 17;
+    public const int UniqueFlag = 18;
+    public const int UniqueMyNamespace = 19;
+    public const int UniqueMyNamespaceFlag = 20;
+    public const int UniqueStandard = 21;
 
-    public const int TotalComponents = 20;
+    public const int TotalComponents = 22;
 
     public static readonly string[] componentNames = {
         "ClassToGenerate",
@@ -37,6 +39,8 @@ public static class TestComponentsLookup {
         "NameAge",
         "NewCustomNameComponent1",
         "NewCustomNameComponent2",
+        "Position",
+        "Size",
         "Standard",
         "StructToGenerate",
         "Test2Context",
@@ -60,6 +64,8 @@ public static class TestComponentsLookup {
         typeof(NameAgeComponent),
         typeof(NewCustomNameComponent1Component),
         typeof(NewCustomNameComponent2Component),
+        typeof(PositionComponent),
+        typeof(SizeComponent),
         typeof(StandardComponent),
         typeof(StructToGenerateComponent),
         typeof(Test2ContextComponent),

@@ -32,24 +32,7 @@ namespace Entitas {
             indexEntities(_group);
         }
 
-        public bool HasEntity(TKey key) {
-            return _index.ContainsKey(key);
-        }
-
         public TEntity GetEntity(TKey key) {
-            var entity = TryGetEntity(key);
-            if(entity == null) {
-                throw new EntityIndexException(
-                    "Entity for key '" + key + "' doesn't exist!",
-                    "You should check if an entity with that key exists " +
-                    "before getting it."
-                );
-            }
-
-            return entity;
-        }
-
-        public TEntity TryGetEntity(TKey key) {
             TEntity entity;
             _index.TryGetValue(key, out entity);
             return entity;

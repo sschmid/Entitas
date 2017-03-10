@@ -26,6 +26,7 @@ namespace Entitas.CodeGenerator {
         }
     }
 
+    // TODO Rename
     public static class ContextCodeGeneratorDataExtension {
 
         public const string CONTEXT_NAME = "context_name";

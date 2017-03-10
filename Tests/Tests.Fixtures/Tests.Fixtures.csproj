@@ -55,6 +55,11 @@
     <Compile Include="Fixtures\TestMemberAttribute.cs" />
     <Compile Include="Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
     <Compile Include="Fixtures\Components\NoContextComponent.cs" />
+    <Compile Include="Fixtures\Components\EntityIndexComponent.cs" />
+    <Compile Include="Fixtures\Components\AbstractEntityIndexComponent.cs" />
+    <Compile Include="Fixtures\Components\PrimaryEntityIndexComponent.cs" />
+    <Compile Include="Fixtures\CustomEntityIndex.cs" />
+    <Compile Include="Fixtures\ClassWithEntitIndexAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generated\**\*.cs" />
