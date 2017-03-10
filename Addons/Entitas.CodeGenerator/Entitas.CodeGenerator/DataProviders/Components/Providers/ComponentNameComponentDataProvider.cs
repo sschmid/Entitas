@@ -11,7 +11,7 @@ namespace Entitas.CodeGenerator {
         }
     }
 
-    public static class ComponentNameComponentDataProviderExtension {
+    public static class ComponentNameComponentDataExtension {
 
         public const string COMPONENT_FULL_COMPONENT_NAME = "component_fullComponentName";
         public const string COMPONENT_COMPONENT_NAME = "component_componentName";

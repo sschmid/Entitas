@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas.CodeGenerator;
 using NSpec;
 using My.Namespace;
@@ -65,7 +65,7 @@ class describe_NamespaceComponentDataProvider : nspec {
             it["gets generate component"] = () => {
                 d.ShouldGenerateComponent().GetType().should_be(typeof(bool));
                 d.ShouldGenerateComponent().should_be_false();
-                d.ContainsKey(ShouldGenerateComponentComponentDataProviderExtension.COMPONENT_OBJECT_TYPE).should_be_false();
+                d.ContainsKey(ShouldGenerateComponentComponentDataExtension.COMPONENT_OBJECT_TYPE).should_be_false();
             };
 
             it["gets generate index"] = () => {

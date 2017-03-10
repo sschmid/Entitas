@@ -19,7 +19,7 @@ namespace Entitas.CodeGenerator {
         }
     }
 
-    public static class UniquePrefixComponentDataProviderExtension {
+    public static class UniquePrefixComponentDataExtension {
 
         public const string COMPONENT_UNIQUE_PREFIX = "component_uniquePrefix";
 

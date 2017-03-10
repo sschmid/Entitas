@@ -29,7 +29,7 @@ namespace Entitas.CodeGenerator {
         }
     }
 
-    public static class ContextsComponentDataProviderExtension {
+    public static class ContextsComponentDataExtension {
 
         public const string COMPONENT_CONTEXTS = "component_contexts";
 

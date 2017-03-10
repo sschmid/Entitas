@@ -71,7 +71,7 @@ class describe_ComponentDataProvider : nspec {
             it["gets generate component"] = () => {
                 d.ShouldGenerateComponent().GetType().should_be(typeof(bool));
                 d.ShouldGenerateComponent().should_be_false();
-                d.ContainsKey(ShouldGenerateComponentComponentDataProviderExtension.COMPONENT_OBJECT_TYPE).should_be_false();
+                d.ContainsKey(ShouldGenerateComponentComponentDataExtension.COMPONENT_OBJECT_TYPE).should_be_false();
             };
 
             it["gets generate index"] = () => {

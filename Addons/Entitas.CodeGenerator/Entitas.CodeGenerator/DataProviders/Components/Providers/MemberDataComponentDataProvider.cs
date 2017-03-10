@@ -16,7 +16,7 @@ namespace Entitas.CodeGenerator {
         }
     }
 
-    public static class MemberInfosComponentDataProviderExtension {
+    public static class MemberInfosComponentDataExtension {
 
         public const string COMPONENT_MEMBER_INFOS = "component_memberInfos";
 

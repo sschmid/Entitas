@@ -13,7 +13,7 @@ namespace Entitas.CodeGenerator {
         }
     }
 
-    public static class ShouldGenerateComponentComponentDataProviderExtension {
+    public static class ShouldGenerateComponentComponentDataExtension {
 
         public const string COMPONENT_GENERATE_COMPONENT = "component_generateComponent";
         public const string COMPONENT_OBJECT_TYPE = "component_objectType";

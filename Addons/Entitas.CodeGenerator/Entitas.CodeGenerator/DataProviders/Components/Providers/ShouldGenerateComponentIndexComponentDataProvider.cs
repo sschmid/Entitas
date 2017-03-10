@@ -20,7 +20,7 @@ namespace Entitas.CodeGenerator {
         }
     }
 
-    public static class ShouldGenerateComponentIndexComponentDataProviderExtension {
+    public static class ShouldGenerateComponentIndexComponentDataExtension {
 
         public const string COMPONENT_GENERATE_INDEX = "component_generateIndex";
 

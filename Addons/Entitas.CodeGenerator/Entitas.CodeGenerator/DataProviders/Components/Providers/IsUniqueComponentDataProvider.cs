@@ -16,7 +16,7 @@ namespace Entitas.CodeGenerator {
         }
     }
 
-    public static class IsUniqueComponentDataProviderExtension {
+    public static class IsUniqueComponentDataExtension {
 
         public const string COMPONENT_IS_UNIQUE = "component_isUnique";
 
