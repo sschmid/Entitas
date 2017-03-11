@@ -32,10 +32,10 @@ class describe_ComponentDataProvider : nspec {
 
             it["gets component name"] = () => {
                 d.GetComponentName().GetType().should_be(typeof(string));
-                d.GetComponentName().should_be("MyNamespace");
+                d.GetComponentName().should_be("MyNamespaceMyNamespace");
 
                 d.GetFullComponentName().GetType().should_be(typeof(string));
-                d.GetFullComponentName().should_be("MyNamespaceComponent");
+                d.GetFullComponentName().should_be("MyNamespaceMyNamespaceComponent");
             };
 
             it["gets full type name"] = () => {

@@ -114,7 +114,6 @@
     <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\Editor\VisualDebuggingConfig.cs">
       <Link>Linked Libraries\Entitas.Unity.VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
     </Compile>
-    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_NamespaceComponentDataProvider.cs" />
     <Compile Include="Tests\Entitas\describe_ContextInfo.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasException.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_EntityIndexDataProvider.cs" />

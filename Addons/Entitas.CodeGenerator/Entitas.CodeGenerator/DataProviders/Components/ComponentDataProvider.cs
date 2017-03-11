@@ -5,7 +5,7 @@ namespace Entitas.CodeGenerator {
 
     public class ComponentDataProvider : AbstractComponentDataProvider {
 
-        public override string name { get { return "Component (without namespace)"; } }
+        public override string name { get { return "Component"; } }
         public override bool isEnabledByDefault { get { return true; } }
 
         public ComponentDataProvider()

@@ -5,7 +5,7 @@ namespace Entitas.CodeGenerator {
     public class ComponentNameComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
-            var componentName = type.ToCompilableString().ShortTypeName();
+            var componentName = type.ToCompilableString().RemoveDots();
             data.SetFullComponentName(componentName.AddComponentSuffix());
             data.SetComponentName(componentName.RemoveComponentSuffix());
         }
