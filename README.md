@@ -5,8 +5,7 @@
 ---
 
 <p align="center">
-    <a>If you love Entitas as much as we do<br />please support the development</a>
-
+    <a>🎉 Happy birthday Entitas! 🎉<br />3 years of clean code<br />Please support the development<br/></a>
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Donate-PayPal.gif" alt="Thank you!"></a>
 </p>
@@ -36,7 +35,7 @@ Entitas - The Entity Component System Framework for C# and Unity
 
 Entitas is a super fast Entity Component System Framework (ECS) specifically made for C# and Unity. Internal caching and blazing fast component access makes it second to none. Several design decisions have been made to work optimal in a garbage collected environment and to go easy on the garbage collector. Entitas comes with an optional code generator which radically reduces the amount of code you have to write and [makes your code read like well written prose.][clean-coders]
 
-<p align="left">
+<p align="center">
     <a href="https://dev.windows.com">
         <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/csharp.png" alt="CSharp" height="64"></a>
     <a href="http://unity3d.com">
@@ -53,13 +52,13 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
 
 ### **[» Download](#download-entitas)**
 ### **[» Ask a question][issues-new]**
-### **[» Wiki, Overview, Roadmap and example projects][wiki]**
-### **[» Community: Games and Examples #madeWithEntitas][wiki-games-and-examples]**
+### **[» Wiki and example projects][wiki]**
+### **[» #madeWithEntitas][wiki-games-and-examples]**
 
 ---
 
-Videos
-======
+Unity Unite Talks
+=================
 
 | Entity system architecture with Unity | ECS architecture with Unity by example |
 |:-------------------------------------:|:--------------------------------------:|
@@ -73,22 +72,23 @@ First glimpse
 The optional [code generator][wiki-code-generator] lets you write code that is super fast, safe and literally screams its intent.
 
 ```csharp
-public static Entity CreateRedGem(this Context context, int x, int y) {
-    return context.CreateEntity()
-               .IsGameBoardElement(true)
-               .IsMovable(true)
-               .AddPosition(x, y)
-               .AddResource(Res.redGem)
-               .IsInteractive(true);
+public static GameEntity CreateRedGem(this GameContext context, Vector3 position) {
+    var entity = context.CreateEntity();
+    entity.isGameBoardElement = true;
+    entity.isMovable = true;
+    entity.AddPosition(position);
+    entity.AddAsset("RedGem");
+    entity.isInteractive = true;
+    return entity;
 }
 ```
 
 ```csharp
-var entities = context.GetEntities(Matcher.AllOf(Matcher.Move, Matcher.Position));
-foreach (var entity in entities) {
-    var move = entity.move;
-    var pos = entity.position;
-    entity.ReplacePosition(pos.x, pos.y + move.speed);
+var entities = context.GetEntities(Matcher<GameEntity>.AllOf(GameMatcher.Position, GameMatcher.Velocity));
+foreach(var e in entities) {
+    var pos = e.position;
+    var vel = e.velocity;
+    e.ReplacePosition(pos.value + vel.value);
 }
 ```
 
@@ -99,7 +99,7 @@ Overview
 Entitas is fast, light and gets rid of unnecessary complexity. There are less than a handful classes you have to know to rocket start your game or application:
 
 - Entity
-- Pool
+- Context
 - Group
 - Entity Collector
 
@@ -122,16 +122,16 @@ The optional Unity module integrates Entitas nicely into Unity and provides powe
 [Read more...][wiki-unity-integration]
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity-MenuItems.png" alt="Entitas.Unity MenuItems">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity.VisualDebugging-Entity.png" alt="Entitas.Unity.VisualDebugging Entity">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png" alt="Entitas.Unity.VisualDebugging Systems">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity-MenuItems.png" alt="Entitas.Unity MenuItems"><br />
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity.VisualDebugging-Entity.png" alt="Entitas.Unity.VisualDebugging Entity" width="400">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png" alt="Entitas.Unity.VisualDebugging Systems" width="400">
 </p>
 
 
 Entitas deep dive
 =================
 
-[Read the wiki][wiki] or checkout the awesome [example projects][wiki-example-projects] to see Entitas in action. These example projects illustrate how systems, groups, collectors and entities all play together seamlessly.
+[Read the wiki][wiki] or checkout the [example projects][wiki-example-projects] to see Entitas in action. These example projects illustrate how systems, groups, collectors and entities all play together seamlessly.
 
 
 Download Entitas
@@ -140,6 +140,7 @@ Download Entitas
 Each release is published with zip files containing all source files you need.
 
 [Show releases][releases]
+
 
 
 Contributing to Entitas

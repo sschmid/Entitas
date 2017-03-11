@@ -1,5 +1,5 @@
 using Entitas;
-using Entitas.Api;
 
-public class MovableComponent : IComponent {
+[Game]
+public sealed class MovableComponent : IComponent {
 }

@@ -1,35 +1,55 @@
-using System;
 using System.IO;
 using System.Reflection;
 using Entitas.CodeGenerator;
 
 namespace Readme {
+
     class MainClass {
+
         public static void Main(string[] args) {
             generate();
         }
 
         static void generate() {
-            //var generatedFolder = getEntitasProjectDir() + "/Readme/Readme/Generated/";
+            var path = getEntitasProjectDir() + "/Readme/Readme/Generated/";
 
-            //var codeGenerators = new ICodeGenerator[] {
-            //    new ComponentExtensionsGenerator(),
-            //    new ComponentIndicesGenerator(),
-            //    new ContextAttributesGenerator(),
-            //    new ContextsGenerator()
-            //};
+            var types = Assembly
+                .GetAssembly(typeof(MainClass))
+                .GetTypes();
 
-            //var assembly = Assembly.GetAssembly(typeof(ReadmeSnippets));
+            var contextNames = new [] { "Game", "GameState", "Input" };
 
-            //var provider = new TypeReflectionProvider(assembly.GetTypes(), new string[0], new string[0]);
-            //var files = CodeGenerator.Generate(provider, generatedFolder, codeGenerators);
+            var dataProviders = new ICodeGeneratorDataProvider[] {
+                new ContextDataProvider(contextNames),
+                new ComponentDataProvider(types)
+            };
 
-            //foreach(var file in files) {
-            //    Console.WriteLine("Generated: " + file.fileName);
-            //}
+            var codeGenerators = new ICodeGenerator[] {
+                new ComponentContextGenerator(),
+                new ComponentEntityGenerator(),
+                new ComponentGenerator(),
+                new ComponentsLookupGenerator(),
+                new ContextAttributeGenerator(),
+                new ContextGenerator(),
+                new ContextsGenerator(),
+                new EntityGenerator(),
+                new MatcherGenerator()
+            };
 
-            //Console.WriteLine("Done. Press any key...");
-            //Console.Read();
+            var postProcessors = new ICodeGenFilePostProcessor [] {
+                new MergeFilesPostProcessor(),
+                new NewLinePostProcessor(),
+                new WriteToDiskPostProcessor(path),
+            };
+
+            var codeGenerator = new CodeGenerator(dataProviders, codeGenerators, postProcessors);
+            var files = codeGenerator.Generate();
+
+            foreach(var file in files) {
+                System.Console.WriteLine("file.fileName: " + file.fileName);
+            }
+
+            System.Console.WriteLine("Done. " + files.Length + " files generated.");
         }
 
         static string getEntitasProjectDir() {

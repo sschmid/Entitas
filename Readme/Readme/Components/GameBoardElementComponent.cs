@@ -1,5 +1,5 @@
 using Entitas;
-using Entitas.Api;
 
-public class GameBoardElementComponent : IComponent {
+[Game]
+public sealed class GameBoardElementComponent : IComponent {
 }

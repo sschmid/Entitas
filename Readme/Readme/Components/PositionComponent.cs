@@ -1,7 +1,8 @@
 using Entitas;
-using Entitas.Api;
+using UnityEngine;
 
-public class PositionComponent : IComponent {
-    public int x;
-    public int y;
+[Game]
+public sealed class PositionComponent : IComponent {
+
+    public Vector3 value;
 }

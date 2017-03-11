@@ -29,57 +29,41 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\Tests\Tests\Libraries\UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Readme\ReadmeSnippets.cs" />
-    <Compile Include="Readme\Components\AnimatingComponent.cs" />
-    <Compile Include="Readme\Components\CoinsComponent.cs" />
+    <Compile Include="Readme\Components\AssetComponent.cs" />
     <Compile Include="Readme\Components\GameBoardElementComponent.cs" />
-    <Compile Include="Readme\Components\HealthComponent.cs" />
     <Compile Include="Readme\Components\InteractiveComponent.cs" />
     <Compile Include="Readme\Components\MovableComponent.cs" />
-    <Compile Include="Readme\Components\MoveComponent.cs" />
     <Compile Include="Readme\Components\PositionComponent.cs" />
-    <Compile Include="Readme\Components\ResourceComponent.cs" />
-    <Compile Include="Readme\Components\UIPositionComponent.cs" />
-    <Compile Include="Readme\Components\UserComponent.cs" />
-    <Compile Include="Readme\Generated\AnimatingComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\CoinsComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\ComponentIds.cs" />
-    <Compile Include="Readme\Generated\GameBoardElementComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\HealthComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\InteractiveComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\MetaComponentIds.cs" />
-    <Compile Include="Readme\Generated\MovableComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\MoveComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\Contexts.cs" />
-    <Compile Include="Readme\Generated\PositionComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\ResourceComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\UIComponentIds.cs" />
-    <Compile Include="Readme\Generated\UIPositionComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\UserComponentGeneratedExtension.cs" />
-    <Compile Include="Readme\Generated\GameEntity.cs" />
-    <Compile Include="Readme\Generated\GameContext.cs" />
-    <Compile Include="Readme\Generated\GameContext_1.cs" />
+    <Compile Include="Readme\Components\ScoreComponent.cs" />
+    <Compile Include="Readme\Components\ViewComponent.cs" />
+    <Compile Include="Readme\Components\VelocityComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Readme\" />
-    <Folder Include="Readme\Generated\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.Utils\Entitas.Utils.csproj">
-      <Project>{9FEAE5CD-2FA2-44BE-BFED-CF3569182C7F}</Project>
-      <Name>Entitas.Utils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
+    <Compile Include="Readme\Generated\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Addons\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
       <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
       <Name>Entitas.CodeGenerator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Entitas.Api\Entitas.Api.csproj">
-      <Project>{124A01F2-AB29-438A-BB4A-1CDA48A8E5C9}</Project>
-      <Name>Entitas.Api</Name>
+    <ProjectReference Include="..\Addons\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGenerator.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
