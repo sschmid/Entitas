@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasMyString { get { return HasComponent(GameComponentsLookup.MyString); } }
 
     public void AddMyString(string newMyString) {
-        var component = CreateComponent<MyStringComponent>(GameComponentsLookup.MyString);
+        var index = GameComponentsLookup.MyString;
+        var component = CreateComponent<MyStringComponent>(index);
         component.myString = newMyString;
-        AddComponent(GameComponentsLookup.MyString, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceMyString(string newMyString) {
-        var component = CreateComponent<MyStringComponent>(GameComponentsLookup.MyString);
+        var index = GameComponentsLookup.MyString;
+        var component = CreateComponent<MyStringComponent>(index);
         component.myString = newMyString;
-        ReplaceComponent(GameComponentsLookup.MyString, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveMyString() {

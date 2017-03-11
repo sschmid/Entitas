@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasCustomObject { get { return HasComponent(GameComponentsLookup.CustomObject); } }
 
     public void AddCustomObject(CustomObject newCustomObject) {
-        var component = CreateComponent<CustomObjectComponent>(GameComponentsLookup.CustomObject);
+        var index = GameComponentsLookup.CustomObject;
+        var component = CreateComponent<CustomObjectComponent>(index);
         component.customObject = newCustomObject;
-        AddComponent(GameComponentsLookup.CustomObject, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceCustomObject(CustomObject newCustomObject) {
-        var component = CreateComponent<CustomObjectComponent>(GameComponentsLookup.CustomObject);
+        var index = GameComponentsLookup.CustomObject;
+        var component = CreateComponent<CustomObjectComponent>(index);
         component.customObject = newCustomObject;
-        ReplaceComponent(GameComponentsLookup.CustomObject, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveCustomObject() {

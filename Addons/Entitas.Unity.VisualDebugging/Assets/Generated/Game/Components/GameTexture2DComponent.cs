@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasTexture2D { get { return HasComponent(GameComponentsLookup.Texture2D); } }
 
     public void AddTexture2D(UnityEngine.Texture2D newTexture2D) {
-        var component = CreateComponent<Texture2DComponent>(GameComponentsLookup.Texture2D);
+        var index = GameComponentsLookup.Texture2D;
+        var component = CreateComponent<Texture2DComponent>(index);
         component.texture2D = newTexture2D;
-        AddComponent(GameComponentsLookup.Texture2D, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceTexture2D(UnityEngine.Texture2D newTexture2D) {
-        var component = CreateComponent<Texture2DComponent>(GameComponentsLookup.Texture2D);
+        var index = GameComponentsLookup.Texture2D;
+        var component = CreateComponent<Texture2DComponent>(index);
         component.texture2D = newTexture2D;
-        ReplaceComponent(GameComponentsLookup.Texture2D, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveTexture2D() {

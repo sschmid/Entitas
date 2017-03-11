@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasUnityObject { get { return HasComponent(GameComponentsLookup.UnityObject); } }
 
     public void AddUnityObject(UnityEngine.Object newUnityObject) {
-        var component = CreateComponent<UnityObjectComponent>(GameComponentsLookup.UnityObject);
+        var index = GameComponentsLookup.UnityObject;
+        var component = CreateComponent<UnityObjectComponent>(index);
         component.unityObject = newUnityObject;
-        AddComponent(GameComponentsLookup.UnityObject, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceUnityObject(UnityEngine.Object newUnityObject) {
-        var component = CreateComponent<UnityObjectComponent>(GameComponentsLookup.UnityObject);
+        var index = GameComponentsLookup.UnityObject;
+        var component = CreateComponent<UnityObjectComponent>(index);
         component.unityObject = newUnityObject;
-        ReplaceComponent(GameComponentsLookup.UnityObject, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveUnityObject() {

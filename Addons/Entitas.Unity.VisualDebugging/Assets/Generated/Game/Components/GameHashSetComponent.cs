@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasHashSet { get { return HasComponent(GameComponentsLookup.HashSet); } }
 
     public void AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
-        var component = CreateComponent<HashSetComponent>(GameComponentsLookup.HashSet);
+        var index = GameComponentsLookup.HashSet;
+        var component = CreateComponent<HashSetComponent>(index);
         component.hashset = newHashset;
-        AddComponent(GameComponentsLookup.HashSet, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
-        var component = CreateComponent<HashSetComponent>(GameComponentsLookup.HashSet);
+        var index = GameComponentsLookup.HashSet;
+        var component = CreateComponent<HashSetComponent>(index);
         component.hashset = newHashset;
-        ReplaceComponent(GameComponentsLookup.HashSet, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveHashSet() {

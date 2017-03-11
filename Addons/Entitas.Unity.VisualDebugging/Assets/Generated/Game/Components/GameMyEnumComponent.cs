@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasMyEnum { get { return HasComponent(GameComponentsLookup.MyEnum); } }
 
     public void AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
-        var component = CreateComponent<MyEnumComponent>(GameComponentsLookup.MyEnum);
+        var index = GameComponentsLookup.MyEnum;
+        var component = CreateComponent<MyEnumComponent>(index);
         component.myEnum = newMyEnum;
-        AddComponent(GameComponentsLookup.MyEnum, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
-        var component = CreateComponent<MyEnumComponent>(GameComponentsLookup.MyEnum);
+        var index = GameComponentsLookup.MyEnum;
+        var component = CreateComponent<MyEnumComponent>(index);
         component.myEnum = newMyEnum;
-        ReplaceComponent(GameComponentsLookup.MyEnum, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveMyEnum() {

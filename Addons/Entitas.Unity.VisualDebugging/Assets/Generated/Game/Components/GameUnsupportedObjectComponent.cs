@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasUnsupportedObject { get { return HasComponent(GameComponentsLookup.UnsupportedObject); } }
 
     public void AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
-        var component = CreateComponent<UnsupportedObjectComponent>(GameComponentsLookup.UnsupportedObject);
+        var index = GameComponentsLookup.UnsupportedObject;
+        var component = CreateComponent<UnsupportedObjectComponent>(index);
         component.unsupportedObject = newUnsupportedObject;
-        AddComponent(GameComponentsLookup.UnsupportedObject, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
-        var component = CreateComponent<UnsupportedObjectComponent>(GameComponentsLookup.UnsupportedObject);
+        var index = GameComponentsLookup.UnsupportedObject;
+        var component = CreateComponent<UnsupportedObjectComponent>(index);
         component.unsupportedObject = newUnsupportedObject;
-        ReplaceComponent(GameComponentsLookup.UnsupportedObject, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveUnsupportedObject() {

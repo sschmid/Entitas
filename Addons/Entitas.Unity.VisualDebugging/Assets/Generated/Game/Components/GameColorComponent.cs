@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasColor { get { return HasComponent(GameComponentsLookup.Color); } }
 
     public void AddColor(UnityEngine.Color newColor) {
-        var component = CreateComponent<ColorComponent>(GameComponentsLookup.Color);
+        var index = GameComponentsLookup.Color;
+        var component = CreateComponent<ColorComponent>(index);
         component.color = newColor;
-        AddComponent(GameComponentsLookup.Color, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceColor(UnityEngine.Color newColor) {
-        var component = CreateComponent<ColorComponent>(GameComponentsLookup.Color);
+        var index = GameComponentsLookup.Color;
+        var component = CreateComponent<ColorComponent>(index);
         component.color = newColor;
-        ReplaceComponent(GameComponentsLookup.Color, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveColor() {

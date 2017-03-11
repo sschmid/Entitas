@@ -12,17 +12,19 @@ public partial class GameEntity {
     public bool hasDictArray { get { return HasComponent(GameComponentsLookup.DictArray); } }
 
     public void AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
-        var component = CreateComponent<DictArrayComponent>(GameComponentsLookup.DictArray);
+        var index = GameComponentsLookup.DictArray;
+        var component = CreateComponent<DictArrayComponent>(index);
         component.dict = newDict;
         component.dictArray = newDictArray;
-        AddComponent(GameComponentsLookup.DictArray, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
-        var component = CreateComponent<DictArrayComponent>(GameComponentsLookup.DictArray);
+        var index = GameComponentsLookup.DictArray;
+        var component = CreateComponent<DictArrayComponent>(index);
         component.dict = newDict;
         component.dictArray = newDictArray;
-        ReplaceComponent(GameComponentsLookup.DictArray, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveDictArray() {

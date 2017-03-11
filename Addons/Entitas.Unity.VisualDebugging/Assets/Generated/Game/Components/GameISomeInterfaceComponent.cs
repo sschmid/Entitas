@@ -50,15 +50,17 @@ public partial class GameEntity {
     public bool hasISomeInterface { get { return HasComponent(GameComponentsLookup.ISomeInterface); } }
 
     public void AddISomeInterface(ISomeInterface newValue) {
-        var component = CreateComponent<ISomeInterfaceComponent>(GameComponentsLookup.ISomeInterface);
+        var index = GameComponentsLookup.ISomeInterface;
+        var component = CreateComponent<ISomeInterfaceComponent>(index);
         component.value = newValue;
-        AddComponent(GameComponentsLookup.ISomeInterface, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceISomeInterface(ISomeInterface newValue) {
-        var component = CreateComponent<ISomeInterfaceComponent>(GameComponentsLookup.ISomeInterface);
+        var index = GameComponentsLookup.ISomeInterface;
+        var component = CreateComponent<ISomeInterfaceComponent>(index);
         component.value = newValue;
-        ReplaceComponent(GameComponentsLookup.ISomeInterface, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveISomeInterface() {

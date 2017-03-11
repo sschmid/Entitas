@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasDictionary { get { return HasComponent(GameComponentsLookup.Dictionary); } }
 
     public void AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
-        var component = CreateComponent<DictionaryComponent>(GameComponentsLookup.Dictionary);
+        var index = GameComponentsLookup.Dictionary;
+        var component = CreateComponent<DictionaryComponent>(index);
         component.dict = newDict;
-        AddComponent(GameComponentsLookup.Dictionary, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
-        var component = CreateComponent<DictionaryComponent>(GameComponentsLookup.Dictionary);
+        var index = GameComponentsLookup.Dictionary;
+        var component = CreateComponent<DictionaryComponent>(index);
         component.dict = newDict;
-        ReplaceComponent(GameComponentsLookup.Dictionary, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveDictionary() {

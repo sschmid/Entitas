@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasListArray { get { return HasComponent(GameComponentsLookup.ListArray); } }
 
     public void AddListArray(System.Collections.Generic.List<string>[] newListArray) {
-        var component = CreateComponent<ListArrayComponent>(GameComponentsLookup.ListArray);
+        var index = GameComponentsLookup.ListArray;
+        var component = CreateComponent<ListArrayComponent>(index);
         component.listArray = newListArray;
-        AddComponent(GameComponentsLookup.ListArray, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceListArray(System.Collections.Generic.List<string>[] newListArray) {
-        var component = CreateComponent<ListArrayComponent>(GameComponentsLookup.ListArray);
+        var index = GameComponentsLookup.ListArray;
+        var component = CreateComponent<ListArrayComponent>(index);
         component.listArray = newListArray;
-        ReplaceComponent(GameComponentsLookup.ListArray, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveListArray() {

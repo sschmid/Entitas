@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasMyFloat { get { return HasComponent(GameComponentsLookup.MyFloat); } }
 
     public void AddMyFloat(float newMyFloat) {
-        var component = CreateComponent<MyFloatComponent>(GameComponentsLookup.MyFloat);
+        var index = GameComponentsLookup.MyFloat;
+        var component = CreateComponent<MyFloatComponent>(index);
         component.myFloat = newMyFloat;
-        AddComponent(GameComponentsLookup.MyFloat, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceMyFloat(float newMyFloat) {
-        var component = CreateComponent<MyFloatComponent>(GameComponentsLookup.MyFloat);
+        var index = GameComponentsLookup.MyFloat;
+        var component = CreateComponent<MyFloatComponent>(index);
         component.myFloat = newMyFloat;
-        ReplaceComponent(GameComponentsLookup.MyFloat, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveMyFloat() {

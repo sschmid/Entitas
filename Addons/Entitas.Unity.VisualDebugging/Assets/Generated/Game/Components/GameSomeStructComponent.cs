@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasSomeStruct { get { return HasComponent(GameComponentsLookup.SomeStruct); } }
 
     public void AddSomeStruct(SomeStruct newValue) {
-        var component = CreateComponent<SomeStructComponent>(GameComponentsLookup.SomeStruct);
+        var index = GameComponentsLookup.SomeStruct;
+        var component = CreateComponent<SomeStructComponent>(index);
         component.value = newValue;
-        AddComponent(GameComponentsLookup.SomeStruct, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceSomeStruct(SomeStruct newValue) {
-        var component = CreateComponent<SomeStructComponent>(GameComponentsLookup.SomeStruct);
+        var index = GameComponentsLookup.SomeStruct;
+        var component = CreateComponent<SomeStructComponent>(index);
         component.value = newValue;
-        ReplaceComponent(GameComponentsLookup.SomeStruct, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveSomeStruct() {

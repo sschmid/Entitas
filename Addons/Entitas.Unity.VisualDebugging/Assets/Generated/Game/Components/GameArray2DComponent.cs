@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasArray2D { get { return HasComponent(GameComponentsLookup.Array2D); } }
 
     public void AddArray2D(string[,] newArray2d) {
-        var component = CreateComponent<Array2DComponent>(GameComponentsLookup.Array2D);
+        var index = GameComponentsLookup.Array2D;
+        var component = CreateComponent<Array2DComponent>(index);
         component.array2d = newArray2d;
-        AddComponent(GameComponentsLookup.Array2D, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceArray2D(string[,] newArray2d) {
-        var component = CreateComponent<Array2DComponent>(GameComponentsLookup.Array2D);
+        var index = GameComponentsLookup.Array2D;
+        var component = CreateComponent<Array2DComponent>(index);
         component.array2d = newArray2d;
-        ReplaceComponent(GameComponentsLookup.Array2D, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveArray2D() {

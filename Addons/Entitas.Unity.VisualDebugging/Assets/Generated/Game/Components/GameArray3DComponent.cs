@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasArray3D { get { return HasComponent(GameComponentsLookup.Array3D); } }
 
     public void AddArray3D(string[,,] newArray3d) {
-        var component = CreateComponent<Array3DComponent>(GameComponentsLookup.Array3D);
+        var index = GameComponentsLookup.Array3D;
+        var component = CreateComponent<Array3DComponent>(index);
         component.array3d = newArray3d;
-        AddComponent(GameComponentsLookup.Array3D, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceArray3D(string[,,] newArray3d) {
-        var component = CreateComponent<Array3DComponent>(GameComponentsLookup.Array3D);
+        var index = GameComponentsLookup.Array3D;
+        var component = CreateComponent<Array3DComponent>(index);
         component.array3d = newArray3d;
-        ReplaceComponent(GameComponentsLookup.Array3D, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveArray3D() {

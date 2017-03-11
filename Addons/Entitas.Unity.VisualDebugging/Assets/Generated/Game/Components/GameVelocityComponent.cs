@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasVelocity { get { return HasComponent(GameComponentsLookup.Velocity); } }
 
     public void AddVelocity(IntVector2 newValue) {
-        var component = CreateComponent<VelocityComponent>(GameComponentsLookup.Velocity);
+        var index = GameComponentsLookup.Velocity;
+        var component = CreateComponent<VelocityComponent>(index);
         component.value = newValue;
-        AddComponent(GameComponentsLookup.Velocity, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceVelocity(IntVector2 newValue) {
-        var component = CreateComponent<VelocityComponent>(GameComponentsLookup.Velocity);
+        var index = GameComponentsLookup.Velocity;
+        var component = CreateComponent<VelocityComponent>(index);
         component.value = newValue;
-        ReplaceComponent(GameComponentsLookup.Velocity, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveVelocity() {

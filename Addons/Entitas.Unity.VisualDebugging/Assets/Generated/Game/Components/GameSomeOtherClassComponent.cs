@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasSomeOtherClass { get { return HasComponent(GameComponentsLookup.SomeOtherClass); } }
 
     public void AddSomeOtherClass(SomeNamespace.SomeOtherClass newValue) {
-        var component = CreateComponent<SomeOtherClassComponent>(GameComponentsLookup.SomeOtherClass);
+        var index = GameComponentsLookup.SomeOtherClass;
+        var component = CreateComponent<SomeOtherClassComponent>(index);
         component.value = newValue;
-        AddComponent(GameComponentsLookup.SomeOtherClass, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceSomeOtherClass(SomeNamespace.SomeOtherClass newValue) {
-        var component = CreateComponent<SomeOtherClassComponent>(GameComponentsLookup.SomeOtherClass);
+        var index = GameComponentsLookup.SomeOtherClass;
+        var component = CreateComponent<SomeOtherClassComponent>(index);
         component.value = newValue;
-        ReplaceComponent(GameComponentsLookup.SomeOtherClass, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveSomeOtherClass() {

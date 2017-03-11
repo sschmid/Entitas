@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasRect { get { return HasComponent(GameComponentsLookup.Rect); } }
 
     public void AddRect(UnityEngine.Rect newRect) {
-        var component = CreateComponent<RectComponent>(GameComponentsLookup.Rect);
+        var index = GameComponentsLookup.Rect;
+        var component = CreateComponent<RectComponent>(index);
         component.rect = newRect;
-        AddComponent(GameComponentsLookup.Rect, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceRect(UnityEngine.Rect newRect) {
-        var component = CreateComponent<RectComponent>(GameComponentsLookup.Rect);
+        var index = GameComponentsLookup.Rect;
+        var component = CreateComponent<RectComponent>(index);
         component.rect = newRect;
-        ReplaceComponent(GameComponentsLookup.Rect, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveRect() {

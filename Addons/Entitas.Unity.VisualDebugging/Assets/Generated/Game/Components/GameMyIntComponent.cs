@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasMyInt { get { return HasComponent(GameComponentsLookup.MyInt); } }
 
     public void AddMyInt(int newMyInt) {
-        var component = CreateComponent<MyIntComponent>(GameComponentsLookup.MyInt);
+        var index = GameComponentsLookup.MyInt;
+        var component = CreateComponent<MyIntComponent>(index);
         component.myInt = newMyInt;
-        AddComponent(GameComponentsLookup.MyInt, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceMyInt(int newMyInt) {
-        var component = CreateComponent<MyIntComponent>(GameComponentsLookup.MyInt);
+        var index = GameComponentsLookup.MyInt;
+        var component = CreateComponent<MyIntComponent>(index);
         component.myInt = newMyInt;
-        ReplaceComponent(GameComponentsLookup.MyInt, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveMyInt() {

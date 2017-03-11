@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasMyDouble { get { return HasComponent(GameComponentsLookup.MyDouble); } }
 
     public void AddMyDouble(double newMyDouble) {
-        var component = CreateComponent<MyDoubleComponent>(GameComponentsLookup.MyDouble);
+        var index = GameComponentsLookup.MyDouble;
+        var component = CreateComponent<MyDoubleComponent>(index);
         component.myDouble = newMyDouble;
-        AddComponent(GameComponentsLookup.MyDouble, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceMyDouble(double newMyDouble) {
-        var component = CreateComponent<MyDoubleComponent>(GameComponentsLookup.MyDouble);
+        var index = GameComponentsLookup.MyDouble;
+        var component = CreateComponent<MyDoubleComponent>(index);
         component.myDouble = newMyDouble;
-        ReplaceComponent(GameComponentsLookup.MyDouble, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveMyDouble() {

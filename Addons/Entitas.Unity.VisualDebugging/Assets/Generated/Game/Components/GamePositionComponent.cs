@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasPosition { get { return HasComponent(GameComponentsLookup.Position); } }
 
     public void AddPosition(IntVector2 newValue) {
-        var component = CreateComponent<PositionComponent>(GameComponentsLookup.Position);
+        var index = GameComponentsLookup.Position;
+        var component = CreateComponent<PositionComponent>(index);
         component.value = newValue;
-        AddComponent(GameComponentsLookup.Position, component);
+        AddComponent(index, component);
     }
 
     public void ReplacePosition(IntVector2 newValue) {
-        var component = CreateComponent<PositionComponent>(GameComponentsLookup.Position);
+        var index = GameComponentsLookup.Position;
+        var component = CreateComponent<PositionComponent>(index);
         component.value = newValue;
-        ReplaceComponent(GameComponentsLookup.Position, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemovePosition() {

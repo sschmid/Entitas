@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasVector4 { get { return HasComponent(GameComponentsLookup.Vector4); } }
 
     public void AddVector4(UnityEngine.Vector4 newVector4) {
-        var component = CreateComponent<Vector4Component>(GameComponentsLookup.Vector4);
+        var index = GameComponentsLookup.Vector4;
+        var component = CreateComponent<Vector4Component>(index);
         component.vector4 = newVector4;
-        AddComponent(GameComponentsLookup.Vector4, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceVector4(UnityEngine.Vector4 newVector4) {
-        var component = CreateComponent<Vector4Component>(GameComponentsLookup.Vector4);
+        var index = GameComponentsLookup.Vector4;
+        var component = CreateComponent<Vector4Component>(index);
         component.vector4 = newVector4;
-        ReplaceComponent(GameComponentsLookup.Vector4, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveVector4() {

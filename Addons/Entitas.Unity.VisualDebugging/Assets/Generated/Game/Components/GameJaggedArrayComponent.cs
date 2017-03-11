@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasJaggedArray { get { return HasComponent(GameComponentsLookup.JaggedArray); } }
 
     public void AddJaggedArray(string[][] newJaggedArray) {
-        var component = CreateComponent<JaggedArrayComponent>(GameComponentsLookup.JaggedArray);
+        var index = GameComponentsLookup.JaggedArray;
+        var component = CreateComponent<JaggedArrayComponent>(index);
         component.jaggedArray = newJaggedArray;
-        AddComponent(GameComponentsLookup.JaggedArray, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceJaggedArray(string[][] newJaggedArray) {
-        var component = CreateComponent<JaggedArrayComponent>(GameComponentsLookup.JaggedArray);
+        var index = GameComponentsLookup.JaggedArray;
+        var component = CreateComponent<JaggedArrayComponent>(index);
         component.jaggedArray = newJaggedArray;
-        ReplaceComponent(GameComponentsLookup.JaggedArray, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveJaggedArray() {

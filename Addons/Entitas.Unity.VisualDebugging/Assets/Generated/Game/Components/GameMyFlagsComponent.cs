@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasMyFlags { get { return HasComponent(GameComponentsLookup.MyFlags); } }
 
     public void AddMyFlags(MyFlagsComponent.MyFlags newMyFlags) {
-        var component = CreateComponent<MyFlagsComponent>(GameComponentsLookup.MyFlags);
+        var index = GameComponentsLookup.MyFlags;
+        var component = CreateComponent<MyFlagsComponent>(index);
         component.myFlags = newMyFlags;
-        AddComponent(GameComponentsLookup.MyFlags, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceMyFlags(MyFlagsComponent.MyFlags newMyFlags) {
-        var component = CreateComponent<MyFlagsComponent>(GameComponentsLookup.MyFlags);
+        var index = GameComponentsLookup.MyFlags;
+        var component = CreateComponent<MyFlagsComponent>(index);
         component.myFlags = newMyFlags;
-        ReplaceComponent(GameComponentsLookup.MyFlags, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveMyFlags() {

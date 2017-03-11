@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasList { get { return HasComponent(GameComponentsLookup.List); } }
 
     public void AddList(System.Collections.Generic.List<string> newList) {
-        var component = CreateComponent<ListComponent>(GameComponentsLookup.List);
+        var index = GameComponentsLookup.List;
+        var component = CreateComponent<ListComponent>(index);
         component.list = newList;
-        AddComponent(GameComponentsLookup.List, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceList(System.Collections.Generic.List<string> newList) {
-        var component = CreateComponent<ListComponent>(GameComponentsLookup.List);
+        var index = GameComponentsLookup.List;
+        var component = CreateComponent<ListComponent>(index);
         component.list = newList;
-        ReplaceComponent(GameComponentsLookup.List, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveList() {

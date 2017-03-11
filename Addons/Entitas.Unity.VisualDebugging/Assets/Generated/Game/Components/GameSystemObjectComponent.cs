@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasSystemObject { get { return HasComponent(GameComponentsLookup.SystemObject); } }
 
     public void AddSystemObject(object newSystemObject) {
-        var component = CreateComponent<SystemObjectComponent>(GameComponentsLookup.SystemObject);
+        var index = GameComponentsLookup.SystemObject;
+        var component = CreateComponent<SystemObjectComponent>(index);
         component.systemObject = newSystemObject;
-        AddComponent(GameComponentsLookup.SystemObject, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceSystemObject(object newSystemObject) {
-        var component = CreateComponent<SystemObjectComponent>(GameComponentsLookup.SystemObject);
+        var index = GameComponentsLookup.SystemObject;
+        var component = CreateComponent<SystemObjectComponent>(index);
         component.systemObject = newSystemObject;
-        ReplaceComponent(GameComponentsLookup.SystemObject, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveSystemObject() {

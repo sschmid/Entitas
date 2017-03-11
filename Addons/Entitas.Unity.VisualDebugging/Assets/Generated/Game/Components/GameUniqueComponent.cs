@@ -50,15 +50,17 @@ public partial class GameEntity {
     public bool hasUnique { get { return HasComponent(GameComponentsLookup.Unique); } }
 
     public void AddUnique(string newValue) {
-        var component = CreateComponent<UniqueComponent>(GameComponentsLookup.Unique);
+        var index = GameComponentsLookup.Unique;
+        var component = CreateComponent<UniqueComponent>(index);
         component.value = newValue;
-        AddComponent(GameComponentsLookup.Unique, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceUnique(string newValue) {
-        var component = CreateComponent<UniqueComponent>(GameComponentsLookup.Unique);
+        var index = GameComponentsLookup.Unique;
+        var component = CreateComponent<UniqueComponent>(index);
         component.value = newValue;
-        ReplaceComponent(GameComponentsLookup.Unique, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveUnique() {

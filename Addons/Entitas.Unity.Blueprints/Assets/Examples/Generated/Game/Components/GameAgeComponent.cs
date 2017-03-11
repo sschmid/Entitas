@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasAge { get { return HasComponent(GameComponentsLookup.Age); } }
 
     public void AddAge(int newValue) {
-        var component = CreateComponent<AgeComponent>(GameComponentsLookup.Age);
+        var index = GameComponentsLookup.Age;
+        var component = CreateComponent<AgeComponent>(index);
         component.value = newValue;
-        AddComponent(GameComponentsLookup.Age, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceAge(int newValue) {
-        var component = CreateComponent<AgeComponent>(GameComponentsLookup.Age);
+        var index = GameComponentsLookup.Age;
+        var component = CreateComponent<AgeComponent>(index);
         component.value = newValue;
-        ReplaceComponent(GameComponentsLookup.Age, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveAge() {

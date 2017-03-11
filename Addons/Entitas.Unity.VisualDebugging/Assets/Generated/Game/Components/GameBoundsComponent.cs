@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasBounds { get { return HasComponent(GameComponentsLookup.Bounds); } }
 
     public void AddBounds(UnityEngine.Bounds newBounds) {
-        var component = CreateComponent<BoundsComponent>(GameComponentsLookup.Bounds);
+        var index = GameComponentsLookup.Bounds;
+        var component = CreateComponent<BoundsComponent>(index);
         component.bounds = newBounds;
-        AddComponent(GameComponentsLookup.Bounds, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceBounds(UnityEngine.Bounds newBounds) {
-        var component = CreateComponent<BoundsComponent>(GameComponentsLookup.Bounds);
+        var index = GameComponentsLookup.Bounds;
+        var component = CreateComponent<BoundsComponent>(index);
         component.bounds = newBounds;
-        ReplaceComponent(GameComponentsLookup.Bounds, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveBounds() {

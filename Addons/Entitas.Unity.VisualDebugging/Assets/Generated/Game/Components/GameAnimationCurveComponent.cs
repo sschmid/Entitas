@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasAnimationCurve { get { return HasComponent(GameComponentsLookup.AnimationCurve); } }
 
     public void AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
-        var component = CreateComponent<AnimationCurveComponent>(GameComponentsLookup.AnimationCurve);
+        var index = GameComponentsLookup.AnimationCurve;
+        var component = CreateComponent<AnimationCurveComponent>(index);
         component.animationCurve = newAnimationCurve;
-        AddComponent(GameComponentsLookup.AnimationCurve, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
-        var component = CreateComponent<AnimationCurveComponent>(GameComponentsLookup.AnimationCurve);
+        var index = GameComponentsLookup.AnimationCurve;
+        var component = CreateComponent<AnimationCurveComponent>(index);
         component.animationCurve = newAnimationCurve;
-        ReplaceComponent(GameComponentsLookup.AnimationCurve, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveAnimationCurve() {

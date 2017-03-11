@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasDateTime { get { return HasComponent(GameComponentsLookup.DateTime); } }
 
     public void AddDateTime(System.DateTime newDate) {
-        var component = CreateComponent<DateTimeComponent>(GameComponentsLookup.DateTime);
+        var index = GameComponentsLookup.DateTime;
+        var component = CreateComponent<DateTimeComponent>(index);
         component.date = newDate;
-        AddComponent(GameComponentsLookup.DateTime, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceDateTime(System.DateTime newDate) {
-        var component = CreateComponent<DateTimeComponent>(GameComponentsLookup.DateTime);
+        var index = GameComponentsLookup.DateTime;
+        var component = CreateComponent<DateTimeComponent>(index);
         component.date = newDate;
-        ReplaceComponent(GameComponentsLookup.DateTime, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveDateTime() {

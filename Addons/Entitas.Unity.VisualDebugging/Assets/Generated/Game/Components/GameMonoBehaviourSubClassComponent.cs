@@ -12,15 +12,17 @@ public partial class GameEntity {
     public bool hasMonoBehaviourSubClass { get { return HasComponent(GameComponentsLookup.MonoBehaviourSubClass); } }
 
     public void AddMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
-        var component = CreateComponent<MonoBehaviourSubClassComponent>(GameComponentsLookup.MonoBehaviourSubClass);
+        var index = GameComponentsLookup.MonoBehaviourSubClass;
+        var component = CreateComponent<MonoBehaviourSubClassComponent>(index);
         component.monoBehaviour = newMonoBehaviour;
-        AddComponent(GameComponentsLookup.MonoBehaviourSubClass, component);
+        AddComponent(index, component);
     }
 
     public void ReplaceMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
-        var component = CreateComponent<MonoBehaviourSubClassComponent>(GameComponentsLookup.MonoBehaviourSubClass);
+        var index = GameComponentsLookup.MonoBehaviourSubClass;
+        var component = CreateComponent<MonoBehaviourSubClassComponent>(index);
         component.monoBehaviour = newMonoBehaviour;
-        ReplaceComponent(GameComponentsLookup.MonoBehaviourSubClass, component);
+        ReplaceComponent(index, component);
     }
 
     public void RemoveMonoBehaviourSubClass() {
