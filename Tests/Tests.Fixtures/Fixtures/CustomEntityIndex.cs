@@ -12,6 +12,7 @@ namespace MyNamespace {
 
         public CustomEntityIndex(TestContext context)
             : base(
+                "MyCustomEntityIndex",
                 context.GetGroup(Matcher<TestEntity>.AllOf(TestMatcher.Position, TestMatcher.Size)),
                 (e, c) => {
                     var position = c is PositionComponent ? (PositionComponent)c : e.position;

@@ -590,16 +590,16 @@ class describe_Context : nspec {
 
             it["adds and EntityIndex"] = () => {
                 const int componentIndex = 1;
-                var entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), (arg1, arg2) => string.Empty);
-                ctx.AddEntityIndex(componentIndex.ToString(), entityIndex);
-                ctx.GetEntityIndex(componentIndex.ToString()).should_be_same(entityIndex);
+                var entityIndex = new PrimaryEntityIndex<TestEntity, string>("TestIndex", ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), (arg1, arg2) => string.Empty);
+                ctx.AddEntityIndex(entityIndex);
+                ctx.GetEntityIndex(entityIndex.name).should_be_same(entityIndex);
             };
 
             it["throws when adding an EntityIndex with same name"] = expect<ContextEntityIndexDoesAlreadyExistException>(() => {
                 const int componentIndex = 1;
-                var entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), (arg1, arg2) => string.Empty);
-                ctx.AddEntityIndex(componentIndex.ToString(), entityIndex);
-                ctx.AddEntityIndex(componentIndex.ToString(), entityIndex);
+                var entityIndex = new PrimaryEntityIndex<TestEntity, string>("TestIndex", ctx.GetGroup(Matcher<TestEntity>.AllOf(componentIndex)), (arg1, arg2) => string.Empty);
+                ctx.AddEntityIndex(entityIndex);
+                ctx.AddEntityIndex(entityIndex);
             });
         };
 
@@ -745,9 +745,9 @@ class describe_Context : nspec {
                 PrimaryEntityIndex<TestEntity, string> entityIndex = null;
 
                 before = () => {
-                    entityIndex = new PrimaryEntityIndex<TestEntity, string>(ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
+                    entityIndex = new PrimaryEntityIndex<TestEntity, string>("TestIndex", ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
                         (e, c) => ((NameAgeComponent)(c)).name);
-                    ctx.AddEntityIndex(CID.ComponentA.ToString(), entityIndex);
+                    ctx.AddEntityIndex(entityIndex);
                 };
 
                 it["deactivates EntityIndex"] = () => {

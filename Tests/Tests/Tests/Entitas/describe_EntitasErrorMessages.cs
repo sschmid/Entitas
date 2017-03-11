@@ -122,9 +122,9 @@ class describe_EntitasErrorMessages : nspec {
 
             it["duplicate entityIndex"] = () => printErrorMessage(() => {
                 var groupA = ctx.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA));
-                var index = new PrimaryEntityIndex<TestEntity, string>(groupA, (arg1, arg2) => string.Empty);
-                ctx.AddEntityIndex("duplicate", index);
-                ctx.AddEntityIndex("duplicate", index);
+                var index = new PrimaryEntityIndex<TestEntity, string>("TestIndex", groupA, (arg1, arg2) => string.Empty);
+                ctx.AddEntityIndex(index);
+                ctx.AddEntityIndex(index);
             });
         };
 
@@ -165,13 +165,13 @@ class describe_EntitasErrorMessages : nspec {
 
             it["no entity with key"] = () => printErrorMessage(() => {
                 var groupA = ctx.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA));
-                var index = new PrimaryEntityIndex<TestEntity, string>(groupA, (e, c) => ((NameAgeComponent)c).name);
+                var index = new PrimaryEntityIndex<TestEntity, string>("TestIndex", groupA, (e, c) => ((NameAgeComponent)c).name);
                 index.GetEntity("unknownKey");
             });
 
             it["multiple entities for primary key"] = () => printErrorMessage(() => {
                 var groupA = ctx.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA));
-                new PrimaryEntityIndex<TestEntity, string>(groupA, (e, c) => ((NameAgeComponent)c).name);
+                new PrimaryEntityIndex<TestEntity, string>("TestIndex", groupA, (e, c) => ((NameAgeComponent)c).name);
 
                 var nameAge = new NameAgeComponent();
                 nameAge.name = "Max";

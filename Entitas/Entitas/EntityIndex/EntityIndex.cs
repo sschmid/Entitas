@@ -7,22 +7,22 @@ namespace Entitas {
 
         readonly Dictionary<TKey, HashSet<TEntity>> _index;
 
-        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) : base(group, getKey) {
+        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) : base(name, group, getKey) {
             _index = new Dictionary<TKey, HashSet<TEntity>>();
             Activate();
         }
 
-        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys) : base(group, getKeys) {
+        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys) : base(name, group, getKeys) {
             _index = new Dictionary<TKey, HashSet<TEntity>>();
             Activate();
         }
 
-        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey, IEqualityComparer<TKey> comparer) : base(group, getKey) {
+        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey, IEqualityComparer<TKey> comparer) : base(name, group, getKey) {
             _index = new Dictionary<TKey, HashSet<TEntity>>(comparer);
             Activate();
         }
 
-        public EntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys, IEqualityComparer<TKey> comparer) : base(group, getKeys) {
+        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys, IEqualityComparer<TKey> comparer) : base(name, group, getKeys) {
             _index = new Dictionary<TKey, HashSet<TEntity>>(comparer);
             Activate();
         }

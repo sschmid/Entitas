@@ -4,18 +4,23 @@ namespace Entitas {
 
     public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : class, IEntity, new() {
 
+        public string name { get { return _name; } }
+
+        protected readonly string _name;
         protected readonly IGroup<TEntity> _group;
         protected readonly Func<TEntity, IComponent, TKey> _getKey;
         protected readonly Func<TEntity, IComponent, TKey[]> _getKeys;
         protected readonly bool _isSingleKey;
 
-        protected AbstractEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) {
+        protected AbstractEntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) {
+            _name = name;
             _group = group;
             _getKey = getKey;
             _isSingleKey = true;
         }
 
-        protected AbstractEntityIndex(IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys) {
+        protected AbstractEntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys) {
+            _name = name;
             _group = group;
             _getKeys = getKeys;
             _isSingleKey = false;
@@ -30,6 +35,10 @@ namespace Entitas {
             _group.OnEntityAdded -= onEntityAdded;
             _group.OnEntityRemoved -= onEntityRemoved;
             clear();
+        }
+
+        public override string ToString() {
+            return name;
         }
 
         protected void indexEntities(IGroup<TEntity> group) {

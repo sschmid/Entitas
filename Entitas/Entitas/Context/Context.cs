@@ -258,12 +258,12 @@ namespace Entitas {
 
         /// Adds the IEntityIndex for the specified name.
         /// There can only be one IEntityIndex per name.
-        public void AddEntityIndex(string name, IEntityIndex entityIndex) {
-            if(_entityIndices.ContainsKey(name)) {
-                throw new ContextEntityIndexDoesAlreadyExistException(this, name);
+        public void AddEntityIndex(IEntityIndex entityIndex) {
+            if(_entityIndices.ContainsKey(entityIndex.name)) {
+                throw new ContextEntityIndexDoesAlreadyExistException(this, entityIndex.name);
             }
 
-            _entityIndices.Add(name, entityIndex);
+            _entityIndices.Add(entityIndex.name, entityIndex);
         }
 
         /// Gets the IEntityIndex for the specified name.

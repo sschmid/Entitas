@@ -27,7 +27,7 @@ namespace Entitas {
 
         void ClearGroups();
 
-        void AddEntityIndex(string name, IEntityIndex entityIndex);
+        void AddEntityIndex(IEntityIndex entityIndex);
         IEntityIndex GetEntityIndex(string name);
         void DeactivateAndRemoveEntityIndices();
 

@@ -10,7 +10,7 @@ public class EntityIndexGetEntity : IPerformanceTest {
 
     public void Before() {
         _context = Helper.CreateContext();
-        _index = new PrimaryEntityIndex<Entity, string>(_context.GetGroup(Matcher<Entity>.AllOf(CP.ComponentA)), (e, c) => ((NameComponent)c).name);
+        _index = new PrimaryEntityIndex<Entity, string>("TestIndex", _context.GetGroup(Matcher<Entity>.AllOf(CP.ComponentA)), (e, c) => ((NameComponent)c).name);
 
         for (int i = 0; i < 10; i++) {
             var nameComponent = new NameComponent();
