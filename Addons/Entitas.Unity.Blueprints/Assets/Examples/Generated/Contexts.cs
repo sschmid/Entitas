@@ -51,4 +51,11 @@ public partial class Contexts : Entitas.IContexts {
             postConstructor.Invoke(this, null);
         }
     }
+
+    public void Reset() {
+        var contexts = allContexts;
+        for (int i = 0; i < contexts.Length; i++) {
+            contexts[i].Reset();
+        }
+    }
 }
