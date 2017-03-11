@@ -52,7 +52,10 @@ ${getIndices}
 ";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return generateEntityIndices(data.OfType<EntityIndexData>().ToArray());
+            var entityIndexData = data.OfType<EntityIndexData>().ToArray();
+            return entityIndexData.Length == 0
+                                  ? new CodeGenFile[0]
+                                  : generateEntityIndices(entityIndexData);
         }
 
         CodeGenFile[] generateEntityIndices(EntityIndexData[] data) {

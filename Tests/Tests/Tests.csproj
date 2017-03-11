@@ -120,6 +120,7 @@
     <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_EntityIndexDataProvider.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_CustomEntityIndex.cs" />
     <Compile Include="Tests\Entitas.Utils\Extensions\describe_ContextStringExtension.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\CodeGenerators\describe_EntityIndexGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -133,6 +134,7 @@
     <Folder Include="Tests\Entitas.Utils\" />
     <Folder Include="Tests\Entitas.Migration\" />
     <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
+    <Folder Include="Tests\Entitas.CodeGenerator\CodeGenerators\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\UnityEngine.dll" />
