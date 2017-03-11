@@ -15,15 +15,17 @@ namespace Entitas.CodeGenerator {
     public bool has${Name} { get { return HasComponent(${Index}); } }
 
     public void Add${Name}(${memberArgs}) {
-        var component = CreateComponent<${Type}>(${Index});
+        var index = ${Index};
+        var component = CreateComponent<${Type}>(index);
 ${memberAssignment}
-        AddComponent(${Index}, component);
+        AddComponent(index, component);
     }
 
     public void Replace${Name}(${memberArgs}) {
-        var component = CreateComponent<${Type}>(${Index});
+        var index = ${Index};
+        var component = CreateComponent<${Type}>(index);
 ${memberAssignment}
-        ReplaceComponent(${Index}, component);
+        ReplaceComponent(index, component);
     }
 
     public void Remove${Name}() {
