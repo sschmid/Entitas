@@ -8,6 +8,7 @@ increase productivity and ease of use.
 #### Breaking changes
 - Removed HideInBlueprintsInspector (#270 #306)
 - Changed interface `ITypeDrawer`
+- Added Contexts constructor (#286)
 
 # Entitas
 - Using ToString on subclassed components, too (#290)
