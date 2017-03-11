@@ -27,12 +27,13 @@ ${getIndices}
         const string INDEX_CONSTANTS_TEMPLATE = @"    public const string ${Name} = ""${Name}"";";
 
         const string ADD_INDEX_TEMPLATE =
-@"        ${context}.AddEntityIndex(${Name}, new ${IndexType}<${Context}Entity, ${KeyType}>(
+@"        ${context}.AddEntityIndex(new ${IndexType}<${Context}Entity, ${KeyType}>(
+            ""${Name}""
             ${context}.GetGroup(${Context}Matcher.${Name}),
             (e, c) => { var component = c as ${ComponentType}; return component != null ? component.${MemberName} : e.${componentName}.${MemberName}; }));";
 
-        const string ADD_CUSTOMINDEX_TEMPLATE =
-@"        ${context}.AddEntityIndex(${Name}, new ${IndexType}(${context}));";
+        const string ADD_CUSTOM_INDEX_TEMPLATE =
+@"        ${context}.AddEntityIndex(new ${IndexType}(${context}));";
 
         const string GET_INDEX_TEMPLATE =
 @"    public static System.Collections.Generic.HashSet<${Context}Entity> GetEntitiesWith${Name}(this ${Context}Context context, ${KeyType} ${MemberName}) {
@@ -95,9 +96,8 @@ ${getIndices}
         }
 
         string generateCustomMethods(EntityIndexData data) {
-            return ADD_CUSTOMINDEX_TEMPLATE
+            return ADD_CUSTOM_INDEX_TEMPLATE
                 .Replace("${context}", data.GetContextNames()[0].LowercaseFirst())
-                .Replace("${Name}", data.GetEntityIndexName())
                 .Replace("${IndexType}", data.GetEntityIndexType());
         }
 
