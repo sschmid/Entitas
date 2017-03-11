@@ -5,7 +5,7 @@ namespace Entitas.CodeGenerator {
 
     public class ContextAttributeGenerator : ICodeGenerator {
 
-        public string name { get { return "Context Attributes"; } }
+        public string name { get { return "Context Attribute"; } }
         public bool isEnabledByDefault { get { return true; } }
 
         const string ATTRIBUTE_TEMPLATE =
