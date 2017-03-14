@@ -23,8 +23,8 @@ public static class GameComponentsLookup {
     public const int HashSet = 12;
     public const int ISomeInterface = 13;
     public const int JaggedArray = 14;
-    public const int List = 15;
-    public const int ListArray = 16;
+    public const int ListArray = 15;
+    public const int List = 16;
     public const int ManyMembers = 17;
     public const int MonoBehaviourSubClass = 18;
     public const int MyBool = 19;
@@ -45,8 +45,8 @@ public static class GameComponentsLookup {
     public const int SomeStruct = 34;
     public const int SystemObject = 35;
     public const int Test = 36;
-    public const int Texture = 37;
-    public const int Texture2D = 38;
+    public const int Texture2D = 37;
+    public const int Texture = 38;
     public const int Unique = 39;
     public const int UnityObject = 40;
     public const int UnsupportedObject = 41;
@@ -73,8 +73,8 @@ public static class GameComponentsLookup {
         "HashSet",
         "ISomeInterface",
         "JaggedArray",
-        "List",
         "ListArray",
+        "List",
         "ManyMembers",
         "MonoBehaviourSubClass",
         "MyBool",
@@ -95,8 +95,8 @@ public static class GameComponentsLookup {
         "SomeStruct",
         "SystemObject",
         "Test",
-        "Texture",
         "Texture2D",
+        "Texture",
         "Unique",
         "UnityObject",
         "UnsupportedObject",
@@ -122,8 +122,8 @@ public static class GameComponentsLookup {
         typeof(HashSetComponent),
         typeof(ISomeInterfaceComponent),
         typeof(JaggedArrayComponent),
-        typeof(ListComponent),
         typeof(ListArrayComponent),
+        typeof(ListComponent),
         typeof(ManyMembersComponent),
         typeof(MonoBehaviourSubClassComponent),
         typeof(MyBoolComponent),
@@ -144,8 +144,8 @@ public static class GameComponentsLookup {
         typeof(SomeStructComponent),
         typeof(SystemObjectComponent),
         typeof(TestComponent),
-        typeof(TextureComponent),
         typeof(Texture2DComponent),
+        typeof(TextureComponent),
         typeof(UniqueComponent),
         typeof(UnityObjectComponent),
         typeof(UnsupportedObjectComponent),

@@ -14,7 +14,7 @@ public partial class GameContext {
 
     public GameEntity SetUnique(string newValue) {
         if(hasUnique) {
-            throw new Entitas.EntitasException("Could not set unique!\n" + this + " already has an entity with UniqueComponent!",
+            throw new Entitas.EntitasException("Could not set Unique!\n" + this + " already has an entity with UniqueComponent!",
                 "You should check if the context already has a uniqueEntity before setting it or use context.ReplaceUnique().");
         }
         var entity = CreateEntity();

@@ -14,7 +14,7 @@ public partial class GameContext {
 
     public GameEntity SetISomeInterface(ISomeInterface newValue) {
         if(hasISomeInterface) {
-            throw new Entitas.EntitasException("Could not set iSomeInterface!\n" + this + " already has an entity with ISomeInterfaceComponent!",
+            throw new Entitas.EntitasException("Could not set ISomeInterface!\n" + this + " already has an entity with ISomeInterfaceComponent!",
                 "You should check if the context already has a iSomeInterfaceEntity before setting it or use context.ReplaceISomeInterface().");
         }
         var entity = CreateEntity();
