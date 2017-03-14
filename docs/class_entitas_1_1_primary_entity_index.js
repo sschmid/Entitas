@@ -1,12 +1,12 @@
 var class_entitas_1_1_primary_entity_index =
 [
-    [ "PrimaryEntityIndex", "class_entitas_1_1_primary_entity_index.html#a0b3056ea19b8f2b277e3c8bb320fa9d6", null ],
-    [ "PrimaryEntityIndex", "class_entitas_1_1_primary_entity_index.html#ac631e74cae1f590c2efe83c3896735f8", null ],
+    [ "PrimaryEntityIndex", "class_entitas_1_1_primary_entity_index.html#ae26589dec2b36c8efac116371e378704", null ],
+    [ "PrimaryEntityIndex", "class_entitas_1_1_primary_entity_index.html#a256f7f8cd7f759181909aa2bc30f4563", null ],
+    [ "PrimaryEntityIndex", "class_entitas_1_1_primary_entity_index.html#ad3836d58b7f5354a46863e5c6f81299a", null ],
+    [ "PrimaryEntityIndex", "class_entitas_1_1_primary_entity_index.html#a335ce1aaaf24ff7615368e590b346275", null ],
     [ "Activate", "class_entitas_1_1_primary_entity_index.html#ad71aa7a156066d58409ff93a4615c28c", null ],
-    [ "addEntity", "class_entitas_1_1_primary_entity_index.html#ac694413e1ebe23c973f2b50fee724b2b", null ],
+    [ "addEntity", "class_entitas_1_1_primary_entity_index.html#a3635df33c94d7ffd39b4db9cd8e53a16", null ],
     [ "clear", "class_entitas_1_1_primary_entity_index.html#a31498f2c485b780da2fe62a388078615", null ],
     [ "GetEntity", "class_entitas_1_1_primary_entity_index.html#a03ec25e98a73551e1441dec0cd0c0792", null ],
-    [ "HasEntity", "class_entitas_1_1_primary_entity_index.html#ac7162ab1e64510515898112664c477aa", null ],
-    [ "removeEntity", "class_entitas_1_1_primary_entity_index.html#a3331b1c28124908b899a4d34c1c57f19", null ],
-    [ "TryGetEntity", "class_entitas_1_1_primary_entity_index.html#a66faddc6032f97417c9f72bbfa6cf0b3", null ]
+    [ "removeEntity", "class_entitas_1_1_primary_entity_index.html#ae3b5f5a72703f95fd5f8fc5076faa302", null ]
 ];

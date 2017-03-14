@@ -11,5 +11,6 @@ var searchData=
   ['contextextension',['ContextExtension',['../class_entitas_1_1_context_extension.html',1,'Entitas']]],
   ['contextinfo',['ContextInfo',['../class_entitas_1_1_context_info.html',1,'Entitas']]],
   ['contextinfoexception',['ContextInfoException',['../class_entitas_1_1_context_info_exception.html',1,'Entitas']]],
-  ['contextstillhasretainedentitiesexception',['ContextStillHasRetainedEntitiesException',['../class_entitas_1_1_context_still_has_retained_entities_exception.html',1,'Entitas']]]
+  ['contextstillhasretainedentitiesexception',['ContextStillHasRetainedEntitiesException',['../class_entitas_1_1_context_still_has_retained_entities_exception.html',1,'Entitas']]],
+  ['contextstringextension',['ContextStringExtension',['../class_entitas_1_1_context_string_extension.html',1,'Entitas']]]
 ];

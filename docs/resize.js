@@ -101,6 +101,7 @@ function initResizable()
   }
   var width = readCookie('width');
   if (width) { restoreWidth(width); } else { resizeWidth(); }
+  resizeHeight();
   var url = location.href;
   var i=url.indexOf("#");
   if (i>=0) window.location.hash=url.substr(i);

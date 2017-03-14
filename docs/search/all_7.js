@@ -5,7 +5,7 @@ var searchData=
   ['icleanupsystem',['ICleanupSystem',['../interface_entitas_1_1_i_cleanup_system.html',1,'Entitas']]],
   ['icomponent',['IComponent',['../interface_entitas_1_1_i_component.html',1,'Entitas']]],
   ['icompoundmatcher',['ICompoundMatcher',['../interface_entitas_1_1_i_compound_matcher.html',1,'Entitas']]],
-  ['icontext',['IContext',['../interface_entitas_1_1_i_context.html',1,'Entitas.IContext&lt; TEntity &gt;'],['../interface_entitas_1_1_i_context.html',1,'Entitas.IContext']]],
+  ['icontext',['IContext',['../interface_entitas_1_1_i_context.html',1,'Entitas.IContext'],['../interface_entitas_1_1_i_context.html',1,'Entitas.IContext&lt; TEntity &gt;']]],
   ['icontext_3c_20tentity_20_3e',['IContext&lt; TEntity &gt;',['../interface_entitas_1_1_i_context.html',1,'Entitas']]],
   ['icontexts',['IContexts',['../interface_entitas_1_1_i_contexts.html',1,'Entitas']]],
   ['ientity',['IEntity',['../interface_entitas_1_1_i_entity.html',1,'Entitas']]],

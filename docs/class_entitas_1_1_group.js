@@ -5,7 +5,7 @@ var class_entitas_1_1_group =
     [ "GetEntities", "class_entitas_1_1_group.html#a7238093207c3d6c19ffdc42a49ae35f4", null ],
     [ "GetSingleEntity", "class_entitas_1_1_group.html#aac08cf5ddaa5b330622e032a120cdc2b", null ],
     [ "HandleEntity", "class_entitas_1_1_group.html#a62e1246c95b7c4bcbd45c57e2e8acd0f", null ],
-    [ "handleEntity", "class_entitas_1_1_group.html#a7e4210804f55773eca7f260990ff60fe", null ],
+    [ "HandleEntity", "class_entitas_1_1_group.html#a56ee47700da18c56c429ab0f1b2087d0", null ],
     [ "HandleEntitySilently", "class_entitas_1_1_group.html#a78fe027e276b048903cd9eae363eb2db", null ],
     [ "RemoveAllEventHandlers", "class_entitas_1_1_group.html#a9f10b75019cf8d2b77ca4bc2a8556548", null ],
     [ "ToString", "class_entitas_1_1_group.html#a3df87e47a39bdc6ab58f4ec505e5fd8e", null ],

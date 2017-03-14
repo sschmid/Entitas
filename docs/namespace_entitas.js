@@ -14,6 +14,7 @@ var namespace_entitas =
     [ "ContextInfo", "class_entitas_1_1_context_info.html", "class_entitas_1_1_context_info" ],
     [ "ContextInfoException", "class_entitas_1_1_context_info_exception.html", "class_entitas_1_1_context_info_exception" ],
     [ "ContextStillHasRetainedEntitiesException", "class_entitas_1_1_context_still_has_retained_entities_exception.html", "class_entitas_1_1_context_still_has_retained_entities_exception" ],
+    [ "ContextStringExtension", "class_entitas_1_1_context_string_extension.html", "class_entitas_1_1_context_string_extension" ],
     [ "EntitasCache", "class_entitas_1_1_entitas_cache.html", "class_entitas_1_1_entitas_cache" ],
     [ "EntitasException", "class_entitas_1_1_entitas_exception.html", "class_entitas_1_1_entitas_exception" ],
     [ "EntitasPreferences", "class_entitas_1_1_entitas_preferences.html", "class_entitas_1_1_entitas_preferences" ],
@@ -61,5 +62,6 @@ var namespace_entitas =
     [ "ReactiveSystem", "class_entitas_1_1_reactive_system.html", "class_entitas_1_1_reactive_system" ],
     [ "SingleEntityException", "class_entitas_1_1_single_entity_exception.html", "class_entitas_1_1_single_entity_exception" ],
     [ "Systems", "class_entitas_1_1_systems.html", "class_entitas_1_1_systems" ],
+    [ "SystemStringExtension", "class_entitas_1_1_system_string_extension.html", "class_entitas_1_1_system_string_extension" ],
     [ "TypeSerializationExtension", "class_entitas_1_1_type_serialization_extension.html", "class_entitas_1_1_type_serialization_extension" ]
 ];

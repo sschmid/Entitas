@@ -6,6 +6,7 @@ var hierarchy =
     [ "Entitas.ComponentStringExtension", "class_entitas_1_1_component_string_extension.html", null ],
     [ "Entitas.ContextExtension", "class_entitas_1_1_context_extension.html", null ],
     [ "Entitas.ContextInfo", "class_entitas_1_1_context_info.html", null ],
+    [ "Entitas.ContextStringExtension", "class_entitas_1_1_context_string_extension.html", null ],
     [ "Entitas.EntitasCache", "class_entitas_1_1_entitas_cache.html", null ],
     [ "Entitas.EntitasPreferences", "class_entitas_1_1_entitas_preferences.html", null ],
     [ "Entitas.EntitasPreferencesConfig", "class_entitas_1_1_entitas_preferences_config.html", null ],
@@ -94,5 +95,6 @@ var hierarchy =
     [ "Entitas.PublicMemberInfo", "class_entitas_1_1_public_member_info.html", null ],
     [ "Entitas.PublicMemberInfoEntityExtension", "class_entitas_1_1_public_member_info_entity_extension.html", null ],
     [ "Entitas.PublicMemberInfoExtension", "class_entitas_1_1_public_member_info_extension.html", null ],
+    [ "Entitas.SystemStringExtension", "class_entitas_1_1_system_string_extension.html", null ],
     [ "Entitas.TypeSerializationExtension", "class_entitas_1_1_type_serialization_extension.html", null ]
 ];
