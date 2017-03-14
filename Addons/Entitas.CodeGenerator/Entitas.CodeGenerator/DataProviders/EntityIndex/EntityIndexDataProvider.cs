@@ -55,10 +55,9 @@ namespace Entitas.CodeGenerator {
 
             data.SetEntityIndexType(getEntityIndexType(attribute));
             data.IsCustom(false);
-            data.SetEntityIndexName(type.ToCompilableString().RemoveComponentSuffix().RemoveDots());
+            data.SetEntityIndexName(type.ToCompilableString().ToComponentName());
             data.SetKeyType(info.type.ToCompilableString());
             data.SetComponentType(type.ToCompilableString());
-            data.SetComponentName(type.ToCompilableString().ShortTypeName().RemoveComponentSuffix());
             data.SetMemberName(info.name);
 
             var contextNames = ContextsComponentDataProvider.GetContextNames(type);
@@ -115,7 +114,6 @@ namespace Entitas.CodeGenerator {
 
         public const string ENTITY_INDEX_KEY_TYPE = "entityIndex_keyType";
         public const string ENTITY_INDEX_COMPONENT_TYPE = "entityIndex_componentType";
-        public const string ENTITY_INDEX_COMPONENT_NAME = "entityIndex_componentName";
         public const string ENTITY_INDEX_MEMBER_NAME = "entityIndex_memberName";
 
         public static string GetEntityIndexType(this EntityIndexData data) {
@@ -172,14 +170,6 @@ namespace Entitas.CodeGenerator {
 
         public static void SetComponentType(this EntityIndexData data, string type) {
             data[ENTITY_INDEX_COMPONENT_TYPE] = type;
-        }
-
-        public static string GetComponentName(this EntityIndexData data) {
-            return (string)data[ENTITY_INDEX_COMPONENT_NAME];
-        }
-
-        public static void SetComponentName(this EntityIndexData data, string componentName) {
-            data[ENTITY_INDEX_COMPONENT_NAME] = componentName;
         }
 
         public static string GetMemberName(this EntityIndexData data) {

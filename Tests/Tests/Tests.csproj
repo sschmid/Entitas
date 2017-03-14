@@ -78,9 +78,6 @@
     <Compile Include="Tests\Entitas.Utils\Caching\describe_ObjectPool.cs" />
     <Compile Include="Tests\Entitas.Utils\Configuration\describe_EntitasPreferencesConfig.cs" />
     <Compile Include="Tests\Entitas.Utils\Configuration\describe_Properties.cs" />
-    <Compile Include="Tests\Entitas.Utils\Extensions\describe_ComponentStringExtension.cs" />
-    <Compile Include="Tests\Entitas.Utils\Extensions\describe_InterfaceTypeExtension.cs" />
-    <Compile Include="Tests\Entitas.Utils\Extensions\describe_TypeSerializationExtension.cs" />
     <Compile Include="Tests\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfo.cs" />
     <Compile Include="Tests\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfoEntityExtension.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0180.cs" />
@@ -118,8 +115,12 @@
     <Compile Include="Tests\Entitas\describe_EntitasException.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_EntityIndexDataProvider.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_CustomEntityIndex.cs" />
-    <Compile Include="Tests\Entitas.Utils\Extensions\describe_ContextStringExtension.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\CodeGenerators\describe_EntityIndexGenerator.cs" />
+    <Compile Include="Tests\Entitas\Extensions\describe_ComponentStringExtension.cs" />
+    <Compile Include="Tests\Entitas\Extensions\describe_ContextStringExtension.cs" />
+    <Compile Include="Tests\Entitas\Extensions\describe_InterfaceTypeExtension.cs" />
+    <Compile Include="Tests\Entitas\Extensions\describe_TypeSerializationExtension.cs" />
+    <Compile Include="Tests\Entitas\Extensions\describe_SystemStringExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -134,6 +135,7 @@
     <Folder Include="Tests\Entitas.Migration\" />
     <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
     <Folder Include="Tests\Entitas.CodeGenerator\CodeGenerators\" />
+    <Folder Include="Tests\Entitas\Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\UnityEngine.dll" />

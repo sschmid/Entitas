@@ -9,33 +9,33 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string STANDARD_COMPONENT_TEMPLATE =
-@"public partial class ${Context}Context {
+@"public partial class ${ContextName}Context {
 
-    public ${Context}Entity ${name}Entity { get { return GetGroup(${Context}Matcher.${Name}).GetSingleEntity(); } }
-    public ${Type} ${name} { get { return ${name}Entity.${name}; } }
-    public bool has${Name} { get { return ${name}Entity != null; } }
+    public ${ContextName}Entity ${componentName}Entity { get { return GetGroup(${ContextName}Matcher.${ComponentName}).GetSingleEntity(); } }
+    public ${ComponentType} ${componentName} { get { return ${componentName}Entity.${componentName}; } }
+    public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
 
-    public ${Context}Entity Set${Name}(${memberArgs}) {
-        if(has${Name}) {
-            throw new Entitas.EntitasException(""Could not set ${name}!\n"" + this + "" already has an entity with ${FullName}!"",
-                ""You should check if the context already has a ${name}Entity before setting it or use context.Replace${Name}()."");
+    public ${ContextName}Entity Set${ComponentName}(${memberArgs}) {
+        if(has${ComponentName}) {
+            throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
+                ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
         }
         var entity = CreateEntity();
-        entity.Add${Name}(${methodArgs});
+        entity.Add${ComponentName}(${methodArgs});
         return entity;
     }
 
-    public void Replace${Name}(${memberArgs}) {
-        var entity = ${name}Entity;
+    public void Replace${ComponentName}(${memberArgs}) {
+        var entity = ${componentName}Entity;
         if(entity == null) {
-            entity = Set${Name}(${methodArgs});
+            entity = Set${ComponentName}(${methodArgs});
         } else {
-            entity.Replace${Name}(${methodArgs});
+            entity.Replace${ComponentName}(${methodArgs});
         }
     }
 
-    public void Remove${Name}() {
-        DestroyEntity(${name}Entity);
+    public void Remove${ComponentName}() {
+        DestroyEntity(${componentName}Entity);
     }
 }
 ";
@@ -47,17 +47,17 @@ namespace Entitas.CodeGenerator {
 @"new${MemberName}";
 
         const string FLAG_COMPONENT_TEMPLATE =
-@"public partial class ${Context}Context {
+@"public partial class ${ContextName}Context {
 
-    public ${Context}Entity ${name}Entity { get { return GetGroup(${Context}Matcher.${Name}).GetSingleEntity(); } }
+    public ${ContextName}Entity ${componentName}Entity { get { return GetGroup(${ContextName}Matcher.${ComponentName}).GetSingleEntity(); } }
 
-    public bool ${prefixedName} {
-        get { return ${name}Entity != null; }
+    public bool ${prefixedComponentName} {
+        get { return ${componentName}Entity != null; }
         set {
-            var entity = ${name}Entity;
+            var entity = ${componentName}Entity;
             if(value != (entity != null)) {
                 if(value) {
-                    CreateEntity().${prefixedName} = true;
+                    CreateEntity().${prefixedComponentName} = true;
                 } else {
                     DestroyEntity(entity);
                 }
@@ -84,24 +84,24 @@ namespace Entitas.CodeGenerator {
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
             var memberData = data.GetMemberData();
+            var componentName = data.GetFullTypeName().ToComponentName();
             var template = memberData.Length == 0
                                       ? FLAG_COMPONENT_TEMPLATE
                                       : STANDARD_COMPONENT_TEMPLATE;
 
             var fileContent = template
-                .Replace("${Context}", contextName)
-                .Replace("${Name}", data.GetComponentName())
-                .Replace("${name}", data.GetComponentName().LowercaseFirst())
-                .Replace("${FullName}", data.GetFullComponentName())
-                .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + data.GetComponentName())
-                .Replace("${Type}", data.GetFullTypeName())
+                .Replace("${ContextName}", contextName)
+                .Replace("${ComponentType}", data.GetFullTypeName())
+                .Replace("${ComponentName}", componentName)
+                .Replace("${componentName}", componentName.LowercaseFirst())
+                .Replace("${prefixedComponentName}", data.GetUniqueComponentPrefix().LowercaseFirst() + componentName)
                 .Replace("${memberArgs}", getMemberArgs(memberData))
                 .Replace("${methodArgs}", getMethodArgs(memberData));
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
-                contextName + data.GetFullComponentName() + ".cs",
+                contextName + componentName.AddComponentSuffix() + ".cs",
                 fileContent,
                 GetType().FullName
             );

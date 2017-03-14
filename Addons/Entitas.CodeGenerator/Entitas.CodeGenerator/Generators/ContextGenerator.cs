@@ -9,14 +9,14 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string CONTEXT_TEMPLATE =
-@"public sealed partial class ${Context}Context : Entitas.Context<${Context}Entity> {
+@"public sealed partial class ${ContextName}Context : Entitas.Context<${ContextName}Entity> {
 
-    public ${Context}Context()
+    public ${ContextName}Context()
         : base(
             ${Lookup}.TotalComponents,
             0,
             new Entitas.ContextInfo(
-                ""${Context}"",
+                ""${ContextName}"",
                 ${Lookup}.componentNames,
                 ${Lookup}.componentTypes
             )
@@ -37,7 +37,7 @@ namespace Entitas.CodeGenerator {
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar + contextName + "Context.cs",
                 CONTEXT_TEMPLATE
-                    .Replace("${Context}", contextName)
+                    .Replace("${ContextName}", contextName)
                     .Replace("${Lookup}", contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP),
                 GetType().FullName
             );

@@ -14,7 +14,7 @@ class describe_ContextStringExtension : nspec {
                 str.AddContextSuffix().should_be_same(str);
             };
 
-            it["add ContextSuffix to string not ending with ContextSuffix"] = () => {
+            it["adds ContextSuffix to string not ending with ContextSuffix"] = () => {
                 const string str = "Game";
                 str.AddContextSuffix().should_be("Game" + CONTEXT_SUFFIX);
             };

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Entitas.CodeGenerator;
+using My.Namespace;
 using MyNamespace;
 using NSpec;
 
@@ -22,7 +23,7 @@ class describe_EntityIndexDataProvider : nspec {
             d.IsCustom().should_be_false();
 
             d.GetEntityIndexName().GetType().should_be(typeof(string));
-            d.GetEntityIndexName().should_be("EntityIndex");
+            d.GetEntityIndexName().should_be("MyNamespaceEntityIndex");
 
             d.GetContextNames().GetType().should_be(typeof(string[]));
             d.GetContextNames().Length.should_be(2);
@@ -33,10 +34,7 @@ class describe_EntityIndexDataProvider : nspec {
             d.GetKeyType().should_be("string");
 
             d.GetComponentType().GetType().should_be(typeof(string));
-            d.GetComponentType().should_be("EntityIndexComponent");
-
-            d.GetComponentName().GetType().should_be(typeof(string));
-            d.GetComponentName().should_be("EntityIndex");
+            d.GetComponentType().should_be("My.Namespace.EntityIndexComponent");
 
             d.GetMemberName().GetType().should_be(typeof(string));
             d.GetMemberName().should_be("value");
@@ -57,7 +55,6 @@ class describe_EntityIndexDataProvider : nspec {
             d.GetContextNames()[0].should_be("Game");
             d.GetKeyType().should_be("string");
             d.GetComponentType().should_be("PrimaryEntityIndexComponent");
-            d.GetComponentName().should_be("PrimaryEntityIndex");
             d.GetMemberName().should_be("value");
         };
 

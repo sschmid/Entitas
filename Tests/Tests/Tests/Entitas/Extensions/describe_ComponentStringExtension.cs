@@ -14,7 +14,7 @@ class describe_ComponentStringExtension : nspec {
                 str.AddComponentSuffix().should_be_same(str);
             };
 
-            it["add ComponentSuffix to string not ending with ComponentSuffix"] = () => {
+            it["adds ComponentSuffix to string not ending with ComponentSuffix"] = () => {
                 const string str = "Position";
                 str.AddComponentSuffix().should_be("Position" + COMPONENT_SUFFIX);
             };

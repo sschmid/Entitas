@@ -97,6 +97,7 @@
     <Compile Include="Entitas\EntityIndex\IEntityIndex.cs" />
     <Compile Include="Entitas\Group\IGroup.cs" />
     <Compile Include="Entitas\Extensions\ContextStringExtension.cs" />
+    <Compile Include="Entitas\Extensions\SystemStringExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

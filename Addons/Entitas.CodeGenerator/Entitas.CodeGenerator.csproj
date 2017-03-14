@@ -55,7 +55,6 @@
     <Compile Include="Entitas.CodeGenerator\DataProviders\Contexts\ContextData.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Contexts\ContextDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\CodeGenFile.cs" />
-    <Compile Include="Entitas.CodeGenerator\DataProviders\Components\Providers\ComponentNameComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\ComponentContextGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\ComponentEntityGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\ComponentGenerator.cs" />

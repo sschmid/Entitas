@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Entitas.CodeGenerator {
@@ -24,30 +24,30 @@ public static class ContextsExtensions {
 ${getIndices}
 }";
 
-        const string INDEX_CONSTANTS_TEMPLATE = @"    public const string ${Name} = ""${Name}"";";
+        const string INDEX_CONSTANTS_TEMPLATE = @"    public const string ${IndexName} = ""${IndexName}"";";
 
         const string ADD_INDEX_TEMPLATE =
-@"        ${context}.AddEntityIndex(new ${IndexType}<${Context}Entity, ${KeyType}>(
-            ""${Name}""
-            ${context}.GetGroup(${Context}Matcher.${Name}),
+@"        ${contextName}.AddEntityIndex(new ${IndexType}<${ContextName}Entity, ${KeyType}>(
+            ""${IndexName}"",
+            ${contextName}.GetGroup(${ContextName}Matcher.${IndexName}),
             (e, c) => { var component = c as ${ComponentType}; return component != null ? component.${MemberName} : e.${componentName}.${MemberName}; }));";
 
         const string ADD_CUSTOM_INDEX_TEMPLATE =
-@"        ${context}.AddEntityIndex(new ${IndexType}(${context}));";
+@"        ${contextName}.AddEntityIndex(new ${IndexType}(${contextName}));";
 
         const string GET_INDEX_TEMPLATE =
-@"    public static System.Collections.Generic.HashSet<${Context}Entity> GetEntitiesWith${Name}(this ${Context}Context context, ${KeyType} ${MemberName}) {
-        return ((${IndexType}<${Context}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${Name})).GetEntities(${MemberName});
+@"    public static System.Collections.Generic.HashSet<${ContextName}Entity> GetEntitiesWith${IndexName}(this ${ContextName}Context context, ${KeyType} ${MemberName}) {
+        return ((${IndexType}<${ContextName}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${IndexName})).GetEntities(${MemberName});
     }";
 
         const string GET_PRIMARY_INDEX_TEMPLATE =
-@"    public static ${Context}Entity GetEntityWith${Name}(this ${Context}Context context, ${KeyType} ${MemberName}) {
-        return ((${IndexType}<${Context}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${Name})).GetEntity(${MemberName});
+@"    public static ${ContextName}Entity GetEntityWith${IndexName}(this ${ContextName}Context context, ${KeyType} ${MemberName}) {
+        return ((${IndexType}<${ContextName}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${IndexName})).GetEntity(${MemberName});
     }";
 
         const string CUSTOM_METHOD_TEMPLATE =
-@"    public static ${ReturnType} ${MethodName}(this ${Context}Context context, ${methodArgs}) {
-        return ((${IndexType})(context.GetEntityIndex(Contexts.${Name}))).${MethodName}(${args});
+@"    public static ${ReturnType} ${MethodName}(this ${ContextName}Context context, ${methodArgs}) {
+        return ((${IndexType})(context.GetEntityIndex(Contexts.${IndexName}))).${MethodName}(${args});
     }
 ";
 
@@ -61,7 +61,7 @@ ${getIndices}
         CodeGenFile[] generateEntityIndices(EntityIndexData[] data) {
 
             var indexConstants = string.Join("\n", data
-                                        .Select(d => INDEX_CONSTANTS_TEMPLATE.Replace("${Name}", d.GetEntityIndexName()))
+                                        .Select(d => INDEX_CONSTANTS_TEMPLATE.Replace("${IndexName}", d.GetEntityIndexName()))
                                         .ToArray());
 
             var addIndices = string.Join("\n\n", data
@@ -100,20 +100,20 @@ ${getIndices}
 
         string generateCustomMethods(EntityIndexData data) {
             return ADD_CUSTOM_INDEX_TEMPLATE
-                .Replace("${context}", data.GetContextNames()[0].LowercaseFirst())
+                .Replace("${contextName}", data.GetContextNames()[0].LowercaseFirst())
                 .Replace("${IndexType}", data.GetEntityIndexType());
         }
 
         string generateMethods(EntityIndexData data, string contextName) {
             return ADD_INDEX_TEMPLATE
-                .Replace("${context}", contextName.LowercaseFirst())
-                .Replace("${Context}", contextName)
-                .Replace("${Name}", data.GetEntityIndexName())
+                .Replace("${contextName}", contextName.LowercaseFirst())
+                .Replace("${ContextName}", contextName)
+                .Replace("${IndexName}", data.GetEntityIndexName())
                 .Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${ComponentType}", data.GetComponentType())
                 .Replace("${MemberName}", data.GetMemberName())
-                .Replace("${componentName}", data.GetComponentName().LowercaseFirst());
+                .Replace("${componentName}", data.GetComponentType().ToComponentName().LowercaseFirst());
         }
 
         string generateGetMethods(EntityIndexData data) {
@@ -135,8 +135,8 @@ ${getIndices}
             }
 
             return template
-                .Replace("${Context}", contextName)
-                .Replace("${Name}", data.GetEntityIndexName())
+                .Replace("${ContextName}", contextName)
+                .Replace("${IndexName}", data.GetEntityIndexName())
                 .Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${MemberName}", data.GetMemberName());
@@ -147,10 +147,10 @@ ${getIndices}
                                        .Select(m => CUSTOM_METHOD_TEMPLATE
                     .Replace("${ReturnType}", m.ReturnType.ToCompilableString())
                     .Replace("${MethodName}", m.Name)
-                    .Replace("${Context}", data.GetContextNames()[0])
+                    .Replace("${ContextName}", data.GetContextNames()[0])
                     .Replace("${methodArgs}", string.Join(", ", m.GetParameters().Select(p => p.ParameterType.ToCompilableString() + " " + p.Name).ToArray()))
                     .Replace("${IndexType}", data.GetEntityIndexType())
-                    .Replace("${Name}", data.GetEntityIndexName())
+                    .Replace("${IndexName}", data.GetEntityIndexName())
                     .Replace("${args}", string.Join(", ", m.GetParameters().Select(p => p.Name).ToArray()))).ToArray());
         }
    }

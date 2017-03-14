@@ -207,9 +207,9 @@ class describe_Entity : nspec {
                     e.ToString().should_be("Entity_0(*0)(NameAge(Max, 42), ComponentA, ComponentB)");
                 };
 
-                it["uses short component name without namespace if ToString is not implemented"] = () => {
+                it["uses full component name with namespace if ToString is not implemented"] = () => {
                     e.AddComponent(0, new MyNamespaceComponent());
-                    e.ToString().should_be("Entity_0(*0)(MyNamespace, ComponentA, ComponentB)");
+                    e.ToString().should_be("Entity_0(*0)(My.Namespace.MyNamespace, ComponentA, ComponentB)");
                 };
             };
         };

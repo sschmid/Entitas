@@ -23,7 +23,6 @@ namespace Entitas.CodeGenerator {
         static IComponentDataProvider[] getComponentDataProviders(string defaultContextName) {
             return new IComponentDataProvider[] {
                 new ComponentTypeComponentDataProvider(),
-                new ComponentNameComponentDataProvider(),
                 new MemberDataComponentDataProvider(),
                 new ContextsComponentDataProvider(defaultContextName),
                 new IsUniqueComponentDataProvider(),

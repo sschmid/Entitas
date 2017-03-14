@@ -10,7 +10,7 @@ namespace Entitas.CodeGenerator {
 
         const string COMPONENT_TEMPLATE =
 @"${Contexts}${Unique}
-public sealed partial class ${Name} : Entitas.IComponent {
+public sealed partial class ${FullComponentName} : Entitas.IComponent {
     public ${Type} value;
 }
 ";
@@ -24,6 +24,7 @@ public sealed partial class ${Name} : Entitas.IComponent {
         }
 
         CodeGenFile generateComponentClass(ComponentData data) {
+            var fullComponentName = data.GetFullTypeName().RemoveDots();
             var contexts = string.Join(", ", data.GetContextNames());
             var unique = data.IsUnique() ? "[Entitas.CodeGenerator.Api.UniqueAttribute]" : string.Empty;
             if(!string.IsNullOrEmpty(contexts)) {
@@ -31,9 +32,9 @@ public sealed partial class ${Name} : Entitas.IComponent {
             }
 
             return new CodeGenFile(
-                "Components" + Path.DirectorySeparatorChar + data.GetFullComponentName() + ".cs",
+                "Components" + Path.DirectorySeparatorChar + fullComponentName + ".cs",
                 COMPONENT_TEMPLATE
-                    .Replace("${Name}", data.GetFullComponentName())
+                    .Replace("${FullComponentName}", fullComponentName)
                     .Replace("${Type}", data.GetObjectType())
                     .Replace("${Contexts}", contexts)
                     .Replace("${Unique}", unique),

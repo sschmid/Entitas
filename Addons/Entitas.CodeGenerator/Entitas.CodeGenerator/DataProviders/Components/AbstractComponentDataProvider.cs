@@ -29,9 +29,9 @@ namespace Entitas.CodeGenerator {
                 .Where(type => hasContexts(type))
                 .SelectMany(type => createDataForNonComponent(type));
 
-            var generatedComponentsLookup = dataFromNonComponents.ToLookup(data => data.GetFullComponentName());
+            var generatedComponentsLookup = dataFromNonComponents.ToLookup(data => data.GetFullTypeName());
             return dataFromComponents
-                .Where(data => !generatedComponentsLookup.Contains(data.GetFullComponentName()))
+                .Where(data => !generatedComponentsLookup.Contains(data.GetFullTypeName()))
                 .Concat(dataFromNonComponents)
                 .ToArray();
         }
@@ -48,17 +48,14 @@ namespace Entitas.CodeGenerator {
         ComponentData[] createDataForNonComponent(Type type) {
             return getComponentNames(type)
                 .Select(componentName => {
-                var data = createDataForComponent(type);
-                data.SetFullTypeName(componentName.AddComponentSuffix());
-                data.SetFullComponentName(componentName.AddComponentSuffix());
-                data.SetComponentName(componentName.RemoveComponentSuffix());
-                data.SetMemberData(new [] {
-                    new MemberData(type.ToCompilableString(), "value")
-                });
+                    var data = createDataForComponent(type);
+                    data.SetFullTypeName(componentName.AddComponentSuffix());
+                    data.SetMemberData(new [] {
+                        new MemberData(type.ToCompilableString(), "value")
+                    });
 
-                return data;
-            })
-                .ToArray();
+                    return data;
+            }).ToArray();
         }
 
         bool hasContexts(Type type) {

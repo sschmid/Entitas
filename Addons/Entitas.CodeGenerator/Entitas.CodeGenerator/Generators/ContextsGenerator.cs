@@ -60,10 +60,10 @@ ${contextObservers}
 }
 ";
 
-        const string CONTEXT_PROPERTY_TEMPLATE = @"    public ${Context}Context ${context} { get; set; }";
-        const string CONTEXT_LIST_TEMPLATE = @"${context}";
-        const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${context} = new ${Context}Context();";
-        const string CONTEXT_OBSERVER_TEMPLATE = @"        CreateContextObserver(${context});";
+        const string CONTEXT_PROPERTY_TEMPLATE = @"    public ${ContextName}Context ${contextName} { get; set; }";
+        const string CONTEXT_LIST_TEMPLATE = @"${contextName}";
+        const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${contextName} = new ${ContextName}Context();";
+        const string CONTEXT_OBSERVER_TEMPLATE = @"        CreateContextObserver(${contextName});";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var contextNames = data
@@ -82,24 +82,24 @@ ${contextObservers}
         string generateContextsClass(string[] contextNames) {
             var contextProperties = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_PROPERTY_TEMPLATE
-                        .Replace("${Context}", contextName)
-                        .Replace("${context}", contextName.LowercaseFirst())
+                        .Replace("${ContextName}", contextName)
+                        .Replace("${contextName}", contextName.LowercaseFirst())
                        ).ToArray());
 
             var contextList = string.Join(", ", contextNames
                 .Select(contextName => CONTEXT_LIST_TEMPLATE
-                        .Replace("${context}", contextName.LowercaseFirst())
+                        .Replace("${contextName}", contextName.LowercaseFirst())
                        ).ToArray());
 
             var contextAssignments = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_ASSIGNMENT_TEMPLATE
-                        .Replace("${Context}", contextName)
-                        .Replace("${context}", contextName.LowercaseFirst())
+                        .Replace("${ContextName}", contextName)
+                        .Replace("${contextName}", contextName.LowercaseFirst())
                        ).ToArray());
 
             var contextObservers = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_OBSERVER_TEMPLATE
-                        .Replace("${context}", contextName.LowercaseFirst())
+                        .Replace("${contextName}", contextName.LowercaseFirst())
                        ).ToArray());
 
             return CONTEXTS_TEMPLATE

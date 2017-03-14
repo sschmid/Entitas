@@ -29,16 +29,16 @@ ${componentTypes}
 ";
 
         const string COMPONENT_CONSTANTS_TEMPLATE =
-@"    public const int ${Name} = ${Index};";
+@"    public const int ${ComponentName} = ${Index};";
 
         const string TOTAL_COMPONENTS_CONSTANT_TEMPLATE =
 @"    public const int TotalComponents = ${totalComponents};";
 
         const string COMPONENT_NAMES_TEMPLATE =
-@"        ""${Name}""";
+@"        ""${ComponentName}""";
 
         const string COMPONENT_TYPES_TEMPLATE =
-@"        typeof(${Type})";
+@"        typeof(${ComponentType})";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var files = new List<CodeGenFile>();
@@ -90,7 +90,7 @@ ${componentTypes}
 
             foreach(var key in contextNameToComponentData.Keys.ToArray()) {
                 contextNameToComponentData[key] = contextNameToComponentData[key]
-                    .OrderBy(d => d.GetComponentName())
+                    .OrderBy(d => d.GetFullTypeName())
                     .ToList();
             }
 
@@ -103,8 +103,8 @@ ${componentTypes}
             var componentConstants = string.Join("\n", data
                 .Select((d, index) => {
                     return COMPONENT_CONSTANTS_TEMPLATE
-                    .Replace("${Name}", d.GetComponentName())
-                    .Replace("${Index}", index.ToString());
+                    .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName())
+                        .Replace("${Index}", index.ToString());
                 }).ToArray());
 
             var totalComponentsConstant = TOTAL_COMPONENTS_CONSTANT_TEMPLATE
@@ -112,12 +112,12 @@ ${componentTypes}
 
             var componentNames = string.Join(",\n", data
                 .Select(d => COMPONENT_NAMES_TEMPLATE
-                        .Replace("${Name}", d.GetComponentName())
+                        .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName())
                 ).ToArray());
 
             var componentTypes = string.Join(",\n", data
                 .Select(d => COMPONENT_TYPES_TEMPLATE
-                    .Replace("${Type}", d.GetFullTypeName())
+                    .Replace("${ComponentType}", d.GetFullTypeName())
                 ).ToArray());
 
             var fileContent = COMPONENTS_LOOKUP_TEMPLATE
