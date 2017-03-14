@@ -30,7 +30,7 @@ ${getIndices}
 @"        ${contextName}.AddEntityIndex(new ${IndexType}<${ContextName}Entity, ${KeyType}>(
             ${IndexName},
             ${contextName}.GetGroup(${ContextName}Matcher.${IndexName}),
-            (e, c) => { var component = c as ${ComponentType}; return component != null ? component.${MemberName} : e.${componentName}.${MemberName}; }));";
+            (e, c) => ((${ComponentType})c).${MemberName}));";
 
         const string ADD_CUSTOM_INDEX_TEMPLATE =
 @"        ${contextName}.AddEntityIndex(new ${IndexType}(${contextName}));";
