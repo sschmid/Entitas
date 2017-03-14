@@ -98,22 +98,19 @@
 │   │       ├── DataProviders
 │   │       │   ├── Components
 │   │       │   │   ├── Providers
-│   │       │   │   │   ├── ComponentNameComponentDataProvider.cs
 │   │       │   │   │   ├── ComponentTypeComponentDataProvider.cs
 │   │       │   │   │   ├── ContextsComponentDataProvider.cs
 │   │       │   │   │   ├── IComponentDataProvider.cs
 │   │       │   │   │   ├── IsUniqueComponentDataProvider.cs
 │   │       │   │   │   ├── MemberData.cs
 │   │       │   │   │   ├── MemberDataComponentDataProvider.cs
-│   │       │   │   │   ├── NamespaceComponentNameComponentDataProvider.cs
 │   │       │   │   │   ├── ShouldGenerateComponentComponentDataProvider.cs
 │   │       │   │   │   ├── ShouldGenerateComponentIndexComponentDataProvider.cs
 │   │       │   │   │   ├── ShouldGenerateMethodsComponentDataProvider.cs
 │   │       │   │   │   └── UniquePrefixComponentDataProvider.cs
 │   │       │   │   ├── AbstractComponentDataProvider.cs
 │   │       │   │   ├── ComponentData.cs
-│   │       │   │   ├── ComponentDataProvider.cs
-│   │       │   │   └── NamespaceComponentDataProvider.cs
+│   │       │   │   └── ComponentDataProvider.cs
 │   │       │   ├── Contexts
 │   │       │   │   ├── ContextData.cs
 │   │       │   │   └── ContextDataProvider.cs
@@ -227,8 +224,7 @@
 │   │           │   ├── GameComponentsLookup.cs
 │   │           │   ├── GameContext.cs
 │   │           │   └── GameEntity.cs
-│   │           ├── Contexts.cs
-│   │           └── ContextsEntityIndices.cs
+│   │           └── Contexts.cs
 │   ├── Entitas.Unity.Migration
 │   │   └── Assets
 │   │       ├── Editor
@@ -365,8 +361,7 @@
 │               │   ├── GameComponentsLookup.cs
 │               │   ├── GameContext.cs
 │               │   └── GameEntity.cs
-│               ├── Contexts.cs
-│               └── ContextsEntityIndices.cs
+│               └── Contexts.cs
 ├── Entitas
 │   └── Entitas
 │       ├── Collector
@@ -407,6 +402,7 @@
 │       │   ├── ComponentStringExtension.cs
 │       │   ├── ContextStringExtension.cs
 │       │   ├── InterfaceTypeExtension.cs
+│       │   ├── SystemStringExtension.cs
 │       │   └── TypeSerializationExtension.cs
 │       ├── Group
 │       │   ├── Group.cs

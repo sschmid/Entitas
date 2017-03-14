@@ -1,3 +1,18 @@
+# 0.39.0
+
+See and discuss changes in [Milestone 0.39.0](https://github.com/sschmid/Entitas-CSharp/milestone/9)
+
+##### Entitas
+- Added `entityIndex.ToString()` with name #329
+
+##### Entitas.CodeGenerator
+- Add `contexts.Reset()` (#317)
+- Removed ComponentDataProvider without namespace #323
+- Don't generate EntityIndex when not specified #326
+- Cache static component index lookup into local var #316
+- Review and check for namespace awareness #328
+
+
 # 0.38.0
 
 See and discuss changes in [Milestone 0.38.0](https://github.com/sschmid/Entitas-CSharp/milestone/8)
