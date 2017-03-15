@@ -78,7 +78,7 @@ ${getIndices}
                 .Replace("${getIndices}", getIndices);
 
             return new[] { new CodeGenFile(
-                "ContextsEntityIndices.cs",
+                "Contexts.cs",
                 fileContent,
                 GetType().FullName
             ) };

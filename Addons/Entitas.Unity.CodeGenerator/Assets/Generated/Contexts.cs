@@ -21,23 +21,12 @@ public partial class Contexts : Entitas.IContexts {
 
     static Contexts _sharedInstance;
 
-    public static void CreateContextObserver(Entitas.IContext context) {
-//#if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-//        if(UnityEngine.Application.isPlaying) {
-//            var observer = new Entitas.Unity.VisualDebugging.ContextObserver(context);
-//            UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
-//        }
-//#endif
-    }
-
     public GameContext game { get; set; }
 
     public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game }; } }
 
     public Contexts() {
         game = new GameContext();
-
-        CreateContextObserver(game);
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
