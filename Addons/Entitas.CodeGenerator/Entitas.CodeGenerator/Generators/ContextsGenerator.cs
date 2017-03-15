@@ -23,23 +23,12 @@ namespace Entitas.CodeGenerator {
 
     static Contexts _sharedInstance;
 
-    public static void CreateContextObserver(Entitas.IContext context) {
-#if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-        if(UnityEngine.Application.isPlaying) {
-            var observer = new Entitas.Unity.VisualDebugging.ContextObserver(context);
-            UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
-        }
-#endif
-    }
-
 ${contextProperties}
 
     public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { ${contextList} }; } }
 
     public Contexts() {
 ${contextAssignments}
-
-${contextObservers}
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
@@ -63,7 +52,6 @@ ${contextObservers}
         const string CONTEXT_PROPERTY_TEMPLATE = @"    public ${ContextName}Context ${contextName} { get; set; }";
         const string CONTEXT_LIST_TEMPLATE = @"${contextName}";
         const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${contextName} = new ${ContextName}Context();";
-        const string CONTEXT_OBSERVER_TEMPLATE = @"        CreateContextObserver(${contextName});";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var contextNames = data
@@ -97,16 +85,10 @@ ${contextObservers}
                         .Replace("${contextName}", contextName.LowercaseFirst())
                        ).ToArray());
 
-            var contextObservers = string.Join("\n", contextNames
-                .Select(contextName => CONTEXT_OBSERVER_TEMPLATE
-                        .Replace("${contextName}", contextName.LowercaseFirst())
-                       ).ToArray());
-
             return CONTEXTS_TEMPLATE
                 .Replace("${contextProperties}", contextProperties)
                 .Replace("${contextList}", contextList)
-                .Replace("${contextAssignments}", contextAssignments)
-                .Replace("${contextObservers}", contextObservers);
+                .Replace("${contextAssignments}", contextAssignments);
         }
     }
 }
