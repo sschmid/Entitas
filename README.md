@@ -5,9 +5,16 @@
 ---
 
 <p align="center">
-    <a>🎉 Happy birthday Entitas! 🎉<br />3 years of clean code<br />Please support the development<br/></a>
+    <a>🎉 Happy birthday Entitas! 🎉<br />3 years of clean code</a>
+</p>
+
+---
+
+<p align="center">
+    <b>Entitas is free, but powered by</b>
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Donate-PayPal.gif" alt="Thank you!"></a>
+        <b>your donations</b>
+    </a>
 </p>
 
 ---
