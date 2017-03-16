@@ -79,6 +79,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         public string name { get { return _name; } }
         public GameObject gameObject { get { return _gameObject; } }
+        public SystemInfo systemInfo { get { return _systemInfo; } }
 
         public double executeDuration { get { return _executeDuration; } }
         public double cleanupDuration { get { return _cleanupDuration; } }
@@ -94,6 +95,8 @@ namespace Entitas.Unity.VisualDebugging {
 
         List<ISystem> _systems;
         GameObject _gameObject;
+        SystemInfo _systemInfo;
+
         List<SystemInfo> _initializeSystemInfos;
         List<SystemInfo> _executeSystemInfos;
         List<SystemInfo> _cleanupSystemInfos;
@@ -116,6 +119,8 @@ namespace Entitas.Unity.VisualDebugging {
             _gameObject = new GameObject(name);
             _gameObject.AddComponent<DebugSystemsBehaviour>().Init(this);
 
+            _systemInfo = new SystemInfo(this);
+
             _systems = new List<ISystem>();
             _initializeSystemInfos = new List<SystemInfo>();
             _executeSystemInfos = new List<SystemInfo>();
@@ -127,22 +132,30 @@ namespace Entitas.Unity.VisualDebugging {
 
         public override Systems Add(ISystem system) {
             _systems.Add(system);
+
+            SystemInfo childSystemInfo;
+
             var debugSystems = system as DebugSystems;
             if(debugSystems != null) {
+                childSystemInfo = debugSystems.systemInfo;
                 debugSystems.gameObject.transform.SetParent(_gameObject.transform, false);
+            } else {
+                childSystemInfo = new SystemInfo(system);
             }
-            var systemInfo = new SystemInfo(system);
-            if(systemInfo.isInitializeSystems) {
-                _initializeSystemInfos.Add(systemInfo);
+
+            childSystemInfo.parentSystemInfo = _systemInfo;
+
+            if(childSystemInfo.isInitializeSystems) {
+                _initializeSystemInfos.Add(childSystemInfo);
             }
-            if(systemInfo.isExecuteSystems || systemInfo.isReactiveSystems) {
-                _executeSystemInfos.Add(systemInfo);
+            if(childSystemInfo.isExecuteSystems || childSystemInfo.isReactiveSystems) {
+                _executeSystemInfos.Add(childSystemInfo);
             }
-            if(systemInfo.isCleanupSystems) {
-                _cleanupSystemInfos.Add(systemInfo);
+            if(childSystemInfo.isCleanupSystems) {
+                _cleanupSystemInfos.Add(childSystemInfo);
             }
-            if(systemInfo.isTearDownSystems) {
-                _tearDownSystemInfos.Add(systemInfo);
+            if(childSystemInfo.isTearDownSystems) {
+                _tearDownSystemInfos.Add(childSystemInfo);
             }
 
             return base.Add(system);
