@@ -53,6 +53,7 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
 ---
 
 ### **[» Download](#download-entitas)**
+### **[» Documentation][documentation]**
 ### **[» Ask a question][issues-new]**
 ### **[» Wiki and example projects][wiki]**
 ### **[» #madeWithEntitas][wiki-games-and-examples]**
@@ -217,6 +218,7 @@ Entitas is available in
 
 [clean-coders]: https://cleancoders.com "Clean Coders"
 
+[documentation]: http://sschmid.github.io/Entitas-CSharp/ "Entitas Documentation"
 [wiki]: https://github.com/sschmid/Entitas-CSharp/wiki "Entitas Wiki"
 [wiki-code-generator]: https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator "Wiki - Code Generator"
 [wiki-overview]: https://github.com/sschmid/Entitas-CSharp/wiki/Overview "Wiki - Overview"
