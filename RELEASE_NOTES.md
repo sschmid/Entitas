@@ -1,3 +1,21 @@
+# 0.39.1
+
+See and discuss changes in [Milestone 0.39.1](https://github.com/sschmid/Entitas-CSharp/milestone/10)
+
+##### Entitas
+- Added `entityIndex.ToString()` with name #329
+
+##### Entitas.CodeGenerator
+- Add ContextObserverGenerator #337
+- Simplified EntityIndexGenerator getKey
+
+#### Entitas.Unity.VisualDebugging
+- Optimize DebugSystemsInspector #338
+
+#### Entitas.Unity.Blueprints
+- Blueprints not persistent after changes to components. #331
+
+
 # 0.39.0
 
 See and discuss changes in [Milestone 0.39.0](https://github.com/sschmid/Entitas-CSharp/milestone/9)
