@@ -17,22 +17,12 @@
         <img src="https://img.shields.io/github/release/sschmid/Entitas-CSharp.svg" alt="Latest release"></a>
 </p>
 
----
-
-<p align="center">
-    <a>🎉 Happy birthday Entitas! 🎉<br />3 years of clean code</a>
-</p>
-
----
-
 <p align="center">
     <b>Entitas is free, but powered by</b>
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852">
         <b>your donations</b>
     </a>
 </p>
-
----
 
 Entitas - The Entity Component System Framework for C# and Unity
 ================================================================
