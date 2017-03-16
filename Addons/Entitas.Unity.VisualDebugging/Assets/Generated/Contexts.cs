@@ -54,7 +54,7 @@ public partial class Contexts : Entitas.IContexts {
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public partial class Contexts : Entitas.IContexts {
+public partial class Contexts {
 
     public void CreateContextObserver(Entitas.IContext context) {
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)

@@ -13,7 +13,7 @@ namespace Entitas.Unity.VisualDebugging {
 #endif
 
         const string CONTEXTS_TEMPLATE =
-@"public partial class Contexts : Entitas.IContexts {
+@"public partial class Contexts {
 
     public void CreateContextObserver(Entitas.IContext context) {
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
