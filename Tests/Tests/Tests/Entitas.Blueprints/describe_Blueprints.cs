@@ -72,7 +72,7 @@ class describe_Blueprints : nspec {
                 component.publicProperty.should_be("publicPropertyValue");
             };
 
-            it["throws when invalid member name"] = expect<ComponentBlueprintException>(() => {
+            it["ignores invalid member name"] = () => {
                 var componentBlueprint = new ComponentBlueprint();
                 componentBlueprint.index = 0;
                 componentBlueprint.fullTypeName = typeof(NameAgeComponent).FullName;
@@ -81,7 +81,7 @@ class describe_Blueprints : nspec {
                     new SerializableMember("publicProperty", "publicPropertyValue")
                 };
                 componentBlueprint.CreateComponent(entity);
-            });
+            };
         };
 
         context["Blueprint"] = () => {

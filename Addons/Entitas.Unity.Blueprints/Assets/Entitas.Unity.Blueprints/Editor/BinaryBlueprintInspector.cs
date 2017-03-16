@@ -122,6 +122,9 @@ namespace Entitas.Unity.Blueprints {
             switchToContext();
 
             _entity.ApplyBlueprint(_blueprint);
+
+            // Serialize in case the structure of a component changed, e.g. field got removed
+            binaryBlueprint.Serialize(_entity);
         }
 
         void OnDisable() {

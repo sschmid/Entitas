@@ -72,15 +72,15 @@ namespace Entitas.Blueprints {
                 var member = members[i];
 
                 PublicMemberInfo memberInfo;
-                if(!_componentMembers.TryGetValue(member.name, out memberInfo)) {
-                    throw new ComponentBlueprintException(
+                if(_componentMembers.TryGetValue(member.name, out memberInfo)) {
+                    memberInfo.SetValue(component, member.value);
+                } else {
+                    Console.WriteLine(
                         "Could not find member '" + member.name +
-                        "' in type '" + _type.FullName + "'!",
+                        "' in type '" + _type.FullName + "'!\n" +
                         "Only non-static public members are supported."
                     );
                 }
-
-                memberInfo.SetValue(component, member.value);
             }
 
             return component;
