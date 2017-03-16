@@ -56,6 +56,11 @@ namespace Entitas.Unity.VisualDebugging {
         public double cleanupDuration { get; set; }
         public double teardownDuration { get; set; }
 
+        public bool areAllParentsActive {
+            get { return parentSystemInfo == null || (parentSystemInfo.isActive && parentSystemInfo.areAllParentsActive); }
+        }
+
+        public SystemInfo parentSystemInfo;
         public bool isActive;
 
         readonly ISystem _system;
