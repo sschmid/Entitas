@@ -241,18 +241,21 @@ namespace Entitas.Unity.VisualDebugging {
                 if(EntitasEditorLayout.MatchesSearchString(systemInfo.systemName.ToLower(), _systemNameSearchString.ToLower())) {
                     EditorGUILayout.BeginHorizontal();
                     {
+                        var wasActive = systemInfo.isActive;
                         EditorGUI.BeginDisabledGroup(isChildSystem);
                         {
                             systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
                         }
                         EditorGUI.EndDisabledGroup();
 
-                        var reactiveSystem = systemInfo.system as IReactiveSystem;
-                        if(reactiveSystem != null) {
-                            if(systemInfo.isActive) {
-                                reactiveSystem.Activate();
-                            } else {
-                                reactiveSystem.Deactivate();
+                        if(systemInfo.isActive != wasActive) {
+                            var reactiveSystem = systemInfo.system as IReactiveSystem;
+                            if(reactiveSystem != null) {
+                                if(systemInfo.isActive) {
+                                    reactiveSystem.Activate();
+                                } else {
+                                    reactiveSystem.Deactivate();
+                                }
                             }
                         }
 
