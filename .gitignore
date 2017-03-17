@@ -27,6 +27,8 @@ test-results
 # Custom
 Build/*
 !Build/deploy/
+Build/deploy/Entitas-CSharp
+Build/deploy/Entitas-Unity
 
 Addons/Entitas.Unity/Entitas.Unity.sln
 Addons/Entitas.Unity/Assets/Libraries
