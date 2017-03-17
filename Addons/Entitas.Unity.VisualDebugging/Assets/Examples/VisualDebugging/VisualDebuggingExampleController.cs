@@ -103,6 +103,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddMyChar('c');
             e.AddUnsupportedObject(new UnsupportedObject("Unsupported Object"));
             e.AddSimpleObject(new SimpleObject());
+            e.AddDontDrawSimpleObject(new SimpleObject());
             e.AddProperty("My Property");
             e.AddPerson("Max", "Male");
             e.AddManyMembers("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
@@ -158,6 +159,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
         e.AddUnsupportedObject(unsupportedObject);
         SimpleObject simpleObject = null;
         e.AddSimpleObject(simpleObject);
+        e.AddDontDrawSimpleObject(simpleObject);
         e.AddProperty(myString);
         string personName = null;
         string personGender = null;

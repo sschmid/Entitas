@@ -109,8 +109,13 @@ public class UnsupportedObjectComponent : IComponent {
     public UnsupportedObject unsupportedObject;
 }
 
-[Game, DrawComponent]
+[Game]
 public class SimpleObjectComponent : IComponent {
+    public SimpleObject simpleObject;
+}
+
+[Game, DontDrawComponent]
+public class DontDrawSimpleObjectComponent : IComponent {
     public SimpleObject simpleObject;
 }
 

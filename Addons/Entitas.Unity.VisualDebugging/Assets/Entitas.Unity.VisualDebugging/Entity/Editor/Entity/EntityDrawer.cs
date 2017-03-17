@@ -236,7 +236,7 @@ namespace Entitas.Unity.VisualDebugging {
                     setValue(target, newValue);
                 } else {
                     var targetType = target.GetType();
-                    var shouldDraw = !targetType.ImplementsInterface<IComponent>() || Attribute.IsDefined(targetType, typeof(DrawComponentAttribute));
+                    var shouldDraw = !targetType.ImplementsInterface<IComponent>() || !Attribute.IsDefined(targetType, typeof(DontDrawComponentAttribute));
                     if(shouldDraw) {
                         EditorGUILayout.LabelField(memberName, value.ToString());
 

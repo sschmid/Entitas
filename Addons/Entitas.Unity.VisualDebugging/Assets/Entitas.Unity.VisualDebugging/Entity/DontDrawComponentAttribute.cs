@@ -3,6 +3,6 @@
 namespace Entitas.Unity.VisualDebugging {
 
     [AttributeUsage(AttributeTargets.Class)]
-    public class DrawComponentAttribute : Attribute {
+    public class DontDrawComponentAttribute : Attribute {
     }
 }
