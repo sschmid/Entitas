@@ -40,22 +40,23 @@ public static class GameComponentsLookup {
     public const int Position = 29;
     public const int Property = 30;
     public const int Rect = 31;
-    public const int SomeClass = 32;
-    public const int SomeOtherClass = 33;
-    public const int SomeStruct = 34;
-    public const int SystemObject = 35;
-    public const int Test = 36;
-    public const int Texture2D = 37;
-    public const int Texture = 38;
-    public const int Unique = 39;
-    public const int UnityObject = 40;
-    public const int UnsupportedObject = 41;
-    public const int Vector2 = 42;
-    public const int Vector3 = 43;
-    public const int Vector4 = 44;
-    public const int Velocity = 45;
+    public const int SimpleObject = 32;
+    public const int SomeClass = 33;
+    public const int SomeOtherClass = 34;
+    public const int SomeStruct = 35;
+    public const int SystemObject = 36;
+    public const int Test = 37;
+    public const int Texture2D = 38;
+    public const int Texture = 39;
+    public const int Unique = 40;
+    public const int UnityObject = 41;
+    public const int UnsupportedObject = 42;
+    public const int Vector2 = 43;
+    public const int Vector3 = 44;
+    public const int Vector4 = 45;
+    public const int Velocity = 46;
 
-    public const int TotalComponents = 46;
+    public const int TotalComponents = 47;
 
     public static readonly string[] componentNames = {
         "AnArray",
@@ -90,6 +91,7 @@ public static class GameComponentsLookup {
         "Position",
         "Property",
         "Rect",
+        "SimpleObject",
         "SomeClass",
         "SomeOtherClass",
         "SomeStruct",
@@ -139,6 +141,7 @@ public static class GameComponentsLookup {
         typeof(PositionComponent),
         typeof(PropertyComponent),
         typeof(RectComponent),
+        typeof(SimpleObjectComponent),
         typeof(SomeClassComponent),
         typeof(SomeOtherClassComponent),
         typeof(SomeStructComponent),

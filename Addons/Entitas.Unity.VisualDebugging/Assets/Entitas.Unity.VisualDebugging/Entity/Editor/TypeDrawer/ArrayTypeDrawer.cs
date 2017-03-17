@@ -10,17 +10,17 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsArray;
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
             var array = (Array)value;
             var elementType = memberType.GetElementType();
             var indent = EditorGUI.indentLevel;
 
             if(array.Rank == 1) {
-                array = drawRank1(array, memberName, elementType, indent, component);
+                array = drawRank1(array, memberName, elementType, indent, target);
             } else if(array.Rank == 2) {
-                array = drawRank2(array, memberName, elementType, component);
+                array = drawRank2(array, memberName, elementType, target);
             } else if(array.Rank == 3) {
-                array = drawRank3(array, memberName, elementType, component);
+                array = drawRank3(array, memberName, elementType, target);
             }
 
             EditorGUI.indentLevel = indent;
@@ -34,7 +34,7 @@ namespace Entitas.Unity.VisualDebugging {
          *
          */
 
-        Array drawRank1(Array array, string memberName, Type elementType, int indent, IComponent component) {
+        Array drawRank1(Array array, string memberName, Type elementType, int indent, object target) {
             var length = array.GetLength(0);
             if(length == 0) {
                 array = drawAddElement(array, memberName, elementType);
@@ -49,8 +49,8 @@ namespace Entitas.Unity.VisualDebugging {
                 var localIndex = i;
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EntityDrawer.DrawComponentMember(elementType, memberName + "[" + localIndex + "]", array.GetValue(localIndex),
-                                                     component, (newComponent, newValue) => array.SetValue(newValue, localIndex));
+                    EntityDrawer.DrawObjectMember(elementType, memberName + "[" + localIndex + "]", array.GetValue(localIndex),
+                                                  target, (newComponent, newValue) => array.SetValue(newValue, localIndex));
 
                     var action = drawEditActions(array, elementType, localIndex);
                     if(action != null) {
@@ -91,15 +91,15 @@ namespace Entitas.Unity.VisualDebugging {
          *
          */
 
-        Array drawRank2(Array array, string memberName, Type elementType, IComponent component) {
+        Array drawRank2(Array array, string memberName, Type elementType, object target) {
             EditorGUILayout.LabelField(memberName);
 
             for (int i = 0; i < array.GetLength(0); i++) {
                 var localIndex1 = i;
                 for (int j = 0; j < array.GetLength(1); j++) {
                     var localIndex2 = j;
-                    EntityDrawer.DrawComponentMember(elementType, memberName + "[" + localIndex1 + ", " + localIndex2 + "]", array.GetValue(localIndex1, localIndex2),
-                                                     component, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2));
+                    EntityDrawer.DrawObjectMember(elementType, memberName + "[" + localIndex1 + ", " + localIndex2 + "]", array.GetValue(localIndex1, localIndex2),
+                                                  target, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2));
                 }
                 EditorGUILayout.Space();
             }
@@ -113,7 +113,7 @@ namespace Entitas.Unity.VisualDebugging {
          *
          */
 
-        Array drawRank3(Array array, string memberName, Type elementType, IComponent component) {
+        Array drawRank3(Array array, string memberName, Type elementType, object target) {
             EditorGUILayout.LabelField(memberName);
 
             for (int i = 0; i < array.GetLength(0); i++) {
@@ -122,8 +122,8 @@ namespace Entitas.Unity.VisualDebugging {
                     var localIndex2 = j;
                     for (int k = 0; k < array.GetLength(2); k++) {
                         var localIndex3 = k;
-                        EntityDrawer.DrawComponentMember(elementType, memberName + "[" + localIndex1 + ", " + localIndex2 + " ," + localIndex3 + "]", array.GetValue(localIndex1, localIndex2, localIndex3),
-                                                         component, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2, localIndex3));
+                        EntityDrawer.DrawObjectMember(elementType, memberName + "[" + localIndex1 + ", " + localIndex2 + " ," + localIndex3 + "]", array.GetValue(localIndex1, localIndex2, localIndex3),
+                                                      target, (newComponent, newValue) => array.SetValue(newValue, localIndex1, localIndex2, localIndex3));
                     }
                     EditorGUILayout.Space();
                 }

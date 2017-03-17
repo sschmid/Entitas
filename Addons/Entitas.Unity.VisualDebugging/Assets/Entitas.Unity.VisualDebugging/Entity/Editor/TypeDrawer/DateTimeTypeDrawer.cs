@@ -10,7 +10,7 @@ namespace Entitas.Unity.VisualDebugging {
         }
 
         // Note: This is a very basic implementation. The ToString() method conversion will cut off milliseconds.
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
             var dateString = value.ToString();
             var newDateString = EditorGUILayout.TextField(memberName, dateString);
 

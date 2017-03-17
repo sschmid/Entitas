@@ -10,7 +10,7 @@ namespace Entitas.Unity.VisualDebugging {
                 type.IsSubclassOf(typeof(UnityEngine.Object));
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
             return EditorGUILayout.ObjectField(memberName, (UnityEngine.Object)value, memberType, true);
         }
     }

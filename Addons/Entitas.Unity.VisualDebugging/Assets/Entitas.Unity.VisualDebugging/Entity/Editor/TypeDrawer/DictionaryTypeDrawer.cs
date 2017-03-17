@@ -13,20 +13,20 @@ namespace Entitas.Unity.VisualDebugging {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>);
         }
 
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
             var dictionary = (IDictionary)value;
             var keyType = memberType.GetGenericArguments()[0];
             var valueType = memberType.GetGenericArguments()[1];
-            var componentType = component.GetType();
-            if(!_keySearchTexts.ContainsKey(componentType)) {
-                _keySearchTexts.Add(componentType, string.Empty);
+            var targetType = target.GetType();
+            if(!_keySearchTexts.ContainsKey(targetType)) {
+                _keySearchTexts.Add(targetType, string.Empty);
             }
 
             EditorGUILayout.BeginHorizontal();
             {
                 if(dictionary.Count == 0) {
                     EditorGUILayout.LabelField(memberName, "empty");
-                    _keySearchTexts[componentType] = string.Empty;
+                    _keySearchTexts[targetType] = string.Empty;
                 } else {
                     EditorGUILayout.LabelField(memberName);
                 }
@@ -52,7 +52,7 @@ namespace Entitas.Unity.VisualDebugging {
 
                 if(dictionary.Count > 5) {
                     EditorGUILayout.Space();
-                    _keySearchTexts[componentType] = EntitasEditorLayout.SearchTextField(_keySearchTexts[componentType]);
+                    _keySearchTexts[targetType] = EntitasEditorLayout.SearchTextField(_keySearchTexts[targetType]);
                 }
 
                 EditorGUILayout.Space();
@@ -60,9 +60,9 @@ namespace Entitas.Unity.VisualDebugging {
                 var keys = new ArrayList(dictionary.Keys);
                 for (int i = 0; i < keys.Count; i++) {
                     var key = keys[i];
-                    if(EntitasEditorLayout.MatchesSearchString(key.ToString().ToLower(), _keySearchTexts[componentType].ToLower())) {
-                        EntityDrawer.DrawComponentMember(keyType, "key", key,
-                            component, (newComponent, newValue) => {
+                    if(EntitasEditorLayout.MatchesSearchString(key.ToString().ToLower(), _keySearchTexts[targetType].ToLower())) {
+                        EntityDrawer.DrawObjectMember(keyType, "key", key,
+                            target, (newComponent, newValue) => {
                             var tmpValue = dictionary[key];
                             dictionary.Remove(key);
                             if(newValue != null) {
@@ -70,8 +70,8 @@ namespace Entitas.Unity.VisualDebugging {
                             }
                         });
 
-                        EntityDrawer.DrawComponentMember(valueType, "value", dictionary[key],
-                                                         component, (newComponent, newValue) => dictionary[key] = newValue);
+                        EntityDrawer.DrawObjectMember(valueType, "value", dictionary[key],
+                                                      target, (newComponent, newValue) => dictionary[key] = newValue);
 
                         EditorGUILayout.Space();
                     }

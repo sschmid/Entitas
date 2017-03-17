@@ -1,5 +1,4 @@
 ﻿using System;
-using Entitas;
 using Entitas.Unity.VisualDebugging;
 using UnityEditor;
 
@@ -13,7 +12,7 @@ public class CustomObjectDrawer : ITypeDrawer, IDefaultInstanceCreator {
         return new CustomObject("Default");
     }
 
-    public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
+    public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
         var myObject = (CustomObject)value;
         myObject.name = EditorGUILayout.TextField(memberName, myObject.name);
         return myObject;

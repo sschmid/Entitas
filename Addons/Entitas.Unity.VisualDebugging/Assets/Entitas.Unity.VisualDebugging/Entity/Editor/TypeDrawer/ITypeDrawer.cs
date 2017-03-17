@@ -6,6 +6,6 @@ namespace Entitas.Unity.VisualDebugging {
 
         bool HandlesType(Type type);
 
-        object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component);
+        object DrawAndGetNewValue(Type memberType, string memberName, object value, object target);
     }
 }

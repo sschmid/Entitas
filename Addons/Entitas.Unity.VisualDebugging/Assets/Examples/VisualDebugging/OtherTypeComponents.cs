@@ -94,9 +94,22 @@ public class UnsupportedObject {
     }
 }
 
+public class SimpleObject {
+    public string name;
+    public int age;
+    public Dictionary<string, string> data;
+    public CustomObject customObject;
+    public IntVector2 intVector;
+}
+
 [Game]
 public class UnsupportedObjectComponent : IComponent {
     public UnsupportedObject unsupportedObject;
+}
+
+[Game]
+public class SimpleObjectComponent : IComponent {
+    public SimpleObject simpleObject;
 }
 
 [Game]
