@@ -16,7 +16,7 @@ public class EntityLinkTests {
     public void BeforeEach() {
         _context = new GameContext();
         _entity = _context.CreateEntity();
-        _gameObject = new GameObject();
+        _gameObject = new GameObject("TestGameObject");
         _link = _gameObject.AddComponent<EntityLink>();
     }
 
@@ -127,5 +127,10 @@ public class EntityLinkTests {
         Assert.AreSame(link1, link2);
         Assert.AreSame(_entity, link2.entity);
         Assert.AreSame(_context, link2.context);
+    }
+
+    [Test]
+    public void CanToString() {
+        Assert.AreEqual("EntityLink(TestGameObject)", _link.ToString());
     }
 }

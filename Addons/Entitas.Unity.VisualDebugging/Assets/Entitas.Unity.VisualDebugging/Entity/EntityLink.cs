@@ -30,6 +30,10 @@ namespace Entitas.Unity {
             _entity = null;
             _context = null;
         }
+
+        public override string ToString() {
+            return "EntityLink(" + gameObject.name + ")";
+        }
     }
 
     public static class EntityLinkExtension {
