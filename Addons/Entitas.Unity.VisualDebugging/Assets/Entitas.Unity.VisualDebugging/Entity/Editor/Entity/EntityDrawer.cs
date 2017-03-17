@@ -243,12 +243,13 @@ namespace Entitas.Unity.VisualDebugging {
                                                 || Attribute.IsDefined(targetType, typeof(DrawComponentAttribute));
 
                     if(shouldDraw) {
+                        EditorGUILayout.LabelField(memberName, value.ToString());
+
                         var indent = EditorGUI.indentLevel;
                         EditorGUI.indentLevel += 1;
 
                         EditorGUILayout.BeginVertical();
                         {
-                            EditorGUILayout.Space();
                             var infos = memberType.GetPublicMemberInfos();
                             for(int i = 0; i < infos.Count; i++) {
                                 var info = infos[i];
