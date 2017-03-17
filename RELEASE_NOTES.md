@@ -1,6 +1,6 @@
 # 0.39.2
 
-See and discuss changes in [Milestone 0.39.1](https://github.com/sschmid/Entitas-CSharp/milestone/11)
+See and discuss changes in [Milestone 0.39.2](https://github.com/sschmid/Entitas-CSharp/milestone/11)
 
 #### Entitas
 - Optimize group update performance for component add/remove #321
