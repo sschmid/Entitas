@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Entitas;
 using Entitas.CodeGenerator.Api;
+using Entitas.Unity.VisualDebugging;
 using UnityEngine;
 
 public class CustomObject {
@@ -100,6 +101,7 @@ public class SimpleObject {
     public Dictionary<string, string> data;
     public CustomObject customObject;
     public IntVector2 intVector;
+    public SimpleObject simpleObject;
 }
 
 [Game]
@@ -107,7 +109,7 @@ public class UnsupportedObjectComponent : IComponent {
     public UnsupportedObject unsupportedObject;
 }
 
-[Game]
+[Game, DrawComponent]
 public class SimpleObjectComponent : IComponent {
     public SimpleObject simpleObject;
 }

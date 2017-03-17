@@ -238,23 +238,29 @@ namespace Entitas.Unity.VisualDebugging {
                 if(typeDrawer != null) {
                     setValue(target, typeDrawer.DrawAndGetNewValue(memberType, memberName, value, target));
                 } else {
-                    drawUnsupportedType(memberType, memberName, value);
+                    var targetType = target.GetType();
+                    var shouldDraw = !targetType.ImplementsInterface<IComponent>()
+                                                || Attribute.IsDefined(targetType, typeof(DrawComponentAttribute));
 
-                    var indent = EditorGUI.indentLevel;
-                    EditorGUI.indentLevel += 1;
+                    if(shouldDraw) {
+                        var indent = EditorGUI.indentLevel;
+                        EditorGUI.indentLevel += 1;
 
-                    EditorGUILayout.BeginVertical();
-                    {
-                        EditorGUILayout.Space();
-                        var infos = memberType.GetPublicMemberInfos();
-                        for(int i = 0; i < infos.Count; i++) {
-                            var info = infos[i];
-                            DrawObjectMember(info.type, info.name, info.GetValue(value), value, info.SetValue);
+                        EditorGUILayout.BeginVertical();
+                        {
+                            EditorGUILayout.Space();
+                            var infos = memberType.GetPublicMemberInfos();
+                            for(int i = 0; i < infos.Count; i++) {
+                                var info = infos[i];
+                                DrawObjectMember(info.type, info.name, info.GetValue(value), value, info.SetValue);
+                            }
                         }
-                    }
-                    EditorGUILayout.EndVertical();
+                        EditorGUILayout.EndVertical();
 
-                    EditorGUI.indentLevel = indent;
+                        EditorGUI.indentLevel = indent;
+                    } else {
+                        drawUnsupportedType(memberType, memberName, value);
+                    }
                 }
 
                 if(!memberType.IsValueType) {
