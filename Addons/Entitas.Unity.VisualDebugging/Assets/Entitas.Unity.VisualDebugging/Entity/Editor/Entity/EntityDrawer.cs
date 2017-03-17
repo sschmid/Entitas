@@ -179,7 +179,7 @@ namespace Entitas.Unity.VisualDebugging {
                         } else {
                             foreach(var info in memberInfos) {
                                 if(EntitasEditorLayout.MatchesSearchString(info.name.ToLower(), componentMemberSearch[index].ToLower())) {
-                                    if(drawComponentMember(info.type, info.name, info.GetValue(newComponent), newComponent, info.SetValue)) {
+                                    if(DrawObjectMember(info.type, info.name, info.GetValue(newComponent), newComponent, info.SetValue)) {
                                         changed = true;
                                     }
                                 }
@@ -195,10 +195,6 @@ namespace Entitas.Unity.VisualDebugging {
                 }
                 EntitasEditorLayout.EndVerticalBox();
             }
-        }
-
-        static bool drawComponentMember(Type memberType, string memberName, object value, IComponent component, Action<object, object> setValue) {
-            return DrawObjectMember(memberType, memberName, value, component, setValue);
         }
 
         public static bool DrawObjectMember(Type memberType, string memberName, object value, object target, Action<object, object> setValue) {
@@ -236,12 +232,11 @@ namespace Entitas.Unity.VisualDebugging {
             {
                 var typeDrawer = getTypeDrawer(memberType);
                 if(typeDrawer != null) {
-                    setValue(target, typeDrawer.DrawAndGetNewValue(memberType, memberName, value, target));
+                    var newValue = typeDrawer.DrawAndGetNewValue(memberType, memberName, value, target);
+                    setValue(target, newValue);
                 } else {
                     var targetType = target.GetType();
-                    var shouldDraw = !targetType.ImplementsInterface<IComponent>()
-                                                || Attribute.IsDefined(targetType, typeof(DrawComponentAttribute));
-
+                    var shouldDraw = !targetType.ImplementsInterface<IComponent>() || Attribute.IsDefined(targetType, typeof(DrawComponentAttribute));
                     if(shouldDraw) {
                         EditorGUILayout.LabelField(memberName, value.ToString());
 
@@ -254,6 +249,9 @@ namespace Entitas.Unity.VisualDebugging {
                             for(int i = 0; i < infos.Count; i++) {
                                 var info = infos[i];
                                 DrawObjectMember(info.type, info.name, info.GetValue(value), value, info.SetValue);
+                                if(memberType.IsValueType) {
+                                    setValue(target, value);
+                                }
                             }
                         }
                         EditorGUILayout.EndVertical();

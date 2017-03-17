@@ -111,8 +111,6 @@ public class UnsupportedObjectComponent : IComponent {
 
 [Game, DrawComponent]
 public class SimpleObjectComponent : IComponent {
-    public string name;
-    public int age;
     public SimpleObject simpleObject;
 }
 
