@@ -1,3 +1,17 @@
+# 0.39.2
+
+See and discuss changes in [Milestone 0.39.1](https://github.com/sschmid/Entitas-CSharp/milestone/11)
+
+#### Entitas
+- Optimize group update performance for component add/remove #321
+- Ignore indexed properties in PublicMemberInfo #339
+- More explicit EntityIndex.ToString()
+- More explicit EntityLink.ToString()
+
+#### Entitas.Unity.VisualDebugging
+- Automatically draw types. No TypeDrawers #327
+
+
 # 0.39.1
 
 See and discuss changes in [Milestone 0.39.1](https://github.com/sschmid/Entitas-CSharp/milestone/10)

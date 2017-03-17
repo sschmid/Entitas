@@ -302,6 +302,7 @@
 │           │   │   │   │   └── Vector4TypeDrawer.cs
 │           │   │   │   ├── EntityLinkInspector.cs
 │           │   │   │   └── IComponentDrawer.cs
+│           │   │   ├── DontDrawComponentAttribute.cs
 │           │   │   ├── EntityBehaviour.cs
 │           │   │   └── EntityLink.cs
 │           │   └── GameObjectDestroyExtension.cs
@@ -327,6 +328,7 @@
 │               │   │   ├── GameDateTimeComponent.cs
 │               │   │   ├── GameDictArrayComponent.cs
 │               │   │   ├── GameDictionaryComponent.cs
+│               │   │   ├── GameDontDrawSimpleObjectComponent.cs
 │               │   │   ├── GameGameObjectComponent.cs
 │               │   │   ├── GameHashSetComponent.cs
 │               │   │   ├── GameISomeInterfaceComponent.cs
@@ -348,6 +350,7 @@
 │               │   │   ├── GamePositionComponent.cs
 │               │   │   ├── GamePropertyComponent.cs
 │               │   │   ├── GameRectComponent.cs
+│               │   │   ├── GameSimpleObjectComponent.cs
 │               │   │   ├── GameSomeClassComponent.cs
 │               │   │   ├── GameSomeOtherClassComponent.cs
 │               │   │   ├── GameSomeStructComponent.cs

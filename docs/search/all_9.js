@@ -2,6 +2,7 @@ var searchData=
 [
   ['objectcache',['ObjectCache',['../class_entitas_1_1_object_cache.html',1,'Entitas']]],
   ['objectpool',['ObjectPool',['../class_entitas_1_1_object_pool.html',1,'Entitas']]],
+  ['objectpool_3c_20list_3c_20groupchanged_3c_20tentity_20_3e_20_3e_20_3e',['ObjectPool&lt; List&lt; GroupChanged&lt; TEntity &gt; &gt; &gt;',['../class_entitas_1_1_object_pool.html',1,'Entitas']]],
   ['oncomponentadded',['OnComponentAdded',['../class_entitas_1_1_entity.html#ae32e6949d12be079ed24181dca78f928',1,'Entitas::Entity']]],
   ['oncomponentremoved',['OnComponentRemoved',['../class_entitas_1_1_entity.html#a16e5c42416751abe64cfd86a9b9da887',1,'Entitas::Entity']]],
   ['oncomponentreplaced',['OnComponentReplaced',['../class_entitas_1_1_entity.html#a83ffb44d61d4c3c137bd9377c0866e6a',1,'Entitas::Entity']]],

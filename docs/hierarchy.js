@@ -91,6 +91,7 @@ var hierarchy =
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
     [ "Entitas.ObjectCache", "class_entitas_1_1_object_cache.html", null ],
     [ "Entitas.ObjectPool< T >", "class_entitas_1_1_object_pool.html", null ],
+    [ "Entitas.ObjectPool< List< GroupChanged< TEntity > > >", "class_entitas_1_1_object_pool.html", null ],
     [ "Entitas.Properties", "class_entitas_1_1_properties.html", null ],
     [ "Entitas.PublicMemberInfo", "class_entitas_1_1_public_member_info.html", null ],
     [ "Entitas.PublicMemberInfoEntityExtension", "class_entitas_1_1_public_member_info_entity_extension.html", null ],

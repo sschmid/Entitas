@@ -1,10 +1,8 @@
 var class_entitas_1_1_entitas_cache =
 [
-    [ "GetGroupChangedList< TEntity >", "class_entitas_1_1_entitas_cache.html#a3e21da893afc76aa3e300783f366ebde", null ],
     [ "GetIComponentList", "class_entitas_1_1_entitas_cache.html#af5f533279e52e30bbd85d6b56cbae07b", null ],
     [ "GetIntHashSet", "class_entitas_1_1_entitas_cache.html#a817f7d8e965a9ada4fd2fb717e24c5f2", null ],
     [ "GetIntList", "class_entitas_1_1_entitas_cache.html#a88a1fa91f4fb89862f3a4537f1f7faf2", null ],
-    [ "PushGroupChangedList< TEntity >", "class_entitas_1_1_entitas_cache.html#aef083930c1661c25b6affbc9729fa3f7", null ],
     [ "PushIComponentList", "class_entitas_1_1_entitas_cache.html#af14db7973ed60d0faf00ee618b8da618", null ],
     [ "PushIntHashSet", "class_entitas_1_1_entitas_cache.html#afcf26e69bcaeed5258ec76dfb4191228", null ],
     [ "PushIntList", "class_entitas_1_1_entitas_cache.html#ae2b1f4d84cebbf56d5aaacfee5a933f3", null ],

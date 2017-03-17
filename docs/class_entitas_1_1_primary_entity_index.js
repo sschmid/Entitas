@@ -8,5 +8,6 @@ var class_entitas_1_1_primary_entity_index =
     [ "addEntity", "class_entitas_1_1_primary_entity_index.html#a3635df33c94d7ffd39b4db9cd8e53a16", null ],
     [ "clear", "class_entitas_1_1_primary_entity_index.html#a31498f2c485b780da2fe62a388078615", null ],
     [ "GetEntity", "class_entitas_1_1_primary_entity_index.html#a03ec25e98a73551e1441dec0cd0c0792", null ],
-    [ "removeEntity", "class_entitas_1_1_primary_entity_index.html#ae3b5f5a72703f95fd5f8fc5076faa302", null ]
+    [ "removeEntity", "class_entitas_1_1_primary_entity_index.html#ae3b5f5a72703f95fd5f8fc5076faa302", null ],
+    [ "ToString", "class_entitas_1_1_primary_entity_index.html#a79ca4eb5097d74e6c0e769fc67ca1206", null ]
 ];
