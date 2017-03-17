@@ -42,6 +42,10 @@ namespace Entitas {
             return entities;
         }
 
+        public override string ToString() {
+            return "EntityIndex(" + name + ")";
+        }
+
         protected override void clear() {
             foreach(var entities in _index.Values) {
                 foreach(var entity in entities) {

@@ -38,6 +38,10 @@ namespace Entitas {
             return entity;
         }
 
+        public override string ToString() {
+            return "PrimaryEntityIndex(" + name + ")";
+        }
+
         protected override void clear() {
             foreach(var entity in _index.Values) {
 

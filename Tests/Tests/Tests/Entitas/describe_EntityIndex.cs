@@ -75,7 +75,7 @@ class describe_EntityIndex : nspec {
                 });
 
                 it["can ToString"] = () => {
-                    index.ToString().should_be("TestIndex");
+                    index.ToString().should_be("PrimaryEntityIndex(TestIndex)");
                 };
 
                 context["when deactivated"] = () => {
@@ -251,7 +251,7 @@ class describe_EntityIndex : nspec {
                 };
 
                 it["can ToString"] = () => {
-                    index.ToString().should_be("TestIndex");
+                    index.ToString().should_be("EntityIndex(TestIndex)");
                 };
 
                 context["when deactivated"] = () => {
