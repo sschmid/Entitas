@@ -21,7 +21,7 @@ namespace Entitas {
 
             for(int i = 0; i < propertyInfos.Length; i++) {
                 var propertyInfo = propertyInfos[i];
-                if(propertyInfo.CanRead && propertyInfo.CanWrite) {
+                if(propertyInfo.CanRead && propertyInfo.CanWrite && propertyInfo.GetIndexParameters().Length == 0) {
                     memberInfos.Add(new PublicMemberInfo(propertyInfo));
                 }
             }
