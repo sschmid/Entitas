@@ -33,6 +33,9 @@ namespace Entitas.Unity.VisualDebugging {
             }
             EditorGUILayout.EndHorizontal();
 
+            EditorGUILayout.Space();
+
+            _visualDebuggingConfig.systemWarningThreshold = EditorGUILayout.IntField("System Warning Threshold", int.Parse(_visualDebuggingConfig.systemWarningThreshold)).ToString();
 
             EditorGUILayout.Space();
 

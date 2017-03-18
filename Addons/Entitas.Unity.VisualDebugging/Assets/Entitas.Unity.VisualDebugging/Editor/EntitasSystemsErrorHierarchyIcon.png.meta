@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 27b806265ee874b86aa2d28aba93ace2
+guid: 8fecc08fe51ec4ba990bfd58e4ed14b5
 labels:
-- EntitasEntityHierarchyIcon
-timeCreated: 1457898659
+- EntitasSystemsErrorHierarchyIcon
+timeCreated: 1489846920
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName: {}
@@ -26,8 +26,8 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -3
-  maxTextureSize: 256
+  textureFormat: 1
+  maxTextureSize: 2048
   textureSettings:
     filterMode: 0
     aniso: -1
