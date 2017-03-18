@@ -24,7 +24,7 @@ namespace Entitas.Unity.VisualDebugging {
 
         static bool _showDetails = false;
         static bool _showSystemsMonitor = true;
-        static bool _showSystemsList = false;
+        static bool _showSystemsList = true;
 
         static bool _showInitializeSystems = true;
         static bool _showExecuteSystems = true;
