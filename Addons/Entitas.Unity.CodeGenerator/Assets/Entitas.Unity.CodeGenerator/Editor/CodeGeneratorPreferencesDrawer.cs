@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Entitas.CodeGenerator;
 using UnityEditor;
 using UnityEngine;
@@ -25,9 +26,11 @@ namespace Entitas.Unity.CodeGenerator {
         UnityEditorInternal.ReorderableList _contextList;
 
         public override void Initialize(EntitasPreferencesConfig config) {
-            var enabledDataProviderNames = initPhase<ICodeGeneratorDataProvider>(out _availableDataProviderTypes, out _availableDataProviderNames);
-            var enabledGeneratorNames = initPhase<ICodeGenerator>(out _availableGeneratorTypes, out _availableGeneratorNames);
-            var enabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(out _availablePostProcessorTypes, out _availablePostProcessorNames);
+            var assembly = Assembly.LoadFrom(new CodeGeneratorConfig(config).codeGeneratorAssemblyPath);
+
+            var enabledDataProviderNames = initPhase<ICodeGeneratorDataProvider>(assembly, out _availableDataProviderTypes, out _availableDataProviderNames);
+            var enabledGeneratorNames = initPhase<ICodeGenerator>(assembly, out _availableGeneratorTypes, out _availableGeneratorNames);
+            var enabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(assembly, out _availablePostProcessorTypes, out _availablePostProcessorNames);
 
             _codeGeneratorConfig = new CodeGeneratorConfig(config, enabledDataProviderNames, enabledGeneratorNames, enabledPostProcessorNames);
 
@@ -45,6 +48,8 @@ namespace Entitas.Unity.CodeGenerator {
         }
 
         protected override void drawContent(EntitasPreferencesConfig config) {
+            drawAssembly();
+            drawCodeGeneratorAssembly();
             drawTargetFolder();
             drawContexts();
 
@@ -53,6 +58,28 @@ namespace Entitas.Unity.CodeGenerator {
             _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
 
             drawGenerateButton();
+        }
+
+        void drawAssembly() {
+            var path = EntitasEditorLayout.ObjectFieldOpenFilePanel(
+                "Assembly",
+                _codeGeneratorConfig.assemblyPath,
+                _codeGeneratorConfig.assemblyPath
+            );
+            if(!string.IsNullOrEmpty(path)) {
+                _codeGeneratorConfig.assemblyPath = path;
+            }
+        }
+
+        void drawCodeGeneratorAssembly() {
+            var path = EntitasEditorLayout.ObjectFieldOpenFilePanel(
+                "Code Generator Assembly",
+                _codeGeneratorConfig.codeGeneratorAssemblyPath,
+                _codeGeneratorConfig.codeGeneratorAssemblyPath
+            );
+            if(!string.IsNullOrEmpty(path)) {
+                _codeGeneratorConfig.codeGeneratorAssemblyPath = path;
+            }
         }
 
         void drawTargetFolder() {
@@ -91,9 +118,9 @@ namespace Entitas.Unity.CodeGenerator {
             _codeGeneratorConfig.contexts = _contexts.ToArray();
         }
 
-        static string[] initPhase<T>(out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {
-            var instances = UnityCodeGenerator
-                .GetTypes<T>()
+        static string[] initPhase<T>(Assembly assembly, out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {
+            var instances = CodeGeneratorUtil
+                .GetOrderedTypes<T>(assembly)
                 .Where(type => !type.IsAbstract)
                 .Select(type => (T)Activator.CreateInstance(type));
 

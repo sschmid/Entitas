@@ -5,6 +5,8 @@ using NSpec;
 class describe_CodeGeneratorConfig : nspec {
 
     const string configString =
+        "Entitas.CodeGenerator.Assembly = path/to/assembly/" + "\n" +
+        "Entitas.CodeGenerator.CodeGeneratorAssembly = path/to/cgAssembly/" + "\n" +
         "Entitas.CodeGenerator.TargetDirectory = path/to/folder/" + "\n" +
         "Entitas.CodeGenerator.Contexts = Core, Meta, UI" + "\n" +
         "Entitas.CodeGenerator.DataProviders = DataProvider1, DataProvider2, DataProvider3" + "\n" +
@@ -16,6 +18,8 @@ class describe_CodeGeneratorConfig : nspec {
         it["creates config from EntitasPreferencesConfig"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
 
+            config.assemblyPath.should_be("path/to/assembly/");
+            config.codeGeneratorAssemblyPath.should_be("path/to/cgAssembly/");
             config.targetDirectory.should_be("path/to/folder/");
             config.contexts.should_be(new [] { "Core", "Meta", "UI" });
             config.dataProviders.should_be(new [] { "DataProvider1", "DataProvider2", "DataProvider3" });
@@ -25,6 +29,8 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["gets default values when keys dont exist"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new [] {"Data1, Data2"}, new [] {"Gen1, Gen2"}, new [] {"Post1, Post2"});
+            config.codeGeneratorAssemblyPath.should_be("Library/ScriptAssemblies/Assembly-CSharp-Editor.dll");
+            config.assemblyPath.should_be("Library/ScriptAssemblies/Assembly-CSharp.dll");
             config.targetDirectory.should_be("Assets/Generated/");
             config.contexts.should_be(new [] { "Game", "GameState", "Input" });
             config.dataProviders.should_be(new [] {"Data1", "Data2"});
@@ -34,12 +40,16 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["sets values"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString), new string[0], new string[0], new string[0]);
+            config.assemblyPath = "path/to/newAssembly/";
+            config.codeGeneratorAssemblyPath = "path/to/newCgAssembly/";
             config.targetDirectory = "new/path/";
             config.contexts = new [] { "Other1", "Other2" };
             config.dataProviders = new [] { "Data4", "Data5" };
             config.codeGenerators = new [] { "Generator4", "Generator5" };
             config.postProcessors = new [] { "Post4", "Post5" };
 
+            config.assemblyPath.should_be("path/to/newAssembly/");
+            config.codeGeneratorAssemblyPath.should_be("path/to/newCgAssembly/");
             config.targetDirectory.should_be("new/path/");
             config.contexts.should_be(new [] { "Other1", "Other2" });
             config.dataProviders.should_be(new [] { "Data4", "Data5" });
@@ -49,6 +59,8 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["gets string"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
+            config.assemblyPath = "path/to/newAssembly/";
+            config.codeGeneratorAssemblyPath = "path/to/newCgAssembly/";
             config.targetDirectory = "new/path/";
             config.contexts = new [] { "Other1", "Other2" };
             config.dataProviders = new [] { "Data4", "Data5" };
@@ -56,6 +68,8 @@ class describe_CodeGeneratorConfig : nspec {
             config.postProcessors = new [] { "Post4", "Post5" };
 
             config.ToString().should_be(
+                "Entitas.CodeGenerator.Assembly = path/to/newAssembly/\n" +
+                "Entitas.CodeGenerator.CodeGeneratorAssembly = path/to/newCgAssembly/\n" +
                 "Entitas.CodeGenerator.TargetDirectory = new/path/\n" +
                 "Entitas.CodeGenerator.Contexts = Other1,Other2\n" +
                 "Entitas.CodeGenerator.DataProviders = Data4,Data5\n" +
@@ -67,6 +81,8 @@ class describe_CodeGeneratorConfig : nspec {
         it["gets string from empty config"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.ToString().should_be(
+                "Entitas.CodeGenerator.Assembly = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
+                "Entitas.CodeGenerator.CodeGeneratorAssembly = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
                 "Entitas.CodeGenerator.Contexts = Game,GameState,Input\n" +
                 "Entitas.CodeGenerator.DataProviders = \n" +
@@ -91,6 +107,8 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.contexts = new [] { "Meta", string.Empty };
             config.ToString().should_be(
+                "Entitas.CodeGenerator.Assembly = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
+                "Entitas.CodeGenerator.CodeGeneratorAssembly = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
                 "Entitas.CodeGenerator.Contexts = Meta\n" +
                 "Entitas.CodeGenerator.DataProviders = \n" +
@@ -103,6 +121,8 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.codeGenerators = new [] { "Gen1", string.Empty };
             config.ToString().should_be(
+                "Entitas.CodeGenerator.Assembly = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
+                "Entitas.CodeGenerator.CodeGeneratorAssembly = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
                 "Entitas.CodeGenerator.Contexts = Game,GameState,Input\n" +
                 "Entitas.CodeGenerator.DataProviders = \n" +

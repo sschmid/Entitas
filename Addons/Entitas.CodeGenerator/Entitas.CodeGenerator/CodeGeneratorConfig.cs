@@ -5,6 +5,20 @@ namespace Entitas.CodeGenerator {
 
     public class CodeGeneratorConfig {
 
+        public const string ASSEMBLY_PATH_KEY = "Entitas.CodeGenerator.Assembly";
+		const string DEFAULT_ASSEMBLY_PATH = "Library/ScriptAssemblies/Assembly-CSharp.dll";
+        public string assemblyPath { 
+            get { return _config.GetValueOrDefault(ASSEMBLY_PATH_KEY, DEFAULT_ASSEMBLY_PATH); }
+            set { _config[ASSEMBLY_PATH_KEY] = value; }
+        }
+
+        public const string CODE_GENERATOR_ASSEMBLY_PATH_KEY = "Entitas.CodeGenerator.CodeGeneratorAssembly";
+		const string DEFAULT_CODE_GENERATOR_ASSEMBLY_PATH = "Library/ScriptAssemblies/Assembly-CSharp-Editor.dll";
+        public string codeGeneratorAssemblyPath { 
+            get { return _config.GetValueOrDefault(CODE_GENERATOR_ASSEMBLY_PATH_KEY, DEFAULT_CODE_GENERATOR_ASSEMBLY_PATH); }
+            set { _config[CODE_GENERATOR_ASSEMBLY_PATH_KEY] = value; }
+        }
+
         public const string TARGET_DIRECTORY_KEY = "Entitas.CodeGenerator.TargetDirectory";
         const string DEFAULT_TARGET_DIRECTORY = "Assets/Generated/";
         public string targetDirectory { 
@@ -53,6 +67,8 @@ namespace Entitas.CodeGenerator {
             _defaultPostProcessors = joinValues(postProcessors);
 
             // Assigning will apply default values to missing keys
+            assemblyPath = assemblyPath;
+            codeGeneratorAssemblyPath = codeGeneratorAssemblyPath;
             targetDirectory = targetDirectory;
             contexts = contexts;
             this.dataProviders = this.dataProviders;

@@ -33,6 +33,19 @@ namespace Entitas.Unity {
             return null;
         }
 
+        public static string ObjectFieldOpenFilePanel(string label, string buttonText, string defaultPath) {
+            if(ObjectFieldButton(label, buttonText)) {
+                var path = defaultPath ?? "Assets/";
+                if(!File.Exists(path)) {
+                    path = "Assets/";
+                }
+                path = EditorUtility.OpenFilePanel(label, path, "dll");
+                return path.Replace(Directory.GetCurrentDirectory() + "/", string.Empty);
+            }
+
+            return null;
+        }
+
         public static bool MiniButton(string c) {
             return miniButton(c, EditorStyles.miniButton);
         }

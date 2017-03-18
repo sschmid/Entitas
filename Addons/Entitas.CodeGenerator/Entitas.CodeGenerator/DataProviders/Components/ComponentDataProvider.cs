@@ -9,7 +9,7 @@ namespace Entitas.CodeGenerator {
         public override bool isEnabledByDefault { get { return true; } }
 
         public ComponentDataProvider()
-            : this(Assembly.GetAssembly(typeof(IEntity)).GetTypes()) {
+            : this(Assembly.LoadFrom(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).assemblyPath).GetTypes()) {
         }
         
         public ComponentDataProvider(Type[] types)
