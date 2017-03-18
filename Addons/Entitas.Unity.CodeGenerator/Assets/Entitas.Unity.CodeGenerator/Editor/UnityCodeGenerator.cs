@@ -15,13 +15,7 @@ namespace Entitas.Unity.CodeGenerator {
 
             Debug.Log("Generating...");
 
-            var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
-
-            var codeGenerator = new Entitas.CodeGenerator.CodeGenerator(
-                getEnabled<ICodeGeneratorDataProvider>(config.dataProviders),
-                getEnabled<ICodeGenerator>(config.codeGenerators),
-                getEnabled<ICodeGenFilePostProcessor>(config.postProcessors)
-            );
+            var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(EntitasPreferences.CONFIG_PATH);
 
             var progressOffset = 0f;
 
@@ -52,20 +46,6 @@ namespace Entitas.Unity.CodeGenerator {
             Debug.Log("Generated " + totalGeneratedFiles + " files (" + sloc + " sloc, " + loc + " loc)");
 
             AssetDatabase.Refresh();
-        }
-
-        static T[] getEnabled<T>(string[] types) {
-            return GetTypes<T>()
-                    .Where(type => types.Contains(type.FullName))
-                    .Select(type => (T)Activator.CreateInstance(type))
-                    .ToArray();
-        }
-
-        public static Type[] GetTypes<T>() {
-            return Assembly.GetAssembly(typeof(T)).GetTypes()
-                .Where(type => type.ImplementsInterface<T>())
-                .OrderBy(type => type.FullName)
-                .ToArray();
         }
 
         static void checkCanGenerate() {
