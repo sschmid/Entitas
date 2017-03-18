@@ -24,10 +24,11 @@ namespace Entitas.Unity {
             return null;
         }
 
-        public static void DrawTexture(Texture2D texture) {
+        public static Rect DrawTexture(Texture2D texture) {
             var ratio = (float)texture.width / (float)texture.height;
             var rect = GUILayoutUtility.GetAspectRect(ratio, GUILayout.ExpandWidth(true));
             GUI.DrawTexture(rect, texture, ScaleMode.ScaleAndCrop);
+            return rect;
         }
     }
 }

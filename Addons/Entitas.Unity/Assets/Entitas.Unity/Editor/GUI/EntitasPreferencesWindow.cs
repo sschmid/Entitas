@@ -70,7 +70,10 @@ namespace Entitas.Unity {
         }
 
         void drawHeader() {
-            EntitasEditorLayout.DrawTexture(_headerTexture);
+            var rect = EntitasEditorLayout.DrawTexture(_headerTexture);
+            if(rect.Contains(Event.current.mousePosition) && Event.current.clickCount > 0) {
+                Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/blob/develop/README.md");
+            }
         }
 
         void drawPreferencesDrawers() {
