@@ -71,6 +71,7 @@
     <Compile Include="Entitas.CodeGenerator\DataProviders\EntityIndex\EntityIndexData.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\EntityIndex\EntityIndexDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\EntityIndexGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\PostProcessors\ConsoleWriteLinePostProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator\" />
