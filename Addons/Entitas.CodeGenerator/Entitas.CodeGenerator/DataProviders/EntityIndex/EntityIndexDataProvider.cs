@@ -15,7 +15,7 @@ namespace Entitas.CodeGenerator {
         string _defaultContextName;
 
         public EntityIndexDataProvider()
-            : this(Assembly.GetAssembly(typeof(IEntity)).GetTypes()) {
+            : this(Assembly.LoadFrom(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).assemblyPath).GetTypes()) {
         }
 
         public EntityIndexDataProvider(Type[] types)
