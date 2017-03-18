@@ -19,6 +19,8 @@ Open `Entitas.sln` and run the Tests project to ensure everything works as expec
 $ ./Scripts/test
 ```
 
+Use the [policy.mdpolicy][policy] to make sure to conform to the given code style.
+
 If you plan to make changes to the Entitas.Unity project, run
 ```
 $ ./Scripts/update
@@ -35,8 +37,11 @@ $ git flow feature start <#123-your-feature>
 Write and update unit tests and make sure all the existing tests pass. If you have many commits please consider using [git rebase](https://git-scm.com/docs/git-rebase) to cleanup the commits. This can simplify reviewing the pull request.
 Once you're happy with your changes open a [pull request][pulls] to your feature branch. The default branch is `develop`. Don't create a [pull request][pulls] from master.
 
+By submitting a pull request, you represent that you have the right to license your contribution to the community, and agree by submitting the patch that your contributions are licensed under the [Entitas license][license].
 
 [github-entitas]: https://github.com/sschmid/Entitas-CSharp "sschmid/Entitas-CSharp"
 [issues]: https://github.com/sschmid/Entitas-CSharp/issues "Issues"
 [pulls]: https://github.com/sschmid/Entitas-CSharp/pulls "Pull Requests"
 [issues-new]: https://github.com/sschmid/Entitas-CSharp/issues/new "New issue"
+[license]: https://github.com/sschmid/Entitas-CSharp/blob/develop/LICENSE.txt "License"
+[policy]: https://github.com/sschmid/Entitas-CSharp/blob/develop/policy.mdpolicy "Policy"
