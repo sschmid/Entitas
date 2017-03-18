@@ -1,3 +1,22 @@
+# 0.40.0
+
+See and discuss changes in [Milestone 0.40.0](https://github.com/sschmid/Entitas-CSharp/milestone/12)
+
+#### Note
+Please update Entitas.properties by opening Entitas Preferences. Added `assemblyPath` and `codeGeneratorAssemblyPath` to code generator config. When not selected already, navigate to `Library/ScriptAssemblies/` in your Unity project and select `Assembly-CSharp.dll` for the assembly and `Assembly-CSharp-Editor.dll` for the code generator assembly.
+
+#### Entitas.CodeGenerator
+- Add ConsoleWriteLinePostProcessor #342
+- Make EntitasPreferences.CONFIG_PATH public field in order to customize the path to the config file #342
+- Add CodeGeneratorUtil to simplify creating an instance based on Entitas.properties
+- Add `assemblyPath` and `codeGeneratorAssemblyPath` to code generator config
+
+#### Entitas.Unity.VisualDebugging
+- Added SystemWarningThreshold to visualize slow systems
+- Tinting slow systems red
+- Systems list unfolded by default
+
+
 # 0.39.2
 
 See and discuss changes in [Milestone 0.39.2](https://github.com/sschmid/Entitas-CSharp/milestone/11)

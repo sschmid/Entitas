@@ -135,6 +135,7 @@
 │   │       │   └── MatcherGenerator.cs
 │   │       ├── PostProcessors
 │   │       │   ├── AddFileHeaderPostProcessor.cs
+│   │       │   ├── ConsoleWriteLinePostProcessor.cs
 │   │       │   ├── ICodeGenFilePostProcessor.cs
 │   │       │   ├── MergeFilesPostProcessor.cs
 │   │       │   ├── NewLinePostProcessor.cs
@@ -143,6 +144,7 @@
 │   │       ├── CodeGenerator.cs
 │   │       ├── CodeGeneratorConfig.cs
 │   │       ├── CodeGeneratorStringExtensions.cs
+│   │       ├── CodeGeneratorUtil.cs
 │   │       └── ICodeGeneratorInterface.cs
 │   ├── Entitas.CodeGenerator.Api
 │   │   └── Entitas.CodeGenerator.Api
@@ -190,7 +192,6 @@
 │   │               │   └── IEntitasPreferencesDrawer.cs
 │   │               ├── Menu
 │   │               │   ├── EntitasCheckForUpdates.cs
-│   │               │   ├── EntitasFeedback.cs
 │   │               │   └── EntitasMenuItems.cs
 │   │               ├── EntitasHeader.png
 │   │               ├── EntitasPreferencesDrawer.cs
@@ -264,6 +265,7 @@
 │           │   │   ├── EntitasEntityHierarchyIcon.png
 │           │   │   ├── EntitasHierarchyIcon.cs
 │           │   │   ├── EntitasStats.cs
+│           │   │   ├── EntitasSystemsErrorHierarchyIcon.png
 │           │   │   ├── EntitasSystemsHierarchyIcon.png
 │           │   │   ├── VisualDebuggingConfig.cs
 │           │   │   ├── VisualDebuggingEntitasExtension.cs
