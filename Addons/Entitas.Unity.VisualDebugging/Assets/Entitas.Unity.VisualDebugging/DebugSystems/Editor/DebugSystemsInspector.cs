@@ -32,7 +32,9 @@ namespace Entitas.Unity.VisualDebugging {
         static bool _showTearDownSystems = true;
         static bool _hideEmptySystems = true;
         static string _systemNameSearchString = string.Empty;
-        
+
+        int _systemWarningThreshold;
+
         float _threshold;
         SortMethod _systemSortMethod;
 
@@ -40,6 +42,11 @@ namespace Entitas.Unity.VisualDebugging {
 
         GUIContent _stepButtonContent;
         GUIContent _pauseButtonContent;
+
+        void OnEnable() {
+            var config = EntitasPreferences.LoadConfig();
+            _systemWarningThreshold = int.Parse(new VisualDebuggingConfig(config).systemWarningThreshold);
+        }
 
         public override void OnInspectorGUI() {
             var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
@@ -270,22 +277,22 @@ namespace Entitas.Unity.VisualDebugging {
 
                         switch(type) {
                             case SystemInterfaceFlags.IInitializeSystem:
-                                EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.initializationDuration.ToString(), getSystemStyle(systemInfo));
+                                EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.initializationDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.IInitializeSystem));
                                 break;
                             case SystemInterfaceFlags.IExecuteSystem:
                                 var avgE = string.Format("Ø {0:00.000}", systemInfo.averageExecutionDuration).PadRight(12);
                                 var minE = string.Format("▼ {0:00.000}", systemInfo.minExecutionDuration).PadRight(12);
                                 var maxE = string.Format("▲ {0:00.000}", systemInfo.maxExecutionDuration);
-                                EditorGUILayout.LabelField(systemInfo.systemName, avgE + minE + maxE, getSystemStyle(systemInfo));
+                                EditorGUILayout.LabelField(systemInfo.systemName, avgE + minE + maxE, getSystemStyle(systemInfo, SystemInterfaceFlags.IExecuteSystem));
                                 break;
                             case SystemInterfaceFlags.ICleanupSystem:
                                 var avgC = string.Format("Ø {0:00.000}", systemInfo.averageCleanupDuration).PadRight(12);
                                 var minC = string.Format("▼ {0:00.000}", systemInfo.minCleanupDuration).PadRight(12);
                                 var maxC = string.Format("▲ {0:00.000}", systemInfo.maxCleanupDuration);
-                                EditorGUILayout.LabelField(systemInfo.systemName, avgC + minC + maxC, getSystemStyle(systemInfo));
+                                EditorGUILayout.LabelField(systemInfo.systemName, avgC + minC + maxC, getSystemStyle(systemInfo, SystemInterfaceFlags.ICleanupSystem));
                                 break;
                             case SystemInterfaceFlags.ITearDownSystem:
-                                EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.teardownDuration.ToString(), getSystemStyle(systemInfo));
+                                EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.teardownDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.ITearDownSystem));
                                 break;
                         }
                     }
@@ -351,11 +358,19 @@ namespace Entitas.Unity.VisualDebugging {
             }
         }
 
-        static GUIStyle getSystemStyle(SystemInfo systemInfo) {
+        GUIStyle getSystemStyle(SystemInfo systemInfo, SystemInterfaceFlags systemFlag) {
             var style = new GUIStyle(GUI.skin.label);
             var color = systemInfo.isReactiveSystems && EditorGUIUtility.isProSkin
                             ? Color.white
                             : style.normal.textColor;
+
+            if(systemFlag == SystemInterfaceFlags.IExecuteSystem && systemInfo.averageExecutionDuration >= _systemWarningThreshold) {
+                color = Color.red;
+            }
+
+            if(systemFlag == SystemInterfaceFlags.ICleanupSystem && systemInfo.averageCleanupDuration >= _systemWarningThreshold) {
+                color = Color.red;
+            }
 
             style.normal.textColor = color;
 
