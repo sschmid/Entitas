@@ -5,8 +5,15 @@ namespace Entitas.CodeGenerator {
 
     public class CodeGeneratorConfig {
 
+        public const string PROJECT_PATH_KEY = "Entitas.CodeGenerator.Project";
+        const string DEFAULT_PROJECT_PATH = "Assembly-CSharp.csproj";
+        public string projectPath { 
+            get { return _config.GetValueOrDefault(PROJECT_PATH_KEY, DEFAULT_PROJECT_PATH); }
+            set { _config[PROJECT_PATH_KEY] = value; }
+        }
+
         public const string ASSEMBLY_PATH_KEY = "Entitas.CodeGenerator.Assembly";
-		const string DEFAULT_ASSEMBLY_PATH = "Library/ScriptAssemblies/Assembly-CSharp.dll";
+        const string DEFAULT_ASSEMBLY_PATH = "Library/ScriptAssemblies/Assembly-CSharp.dll";
         public string assemblyPath { 
             get { return _config.GetValueOrDefault(ASSEMBLY_PATH_KEY, DEFAULT_ASSEMBLY_PATH); }
             set { _config[ASSEMBLY_PATH_KEY] = value; }
@@ -51,11 +58,11 @@ namespace Entitas.CodeGenerator {
             set { _config[POST_PROCESSORS_KEY] = joinValues(value); }
         }
 
+        protected readonly EntitasPreferencesConfig _config;
+
         readonly string _defaultDataProviders;
         readonly string _defaultCodeGenerators;
         readonly string _defaultPostProcessors;
-
-        readonly EntitasPreferencesConfig _config;
 
         public CodeGeneratorConfig(EntitasPreferencesConfig config) : this(config, new string[0], new string[0], new string[0]) {
         }
@@ -67,6 +74,7 @@ namespace Entitas.CodeGenerator {
             _defaultPostProcessors = joinValues(postProcessors);
 
             // Assigning will apply default values to missing keys
+            projectPath = projectPath;
             assemblyPath = assemblyPath;
             codeGeneratorAssemblyPath = codeGeneratorAssemblyPath;
             targetDirectory = targetDirectory;

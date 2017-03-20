@@ -5,6 +5,7 @@ using NSpec;
 class describe_CodeGeneratorConfig : nspec {
 
     const string configString =
+        "Entitas.CodeGenerator.Project = path/to/project/" + "\n" +
         "Entitas.CodeGenerator.Assembly = path/to/assembly/" + "\n" +
         "Entitas.CodeGenerator.CodeGeneratorAssembly = path/to/cgAssembly/" + "\n" +
         "Entitas.CodeGenerator.TargetDirectory = path/to/folder/" + "\n" +
@@ -18,6 +19,7 @@ class describe_CodeGeneratorConfig : nspec {
         it["creates config from EntitasPreferencesConfig"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
 
+            config.projectPath.should_be("path/to/project/");
             config.assemblyPath.should_be("path/to/assembly/");
             config.codeGeneratorAssemblyPath.should_be("path/to/cgAssembly/");
             config.targetDirectory.should_be("path/to/folder/");
@@ -29,6 +31,7 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["gets default values when keys dont exist"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new [] {"Data1, Data2"}, new [] {"Gen1, Gen2"}, new [] {"Post1, Post2"});
+            config.projectPath.should_be("Assembly-CSharp.csproj");
             config.codeGeneratorAssemblyPath.should_be("Library/ScriptAssemblies/Assembly-CSharp-Editor.dll");
             config.assemblyPath.should_be("Library/ScriptAssemblies/Assembly-CSharp.dll");
             config.targetDirectory.should_be("Assets/Generated/");
@@ -40,6 +43,7 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["sets values"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString), new string[0], new string[0], new string[0]);
+            config.projectPath = "path/to/newProject/";
             config.assemblyPath = "path/to/newAssembly/";
             config.codeGeneratorAssemblyPath = "path/to/newCgAssembly/";
             config.targetDirectory = "new/path/";
@@ -48,6 +52,7 @@ class describe_CodeGeneratorConfig : nspec {
             config.codeGenerators = new [] { "Generator4", "Generator5" };
             config.postProcessors = new [] { "Post4", "Post5" };
 
+            config.projectPath.should_be("path/to/newProject/");
             config.assemblyPath.should_be("path/to/newAssembly/");
             config.codeGeneratorAssemblyPath.should_be("path/to/newCgAssembly/");
             config.targetDirectory.should_be("new/path/");
@@ -59,6 +64,7 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["gets string"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
+            config.projectPath = "path/to/newProject/";
             config.assemblyPath = "path/to/newAssembly/";
             config.codeGeneratorAssemblyPath = "path/to/newCgAssembly/";
             config.targetDirectory = "new/path/";
@@ -68,6 +74,7 @@ class describe_CodeGeneratorConfig : nspec {
             config.postProcessors = new [] { "Post4", "Post5" };
 
             config.ToString().should_be(
+                "Entitas.CodeGenerator.Project = path/to/newProject/\n" +
                 "Entitas.CodeGenerator.Assembly = path/to/newAssembly/\n" +
                 "Entitas.CodeGenerator.CodeGeneratorAssembly = path/to/newCgAssembly/\n" +
                 "Entitas.CodeGenerator.TargetDirectory = new/path/\n" +
@@ -81,6 +88,7 @@ class describe_CodeGeneratorConfig : nspec {
         it["gets string from empty config"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.ToString().should_be(
+                "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
                 "Entitas.CodeGenerator.Assembly = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGenerator.CodeGeneratorAssembly = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
@@ -107,6 +115,7 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.contexts = new [] { "Meta", string.Empty };
             config.ToString().should_be(
+                "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
                 "Entitas.CodeGenerator.Assembly = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGenerator.CodeGeneratorAssembly = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
@@ -121,6 +130,7 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.codeGenerators = new [] { "Gen1", string.Empty };
             config.ToString().should_be(
+                "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
                 "Entitas.CodeGenerator.Assembly = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGenerator.CodeGeneratorAssembly = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
