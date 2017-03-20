@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
-    <Compile Include="GenerateTestComponents.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="Fixtures\Systems\CleanupSystemSpy.cs" />
     <Compile Include="Fixtures\Systems\ExecuteSystemSpy.cs" />
@@ -142,6 +141,7 @@
     <None Include="Libraries\NSpec.dll" />
     <None Include="Libraries\NSpecRunner.dll" />
     <None Include="Libraries\nunit.framework.dll" />
+    <None Include="Entitas.properties" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">

@@ -11,13 +11,18 @@ namespace Tests {
 
         public static void Main(string[] args) {
 
+            //Entitas.CodeGenerator.CodeGeneratorUtil
+            //    .CodeGeneratorFromConfig("../../Entitas.properties")
+            //    .Generate();
+
+
             //format();
-            //Tests.GenerateTestComponents.Generate();
+
 
             //var tagOrClassName = "focus";
             var tagOrClassName = string.Empty;
 
-            var types = Assembly.GetAssembly(typeof(describe_Entity)).GetTypes();
+            var types = Assembly.GetAssembly(typeof(TestExtensions)).GetTypes();
 
             var finder = new SpecFinder(types, "");
             var tagsFilter = new Tags().Parse(tagOrClassName);
