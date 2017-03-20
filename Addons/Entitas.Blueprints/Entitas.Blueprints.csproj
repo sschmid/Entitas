@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Entitas.Blueprints</RootNamespace>
     <AssemblyName>Entitas.Blueprints</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
