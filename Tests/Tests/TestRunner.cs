@@ -18,7 +18,6 @@ namespace Tests {
 
             //format();
 
-
             //var tagOrClassName = "focus";
             var tagOrClassName = string.Empty;
 
