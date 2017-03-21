@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -24,7 +24,10 @@ namespace Entitas.CodeGenerator {
         public CodeGeneratorData[] GetData() {
             if(_types == null) {
                 var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
-                _types = Assembly.LoadFrom(config.assemblyPath).GetTypes();
+                _types = config.assemblyPaths
+                               .Select(path => Assembly.LoadFrom(path))
+                               .SelectMany(assembly => assembly.GetTypes())
+                               .ToArray();
             }
 
             var entityIndexData = _types

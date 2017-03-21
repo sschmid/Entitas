@@ -39,12 +39,12 @@ namespace Entitas.CodeGenerator {
         }
 
         static void init() {
-            var assembly = Assembly.GetAssembly(typeof(CodeGenerator));
+            var types = getTypes();
             var defaultConfig = new CodeGeneratorConfig(
                 new EntitasPreferencesConfig(string.Empty),
-                CodeGeneratorUtil.GetOrderedTypeNames<ICodeGeneratorDataProvider>(assembly).ToArray(),
-                CodeGeneratorUtil.GetOrderedTypeNames<ICodeGenerator>(assembly).ToArray(),
-                CodeGeneratorUtil.GetOrderedTypeNames<ICodeGenFilePostProcessor>(assembly).ToArray()
+                CodeGeneratorUtil.GetOrderedTypeNames<ICodeGeneratorDataProvider>(types).ToArray(),
+                CodeGeneratorUtil.GetOrderedTypeNames<ICodeGenerator>(types).ToArray(),
+                CodeGeneratorUtil.GetOrderedTypeNames<ICodeGenFilePostProcessor>(types).ToArray()
             );
 
             var currentDir = Directory.GetCurrentDirectory();
@@ -59,18 +59,22 @@ namespace Entitas.CodeGenerator {
                 var fileContent = File.ReadAllText(fileName);
                 var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(fileContent));
 
-                var assembly = Assembly.GetAssembly(typeof(CodeGenerator));
+                var types = getTypes();
 
-                printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(assembly, config.dataProviders));
-                printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGenerator>(assembly, config.codeGenerators));
-                printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGenFilePostProcessor>(assembly, config.postProcessors));
+                printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(types, config.dataProviders));
+                printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGenerator>(types, config.codeGenerators));
+                printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGenFilePostProcessor>(types, config.postProcessors));
 
-                printAvailable(CodeGeneratorUtil.GetAvailable<ICodeGeneratorDataProvider>(assembly, config.dataProviders));
-                printAvailable(CodeGeneratorUtil.GetAvailable<ICodeGenerator>(assembly, config.codeGenerators));
-                printAvailable(CodeGeneratorUtil.GetAvailable<ICodeGenFilePostProcessor>(assembly, config.postProcessors));
+                printAvailable(CodeGeneratorUtil.GetAvailable<ICodeGeneratorDataProvider>(types, config.dataProviders));
+                printAvailable(CodeGeneratorUtil.GetAvailable<ICodeGenerator>(types, config.codeGenerators));
+                printAvailable(CodeGeneratorUtil.GetAvailable<ICodeGenFilePostProcessor>(types, config.postProcessors));
             } else {
-                Console.WriteLine("Couldn't find " + fileName);
+                printNoConfig();
             }
+        }
+
+        static Type[] getTypes() {
+            return Assembly.GetAssembly(typeof(CodeGenerator)).GetTypes();
         }
 
         static void printUnavailable(string[] names) {
@@ -90,7 +94,7 @@ namespace Entitas.CodeGenerator {
                 var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(fileName);
                 codeGenerator.Generate();
             } else {
-                Console.WriteLine("Couldn't find " + fileName);
+                printNoConfig();
             }
         }
 
@@ -99,15 +103,21 @@ namespace Entitas.CodeGenerator {
                 var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(fileName);
                 codeGenerator.DryRun();
             } else {
-                Console.WriteLine("Couldn't find " + fileName);
+                printNoConfig();
             }
+        }
+
+        static void printNoConfig() {
+            Console.WriteLine("Couldn't find " + fileName);
+            Console.WriteLine("Run entitas init to create Entitas.properties with default values");
         }
 
         static void printUsage() {
             Console.WriteLine(
-@"usage: Entitas init     - Creates Entitas.properties with default values
-       Entitas diff     - List of unused or invalid data providers, code generators and post processors
-       Entitas gen      - Generates files based on Entitas.properties"
+@"usage: entitas init     - Creates Entitas.properties with default values
+       entitas diff     - List of unused or invalid data providers, code generators and post processors
+       entitas dry      - Simulates generating files without running post processors
+       entitas gen      - Generates files based on Entitas.properties"
             );
         }
     }
