@@ -9,25 +9,24 @@ namespace Entitas.CodeGenerator {
     public class EntityIndexDataProvider : ICodeGeneratorDataProvider {
 
         public string name { get { return "Entity Index"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
 
         Type[] _types;
-        string _defaultContextName;
 
-        public EntityIndexDataProvider()
-            : this(Assembly.LoadFrom(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).assemblyPath).GetTypes()) {
+        public EntityIndexDataProvider() : this(null) {
         }
 
-        public EntityIndexDataProvider(Type[] types)
-            : this(types, new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).contexts[0]) {
-        }
-
-        public EntityIndexDataProvider(Type[] types, string defaultContextName) {
+        public EntityIndexDataProvider(Type[] types) {
             _types = types;
-            _defaultContextName = defaultContextName;
         }
 
         public CodeGeneratorData[] GetData() {
+            if(_types == null) {
+                var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
+                _types = Assembly.LoadFrom(config.assemblyPath).GetTypes();
+            }
+
             var entityIndexData = _types
                 .Where(type => !type.IsAbstract)
                 .Where(type => type.ImplementsInterface<IComponent>())
@@ -59,12 +58,7 @@ namespace Entitas.CodeGenerator {
             data.SetKeyType(info.type.ToCompilableString());
             data.SetComponentType(type.ToCompilableString());
             data.SetMemberName(info.name);
-
-            var contextNames = ContextsComponentDataProvider.GetContextNames(type);
-            if(contextNames.Length == 0) {
-                contextNames = new [] { _defaultContextName };
-            }
-            data.SetContextNames(contextNames);
+            data.SetContextNames(ContextsComponentDataProvider.GetContextNames(type));
 
             return data;
         }

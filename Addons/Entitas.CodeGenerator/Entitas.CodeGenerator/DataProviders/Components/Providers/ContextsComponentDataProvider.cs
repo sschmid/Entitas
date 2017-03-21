@@ -6,26 +6,24 @@ namespace Entitas.CodeGenerator {
 
     public class ContextsComponentDataProvider : IComponentDataProvider {
 
-        readonly string _defaultContextName;
-
-        public ContextsComponentDataProvider(string defaultContextName) {
-            _defaultContextName = defaultContextName;
-        }
-
         public void Provide(Type type, ComponentData data) {
             var contextNames = GetContextNames(type);
-            if(contextNames.Length == 0) {
-                contextNames = new [] { _defaultContextName };
-            }
             data.SetContextNames(contextNames);
         }
 
         public static string[] GetContextNames(Type type) {
-            return Attribute
+            var contextNames = Attribute
                 .GetCustomAttributes(type)
                 .OfType<ContextAttribute>()
                 .Select(attr => attr.contextName)
                 .ToArray();
+
+            if(contextNames.Length == 0) {
+                var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
+                contextNames = new [] { config.contexts[0] };
+            }
+
+            return contextNames;
         }
     }
 

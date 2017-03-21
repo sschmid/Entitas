@@ -5,6 +5,7 @@ namespace Entitas.CodeGenerator {
     public class ContextsGenerator : ICodeGenerator {
 
         public string name { get { return "Contexts"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
 
         const string CONTEXTS_TEMPLATE =

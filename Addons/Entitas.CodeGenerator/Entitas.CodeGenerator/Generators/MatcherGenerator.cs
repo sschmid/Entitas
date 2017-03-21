@@ -6,6 +6,7 @@ namespace Entitas.CodeGenerator {
     public class MatcherGenerator : ICodeGenerator {
 
         public string name { get { return "Matcher"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
 
         const string MATCHER_TEMPLATE =

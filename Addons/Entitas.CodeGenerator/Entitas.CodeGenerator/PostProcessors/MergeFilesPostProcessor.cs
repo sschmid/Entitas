@@ -6,8 +6,8 @@ namespace Entitas.CodeGenerator {
     public class MergeFilesPostProcessor : ICodeGenFilePostProcessor {
 
         public string name { get { return "Merge files"; } }
-        public bool isEnabledByDefault { get { return true; } }
         public int priority { get { return 90; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             var pathToFile = new Dictionary<string, CodeGenFile>();

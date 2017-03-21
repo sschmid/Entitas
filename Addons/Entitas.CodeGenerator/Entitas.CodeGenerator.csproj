@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Entitas.CodeGenerator</RootNamespace>
     <AssemblyName>Entitas.CodeGenerator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
@@ -73,6 +73,7 @@
     <Compile Include="Entitas.CodeGenerator\Generators\EntityIndexGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\PostProcessors\ConsoleWriteLinePostProcessor.cs" />
     <Compile Include="Entitas.CodeGenerator\CodeGeneratorUtil.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator\" />

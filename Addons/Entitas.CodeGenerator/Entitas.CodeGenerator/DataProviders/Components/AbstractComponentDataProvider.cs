@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using Entitas.CodeGenerator.Api;
 
 namespace Entitas.CodeGenerator {
@@ -7,17 +8,23 @@ namespace Entitas.CodeGenerator {
     public abstract class AbstractComponentDataProvider : ICodeGeneratorDataProvider {
 
         public abstract string name { get; }
+        public abstract int priority { get; }
         public abstract bool isEnabledByDefault { get; }
 
-        readonly Type[] _types;
-        readonly IComponentDataProvider[] _dataProviders;
+        Type[] _types;
+        IComponentDataProvider[] _dataProviders;
 
-        protected AbstractComponentDataProvider(IComponentDataProvider[] dataProviders, Type[] types) {
+        protected AbstractComponentDataProvider(Type[] types, IComponentDataProvider[] dataProviders) {
             _types = types;
             _dataProviders = dataProviders;
         }
 
         public CodeGeneratorData[] GetData() {
+            if(_types == null) {
+                var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
+                _types = Assembly.LoadFrom(config.assemblyPath).GetTypes();
+            }
+
             var dataFromComponents = _types
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsAbstract)
@@ -50,12 +57,12 @@ namespace Entitas.CodeGenerator {
                 .Select(componentName => {
                     var data = createDataForComponent(type);
                     data.SetFullTypeName(componentName.AddComponentSuffix());
-                    data.SetMemberData(new [] {
+                    data.SetMemberData(new[] {
                         new MemberData(type.ToCompilableString(), "value")
                     });
 
                     return data;
-            }).ToArray();
+                }).ToArray();
         }
 
         bool hasContexts(Type type) {

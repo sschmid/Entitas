@@ -6,6 +6,7 @@ namespace Entitas.CodeGenerator {
     public class ContextAttributeGenerator : ICodeGenerator {
 
         public string name { get { return "Context Attribute"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
 
         const string ATTRIBUTE_TEMPLATE =

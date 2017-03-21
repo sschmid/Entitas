@@ -5,8 +5,8 @@ namespace Entitas.CodeGenerator {
     public class ConsoleWriteLinePostProcessor : ICodeGenFilePostProcessor {
 
         public string name { get { return "Console.WriteLine generated files"; } }
-        public bool isEnabledByDefault { get { return false; } }
         public int priority { get { return 200; } }
+        public bool isEnabledByDefault { get { return false; } }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {

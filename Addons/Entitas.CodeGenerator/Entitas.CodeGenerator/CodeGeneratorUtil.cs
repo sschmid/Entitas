@@ -9,26 +9,47 @@ namespace Entitas.CodeGenerator {
         public static CodeGenerator CodeGeneratorFromConfig(string configPath) {
             EntitasPreferences.CONFIG_PATH = configPath;
             var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
-            var codeGeneratorAssembly = Assembly.LoadFrom(config.codeGeneratorAssemblyPath);
+            var assembly = Assembly.LoadFrom(config.codeGeneratorAssemblyPath);
 
             return new CodeGenerator(
-                getEnabled<ICodeGeneratorDataProvider>(codeGeneratorAssembly, config.dataProviders),
-                getEnabled<ICodeGenerator>(codeGeneratorAssembly, config.codeGenerators),
-                getEnabled<ICodeGenFilePostProcessor>(codeGeneratorAssembly, config.postProcessors)
+                GetEnabledInstances<ICodeGeneratorDataProvider>(assembly, config.dataProviders),
+                GetEnabledInstances<ICodeGenerator>(assembly, config.codeGenerators),
+                GetEnabledInstances<ICodeGenFilePostProcessor>(assembly, config.postProcessors)
             );
         }
 
-        public static Type[] GetOrderedTypes<T>(Assembly assembly) {
+        public static T[] GetOrderedInstances<T>(Assembly assembly) where T : ICodeGeneratorInterface {
             return assembly.GetTypes()
                            .Where(type => type.ImplementsInterface<T>())
-                           .OrderBy(type => type.FullName)
+                           .Where(type => !type.IsAbstract)
+                           .Select(type => (T)Activator.CreateInstance(type))
+                           .OrderBy(instance => instance.priority)
+                           .ThenBy(instance => instance.GetType().ToCompilableString())
                            .ToArray();
         }
 
-        static T[] getEnabled<T>(Assembly assembly, string[] types) {
-            return GetOrderedTypes<T>(assembly)
-                    .Where(type => types.Contains(type.FullName))
-                    .Select(type => (T)Activator.CreateInstance(type))
+        public static string[] GetOrderedTypeNames<T>(Assembly assembly) where T : ICodeGeneratorInterface {
+            return GetOrderedInstances<T>(assembly)
+                    .Select(instance => instance.GetType().ToCompilableString())
+                    .ToArray();
+        }
+
+        public static T[] GetEnabledInstances<T>(Assembly assembly, string[] enabledTypeNames) where T : ICodeGeneratorInterface {
+            return GetOrderedInstances<T>(assembly)
+                    .Where(instance => enabledTypeNames.Contains(instance.GetType().ToCompilableString()))
+                    .ToArray();
+        }
+
+        public static string[] GetAvailable<T>(Assembly assembly, string[] enabledTypeNames) where T : ICodeGeneratorInterface {
+            return GetOrderedTypeNames<T>(assembly)
+                    .Where(typeName => !enabledTypeNames.Contains(typeName))
+                    .ToArray();
+        }
+
+        public static string[] GetUnavailable<T>(Assembly assembly, string[] enabledTypeNames) where T : ICodeGeneratorInterface {
+            var typeNames = GetOrderedTypeNames<T>(assembly);
+            return enabledTypeNames
+                    .Where(typeName => !typeNames.Contains(typeName))
                     .ToArray();
         }
     }

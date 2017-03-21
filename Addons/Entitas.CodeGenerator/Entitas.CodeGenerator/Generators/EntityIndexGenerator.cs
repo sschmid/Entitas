@@ -6,6 +6,7 @@ namespace Entitas.CodeGenerator {
     public class EntityIndexGenerator : ICodeGenerator {
 
         public string name { get { return "Entity Index"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
 
         const string CLASS_TEMPLATE =

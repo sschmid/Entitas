@@ -100,7 +100,7 @@ namespace Entitas {
             return typeString;
         }
 
-        static readonly Dictionary<string, string> _builtInTypesToString = new Dictionary<string, string>() {
+        static readonly Dictionary<string, string> _builtInTypesToString = new Dictionary<string, string> {
             { "System.Boolean", "bool" },
             { "System.Byte", "byte" },
             { "System.SByte", "sbyte" },
@@ -119,7 +119,7 @@ namespace Entitas {
             { "System.Void", "void" }
         };
 
-        static readonly Dictionary<string, string> _builtInTypeStrings = new Dictionary<string, string>() {
+        static readonly Dictionary<string, string> _builtInTypeStrings = new Dictionary<string, string> {
             { "bool", "System.Boolean" },
             { "byte", "System.Byte" },
             { "sbyte", "System.SByte" },

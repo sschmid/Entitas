@@ -6,8 +6,8 @@ namespace Entitas.CodeGenerator {
     public class WriteToDiskPostProcessor : ICodeGenFilePostProcessor {
 
         public string name { get { return "Write to disk"; } }
-        public bool isEnabledByDefault { get { return true; } }
         public int priority { get { return 100; } }
+        public bool isEnabledByDefault { get { return true; } }
 
         readonly string _directory;
 

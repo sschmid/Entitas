@@ -136,6 +136,7 @@ class describe_CodeGenerator : nspec {
 public class TestDataProvider : ICodeGeneratorDataProvider {
 
     public string name { get { return ""; } }
+    public int priority { get { return 0; } }
     public bool isEnabledByDefault { get { return true; } }
 
     public CodeGeneratorData[] GetData() {
@@ -155,6 +156,7 @@ public class TestDataProvider : ICodeGeneratorDataProvider {
 public class TestCodeGenerator : ICodeGenerator {
 
     public string name { get { return ""; } }
+    public int priority { get { return 0; } }
     public bool isEnabledByDefault { get { return true; } }
 
     public CodeGenFile[] Generate(CodeGeneratorData[] data) {
@@ -170,8 +172,8 @@ public class TestCodeGenerator : ICodeGenerator {
 public class TestPostProcessor : ICodeGenFilePostProcessor {
 
     public string name { get { return ""; } }
-    public bool isEnabledByDefault { get { return true; } }
     public int priority { get { return 10; } }
+    public bool isEnabledByDefault { get { return true; } }
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
         foreach(var file in files) {
@@ -185,8 +187,8 @@ public class TestPostProcessor : ICodeGenFilePostProcessor {
 public class Test2PostProcessor : ICodeGenFilePostProcessor {
 
     public string name { get { return ""; } }
-    public bool isEnabledByDefault { get { return true; } }
     public int priority { get { return 0; } }
+    public bool isEnabledByDefault { get { return true; } }
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
         foreach(var file in files) {

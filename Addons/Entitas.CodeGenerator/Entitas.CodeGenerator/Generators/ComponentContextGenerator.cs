@@ -6,6 +6,7 @@ namespace Entitas.CodeGenerator {
     public class ComponentContextGenerator : ICodeGenerator {
 
         public string name { get { return "Component (Context API)"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
 
         const string STANDARD_COMPONENT_TEMPLATE =
