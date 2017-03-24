@@ -6,8 +6,8 @@ class describe_CodeGeneratorConfig : nspec {
 
     const string configString =
         "Entitas.CodeGenerator.Project = path/to/project/" + "\n" +
-        "Entitas.CodeGenerator.Assembly = game.dll, kit.dll" + "\n" +
-        "Entitas.CodeGenerator.CodeGeneratorAssembly = gen1.dll, gen2.dll" + "\n" +
+        "Entitas.CodeGenerator.Assemblies = game.dll, kit.dll" + "\n" +
+        "Entitas.CodeGenerator.CodeGeneratorAssemblies = gen1.dll, gen2.dll" + "\n" +
         "Entitas.CodeGenerator.TargetDirectory = path/to/folder/" + "\n" +
         "Entitas.CodeGenerator.Contexts = Core, Meta, UI" + "\n" +
         "Entitas.CodeGenerator.DataProviders = DataProvider1, DataProvider2, DataProvider3" + "\n" +
@@ -75,8 +75,8 @@ class describe_CodeGeneratorConfig : nspec {
 
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = path/to/newProject/\n" +
-                "Entitas.CodeGenerator.Assembly = game.dll,physics.dll\n" +
-                "Entitas.CodeGenerator.CodeGeneratorAssembly = myGen1.dll,myGen2.dll\n" +
+                "Entitas.CodeGenerator.Assemblies = game.dll,physics.dll\n" +
+                "Entitas.CodeGenerator.CodeGeneratorAssemblies = myGen1.dll,myGen2.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = new/path/\n" +
                 "Entitas.CodeGenerator.Contexts = Other1,Other2\n" +
                 "Entitas.CodeGenerator.DataProviders = Data4,Data5\n" +
@@ -89,8 +89,8 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
-                "Entitas.CodeGenerator.Assembly = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
-                "Entitas.CodeGenerator.CodeGeneratorAssembly = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
+                "Entitas.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
+                "Entitas.CodeGenerator.CodeGeneratorAssemblies = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
                 "Entitas.CodeGenerator.Contexts = Game,GameState,Input\n" +
                 "Entitas.CodeGenerator.DataProviders = \n" +
@@ -116,8 +116,8 @@ class describe_CodeGeneratorConfig : nspec {
             config.contexts = new [] { "Meta", string.Empty };
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
-                "Entitas.CodeGenerator.Assembly = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
-                "Entitas.CodeGenerator.CodeGeneratorAssembly = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
+                "Entitas.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
+                "Entitas.CodeGenerator.CodeGeneratorAssemblies = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
                 "Entitas.CodeGenerator.Contexts = Meta\n" +
                 "Entitas.CodeGenerator.DataProviders = \n" +
@@ -131,8 +131,8 @@ class describe_CodeGeneratorConfig : nspec {
             config.codeGenerators = new [] { "Gen1", string.Empty };
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
-                "Entitas.CodeGenerator.Assembly = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
-                "Entitas.CodeGenerator.CodeGeneratorAssembly = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
+                "Entitas.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
+                "Entitas.CodeGenerator.CodeGeneratorAssemblies = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
                 "Entitas.CodeGenerator.Contexts = Game,GameState,Input\n" +
                 "Entitas.CodeGenerator.DataProviders = \n" +

@@ -12,14 +12,14 @@ namespace Entitas.CodeGenerator {
             set { _config[PROJECT_PATH_KEY] = value; }
         }
 
-        public const string ASSEMBLY_PATHS_KEY = "Entitas.CodeGenerator.Assembly";
+        public const string ASSEMBLY_PATHS_KEY = "Entitas.CodeGenerator.Assemblies";
         const string DEFAULT_ASSEMBLY_PATHS = "Library/ScriptAssemblies/Assembly-CSharp.dll";
         public string[] assemblyPaths { 
             get { return separateValues(_config.GetValueOrDefault(ASSEMBLY_PATHS_KEY, DEFAULT_ASSEMBLY_PATHS)); }
             set { _config[ASSEMBLY_PATHS_KEY] = joinValues(value); }
         }
 
-        public const string CODE_GENERATOR_ASSEMBLY_PATHS_KEY = "Entitas.CodeGenerator.CodeGeneratorAssembly";
+        public const string CODE_GENERATOR_ASSEMBLY_PATHS_KEY = "Entitas.CodeGenerator.CodeGeneratorAssemblies";
         const string DEFAULT_CODE_GENERATOR_ASSEMBLY_PATHS = "Library/ScriptAssemblies/Assembly-CSharp-Editor.dll";
         public string[] codeGeneratorAssemblyPaths { 
             get { return separateValues(_config.GetValueOrDefault(CODE_GENERATOR_ASSEMBLY_PATHS_KEY, DEFAULT_CODE_GENERATOR_ASSEMBLY_PATHS)); }
