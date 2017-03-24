@@ -12,6 +12,13 @@ namespace Entitas.CodeGenerator {
             set { _config[PROJECT_PATH_KEY] = value; }
         }
 
+        public const string ASSEMBLY_BASE_PATHS_KEY = "Entitas.CodeGenerator.AssemblyBasePaths";
+        const string DEFAULT_ASSEMBLY_BASE_PATHS = "";
+        public string[] assemblyBasePaths { 
+            get { return separateValues(_config.GetValueOrDefault(ASSEMBLY_BASE_PATHS_KEY, DEFAULT_ASSEMBLY_BASE_PATHS)); }
+            set { _config[ASSEMBLY_BASE_PATHS_KEY] = joinValues(value); }
+        }
+
         public const string ASSEMBLY_PATHS_KEY = "Entitas.CodeGenerator.Assemblies";
         const string DEFAULT_ASSEMBLY_PATHS = "Library/ScriptAssemblies/Assembly-CSharp.dll";
         public string[] assemblyPaths { 
@@ -75,6 +82,7 @@ namespace Entitas.CodeGenerator {
 
             // Assigning will apply default values to missing keys
             projectPath = projectPath;
+            assemblyBasePaths = assemblyBasePaths;
             assemblyPaths = assemblyPaths;
             codeGeneratorAssemblyPaths = codeGeneratorAssemblyPaths;
             targetDirectory = targetDirectory;
