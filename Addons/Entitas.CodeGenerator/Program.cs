@@ -1,13 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.IO;
 
 namespace Entitas.CodeGenerator {
 
     class MainClass {
-
-        const string fileName = "Entitas.properties";
 
         public static void Main(string[] args) {
             if(args == null || args.Length != 1) {
@@ -17,11 +15,17 @@ namespace Entitas.CodeGenerator {
 
             try {
                 switch(args[0]) {
-                    case "init":
-                        init();
+                    case "new":
+                        newConfig();
+                        break;
+                    case "edit":
+                        editConfig();
                         break;
                     case "diff":
                         diff();
+                        break;
+                    case "scan":
+                        scanDlls();
                         break;
                     case "dry":
                         dryRun();
@@ -34,12 +38,30 @@ namespace Entitas.CodeGenerator {
                         break;
                 }
             } catch(Exception ex) {
-                Console.WriteLine(ex.Message);
+                var loadException = ex as ReflectionTypeLoadException;
+                if(loadException != null) {
+                    foreach(var e in loadException.LoaderExceptions) {
+                        Console.WriteLine(e);
+                    }
+                } else {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
-        static void init() {
-            var types = getTypes();
+        static void printUsage() {
+            Console.WriteLine(
+@"usage: entitas init     - Creates Entitas.properties with default values
+       entitas edit     - Opens Entitas.properties
+       entitas diff     - List of unused and invalid data providers, code generators and post processors
+       entitas scan     - Scans and prints available types found in specified assemblies
+       entitas dry      - Simulates generating files without running post processors
+       entitas gen      - Generates files based on Entitas.properties"
+            );
+        }
+
+        static void newConfig() {
+            var types = Assembly.GetAssembly(typeof(CodeGenerator)).GetTypes();
             var defaultConfig = new CodeGeneratorConfig(
                 new EntitasPreferencesConfig(string.Empty),
                 CodeGeneratorUtil.GetOrderedTypeNames<ICodeGeneratorDataProvider>(types).ToArray(),
@@ -49,17 +71,21 @@ namespace Entitas.CodeGenerator {
 
             var currentDir = Directory.GetCurrentDirectory();
 
-            var path = currentDir + Path.DirectorySeparatorChar + fileName;
+            var path = currentDir + Path.DirectorySeparatorChar + EntitasPreferences.GetConfigPath();
             File.WriteAllText(path, defaultConfig.ToString());
             Console.WriteLine("Created " + path);
         }
 
+        static void editConfig() {
+            System.Diagnostics.Process.Start(EntitasPreferences.GetConfigPath());
+        }
+
         static void diff() {
-            if(File.Exists(fileName)) {
-                var fileContent = File.ReadAllText(fileName);
+            if(File.Exists(EntitasPreferences.GetConfigPath())) {
+                var fileContent = File.ReadAllText(EntitasPreferences.GetConfigPath());
                 var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(fileContent));
 
-                var types = getTypes();
+                var types = CodeGeneratorUtil.GetTypesInAllAssemblies(config);
 
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(types, config.dataProviders));
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGenerator>(types, config.codeGenerators));
@@ -73,8 +99,33 @@ namespace Entitas.CodeGenerator {
             }
         }
 
-        static Type[] getTypes() {
-            return Assembly.GetAssembly(typeof(CodeGenerator)).GetTypes();
+        static void scanDlls() {
+            if(File.Exists(EntitasPreferences.GetConfigPath())) {
+                var types = CodeGeneratorUtil.GetTypesInAllAssemblies(EntitasPreferences.GetConfigPath());
+                foreach(var type in types) {
+                    Console.WriteLine(type);
+                }
+            } else {
+                printNoConfig();
+            }
+        }
+
+        static void dryRun() {
+            if(File.Exists(EntitasPreferences.GetConfigPath())) {
+                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath());
+                codeGenerator.DryRun();
+            } else {
+                printNoConfig();
+            }
+        }
+
+        static void generate() {
+            if(File.Exists(EntitasPreferences.GetConfigPath())) {
+                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath());
+                codeGenerator.Generate();
+            } else {
+                printNoConfig();
+            }
         }
 
         static void printUnavailable(string[] names) {
@@ -89,36 +140,9 @@ namespace Entitas.CodeGenerator {
             }
         }
 
-        static void generate() {
-            if(File.Exists(fileName)) {
-                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(fileName);
-                codeGenerator.Generate();
-            } else {
-                printNoConfig();
-            }
-        }
-
-        static void dryRun() {
-            if(File.Exists(fileName)) {
-                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(fileName);
-                codeGenerator.DryRun();
-            } else {
-                printNoConfig();
-            }
-        }
-
         static void printNoConfig() {
-            Console.WriteLine("Couldn't find " + fileName);
+            Console.WriteLine("Couldn't find " + EntitasPreferences.GetConfigPath());
             Console.WriteLine("Run entitas init to create Entitas.properties with default values");
-        }
-
-        static void printUsage() {
-            Console.WriteLine(
-@"usage: entitas init     - Creates Entitas.properties with default values
-       entitas diff     - List of unused or invalid data providers, code generators and post processors
-       entitas dry      - Simulates generating files without running post processors
-       entitas gen      - Generates files based on Entitas.properties"
-            );
         }
     }
 }

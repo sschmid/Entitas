@@ -120,6 +120,7 @@
     <Compile Include="Tests\Entitas\Extensions\describe_InterfaceTypeExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_TypeSerializationExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_SystemStringExtension.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_DependencyResolver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

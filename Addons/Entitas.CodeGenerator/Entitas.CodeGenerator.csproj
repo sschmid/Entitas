@@ -74,6 +74,7 @@
     <Compile Include="Entitas.CodeGenerator\PostProcessors\ConsoleWriteLinePostProcessor.cs" />
     <Compile Include="Entitas.CodeGenerator\CodeGeneratorUtil.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Entitas.CodeGenerator\DependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator\" />

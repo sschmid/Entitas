@@ -4,14 +4,28 @@ namespace Entitas {
 
     public static class EntitasPreferences {
 
-        public static string CONFIG_PATH = "Entitas.properties";
+        static string configPath = "Entitas.properties";
 
-        public static EntitasPreferencesConfig LoadConfig() {
-            return new EntitasPreferencesConfig(File.Exists(CONFIG_PATH) ? File.ReadAllText(CONFIG_PATH) : string.Empty);
+        public static void SetConfigPath(string configPath) {
+            EntitasPreferences.configPath = configPath;
+        }
+
+        public static string GetConfigPath() {
+            return configPath;
+        }
+
+        public static EntitasPreferencesConfig LoadConfig(string configPath = "Entitas.properties") {
+            SetConfigPath(configPath);
+
+            var config = File.Exists(configPath)
+                             ? File.ReadAllText(configPath)
+                             : string.Empty;
+
+            return new EntitasPreferencesConfig(config);
         }
 
         public static void SaveConfig(EntitasPreferencesConfig config) {
-            File.WriteAllText(CONFIG_PATH, config.ToString());
+            File.WriteAllText(configPath, config.ToString());
         }
     }
 }

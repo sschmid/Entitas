@@ -7,18 +7,31 @@ namespace Entitas.CodeGenerator {
     public static class CodeGeneratorUtil {
 
         public static CodeGenerator CodeGeneratorFromConfig(string configPath) {
-            EntitasPreferences.CONFIG_PATH = configPath;
-            var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
-            var types = config.codeGeneratorAssemblyPaths
-                           .Select(path => Assembly.LoadFrom(path))
-                           .SelectMany(assembly => assembly.GetTypes())
-                           .ToArray();
+            var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(configPath));
+            var types = GetTypesInAllAssemblies(config);
 
             return new CodeGenerator(
                 GetEnabledInstances<ICodeGeneratorDataProvider>(types, config.dataProviders),
                 GetEnabledInstances<ICodeGenerator>(types, config.codeGenerators),
                 GetEnabledInstances<ICodeGenFilePostProcessor>(types, config.postProcessors)
             );
+        }
+
+        public static Type[] GetTypesInAllAssemblies(string configPath) {
+            var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(configPath));
+            return GetTypesInAllAssemblies(config);
+        }
+
+        public static Type[] GetTypesInAllAssemblies(CodeGeneratorConfig config) {
+            return config.codeGeneratorAssemblyPaths
+                         .Select(path => {
+
+                             System.Console.WriteLine("### Load " + path);
+
+                             return Assembly.LoadFrom(path);
+                         })
+                         .SelectMany(assembly => assembly.GetTypes())
+                         .ToArray();
         }
 
         public static T[] GetOrderedInstances<T>(Type[] types) where T : ICodeGeneratorInterface {
