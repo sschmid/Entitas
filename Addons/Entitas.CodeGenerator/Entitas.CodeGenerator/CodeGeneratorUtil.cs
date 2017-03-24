@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Reflection;
 
 namespace Entitas.CodeGenerator {
 
@@ -23,15 +22,14 @@ namespace Entitas.CodeGenerator {
         }
 
         public static Type[] GetTypesInAllAssemblies(CodeGeneratorConfig config) {
-            return config.codeGeneratorAssemblyPaths
-                         .Select(path => {
-
-                             System.Console.WriteLine("### Load " + path);
-
-                             return Assembly.LoadFrom(path);
-                         })
-                         .SelectMany(assembly => assembly.GetTypes())
-                         .ToArray();
+            var appDomain = AppDomain.CurrentDomain;
+            var resolver = new DependencyResolver(appDomain, config.assemblyBasePaths);
+            foreach(var path in config.codeGeneratorAssemblyPaths) {
+                resolver.Load(path);
+            }
+            return appDomain.GetAssemblies()
+                            .SelectMany(assembly => assembly.GetTypes())
+                            .ToArray();
         }
 
         public static T[] GetOrderedInstances<T>(Type[] types) where T : ICodeGeneratorInterface {

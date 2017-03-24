@@ -21,6 +21,9 @@ namespace Entitas.CodeGenerator {
                     case "edit":
                         editConfig();
                         break;
+                    case "doctor":
+                        doctor();
+                        break;
                     case "diff":
                         diff();
                         break;
@@ -51,8 +54,9 @@ namespace Entitas.CodeGenerator {
 
         static void printUsage() {
             Console.WriteLine(
-@"usage: entitas init     - Creates Entitas.properties with default values
+@"usage: entitas new      - Creates new Entitas.properties with default values
        entitas edit     - Opens Entitas.properties
+       entitas doctor   - Checks the config for potential problems
        entitas diff     - List of unused and invalid data providers, code generators and post processors
        entitas scan     - Scans and prints available types found in specified assemblies
        entitas dry      - Simulates generating files without running post processors
@@ -78,6 +82,16 @@ namespace Entitas.CodeGenerator {
 
         static void editConfig() {
             System.Diagnostics.Process.Start(EntitasPreferences.GetConfigPath());
+        }
+
+        static void doctor() {
+            if(File.Exists(EntitasPreferences.GetConfigPath())) {
+                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath());
+                codeGenerator.DryRun();
+                Console.WriteLine("You're ready to generate.");
+            } else {
+                printNoConfig();
+            }
         }
 
         static void diff() {
@@ -142,7 +156,7 @@ namespace Entitas.CodeGenerator {
 
         static void printNoConfig() {
             Console.WriteLine("Couldn't find " + EntitasPreferences.GetConfigPath());
-            Console.WriteLine("Run entitas init to create Entitas.properties with default values");
+            Console.WriteLine("Run 'entitas new' to create Entitas.properties with default values");
         }
     }
 }

@@ -14,7 +14,7 @@ class describe_DependencyResolver : nspec {
 
             before = () => {
                 dllPath = TestExtensions.GetProjectRoot() + "/Tests/Tests.Fixtures/TestDependenyBase/bin/Release/TestDependenyBase.dll";
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain);
+                var resolver = new DependencyResolver(AppDomain.CurrentDomain, new string[0]);
                 resolver.Load(dllPath);
                 types = resolver.GetTypes();
             };
@@ -36,7 +36,7 @@ class describe_DependencyResolver : nspec {
 
             before = () => {
                 dllPath = TestExtensions.GetProjectRoot() + "/Tests/Tests.Fixtures/TestDependency/bin/Release/TestDependency.dll";
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain);
+                var resolver = new DependencyResolver(AppDomain.CurrentDomain, new string[0]);
                 resolver.Load(dllPath);
                 types = resolver.GetTypes();
             };
