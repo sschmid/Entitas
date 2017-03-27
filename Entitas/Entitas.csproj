@@ -98,6 +98,7 @@
     <Compile Include="Entitas\Group\IGroup.cs" />
     <Compile Include="Entitas\Extensions\ContextStringExtension.cs" />
     <Compile Include="Entitas\Extensions\SystemStringExtension.cs" />
+    <Compile Include="Entitas\EntitasVersion.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -119,5 +120,10 @@
     <Folder Include="Entitas\Matcher\Interfaces\" />
     <Folder Include="Entitas\Systems\Interfaces\" />
     <Folder Include="Entitas\Context\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entitas\version">
+      <LogicalName>version</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
