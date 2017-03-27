@@ -20,7 +20,7 @@ namespace Entitas.Unity {
 
         void OnEnable() {
             _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasHeader");
-            _config = EntitasPreferences.LoadConfig();
+            _config = EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath());
             _preferencesDrawers = Assembly.GetAssembly(typeof(IEntitasPreferencesDrawer)).GetTypes()
                 .Where(type => type.ImplementsInterface<IEntitasPreferencesDrawer>())
                 .Where(type => !type.IsAbstract)
