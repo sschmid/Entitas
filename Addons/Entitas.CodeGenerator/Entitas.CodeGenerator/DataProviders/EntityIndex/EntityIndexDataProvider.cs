@@ -23,11 +23,7 @@ namespace Entitas.CodeGenerator {
 
         public CodeGeneratorData[] GetData() {
             if(_types == null) {
-                var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
-                _types = config.assemblyPaths
-                               .Select(path => Assembly.LoadFrom(path))
-                               .SelectMany(assembly => assembly.GetTypes())
-                               .ToArray();
+                _types = CodeGeneratorUtil.GetTypesInAllAssemblies(EntitasPreferences.GetConfigPath());
             }
 
             var entityIndexData = _types

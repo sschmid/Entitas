@@ -2,16 +2,21 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Fabl;
 
 namespace Entitas.CodeGenerator {
 
     class MainClass {
 
+        static Logger _logger = fabl.GetLogger("Main");
+
         public static void Main(string[] args) {
-            if(args == null || args.Length != 1) {
+            if(args == null || args.Length == 0) {
                 printUsage();
                 return;
             }
+
+            setupLogging(args);
 
             try {
                 switch(args[0]) {
@@ -44,10 +49,10 @@ namespace Entitas.CodeGenerator {
                 var loadException = ex as ReflectionTypeLoadException;
                 if(loadException != null) {
                     foreach(var e in loadException.LoaderExceptions) {
-                        Console.WriteLine(e);
+                        _logger.Error(e.ToString());
                     }
                 } else {
-                    Console.WriteLine(ex.Message);
+                    _logger.Error(ex.Message);
                 }
             }
         }
@@ -60,8 +65,22 @@ namespace Entitas.CodeGenerator {
        entitas diff     - List of unused and invalid data providers, code generators and post processors
        entitas scan     - Scans and prints available types found in specified assemblies
        entitas dry      - Simulates generating files without running post processors
-       entitas gen      - Generates files based on Entitas.properties"
+       entitas gen      - Generates files based on Entitas.properties
+       [-v]             - verbose output"
             );
+        }
+
+        static void setupLogging(string[] args) {
+            if (args.Any(arg => arg == "-v")) {
+                fabl.globalLogLevel = LogLevel.Debug;
+            } else {
+                fabl.globalLogLevel = LogLevel.Info;
+            }
+
+            var formatter = new ColorCodeFormatter();
+            fabl.AddAppender((logger, logLevel, message) => {
+                Console.WriteLine(formatter.FormatMessage(logLevel, message));
+            });
         }
 
         static void newConfig() {
@@ -76,8 +95,10 @@ namespace Entitas.CodeGenerator {
             var currentDir = Directory.GetCurrentDirectory();
 
             var path = currentDir + Path.DirectorySeparatorChar + EntitasPreferences.GetConfigPath();
-            File.WriteAllText(path, defaultConfig.ToString());
-            Console.WriteLine("Created " + path);
+            var config = defaultConfig.ToString();
+            File.WriteAllText(path, config);
+            _logger.Info("Created " + path);
+            _logger.Debug(config);
         }
 
         static void editConfig() {
@@ -88,7 +109,7 @@ namespace Entitas.CodeGenerator {
             if(File.Exists(EntitasPreferences.GetConfigPath())) {
                 var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath());
                 codeGenerator.DryRun();
-                Console.WriteLine("You're ready to generate.");
+                _logger.Info("You're ready to generate.");
             } else {
                 printNoConfig();
             }
@@ -97,6 +118,7 @@ namespace Entitas.CodeGenerator {
         static void diff() {
             if(File.Exists(EntitasPreferences.GetConfigPath())) {
                 var fileContent = File.ReadAllText(EntitasPreferences.GetConfigPath());
+                _logger.Debug(fileContent);
                 var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(fileContent));
 
                 var types = CodeGeneratorUtil.GetTypesInAllAssemblies(config);
@@ -117,7 +139,7 @@ namespace Entitas.CodeGenerator {
             if(File.Exists(EntitasPreferences.GetConfigPath())) {
                 var types = CodeGeneratorUtil.GetTypesInAllAssemblies(EntitasPreferences.GetConfigPath());
                 foreach(var type in types) {
-                    Console.WriteLine(type);
+                    _logger.Info(type.ToString());
                 }
             } else {
                 printNoConfig();
@@ -144,19 +166,19 @@ namespace Entitas.CodeGenerator {
 
         static void printUnavailable(string[] names) {
             foreach(var name in names) {
-                Console.WriteLine("Unavailable " + name);
+                _logger.Info("Unavailable " + name);
             }
         }
 
         static void printAvailable(string[] names) {
             foreach(var name in names) {
-                Console.WriteLine("Available " + name);
+                _logger.Info("Available " + name);
             }
         }
 
         static void printNoConfig() {
-            Console.WriteLine("Couldn't find " + EntitasPreferences.GetConfigPath());
-            Console.WriteLine("Run 'entitas new' to create Entitas.properties with default values");
+            _logger.Info("Couldn't find " + EntitasPreferences.GetConfigPath());
+            _logger.Info("Run 'entitas new' to create Entitas.properties with default values");
         }
     }
 }

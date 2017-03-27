@@ -2,10 +2,13 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Fabl;
 
 namespace Entitas.CodeGenerator {
 
     public class DependencyResolver {
+
+        static Logger _logger = fabl.GetLogger(typeof(DependencyResolver).Name);
 
         readonly AppDomain _appDomain;
         string[] _basePaths;
@@ -17,14 +20,14 @@ namespace Entitas.CodeGenerator {
         }
 
         public void Load(string path) {
-            //Console.WriteLine("- AppDomain add: " + path);
+            _logger.Debug("- AppDomain add: " + path);
             _appDomain.Load(path);
         }
 
         Assembly onAssemblyResolve(object sender, ResolveEventArgs args) {
             Assembly assembly = null;
             try {
-                //Console.WriteLine("  - Loading: " + args.Name);
+                _logger.Debug("  - Loading: " + args.Name);
                 assembly = Assembly.LoadFrom(args.Name);
             } catch(Exception) {
                 var name = new AssemblyName(args.Name).Name;
@@ -32,16 +35,26 @@ namespace Entitas.CodeGenerator {
                     name += ".dll";
                 }
 
-                foreach(var basePath in _basePaths) {
-                    var path = basePath + Path.DirectorySeparatorChar + name;
-                    if(File.Exists(path)) {
-                        //Console.WriteLine("    - Resolved: " + path);
-                        assembly = Assembly.LoadFrom(path);
-                    }
+                var path = resolvePath(name);
+                if(path != null) {
+                    assembly = Assembly.LoadFrom(path);
                 }
             }
 
             return assembly;
+        }
+
+        string resolvePath(string assemblyName) {
+            foreach(var basePath in _basePaths) {
+                var path = basePath + Path.DirectorySeparatorChar + assemblyName;
+                if(File.Exists(path)) {
+                    _logger.Debug("    - Resolved: " + path);
+                    return path;
+                }
+            }
+
+            _logger.Warn("    - Could not resolve: " + assemblyName);
+            return null;
         }
 
         public Type[] GetTypes() {

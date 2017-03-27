@@ -27,6 +27,7 @@ namespace Entitas.CodeGenerator {
             foreach(var path in config.codeGeneratorAssemblyPaths) {
                 resolver.Load(path);
             }
+
             return appDomain.GetAssemblies()
                             .SelectMany(assembly => assembly.GetTypes())
                             .ToArray();

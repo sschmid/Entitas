@@ -29,6 +29,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="fabl">
+      <HintPath>..\fabl.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entitas.CodeGenerator\DataProviders\CodeGeneratorData.cs" />
