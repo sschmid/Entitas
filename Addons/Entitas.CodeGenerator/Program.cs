@@ -71,7 +71,7 @@ namespace Entitas.CodeGenerator {
         }
 
         static void setupLogging(string[] args) {
-            if (args.Any(arg => arg == "-v")) {
+            if(args.Any(arg => arg == "-v")) {
                 fabl.globalLogLevel = LogLevel.Debug;
             } else {
                 fabl.globalLogLevel = LogLevel.Info;
@@ -120,8 +120,7 @@ namespace Entitas.CodeGenerator {
                 var fileContent = File.ReadAllText(EntitasPreferences.GetConfigPath());
                 _logger.Debug(fileContent);
                 var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(fileContent));
-
-                var types = CodeGeneratorUtil.GetTypesInAllAssemblies(config);
+                var types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
 
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(types, config.dataProviders));
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGenerator>(types, config.codeGenerators));
@@ -137,12 +136,19 @@ namespace Entitas.CodeGenerator {
 
         static void scanDlls() {
             if(File.Exists(EntitasPreferences.GetConfigPath())) {
-                var types = CodeGeneratorUtil.GetTypesInAllAssemblies(EntitasPreferences.GetConfigPath());
-                foreach(var type in types) {
-                    _logger.Info(type.ToString());
-                }
+                printTypes(CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies());
+                printTypes(CodeGeneratorUtil.LoadTypesFromAssemblies());
             } else {
                 printNoConfig();
+            }
+        }
+
+        static void printTypes(Type[] types) {
+            var orderedTypes = types
+                .OrderBy(type => type.Assembly.GetName().Name)
+                .ThenBy(type => type.FullName);
+            foreach(var type in orderedTypes) {
+                _logger.Info(type.Assembly.GetName().Name + ": " + type);
             }
         }
 

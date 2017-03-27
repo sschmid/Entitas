@@ -19,7 +19,7 @@ namespace Entitas.CodeGenerator {
                 .ToArray();
 
             if(contextNames.Length == 0) {
-                var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig());
+                var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath()));
                 contextNames = new [] { config.contexts[0] };
             }
 

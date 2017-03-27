@@ -14,7 +14,7 @@ namespace Entitas {
             return configPath;
         }
 
-        public static EntitasPreferencesConfig LoadConfig(string configPath = "Entitas.properties") {
+        public static EntitasPreferencesConfig LoadConfig(string configPath) {
             SetConfigPath(configPath);
 
             var config = File.Exists(configPath)

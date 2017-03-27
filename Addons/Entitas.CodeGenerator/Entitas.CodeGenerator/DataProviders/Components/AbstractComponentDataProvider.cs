@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using Entitas.CodeGenerator.Api;
 
 namespace Entitas.CodeGenerator {
@@ -21,7 +20,7 @@ namespace Entitas.CodeGenerator {
 
         public CodeGeneratorData[] GetData() {
             if(_types == null) {
-                _types = CodeGeneratorUtil.GetTypesInAllAssemblies(EntitasPreferences.GetConfigPath());
+                _types = CodeGeneratorUtil.LoadTypesFromAssemblies();
             }
 
             var dataFromComponents = _types

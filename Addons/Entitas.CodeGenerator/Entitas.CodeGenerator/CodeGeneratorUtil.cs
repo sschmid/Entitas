@@ -5,9 +5,40 @@ namespace Entitas.CodeGenerator {
 
     public static class CodeGeneratorUtil {
 
+        public static DependencyResolver codeGeneratorDependencyResolver {
+            get {
+                if(_codeGeneratorDependencyResolver == null) {
+                    var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath()));
+                    _codeGeneratorDependencyResolver = new DependencyResolver(AppDomain.CurrentDomain, config.assemblyBasePaths);
+                    foreach(var path in config.codeGeneratorAssemblyPaths) {
+                        _codeGeneratorDependencyResolver.Load(path);
+                    }
+                }
+
+                return _codeGeneratorDependencyResolver;
+            }
+        }
+
+        public static DependencyResolver dependencyResolver {
+            get {
+                if(_dependencyResolver == null) {
+                    var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath()));
+                    _dependencyResolver = new DependencyResolver(AppDomain.CurrentDomain, config.assemblyBasePaths);
+                    foreach(var path in config.assemblyPaths) {
+                        _dependencyResolver.Load(path);
+                    }
+                }
+
+                return _dependencyResolver;
+            }
+        }
+
+        static DependencyResolver _dependencyResolver;
+        static DependencyResolver _codeGeneratorDependencyResolver;
+
         public static CodeGenerator CodeGeneratorFromConfig(string configPath) {
             var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(configPath));
-            var types = GetTypesInAllAssemblies(config);
+            var types = LoadTypesFromCodeGeneratorAssemblies();
 
             return new CodeGenerator(
                 GetEnabledInstances<ICodeGeneratorDataProvider>(types, config.dataProviders),
@@ -16,21 +47,12 @@ namespace Entitas.CodeGenerator {
             );
         }
 
-        public static Type[] GetTypesInAllAssemblies(string configPath) {
-            var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(configPath));
-            return GetTypesInAllAssemblies(config);
+        public static Type[] LoadTypesFromAssemblies() {
+            return dependencyResolver.GetTypes();
         }
 
-        public static Type[] GetTypesInAllAssemblies(CodeGeneratorConfig config) {
-            var appDomain = AppDomain.CurrentDomain;
-            var resolver = new DependencyResolver(appDomain, config.assemblyBasePaths);
-            foreach(var path in config.codeGeneratorAssemblyPaths) {
-                resolver.Load(path);
-            }
-
-            return appDomain.GetAssemblies()
-                            .SelectMany(assembly => assembly.GetTypes())
-                            .ToArray();
+        public static Type[] LoadTypesFromCodeGeneratorAssemblies() {
+            return codeGeneratorDependencyResolver.GetTypes();
         }
 
         public static T[] GetOrderedInstances<T>(Type[] types) where T : ICodeGeneratorInterface {
