@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Fabl;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGenerator.CLI {
 
     class MainClass {
 

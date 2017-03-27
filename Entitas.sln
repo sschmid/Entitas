@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependency", "Tests\Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDependenyBase", "Tests\Tests.Fixtures\TestDependenyBase\TestDependenyBase.csproj", "{9F8664D9-9EAA-4F1C-8FF3-40B5FC4F5173}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGenerator.CLI", "Addons\Entitas.CodeGenerator.CLI\Entitas.CodeGenerator.CLI.csproj", "{EF2A4801-6319-4B20-B44E-E4AB02B665BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{84D4CB86-739E-4B54-9112-91E1B3BD47AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F8664D9-9EAA-4F1C-8FF3-40B5FC4F5173}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F8664D9-9EAA-4F1C-8FF3-40B5FC4F5173}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF2A4801-6319-4B20-B44E-E4AB02B665BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF2A4801-6319-4B20-B44E-E4AB02B665BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF2A4801-6319-4B20-B44E-E4AB02B665BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF2A4801-6319-4B20-B44E-E4AB02B665BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -122,7 +128,7 @@ Global
 		$4.IndentSwitchSection = True
 		$4.SpaceAfterControlFlowStatementKeyword = False
 		$0.StandardHeader = $5
-		$5.Text =
+		$5.Text = 
 		$5.IncludeInNewFiles = True
 		$0.NameConventionPolicy = $6
 		$6.Rules = $7
@@ -250,5 +256,6 @@ Global
 		{41F1BFA1-062C-4929-9BFD-2340D4E60A06} = {663F8023-1E6F-49FE-83D0-F60871AD282D}
 		{84D4CB86-739E-4B54-9112-91E1B3BD47AA} = {41F1BFA1-062C-4929-9BFD-2340D4E60A06}
 		{9F8664D9-9EAA-4F1C-8FF3-40B5FC4F5173} = {41F1BFA1-062C-4929-9BFD-2340D4E60A06}
+		{EF2A4801-6319-4B20-B44E-E4AB02B665BB} = {B68761FF-EFF7-4611-9F1E-6B0127C89301}
 	EndGlobalSection
 EndGlobal
