@@ -2,6 +2,8 @@
 echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
+${SCRIPTS}/build
+
 # clean
 rm -rf $BUILD
 
@@ -9,62 +11,87 @@ rm -rf $BUILD
 mkdir $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
 
 # collect sources
-cpe "${ROOT}/${ES}/${ES}" $BUILD_SRC
+cp "${ES}/${BIN}/${ES}.dll" ${BUILD_SRC}
 
-cpe "${ADDONS}/${BP}/${BP}" $BUILD_SRC
-cpe "${ADDONS}/${CG}/${CG}" $BUILD_SRC
-cpe "${ADDONS}/${CGA}/${CGA}" $BUILD_SRC
-cpe "${ADDONS}/${MIG}/${MIG}" $BUILD_SRC
+cp "${ADDONS}/${ES_UE}/${BIN}/${ES_UE}.dll" ${BUILD_SRC}
 
-cpe "${ADDONS}/${EU}/Assets/${EU}/" "${BUILD_SRC}/${EU}"
-cpe "${ADDONS}/${UBP}/Assets/${UBP}/" "${BUILD_SRC}/${UBP}"
-cpe "${ADDONS}/${UCG}/Assets/${UCG}/" "${BUILD_SRC}/${UCG}"
-cpe "${ADDONS}/${UMIG}/Assets/${UMIG}/" "${BUILD_SRC}/${UMIG}"
-cpe "${ADDONS}/${UVD}/Assets/${UVD}/" "${BUILD_SRC}/${UVD}"
+cp "${ADDONS}/${ES_CG}/${BIN}/${ES_CG}.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_CG}/${BIN}/fabl.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_CG_ATTR}/${BIN}/${ES_CG_ATTR}.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_CG_CLI}/${BIN}/${ES_CG_CLI}.exe" ${BUILD_SRC}
+cp "${ADDONS}/${ES_CG_UE}/${BIN}/${ES_CG_UE}.dll" ${BUILD_SRC}
+
+cp "${ADDONS}/${ES_MIG}/${BIN}/${ES_MIG}.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_MIG_CLI}/${BIN}/${ES_MIG_CLI}.exe" ${BUILD_SRC}
+cp "${ADDONS}/${ES_MIG_UE}/${BIN}/${ES_MIG_UE}.dll" ${BUILD_SRC}
+
+cp "${ADDONS}/${ES_VD_U}/${BIN}/${ES_VD_U}.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_VD_UE}/${BIN}/${ES_VD_UE}.dll" ${BUILD_SRC}
+
+cp "${ADDONS}/${ES_BP}/${BIN}/${ES_BP}.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_BP_U}/${BIN}/${ES_BP_U}.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_BP_UE}/${BIN}/${ES_BP_UE}.dll" ${BUILD_SRC}
+
 
 # update project dependencies
 
-# Entitas.Unity.Blueprints
-libDir="${ADDONS}/${EU}/Assets/Libraries"
+# Entitas.Unity
+libDir="${ADDONS_PLAYGROUND}/Entitas.Unity/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
-cpe "${BUILD_SRC}/${ES}" ${libDir}
+cp  "${BUILD_SRC}/${ES}.dll" ${libDir}
+mkdir "${libDir}/Editor"
+cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
 
-# Entitas.Unity.Blueprints
-libDir="${ADDONS}/${UBP}/Assets/Libraries"
+# Entitas.CodeGenerator.Unity
+libDir="${ADDONS_PLAYGROUND}/Entitas.CodeGenerator.Unity/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
-cpe "${BUILD_SRC}/${ES}" ${libDir}
-cpe "${BUILD_SRC}/${BP}" ${libDir}
-cpe "${BUILD_SRC}/${CG}" "${libDir}/Editor"
-cpe "${BUILD_SRC}/${CGA}" ${libDir}
-cpe "${BUILD_SRC}/${EU}" ${libDir}
-cpe "${BUILD_SRC}/${UCG}" ${libDir}
-cpe "${BUILD_SRC}/${UVD}" ${libDir}
+cp "${BUILD_SRC}/${ES}.dll" ${libDir}
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
+cp "${BUILD_SRC}/fabl.dll" ${libDir}
+mkdir "${libDir}/Editor"
+cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_CG}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_CG_UE}.dll" "${libDir}/Editor/"
 
-# Entitas.Unity.CodeGenerator
-libDir="${ADDONS}/${UCG}/Assets/Libraries"
+# Entitas.Migration.Unity
+libDir="${ADDONS_PLAYGROUND}/Entitas.Migration.Unity/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
-cpe "${BUILD_SRC}/${ES}" ${libDir}
-cpe "${BUILD_SRC}/${CG}" "${libDir}/Editor"
-cpe "${BUILD_SRC}/${CGA}" ${libDir}
-cpe "${BUILD_SRC}/${EU}" ${libDir}
+cp "${BUILD_SRC}/${ES}.dll" ${libDir}
+mkdir "${libDir}/Editor"
+cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_MIG}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_MIG_UE}.dll" "${libDir}/Editor/"
 
-# Entitas.Unity.Migration
-libDir="${ADDONS}/${UMIG}/Assets/Libraries"
+# Entitas.VisualDebugging.Unity
+libDir="${ADDONS_PLAYGROUND}/Entitas.VisualDebugging.Unity/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
-cpe "${BUILD_SRC}/${ES}" ${libDir}
-cpe "${BUILD_SRC}/${MIG}" ${libDir}
-cpe "${BUILD_SRC}/${EU}" ${libDir}
+cp "${BUILD_SRC}/${ES}.dll" ${libDir}
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
+cp "${BUILD_SRC}/fabl.dll" ${libDir}
+cp "${BUILD_SRC}/${ES_VD_U}.dll" ${libDir}
+mkdir "${libDir}/Editor"
+cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_CG}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_CG_UE}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_VD_UE}.dll" "${libDir}/Editor/"
 
-# Entitas.Unity.VisualDebugging
-libDir="${ADDONS}/${UVD}/Assets/Libraries"
+# Entitas.Blueprints.Unity
+libDir="${ADDONS_PLAYGROUND}/Entitas.Blueprints.Unity/Assets/Libraries"
 rm -rf ${libDir}
 mkdir ${libDir}
-cpe "${BUILD_SRC}/${ES}" ${libDir}
-cpe "${BUILD_SRC}/${CG}" "${libDir}/Editor"
-cpe "${BUILD_SRC}/${CGA}" ${libDir}
-cpe "${BUILD_SRC}/${EU}" ${libDir}
-cpe "${BUILD_SRC}/${UCG}" ${libDir}
+cp "${BUILD_SRC}/${ES}.dll" ${libDir}
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
+cp "${BUILD_SRC}/${ES_BP}.dll" ${libDir}
+cp "${BUILD_SRC}/fabl.dll" ${libDir}
+cp "${BUILD_SRC}/${ES_VD_U}.dll" ${libDir}
+cp "${BUILD_SRC}/${ES_BP_U}.dll" ${libDir}
+mkdir "${libDir}/Editor"
+cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_CG}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_CG_UE}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_VD_UE}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_BP_UE}.dll" "${libDir}/Editor/"

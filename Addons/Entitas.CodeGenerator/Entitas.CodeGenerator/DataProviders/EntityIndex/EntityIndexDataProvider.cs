@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Entitas.CodeGenerator.Api;
+using Entitas.CodeGenerator.Attributes;
 
 namespace Entitas.CodeGenerator {
 

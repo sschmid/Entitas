@@ -10,7 +10,7 @@ namespace Entitas.CodeGenerator {
         public bool isEnabledByDefault { get { return true; } }
 
         const string ATTRIBUTE_TEMPLATE =
-@"public sealed class ${ContextName}Attribute : Entitas.CodeGenerator.Api.ContextAttribute {
+@"public sealed class ${ContextName}Attribute : Entitas.CodeGenerator.Attributes.ContextAttribute {
 
     public ${ContextName}Attribute() : base(""${ContextName}"") {
     }

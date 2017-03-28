@@ -1,5 +1,5 @@
 using Entitas;
-using Entitas.CodeGenerator.Api;
+using Entitas.CodeGenerator.Attributes;
 
 [Context("Test"), DontGenerate(false)]
 public sealed class DontGenerateIndexComponent : IComponent {

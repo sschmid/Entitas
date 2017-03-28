@@ -5,37 +5,3 @@ source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 # build project
 xbuild /target:Clean /property:Configuration=Release /verbosity:minimal $SOLUTION
 xbuild /property:Configuration=Release /verbosity:minimal $SOLUTION
-
-# update
-${SCRIPTS}/update
-
-# generate unity csharp projects
-$UNITY -quit \
-       -batchmode \
-       -logfile \
-       -projectPath "${ADDONS}/${EU}/Assets/../" \
-       -executeMethod $UNITY_EXECUTE_METHOD
-
-$UNITY -quit \
-       -batchmode \
-       -logfile \
-       -projectPath "${ADDONS}/${UBP}/" \
-       -executeMethod $UNITY_EXECUTE_METHOD
-
-$UNITY -quit \
-       -batchmode \
-       -logfile \
-       -projectPath "${ADDONS}/${UCG}/" \
-       -executeMethod $UNITY_EXECUTE_METHOD
-
-$UNITY -quit \
-       -batchmode \
-       -logfile \
-       -projectPath "${ADDONS}/${UMIG}/" \
-       -executeMethod $UNITY_EXECUTE_METHOD
-
-$UNITY -quit \
-       -batchmode \
-       -logfile \
-       -projectPath "${ADDONS}/${UVD}/" \
-       -executeMethod $UNITY_EXECUTE_METHOD

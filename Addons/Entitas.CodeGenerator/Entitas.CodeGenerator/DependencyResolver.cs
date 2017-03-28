@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using Fabl;
-using System.Collections.Generic;
 
 namespace Entitas.CodeGenerator {
 
@@ -58,19 +57,7 @@ namespace Entitas.CodeGenerator {
         }
 
         public Type[] GetTypes() {
-            var types = new List<Type>();
-            foreach(var assembly in _appDomain.GetAssemblies()) {
-                foreach(var type in assembly.GetTypes()) {
-                    try {
-                        type.GetCustomAttributes(false);
-                        types.Add(type);
-                    } catch(Exception) {
-                        _logger.Error("Cannot get type " + type.FullName);
-                    }
-                }
-            }
-
-            return types.ToArray();
+            return TypeUtils.GetAllTypes();
         }
     }
 }

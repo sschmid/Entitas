@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{70222463-4E60-4862-8C18-1EBA6CA63353}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Entitas.VisualDebugging.Unity</RootNamespace>
+    <AssemblyName>Entitas.VisualDebugging.Unity</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entitas.VisualDebugging.Unity\GameObjectDestroyExtension.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\ContextObserver\ContextObserver.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\ContextObserver\ContextObserverBehaviour.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\ContextObserver\ContextObserverExtension.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\DebugSystems\DebugSystems.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\DebugSystems\DebugSystemsBehaviour.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\DebugSystems\Feature.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\DebugSystems\SystemInfo.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Entity\DontDrawComponentAttribute.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Entity\EntityBehaviour.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Entity\EntityLink.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\VisualDebuggingConfig.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6DCBB57A-C3A3-4055-B99E-0C97A0D3C4CA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Entitas.VisualDebugging.Unity.Editor</RootNamespace>
+    <AssemblyName>Entitas.VisualDebugging.Unity.Editor</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\CodeGenerator\ContextObserverGenerator.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\ContextObserver\ContextObserverInspector.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\DebugSystems\DebugSystemsInspector.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\DebugSystems\SystemsMonitor.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\EntitasHierarchyIcon.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\EntitasStats.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\VisualDebuggingEntitasExtension.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\VisualDebuggingPreferencesDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\DefaultInstanceCreator\DefaultArrayCreator.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\DefaultInstanceCreator\DefaultStringCreator.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\DefaultInstanceCreator\IDefaultInstanceCreator.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\Entity\EntityDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\Entity\EntityDrawerState.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\Entity\EntityInspector.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\AnimationCurveTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\ArrayTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\BoolTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\BoundsTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\CharTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\ColorTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\DateTimeTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\DictionaryTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\DoubleTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\EnumTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\FloatTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\HashSetTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\IntTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\ITypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\ListTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\RectTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\StringTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\UnityObjectTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\Vector2TypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\Vector3TypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\Vector4TypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\EntityLinkInspector.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Entity\IComponentDrawer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas.VisualDebugging.Unity.Editor\Entity\DefaultInstanceCreator\" />
+    <Folder Include="Entitas.VisualDebugging.Unity.Editor\Entity\Entity\" />
+    <Folder Include="Entitas.VisualDebugging.Unity.Editor\Entity\TypeDrawer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
+      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
+      <Name>Entitas.CodeGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
+      <Project>{9AF72B25-85B0-4FDC-85C3-660926C82438}</Project>
+      <Name>Entitas.Unity.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj">
+      <Project>{70222463-4E60-4862-8C18-1EBA6CA63353}</Project>
+      <Name>Entitas.VisualDebugging.Unity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

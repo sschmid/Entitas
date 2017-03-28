@@ -84,7 +84,7 @@ namespace Entitas.CodeGenerator.CLI {
         }
 
         static void newConfig() {
-            var types = Assembly.GetAssembly(typeof(CodeGenerator)).GetTypes();
+            var types = TypeUtils.GetAllTypes();
             var defaultConfig = new CodeGeneratorConfig(
                 new EntitasPreferencesConfig(string.Empty),
                 CodeGeneratorUtil.GetOrderedTypeNames<ICodeGeneratorDataProvider>(types).ToArray(),
@@ -107,9 +107,9 @@ namespace Entitas.CodeGenerator.CLI {
 
         static void doctor() {
             if(File.Exists(EntitasPreferences.GetConfigPath())) {
+                diff();
                 var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath());
                 codeGenerator.DryRun();
-                _logger.Info("You're ready to generate.");
             } else {
                 printNoConfig();
             }

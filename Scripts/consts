@@ -7,24 +7,32 @@ UNITY="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
 PROJECT_NAME="Entitas"
 
 ADDONS="${ROOT}/Addons"
+ADDONS_PLAYGROUND="${ADDONS}/Tests"
 
-ES="${PROJECT_NAME}"
-BP="${ES}.Blueprints"
-CG="${ES}.CodeGenerator"
-CGA="${ES}.CodeGenerator.Api"
-MIG="${ES}.Migration"
+ES="Entitas"
+ES_UE="Entitas.Unity.Editor"
 
-EU="${ES}.Unity"
-UBP="${EU}.Blueprints"
-UCG="${EU}.CodeGenerator"
-UMIG="${EU}.Migration"
-UVD="${EU}.VisualDebugging"
+ES_CG="Entitas.CodeGenerator"
+ES_CG_ATTR="Entitas.CodeGenerator.Attributes"
+ES_CG_CLI="Entitas.CodeGenerator.CLI"
+ES_CG_UE="Entitas.CodeGenerator.Unity.Editor"
+
+ES_MIG="Entitas.Migration"
+ES_MIG_CLI="Entitas.Migration.CLI"
+ES_MIG_UE="Entitas.Migration.Unity.Editor"
+
+ES_VD_U="Entitas.VisualDebugging.Unity"
+ES_VD_UE="Entitas.VisualDebugging.Unity.Editor"
+
+ES_BP="Entitas.Blueprints"
+ES_BP_U="Entitas.Blueprints.Unity"
+ES_BP_UE="Entitas.Blueprints.Unity.Editor"
+
+BIN="bin/Release"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 SOLUTION="${ROOT}/${PROJECT_NAME}.sln"
 PROJECT_VERSION=`cat ${ROOT}/${PROJECT_NAME}/${PROJECT_NAME}/version`
-
-UNITY_EXECUTE_METHOD="Commands.GenerateCSharpProject"
 
 TEST_PROJECT="${ROOT}/Tests/Tests/Tests.csproj"
 TEST_RUNNER="${ROOT}/Tests/Tests/bin/Release/Tests.exe"

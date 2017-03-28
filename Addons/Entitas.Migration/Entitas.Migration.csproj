@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>Entitas.Migration</RootNamespace>
     <AssemblyName>Entitas.Migration</AssemblyName>
     <ReleaseVersion>1.0.0</ReleaseVersion>
@@ -32,7 +32,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
     <Compile Include="Entitas.Migration\M0180.cs" />
     <Compile Include="Entitas.Migration\MigrationUtils.cs" />
     <Compile Include="Entitas.Migration\IMigration.cs" />

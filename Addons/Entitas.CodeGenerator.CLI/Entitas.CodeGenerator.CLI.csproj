@@ -30,24 +30,24 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="fabl">
-      <HintPath>..\fabl.exe</HintPath>
+      <HintPath>..\Libraries\fabl.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
-      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
-      <Name>Entitas.CodeGenerator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
-      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
-      <Name>Entitas.CodeGenerator.Api</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGenerator.Attributes\Entitas.CodeGenerator.Attributes.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGenerator.Attributes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
+      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
+      <Name>Entitas.CodeGenerator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

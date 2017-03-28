@@ -14,7 +14,7 @@ namespace Entitas.CodeGenerator {
 
 ${indexConstants}
 
-    [Entitas.CodeGenerator.Api.PostConstructor]
+    [Entitas.CodeGenerator.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
 ${addIndices}
     }

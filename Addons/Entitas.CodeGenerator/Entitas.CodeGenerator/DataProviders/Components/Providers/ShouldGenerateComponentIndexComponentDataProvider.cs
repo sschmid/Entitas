@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Entitas.CodeGenerator.Api;
+using Entitas.CodeGenerator.Attributes;
 
 namespace Entitas.CodeGenerator {
 
