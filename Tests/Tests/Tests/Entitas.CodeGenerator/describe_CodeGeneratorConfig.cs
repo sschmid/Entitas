@@ -34,7 +34,7 @@ class describe_CodeGeneratorConfig : nspec {
         it["gets default values when keys dont exist"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new [] {"Data1, Data2"}, new [] {"Gen1, Gen2"}, new [] {"Post1, Post2"});
             config.projectPath.should_be("Assembly-CSharp.csproj");
-            config.assemblyBasePaths.should_be(new string[0]);
+            config.assemblyBasePaths.should_be(new [] { "/Applications/Unity/Unity.app/Contents/Managed", "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" });
             config.assemblyPaths.should_be(new [] { "Library/ScriptAssemblies/Assembly-CSharp.dll"});
             config.codeGeneratorAssemblyPaths.should_be(new [] { "Library/ScriptAssemblies/Assembly-CSharp-Editor.dll"});
             config.targetDirectory.should_be("Assets/Generated/");
@@ -96,7 +96,7 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
-                "Entitas.CodeGenerator.AssemblyBasePaths = \n" +
+                "Entitas.CodeGenerator.AssemblyBasePaths = /Applications/Unity/Unity.app/Contents/Managed,/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
                 "Entitas.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGenerator.CodeGeneratorAssemblies = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
@@ -124,7 +124,7 @@ class describe_CodeGeneratorConfig : nspec {
             config.contexts = new [] { "Meta", string.Empty };
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
-                "Entitas.CodeGenerator.AssemblyBasePaths = \n" +
+                "Entitas.CodeGenerator.AssemblyBasePaths = /Applications/Unity/Unity.app/Contents/Managed,/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
                 "Entitas.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGenerator.CodeGeneratorAssemblies = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
@@ -140,7 +140,7 @@ class describe_CodeGeneratorConfig : nspec {
             config.codeGenerators = new [] { "Gen1", string.Empty };
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
-                "Entitas.CodeGenerator.AssemblyBasePaths = \n" +
+                "Entitas.CodeGenerator.AssemblyBasePaths = /Applications/Unity/Unity.app/Contents/Managed,/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
                 "Entitas.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGenerator.CodeGeneratorAssemblies = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +

@@ -13,7 +13,7 @@ namespace Entitas.CodeGenerator {
         }
 
         public const string ASSEMBLY_BASE_PATHS_KEY = "Entitas.CodeGenerator.AssemblyBasePaths";
-        const string DEFAULT_ASSEMBLY_BASE_PATHS = "";
+        const string DEFAULT_ASSEMBLY_BASE_PATHS = "/Applications/Unity/Unity.app/Contents/Managed,/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity";
         public string[] assemblyBasePaths { 
             get { return separateValues(_config.GetValueOrDefault(ASSEMBLY_BASE_PATHS_KEY, DEFAULT_ASSEMBLY_BASE_PATHS)); }
             set { _config[ASSEMBLY_BASE_PATHS_KEY] = joinValues(value); }
