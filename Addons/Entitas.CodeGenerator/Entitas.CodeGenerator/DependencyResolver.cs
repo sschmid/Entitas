@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Fabl;
 
@@ -11,16 +13,19 @@ namespace Entitas.CodeGenerator {
 
         readonly AppDomain _appDomain;
         string[] _basePaths;
+        List<Assembly> _assemblies;
 
         public DependencyResolver(AppDomain appDomain, string[] basePaths) {
             _appDomain = appDomain;
             _appDomain.AssemblyResolve += onAssemblyResolve;
             _basePaths = basePaths;
+            _assemblies = new List<Assembly>();
         }
 
         public void Load(string path) {
             _logger.Debug("- AppDomain add: " + path);
-            _appDomain.Load(path);
+            var assembly = _appDomain.Load(path);
+            _assemblies.Add(assembly);
         }
 
         Assembly onAssemblyResolve(object sender, ResolveEventArgs args) {
@@ -57,7 +62,9 @@ namespace Entitas.CodeGenerator {
         }
 
         public Type[] GetTypes() {
-            return TypeUtils.GetAllTypes();
+            return _assemblies
+                .SelectMany(assembly => assembly.GetTypes())
+                .ToArray();
         }
     }
 }

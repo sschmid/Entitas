@@ -7,7 +7,7 @@ class describe_DependencyResolver : nspec {
 
     void when_resolving() {
 
-        xcontext["when no dependencies"] = () => {
+        context["when no dependencies"] = () => {
 
             string dllPath = null;
             Type[] types = null;
@@ -20,12 +20,12 @@ class describe_DependencyResolver : nspec {
             };
 
             it["loads dll"] = () => {
-                types.should_contain(type => type.FullName == "TestDependenyBase.Point");
+                types.Length.should_be(1);
+                types[0].FullName.should_be("TestDependenyBase.Point");
             };
 
             it["instantiates type"] = () => {
-                var type = types.Single(t => t.FullName == "TestDependenyBase.Point");
-                Activator.CreateInstance(type);
+                Activator.CreateInstance(types[0]);
             };
         };
 
@@ -42,12 +42,12 @@ class describe_DependencyResolver : nspec {
             };
 
             it["loads dll with all dependencies"] = () => {
-                types.should_contain(type => type.FullName == "TestDependency.PositionComponent");
+                types.Length.should_be(1);
+                types[0].FullName.should_be("TestDependency.PositionComponent");
             };
 
             it["instantiates type"] = () => {
-                var type = types.Single(t => t.FullName == "TestDependency.PositionComponent");
-                Activator.CreateInstance(type);
+                Activator.CreateInstance(types[0]);
             };
         };
     }
