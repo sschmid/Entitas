@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Entitas.Migration.CLI</RootNamespace>
     <AssemblyName>Entitas.Migration.CLI</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
