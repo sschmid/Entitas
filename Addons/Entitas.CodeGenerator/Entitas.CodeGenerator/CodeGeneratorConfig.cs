@@ -5,6 +5,18 @@ namespace Entitas.CodeGenerator {
 
     public class CodeGeneratorConfig {
 
+        public static readonly string[] keys = {
+            PROJECT_PATH_KEY,
+            ASSEMBLY_BASE_PATHS_KEY,
+            ASSEMBLY_PATHS_KEY,
+            CODE_GENERATOR_ASSEMBLY_PATHS_KEY,
+            TARGET_DIRECTORY_KEY,
+            CONTEXTS_KEY,
+            DATA_PROVIDERS_KEY,
+            CODE_GENERATORS_KEY,
+            POST_PROCESSORS_KEY
+        };
+
         public const string PROJECT_PATH_KEY = "Entitas.CodeGenerator.Project";
         const string DEFAULT_PROJECT_PATH = "Assembly-CSharp.csproj";
         public string projectPath { 

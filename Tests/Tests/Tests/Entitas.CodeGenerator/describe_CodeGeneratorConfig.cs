@@ -150,5 +150,18 @@ class describe_CodeGeneratorConfig : nspec {
                 "Entitas.CodeGenerator.PostProcessors = \n"
             );
         };
+
+        it["has all keys"] = () => {
+            var keys = CodeGeneratorConfig.keys;
+            keys.should_contain("Entitas.CodeGenerator.Project");
+            keys.should_contain("Entitas.CodeGenerator.AssemblyBasePaths");
+            keys.should_contain("Entitas.CodeGenerator.Assemblies");
+            keys.should_contain("Entitas.CodeGenerator.CodeGeneratorAssemblies");
+            keys.should_contain("Entitas.CodeGenerator.TargetDirectory");
+            keys.should_contain("Entitas.CodeGenerator.Contexts");
+            keys.should_contain("Entitas.CodeGenerator.DataProviders");
+            keys.should_contain("Entitas.CodeGenerator.CodeGenerators");
+            keys.should_contain("Entitas.CodeGenerator.PostProcessors");
+        };
     }
 }

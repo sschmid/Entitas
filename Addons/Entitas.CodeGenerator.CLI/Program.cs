@@ -108,8 +108,9 @@ namespace Entitas.CodeGenerator.CLI {
         static void doctor() {
             if(File.Exists(EntitasPreferences.GetConfigPath())) {
                 diff();
-                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath());
-                codeGenerator.DryRun();
+                CodeGeneratorUtil
+                    .CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath())
+                    .DryRun();
             } else {
                 printNoConfig();
             }
@@ -119,8 +120,12 @@ namespace Entitas.CodeGenerator.CLI {
             if(File.Exists(EntitasPreferences.GetConfigPath())) {
                 var fileContent = File.ReadAllText(EntitasPreferences.GetConfigPath());
                 _logger.Debug(fileContent);
+                var properties = new Properties(fileContent);
                 var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(fileContent));
                 var types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
+
+                printUnusedKeys(properties);
+                printMissingKeys(properties);
 
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(types, config.dataProviders));
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGenerator>(types, config.codeGenerators));
@@ -131,6 +136,20 @@ namespace Entitas.CodeGenerator.CLI {
                 printAvailable(CodeGeneratorUtil.GetAvailable<ICodeGenFilePostProcessor>(types, config.postProcessors));
             } else {
                 printNoConfig();
+            }
+        }
+
+        static void printUnusedKeys(Properties properties) {
+            var unusedKeys = properties.keys.Where(key => !CodeGeneratorConfig.keys.Contains(key));
+            foreach(var key in unusedKeys) {
+                _logger.Info("Unused " + key);
+            }
+        }
+
+        static void printMissingKeys(Properties properties) {
+            var missingKeys = CodeGeneratorConfig.keys.Where(key => !properties.HasKey(key));
+            foreach(var key in missingKeys) {
+                _logger.Warn("Missing " + key);
             }
         }
 
@@ -154,8 +173,9 @@ namespace Entitas.CodeGenerator.CLI {
 
         static void dryRun() {
             if(File.Exists(EntitasPreferences.GetConfigPath())) {
-                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath());
-                codeGenerator.DryRun();
+                CodeGeneratorUtil
+                    .CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath())
+                    .DryRun();
             } else {
                 printNoConfig();
             }
@@ -163,8 +183,9 @@ namespace Entitas.CodeGenerator.CLI {
 
         static void generate() {
             if(File.Exists(EntitasPreferences.GetConfigPath())) {
-                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath());
-                codeGenerator.Generate();
+                CodeGeneratorUtil
+                    .CodeGeneratorFromConfig(EntitasPreferences.GetConfigPath())
+                    .Generate();
             } else {
                 printNoConfig();
             }
