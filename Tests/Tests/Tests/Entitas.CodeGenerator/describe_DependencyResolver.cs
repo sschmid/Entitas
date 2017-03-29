@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Entitas.CodeGenerator;
 using NSpec;
 
@@ -7,7 +6,7 @@ class describe_DependencyResolver : nspec {
 
     void when_resolving() {
 
-        context["when no dependencies"] = () => {
+        xcontext["when no dependencies"] = () => {
 
             string dllPath = null;
             Type[] types = null;
@@ -29,7 +28,7 @@ class describe_DependencyResolver : nspec {
             };
         };
 
-        context["when dependencies"] = () => {
+        xcontext["when dependencies"] = () => {
 
             string dllPath = null;
             Type[] types = null;
