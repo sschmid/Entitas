@@ -9,7 +9,6 @@ ${SCRIPTS}/docs
 # collect
 COLLECTED_DIR="${BUILD_SRC}/files"
 mkdir $COLLECTED_DIR
-cp -v "${ADDONS}/${ES_MIG_CLI}/bin/Release/Entitas.Migration.CLI.exe" "${COLLECTED_DIR}/MigrationAssistant.exe"
 cp -v "${ROOT}/README.md" "$COLLECTED_DIR/README.md"
 cp -v "${ROOT}/RELEASE_NOTES.md" "$COLLECTED_DIR/RELEASE_NOTES.md"
 cp -v "${ROOT}/EntitasUpgradeGuide.md" "$COLLECTED_DIR/EntitasUpgradeGuide.md"
@@ -17,14 +16,18 @@ cp -v "${ROOT}/LICENSE.txt" "$COLLECTED_DIR/LICENSE.txt"
 
 TMP_DIR="${BUILD}/tmp"
 TMP_ENTITAS="${TMP_DIR}/Entitas"
-# create c# zip
+
+# create c# zip ------------------------------------------------------------
 mkdir $TMP_DIR $TMP_ENTITAS
+
 cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
 cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
+
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
+
 cp "${BUILD_SRC}/${ES_MIG}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_MIG_CLI}.exe" "$TMP_ENTITAS/MigrationAssistant.exe"
+
 cp "${COLLECTED_DIR}/"* $TMP_DIR || true
 
 cp -r $DOCS "${TMP_DIR}/Documentation"
@@ -32,24 +35,29 @@ pushd $TMP_DIR > /dev/null
   zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-CSharp.zip" ./
 popd > /dev/null
 rm -rf $TMP_DIR
+# --------------------------------------------------------------------------
 
-# create unity zip
+# create unity zip ---------------------------------------------------------
 TMP_EDITOR="${TMP_ENTITAS}/Editor"
 mkdir $TMP_DIR $TMP_ENTITAS $TMP_EDITOR
-cp -r "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
-cp -r "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
-cp -r "${BUILD_SRC}/${ES_CG}.dll" $TMP_EDITOR
-cp -r "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
-cp -r "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
-cp -r "${BUILD_SRC}/${ES_MIG}.dll" $TMP_EDITOR
 
-cp -r "${BUILD_SRC}/${ES_UE}.dll" $TMP_EDITOR
-cp -r "${BUILD_SRC}/${ES_BP_U}.dll" $TMP_ENTITAS
-cp -r "${BUILD_SRC}/${ES_BP_UE}.dll" $TMP_EDITOR
-cp -r "${BUILD_SRC}/${ES_CG_UE}.dll" $TMP_EDITOR
-cp -r "${BUILD_SRC}/${ES_MIG_UE}.dll" $TMP_EDITOR
-cp -r "${BUILD_SRC}/${ES_VD_U}.dll" $TMP_ENTITAS
-cp -r "${BUILD_SRC}/${ES_VD_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
+
+cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
+
+cp "${BUILD_SRC}/${ES_MIG}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_MIG_CLI}.exe" "$TMP_EDITOR/MigrationAssistant.exe"
+
+cp "${BUILD_SRC}/${ES_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_BP_U}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_BP_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_CG_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_MIG_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_VD_U}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_VD_UE}.dll" $TMP_EDITOR
 
 cp "${COLLECTED_DIR}/"* $TMP_DIR || true
 
@@ -58,6 +66,23 @@ pushd $TMP_DIR > /dev/null
   zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-Unity.zip" ./
 popd > /dev/null
 rm -rf $TMP_DIR
+# --------------------------------------------------------------------------
+
+# create code generator zip ------------------------------------------------
+TMP_CG="${TMP_DIR}/CodeGenerator"
+mkdir $TMP_DIR $TMP_CG
+
+cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES_CG_CLI}.exe" "$TMP_CG/entitas.exe"
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_CG
+cp "${BUILD_SRC}/fabl.dll" $TMP_CG
+
+pushd $TMP_DIR > /dev/null
+  zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-CodeGenerator.zip" ./
+popd > /dev/null
+rm -rf $TMP_DIR
+# --------------------------------------------------------------------------
 
 # create docset tgz
 pushd "${BUILD_DOCS}/docset" > /dev/null
