@@ -55,5 +55,12 @@ class describe_VisualDebuggingConfig : nspec {
                 "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/\n" +
                 "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/\n");
         };
+
+        it["has all keys"] = () => {
+            var keys = VisualDebuggingConfig.keys;
+            keys.should_contain("Entitas.VisualDebugging.Unity.SystemWarningThreshold");
+            keys.should_contain("Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath");
+            keys.should_contain("Entitas.VisualDebugging.Unity.TypeDrawerFolderPath");
+        };
     }
 }
