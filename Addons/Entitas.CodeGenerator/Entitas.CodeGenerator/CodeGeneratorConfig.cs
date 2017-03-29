@@ -105,18 +105,17 @@ namespace Entitas.CodeGenerator {
         }
 
         static string joinValues(string[] values) {
-            return string.Join(",",
-                                values
-                                .Where(value => !string.IsNullOrEmpty(value))
-                                .ToArray()
-                              ).Replace(" ", string.Empty);
+            return string.Join(", ", values
+                               .Where(value => !string.IsNullOrEmpty(value))
+                               .Select(value => value.Trim())
+                               .ToArray());
         }
 
         static string[] separateValues(string values) {
             return values
-                        .Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                        .Select(value => value.Trim())
-                        .ToArray();
+                    .Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(value => value.Trim())
+                    .ToArray();
         }
 
         public override string ToString() {

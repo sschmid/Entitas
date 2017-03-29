@@ -11,9 +11,9 @@ class describe_CodeGeneratorConfig : nspec {
         "Entitas.CodeGenerator.CodeGeneratorAssemblies = gen1.dll, gen2.dll" + "\n" +
         "Entitas.CodeGenerator.TargetDirectory = path/to/folder/" + "\n" +
         "Entitas.CodeGenerator.Contexts = Core, Meta, UI" + "\n" +
-        "Entitas.CodeGenerator.DataProviders = DataProvider1, DataProvider2, DataProvider3" + "\n" +
+        "Entitas.CodeGenerator.DataProviders = DataProvider1,DataProvider2,DataProvider3" + "\n" +
         "Entitas.CodeGenerator.CodeGenerators = Generator1, Generator2, Generator3" + "\n" +
-        "Entitas.CodeGenerator.PostProcessors = PostProcessor1, PostProcessor2, PostProcessor3";
+        "Entitas.CodeGenerator.PostProcessors = PostProcessor1 , PostProcessor2 , PostProcessor3";
 
     void when_creating_config() {
 
@@ -81,14 +81,14 @@ class describe_CodeGeneratorConfig : nspec {
 
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = path/to/newProject/\n" +
-                "Entitas.CodeGenerator.AssemblyBasePaths = newBase1,newBase2\n" +
-                "Entitas.CodeGenerator.Assemblies = game.dll,physics.dll\n" +
-                "Entitas.CodeGenerator.CodeGeneratorAssemblies = myGen1.dll,myGen2.dll\n" +
+                "Entitas.CodeGenerator.AssemblyBasePaths = newBase1, newBase2\n" +
+                "Entitas.CodeGenerator.Assemblies = game.dll, physics.dll\n" +
+                "Entitas.CodeGenerator.CodeGeneratorAssemblies = myGen1.dll, myGen2.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = new/path/\n" +
-                "Entitas.CodeGenerator.Contexts = Other1,Other2\n" +
-                "Entitas.CodeGenerator.DataProviders = Data4,Data5\n" +
-                "Entitas.CodeGenerator.CodeGenerators = Generator4,Generator5\n" +
-                "Entitas.CodeGenerator.PostProcessors = Post4,Post5\n"
+                "Entitas.CodeGenerator.Contexts = Other1, Other2\n" +
+                "Entitas.CodeGenerator.DataProviders = Data4, Data5\n" +
+                "Entitas.CodeGenerator.CodeGenerators = Generator4, Generator5\n" +
+                "Entitas.CodeGenerator.PostProcessors = Post4, Post5\n"
             );
         };
 
@@ -96,57 +96,35 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
-                "Entitas.CodeGenerator.AssemblyBasePaths = /Applications/Unity/Unity.app/Contents/Managed,/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
+                "Entitas.CodeGenerator.AssemblyBasePaths = /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
                 "Entitas.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGenerator.CodeGeneratorAssemblies = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
-                "Entitas.CodeGenerator.Contexts = Game,GameState,Input\n" +
+                "Entitas.CodeGenerator.Contexts = Game, GameState, Input\n" +
                 "Entitas.CodeGenerator.DataProviders = \n" +
                 "Entitas.CodeGenerator.CodeGenerators = \n" +
                 "Entitas.CodeGenerator.PostProcessors = \n"
             );
         };
 
-        it["removes empty contexts"] = () => {
+        it["removes empty entries"] = () => {
             const string configString = "Entitas.CodeGenerator.Contexts = ,,Core,,UI,,";
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
             config.contexts.should_be(new [] { "Core", "UI" });
         };
 
-        it["removes empty enabled code generators"] = () => {
-            const string configString = "Entitas.CodeGenerator.CodeGenerators = ,,Gen1,,Gen2,,";
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
-            config.codeGenerators.should_be(new [] { "Gen1", "Gen2" });
-        };
-
-        it["removes trailing comma in contexts string"] = () => {
+        it["removes trailing comma"] = () => {
             var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
             config.contexts = new [] { "Meta", string.Empty };
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
-                "Entitas.CodeGenerator.AssemblyBasePaths = /Applications/Unity/Unity.app/Contents/Managed,/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
+                "Entitas.CodeGenerator.AssemblyBasePaths = /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
                 "Entitas.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGenerator.CodeGeneratorAssemblies = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
                 "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
                 "Entitas.CodeGenerator.Contexts = Meta\n" +
                 "Entitas.CodeGenerator.DataProviders = \n" +
                 "Entitas.CodeGenerator.CodeGenerators = \n" +
-                "Entitas.CodeGenerator.PostProcessors = \n"
-            );
-        };
-
-        it["removes trailing comma in enabled code generators string"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
-            config.codeGenerators = new [] { "Gen1", string.Empty };
-            config.ToString().should_be(
-                "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
-                "Entitas.CodeGenerator.AssemblyBasePaths = /Applications/Unity/Unity.app/Contents/Managed,/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
-                "Entitas.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
-                "Entitas.CodeGenerator.CodeGeneratorAssemblies = Library/ScriptAssemblies/Assembly-CSharp-Editor.dll\n" +
-                "Entitas.CodeGenerator.TargetDirectory = Assets/Generated/\n" +
-                "Entitas.CodeGenerator.Contexts = Game,GameState,Input\n" +
-                "Entitas.CodeGenerator.DataProviders = \n" +
-                "Entitas.CodeGenerator.CodeGenerators = Gen1\n" +
                 "Entitas.CodeGenerator.PostProcessors = \n"
             );
         };
