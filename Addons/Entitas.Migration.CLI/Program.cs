@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace Entitas.Migration.CLI {
@@ -6,8 +6,8 @@ namespace Entitas.Migration.CLI {
     class MainClass {
 
         public static void Main(string[] args) {
-
-            var allMigrations = TypeUtils.GetInstancesOf<IMigration>()
+            var allMigrations = AppDomain.CurrentDomain
+                                         .GetInstancesOf<IMigration>()
                                          .OrderBy(instance => instance.GetType().FullName)
                                          .ToArray();
 

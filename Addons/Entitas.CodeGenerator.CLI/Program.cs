@@ -84,7 +84,7 @@ namespace Entitas.CodeGenerator.CLI {
         }
 
         static void newConfig() {
-            var types = TypeUtils.GetAllTypes();
+            var types = AppDomain.CurrentDomain.GetAllTypes();
             var defaultConfig = new CodeGeneratorConfig(
                 new EntitasPreferencesConfig(string.Empty),
                 CodeGeneratorUtil.GetOrderedTypeNames<ICodeGeneratorDataProvider>(types).ToArray(),
@@ -193,7 +193,7 @@ namespace Entitas.CodeGenerator.CLI {
 
         static void printUnavailable(string[] names) {
             foreach(var name in names) {
-                _logger.Info("Unavailable " + name);
+                _logger.Warn("Unavailable " + name);
             }
         }
 

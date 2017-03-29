@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -21,7 +22,8 @@ namespace Entitas.Unity.Editor {
 
             _config = EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath());
 
-            _preferencesDrawers = TypeUtils.GetInstancesOf<IEntitasPreferencesDrawer>()
+            _preferencesDrawers = AppDomain.CurrentDomain
+                                           .GetInstancesOf<IEntitasPreferencesDrawer>()
                                            .OrderBy(drawer => drawer.priority)
                                            .ToArray();
 

@@ -77,7 +77,9 @@ namespace Entitas.Blueprints.Unity.Editor {
         }
 
         static IContext[] findAllContexts() {
-            var contextsType = TypeUtils.GetNonAbstractTypes<IContexts>().SingleOrDefault();
+            var contextsType = AppDomain.CurrentDomain
+                                        .GetNonAbstractTypes<IContexts>()
+                                        .SingleOrDefault();
             if(contextsType != null) {
                 var contexts = (IContexts)Activator.CreateInstance(contextsType);
                 return contexts.allContexts;

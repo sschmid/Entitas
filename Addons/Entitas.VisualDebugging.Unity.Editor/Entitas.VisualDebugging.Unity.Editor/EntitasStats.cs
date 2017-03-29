@@ -20,7 +20,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         public static Dictionary<string, int> GetStats() {
-            var types = TypeUtils.GetAllTypes();
+            var types = AppDomain.CurrentDomain.GetAllTypes();
             var components = types
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .ToArray();

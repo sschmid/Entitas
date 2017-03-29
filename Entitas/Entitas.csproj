@@ -99,7 +99,7 @@
     <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfo.cs" />
     <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfoEntityExtension.cs" />
     <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfoExtension.cs" />
-    <Compile Include="Entitas\Utils\TypeUtils.cs" />
+    <Compile Include="Entitas\Utils\AppDomainExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
