@@ -17,19 +17,21 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         const string CONTEXTS_TEMPLATE =
 @"public partial class Contexts {
 
-    public void CreateContextObserver(Entitas.IContext context) {
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+
+    public void CreateContextObserver(Entitas.IContext context) {
         if(UnityEngine.Application.isPlaying) {
             var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);
             UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
         }
-#endif
     }
 
     [Entitas.CodeGenerator.Attributes.PostConstructor]
     public void InitializeContexObservers() {
 ${contextObservers}
     }
+
+#endif
 }
 ";
 
