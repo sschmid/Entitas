@@ -23,7 +23,7 @@ namespace Entitas.CodeGenerator {
         }
 
         public void Load(string path) {
-            _logger.Debug("- AppDomain add: " + path);
+            _logger.Debug("AppDomain load: " + path);
             var assembly = _appDomain.Load(path);
             _assemblies.Add(assembly);
         }
