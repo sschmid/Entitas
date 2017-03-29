@@ -58,7 +58,7 @@ namespace Entitas.CodeGenerator {
             data.SetKeyType(info.type.ToCompilableString());
             data.SetComponentType(type.ToCompilableString());
             data.SetMemberName(info.name);
-            data.SetContextNames(ContextsComponentDataProvider.GetContextNames(type));
+            data.SetContextNames(ContextsComponentDataProvider.GetContextNamesOrDefault(type));
 
             return data;
         }

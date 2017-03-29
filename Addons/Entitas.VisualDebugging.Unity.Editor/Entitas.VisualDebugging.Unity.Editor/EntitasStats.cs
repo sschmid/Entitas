@@ -39,12 +39,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static Dictionary<string, int> getContexts(Type[] components) {
-            var defaultContext = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath())).contexts[0];
             return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {
-                var contextNames = ContextsComponentDataProvider.GetContextNames(type);
-                if(contextNames.Length == 0) {
-                    contextNames = new [] { defaultContext };
-                }
+                var contextNames = ContextsComponentDataProvider.GetContextNamesOrDefault(type);
                 foreach(var contextName in contextNames) {
                     if(!contexts.ContainsKey(contextName)) {
                         contexts.Add(contextName, 0);

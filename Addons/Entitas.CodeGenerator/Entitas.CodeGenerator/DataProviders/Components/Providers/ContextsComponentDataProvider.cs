@@ -7,17 +7,20 @@ namespace Entitas.CodeGenerator {
     public class ContextsComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
-            var contextNames = GetContextNames(type);
+            var contextNames = GetContextNamesOrDefault(type);
             data.SetContextNames(contextNames);
         }
 
         public static string[] GetContextNames(Type type) {
-            var contextNames = Attribute
+            return Attribute
                 .GetCustomAttributes(type)
                 .OfType<ContextAttribute>()
                 .Select(attr => attr.contextName)
                 .ToArray();
+        }
 
+        public static string[] GetContextNamesOrDefault(Type type) {
+            var contextNames = GetContextNames(type);
             if(contextNames.Length == 0) {
                 var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath()));
                 contextNames = new [] { config.contexts[0] };
