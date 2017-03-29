@@ -62,9 +62,9 @@ namespace Entitas.CodeGenerator.CLI {
 @"usage: entitas new [-f]     - Creates new Entitas.properties with default values
        entitas edit         - Opens Entitas.properties
        entitas doctor       - Checks the config for potential problems
-       entitas diff         - List of unused and invalid data providers, code generators and post processors
+       entitas diff         - Lists unused and invalid data providers, code generators and post processors
        entitas scan         - Scans and prints available types found in specified assemblies
-       entitas dry          - Simulates generating files without running post processors
+       entitas dry          - Simulates generating files without writing to disk
        entitas gen          - Generates files based on Entitas.properties
        [-v]                 - verbose output"
             );
@@ -79,7 +79,7 @@ namespace Entitas.CodeGenerator.CLI {
 
             var formatter = new ColorCodeFormatter();
             fabl.AddAppender((logger, logLevel, message) => {
-                Console.WriteLine(formatter.FormatMessage(logLevel, message));
+                Console.WriteLine(formatter.FormatMessage(logger, logLevel, message));
             });
         }
 
