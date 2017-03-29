@@ -12,6 +12,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 #else
         public bool isEnabledByDefault { get { return false; } }
 #endif
+        public bool runInDryMode { get { return true; } }
 
         const string CONTEXTS_TEMPLATE =
 @"public partial class Contexts {

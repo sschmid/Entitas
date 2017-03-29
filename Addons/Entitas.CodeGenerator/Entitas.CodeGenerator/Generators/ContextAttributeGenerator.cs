@@ -8,6 +8,7 @@ namespace Entitas.CodeGenerator {
         public string name { get { return "Context Attribute"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         const string ATTRIBUTE_TEMPLATE =
 @"public sealed class ${ContextName}Attribute : Entitas.CodeGenerator.Attributes.ContextAttribute {

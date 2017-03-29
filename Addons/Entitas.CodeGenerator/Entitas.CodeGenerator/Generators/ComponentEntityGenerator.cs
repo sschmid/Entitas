@@ -8,6 +8,7 @@ namespace Entitas.CodeGenerator {
         public string name { get { return "Component (Entity API)"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         const string STANDARD_COMPONENT_TEMPLATE =
 @"public partial class ${ContextName}Entity {

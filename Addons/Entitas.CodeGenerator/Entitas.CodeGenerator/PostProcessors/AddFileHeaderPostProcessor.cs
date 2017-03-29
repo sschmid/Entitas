@@ -5,6 +5,7 @@ namespace Entitas.CodeGenerator {
         public string name { get { return "Add file header"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         public const string AUTO_GENERATED_HEADER_FORMAT =
 @"//------------------------------------------------------------------------------

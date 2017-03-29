@@ -9,6 +9,7 @@ namespace Entitas.CodeGenerator {
         public string name { get { return "Components Lookup"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         public const string COMPONENTS_LOOKUP = "ComponentsLookup";
 

@@ -7,6 +7,7 @@ namespace Entitas.CodeGenerator {
         public override string name { get { return "Component"; } }
         public override int priority { get { return 0; } }
         public override bool isEnabledByDefault { get { return true; } }
+        public override bool runInDryMode { get { return true; } }
 
         public ComponentDataProvider() : this(null) {
         }

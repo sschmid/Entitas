@@ -8,6 +8,7 @@ namespace Entitas.Blueprints.Unity.Editor {
         public string name { get { return "Blueprint"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         const string CLASS_TEMPLATE =
 @"using Entitas.Blueprints;

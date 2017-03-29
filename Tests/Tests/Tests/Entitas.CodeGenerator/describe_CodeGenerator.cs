@@ -21,7 +21,7 @@ class describe_CodeGenerator : nspec {
             files[1].fileName.should_be("FileName1-Approved!");
         };
 
-        it["performs a dry run (no post processors)"] = () => {
+        it["performs a dry run"] = () => {
             var generator = new CodeGenerator(
                 new [] { new TestDataProvider() },
                 new [] { new TestCodeGenerator() },
@@ -138,6 +138,7 @@ public class TestDataProvider : ICodeGeneratorDataProvider {
     public string name { get { return ""; } }
     public int priority { get { return 0; } }
     public bool isEnabledByDefault { get { return true; } }
+    public bool runInDryMode { get { return true; } }
 
     public CodeGeneratorData[] GetData() {
         var data1 = new CodeGeneratorData();
@@ -158,6 +159,7 @@ public class TestCodeGenerator : ICodeGenerator {
     public string name { get { return ""; } }
     public int priority { get { return 0; } }
     public bool isEnabledByDefault { get { return true; } }
+    public bool runInDryMode { get { return true; } }
 
     public CodeGenFile[] Generate(CodeGeneratorData[] data) {
         return data
@@ -174,6 +176,7 @@ public class TestPostProcessor : ICodeGenFilePostProcessor {
     public string name { get { return ""; } }
     public int priority { get { return 10; } }
     public bool isEnabledByDefault { get { return true; } }
+    public bool runInDryMode { get { return false; } }
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
         foreach(var file in files) {
@@ -189,6 +192,7 @@ public class Test2PostProcessor : ICodeGenFilePostProcessor {
     public string name { get { return ""; } }
     public int priority { get { return 0; } }
     public bool isEnabledByDefault { get { return true; } }
+    public bool runInDryMode { get { return true; } }
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
         foreach(var file in files) {
@@ -202,8 +206,9 @@ public class Test2PostProcessor : ICodeGenFilePostProcessor {
 public class Test3PostProcessor : ICodeGenFilePostProcessor {
 
     public string name { get { return ""; } }
-    public bool isEnabledByDefault { get { return true; } }
     public int priority { get { return 0; } }
+    public bool isEnabledByDefault { get { return true; } }
+    public bool runInDryMode { get { return true; } }
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
         return new [] { files[0] };

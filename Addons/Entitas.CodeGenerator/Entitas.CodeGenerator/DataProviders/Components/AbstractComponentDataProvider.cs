@@ -9,6 +9,7 @@ namespace Entitas.CodeGenerator {
         public abstract string name { get; }
         public abstract int priority { get; }
         public abstract bool isEnabledByDefault { get; }
+        public abstract bool runInDryMode { get; }
 
         Type[] _types;
         IComponentDataProvider[] _dataProviders;

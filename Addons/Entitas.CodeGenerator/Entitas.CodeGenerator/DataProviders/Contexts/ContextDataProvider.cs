@@ -7,6 +7,7 @@ namespace Entitas.CodeGenerator {
         public string name { get { return "Context"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         string[] _contextNames;
 

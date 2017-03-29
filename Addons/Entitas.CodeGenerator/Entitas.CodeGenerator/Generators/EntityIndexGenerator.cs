@@ -8,6 +8,7 @@ namespace Entitas.CodeGenerator {
         public string name { get { return "Entity Index"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         const string CLASS_TEMPLATE =
 @"public partial class Contexts {
