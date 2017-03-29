@@ -62,9 +62,16 @@ namespace Entitas.CodeGenerator {
         }
 
         public Type[] GetTypes() {
-            return _assemblies
-                .SelectMany(assembly => assembly.GetTypes())
-                .ToArray();
+            var types = new List<Type>();
+            foreach(var assembly in _assemblies) {
+                try {
+                    types.AddRange(assembly.GetTypes());
+                } catch(ReflectionTypeLoadException ex) {
+                    types.AddRange(ex.Types.Where(type => type != null));
+                }
+            }
+
+            return types.ToArray();
         }
     }
 }
