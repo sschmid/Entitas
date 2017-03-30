@@ -11,7 +11,7 @@ namespace Entitas.CodeGenerator {
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {
-                Console.WriteLine(file.generatorName + ": " + file.fileName);
+                Console.WriteLine(file.fileName + " - " + file.generatorName);
             }
 
             return files;

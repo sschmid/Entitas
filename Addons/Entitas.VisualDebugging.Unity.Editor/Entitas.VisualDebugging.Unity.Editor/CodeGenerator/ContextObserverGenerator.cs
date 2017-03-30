@@ -19,16 +19,16 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
+    [Entitas.CodeGenerator.Attributes.PostConstructor]
+    public void InitializeContexObservers() {
+${contextObservers}
+    }
+
     public void CreateContextObserver(Entitas.IContext context) {
         if(UnityEngine.Application.isPlaying) {
             var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);
             UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
         }
-    }
-
-    [Entitas.CodeGenerator.Attributes.PostConstructor]
-    public void InitializeContexObservers() {
-${contextObservers}
     }
 
 #endif

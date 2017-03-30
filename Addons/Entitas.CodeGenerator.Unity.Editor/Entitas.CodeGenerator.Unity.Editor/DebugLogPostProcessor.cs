@@ -11,7 +11,7 @@ namespace Entitas.CodeGenerator.Unity.Editor {
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {
-                Debug.Log(file.generatorName + ": " + file.fileName);
+                Debug.Log(file.fileName + " - " + file.generatorName);
             }
 
             return files;

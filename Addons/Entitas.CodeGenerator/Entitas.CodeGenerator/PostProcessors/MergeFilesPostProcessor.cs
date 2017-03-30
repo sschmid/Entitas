@@ -18,6 +18,7 @@ namespace Entitas.CodeGenerator {
                     pathToFile.Add(file.fileName, file);
                 } else {
                     pathToFile[file.fileName].fileContent += "\n" + file.fileContent;
+                    pathToFile[file.fileName].generatorName += ", " + file.generatorName;
                     files[i] = null;
                 }
             }
