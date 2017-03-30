@@ -1,22 +1,13 @@
-﻿using System;
+using System;
 using System.Linq;
-using Entitas.CodeGenerator.Api;
+using Entitas.CodeGenerator.Attributes;
 
 namespace Entitas.CodeGenerator {
 
     public class ContextsComponentDataProvider : IComponentDataProvider {
 
-        readonly string _defaultContextName;
-
-        public ContextsComponentDataProvider(string defaultContextName) {
-            _defaultContextName = defaultContextName;
-        }
-
         public void Provide(Type type, ComponentData data) {
-            var contextNames = GetContextNames(type);
-            if(contextNames.Length == 0) {
-                contextNames = new [] { _defaultContextName };
-            }
+            var contextNames = GetContextNamesOrDefault(type);
             data.SetContextNames(contextNames);
         }
 
@@ -26,6 +17,16 @@ namespace Entitas.CodeGenerator {
                 .OfType<ContextAttribute>()
                 .Select(attr => attr.contextName)
                 .ToArray();
+        }
+
+        public static string[] GetContextNamesOrDefault(Type type) {
+            var contextNames = GetContextNames(type);
+            if(contextNames.Length == 0) {
+                var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath()));
+                contextNames = new [] { config.contexts[0] };
+            }
+
+            return contextNames;
         }
     }
 

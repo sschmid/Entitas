@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Entitas;
-using Entitas.CodeGenerator.Api;
+using Entitas.CodeGenerator.Attributes;
 
 namespace MyNamespace {
 

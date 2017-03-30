@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class Test2Attribute : Entitas.CodeGenerator.Api.ContextAttribute {
+public sealed class Test2Attribute : Entitas.CodeGenerator.Attributes.ContextAttribute {
 
     public Test2Attribute() : base("Test2") {
     }

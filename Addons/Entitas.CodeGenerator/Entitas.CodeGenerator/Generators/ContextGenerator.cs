@@ -6,7 +6,9 @@ namespace Entitas.CodeGenerator {
     public class ContextGenerator : ICodeGenerator {
 
         public string name { get { return "Context"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         const string CONTEXT_TEMPLATE =
 @"public sealed partial class ${ContextName}Context : Entitas.Context<${ContextName}Entity> {

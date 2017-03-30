@@ -27,60 +27,39 @@ namespace Entitas.CodeGenerator {
         }
 
         public CodeGenFile[] DryRun() {
-            _cancel = false;
-
-            var data = new List<CodeGeneratorData>();
-
-            var total = _dataProviders.Length + _codeGenerators.Length;
-            int progress = 0;
-
-            foreach(var dataProvider in _dataProviders) {
-                if(_cancel) {
-                    return new CodeGenFile[0];
-                }
-
-                progress += 1;
-                if(OnProgress != null) {
-                    OnProgress("[Dry Run] Creating model", dataProvider.name, (float)progress / total);
-                }
-
-                data.AddRange(dataProvider.GetData());
-            }
-
-            var files = new List<CodeGenFile>();
-            var dataArray = data.ToArray();
-            foreach(var generator in _codeGenerators) {
-                if(_cancel) {
-                    return new CodeGenFile[0];
-                }
-
-                progress += 1;
-                if(OnProgress != null) {
-                    OnProgress("[Dry Run] Creating files", generator.name, (float)progress / total);
-                }
-
-                files.AddRange(generator.Generate(dataArray));
-            }
-
-            return files.ToArray();
+            return generate(
+                "[Dry Run] ",
+                _dataProviders.Where(i => i.runInDryMode).ToArray(),
+                _codeGenerators.Where(i => i.runInDryMode).ToArray(),
+                _postProcessors.Where(i => i.runInDryMode).ToArray()
+            );
         }
 
         public CodeGenFile[] Generate() {
+            return generate(
+                string.Empty,
+                _dataProviders,
+                _codeGenerators,
+                _postProcessors
+            );
+        }
+
+        CodeGenFile[] generate(string messagePrefix, ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
             _cancel = false;
 
             var data = new List<CodeGeneratorData>();
 
-            var total = _dataProviders.Length + _codeGenerators.Length + _postProcessors.Length;
+            var total = dataProviders.Length + codeGenerators.Length + postProcessors.Length;
             int progress = 0;
 
-            foreach(var dataProvider in _dataProviders) {
+            foreach(var dataProvider in dataProviders) {
                 if(_cancel) {
                     return new CodeGenFile[0];
                 }
 
                 progress += 1;
                 if(OnProgress != null) {
-                    OnProgress("Creating model", dataProvider.name, (float)progress / total);
+                    OnProgress(messagePrefix + "Creating model", dataProvider.name, (float)progress / total);
                 }
 
                 data.AddRange(dataProvider.GetData());
@@ -88,28 +67,28 @@ namespace Entitas.CodeGenerator {
 
             var files = new List<CodeGenFile>();
             var dataArray = data.ToArray();
-            foreach(var generator in _codeGenerators) {
+            foreach(var generator in codeGenerators) {
                 if(_cancel) {
                     return new CodeGenFile[0];
                 }
 
                 progress += 1;
                 if(OnProgress != null) {
-                    OnProgress("Creating files", generator.name, (float)progress / total);
+                    OnProgress(messagePrefix + "Creating files", generator.name, (float)progress / total);
                 }
 
                 files.AddRange(generator.Generate(dataArray));
             }
 
             var generatedFiles = files.ToArray();
-            foreach(var postProcessor in _postProcessors) {
+            foreach(var postProcessor in postProcessors) {
                 if(_cancel) {
                     return new CodeGenFile[0];
                 }
 
                 progress += 1;
                 if(OnProgress != null) {
-                    OnProgress("Processing files", postProcessor.name, (float)progress / total);
+                    OnProgress(messagePrefix + "Processing files", postProcessor.name, (float)progress / total);
                 }
 
                 generatedFiles = postProcessor.PostProcess(generatedFiles);

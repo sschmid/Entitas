@@ -29,9 +29,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEngine">
-      <HintPath>Libraries\UnityEngine.dll</HintPath>
-    </Reference>
     <Reference Include="NSpec">
       <HintPath>Libraries\NSpec.dll</HintPath>
     </Reference>
@@ -40,6 +37,9 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Libraries\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\Addons\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -88,28 +88,13 @@
     <Compile Include="Tests\Entitas.Migration\describe_M0360_1.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0360_2.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
-    <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_SystemInfo.cs" />
-    <Compile Include="Tests\Entitas.Unity.VisualDebugging\describe_VisualDebuggingConfig.cs" />
-    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestCleanupSystem.cs" />
-    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestExecuteSystem.cs" />
-    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestInitializeSystem.cs" />
-    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestReactiveSystem.cs" />
-    <Compile Include="Tests\Entitas.Unity.VisualDebugging\Fixtures\TestTearDownSystem.cs" />
-    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystems.cs">
-      <Link>Linked Libraries\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystems.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs">
-      <Link>Linked Libraries\Entitas.Unity.VisualDebugging\DebugSystems\DebugSystemsBehaviour.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\Feature.cs">
-      <Link>Linked Libraries\Entitas.Unity.VisualDebugging\DebugSystems\Feature.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs">
-      <Link>Linked Libraries\Entitas.Unity.VisualDebugging\DebugSystems\SystemInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Addons\Entitas.Unity.VisualDebugging\Assets\Entitas.Unity.VisualDebugging\Editor\VisualDebuggingConfig.cs">
-      <Link>Linked Libraries\Entitas.Unity.VisualDebugging\Editor\VisualDebuggingConfig.cs</Link>
-    </Compile>
+    <Compile Include="Tests\Entitas.VisualDebugging.Unity\describe_SystemInfo.cs" />
+    <Compile Include="Tests\Entitas.VisualDebugging.Unity\describe_VisualDebuggingConfig.cs" />
+    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestCleanupSystem.cs" />
+    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestExecuteSystem.cs" />
+    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestInitializeSystem.cs" />
+    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestReactiveSystem.cs" />
+    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestTearDownSystem.cs" />
     <Compile Include="Tests\Entitas\describe_ContextInfo.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasException.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_EntityIndexDataProvider.cs" />
@@ -120,30 +105,34 @@
     <Compile Include="Tests\Entitas\Extensions\describe_InterfaceTypeExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_TypeSerializationExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_SystemStringExtension.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_DependencyResolver.cs" />
+    <Compile Include="Tests\Entitas\describe_EntitasResources.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Tests\" />
     <Folder Include="Libraries\" />
-    <Folder Include="Linked Libraries\" />
     <Folder Include="Fixtures\" />
     <Folder Include="Fixtures\Systems\" />
     <Folder Include="Tests\Entitas\" />
     <Folder Include="Tests\Entitas.CodeGenerator\" />
     <Folder Include="Tests\Entitas.Utils\" />
     <Folder Include="Tests\Entitas.Migration\" />
-    <Folder Include="Tests\Entitas.Unity.VisualDebugging\" />
+    <Folder Include="Tests\Entitas.VisualDebugging.Unity\" />
     <Folder Include="Tests\Entitas.CodeGenerator\CodeGenerators\" />
     <Folder Include="Tests\Entitas\Extensions\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Libraries\UnityEngine.dll" />
     <None Include="Libraries\NSpec.dll" />
     <None Include="Libraries\NSpecRunner.dll" />
     <None Include="Libraries\nunit.framework.dll" />
     <None Include="Entitas.properties" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tests.Fixtures\Tests.Fixtures.csproj">
+      <Project>{6F01CC45-F951-43A5-923E-D3778F9DD435}</Project>
+      <Name>Tests.Fixtures</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
@@ -156,17 +145,17 @@
       <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
       <Name>Entitas.CodeGenerator</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGenerator.Attributes\Entitas.CodeGenerator.Attributes.csproj">
       <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
-      <Name>Entitas.CodeGenerator.Api</Name>
+      <Name>Entitas.CodeGenerator.Attributes</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.Migration\Entitas.Migration.csproj">
       <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
       <Name>Entitas.Migration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Tests.Fixtures\Tests.Fixtures.csproj">
-      <Project>{6F01CC45-F951-43A5-923E-D3778F9DD435}</Project>
-      <Name>Tests.Fixtures</Name>
+    <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj">
+      <Project>{70222463-4E60-4862-8C18-1EBA6CA63353}</Project>
+      <Name>Entitas.VisualDebugging.Unity</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Readme</RootNamespace>
     <AssemblyName>Readme</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,7 +30,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
-      <HintPath>..\Tests\Tests\Libraries\UnityEngine.dll</HintPath>
+      <HintPath>..\Addons\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -56,20 +56,20 @@
     <Compile Include="Readme\Generated\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Addons\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
-      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
-      <Name>Entitas.CodeGenerator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Addons\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
-      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
-      <Name>Entitas.CodeGenerator.Api</Name>
-    </ProjectReference>
+    <None Include="Entitas.properties" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Entitas.properties" />
+    <ProjectReference Include="..\Addons\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
+      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
+      <Name>Entitas.CodeGenerator</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Addons\Entitas.CodeGenerator.Attributes\Entitas.CodeGenerator.Attributes.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGenerator.Attributes</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

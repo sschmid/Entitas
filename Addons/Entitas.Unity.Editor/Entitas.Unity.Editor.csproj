@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9AF72B25-85B0-4FDC-85C3-660926C82438}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Entitas.Unity.Editor</RootNamespace>
+    <AssemblyName>Entitas.Unity.Editor</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="UnityEditor">
+      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entitas.Unity.Editor\GUI\AbstractEntitasPreferencesDrawer.cs" />
+    <Compile Include="Entitas.Unity.Editor\GUI\EntitasPreferencesWindow.cs" />
+    <Compile Include="Entitas.Unity.Editor\GUI\EntitasStyles.cs" />
+    <Compile Include="Entitas.Unity.Editor\GUI\IEntitasPreferencesDrawer.cs" />
+    <Compile Include="Entitas.Unity.Editor\GUI\Layout\EditorWindow.cs" />
+    <Compile Include="Entitas.Unity.Editor\GUI\Layout\GUI.cs" />
+    <Compile Include="Entitas.Unity.Editor\GUI\Layout\Layout.cs" />
+    <Compile Include="Entitas.Unity.Editor\Menu\EntitasCheckForUpdates.cs" />
+    <Compile Include="Entitas.Unity.Editor\Menu\EntitasMenuItems.cs" />
+    <Compile Include="Entitas.Unity.Editor\EntitasPreferencesDrawer.cs" />
+    <Compile Include="Entitas.Unity.Editor\ScriptingDefineSymbols.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas.Unity.Editor\GUI\" />
+    <Folder Include="Entitas.Unity.Editor\Menu\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

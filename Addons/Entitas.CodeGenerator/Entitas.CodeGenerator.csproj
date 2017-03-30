@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Entitas.CodeGenerator</RootNamespace>
     <AssemblyName>Entitas.CodeGenerator</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -29,6 +29,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="fabl">
+      <HintPath>..\Libraries\fabl.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entitas.CodeGenerator\DataProviders\CodeGeneratorData.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="Entitas.CodeGenerator\Generators\EntityIndexGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\PostProcessors\ConsoleWriteLinePostProcessor.cs" />
     <Compile Include="Entitas.CodeGenerator\CodeGeneratorUtil.cs" />
+    <Compile Include="Entitas.CodeGenerator\DependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGenerator\" />
@@ -85,13 +89,13 @@
     <Folder Include="Entitas.CodeGenerator\DataProviders\EntityIndex\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGenerator.Api\Entitas.CodeGenerator.Api.csproj">
-      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
-      <Name>Entitas.CodeGenerator.Api</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGenerator.Attributes\Entitas.CodeGenerator.Attributes.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGenerator.Attributes</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

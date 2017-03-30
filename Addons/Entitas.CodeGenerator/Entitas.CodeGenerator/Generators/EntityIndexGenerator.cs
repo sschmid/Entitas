@@ -6,14 +6,16 @@ namespace Entitas.CodeGenerator {
     public class EntityIndexGenerator : ICodeGenerator {
 
         public string name { get { return "Entity Index"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         const string CLASS_TEMPLATE =
 @"public partial class Contexts {
 
 ${indexConstants}
 
-    [Entitas.CodeGenerator.Api.PostConstructor]
+    [Entitas.CodeGenerator.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
 ${addIndices}
     }

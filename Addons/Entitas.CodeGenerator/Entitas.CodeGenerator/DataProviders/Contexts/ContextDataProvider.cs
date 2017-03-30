@@ -5,11 +5,13 @@ namespace Entitas.CodeGenerator {
     public class ContextDataProvider : ICodeGeneratorDataProvider {
 
         public string name { get { return "Context"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
-        readonly string[] _contextNames;
+        string[] _contextNames;
 
-        public ContextDataProvider() : this(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).contexts) {
+        public ContextDataProvider() : this(null) {
         }
 
         public ContextDataProvider(string[] contextNames) {
@@ -17,6 +19,11 @@ namespace Entitas.CodeGenerator {
         }
 
         public CodeGeneratorData[] GetData() {
+            if(_contextNames == null) {
+                var config = new CodeGeneratorConfig(EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath()));
+                _contextNames = config.contexts;
+            }
+
             return _contextNames
                 .Select(contextName => {
                     var data = new ContextData();

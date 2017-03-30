@@ -6,12 +6,13 @@ namespace Entitas.CodeGenerator {
     public class WriteToDiskPostProcessor : ICodeGenFilePostProcessor {
 
         public string name { get { return "Write to disk"; } }
-        public bool isEnabledByDefault { get { return true; } }
         public int priority { get { return 100; } }
+        public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return false; } }
 
         readonly string _directory;
 
-        public WriteToDiskPostProcessor() : this(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).targetDirectory) {
+        public WriteToDiskPostProcessor() : this(new CodeGeneratorConfig(EntitasPreferences.LoadConfig(EntitasPreferences.GetConfigPath())).targetDirectory) {
         }
 
         public WriteToDiskPostProcessor(string directory) {

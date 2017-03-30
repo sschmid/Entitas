@@ -34,7 +34,7 @@ public partial class Contexts : Entitas.IContexts {
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
-            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGenerator.Api.PostConstructorAttribute))
+            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGenerator.Attributes.PostConstructorAttribute))
         );
 
         foreach(var postConstructor in postConstructors) {
@@ -64,7 +64,7 @@ public partial class Contexts {
     public const string PrimaryEntityIndex = "PrimaryEntityIndex";
     public const string MyNamespaceCustomEntityIndex = "MyNamespaceCustomEntityIndex";
 
-    [Entitas.CodeGenerator.Api.PostConstructor]
+    [Entitas.CodeGenerator.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
         test.AddEntityIndex(new Entitas.EntityIndex<TestEntity, string>(
             MyNamespaceEntityIndex,

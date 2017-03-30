@@ -7,7 +7,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Entitas</RootNamespace>
     <AssemblyName>Entitas</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -67,15 +67,6 @@
     <Compile Include="Entitas\EntitasCache.cs" />
     <Compile Include="Entitas\Context\ContextInfo.cs" />
     <Compile Include="Entitas\EntitasException.cs" />
-    <Compile Include="Entitas\Utils\Caching\ObjectCache.cs" />
-    <Compile Include="Entitas\Utils\Caching\ObjectPool.cs" />
-    <Compile Include="Entitas\Utils\Configuration\EntitasPreferences.cs" />
-    <Compile Include="Entitas\Utils\Configuration\EntitasPreferencesConfig.cs" />
-    <Compile Include="Entitas\Utils\Configuration\Properties.cs" />
-    <Compile Include="Entitas\Utils\PublicMemberInfo\AttributeInfo.cs" />
-    <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfo.cs" />
-    <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfoEntityExtension.cs" />
-    <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfoExtension.cs" />
     <Compile Include="Entitas\Extensions\ComponentStringExtension.cs" />
     <Compile Include="Entitas\Extensions\InterfaceTypeExtension.cs" />
     <Compile Include="Entitas\Extensions\TypeSerializationExtension.cs" />
@@ -98,6 +89,17 @@
     <Compile Include="Entitas\Group\IGroup.cs" />
     <Compile Include="Entitas\Extensions\ContextStringExtension.cs" />
     <Compile Include="Entitas\Extensions\SystemStringExtension.cs" />
+    <Compile Include="Entitas\EntitasResources.cs" />
+    <Compile Include="Entitas\Utils\Caching\ObjectCache.cs" />
+    <Compile Include="Entitas\Utils\Caching\ObjectPool.cs" />
+    <Compile Include="Entitas\Utils\Configuration\EntitasPreferences.cs" />
+    <Compile Include="Entitas\Utils\Configuration\EntitasPreferencesConfig.cs" />
+    <Compile Include="Entitas\Utils\Configuration\Properties.cs" />
+    <Compile Include="Entitas\Utils\PublicMemberInfo\AttributeInfo.cs" />
+    <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfo.cs" />
+    <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfoEntityExtension.cs" />
+    <Compile Include="Entitas\Utils\PublicMemberInfo\PublicMemberInfoExtension.cs" />
+    <Compile Include="Entitas\Utils\AppDomainExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -113,11 +115,16 @@
     <Folder Include="Entitas\Entity\Exceptions\" />
     <Folder Include="Entitas\Collector\" />
     <Folder Include="Entitas\Utils\" />
-    <Folder Include="Entitas\Utils\Caching\" />
-    <Folder Include="Entitas\Utils\Configuration\" />
-    <Folder Include="Entitas\Utils\PublicMemberInfo\" />
     <Folder Include="Entitas\Matcher\Interfaces\" />
     <Folder Include="Entitas\Systems\Interfaces\" />
     <Folder Include="Entitas\Context\Interfaces\" />
+    <Folder Include="Entitas\Utils\Caching\" />
+    <Folder Include="Entitas\Utils\Configuration\" />
+    <Folder Include="Entitas\Utils\PublicMemberInfo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Entitas\version">
+      <LogicalName>version</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

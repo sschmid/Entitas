@@ -30,22 +30,22 @@ Build/*
 Build/deploy/Entitas-CSharp
 Build/deploy/Entitas-Unity
 
-Addons/Entitas.Unity/Entitas.Unity.sln
-Addons/Entitas.Unity/Assets/Libraries
-Addons/Entitas.Unity/Assets/Libraries.meta
+Addons/Tests/Entitas.Unity/Entitas.Unity.sln
+Addons/Tests/Entitas.Unity/Assets/Libraries
+Addons/Tests/Entitas.Unity/Assets/Libraries.meta
 
-Addons/Entitas.Unity.CodeGenerator/Entitas.Unity.CodeGenerator.sln
-Addons/Entitas.Unity.CodeGenerator/Assets/Libraries
-Addons/Entitas.Unity.CodeGenerator/Assets/Libraries.meta
+Addons/Tests/Entitas.CodeGenerator.Unity/Entitas.CodeGenerator.Unity.sln
+Addons/Tests/Entitas.CodeGenerator.Unity/Assets/Libraries
+Addons/Tests/Entitas.CodeGenerator.Unity/Assets/Libraries.meta
 
-Addons/Entitas.Unity.Blueprints/Entitas.Unity.Blueprints.sln
-Addons/Entitas.Unity.Blueprints/Assets/Libraries
-Addons/Entitas.Unity.Blueprints/Assets/Libraries.meta
+Addons/Tests/Entitas.Blueprints.Unity/Entitas.Blueprints.Unity.sln
+Addons/Tests/Entitas.Blueprints.Unity/Assets/Libraries
+Addons/Tests/Entitas.Blueprints.Unity/Assets/Libraries.meta
 
-Addons/Entitas.Unity.Migration/Entitas.Unity.Migration.sln
-Addons/Entitas.Unity.Migration/Assets/Libraries
-Addons/Entitas.Unity.Migration/Assets/Libraries.meta
+Addons/Tests/Entitas.Migration.Unity/Entitas.Migration.Unity.sln
+Addons/Tests/Entitas.Migration.Unity/Assets/Libraries
+Addons/Tests/Entitas.Migration.Unity/Assets/Libraries.meta
 
-Addons/Entitas.Unity.VisualDebugging/Entitas.Unity.VisualDebugging.sln
-Addons/Entitas.Unity.VisualDebugging/Assets/Libraries
-Addons/Entitas.Unity.VisualDebugging/Assets/Libraries.meta
+Addons/Tests/Entitas.VisualDebugging.Unity/Entitas.VisualDebugging.Unity.sln
+Addons/Tests/Entitas.VisualDebugging.Unity/Assets/Libraries
+Addons/Tests/Entitas.VisualDebugging.Unity/Assets/Libraries.meta

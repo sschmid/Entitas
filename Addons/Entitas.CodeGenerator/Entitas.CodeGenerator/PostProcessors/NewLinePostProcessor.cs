@@ -5,8 +5,9 @@ namespace Entitas.CodeGenerator {
     public class NewLinePostProcessor : ICodeGenFilePostProcessor {
 
         public string name { get { return "Convert newlines"; } }
-        public bool isEnabledByDefault { get { return true; } }
         public int priority { get { return 90; } }
+        public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {

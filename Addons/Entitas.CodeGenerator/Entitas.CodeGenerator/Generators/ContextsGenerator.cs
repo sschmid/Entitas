@@ -5,7 +5,9 @@ namespace Entitas.CodeGenerator {
     public class ContextsGenerator : ICodeGenerator {
 
         public string name { get { return "Contexts"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         const string CONTEXTS_TEMPLATE =
 @"public partial class Contexts : Entitas.IContexts {
@@ -32,7 +34,7 @@ ${contextAssignments}
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
-            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGenerator.Api.PostConstructorAttribute))
+            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGenerator.Attributes.PostConstructorAttribute))
         );
 
         foreach(var postConstructor in postConstructors) {

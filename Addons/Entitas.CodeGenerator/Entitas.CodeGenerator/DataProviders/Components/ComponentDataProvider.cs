@@ -1,30 +1,26 @@
 using System;
-using System.Reflection;
 
 namespace Entitas.CodeGenerator {
 
     public class ComponentDataProvider : AbstractComponentDataProvider {
 
         public override string name { get { return "Component"; } }
+        public override int priority { get { return 0; } }
         public override bool isEnabledByDefault { get { return true; } }
+        public override bool runInDryMode { get { return true; } }
 
-        public ComponentDataProvider()
-            : this(Assembly.LoadFrom(new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).assemblyPath).GetTypes()) {
+        public ComponentDataProvider() : this(null) {
         }
-        
+
         public ComponentDataProvider(Type[] types)
-            : this(types, new CodeGeneratorConfig(EntitasPreferences.LoadConfig()).contexts[0]) {
+            : base(types, getComponentDataProviders()) {
         }
 
-        public ComponentDataProvider(Type[] types, string defaultContextName)
-            : base(getComponentDataProviders(defaultContextName), types) {
-        }
-
-        static IComponentDataProvider[] getComponentDataProviders(string defaultContextName) {
+        static IComponentDataProvider[] getComponentDataProviders() {
             return new IComponentDataProvider[] {
                 new ComponentTypeComponentDataProvider(),
                 new MemberDataComponentDataProvider(),
-                new ContextsComponentDataProvider(defaultContextName),
+                new ContextsComponentDataProvider(),
                 new IsUniqueComponentDataProvider(),
                 new UniquePrefixComponentDataProvider(),
                 new ShouldGenerateComponentComponentDataProvider(),

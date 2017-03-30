@@ -6,7 +6,9 @@ namespace Entitas.CodeGenerator {
     public class ComponentGenerator : ICodeGenerator {
 
         public string name { get { return "Component"; } }
+        public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
 
         const string COMPONENT_TEMPLATE =
 @"${Contexts}${Unique}
@@ -26,7 +28,7 @@ public sealed partial class ${FullComponentName} : Entitas.IComponent {
         CodeGenFile generateComponentClass(ComponentData data) {
             var fullComponentName = data.GetFullTypeName().RemoveDots();
             var contexts = string.Join(", ", data.GetContextNames());
-            var unique = data.IsUnique() ? "[Entitas.CodeGenerator.Api.UniqueAttribute]" : string.Empty;
+            var unique = data.IsUnique() ? "[Entitas.CodeGenerator.Attributes.UniqueAttribute]" : string.Empty;
             if(!string.IsNullOrEmpty(contexts)) {
                 contexts = "[" + contexts + "]";
             }

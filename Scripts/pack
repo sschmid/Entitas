@@ -2,57 +2,87 @@
 echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
-${SCRIPTS}/build
+${SCRIPTS}/update
 ${SCRIPTS}/test
 ${SCRIPTS}/docs
 
 # collect
-cp -v "${ADDONS}/${MIG}/bin/Release/Entitas.Migration.exe" "${BUILD_SRC}/MigrationAssistant.exe"
-cp -v "${ROOT}/README.md" "$BUILD_SRC/README.md"
-cp -v "${ROOT}/RELEASE_NOTES.md" "$BUILD_SRC/RELEASE_NOTES.md"
-cp -v "${ROOT}/EntitasUpgradeGuide.md" "$BUILD_SRC/EntitasUpgradeGuide.md"
-cp -v "${ROOT}/LICENSE.txt" "$BUILD_SRC/LICENSE.txt"
+COLLECTED_DIR="${BUILD_SRC}/files"
+mkdir $COLLECTED_DIR
+cp -v "${ROOT}/README.md" "$COLLECTED_DIR/README.md"
+cp -v "${ROOT}/RELEASE_NOTES.md" "$COLLECTED_DIR/RELEASE_NOTES.md"
+cp -v "${ROOT}/EntitasUpgradeGuide.md" "$COLLECTED_DIR/EntitasUpgradeGuide.md"
+cp -v "${ROOT}/LICENSE.txt" "$COLLECTED_DIR/LICENSE.txt"
 
 TMP_DIR="${BUILD}/tmp"
-TMP_ADDONS="${TMP_DIR}/Addons"
+TMP_ENTITAS="${TMP_DIR}/Entitas"
 
-# create c# zip
-mkdir $TMP_DIR $TMP_ADDONS
-cp -r "${BUILD_SRC}/${ES}" $TMP_DIR
-cp -r "${BUILD_SRC}/${BP}" $TMP_ADDONS
-cp -r "${BUILD_SRC}/${CG}" $TMP_ADDONS
-cp -r "${BUILD_SRC}/${CGA}" $TMP_ADDONS
-cp -r "${BUILD_SRC}/${MIG}" $TMP_ADDONS
-cp "${BUILD_SRC}/"* $TMP_DIR || true
+# create c# zip ------------------------------------------------------------
+mkdir $TMP_DIR $TMP_ENTITAS
 
-# cp -r $DOCS "${TMP_DIR}/Documentation"
+cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
+
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
+
+cp "${BUILD_SRC}/${ES_MIG}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_MIG_CLI}.exe" "$TMP_ENTITAS/MigrationAssistant.exe"
+
+cp "${COLLECTED_DIR}/"* $TMP_DIR || true
+
+cp -r $DOCS "${TMP_DIR}/Documentation"
 pushd $TMP_DIR > /dev/null
   zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-CSharp.zip" ./
 popd > /dev/null
 rm -rf $TMP_DIR
+# --------------------------------------------------------------------------
 
-# create unity zip
-TMP_EDITOR="${TMP_ADDONS}/Editor"
-mkdir $TMP_DIR $TMP_ADDONS $TMP_EDITOR
-cp -r "${BUILD_SRC}/${ES}" $TMP_DIR
-cp -r "${BUILD_SRC}/${BP}" $TMP_ADDONS
-cp -r "${BUILD_SRC}/${CG}" $TMP_EDITOR
-cp -r "${BUILD_SRC}/${CGA}" $TMP_ADDONS
-cp -r "${BUILD_SRC}/${MIG}" $TMP_EDITOR
+# create unity zip ---------------------------------------------------------
+TMP_EDITOR="${TMP_ENTITAS}/Editor"
+mkdir $TMP_DIR $TMP_ENTITAS $TMP_EDITOR
 
-cp -r "${BUILD_SRC}/${EU}" $TMP_ADDONS
-cp -r "${BUILD_SRC}/${UBP}" $TMP_ADDONS
-cp -r "${BUILD_SRC}/${UCG}" $TMP_ADDONS
-cp -r "${BUILD_SRC}/${UMIG}" $TMP_ADDONS
-cp -r "${BUILD_SRC}/${UVD}" $TMP_ADDONS
+cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
 
-cp "${BUILD_SRC}/"* $TMP_DIR || true
+cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
+
+cp "${BUILD_SRC}/${ES_MIG}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_MIG_CLI}.exe" "$TMP_EDITOR/MigrationAssistant.exe"
+
+cp "${BUILD_SRC}/${ES_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_BP_U}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_BP_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_CG_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_MIG_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_VD_U}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_VD_UE}.dll" $TMP_EDITOR
+
+cp "${COLLECTED_DIR}/"* $TMP_DIR || true
 
 cp -r $DOCS "${TMP_DIR}/Documentation"
 pushd $TMP_DIR > /dev/null
   zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-Unity.zip" ./
 popd > /dev/null
 rm -rf $TMP_DIR
+# --------------------------------------------------------------------------
+
+# create code generator zip ------------------------------------------------
+TMP_CG="${TMP_DIR}/CodeGenerator"
+mkdir $TMP_DIR $TMP_CG
+
+cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES_CG_CLI}.exe" "$TMP_CG/entitas.exe"
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_CG
+cp "${BUILD_SRC}/fabl.dll" $TMP_CG
+
+pushd $TMP_DIR > /dev/null
+  zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-CodeGenerator.zip" ./
+popd > /dev/null
+rm -rf $TMP_DIR
+# --------------------------------------------------------------------------
 
 # create docset tgz
 pushd "${BUILD_DOCS}/docset" > /dev/null
