@@ -141,7 +141,7 @@ namespace Entitas.Blueprints.Unity.Editor {
                     {
                         _contextIndex = EditorGUILayout.Popup(_contextIndex, _allContextNames);
 
-                        if(GUILayout.Button("Switch Context")) {
+                        if(EntitasEditorLayout.MiniButton("Switch Context")) {
                             switchToContext();
                         }
                     }
