@@ -18,7 +18,7 @@ class describe_CodeGeneratorConfig : nspec {
     void when_creating_config() {
 
         it["creates config from EntitasPreferencesConfig"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
+            var config = new CodeGeneratorConfig(new Config(configString));
 
             config.projectPath.should_be("path/to/project/");
             config.assemblyBasePaths.should_be(new [] { "base1", "base/2/"});
@@ -32,7 +32,7 @@ class describe_CodeGeneratorConfig : nspec {
         };
 
         it["gets default values when keys dont exist"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty), new [] {"Data1, Data2"}, new [] {"Gen1, Gen2"}, new [] {"Post1, Post2"});
+            var config = new CodeGeneratorConfig(new Config(string.Empty), new [] {"Data1, Data2"}, new [] {"Gen1, Gen2"}, new [] {"Post1, Post2"});
             config.projectPath.should_be("Assembly-CSharp.csproj");
             config.assemblyBasePaths.should_be(new [] { "/Applications/Unity/Unity.app/Contents/Managed", "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" });
             config.assemblyPaths.should_be(new [] { "Library/ScriptAssemblies/Assembly-CSharp.dll"});
@@ -45,7 +45,7 @@ class describe_CodeGeneratorConfig : nspec {
         };
 
         it["sets values"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString), new string[0], new string[0], new string[0]);
+            var config = new CodeGeneratorConfig(new Config(configString), new string[0], new string[0], new string[0]);
             config.projectPath = "path/to/newProject/";
             config.assemblyBasePaths = new [] { "newBase1", "newBase2"};
             config.assemblyPaths = new [] { "game.dll", "physics.dll"};
@@ -68,7 +68,7 @@ class describe_CodeGeneratorConfig : nspec {
         };
 
         it["gets string"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
+            var config = new CodeGeneratorConfig(new Config(configString));
             config.projectPath = "path/to/newProject/";
             config.assemblyBasePaths = new [] { "newBase1", "newBase2"};
             config.assemblyPaths = new [] { "game.dll", "physics.dll"};
@@ -93,7 +93,7 @@ class describe_CodeGeneratorConfig : nspec {
         };
 
         it["gets string from empty config"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
+            var config = new CodeGeneratorConfig(new Config(string.Empty));
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +
                 "Entitas.CodeGenerator.AssemblyBasePaths = /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
@@ -109,12 +109,12 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["removes empty entries"] = () => {
             const string configString = "Entitas.CodeGenerator.Contexts = ,,Core,,UI,,";
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(configString));
+            var config = new CodeGeneratorConfig(new Config(configString));
             config.contexts.should_be(new [] { "Core", "UI" });
         };
 
         it["removes trailing comma"] = () => {
-            var config = new CodeGeneratorConfig(new EntitasPreferencesConfig(string.Empty));
+            var config = new CodeGeneratorConfig(new Config(string.Empty));
             config.contexts = new [] { "Meta", string.Empty };
             config.ToString().should_be(
                 "Entitas.CodeGenerator.Project = Assembly-CSharp.csproj\n" +

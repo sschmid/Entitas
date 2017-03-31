@@ -29,44 +29,42 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEditor">
-      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.Blueprints.Unity.Editor\CodeGenerator\BlueprintData.cs" />
-    <Compile Include="Entitas.Blueprints.Unity.Editor\CodeGenerator\BlueprintDataProvider.cs" />
-    <Compile Include="Entitas.Blueprints.Unity.Editor\CodeGenerator\BlueprintsGenerator.cs" />
-    <Compile Include="Entitas.Blueprints.Unity.Editor\BinaryBlueprintInspector.cs" />
-    <Compile Include="Entitas.Blueprints.Unity.Editor\BinaryBlueprintPostprocessor.cs" />
-    <Compile Include="Entitas.Blueprints.Unity.Editor\BlueprintsInspector.cs" />
+    <Compile Include="Editor\BinaryBlueprintInspector.cs" />
+    <Compile Include="Editor\BinaryBlueprintPostprocessor.cs" />
+    <Compile Include="Editor\BlueprintsInspector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entitas.Blueprints.Unity.Editor\CodeGenerator\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
-      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
-      <Name>Entitas</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.Blueprints\Entitas.Blueprints.csproj">
-      <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
-      <Name>Entitas.Blueprints</Name>
+    <ProjectReference Include="..\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor.csproj">
+      <Project>{6DCBB57A-C3A3-4055-B99E-0C97A0D3C4CA}</Project>
+      <Name>Entitas.VisualDebugging.Unity.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="..\Entitas.Blueprints.Unity\Entitas.Blueprints.Unity.csproj">
       <Project>{026FFA2B-1F8D-4E05-A54D-67AB5B611985}</Project>
       <Name>Entitas.Blueprints.Unity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
-      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
-      <Name>Entitas.CodeGenerator</Name>
+    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
+      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
+      <Name>Entitas.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor.csproj">
-      <Project>{6DCBB57A-C3A3-4055-B99E-0C97A0D3C4CA}</Project>
-      <Name>Entitas.VisualDebugging.Unity.Editor</Name>
+    <ProjectReference Include="..\Entitas.Blueprints\Entitas.Blueprints.csproj">
+      <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
+      <Name>Entitas.Blueprints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
+      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
+      <Name>Entitas.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
+      <Project>{9AF72B25-85B0-4FDC-85C3-660926C82438}</Project>
+      <Name>Entitas.Unity.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

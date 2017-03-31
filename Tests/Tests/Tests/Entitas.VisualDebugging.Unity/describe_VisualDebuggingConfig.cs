@@ -12,21 +12,21 @@ class describe_VisualDebuggingConfig : nspec {
     void when_creating_config() {
         
         it["creates config from EntitasPreferencesConfig"] = () => {
-            var config = new VisualDebuggingConfig(new EntitasPreferencesConfig(configString));
+            var config = new VisualDebuggingConfig(new Config(configString));
             config.systemWarningThreshold.should_be("12");
             config.defaultInstanceCreatorFolderPath.should_be("path/to/folder/");
             config.typeDrawerFolderPath.should_be("path/to/otherFolder/");
         };
 
         it["gets default values when keys dont exist"] = () => {
-            var config = new VisualDebuggingConfig(new EntitasPreferencesConfig(string.Empty));
+            var config = new VisualDebuggingConfig(new Config(string.Empty));
             config.systemWarningThreshold.should_be("8");
             config.defaultInstanceCreatorFolderPath.should_be("Assets/Editor/DefaultInstanceCreator/");
             config.typeDrawerFolderPath.should_be("Assets/Editor/TypeDrawer/");
         };
 
         it["sets values"] = () => {
-            var config = new VisualDebuggingConfig(new EntitasPreferencesConfig(configString));
+            var config = new VisualDebuggingConfig(new Config(configString));
             config.systemWarningThreshold = "6";
             config.defaultInstanceCreatorFolderPath = "new/path/";
             config.typeDrawerFolderPath = "new/otherPath/";
@@ -37,7 +37,7 @@ class describe_VisualDebuggingConfig : nspec {
         };
 
         it["gets string"] = () => {
-            var config = new VisualDebuggingConfig(new EntitasPreferencesConfig(configString));
+            var config = new VisualDebuggingConfig(new Config(configString));
             config.systemWarningThreshold = "6";
             config.defaultInstanceCreatorFolderPath = "new/path/";
             config.typeDrawerFolderPath = "new/otherPath/";
@@ -49,7 +49,7 @@ class describe_VisualDebuggingConfig : nspec {
         };
 
         it["gets string from empty config"] = () => {
-            var config = new VisualDebuggingConfig(new EntitasPreferencesConfig(string.Empty));
+            var config = new VisualDebuggingConfig(new Config(string.Empty));
             config.ToString().should_be(
                 "Entitas.VisualDebugging.Unity.SystemWarningThreshold = 8\n" +
                 "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/\n" +

@@ -5,10 +5,10 @@ class describe_EntitasPreferencesConfig : nspec {
 
     void when_config() {
 
-        EntitasPreferencesConfig config = null;
+        Config config = null;
 
         before = () => {
-            config = new EntitasPreferencesConfig(string.Empty);
+            config = new Config(string.Empty);
         };
 
         it["gets string from empty config"] = () => config.ToString().should_be(string.Empty);

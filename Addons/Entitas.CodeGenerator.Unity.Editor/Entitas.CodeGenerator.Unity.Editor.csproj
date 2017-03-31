@@ -37,22 +37,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.CodeGenerator.Unity.Editor\CodeGeneratorPreferencesDrawer.cs" />
-    <Compile Include="Entitas.CodeGenerator.Unity.Editor\DebugLogPostProcessor.cs" />
-    <Compile Include="Entitas.CodeGenerator.Unity.Editor\UnityCodeGenerator.cs" />
+    <Compile Include="Editor\CodeGeneratorPreferencesDrawer.cs" />
+    <Compile Include="Editor\DebugLogPostProcessor.cs" />
+    <Compile Include="Editor\UnityCodeGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
-      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
-      <Name>Entitas</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
-      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
-      <Name>Entitas.CodeGenerator</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
       <Project>{9AF72B25-85B0-4FDC-85C3-660926C82438}</Project>
       <Name>Entitas.Unity.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">
+      <Project>{8AA2998C-DEAD-4795-8255-55C2CEC8DED2}</Project>
+      <Name>Entitas.CodeGeneration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
+      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
+      <Name>Entitas.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGeneration.CodeGenerator\Entitas.CodeGeneration.CodeGenerator.csproj">
+      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
+      <Name>Entitas.CodeGeneration.CodeGenerator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
