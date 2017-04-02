@@ -166,10 +166,6 @@
       <Project>{EF2A4801-6319-4B20-B44E-E4AB02B665BB}</Project>
       <Name>Entitas.CodeGeneration.CodeGenerator.CLI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGenerator.Unity.Editor\Entitas.CodeGenerator.Unity.Editor.csproj">
-      <Project>{68AFC167-E6B6-4E9B-8C52-84854B004CAD}</Project>
-      <Name>Entitas.CodeGenerator.Unity.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.Migration\Entitas.Migration.csproj">
       <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
       <Name>Entitas.Migration</Name>
@@ -209,6 +205,10 @@
     <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
       <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
       <Name>Entitas.CodeGeneration.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Unity.Editor\Entitas.CodeGeneration.Unity.Editor.csproj">
+      <Project>{68AFC167-E6B6-4E9B-8C52-84854B004CAD}</Project>
+      <Name>Entitas.CodeGeneration.Unity.Editor</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

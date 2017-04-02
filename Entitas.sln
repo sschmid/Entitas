@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Code
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Editor", "Addons\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj", "{9AF72B25-85B0-4FDC-85C3-660926C82438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGenerator.Unity.Editor", "Addons\Entitas.CodeGenerator.Unity.Editor\Entitas.CodeGenerator.Unity.Editor.csproj", "{68AFC167-E6B6-4E9B-8C52-84854B004CAD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Unity.Editor", "Addons\Entitas.CodeGeneration.Unity.Editor\Entitas.CodeGeneration.Unity.Editor.csproj", "{68AFC167-E6B6-4E9B-8C52-84854B004CAD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.Unity", "Addons\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj", "{70222463-4E60-4862-8C18-1EBA6CA63353}"
 EndProject
@@ -224,7 +224,7 @@ Global
 		$4.IndentSwitchSection = True
 		$4.SpaceAfterControlFlowStatementKeyword = False
 		$0.StandardHeader = $5
-		$5.Text = 
+		$5.Text =
 		$5.IncludeInNewFiles = True
 		$0.NameConventionPolicy = $6
 		$6.Rules = $7

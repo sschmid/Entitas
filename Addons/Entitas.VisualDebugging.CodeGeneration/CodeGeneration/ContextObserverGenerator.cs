@@ -7,11 +7,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         public string name { get { return "Context Observer"; } }
         public int priority { get { return 0; } }
-#if UNITY_EDITOR
         public bool isEnabledByDefault { get { return true; } }
-#else
-        public bool isEnabledByDefault { get { return false; } }
-#endif
         public bool runInDryMode { get { return true; } }
 
         const string CONTEXTS_TEMPLATE =

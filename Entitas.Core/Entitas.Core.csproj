@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.Interfaces</RootNamespace>
-    <AssemblyName>Entitas.Interfaces</AssemblyName>
+    <RootNamespace>Entitas.Core</RootNamespace>
+    <AssemblyName>Entitas.Core</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>

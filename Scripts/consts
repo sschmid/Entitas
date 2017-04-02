@@ -10,21 +10,28 @@ ADDONS="${ROOT}/Addons"
 ADDONS_PLAYGROUND="${ADDONS}/Tests"
 
 ES="Entitas"
+ES_CORE="Entitas.Core"
+ES_UTILS="Entitas.Utils"
+
 ES_UE="Entitas.Unity.Editor"
 
-ES_CG="Entitas.CodeGenerator"
-ES_CG_ATTR="Entitas.CodeGenerator.Attributes"
-ES_CG_CLI="Entitas.CodeGenerator.CLI"
-ES_CG_UE="Entitas.CodeGenerator.Unity.Editor"
+ES_CG="Entitas.CodeGeneration"
+ES_CG_ATTR="Entitas.CodeGeneration.Attributes"
+ES_CG_G="Entitas.CodeGeneration.CodeGenerator"
+ES_CG_G_CLI="Entitas.CodeGeneration.CodeGenerator.CLI"
+ES_CG_P="Entitas.CodeGeneration.Plugins"
+ES_CG_UE="Entitas.CodeGeneration.Unity.Editor"
 
 ES_MIG="Entitas.Migration"
 ES_MIG_CLI="Entitas.Migration.CLI"
 ES_MIG_UE="Entitas.Migration.Unity.Editor"
 
+ES_VD_CG="Entitas.VisualDebugging.CodeGeneration"
 ES_VD_U="Entitas.VisualDebugging.Unity"
 ES_VD_UE="Entitas.VisualDebugging.Unity.Editor"
 
 ES_BP="Entitas.Blueprints"
+ES_BP_CG="Entitas.Blueprints.CodeGeneration"
 ES_BP_U="Entitas.Blueprints.Unity"
 ES_BP_UE="Entitas.Blueprints.Unity.Editor"
 

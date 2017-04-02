@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{68AFC167-E6B6-4E9B-8C52-84854B004CAD}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.CodeGenerator.Unity.Editor</RootNamespace>
-    <AssemblyName>Entitas.CodeGenerator.Unity.Editor</AssemblyName>
+    <RootNamespace>Entitas.CodeGeneration.Unity.Editor</RootNamespace>
+    <AssemblyName>Entitas.CodeGeneration.Unity.Editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>

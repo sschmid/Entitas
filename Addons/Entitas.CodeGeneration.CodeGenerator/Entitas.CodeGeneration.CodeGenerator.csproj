@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.CodeGenerator</RootNamespace>
-    <AssemblyName>Entitas.CodeGenerator</AssemblyName>
+    <RootNamespace>Entitas.CodeGeneration.CodeGenerator</RootNamespace>
+    <AssemblyName>Entitas.CodeGeneration.CodeGenerator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
