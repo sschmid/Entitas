@@ -7,7 +7,7 @@ UNITY="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
 PROJECT_NAME="Entitas"
 
 ADDONS="${ROOT}/Addons"
-ADDONS_PLAYGROUND="${ADDONS}/Tests"
+ADDONS_PLAYGROUND="${ROOT}/Tests/Unity"
 
 ES="Entitas"
 ES_CORE="Entitas.Core"
