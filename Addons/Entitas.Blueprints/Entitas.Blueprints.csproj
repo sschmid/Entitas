@@ -31,19 +31,23 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entitas.Blueprints\" />
+    <Folder Include="Blueprints\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.Blueprints\Blueprint.cs" />
-    <Compile Include="Entitas.Blueprints\BlueprintEntityExtension.cs" />
-    <Compile Include="Entitas.Blueprints\ComponentBlueprint.cs" />
-    <Compile Include="Entitas.Blueprints\ComponentBlueprintException.cs" />
-    <Compile Include="Entitas.Blueprints\SerializableMember.cs" />
+    <Compile Include="Blueprints\Blueprint.cs" />
+    <Compile Include="Blueprints\BlueprintEntityExtension.cs" />
+    <Compile Include="Blueprints\ComponentBlueprint.cs" />
+    <Compile Include="Blueprints\ComponentBlueprintException.cs" />
+    <Compile Include="Blueprints\SerializableMember.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
-      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
-      <Name>Entitas</Name>
+    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
+      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
+      <Name>Entitas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
+      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
+      <Name>Entitas.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

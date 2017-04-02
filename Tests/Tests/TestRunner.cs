@@ -21,7 +21,7 @@ namespace Tests {
             //var tagOrClassName = "focus";
             var tagOrClassName = string.Empty;
 
-            var types = Assembly.GetAssembly(typeof(TestExtensions)).GetTypes();
+            var types = Assembly.GetAssembly(typeof(TestRunner)).GetTypes();
 
             var finder = new SpecFinder(types, "");
             var tagsFilter = new Tags().Parse(tagOrClassName);

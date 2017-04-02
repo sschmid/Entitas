@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{68AFC167-E6B6-4E9B-8C52-84854B004CAD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Entitas.CodeGeneration.Unity.Editor</RootNamespace>
+    <AssemblyName>Entitas.CodeGeneration.Unity.Editor</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Editor\CodeGeneratorPreferencesDrawer.cs" />
+    <Compile Include="Editor\DebugLogPostProcessor.cs" />
+    <Compile Include="Editor\UnityCodeGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
+      <Project>{9AF72B25-85B0-4FDC-85C3-660926C82438}</Project>
+      <Name>Entitas.Unity.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">
+      <Project>{8AA2998C-DEAD-4795-8255-55C2CEC8DED2}</Project>
+      <Name>Entitas.CodeGeneration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
+      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
+      <Name>Entitas.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGeneration.CodeGenerator\Entitas.CodeGeneration.CodeGenerator.csproj">
+      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
+      <Name>Entitas.CodeGeneration.CodeGenerator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

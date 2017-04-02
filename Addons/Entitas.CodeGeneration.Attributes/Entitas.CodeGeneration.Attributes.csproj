@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{76A16CFD-7488-41D3-989B-CA2F1840E638}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Entitas.CodeGeneration.Attributes</RootNamespace>
+    <AssemblyName>Entitas.CodeGeneration.Attributes</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\AbstractEntityIndexAttribute.cs" />
+    <Compile Include="Attributes\ContextAttribute.cs" />
+    <Compile Include="Attributes\CustomComponentNameAttribute.cs" />
+    <Compile Include="Attributes\CustomEntityIndexAttribute.cs" />
+    <Compile Include="Attributes\CustomPrefixAttribute.cs" />
+    <Compile Include="Attributes\DontGenerateAttribute.cs" />
+    <Compile Include="Attributes\EntityIndexAttribute.cs" />
+    <Compile Include="Attributes\EntityIndexGetMethodAttribute.cs" />
+    <Compile Include="Attributes\EntityIndexType.cs" />
+    <Compile Include="Attributes\PostConstructorAttribute.cs" />
+    <Compile Include="Attributes\PrimaryEntityIndexAttribute.cs" />
+    <Compile Include="Attributes\UniqueAttribute.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

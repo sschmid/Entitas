@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{84D279D3-76D8-4271-B895-83D46B08753C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Entitas.CodeGeneration.Plugins</RootNamespace>
+    <AssemblyName>Entitas.CodeGeneration.Plugins</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Plugins\CodeGenerators\ComponentContextGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\ComponentEntityGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\ComponentGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\ComponentsLookupGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\ContextAttributeGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\ContextGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\ContextsGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\EntityGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\EntityIndexGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\MatcherGenerator.cs" />
+    <Compile Include="Plugins\DataProviders\Components\AbstractComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\ComponentData.cs" />
+    <Compile Include="Plugins\DataProviders\Components\ComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\ComponentTypeComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\ContextsComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\IComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\IsUniqueComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\MemberData.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\MemberDataComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\ShouldGenerateComponentComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\ShouldGenerateComponentIndexComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\ShouldGenerateMethodsComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Components\Providers\UniquePrefixComponentDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\Contexts\ContextData.cs" />
+    <Compile Include="Plugins\DataProviders\Contexts\ContextDataProvider.cs" />
+    <Compile Include="Plugins\DataProviders\EntityIndex\EntityIndexData.cs" />
+    <Compile Include="Plugins\DataProviders\EntityIndex\EntityIndexDataProvider.cs" />
+    <Compile Include="Plugins\PostProcessors\AddFileHeaderPostProcessor.cs" />
+    <Compile Include="Plugins\PostProcessors\ConsoleWriteLinePostProcessor.cs" />
+    <Compile Include="Plugins\PostProcessors\MergeFilesPostProcessor.cs" />
+    <Compile Include="Plugins\PostProcessors\NewLinePostProcessor.cs" />
+    <Compile Include="Plugins\PostProcessors\WriteToDiskPostProcessor.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Plugins\" />
+    <Folder Include="Plugins\CodeGenerators\" />
+    <Folder Include="Plugins\DataProviders\" />
+    <Folder Include="Plugins\PostProcessors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">
+      <Project>{8AA2998C-DEAD-4795-8255-55C2CEC8DED2}</Project>
+      <Name>Entitas.CodeGeneration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
+      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
+      <Name>Entitas.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
+      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
+      <Name>Entitas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGeneration.Attributes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.CodeGeneration.CodeGenerator\Entitas.CodeGeneration.CodeGenerator.csproj">
+      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
+      <Name>Entitas.CodeGeneration.CodeGenerator</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

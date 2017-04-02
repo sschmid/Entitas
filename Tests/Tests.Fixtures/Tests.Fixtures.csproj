@@ -71,13 +71,13 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGenerator\Entitas.CodeGenerator.csproj">
-      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
-      <Name>Entitas.CodeGenerator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGenerator.Attributes\Entitas.CodeGenerator.Attributes.csproj">
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj">
       <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
-      <Name>Entitas.CodeGenerator.Attributes</Name>
+      <Name>Entitas.CodeGeneration.Attributes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
+      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
+      <Name>Entitas.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

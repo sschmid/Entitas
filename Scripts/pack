@@ -21,9 +21,12 @@ TMP_ENTITAS="${TMP_DIR}/Entitas"
 mkdir $TMP_DIR $TMP_ENTITAS
 
 cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_CORE}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_ENTITAS
 
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
+
+cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
 
 cp "${BUILD_SRC}/${ES_MIG}.dll" $TMP_ENTITAS
 cp "${BUILD_SRC}/${ES_MIG_CLI}.exe" "$TMP_ENTITAS/MigrationAssistant.exe"
@@ -42,22 +45,31 @@ TMP_EDITOR="${TMP_ENTITAS}/Editor"
 mkdir $TMP_DIR $TMP_ENTITAS $TMP_EDITOR
 
 cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_CORE}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_ENTITAS
+
+cp "${BUILD_SRC}/${ES_UE}.dll" $TMP_EDITOR
 
 cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_CG_P}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_CG_UE}.dll" $TMP_EDITOR
 
 cp "${BUILD_SRC}/${ES_MIG}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_MIG_UE}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/${ES_MIG_CLI}.exe" "$TMP_EDITOR/MigrationAssistant.exe"
 
-cp "${BUILD_SRC}/${ES_UE}.dll" $TMP_EDITOR
-cp "${BUILD_SRC}/${ES_BP_U}.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/${ES_BP_UE}.dll" $TMP_EDITOR
-cp "${BUILD_SRC}/${ES_CG_UE}.dll" $TMP_EDITOR
-cp "${BUILD_SRC}/${ES_MIG_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_VD_CG}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/${ES_VD_U}.dll" $TMP_ENTITAS
 cp "${BUILD_SRC}/${ES_VD_UE}.dll" $TMP_EDITOR
+
+cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_BP_CG}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/${ES_BP_U}.dll" $TMP_ENTITAS
+cp "${BUILD_SRC}/${ES_BP_UE}.dll" $TMP_EDITOR
+
+cp "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
 
 cp "${COLLECTED_DIR}/"* $TMP_DIR || true
 
@@ -72,10 +84,12 @@ rm -rf $TMP_DIR
 TMP_CG="${TMP_DIR}/CodeGenerator"
 mkdir $TMP_DIR $TMP_CG
 
-cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/entitas.exe"
+cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_CG
-cp "${BUILD_SRC}/${ES_CG_CLI}.exe" "$TMP_CG/entitas.exe"
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_CG
 cp "${BUILD_SRC}/fabl.dll" $TMP_CG
 
 pushd $TMP_DIR > /dev/null

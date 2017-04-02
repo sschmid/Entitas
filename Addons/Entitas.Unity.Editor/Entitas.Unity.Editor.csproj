@@ -37,23 +37,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.Unity.Editor\GUI\AbstractEntitasPreferencesDrawer.cs" />
-    <Compile Include="Entitas.Unity.Editor\GUI\EntitasPreferencesWindow.cs" />
-    <Compile Include="Entitas.Unity.Editor\GUI\EntitasStyles.cs" />
-    <Compile Include="Entitas.Unity.Editor\GUI\IEntitasPreferencesDrawer.cs" />
-    <Compile Include="Entitas.Unity.Editor\GUI\Layout\EditorWindow.cs" />
-    <Compile Include="Entitas.Unity.Editor\GUI\Layout\GUI.cs" />
-    <Compile Include="Entitas.Unity.Editor\GUI\Layout\Layout.cs" />
-    <Compile Include="Entitas.Unity.Editor\Menu\EntitasCheckForUpdates.cs" />
-    <Compile Include="Entitas.Unity.Editor\Menu\EntitasMenuItems.cs" />
-    <Compile Include="Entitas.Unity.Editor\EntitasPreferencesDrawer.cs" />
-    <Compile Include="Entitas.Unity.Editor\ScriptingDefineSymbols.cs" />
+    <Compile Include="Editor\GUI\AbstractPreferencesDrawer.cs" />
+    <Compile Include="Editor\GUI\PreferencesWindow.cs" />
+    <Compile Include="Editor\GUI\EntitasStyles.cs" />
+    <Compile Include="Editor\GUI\IEntitasPreferencesDrawer.cs" />
+    <Compile Include="Editor\GUI\Layout\EditorWindow.cs" />
+    <Compile Include="Editor\GUI\Layout\GUI.cs" />
+    <Compile Include="Editor\GUI\Layout\Layout.cs" />
+    <Compile Include="Editor\Menu\CheckForUpdates.cs" />
+    <Compile Include="Editor\Menu\EntitasMenuItems.cs" />
+    <Compile Include="Editor\EntitasPreferencesDrawer.cs" />
+    <Compile Include="Editor\ScriptingDefineSymbols.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entitas.Unity.Editor\GUI\" />
-    <Folder Include="Entitas.Unity.Editor\Menu\" />
+    <Folder Include="Editor\GUI\" />
+    <Folder Include="Editor\Menu\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
+      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
+      <Name>Entitas.Utils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
