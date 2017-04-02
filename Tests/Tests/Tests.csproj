@@ -144,7 +144,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.Blueprints.CodeGeneration\Entitas.Blueprints.CodeGeneration.csproj">
       <Project>{205014A8-1E4A-40D2-A368-9D2497EA9AE1}</Project>
-      <Name>Entitas.Blueprints.CodeGeneration</Name>
+      <Name>Entitas.Blueprints.CodeGeneration.Plugins</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.Blueprints.Unity\Entitas.Blueprints.Unity.csproj">
       <Project>{026FFA2B-1F8D-4E05-A54D-67AB5B611985}</Project>
@@ -196,7 +196,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.CodeGeneration\Entitas.VisualDebugging.CodeGeneration.csproj">
       <Project>{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}</Project>
-      <Name>Entitas.VisualDebugging.CodeGeneration</Name>
+      <Name>Entitas.VisualDebugging.CodeGeneration.Plugins</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.CodeGenerator\Entitas.CodeGeneration.CodeGenerator.csproj">
       <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>

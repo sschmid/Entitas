@@ -29,12 +29,12 @@ cp "${ADDONS}/${ES_MIG}/${BIN}/${ES_MIG}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_MIG_CLI}/${BIN}/${ES_MIG_CLI}.exe" ${BUILD_SRC}
 cp "${ADDONS}/${ES_MIG_UE}/${BIN}/${ES_MIG_UE}.dll" ${BUILD_SRC}
 
-cp "${ADDONS}/${ES_VD_CG}/${BIN}/${ES_VD_CG}.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_VD_CG_P}/${BIN}/${ES_VD_CG_P}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_VD_U}/${BIN}/${ES_VD_U}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_VD_UE}/${BIN}/${ES_VD_UE}.dll" ${BUILD_SRC}
 
 cp "${ADDONS}/${ES_BP}/${BIN}/${ES_BP}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_BP_CG}/${BIN}/${ES_BP_CG}.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_BP_CG_P}/${BIN}/${ES_BP_CG_P}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_BP_U}/${BIN}/${ES_BP_U}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_BP_UE}/${BIN}/${ES_BP_UE}.dll" ${BUILD_SRC}
 
@@ -100,7 +100,7 @@ cp "${BUILD_SRC}/fabl.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
 cp "${BUILD_SRC}/${ES_CG_UE}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_VD_CG}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_VD_CG_P}.dll" "${libDir}/Editor/"
 
 # Blueprints
 libDir="${ADDONS_PLAYGROUND}/Blueprints/Assets/Libraries"
@@ -125,5 +125,5 @@ cp "${BUILD_SRC}/fabl.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
 cp "${BUILD_SRC}/${ES_CG_UE}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_VD_CG}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_BP_CG}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_VD_CG_P}.dll" "${libDir}/Editor/"
+cp "${BUILD_SRC}/${ES_BP_CG_P}.dll" "${libDir}/Editor/"
