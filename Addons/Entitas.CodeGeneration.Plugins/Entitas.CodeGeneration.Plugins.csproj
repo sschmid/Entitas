@@ -35,12 +35,13 @@
     <Compile Include="Plugins\CodeGenerators\ComponentEntityGenerator.cs" />
     <Compile Include="Plugins\CodeGenerators\ComponentGenerator.cs" />
     <Compile Include="Plugins\CodeGenerators\ComponentsLookupGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\ComponentMatcherGenerator.cs" />
     <Compile Include="Plugins\CodeGenerators\ContextAttributeGenerator.cs" />
     <Compile Include="Plugins\CodeGenerators\ContextGenerator.cs" />
     <Compile Include="Plugins\CodeGenerators\ContextsGenerator.cs" />
+    <Compile Include="Plugins\CodeGenerators\ContextMatcherGenerator.cs" />
     <Compile Include="Plugins\CodeGenerators\EntityGenerator.cs" />
     <Compile Include="Plugins\CodeGenerators\EntityIndexGenerator.cs" />
-    <Compile Include="Plugins\CodeGenerators\MatcherGenerator.cs" />
     <Compile Include="Plugins\DataProviders\Components\AbstractComponentDataProvider.cs" />
     <Compile Include="Plugins\DataProviders\Components\ComponentData.cs" />
     <Compile Include="Plugins\DataProviders\Components\ComponentDataProvider.cs" />
