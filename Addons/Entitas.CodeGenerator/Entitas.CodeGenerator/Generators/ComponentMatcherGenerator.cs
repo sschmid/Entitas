@@ -5,12 +5,12 @@ namespace Entitas.CodeGenerator {
 
     public class MatcherGenerator : ICodeGenerator {
 
-        public string name { get { return "Matcher"; } }
+        public string name { get { return "Component (Matcher API)"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        const string MATCHER_TEMPLATE =
+        const string STANDARD_COMPONENT_TEMPLATE =
 @"public sealed partial class ${ContextName}Matcher {
 
     static Entitas.IMatcher<${ContextName}Entity> _matcher${ComponentName};
@@ -48,7 +48,7 @@ namespace Entitas.CodeGenerator {
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
             var componentNames = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + ".componentNames";
 
-            var fileContent = MATCHER_TEMPLATE
+            var fileContent = STANDARD_COMPONENT_TEMPLATE
                 .Replace("${ContextName}", contextName)
                 .Replace("${ComponentName}", componentName)
                 .Replace("${Index}", index)

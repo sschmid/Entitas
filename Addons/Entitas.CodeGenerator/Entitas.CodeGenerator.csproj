@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entitas.CodeGenerator\DataProviders\CodeGeneratorData.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ContextMatcherGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\PostProcessors\AddFileHeaderPostProcessor.cs" />
     <Compile Include="Entitas.CodeGenerator\PostProcessors\ICodeGenFilePostProcessor.cs" />
     <Compile Include="Entitas.CodeGenerator\PostProcessors\NewLinePostProcessor.cs" />
@@ -65,7 +66,7 @@
     <Compile Include="Entitas.CodeGenerator\Generators\ContextAttributeGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\ContextGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\EntityGenerator.cs" />
-    <Compile Include="Entitas.CodeGenerator\Generators\MatcherGenerator.cs" />
+    <Compile Include="Entitas.CodeGenerator\Generators\ComponentMatcherGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\Generators\ContextsGenerator.cs" />
     <Compile Include="Entitas.CodeGenerator\DataProviders\Components\AbstractComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGenerator\ICodeGeneratorInterface.cs" />
@@ -78,16 +79,7 @@
     <Compile Include="Entitas.CodeGenerator\CodeGeneratorUtil.cs" />
     <Compile Include="Entitas.CodeGenerator\DependencyResolver.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entitas.CodeGenerator\" />
-    <Folder Include="Entitas.CodeGenerator\DataProviders\" />
-    <Folder Include="Entitas.CodeGenerator\Generators\" />
-    <Folder Include="Entitas.CodeGenerator\PostProcessors\" />
-    <Folder Include="Entitas.CodeGenerator\DataProviders\Components\" />
-    <Folder Include="Entitas.CodeGenerator\DataProviders\Components\Providers\" />
-    <Folder Include="Entitas.CodeGenerator\DataProviders\Contexts\" />
-    <Folder Include="Entitas.CodeGenerator\DataProviders\EntityIndex\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
