@@ -29,6 +29,7 @@ Build/*
 !Build/deploy/
 Build/deploy/Entitas-CSharp
 Build/deploy/Entitas-Unity
+Build/deploy/CodeGenerator
 
 Tests/Unity/Entitas.Unity/Entitas.Unity.sln
 Tests/Unity/Entitas.Unity/Assets/Libraries
