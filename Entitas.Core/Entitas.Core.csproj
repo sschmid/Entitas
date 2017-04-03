@@ -55,6 +55,7 @@
     <Compile Include="Interfaces\Systems\ITearDownSystem.cs" />
     <Compile Include="Interfaces\Matchers\IMatcher.cs" />
     <Compile Include="ContextInfo.cs" />
+    <Compile Include="Interfaces\IAERC.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -49,6 +50,12 @@ namespace Entitas {
         /// Returns the number of entities that are currently retained by
         /// other objects (e.g. Group, Collector, ReactiveSystem).
         public int retainedEntitiesCount { get { return _retainedEntities.Count; } }
+
+        /// Automatic Entity Reference Counting (AERC)
+        /// is used internally to prevent pooling retained entities.
+        /// If you use retain manually you also have to
+        /// release it manually at some point.
+        public Func<IEntity, IAERC> aercFactory;
 
         readonly int _totalComponents;
 
@@ -128,7 +135,7 @@ namespace Entitas {
                 entity.Reactivate(_creationIndex++);
             } else {
                 entity = new TEntity();
-                entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo);
+                entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo, aercFactory(entity));
             }
 
             _entities.Add(entity);

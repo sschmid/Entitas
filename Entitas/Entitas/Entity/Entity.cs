@@ -54,6 +54,12 @@ namespace Entitas {
         /// It's used to provide better error messages.
         public ContextInfo contextInfo { get { return _contextInfo; } }
 
+        /// Automatic Entity Reference Counting (AERC)
+        /// is used internally to prevent pooling retained entities.
+        /// If you use retain manually you also have to
+        /// release it manually at some point.
+        public IAERC aerc { get { return _aerc; } }
+
         int _creationIndex;
         bool _isEnabled;
 
@@ -61,13 +67,14 @@ namespace Entitas {
         IComponent[] _components;
         Stack<IComponent>[] _componentPools;
         ContextInfo _contextInfo;
+        IAERC _aerc;
 
         IComponent[] _componentsCache;
         int[] _componentIndicesCache;
         string _toStringCache;
         StringBuilder _toStringBuilder;
 
-        public void Initialize(int creationIndex, int totalComponents, Stack<IComponent>[] componentPools, ContextInfo contextInfo = null) {
+        public void Initialize(int creationIndex, int totalComponents, Stack<IComponent>[] componentPools, ContextInfo contextInfo = null, IAERC aerc = null) {
             Reactivate(creationIndex);
 
             _totalComponents = totalComponents;
@@ -75,6 +82,7 @@ namespace Entitas {
             _componentPools = componentPools;
 
             _contextInfo = contextInfo ?? createDefaultContextInfo();
+            _aerc = aerc;
         }
 
         ContextInfo createDefaultContextInfo() {
@@ -324,14 +332,7 @@ namespace Entitas {
         }
 
         /// Returns the number of objects that retain this entity.
-        public int retainCount { get { return _retainCount; } }
-        int _retainCount;
-
-#if !ENTITAS_FAST_AND_UNSAFE
-        /// Returns all the objects that retain this entity.
-        public HashSet<object> owners { get { return _owners; } }
-        readonly HashSet<object> _owners = new HashSet<object>();
-#endif
+        public int retainCount { get { return _aerc.retainCount; } }
 
         /// Retains the entity. An owner can only retain the same entity once.
         /// Retain/Release is part of AERC (Automatic Entity Reference Counting)
@@ -339,14 +340,7 @@ namespace Entitas {
         /// If you use retain manually you also have to
         /// release it manually at some point.
         public void Retain(object owner) {
-            _retainCount += 1;
-
-#if !ENTITAS_FAST_AND_UNSAFE
-            if(!owners.Add(owner)) {
-                throw new EntityIsAlreadyRetainedByOwnerException(this, owner);
-            }
-#endif
-
+            _aerc.Retain(owner);
             _toStringCache = null;
         }
 
@@ -357,16 +351,10 @@ namespace Entitas {
         /// If you use retain manually you also have to
         /// release it manually at some point.
         public void Release(object owner) {
-            _retainCount -= 1;
+            _aerc.Retain(owner);
             _toStringCache = null;
 
-#if !ENTITAS_FAST_AND_UNSAFE
-            if(!owners.Remove(owner)) {
-                throw new EntityIsNotRetainedByOwnerException(this, owner);
-            }
-#endif
-
-            if(_retainCount == 0) {
+            if(_aerc.retainCount == 0) {
                 if(OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }

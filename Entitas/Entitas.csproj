@@ -70,6 +70,8 @@
     <Compile Include="Entitas\Extensions\ContextStringExtension.cs" />
     <Compile Include="Entitas\Extensions\PublicMemberInfoEntityExtension.cs" />
     <Compile Include="Entitas\Extensions\SystemStringExtension.cs" />
+    <Compile Include="Entitas\Entity\UnsafeAERC.cs" />
+    <Compile Include="Entitas\Entity\SafeAERC.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
