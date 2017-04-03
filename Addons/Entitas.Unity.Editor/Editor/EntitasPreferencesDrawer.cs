@@ -30,12 +30,12 @@ namespace Entitas.Unity.Editor {
         protected override void drawContent(Config config) {
             EditorGUILayout.BeginHorizontal();
             {
-                EditorGUILayout.LabelField("Optimizations");
+                EditorGUILayout.LabelField("AERC");
                 var buttonStyle = new GUIStyle(EditorStyles.miniButtonLeft);
                 if(_scriptCallOptimization == ScriptCallOptimization.Disabled) {
                     buttonStyle.normal = buttonStyle.active;
                 }
-                if(GUILayout.Button("Disabled", buttonStyle)) {
+                if(GUILayout.Button("Safe", buttonStyle)) {
                     _scriptCallOptimization = ScriptCallOptimization.Disabled;
                     _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }
