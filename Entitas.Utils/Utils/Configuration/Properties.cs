@@ -39,6 +39,10 @@ namespace Entitas {
             return _dict.ContainsKey(key);
         }
 
+        public void RemoveKey(string key) {
+            _dict.Remove(key);
+        }
+
         static string convertLineEndings(string str) {
             return str.Replace("\r\n", "\n").Replace("\r", "\n");
         }

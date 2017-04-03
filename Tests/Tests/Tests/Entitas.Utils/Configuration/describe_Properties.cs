@@ -281,6 +281,21 @@ class describe_Properties : nspec {
             };
         };
 
+        context["removing properties"] = () => {
+
+            Properties p = null;
+
+            before = () => {
+                p = new Properties();
+                p["key"] = "value";
+            };
+
+            it["set new property"] = () => {
+                p.RemoveKey("key");
+                p.HasKey("key").should_be_false();
+            };
+        };
+
         context["placeholder"] = () => {
 
             it["replaces placeholder within ${...}"] = () => {
