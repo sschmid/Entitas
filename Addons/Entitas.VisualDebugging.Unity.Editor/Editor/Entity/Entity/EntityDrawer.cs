@@ -23,24 +23,23 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
             EditorGUILayout.LabelField("Retained by (" + entity.retainCount + ")", EditorStyles.boldLabel);
 
-            #if !ENTITAS_FAST_AND_UNSAFE
-
-            EntitasEditorLayout.BeginVerticalBox();
-            {
-                foreach(var owner in entity.owners.OrderBy(o => o.GetType().Name)) {
-                    EditorGUILayout.BeginHorizontal();
-                    {
-                        EditorGUILayout.LabelField(owner.ToString());
-                        if(EntitasEditorLayout.MiniButton("Release")) {
-                            entity.Release(owner);
+            var safeAerc = entity.aerc as SafeAERC;
+            if(safeAerc != null) {
+                EntitasEditorLayout.BeginVerticalBox();
+                {
+                    foreach(var owner in safeAerc.owners.OrderBy(o => o.GetType().Name)) {
+                        EditorGUILayout.BeginHorizontal();
+                        {
+                            EditorGUILayout.LabelField(owner.ToString());
+                            if(EntitasEditorLayout.MiniButton("Release")) {
+                                entity.Release(owner);
+                            }
+                            EditorGUILayout.EndHorizontal();
                         }
-                        EditorGUILayout.EndHorizontal();
                     }
                 }
+                EntitasEditorLayout.EndVerticalBox();
             }
-            EntitasEditorLayout.EndVerticalBox();
-
-            #endif
         }
 
         public static void DrawMultipleEntities(IContext context, IEntity[] entities) {

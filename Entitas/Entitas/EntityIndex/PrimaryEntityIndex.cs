@@ -44,14 +44,14 @@ namespace Entitas {
 
         protected override void clear() {
             foreach(var entity in _index.Values) {
-
-#if ENTITAS_FAST_AND_UNSAFE
-                entity.Release(this);
-#else
-                if(entity.owners.Contains(this)) {
+                var safeAerc = entity.aerc as SafeAERC;
+                if(safeAerc != null) {
+                    if(safeAerc.owners.Contains(this)) {
+                        entity.Release(this);
+                    }
+                } else {
                     entity.Release(this);
                 }
-#endif
             }
 
             _index.Clear();
@@ -66,25 +66,27 @@ namespace Entitas {
 
             _index.Add(key, entity);
 
-#if ENTITAS_FAST_AND_UNSAFE
-            entity.Retain(this);
-#else
-            if(!entity.owners.Contains(this)) {
+            var safeAerc = entity.aerc as SafeAERC;
+            if(safeAerc != null) {
+                if(!safeAerc.owners.Contains(this)) {
+                    entity.Retain(this);
+                }
+            } else {
                 entity.Retain(this);
             }
-#endif
         }
 
         protected override void removeEntity(TKey key, TEntity entity) {
             _index.Remove(key);
 
-#if ENTITAS_FAST_AND_UNSAFE
-            entity.Release(this);
-#else
-            if(entity.owners.Contains(this)) {
+            var safeAerc = entity.aerc as SafeAERC;
+            if(safeAerc != null) {
+                if(safeAerc.owners.Contains(this)) {
+                    entity.Release(this);
+                }
+            } else {
                 entity.Release(this);
             }
-#endif
         }
     }
 }

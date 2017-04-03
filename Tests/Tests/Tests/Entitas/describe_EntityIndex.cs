@@ -150,9 +150,11 @@ class describe_EntityIndex : nspec {
 
                 it["retains entity"] = () => {
                     entity.retainCount.should_be(3);
-                    #if !ENTITAS_FAST_AND_UNSAFE
-                    entity.owners.should_contain(index);
-                    #endif
+
+                    var safeAerc = entity.aerc as SafeAERC;
+                    if(safeAerc != null) {
+                        safeAerc.owners.should_contain(index);
+                    }
                 };
 
                 it["gets entity for key"] = () => {
@@ -165,9 +167,11 @@ class describe_EntityIndex : nspec {
                     index.GetEntity(name + "1").should_be_null();
                     index.GetEntity(name + "2").should_be_null();
                     entity.retainCount.should_be(1);
-                    #if !ENTITAS_FAST_AND_UNSAFE
-                    entity.owners.should_not_contain(index);
-                    #endif
+
+                    var safeAerc = entity.aerc as SafeAERC;
+                    if(safeAerc != null) {
+                        safeAerc.owners.should_not_contain(index);
+                    }
                 };
 
                 it["has existing entity"] = () => {
@@ -329,10 +333,16 @@ class describe_EntityIndex : nspec {
                 it["retains entity"] = () => {
                     entity1.retainCount.should_be(3);
                     entity2.retainCount.should_be(3);
-                    #if !ENTITAS_FAST_AND_UNSAFE
-                    entity1.owners.should_contain(index);
-                    entity2.owners.should_contain(index);
-                    #endif
+
+                    var safeAerc1 = entity1.aerc as SafeAERC;
+                    if(safeAerc1 != null) {
+                        safeAerc1.owners.should_contain(index);
+                    }
+
+                    var safeAerc2 = entity1.aerc as SafeAERC;
+                    if(safeAerc2 != null) {
+                        safeAerc2.owners.should_contain(index);
+                    }
                 };
 
                 it["has entity"] = () => {
@@ -353,12 +363,19 @@ class describe_EntityIndex : nspec {
                     index.GetEntities("1").Count.should_be(0);
                     index.GetEntities("2").Count.should_be(1);
                     index.GetEntities("3").Count.should_be(1);
+
                     entity1.retainCount.should_be(1);
                     entity2.retainCount.should_be(3);
-                    #if !ENTITAS_FAST_AND_UNSAFE
-                    entity1.owners.should_not_contain(index);
-                    entity2.owners.should_contain(index);
-                    #endif
+
+                    var safeAerc1 = entity1.aerc as SafeAERC;
+                    if(safeAerc1 != null) {
+                        safeAerc1.owners.should_not_contain(index);
+                    }
+
+                    var safeAerc2 = entity2.aerc as SafeAERC;
+                    if(safeAerc2 != null) {
+                        safeAerc2.owners.should_contain(index);
+                    }
                 };
 
                 it["has existing entities"] = () => {

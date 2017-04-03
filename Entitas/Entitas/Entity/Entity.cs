@@ -351,7 +351,7 @@ namespace Entitas {
         /// If you use retain manually you also have to
         /// release it manually at some point.
         public void Release(object owner) {
-            _aerc.Retain(owner);
+            _aerc.Release(owner);
             _toStringCache = null;
 
             if(_aerc.retainCount == 0) {
