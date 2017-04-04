@@ -61,6 +61,7 @@ namespace Entitas.CodeGenerator.CLI {
         }
 
         static void printUsage() {
+            Console.WriteLine("Entitas Code Generator version " + EntitasResources.GetVersion());
             Console.WriteLine(
 @"usage: entitas new [-f] - Creates new Entitas.properties config with default values
        entitas edit     - Opens Entitas.properties config
@@ -139,19 +140,21 @@ namespace Entitas.CodeGenerator.CLI {
                 var fileContent = File.ReadAllText(Preferences.configPath);
                 var properties = new Properties(fileContent);
 
-                foreach(var key in getUnusedKeys(properties)) {
-                    if(getUserDecision("Remove unused key: " + key + "? (y | n)")) {
-                        properties.RemoveKey(key);
-                        Preferences.SaveConfig(new Config(properties.ToString()));
-                        Console.WriteLine("Removed key: " + key);
-                    }
-                }
-
                 foreach(var key in getMissingKey(properties)) {
-                    if(getUserDecision("Add missing key: " + key + "? (y | n)")) {
+                    _logger.Info("Add missing key: '" + key + "' ? (y / n)");
+                    if(getUserDecision()) {
                         properties[key] = string.Empty;
                         Preferences.SaveConfig(new Config(properties.ToString()));
                         Console.WriteLine("Added key: " + key);
+                    }
+                }
+
+                foreach(var key in getUnusedKeys(properties)) {
+                    _logger.Warn("Remove unused key: '" + key + "' ? (y / n)");
+                    if(getUserDecision()) {
+                        properties.RemoveKey(key);
+                        Preferences.SaveConfig(new Config(properties.ToString()));
+                        Console.WriteLine("Removed key: " + key);
                     }
                 }
             } else {
@@ -159,8 +162,7 @@ namespace Entitas.CodeGenerator.CLI {
             }
         }
 
-        static bool getUserDecision(string question) {
-            Console.WriteLine(question);
+        static bool getUserDecision() {
             char keyChar;
             do {
                 keyChar = Console.ReadKey(true).KeyChar;
