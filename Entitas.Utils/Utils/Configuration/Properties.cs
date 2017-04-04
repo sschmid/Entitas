@@ -79,6 +79,10 @@ namespace Entitas {
                 line => line.Split(keyValueDelimiter, 2)
             );
             foreach(var property in properties) {
+                if(property.Length != 2) {
+                    throw new InvalidKeyPropertiesException(property[0]);
+                }
+
                 this[property[0]] = property[1];
             }
         }
@@ -103,6 +107,15 @@ namespace Entitas {
 
                 return properties + kv.Key + " = " + content + "\n";
             });
+        }
+    }
+
+    public class InvalidKeyPropertiesException : Exception {
+
+        public readonly string key;
+
+        public InvalidKeyPropertiesException(string key) : base("Invalid key " + key) {
+            this.key = key;
         }
     }
 }

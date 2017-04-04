@@ -23,6 +23,26 @@ class describe_Properties : nspec {
             it["is empty"] = () => assertProperties(string.Empty, string.Empty, null);
         };
 
+        context["when invalid input string"] = () => {
+
+            it["throws when invalid key"] = () => {
+                var input =
+                    "some.key.1 = some value 1" + "\n" +
+                    "some.key.2" + "\n" +
+                    "some.key.3 = some value 3" + "\n";
+
+                InvalidKeyPropertiesException exception = null;
+                try {
+                    new Properties(input);
+                } catch(InvalidKeyPropertiesException ex) {
+                    exception = ex;
+                }
+
+                exception.should_not_be_null();
+                exception.key.should_be("some.key.2");
+            };
+        };
+
         context["when single line"] = () => {
 
             it["creates Properties from single line input string"] = () => {
