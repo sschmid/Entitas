@@ -30,7 +30,7 @@ namespace Entitas.Unity.Editor {
         protected override void drawContent(Config config) {
             EditorGUILayout.BeginHorizontal();
             {
-                EditorGUILayout.LabelField("AERC");
+                EditorGUILayout.LabelField("Automatic Entity Reference Counting");
                 var buttonStyle = new GUIStyle(EditorStyles.miniButtonLeft);
                 if(_scriptCallOptimization == ScriptCallOptimization.Disabled) {
                     buttonStyle.normal = buttonStyle.active;
