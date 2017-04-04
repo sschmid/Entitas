@@ -288,15 +288,6 @@ namespace Entitas {
             return entityIndex;
         }
 
-        /// Deactivates and removes all entity indices.
-        public void DeactivateAndRemoveEntityIndices() {
-            foreach(var entityIndex in _entityIndices.Values) {
-                entityIndex.Deactivate();
-            }
-
-            _entityIndices.Clear();
-        }
-
         /// Resets the creationIndex back to 0.
         public void ResetCreationIndex() {
             _creationIndex = 0;

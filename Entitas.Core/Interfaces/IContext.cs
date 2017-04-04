@@ -29,7 +29,6 @@ namespace Entitas {
 
         void AddEntityIndex(IEntityIndex entityIndex);
         IEntityIndex GetEntityIndex(string name);
-        void DeactivateAndRemoveEntityIndices();
 
         void ResetCreationIndex();
         void ClearComponentPool(int index);

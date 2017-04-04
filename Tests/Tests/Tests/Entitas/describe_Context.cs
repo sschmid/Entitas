@@ -739,36 +739,6 @@ class describe_Context : nspec {
                     ctx.ClearComponentPool(CID.ComponentC);
                 };
             };
-
-            context["EntityIndex"] = () => {
-
-                PrimaryEntityIndex<TestEntity, string> entityIndex = null;
-
-                before = () => {
-                    entityIndex = new PrimaryEntityIndex<TestEntity, string>("TestIndex", ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
-                        (e, c) => ((NameAgeComponent)(c)).name);
-                    ctx.AddEntityIndex(entityIndex);
-                };
-
-                it["deactivates EntityIndex"] = () => {
-                    var nameAgeComponent = new NameAgeComponent();
-                    nameAgeComponent.name = "Max";
-
-                    var e = ctx.CreateEntity();
-                    e.AddComponent(CID.ComponentA, nameAgeComponent);
-                    
-                    entityIndex.GetEntity("Max").should_be_same(e);
-
-                    ctx.DeactivateAndRemoveEntityIndices();
-
-                    entityIndex.GetEntity("Max").should_be_null();
-                };
-
-                it["removes EntityIndex"] = expect<ContextEntityIndexDoesNotExistException>(() => {
-                    ctx.DeactivateAndRemoveEntityIndices();
-                    ctx.GetEntityIndex(CID.ComponentA.ToString());
-                });
-            };
         };
 
         context["EntitasCache"] = () => {
