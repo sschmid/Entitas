@@ -7,34 +7,27 @@ namespace Entitas.CodeGenerator {
 
         public static DependencyResolver codeGeneratorDependencyResolver {
             get {
-                if(_codeGeneratorDependencyResolver == null) {
-                    var config = new CodeGeneratorConfig(Preferences.LoadConfig());
-                    _codeGeneratorDependencyResolver = new DependencyResolver(AppDomain.CurrentDomain, config.assemblyBasePaths);
-                    foreach(var path in config.codeGeneratorAssemblyPaths) {
-                        _codeGeneratorDependencyResolver.Load(path);
-                    }
+                var config = new CodeGeneratorConfig(Preferences.LoadConfig());
+                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.assemblyBasePaths);
+                foreach(var path in config.codeGeneratorAssemblyPaths) {
+                    resolver.Load(path);
                 }
 
-                return _codeGeneratorDependencyResolver;
+                return resolver;
             }
         }
 
         public static DependencyResolver dependencyResolver {
             get {
-                if(_dependencyResolver == null) {
-                    var config = new CodeGeneratorConfig(Preferences.LoadConfig());
-                    _dependencyResolver = new DependencyResolver(AppDomain.CurrentDomain, config.assemblyBasePaths);
-                    foreach(var path in config.assemblyPaths) {
-                        _dependencyResolver.Load(path);
-                    }
+                var config = new CodeGeneratorConfig(Preferences.LoadConfig());
+                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.assemblyBasePaths);
+                foreach(var path in config.assemblyPaths) {
+                    resolver.Load(path);
                 }
 
-                return _dependencyResolver;
+                return resolver;
             }
         }
-
-        static DependencyResolver _dependencyResolver;
-        static DependencyResolver _codeGeneratorDependencyResolver;
 
         public static CodeGenerator CodeGeneratorFromConfig(string configPath) {
             Preferences.configPath = configPath;
