@@ -60,9 +60,6 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                         }
                         EditorGUILayout.EndHorizontal();
                     }
-                    if(GUILayout.Button("Clear Groups")) {
-                        contextObserver.context.ClearGroups();
-                    }
                 }
                 EntitasEditorLayout.EndVerticalBox();
             }

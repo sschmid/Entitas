@@ -24,13 +24,11 @@ namespace Entitas.VisualDebugging.Unity {
 
             _context.OnEntityCreated += onEntityCreated;
             _context.OnGroupCreated += onGroupCreated;
-            _context.OnGroupCleared += onGroupCleared;
         }
 
         public void Deactivate() {
             _context.OnEntityCreated -= onEntityCreated;
             _context.OnGroupCreated -= onGroupCreated;
-            _context.OnGroupCleared -= onGroupCleared;
         }
 
         void onEntityCreated(IContext context, IEntity entity) {
@@ -41,10 +39,6 @@ namespace Entitas.VisualDebugging.Unity {
 
         void onGroupCreated(IContext context, IGroup group) {
             _groups.Add(group);
-        }
-
-        void onGroupCleared(IContext context, IGroup group) {
-            _groups.Remove(group);
         }
 
         public override string ToString() {
