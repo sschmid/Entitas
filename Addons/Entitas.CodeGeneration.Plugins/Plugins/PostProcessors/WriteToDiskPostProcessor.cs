@@ -23,7 +23,7 @@ namespace Entitas.CodeGenerator {
             cleanDir();
 
             foreach(var file in files) {
-                var fileName = _directory + file.fileName;
+                var fileName = _directory + "/" + file.fileName;
                 var targetDir = Path.GetDirectoryName(fileName);
                 if(!Directory.Exists(targetDir)) {
                     Directory.CreateDirectory(targetDir);
@@ -39,7 +39,7 @@ namespace Entitas.CodeGenerator {
                 directory += "/";
             }
             if(!directory.EndsWith("Generated/", StringComparison.Ordinal)) {
-                directory += "Generated/";
+                directory += "Generated";
             }
             return directory;
         }
