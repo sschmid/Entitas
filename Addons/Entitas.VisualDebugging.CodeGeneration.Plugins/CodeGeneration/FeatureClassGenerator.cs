@@ -1,4 +1,16 @@
-namespace Entitas {
+﻿using Entitas.CodeGenerator;
+
+namespace Entitas.VisualDebugging.Unity.Editor {
+
+    public class FeatureClassGenerator : ICodeGenerator {
+
+        public string name { get { return "Feature Class"; } }
+        public int priority { get { return 0; } }
+        public bool isEnabledByDefault { get { return true; } }
+        public bool runInDryMode { get { return true; } }
+
+        const string FEATURE_TEMPLATE =
+@"namespace Entitas {
 
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
@@ -38,4 +50,15 @@ namespace Entitas {
 
 #endif
 
+}
+";
+
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+            return new[] { new CodeGenFile(
+                "Feature.cs",
+                FEATURE_TEMPLATE,
+                GetType().FullName)
+            };
+        }
+    }
 }

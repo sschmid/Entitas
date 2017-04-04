@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGeneration\ContextObserverGenerator.cs" />
+    <Compile Include="CodeGeneration\FeatureClassGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CodeGeneration\" />
