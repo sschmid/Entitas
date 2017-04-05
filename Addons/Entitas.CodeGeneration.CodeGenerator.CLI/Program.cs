@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -10,6 +11,12 @@ namespace Entitas.CodeGenerator.CLI {
 
         static Logger _logger = fabl.GetLogger("Main");
 
+        static Dictionary<LogLevel, ConsoleColor> _consoleColors = new Dictionary<LogLevel, ConsoleColor> {
+            { LogLevel.Warn, ConsoleColor.Yellow },
+            { LogLevel.Error, ConsoleColor.Red },
+            { LogLevel.Fatal, ConsoleColor.DarkRed }
+        };
+
         public static void Main(string[] args) {
             if(args == null || args.Length == 0) {
                 printUsage();
@@ -19,6 +26,7 @@ namespace Entitas.CodeGenerator.CLI {
             setupLogging(args);
 
             try {
+
                 switch(args[0]) {
                     case "new":
                         createNewConfig(args.Any(arg => arg == "-f"));
@@ -82,9 +90,14 @@ namespace Entitas.CodeGenerator.CLI {
                 fabl.globalLogLevel = LogLevel.Info;
             }
 
-            var formatter = new ColorCodeFormatter();
             fabl.AddAppender((logger, logLevel, message) => {
-                Console.WriteLine(formatter.FormatMessage(logger, logLevel, message));
+                if(_consoleColors.ContainsKey(logLevel)) {
+                    Console.ForegroundColor = _consoleColors[logLevel];
+                    Console.WriteLine(message);
+                    Console.ResetColor();
+                } else {
+                    Console.WriteLine(message);
+                }
             });
         }
 
