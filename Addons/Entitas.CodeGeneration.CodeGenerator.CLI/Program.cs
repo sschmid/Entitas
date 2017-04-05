@@ -12,7 +12,7 @@ namespace Entitas.CodeGenerator.CLI {
         static Logger _logger = fabl.GetLogger("Main");
 
         static Dictionary<LogLevel, ConsoleColor> _consoleColors = new Dictionary<LogLevel, ConsoleColor> {
-            { LogLevel.Warn, ConsoleColor.Yellow },
+            { LogLevel.Warn, ConsoleColor.DarkYellow },
             { LogLevel.Error, ConsoleColor.Red },
             { LogLevel.Fatal, ConsoleColor.DarkRed }
         };
