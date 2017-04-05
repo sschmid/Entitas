@@ -63,7 +63,7 @@ namespace Entitas.CodeGenerator.CLI {
                         _logger.Error(e.ToString());
                     }
                 } else {
-                    if(args.Any(arg => arg == "-v")) {
+                    if(isVerbose(args)) {
                         _logger.Error(ex.ToString());
                     } else {
                         _logger.Error(ex.Message);
@@ -83,13 +83,24 @@ namespace Entitas.CodeGenerator.CLI {
        entitas scan     - Scans and prints available types found in specified assemblies
        entitas dry      - Simulates generating files without writing to disk
        entitas gen      - Generates files based on Entitas.properties
-       [-v]             - verbose output"
+       [-v]             - verbose output
+       [-s]             - silent output (errors only)"
             );
         }
 
+        static bool isVerbose(string[] args) {
+            return args.Any(arg => arg == "-v");  
+        }
+
+        static bool isSilent(string[] args) {
+            return args.Any(arg => arg == "-s");  
+        }
+
         static void setupLogging(string[] args) {
-            if(args.Any(arg => arg == "-v")) {
+            if(isVerbose(args)) {
                 fabl.globalLogLevel = LogLevel.On;
+            } else if(isSilent(args)) {
+                fabl.globalLogLevel = LogLevel.Error;
             } else {
                 fabl.globalLogLevel = LogLevel.Info;
             }
