@@ -14,9 +14,6 @@ namespace Entitas.CodeGenerator.Unity.Editor {
 
             Debug.Log("Generating...");
 
-
-            // TODO Try catch EditorUtility.ClearProgressBar()
-
             var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(Preferences.configPath);
 
             var progressOffset = 0f;
@@ -28,10 +25,19 @@ namespace Entitas.CodeGenerator.Unity.Editor {
                 }
             };
 
-            var dryFiles = codeGenerator.DryRun();
+            CodeGenFile[] dryFiles = null;
+            CodeGenFile[] files = null;
 
-            progressOffset = 0.5f;
-            var files = codeGenerator.Generate();
+            try {
+                dryFiles = codeGenerator.DryRun();
+                progressOffset = 0.5f;
+                files = codeGenerator.Generate();
+            } catch(Exception ex) {
+                dryFiles = new CodeGenFile[0];
+                files = new CodeGenFile[0];
+
+                EditorUtility.DisplayDialog("Error", ex.Message, "Ok");
+            }
 
             EditorUtility.ClearProgressBar();
 
