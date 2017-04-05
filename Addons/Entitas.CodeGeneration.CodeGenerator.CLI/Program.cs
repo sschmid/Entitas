@@ -37,11 +37,11 @@ namespace Entitas.CodeGenerator.CLI {
                     case "doctor":
                         doctor();
                         break;
+                    case "status":
+                        status();
+                        break;
                     case "fix":
                         fixConfig();
-                        break;
-                    case "diff":
-                        diff();
                         break;
                     case "scan":
                         scanDlls();
@@ -63,7 +63,11 @@ namespace Entitas.CodeGenerator.CLI {
                         _logger.Error(e.ToString());
                     }
                 } else {
-                    _logger.Error(ex.Message);
+                    if(args.Any(arg => arg == "-v")) {
+                        _logger.Error(ex.ToString());
+                    } else {
+                        _logger.Error(ex.Message);
+                    }
                 }
             }
         }
@@ -74,7 +78,7 @@ namespace Entitas.CodeGenerator.CLI {
 @"usage: entitas new [-f] - Creates new Entitas.properties config with default values
        entitas edit     - Opens Entitas.properties config
        entitas doctor   - Checks the config for potential problems
-       entitas diff     - Lists available and unavailable plugins
+       entitas status   - Lists available and unavailable plugins
        entitas fix      - Adds missing or removes unused keys interactively
        entitas scan     - Scans and prints available types found in specified assemblies
        entitas dry      - Simulates generating files without writing to disk
@@ -138,7 +142,7 @@ namespace Entitas.CodeGenerator.CLI {
 
         static void doctor() {
             if(File.Exists(Preferences.configPath)) {
-                diff();
+                status();
                 _logger.Debug("Dry Run");
                 CodeGeneratorUtil
                     .CodeGeneratorFromConfig(Preferences.configPath)
@@ -184,7 +188,7 @@ namespace Entitas.CodeGenerator.CLI {
             return keyChar == 'y';
         }
 
-        static void diff() {
+        static void status() {
             if(File.Exists(Preferences.configPath)) {
                 var fileContent = File.ReadAllText(Preferences.configPath);
                 var properties = new Properties(fileContent);
