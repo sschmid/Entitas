@@ -77,7 +77,13 @@ namespace Entitas.CodeGenerator {
             var getMethods = type
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance)
                 .Where(method => Attribute.IsDefined(method, typeof(EntityIndexGetMethodAttribute )))
-                .ToArray();
+                .Select(method => new MethodData (
+                    method.ReturnType.ToCompilableString(),
+                    method.Name,
+                    method.GetParameters()
+                        .Select(p => new MemberData(p.ParameterType.ToCompilableString(), p.Name))
+                        .ToArray()
+                )).ToArray();
 
             data.SetCustomMethods(getMethods);
 
@@ -126,11 +132,11 @@ namespace Entitas.CodeGenerator {
             data[ENTITY_INDEX_IS_CUSTOM] = isCustom;
         }
 
-        public static MethodInfo[] GetCustomMethods(this EntityIndexData data) {
-            return (MethodInfo[])data[ENTITY_INDEX_CUSTOM_METHODS];
+        public static MethodData[] GetCustomMethods(this EntityIndexData data) {
+            return (MethodData[])data[ENTITY_INDEX_CUSTOM_METHODS];
         }
         
-        public static void SetCustomMethods(this EntityIndexData data, MethodInfo[] methods) {
+        public static void SetCustomMethods(this EntityIndexData data, MethodData[] methods) {
             data[ENTITY_INDEX_CUSTOM_METHODS] = methods;
         }
 

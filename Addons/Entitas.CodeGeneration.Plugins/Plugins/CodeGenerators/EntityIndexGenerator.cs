@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Entitas.CodeGenerator;
 
 namespace Entitas.CodeGenerator {
 
@@ -147,13 +148,15 @@ ${getIndices}
         string getCustomMethods(EntityIndexData data) {
             return string.Join("\n", data.GetCustomMethods()
                                        .Select(m => CUSTOM_METHOD_TEMPLATE
-                    .Replace("${ReturnType}", m.ReturnType.ToCompilableString())
-                    .Replace("${MethodName}", m.Name)
+                    .Replace("${ReturnType}", m.returnType)
+                    .Replace("${MethodName}", m.methodName)
                     .Replace("${ContextName}", data.GetContextNames()[0])
-                    .Replace("${methodArgs}", string.Join(", ", m.GetParameters().Select(p => p.ParameterType.ToCompilableString() + " " + p.Name).ToArray()))
+                    .Replace("${methodArgs}", string.Join(", ", m.parameters.Select(p => p.type + " " + p.name).ToArray()))
                     .Replace("${IndexType}", data.GetEntityIndexType())
                     .Replace("${IndexName}", data.GetEntityIndexName())
-                    .Replace("${args}", string.Join(", ", m.GetParameters().Select(p => p.Name).ToArray()))).ToArray());
+                    .Replace("${args}", string.Join(", ", m.parameters.Select(p => p.name).ToArray()))).ToArray());
         }
    }
 }
+
+

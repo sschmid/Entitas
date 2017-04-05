@@ -48,7 +48,6 @@
     <Compile Include="Plugins\DataProviders\Components\Providers\ContextsComponentDataProvider.cs" />
     <Compile Include="Plugins\DataProviders\Components\Providers\IComponentDataProvider.cs" />
     <Compile Include="Plugins\DataProviders\Components\Providers\IsUniqueComponentDataProvider.cs" />
-    <Compile Include="Plugins\DataProviders\Components\Providers\MemberData.cs" />
     <Compile Include="Plugins\DataProviders\Components\Providers\MemberDataComponentDataProvider.cs" />
     <Compile Include="Plugins\DataProviders\Components\Providers\ShouldGenerateComponentComponentDataProvider.cs" />
     <Compile Include="Plugins\DataProviders\Components\Providers\ShouldGenerateComponentIndexComponentDataProvider.cs" />
@@ -63,6 +62,8 @@
     <Compile Include="Plugins\PostProcessors\MergeFilesPostProcessor.cs" />
     <Compile Include="Plugins\PostProcessors\NewLinePostProcessor.cs" />
     <Compile Include="Plugins\PostProcessors\WriteToDiskPostProcessor.cs" />
+    <Compile Include="Plugins\MemberData.cs" />
+    <Compile Include="Plugins\MethodData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\" />

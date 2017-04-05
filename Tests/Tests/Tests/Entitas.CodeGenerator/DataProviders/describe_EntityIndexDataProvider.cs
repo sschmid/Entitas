@@ -80,7 +80,7 @@ class describe_EntityIndexDataProvider : nspec {
             d.GetContextNames()[0].should_be("Test");
 
             var methods = d.GetCustomMethods();
-            methods.GetType().should_be(typeof(MethodInfo[]));
+            methods.GetType().should_be(typeof(MethodData[]));
             methods.Length.should_be(2);
         };
 
