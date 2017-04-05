@@ -29,6 +29,9 @@ namespace Entitas.CodeGenerator.CLI {
                     case "doctor":
                         doctor();
                         break;
+                    case "fix":
+                        fixConfig();
+                        break;
                     case "diff":
                         diff();
                         break;
@@ -58,15 +61,17 @@ namespace Entitas.CodeGenerator.CLI {
         }
 
         static void printUsage() {
+            Console.WriteLine("Entitas Code Generator version " + EntitasResources.GetVersion());
             Console.WriteLine(
-@"usage: entitas new [-f]     - Creates new Entitas.properties with default values
-       entitas edit         - Opens Entitas.properties
-       entitas doctor       - Checks the config for potential problems
-       entitas diff         - Lists unused and invalid data providers, code generators and post processors
-       entitas scan         - Scans and prints available types found in specified assemblies
-       entitas dry          - Simulates generating files without writing to disk
-       entitas gen          - Generates files based on Entitas.properties
-       [-v]                 - verbose output"
+@"usage: entitas new [-f] - Creates new Entitas.properties config with default values
+       entitas edit     - Opens Entitas.properties config
+       entitas doctor   - Checks the config for potential problems
+       entitas diff     - Lists available and unavailable plugins
+       entitas fix      - Adds missing or removes unused keys interactively
+       entitas scan     - Scans and prints available types found in specified assemblies
+       entitas dry      - Simulates generating files without writing to disk
+       entitas gen      - Generates files based on Entitas.properties
+       [-v]             - verbose output"
             );
         }
 
@@ -104,13 +109,18 @@ namespace Entitas.CodeGenerator.CLI {
                 editConfig();
             } else {
                 _logger.Warn(path + " already exists!");
-                _logger.Info("Use entitas new -f to overwrite exiting file.");
+                _logger.Info("Use entitas new -f to overwrite the exiting file.");
+                _logger.Info("Use entitas edit to open the exiting file.");
             }
         }
 
         static void editConfig() {
-            _logger.Debug("Opening " + Preferences.configPath);
-            System.Diagnostics.Process.Start(Preferences.configPath);
+            if(File.Exists(Preferences.configPath)) {
+                _logger.Debug("Opening " + Preferences.configPath);
+                System.Diagnostics.Process.Start(Preferences.configPath);
+            } else {
+                printNoConfig();
+            }
         }
 
         static void doctor() {
@@ -125,15 +135,57 @@ namespace Entitas.CodeGenerator.CLI {
             }
         }
 
+        static void fixConfig() {
+            if(File.Exists(Preferences.configPath)) {
+                var fileContent = File.ReadAllText(Preferences.configPath);
+                var properties = new Properties(fileContent);
+
+                foreach(var key in getMissingKey(properties)) {
+                    _logger.Info("Add missing key: '" + key + "' ? (y / n)");
+                    if(getUserDecision()) {
+                        properties[key] = string.Empty;
+                        Preferences.SaveConfig(new Config(properties.ToString()));
+                        Console.WriteLine("Added key: " + key);
+                    }
+                }
+
+                foreach(var key in getUnusedKeys(properties)) {
+                    _logger.Warn("Remove unused key: '" + key + "' ? (y / n)");
+                    if(getUserDecision()) {
+                        properties.RemoveKey(key);
+                        Preferences.SaveConfig(new Config(properties.ToString()));
+                        Console.WriteLine("Removed key: " + key);
+                    }
+                }
+            } else {
+                printNoConfig();
+            }
+        }
+
+        static bool getUserDecision() {
+            char keyChar;
+            do {
+                keyChar = Console.ReadKey(true).KeyChar;
+            } while(keyChar != 'y' && keyChar != 'n');
+
+            return keyChar == 'y';
+        }
+
         static void diff() {
             if(File.Exists(Preferences.configPath)) {
                 var fileContent = File.ReadAllText(Preferences.configPath);
                 var properties = new Properties(fileContent);
                 var config = new CodeGeneratorConfig(new Config(fileContent));
-                var types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
 
-                printUnusedKeys(properties);
-                printMissingKeys(properties);
+                foreach(var key in getUnusedKeys(properties)) {
+                    _logger.Info("Unused key: " + key);
+                }
+
+                foreach(var key in getMissingKey(properties)) {
+                    _logger.Warn("Missing key: " + key);
+                }
+
+                var types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
 
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(types, config.dataProviders));
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGenerator>(types, config.codeGenerators));
@@ -147,18 +199,16 @@ namespace Entitas.CodeGenerator.CLI {
             }
         }
 
-        static void printUnusedKeys(Properties properties) {
-            var unusedKeys = properties.keys.Where(key => !CodeGeneratorConfig.keys.Contains(key));
-            foreach(var key in unusedKeys) {
-                _logger.Info("Unused key: " + key);
-            }
+        static string[] getUnusedKeys(Properties properties) {
+            return properties.keys
+                             .Where(key => !CodeGeneratorConfig.keys.Contains(key))
+                             .ToArray();
         }
 
-        static void printMissingKeys(Properties properties) {
-            var missingKeys = CodeGeneratorConfig.keys.Where(key => !properties.HasKey(key));
-            foreach(var key in missingKeys) {
-                _logger.Warn("Missing key: " + key);
-            }
+        static string[] getMissingKey(Properties properties) {
+            return CodeGeneratorConfig.keys
+                                      .Where(key => !properties.HasKey(key))
+                                      .ToArray();
         }
 
         static void scanDlls() {
@@ -212,7 +262,7 @@ namespace Entitas.CodeGenerator.CLI {
         }
 
         static void printNoConfig() {
-            _logger.Info("Couldn't find " + Preferences.configPath);
+            _logger.Warn("Couldn't find " + Preferences.configPath);
             _logger.Info("Run 'entitas new' to create Entitas.properties with default values");
         }
     }

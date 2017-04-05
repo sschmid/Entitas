@@ -291,21 +291,6 @@ class describe_Context : nspec {
                 ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
             };
 
-            it["dispatches OnGroupCleared when clearing groups"] = () => {
-                IGroup eventGroup = null;
-                ctx.OnGroupCleared += (p, g) => {
-                    didDispatch += 1;
-                    p.should_be_same(ctx);
-                    eventGroup = g;
-                };
-                ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
-                var group2 = ctx.GetGroup(Matcher<TestEntity>.AllOf(1));
-                ctx.ClearGroups();
-
-                didDispatch.should_be(2);
-                eventGroup.should_be_same(group2);
-            };
-
             it["removes all external delegates when destroying an entity"] = () => {
                 var e = ctx.CreateEntity();
                 e.OnComponentAdded += delegate { this.Fail(); };
@@ -605,58 +590,6 @@ class describe_Context : nspec {
 
         context["reset"] = () => {
 
-            context["groups"] = () => {
-
-                it["resets and removes groups from context"] = () => {
-
-                    var m = Matcher<TestEntity>.AllOf(CID.ComponentA);
-                    var groupsCreated = 0;
-                    IGroup createdGroup = null;
-                    ctx.OnGroupCreated += (p, g) => {
-                        groupsCreated += 1;
-                        createdGroup = g;
-                    };
-
-                    var initialGroup = ctx.GetGroup(m);
-
-                    ctx.ClearGroups();
-
-                    ctx.GetGroup(m);
-
-                    ctx.CreateEntity().AddComponentA();
-
-                    groupsCreated.should_be(2);
-                    createdGroup.should_not_be_same(initialGroup);
-
-                    initialGroup.count.should_be(0);
-                    createdGroup.count.should_be(1);
-                };
-
-                it["removes all event handlers from groups"] = () => {
-                    var m = Matcher<TestEntity>.AllOf(CID.ComponentA);
-                    var group = ctx.GetGroup(m);
-
-                    group.OnEntityAdded += delegate { this.Fail(); };
-
-                    ctx.ClearGroups();
-
-                    var e = ctx.CreateEntity();
-                    e.AddComponentA();
-                    group.HandleEntity(e, CID.ComponentA, Component.A);
-                };
-
-                it["releases entities in groups"] = () => {
-                    var m = Matcher<TestEntity>.AllOf(CID.ComponentA);
-                    ctx.GetGroup(m);
-                    var entity = ctx.CreateEntity();
-                    entity.AddComponentA();
-
-                    ctx.ClearGroups();
-
-                    entity.retainCount.should_be(1);
-                };
-            };
-
             context["context"] = () => {
 
                 it["resets creation index"] = () => {
@@ -697,14 +630,6 @@ class describe_Context : nspec {
 
                         ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
                     };
-
-                    it["removes OnGroupCleared"] = () => {
-                        ctx.OnGroupCleared += delegate { this.Fail(); };
-                        ctx.Reset();
-                        ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
-
-                        ctx.ClearGroups();
-                    };
                 };
             };
 
@@ -738,36 +663,6 @@ class describe_Context : nspec {
                 it["only clears existing component pool"] = () => {
                     ctx.ClearComponentPool(CID.ComponentC);
                 };
-            };
-
-            context["EntityIndex"] = () => {
-
-                PrimaryEntityIndex<TestEntity, string> entityIndex = null;
-
-                before = () => {
-                    entityIndex = new PrimaryEntityIndex<TestEntity, string>("TestIndex", ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
-                        (e, c) => ((NameAgeComponent)(c)).name);
-                    ctx.AddEntityIndex(entityIndex);
-                };
-
-                it["deactivates EntityIndex"] = () => {
-                    var nameAgeComponent = new NameAgeComponent();
-                    nameAgeComponent.name = "Max";
-
-                    var e = ctx.CreateEntity();
-                    e.AddComponent(CID.ComponentA, nameAgeComponent);
-                    
-                    entityIndex.GetEntity("Max").should_be_same(e);
-
-                    ctx.DeactivateAndRemoveEntityIndices();
-
-                    entityIndex.GetEntity("Max").should_be_null();
-                };
-
-                it["removes EntityIndex"] = expect<ContextEntityIndexDoesNotExistException>(() => {
-                    ctx.DeactivateAndRemoveEntityIndices();
-                    ctx.GetEntityIndex(CID.ComponentA.ToString());
-                });
             };
         };
 

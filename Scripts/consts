@@ -26,12 +26,12 @@ ES_MIG="Entitas.Migration"
 ES_MIG_CLI="Entitas.Migration.CLI"
 ES_MIG_UE="Entitas.Migration.Unity.Editor"
 
-ES_VD_CG="Entitas.VisualDebugging.CodeGeneration"
+ES_VD_CG_P="Entitas.VisualDebugging.CodeGeneration.Plugins"
 ES_VD_U="Entitas.VisualDebugging.Unity"
 ES_VD_UE="Entitas.VisualDebugging.Unity.Editor"
 
 ES_BP="Entitas.Blueprints"
-ES_BP_CG="Entitas.Blueprints.CodeGeneration"
+ES_BP_CG_P="Entitas.Blueprints.CodeGeneration.Plugins"
 ES_BP_U="Entitas.Blueprints.Unity"
 ES_BP_UE="Entitas.Blueprints.Unity.Editor"
 

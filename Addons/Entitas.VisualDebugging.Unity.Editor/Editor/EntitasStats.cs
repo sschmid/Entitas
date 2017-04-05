@@ -56,8 +56,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return type.ImplementsInterface<ISystem>()
                 && type != typeof(ReactiveSystem<>)
                 && type != typeof(Systems)
-                && type != typeof(DebugSystems)
-                && type != typeof(Feature);
+                && type != typeof(DebugSystems);
         }
     }
 }

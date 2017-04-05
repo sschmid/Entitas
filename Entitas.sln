@@ -59,11 +59,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Plug
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Utils", "Entitas.Utils\Entitas.Utils.csproj", "{344251CF-6CA3-4272-B92E-69CCF7D26700}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.CodeGeneration", "Addons\Entitas.VisualDebugging.CodeGeneration\Entitas.VisualDebugging.CodeGeneration.csproj", "{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.CodeGeneration.Plugins", "Addons\Entitas.VisualDebugging.CodeGeneration.Plugins\Entitas.VisualDebugging.CodeGeneration.Plugins.csproj", "{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration", "Addons\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj", "{8AA2998C-DEAD-4795-8255-55C2CEC8DED2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.CodeGeneration", "Addons\Entitas.Blueprints.CodeGeneration\Entitas.Blueprints.CodeGeneration.csproj", "{205014A8-1E4A-40D2-A368-9D2497EA9AE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.CodeGeneration.Plugins", "Addons\Entitas.Blueprints.CodeGeneration.Plugins\Entitas.Blueprints.CodeGeneration.Plugins.csproj", "{205014A8-1E4A-40D2-A368-9D2497EA9AE1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entitas", "Entitas", "{3DADB01D-23B9-4E33-8243-E2ED50D7D0D1}"
 EndProject

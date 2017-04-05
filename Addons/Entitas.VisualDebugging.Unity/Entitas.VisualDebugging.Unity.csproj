@@ -40,7 +40,6 @@
     <Compile Include="Unity\ContextObserver\ContextObserverExtension.cs" />
     <Compile Include="Unity\DebugSystems\DebugSystems.cs" />
     <Compile Include="Unity\DebugSystems\DebugSystemsBehaviour.cs" />
-    <Compile Include="Unity\DebugSystems\Feature.cs" />
     <Compile Include="Unity\Entity\DontDrawComponentAttribute.cs" />
     <Compile Include="Unity\Entity\EntityBehaviour.cs" />
     <Compile Include="Unity\Entity\EntityLink.cs" />

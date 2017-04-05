@@ -21,9 +21,12 @@ ${contextObservers}
     }
 
     public void CreateContextObserver(Entitas.IContext context) {
-        if(UnityEngine.Application.isPlaying) {
-            var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);
-            UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
+        try {
+            if(UnityEngine.Application.isPlaying) {
+                var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);
+                UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
+            }
+        } catch(System.Exception) {
         }
     }
 

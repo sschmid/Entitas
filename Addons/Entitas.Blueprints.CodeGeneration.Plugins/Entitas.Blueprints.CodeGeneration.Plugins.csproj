@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{205014A8-1E4A-40D2-A368-9D2497EA9AE1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.Blueprints.CodeGeneration</RootNamespace>
-    <AssemblyName>Entitas.Blueprints.CodeGeneration</AssemblyName>
+    <RootNamespace>Entitas.Blueprints.CodeGeneration.Plugins</RootNamespace>
+    <AssemblyName>Entitas.Blueprints.CodeGeneration.Plugins</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>

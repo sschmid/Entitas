@@ -23,6 +23,12 @@ namespace Entitas.CodeGenerator {
                 ${Lookup}.componentTypes
             )
         ) {
+
+#if (ENTITAS_FAST_AND_UNSAFE)
+        aercFactory = (entity) => new Entitas.UnsafeAERC();
+#else
+        aercFactory = (entity) => new Entitas.SafeAERC(entity);
+#endif
     }
 }
 ";

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.VisualDebugging.CodeGeneration</RootNamespace>
+    <RootNamespace>Entitas.VisualDebugging.CodeGeneration.Plugins</RootNamespace>
     <AssemblyName>Entitas.VisualDebugging.CodeGeneration</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
@@ -26,12 +26,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <AssemblyName>Entitas.VisualDebugging.CodeGeneration.Plugins</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGeneration\ContextObserverGenerator.cs" />
+    <Compile Include="CodeGeneration\FeatureClassGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CodeGeneration\" />

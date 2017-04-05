@@ -17,16 +17,26 @@ namespace Entitas.Unity.Editor {
         IEntitasPreferencesDrawer[] _preferencesDrawers;
         Vector2 _scrollViewPosition;
 
+        Exception _configException;
+
         void OnEnable() {
             _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasHeader");
-            _config = Preferences.LoadConfig();
-            _preferencesDrawers = AppDomain.CurrentDomain
-                                           .GetInstancesOf<IEntitasPreferencesDrawer>()
-                                           .OrderBy(drawer => drawer.priority)
-                                           .ToArray();
 
-            foreach(var drawer in _preferencesDrawers) {
-                drawer.Initialize(_config);
+            try {
+                _config = Preferences.LoadConfig();
+            } catch(Exception ex) {
+                _configException = ex;
+            }
+
+            if(_configException == null) {
+                _preferencesDrawers = AppDomain.CurrentDomain
+                                               .GetInstancesOf<IEntitasPreferencesDrawer>()
+                                               .OrderBy(drawer => drawer.priority)
+                                               .ToArray();
+
+                foreach(var drawer in _preferencesDrawers) {
+                    drawer.Initialize(_config);
+                }
             }
         }
 
@@ -74,11 +84,17 @@ namespace Entitas.Unity.Editor {
         }
 
         void drawPreferencesDrawers() {
-            for(int i = 0; i < _preferencesDrawers.Length; i++) {
-                _preferencesDrawers[i].Draw(_config);
-                if(i < _preferencesDrawers.Length -1) {
-                    EditorGUILayout.Space();
+            if(_configException == null) {
+                for(int i = 0; i < _preferencesDrawers.Length; i++) {
+                    _preferencesDrawers[i].Draw(_config);
+                    if(i < _preferencesDrawers.Length -1) {
+                        EditorGUILayout.Space();
+                    }
                 }
+            } else {
+                EditorGUILayout.LabelField("Entitas.properties is not in a correct format.");
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField(_configException.Message);
             }
         }
     }

@@ -12,7 +12,6 @@ namespace Entitas {
         event ContextEntityChanged OnEntityDestroyed;
 
         event ContextGroupChanged OnGroupCreated;
-        event ContextGroupChanged OnGroupCleared;
 
         int totalComponents { get; }
 
@@ -25,11 +24,8 @@ namespace Entitas {
 
         void DestroyAllEntities();
 
-        void ClearGroups();
-
         void AddEntityIndex(IEntityIndex entityIndex);
         IEntityIndex GetEntityIndex(string name);
-        void DeactivateAndRemoveEntityIndices();
 
         void ResetCreationIndex();
         void ClearComponentPool(int index);
