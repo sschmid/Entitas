@@ -1,9 +1,10 @@
 ﻿using System;
-using Entitas;
+using Entitas.Core;
 using Entitas.Unity;
 using Entitas.VisualDebugging.Unity.Editor;
 using NUnit.Framework;
 using UnityEngine;
+using Entitas;
 
 public class EntityLinkTests {
 
@@ -34,7 +35,7 @@ public class EntityLinkTests {
         Assert.AreSame(_context, _link.context);
         Assert.AreEqual(retainCount + 1, _entity.retainCount);
         #if !ENTITAS_FAST_AND_UNSAFE
-        Assert.IsTrue(_entity.owners.Contains(_link));
+        Assert.IsTrue(((SafeAERC)_entity.aerc).owners.Contains(_link));
         #endif
     }
 
@@ -60,7 +61,7 @@ public class EntityLinkTests {
         Assert.IsNull(_link.entity);
         Assert.IsNull(_link.context);
         #if !ENTITAS_FAST_AND_UNSAFE
-        Assert.IsFalse(_entity.owners.Contains(_link));
+        Assert.IsFalse(((SafeAERC)_entity.aerc).owners.Contains(_link));
         #endif
     }
 

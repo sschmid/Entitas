@@ -15,6 +15,7 @@ cp "${ES}/${BIN}/${ES}.dll" ${BUILD_SRC}
 cp "${ES_CORE}/${BIN}/${ES_CORE}.dll" ${BUILD_SRC}
 cp "${ES_UTILS}/${BIN}/${ES_UTILS}.dll" ${BUILD_SRC}
 
+cp "${ADDONS}/${ES_U}/${BIN}/${ES_U}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_UE}/${BIN}/${ES_UE}.dll" ${BUILD_SRC}
 
 cp "${ADDONS}/${ES_CG}/${BIN}/${ES_CG}.dll" ${BUILD_SRC}
@@ -91,6 +92,7 @@ cp "${BUILD_SRC}/${ES_CG}.dll" "${libDir}/Editor/"
 cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
 cp "${BUILD_SRC}/${ES_CORE}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES}.dll" ${libDir}
+cp "${BUILD_SRC}/${ES_U}.dll" "${libDir}"
 cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
 cp "${BUILD_SRC}/${ES_UTILS}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_VD_U}.dll" ${libDir}

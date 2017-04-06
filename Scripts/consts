@@ -13,6 +13,7 @@ ES="Entitas"
 ES_CORE="Entitas.Core"
 ES_UTILS="Entitas.Utils"
 
+ES_U="Entitas.Unity"
 ES_UE="Entitas.Unity.Editor"
 
 ES_CG="Entitas.CodeGeneration"

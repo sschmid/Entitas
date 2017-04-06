@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Core;
 
 public class ProcessRandomValueSystem : ReactiveSystem<GameEntity> {
 

@@ -1,4 +1,4 @@
-﻿using Entitas;
+﻿using Entitas.Core;
 using UnityEngine;
 
 [Game]

@@ -35,18 +35,19 @@ Tests/Unity/Entitas.Unity/Entitas.Unity.sln
 Tests/Unity/Entitas.Unity/Assets/Libraries
 Tests/Unity/Entitas.Unity/Assets/Libraries.meta
 
-Tests/Unity/CodeGenerator/Entitas.CodeGenerator.Unity.sln
+Tests/Unity/CodeGenerator/CodeGenerator.sln
 Tests/Unity/CodeGenerator/Assets/Libraries
 Tests/Unity/CodeGenerator/Assets/Libraries.meta
 
-Tests/Unity/Blueprints/Entitas.Blueprints.Unity.sln
+Tests/Unity/Blueprints/Blueprints.sln
 Tests/Unity/Blueprints/Assets/Libraries
 Tests/Unity/Blueprints/Assets/Libraries.meta
 
-Tests/Unity/Migration/Entitas.Migration.Unity.sln
+Tests/Unity/Migration/Migration.sln
 Tests/Unity/Migration/Assets/Libraries
 Tests/Unity/Migration/Assets/Libraries.meta
 
-Tests/Unity/VisualDebugging/Entitas.VisualDebugging.Unity.sln
+Tests/Unity/VisualDebugging/VisualDebugging.sln
 Tests/Unity/VisualDebugging/Assets/Libraries
 Tests/Unity/VisualDebugging/Assets/Libraries.meta
+

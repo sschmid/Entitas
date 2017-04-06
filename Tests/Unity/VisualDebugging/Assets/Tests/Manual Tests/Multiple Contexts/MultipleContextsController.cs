@@ -1,5 +1,6 @@
 using UnityEngine;
 using Entitas;
+using Entitas.Core;
 
 public class MultipleContextsController : MonoBehaviour {
 
@@ -8,10 +9,10 @@ public class MultipleContextsController : MonoBehaviour {
 
     void Start() {
 
-        _contextA = new Context<GameEntity>(GameComponentsLookup.TotalComponents, 0, new ContextInfo("Context A", GameComponentsLookup.componentNames, GameComponentsLookup.componentTypes));
+        _contextA = new Context<GameEntity>(GameComponentsLookup.TotalComponents, 0, new ContextInfo("Context A", GameComponentsLookup.componentNames, GameComponentsLookup.componentTypes), (entity) => new SafeAERC(entity));
         new Entitas.VisualDebugging.Unity.ContextObserver(_contextA);
 
-        _contextB = new Context<GameEntity>(GameComponentsLookup.TotalComponents, 0, new ContextInfo("Context B", GameComponentsLookup.componentNames, GameComponentsLookup.componentTypes));
+        _contextB = new Context<GameEntity>(GameComponentsLookup.TotalComponents, 0, new ContextInfo("Context B", GameComponentsLookup.componentNames, GameComponentsLookup.componentTypes), (entity) => new SafeAERC(entity));
         new Entitas.VisualDebugging.Unity.ContextObserver(_contextB);
 
 

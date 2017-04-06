@@ -1,5 +1,5 @@
 ﻿using UnityEditor;
-using Entitas.CodeGenerator.Unity.Editor;
+using Entitas.CodeGeneration.Unity.Editor;
 
 public static class Commands {
 

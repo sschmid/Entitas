@@ -1,5 +1,5 @@
 using System;
-using Entitas.CodeGenerator.Attributes;
+using Entitas.CodeGeneration.Attributes;
 
 [Game]
 public class SomeClass {

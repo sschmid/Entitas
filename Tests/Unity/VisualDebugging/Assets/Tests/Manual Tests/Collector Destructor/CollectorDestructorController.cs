@@ -12,7 +12,8 @@ public class CollectorDestructorController : MonoBehaviour {
         _initialEntity = context.CreateEntity();
         _initialEntity.isTest = true;
         context.DestroyEntity(_initialEntity);
-        context.ClearGroups();
+        // TODO
+        //context.ClearGroups();
     }
 
     void Update() {

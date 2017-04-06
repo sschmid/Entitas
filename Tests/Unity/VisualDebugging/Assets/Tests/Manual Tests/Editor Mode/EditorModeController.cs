@@ -1,5 +1,5 @@
 using UnityEngine;
-using Entitas;
+using Entitas.Core;
 
 public class EditorModeController : MonoBehaviour {
 

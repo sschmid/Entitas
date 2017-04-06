@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Entitas;
+using Entitas.Core;
 
 public class AReactiveSystem : ReactiveSystem<GameEntity> {
 
