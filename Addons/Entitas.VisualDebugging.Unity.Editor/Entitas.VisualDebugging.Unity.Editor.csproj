@@ -105,6 +105,10 @@
       <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
       <Name>Entitas.CodeGeneration.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity\Entitas.Unity.csproj">
+      <Project>{D85282FB-B992-4316-90FF-4D81D912202C}</Project>
+      <Name>Entitas.Unity</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

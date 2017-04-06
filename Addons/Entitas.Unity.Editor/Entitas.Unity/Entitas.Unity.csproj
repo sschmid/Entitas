@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{70222463-4E60-4862-8C18-1EBA6CA63353}</ProjectGuid>
+    <ProjectGuid>{D85282FB-B992-4316-90FF-4D81D912202C}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.VisualDebugging.Unity</RootNamespace>
-    <AssemblyName>Entitas.VisualDebugging.Unity</AssemblyName>
+    <RootNamespace>Entitas.Unity</RootNamespace>
+    <AssemblyName>Entitas.Unity</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
@@ -30,26 +30,17 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Unity\GameObjectDestroyExtension.cs" />
-    <Compile Include="Unity\ContextObserver\ContextObserver.cs" />
-    <Compile Include="Unity\ContextObserver\ContextObserverBehaviour.cs" />
-    <Compile Include="Unity\ContextObserver\ContextObserverExtension.cs" />
-    <Compile Include="Unity\DebugSystems\DebugSystems.cs" />
-    <Compile Include="Unity\DebugSystems\DebugSystemsBehaviour.cs" />
-    <Compile Include="Unity\Entity\DontDrawComponentAttribute.cs" />
-    <Compile Include="Unity\Entity\EntityBehaviour.cs" />
-    <Compile Include="Unity\DebugSystems\SystemInfo.cs" />
+    <Folder Include="Entitas.Unity\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
-      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
-      <Name>Entitas</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
+    <Compile Include="Entitas.Unity\EntityLink.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Entitas.Core\Entitas.Core.csproj">
       <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
       <Name>Entitas.Core</Name>
     </ProjectReference>
