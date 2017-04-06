@@ -1,3 +1,4 @@
+using Entitas.VisualDebugging.Unity;
 using Entitas.VisualDebugging.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class EditorModeInspector : Editor {
 
         if(GUILayout.Button("Reset context")) {
             controller.context.Reset();
+            controller.context.FindContextObserver().gameObject.DestroyGameObject();
+            controller.context = null;
         }
 
         if(GUILayout.Button("Create entitiy")) {
