@@ -8,9 +8,9 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
         public static readonly string[] keys = {
             PROJECT_PATH_KEY,
-            ASSEMBLY_BASE_PATHS_KEY,
+            SEARCH_PATHS_KEY,
             ASSEMBLY_PATHS_KEY,
-            CODE_GENERATOR_ASSEMBLY_PATHS_KEY,
+            PLUGINS_PATHS_KEY,
             TARGET_DIRECTORY_KEY,
             CONTEXTS_KEY,
             DATA_PROVIDERS_KEY,
@@ -18,61 +18,61 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             POST_PROCESSORS_KEY
         };
 
-        public const string PROJECT_PATH_KEY = "Entitas.CodeGenerator.Project";
+        public const string PROJECT_PATH_KEY = "Entitas.CodeGeneration.Project";
         const string DEFAULT_PROJECT_PATH = "Assembly-CSharp.csproj";
         public string projectPath { 
             get { return _config.GetValueOrDefault(PROJECT_PATH_KEY, DEFAULT_PROJECT_PATH); }
             set { _config[PROJECT_PATH_KEY] = value; }
         }
 
-        public const string ASSEMBLY_BASE_PATHS_KEY = "Entitas.CodeGenerator.AssemblyBasePaths";
-        const string DEFAULT_ASSEMBLY_BASE_PATHS = "Library/ScriptAssemblies, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity";
-        public string[] assemblyBasePaths { 
-            get { return separateValues(_config.GetValueOrDefault(ASSEMBLY_BASE_PATHS_KEY, DEFAULT_ASSEMBLY_BASE_PATHS)); }
-            set { _config[ASSEMBLY_BASE_PATHS_KEY] = joinValues(value); }
+        public const string SEARCH_PATHS_KEY = "Entitas.CodeGeneration.SearchPaths";
+        const string SEARCH_PATHS = "Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity";
+        public string[] searchPaths { 
+            get { return separateValues(_config.GetValueOrDefault(SEARCH_PATHS_KEY, SEARCH_PATHS)); }
+            set { _config[SEARCH_PATHS_KEY] = joinValues(value); }
         }
 
-        public const string ASSEMBLY_PATHS_KEY = "Entitas.CodeGenerator.Assemblies";
-        const string DEFAULT_ASSEMBLY_PATHS = "Assembly-CSharp.dll";
-        public string[] assemblyPaths { 
+        public const string ASSEMBLY_PATHS_KEY = "Entitas.CodeGeneration.Assemblies";
+        const string DEFAULT_ASSEMBLY_PATHS = "Library/ScriptAssemblies/Assembly-CSharp.dll";
+        public string[] assemblies { 
             get { return separateValues(_config.GetValueOrDefault(ASSEMBLY_PATHS_KEY, DEFAULT_ASSEMBLY_PATHS)); }
             set { _config[ASSEMBLY_PATHS_KEY] = joinValues(value); }
         }
 
-        public const string CODE_GENERATOR_ASSEMBLY_PATHS_KEY = "Entitas.CodeGenerator.CodeGeneratorAssemblies";
-        const string DEFAULT_CODE_GENERATOR_ASSEMBLY_PATHS = "Assembly-CSharp-Editor.dll";
-        public string[] codeGeneratorAssemblyPaths { 
-            get { return separateValues(_config.GetValueOrDefault(CODE_GENERATOR_ASSEMBLY_PATHS_KEY, DEFAULT_CODE_GENERATOR_ASSEMBLY_PATHS)); }
-            set { _config[CODE_GENERATOR_ASSEMBLY_PATHS_KEY] = joinValues(value); }
+        public const string PLUGINS_PATHS_KEY = "Entitas.CodeGeneration.Plugins";
+        const string PLUGINS_PATHS = "Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins";
+        public string[] plugins { 
+            get { return separateValues(_config.GetValueOrDefault(PLUGINS_PATHS_KEY, PLUGINS_PATHS)); }
+            set { _config[PLUGINS_PATHS_KEY] = joinValues(value); }
         }
 
-        public const string TARGET_DIRECTORY_KEY = "Entitas.CodeGenerator.TargetDirectory";
+        public const string TARGET_DIRECTORY_KEY = "Entitas.CodeGeneration.TargetDirectory";
         const string DEFAULT_TARGET_DIRECTORY = "Assets/Generated";
         public string targetDirectory { 
             get { return _config.GetValueOrDefault(TARGET_DIRECTORY_KEY, DEFAULT_TARGET_DIRECTORY); }
             set { _config[TARGET_DIRECTORY_KEY] = value; }
         }
 
-        public const string CONTEXTS_KEY = "Entitas.CodeGenerator.Contexts";
+        public const string CONTEXTS_KEY = "Entitas.CodeGeneration.Contexts";
         const string DEFAULT_CONTEXTS = "Game, GameState, Input";
         public string[] contexts {
             get { return separateValues(_config.GetValueOrDefault(CONTEXTS_KEY, DEFAULT_CONTEXTS)); }
             set { _config[CONTEXTS_KEY] = joinValues(value); }
         }
 
-        public const string DATA_PROVIDERS_KEY = "Entitas.CodeGenerator.DataProviders";
+        public const string DATA_PROVIDERS_KEY = "Entitas.CodeGeneration.DataProviders";
         public string[] dataProviders {
             get {  return separateValues(_config.GetValueOrDefault(DATA_PROVIDERS_KEY, _defaultDataProviders)); }
             set { _config[DATA_PROVIDERS_KEY] = joinValues(value); }
         }
 
-        public const string CODE_GENERATORS_KEY = "Entitas.CodeGenerator.CodeGenerators";
+        public const string CODE_GENERATORS_KEY = "Entitas.CodeGeneration.CodeGenerators";
         public string[] codeGenerators {
             get {  return separateValues(_config.GetValueOrDefault(CODE_GENERATORS_KEY, _defaultCodeGenerators)); }
             set { _config[CODE_GENERATORS_KEY] = joinValues(value); }
         }
 
-        public const string POST_PROCESSORS_KEY = "Entitas.CodeGenerator.PostProcessors";
+        public const string POST_PROCESSORS_KEY = "Entitas.CodeGeneration.PostProcessors";
         public string[] postProcessors {
             get {  return separateValues(_config.GetValueOrDefault(POST_PROCESSORS_KEY, _defaultPostProcessors)); }
             set { _config[POST_PROCESSORS_KEY] = joinValues(value); }
@@ -95,9 +95,9 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
             // Assigning will apply default values to missing keys
             projectPath = projectPath;
-            assemblyBasePaths = assemblyBasePaths;
-            assemblyPaths = assemblyPaths;
-            codeGeneratorAssemblyPaths = codeGeneratorAssemblyPaths;
+            searchPaths = searchPaths;
+            assemblies = assemblies;
+            plugins = plugins;
             targetDirectory = targetDirectory;
             contexts = contexts;
             this.dataProviders = this.dataProviders;

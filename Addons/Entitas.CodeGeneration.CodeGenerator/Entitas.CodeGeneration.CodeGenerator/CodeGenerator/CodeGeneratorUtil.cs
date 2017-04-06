@@ -9,8 +9,8 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         public static DependencyResolver codeGeneratorDependencyResolver {
             get {
                 var config = new CodeGeneratorConfig(Preferences.LoadConfig());
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.assemblyBasePaths);
-                foreach(var path in config.codeGeneratorAssemblyPaths) {
+                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
+                foreach(var path in config.plugins) {
                     resolver.Load(path);
                 }
 
@@ -21,8 +21,8 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         public static DependencyResolver dependencyResolver {
             get {
                 var config = new CodeGeneratorConfig(Preferences.LoadConfig());
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.assemblyBasePaths);
-                foreach(var path in config.assemblyPaths) {
+                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
+                foreach(var path in config.assemblies) {
                     resolver.Load(path);
                 }
 
