@@ -82,7 +82,9 @@ rm -rf $TMP_DIR
 
 # create code generator zip ------------------------------------------------
 TMP_CG="${TMP_DIR}/CodeGenerator"
-mkdir $TMP_DIR $TMP_CG
+CG_PLUGINS="${TMP_CG}/Plugins"
+CG_BUILTIN="${CG_PLUGINS}/Builtin"
+mkdir $TMP_DIR $TMP_CG $CG_PLUGINS $CG_BUILTIN
 
 cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/entitas.exe"
 cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_CG
@@ -91,6 +93,24 @@ cp "${BUILD_SRC}/${ES_CORE}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_CG
 cp "${BUILD_SRC}/fabl.dll" $TMP_CG
+
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_CG_G}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_CG}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_CG_P}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_CORE}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_UTILS}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_VD_CG_P}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/fabl.dll" $CG_BUILTIN
+
+cp "${BUILD_SRC}/${ES_BP_CG_P}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_BP}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_BP_U}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_BP_UE}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_UE}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_VD_U}.dll" $CG_BUILTIN
+cp "${BUILD_SRC}/${ES_VD_UE}.dll" $CG_BUILTIN
 
 pushd $TMP_DIR > /dev/null
   zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-CodeGenerator.zip" ./
