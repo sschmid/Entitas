@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D85282FB-B992-4316-90FF-4D81D912202C}</ProjectGuid>
+    <ProjectGuid>{CB3ADCB3-E842-4A71-B32E-15ABDE7311F6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Entitas.Unity</RootNamespace>
     <AssemblyName>Entitas.Unity</AssemblyName>
@@ -30,7 +30,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
+      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -40,7 +40,7 @@
     <Compile Include="Entitas.Unity\EntityLink.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Entitas.Core\Entitas.Core.csproj">
+    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
       <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
       <Name>Entitas.Core</Name>
     </ProjectReference>

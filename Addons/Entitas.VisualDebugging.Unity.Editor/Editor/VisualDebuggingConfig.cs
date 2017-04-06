@@ -1,4 +1,6 @@
-namespace Entitas.VisualDebugging.Unity {
+using Entitas.Utils;
+
+namespace Entitas.VisualDebugging.Unity.Editor {
 
     public class VisualDebuggingConfig {
 

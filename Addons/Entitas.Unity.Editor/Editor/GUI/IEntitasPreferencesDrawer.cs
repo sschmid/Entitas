@@ -1,3 +1,5 @@
+using Entitas.Utils;
+
 namespace Entitas.Unity.Editor {
 
     public interface IEntitasPreferencesDrawer {

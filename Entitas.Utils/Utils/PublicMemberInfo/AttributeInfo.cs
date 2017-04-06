@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Entitas {
+namespace Entitas.Utils {
 
     public class AttributeInfo {
 

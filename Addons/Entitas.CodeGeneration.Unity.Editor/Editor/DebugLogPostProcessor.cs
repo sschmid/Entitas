@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Entitas.CodeGenerator.Unity.Editor {
+namespace Entitas.CodeGeneration.Unity.Editor {
 
     public class DebugLogPostProcessor : ICodeGenFilePostProcessor {
 

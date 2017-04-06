@@ -1,5 +1,5 @@
 ﻿using System;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration.CodeGenerator;
 using NSpec;
 
 class describe_DependencyResolver : nspec {

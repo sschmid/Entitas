@@ -1,7 +1,8 @@
 ﻿using System.Linq;
-using Entitas.CodeGenerator;
+using Entitas.Blueprints.Unity.Editor;
+using Entitas.CodeGeneration;
 
-namespace Entitas.Blueprints.Unity.Editor {
+namespace Entitas.Blueprints.CodeGeneration.Plugins {
 
     public class BlueprintDataProvider : ICodeGeneratorDataProvider {
 

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Entitas;
+using Entitas.Utils;
 using NSpec;
 
 class describe_Properties : nspec {

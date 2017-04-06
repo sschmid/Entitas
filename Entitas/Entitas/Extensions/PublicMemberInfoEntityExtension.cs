@@ -1,3 +1,6 @@
+using Entitas.Core;
+using Entitas.Utils;
+
 namespace Entitas {
 
     public static class PublicMemberInfoEntityExtension {

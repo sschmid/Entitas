@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Core;
 using My.Namespace;
 using NSpec;
 

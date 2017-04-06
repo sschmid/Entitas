@@ -1,4 +1,6 @@
-﻿namespace Entitas {
+﻿using Entitas.Core;
+
+namespace Entitas {
 
     /// Automatic Entity Reference Counting (AERC)
     /// is used internally to prevent pooling retained entities.

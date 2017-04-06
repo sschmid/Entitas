@@ -31,18 +31,13 @@ class check_namespaces : nspec {
             var fileName = file.Key
                                .Replace(dir(projectRoot), string.Empty)
                                .Replace(addonsDir, string.Empty);
-                
+
+
             string expectedNamespace;
-            if(file.Key.Contains(typeof(Entitas.Feature).Name)) {
-                expectedNamespace = "Entitas";
-            } else if(file.Key.Contains("EntityLink.cs")) {
-                expectedNamespace = "Entitas.Unity";
-            } else {
-                expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
-                    .ToString()
-                    .Replace("namespace ", string.Empty)
-                    .Trim();
-            }
+            expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
+                .ToString()
+                .Replace("namespace ", string.Empty)
+                .Trim();
 
             var foundNamespace = Regex.Match(file.Value, namespacePattern, RegexOptions.Multiline)
                 .ToString()

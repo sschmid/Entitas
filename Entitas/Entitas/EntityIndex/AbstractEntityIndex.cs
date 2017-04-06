@@ -1,4 +1,5 @@
 using System;
+using Entitas.Core;
 
 namespace Entitas {
 

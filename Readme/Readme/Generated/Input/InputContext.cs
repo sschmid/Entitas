@@ -12,11 +12,11 @@ public sealed partial class InputContext : Entitas.Context<InputEntity> {
         : base(
             InputComponentsLookup.TotalComponents,
             0,
-            new Entitas.ContextInfo(
+            new Entitas.Core.ContextInfo(
                 "Input",
                 InputComponentsLookup.componentNames,
                 InputComponentsLookup.componentTypes
-            )
+            ), (entity) => new Entitas.SafeAERC(entity)
         ) {
     }
 }

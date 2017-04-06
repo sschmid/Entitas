@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Entitas.CodeGenerator.Attributes {
+namespace Entitas.CodeGeneration.Attributes {
 
     [AttributeUsage(AttributeTargets.Method)]
     public class EntityIndexGetMethodAttribute : Attribute {

@@ -1,5 +1,5 @@
-using Entitas;
-using Entitas.VisualDebugging.Unity;
+using Entitas.Utils;
+using Entitas.VisualDebugging.Unity.Editor;
 using NSpec;
 
 class describe_VisualDebuggingConfig : nspec {

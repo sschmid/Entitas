@@ -1,4 +1,4 @@
-using Entitas;
+using Entitas.Core;
 
 #pragma warning disable
 public class EntityAddComponent : IPerformanceTest {

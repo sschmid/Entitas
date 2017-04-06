@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Entitas.Core;
+using Entitas.Utils;
 
 namespace Entitas {
 
@@ -48,16 +50,11 @@ namespace Entitas {
         /// other objects (e.g. Group, Collector, ReactiveSystem).
         public int retainedEntitiesCount { get { return _retainedEntities.Count; } }
 
-        /// Automatic Entity Reference Counting (AERC)
-        /// is used internally to prevent pooling retained entities.
-        /// If you use retain manually you also have to
-        /// release it manually at some point.
-        public Func<IEntity, IAERC> aercFactory;
-
         readonly int _totalComponents;
 
         readonly Stack<IComponent>[] _componentPools;
         readonly ContextInfo _contextInfo;
+        readonly Func<IEntity, IAERC> _aercFactory;
 
         readonly HashSet<TEntity> _entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
         readonly Stack<TEntity> _reusableEntities = new Stack<TEntity>();
@@ -80,12 +77,12 @@ namespace Entitas {
 
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
-        public Context(int totalComponents) : this(totalComponents, 0, null) {
+        public Context(int totalComponents) : this(totalComponents, 0, null, null) {
         }
 
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
-        public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo) {
+        public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory) {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
 
@@ -97,6 +94,10 @@ namespace Entitas {
             } else {
                 _contextInfo = createDefaultContextInfo();
             }
+
+            _aercFactory = aercFactory == null
+                ? (entity) => new SafeAERC(entity)
+                : aercFactory;
 
             _groupsForIndex = new List<IGroup<TEntity>>[totalComponents];
             _componentPools = new Stack<IComponent>[totalComponents];
@@ -132,7 +133,7 @@ namespace Entitas {
                 entity.Reactivate(_creationIndex++);
             } else {
                 entity = new TEntity();
-                entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo, aercFactory(entity));
+                entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo, _aercFactory(entity));
             }
 
             _entities.Add(entity);

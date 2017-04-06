@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using Entitas.CodeGenerator;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class EntityIndexGenerator : ICodeGenerator {
 
@@ -16,7 +16,7 @@ namespace Entitas.CodeGenerator {
 
 ${indexConstants}
 
-    [Entitas.CodeGenerator.Attributes.PostConstructor]
+    [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
 ${addIndices}
     }

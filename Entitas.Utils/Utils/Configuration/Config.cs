@@ -1,4 +1,4 @@
-namespace Entitas {
+namespace Entitas.Utils {
 
     public class Config {
 

@@ -1,4 +1,4 @@
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration.CodeGenerator;
 
 namespace Readme {
 

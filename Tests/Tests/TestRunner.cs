@@ -10,12 +10,6 @@ namespace Tests {
     class TestRunner {
 
         public static void Main(string[] args) {
-
-            //Entitas.CodeGenerator.CodeGeneratorUtil
-            //    .CodeGeneratorFromConfig("../../Entitas.properties")
-            //    .Generate();
-
-
             //format();
 
             //var tagOrClassName = "focus";

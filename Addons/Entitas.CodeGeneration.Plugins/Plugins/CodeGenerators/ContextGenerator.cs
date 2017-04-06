@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextGenerator : ICodeGenerator {
 
@@ -17,18 +17,20 @@ namespace Entitas.CodeGenerator {
         : base(
             ${Lookup}.TotalComponents,
             0,
-            new Entitas.ContextInfo(
+            new Entitas.Core.ContextInfo(
                 ""${ContextName}"",
                 ${Lookup}.componentNames,
                 ${Lookup}.componentTypes
-            )
-        ) {
+            ),
+            (entity) =>
 
 #if (ENTITAS_FAST_AND_UNSAFE)
-        aercFactory = (entity) => new Entitas.UnsafeAERC();
+                new Entitas.UnsafeAERC()
 #else
-        aercFactory = (entity) => new Entitas.SafeAERC(entity);
+                new Entitas.SafeAERC(entity)
 #endif
+
+        ) {
     }
 }
 ";

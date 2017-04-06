@@ -12,11 +12,11 @@ public sealed partial class GameStateContext : Entitas.Context<GameStateEntity> 
         : base(
             GameStateComponentsLookup.TotalComponents,
             0,
-            new Entitas.ContextInfo(
+            new Entitas.Core.ContextInfo(
                 "GameState",
                 GameStateComponentsLookup.componentNames,
                 GameStateComponentsLookup.componentTypes
-            )
+            ), (entity) => new Entitas.SafeAERC(entity)
         ) {
     }
 }

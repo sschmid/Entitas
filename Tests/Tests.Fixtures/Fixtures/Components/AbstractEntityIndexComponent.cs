@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGenerator.Attributes;
+﻿using Entitas.CodeGeneration.Attributes;
 
 public abstract class AbstractEntityIndexComponent {
 

@@ -1,8 +1,11 @@
 using System;
 using System.Linq;
-using Entitas.CodeGenerator.Attributes;
+using Entitas.CodeGeneration.Attributes;
+using Entitas.CodeGeneration.CodeGenerator;
+using Entitas.Core;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public abstract class AbstractComponentDataProvider : ICodeGeneratorDataProvider {
 

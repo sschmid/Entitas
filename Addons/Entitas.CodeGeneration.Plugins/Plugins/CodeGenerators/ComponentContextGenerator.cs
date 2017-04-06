@@ -1,7 +1,8 @@
 using System.IO;
 using System.Linq;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentContextGenerator : ICodeGenerator {
 
@@ -19,7 +20,7 @@ namespace Entitas.CodeGenerator {
 
     public ${ContextName}Entity Set${ComponentName}(${memberArgs}) {
         if(has${ComponentName}) {
-            throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
+            throw new Entitas.Core.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
                 ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
         }
         var entity = CreateEntity();

@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Unity.Editor;
+using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.CodeGenerator.Unity.Editor {
+namespace Entitas.CodeGeneration.Unity.Editor {
 
     public class CodeGeneratorPreferencesDrawer : AbstractPreferencesDrawer {
 

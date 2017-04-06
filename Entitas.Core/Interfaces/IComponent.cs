@@ -1,4 +1,4 @@
-namespace Entitas {
+namespace Entitas.Core {
 
     /// Implement this interface if you want to create a component which
     /// you can add to an entity.
@@ -9,7 +9,7 @@ namespace Entitas {
     /// [MyContextName, MyOtherContextName]: You can make this component to be
     /// available only in the specified contexts.
     /// The code generator can generate these attributes for you.
-    /// More available Attributes can be found in Entitas.CodeGenerator.Attributes/Attributes.
+    /// More available Attributes can be found in Entitas.CodeGeneration.Attributes/Attributes.
     public interface IComponent {
     }
 }

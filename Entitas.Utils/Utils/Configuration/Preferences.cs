@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace Entitas {
+namespace Entitas.Utils {
 
     public static class Preferences {
 

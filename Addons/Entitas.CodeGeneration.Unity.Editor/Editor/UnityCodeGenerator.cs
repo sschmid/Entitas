@@ -1,10 +1,12 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Entitas.CodeGeneration.CodeGenerator;
+using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.CodeGenerator.Unity.Editor {
+namespace Entitas.CodeGeneration.Unity.Editor {
 
     public static class UnityCodeGenerator {
 

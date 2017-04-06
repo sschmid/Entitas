@@ -1,4 +1,4 @@
-﻿namespace Entitas {
+﻿namespace Entitas.Core {
 
     public interface IAERC {
         int retainCount { get; }

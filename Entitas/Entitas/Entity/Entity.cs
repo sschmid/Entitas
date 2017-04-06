@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Entitas.Core;
+using Entitas.Utils;
 
 namespace Entitas {
 
@@ -82,7 +84,7 @@ namespace Entitas {
             _componentPools = componentPools;
 
             _contextInfo = contextInfo ?? createDefaultContextInfo();
-            _aerc = aerc;
+            _aerc = aerc ?? new SafeAERC(this);
         }
 
         ContextInfo createDefaultContextInfo() {

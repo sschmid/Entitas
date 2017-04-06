@@ -1,6 +1,7 @@
 using System.Linq;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextsGenerator : ICodeGenerator {
 
@@ -10,7 +11,7 @@ namespace Entitas.CodeGenerator {
         public bool runInDryMode { get { return true; } }
 
         const string CONTEXTS_TEMPLATE =
-@"public partial class Contexts : Entitas.IContexts {
+@"public partial class Contexts : Entitas.Core.IContexts {
 
     public static Contexts sharedInstance {
         get {
@@ -27,14 +28,14 @@ namespace Entitas.CodeGenerator {
 
 ${contextProperties}
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { ${contextList} }; } }
+    public Entitas.Core.IContext[] allContexts { get { return new Entitas.Core.IContext [] { ${contextList} }; } }
 
     public Contexts() {
 ${contextAssignments}
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
-            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGenerator.Attributes.PostConstructorAttribute))
+            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGeneration.Attributes.PostConstructorAttribute))
         );
 
         foreach(var postConstructor in postConstructors) {

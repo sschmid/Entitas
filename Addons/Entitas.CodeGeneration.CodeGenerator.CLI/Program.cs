@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Entitas.Utils;
 using Fabl;
 
-namespace Entitas.CodeGenerator.CLI {
+namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
     class MainClass {
 

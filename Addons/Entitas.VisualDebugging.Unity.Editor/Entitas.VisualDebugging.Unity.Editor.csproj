@@ -71,9 +71,9 @@
     <Compile Include="Editor\Entity\TypeDrawer\Vector2TypeDrawer.cs" />
     <Compile Include="Editor\Entity\TypeDrawer\Vector3TypeDrawer.cs" />
     <Compile Include="Editor\Entity\TypeDrawer\Vector4TypeDrawer.cs" />
-    <Compile Include="Editor\Entity\EntityLinkInspector.cs" />
     <Compile Include="Editor\Entity\IComponentDrawer.cs" />
     <Compile Include="Editor\VisualDebuggingConfig.cs" />
+    <Compile Include="Editor\EntityLinkInspector.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Editor\Entity\DefaultInstanceCreator\" />
@@ -105,8 +105,8 @@
       <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
       <Name>Entitas.CodeGeneration.Plugins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity\Entitas.Unity.csproj">
-      <Project>{D85282FB-B992-4316-90FF-4D81D912202C}</Project>
+    <ProjectReference Include="..\Entitas.Unity\Entitas.Unity.csproj">
+      <Project>{CB3ADCB3-E842-4A71-B32E-15ABDE7311F6}</Project>
       <Name>Entitas.Unity</Name>
     </ProjectReference>
   </ItemGroup>

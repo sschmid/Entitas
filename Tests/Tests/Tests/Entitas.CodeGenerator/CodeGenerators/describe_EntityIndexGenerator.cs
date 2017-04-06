@@ -1,5 +1,6 @@
-﻿using NSpec;
-using Entitas.CodeGenerator;
+﻿using Entitas.CodeGeneration;
+using Entitas.CodeGeneration.Plugins;
+using NSpec;
 
 class describe_EntityIndexGenerator : nspec {
 

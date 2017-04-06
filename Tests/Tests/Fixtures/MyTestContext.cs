@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using Entitas.Core;
 
 public sealed class MyTestContext : Context<TestEntity> {
 
@@ -6,6 +7,6 @@ public sealed class MyTestContext : Context<TestEntity> {
     }
 
     public MyTestContext(int totalComponents, int startCreationIndex, ContextInfo contextInfo)
-        : base(totalComponents, startCreationIndex, contextInfo) {
+        : base(totalComponents, startCreationIndex, contextInfo, (entity) => new SafeAERC(entity)) {
     }
 }

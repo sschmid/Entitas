@@ -1,7 +1,9 @@
 using System;
 using System.IO;
+using Entitas.CodeGeneration.CodeGenerator;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class WriteToDiskPostProcessor : ICodeGenFilePostProcessor {
 

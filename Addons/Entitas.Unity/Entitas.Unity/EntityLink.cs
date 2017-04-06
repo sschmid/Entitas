@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using Entitas.Core;
+using UnityEngine;
 
 namespace Entitas.Unity {
 

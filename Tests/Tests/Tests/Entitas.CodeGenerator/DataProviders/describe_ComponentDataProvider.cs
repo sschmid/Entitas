@@ -1,8 +1,8 @@
 using System;
-using Entitas.CodeGenerator;
-using NSpec;
+using Entitas.CodeGeneration.Plugins;
+using Entitas.Utils;
 using My.Namespace;
-using Entitas;
+using NSpec;
 
 class describe_ComponentDataProvider : nspec {
 

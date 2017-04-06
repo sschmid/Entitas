@@ -1,5 +1,5 @@
-using Entitas;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration.CodeGenerator;
+using Entitas.Utils;
 using NSpec;
 
 class describe_CodeGeneratorConfig : nspec {

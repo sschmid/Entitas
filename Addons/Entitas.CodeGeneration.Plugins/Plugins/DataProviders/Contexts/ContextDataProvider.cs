@@ -1,6 +1,8 @@
 using System.Linq;
+using Entitas.CodeGeneration.CodeGenerator;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextDataProvider : ICodeGeneratorDataProvider {
 

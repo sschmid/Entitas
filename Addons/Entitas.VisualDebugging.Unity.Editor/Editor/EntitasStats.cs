@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration.Plugins;
+using Entitas.Core;
+using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
 

@@ -1,6 +1,6 @@
-﻿using Entitas.CodeGenerator;
+﻿using Entitas.CodeGeneration;
 
-namespace Entitas.Blueprints.Unity.Editor {
+namespace Entitas.Blueprints.CodeGeneration.Plugins {
 
     public class BlueprintData : CodeGeneratorData {
     }

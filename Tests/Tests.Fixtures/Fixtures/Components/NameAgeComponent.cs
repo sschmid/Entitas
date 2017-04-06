@@ -1,5 +1,5 @@
-﻿using Entitas;
-using Entitas.CodeGenerator.Attributes;
+﻿using Entitas.Core;
+using Entitas.CodeGeneration.Attributes;
 
 [Context("Test"), Context("Test2")]
 public sealed class NameAgeComponent : IComponent {

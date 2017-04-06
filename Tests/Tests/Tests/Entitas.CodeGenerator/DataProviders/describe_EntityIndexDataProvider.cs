@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Entitas.CodeGenerator;
+﻿using Entitas.CodeGeneration.Plugins;
 using My.Namespace;
 using MyNamespace;
 using NSpec;

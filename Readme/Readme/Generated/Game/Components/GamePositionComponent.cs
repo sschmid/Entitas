@@ -40,9 +40,9 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherPosition;
+    static Entitas.Core.IMatcher<GameEntity> _matcherPosition;
 
-    public static Entitas.IMatcher<GameEntity> Position {
+    public static Entitas.Core.IMatcher<GameEntity> Position {
         get {
             if(_matcherPosition == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Position);

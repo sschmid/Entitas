@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Entitas {
+namespace Entitas.Core {
 
     public delegate void ContextEntityChanged(IContext context, IEntity entity);
     public delegate void ContextGroupChanged(IContext context, IGroup group);

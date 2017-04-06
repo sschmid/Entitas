@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas.Core;
 
 [Game]
 public sealed class HealthComponent : IComponent {

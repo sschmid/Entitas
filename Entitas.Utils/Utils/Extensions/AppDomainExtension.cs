@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Entitas {
+namespace Entitas.Utils {
 
     public static class AppDomainExtension {
 

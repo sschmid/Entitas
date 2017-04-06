@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextAttributeGenerator : ICodeGenerator {
 
@@ -11,7 +11,7 @@ namespace Entitas.CodeGenerator {
         public bool runInDryMode { get { return true; } }
 
         const string ATTRIBUTE_TEMPLATE =
-@"public sealed class ${ContextName}Attribute : Entitas.CodeGenerator.Attributes.ContextAttribute {
+@"public sealed class ${ContextName}Attribute : Entitas.CodeGeneration.Attributes.ContextAttribute {
 
     public ${ContextName}Attribute() : base(""${ContextName}"") {
     }

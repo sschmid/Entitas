@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration {
 
     public class CodeGeneratorData : Dictionary<string, object> {
     }

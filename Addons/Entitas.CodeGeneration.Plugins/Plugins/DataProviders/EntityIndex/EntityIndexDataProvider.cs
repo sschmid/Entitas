@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Entitas.CodeGenerator.Attributes;
+using Entitas.CodeGeneration.Attributes;
+using Entitas.CodeGeneration.CodeGenerator;
+using Entitas.Core;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class EntityIndexDataProvider : ICodeGeneratorDataProvider {
 

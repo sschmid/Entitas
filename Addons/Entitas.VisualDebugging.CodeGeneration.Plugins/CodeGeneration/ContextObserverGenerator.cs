@@ -1,7 +1,9 @@
 using System.Linq;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
+using Entitas.CodeGeneration.Plugins;
+using Entitas.Utils;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
+namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
 
     public class ContextObserverGenerator : ICodeGenerator {
 
@@ -15,12 +17,12 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
 #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
-    [Entitas.CodeGenerator.Attributes.PostConstructor]
+    [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeContexObservers() {
 ${contextObservers}
     }
 
-    public void CreateContextObserver(Entitas.IContext context) {
+    public void CreateContextObserver(Entitas.Core.IContext context) {
         try {
             if(UnityEngine.Application.isPlaying) {
                 var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);

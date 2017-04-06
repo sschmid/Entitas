@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.CodeGenerator {
 
     public class CodeGeneratorConfig {
 
@@ -25,35 +26,35 @@ namespace Entitas.CodeGenerator {
         }
 
         public const string ASSEMBLY_BASE_PATHS_KEY = "Entitas.CodeGenerator.AssemblyBasePaths";
-        const string DEFAULT_ASSEMBLY_BASE_PATHS = "/Applications/Unity/Unity.app/Contents/Managed,/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity";
+        const string DEFAULT_ASSEMBLY_BASE_PATHS = "Library/ScriptAssemblies, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity";
         public string[] assemblyBasePaths { 
             get { return separateValues(_config.GetValueOrDefault(ASSEMBLY_BASE_PATHS_KEY, DEFAULT_ASSEMBLY_BASE_PATHS)); }
             set { _config[ASSEMBLY_BASE_PATHS_KEY] = joinValues(value); }
         }
 
         public const string ASSEMBLY_PATHS_KEY = "Entitas.CodeGenerator.Assemblies";
-        const string DEFAULT_ASSEMBLY_PATHS = "Library/ScriptAssemblies/Assembly-CSharp.dll";
+        const string DEFAULT_ASSEMBLY_PATHS = "Assembly-CSharp.dll";
         public string[] assemblyPaths { 
             get { return separateValues(_config.GetValueOrDefault(ASSEMBLY_PATHS_KEY, DEFAULT_ASSEMBLY_PATHS)); }
             set { _config[ASSEMBLY_PATHS_KEY] = joinValues(value); }
         }
 
         public const string CODE_GENERATOR_ASSEMBLY_PATHS_KEY = "Entitas.CodeGenerator.CodeGeneratorAssemblies";
-        const string DEFAULT_CODE_GENERATOR_ASSEMBLY_PATHS = "Library/ScriptAssemblies/Assembly-CSharp-Editor.dll";
+        const string DEFAULT_CODE_GENERATOR_ASSEMBLY_PATHS = "Assembly-CSharp-Editor.dll";
         public string[] codeGeneratorAssemblyPaths { 
             get { return separateValues(_config.GetValueOrDefault(CODE_GENERATOR_ASSEMBLY_PATHS_KEY, DEFAULT_CODE_GENERATOR_ASSEMBLY_PATHS)); }
             set { _config[CODE_GENERATOR_ASSEMBLY_PATHS_KEY] = joinValues(value); }
         }
 
         public const string TARGET_DIRECTORY_KEY = "Entitas.CodeGenerator.TargetDirectory";
-        const string DEFAULT_TARGET_DIRECTORY = "Assets/Generated/";
+        const string DEFAULT_TARGET_DIRECTORY = "Assets/Generated";
         public string targetDirectory { 
             get { return _config.GetValueOrDefault(TARGET_DIRECTORY_KEY, DEFAULT_TARGET_DIRECTORY); }
             set { _config[TARGET_DIRECTORY_KEY] = value; }
         }
 
         public const string CONTEXTS_KEY = "Entitas.CodeGenerator.Contexts";
-        const string DEFAULT_CONTEXTS = "Game,GameState,Input";
+        const string DEFAULT_CONTEXTS = "Game, GameState, Input";
         public string[] contexts {
             get { return separateValues(_config.GetValueOrDefault(CONTEXTS_KEY, DEFAULT_CONTEXTS)); }
             set { _config[CONTEXTS_KEY] = joinValues(value); }
@@ -77,7 +78,7 @@ namespace Entitas.CodeGenerator {
             set { _config[POST_PROCESSORS_KEY] = joinValues(value); }
         }
 
-        protected readonly Config _config;
+        readonly Config _config;
 
         readonly string _defaultDataProviders;
         readonly string _defaultCodeGenerators;

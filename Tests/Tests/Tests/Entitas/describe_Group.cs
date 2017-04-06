@@ -1,4 +1,5 @@
 using Entitas;
+using Entitas.Core;
 using NSpec;
 
 class describe_Group : nspec {

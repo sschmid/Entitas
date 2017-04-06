@@ -1,6 +1,6 @@
 using System;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class NewLinePostProcessor : ICodeGenFilePostProcessor {
 

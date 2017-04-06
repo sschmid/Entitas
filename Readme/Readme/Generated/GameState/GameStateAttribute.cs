@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class GameStateAttribute : Entitas.CodeGenerator.Attributes.ContextAttribute {
+public sealed class GameStateAttribute : Entitas.CodeGeneration.Attributes.ContextAttribute {
 
     public GameStateAttribute() : base("GameState") {
     }

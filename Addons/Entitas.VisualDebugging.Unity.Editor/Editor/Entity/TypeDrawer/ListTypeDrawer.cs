@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using Entitas.Unity.Editor;
+using Entitas.Utils;
 using UnityEditor;
 
 namespace Entitas.VisualDebugging.Unity.Editor {

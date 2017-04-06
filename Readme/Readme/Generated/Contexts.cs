@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public partial class Contexts : Entitas.IContexts {
+public partial class Contexts : Entitas.Core.IContexts {
 
     public static Contexts sharedInstance {
         get {
@@ -25,7 +25,7 @@ public partial class Contexts : Entitas.IContexts {
     public GameStateContext gameState { get; set; }
     public InputContext input { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game, gameState, input }; } }
+    public Entitas.Core.IContext[] allContexts { get { return new Entitas.Core.IContext [] { game, gameState, input }; } }
 
     public Contexts() {
         game = new GameContext();
@@ -34,7 +34,7 @@ public partial class Contexts : Entitas.IContexts {
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
-            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGenerator.Attributes.PostConstructorAttribute))
+            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGeneration.Attributes.PostConstructorAttribute))
         );
 
         foreach(var postConstructor in postConstructors) {

@@ -2,6 +2,7 @@ using Entitas;
 using NSpec;
 using System.Collections.Generic;
 using System.Linq;
+using Entitas.Core;
 
 class describe_EntityIndex : nspec {
 

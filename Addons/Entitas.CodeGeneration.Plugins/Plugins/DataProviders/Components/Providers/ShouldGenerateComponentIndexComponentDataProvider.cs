@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Entitas.CodeGenerator.Attributes;
+using Entitas.CodeGeneration.Attributes;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class ShouldGenerateComponentIndexComponentDataProvider : IComponentDataProvider {
 

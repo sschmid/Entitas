@@ -1,4 +1,4 @@
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration.Plugins;
 using NSpec;
 
 class describe_ContextDataProvider : nspec {

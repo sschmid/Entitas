@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Entitas.Core;
+using Entitas.Utils;
 
 namespace Entitas {
 

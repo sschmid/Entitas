@@ -1,3 +1,5 @@
+using Entitas.Core;
+
 namespace Entitas {
 
     public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : class, IEntity, new() {

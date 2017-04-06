@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Entitas {
+namespace Entitas.Utils {
 
     public static class InterfaceTypeExtension {
 

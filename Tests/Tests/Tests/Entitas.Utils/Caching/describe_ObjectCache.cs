@@ -1,4 +1,4 @@
-using Entitas;
+using Entitas.Utils;
 using NSpec;
 
 class describe_ObjectCache : nspec {

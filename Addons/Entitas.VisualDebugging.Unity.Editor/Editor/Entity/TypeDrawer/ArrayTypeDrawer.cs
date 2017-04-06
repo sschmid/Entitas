@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Entitas.Unity.Editor;
+using Entitas.Utils;
 using UnityEditor;
 
 namespace Entitas.VisualDebugging.Unity.Editor {

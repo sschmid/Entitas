@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using Fabl;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.CodeGenerator {
 
     public class DependencyResolver {
 

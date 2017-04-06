@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.CodeGenerator {
 
     public delegate void GeneratorProgress(string title, string info, float progress);
 

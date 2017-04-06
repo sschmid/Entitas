@@ -1,6 +1,6 @@
-﻿using Entitas.CodeGenerator;
+﻿using Entitas.CodeGeneration;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
+namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
 
     public class FeatureClassGenerator : ICodeGenerator {
 

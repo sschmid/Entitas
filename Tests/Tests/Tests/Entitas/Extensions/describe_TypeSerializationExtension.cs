@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Utils;
 using NSpec;
 
 class describe_TypeSerializationExtension : nspec {

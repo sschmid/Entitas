@@ -1,3 +1,5 @@
+using Entitas.Core;
+
 namespace Entitas {
 
     public static class ContextExtension {

@@ -1,4 +1,5 @@
 using Entitas;
+using Entitas.Core;
 
 public class ContextOnEntityReplaced : IPerformanceTest {
 

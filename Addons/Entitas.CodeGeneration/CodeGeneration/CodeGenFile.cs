@@ -1,4 +1,6 @@
-namespace Entitas.CodeGenerator {
+using Entitas.Utils;
+
+namespace Entitas.CodeGeneration {
 
     public class CodeGenFile {
 

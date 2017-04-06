@@ -130,22 +130,6 @@
       <Project>{6F01CC45-F951-43A5-923E-D3778F9DD435}</Project>
       <Name>Tests.Fixtures</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
-      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
-      <Name>Entitas</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
-      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
-      <Name>Entitas.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Blueprints\Entitas.Blueprints.csproj">
-      <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
-      <Name>Entitas.Blueprints</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Blueprints.CodeGeneration\Entitas.Blueprints.CodeGeneration.csproj">
-      <Project>{205014A8-1E4A-40D2-A368-9D2497EA9AE1}</Project>
-      <Name>Entitas.Blueprints.CodeGeneration.Plugins</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.Blueprints.Unity\Entitas.Blueprints.Unity.csproj">
       <Project>{026FFA2B-1F8D-4E05-A54D-67AB5B611985}</Project>
       <Name>Entitas.Blueprints.Unity</Name>
@@ -162,9 +146,25 @@
       <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
       <Name>Entitas.CodeGeneration.Attributes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.CodeGenerator\Entitas.CodeGeneration.CodeGenerator.csproj">
+      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
+      <Name>Entitas.CodeGeneration.CodeGenerator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.CodeGenerator.CLI\Entitas.CodeGeneration.CodeGenerator.CLI.csproj">
       <Project>{EF2A4801-6319-4B20-B44E-E4AB02B665BB}</Project>
       <Name>Entitas.CodeGeneration.CodeGenerator.CLI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
+      <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
+      <Name>Entitas.CodeGeneration.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Unity.Editor\Entitas.CodeGeneration.Unity.Editor.csproj">
+      <Project>{68AFC167-E6B6-4E9B-8C52-84854B004CAD}</Project>
+      <Name>Entitas.CodeGeneration.Unity.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
+      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
+      <Name>Entitas.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.Migration\Entitas.Migration.csproj">
       <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
@@ -186,29 +186,29 @@
       <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
       <Name>Entitas.Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor.csproj">
-      <Project>{6DCBB57A-C3A3-4055-B99E-0C97A0D3C4CA}</Project>
-      <Name>Entitas.VisualDebugging.Unity.Editor</Name>
+    <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.CodeGeneration.Plugins\Entitas.VisualDebugging.CodeGeneration.Plugins.csproj">
+      <Project>{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}</Project>
+      <Name>Entitas.VisualDebugging.CodeGeneration.Plugins</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj">
       <Project>{70222463-4E60-4862-8C18-1EBA6CA63353}</Project>
       <Name>Entitas.VisualDebugging.Unity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.CodeGeneration\Entitas.VisualDebugging.CodeGeneration.csproj">
-      <Project>{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}</Project>
-      <Name>Entitas.VisualDebugging.CodeGeneration.Plugins</Name>
+    <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor.csproj">
+      <Project>{6DCBB57A-C3A3-4055-B99E-0C97A0D3C4CA}</Project>
+      <Name>Entitas.VisualDebugging.Unity.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.CodeGenerator\Entitas.CodeGeneration.CodeGenerator.csproj">
-      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
-      <Name>Entitas.CodeGeneration.CodeGenerator</Name>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
-      <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
-      <Name>Entitas.CodeGeneration.Plugins</Name>
+    <ProjectReference Include="..\..\Addons\Entitas.Blueprints\Entitas.Blueprints.csproj">
+      <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
+      <Name>Entitas.Blueprints</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Unity.Editor\Entitas.CodeGeneration.Unity.Editor.csproj">
-      <Project>{68AFC167-E6B6-4E9B-8C52-84854B004CAD}</Project>
-      <Name>Entitas.CodeGeneration.Unity.Editor</Name>
+    <ProjectReference Include="..\..\Addons\Entitas.Blueprints.CodeGeneration.Plugins\Entitas.Blueprints.CodeGeneration.Plugins.csproj">
+      <Project>{205014A8-1E4A-40D2-A368-9D2497EA9AE1}</Project>
+      <Name>Entitas.Blueprints.CodeGeneration.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

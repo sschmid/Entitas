@@ -1,5 +1,6 @@
 using System.Linq;
-using Entitas.CodeGenerator;
+using Entitas.CodeGeneration;
+using Entitas.CodeGeneration.CodeGenerator;
 using NSpec;
 
 class describe_CodeGenerator : nspec {

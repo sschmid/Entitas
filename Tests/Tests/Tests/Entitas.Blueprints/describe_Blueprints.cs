@@ -1,5 +1,6 @@
 using Entitas;
 using Entitas.Blueprints;
+using Entitas.Core;
 using NSpec;
 
 class describe_Blueprints : nspec {

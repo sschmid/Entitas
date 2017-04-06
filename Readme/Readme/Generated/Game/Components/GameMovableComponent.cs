@@ -34,9 +34,9 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherMovable;
+    static Entitas.Core.IMatcher<GameEntity> _matcherMovable;
 
-    public static Entitas.IMatcher<GameEntity> Movable {
+    public static Entitas.Core.IMatcher<GameEntity> Movable {
         get {
             if(_matcherMovable == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Movable);

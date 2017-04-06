@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using Entitas.Core;
 using UnityEngine;
 
 namespace Entitas.VisualDebugging.Unity {

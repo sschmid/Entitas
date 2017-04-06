@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
+using Entitas.Core;
 using Entitas.Unity.Editor;
+using Entitas.Utils;
 using Entitas.VisualDebugging.Unity.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;

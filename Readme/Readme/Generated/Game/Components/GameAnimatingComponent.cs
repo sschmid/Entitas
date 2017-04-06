@@ -61,9 +61,9 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherAnimating;
+    static Entitas.Core.IMatcher<GameEntity> _matcherAnimating;
 
-    public static Entitas.IMatcher<GameEntity> Animating {
+    public static Entitas.Core.IMatcher<GameEntity> Animating {
         get {
             if(_matcherAnimating == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Animating);

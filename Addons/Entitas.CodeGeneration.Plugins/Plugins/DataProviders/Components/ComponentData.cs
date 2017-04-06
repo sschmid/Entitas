@@ -1,8 +1,9 @@
-﻿namespace Entitas.CodeGenerator {
+﻿using Entitas.Utils;
+
+namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentData : CodeGeneratorData {
     }
-
 
     public static class ComponentDataExtension {
 

@@ -1,6 +1,8 @@
 ﻿using System;
+using Entitas.Core;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class ShouldGenerateComponentComponentDataProvider : IComponentDataProvider {
 

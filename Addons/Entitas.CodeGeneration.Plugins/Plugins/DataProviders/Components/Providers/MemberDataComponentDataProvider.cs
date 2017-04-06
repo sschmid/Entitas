@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
+using Entitas.Utils;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class MemberDataComponentDataProvider : IComponentDataProvider {
 
