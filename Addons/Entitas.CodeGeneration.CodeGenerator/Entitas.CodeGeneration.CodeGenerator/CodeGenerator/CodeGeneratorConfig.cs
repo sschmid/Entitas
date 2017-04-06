@@ -11,11 +11,11 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             SEARCH_PATHS_KEY,
             ASSEMBLY_PATHS_KEY,
             PLUGINS_PATHS_KEY,
-            TARGET_DIRECTORY_KEY,
-            CONTEXTS_KEY,
             DATA_PROVIDERS_KEY,
             CODE_GENERATORS_KEY,
-            POST_PROCESSORS_KEY
+            POST_PROCESSORS_KEY,
+            TARGET_DIRECTORY_KEY,
+            CONTEXTS_KEY
         };
 
         public const string PROJECT_PATH_KEY = "Entitas.CodeGeneration.Project";
@@ -46,20 +46,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             set { _config[PLUGINS_PATHS_KEY] = joinValues(value); }
         }
 
-        public const string TARGET_DIRECTORY_KEY = "Entitas.CodeGeneration.TargetDirectory";
-        const string DEFAULT_TARGET_DIRECTORY = "Assets/Generated";
-        public string targetDirectory { 
-            get { return _config.GetValueOrDefault(TARGET_DIRECTORY_KEY, DEFAULT_TARGET_DIRECTORY); }
-            set { _config[TARGET_DIRECTORY_KEY] = value; }
-        }
-
-        public const string CONTEXTS_KEY = "Entitas.CodeGeneration.Contexts";
-        const string DEFAULT_CONTEXTS = "Game, GameState, Input";
-        public string[] contexts {
-            get { return separateValues(_config.GetValueOrDefault(CONTEXTS_KEY, DEFAULT_CONTEXTS)); }
-            set { _config[CONTEXTS_KEY] = joinValues(value); }
-        }
-
         public const string DATA_PROVIDERS_KEY = "Entitas.CodeGeneration.DataProviders";
         public string[] dataProviders {
             get {  return separateValues(_config.GetValueOrDefault(DATA_PROVIDERS_KEY, _defaultDataProviders)); }
@@ -76,6 +62,20 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         public string[] postProcessors {
             get {  return separateValues(_config.GetValueOrDefault(POST_PROCESSORS_KEY, _defaultPostProcessors)); }
             set { _config[POST_PROCESSORS_KEY] = joinValues(value); }
+        }
+
+        public const string TARGET_DIRECTORY_KEY = "Entitas.CodeGeneration.TargetDirectory";
+        const string DEFAULT_TARGET_DIRECTORY = "Assets/Generated";
+        public string targetDirectory { 
+            get { return _config.GetValueOrDefault(TARGET_DIRECTORY_KEY, DEFAULT_TARGET_DIRECTORY); }
+            set { _config[TARGET_DIRECTORY_KEY] = value; }
+        }
+
+        public const string CONTEXTS_KEY = "Entitas.CodeGeneration.Contexts";
+        const string DEFAULT_CONTEXTS = "Game, GameState, Input";
+        public string[] contexts {
+            get { return separateValues(_config.GetValueOrDefault(CONTEXTS_KEY, DEFAULT_CONTEXTS)); }
+            set { _config[CONTEXTS_KEY] = joinValues(value); }
         }
 
         readonly Config _config;
@@ -98,11 +98,11 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             searchPaths = searchPaths;
             assemblies = assemblies;
             plugins = plugins;
-            targetDirectory = targetDirectory;
-            contexts = contexts;
             this.dataProviders = this.dataProviders;
             this.codeGenerators = this.codeGenerators;
             this.postProcessors = this.postProcessors;
+            targetDirectory = targetDirectory;
+            contexts = contexts;
         }
 
         static string joinValues(string[] values) {
