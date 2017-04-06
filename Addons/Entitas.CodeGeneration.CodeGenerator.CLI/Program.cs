@@ -152,6 +152,7 @@ namespace Entitas.CodeGenerator.CLI {
         }
 
         static void doctor() {
+            _logger.Debug("Entitas Code Generator version " + EntitasResources.GetVersion());
             if(File.Exists(Preferences.configPath)) {
                 status();
                 _logger.Debug("Dry Run");
@@ -204,6 +205,8 @@ namespace Entitas.CodeGenerator.CLI {
                 var fileContent = File.ReadAllText(Preferences.configPath);
                 var properties = new Properties(fileContent);
                 var config = new CodeGeneratorConfig(new Config(fileContent));
+
+                _logger.Debug(config.ToString());
 
                 foreach(var key in getUnusedKeys(properties)) {
                     _logger.Info("Unused key: " + key);
