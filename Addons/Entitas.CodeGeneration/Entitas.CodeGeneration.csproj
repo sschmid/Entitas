@@ -31,16 +31,16 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGeneration\Interfaces\ICodeGenerator.cs" />
-    <Compile Include="CodeGeneration\Interfaces\ICodeGeneratorDataProvider.cs" />
-    <Compile Include="CodeGeneration\Interfaces\ICodeGeneratorInterface.cs" />
-    <Compile Include="CodeGeneration\Interfaces\ICodeGenFilePostProcessor.cs" />
-    <Compile Include="CodeGeneration\CodeGeneratorData.cs" />
-    <Compile Include="CodeGeneration\CodeGenFile.cs" />
+    <Compile Include="Entitas.CodeGeneration\CodeGeneration\CodeGeneratorData.cs" />
+    <Compile Include="Entitas.CodeGeneration\CodeGeneration\CodeGenFile.cs" />
+    <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGeneratorDataProvider.cs" />
+    <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGeneratorInterface.cs" />
+    <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGenFilePostProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CodeGeneration\" />
-    <Folder Include="CodeGeneration\Interfaces\" />
+    <Folder Include="Entitas.CodeGeneration\" />
+    <Folder Include="Entitas.CodeGeneration\CodeGeneration\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">

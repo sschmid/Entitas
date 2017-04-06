@@ -37,9 +37,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editor\CodeGeneratorPreferencesDrawer.cs" />
-    <Compile Include="Editor\DebugLogPostProcessor.cs" />
-    <Compile Include="Editor\UnityCodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Unity.Editor\Editor\CodeGeneratorPreferencesDrawer.cs" />
+    <Compile Include="Entitas.CodeGeneration.Unity.Editor\Editor\DebugLogPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGeneration.Unity.Editor\Editor\UnityCodeGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
@@ -58,6 +58,10 @@
       <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
       <Name>Entitas.CodeGeneration.CodeGenerator</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas.CodeGeneration.Unity.Editor\" />
+    <Folder Include="Entitas.CodeGeneration.Unity.Editor\Editor\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

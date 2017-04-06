@@ -37,12 +37,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGeneration\BlueprintData.cs" />
-    <Compile Include="CodeGeneration\BlueprintDataProvider.cs" />
-    <Compile Include="CodeGeneration\BlueprintsGenerator.cs" />
+    <Compile Include="Entitas.Blueprints.CodeGeneration.Plugins\Plugins\BlueprintData.cs" />
+    <Compile Include="Entitas.Blueprints.CodeGeneration.Plugins\Plugins\BlueprintDataProvider.cs" />
+    <Compile Include="Entitas.Blueprints.CodeGeneration.Plugins\Plugins\BlueprintsGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CodeGeneration\" />
+    <Folder Include="Entitas.Blueprints.CodeGeneration.Plugins\" />
+    <Folder Include="Entitas.Blueprints.CodeGeneration.Plugins\Plugins\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">

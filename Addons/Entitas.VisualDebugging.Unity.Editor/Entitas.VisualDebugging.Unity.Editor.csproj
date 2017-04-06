@@ -37,48 +37,47 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editor\ContextObserver\ContextObserverInspector.cs" />
-    <Compile Include="Editor\DebugSystems\DebugSystemsInspector.cs" />
-    <Compile Include="Editor\DebugSystems\SystemsMonitor.cs" />
-    <Compile Include="Editor\EntitasHierarchyIcon.cs" />
-    <Compile Include="Editor\EntitasStats.cs" />
-    <Compile Include="Editor\VisualDebuggingEntitasExtension.cs" />
-    <Compile Include="Editor\VisualDebuggingPreferencesDrawer.cs" />
-    <Compile Include="Editor\Entity\DefaultInstanceCreator\DefaultArrayCreator.cs" />
-    <Compile Include="Editor\Entity\DefaultInstanceCreator\DefaultStringCreator.cs" />
-    <Compile Include="Editor\Entity\DefaultInstanceCreator\IDefaultInstanceCreator.cs" />
-    <Compile Include="Editor\Entity\Entity\EntityDrawer.cs" />
-    <Compile Include="Editor\Entity\Entity\EntityDrawerState.cs" />
-    <Compile Include="Editor\Entity\Entity\EntityInspector.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\AnimationCurveTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\ArrayTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\BoolTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\BoundsTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\CharTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\ColorTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\DateTimeTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\DictionaryTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\DoubleTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\EnumTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\FloatTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\HashSetTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\IntTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\ITypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\ListTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\RectTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\StringTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\UnityObjectTypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\Vector2TypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\Vector3TypeDrawer.cs" />
-    <Compile Include="Editor\Entity\TypeDrawer\Vector4TypeDrawer.cs" />
-    <Compile Include="Editor\Entity\IComponentDrawer.cs" />
-    <Compile Include="Editor\VisualDebuggingConfig.cs" />
-    <Compile Include="Editor\EntityLinkInspector.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\ContextObserver\ContextObserverInspector.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\DebugSystems\DebugSystemsInspector.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\DebugSystems\SystemsMonitor.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\EntitasHierarchyIcon.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\EntitasStats.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\DefaultInstanceCreator\DefaultArrayCreator.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\DefaultInstanceCreator\DefaultStringCreator.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\DefaultInstanceCreator\IDefaultInstanceCreator.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\Entity\EntityDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\Entity\EntityDrawerState.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\Entity\EntityInspector.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\IComponentDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\AnimationCurveTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\ArrayTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\BoolTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\BoundsTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\CharTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\ColorTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\DateTimeTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\DictionaryTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\DoubleTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\EnumTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\FloatTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\HashSetTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\IntTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\ITypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\ListTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\RectTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\StringTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\UnityObjectTypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\Vector2TypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\Vector3TypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\Entity\TypeDrawer\Vector4TypeDrawer.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\EntityLinkInspector.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\VisualDebuggingConfig.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\VisualDebuggingEntitasExtension.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity.Editor\Editor\VisualDebuggingPreferencesDrawer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Editor\Entity\DefaultInstanceCreator\" />
-    <Folder Include="Editor\Entity\Entity\" />
-    <Folder Include="Editor\Entity\TypeDrawer\" />
+    <Folder Include="Entitas.VisualDebugging.Unity.Editor\" />
+    <Folder Include="Entitas.VisualDebugging.Unity.Editor\Editor\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">

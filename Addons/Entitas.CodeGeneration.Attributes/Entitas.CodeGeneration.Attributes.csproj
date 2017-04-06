@@ -31,21 +31,22 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\AbstractEntityIndexAttribute.cs" />
-    <Compile Include="Attributes\ContextAttribute.cs" />
-    <Compile Include="Attributes\CustomComponentNameAttribute.cs" />
-    <Compile Include="Attributes\CustomEntityIndexAttribute.cs" />
-    <Compile Include="Attributes\CustomPrefixAttribute.cs" />
-    <Compile Include="Attributes\DontGenerateAttribute.cs" />
-    <Compile Include="Attributes\EntityIndexAttribute.cs" />
-    <Compile Include="Attributes\EntityIndexGetMethodAttribute.cs" />
-    <Compile Include="Attributes\EntityIndexType.cs" />
-    <Compile Include="Attributes\PostConstructorAttribute.cs" />
-    <Compile Include="Attributes\PrimaryEntityIndexAttribute.cs" />
-    <Compile Include="Attributes\UniqueAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\AbstractEntityIndexAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\ContextAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\CustomComponentNameAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\CustomEntityIndexAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\CustomPrefixAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\DontGenerateAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\EntityIndexAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\EntityIndexGetMethodAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\EntityIndexType.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\PostConstructorAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\PrimaryEntityIndexAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\UniqueAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Attributes\" />
+    <Folder Include="Entitas.CodeGeneration.Attributes\" />
+    <Folder Include="Entitas.CodeGeneration.Attributes\Attributes\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

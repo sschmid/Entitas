@@ -34,15 +34,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Unity\GameObjectDestroyExtension.cs" />
-    <Compile Include="Unity\ContextObserver\ContextObserver.cs" />
-    <Compile Include="Unity\ContextObserver\ContextObserverBehaviour.cs" />
-    <Compile Include="Unity\ContextObserver\ContextObserverExtension.cs" />
-    <Compile Include="Unity\DebugSystems\DebugSystems.cs" />
-    <Compile Include="Unity\DebugSystems\DebugSystemsBehaviour.cs" />
-    <Compile Include="Unity\Entity\DontDrawComponentAttribute.cs" />
-    <Compile Include="Unity\Entity\EntityBehaviour.cs" />
-    <Compile Include="Unity\DebugSystems\SystemInfo.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Unity\ContextObserver\ContextObserver.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Unity\ContextObserver\ContextObserverBehaviour.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Unity\ContextObserver\ContextObserverExtension.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Unity\DebugSystems\DebugSystems.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Unity\DebugSystems\DebugSystemsBehaviour.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Unity\DebugSystems\SystemInfo.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Unity\Entity\DontDrawComponentAttribute.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Unity\Entity\EntityBehaviour.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Unity\GameObjectDestroyExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
@@ -53,6 +53,10 @@
       <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
       <Name>Entitas.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas.VisualDebugging.Unity\" />
+    <Folder Include="Entitas.VisualDebugging.Unity\Unity\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

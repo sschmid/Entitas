@@ -32,11 +32,12 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGeneration\ContextObserverGenerator.cs" />
-    <Compile Include="CodeGeneration\FeatureClassGenerator.cs" />
+    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\Plugins\ContextObserverGenerator.cs" />
+    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\Plugins\FeatureClassGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CodeGeneration\" />
+    <Folder Include="Entitas.VisualDebugging.CodeGeneration.Plugins\" />
+    <Folder Include="Entitas.VisualDebugging.CodeGeneration.Plugins\Plugins\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">

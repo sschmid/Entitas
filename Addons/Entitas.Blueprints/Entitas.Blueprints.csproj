@@ -31,14 +31,15 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Blueprints\" />
+    <Folder Include="Entitas.Blueprints\" />
+    <Folder Include="Entitas.Blueprints\Blueprints\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blueprints\Blueprint.cs" />
-    <Compile Include="Blueprints\BlueprintEntityExtension.cs" />
-    <Compile Include="Blueprints\ComponentBlueprint.cs" />
-    <Compile Include="Blueprints\ComponentBlueprintException.cs" />
-    <Compile Include="Blueprints\SerializableMember.cs" />
+    <Compile Include="Entitas.Blueprints\Blueprints\Blueprint.cs" />
+    <Compile Include="Entitas.Blueprints\Blueprints\BlueprintEntityExtension.cs" />
+    <Compile Include="Entitas.Blueprints\Blueprints\ComponentBlueprint.cs" />
+    <Compile Include="Entitas.Blueprints\Blueprints\ComponentBlueprintException.cs" />
+    <Compile Include="Entitas.Blueprints\Blueprints\SerializableMember.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">

@@ -35,9 +35,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.Unity\" />
+    <Folder Include="Entitas.Unity\Unity\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.Unity\EntityLink.cs" />
+    <Compile Include="Entitas.Unity\Unity\EntityLink.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">

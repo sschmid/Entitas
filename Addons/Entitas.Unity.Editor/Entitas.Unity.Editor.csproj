@@ -37,21 +37,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editor\GUI\AbstractPreferencesDrawer.cs" />
-    <Compile Include="Editor\GUI\PreferencesWindow.cs" />
-    <Compile Include="Editor\GUI\EntitasStyles.cs" />
-    <Compile Include="Editor\GUI\IEntitasPreferencesDrawer.cs" />
-    <Compile Include="Editor\GUI\Layout\EditorWindow.cs" />
-    <Compile Include="Editor\GUI\Layout\GUI.cs" />
-    <Compile Include="Editor\GUI\Layout\Layout.cs" />
-    <Compile Include="Editor\Menu\CheckForUpdates.cs" />
-    <Compile Include="Editor\Menu\EntitasMenuItems.cs" />
-    <Compile Include="Editor\EntitasPreferencesDrawer.cs" />
-    <Compile Include="Editor\ScriptingDefineSymbols.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\EntitasPreferencesDrawer.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\GUI\AbstractPreferencesDrawer.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\GUI\EntitasStyles.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\GUI\IEntitasPreferencesDrawer.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\GUI\Layout\EditorWindow.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\GUI\Layout\GUI.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\GUI\Layout\Layout.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\GUI\PreferencesWindow.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\Menu\CheckForUpdates.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\Menu\EntitasMenuItems.cs" />
+    <Compile Include="Entitas.Unity.Editor\Editor\ScriptingDefineSymbols.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Editor\GUI\" />
-    <Folder Include="Editor\Menu\" />
+    <Folder Include="Entitas.Unity.Editor\" />
+    <Folder Include="Entitas.Unity.Editor\Editor\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">

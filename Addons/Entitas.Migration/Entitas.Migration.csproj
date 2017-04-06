@@ -32,21 +32,23 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migration\MigrationUtils.cs" />
-    <Compile Include="Migration\IMigration.cs" />
-    <Compile Include="Migration\MigrationFile.cs" />
-    <Compile Include="Migrations\M0180.cs" />
-    <Compile Include="Migrations\M0190.cs" />
-    <Compile Include="Migrations\M0220.cs" />
-    <Compile Include="Migrations\M0260.cs" />
-    <Compile Include="Migrations\M0300.cs" />
-    <Compile Include="Migrations\M0320.cs" />
-    <Compile Include="Migrations\M0360_1.cs" />
-    <Compile Include="Migrations\M0360_2.cs" />
+    <Compile Include="Entitas.Migration\Migration\IMigration.cs" />
+    <Compile Include="Entitas.Migration\Migration\MigrationFile.cs" />
+    <Compile Include="Entitas.Migration\Migration\MigrationUtils.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0180.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0190.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0220.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0260.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0300.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0320.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0360_1.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0360_2.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="Entitas.Migration\" />
+    <Folder Include="Entitas.Migration\Migration\" />
+    <Folder Include="Entitas.Migration\Migrations\" />
   </ItemGroup>
 </Project>

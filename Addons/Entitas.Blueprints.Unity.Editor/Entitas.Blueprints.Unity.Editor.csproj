@@ -37,9 +37,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editor\BinaryBlueprintInspector.cs" />
-    <Compile Include="Editor\BinaryBlueprintPostprocessor.cs" />
-    <Compile Include="Editor\BlueprintsInspector.cs" />
+    <Compile Include="Entitas.Blueprints.Unity.Editor\Editor\BinaryBlueprintInspector.cs" />
+    <Compile Include="Entitas.Blueprints.Unity.Editor\Editor\BinaryBlueprintPostprocessor.cs" />
+    <Compile Include="Entitas.Blueprints.Unity.Editor\Editor\BlueprintsInspector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor.csproj">
@@ -66,6 +66,10 @@
       <Project>{9AF72B25-85B0-4FDC-85C3-660926C82438}</Project>
       <Name>Entitas.Unity.Editor</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas.Blueprints.Unity.Editor\" />
+    <Folder Include="Entitas.Blueprints.Unity.Editor\Editor\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

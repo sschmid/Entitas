@@ -34,13 +34,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeGenerator\CodeGenerator.cs" />
-    <Compile Include="CodeGenerator\CodeGeneratorConfig.cs" />
-    <Compile Include="CodeGenerator\CodeGeneratorUtil.cs" />
-    <Compile Include="CodeGenerator\DependencyResolver.cs" />
+    <Compile Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\CodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\CodeGeneratorConfig.cs" />
+    <Compile Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\CodeGeneratorUtil.cs" />
+    <Compile Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\DependencyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CodeGenerator\" />
+    <Folder Include="Entitas.CodeGeneration.CodeGenerator\" />
+    <Folder Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">

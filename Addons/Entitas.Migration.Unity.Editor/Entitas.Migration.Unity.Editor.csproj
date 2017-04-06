@@ -37,7 +37,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Editor\MigrationWindow.cs" />
+    <Compile Include="Entitas.Migration.Unity.Editor\Editor\MigrationWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
@@ -48,6 +48,10 @@
       <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
       <Name>Entitas.Migration</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Entitas.Migration.Unity.Editor\" />
+    <Folder Include="Entitas.Migration.Unity.Editor\Editor\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
