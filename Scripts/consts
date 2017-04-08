@@ -10,7 +10,6 @@ ADDONS="${ROOT}/Addons"
 ADDONS_PLAYGROUND="${ROOT}/Tests/Unity"
 
 ES="Entitas"
-ES_CORE="Entitas.Core"
 ES_UTILS="Entitas.Utils"
 
 ES_U="Entitas.Unity"
