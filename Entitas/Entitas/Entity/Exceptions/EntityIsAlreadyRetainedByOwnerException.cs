@@ -1,6 +1,4 @@
-using Entitas.Core;
-
-namespace Entitas {
+﻿namespace Entitas {
 
     public class EntityIsAlreadyRetainedByOwnerException : EntitasException {
 

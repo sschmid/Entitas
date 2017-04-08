@@ -1,4 +1,4 @@
-namespace Entitas.Core {
+﻿namespace Entitas {
 
     public interface IReactiveSystem : IExecuteSystem {
 

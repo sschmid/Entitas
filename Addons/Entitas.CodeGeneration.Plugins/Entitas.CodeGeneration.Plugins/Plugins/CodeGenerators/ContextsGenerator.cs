@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string CONTEXTS_TEMPLATE =
-@"public partial class Contexts : Entitas.Core.IContexts {
+@"public partial class Contexts : Entitas.IContexts {
 
     public static Contexts sharedInstance {
         get {
@@ -28,7 +28,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
 ${contextProperties}
 
-    public Entitas.Core.IContext[] allContexts { get { return new Entitas.Core.IContext [] { ${contextList} }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { ${contextList} }; } }
 
     public Contexts() {
 ${contextAssignments}

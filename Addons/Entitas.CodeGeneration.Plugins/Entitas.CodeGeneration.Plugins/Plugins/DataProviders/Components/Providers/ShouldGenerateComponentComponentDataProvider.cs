@@ -1,5 +1,4 @@
 ﻿using System;
-using Entitas.Core;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {

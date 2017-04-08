@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Entitas.Core;
 using Entitas.Utils;
 
 namespace Entitas {
@@ -38,7 +37,7 @@ namespace Entitas {
         /// The contextInfo contains information about the context.
         /// It's used to provide better error messages.
         public ContextInfo contextInfo { get { return _contextInfo; } }
-        
+
         /// Returns the number of entities in the context.
         public int count { get { return _entities.Count; } }
 

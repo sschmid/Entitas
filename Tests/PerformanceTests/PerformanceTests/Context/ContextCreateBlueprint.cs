@@ -1,6 +1,5 @@
-using Entitas;
+﻿using Entitas;
 using Entitas.Blueprints;
-using Entitas.Core;
 
 public class ContextCreateBlueprint : IPerformanceTest {
 

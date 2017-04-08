@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -13,9 +13,9 @@ namespace Entitas.CodeGeneration.Plugins {
         const string MATCHER_TEMPLATE =
 @"public sealed partial class ${ContextName}Matcher {
 
-    static Entitas.Core.IMatcher<${ContextName}Entity> _matcher${ComponentName};
+    static Entitas.IMatcher<${ContextName}Entity> _matcher${ComponentName};
 
-    public static Entitas.Core.IMatcher<${ContextName}Entity> ${ComponentName} {
+    public static Entitas.IMatcher<${ContextName}Entity> ${ComponentName} {
         get {
             if(_matcher${ComponentName} == null) {
                 var matcher = (Entitas.Matcher<${ContextName}Entity>)Entitas.Matcher<${ContextName}Entity>.AllOf(${Index});

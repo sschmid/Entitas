@@ -72,6 +72,26 @@
     <Compile Include="Entitas\Extensions\SystemStringExtension.cs" />
     <Compile Include="Entitas\Entity\UnsafeAERC.cs" />
     <Compile Include="Entitas\Entity\SafeAERC.cs" />
+    <Compile Include="Entitas\Interfaces\IAERC.cs" />
+    <Compile Include="Entitas\Interfaces\IComponent.cs" />
+    <Compile Include="Entitas\Interfaces\IContext.cs" />
+    <Compile Include="Entitas\Interfaces\IContexts.cs" />
+    <Compile Include="Entitas\Interfaces\IEntity.cs" />
+    <Compile Include="Entitas\Interfaces\IEntityIndex.cs" />
+    <Compile Include="Entitas\Interfaces\IGroup.cs" />
+    <Compile Include="Entitas\Interfaces\Matchers\IAllOfMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Matchers\IAnyOfMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Matchers\ICompoundMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Matchers\IMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Matchers\INoneOfMatcher.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\ICleanupSystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\IExecuteSystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\IInitializeSystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\IReactiveSystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\ISystem.cs" />
+    <Compile Include="Entitas\Interfaces\Systems\ITearDownSystem.cs" />
+    <Compile Include="Entitas\ContextInfo.cs" />
+    <Compile Include="Entitas\EntitasException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -86,6 +106,7 @@
     <Folder Include="Entitas\Entity\Exceptions\" />
     <Folder Include="Entitas\Collector\" />
     <Folder Include="Entitas\Extensions\" />
+    <Folder Include="Entitas\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Entitas\version">
@@ -93,10 +114,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.Core\Entitas.Core.csproj">
-      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
-      <Name>Entitas.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entitas.Utils\Entitas.Utils.csproj">
       <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
       <Name>Entitas.Utils</Name>

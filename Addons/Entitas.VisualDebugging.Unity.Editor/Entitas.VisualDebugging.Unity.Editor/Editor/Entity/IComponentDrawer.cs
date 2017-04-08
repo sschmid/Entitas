@@ -1,5 +1,4 @@
-using System;
-using Entitas.Core;
+﻿using System;
 
 namespace Entitas.VisualDebugging.Unity.Editor {
 

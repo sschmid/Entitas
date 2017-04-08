@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using Entitas.Core;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -124,7 +123,7 @@ namespace Entitas {
                 if(reactiveSystem != null) {
                     reactiveSystem.Clear();
                 }
-                
+
                 var nestedSystems = system as Systems;
                 if(nestedSystems != null) {
                     nestedSystems.ClearReactiveSystems();

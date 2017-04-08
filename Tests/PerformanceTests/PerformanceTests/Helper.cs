@@ -1,5 +1,4 @@
-using Entitas;
-using Entitas.Core;
+﻿using Entitas;
 
 public static class Helper {
 

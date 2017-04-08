@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Entitas;
-using Entitas.Core;
 
 public interface IReactiveSystemSpy {
     int didInitialize { get; }

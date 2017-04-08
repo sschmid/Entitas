@@ -1,10 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.CodeGenerator;
-using Entitas.Core;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -76,7 +75,7 @@ namespace Entitas.CodeGeneration.Plugins {
             data.SetEntityIndexName(type.ToCompilableString().RemoveDots());
 
             data.SetContextNames(new [] { attribute.contextType.ToCompilableString().ShortTypeName().RemoveContextSuffix() });
-             
+
             var getMethods = type
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance)
                 .Where(method => Attribute.IsDefined(method, typeof(EntityIndexGetMethodAttribute )))
@@ -108,7 +107,7 @@ namespace Entitas.CodeGeneration.Plugins {
     public static class EntityIndexDataExtension {
 
         public const string ENTITY_INDEX_TYPE = "entityIndex_type";
-        
+
         public const string ENTITY_INDEX_IS_CUSTOM = "entityIndex_isCustom";
         public const string ENTITY_INDEX_CUSTOM_METHODS = "entityIndex_customMethods";
 
@@ -138,7 +137,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public static MethodData[] GetCustomMethods(this EntityIndexData data) {
             return (MethodData[])data[ENTITY_INDEX_CUSTOM_METHODS];
         }
-        
+
         public static void SetCustomMethods(this EntityIndexData data, MethodData[] methods) {
             data[ENTITY_INDEX_CUSTOM_METHODS] = methods;
         }

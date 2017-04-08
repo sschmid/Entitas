@@ -1,5 +1,4 @@
-using Entitas.Core;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Entitas.VisualDebugging.Unity {
 

@@ -1,6 +1,4 @@
-using Entitas.Core;
-
-namespace Entitas.Blueprints.Unity {
+﻿namespace Entitas.Blueprints.Unity {
 
     public class BlueprintsNotFoundException : EntitasException {
 

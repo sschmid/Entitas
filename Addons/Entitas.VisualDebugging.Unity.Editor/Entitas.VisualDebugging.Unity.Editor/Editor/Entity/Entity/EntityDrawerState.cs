@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Entitas.Core;
 using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;

@@ -1,7 +1,7 @@
-﻿using Entitas.Core;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity {
+namespace Entitas.VisualDebugging.Unity
+{
 
     public static class ContextObserverExtension {
 

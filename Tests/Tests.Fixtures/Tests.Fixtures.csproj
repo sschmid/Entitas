@@ -75,10 +75,6 @@
       <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
       <Name>Entitas.CodeGeneration.Attributes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
-      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
-      <Name>Entitas.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

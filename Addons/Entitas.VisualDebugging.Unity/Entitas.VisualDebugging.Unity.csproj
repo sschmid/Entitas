@@ -49,10 +49,6 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
-      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
-      <Name>Entitas.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.VisualDebugging.Unity\" />

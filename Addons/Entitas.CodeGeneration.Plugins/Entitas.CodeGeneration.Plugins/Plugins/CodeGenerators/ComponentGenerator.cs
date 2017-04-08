@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Entitas.Utils;
 
@@ -13,7 +13,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         const string COMPONENT_TEMPLATE =
 @"${Contexts}${Unique}
-public sealed partial class ${FullComponentName} : Entitas.Core.IComponent {
+public sealed partial class ${FullComponentName} : Entitas.IComponent {
     public ${Type} value;
 }
 ";

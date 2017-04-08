@@ -1,4 +1,4 @@
-namespace Entitas.Core {
+﻿namespace Entitas {
 
     public interface INoneOfMatcher<TEntity> : ICompoundMatcher<TEntity> where TEntity : class, IEntity, new() {
     }

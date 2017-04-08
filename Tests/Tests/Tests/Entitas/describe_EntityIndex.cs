@@ -1,15 +1,14 @@
-using Entitas;
+﻿using Entitas;
 using NSpec;
 using System.Collections.Generic;
 using System.Linq;
-using Entitas.Core;
 
 class describe_EntityIndex : nspec {
 
     void when_primary_index() {
 
         context["single key"] = () => {
-            
+
             PrimaryEntityIndex<TestEntity, string> index = null;
             IContext<TestEntity> ctx = null;
             IGroup<TestEntity> group = null;
@@ -247,7 +246,7 @@ class describe_EntityIndex : nspec {
                             : ((NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
                     });
                     newIndex.GetEntities(name).Count.should_be(2);
-                };  
+                };
 
                 it["releases and removes entity from index when component gets removed"] = () => {
                     entity1.RemoveComponent(CID.ComponentA);

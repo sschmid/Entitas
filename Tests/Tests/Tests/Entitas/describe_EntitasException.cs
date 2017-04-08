@@ -1,4 +1,4 @@
-﻿using Entitas.Core;
+﻿using Entitas;
 using NSpec;
 
 class describe_EntitasException : nspec {

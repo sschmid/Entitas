@@ -1,7 +1,6 @@
-using System;
+﻿using System;
 using Entitas;
 using Entitas.Blueprints;
-using Entitas.Core;
 using NSpec;
 
 class describe_EntitasErrorMessages : nspec {

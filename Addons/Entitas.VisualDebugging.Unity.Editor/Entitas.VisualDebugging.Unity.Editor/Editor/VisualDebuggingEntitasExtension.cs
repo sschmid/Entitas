@@ -1,6 +1,4 @@
-﻿using Entitas.Core;
-
-namespace Entitas.VisualDebugging.Unity.Editor {
+﻿namespace Entitas.VisualDebugging.Unity.Editor {
 
     public static class VisualDebuggingEntitasExtension {
 

@@ -1,5 +1,4 @@
 ﻿using Entitas;
-using Entitas.Core;
 
 public sealed class MyTestContext : Context<TestEntity> {
 

@@ -1,6 +1,4 @@
-using Entitas.Core;
-
-namespace Entitas.Blueprints {
+﻿namespace Entitas.Blueprints {
 
     public static class BlueprintEntityExtension {
 

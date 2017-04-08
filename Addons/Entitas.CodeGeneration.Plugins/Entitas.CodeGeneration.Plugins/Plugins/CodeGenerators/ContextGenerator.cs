@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -17,7 +17,7 @@ namespace Entitas.CodeGeneration.Plugins {
         : base(
             ${Lookup}.TotalComponents,
             0,
-            new Entitas.Core.ContextInfo(
+            new Entitas.ContextInfo(
                 ""${ContextName}"",
                 ${Lookup}.componentNames,
                 ${Lookup}.componentTypes

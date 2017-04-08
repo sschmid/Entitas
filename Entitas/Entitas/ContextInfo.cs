@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace Entitas.Core {
+namespace Entitas {
 
     public class ContextInfo {
 

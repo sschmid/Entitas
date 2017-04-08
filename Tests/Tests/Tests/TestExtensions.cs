@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Entitas.Core;
+using Entitas;
 using NSpec;
 
 public static class TestExtensions {

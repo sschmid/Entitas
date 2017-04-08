@@ -1,5 +1,4 @@
-using Entitas;
-using Entitas.Core;
+﻿using Entitas;
 
 public class EntityRemoveAddComponent : IPerformanceTest {
 
@@ -39,6 +38,6 @@ public class EntityRemoveAddComponent : IPerformanceTest {
         for (int i = 0; i < n; i++) {
             _e.RemoveComponent(CP.ComponentA);
             _e.AddComponent(CP.ComponentA, _e.CreateComponent<ComponentA>(CP.ComponentA));
-        }    
+        }
     }
 }

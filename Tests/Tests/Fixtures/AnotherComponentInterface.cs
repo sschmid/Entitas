@@ -1,4 +1,4 @@
-using Entitas.Core;
+﻿using Entitas;
 
 public interface AnotherComponentInterface : IComponent {
 }

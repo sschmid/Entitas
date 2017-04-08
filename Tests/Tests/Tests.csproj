@@ -162,10 +162,6 @@
       <Project>{68AFC167-E6B6-4E9B-8C52-84854B004CAD}</Project>
       <Name>Entitas.CodeGeneration.Unity.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
-      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
-      <Name>Entitas.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.Migration\Entitas.Migration.csproj">
       <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
       <Name>Entitas.Migration</Name>

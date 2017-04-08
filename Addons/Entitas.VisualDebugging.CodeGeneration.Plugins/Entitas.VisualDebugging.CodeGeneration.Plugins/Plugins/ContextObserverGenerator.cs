@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Entitas.CodeGeneration;
 using Entitas.CodeGeneration.Plugins;
 using Entitas.Utils;
@@ -22,7 +22,7 @@ namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
 ${contextObservers}
     }
 
-    public void CreateContextObserver(Entitas.Core.IContext context) {
+    public void CreateContextObserver(Entitas.IContext context) {
         try {
             if(UnityEngine.Application.isPlaying) {
                 var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);

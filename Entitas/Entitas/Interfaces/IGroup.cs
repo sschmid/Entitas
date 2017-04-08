@@ -1,4 +1,4 @@
-namespace Entitas.Core {
+﻿namespace Entitas {
 
     public delegate void GroupChanged<TEntity>(
         IGroup<TEntity> group, TEntity entity, int index, IComponent component

@@ -39,13 +39,13 @@
     <Compile Include="Entitas.Blueprints.Unity\Unity\BlueprintsNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Entitas.Core\Entitas.Core.csproj">
-      <Project>{0D4CD7FF-DB16-4411-9DD2-82F3A918D393}</Project>
-      <Name>Entitas.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entitas.Blueprints\Entitas.Blueprints.csproj">
       <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
       <Name>Entitas.Blueprints</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

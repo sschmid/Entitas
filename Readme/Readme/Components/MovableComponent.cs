@@ -1,4 +1,4 @@
-using Entitas.Core;
+﻿using Entitas;
 
 [Game]
 public sealed class MovableComponent : IComponent {

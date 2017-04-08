@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
-using Entitas.Core;
 
 namespace MyNamespace {
 

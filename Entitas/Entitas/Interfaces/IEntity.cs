@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Entitas.Core {
+namespace Entitas {
 
     public delegate void EntityComponentChanged(
         IEntity entity, int index, IComponent component

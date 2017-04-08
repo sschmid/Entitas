@@ -1,8 +1,7 @@
-using System;
+﻿using System;
 using System.Linq;
 using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.CodeGenerator;
-using Entitas.Core;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
