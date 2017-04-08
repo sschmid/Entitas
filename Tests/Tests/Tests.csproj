@@ -104,6 +104,7 @@
     <Compile Include="Tests\Entitas\Extensions\describe_SystemStringExtension.cs" />
     <Compile Include="Tests\Entitas.CodeGenerator\describe_DependencyResolver.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasResources.cs" />
+    <Compile Include="Tests\Entitas.CodeGenerator\describe_TargetDirectoryExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

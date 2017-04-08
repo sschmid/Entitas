@@ -64,6 +64,8 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\MergeFilesPostProcessor.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\NewLinePostProcessor.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\WriteToDiskPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\CleanTargetDirectoryPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\TargetDirectoryStringExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.Plugins\" />
