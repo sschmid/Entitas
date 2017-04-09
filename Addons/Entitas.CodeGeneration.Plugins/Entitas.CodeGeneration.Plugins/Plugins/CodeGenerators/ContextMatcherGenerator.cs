@@ -1,7 +1,7 @@
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 
-namespace Entitas.CodeGenerator {
+namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextMatcherGenerator : ICodeGenerator {
 
