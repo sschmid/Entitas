@@ -63,5 +63,9 @@
       <Name>Entitas</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Entitas.Unity.Editor\Editor\Images\EntitasHeader.png" />
+    <None Include="Entitas.Unity.Editor\Editor\Images\EntitasHeader.png.meta" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

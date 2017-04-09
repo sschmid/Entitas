@@ -105,5 +105,19 @@
       <Name>Entitas.Unity</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasContextErrorHierarchyIcon.png" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasContextErrorHierarchyIcon.png.meta" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasContextHierarchyIcon.png" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasContextHierarchyIcon.png.meta" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasEntityErrorHierarchyIcon.png" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasEntityErrorHierarchyIcon.png.meta" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasEntityHierarchyIcon.png" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasEntityHierarchyIcon.png.meta" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasSystemsErrorHierarchyIcon.png" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasSystemsErrorHierarchyIcon.png.meta" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasSystemsHierarchyIcon.png" />
+    <None Include="Entitas.VisualDebugging.Unity.Editor\Editor\Images\EntitasSystemsHierarchyIcon.png.meta" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
