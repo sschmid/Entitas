@@ -26,7 +26,6 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Entitas.Migration.xml</DocumentationFile>
     <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <ItemGroup>
