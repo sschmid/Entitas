@@ -43,6 +43,9 @@
     <Compile Include="Entitas.Migration\Migrations\M0320.cs" />
     <Compile Include="Entitas.Migration\Migrations\M0360_1.cs" />
     <Compile Include="Entitas.Migration\Migrations\M0360_2.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0410_1.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0410_2.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M0410_3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
