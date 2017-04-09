@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -12,20 +12,20 @@ namespace Entitas.Unity.Editor {
 
         const string ENTITAS_FAST_AND_UNSAFE = "ENTITAS_FAST_AND_UNSAFE";
 
-        enum ScriptCallOptimization {
-            Disabled,
+        enum AERCMode {
+            Safe,
             FastAndUnsafe
         }
 
         ScriptingDefineSymbols _scriptingDefineSymbols;
-        ScriptCallOptimization _scriptCallOptimization;
+        AERCMode _scriptCallOptimization;
 
         public override void Initialize(Config config) {
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _scriptCallOptimization = _scriptingDefineSymbols.buildTargetToDefSymbol.Values
                                             .All<string>(defs => defs.Contains(ENTITAS_FAST_AND_UNSAFE))
-                                                ? ScriptCallOptimization.FastAndUnsafe
-                                                : ScriptCallOptimization.Disabled;
+                                                ? AERCMode.FastAndUnsafe
+                                                : AERCMode.Safe;
         }
 
         protected override void drawContent(Config config) {
@@ -33,20 +33,20 @@ namespace Entitas.Unity.Editor {
             {
                 EditorGUILayout.LabelField("Automatic Entity Reference Counting");
                 var buttonStyle = new GUIStyle(EditorStyles.miniButtonLeft);
-                if(_scriptCallOptimization == ScriptCallOptimization.Disabled) {
+                if(_scriptCallOptimization == AERCMode.Safe) {
                     buttonStyle.normal = buttonStyle.active;
                 }
                 if(GUILayout.Button("Safe", buttonStyle)) {
-                    _scriptCallOptimization = ScriptCallOptimization.Disabled;
+                    _scriptCallOptimization = AERCMode.Safe;
                     _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }
 
                 buttonStyle = new GUIStyle(EditorStyles.miniButtonRight);
-                if(_scriptCallOptimization == ScriptCallOptimization.FastAndUnsafe) {
+                if(_scriptCallOptimization == AERCMode.FastAndUnsafe) {
                     buttonStyle.normal = buttonStyle.active;
                 }
                 if(GUILayout.Button("Fast And Unsafe", buttonStyle)) {
-                    _scriptCallOptimization = ScriptCallOptimization.FastAndUnsafe;
+                    _scriptCallOptimization = AERCMode.FastAndUnsafe;
                     _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }
             }
