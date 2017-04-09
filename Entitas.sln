@@ -221,10 +221,13 @@ Global
 		$4.inheritsSet = Mono
 		$4.inheritsScope = text/x-csharp
 		$4.scope = text/x-csharp
-		$4.IndentSwitchSection = False
-		$4.SpacingAfterMethodDeclarationName = True
-		$4.SpaceAfterMethodCallName = True
-		$4.SpaceBeforeOpenSquareBracket = True
+		$4.IndentSwitchSection = True
+		$4.SpacingAfterMethodDeclarationName = False
+		$4.SpaceAfterMethodCallName = False
+		$4.SpaceBeforeOpenSquareBracket = False
+		$4.NewLinesForBracesInTypes = False
+		$4.NewLinesForBracesInMethods = False
+		$4.SpaceAfterControlFlowStatementKeyword = False
 		$0.StandardHeader = $5
 		$0.NameConventionPolicy = $6
 		$6.Rules = $7
