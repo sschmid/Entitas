@@ -79,6 +79,14 @@ namespace Entitas {
         public Context(int totalComponents) : this(totalComponents, 0, null, null) {
         }
 
+        // TODO Obsolete since 0.41.0, April 2017
+        [Obsolete("Migration Support for 0.41.0. Please use new Context(totalComponents, startCreationIndex, contextInfo, aercFactory)")]
+        public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo)
+            : this(totalComponents,
+                   startCreationIndex,
+                   contextInfo,
+                   (entity) => new SafeAERC(entity)) { }
+
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
         public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory) {
