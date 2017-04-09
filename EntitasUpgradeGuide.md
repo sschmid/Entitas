@@ -76,6 +76,12 @@ Explanation:
 
 If all set up correctly DataProviders, CodeGenerators and PostProcessors can be set in Unity.
 
+The command line code generator currently doesn't support the following plugins:
+- Entitas.Blueprints.CodeGeneration.Plugins (contains Blueprint DataProvider and CodeGenerator)
+- Entitas.CodeGeneration.Unity.Editor (contains DebugLogPostProcessor)
+
+because they use Unity specific api. They will work as expected when generating from within Unity but don't work on the command line.
+
 To test the config for potential problems, please unzip CodeGenerator.zip in the root folder of your project.
 
 ```

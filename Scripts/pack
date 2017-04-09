@@ -8,7 +8,7 @@ ${SCRIPTS}/docs
 
 # collect
 COLLECTED_DIR="${BUILD_SRC}/files"
-mkdir $COLLECTED_DIR "$COLLECTED_DIR/Migration"
+mkdir $COLLECTED_DIR "$COLLECTED_DIR/Migration" "$COLLECTED_DIR/Images"
 cp -v "${ROOT}/README.md" "$COLLECTED_DIR/README.md"
 cp -v "${ROOT}/RELEASE_NOTES.md" "$COLLECTED_DIR/RELEASE_NOTES.md"
 cp -v "${ROOT}/EntitasUpgradeGuide.md" "$COLLECTED_DIR/EntitasUpgradeGuide.md"
@@ -16,6 +16,10 @@ cp -v "${ROOT}/LICENSE.txt" "$COLLECTED_DIR/LICENSE.txt"
 cp "${BUILD_SRC}/${ES_MIG_CLI}.exe" "$COLLECTED_DIR/Migration/MigrationAssistant.exe"
 cp "${BUILD_SRC}/${ES_MIG}.dll" "$COLLECTED_DIR/Migration/${ES_MIG}.dll"
 cp "${BUILD_SRC}/${ES_UTILS}.dll" "$COLLECTED_DIR/Migration/${ES_UTILS}.dll"
+
+cp "${ADDONS}/${ES_UE}/${ES_UE}/Editor/Images/"* "$COLLECTED_DIR/Images"
+cp "${ADDONS}/${ES_MIG_UE}/${ES_MIG_UE}/Editor/Images/"* "$COLLECTED_DIR/Images"
+cp "${ADDONS}/${ES_VD_UE}/${ES_VD_UE}/Editor/Images/"* "$COLLECTED_DIR/Images"
 
 TMP_DIR="${BUILD}/tmp"
 TMP_ENTITAS="${TMP_DIR}/Entitas"
@@ -74,6 +78,7 @@ cp "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
 
 cp "${COLLECTED_DIR}/"* $TMP_DIR || true
 cp -r "$COLLECTED_DIR/Migration" $TMP_DIR
+cp -r "$COLLECTED_DIR/Images" $TMP_EDITOR
 
 cp -r $DOCS "${TMP_DIR}/Documentation"
 pushd $TMP_DIR > /dev/null

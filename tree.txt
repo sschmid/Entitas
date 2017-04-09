@@ -10,7 +10,6 @@
 │   │   └── Entitas.Blueprints.Unity
 │   │       └── Unity
 │   ├── Entitas.Blueprints.Unity.Editor
-│   │   ├── Editor
 │   │   └── Entitas.Blueprints.Unity.Editor
 │   │       └── Editor
 │   ├── Entitas.CodeGeneration
@@ -21,12 +20,6 @@
 │   │   └── Entitas.CodeGeneration.Attributes
 │   │       └── Attributes
 │   ├── Entitas.CodeGeneration.CodeGenerator
-│   │   ├── CodeGenerator
-│   │   │   └── DataProviders
-│   │   │       ├── Components
-│   │   │       │   └── Providers
-│   │   │       ├── Contexts
-│   │   │       └── EntityIndex
 │   │   └── Entitas.CodeGeneration.CodeGenerator
 │   │       └── CodeGenerator
 │   ├── Entitas.CodeGeneration.CodeGenerator.CLI
@@ -51,6 +44,7 @@
 │   ├── Entitas.Migration.Unity.Editor
 │   │   └── Entitas.Migration.Unity.Editor
 │   │       └── Editor
+│   │           └── Images
 │   ├── Entitas.Unity
 │   │   └── Entitas.Unity
 │   │       └── Unity
@@ -59,36 +53,27 @@
 │   │       └── Editor
 │   │           ├── GUI
 │   │           │   └── Layout
+│   │           ├── Images
 │   │           └── Menu
 │   ├── Entitas.VisualDebugging.CodeGeneration.Plugins
 │   │   └── Entitas.VisualDebugging.CodeGeneration.Plugins
 │   │       └── Plugins
 │   ├── Entitas.VisualDebugging.Unity
-│   │   ├── Entitas.VisualDebugging.Unity
-│   │   │   └── Unity
-│   │   │       ├── ContextObserver
-│   │   │       ├── DebugSystems
-│   │   │       └── Entity
-│   │   └── Unity
-│   │       ├── ContextObserver
-│   │       ├── DebugSystems
-│   │       └── Entity
+│   │   └── Entitas.VisualDebugging.Unity
+│   │       └── Unity
+│   │           ├── ContextObserver
+│   │           ├── DebugSystems
+│   │           └── Entity
 │   └── Entitas.VisualDebugging.Unity.Editor
-│       ├── Editor
-│       │   ├── ContextObserver
-│       │   ├── DebugSystems
-│       │   └── Entity
-│       │       ├── DefaultInstanceCreator
-│       │       ├── Entity
-│       │       └── TypeDrawer
 │       └── Entitas.VisualDebugging.Unity.Editor
 │           └── Editor
 │               ├── ContextObserver
 │               ├── DebugSystems
-│               └── Entity
-│                   ├── DefaultInstanceCreator
-│                   ├── Entity
-│                   └── TypeDrawer
+│               ├── Entity
+│               │   ├── DefaultInstanceCreator
+│               │   ├── Entity
+│               │   └── TypeDrawer
+│               └── Images
 ├── Entitas
 │   └── Entitas
 │       ├── Collector
@@ -139,7 +124,6 @@
 │   │           ├── Blueprints.cs
 │   │           └── BlueprintsNotFoundException.cs
 │   ├── Entitas.Blueprints.Unity.Editor
-│   │   ├── Editor
 │   │   └── Entitas.Blueprints.Unity.Editor
 │   │       └── Editor
 │   │           ├── BinaryBlueprintInspector.cs
@@ -171,12 +155,6 @@
 │   │           ├── PrimaryEntityIndexAttribute.cs
 │   │           └── UniqueAttribute.cs
 │   ├── Entitas.CodeGeneration.CodeGenerator
-│   │   ├── CodeGenerator
-│   │   │   └── DataProviders
-│   │   │       ├── Components
-│   │   │       │   └── Providers
-│   │   │       ├── Contexts
-│   │   │       └── EntityIndex
 │   │   └── Entitas.CodeGeneration.CodeGenerator
 │   │       └── CodeGenerator
 │   │           ├── CodeGenerator.cs
@@ -259,6 +237,8 @@
 │   ├── Entitas.Migration.Unity.Editor
 │   │   └── Entitas.Migration.Unity.Editor
 │   │       └── Editor
+│   │           ├── Images
+│   │           │   └── EntitasMigrationHeader.png
 │   │           └── MigrationWindow.cs
 │   ├── Entitas.Unity
 │   │   ├── Entitas.Unity
@@ -277,6 +257,8 @@
 │   │           │   ├── EntitasStyles.cs
 │   │           │   ├── IEntitasPreferencesDrawer.cs
 │   │           │   └── PreferencesWindow.cs
+│   │           ├── Images
+│   │           │   └── EntitasHeader.png
 │   │           ├── Menu
 │   │           │   ├── CheckForUpdates.cs
 │   │           │   └── EntitasMenuItems.cs
@@ -288,32 +270,21 @@
 │   │           ├── ContextObserverGenerator.cs
 │   │           └── FeatureClassGenerator.cs
 │   ├── Entitas.VisualDebugging.Unity
-│   │   ├── Entitas.VisualDebugging.Unity
-│   │   │   └── Unity
-│   │   │       ├── ContextObserver
-│   │   │       │   ├── ContextObserver.cs
-│   │   │       │   ├── ContextObserverBehaviour.cs
-│   │   │       │   └── ContextObserverExtension.cs
-│   │   │       ├── DebugSystems
-│   │   │       │   ├── DebugSystems.cs
-│   │   │       │   ├── DebugSystemsBehaviour.cs
-│   │   │       │   └── SystemInfo.cs
-│   │   │       ├── Entity
-│   │   │       │   ├── DontDrawComponentAttribute.cs
-│   │   │       │   └── EntityBehaviour.cs
-│   │   │       └── GameObjectDestroyExtension.cs
-│   │   └── Unity
-│   │       ├── ContextObserver
-│   │       ├── DebugSystems
-│   │       └── Entity
+│   │   └── Entitas.VisualDebugging.Unity
+│   │       └── Unity
+│   │           ├── ContextObserver
+│   │           │   ├── ContextObserver.cs
+│   │           │   ├── ContextObserverBehaviour.cs
+│   │           │   └── ContextObserverExtension.cs
+│   │           ├── DebugSystems
+│   │           │   ├── DebugSystems.cs
+│   │           │   ├── DebugSystemsBehaviour.cs
+│   │           │   └── SystemInfo.cs
+│   │           ├── Entity
+│   │           │   ├── DontDrawComponentAttribute.cs
+│   │           │   └── EntityBehaviour.cs
+│   │           └── GameObjectDestroyExtension.cs
 │   └── Entitas.VisualDebugging.Unity.Editor
-│       ├── Editor
-│       │   ├── ContextObserver
-│       │   ├── DebugSystems
-│       │   └── Entity
-│       │       ├── DefaultInstanceCreator
-│       │       ├── Entity
-│       │       └── TypeDrawer
 │       └── Entitas.VisualDebugging.Unity.Editor
 │           └── Editor
 │               ├── ContextObserver
@@ -353,6 +324,13 @@
 │               │   │   ├── Vector3TypeDrawer.cs
 │               │   │   └── Vector4TypeDrawer.cs
 │               │   └── IComponentDrawer.cs
+│               ├── Images
+│               │   ├── EntitasContextErrorHierarchyIcon.png
+│               │   ├── EntitasContextHierarchyIcon.png
+│               │   ├── EntitasEntityErrorHierarchyIcon.png
+│               │   ├── EntitasEntityHierarchyIcon.png
+│               │   ├── EntitasSystemsErrorHierarchyIcon.png
+│               │   └── EntitasSystemsHierarchyIcon.png
 │               ├── EntitasHierarchyIcon.cs
 │               ├── EntitasStats.cs
 │               ├── EntityLinkInspector.cs

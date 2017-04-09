@@ -28,6 +28,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 
 #### CodeGenerator
 - Added command line code generator #158 #353
+  - Unsupported Plugins: Entitas.Blueprints.CodeGeneration.Plugins, Entitas.CodeGeneration.Unity.Editor
 - ContextObserverGenerator puts VisualDebugging in try-catch to support Unit Testing #362
 - Added FeatureClassGenerator and removed Feature class from Entitas to support conditional compilation with `#if UNITY_EDITOR`
 - Added MethodData instead of using System.Reflection.MethodInfo
