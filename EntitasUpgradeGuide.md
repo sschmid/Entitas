@@ -35,6 +35,82 @@ $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/RequestedFolder
 
 ---
 
+Entitas 0.41.0 upgrade guide
+============================
+
+#### Breaking changes
+In order to deploy Entitas as Dlls which enables 3rd party Addons and the extendable command line code generator the projects have been restructured. This restructuring has an impact on namespaces.
+
+#### Before you install
+- You're fine - nothing to do for you :heart:
+
+#### After you installed
+- Apply Migrations 0.41.0-1
+- Apply Migrations 0.41.0-2
+- Apply Migrations 0.41.0-3
+
+These migrations should update most of the namespaces. Depending on which features of Entitas you have used there might be a chance that not all namespaces have been updated. In this case please fix the remaining namespaces manually.
+
+Entitas.properties keys have been updated to support the latest code generator. Please open Entitas.properties in your project root and make sure the keys are updated. Here's an example from Match One
+
+```
+Entitas.CodeGeneration.Project = Assembly-CSharp.csproj
+Entitas.CodeGeneration.SearchPaths = Assets/Libraries/Entitas, Assets/Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed
+Entitas.CodeGeneration.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll
+Entitas.CodeGeneration.Plugins = Entitas.CodeGeneration.Plugins, Entitas.CodeGeneration.Unity.Editor, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins
+Entitas.CodeGeneration.DataProviders = Entitas.Blueprints.CodeGeneration.Plugins.BlueprintDataProvider, Entitas.CodeGeneration.Plugins.ComponentDataProvider, Entitas.CodeGeneration.Plugins.ContextDataProvider, Entitas.CodeGeneration.Plugins.EntityIndexDataProvider
+Entitas.CodeGeneration.CodeGenerators = Entitas.Blueprints.CodeGeneration.Plugins.BlueprintsGenerator, Entitas.CodeGeneration.Plugins.ComponentContextGenerator, Entitas.CodeGeneration.Plugins.ComponentEntityGenerator, Entitas.CodeGeneration.Plugins.ComponentGenerator, Entitas.CodeGeneration.Plugins.ComponentsLookupGenerator, Entitas.CodeGeneration.Plugins.ContextAttributeGenerator, Entitas.CodeGeneration.Plugins.ContextGenerator, Entitas.CodeGeneration.Plugins.ContextsGenerator, Entitas.CodeGeneration.Plugins.EntityGenerator, Entitas.CodeGeneration.Plugins.EntityIndexGenerator, Entitas.CodeGeneration.Plugins.MatcherGenerator, Entitas.VisualDebugging.CodeGeneration.Plugins.ContextObserverGenerator, Entitas.VisualDebugging.CodeGeneration.Plugins.FeatureClassGenerator
+Entitas.CodeGeneration.PostProcessors = Entitas.CodeGeneration.Plugins.AddFileHeaderPostProcessor, Entitas.CodeGeneration.Plugins.CleanTargetDirectoryPostProcessor, Entitas.CodeGeneration.Plugins.MergeFilesPostProcessor, Entitas.CodeGeneration.Plugins.NewLinePostProcessor, Entitas.CodeGeneration.Plugins.WriteToDiskPostProcessor, Entitas.CodeGeneration.Plugins.ConsoleWriteLinePostProcessor, Entitas.CodeGeneration.Unity.Editor.DebugLogPostProcessor
+Entitas.CodeGeneration.TargetDirectory = Assets/Sources/
+Entitas.CodeGeneration.Contexts = Game, GameState, Input
+Entitas.VisualDebugging.Unity.SystemWarningThreshold = 8
+Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/
+Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/
+```
+
+Explanation:
+- Entitas.CodeGeneration.Project: Relative path to your project.csproj (when using Unity use `Assembly-CSharp.csproj`)
+- Entitas.CodeGeneration.SearchPaths: The new code generator can be extended with 3rd party plugins. Specify all folders where plugin dlls can be found. Plugins may depend on UnityEngine or UnityEditor, if so please specify where those dlls can be found (Unity default on Mac: `/Applications/Unity/Unity.app/Contents/Managed`
+- Entitas.CodeGeneration.Assemblies: One or more Dlls that contain your components
+- Entitas.CodeGeneration.Plugins: One or more Code Generator Plugin Dlls or namespaces
+
+If all set up correctly DataProviders, CodeGenerators and PostProcessors can be set in Unity.
+
+To test the config for potential problems, please unzip CodeGenerator.zip in the root folder of your project.
+
+```
+// skip mono on Windows
+$ mono ./CodeGenerator/entitas.exe
+Entitas Code Generator version 0.41.0
+usage: entitas new [-f] - Creates new Entitas.properties config with default values
+       entitas edit     - Opens Entitas.properties config
+       entitas doctor   - Checks the config for potential problems
+       entitas status   - Lists available and unavailable plugins
+       entitas fix      - Adds missing or removes unused keys interactively
+       entitas scan     - Scans and prints available types found in specified assemblies
+       entitas dry      - Simulates generating files without writing to disk
+       entitas gen      - Generates files based on Entitas.properties
+       [-v]             - verbose output
+       [-s]             - silent output (errors only)
+```
+
+To check the config for potential problems please run
+```
+$ mono ./CodeGenerator/entitas.exe doctor
+```
+
+The `doctor` command will show you the status and potential problems. Sometime you might get a warning like this:
+
+```
+- Could not resolve xyz.dll
+```
+
+This is just a warning. If no error is shown after running the `doctor` command, you can ignore those. All code generator plugins must be resolvable in order to be used. Use the `status` command to see available and unavailable plugins. This command helps you manage the plugins. Add or remove DataProviders, CodeGenerators or PostProcessors and check with `status` until you're happy. As usual, you can also use the Entitas Preferences Window in Unity to set up everything.
+
+If there are nor problems use the `gen` command to generate or use the green generate button in Unity as usual.
+
+---
+
 Entitas 0.37.0 upgrade guide
 ============================
 

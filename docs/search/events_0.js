@@ -10,6 +10,5 @@ var searchData=
   ['onentityremoved',['OnEntityRemoved',['../class_entitas_1_1_group.html#ad010b1c3944aa9aa54c5ff76c93c431e',1,'Entitas::Group']]],
   ['onentityupdated',['OnEntityUpdated',['../class_entitas_1_1_group.html#a925d5a507d149042cfa728111c1a0d41',1,'Entitas::Group']]],
   ['onentitywillbedestroyed',['OnEntityWillBeDestroyed',['../class_entitas_1_1_context.html#ab8c74cb2adee934df32ec2a86fc607b2',1,'Entitas::Context']]],
-  ['ongroupcleared',['OnGroupCleared',['../class_entitas_1_1_context.html#a0d41f9355cab92e04a8231b5c328bd05',1,'Entitas::Context']]],
   ['ongroupcreated',['OnGroupCreated',['../class_entitas_1_1_context.html#af08af71f91b512aee430ab4091709e3e',1,'Entitas::Context']]]
 ];

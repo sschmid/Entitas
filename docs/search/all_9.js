@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['objectcache',['ObjectCache',['../class_entitas_1_1_object_cache.html',1,'Entitas']]],
-  ['objectpool',['ObjectPool',['../class_entitas_1_1_object_pool.html',1,'Entitas']]],
-  ['objectpool_3c_20list_3c_20groupchanged_3c_20tentity_20_3e_20_3e_20_3e',['ObjectPool&lt; List&lt; GroupChanged&lt; TEntity &gt; &gt; &gt;',['../class_entitas_1_1_object_pool.html',1,'Entitas']]],
   ['oncomponentadded',['OnComponentAdded',['../class_entitas_1_1_entity.html#ae32e6949d12be079ed24181dca78f928',1,'Entitas::Entity']]],
   ['oncomponentremoved',['OnComponentRemoved',['../class_entitas_1_1_entity.html#a16e5c42416751abe64cfd86a9b9da887',1,'Entitas::Entity']]],
   ['oncomponentreplaced',['OnComponentReplaced',['../class_entitas_1_1_entity.html#a83ffb44d61d4c3c137bd9377c0866e6a',1,'Entitas::Entity']]],
@@ -13,7 +10,5 @@ var searchData=
   ['onentityremoved',['OnEntityRemoved',['../class_entitas_1_1_group.html#ad010b1c3944aa9aa54c5ff76c93c431e',1,'Entitas::Group']]],
   ['onentityupdated',['OnEntityUpdated',['../class_entitas_1_1_group.html#a925d5a507d149042cfa728111c1a0d41',1,'Entitas::Group']]],
   ['onentitywillbedestroyed',['OnEntityWillBeDestroyed',['../class_entitas_1_1_context.html#ab8c74cb2adee934df32ec2a86fc607b2',1,'Entitas::Context']]],
-  ['ongroupcleared',['OnGroupCleared',['../class_entitas_1_1_context.html#a0d41f9355cab92e04a8231b5c328bd05',1,'Entitas::Context']]],
-  ['ongroupcreated',['OnGroupCreated',['../class_entitas_1_1_context.html#af08af71f91b512aee430ab4091709e3e',1,'Entitas::Context']]],
-  ['owners',['owners',['../class_entitas_1_1_entity.html#aa22ac53a43e919909a1330d035cc1ec4',1,'Entitas::Entity']]]
+  ['ongroupcreated',['OnGroupCreated',['../class_entitas_1_1_context.html#af08af71f91b512aee430ab4091709e3e',1,'Entitas::Context']]]
 ];

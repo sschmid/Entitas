@@ -1,3 +1,44 @@
+# 0.41.0
+
+See and discuss changes in [Milestone 0.41.0](https://github.com/sschmid/Entitas-CSharp/milestone/13)
+
+This milestone paves the way for a more customizable version of Entitas. A streamlined and modular project structure enables deploying Entitas as Dlls which opens the door for 3rd party Addons and the extendable command line code generator.
+
+#### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+- Renamed Entitas.properties config keys
+- Removed context.DeactivateAndRemoveEntityIndices()
+- Removed context.ClearGroups()
+- New namespaces as a consequence of project restructuring
+
+#### General
+- Project restructuring. All Entitas projects are now in Entitas.sln, including all Addons and Unity projects
+- Deploying Entitas as Dlls instead of source code which has multiple benefits, e.g.
+  - Entitas Unity menu appears even if code doesn't compile
+  - Enables 3rd party Addons and Plugins
+  - Enables command line code generator
+
+#### Entitas
+- Extracted Automatic Entity Reference Counting (AERC) as a strategy which can be set per context
+- Better exception handling for Entitas.properties config
+- Renamed config keys
+- Removed context.DeactivateAndRemoveEntityIndices()
+- Removed context.ClearGroups()
+
+#### CodeGenerator
+- Added command line code generator #158 #353
+- ContextObserverGenerator puts VisualDebugging in try-catch to support Unit Testing #362
+- Added FeatureClassGenerator and removed Feature class from Entitas to support conditional compilation with `#if UNITY_EDITOR`
+- Added MethodData instead of using System.Reflection.MethodInfo
+- Added CleanTargetDirectoryPostProcessor
+
+#### VisualDebugging
+- Removed Feature class
+- UX improvements
+- Better exception handling for Entitas.properties config
+
+
 # 0.40.0
 
 See and discuss changes in [Milestone 0.40.0](https://github.com/sschmid/Entitas-CSharp/milestone/12)

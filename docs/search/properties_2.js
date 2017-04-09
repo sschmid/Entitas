@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['matcher',['matcher',['../class_entitas_1_1_group.html#ae48b92ee4d75ca6ec41d1e1187e3b1a2',1,'Entitas::Group']]]
+  ['isenabled',['isEnabled',['../class_entitas_1_1_entity.html#a93e43dc3a3668ca457db9d3609405ff9',1,'Entitas::Entity']]]
 ];

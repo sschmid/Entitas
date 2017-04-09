@@ -1,6 +1,5 @@
 var hierarchy =
 [
-    [ "Entitas.AttributeInfo", "class_entitas_1_1_attribute_info.html", null ],
     [ "Entitas.CollectionExtension", "class_entitas_1_1_collection_extension.html", null ],
     [ "Entitas.Collector< TEntity >", "class_entitas_1_1_collector.html", null ],
     [ "Entitas.ComponentStringExtension", "class_entitas_1_1_component_string_extension.html", null ],
@@ -8,8 +7,7 @@ var hierarchy =
     [ "Entitas.ContextInfo", "class_entitas_1_1_context_info.html", null ],
     [ "Entitas.ContextStringExtension", "class_entitas_1_1_context_string_extension.html", null ],
     [ "Entitas.EntitasCache", "class_entitas_1_1_entitas_cache.html", null ],
-    [ "Entitas.EntitasPreferences", "class_entitas_1_1_entitas_preferences.html", null ],
-    [ "Entitas.EntitasPreferencesConfig", "class_entitas_1_1_entitas_preferences_config.html", null ],
+    [ "Entitas.EntitasResources", "class_entitas_1_1_entitas_resources.html", null ],
     [ "Exception", null, [
       [ "Entitas.EntitasException", "class_entitas_1_1_entitas_exception.html", [
         [ "Entitas.CollectorException", "class_entitas_1_1_collector_exception.html", null ],
@@ -31,6 +29,13 @@ var hierarchy =
       [ "Entitas.MatcherException", "class_entitas_1_1_matcher_exception.html", null ]
     ] ],
     [ "Entitas.GroupExtension", "class_entitas_1_1_group_extension.html", null ],
+    [ "Entitas.IAERC", "interface_entitas_1_1_i_a_e_r_c.html", [
+      [ "Entitas.IEntity", "interface_entitas_1_1_i_entity.html", [
+        [ "Entitas.Entity", "class_entitas_1_1_entity.html", null ]
+      ] ],
+      [ "Entitas.SafeAERC", "class_entitas_1_1_safe_a_e_r_c.html", null ],
+      [ "Entitas.UnsafeAERC", "class_entitas_1_1_unsafe_a_e_r_c.html", null ]
+    ] ],
     [ "Entitas.IComponent", "interface_entitas_1_1_i_component.html", null ],
     [ "Entitas.IContext", "interface_entitas_1_1_i_context.html", [
       [ "Entitas.IContext< TEntity >", "interface_entitas_1_1_i_context.html", null ]
@@ -39,9 +44,6 @@ var hierarchy =
       [ "Entitas.Context< TEntity >", "class_entitas_1_1_context.html", null ]
     ] ],
     [ "Entitas.IContexts", "interface_entitas_1_1_i_contexts.html", null ],
-    [ "Entitas.IEntity", "interface_entitas_1_1_i_entity.html", [
-      [ "Entitas.Entity", "class_entitas_1_1_entity.html", null ]
-    ] ],
     [ "Entitas.IEntityIndex", "interface_entitas_1_1_i_entity_index.html", [
       [ "Entitas.AbstractEntityIndex< TEntity, TKey >", "class_entitas_1_1_abstract_entity_index.html", [
         [ "Entitas.EntityIndex< TEntity, TKey >", "class_entitas_1_1_entity_index.html", null ],
@@ -68,7 +70,6 @@ var hierarchy =
         ] ]
       ] ]
     ] ],
-    [ "Entitas.InterfaceTypeExtension", "class_entitas_1_1_interface_type_extension.html", null ],
     [ "Entitas.ISystem", "interface_entitas_1_1_i_system.html", [
       [ "Entitas.ICleanupSystem", "interface_entitas_1_1_i_cleanup_system.html", [
         [ "Entitas.Systems", "class_entitas_1_1_systems.html", null ]
@@ -89,13 +90,6 @@ var hierarchy =
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
-    [ "Entitas.ObjectCache", "class_entitas_1_1_object_cache.html", null ],
-    [ "Entitas.ObjectPool< T >", "class_entitas_1_1_object_pool.html", null ],
-    [ "Entitas.ObjectPool< List< GroupChanged< TEntity > > >", "class_entitas_1_1_object_pool.html", null ],
-    [ "Entitas.Properties", "class_entitas_1_1_properties.html", null ],
-    [ "Entitas.PublicMemberInfo", "class_entitas_1_1_public_member_info.html", null ],
     [ "Entitas.PublicMemberInfoEntityExtension", "class_entitas_1_1_public_member_info_entity_extension.html", null ],
-    [ "Entitas.PublicMemberInfoExtension", "class_entitas_1_1_public_member_info_extension.html", null ],
-    [ "Entitas.SystemStringExtension", "class_entitas_1_1_system_string_extension.html", null ],
-    [ "Entitas.TypeSerializationExtension", "class_entitas_1_1_type_serialization_extension.html", null ]
+    [ "Entitas.SystemStringExtension", "class_entitas_1_1_system_string_extension.html", null ]
 ];

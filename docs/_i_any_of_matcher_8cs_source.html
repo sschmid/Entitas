@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.13"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Entitas: Entitas/Entitas/Matcher/Interfaces/IAnyOfMatcher.cs Source File</title>
+<title>Entitas: Entitas/Entitas/Interfaces/Matchers/IAnyOfMatcher.cs Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="docs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Entitas
-   &#160;<span id="projectnumber">0.40.0</span>
+   &#160;<span id="projectnumber">0.41.0</span>
    </div>
    <div id="projectbrief">Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity</div>
   </td>
@@ -89,14 +89,14 @@ $(document).ready(function(){initNavTree('_i_any_of_matcher_8cs_source.html','')
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_entitas.html">Entitas</a> {</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div><div class="line"><a name="l00003"></a><span class="lineno"><a class="line" href="interface_entitas_1_1_i_any_of_matcher.html">    3</a></span>&#160;    <span class="keyword">public</span> <span class="keyword">interface </span><a class="code" href="interface_entitas_1_1_i_any_of_matcher.html">IAnyOfMatcher</a>&lt;TEntity&gt; : <a class="code" href="interface_entitas_1_1_i_none_of_matcher.html">INoneOfMatcher</a>&lt;TEntity&gt; where TEntity : class, <a class="code" href="interface_entitas_1_1_i_entity.html">IEntity</a>, new() {</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;        <a class="code" href="interface_entitas_1_1_i_none_of_matcher.html">INoneOfMatcher&lt;TEntity&gt;</a> NoneOf(params <span class="keywordtype">int</span>[] indices);</div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;        <a class="code" href="interface_entitas_1_1_i_none_of_matcher.html">INoneOfMatcher&lt;TEntity&gt;</a> NoneOf(params <a class="code" href="interface_entitas_1_1_i_matcher.html">IMatcher&lt;TEntity&gt;</a>[] matchers);</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    }</div><div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;}</div><div class="ttc" id="namespace_entitas_html"><div class="ttname"><a href="namespace_entitas.html">Entitas</a></div><div class="ttdef"><b>Definition:</b> <a href="_collector_8cs_source.html#l00004">Collector.cs:4</a></div></div>
 <div class="ttc" id="interface_entitas_1_1_i_none_of_matcher_html"><div class="ttname"><a href="interface_entitas_1_1_i_none_of_matcher.html">Entitas.INoneOfMatcher</a></div><div class="ttdef"><b>Definition:</b> <a href="_i_none_of_matcher_8cs_source.html#l00003">INoneOfMatcher.cs:3</a></div></div>
 <div class="ttc" id="interface_entitas_1_1_i_matcher_html"><div class="ttname"><a href="interface_entitas_1_1_i_matcher.html">Entitas.IMatcher</a></div><div class="ttdef"><b>Definition:</b> <a href="_i_matcher_8cs_source.html#l00003">IMatcher.cs:3</a></div></div>
-<div class="ttc" id="interface_entitas_1_1_i_entity_html"><div class="ttname"><a href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a></div><div class="ttdef"><b>Definition:</b> <a href="_i_entity_8cs_source.html#l00014">IEntity.cs:14</a></div></div>
+<div class="ttc" id="interface_entitas_1_1_i_entity_html"><div class="ttname"><a href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a></div><div class="ttdef"><b>Definition:</b> <a href="_i_entity_8cs_source.html#l00016">IEntity.cs:16</a></div></div>
 <div class="ttc" id="interface_entitas_1_1_i_any_of_matcher_html"><div class="ttname"><a href="interface_entitas_1_1_i_any_of_matcher.html">Entitas.IAnyOfMatcher</a></div><div class="ttdef"><b>Definition:</b> <a href="_i_any_of_matcher_8cs_source.html#l00003">IAnyOfMatcher.cs:3</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_2445fa600638ca0377a838c43b60c5d0.html">Entitas</a></li><li class="navelem"><a class="el" href="dir_18d0583636d1f7adc70f46fa7dc6fd22.html">Entitas</a></li><li class="navelem"><a class="el" href="dir_5b9febb0a1643b31f73c828c94068ca9.html">Matcher</a></li><li class="navelem"><a class="el" href="dir_b3f9a997fe54a4a772f0ea0f564b8f92.html">Interfaces</a></li><li class="navelem"><b>IAnyOfMatcher.cs</b></li>
+    <li class="navelem"><a class="el" href="dir_2445fa600638ca0377a838c43b60c5d0.html">Entitas</a></li><li class="navelem"><a class="el" href="dir_18d0583636d1f7adc70f46fa7dc6fd22.html">Entitas</a></li><li class="navelem"><a class="el" href="dir_b4d3ecafd9849fd76c2839b0ca942f82.html">Interfaces</a></li><li class="navelem"><a class="el" href="dir_55a82be7c00cee32348d44ab079a8dd6.html">Matchers</a></li><li class="navelem"><b>IAnyOfMatcher.cs</b></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>

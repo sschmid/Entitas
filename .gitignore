@@ -30,7 +30,6 @@ Build/*
 Build/deploy/Entitas-CSharp
 Build/deploy/Entitas-Unity
 Build/deploy/CodeGenerator
-Entitas-CodeGenerator.zip
 
 Tests/Unity/Entitas.Unity/Entitas.Unity.sln
 Tests/Unity/Entitas.Unity/Assets/Libraries
