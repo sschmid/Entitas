@@ -1,15 +1,35 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EntityIndexGenerator : ICodeGenerator {
+    public class EntityIndexGenerator : ICodeGenerator, IConfigurable {
 
         public string name { get { return "Entity Index"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
+
+        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+
+        public Dictionary<string, string> defaultProperties {
+            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
+        }
+
+        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
+
+        Dictionary<string, string> properties {
+            get {
+                if(_properties == null) {
+                    _properties = defaultProperties;
+                }
+
+                return _properties;
+            }
+        }
+
+        Dictionary<string, string> _properties;
 
         const string CLASS_TEMPLATE =
 @"public partial class Contexts {
@@ -53,6 +73,10 @@ ${getIndices}
         return ((${IndexType})(context.GetEntityIndex(Contexts.${IndexName}))).${MethodName}(${args});
     }
 ";
+
+        public void Configure(Dictionary<string, string> properties) {
+            _properties = properties;
+        }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var entityIndexData = data.OfType<EntityIndexData>().ToArray();
@@ -116,7 +140,7 @@ ${getIndices}
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${ComponentType}", data.GetComponentType())
                 .Replace("${MemberName}", data.GetMemberName())
-                .Replace("${componentName}", data.GetComponentType().ToComponentName().LowercaseFirst());
+                .Replace("${componentName}", data.GetComponentType().ToComponentName(ignoreNamespaces).LowercaseFirst());
         }
 
         string generateGetMethods(EntityIndexData data) {

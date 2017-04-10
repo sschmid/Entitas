@@ -37,6 +37,7 @@
     <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGeneratorDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGeneratorInterface.cs" />
     <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGenFilePostProcessor.cs" />
+    <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\IConfigurable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration\" />

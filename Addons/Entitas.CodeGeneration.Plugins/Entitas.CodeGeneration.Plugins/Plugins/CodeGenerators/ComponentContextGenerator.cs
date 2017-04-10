@@ -1,15 +1,36 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentContextGenerator : ICodeGenerator {
+    public class ComponentContextGenerator : ICodeGenerator, IConfigurable {
 
         public string name { get { return "Component (Context API)"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
+
+        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+
+        public Dictionary<string, string> defaultProperties {
+            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
+        }
+
+        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
+
+        Dictionary<string, string> properties {
+            get {
+                if(_properties == null) {
+                    _properties = defaultProperties;
+                }
+
+                return _properties;
+            }
+        }
+
+        Dictionary<string, string> _properties;
 
         const string STANDARD_COMPONENT_TEMPLATE =
 @"public partial class ${ContextName}Context {
@@ -70,6 +91,10 @@ namespace Entitas.CodeGeneration.Plugins {
 }
 ";
 
+        public void Configure(Dictionary<string, string> properties) {
+            _properties = properties;
+        }
+
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
@@ -87,7 +112,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
             var memberData = data.GetMemberData();
-            var componentName = data.GetFullTypeName().ToComponentName();
+            var componentName = data.GetFullTypeName().ToComponentName(ignoreNamespaces);
             var template = memberData.Length == 0
                                       ? FLAG_COMPONENT_TEMPLATE
                                       : STANDARD_COMPONENT_TEMPLATE;

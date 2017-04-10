@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Entitas.Utils;
 
@@ -83,6 +83,12 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             return enabledTypeNames
                     .Where(typeName => !typeNames.Contains(typeName))
                     .ToArray();
+        }
+
+        public static T[] GetUsed<T>(Type[] types, string[] enabledTypeNames) where T : ICodeGeneratorInterface {
+            return GetOrderedInstances<T>(types)
+                .Where(instance => enabledTypeNames.Contains(instance.GetType().ToCompilableString()))
+                .ToArray();
         }
     }
 }

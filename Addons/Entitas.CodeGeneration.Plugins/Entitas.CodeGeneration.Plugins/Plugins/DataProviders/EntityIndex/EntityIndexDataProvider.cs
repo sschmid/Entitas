@@ -8,13 +8,32 @@ using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EntityIndexDataProvider : ICodeGeneratorDataProvider {
+    public class EntityIndexDataProvider : ICodeGeneratorDataProvider, IConfigurable {
 
         public string name { get { return "Entity Index"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
+        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+
+        public Dictionary<string, string> defaultProperties {
+            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
+        }
+
+        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
+
+        Dictionary<string, string> properties {
+            get {
+                if(_properties == null) {
+                    _properties = defaultProperties;
+                }
+
+                return _properties;
+            }
+        }
+
+        Dictionary<string, string> _properties;
         Type[] _types;
 
         public EntityIndexDataProvider() : this(null) {
@@ -22,6 +41,10 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public EntityIndexDataProvider(Type[] types) {
             _types = types;
+        }
+
+        public void Configure(Dictionary<string, string> properties) {
+            _properties = properties;
         }
 
         public CodeGeneratorData[] GetData() {
@@ -56,7 +79,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
             data.SetEntityIndexType(getEntityIndexType(attribute));
             data.IsCustom(false);
-            data.SetEntityIndexName(type.ToCompilableString().ToComponentName());
+            data.SetEntityIndexName(type.ToCompilableString().ToComponentName(ignoreNamespaces));
             data.SetKeyType(info.type.ToCompilableString());
             data.SetComponentType(type.ToCompilableString());
             data.SetMemberName(info.name);

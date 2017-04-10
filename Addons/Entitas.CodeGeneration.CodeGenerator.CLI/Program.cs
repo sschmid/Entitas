@@ -170,7 +170,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 var fileContent = File.ReadAllText(Preferences.configPath);
                 var properties = new Properties(fileContent);
 
-                foreach(var key in getMissingKey(properties)) {
+                foreach(var key in getMissingKeys(properties)) {
                     _logger.Info("Add missing key: '" + key + "' ? (y / n)");
                     if(getUserDecision()) {
                         properties[key] = string.Empty;
@@ -209,15 +209,39 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
                 _logger.Debug(config.ToString());
 
-                foreach(var key in getUnusedKeys(properties)) {
+                Type[] types = null;
+                string[] configurableKeys = null;
+
+                try {
+                    types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
+                    configurableKeys = getConfigurableKeys(
+                                            CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(types, config.dataProviders),
+                                            CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),
+                                            CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(types, config.postProcessors)
+                                        );
+                } catch(Exception ex) {
+                    foreach(var key in getUnusedKeys(properties)) {
+                        _logger.Info("Unused key: " + key);
+                    }
+
+                    foreach(var key in getMissingKeys(properties)) {
+                        _logger.Warn("Missing key: " + key);
+                    }
+
+                    throw ex;
+                }
+
+                foreach(var key in getUnusedKeys(properties).Where(key => !configurableKeys.Contains(key))) {
                     _logger.Info("Unused key: " + key);
                 }
 
-                foreach(var key in getMissingKey(properties)) {
+                foreach(var key in getMissingKeys(properties)) {
                     _logger.Warn("Missing key: " + key);
                 }
 
-                var types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
+                foreach(var key in configurableKeys.Where(key => !properties.HasKey(key))) {
+                    _logger.Warn("Missing key: " + key);
+                }
 
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(types, config.dataProviders));
                 printUnavailable(CodeGeneratorUtil.GetUnavailable<ICodeGenerator>(types, config.codeGenerators));
@@ -237,10 +261,20 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                              .ToArray();
         }
 
-        static string[] getMissingKey(Properties properties) {
+        static string[] getMissingKeys(Properties properties) {
             return CodeGeneratorConfig.keys
                                       .Where(key => !properties.HasKey(key))
                                       .ToArray();
+        }
+
+        static string[] getConfigurableKeys(ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
+            return dataProviders.OfType<IConfigurable>()
+                .Concat(codeGenerators.OfType<IConfigurable>())
+                .Concat(postProcessors.OfType<IConfigurable>())
+                .Select(instance => instance.defaultProperties)
+                .SelectMany(props => props.Keys)
+                .Distinct()
+                .ToArray();
         }
 
         static void scanDlls() {

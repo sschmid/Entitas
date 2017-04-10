@@ -1,15 +1,35 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentsLookupGenerator : ICodeGenerator {
+    public class ComponentsLookupGenerator : ICodeGenerator, IConfigurable {
 
         public string name { get { return "Components Lookup"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
+
+        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+
+        public Dictionary<string, string> defaultProperties {
+            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
+        }
+
+        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
+
+        Dictionary<string, string> properties {
+            get {
+                if(_properties == null) {
+                    _properties = defaultProperties;
+                }
+
+                return _properties;
+            }
+        }
+
+        Dictionary<string, string> _properties;
 
         public const string COMPONENTS_LOOKUP = "ComponentsLookup";
 
@@ -41,6 +61,10 @@ ${componentTypes}
 
         const string COMPONENT_TYPES_TEMPLATE =
 @"        typeof(${ComponentType})";
+
+        public void Configure(Dictionary<string, string> properties) {
+            _properties = properties;
+        }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var files = new List<CodeGenFile>();
@@ -105,7 +129,7 @@ ${componentTypes}
             var componentConstants = string.Join("\n", data
                 .Select((d, index) => {
                     return COMPONENT_CONSTANTS_TEMPLATE
-                    .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName())
+                    .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(ignoreNamespaces))
                         .Replace("${Index}", index.ToString());
                 }).ToArray());
 
@@ -114,7 +138,7 @@ ${componentTypes}
 
             var componentNames = string.Join(",\n", data
                 .Select(d => COMPONENT_NAMES_TEMPLATE
-                        .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName())
+                        .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(ignoreNamespaces))
                 ).ToArray());
 
             var componentTypes = string.Join(",\n", data
