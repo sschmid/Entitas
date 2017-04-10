@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class MatcherGenerator : ICodeGenerator {
+    public class ComponentMatcherGenerator : ICodeGenerator {
 
         public string name { get { return "Component (Matcher API)"; } }
         public int priority { get { return 0; } }
