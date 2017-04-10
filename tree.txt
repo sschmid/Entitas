@@ -136,7 +136,8 @@
 │   │           │   ├── ICodeGenFilePostProcessor.cs
 │   │           │   ├── ICodeGenerator.cs
 │   │           │   ├── ICodeGeneratorDataProvider.cs
-│   │           │   └── ICodeGeneratorInterface.cs
+│   │           │   ├── ICodeGeneratorInterface.cs
+│   │           │   └── IConfigurable.cs
 │   │           ├── CodeGenFile.cs
 │   │           └── CodeGeneratorData.cs
 │   ├── Entitas.CodeGeneration.Attributes
@@ -170,13 +171,14 @@
 │   │           │   ├── ComponentContextGenerator.cs
 │   │           │   ├── ComponentEntityGenerator.cs
 │   │           │   ├── ComponentGenerator.cs
+│   │           │   ├── ComponentMatcherGenerator.cs
 │   │           │   ├── ComponentsLookupGenerator.cs
 │   │           │   ├── ContextAttributeGenerator.cs
 │   │           │   ├── ContextGenerator.cs
+│   │           │   ├── ContextMatcherGenerator.cs
 │   │           │   ├── ContextsGenerator.cs
 │   │           │   ├── EntityGenerator.cs
-│   │           │   ├── EntityIndexGenerator.cs
-│   │           │   └── MatcherGenerator.cs
+│   │           │   └── EntityIndexGenerator.cs
 │   │           ├── DataProviders
 │   │           │   ├── Components
 │   │           │   │   ├── Providers

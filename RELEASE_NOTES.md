@@ -1,3 +1,33 @@
+# 0.41.1
+
+See and discuss changes in [Milestone 0.41.1](https://github.com/sschmid/Entitas-CSharp/milestone/14)
+
+#### CodeGenerator
+- Added ContextMatcherGenerator #358 #358 @marczaku
+
+```csharp
+// instead of
+Matcher<GameEntity>.AllOf(GameMatcher.Position, GameMatcher.View);
+
+// you can write
+GameMatcher.AllOf(GameMatcher.Position, GameMatcher.View);
+```
+
+- Added option to ignore namespace in generated api
+  - Simply add `Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true` to your Entitas.properties
+  - You can run `entitas status` to see if any plugins require additional keys
+
+```
+$ entitas status
+Missing key: Entitas.CodeGeneration.Plugins.IgnoreNamespaces
+```
+
+- Added `IConfigurable` to support optional keys needed in Entitas.properties
+
+#### Other
+- Added properties.ToDictionary()
+
+
 # 0.41.0
 
 See and discuss changes in [Milestone 0.41.0](https://github.com/sschmid/Entitas-CSharp/milestone/13)
