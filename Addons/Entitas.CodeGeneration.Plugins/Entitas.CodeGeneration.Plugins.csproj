@@ -40,7 +40,6 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\CodeGenerators\ContextsGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\CodeGenerators\EntityGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\CodeGenerators\EntityIndexGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\Components\AbstractComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\Components\ComponentData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\Components\ComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\Components\Providers\ComponentTypeComponentDataProvider.cs" />
