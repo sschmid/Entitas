@@ -82,7 +82,13 @@ The command line code generator currently doesn't support the following plugins:
 
 because they use Unity specific api. They will work as expected when generating from within Unity but don't work on the command line.
 
-To test the config for potential problems, please unzip CodeGenerator.zip in the root folder of your project.
+To test the config for potential problems, please unzip Entitas-CodeGenerator.zip in the root folder of your project.
+
+### Note for Windows users
+Right-click Entitas-CodeGenerator.zip, open properties
+Check "Unblock"
+Hit Apply
+unzip
 
 ```
 // skip mono on Windows
