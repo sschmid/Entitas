@@ -84,11 +84,15 @@ because they use Unity specific api. They will work as expected when generating 
 
 To test the config for potential problems, please unzip Entitas-CodeGenerator.zip in the root folder of your project.
 
+---
+
 ### Note for Windows users
-Right-click Entitas-CodeGenerator.zip, open properties
-Check "Unblock"
-Hit Apply
-unzip
+- Right-click Entitas-CodeGenerator.zip, open properties
+- Check "Unblock"
+- Hit Apply
+- unzip
+
+---
 
 ```
 // skip mono on Windows
