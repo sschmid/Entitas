@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Entitas.Utils;
 using NSpec;
 
@@ -232,6 +232,29 @@ class describe_Properties : nspec {
                 values.should_contain("some value 1");
                 values.should_contain("some value 2 ");
                 values.should_contain("some value 3");
+            };
+
+            it["gets a dictionary"] = () => {
+                var input =
+                    "some.key.1=some value 1" + "\n" +
+                    " some.key.2 = some value 2 " + "\n" +
+                    "some.key.3=some value 3" + "\n";
+
+                var dict = new Properties(input).ToDictionary();
+                dict.Count.should_be(3);
+                dict.ContainsKey("some.key.1").should_be_true();
+                dict.ContainsKey("some.key.2").should_be_true();
+                dict.ContainsKey("some.key.3").should_be_true();
+            };
+
+            it["gets a dictionary copy"] = () => {
+                var input =
+                    "some.key.1=some value 1" + "\n" +
+                    " some.key.2 = some value 2 " + "\n" +
+                    "some.key.3=some value 3" + "\n";
+
+                var properties = new Properties(input);
+                properties.ToDictionary().should_not_be_same(properties.ToDictionary());
             };
         };
 

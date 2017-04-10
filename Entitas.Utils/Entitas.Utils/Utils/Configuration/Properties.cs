@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -41,6 +41,10 @@ namespace Entitas.Utils {
 
         public void RemoveKey(string key) {
             _dict.Remove(key);
+        }
+
+        public Dictionary<string, string> ToDictionary() {
+            return new Dictionary<string, string>(_dict);
         }
 
         static string convertLineEndings(string str) {
