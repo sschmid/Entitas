@@ -15,25 +15,10 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
 
-        public Dictionary<string, string> defaultProperties {
-            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
-        }
+        readonly IgnoreNamespacesConfig _config = new IgnoreNamespacesConfig();
 
-        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
-
-        Dictionary<string, string> properties {
-            get {
-                if(_properties == null) {
-                    _properties = defaultProperties;
-                }
-
-                return _properties;
-            }
-        }
-
-        Dictionary<string, string> _properties;
         Type[] _types;
 
         public EntityIndexDataProvider() : this(null) {
@@ -43,8 +28,8 @@ namespace Entitas.CodeGeneration.Plugins {
             _types = types;
         }
 
-        public void Configure(Dictionary<string, string> properties) {
-            _properties = properties;
+        public void Configure(Properties properties) {
+            _config.Configure(properties);
         }
 
         public CodeGeneratorData[] GetData() {
@@ -79,7 +64,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
             data.SetEntityIndexType(getEntityIndexType(attribute));
             data.IsCustom(false);
-            data.SetEntityIndexName(type.ToCompilableString().ToComponentName(ignoreNamespaces));
+            data.SetEntityIndexName(type.ToCompilableString().ToComponentName(_config.ignoreNamespaces));
             data.SetKeyType(info.type.ToCompilableString());
             data.SetComponentType(type.ToCompilableString());
             data.SetMemberName(info.name);

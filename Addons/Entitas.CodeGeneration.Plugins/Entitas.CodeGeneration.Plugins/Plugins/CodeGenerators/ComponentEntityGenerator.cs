@@ -12,25 +12,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
 
-        public Dictionary<string, string> defaultProperties {
-            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
-        }
-
-        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
-
-        Dictionary<string, string> properties {
-            get {
-                if(_properties == null) {
-                    _properties = defaultProperties;
-                }
-
-                return _properties;
-            }
-        }
-
-        Dictionary<string, string> _properties;
+        readonly IgnoreNamespacesConfig _config = new IgnoreNamespacesConfig();
 
         const string STANDARD_COMPONENT_TEMPLATE =
 @"public partial class ${ContextName}Entity {
@@ -84,8 +68,8 @@ ${memberAssignment}
 }
 ";
 
-        public void Configure(Dictionary<string, string> properties) {
-            _properties = properties;
+        public void Configure(Properties properties) {
+            _config.Configure(properties);
         }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
@@ -103,7 +87,7 @@ ${memberAssignment}
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var componentName = data.GetFullTypeName().ToComponentName(ignoreNamespaces);
+            var componentName = data.GetFullTypeName().ToComponentName(_config.ignoreNamespaces);
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
             var memberData = data.GetMemberData();
             var template = memberData.Length == 0

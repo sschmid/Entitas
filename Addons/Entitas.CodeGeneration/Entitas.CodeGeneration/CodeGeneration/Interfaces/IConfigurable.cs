@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using Entitas.Utils;
 
 namespace Entitas.CodeGeneration {
 
-    public interface IConfigurable : ICodeGeneratorInterface {
+    public interface IConfigurable {
 
         Dictionary<string, string> defaultProperties { get; }
 
-        void Configure(Dictionary<string, string> properties);
+        void Configure(Properties properties);
     }
 }
