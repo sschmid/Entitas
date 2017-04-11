@@ -5,13 +5,13 @@ using NSpec;
 class describe_CodeGeneratorConfig : nspec {
 
     const string configString =
-        "Entitas.CodeGeneration.SearchPaths = sp1, sp2" + "\n" +
-        "Entitas.CodeGeneration.Assemblies = a1, a2" + "\n" +
-        "Entitas.CodeGeneration.Plugins = p1, p2" + "\n" +
+        "Entitas.CodeGeneration.CodeGenerator.SearchPaths = sp1, sp2" + "\n" +
+        "Entitas.CodeGeneration.CodeGenerator.Assemblies = a1, a2" + "\n" +
+        "Entitas.CodeGeneration.CodeGenerator.Plugins = p1, p2" + "\n" +
 
-        "Entitas.CodeGeneration.DataProviders = dp1,dp2,dp3" + "\n" +
-        "Entitas.CodeGeneration.CodeGenerators = cg1, cg2, cg3" + "\n" +
-        "Entitas.CodeGeneration.PostProcessors = pp1 , pp2 , pp3" + "\n";
+        "Entitas.CodeGeneration.CodeGenerator.DataProviders = dp1,dp2,dp3" + "\n" +
+        "Entitas.CodeGeneration.CodeGenerator.CodeGenerators = cg1, cg2, cg3" + "\n" +
+        "Entitas.CodeGeneration.CodeGenerator.PostProcessors = pp1 , pp2 , pp3" + "\n";
 
     void when_creating_config() {
 
@@ -21,11 +21,7 @@ class describe_CodeGeneratorConfig : nspec {
             config = new CodeGeneratorConfig();
         };
 
-        context["when input is empty"] = () => {
-
-            before = () => {
-                config.Configure(new Properties());
-            };
+        context["when not configured"] = () => {
 
             it["gets default values"] = () => {
                 config.searchPaths.should_be(new [] {
@@ -45,14 +41,14 @@ class describe_CodeGeneratorConfig : nspec {
                 config.postProcessors.should_be_empty();
             };
 
-            it["gets string from empty config"] = () => {
+            it["gets string with default values"] = () => {
                 config.ToString().should_be(
-                    "Entitas.CodeGeneration.SearchPaths = Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
-                    "Entitas.CodeGeneration.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
-                    "Entitas.CodeGeneration.Plugins = Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins\n" +
-                    "Entitas.CodeGeneration.DataProviders = \n" +
-                    "Entitas.CodeGeneration.CodeGenerators = \n" +
-                    "Entitas.CodeGeneration.PostProcessors = \n"
+                    "Entitas.CodeGeneration.CodeGenerator.SearchPaths = Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
+                    "Entitas.CodeGeneration.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
+                    "Entitas.CodeGeneration.CodeGenerator.Plugins = Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins\n" +
+                    "Entitas.CodeGeneration.CodeGenerator.DataProviders = \n" +
+                    "Entitas.CodeGeneration.CodeGenerator.CodeGenerators = \n" +
+                    "Entitas.CodeGeneration.CodeGenerator.PostProcessors = \n"
                 );
             };
         };
@@ -64,9 +60,9 @@ class describe_CodeGeneratorConfig : nspec {
             };
 
             it["creates config"] = () => {
-                config.searchPaths.should_be(new [] { "s1", "s2"});
+                config.searchPaths.should_be(new [] { "sp1", "sp2"});
                 config.assemblies.should_be(new [] { "a1", "a2"});
-                config.plugins.should_be(new [] { "cg1", "cg2"});
+                config.plugins.should_be(new [] { "p1", "p2"});
 
                 config.dataProviders.should_be(new [] { "dp1", "dp2", "dp3" });
                 config.codeGenerators.should_be(new [] { "cg1", "cg2", "cg3" });
@@ -97,13 +93,13 @@ class describe_CodeGeneratorConfig : nspec {
 
                 it["gets string"] = () => {
                     config.ToString().should_be(
-                        "Entitas.CodeGeneration.SearchPaths = newS1, newS2\n" +
-                        "Entitas.CodeGeneration.Assemblies = newA1, newA2\n" +
-                        "Entitas.CodeGeneration.Plugins = newP1, newP2\n" +
+                        "Entitas.CodeGeneration.CodeGenerator.SearchPaths = newS1, newS2\n" +
+                        "Entitas.CodeGeneration.CodeGenerator.Assemblies = newA1, newA2\n" +
+                        "Entitas.CodeGeneration.CodeGenerator.Plugins = newP1, newP2\n" +
 
-                        "Entitas.CodeGeneration.DataProviders = newDp1, newDp2\n" +
-                        "Entitas.CodeGeneration.CodeGenerators = newCg1, newCg2\n" +
-                        "Entitas.CodeGeneration.PostProcessors = newPp1, newPp2"
+                        "Entitas.CodeGeneration.CodeGenerator.DataProviders = newDp1, newDp2\n" +
+                        "Entitas.CodeGeneration.CodeGenerator.CodeGenerators = newCg1, newCg2\n" +
+                        "Entitas.CodeGeneration.CodeGenerator.PostProcessors = newPp1, newPp2\n"
                     );
                 };
             };

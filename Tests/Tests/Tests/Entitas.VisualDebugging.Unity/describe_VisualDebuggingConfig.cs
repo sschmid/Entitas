@@ -5,9 +5,9 @@ using NSpec;
 class describe_VisualDebuggingConfig : nspec {
 
     const string configString =
-        "Entitas.VisualDebugging.Unity.SystemWarningThreshold = 12\n" +
-        "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = dicPath\n" +
-        "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = tdPath\n";
+        "Entitas.VisualDebugging.Unity.Editor.SystemWarningThreshold = 12\n" +
+        "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath = dicPath\n" +
+        "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath = tdPath\n";
     
     void when_creating_config() {
         
@@ -17,23 +17,19 @@ class describe_VisualDebuggingConfig : nspec {
             config = new VisualDebuggingConfig();
         };
 
-        context["when input is empty"] = () => {
-
-            before = () => {
-                config.Configure(new Properties());
-            };
+        context["when not configured"] = () => {
 
             it["gets default values"] = () => {
-                config.systemWarningThreshold.should_be("8");
+                config.systemWarningThreshold.should_be(8);
                 config.defaultInstanceCreatorFolderPath.should_be("Assets/Editor/DefaultInstanceCreator/");
                 config.typeDrawerFolderPath.should_be("Assets/Editor/TypeDrawer/");
             };
 
-            it["gets string from empty config"] = () => {
+            it["gets string with default values"] = () => {
                 config.ToString().should_be(
-                    "Entitas.VisualDebugging.Unity.SystemWarningThreshold = 8\n" +
-                    "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/\n" +
-                    "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/\n");
+                    "Entitas.VisualDebugging.Unity.Editor.SystemWarningThreshold = 8\n" +
+                    "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/\n" +
+                    "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/\n");
             };
         };
 
@@ -44,7 +40,7 @@ class describe_VisualDebuggingConfig : nspec {
             };
 
             it["creates config"] = () => {
-                config.systemWarningThreshold.should_be("12");
+                config.systemWarningThreshold.should_be(12);
                 config.defaultInstanceCreatorFolderPath.should_be("dicPath");
                 config.typeDrawerFolderPath.should_be("tdPath");
             };
@@ -65,9 +61,9 @@ class describe_VisualDebuggingConfig : nspec {
 
                 it["gets string"] = () => {
                     config.ToString().should_be(
-                        "Entitas.VisualDebugging.Unity.SystemWarningThreshold = 6\n" +
-                        "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = new/path/\n" +
-                        "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = new/otherPath/\n");
+                        "Entitas.VisualDebugging.Unity.Editor.SystemWarningThreshold = 6\n" +
+                        "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath = newDicPath\n" +
+                        "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath = newTdPath\n");
                 };
             };
         };

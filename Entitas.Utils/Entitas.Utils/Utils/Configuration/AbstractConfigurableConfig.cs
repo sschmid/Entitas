@@ -8,7 +8,7 @@ namespace Entitas.Utils {
 
         public Properties properties {
             get {
-                if(_properties == null) {
+                if(_properties == null || _properties.count == 0) {
                     _properties = new Properties(defaultProperties);
                 }
 

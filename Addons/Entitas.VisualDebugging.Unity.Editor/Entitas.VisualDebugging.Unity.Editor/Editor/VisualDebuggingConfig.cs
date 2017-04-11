@@ -5,9 +5,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
     public class VisualDebuggingConfig : AbstractConfigurableConfig {
 
-        const string SYSTEM_WARNING_THRESHOLD_KEY = "Entitas.VisualDebugging.Unity.SystemWarningThreshold";
-        const string DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath";
-        const string TYPE_DRAWER_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath";
+        const string SYSTEM_WARNING_THRESHOLD_KEY = "Entitas.VisualDebugging.Unity.Editor.SystemWarningThreshold";
+        const string DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath";
+        const string TYPE_DRAWER_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath";
 
 
         public override Dictionary<string, string> defaultProperties {
