@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Entitas.Utils;
 
@@ -51,6 +51,12 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
         public static Type[] LoadTypesFromCodeGeneratorAssemblies() {
             return codeGeneratorDependencyResolver.GetTypes();
+        }
+
+        public static string[] GetOrderedNames(string[] types) {
+            return types
+                    .OrderBy(type => type)
+                    .ToArray();
         }
 
         public static T[] GetOrderedInstances<T>(Type[] types) where T : ICodeGeneratorInterface {

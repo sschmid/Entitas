@@ -17,7 +17,6 @@ namespace Entitas.Utils {
             return str.Replace("\r\n", "\n").Replace("\r", "\n");
         }
 
-        // TODO Unit Test
         public static string ToCSV(this string[] values) {
             return string.Join(", ", values
                                .Where(value => !string.IsNullOrEmpty(value))
@@ -26,7 +25,6 @@ namespace Entitas.Utils {
                               );
         }
 
-        // TODO Unit Test
         public static string[] ArrayFromCSV(this string values) {
             return values
                 .Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)

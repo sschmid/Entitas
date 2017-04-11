@@ -6,7 +6,7 @@ namespace Entitas.Utils {
 
         public abstract Dictionary<string, string> defaultProperties { get; }
 
-        protected Properties properties {
+        public Properties properties {
             get {
                 if(_properties == null) {
                     _properties = new Properties(defaultProperties);
@@ -20,6 +20,10 @@ namespace Entitas.Utils {
 
         public virtual void Configure(Properties properties) {
             _properties = properties;
+        }
+
+        public override string ToString() {
+            return properties.ToString();
         }
     }
 }
