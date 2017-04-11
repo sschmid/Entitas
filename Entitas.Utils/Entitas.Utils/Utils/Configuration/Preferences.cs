@@ -31,5 +31,10 @@ namespace Entitas.Utils {
         public static void SaveConfig(Config config) {
             File.WriteAllText(configPath, config.ToString());
         }
+
+        // TODO Config
+        public static void SaveConfigProperties(Properties properties) {
+            File.WriteAllText(configPath, properties.ToString());
+        }
     }
 }

@@ -43,6 +43,8 @@
     <Compile Include="Entitas.Utils\Utils\PublicMemberInfo\AttributeInfo.cs" />
     <Compile Include="Entitas.Utils\Utils\PublicMemberInfo\PublicMemberInfo.cs" />
     <Compile Include="Entitas.Utils\Utils\PublicMemberInfo\PublicMemberInfoExtension.cs" />
+    <Compile Include="Entitas.Utils\Utils\Configuration\AbstractConfigurableConfig.cs" />
+    <Compile Include="Entitas.Utils\Utils\Configuration\IConfigurable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.Utils\" />

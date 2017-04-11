@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Entitas.Utils;
 using UnityEditor;
@@ -14,7 +14,7 @@ namespace Entitas.Unity.Editor {
         }
 
         Texture2D _headerTexture;
-        Config _config;
+        Properties _properties;
         IEntitasPreferencesDrawer[] _preferencesDrawers;
         Vector2 _scrollViewPosition;
 
@@ -24,7 +24,7 @@ namespace Entitas.Unity.Editor {
             _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasHeader");
 
             try {
-                _config = Preferences.LoadConfig();
+                _properties = Preferences.LoadConfigProperties();
             } catch(Exception ex) {
                 _configException = ex;
             }
@@ -36,7 +36,7 @@ namespace Entitas.Unity.Editor {
                                                .ToArray();
 
                 foreach(var drawer in _preferencesDrawers) {
-                    drawer.Initialize(_config);
+                    drawer.Initialize(_properties);
                 }
             }
         }
@@ -51,7 +51,7 @@ namespace Entitas.Unity.Editor {
             EditorGUILayout.EndScrollView();
 
             if(GUI.changed) {
-                Preferences.SaveConfig(_config);
+                Preferences.SaveConfigProperties(_properties);
             }
         }
 
@@ -87,7 +87,7 @@ namespace Entitas.Unity.Editor {
         void drawPreferencesDrawers() {
             if(_configException == null) {
                 for(int i = 0; i < _preferencesDrawers.Length; i++) {
-                    _preferencesDrawers[i].Draw(_config);
+                    _preferencesDrawers[i].Draw(_properties);
                     if(i < _preferencesDrawers.Length -1) {
                         EditorGUILayout.Space();
                     }

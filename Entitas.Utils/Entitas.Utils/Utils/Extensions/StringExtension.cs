@@ -1,3 +1,6 @@
+﻿using System;
+using System.Linq;
+
 namespace Entitas.Utils {
 
     public static class StringExtension {
@@ -12,6 +15,23 @@ namespace Entitas.Utils {
 
         public static string ToUnixLineEndings(this string str) {
             return str.Replace("\r\n", "\n").Replace("\r", "\n");
+        }
+
+        // TODO Unit Test
+        public static string ToCSV(this string[] values) {
+            return string.Join(", ", values
+                               .Where(value => !string.IsNullOrEmpty(value))
+                               .Select(value => value.Trim())
+                               .ToArray()
+                              );
+        }
+
+        // TODO Unit Test
+        public static string[] ArrayFromCSV(this string values) {
+            return values
+                .Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(value => value.Trim())
+                .ToArray();
         }
     }
 }

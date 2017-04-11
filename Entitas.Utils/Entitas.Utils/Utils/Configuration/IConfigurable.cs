@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Entitas.Utils;
 
-namespace Entitas.CodeGeneration {
+namespace Entitas.Utils {
 
     public interface IConfigurable {
 

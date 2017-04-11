@@ -46,8 +46,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         GUIContent _pauseButtonContent;
 
         void OnEnable() {
-            var config = Preferences.LoadConfig();
-            _systemWarningThreshold = int.Parse(new VisualDebuggingConfig(config).systemWarningThreshold);
+            var config = new VisualDebuggingConfig();
+            config.Configure(Preferences.LoadConfigProperties());
+            _systemWarningThreshold = config.systemWarningThreshold;
         }
 
         public override void OnInspectorGUI() {

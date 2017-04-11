@@ -1,4 +1,4 @@
-using Entitas.Utils;
+﻿using Entitas.Utils;
 using Entitas.VisualDebugging.Unity.Editor;
 using NSpec;
 
@@ -6,61 +6,70 @@ class describe_VisualDebuggingConfig : nspec {
 
     const string configString =
         "Entitas.VisualDebugging.Unity.SystemWarningThreshold = 12\n" +
-        "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = path/to/folder/\n" +
-        "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = path/to/otherFolder/\n";
+        "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = dicPath\n" +
+        "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = tdPath\n";
     
     void when_creating_config() {
         
-        it["creates config from EntitasPreferencesConfig"] = () => {
-            var config = new VisualDebuggingConfig(new Config(configString));
-            config.systemWarningThreshold.should_be("12");
-            config.defaultInstanceCreatorFolderPath.should_be("path/to/folder/");
-            config.typeDrawerFolderPath.should_be("path/to/otherFolder/");
+        VisualDebuggingConfig config = null;
+
+        before = () => {
+            config = new VisualDebuggingConfig();
         };
 
-        it["gets default values when keys dont exist"] = () => {
-            var config = new VisualDebuggingConfig(new Config(string.Empty));
-            config.systemWarningThreshold.should_be("8");
-            config.defaultInstanceCreatorFolderPath.should_be("Assets/Editor/DefaultInstanceCreator/");
-            config.typeDrawerFolderPath.should_be("Assets/Editor/TypeDrawer/");
+        context["when input is empty"] = () => {
+
+            before = () => {
+                config.Configure(new Properties());
+            };
+
+            it["gets default values"] = () => {
+                config.systemWarningThreshold.should_be("8");
+                config.defaultInstanceCreatorFolderPath.should_be("Assets/Editor/DefaultInstanceCreator/");
+                config.typeDrawerFolderPath.should_be("Assets/Editor/TypeDrawer/");
+            };
+
+            it["gets string from empty config"] = () => {
+                config.ToString().should_be(
+                    "Entitas.VisualDebugging.Unity.SystemWarningThreshold = 8\n" +
+                    "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/\n" +
+                    "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/\n");
+            };
         };
 
-        it["sets values"] = () => {
-            var config = new VisualDebuggingConfig(new Config(configString));
-            config.systemWarningThreshold = "6";
-            config.defaultInstanceCreatorFolderPath = "new/path/";
-            config.typeDrawerFolderPath = "new/otherPath/";
+        context["when input string"] = () => {
 
-            config.systemWarningThreshold.should_be("6");
-            config.defaultInstanceCreatorFolderPath.should_be("new/path/");
-            config.typeDrawerFolderPath.should_be("new/otherPath/");
-        };
+            before = () => {
+                config.Configure(new Properties(configString));
+            };
 
-        it["gets string"] = () => {
-            var config = new VisualDebuggingConfig(new Config(configString));
-            config.systemWarningThreshold = "6";
-            config.defaultInstanceCreatorFolderPath = "new/path/";
-            config.typeDrawerFolderPath = "new/otherPath/";
+            it["creates config"] = () => {
+                config.systemWarningThreshold.should_be("12");
+                config.defaultInstanceCreatorFolderPath.should_be("dicPath");
+                config.typeDrawerFolderPath.should_be("tdPath");
+            };
 
-            config.ToString().should_be(
-                "Entitas.VisualDebugging.Unity.SystemWarningThreshold = 6\n" +
-                "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = new/path/\n" +
-                "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = new/otherPath/\n");
-        };
+            context["when setting values"] = () => {
 
-        it["gets string from empty config"] = () => {
-            var config = new VisualDebuggingConfig(new Config(string.Empty));
-            config.ToString().should_be(
-                "Entitas.VisualDebugging.Unity.SystemWarningThreshold = 8\n" +
-                "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/\n" +
-                "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/\n");
-        };
+                before = () => {
+                    config.systemWarningThreshold = 6;
+                    config.defaultInstanceCreatorFolderPath = "newDicPath";
+                    config.typeDrawerFolderPath = "newTdPath";
+                };
 
-        it["has all keys"] = () => {
-            var keys = VisualDebuggingConfig.keys;
-            keys.should_contain("Entitas.VisualDebugging.Unity.SystemWarningThreshold");
-            keys.should_contain("Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath");
-            keys.should_contain("Entitas.VisualDebugging.Unity.TypeDrawerFolderPath");
+                it["sets values"] = () => {
+                    config.systemWarningThreshold.should_be(6);
+                    config.defaultInstanceCreatorFolderPath.should_be("newDicPath");
+                    config.typeDrawerFolderPath.should_be("newTdPath");
+                };
+
+                it["gets string"] = () => {
+                    config.ToString().should_be(
+                        "Entitas.VisualDebugging.Unity.SystemWarningThreshold = 6\n" +
+                        "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath = new/path/\n" +
+                        "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath = new/otherPath/\n");
+                };
+            };
         };
     }
 }

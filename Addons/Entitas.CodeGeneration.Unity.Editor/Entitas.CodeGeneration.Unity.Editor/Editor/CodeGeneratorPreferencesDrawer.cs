@@ -31,7 +31,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
         Exception _configException;
 
-        public override void Initialize(Config config) {
+        public override void Initialize(Properties properties) {
             Type[] types = null;
             try {
                 types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
@@ -63,7 +63,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             }
         }
 
-        protected override void drawContent(Config config) {
+        protected override void drawContent(Properties properties) {
             if(_configException == null) {
 
                 // TODO Config

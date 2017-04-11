@@ -337,7 +337,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static void generateIDefaultInstanceCreator(string typeName) {
-            var config = new VisualDebuggingConfig(Preferences.LoadConfig());
+            var config = new VisualDebuggingConfig();
+            config.Configure(Preferences.LoadConfigProperties());
             var folder = config.defaultInstanceCreatorFolderPath;
             var filePath = folder + "Default" + typeName.ShortTypeName() + "InstanceCreator.cs";
             var template = DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT
@@ -347,7 +348,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static void generateITypeDrawer(string typeName) {
-            var config = new VisualDebuggingConfig(Preferences.LoadConfig());
+            var config = new VisualDebuggingConfig();
+            config.Configure(Preferences.LoadConfigProperties());
             var folder = config.typeDrawerFolderPath;
             var filePath = folder + typeName.ShortTypeName() + "TypeDrawer.cs";
             var template = TYPE_DRAWER_TEMPLATE_FORMAT
