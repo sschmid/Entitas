@@ -13,7 +13,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             DATA_PROVIDERS_KEY,
             CODE_GENERATORS_KEY,
             POST_PROCESSORS_KEY,
-            CONTEXTS_KEY
         };
 
         public const string SEARCH_PATHS_KEY = "Entitas.CodeGeneration.SearchPaths";
@@ -55,13 +54,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             set { _config[POST_PROCESSORS_KEY] = joinValues(value); }
         }
 
-        public const string CONTEXTS_KEY = "Entitas.CodeGeneration.Contexts";
-        const string DEFAULT_CONTEXTS = "Game, GameState, Input";
-        public string[] contexts {
-            get { return separateValues(_config.GetValueOrDefault(CONTEXTS_KEY, DEFAULT_CONTEXTS)); }
-            set { _config[CONTEXTS_KEY] = joinValues(value); }
-        }
-
         readonly Config _config;
 
         readonly string _defaultDataProviders;
@@ -84,7 +76,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             this.dataProviders = this.dataProviders;
             this.codeGenerators = this.codeGenerators;
             this.postProcessors = this.postProcessors;
-            contexts = contexts;
         }
 
         static string joinValues(string[] values) {

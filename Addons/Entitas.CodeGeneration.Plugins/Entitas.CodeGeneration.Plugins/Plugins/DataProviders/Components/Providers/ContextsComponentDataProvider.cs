@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.CodeGenerator;
@@ -6,7 +7,15 @@ using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ContextsComponentDataProvider : IComponentDataProvider {
+    public class ContextsComponentDataProvider : IComponentDataProvider, IConfigurable {
+
+        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
+
+        readonly ContextNamesConfig _config = new ContextNamesConfig();
+
+        public void Configure(Properties properties) {
+            _config.Configure(properties);
+        }
 
         public void Provide(Type type, ComponentData data) {
             var contextNames = GetContextNamesOrDefault(type);
@@ -24,8 +33,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public static string[] GetContextNamesOrDefault(Type type) {
             var contextNames = GetContextNames(type);
             if(contextNames.Length == 0) {
-                var config = new CodeGeneratorConfig(Preferences.LoadConfig());
-                contextNames = new [] { config.contexts[0] };
+                var config = new ContextNamesConfig();
+                config.Configure(Preferences.LoadConfigProperties());
+                contextNames = new [] { config.contextNames[0] };
             }
 
             return contextNames;

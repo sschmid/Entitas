@@ -23,7 +23,10 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         string[] _availablePostProcessorNames;
 
         CodeGeneratorConfig _codeGeneratorConfig;
-        List<string> _contexts;
+
+        // TODO Config
+        //List<string> _contexts;
+
         UnityEditorInternal.ReorderableList _contextList;
 
         Exception _configException;
@@ -43,17 +46,18 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
                 _codeGeneratorConfig = new CodeGeneratorConfig(config, defaultEnabledDataProviderNames, defaultEnabledGeneratorNames, defaultEnabledPostProcessorNames);
 
-                _contexts = new List<string>(_codeGeneratorConfig.contexts);
+                // TODO Config
+                //_contexts = new List<string>(_codeGeneratorConfig.contexts);
 
-                _contextList = new UnityEditorInternal.ReorderableList(_contexts, typeof(string), true, true, true, true);
-                _contextList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Contexts");
-                _contextList.drawElementCallback = (rect, index, isActive, isFocused) => {
-                    rect.width -= 20;
-                    _contexts[index] = EditorGUI.TextField(rect, _contexts[index]);
-                };
-                _contextList.onAddCallback = list => list.list.Add("New Context");
-                _contextList.onCanRemoveCallback = list => list.count > 1;
-                _contextList.onChangedCallback = list => GUI.changed = true;
+                //_contextList = new UnityEditorInternal.ReorderableList(_contexts, typeof(string), true, true, true, true);
+                //_contextList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Contexts");
+                //_contextList.drawElementCallback = (rect, index, isActive, isFocused) => {
+                //    rect.width -= 20;
+                //    _contexts[index] = EditorGUI.TextField(rect, _contexts[index]);
+                //};
+                //_contextList.onAddCallback = list => list.list.Add("New Context");
+                //_contextList.onCanRemoveCallback = list => list.count > 1;
+                //_contextList.onChangedCallback = list => GUI.changed = true;
             }
         }
 
@@ -63,7 +67,8 @@ namespace Entitas.CodeGeneration.Unity.Editor {
                 // TODO Config
                 //drawTargetFolder();
 
-                drawContexts();
+                // TODO Config
+                //drawContexts();
 
                 _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
                 _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
@@ -89,30 +94,31 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         //    }
         //}
 
-        void drawContexts() {
-            EditorGUILayout.Space();
+        // TODO Config
+        //void drawContexts() {
+        //    EditorGUILayout.Space();
 
-            EditorGUILayout.BeginHorizontal();
-            {
-                GUILayout.Space(5);
-                EditorGUILayout.BeginVertical();
-                {
-                    _contextList.DoLayoutList();
-                }
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4);
-            }
-            EditorGUILayout.EndHorizontal();
+        //    EditorGUILayout.BeginHorizontal();
+        //    {
+        //        GUILayout.Space(5);
+        //        EditorGUILayout.BeginVertical();
+        //        {
+        //            _contextList.DoLayoutList();
+        //        }
+        //        EditorGUILayout.EndVertical();
+        //        GUILayout.Space(4);
+        //    }
+        //    EditorGUILayout.EndHorizontal();
 
-            if(_contexts.Count <= 1) {
-                EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple contexts. " +
-                "The code generator generates subclasses of ContextAttribute for each context name. " +
-                "You have to assign components to one or more contexts with the generated attribute, e.g. [Game] or [Input], " +
-                "otherwise they will be ignored by the code generator.", MessageType.Info);
-            }
+        //    if(_contexts.Count <= 1) {
+        //        EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple contexts. " +
+        //        "The code generator generates subclasses of ContextAttribute for each context name. " +
+        //        "You have to assign components to one or more contexts with the generated attribute, e.g. [Game] or [Input], " +
+        //        "otherwise they will be ignored by the code generator.", MessageType.Info);
+        //    }
 
-            _codeGeneratorConfig.contexts = _contexts.ToArray();
-        }
+        //    _codeGeneratorConfig.contexts = _contexts.ToArray();
+        //}
 
         static string[] initPhase<T>(Type[] types, out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {
             IEnumerable<T> instances = CodeGeneratorUtil.GetOrderedInstances<T>(types);
