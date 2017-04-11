@@ -1,4 +1,4 @@
-using Entitas.Utils;
+﻿using Entitas.Utils;
 
 namespace Entitas.Unity.Editor {
 
@@ -7,6 +7,7 @@ namespace Entitas.Unity.Editor {
         int priority { get; }
         string title { get; }
 
+        // TODO Config Use Properties
         void Initialize(Config config);
 
         void Draw(Config config);

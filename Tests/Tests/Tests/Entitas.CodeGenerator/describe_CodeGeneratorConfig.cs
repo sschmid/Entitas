@@ -5,92 +5,108 @@ using NSpec;
 class describe_CodeGeneratorConfig : nspec {
 
     const string configString =
-        "Entitas.CodeGeneration.SearchPaths = base1, base/2/" + "\n" +
-        "Entitas.CodeGeneration.Assemblies = game.dll, kit.dll" + "\n" +
-        "Entitas.CodeGeneration.Plugins = gen1.dll, gen2.dll" + "\n" +
-        "Entitas.CodeGeneration.DataProviders = DataProvider1,DataProvider2,DataProvider3" + "\n" +
-        "Entitas.CodeGeneration.CodeGenerators = Generator1, Generator2, Generator3" + "\n" +
-        "Entitas.CodeGeneration.PostProcessors = PostProcessor1 , PostProcessor2 , PostProcessor3" + "\n";
+        "Entitas.CodeGeneration.SearchPaths = sp1, sp2" + "\n" +
+        "Entitas.CodeGeneration.Assemblies = a1, a2" + "\n" +
+        "Entitas.CodeGeneration.Plugins = p1, p2" + "\n" +
+
+        "Entitas.CodeGeneration.DataProviders = dp1,dp2,dp3" + "\n" +
+        "Entitas.CodeGeneration.CodeGenerators = cg1, cg2, cg3" + "\n" +
+        "Entitas.CodeGeneration.PostProcessors = pp1 , pp2 , pp3" + "\n";
 
     void when_creating_config() {
 
-        it["creates config from EntitasPreferencesConfig"] = () => {
-            var config = new CodeGeneratorConfig(new Config(configString));
+        CodeGeneratorConfig config = null;
 
-            config.searchPaths.should_be(new [] { "base1", "base/2/"});
-            config.assemblies.should_be(new [] { "game.dll", "kit.dll"});
-            config.plugins.should_be(new [] { "gen1.dll", "gen2.dll"});
-            config.dataProviders.should_be(new [] { "DataProvider1", "DataProvider2", "DataProvider3" });
-            config.codeGenerators.should_be(new [] { "Generator1", "Generator2", "Generator3" });
-            config.postProcessors.should_be(new [] { "PostProcessor1", "PostProcessor2", "PostProcessor3" });
+        before = () => {
+            config = new CodeGeneratorConfig();
         };
 
-        it["gets default values when keys dont exist"] = () => {
-            var config = new CodeGeneratorConfig(new Config(string.Empty), new [] {"Data1, Data2"}, new [] {"Gen1, Gen2"}, new [] {"Post1, Post2"});
-            config.searchPaths.should_be(new [] { "Libraries/Entitas", "Libraries/Entitas/Editor", "/Applications/Unity/Unity.app/Contents/Managed", "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" });
-            config.assemblies.should_be(new [] { "Library/ScriptAssemblies/Assembly-CSharp.dll"});
-            config.plugins.should_be(new [] { "Entitas.CodeGeneration.Plugins", "Entitas.VisualDebugging.CodeGeneration.Plugins", "Entitas.Blueprints.CodeGeneration.Plugins"});
-            config.dataProviders.should_be(new [] {"Data1", "Data2"});
-            config.codeGenerators.should_be(new [] {"Gen1", "Gen2"});
-            config.postProcessors.should_be(new [] {"Post1", "Post2"});
+        context["when input is empty"] = () => {
+
+            before = () => {
+                config.Configure(new Properties());
+            };
+
+            it["gets default values"] = () => {
+                config.searchPaths.should_be(new [] {
+                    "Libraries/Entitas", "Libraries/Entitas/Editor",
+                    "/Applications/Unity/Unity.app/Contents/Managed",
+                    "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" });
+
+                config.assemblies.should_be(new [] { "Library/ScriptAssemblies/Assembly-CSharp.dll"});
+
+                config.plugins.should_be(new [] {
+                    "Entitas.CodeGeneration.Plugins",
+                    "Entitas.VisualDebugging.CodeGeneration.Plugins",
+                    "Entitas.Blueprints.CodeGeneration.Plugins"});
+
+                config.dataProviders.should_be_empty();
+                config.codeGenerators.should_be_empty();
+                config.postProcessors.should_be_empty();
+            };
+
+            it["gets string from empty config"] = () => {
+                config.ToString().should_be(
+                    "Entitas.CodeGeneration.SearchPaths = Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
+                    "Entitas.CodeGeneration.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
+                    "Entitas.CodeGeneration.Plugins = Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins\n" +
+                    "Entitas.CodeGeneration.DataProviders = \n" +
+                    "Entitas.CodeGeneration.CodeGenerators = \n" +
+                    "Entitas.CodeGeneration.PostProcessors = \n"
+                );
+            };
         };
 
-        it["sets values"] = () => {
-            var config = new CodeGeneratorConfig(new Config(configString), new string[0], new string[0], new string[0]);
-            config.searchPaths = new [] { "newBase1", "newBase2"};
-            config.assemblies = new [] { "game.dll", "physics.dll"};
-            config.plugins = new [] { "myGen1.dll", "myGen2.dll"};
-            config.dataProviders = new [] { "Data4", "Data5" };
-            config.codeGenerators = new [] { "Generator4", "Generator5" };
-            config.postProcessors = new [] { "Post4", "Post5" };
+        context["when input string"] = () => {
 
-            config.searchPaths.should_be(new [] { "newBase1", "newBase2"});
-            config.assemblies.should_be(new [] { "game.dll", "physics.dll"});
-            config.plugins.should_be(new [] { "myGen1.dll", "myGen2.dll"});
-            config.dataProviders.should_be(new [] { "Data4", "Data5" });
-            config.codeGenerators.should_be(new [] { "Generator4", "Generator5" });
-            config.postProcessors.should_be(new [] { "Post4", "Post5" });
-        };
+            before = () => {
+                config.Configure(new Properties(configString));
+            };
 
-        it["gets string"] = () => {
-            var config = new CodeGeneratorConfig(new Config(configString));
-            config.searchPaths = new [] { "newBase1", "newBase2"};
-            config.assemblies = new [] { "game.dll", "physics.dll"};
-            config.plugins = new [] { "myGen1.dll", "myGen2.dll"};
-            config.dataProviders = new [] { "Data4", "Data5" };
-            config.codeGenerators = new [] { "Generator4", "Generator5" };
-            config.postProcessors = new [] { "Post4", "Post5" };
+            it["creates config"] = () => {
+                config.searchPaths.should_be(new [] { "s1", "s2"});
+                config.assemblies.should_be(new [] { "a1", "a2"});
+                config.plugins.should_be(new [] { "cg1", "cg2"});
 
-            config.ToString().should_be(
-                "Entitas.CodeGeneration.SearchPaths = newBase1, newBase2\n" +
-                "Entitas.CodeGeneration.Assemblies = game.dll, physics.dll\n" +
-                "Entitas.CodeGeneration.Plugins = myGen1.dll, myGen2.dll\n" +
-                "Entitas.CodeGeneration.DataProviders = Data4, Data5\n" +
-                "Entitas.CodeGeneration.CodeGenerators = Generator4, Generator5\n" +
-                "Entitas.CodeGeneration.PostProcessors = Post4, Post5\n"
-            );
-        };
+                config.dataProviders.should_be(new [] { "dp1", "dp2", "dp3" });
+                config.codeGenerators.should_be(new [] { "cg1", "cg2", "cg3" });
+                config.postProcessors.should_be(new [] { "pp1", "pp2", "pp3" });
+            };
 
-        it["gets string from empty config"] = () => {
-            var config = new CodeGeneratorConfig(new Config(string.Empty));
-            config.ToString().should_be(
-                "Entitas.CodeGeneration.SearchPaths = Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
-                "Entitas.CodeGeneration.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
-                "Entitas.CodeGeneration.Plugins = Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins\n" +
-                "Entitas.CodeGeneration.DataProviders = \n" +
-                "Entitas.CodeGeneration.CodeGenerators = \n" +
-                "Entitas.CodeGeneration.PostProcessors = \n"
-            );
-        };
+            context["when setting values"] = () => {
 
-        it["has all keys"] = () => {
-            var keys = CodeGeneratorConfig.keys;
-            keys.should_contain("Entitas.CodeGeneration.SearchPaths");
-            keys.should_contain("Entitas.CodeGeneration.Assemblies");
-            keys.should_contain("Entitas.CodeGeneration.Plugins");
-            keys.should_contain("Entitas.CodeGeneration.DataProviders");
-            keys.should_contain("Entitas.CodeGeneration.CodeGenerators");
-            keys.should_contain("Entitas.CodeGeneration.PostProcessors");
+                before = () => {
+                    config.searchPaths = new [] { "newS1", "newS2"};
+                    config.assemblies = new [] { "newA1", "newA2"};
+                    config.plugins = new [] { "newP1", "newP2"};
+
+                    config.dataProviders = new [] { "newDp1", "newDp2" };
+                    config.codeGenerators = new [] { "newCg1", "newCg2" };
+                    config.postProcessors = new [] { "newPp1", "newPp2" };
+                };
+
+                it["has updated values"] = () => {
+                    config.searchPaths.should_be(new [] { "newS1", "newS2"});
+                    config.assemblies.should_be(new [] { "newA1", "newA2"});
+                    config.plugins.should_be(new [] { "newP1", "newP2"});
+
+                    config.dataProviders.should_be(new [] { "newDp1", "newDp2" });
+                    config.codeGenerators.should_be(new [] { "newCg1", "newCg2" });
+                    config.postProcessors.should_be(new [] { "newPp1", "newPp2" });
+                };
+
+                it["gets string"] = () => {
+                    config.ToString().should_be(
+                        "Entitas.CodeGeneration.SearchPaths = newS1, newS2\n" +
+                        "Entitas.CodeGeneration.Assemblies = newA1, newA2\n" +
+                        "Entitas.CodeGeneration.Plugins = newP1, newP2\n" +
+
+                        "Entitas.CodeGeneration.DataProviders = newDp1, newDp2\n" +
+                        "Entitas.CodeGeneration.CodeGenerators = newCg1, newCg2\n" +
+                        "Entitas.CodeGeneration.PostProcessors = newPp1, newPp2"
+                    );
+                };
+            };
         };
     }
 }

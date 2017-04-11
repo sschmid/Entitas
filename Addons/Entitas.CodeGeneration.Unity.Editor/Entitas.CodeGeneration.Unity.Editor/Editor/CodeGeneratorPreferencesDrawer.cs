@@ -40,11 +40,13 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             }
 
             if(_configException == null) {
-                var defaultEnabledDataProviderNames = initPhase<ICodeGeneratorDataProvider>(types, out _availableDataProviderTypes, out _availableDataProviderNames);
-                var defaultEnabledGeneratorNames = initPhase<ICodeGenerator>(types, out _availableGeneratorTypes, out _availableGeneratorNames);
-                var defaultEnabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
+                // TODO Config
+                //var defaultEnabledDataProviderNames = initPhase<ICodeGeneratorDataProvider>(types, out _availableDataProviderTypes, out _availableDataProviderNames);
+                //var defaultEnabledGeneratorNames = initPhase<ICodeGenerator>(types, out _availableGeneratorTypes, out _availableGeneratorNames);
+                //var defaultEnabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
 
-                _codeGeneratorConfig = new CodeGeneratorConfig(config, defaultEnabledDataProviderNames, defaultEnabledGeneratorNames, defaultEnabledPostProcessorNames);
+                _codeGeneratorConfig = new CodeGeneratorConfig();
+                //_codeGeneratorConfig.Configure();
 
                 // TODO Config
                 //_contexts = new List<string>(_codeGeneratorConfig.contexts);

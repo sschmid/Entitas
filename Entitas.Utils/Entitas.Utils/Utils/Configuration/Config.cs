@@ -1,5 +1,7 @@
-namespace Entitas.Utils {
+﻿namespace Entitas.Utils {
 
+
+    // TODO Config delete
     public class Config {
 
         readonly Properties _properties;
