@@ -67,6 +67,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\CodeGenerators\ComponentMatcherGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\CodeGenerators\ContextMatcherGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\IgnoreNamespacesConfig.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\TargetDirectoryConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.Plugins\" />

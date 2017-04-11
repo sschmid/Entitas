@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.CodeGenerator;
@@ -59,7 +59,10 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
         protected override void drawContent(Config config) {
             if(_configException == null) {
-                drawTargetFolder();
+
+                // TODO Config
+                //drawTargetFolder();
+
                 drawContexts();
 
                 _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
@@ -74,16 +77,17 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             }
         }
 
-        void drawTargetFolder() {
-            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel(
-                "Target Directory",
-                _codeGeneratorConfig.targetDirectory,
-                _codeGeneratorConfig.targetDirectory
-            );
-            if(!string.IsNullOrEmpty(path)) {
-                _codeGeneratorConfig.targetDirectory = path;
-            }
-        }
+        // TODO Config
+        //void drawTargetFolder() {
+        //    var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel(
+        //        "Target Directory",
+        //        _codeGeneratorConfig.targetDirectory,
+        //        _codeGeneratorConfig.targetDirectory
+        //    );
+        //    if(!string.IsNullOrEmpty(path)) {
+        //        _codeGeneratorConfig.targetDirectory = path;
+        //    }
+        //}
 
         void drawContexts() {
             EditorGUILayout.Space();
