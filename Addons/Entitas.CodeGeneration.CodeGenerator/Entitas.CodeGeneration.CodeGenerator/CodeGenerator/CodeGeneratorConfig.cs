@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Entitas.Utils;
 
@@ -7,7 +7,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
     public class CodeGeneratorConfig {
 
         public static readonly string[] keys = {
-            PROJECT_PATH_KEY,
             SEARCH_PATHS_KEY,
             ASSEMBLY_PATHS_KEY,
             PLUGINS_PATHS_KEY,
@@ -17,13 +16,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             TARGET_DIRECTORY_KEY,
             CONTEXTS_KEY
         };
-
-        public const string PROJECT_PATH_KEY = "Entitas.CodeGeneration.Project";
-        const string DEFAULT_PROJECT_PATH = "Assembly-CSharp.csproj";
-        public string projectPath { 
-            get { return _config.GetValueOrDefault(PROJECT_PATH_KEY, DEFAULT_PROJECT_PATH); }
-            set { _config[PROJECT_PATH_KEY] = value; }
-        }
 
         public const string SEARCH_PATHS_KEY = "Entitas.CodeGeneration.SearchPaths";
         const string SEARCH_PATHS = "Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity";
@@ -94,7 +86,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             _defaultPostProcessors = joinValues(postProcessors);
 
             // Assigning will apply default values to missing keys
-            projectPath = projectPath;
             searchPaths = searchPaths;
             assemblies = assemblies;
             plugins = plugins;

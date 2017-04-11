@@ -1,11 +1,10 @@
-using Entitas.CodeGeneration.CodeGenerator;
+﻿using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
 using NSpec;
 
 class describe_CodeGeneratorConfig : nspec {
 
     const string configString =
-        "Entitas.CodeGeneration.Project = path/to/project/" + "\n" +
         "Entitas.CodeGeneration.SearchPaths = base1, base/2/" + "\n" +
         "Entitas.CodeGeneration.Assemblies = game.dll, kit.dll" + "\n" +
         "Entitas.CodeGeneration.Plugins = gen1.dll, gen2.dll" + "\n" +
@@ -20,7 +19,6 @@ class describe_CodeGeneratorConfig : nspec {
         it["creates config from EntitasPreferencesConfig"] = () => {
             var config = new CodeGeneratorConfig(new Config(configString));
 
-            config.projectPath.should_be("path/to/project/");
             config.searchPaths.should_be(new [] { "base1", "base/2/"});
             config.assemblies.should_be(new [] { "game.dll", "kit.dll"});
             config.plugins.should_be(new [] { "gen1.dll", "gen2.dll"});
@@ -33,7 +31,6 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["gets default values when keys dont exist"] = () => {
             var config = new CodeGeneratorConfig(new Config(string.Empty), new [] {"Data1, Data2"}, new [] {"Gen1, Gen2"}, new [] {"Post1, Post2"});
-            config.projectPath.should_be("Assembly-CSharp.csproj");
             config.searchPaths.should_be(new [] { "Libraries/Entitas", "Libraries/Entitas/Editor", "/Applications/Unity/Unity.app/Contents/Managed", "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" });
             config.assemblies.should_be(new [] { "Library/ScriptAssemblies/Assembly-CSharp.dll"});
             config.plugins.should_be(new [] { "Entitas.CodeGeneration.Plugins", "Entitas.VisualDebugging.CodeGeneration.Plugins", "Entitas.Blueprints.CodeGeneration.Plugins"});
@@ -46,7 +43,6 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["sets values"] = () => {
             var config = new CodeGeneratorConfig(new Config(configString), new string[0], new string[0], new string[0]);
-            config.projectPath = "path/to/newProject/";
             config.searchPaths = new [] { "newBase1", "newBase2"};
             config.assemblies = new [] { "game.dll", "physics.dll"};
             config.plugins = new [] { "myGen1.dll", "myGen2.dll"};
@@ -56,7 +52,6 @@ class describe_CodeGeneratorConfig : nspec {
             config.targetDirectory = "new/path/";
             config.contexts = new [] { "Other1", "Other2" };
 
-            config.projectPath.should_be("path/to/newProject/");
             config.searchPaths.should_be(new [] { "newBase1", "newBase2"});
             config.assemblies.should_be(new [] { "game.dll", "physics.dll"});
             config.plugins.should_be(new [] { "myGen1.dll", "myGen2.dll"});
@@ -69,7 +64,6 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["gets string"] = () => {
             var config = new CodeGeneratorConfig(new Config(configString));
-            config.projectPath = "path/to/newProject/";
             config.searchPaths = new [] { "newBase1", "newBase2"};
             config.assemblies = new [] { "game.dll", "physics.dll"};
             config.plugins = new [] { "myGen1.dll", "myGen2.dll"};
@@ -80,7 +74,6 @@ class describe_CodeGeneratorConfig : nspec {
             config.contexts = new [] { "Other1", "Other2" };
 
             config.ToString().should_be(
-                "Entitas.CodeGeneration.Project = path/to/newProject/\n" +
                 "Entitas.CodeGeneration.SearchPaths = newBase1, newBase2\n" +
                 "Entitas.CodeGeneration.Assemblies = game.dll, physics.dll\n" +
                 "Entitas.CodeGeneration.Plugins = myGen1.dll, myGen2.dll\n" +
@@ -95,7 +88,6 @@ class describe_CodeGeneratorConfig : nspec {
         it["gets string from empty config"] = () => {
             var config = new CodeGeneratorConfig(new Config(string.Empty));
             config.ToString().should_be(
-                "Entitas.CodeGeneration.Project = Assembly-CSharp.csproj\n" +
                 "Entitas.CodeGeneration.SearchPaths = Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
                 "Entitas.CodeGeneration.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGeneration.Plugins = Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins\n" +
@@ -117,7 +109,6 @@ class describe_CodeGeneratorConfig : nspec {
             var config = new CodeGeneratorConfig(new Config(string.Empty));
             config.contexts = new [] { "Meta", string.Empty };
             config.ToString().should_be(
-                "Entitas.CodeGeneration.Project = Assembly-CSharp.csproj\n" +
                 "Entitas.CodeGeneration.SearchPaths = Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
                 "Entitas.CodeGeneration.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                 "Entitas.CodeGeneration.Plugins = Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins\n" +
@@ -131,7 +122,6 @@ class describe_CodeGeneratorConfig : nspec {
 
         it["has all keys"] = () => {
             var keys = CodeGeneratorConfig.keys;
-            keys.should_contain("Entitas.CodeGeneration.Project");
             keys.should_contain("Entitas.CodeGeneration.SearchPaths");
             keys.should_contain("Entitas.CodeGeneration.Assemblies");
             keys.should_contain("Entitas.CodeGeneration.Plugins");
