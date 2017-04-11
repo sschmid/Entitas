@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Entitas.Utils;
 using UnityEditor;
@@ -24,7 +24,7 @@ namespace Entitas.Unity.Editor {
             _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasHeader");
 
             try {
-                _properties = Preferences.LoadConfigProperties();
+                _properties = Preferences.LoadProperties();
             } catch(Exception ex) {
                 _configException = ex;
             }
@@ -51,7 +51,7 @@ namespace Entitas.Unity.Editor {
             EditorGUILayout.EndScrollView();
 
             if(GUI.changed) {
-                Preferences.SaveConfigProperties(_properties);
+                Preferences.SaveProperties(_properties);
             }
         }
 

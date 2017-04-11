@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Attributes;
@@ -34,7 +34,7 @@ namespace Entitas.CodeGeneration.Plugins {
             var contextNames = GetContextNames(type);
             if(contextNames.Length == 0) {
                 var config = new ContextNamesConfig();
-                config.Configure(Preferences.LoadConfigProperties());
+                config.Configure(Preferences.LoadProperties());
                 contextNames = new [] { config.contextNames[0] };
             }
 

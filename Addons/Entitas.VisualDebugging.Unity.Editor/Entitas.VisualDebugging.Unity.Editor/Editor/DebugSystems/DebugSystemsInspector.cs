@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Unity.Editor;
 using Entitas.Utils;
@@ -47,7 +47,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         void OnEnable() {
             var config = new VisualDebuggingConfig();
-            config.Configure(Preferences.LoadConfigProperties());
+            config.Configure(Preferences.LoadProperties());
             _systemWarningThreshold = config.systemWarningThreshold;
         }
 

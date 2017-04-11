@@ -72,7 +72,6 @@
     <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGenFile.cs" />
     <Compile Include="Tests\Entitas.Utils\Caching\describe_ObjectCache.cs" />
     <Compile Include="Tests\Entitas.Utils\Caching\describe_ObjectPool.cs" />
-    <Compile Include="Tests\Entitas.Utils\Configuration\describe_EntitasPreferencesConfig.cs" />
     <Compile Include="Tests\Entitas.Utils\Configuration\describe_Properties.cs" />
     <Compile Include="Tests\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfo.cs" />
     <Compile Include="Tests\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfoEntityExtension.cs" />

@@ -1,4 +1,4 @@
-﻿using Entitas.Unity.Editor;
+using Entitas.Unity.Editor;
 using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -74,7 +74,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         static EntitasHierarchyIcon() {
             EditorApplication.hierarchyWindowItemOnGUI += onHierarchyWindowItemOnGUI;
             var config = new VisualDebuggingConfig();
-            config.Configure(Preferences.LoadConfigProperties());
+            config.Configure(Preferences.LoadProperties());
             _systemWarningThreshold = config.systemWarningThreshold;
         }
 

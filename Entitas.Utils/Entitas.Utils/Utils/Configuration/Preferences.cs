@@ -11,16 +11,7 @@ namespace Entitas.Utils {
 
         static string _configPath;
 
-        // TODO Config delete
-        public static Config LoadConfig() {
-            var config = File.Exists(configPath)
-                             ? File.ReadAllText(configPath)
-                             : string.Empty;
-
-            return new Config(config);
-        }
-
-        public static Properties LoadConfigProperties() {
+        public static Properties LoadProperties() {
             var config = File.Exists(configPath)
                              ? File.ReadAllText(configPath)
                              : string.Empty;
@@ -28,12 +19,7 @@ namespace Entitas.Utils {
             return new Properties(config);
         }
 
-        public static void SaveConfig(Config config) {
-            File.WriteAllText(configPath, config.ToString());
-        }
-
-        // TODO Config
-        public static void SaveConfigProperties(Properties properties) {
+        public static void SaveProperties(Properties properties) {
             File.WriteAllText(configPath, properties.ToString());
         }
     }
