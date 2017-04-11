@@ -35,6 +35,11 @@ namespace Entitas.Utils {
             replacePlaceholders();
         }
 
+        public Properties(Dictionary<string, string> properties) {
+            _dict = new Dictionary<string, string>(properties);
+            replacePlaceholders();
+        }
+
         public bool HasKey(string key) {
             return _dict.ContainsKey(key);
         }

@@ -17,6 +17,19 @@ class describe_Properties : nspec {
         }
     }
 
+    void assertProperties(Dictionary<string, string> input, string expectedOutput, Dictionary<string, string> expectedProperties) {
+        var p = new Properties(input);
+        var expectedCount = expectedProperties != null ? expectedProperties.Count : 0;
+        p.count.should_be(expectedCount);
+        p.ToString().should_be(expectedOutput);
+        if(expectedProperties != null) {
+            foreach(var kv in expectedProperties) {
+                p.HasKey(kv.Key).should_be_true();
+                p[kv.Key].should_be(kv.Value);
+            }
+        }
+    }
+
     void when_creating_properties() {
 
         context["when empty"] = () => {
@@ -369,6 +382,60 @@ class describe_Properties : nspec {
                     "project.name = Entitas" + "\n" +
                     "project.domain = com.sschmid" + "\r" +
                     "project.bundleId = ${project.domain}.${project.name}" + "\r\n";
+
+                const string expectedOutput =
+                    "project.name = Entitas\n" +
+                    "project.domain = com.sschmid\n" +
+                    "project.bundleId = com.sschmid.Entitas\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "project.name", "Entitas" },
+                    { "project.domain", "com.sschmid" },
+                    { "project.bundleId", "com.sschmid.Entitas" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
+        };
+    }
+
+    void when_creating_properties_from_dictionary() {
+
+        it["creates properties from dictionary"] = () => {
+            var input = new Dictionary<string, string> {
+                { "key1", "value1"},
+                { "key2", "value2"}
+            };
+
+            assertProperties(
+                input,
+                "key1 = value1" + "\n" + 
+                "key2 = value2" + "\n",
+                input
+            );
+        };
+
+        it["uses copy of original dictionary"] = () => {
+            var input = new Dictionary<string, string> {
+                { "key1", "value1"},
+                { "key2", "value2"}
+            };
+
+            var p = new Properties(input);
+            p["key1"] = "newValue1";
+
+            input["key1"].should_be("value1");
+            p["key1"].should_be("newValue1");
+        };
+
+        context["placeholder"] = () => {
+
+            it["replaces placeholder within ${...}"] = () => {
+                var input = new Dictionary<string, string> {
+                    { "project.name", "Entitas"},
+                    { "project.domain", "com.sschmid"},
+                    { "project.bundleId", "${project.domain}.${project.name}"}
+                };
 
                 const string expectedOutput =
                     "project.name = Entitas\n" +
