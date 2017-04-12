@@ -1,5 +1,5 @@
 ﻿using System;
-using Entitas.Core;
+using Entitas;
 using Entitas.Unity;
 using Entitas.VisualDebugging.Unity.Editor;
 using NUnit.Framework;

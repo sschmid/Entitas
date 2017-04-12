@@ -7,6 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 [Game]
-public sealed partial class SomeStructComponent : Entitas.Core.IComponent {
+public sealed partial class SomeStructComponent : Entitas.IComponent {
     public SomeStruct value;
 }

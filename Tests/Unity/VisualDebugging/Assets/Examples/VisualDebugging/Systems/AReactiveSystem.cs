@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using Entitas;
-using Entitas.Core;
+using Entitas;
 
 public class AReactiveSystem : ReactiveSystem<GameEntity> {
 

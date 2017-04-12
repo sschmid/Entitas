@@ -23,12 +23,6 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         string[] _availablePostProcessorNames;
 
         CodeGeneratorConfig _codeGeneratorConfig;
-
-        // TODO Config
-        //List<string> _contexts;
-
-        UnityEditorInternal.ReorderableList _contextList;
-
         Exception _configException;
 
         public override void Initialize(Properties properties) {
@@ -40,38 +34,17 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             }
 
             if(_configException == null) {
-                // TODO Config
-                //var defaultEnabledDataProviderNames = initPhase<ICodeGeneratorDataProvider>(types, out _availableDataProviderTypes, out _availableDataProviderNames);
-                //var defaultEnabledGeneratorNames = initPhase<ICodeGenerator>(types, out _availableGeneratorTypes, out _availableGeneratorNames);
-                //var defaultEnabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
+                initPhase<ICodeGeneratorDataProvider>(types, out _availableDataProviderTypes, out _availableDataProviderNames);
+                initPhase<ICodeGenerator>(types, out _availableGeneratorTypes, out _availableGeneratorNames);
+                initPhase<ICodeGenFilePostProcessor>(types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
 
                 _codeGeneratorConfig = new CodeGeneratorConfig();
-                //_codeGeneratorConfig.Configure();
-
-                // TODO Config
-                //_contexts = new List<string>(_codeGeneratorConfig.contexts);
-
-                //_contextList = new UnityEditorInternal.ReorderableList(_contexts, typeof(string), true, true, true, true);
-                //_contextList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Contexts");
-                //_contextList.drawElementCallback = (rect, index, isActive, isFocused) => {
-                //    rect.width -= 20;
-                //    _contexts[index] = EditorGUI.TextField(rect, _contexts[index]);
-                //};
-                //_contextList.onAddCallback = list => list.list.Add("New Context");
-                //_contextList.onCanRemoveCallback = list => list.count > 1;
-                //_contextList.onChangedCallback = list => GUI.changed = true;
+                _codeGeneratorConfig.Configure(properties);
             }
         }
 
         protected override void drawContent(Properties properties) {
             if(_configException == null) {
-
-                // TODO Config
-                //drawTargetFolder();
-
-                // TODO Config
-                //drawContexts();
-
                 _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
                 _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
                 _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
@@ -83,44 +56,6 @@ namespace Entitas.CodeGeneration.Unity.Editor {
                 EditorGUILayout.LabelField(_configException.Message, style);
             }
         }
-
-        // TODO Config
-        //void drawTargetFolder() {
-        //    var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel(
-        //        "Target Directory",
-        //        _codeGeneratorConfig.targetDirectory,
-        //        _codeGeneratorConfig.targetDirectory
-        //    );
-        //    if(!string.IsNullOrEmpty(path)) {
-        //        _codeGeneratorConfig.targetDirectory = path;
-        //    }
-        //}
-
-        // TODO Config
-        //void drawContexts() {
-        //    EditorGUILayout.Space();
-
-        //    EditorGUILayout.BeginHorizontal();
-        //    {
-        //        GUILayout.Space(5);
-        //        EditorGUILayout.BeginVertical();
-        //        {
-        //            _contextList.DoLayoutList();
-        //        }
-        //        EditorGUILayout.EndVertical();
-        //        GUILayout.Space(4);
-        //    }
-        //    EditorGUILayout.EndHorizontal();
-
-        //    if(_contexts.Count <= 1) {
-        //        EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple contexts. " +
-        //        "The code generator generates subclasses of ContextAttribute for each context name. " +
-        //        "You have to assign components to one or more contexts with the generated attribute, e.g. [Game] or [Input], " +
-        //        "otherwise they will be ignored by the code generator.", MessageType.Info);
-        //    }
-
-        //    _codeGeneratorConfig.contexts = _contexts.ToArray();
-        //}
 
         static string[] initPhase<T>(Type[] types, out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {
             IEnumerable<T> instances = CodeGeneratorUtil.GetOrderedInstances<T>(types);

@@ -1,5 +1,5 @@
-using System.Threading;
-using Entitas.Core;
+﻿using System.Threading;
+using Entitas;
 
 public class FastSystem : IExecuteSystem {
 

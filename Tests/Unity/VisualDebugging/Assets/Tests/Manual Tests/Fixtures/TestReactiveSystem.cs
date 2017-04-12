@@ -1,6 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Entitas;
-using Entitas.Core;
+using Entitas;
 
 public class TestReactiveSystem : ReactiveSystem<GameEntity> {
 
