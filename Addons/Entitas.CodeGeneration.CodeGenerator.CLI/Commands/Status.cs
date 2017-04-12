@@ -22,7 +22,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
                 try {
                     types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
-                    configurableKeyValuePairs = Helper.GetConfigurableKeyValuePairs(
+                    configurableKeyValuePairs = CodeGeneratorUtil.GetConfigurableKeyValuePairs(
                         CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(types, config.dataProviders),
                         CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),
                         CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(types, config.postProcessors)
@@ -58,7 +58,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         static void printConfigurableKeyStatus(KeyValuePair<string, string>[] configurableKeyValuePairs, Properties properties) {
-            foreach(var kv in Helper.GetMissingConfigurableKeyValuePairs(configurableKeyValuePairs, properties)) {
+            foreach(var kv in CodeGeneratorUtil.GetMissingConfigurableKeyValuePairs(configurableKeyValuePairs, properties)) {
                 fabl.Warn("Missing key: " + kv.Key);
             }
         }

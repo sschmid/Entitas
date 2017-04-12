@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
 
@@ -109,6 +110,22 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         public static T[] GetUsed<T>(Type[] types, string[] enabledTypeNames) where T : ICodeGeneratorInterface {
             return GetOrderedInstances<T>(types)
                 .Where(instance => enabledTypeNames.Contains(instance.GetType().ToCompilableString()))
+                .ToArray();
+        }
+
+        public static KeyValuePair<string, string>[] GetConfigurableKeyValuePairs(ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
+            return dataProviders.OfType<IConfigurable>()
+                                .Concat(codeGenerators.OfType<IConfigurable>())
+                                .Concat(postProcessors.OfType<IConfigurable>())
+                                .Select(instance => instance.defaultProperties)
+                                .SelectMany(dict => dict.Select(kv => kv))
+                                .Distinct()
+                                .ToArray();
+        }
+
+        public static KeyValuePair<string, string>[] GetMissingConfigurableKeyValuePairs(KeyValuePair<string, string>[] configurableKeyValuePairs, Properties properties) {
+            return configurableKeyValuePairs
+                .Where(kv => !properties.HasKey(kv.Key))
                 .ToArray();
         }
     }
