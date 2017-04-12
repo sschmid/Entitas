@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Entitas.CodeGeneration.CodeGenerator {
@@ -19,11 +19,9 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                              ICodeGenerator[] codeGenerators,
                              ICodeGenFilePostProcessor[] postProcessors) {
 
-            _dataProviders = dataProviders;
-            _codeGenerators = codeGenerators;
-            _postProcessors = postProcessors
-                .OrderBy(pp => pp.priority)
-                .ToArray();
+            _dataProviders = dataProviders.OrderBy(i => i.priority).ToArray();
+            _codeGenerators = codeGenerators.OrderBy(i => i.priority).ToArray();
+            _postProcessors = postProcessors.OrderBy(i => i.priority).ToArray();
         }
 
         public CodeGenFile[] DryRun() {
