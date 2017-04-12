@@ -12,7 +12,7 @@ public sealed partial class GameStateContext : Entitas.Context<GameStateEntity> 
         : base(
             GameStateComponentsLookup.TotalComponents,
             0,
-            new Entitas.Core.ContextInfo(
+            new Entitas.ContextInfo(
                 "GameState",
                 GameStateComponentsLookup.componentNames,
                 GameStateComponentsLookup.componentTypes
