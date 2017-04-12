@@ -25,7 +25,7 @@ class describe_CodeGeneratorConfig : nspec {
 
             it["gets default values"] = () => {
                 config.searchPaths.should_be(new [] {
-                    "Libraries/Entitas", "Libraries/Entitas/Editor",
+                    "Assets/Libraries/Entitas", "Assets/Libraries/Entitas/Editor",
                     "/Applications/Unity/Unity.app/Contents/Managed",
                     "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" });
 
@@ -43,7 +43,7 @@ class describe_CodeGeneratorConfig : nspec {
 
             it["gets string with default values"] = () => {
                 config.ToString().should_be(
-                    "Entitas.CodeGeneration.CodeGenerator.SearchPaths = Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
+                    "Entitas.CodeGeneration.CodeGenerator.SearchPaths = Assets/Libraries/Entitas, Assets/Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
                     "Entitas.CodeGeneration.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                     "Entitas.CodeGeneration.CodeGenerator.Plugins = Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins\n" +
                     "Entitas.CodeGeneration.CodeGenerator.DataProviders = \n" +
