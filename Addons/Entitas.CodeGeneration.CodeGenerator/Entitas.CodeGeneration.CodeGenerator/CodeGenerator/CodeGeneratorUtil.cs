@@ -35,14 +35,26 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         public static CodeGenerator CodeGeneratorFromConfig(string configPath) {
             Preferences.configPath = configPath;
             var config = new CodeGeneratorConfig();
-            config.Configure(Preferences.LoadProperties());
+            var properties = Preferences.LoadProperties();
+            config.Configure(properties);
+
             var types = LoadTypesFromCodeGeneratorAssemblies();
 
-            return new CodeGenerator(
-                GetEnabledInstances<ICodeGeneratorDataProvider>(types, config.dataProviders),
-                GetEnabledInstances<ICodeGenerator>(types, config.codeGenerators),
-                GetEnabledInstances<ICodeGenFilePostProcessor>(types, config.postProcessors)
-            );
+            var dataProviders = GetEnabledInstances<ICodeGeneratorDataProvider>(types, config.dataProviders);
+            var codeGenerators = GetEnabledInstances<ICodeGenerator>(types, config.codeGenerators);
+            var postProcessors = GetEnabledInstances<ICodeGenFilePostProcessor>(types, config.postProcessors);
+
+            configure(dataProviders, properties);
+            configure(codeGenerators, properties);
+            configure(postProcessors, properties);
+
+            return new CodeGenerator(dataProviders, codeGenerators, postProcessors);
+        }
+
+        static void configure(ICodeGeneratorInterface[] plugins, Properties properties) {
+            foreach(var plugin in plugins.OfType<IConfigurable>()) {
+                plugin.Configure(properties);
+            }
         }
 
         public static Type[] LoadTypesFromAssemblies() {
