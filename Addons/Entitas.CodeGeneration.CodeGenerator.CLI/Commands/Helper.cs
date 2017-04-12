@@ -1,7 +1,8 @@
 ﻿using System;
-using Fabl;
-using Entitas.Utils;
+using System.Collections.Generic;
 using System.Linq;
+using Entitas.Utils;
+using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
@@ -19,18 +20,18 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 .ToArray();
         }
 
-        public static string[] GetMissingConfigurableKeys(string[] configurableKeys, Properties properties) {
-            return configurableKeys
-                .Where(key => !properties.HasKey(key))
+        public static KeyValuePair<string, string>[] GetMissingConfigurableKeyValuePairs(KeyValuePair<string, string>[] configurableKeyValuePairs, Properties properties) {
+            return configurableKeyValuePairs
+                .Where(kv => !properties.HasKey(kv.Key))
                 .ToArray();
         }
 
-        public static string[] GetConfigurableKeys(ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
+        public static KeyValuePair<string, string>[] GetConfigurableKeyValuePairs(ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
             return dataProviders.OfType<IConfigurable>()
                                 .Concat(codeGenerators.OfType<IConfigurable>())
                                 .Concat(postProcessors.OfType<IConfigurable>())
                                 .Select(instance => instance.defaultProperties)
-                                .SelectMany(props => props.Keys)
+                                .SelectMany(dict => dict.Select(kv => kv))
                                 .Distinct()
                                 .ToArray();
         }
