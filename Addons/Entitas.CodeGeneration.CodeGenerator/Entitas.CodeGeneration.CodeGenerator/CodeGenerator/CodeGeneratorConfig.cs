@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         public override Dictionary<string, string> defaultProperties {
             get {
                 return new Dictionary<string, string> {
-                    { SEARCH_PATHS_KEY, "Libraries/Entitas, Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" },
+                    { SEARCH_PATHS_KEY, "Assets/Libraries/Entitas, Assets/Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" },
                     { ASSEMBLY_PATHS_KEY, "Library/ScriptAssemblies/Assembly-CSharp.dll" },
                     { PLUGINS_PATHS_KEY, "Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins" },
 
