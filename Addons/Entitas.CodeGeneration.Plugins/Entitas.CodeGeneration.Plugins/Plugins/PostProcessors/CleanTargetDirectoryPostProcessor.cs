@@ -12,12 +12,12 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return false; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
+        public Dictionary<string, string> defaultProperties { get { return _targetDirectoryConfig.defaultProperties; } }
 
-        readonly TargetDirectoryConfig _config = new TargetDirectoryConfig();
+        readonly TargetDirectoryConfig _targetDirectoryConfig = new TargetDirectoryConfig();
 
         public void Configure(Properties properties) {
-            _config.Configure(properties);
+            _targetDirectoryConfig.Configure(properties);
         }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
@@ -26,8 +26,8 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         void cleanDir() {
-            if(Directory.Exists(_config.targetDirectory)) {
-                var files = new DirectoryInfo(_config.targetDirectory).GetFiles("*.cs", SearchOption.AllDirectories);
+            if(Directory.Exists(_targetDirectoryConfig.targetDirectory)) {
+                var files = new DirectoryInfo(_targetDirectoryConfig.targetDirectory).GetFiles("*.cs", SearchOption.AllDirectories);
                 foreach(var file in files) {
                     try {
                         File.Delete(file.FullName);
@@ -36,7 +36,7 @@ namespace Entitas.CodeGeneration.Plugins {
                     }
                 }
             } else {
-                Directory.CreateDirectory(_config.targetDirectory);
+                Directory.CreateDirectory(_targetDirectoryConfig.targetDirectory);
             }
         }
     }

@@ -103,7 +103,7 @@ class describe_EntityIndexDataProvider : nspec {
                                 );
             };
 
-            it["can ignore namespaces"] = () => {
+            it["ignores namespaces"] = () => {
                 var types = new [] { typeof(EntityIndexComponent), typeof(StandardComponent) };
                 var provider = new EntityIndexDataProvider(types);
                 provider.Configure(properties);
@@ -115,7 +115,7 @@ class describe_EntityIndexDataProvider : nspec {
                 d.GetEntityIndexName().should_be("EntityIndex");
 
             };
-            it["can get default context"] = () => {
+            it["gets default context"] = () => {
                 var types = new [] { typeof(EntityIndexNoContextComponent), typeof(StandardComponent) };
                 var provider = new EntityIndexDataProvider(types);
                 provider.Configure(properties);

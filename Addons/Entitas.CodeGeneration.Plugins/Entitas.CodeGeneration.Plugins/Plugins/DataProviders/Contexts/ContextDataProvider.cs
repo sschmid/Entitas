@@ -11,16 +11,16 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
+        public Dictionary<string, string> defaultProperties { get { return _contextNamesConfig.defaultProperties; } }
 
-        readonly ContextNamesConfig _config = new ContextNamesConfig();
+        readonly ContextNamesConfig _contextNamesConfig = new ContextNamesConfig();
 
         public void Configure(Properties properties) {
-            _config.Configure(properties);
+            _contextNamesConfig.Configure(properties);
         }
 
         public CodeGeneratorData[] GetData() {
-            return _config.contextNames
+            return _contextNamesConfig.contextNames
                 .Select(contextName => {
                     var data = new ContextData();
                     data.SetContextName(contextName);

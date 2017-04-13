@@ -11,9 +11,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
+        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
 
-        readonly IgnoreNamespacesConfig _config = new IgnoreNamespacesConfig();
+        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string CLASS_TEMPLATE =
 @"public partial class Contexts {
@@ -59,7 +59,7 @@ ${getIndices}
 ";
 
         public void Configure(Properties properties) {
-            _config.Configure(properties);
+            _ignoreNamespacesConfig.Configure(properties);
         }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
@@ -124,7 +124,7 @@ ${getIndices}
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${ComponentType}", data.GetComponentType())
                 .Replace("${MemberName}", data.GetMemberName())
-                .Replace("${componentName}", data.GetComponentType().ToComponentName(_config.ignoreNamespaces).LowercaseFirst());
+                .Replace("${componentName}", data.GetComponentType().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces).LowercaseFirst());
         }
 
         string generateGetMethods(EntityIndexData data) {

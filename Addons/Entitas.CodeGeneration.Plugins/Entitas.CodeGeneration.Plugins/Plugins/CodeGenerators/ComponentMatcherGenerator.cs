@@ -12,9 +12,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
+        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
 
-        readonly IgnoreNamespacesConfig _config = new IgnoreNamespacesConfig();
+        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string STANDARD_COMPONENT_TEMPLATE =
 @"public sealed partial class ${ContextName}Matcher {
@@ -36,7 +36,7 @@ namespace Entitas.CodeGeneration.Plugins {
 ";
 
         public void Configure(Properties properties) {
-            _config.Configure(properties);
+            _ignoreNamespacesConfig.Configure(properties);
         }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
@@ -54,7 +54,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         CodeGenFile generateMatcher(string contextName, ComponentData data) {
-            var componentName = data.GetFullTypeName().ToComponentName(_config.ignoreNamespaces);
+            var componentName = data.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
             var componentNames = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + ".componentNames";
 

@@ -17,11 +17,8 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public Dictionary<string, string> defaultProperties {
             get {
-                return _assembliesConfig
-                    .defaultProperties
-                    .Union(_contextNamesConfig.defaultProperties)
-                    .Union(_ignoreNamespacesConfig.defaultProperties)
-                    .ToDictionary(kv => kv.Key, kv => kv.Value);
+                return _assembliesConfig.defaultProperties
+                       .Merge(_contextNamesConfig.defaultProperties, _ignoreNamespacesConfig.defaultProperties);
             }
         }
 

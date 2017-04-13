@@ -11,17 +11,17 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return false; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
+        public Dictionary<string, string> defaultProperties { get { return _targetDirectoryConfig.defaultProperties; } }
 
-        readonly TargetDirectoryConfig _config = new TargetDirectoryConfig();
+        readonly TargetDirectoryConfig _targetDirectoryConfig = new TargetDirectoryConfig();
 
         public void Configure(Properties properties) {
-            _config.Configure(properties);
+            _targetDirectoryConfig.Configure(properties);
         }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             foreach(var file in files) {
-                var fileName = _config.targetDirectory + Path.DirectorySeparatorChar + file.fileName;
+                var fileName = _targetDirectoryConfig.targetDirectory + Path.DirectorySeparatorChar + file.fileName;
                 var targetDir = Path.GetDirectoryName(fileName);
                 if(!Directory.Exists(targetDir)) {
                     Directory.CreateDirectory(targetDir);

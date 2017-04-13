@@ -12,9 +12,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
+        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
 
-        readonly IgnoreNamespacesConfig _config = new IgnoreNamespacesConfig();
+        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         public const string COMPONENTS_LOOKUP = "ComponentsLookup";
 
@@ -48,7 +48,7 @@ ${componentTypes}
 @"        typeof(${ComponentType})";
 
         public void Configure(Properties properties) {
-            _config.Configure(properties);
+            _ignoreNamespacesConfig.Configure(properties);
         }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
@@ -114,7 +114,7 @@ ${componentTypes}
             var componentConstants = string.Join("\n", data
                 .Select((d, index) => {
                     return COMPONENT_CONSTANTS_TEMPLATE
-                    .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(_config.ignoreNamespaces))
+                    .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                         .Replace("${Index}", index.ToString());
                 }).ToArray());
 
@@ -123,7 +123,7 @@ ${componentTypes}
 
             var componentNames = string.Join(",\n", data
                 .Select(d => COMPONENT_NAMES_TEMPLATE
-                        .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(_config.ignoreNamespaces))
+                        .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                 ).ToArray());
 
             var componentTypes = string.Join(",\n", data
