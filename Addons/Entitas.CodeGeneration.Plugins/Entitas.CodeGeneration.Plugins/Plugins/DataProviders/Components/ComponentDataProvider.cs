@@ -16,14 +16,14 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public Dictionary<string, string> defaultProperties {
             get {
-                var properties = _assembliesConfig.defaultProperties;
-                foreach(var dataProvider in _dataProviders.OfType<IConfigurable>()) {
-                    properties = properties
-                        .Union(dataProvider.defaultProperties)
-                        .ToDictionary(kv => kv.Key, kv => kv.Value);
-                }
+                var dataProviderProperties = _dataProviders
+                    .OfType<IConfigurable>()
+                    .Select(i => i.defaultProperties)
+                    .ToArray();
 
-                return properties;
+                return _assembliesConfig
+                    .defaultProperties
+                    .Merge(dataProviderProperties);
             }
         }
 
