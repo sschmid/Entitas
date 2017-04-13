@@ -81,8 +81,6 @@ namespace Entitas.CodeGeneration.Plugins {
             data.SetKeyType(info.type.ToCompilableString());
             data.SetComponentType(type.ToCompilableString());
             data.SetMemberName(info.name);
-
-            // TODO Unit test
             data.SetContextNames(ContextsComponentDataProvider.GetContextNamesOrDefault(type, _contextNamesConfig.contextNames[0]));
 
             return data;
