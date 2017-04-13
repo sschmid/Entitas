@@ -96,20 +96,19 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                 .ToArray();
         }
 
-        public static KeyValuePair<string, string>[] GetConfigurableKeyValuePairs(ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
-            return dataProviders.OfType<IConfigurable>()
-                                .Concat(codeGenerators.OfType<IConfigurable>())
-                                .Concat(postProcessors.OfType<IConfigurable>())
-                                .Select(instance => instance.defaultProperties)
-                                .SelectMany(dict => dict.Select(kv => kv))
-                                .Distinct()
-                                .ToArray();
+        public static Dictionary<string, string> GetConfigurables(ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
+            return new Dictionary<string, string>()
+                .Merge(dataProviders.OfType<IConfigurable>()
+                       .Concat(codeGenerators.OfType<IConfigurable>())
+                       .Concat(postProcessors.OfType<IConfigurable>())
+                       .Select(instance => instance.defaultProperties)
+                       .ToArray());
         }
 
-        public static KeyValuePair<string, string>[] GetMissingConfigurableKeyValuePairs(KeyValuePair<string, string>[] configurableKeyValuePairs, Properties properties) {
-            return configurableKeyValuePairs
+        public static Dictionary<string, string> GetMissingConfigurables(Dictionary<string, string> configurables, Properties properties) {
+            return configurables
                 .Where(kv => !properties.HasKey(kv.Key))
-                .ToArray();
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
         }
     }
 }

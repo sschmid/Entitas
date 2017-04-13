@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,13 +15,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 var requiredKeys = defaultProperties.Keys.ToArray();
 
                 Type[] types = null;
-                KeyValuePair<string, string>[] configurableKeyValuePairs = null;
+                Dictionary<string, string> configurables = null;
                 var config = new CodeGeneratorConfig();
                 config.Configure(properties);
 
                 try {
                     types = CodeGeneratorUtil.LoadTypesFromPlugins();
-                    configurableKeyValuePairs = CodeGeneratorUtil.GetConfigurableKeyValuePairs(
+                    configurables = CodeGeneratorUtil.GetConfigurables(
                         CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(types, config.dataProviders),
                         CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),
                         CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(types, config.postProcessors)
@@ -31,8 +31,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                     throw ex;
                 }
 
-                fixKeys(requiredKeys, configurableKeyValuePairs, defaultProperties, properties);
-                fixConfigurableKeys(configurableKeyValuePairs, properties);
+                fixKeys(requiredKeys, configurables, defaultProperties, properties);
+                fixConfigurableKeys(configurables, properties);
                 fixPlugins(types, config, properties);
 
             } else {
@@ -40,24 +40,24 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
         }
 
-        static void fixKeys(string[] requiredKeys, KeyValuePair<string, string>[] configurableKeyValuePairs, Dictionary<string, string> defaultProperties, Properties properties) {
-            var requiredKeysWithConfigurable = requiredKeys.ToList().ToArray();
+        static void fixKeys(string[] requiredKeys, Dictionary<string, string> configurables, Dictionary<string, string> defaultProperties, Properties properties) {
+            var requiredKeysWithConfigurables = requiredKeys.ToList().ToArray();
 
-            if(configurableKeyValuePairs != null) {
-                requiredKeysWithConfigurable = requiredKeysWithConfigurable.Concat(configurableKeyValuePairs.Select(kv => kv.Key)).ToArray();
+            if(configurables != null) {
+                requiredKeysWithConfigurables = requiredKeysWithConfigurables.Concat(configurables.Keys).ToArray();
             }
 
             foreach(var key in Helper.GetMissingKeys(requiredKeys, properties)) {
                 Helper.AddKey("Add missing key", key, defaultProperties[key], properties);
             }
 
-            foreach(var key in Helper.GetUnusedKeys(requiredKeysWithConfigurable, properties)) {
+            foreach(var key in Helper.GetUnusedKeys(requiredKeysWithConfigurables, properties)) {
                 Helper.RemoveKey("Remove unused key", key, properties);
             }
         }
 
-        static void fixConfigurableKeys(KeyValuePair<string, string>[] configurableKeyValuePairs, Properties properties) {
-            foreach(var kv in CodeGeneratorUtil.GetMissingConfigurableKeyValuePairs(configurableKeyValuePairs, properties)) {
+        static void fixConfigurableKeys(Dictionary<string, string> configurables, Properties properties) {
+            foreach(var kv in CodeGeneratorUtil.GetMissingConfigurables(configurables, properties)) {
                 Helper.AddKey("Add missing key", kv.Key, kv.Value, properties);
             }
         }

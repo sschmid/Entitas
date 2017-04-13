@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.CodeGenerator;
@@ -64,13 +64,13 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         }
 
         void drawConfigurables() {
-            var configurableKeyValuePairs = CodeGeneratorUtil.GetConfigurableKeyValuePairs(
+            var configurables = CodeGeneratorUtil.GetConfigurables(
                 CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(_types, _config.dataProviders),
                 CodeGeneratorUtil.GetUsed<ICodeGenerator>(_types, _config.codeGenerators),
                 CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(_types, _config.postProcessors)
             );
 
-            foreach(var kv in configurableKeyValuePairs) {
+            foreach(var kv in configurables) {
                 if(!_properties.HasKey(kv.Key)) {
                     _properties[kv.Key] = kv.Value;
                 }
