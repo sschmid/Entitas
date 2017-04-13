@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using Entitas.Utils;
 using Fabl;
@@ -41,7 +40,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public static void RemoveKey(string question, string key, Properties properties) {
             fabl.Warn(question + ": '" + key + "' ? (y / n)");
             if(GetUserDecision()) {
-                properties.RemoveKey(key);
+                properties.RemoveProperty(key);
                 Preferences.SaveProperties(properties);
                 fabl.Warn("Removed: " + key);
             }

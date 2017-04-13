@@ -19,6 +19,8 @@ namespace Entitas.Utils {
                     .TrimStart()
                     .Replace("\\n", "\n")
                     .Replace("\\t", "\t");
+
+                replacePlaceholders();
             }
         }
 
@@ -44,7 +46,15 @@ namespace Entitas.Utils {
             return _dict.ContainsKey(key);
         }
 
-        public void RemoveKey(string key) {
+        public void AddProperties(Dictionary<string, string> properties, bool overwriteExisting) {
+            foreach(var kv in properties) {
+                if(overwriteExisting || !HasKey(kv.Key)) {
+                    this[kv.Key] = kv.Value;
+                }
+            }
+        }
+
+        public void RemoveProperty(string key) {
             _dict.Remove(key);
         }
 
