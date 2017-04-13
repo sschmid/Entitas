@@ -41,7 +41,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Dictionary<string, int> getContexts(Type[] components) {
             return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {
-                var contextNames = ContextsComponentDataProvider.GetContextNamesOrDefault(type);
+                var config = new ContextNamesConfig();
+                config.Configure(Preferences.LoadProperties());
+                var contextNames = ContextsComponentDataProvider.GetContextNamesOrDefault(type, config.contextNames[0]);
                 foreach(var contextName in contextNames) {
                     if(!contexts.ContainsKey(contextName)) {
                         contexts.Add(contextName, 0);

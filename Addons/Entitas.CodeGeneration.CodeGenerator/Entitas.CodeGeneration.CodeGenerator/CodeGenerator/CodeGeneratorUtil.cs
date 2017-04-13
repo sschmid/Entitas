@@ -7,25 +7,12 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
     public static class CodeGeneratorUtil {
 
-        public static DependencyResolver codeGeneratorDependencyResolver {
+        public static DependencyResolver pluginsDependencyResolver {
             get {
                 var config = new CodeGeneratorConfig();
                 config.Configure(Preferences.LoadProperties());
                 var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
                 foreach(var path in config.plugins) {
-                    resolver.Load(path);
-                }
-
-                return resolver;
-            }
-        }
-
-        public static DependencyResolver dependencyResolver {
-            get {
-                var config = new CodeGeneratorConfig();
-                config.Configure(Preferences.LoadProperties());
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
-                foreach(var path in config.assemblies) {
                     resolver.Load(path);
                 }
 
@@ -39,7 +26,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             var properties = Preferences.LoadProperties();
             config.Configure(properties);
 
-            var types = LoadTypesFromCodeGeneratorAssemblies();
+            var types = LoadTypesFromPlugins();
 
             var dataProviders = GetEnabledInstances<ICodeGeneratorDataProvider>(types, config.dataProviders);
             var codeGenerators = GetEnabledInstances<ICodeGenerator>(types, config.codeGenerators);
@@ -58,12 +45,8 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             }
         }
 
-        public static Type[] LoadTypesFromAssemblies() {
-            return dependencyResolver.GetTypes();
-        }
-
-        public static Type[] LoadTypesFromCodeGeneratorAssemblies() {
-            return codeGeneratorDependencyResolver.GetTypes();
+        public static Type[] LoadTypesFromPlugins() {
+            return pluginsDependencyResolver.GetTypes();
         }
 
         public static string[] GetOrderedNames(string[] types) {

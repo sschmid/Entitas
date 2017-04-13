@@ -8,17 +8,17 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextsComponentDataProvider : IComponentDataProvider, IConfigurable {
 
-        public Dictionary<string, string> defaultProperties { get { return _config.defaultProperties; } }
+        public Dictionary<string, string> defaultProperties { get { return _contextNamesConfig.defaultProperties; } }
 
-        readonly ContextNamesConfig _config = new ContextNamesConfig();
-
-        public void Configure(Properties properties) {
-            _config.Configure(properties);
-        }
+        readonly ContextNamesConfig _contextNamesConfig = new ContextNamesConfig();
 
         public void Provide(Type type, ComponentData data) {
-            var contextNames = GetContextNamesOrDefault(type);
+            var contextNames = GetContextNamesOrDefault(type, _contextNamesConfig.contextNames[0]);
             data.SetContextNames(contextNames);
+        }
+
+        public void Configure(Properties properties) {
+            _contextNamesConfig.Configure(properties);
         }
 
         public static string[] GetContextNames(Type type) {
@@ -29,12 +29,10 @@ namespace Entitas.CodeGeneration.Plugins {
                 .ToArray();
         }
 
-        public static string[] GetContextNamesOrDefault(Type type) {
+        public static string[] GetContextNamesOrDefault(Type type, string defaultContextName) {
             var contextNames = GetContextNames(type);
             if(contextNames.Length == 0) {
-                var config = new ContextNamesConfig();
-                config.Configure(Preferences.LoadProperties());
-                contextNames = new [] { config.contextNames[0] };
+                contextNames = new [] { defaultContextName };
             }
 
             return contextNames;

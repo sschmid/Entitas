@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 KeyValuePair<string, string>[] configurableKeyValuePairs = null;
 
                 try {
-                    types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
+                    types = CodeGeneratorUtil.LoadTypesFromPlugins();
                     configurableKeyValuePairs = CodeGeneratorUtil.GetConfigurableKeyValuePairs(
                         CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(types, config.dataProviders),
                         CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),

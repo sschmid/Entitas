@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.CodeGenerator;
@@ -31,7 +31,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         public override void Initialize(Properties properties) {
             _properties = properties;
             try {
-                _types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
+                _types = CodeGeneratorUtil.LoadTypesFromPlugins();
             } catch(Exception ex) {
                 _configException = ex;
             }

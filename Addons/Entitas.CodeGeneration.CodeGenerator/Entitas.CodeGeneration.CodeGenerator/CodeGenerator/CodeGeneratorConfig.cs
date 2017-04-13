@@ -6,7 +6,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
     public class CodeGeneratorConfig : AbstractConfigurableConfig {
 
         public const string SEARCH_PATHS_KEY = "Entitas.CodeGeneration.CodeGenerator.SearchPaths";
-        public const string ASSEMBLY_PATHS_KEY = "Entitas.CodeGeneration.CodeGenerator.Assemblies";
         public const string PLUGINS_PATHS_KEY = "Entitas.CodeGeneration.CodeGenerator.Plugins";
 
         public const string DATA_PROVIDERS_KEY = "Entitas.CodeGeneration.CodeGenerator.DataProviders";
@@ -17,7 +16,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             get {
                 return new Dictionary<string, string> {
                     { SEARCH_PATHS_KEY, "Assets/Libraries/Entitas, Assets/Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" },
-                    { ASSEMBLY_PATHS_KEY, "Library/ScriptAssemblies/Assembly-CSharp.dll" },
                     { PLUGINS_PATHS_KEY, "Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins" },
 
                     { DATA_PROVIDERS_KEY, string.Empty },
@@ -30,11 +28,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         public string[] searchPaths { 
             get { return properties[SEARCH_PATHS_KEY].ArrayFromCSV(); }
             set { properties[SEARCH_PATHS_KEY] = value.ToCSV(); }
-        }
-
-        public string[] assemblies { 
-            get { return properties[ASSEMBLY_PATHS_KEY].ArrayFromCSV(); }
-            set { properties[ASSEMBLY_PATHS_KEY] = value.ToCSV(); }
         }
 
         public string[] plugins { 

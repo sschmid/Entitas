@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.CodeGenerator;
@@ -6,12 +7,28 @@ using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentDataProvider : ICodeGeneratorDataProvider {
+    public class ComponentDataProvider : ICodeGeneratorDataProvider, IConfigurable {
 
         public string name { get { return "Component"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
+
+        public Dictionary<string, string> defaultProperties {
+            get {
+                var properties = _assembliesConfig.defaultProperties;
+                foreach(var dataProvider in _dataProviders.OfType<IConfigurable>()) {
+                    properties = properties
+                        .Union(dataProvider.defaultProperties)
+                        .ToDictionary(kv => kv.Key, kv => kv.Value);
+                }
+
+                return properties;
+            }
+        }
+
+        readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
+        readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
 
         static IComponentDataProvider[] getComponentDataProviders() {
             return new IComponentDataProvider[] {
@@ -40,9 +57,19 @@ namespace Entitas.CodeGeneration.Plugins {
             _dataProviders = dataProviders;
         }
 
+        public void Configure(Properties properties) {
+            _codeGeneratorConfig.Configure(properties);
+            _assembliesConfig.Configure(properties);
+            foreach(var dataProvider in _dataProviders.OfType<IConfigurable>()) {
+                dataProvider.Configure(properties);
+            }
+        }
+
         public CodeGeneratorData[] GetData() {
             if(_types == null) {
-                _types = CodeGeneratorUtil.LoadTypesFromAssemblies();
+                _types = PluginUtil
+                    .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
+                    .GetTypes();
             }
 
             var dataFromComponents = _types

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using Entitas.Utils;
@@ -10,8 +10,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public static void Run() {
             if(File.Exists(Preferences.configPath)) {
-                printTypes(CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies());
-                printTypes(CodeGeneratorUtil.LoadTypesFromAssemblies());
+                printTypes(CodeGeneratorUtil.LoadTypesFromPlugins());
             } else {
                 PrintNoConfig.Run();
             }

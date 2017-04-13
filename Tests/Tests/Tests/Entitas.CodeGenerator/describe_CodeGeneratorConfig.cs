@@ -6,7 +6,6 @@ class describe_CodeGeneratorConfig : nspec {
 
     const string configString =
         "Entitas.CodeGeneration.CodeGenerator.SearchPaths = sp1, sp2" + "\n" +
-        "Entitas.CodeGeneration.CodeGenerator.Assemblies = a1, a2" + "\n" +
         "Entitas.CodeGeneration.CodeGenerator.Plugins = p1, p2" + "\n" +
 
         "Entitas.CodeGeneration.CodeGenerator.DataProviders = dp1,dp2,dp3" + "\n" +
@@ -29,8 +28,6 @@ class describe_CodeGeneratorConfig : nspec {
                     "/Applications/Unity/Unity.app/Contents/Managed",
                     "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity" });
 
-                config.assemblies.should_be(new [] { "Library/ScriptAssemblies/Assembly-CSharp.dll"});
-
                 config.plugins.should_be(new [] {
                     "Entitas.CodeGeneration.Plugins",
                     "Entitas.VisualDebugging.CodeGeneration.Plugins",
@@ -44,7 +41,6 @@ class describe_CodeGeneratorConfig : nspec {
             it["gets string with default values"] = () => {
                 config.ToString().should_be(
                     "Entitas.CodeGeneration.CodeGenerator.SearchPaths = Assets/Libraries/Entitas, Assets/Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity\n" +
-                    "Entitas.CodeGeneration.CodeGenerator.Assemblies = Library/ScriptAssemblies/Assembly-CSharp.dll\n" +
                     "Entitas.CodeGeneration.CodeGenerator.Plugins = Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins\n" +
                     "Entitas.CodeGeneration.CodeGenerator.DataProviders = \n" +
                     "Entitas.CodeGeneration.CodeGenerator.CodeGenerators = \n" +
@@ -61,7 +57,6 @@ class describe_CodeGeneratorConfig : nspec {
 
             it["creates config"] = () => {
                 config.searchPaths.should_be(new [] { "sp1", "sp2"});
-                config.assemblies.should_be(new [] { "a1", "a2"});
                 config.plugins.should_be(new [] { "p1", "p2"});
 
                 config.dataProviders.should_be(new [] { "dp1", "dp2", "dp3" });
@@ -73,7 +68,6 @@ class describe_CodeGeneratorConfig : nspec {
 
                 before = () => {
                     config.searchPaths = new [] { "newS1", "newS2"};
-                    config.assemblies = new [] { "newA1", "newA2"};
                     config.plugins = new [] { "newP1", "newP2"};
 
                     config.dataProviders = new [] { "newDp1", "newDp2" };
@@ -83,7 +77,6 @@ class describe_CodeGeneratorConfig : nspec {
 
                 it["has updated values"] = () => {
                     config.searchPaths.should_be(new [] { "newS1", "newS2"});
-                    config.assemblies.should_be(new [] { "newA1", "newA2"});
                     config.plugins.should_be(new [] { "newP1", "newP2"});
 
                     config.dataProviders.should_be(new [] { "newDp1", "newDp2" });
@@ -94,7 +87,6 @@ class describe_CodeGeneratorConfig : nspec {
                 it["gets string"] = () => {
                     config.ToString().should_be(
                         "Entitas.CodeGeneration.CodeGenerator.SearchPaths = newS1, newS2\n" +
-                        "Entitas.CodeGeneration.CodeGenerator.Assemblies = newA1, newA2\n" +
                         "Entitas.CodeGeneration.CodeGenerator.Plugins = newP1, newP2\n" +
 
                         "Entitas.CodeGeneration.CodeGenerator.DataProviders = newDp1, newDp2\n" +
