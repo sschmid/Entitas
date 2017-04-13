@@ -40,6 +40,9 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public void Configure(Properties properties) {
+            _codeGeneratorConfig.Configure(properties);
+            _assembliesConfig.Configure(properties);
+            _contextNamesConfig.Configure(properties);
             _ignoreNamespacesConfig.Configure(properties);
         }
 
