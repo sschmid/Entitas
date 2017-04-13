@@ -44,6 +44,7 @@
     <Compile Include="Entitas.Utils\Utils\PublicMemberInfo\PublicMemberInfoExtension.cs" />
     <Compile Include="Entitas.Utils\Utils\Configuration\AbstractConfigurableConfig.cs" />
     <Compile Include="Entitas.Utils\Utils\Configuration\IConfigurable.cs" />
+    <Compile Include="Entitas.Utils\Utils\Extensions\DictionaryExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.Utils\" />
