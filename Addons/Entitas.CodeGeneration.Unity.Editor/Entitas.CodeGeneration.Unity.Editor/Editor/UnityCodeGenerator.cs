@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using Entitas.CodeGeneration.CodeGenerator;
@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
             Debug.Log("Generating...");
 
-            var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(Preferences.configPath);
+            var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromProperties();
 
             var progressOffset = 0f;
 

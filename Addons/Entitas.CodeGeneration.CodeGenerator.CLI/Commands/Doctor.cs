@@ -6,15 +6,15 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
     public static class Doctor {
 
-        public static void Run() {
+        public static void Run(Properties properties) {
 
             fabl.Debug("Entitas Code Generator version " + EntitasResources.GetVersion());
 
-            if(File.Exists(Preferences.configPath)) {
-                Status.Run();
+            if(File.Exists(Preferences.PATH)) {
+                Status.Run(properties);
                 fabl.Debug("Dry Run");
                 CodeGeneratorUtil
-                    .CodeGeneratorFromConfig(Preferences.configPath)
+                    .CodeGeneratorFromProperties()
                     .DryRun();
             } else {
                 PrintNoConfig.Run();

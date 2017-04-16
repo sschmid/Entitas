@@ -25,13 +25,16 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         Properties _properties;
         Type[] _types;
 
-        CodeGeneratorConfig _config;
+        CodeGeneratorConfig _codeGeneratorConfig;
         Exception _configException;
 
         public override void Initialize(Properties properties) {
             _properties = properties;
+            _codeGeneratorConfig = new CodeGeneratorConfig();
+            _properties.AddProperties(_codeGeneratorConfig.defaultProperties, false);
+
             try {
-                _types = CodeGeneratorUtil.LoadTypesFromPlugins();
+                _types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
             } catch(Exception ex) {
                 _configException = ex;
             }
@@ -41,16 +44,15 @@ namespace Entitas.CodeGeneration.Unity.Editor {
                 initPhase<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
                 initPhase<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
 
-                _config = new CodeGeneratorConfig();
-                _config.Configure(properties);
+                _codeGeneratorConfig.Configure(properties);
             }
         }
 
         protected override void drawContent(Properties properties) {
             if(_configException == null) {
-                _config.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _config.dataProviders);
-                _config.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _config.codeGenerators);
-                _config.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _config.postProcessors);
+                _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
+                _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
+                _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
 
                 EditorGUILayout.Space();
                 drawConfigurables();
@@ -65,9 +67,9 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
         void drawConfigurables() {
             var configurables = CodeGeneratorUtil.GetConfigurables(
-                CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(_types, _config.dataProviders),
-                CodeGeneratorUtil.GetUsed<ICodeGenerator>(_types, _config.codeGenerators),
-                CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(_types, _config.postProcessors)
+                CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(_types, _codeGeneratorConfig.dataProviders),
+                CodeGeneratorUtil.GetUsed<ICodeGenerator>(_types, _codeGeneratorConfig.codeGenerators),
+                CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(_types, _codeGeneratorConfig.postProcessors)
             );
 
             foreach(var kv in configurables) {

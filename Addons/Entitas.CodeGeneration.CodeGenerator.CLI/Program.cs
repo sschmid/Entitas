@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Fabl;
+using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
@@ -34,6 +35,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
             setupLogging(args);
 
+            var properties = Preferences.LoadProperties();
+
             try {
                 switch(args[0]) {
                     case "new":
@@ -43,13 +46,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                         EditConfig.Run();
                         break;
                     case "doctor":
-                        Doctor.Run();
+                        Doctor.Run(properties);
                         break;
                     case "status":
-                        Status.Run();
+                        Status.Run(properties);
                         break;
                     case "fix":
-                        FixConfig.Run();
+                        FixConfig.Run(properties);
                         break;
                     case "scan":
                         ScanDlls.Run();

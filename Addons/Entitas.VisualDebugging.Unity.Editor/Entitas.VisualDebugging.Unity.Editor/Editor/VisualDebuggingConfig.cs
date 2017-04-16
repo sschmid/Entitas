@@ -9,7 +9,6 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         const string DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath";
         const string TYPE_DRAWER_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath";
 
-
         public override Dictionary<string, string> defaultProperties {
             get {
                 return new Dictionary<string, string> {

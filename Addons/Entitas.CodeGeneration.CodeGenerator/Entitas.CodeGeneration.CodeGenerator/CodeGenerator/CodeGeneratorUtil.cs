@@ -7,26 +7,14 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
     public static class CodeGeneratorUtil {
 
-        public static DependencyResolver pluginsDependencyResolver {
-            get {
-                var config = new CodeGeneratorConfig();
-                config.Configure(Preferences.LoadProperties());
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
-                foreach(var path in config.plugins) {
-                    resolver.Load(path);
-                }
-
-                return resolver;
-            }
-        }
-
-        public static CodeGenerator CodeGeneratorFromConfig(string configPath) {
-            Preferences.configPath = configPath;
-            var config = new CodeGeneratorConfig();
+        public static CodeGenerator CodeGeneratorFromProperties() {
             var properties = Preferences.LoadProperties();
+
+            var config = new CodeGeneratorConfig();
+            properties.AddProperties(config.defaultProperties, false);
             config.Configure(properties);
 
-            var types = LoadTypesFromPlugins();
+            var types = LoadTypesFromPlugins(properties);
 
             var dataProviders = GetEnabledInstances<ICodeGeneratorDataProvider>(types, config.dataProviders);
             var codeGenerators = GetEnabledInstances<ICodeGenerator>(types, config.codeGenerators);
@@ -45,8 +33,15 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             }
         }
 
-        public static Type[] LoadTypesFromPlugins() {
-            return pluginsDependencyResolver.GetTypes();
+        public static Type[] LoadTypesFromPlugins(Properties properties) {
+            var config = new CodeGeneratorConfig();
+            config.Configure(properties);
+            var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
+            foreach(var path in config.plugins) {
+                resolver.Load(path);
+            }
+
+            return resolver.GetTypes();
         }
 
         public static string[] GetOrderedNames(string[] types) {

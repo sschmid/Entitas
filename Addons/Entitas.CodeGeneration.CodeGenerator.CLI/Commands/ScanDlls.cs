@@ -1,7 +1,5 @@
-using System;
-using System.IO;
+﻿using System;
 using System.Linq;
-using Entitas.Utils;
 using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
@@ -9,11 +7,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public static class ScanDlls {
 
         public static void Run() {
-            if(File.Exists(Preferences.configPath)) {
-                printTypes(CodeGeneratorUtil.LoadTypesFromPlugins());
-            } else {
-                PrintNoConfig.Run();
-            }
+            PrintNoConfig.Run();
         }
 
         static void printTypes(Type[] types) {

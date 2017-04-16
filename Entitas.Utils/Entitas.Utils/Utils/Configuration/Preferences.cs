@@ -4,23 +4,18 @@ namespace Entitas.Utils {
 
     public static class Preferences {
 
-        public static string configPath {
-            get { return _configPath ?? "Entitas.properties"; }
-            set { _configPath = value; }
+        public const string PATH = "Entitas.properties";
+
+        public static bool HasProperties() {
+            return File.Exists(PATH);
         }
 
-        static string _configPath;
-
         public static Properties LoadProperties() {
-            var config = File.Exists(configPath)
-                             ? File.ReadAllText(configPath)
-                             : string.Empty;
-
-            return new Properties(config);
+            return new Properties(File.ReadAllText(PATH));
         }
 
         public static void SaveProperties(Properties properties) {
-            File.WriteAllText(configPath, properties.ToString());
+            File.WriteAllText(PATH, properties.ToString());
         }
     }
 }

@@ -3,7 +3,7 @@ using Entitas.CodeGeneration.Plugins;
 
 class describe_PluginUtil : nspec {
 
-    void when_PluginUtil() {
+    void when_plugin_util() {
 
         xit["gets same dependeny resolver for same assemblies"] = () => {
             var assemblies = new [] { "a1", "a2" };

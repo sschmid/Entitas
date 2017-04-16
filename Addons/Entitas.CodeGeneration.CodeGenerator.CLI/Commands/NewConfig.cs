@@ -8,7 +8,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public static void Run(bool force) {
             var currentDir = Directory.GetCurrentDirectory();
-            var path = currentDir + Path.DirectorySeparatorChar + Preferences.configPath;
+            var path = currentDir + Path.DirectorySeparatorChar + Preferences.PATH;
 
             if(!File.Exists(path) || force) {
                 var defaultConfig = new CodeGeneratorConfig().ToString();

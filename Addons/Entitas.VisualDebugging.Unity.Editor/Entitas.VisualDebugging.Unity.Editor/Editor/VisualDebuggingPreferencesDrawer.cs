@@ -20,7 +20,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         public override void Initialize(Properties properties) {
             _visualDebuggingConfig = new VisualDebuggingConfig();
+            properties.AddProperties(_visualDebuggingConfig.defaultProperties, false);
             _visualDebuggingConfig.Configure(properties);
+
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _enableVisualDebugging = !_scriptingDefineSymbols.buildTargetToDefSymbol.Values
                 .All<string>(defs => defs.Contains(ENTITAS_DISABLE_VISUAL_DEBUGGING));

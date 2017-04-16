@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Entitas.Utils;
 using UnityEditor;
@@ -24,7 +24,9 @@ namespace Entitas.Unity.Editor {
             _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasHeader");
 
             try {
-                _properties = Preferences.LoadProperties();
+                _properties = Preferences.HasProperties()
+                                     ? Preferences.LoadProperties()
+                                     : new Properties();
             } catch(Exception ex) {
                 _configException = ex;
             }

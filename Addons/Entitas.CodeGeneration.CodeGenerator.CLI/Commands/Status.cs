@@ -9,9 +9,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
     public static class Status {
 
-        public static void Run() {
-            if(File.Exists(Preferences.configPath)) {
-                var properties = Preferences.LoadProperties();
+        public static void Run(Properties properties) {
+            if(File.Exists(Preferences.PATH)) {
                 var config = new CodeGeneratorConfig();
                 config.Configure(properties);
 
@@ -21,7 +20,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 Dictionary<string, string> configurables = null;
 
                 try {
-                    types = CodeGeneratorUtil.LoadTypesFromPlugins();
+                    types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
                     configurables = CodeGeneratorUtil.GetConfigurables(
                         CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(types, config.dataProviders),
                         CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),
