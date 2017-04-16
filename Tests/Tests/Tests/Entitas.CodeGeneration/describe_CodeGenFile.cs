@@ -16,5 +16,11 @@ class describe_CodeGenFile : nspec {
             var file = new CodeGenFile(null, "line1\r\nline2\r", null);
             file.fileContent.should_be("line1\nline2\n");
         };
+
+        it["converts new lines to unix when setting fileContent"] = () => {
+            var file = new CodeGenFile(null, string.Empty, null);
+            file.fileContent = "line1\r\nline2\r";
+            file.fileContent.should_be("line1\nline2\n");
+        };
     }
 }
