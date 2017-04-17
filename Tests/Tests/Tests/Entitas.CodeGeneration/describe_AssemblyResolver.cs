@@ -2,7 +2,7 @@
 using Entitas.CodeGeneration.CodeGenerator;
 using NSpec;
 
-class describe_DependencyResolver : nspec {
+class describe_AssemblyResolver : nspec {
 
     void when_resolving() {
 
@@ -13,7 +13,7 @@ class describe_DependencyResolver : nspec {
 
             before = () => {
                 dllPath = TestExtensions.GetProjectRoot() + "/Tests/Tests.Fixtures/TestDependenyBase/bin/Release/TestDependenyBase.dll";
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain, new string[0]);
+                var resolver = new AssemblyResolver(AppDomain.CurrentDomain, new string[0]);
                 resolver.Load(dllPath);
                 types = resolver.GetTypes();
             };
@@ -35,7 +35,7 @@ class describe_DependencyResolver : nspec {
 
             before = () => {
                 dllPath = TestExtensions.GetProjectRoot() + "/Tests/Tests.Fixtures/TestDependency/bin/Release/TestDependency.dll";
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain, new string[0]);
+                var resolver = new AssemblyResolver(AppDomain.CurrentDomain, new string[0]);
                 resolver.Load(dllPath);
                 types = resolver.GetTypes();
             };

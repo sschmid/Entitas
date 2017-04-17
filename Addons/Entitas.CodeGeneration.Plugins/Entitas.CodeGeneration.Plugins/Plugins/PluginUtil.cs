@@ -7,12 +7,12 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class PluginUtil {
 
-        static Dictionary<string, DependencyResolver> _resolvers = new Dictionary<string, DependencyResolver>();
+        static Dictionary<string, AssemblyResolver> _resolvers = new Dictionary<string, AssemblyResolver>();
 
-        public static DependencyResolver GetAssembliesResolver(string[] assemblies, string[] basePaths) {
+        public static AssemblyResolver GetAssembliesResolver(string[] assemblies, string[] basePaths) {
             var key = assemblies.ToCSV();
             if(!_resolvers.ContainsKey(key)) {
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain, basePaths);
+                var resolver = new AssemblyResolver(AppDomain.CurrentDomain, basePaths);
                 foreach(var path in assemblies) {
                     resolver.Load(path);
                 }

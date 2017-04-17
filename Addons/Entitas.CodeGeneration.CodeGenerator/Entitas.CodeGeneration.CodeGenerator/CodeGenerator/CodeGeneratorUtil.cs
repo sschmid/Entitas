@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
@@ -35,7 +35,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         public static Type[] LoadTypesFromPlugins(Properties properties) {
             var config = new CodeGeneratorConfig();
             config.Configure(properties);
-            var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
+            var resolver = new AssemblyResolver(AppDomain.CurrentDomain, config.searchPaths);
             foreach(var path in config.plugins) {
                 resolver.Load(path);
             }

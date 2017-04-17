@@ -7,15 +7,15 @@ using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator {
 
-    public class DependencyResolver {
+    public class AssemblyResolver {
 
-        static Logger _logger = fabl.GetLogger(typeof(DependencyResolver).Name);
+        static Logger _logger = fabl.GetLogger(typeof(AssemblyResolver).Name);
 
         readonly AppDomain _appDomain;
         string[] _basePaths;
         List<Assembly> _assemblies;
 
-        public DependencyResolver(AppDomain appDomain, string[] basePaths) {
+        public AssemblyResolver(AppDomain appDomain, string[] basePaths) {
             _appDomain = appDomain;
             _appDomain.AssemblyResolve += onAssemblyResolve;
             _basePaths = basePaths;

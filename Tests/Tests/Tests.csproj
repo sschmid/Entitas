@@ -99,7 +99,7 @@
     <Compile Include="Tests\Entitas\Extensions\describe_ComponentStringExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_ContextStringExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_SystemStringExtension.cs" />
-    <Compile Include="Tests\Entitas.CodeGeneration\describe_DependencyResolver.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\describe_AssemblyResolver.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasResources.cs" />
     <Compile Include="Tests\Entitas.CodeGeneration\describe_TargetDirectoryExtension.cs" />
     <Compile Include="Tests\Entitas.Utils\Extensions\describe_InterfaceTypeExtension.cs" />
