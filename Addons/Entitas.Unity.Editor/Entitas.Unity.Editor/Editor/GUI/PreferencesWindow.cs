@@ -95,7 +95,9 @@ namespace Entitas.Unity.Editor {
                     }
                 }
             } else {
-                EditorGUILayout.LabelField("Entitas.properties is not in a correct format.");
+                var style = new GUIStyle(GUI.skin.label);
+                style.wordWrap = true;
+                EditorGUILayout.LabelField("Entitas.properties is not in a correct format.", style);
                 EditorGUILayout.Space();
                 EditorGUILayout.LabelField(_configException.Message);
             }
