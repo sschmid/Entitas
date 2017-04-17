@@ -31,7 +31,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         public override void Initialize(Properties properties) {
             _properties = properties;
             _codeGeneratorConfig = new CodeGeneratorConfig();
-            _properties.AddProperties(_codeGeneratorConfig.defaultProperties, false);
+            _codeGeneratorConfig.Configure(properties);
 
             try {
                 _types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
@@ -43,8 +43,6 @@ namespace Entitas.CodeGeneration.Unity.Editor {
                 initPhase<ICodeGeneratorDataProvider>(_types, out _availableDataProviderTypes, out _availableDataProviderNames);
                 initPhase<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
                 initPhase<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
-
-                _codeGeneratorConfig.Configure(properties);
             }
         }
 

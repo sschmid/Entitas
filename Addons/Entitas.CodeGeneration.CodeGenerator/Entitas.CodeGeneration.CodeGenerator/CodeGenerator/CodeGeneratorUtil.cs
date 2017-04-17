@@ -11,7 +11,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             var properties = Preferences.LoadProperties();
 
             var config = new CodeGeneratorConfig();
-            properties.AddProperties(config.defaultProperties, false);
             config.Configure(properties);
 
             var types = LoadTypesFromPlugins(properties);

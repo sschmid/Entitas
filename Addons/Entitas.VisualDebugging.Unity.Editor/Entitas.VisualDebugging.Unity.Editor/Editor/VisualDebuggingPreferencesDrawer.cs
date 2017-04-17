@@ -20,7 +20,6 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         public override void Initialize(Properties properties) {
             _visualDebuggingConfig = new VisualDebuggingConfig();
-            properties.AddProperties(_visualDebuggingConfig.defaultProperties, false);
             _visualDebuggingConfig.Configure(properties);
 
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
