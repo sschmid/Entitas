@@ -12,15 +12,20 @@ namespace Entitas.Utils {
 
         public int count { get { return _dict.Count; } }
 
+        const string placeholderPattern = @"\${(.+?)}";
+
         public string this[string key] {
-            get { return _dict[key]; }
+            get {
+                return Regex.Replace(
+                    _dict[key],
+                    placeholderPattern,
+                    match => _dict[match.Groups[1].Value]);
+            }
             set {
                 _dict[key.Trim()] = value
                     .TrimStart()
                     .Replace("\\n", "\n")
                     .Replace("\\t", "\t");
-
-                replacePlaceholders();
             }
         }
 
@@ -34,12 +39,10 @@ namespace Entitas.Utils {
             _dict = new Dictionary<string, string>();
             var lines = getLinesWithProperties(properties);
             addProperties(mergeMultilineValues(lines));
-            replacePlaceholders();
         }
 
         public Properties(Dictionary<string, string> properties) {
             _dict = new Dictionary<string, string>(properties);
-            replacePlaceholders();
         }
 
         public bool HasKey(string key) {
@@ -60,6 +63,20 @@ namespace Entitas.Utils {
 
         public Dictionary<string, string> ToDictionary() {
             return new Dictionary<string, string>(_dict);
+        }
+
+        void addProperties(string[] lines) {
+            var keyValueDelimiter = new[] { '=' };
+            var properties = lines.Select(
+                line => line.Split(keyValueDelimiter, 2)
+            );
+            foreach(var property in properties) {
+                if(property.Length != 2) {
+                    throw new InvalidKeyPropertiesException(property[0]);
+                }
+
+                this[property[0]] = property[1];
+            }
         }
 
         static string convertLineEndings(string str) {
@@ -90,32 +107,6 @@ namespace Entitas.Utils {
 
                 return acc;
             }).ToArray();
-        }
-
-        void addProperties(string[] lines) {
-            var keyValueDelimiter = new[] { '=' };
-            var properties = lines.Select(
-                line => line.Split(keyValueDelimiter, 2)
-            );
-            foreach(var property in properties) {
-                if(property.Length != 2) {
-                    throw new InvalidKeyPropertiesException(property[0]);
-                }
-
-                this[property[0]] = property[1];
-            }
-        }
-
-        void replacePlaceholders() {
-            const string placeholderPattern = @"(?:(?<=\${).+?(?=}))";
-            foreach(var key in _dict.Keys.ToArray()) {
-                var matches = Regex.Matches(_dict[key], placeholderPattern);
-                foreach(Match match in matches) {
-                    _dict[key] = _dict[key].Replace(
-                        "${" + match.Value + "}", _dict[match.Value]
-                    );
-                }
-            }
         }
 
         public override string ToString() {

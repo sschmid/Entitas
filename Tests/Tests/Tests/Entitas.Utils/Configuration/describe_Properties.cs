@@ -404,7 +404,7 @@ class describe_Properties : nspec {
                 const string expectedOutput =
                     "project.name = Entitas\n" +
                     "project.domain = com.sschmid\n" +
-                    "project.bundleId = com.sschmid.Entitas\n";
+                    "project.bundleId = ${project.domain}.${project.name}\n";
 
                 var expectedProperties = new Dictionary<string, string> {
                     { "project.name", "Entitas" },
@@ -423,7 +423,7 @@ class describe_Properties : nspec {
                 const string expectedOutput =
                     "project.name = Entitas\n" +
                     "project.domain = com.sschmid\n" +
-                    "project.bundleId = com.sschmid.Entitas\n";
+                    "project.bundleId = ${project.domain}.${project.name}\n";
 
                 var expectedProperties = new Dictionary<string, string> {
                     { "project.name", "Entitas" },
@@ -449,7 +449,7 @@ class describe_Properties : nspec {
                 const string expectedOutput =
                     "project.name = Entitas\n" +
                     "project.domain = com.sschmid\n" +
-                    "project.bundleId = com.sschmid.Entitas\n";
+                    "project.bundleId = ${project.domain}.${project.name}\n";
 
                 var expectedProperties = new Dictionary<string, string> {
                     { "project.name", "Entitas" },
@@ -503,7 +503,7 @@ class describe_Properties : nspec {
                 const string expectedOutput =
                     "project.name = Entitas\n" +
                     "project.domain = com.sschmid\n" +
-                    "project.bundleId = com.sschmid.Entitas\n";
+                    "project.bundleId = ${project.domain}.${project.name}\n";
 
                 var expectedProperties = new Dictionary<string, string> {
                     { "project.name", "Entitas" },
