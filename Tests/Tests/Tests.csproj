@@ -64,15 +64,14 @@
     <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
     <Compile Include="Tests\Entitas\describe_Systems.cs" />
     <Compile Include="Tests\Entitas.Blueprints\describe_Blueprints.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_CodeGeneratorData.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_ComponentDataProvider.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_ContextDataProvider.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGenerator.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGeneratorConfig.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_CodeGenFile.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\DataProviders\describe_CodeGeneratorData.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\DataProviders\describe_ComponentDataProvider.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\DataProviders\describe_ContextDataProvider.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\describe_CodeGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\describe_CodeGeneratorConfig.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\describe_CodeGenFile.cs" />
     <Compile Include="Tests\Entitas.Utils\Caching\describe_ObjectCache.cs" />
     <Compile Include="Tests\Entitas.Utils\Caching\describe_ObjectPool.cs" />
-    <Compile Include="Tests\Entitas.Utils\Configuration\describe_EntitasPreferencesConfig.cs" />
     <Compile Include="Tests\Entitas.Utils\Configuration\describe_Properties.cs" />
     <Compile Include="Tests\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfo.cs" />
     <Compile Include="Tests\Entitas.Utils\PublicMemberInfo\describe_PublicMemberInfoEntityExtension.cs" />
@@ -94,17 +93,20 @@
     <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestTearDownSystem.cs" />
     <Compile Include="Tests\Entitas\describe_ContextInfo.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasException.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\DataProviders\describe_EntityIndexDataProvider.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_CustomEntityIndex.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\CodeGenerators\describe_EntityIndexGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\DataProviders\describe_EntityIndexDataProvider.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\describe_CustomEntityIndex.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\CodeGenerators\describe_EntityIndexGenerator.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_ComponentStringExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_ContextStringExtension.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_InterfaceTypeExtension.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_TypeSerializationExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_SystemStringExtension.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_DependencyResolver.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\describe_DependencyResolver.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasResources.cs" />
-    <Compile Include="Tests\Entitas.CodeGenerator\describe_TargetDirectoryExtension.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\describe_TargetDirectoryExtension.cs" />
+    <Compile Include="Tests\Entitas.Utils\Extensions\describe_InterfaceTypeExtension.cs" />
+    <Compile Include="Tests\Entitas.Utils\Extensions\describe_TypeSerializationExtension.cs" />
+    <Compile Include="Tests\Entitas.Utils\Extensions\describe_DictionaryExtension.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\describe_PluginUtil.cs" />
+    <Compile Include="Tests\Entitas.Utils\Configuration\describe_AbstractConfigurableConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -113,12 +115,13 @@
     <Folder Include="Fixtures\" />
     <Folder Include="Fixtures\Systems\" />
     <Folder Include="Tests\Entitas\" />
-    <Folder Include="Tests\Entitas.CodeGenerator\" />
+    <Folder Include="Tests\Entitas.CodeGeneration\" />
     <Folder Include="Tests\Entitas.Utils\" />
     <Folder Include="Tests\Entitas.Migration\" />
     <Folder Include="Tests\Entitas.VisualDebugging.Unity\" />
-    <Folder Include="Tests\Entitas.CodeGenerator\CodeGenerators\" />
+    <Folder Include="Tests\Entitas.CodeGeneration\CodeGenerators\" />
     <Folder Include="Tests\Entitas\Extensions\" />
+    <Folder Include="Tests\Entitas.Utils\Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\NSpec.dll" />

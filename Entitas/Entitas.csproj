@@ -72,26 +72,26 @@
     <Compile Include="Entitas\Extensions\SystemStringExtension.cs" />
     <Compile Include="Entitas\Entity\UnsafeAERC.cs" />
     <Compile Include="Entitas\Entity\SafeAERC.cs" />
-    <Compile Include="Entitas\Interfaces\IAERC.cs" />
-    <Compile Include="Entitas\Interfaces\IComponent.cs" />
-    <Compile Include="Entitas\Interfaces\IContext.cs" />
-    <Compile Include="Entitas\Interfaces\IContexts.cs" />
-    <Compile Include="Entitas\Interfaces\IEntity.cs" />
-    <Compile Include="Entitas\Interfaces\IEntityIndex.cs" />
-    <Compile Include="Entitas\Interfaces\IGroup.cs" />
-    <Compile Include="Entitas\Interfaces\Matchers\IAllOfMatcher.cs" />
-    <Compile Include="Entitas\Interfaces\Matchers\IAnyOfMatcher.cs" />
-    <Compile Include="Entitas\Interfaces\Matchers\ICompoundMatcher.cs" />
-    <Compile Include="Entitas\Interfaces\Matchers\IMatcher.cs" />
-    <Compile Include="Entitas\Interfaces\Matchers\INoneOfMatcher.cs" />
-    <Compile Include="Entitas\Interfaces\Systems\ICleanupSystem.cs" />
-    <Compile Include="Entitas\Interfaces\Systems\IExecuteSystem.cs" />
-    <Compile Include="Entitas\Interfaces\Systems\IInitializeSystem.cs" />
-    <Compile Include="Entitas\Interfaces\Systems\IReactiveSystem.cs" />
-    <Compile Include="Entitas\Interfaces\Systems\ISystem.cs" />
-    <Compile Include="Entitas\Interfaces\Systems\ITearDownSystem.cs" />
     <Compile Include="Entitas\ContextInfo.cs" />
     <Compile Include="Entitas\EntitasException.cs" />
+    <Compile Include="Entitas\Context\IContext.cs" />
+    <Compile Include="Entitas\Entity\IAERC.cs" />
+    <Compile Include="Entitas\IComponent.cs" />
+    <Compile Include="Entitas\Context\IContexts.cs" />
+    <Compile Include="Entitas\Entity\IEntity.cs" />
+    <Compile Include="Entitas\EntityIndex\IEntityIndex.cs" />
+    <Compile Include="Entitas\Group\IGroup.cs" />
+    <Compile Include="Entitas\Systems\Interfaces\ICleanupSystem.cs" />
+    <Compile Include="Entitas\Systems\Interfaces\IExecuteSystem.cs" />
+    <Compile Include="Entitas\Systems\Interfaces\IInitializeSystem.cs" />
+    <Compile Include="Entitas\Systems\Interfaces\IReactiveSystem.cs" />
+    <Compile Include="Entitas\Systems\Interfaces\ISystem.cs" />
+    <Compile Include="Entitas\Systems\Interfaces\ITearDownSystem.cs" />
+    <Compile Include="Entitas\Matcher\Interfaces\IAllOfMatcher.cs" />
+    <Compile Include="Entitas\Matcher\Interfaces\IAnyOfMatcher.cs" />
+    <Compile Include="Entitas\Matcher\Interfaces\ICompoundMatcher.cs" />
+    <Compile Include="Entitas\Matcher\Interfaces\IMatcher.cs" />
+    <Compile Include="Entitas\Matcher\Interfaces\INoneOfMatcher.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -106,7 +106,8 @@
     <Folder Include="Entitas\Entity\Exceptions\" />
     <Folder Include="Entitas\Collector\" />
     <Folder Include="Entitas\Extensions\" />
-    <Folder Include="Entitas\Interfaces\" />
+    <Folder Include="Entitas\Systems\Interfaces\" />
+    <Folder Include="Entitas\Matcher\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Entitas\version">

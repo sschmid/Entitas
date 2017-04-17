@@ -24,6 +24,7 @@ cp "${ADDONS}/${ES_CG_G}/${BIN}/fabl.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_CG_G_CLI}/${BIN}/${ES_CG_G_CLI}.exe" ${BUILD_SRC}
 cp "${ADDONS}/${ES_CG_P}/${BIN}/${ES_CG_P}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_CG_UE}/${BIN}/${ES_CG_UE}.dll" ${BUILD_SRC}
+cp "${ADDONS}/${ES_CG_UE}/Compile.cs" ${BUILD_SRC}
 
 cp "${ADDONS}/${ES_MIG}/${BIN}/${ES_MIG}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_MIG_CLI}/${BIN}/${ES_MIG_CLI}.exe" ${BUILD_SRC}

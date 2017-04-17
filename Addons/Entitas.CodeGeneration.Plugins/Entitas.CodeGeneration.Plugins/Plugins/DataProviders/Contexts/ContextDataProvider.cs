@@ -1,32 +1,26 @@
+﻿using System.Collections.Generic;
 using System.Linq;
-using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ContextDataProvider : ICodeGeneratorDataProvider {
+    public class ContextDataProvider : ICodeGeneratorDataProvider, IConfigurable {
 
         public string name { get { return "Context"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        string[] _contextNames;
+        public Dictionary<string, string> defaultProperties { get { return _contextNamesConfig.defaultProperties; } }
 
-        public ContextDataProvider() : this(null) {
-        }
+        readonly ContextNamesConfig _contextNamesConfig = new ContextNamesConfig();
 
-        public ContextDataProvider(string[] contextNames) {
-            _contextNames = contextNames;
+        public void Configure(Properties properties) {
+            _contextNamesConfig.Configure(properties);
         }
 
         public CodeGeneratorData[] GetData() {
-            if(_contextNames == null) {
-                var config = new CodeGeneratorConfig(Preferences.LoadConfig());
-                _contextNames = config.contexts;
-            }
-
-            return _contextNames
+            return _contextNamesConfig.contextNames
                 .Select(contextName => {
                     var data = new ContextData();
                     data.SetContextName(contextName);

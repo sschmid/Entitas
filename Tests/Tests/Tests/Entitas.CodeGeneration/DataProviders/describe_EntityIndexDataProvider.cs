@@ -2,6 +2,7 @@
 using My.Namespace;
 using MyNamespace;
 using NSpec;
+using Entitas.Utils;
 
 class describe_EntityIndexDataProvider : nspec {
 
@@ -89,6 +90,43 @@ class describe_EntityIndexDataProvider : nspec {
             var data = provider.GetData();
 
             data.Length.should_be(0);
+        };
+
+        it["configure"] = () => {
+
+            Properties properties = null;
+
+            before = () => {
+                properties = new Properties(
+                                    "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n" +
+                                    "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true"
+                                );
+            };
+
+            it["ignores namespaces"] = () => {
+                var types = new [] { typeof(EntityIndexComponent), typeof(StandardComponent) };
+                var provider = new EntityIndexDataProvider(types);
+                provider.Configure(properties);
+                var data = provider.GetData();
+
+                data.Length.should_be(1);
+                var d = ((EntityIndexData)data[0]);
+
+                d.GetEntityIndexName().should_be("EntityIndex");
+
+            };
+            it["gets default context"] = () => {
+                var types = new [] { typeof(EntityIndexNoContextComponent), typeof(StandardComponent) };
+                var provider = new EntityIndexDataProvider(types);
+                provider.Configure(properties);
+                var data = provider.GetData();
+
+                data.Length.should_be(1);
+                var d = ((EntityIndexData)data[0]);
+
+                d.GetContextNames().Length.should_be(1);
+                d.GetContextNames()[0].should_be("ConfiguredContext");
+            };
         };
     }
 }

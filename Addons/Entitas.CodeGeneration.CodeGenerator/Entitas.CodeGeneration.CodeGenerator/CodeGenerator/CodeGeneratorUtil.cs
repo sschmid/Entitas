@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
 
@@ -6,48 +7,46 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
     public static class CodeGeneratorUtil {
 
-        public static DependencyResolver codeGeneratorDependencyResolver {
-            get {
-                var config = new CodeGeneratorConfig(Preferences.LoadConfig());
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
-                foreach(var path in config.plugins) {
-                    resolver.Load(path);
-                }
+        public static CodeGenerator CodeGeneratorFromProperties() {
+            var properties = Preferences.LoadProperties();
 
-                return resolver;
+            var config = new CodeGeneratorConfig();
+            config.Configure(properties);
+
+            var types = LoadTypesFromPlugins(properties);
+
+            var dataProviders = GetEnabledInstances<ICodeGeneratorDataProvider>(types, config.dataProviders);
+            var codeGenerators = GetEnabledInstances<ICodeGenerator>(types, config.codeGenerators);
+            var postProcessors = GetEnabledInstances<ICodeGenFilePostProcessor>(types, config.postProcessors);
+
+            configure(dataProviders, properties);
+            configure(codeGenerators, properties);
+            configure(postProcessors, properties);
+
+            return new CodeGenerator(dataProviders, codeGenerators, postProcessors);
+        }
+
+        static void configure(ICodeGeneratorInterface[] plugins, Properties properties) {
+            foreach(var plugin in plugins.OfType<IConfigurable>()) {
+                plugin.Configure(properties);
             }
         }
 
-        public static DependencyResolver dependencyResolver {
-            get {
-                var config = new CodeGeneratorConfig(Preferences.LoadConfig());
-                var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
-                foreach(var path in config.assemblies) {
-                    resolver.Load(path);
-                }
-
-                return resolver;
+        public static Type[] LoadTypesFromPlugins(Properties properties) {
+            var config = new CodeGeneratorConfig();
+            config.Configure(properties);
+            var resolver = new DependencyResolver(AppDomain.CurrentDomain, config.searchPaths);
+            foreach(var path in config.plugins) {
+                resolver.Load(path);
             }
+
+            return resolver.GetTypes();
         }
 
-        public static CodeGenerator CodeGeneratorFromConfig(string configPath) {
-            Preferences.configPath = configPath;
-            var config = new CodeGeneratorConfig(Preferences.LoadConfig());
-            var types = LoadTypesFromCodeGeneratorAssemblies();
-
-            return new CodeGenerator(
-                GetEnabledInstances<ICodeGeneratorDataProvider>(types, config.dataProviders),
-                GetEnabledInstances<ICodeGenerator>(types, config.codeGenerators),
-                GetEnabledInstances<ICodeGenFilePostProcessor>(types, config.postProcessors)
-            );
-        }
-
-        public static Type[] LoadTypesFromAssemblies() {
-            return dependencyResolver.GetTypes();
-        }
-
-        public static Type[] LoadTypesFromCodeGeneratorAssemblies() {
-            return codeGeneratorDependencyResolver.GetTypes();
+        public static string[] GetOrderedNames(string[] types) {
+            return types
+                    .OrderBy(type => type)
+                    .ToArray();
         }
 
         public static T[] GetOrderedInstances<T>(Type[] types) where T : ICodeGeneratorInterface {
@@ -89,6 +88,21 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             return GetOrderedInstances<T>(types)
                 .Where(instance => enabledTypeNames.Contains(instance.GetType().ToCompilableString()))
                 .ToArray();
+        }
+
+        public static Dictionary<string, string> GetConfigurables(ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
+            return new Dictionary<string, string>()
+                .Merge(dataProviders.OfType<IConfigurable>()
+                       .Concat(codeGenerators.OfType<IConfigurable>())
+                       .Concat(postProcessors.OfType<IConfigurable>())
+                       .Select(instance => instance.defaultProperties)
+                       .ToArray());
+        }
+
+        public static Dictionary<string, string> GetMissingConfigurables(Dictionary<string, string> configurables, Properties properties) {
+            return configurables
+                .Where(kv => !properties.HasKey(kv.Key))
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
         }
     }
 }

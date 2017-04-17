@@ -1,47 +1,37 @@
+﻿using System.Collections.Generic;
 using Entitas.Utils;
 
 namespace Entitas.VisualDebugging.Unity.Editor {
 
-    public class VisualDebuggingConfig {
+    public class VisualDebuggingConfig : AbstractConfigurableConfig {
 
-        public static readonly string[] keys = {
-            SYSTEM_WARNING_THRESHOLD_KEY,
-            DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY,
-            TYPE_DRAWER_FOLDER_PATH_KEY
-        };
+        const string SYSTEM_WARNING_THRESHOLD_KEY = "Entitas.VisualDebugging.Unity.Editor.SystemWarningThreshold";
+        const string DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath";
+        const string TYPE_DRAWER_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath";
 
-        const string SYSTEM_WARNING_THRESHOLD_KEY = "Entitas.VisualDebugging.Unity.SystemWarningThreshold";
-        const string DEFAULT_SYSTEM_WARNING_THRESHOLD = "8";
-        public string systemWarningThreshold {
-            get { return _config.GetValueOrDefault(SYSTEM_WARNING_THRESHOLD_KEY, DEFAULT_SYSTEM_WARNING_THRESHOLD); }
-            set { _config[SYSTEM_WARNING_THRESHOLD_KEY] = value; }
+        public override Dictionary<string, string> defaultProperties {
+            get {
+                return new Dictionary<string, string> {
+                    { SYSTEM_WARNING_THRESHOLD_KEY, "8" },
+                    { DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY, "Assets/Editor/DefaultInstanceCreator/" },
+                    { TYPE_DRAWER_FOLDER_PATH_KEY, "Assets/Editor/TypeDrawer/" }
+                };
+            }
         }
 
-        const string DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.DefaultInstanceCreatorFolderPath";
-        const string DEFAULT_DEFAULT_INSTANCE_CREATOR_FOLDER_PATH = "Assets/Editor/DefaultInstanceCreator/";
-        public string defaultInstanceCreatorFolderPath {
-            get { return _config.GetValueOrDefault(DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY, DEFAULT_DEFAULT_INSTANCE_CREATOR_FOLDER_PATH); }
-            set { _config[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY] = value; }
+        public int systemWarningThreshold { 
+            get { return int.Parse(properties[SYSTEM_WARNING_THRESHOLD_KEY]); }
+            set { properties[SYSTEM_WARNING_THRESHOLD_KEY] = value.ToString(); }
         }
 
-        const string TYPE_DRAWER_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.TypeDrawerFolderPath";
-        const string DEFAULT_TYPE_DRAWER_FOLDER_PATH = "Assets/Editor/TypeDrawer/";
-        public string typeDrawerFolderPath {
-            get { return _config.GetValueOrDefault(TYPE_DRAWER_FOLDER_PATH_KEY, DEFAULT_TYPE_DRAWER_FOLDER_PATH); }
-            set { _config[TYPE_DRAWER_FOLDER_PATH_KEY] = value; }
+        public string defaultInstanceCreatorFolderPath { 
+            get { return properties[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY]; }
+            set { properties[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY] = value; }
         }
 
-        readonly Config _config;
-
-        public VisualDebuggingConfig(Config config) {
-            _config = config;
-            systemWarningThreshold = systemWarningThreshold;
-            defaultInstanceCreatorFolderPath = defaultInstanceCreatorFolderPath;
-            typeDrawerFolderPath = typeDrawerFolderPath;
-        }
-
-        public override string ToString() {
-            return _config.ToString();
+        public string typeDrawerFolderPath { 
+            get { return properties[TYPE_DRAWER_FOLDER_PATH_KEY]; }
+            set { properties[TYPE_DRAWER_FOLDER_PATH_KEY] = value; }
         }
     }
 }

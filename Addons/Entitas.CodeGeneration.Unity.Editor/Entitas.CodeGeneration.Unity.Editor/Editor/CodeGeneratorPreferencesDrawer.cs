@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.CodeGenerator;
@@ -22,49 +22,38 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         string[] _availableGeneratorNames;
         string[] _availablePostProcessorNames;
 
-        CodeGeneratorConfig _codeGeneratorConfig;
-        List<string> _contexts;
-        UnityEditorInternal.ReorderableList _contextList;
+        Properties _properties;
+        Type[] _types;
 
+        CodeGeneratorConfig _codeGeneratorConfig;
         Exception _configException;
 
-        public override void Initialize(Config config) {
-            Type[] types = null;
+        public override void Initialize(Properties properties) {
+            _properties = properties;
+            _codeGeneratorConfig = new CodeGeneratorConfig();
+            _codeGeneratorConfig.Configure(properties);
+
             try {
-                types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
+                _types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
             } catch(Exception ex) {
                 _configException = ex;
             }
 
             if(_configException == null) {
-                var defaultEnabledDataProviderNames = initPhase<ICodeGeneratorDataProvider>(types, out _availableDataProviderTypes, out _availableDataProviderNames);
-                var defaultEnabledGeneratorNames = initPhase<ICodeGenerator>(types, out _availableGeneratorTypes, out _availableGeneratorNames);
-                var defaultEnabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
-
-                _codeGeneratorConfig = new CodeGeneratorConfig(config, defaultEnabledDataProviderNames, defaultEnabledGeneratorNames, defaultEnabledPostProcessorNames);
-
-                _contexts = new List<string>(_codeGeneratorConfig.contexts);
-
-                _contextList = new UnityEditorInternal.ReorderableList(_contexts, typeof(string), true, true, true, true);
-                _contextList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Contexts");
-                _contextList.drawElementCallback = (rect, index, isActive, isFocused) => {
-                    rect.width -= 20;
-                    _contexts[index] = EditorGUI.TextField(rect, _contexts[index]);
-                };
-                _contextList.onAddCallback = list => list.list.Add("New Context");
-                _contextList.onCanRemoveCallback = list => list.count > 1;
-                _contextList.onChangedCallback = list => GUI.changed = true;
+                initPhase<ICodeGeneratorDataProvider>(_types, out _availableDataProviderTypes, out _availableDataProviderNames);
+                initPhase<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
+                initPhase<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
             }
         }
 
-        protected override void drawContent(Config config) {
+        protected override void drawContent(Properties properties) {
             if(_configException == null) {
-                drawTargetFolder();
-                drawContexts();
-
                 _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
                 _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
                 _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
+
+                EditorGUILayout.Space();
+                drawConfigurables();
 
                 drawGenerateButton();
             } else {
@@ -74,40 +63,19 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             }
         }
 
-        void drawTargetFolder() {
-            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel(
-                "Target Directory",
-                _codeGeneratorConfig.targetDirectory,
-                _codeGeneratorConfig.targetDirectory
+        void drawConfigurables() {
+            var configurables = CodeGeneratorUtil.GetConfigurables(
+                CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(_types, _codeGeneratorConfig.dataProviders),
+                CodeGeneratorUtil.GetUsed<ICodeGenerator>(_types, _codeGeneratorConfig.codeGenerators),
+                CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(_types, _codeGeneratorConfig.postProcessors)
             );
-            if(!string.IsNullOrEmpty(path)) {
-                _codeGeneratorConfig.targetDirectory = path;
-            }
-        }
 
-        void drawContexts() {
-            EditorGUILayout.Space();
-
-            EditorGUILayout.BeginHorizontal();
-            {
-                GUILayout.Space(5);
-                EditorGUILayout.BeginVertical();
-                {
-                    _contextList.DoLayoutList();
+            foreach(var kv in configurables) {
+                if(!_properties.HasKey(kv.Key)) {
+                    _properties[kv.Key] = kv.Value;
                 }
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4);
+                _properties[kv.Key] = EditorGUILayout.TextField(kv.Key.ShortTypeName(), _properties[kv.Key]);
             }
-            EditorGUILayout.EndHorizontal();
-
-            if(_contexts.Count <= 1) {
-                EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple contexts. " +
-                "The code generator generates subclasses of ContextAttribute for each context name. " +
-                "You have to assign components to one or more contexts with the generated attribute, e.g. [Game] or [Input], " +
-                "otherwise they will be ignored by the code generator.", MessageType.Info);
-            }
-
-            _codeGeneratorConfig.contexts = _contexts.ToArray();
         }
 
         static string[] initPhase<T>(Type[] types, out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {

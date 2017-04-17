@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Unity.Editor;
 using Entitas.Utils;
@@ -46,8 +46,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         GUIContent _pauseButtonContent;
 
         void OnEnable() {
-            var config = Preferences.LoadConfig();
-            _systemWarningThreshold = int.Parse(new VisualDebuggingConfig(config).systemWarningThreshold);
+            var config = new VisualDebuggingConfig();
+            config.Configure(Preferences.LoadProperties());
+            _systemWarningThreshold = config.systemWarningThreshold;
         }
 
         public override void OnInspectorGUI() {

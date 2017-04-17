@@ -7,6 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 [Game][Entitas.CodeGeneration.Attributes.UniqueAttribute]
-public sealed partial class ISomeInterfaceComponent : Entitas.Core.IComponent {
+public sealed partial class ISomeInterfaceComponent : Entitas.IComponent {
     public ISomeInterface value;
 }

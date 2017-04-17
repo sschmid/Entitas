@@ -1,6 +1,6 @@
-using System.Threading;
+﻿using System.Threading;
 using UnityEngine;
-using Entitas.Core;
+using Entitas;
 
 public class RandomDurationSystem : IExecuteSystem {
 

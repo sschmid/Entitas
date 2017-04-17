@@ -7,6 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 [Game]
-public sealed partial class PositionComponent : Entitas.Core.IComponent {
+public sealed partial class PositionComponent : Entitas.IComponent {
     public IntVector2 value;
 }

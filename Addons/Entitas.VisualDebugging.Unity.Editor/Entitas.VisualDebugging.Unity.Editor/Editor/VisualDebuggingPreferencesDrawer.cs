@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using Entitas.Unity.Editor;
 using Entitas.Utils;
 using UnityEditor;
@@ -18,14 +18,16 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         bool _enableVisualDebugging;
 
-        public override void Initialize(Config config) {
-            _visualDebuggingConfig = new VisualDebuggingConfig(config);
+        public override void Initialize(Properties properties) {
+            _visualDebuggingConfig = new VisualDebuggingConfig();
+            _visualDebuggingConfig.Configure(properties);
+
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _enableVisualDebugging = !_scriptingDefineSymbols.buildTargetToDefSymbol.Values
                 .All<string>(defs => defs.Contains(ENTITAS_DISABLE_VISUAL_DEBUGGING));
         }
 
-        protected override void drawContent(Config config) {
+        protected override void drawContent(Properties properties) {
             EditorGUILayout.BeginHorizontal();
             {
                 drawVisualDebugging();
@@ -37,7 +39,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
             EditorGUILayout.Space();
 
-            _visualDebuggingConfig.systemWarningThreshold = EditorGUILayout.IntField("System Warning Threshold", int.Parse(_visualDebuggingConfig.systemWarningThreshold)).ToString();
+            _visualDebuggingConfig.systemWarningThreshold = EditorGUILayout.IntField("System Warning Threshold", _visualDebuggingConfig.systemWarningThreshold);
 
             EditorGUILayout.Space();
 

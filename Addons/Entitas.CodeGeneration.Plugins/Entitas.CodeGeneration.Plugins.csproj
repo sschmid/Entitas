@@ -55,8 +55,6 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\Contexts\ContextDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\EntityIndex\EntityIndexData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\EntityIndex\EntityIndexDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\MemberData.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\MethodData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\AddFileHeaderPostProcessor.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\ConsoleWriteLinePostProcessor.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\MergeFilesPostProcessor.cs" />
@@ -66,10 +64,19 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\TargetDirectoryStringExtension.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\CodeGenerators\ComponentMatcherGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\CodeGenerators\ContextMatcherGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Configs\ContextNamesConfig.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Configs\IgnoreNamespacesConfig.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Configs\TargetDirectoryConfig.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Data\MemberData.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Data\MethodData.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Configs\AssembliesConfig.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PluginUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.Plugins\" />
     <Folder Include="Entitas.CodeGeneration.Plugins\Plugins\" />
+    <Folder Include="Entitas.CodeGeneration.Plugins\Plugins\Configs\" />
+    <Folder Include="Entitas.CodeGeneration.Plugins\Plugins\Data\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">

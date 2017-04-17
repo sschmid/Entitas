@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Entitas.CodeGeneration.Plugins;
 using Entitas.Utils;
 using My.Namespace;
@@ -6,12 +6,16 @@ using NSpec;
 
 class describe_ComponentDataProvider : nspec {
 
-    ComponentData getData<T>() {
-        return getMultipleData<T>()[0];
+    ComponentData getData<T>(Properties properties = null) {
+        return getMultipleData<T>(properties)[0];
     }
 
-    ComponentData[] getMultipleData<T>() {
+    ComponentData[] getMultipleData<T>(Properties properties = null) {
         var provider = new ComponentDataProvider(new Type[] { typeof(T) });
+        if(properties != null) {
+            provider.Configure(properties);
+        }
+
         return (ComponentData[])provider.GetData();
     }
 
@@ -175,6 +179,27 @@ class describe_ComponentDataProvider : nspec {
 
                 data1.GetFullTypeName().should_be("NewCustomNameComponent1Component");
                 data2.GetFullTypeName().should_be("NewCustomNameComponent2Component");
+            };
+        };
+
+        context["configure"] = () => {
+
+            Type type = null;
+            ComponentData data = null;
+
+            before = () => {
+                var properties = new Properties(
+                    "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n"
+                );
+
+                type = typeof(NoContextComponent);
+                data = getData<NoContextComponent>(properties);
+            };
+
+            it["gets default context"] = () => {
+                var contextNames = data.GetContextNames();
+                contextNames.Length.should_be(1);
+                contextNames[0].should_be("ConfiguredContext");
             };
         };
     }
