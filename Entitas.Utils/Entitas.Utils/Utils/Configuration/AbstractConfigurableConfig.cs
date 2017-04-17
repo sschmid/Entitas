@@ -20,6 +20,7 @@ namespace Entitas.Utils {
 
         public virtual void Configure(Properties properties) {
             _properties = properties;
+            _properties.AddProperties(defaultProperties, false);
         }
 
         public override string ToString() {
