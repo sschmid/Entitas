@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Entitas.Utils;
 using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
-    public static class Status {
+    public class Status : AbstractCommand {
 
-        public static void Run(Properties properties) {
-            if(File.Exists(Preferences.PATH)) {
+        public override string trigger { get { return "status"; } }
+
+        public override void Run(string[] args) {
+            if(assertProperties()) {
+                var properties = loadProperties();
                 var config = new CodeGeneratorConfig();
                 config.Configure(properties);
 
@@ -27,27 +29,25 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                         CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(types, config.postProcessors)
                     );
                 } catch(Exception ex) {
-                    printKeyStatus(null, properties);
+                    printKeyStatus(null, config.defaultProperties, properties);
                     throw ex;
                 }
 
-                printKeyStatus(configurables, properties);
+                printKeyStatus(configurables, config.defaultProperties, properties);
                 printConfigurableKeyStatus(configurables, properties);
                 printPluginStatus(types, config);
-            } else {
-                PrintNoConfig.Run();
             }
         }
 
-        static void printKeyStatus(Dictionary<string, string> configurables, Properties properties) {
-            var requiredKeys = new CodeGeneratorConfig().defaultProperties.Keys.ToArray();
-            var requiredKeysWithConfigurable = new CodeGeneratorConfig().defaultProperties.Keys.ToArray();
+        static void printKeyStatus(Dictionary<string, string> configurables, Dictionary<string, string> defaultProperties, Properties properties) {
+            var requiredKeys = defaultProperties.Keys.ToArray();
+            var requiredKeysWithConfigurables = defaultProperties.Keys.ToArray();
 
             if(configurables != null) {
-                requiredKeysWithConfigurable = requiredKeysWithConfigurable.Concat(configurables.Keys).ToArray();
+                requiredKeysWithConfigurables = requiredKeysWithConfigurables.Concat(configurables.Keys).ToArray();
             }
 
-            foreach(var key in Helper.GetUnusedKeys(requiredKeysWithConfigurable, properties)) {
+            foreach(var key in Helper.GetUnusedKeys(requiredKeysWithConfigurables, properties)) {
                 fabl.Info("Unused key: " + key);
             }
 

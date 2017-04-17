@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
-    public static class FixConfig {
+    public class FixConfig : AbstractCommand {
 
-        public static void Run(Properties properties) {
-            if(File.Exists(Preferences.PATH)) {
-                var defaultProperties = new CodeGeneratorConfig().defaultProperties;
-                var requiredKeys = defaultProperties.Keys.ToArray();
+        public override string trigger { get { return "fix"; } }
+
+        public override void Run(string[] args) {
+            if(assertProperties()) {
+                var properties = loadProperties();
+                var config = new CodeGeneratorConfig();
+                config.Configure(properties);
 
                 Type[] types = null;
                 Dictionary<string, string> configurables = null;
-                var config = new CodeGeneratorConfig();
-                config.Configure(properties);
 
                 try {
                     types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
@@ -26,20 +26,18 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                         CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(types, config.postProcessors)
                     );
                 } catch(Exception ex) {
-                    fixKeys(requiredKeys, null, defaultProperties, properties);
+                    fixKeys(null, config.defaultProperties, properties);
                     throw ex;
                 }
 
-                fixKeys(requiredKeys, configurables, defaultProperties, properties);
+                fixKeys(configurables, config.defaultProperties, properties);
                 fixConfigurableKeys(configurables, properties);
                 fixPlugins(types, config, properties);
-
-            } else {
-                PrintNoConfig.Run();
             }
         }
 
-        static void fixKeys(string[] requiredKeys, Dictionary<string, string> configurables, Dictionary<string, string> defaultProperties, Properties properties) {
+        static void fixKeys(Dictionary<string, string> configurables, Dictionary<string, string> defaultProperties, Properties properties) {
+            var requiredKeys = defaultProperties.Keys.ToArray();
             var requiredKeysWithConfigurables = requiredKeys.ToList().ToArray();
 
             if(configurables != null) {

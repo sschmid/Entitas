@@ -1,17 +1,14 @@
-﻿using System.IO;
-using Entitas.Utils;
+﻿namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
-namespace Entitas.CodeGeneration.CodeGenerator.CLI {
+    public class Generate : AbstractCommand {
 
-    public static class Generate {
+        public override string trigger { get { return "gen"; } }
 
-        public static void Run() {
-            if(File.Exists(Preferences.PATH)) {
+        public override void Run(string[] args) {
+            if(assertProperties()) {
                 CodeGeneratorUtil
                     .CodeGeneratorFromProperties()
                     .Generate();
-            } else {
-                PrintNoConfig.Run();
             }
         }
     }

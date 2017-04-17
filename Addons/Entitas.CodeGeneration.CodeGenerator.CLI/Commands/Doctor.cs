@@ -1,23 +1,24 @@
-﻿using System.IO;
-using Entitas.Utils;
-using Fabl;
+﻿using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
-    public static class Doctor {
+    public class Doctor : AbstractCommand {
 
-        public static void Run(Properties properties) {
+        public override string trigger { get { return "doctor"; } }
+
+        public override void Run(string[] args) {
 
             fabl.Debug("Entitas Code Generator version " + EntitasResources.GetVersion());
 
-            if(File.Exists(Preferences.PATH)) {
-                Status.Run(properties);
+            if(assertProperties()) {
+
+                new Status().Run(args);
+
                 fabl.Debug("Dry Run");
+
                 CodeGeneratorUtil
                     .CodeGeneratorFromProperties()
                     .DryRun();
-            } else {
-                PrintNoConfig.Run();
             }
         }
     }

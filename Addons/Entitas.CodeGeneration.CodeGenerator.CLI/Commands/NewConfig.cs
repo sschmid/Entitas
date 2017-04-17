@@ -4,20 +4,22 @@ using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
-    public static class NewConfig {
+    public class NewConfig : AbstractCommand {
 
-        public static void Run(bool force) {
+        public override string trigger { get { return "new"; } }
+
+        public override void Run(string[] args) {
             var currentDir = Directory.GetCurrentDirectory();
             var path = currentDir + Path.DirectorySeparatorChar + Preferences.PATH;
 
-            if(!File.Exists(path) || force) {
+            if(args.isForce() || !File.Exists(path)) {
                 var defaultConfig = new CodeGeneratorConfig().ToString();
                 File.WriteAllText(path, defaultConfig);
 
                 fabl.Info("Created " + path);
                 fabl.Debug(defaultConfig);
 
-                EditConfig.Run();
+                new EditConfig().Run(args);
             } else {
                 fabl.Warn(path + " already exists!");
                 fabl.Info("Use entitas new -f to overwrite the exiting file.");

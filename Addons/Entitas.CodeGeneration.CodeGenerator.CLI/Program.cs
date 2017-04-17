@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Fabl;
 using Entitas.Utils;
+using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
@@ -15,18 +15,6 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             { LogLevel.Fatal, ConsoleColor.DarkRed }
         };
 
-        static bool isForce(string[] args) {
-            return args.Any(arg => arg == "-f");  
-        }
-
-        static bool isVerbose(string[] args) {
-            return args.Any(arg => arg == "-v");  
-        }
-
-        static bool isSilent(string[] args) {
-            return args.Any(arg => arg == "-s");  
-        }
-
         public static void Main(string[] args) {
             if(args == null || args.Length == 0) {
                 printUsage();
@@ -35,52 +23,33 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
             setupLogging(args);
 
-            var properties = Preferences.LoadProperties();
-
             try {
-                switch(args[0]) {
-                    case "new":
-                        NewConfig.Run(isForce(args));
-                        break;
-                    case "edit":
-                        EditConfig.Run();
-                        break;
-                    case "doctor":
-                        Doctor.Run(properties);
-                        break;
-                    case "status":
-                        Status.Run(properties);
-                        break;
-                    case "fix":
-                        FixConfig.Run(properties);
-                        break;
-                    case "scan":
-                        ScanDlls.Run();
-                        break;
-                    case "dry":
-                        DryRun.Run();
-                        break;
-                    case "gen":
-                        Generate.Run();
-                        break;
-                    default:
-                        printUsage();
-                        break;
+                var commands = AppDomain.CurrentDomain.GetInstancesOf<ICommand>();
+                var command = commands.SingleOrDefault(c => c.trigger == args[0]);
+                if(command != null) {
+                    command.Run(args);
+                } else {
+                    printUsage();
                 }
             } catch(Exception ex) {
-                var loadException = ex as ReflectionTypeLoadException;
-                if(loadException != null) {
-                    foreach(var e in loadException.LoaderExceptions) {
-                        fabl.Error(e.ToString());
-                    }
+                printException(ex, args);
+            }
+        }
+
+        static void printException(Exception ex, string[] args) {
+            var loadException = ex as ReflectionTypeLoadException;
+            if(loadException != null) {
+                foreach(var e in loadException.LoaderExceptions) {
+                    fabl.Error(e.ToString());
+                }
+            } else {
+                if(args.isVerbose()) {
+                    fabl.Error(ex.ToString());
                 } else {
-                    if(isVerbose(args)) {
-                        fabl.Error(ex.ToString());
-                    } else {
-                        fabl.Error(ex.Message);
-                    }
+                    fabl.Error(ex.Message);
                 }
             }
+
         }
 
         static void printUsage() {
@@ -100,9 +69,9 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         static void setupLogging(string[] args) {
-            if(isVerbose(args)) {
+            if(args.isVerbose()) {
                 fabl.globalLogLevel = LogLevel.On;
-            } else if(isSilent(args)) {
+            } else if(args.isSilent()) {
                 fabl.globalLogLevel = LogLevel.Error;
             } else {
                 fabl.globalLogLevel = LogLevel.Info;

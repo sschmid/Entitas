@@ -1,17 +1,16 @@
-﻿using System.IO;
-using Entitas.Utils;
+﻿using Entitas.Utils;
 using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
-    public static class EditConfig {
+    public class EditConfig : AbstractCommand {
 
-        public static void Run() {
-            if(File.Exists(Preferences.PATH)) {
+        public override string trigger { get { return "edit"; } }
+
+        public override void Run(string[] args) {
+            if(assertProperties()) {
                 fabl.Debug("Opening " + Preferences.PATH);
                 System.Diagnostics.Process.Start(Preferences.PATH);
-            } else {
-                PrintNoConfig.Run();
             }
         }
     }
