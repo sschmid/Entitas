@@ -340,7 +340,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             var config = new VisualDebuggingConfig();
             config.Configure(Preferences.LoadProperties());
             var folder = config.defaultInstanceCreatorFolderPath;
-            var filePath = folder + "Default" + typeName.ShortTypeName() + "InstanceCreator.cs";
+            var filePath = folder + Path.DirectorySeparatorChar + "Default" + typeName.ShortTypeName() + "InstanceCreator.cs";
             var template = DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT
                 .Replace("${Type}", typeName)
                 .Replace("${ShortType}", typeName.ShortTypeName());
@@ -351,7 +351,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             var config = new VisualDebuggingConfig();
             config.Configure(Preferences.LoadProperties());
             var folder = config.typeDrawerFolderPath;
-            var filePath = folder + typeName.ShortTypeName() + "TypeDrawer.cs";
+            var filePath = folder + Path.DirectorySeparatorChar + typeName.ShortTypeName() + "TypeDrawer.cs";
             var template = TYPE_DRAWER_TEMPLATE_FORMAT
                 .Replace("${Type}", typeName)
                 .Replace("${ShortType}", typeName.ShortTypeName());
@@ -370,7 +370,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         const string DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT =
 @"using System;
-using Entitas.VisualDebugging.Unity;
+using Entitas.VisualDebugging.Unity.Editor;
 
 public class Default${ShortType}InstanceCreator : IDefaultInstanceCreator {
 
@@ -388,7 +388,7 @@ public class Default${ShortType}InstanceCreator : IDefaultInstanceCreator {
         const string TYPE_DRAWER_TEMPLATE_FORMAT =
 @"using System;
 using Entitas;
-using Entitas.VisualDebugging.Unity;
+using Entitas.VisualDebugging.Unity.Editor;
 
 public class ${ShortType}TypeDrawer : ITypeDrawer {
 
@@ -396,7 +396,7 @@ public class ${ShortType}TypeDrawer : ITypeDrawer {
         return type == typeof(${Type});
     }
 
-    public object DrawAndGetNewValue(Type memberType, string memberName, object value, IComponent component) {
+    public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
         // TODO draw the type ${Type}
         throw new NotImplementedException();
     }

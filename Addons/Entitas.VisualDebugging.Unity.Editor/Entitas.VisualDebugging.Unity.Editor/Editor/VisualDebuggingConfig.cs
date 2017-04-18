@@ -13,8 +13,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             get {
                 return new Dictionary<string, string> {
                     { SYSTEM_WARNING_THRESHOLD_KEY, "5" },
-                    { DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY, "Assets/Editor/DefaultInstanceCreator/" },
-                    { TYPE_DRAWER_FOLDER_PATH_KEY, "Assets/Editor/TypeDrawer/" }
+                    { DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY, "Assets/Editor/DefaultInstanceCreator" },
+                    { TYPE_DRAWER_FOLDER_PATH_KEY, "Assets/Editor/TypeDrawer" }
                 };
             }
         }
