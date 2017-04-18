@@ -66,7 +66,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             _properties.AddProperties(configurables, false);
 
             foreach(var kv in configurables) {
-                _properties[kv.Key] = EditorGUILayout.TextField(kv.Key.ShortTypeName(), _properties[kv.Key]);
+                _properties[kv.Key] = EditorGUILayout.TextField(kv.Key.ShortTypeName().ToSpacedCamelCase(), _properties[kv.Key]);
             }
         }
 
