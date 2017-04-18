@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading;
 
 namespace PerformanceTests {
@@ -41,6 +41,8 @@ namespace PerformanceTests {
             run<EmptyTest>();
             run<CollectorIterateCollectedEntities>();
             run<CollectorActivate>();
+
+            run<Casting>();
 
             Console.WriteLine("\nPress any key...");
             Console.Read();

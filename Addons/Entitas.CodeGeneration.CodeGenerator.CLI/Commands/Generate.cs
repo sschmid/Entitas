@@ -1,4 +1,6 @@
-﻿namespace Entitas.CodeGeneration.CodeGenerator.CLI {
+﻿using Fabl;
+
+namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
     public class Generate : AbstractCommand {
 
@@ -6,9 +8,14 @@
 
         public override void Run(string[] args) {
             if(assertProperties()) {
-                CodeGeneratorUtil
-                    .CodeGeneratorFromProperties()
-                    .Generate();
+                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromProperties();
+
+                codeGenerator.OnProgress += (title, info, progress) => {
+                    var p = (int)(progress * 100);
+                    fabl.Debug(string.Format("{0}: {1} ({2}%)", title, info, p));
+                };
+
+                codeGenerator.Generate();
             }
         }
     }

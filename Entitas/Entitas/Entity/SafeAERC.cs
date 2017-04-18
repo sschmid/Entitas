@@ -9,7 +9,7 @@ namespace Entitas {
     /// SafeAERC checks if the entity has already been
     /// retained or released. It's slower, but you keep the information
     /// about the owners.
-    public class SafeAERC : IAERC {
+    public sealed class SafeAERC : IAERC {
 
         public int retainCount { get { return _owners.Count; } }
 

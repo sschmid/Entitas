@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 
 namespace Entitas.CodeGeneration.Plugins {
 
     public class NewLinePostProcessor : ICodeGenFilePostProcessor {
 
         public string name { get { return "Convert newlines"; } }
-        public int priority { get { return 90; } }
+        public int priority { get { return 95; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 

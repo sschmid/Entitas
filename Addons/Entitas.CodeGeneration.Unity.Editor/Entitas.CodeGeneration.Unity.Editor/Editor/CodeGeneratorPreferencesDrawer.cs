@@ -71,9 +71,6 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             );
 
             foreach(var kv in configurables) {
-                if(!_properties.HasKey(kv.Key)) {
-                    _properties[kv.Key] = kv.Value;
-                }
                 _properties[kv.Key] = EditorGUILayout.TextField(kv.Key.ShortTypeName(), _properties[kv.Key]);
             }
         }

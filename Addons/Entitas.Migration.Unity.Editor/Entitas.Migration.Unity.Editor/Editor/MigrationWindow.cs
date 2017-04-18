@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using Entitas.Unity.Editor;
+using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
 
@@ -27,11 +28,10 @@ namespace Entitas.Migration.Unity.Editor {
         }
 
         static IMigration[] getMigrations() {
-            return Assembly.GetAssembly(typeof(IMigration)).GetTypes()
-                .Where(type => type.GetInterfaces().Contains(typeof(IMigration)))
-                .OrderByDescending(type => type.Name)
-                .Select(type => (IMigration)Activator.CreateInstance(type))
-                .ToArray();
+            return AppDomain.CurrentDomain
+                            .GetInstancesOf<IMigration>()
+                            .OrderBy(instance => instance.GetType().FullName)
+                            .ToArray();
         }
 
         void OnGUI() {

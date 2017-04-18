@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -7,6 +7,7 @@ namespace Entitas.Utils {
     public static class PublicMemberInfoExtension {
 
         public static List<PublicMemberInfo> GetPublicMemberInfos(this Type type) {
+
             const BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
             var fieldInfos = type.GetFields(bindingFlags);
