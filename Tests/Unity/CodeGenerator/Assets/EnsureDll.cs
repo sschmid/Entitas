@@ -1,2 +1,0 @@
-﻿public static class EnsureDll {
-}
