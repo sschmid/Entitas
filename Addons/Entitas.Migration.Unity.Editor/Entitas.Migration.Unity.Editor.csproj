@@ -57,9 +57,5 @@
     <Folder Include="Entitas.Migration.Unity.Editor\" />
     <Folder Include="Entitas.Migration.Unity.Editor\Editor\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Entitas.Migration.Unity.Editor\Editor\Images\EntitasMigrationHeader.png" />
-    <None Include="Entitas.Migration.Unity.Editor\Editor\Images\EntitasMigrationHeader.png.meta" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
