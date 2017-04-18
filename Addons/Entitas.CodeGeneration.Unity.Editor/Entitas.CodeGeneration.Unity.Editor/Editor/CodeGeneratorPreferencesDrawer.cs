@@ -13,6 +13,9 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
         public override int priority { get { return 10; } }
         public override string title { get { return "Code Generator"; } }
+        public override Dictionary<string, string> defaultProperties {
+            get { return new CodeGeneratorConfig().defaultProperties; }
+        }
 
         string[] _availableDataProviderTypes;
         string[] _availableGeneratorTypes;
@@ -26,41 +29,28 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         Type[] _types;
 
         CodeGeneratorConfig _codeGeneratorConfig;
-        Exception _configException;
 
         public override void Initialize(Properties properties) {
             _properties = properties;
             _codeGeneratorConfig = new CodeGeneratorConfig();
             _codeGeneratorConfig.Configure(properties);
 
-            try {
-                _types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
-            } catch(Exception ex) {
-                _configException = ex;
-            }
+            _types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
 
-            if(_configException == null) {
-                initPhase<ICodeGeneratorDataProvider>(_types, out _availableDataProviderTypes, out _availableDataProviderNames);
-                initPhase<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
-                initPhase<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
-            }
+            initPhase<ICodeGeneratorDataProvider>(_types, out _availableDataProviderTypes, out _availableDataProviderNames);
+            initPhase<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
+            initPhase<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
         }
 
         protected override void drawContent(Properties properties) {
-            if(_configException == null) {
-                _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
-                _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
-                _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
+            _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
+            _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
+            _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
 
-                EditorGUILayout.Space();
-                drawConfigurables();
+            EditorGUILayout.Space();
+            drawConfigurables();
 
-                drawGenerateButton();
-            } else {
-                var style = new GUIStyle(GUI.skin.label);
-                style.wordWrap = true;
-                EditorGUILayout.LabelField(_configException.Message, style);
-            }
+            drawGenerateButton();
         }
 
         void drawConfigurables() {

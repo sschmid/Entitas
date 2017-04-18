@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Entitas.Unity.Editor;
 using Entitas.Utils;
 using UnityEditor;
@@ -10,6 +11,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         public override int priority { get { return 20; } }
         public override string title { get { return "Visual Debugging"; } }
+        public override Dictionary<string, string> defaultProperties {
+            get { return new VisualDebuggingConfig().defaultProperties; }
+        }
 
         const string ENTITAS_DISABLE_VISUAL_DEBUGGING = "ENTITAS_DISABLE_VISUAL_DEBUGGING";
 

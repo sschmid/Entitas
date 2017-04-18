@@ -21,12 +21,14 @@ class describe_AbstractConfigurableConfig : nspec {
             config.key2.should_be("value2");
         };
 
-        it["adds missing default properties"] = () => {
+        it["doesn't adds missing default properties when not empty"] = () => {
             var config = new TestConfig();
-            config.Configure(new Properties("key1 = newValue1\n"));
+            var properties = new Properties("key1 = newValue1\n");
+            config.Configure(properties);
 
-            config.key1.should_be("newValue1");
-            config.key2.should_be("value2");
+            properties.count.should_be(1);
+            properties.HasKey("key1").should_be_true();
+            properties["key1"].should_be("newValue1");
         };
     }
 }

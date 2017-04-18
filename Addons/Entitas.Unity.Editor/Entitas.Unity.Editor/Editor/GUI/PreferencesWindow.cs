@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
 using UnityEditor;
@@ -22,24 +23,22 @@ namespace Entitas.Unity.Editor {
 
         void OnEnable() {
             _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasHeader");
+            _preferencesDrawers = AppDomain.CurrentDomain
+                                           .GetInstancesOf<IEntitasPreferencesDrawer>()
+                                           .OrderBy(drawer => drawer.priority)
+                                           .ToArray();
 
-            try {
-                _properties = Preferences.HasProperties()
-                                     ? Preferences.LoadProperties()
-                                     : new Properties();
-            } catch(Exception ex) {
-                _configException = ex;
+            if(!Preferences.HasProperties()) {
+                saveDefaultProperties();
             }
 
-            if(_configException == null) {
-                _preferencesDrawers = AppDomain.CurrentDomain
-                                               .GetInstancesOf<IEntitasPreferencesDrawer>()
-                                               .OrderBy(drawer => drawer.priority)
-                                               .ToArray();
-
+            try {
+                _properties = Preferences.LoadProperties();
                 foreach(var drawer in _preferencesDrawers) {
                     drawer.Initialize(_properties);
                 }
+            } catch(Exception ex) {
+                _configException = ex;
             }
         }
 
@@ -89,18 +88,39 @@ namespace Entitas.Unity.Editor {
         void drawPreferencesDrawers() {
             if(_configException == null) {
                 for(int i = 0; i < _preferencesDrawers.Length; i++) {
-                    _preferencesDrawers[i].Draw(_properties);
+                    try {
+                        _preferencesDrawers[i].Draw(_properties);
+                    } catch(Exception ex) {
+                        drawException(ex);
+                    }
+
                     if(i < _preferencesDrawers.Length -1) {
                         EditorGUILayout.Space();
                     }
                 }
             } else {
-                var style = new GUIStyle(GUI.skin.label);
-                style.wordWrap = true;
-                EditorGUILayout.LabelField("Entitas.properties is not in a correct format.", style);
-                EditorGUILayout.Space();
-                EditorGUILayout.LabelField(_configException.Message);
+                drawException(_configException);
             }
+        }
+
+        void drawException(Exception exception) {
+            var style = new GUIStyle(GUI.skin.label);
+            style.wordWrap = true;
+            style.normal.textColor = Color.red;
+
+            EditorGUILayout.LabelField(exception.Message, style);
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Please make sure Entitas.properties is set up correctly.");
+        }
+
+        void saveDefaultProperties() {
+            var properties = new Properties();
+            foreach(var drawer in _preferencesDrawers) {
+                properties.AddProperties(drawer.defaultProperties, false);
+            }
+
+            Preferences.SaveProperties(properties);
         }
     }
 }

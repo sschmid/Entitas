@@ -1,4 +1,5 @@
-﻿using Entitas.Utils;
+﻿using System.Collections.Generic;
+using Entitas.Utils;
 
 namespace Entitas.Unity.Editor {
 
@@ -6,6 +7,7 @@ namespace Entitas.Unity.Editor {
 
         public abstract int priority { get; }
         public abstract string title { get; }
+        public abstract Dictionary<string, string> defaultProperties { get; }
 
         protected bool _drawContent = true;
 
