@@ -13,11 +13,15 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             var path = currentDir + Path.DirectorySeparatorChar + Preferences.PATH;
 
             if(args.isForce() || !File.Exists(path)) {
-                var defaultConfig = new CodeGeneratorConfig().ToString();
-                File.WriteAllText(path, defaultConfig);
+                var defaultConfig = new CodeGeneratorConfig();
+                var properties = new Properties(defaultConfig.defaultProperties);
+                defaultConfig.Configure(properties);
+
+                var propertiesString = defaultConfig.ToString();
+                File.WriteAllText(path, propertiesString);
 
                 fabl.Info("Created " + path);
-                fabl.Debug(defaultConfig);
+                fabl.Debug(propertiesString);
 
                 new EditConfig().Run(args);
             } else {

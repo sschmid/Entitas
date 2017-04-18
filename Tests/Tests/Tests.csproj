@@ -106,7 +106,6 @@
     <Compile Include="Tests\Entitas.Utils\Extensions\describe_TypeSerializationExtension.cs" />
     <Compile Include="Tests\Entitas.Utils\Extensions\describe_DictionaryExtension.cs" />
     <Compile Include="Tests\Entitas.CodeGeneration\describe_PluginUtil.cs" />
-    <Compile Include="Tests\Entitas.Utils\Configuration\describe_AbstractConfigurableConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

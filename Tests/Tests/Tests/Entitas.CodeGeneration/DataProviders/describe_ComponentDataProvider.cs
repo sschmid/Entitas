@@ -12,9 +12,10 @@ class describe_ComponentDataProvider : nspec {
 
     ComponentData[] getMultipleData<T>(Properties properties = null) {
         var provider = new ComponentDataProvider(new Type[] { typeof(T) });
-        if(properties != null) {
-            provider.Configure(properties);
+        if(properties == null) {
+            properties = new Properties("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState");
         }
+        provider.Configure(properties);
 
         return (ComponentData[])provider.GetData();
     }
@@ -155,6 +156,9 @@ class describe_ComponentDataProvider : nspec {
             it["creates data for each type"] = () => {
                 var types = new [] { typeof(NameAgeComponent), typeof(Test2ContextComponent) };
                 var provider = new ComponentDataProvider(types);
+                provider.Configure(new Properties(
+                    "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"
+                ));
                 var data = provider.GetData();
                 data.Length.should_be(types.Length);
             };

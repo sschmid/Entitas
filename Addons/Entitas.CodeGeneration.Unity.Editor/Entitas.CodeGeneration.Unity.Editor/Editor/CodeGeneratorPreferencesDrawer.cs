@@ -13,9 +13,6 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
         public override int priority { get { return 10; } }
         public override string title { get { return "Code Generator"; } }
-        public override Dictionary<string, string> defaultProperties {
-            get { return new CodeGeneratorConfig().defaultProperties; }
-        }
 
         string[] _availableDataProviderTypes;
         string[] _availableGeneratorTypes;
@@ -33,6 +30,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         public override void Initialize(Properties properties) {
             _properties = properties;
             _codeGeneratorConfig = new CodeGeneratorConfig();
+            properties.AddProperties(_codeGeneratorConfig.defaultProperties, false);
             _codeGeneratorConfig.Configure(properties);
 
             _types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
@@ -59,6 +57,8 @@ namespace Entitas.CodeGeneration.Unity.Editor {
                 CodeGeneratorUtil.GetUsed<ICodeGenerator>(_types, _codeGeneratorConfig.codeGenerators),
                 CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(_types, _codeGeneratorConfig.postProcessors)
             );
+
+            _properties.AddProperties(configurables, false);
 
             foreach(var kv in configurables) {
                 _properties[kv.Key] = EditorGUILayout.TextField(kv.Key.ShortTypeName(), _properties[kv.Key]);

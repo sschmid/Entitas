@@ -17,22 +17,6 @@ class describe_VisualDebuggingConfig : nspec {
             config = new VisualDebuggingConfig();
         };
 
-        context["when not configured"] = () => {
-
-            it["gets default values"] = () => {
-                config.systemWarningThreshold.should_be(5);
-                config.defaultInstanceCreatorFolderPath.should_be("Assets/Editor/DefaultInstanceCreator/");
-                config.typeDrawerFolderPath.should_be("Assets/Editor/TypeDrawer/");
-            };
-
-            it["gets string with default values"] = () => {
-                config.ToString().should_be(
-                    "Entitas.VisualDebugging.Unity.Editor.SystemWarningThreshold = 5\n" +
-                    "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/\n" +
-                    "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/\n");
-            };
-        };
-
         context["when input string"] = () => {
 
             before = () => {

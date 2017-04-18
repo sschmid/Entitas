@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
 using UnityEditor;
@@ -28,15 +27,16 @@ namespace Entitas.Unity.Editor {
                                            .OrderBy(drawer => drawer.priority)
                                            .ToArray();
 
-            if(!Preferences.HasProperties()) {
-                saveDefaultProperties();
-            }
-
             try {
-                _properties = Preferences.LoadProperties();
+                _properties = Preferences.HasProperties()
+                                         ? Preferences.LoadProperties()
+                                         : new Properties();
+
                 foreach(var drawer in _preferencesDrawers) {
                     drawer.Initialize(_properties);
                 }
+
+                Preferences.SaveProperties(_properties);
             } catch(Exception ex) {
                 _configException = ex;
             }
@@ -112,15 +112,6 @@ namespace Entitas.Unity.Editor {
 
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Please make sure Entitas.properties is set up correctly.");
-        }
-
-        void saveDefaultProperties() {
-            var properties = new Properties();
-            foreach(var drawer in _preferencesDrawers) {
-                properties.AddProperties(drawer.defaultProperties, false);
-            }
-
-            Preferences.SaveProperties(properties);
         }
     }
 }

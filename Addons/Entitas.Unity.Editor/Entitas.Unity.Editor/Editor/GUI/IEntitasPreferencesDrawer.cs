@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Entitas.Utils;
+﻿using Entitas.Utils;
 
 namespace Entitas.Unity.Editor {
 
@@ -7,7 +6,6 @@ namespace Entitas.Unity.Editor {
 
         int priority { get; }
         string title { get; }
-        Dictionary<string, string> defaultProperties { get; }
 
         void Initialize(Properties properties);
 

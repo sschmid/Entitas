@@ -8,9 +8,19 @@ class describe_EntityIndexDataProvider : nspec {
 
     void when_providing() {
 
+        Properties properties = null;
+
+        before = () => {
+            properties = new Properties(
+                "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState" + "\n" +
+                "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"
+            );
+        };
+
         it["creates data for each entity index"] = () => {
             var types = new [] { typeof(EntityIndexComponent), typeof(StandardComponent) };
             var provider = new EntityIndexDataProvider(types);
+            provider.Configure(properties);
             var data = provider.GetData();
 
             data.Length.should_be(1);
@@ -43,6 +53,7 @@ class describe_EntityIndexDataProvider : nspec {
         it["creates data for each primary entity index"] = () => {
             var types = new [] { typeof(PrimaryEntityIndexComponent), typeof(StandardComponent) };
             var provider = new EntityIndexDataProvider(types);
+            provider.Configure(properties);
             var data = provider.GetData();
 
             data.Length.should_be(1);
@@ -94,13 +105,11 @@ class describe_EntityIndexDataProvider : nspec {
 
         it["configure"] = () => {
 
-            Properties properties = null;
-
             before = () => {
                 properties = new Properties(
-                                    "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n" +
-                                    "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true"
-                                );
+                    "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n" +
+                    "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true"
+                );
             };
 
             it["ignores namespaces"] = () => {

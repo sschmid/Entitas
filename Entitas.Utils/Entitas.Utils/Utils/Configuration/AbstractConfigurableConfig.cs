@@ -6,15 +6,7 @@ namespace Entitas.Utils {
 
         public abstract Dictionary<string, string> defaultProperties { get; }
 
-        public Properties properties {
-            get {
-                if(_properties == null || _properties.count == 0) {
-                    _properties = new Properties(defaultProperties);
-                }
-
-                return _properties;
-            }
-        }
+        public Properties properties { get { return _properties; } }
 
         Properties _properties;
 

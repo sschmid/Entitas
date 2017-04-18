@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -10,9 +9,6 @@ namespace Entitas.Unity.Editor {
 
         public override int priority { get { return 0; } }
         public override string title { get { return "Entitas"; } }
-        public override Dictionary<string, string> defaultProperties {
-            get { return new Dictionary<string, string>(); }
-        }
 
         const string ENTITAS_FAST_AND_UNSAFE = "ENTITAS_FAST_AND_UNSAFE";
 

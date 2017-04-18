@@ -20,37 +20,6 @@ class describe_CodeGeneratorConfig : nspec {
             config = new CodeGeneratorConfig();
         };
 
-        context["when not configured"] = () => {
-
-            it["gets default values"] = () => {
-                config.searchPaths.should_be(new [] {
-                    "Assets/Libraries/Entitas", "Assets/Libraries/Entitas/Editor",
-                    "/Applications/Unity/Unity.app/Contents/Managed",
-                    "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity",
-                    "/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem"
-                });
-
-                config.plugins.should_be(new [] {
-                    "Entitas.CodeGeneration.Plugins",
-                    "Entitas.VisualDebugging.CodeGeneration.Plugins",
-                    "Entitas.Blueprints.CodeGeneration.Plugins"});
-
-                config.dataProviders.should_be_empty();
-                config.codeGenerators.should_be_empty();
-                config.postProcessors.should_be_empty();
-            };
-
-            it["gets string with default values"] = () => {
-                config.ToString().should_be(
-                    "Entitas.CodeGeneration.CodeGenerator.SearchPaths = Assets/Libraries/Entitas, Assets/Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity, /Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem\n" +
-                    "Entitas.CodeGeneration.CodeGenerator.Plugins = Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins\n" +
-                    "Entitas.CodeGeneration.CodeGenerator.DataProviders = \n" +
-                    "Entitas.CodeGeneration.CodeGenerator.CodeGenerators = \n" +
-                    "Entitas.CodeGeneration.CodeGenerator.PostProcessors = \n"
-                );
-            };
-        };
-
         context["when input string"] = () => {
 
             before = () => {
