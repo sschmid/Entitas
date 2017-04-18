@@ -38,6 +38,8 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             initPhase<ICodeGeneratorDataProvider>(_types, out _availableDataProviderTypes, out _availableDataProviderNames);
             initPhase<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
             initPhase<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
+
+            _properties.AddProperties(getConfigurables(), false);
         }
 
         protected override void drawContent(Properties properties) {
@@ -51,13 +53,16 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             drawGenerateButton();
         }
 
-        void drawConfigurables() {
-            var configurables = CodeGeneratorUtil.GetConfigurables(
+        Dictionary<string, string> getConfigurables() {
+            return CodeGeneratorUtil.GetConfigurables(
                 CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(_types, _codeGeneratorConfig.dataProviders),
                 CodeGeneratorUtil.GetUsed<ICodeGenerator>(_types, _codeGeneratorConfig.codeGenerators),
                 CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(_types, _codeGeneratorConfig.postProcessors)
             );
+        }
 
+        void drawConfigurables() {
+            var configurables = getConfigurables();
             _properties.AddProperties(configurables, false);
 
             foreach(var kv in configurables) {
