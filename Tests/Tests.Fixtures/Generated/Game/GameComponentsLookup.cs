@@ -8,17 +8,20 @@
 //------------------------------------------------------------------------------
 public static class GameComponentsLookup {
 
-    public const int NoContext = 0;
-    public const int PrimaryEntityIndex = 1;
+    public const int MyNamespaceEntityIndexNoContext = 0;
+    public const int NoContext = 1;
+    public const int PrimaryEntityIndex = 2;
 
-    public const int TotalComponents = 2;
+    public const int TotalComponents = 3;
 
     public static readonly string[] componentNames = {
+        "MyNamespaceEntityIndexNoContext",
         "NoContext",
         "PrimaryEntityIndex"
     };
 
     public static readonly System.Type[] componentTypes = {
+        typeof(My.Namespace.EntityIndexNoContextComponent),
         typeof(NoContextComponent),
         typeof(PrimaryEntityIndexComponent)
     };
