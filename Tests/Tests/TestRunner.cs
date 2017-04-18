@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using NSpec;
 using NSpec.Domain;
 using NSpec.Domain.Formatters;
@@ -15,7 +14,7 @@ namespace Tests {
             //var tagOrClassName = "focus";
             var tagOrClassName = string.Empty;
 
-            var types = Assembly.GetAssembly(typeof(TestRunner)).GetTypes();
+            var types = typeof(TestRunner).Assembly.GetTypes();
 
             var finder = new SpecFinder(types, "");
             var tagsFilter = new Tags().Parse(tagOrClassName);

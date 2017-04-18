@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
 using UnityEditor;
@@ -63,7 +62,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
                 throw new Exception("Cannot generate because Unity is still compiling. Please wait...");
             }
 
-            var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
+            var assembly = typeof(UnityEditor.Editor).Assembly;
             var logEntries = assembly.GetType("UnityEditorInternal.LogEntries");
             logEntries.GetMethod("Clear").Invoke(new object(), null);
             var canCompile = (int)logEntries.GetMethod("GetCount").Invoke(new object(), null) == 0;

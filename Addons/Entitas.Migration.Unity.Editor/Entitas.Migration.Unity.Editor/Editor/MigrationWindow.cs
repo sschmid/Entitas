@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Reflection;
 using Entitas.Unity.Editor;
 using Entitas.Utils;
 using UnityEditor;
