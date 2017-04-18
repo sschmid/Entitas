@@ -29,7 +29,7 @@ namespace Entitas.Migration.Unity.Editor {
         static IMigration[] getMigrations() {
             return AppDomain.CurrentDomain
                             .GetInstancesOf<IMigration>()
-                            .OrderBy(instance => instance.GetType().FullName)
+                            .OrderByDescending(instance => instance.GetType().FullName)
                             .ToArray();
         }
 
