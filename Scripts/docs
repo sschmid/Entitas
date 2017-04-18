@@ -29,5 +29,6 @@ pushd $ROOT > /dev/null
     rm -rf "${PROJECT_NAME}.docset"
     mv $DOCSET "${PROJECT_NAME}.docset"
   popd > /dev/null
+  rm -rf $DOCS
   rsync -ar "${BUILD_DOCS}/html/" $DOCS
 popd > /dev/null
