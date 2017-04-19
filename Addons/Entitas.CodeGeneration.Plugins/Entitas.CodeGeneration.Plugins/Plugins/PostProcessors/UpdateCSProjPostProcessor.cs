@@ -2,7 +2,6 @@
 using System.IO;
 using Entitas.Utils;
 using System.Text.RegularExpressions;
-using System;
 using System.Linq;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -10,8 +9,8 @@ namespace Entitas.CodeGeneration.Plugins {
     public class UpdateCSProjPostProcessor : ICodeGenFilePostProcessor, IConfigurable {
 
         public string name { get { return "Update .csproj"; } }
-        public int priority { get { return 0; } }
-        public bool isEnabledByDefault { get { return true; } }
+        public int priority { get { return 96; } }
+        public bool isEnabledByDefault { get { return false; } }
         public bool runInDryMode { get { return false; } }
 
         public Dictionary<string, string> defaultProperties { get { return _projectPathConfig.defaultProperties; } }
@@ -32,14 +31,12 @@ namespace Entitas.CodeGeneration.Plugins {
             return files;
         }
 
-        string escapedTargetDirectory() {
-            return _targetDirectoryConfig.targetDirectory
-                                         .Replace("/", "\\")
-                                         .Replace("\\", "\\\\");
-        }
-
         string removeExistingGeneratedEntries(string project) {
-            var entryPattern = @"\s*<Compile Include=""" + escapedTargetDirectory() + @".* \/>";
+            var escapedTargetDirectory = _targetDirectoryConfig.targetDirectory
+                                                               .Replace("/", "\\")
+                                                               .Replace("\\", "\\\\");
+
+            var entryPattern = @"\s*<Compile Include=""" + escapedTargetDirectory + @".* \/>";
             return Regex.Replace(project, entryPattern, string.Empty);
         }
 
@@ -52,15 +49,14 @@ namespace Entitas.CodeGeneration.Plugins {
 {0}
   </ItemGroup>";
 
-            const string entryTemplate = @"    <Compile Include=""{0}"" />";
+            var entryTemplate = @"    <Compile Include=""" + _targetDirectoryConfig.targetDirectory.Replace("/", "\\") + @"\{0}"" />";
 
-            var generatedEntries = string.Format(
-                generatedEntriesTemplate,
-                string.Join("\r\n", files.Select(file => string.Format(entryTemplate, file.fileName.Replace("/", "\\"))).ToArray())
-            );
+            var entries = string.Join("\r\n", files.Select(
+                file => string.Format(entryTemplate, file.fileName.Replace("/", "\\"))).ToArray());
 
-            var rgx = new Regex(endOfItemGroupPattern);
-            return rgx.Replace(project, generatedEntries, 1);
+            var generatedEntries = string.Format(generatedEntriesTemplate, entries);
+
+            return new Regex(endOfItemGroupPattern).Replace(project, generatedEntries, 1);
         }
     }
 }
