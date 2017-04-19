@@ -71,6 +71,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Data\MethodData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Configs\AssembliesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PluginUtil.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Configs\ProjectPathConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.Plugins\" />

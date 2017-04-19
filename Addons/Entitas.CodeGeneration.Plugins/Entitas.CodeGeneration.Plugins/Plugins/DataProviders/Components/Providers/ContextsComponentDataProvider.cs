@@ -12,13 +12,13 @@ namespace Entitas.CodeGeneration.Plugins {
 
         readonly ContextNamesConfig _contextNamesConfig = new ContextNamesConfig();
 
+        public void Configure(Properties properties) {
+            _contextNamesConfig.Configure(properties);
+        }
+
         public void Provide(Type type, ComponentData data) {
             var contextNames = GetContextNamesOrDefault(type, _contextNamesConfig.contextNames[0]);
             data.SetContextNames(contextNames);
-        }
-
-        public void Configure(Properties properties) {
-            _contextNamesConfig.Configure(properties);
         }
 
         public static string[] GetContextNames(Type type) {
