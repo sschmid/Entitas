@@ -7,7 +7,7 @@ class describe_UpdateCSProjPostProcessor : nspec {
 
     void when_post_processing() {
 
-        it["test"] = () => {
+        xit["manual test"] = () => {
             var p = new UpdateCSProjPostProcessor();
 
             p.Configure(new Properties(
