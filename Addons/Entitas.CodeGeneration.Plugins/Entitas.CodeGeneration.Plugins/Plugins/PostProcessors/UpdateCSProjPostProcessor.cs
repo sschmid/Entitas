@@ -42,7 +42,12 @@ namespace Entitas.CodeGeneration.Plugins {
                                                                .Replace("\\", "\\\\");
 
             var entryPattern = @"\s*<Compile Include=""" + escapedTargetDirectory + @".* \/>";
-            return Regex.Replace(project, entryPattern, string.Empty);
+            project = Regex.Replace(project, entryPattern, string.Empty);
+
+            const string emptyItemGroup = @"\s*<ItemGroup>\s*<\/ItemGroup>";
+            project = Regex.Replace(project, emptyItemGroup, string.Empty);
+
+            return project;
         }
 
         string addGeneratedEntries(string project, CodeGenFile[] files) {
