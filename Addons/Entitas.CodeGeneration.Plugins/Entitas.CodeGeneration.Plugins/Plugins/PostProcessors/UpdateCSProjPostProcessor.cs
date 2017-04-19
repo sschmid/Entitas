@@ -13,7 +13,12 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return false; } }
         public bool runInDryMode { get { return false; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _projectPathConfig.defaultProperties; } }
+        public Dictionary<string, string> defaultProperties {
+            get {
+                return _projectPathConfig.defaultProperties
+                       .Merge(_targetDirectoryConfig.defaultProperties);
+            }
+        }
 
         readonly ProjectPathConfig _projectPathConfig = new ProjectPathConfig();
         readonly TargetDirectoryConfig _targetDirectoryConfig = new TargetDirectoryConfig();
