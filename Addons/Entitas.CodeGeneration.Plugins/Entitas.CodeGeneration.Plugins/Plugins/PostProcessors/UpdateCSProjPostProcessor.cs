@@ -49,7 +49,7 @@ namespace Entitas.CodeGeneration.Plugins {
             const string endOfItemGroupPattern = @"<\/ItemGroup>";
 
             const string generatedEntriesTemplate =
-@"  </ItemGroup>
+@"</ItemGroup>
   <ItemGroup>
 {0}
   </ItemGroup>";
