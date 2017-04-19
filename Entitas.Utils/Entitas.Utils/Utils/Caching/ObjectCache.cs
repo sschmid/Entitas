@@ -14,7 +14,7 @@ namespace Entitas.Utils {
         public ObjectPool<T> GetObjectPool<T>() where T : new() {
             object objectPool;
             var type = typeof(T);
-            if(!_objectPools.TryGetValue(type, out objectPool)) {
+            if (!_objectPools.TryGetValue(type, out objectPool)) {
                 objectPool = new ObjectPool<T>(() => new T());
                 _objectPools.Add(type, objectPool);
             }

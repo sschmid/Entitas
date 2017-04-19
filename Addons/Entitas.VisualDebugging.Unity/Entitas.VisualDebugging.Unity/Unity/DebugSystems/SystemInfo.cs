@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Entitas.VisualDebugging.Unity {
 
@@ -84,7 +84,7 @@ namespace Entitas.VisualDebugging.Unity {
             _interfaceFlags = getInterfaceFlags(system);
 
             var debugSystem = system as DebugSystems;
-            if(debugSystem != null) {
+            if (debugSystem != null) {
                 _systemName = debugSystem.name;
             } else {
                 var systemType = system.GetType();
@@ -97,10 +97,10 @@ namespace Entitas.VisualDebugging.Unity {
         }
 
         public void AddExecutionDuration(double executionDuration) {
-            if(executionDuration < _minExecutionDuration || _minExecutionDuration == 0) {
+            if (executionDuration < _minExecutionDuration || _minExecutionDuration == 0) {
                 _minExecutionDuration = executionDuration;
             }
-            if(executionDuration > _maxExecutionDuration) {
+            if (executionDuration > _maxExecutionDuration) {
                 _maxExecutionDuration = executionDuration;
             }
 
@@ -109,10 +109,10 @@ namespace Entitas.VisualDebugging.Unity {
         }
 
         public void AddCleanupDuration(double cleanupDuration) {
-            if(cleanupDuration < _minCleanupDuration || _minCleanupDuration == 0) {
+            if (cleanupDuration < _minCleanupDuration || _minCleanupDuration == 0) {
                 _minCleanupDuration = cleanupDuration;
             }
-            if(cleanupDuration > _maxCleanupDuration) {
+            if (cleanupDuration > _maxCleanupDuration) {
                 _maxCleanupDuration = cleanupDuration;
             }
 
@@ -130,18 +130,18 @@ namespace Entitas.VisualDebugging.Unity {
 
         static SystemInterfaceFlags getInterfaceFlags(ISystem system) {
             var flags = SystemInterfaceFlags.None;
-            if(system is IInitializeSystem) {
+            if (system is IInitializeSystem) {
                 flags |= SystemInterfaceFlags.IInitializeSystem;
             }
-            if(system is IReactiveSystem) {
+            if (system is IReactiveSystem) {
                 flags |= SystemInterfaceFlags.IReactiveSystem;
-            } else if(system is IExecuteSystem) {
+            } else if (system is IExecuteSystem) {
                 flags |= SystemInterfaceFlags.IExecuteSystem;
             }
-            if(system is ICleanupSystem) {
+            if (system is ICleanupSystem) {
                 flags |= SystemInterfaceFlags.ICleanupSystem;
             }
-            if(system is ITearDownSystem) {
+            if (system is ITearDownSystem) {
                 flags |= SystemInterfaceFlags.ITearDownSystem;
             }
 

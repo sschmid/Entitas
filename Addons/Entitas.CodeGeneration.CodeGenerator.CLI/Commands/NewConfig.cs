@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Entitas.Utils;
 using Fabl;
 
@@ -12,7 +12,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             var currentDir = Directory.GetCurrentDirectory();
             var path = currentDir + Path.DirectorySeparatorChar + Preferences.PATH;
 
-            if(args.isForce() || !File.Exists(path)) {
+            if (args.isForce() || !File.Exists(path)) {
                 var defaultConfig = new CodeGeneratorConfig();
                 var properties = new Properties(defaultConfig.defaultProperties);
                 defaultConfig.Configure(properties);

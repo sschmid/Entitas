@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.Unity;
 using UnityEditor;
 using UnityEngine;
@@ -11,18 +11,18 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         public override void OnInspectorGUI() {
             var link = (EntityLink)target;
 
-            if(link.entity != null) {
-                if(GUILayout.Button("Unlink")) {
+            if (link.entity != null) {
+                if (GUILayout.Button("Unlink")) {
                     link.Unlink();
                 }
             }
 
-            if(link.entity != null) {
+            if (link.entity != null) {
                 EditorGUILayout.Space();
 
                 EditorGUILayout.LabelField(link.entity.ToString());
 
-                if(GUILayout.Button("Show entity")) {
+                if (GUILayout.Button("Show entity")) {
                     Selection.activeGameObject = FindObjectsOfType<EntityBehaviour>()
                         .Single(e => e.entity == link.entity).gameObject;
                 }

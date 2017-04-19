@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -50,8 +50,8 @@ namespace Entitas.Utils {
         }
 
         public void AddProperties(Dictionary<string, string> properties, bool overwriteExisting) {
-            foreach(var kv in properties) {
-                if(overwriteExisting || !HasKey(kv.Key)) {
+            foreach (var kv in properties) {
+                if (overwriteExisting || !HasKey(kv.Key)) {
                     this[kv.Key] = kv.Value;
                 }
             }
@@ -66,12 +66,12 @@ namespace Entitas.Utils {
         }
 
         void addProperties(string[] lines) {
-            var keyValueDelimiter = new[] { '=' };
+            var keyValueDelimiter = new [] { '=' };
             var properties = lines.Select(
                 line => line.Split(keyValueDelimiter, 2)
             );
-            foreach(var property in properties) {
-                if(property.Length != 2) {
+            foreach (var property in properties) {
+                if (property.Length != 2) {
                     throw new InvalidKeyPropertiesException(property[0]);
                 }
 
@@ -84,7 +84,7 @@ namespace Entitas.Utils {
         }
 
         static string[] getLinesWithProperties(string properties) {
-            var delimiter = new[] { '\n' };
+            var delimiter = new [] { '\n' };
             return properties
                 .Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
                 .Select(line => line.TrimStart(' '))
@@ -96,7 +96,7 @@ namespace Entitas.Utils {
             var currentProperty = string.Empty;
             return lines.Aggregate(new List<string>(), (acc, line) => {
                 currentProperty += line;
-                if(currentProperty.EndsWith("\\", StringComparison.Ordinal)) {
+                if (currentProperty.EndsWith("\\", StringComparison.Ordinal)) {
                     currentProperty = currentProperty.Substring(
                         0, currentProperty.Length - 1
                     );

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Entitas.Utils;
 using UnityEditor;
@@ -32,7 +32,7 @@ namespace Entitas.Unity.Editor {
                                          ? Preferences.LoadProperties()
                                          : new Properties();
 
-                foreach(var drawer in _preferencesDrawers) {
+                foreach (var drawer in _preferencesDrawers) {
                     drawer.Initialize(_properties);
                 }
 
@@ -51,7 +51,7 @@ namespace Entitas.Unity.Editor {
             }
             EditorGUILayout.EndScrollView();
 
-            if(GUI.changed) {
+            if (GUI.changed) {
                 Preferences.SaveProperties(_properties);
             }
         }
@@ -59,19 +59,19 @@ namespace Entitas.Unity.Editor {
         void drawToolbar() {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
-                if(GUILayout.Button("Check for Updates", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Check for Updates", EditorStyles.toolbarButton)) {
                     CheckForUpdates.DisplayUpdates();
                 }
-                if(GUILayout.Button("Chat", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Chat", EditorStyles.toolbarButton)) {
                     EntitasFeedback.EntitasChat();
                 }
-                if(GUILayout.Button("Docs", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Docs", EditorStyles.toolbarButton)) {
                     EntitasFeedback.EntitasDocs();
                 }
-                if(GUILayout.Button("Wiki", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Wiki", EditorStyles.toolbarButton)) {
                     EntitasFeedback.EntitasWiki();
                 }
-                if(GUILayout.Button("Donate", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Donate", EditorStyles.toolbarButton)) {
                     EntitasFeedback.Donate();
                 }
             }
@@ -80,21 +80,21 @@ namespace Entitas.Unity.Editor {
 
         void drawHeader() {
             var rect = EntitasEditorLayout.DrawTexture(_headerTexture);
-            if(rect.Contains(Event.current.mousePosition) && Event.current.clickCount > 0) {
+            if (rect.Contains(Event.current.mousePosition) && Event.current.clickCount > 0) {
                 Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/blob/develop/README.md");
             }
         }
 
         void drawPreferencesDrawers() {
-            if(_configException == null) {
-                for(int i = 0; i < _preferencesDrawers.Length; i++) {
+            if (_configException == null) {
+                for (int i = 0; i < _preferencesDrawers.Length; i++) {
                     try {
                         _preferencesDrawers[i].Draw(_properties);
                     } catch(Exception ex) {
                         drawException(ex);
                     }
 
-                    if(i < _preferencesDrawers.Length -1) {
+                    if (i < _preferencesDrawers.Length -1) {
                         EditorGUILayout.Space();
                     }
                 }

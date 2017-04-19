@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGeneration.CodeGenerator;
+using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
 using NSpec;
 

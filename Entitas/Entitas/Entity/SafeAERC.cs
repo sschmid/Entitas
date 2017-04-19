@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -23,13 +23,13 @@ namespace Entitas {
         }
 
         public void Retain(object owner) {
-            if(!owners.Add(owner)) {
+            if (!owners.Add(owner)) {
                 throw new EntityIsAlreadyRetainedByOwnerException(_entity, owner);
             }
         }
 
         public void Release(object owner) {
-            if(!owners.Remove(owner)) {
+            if (!owners.Remove(owner)) {
                 throw new EntityIsNotRetainedByOwnerException(_entity, owner);
             }
         }

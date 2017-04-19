@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Entitas.CodeGeneration.Plugins {
 
@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
-            foreach(var file in files) {
+            foreach (var file in files) {
                 file.fileContent = file.fileContent.Replace("\n", Environment.NewLine);
             }
 

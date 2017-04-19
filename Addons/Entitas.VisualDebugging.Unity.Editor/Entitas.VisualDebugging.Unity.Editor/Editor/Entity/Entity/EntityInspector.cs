@@ -7,7 +7,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
     public class EntityInspector : UnityEditor.Editor {
 
         public override void OnInspectorGUI() {
-            if(targets.Length == 1) {
+            if (targets.Length == 1) {
                 var entityBehaviour = (EntityBehaviour)target;
                 EntityDrawer.DrawEntity(entityBehaviour.context, entityBehaviour.entity);
             } else {
@@ -19,7 +19,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 EntityDrawer.DrawMultipleEntities(entityBehaviour.context, entities);
             }
 
-            if(target != null) {
+            if (target != null) {
                 EditorUtility.SetDirty(target);
             }
         }

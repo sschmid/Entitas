@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -33,19 +33,19 @@ namespace Entitas.Unity.Editor {
             {
                 EditorGUILayout.LabelField("Automatic Entity Reference Counting");
                 var buttonStyle = new GUIStyle(EditorStyles.miniButtonLeft);
-                if(_scriptCallOptimization == AERCMode.Safe) {
+                if (_scriptCallOptimization == AERCMode.Safe) {
                     buttonStyle.normal = buttonStyle.active;
                 }
-                if(GUILayout.Button("Safe", buttonStyle)) {
+                if (GUILayout.Button("Safe", buttonStyle)) {
                     _scriptCallOptimization = AERCMode.Safe;
                     _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }
 
                 buttonStyle = new GUIStyle(EditorStyles.miniButtonRight);
-                if(_scriptCallOptimization == AERCMode.FastAndUnsafe) {
+                if (_scriptCallOptimization == AERCMode.FastAndUnsafe) {
                     buttonStyle.normal = buttonStyle.active;
                 }
-                if(GUILayout.Button("Fast And Unsafe", buttonStyle)) {
+                if (GUILayout.Button("Fast And Unsafe", buttonStyle)) {
                     _scriptCallOptimization = AERCMode.FastAndUnsafe;
                     _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }

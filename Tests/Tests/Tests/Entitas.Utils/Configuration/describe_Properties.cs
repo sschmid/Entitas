@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Entitas.Utils;
 using NSpec;
 
@@ -9,8 +9,8 @@ class describe_Properties : nspec {
         var expectedCount = expectedProperties != null ? expectedProperties.Count : 0;
         p.count.should_be(expectedCount);
         p.ToString().should_be(expectedOutput);
-        if(expectedProperties != null) {
-            foreach(var kv in expectedProperties) {
+        if (expectedProperties != null) {
+            foreach (var kv in expectedProperties) {
                 p.HasKey(kv.Key).should_be_true();
                 p[kv.Key].should_be(kv.Value);
             }
@@ -22,8 +22,8 @@ class describe_Properties : nspec {
         var expectedCount = expectedProperties != null ? expectedProperties.Count : 0;
         p.count.should_be(expectedCount);
         p.ToString().should_be(expectedOutput);
-        if(expectedProperties != null) {
-            foreach(var kv in expectedProperties) {
+        if (expectedProperties != null) {
+            foreach (var kv in expectedProperties) {
                 p.HasKey(kv.Key).should_be_true();
                 p[kv.Key].should_be(kv.Value);
             }

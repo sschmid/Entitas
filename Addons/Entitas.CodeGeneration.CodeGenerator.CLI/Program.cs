@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         };
 
         public static void Main(string[] args) {
-            if(args == null || args.Length == 0) {
+            if (args == null || args.Length == 0) {
                 printUsage();
                 return;
             }
@@ -26,7 +26,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             try {
                 var commands = AppDomain.CurrentDomain.GetInstancesOf<ICommand>();
                 var command = commands.SingleOrDefault(c => c.trigger == args[0]);
-                if(command != null) {
+                if (command != null) {
                     command.Run(args);
                 } else {
                     printUsage();
@@ -38,12 +38,12 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         static void printException(Exception ex, string[] args) {
             var loadException = ex as ReflectionTypeLoadException;
-            if(loadException != null) {
-                foreach(var e in loadException.LoaderExceptions) {
+            if (loadException != null) {
+                foreach (var e in loadException.LoaderExceptions) {
                     fabl.Error(e.ToString());
                 }
             } else {
-                if(args.isVerbose()) {
+                if (args.isVerbose()) {
                     fabl.Error(ex.ToString());
                 } else {
                     fabl.Error(ex.Message);
@@ -69,16 +69,16 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         static void setupLogging(string[] args) {
-            if(args.isVerbose()) {
+            if (args.isVerbose()) {
                 fabl.globalLogLevel = LogLevel.On;
-            } else if(args.isSilent()) {
+            } else if (args.isSilent()) {
                 fabl.globalLogLevel = LogLevel.Error;
             } else {
                 fabl.globalLogLevel = LogLevel.Info;
             }
 
             fabl.AddAppender((logger, logLevel, message) => {
-                if(_consoleColors.ContainsKey(logLevel)) {
+                if (_consoleColors.ContainsKey(logLevel)) {
                     Console.ForegroundColor = _consoleColors[logLevel];
                     Console.WriteLine(message);
                     Console.ResetColor();

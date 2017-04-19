@@ -1,4 +1,4 @@
-﻿using Entitas.Utils;
+using Entitas.Utils;
 using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
@@ -8,7 +8,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string trigger { get { return "edit"; } }
 
         public override void Run(string[] args) {
-            if(assertProperties()) {
+            if (assertProperties()) {
                 fabl.Debug("Opening " + Preferences.PATH);
                 System.Diagnostics.Process.Start(Preferences.PATH);
             }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -12,9 +12,9 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
             var pathToFile = new Dictionary<string, CodeGenFile>();
-            for(int i = 0; i < files.Length; i++) {
+            for (int i = 0; i < files.Length; i++) {
                 var file = files[i];
-                if(!pathToFile.ContainsKey(file.fileName)) {
+                if (!pathToFile.ContainsKey(file.fileName)) {
                     pathToFile.Add(file.fileName, file);
                 } else {
                     pathToFile[file.fileName].fileContent += "\n" + file.fileContent;

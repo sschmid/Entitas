@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGeneration;
+using Entitas.CodeGeneration;
 
 namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
 
@@ -10,7 +10,7 @@ namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string FEATURE_TEMPLATE =
-@"#if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+@"#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
 public class Feature : Entitas.VisualDebugging.Unity.DebugSystems {
 
@@ -41,7 +41,7 @@ public class Feature : Entitas.Systems {
 ";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return new[] { new CodeGenFile(
+            return new [] { new CodeGenFile(
                 "Feature.cs",
                 FEATURE_TEMPLATE,
                 GetType().FullName)

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Entitas.CodeGeneration.Unity.Editor {
 
@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         public bool runInDryMode { get { return true; } }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
-            foreach(var file in files) {
+            foreach (var file in files) {
                 Debug.Log(file.fileName + " - " + file.generatorName);
             }
 

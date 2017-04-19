@@ -27,7 +27,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         }
 
         static void configure(ICodeGeneratorInterface[] plugins, Properties properties) {
-            foreach(var plugin in plugins.OfType<IConfigurable>()) {
+            foreach (var plugin in plugins.OfType<IConfigurable>()) {
                 plugin.Configure(properties);
             }
         }
@@ -36,7 +36,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             var config = new CodeGeneratorConfig();
             config.Configure(properties);
             var resolver = new AssemblyResolver(AppDomain.CurrentDomain, config.searchPaths);
-            foreach(var path in config.plugins) {
+            foreach (var path in config.plugins) {
                 resolver.Load(path);
             }
 

@@ -39,7 +39,7 @@ namespace Entitas.Utils {
         }
 
         public void SetValue(object obj, object value) {
-            if(_fieldInfo != null) {
+            if (_fieldInfo != null) {
                 _fieldInfo.SetValue(obj, value);
             } else {
                 _propertyInfo.SetValue(obj, value, null);
@@ -48,7 +48,7 @@ namespace Entitas.Utils {
 
         static AttributeInfo[] getAttributes(object[] attributes) {
             var infos = new AttributeInfo[attributes.Length];
-            for(int i = 0; i < attributes.Length; i++) {
+            for (int i = 0; i < attributes.Length; i++) {
                 var attr = attributes[i];
                 infos[i] = new AttributeInfo(attr, attr.GetType().GetPublicMemberInfos());
             }

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.CodeGeneration;
 using Entitas.CodeGeneration.CodeGenerator;
 using NSpec;
@@ -11,9 +11,9 @@ class describe_CodeGenerator : nspec {
 
             it["executes data providers, generators and post processors"] = () => {
                 var generator = new CodeGenerator(
-                    new[] { new Data_1_2_Provider() },
-                    new[] { new DataFile1CodeGenerator() },
-                    new[] { new Processed1PostProcessor() }
+                    new [] { new Data_1_2_Provider() },
+                    new [] { new DataFile1CodeGenerator() },
+                    new [] { new Processed1PostProcessor() }
                 );
 
                 var files = generator.Generate();
@@ -65,8 +65,8 @@ class describe_CodeGenerator : nspec {
             it["runs data provider based on priority"] = () => {
                 var generator = new CodeGenerator(
                     new ICodeGeneratorDataProvider[] { new Data_3_4_Provider(), new Data_1_2_Provider() },
-                    new[] { new DataFile1CodeGenerator() },
-                    new[] { new Processed1PostProcessor() }
+                    new [] { new DataFile1CodeGenerator() },
+                    new [] { new Processed1PostProcessor() }
                 );
 
                 var files = generator.Generate();
@@ -88,9 +88,9 @@ class describe_CodeGenerator : nspec {
 
             it["runs code generators based on priority"] = () => {
                 var generator = new CodeGenerator(
-                    new[] { new Data_1_2_Provider() },
+                    new [] { new Data_1_2_Provider() },
                     new ICodeGenerator[] { new DataFile2CodeGenerator(), new DataFile1CodeGenerator() },
-                    new[] { new Processed1PostProcessor() }
+                    new [] { new Processed1PostProcessor() }
                 );
 
                 var files = generator.Generate();
@@ -105,8 +105,8 @@ class describe_CodeGenerator : nspec {
 
             it["runs post processors based on priority"] = () => {
                 var generator = new CodeGenerator(
-                    new[] { new Data_1_2_Provider() },
-                    new[] { new DataFile1CodeGenerator() },
+                    new [] { new Data_1_2_Provider() },
+                    new [] { new DataFile1CodeGenerator() },
                     new ICodeGenFilePostProcessor[] { new Processed2PostProcessor(), new Processed1PostProcessor() }
                 );
 
@@ -204,7 +204,7 @@ public class Data_1_2_Provider : ICodeGeneratorDataProvider {
         var data2 = new CodeGeneratorData();
         data2.Add("testKey", "data2");
 
-        return new[] {
+        return new [] {
             data1,
             data2
         };
@@ -225,7 +225,7 @@ public class Data_3_4_Provider : ICodeGeneratorDataProvider {
         var data2 = new CodeGeneratorData();
         data2.Add("testKey", "data4");
 
-        return new[] {
+        return new [] {
             data1,
             data2
         };
@@ -246,7 +246,7 @@ public class DisabledDataProvider : ICodeGeneratorDataProvider {
         var data2 = new CodeGeneratorData();
         data2.Add("testKey", "data6");
 
-        return new[] {
+        return new [] {
             data1,
             data2
         };
@@ -312,7 +312,7 @@ public class Processed1PostProcessor : ICodeGenFilePostProcessor {
     public bool runInDryMode { get { return true; } }
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
-        foreach(var file in files) {
+        foreach (var file in files) {
             file.fileName += "-Processed1";
         }
 
@@ -328,7 +328,7 @@ public class Processed2PostProcessor : ICodeGenFilePostProcessor {
     public bool runInDryMode { get { return true; } }
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
-        foreach(var file in files) {
+        foreach (var file in files) {
             file.fileName += "-Processed2";
         }
 
@@ -344,7 +344,7 @@ public class DisabledPostProcessor : ICodeGenFilePostProcessor {
     public bool runInDryMode { get { return false; } }
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
-        foreach(var file in files) {
+        foreach (var file in files) {
             file.fileName += "-Disabled";
         }
 
@@ -360,6 +360,6 @@ public class NoFilesPostProcessor : ICodeGenFilePostProcessor {
     public bool runInDryMode { get { return true; } }
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
-        return new[] { files[0] };
+        return new [] { files[0] };
     }
 }

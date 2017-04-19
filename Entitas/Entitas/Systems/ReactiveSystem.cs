@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -54,9 +54,9 @@ namespace Entitas {
         /// Will call Execute(entities) with changed entities
         /// if there are any. Otherwise it will not call Execute(entities).
         public void Execute() {
-            if(_collector.collectedEntities.Count != 0) {
-                foreach(var e in _collector.collectedEntities) {
-                    if(Filter(e)) {
+            if (_collector.collectedEntities.Count != 0) {
+                foreach (var e in _collector.collectedEntities) {
+                    if (Filter(e)) {
                         e.Retain(this);
                         _buffer.Add(e);
                     }
@@ -64,9 +64,9 @@ namespace Entitas {
 
                 _collector.ClearCollectedEntities();
 
-                if(_buffer.Count != 0) {
+                if (_buffer.Count != 0) {
                     Execute(_buffer);
-                    for(int i = 0; i < _buffer.Count; i++) {
+                    for (int i = 0; i < _buffer.Count; i++) {
                         _buffer[i].Release(this);
                     }
                     _buffer.Clear();
@@ -75,7 +75,7 @@ namespace Entitas {
         }
 
         public override string ToString() {
-            if(_toStringCache == null) {
+            if (_toStringCache == null) {
                 _toStringCache = "ReactiveSystem(" + GetType().Name + ")";
             }
 

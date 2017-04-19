@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas.CodeGeneration.Plugins;
 using Entitas.Utils;
 using My.Namespace;
@@ -12,7 +12,7 @@ class describe_ComponentDataProvider : nspec {
 
     ComponentData[] getMultipleData<T>(Properties properties = null) {
         var provider = new ComponentDataProvider(new Type[] { typeof(T) });
-        if(properties == null) {
+        if (properties == null) {
             properties = new Properties("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState");
         }
         provider.Configure(properties);

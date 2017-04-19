@@ -27,7 +27,7 @@ class check_namespaces : nspec {
 
         var each = new Each<string, string, string>();
 
-        foreach(var file in sourceFiles) {
+        foreach (var file in sourceFiles) {
             var fileName = file.Key
                                .Replace(dir(projectRoot), string.Empty)
                                .Replace(addonsDir, string.Empty);

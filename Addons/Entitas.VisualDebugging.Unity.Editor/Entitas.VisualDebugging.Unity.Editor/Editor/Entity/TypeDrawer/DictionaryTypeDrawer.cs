@@ -20,13 +20,13 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             var keyType = memberType.GetGenericArguments()[0];
             var valueType = memberType.GetGenericArguments()[1];
             var targetType = target.GetType();
-            if(!_keySearchTexts.ContainsKey(targetType)) {
+            if (!_keySearchTexts.ContainsKey(targetType)) {
                 _keySearchTexts.Add(targetType, string.Empty);
             }
 
             EditorGUILayout.BeginHorizontal();
             {
-                if(dictionary.Count == 0) {
+                if (dictionary.Count == 0) {
                     EditorGUILayout.LabelField(memberName, "empty");
                     _keySearchTexts[targetType] = string.Empty;
                 } else {
@@ -35,11 +35,11 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                 var keyTypeName = keyType.ToCompilableString().ShortTypeName();
                 var valueTypeName = valueType.ToCompilableString().ShortTypeName();
-                if(EntitasEditorLayout.MiniButton("new <" + keyTypeName + ", " + valueTypeName + ">")) {
+                if (EntitasEditorLayout.MiniButton("new <" + keyTypeName + ", " + valueTypeName + ">")) {
                     object defaultKey;
-                    if(EntityDrawer.CreateDefault(keyType, out defaultKey)) {
+                    if (EntityDrawer.CreateDefault(keyType, out defaultKey)) {
                         object defaultValue;
-                        if(EntityDrawer.CreateDefault(valueType, out defaultValue)) {
+                        if (EntityDrawer.CreateDefault(valueType, out defaultValue)) {
                             dictionary[defaultKey] = defaultValue;
                         }
                     }
@@ -47,12 +47,12 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
             EditorGUILayout.EndHorizontal();
 
-            if(dictionary.Count > 0) {
+            if (dictionary.Count > 0) {
 
                 var indent = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = indent + 1;
 
-                if(dictionary.Count > 5) {
+                if (dictionary.Count > 5) {
                     EditorGUILayout.Space();
                     _keySearchTexts[targetType] = EntitasEditorLayout.SearchTextField(_keySearchTexts[targetType]);
                 }
@@ -62,12 +62,12 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 var keys = new ArrayList(dictionary.Keys);
                 for (int i = 0; i < keys.Count; i++) {
                     var key = keys[i];
-                    if(EntitasEditorLayout.MatchesSearchString(key.ToString().ToLower(), _keySearchTexts[targetType].ToLower())) {
+                    if (EntitasEditorLayout.MatchesSearchString(key.ToString().ToLower(), _keySearchTexts[targetType].ToLower())) {
                         EntityDrawer.DrawObjectMember(keyType, "key", key,
                             target, (newComponent, newValue) => {
                             var tmpValue = dictionary[key];
                             dictionary.Remove(key);
-                            if(newValue != null) {
+                            if (newValue != null) {
                                 dictionary[newValue] = tmpValue;
                             }
                         });

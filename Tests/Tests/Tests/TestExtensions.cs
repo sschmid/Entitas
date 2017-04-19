@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Entitas;
@@ -18,12 +18,12 @@ public static class TestExtensions {
 
     public static string GetProjectRoot() {
         var current = new DirectoryInfo(Directory.GetCurrentDirectory());
-        if(current.Parent.Parent.Name == "Tests") {
+        if (current.Parent.Parent.Name == "Tests") {
             // This happens if you run the TestRunner from your IDE
             return current.Parent.Parent.Parent.Parent.FullName;
         }
 
-        if(current.Name == "Scripts") {
+        if (current.Name == "Scripts") {
             // This happens if you run ./run_tests
             return current.Parent.FullName;
         }

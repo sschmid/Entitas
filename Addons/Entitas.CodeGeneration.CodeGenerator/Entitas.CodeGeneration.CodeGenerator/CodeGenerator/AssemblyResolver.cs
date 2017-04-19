@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -35,12 +35,12 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                 assembly = Assembly.LoadFrom(args.Name);
             } catch(Exception) {
                 var name = new AssemblyName(args.Name).Name;
-                if(!name.EndsWith(".dll", StringComparison.Ordinal)) {
+                if (!name.EndsWith(".dll", StringComparison.Ordinal)) {
                     name += ".dll";
                 }
 
                 var path = resolvePath(name);
-                if(path != null) {
+                if (path != null) {
                     assembly = Assembly.LoadFrom(path);
                 }
             }
@@ -49,9 +49,9 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         }
 
         string resolvePath(string assemblyName) {
-            foreach(var basePath in _basePaths) {
+            foreach (var basePath in _basePaths) {
                 var path = basePath + Path.DirectorySeparatorChar + assemblyName;
-                if(File.Exists(path)) {
+                if (File.Exists(path)) {
                     _logger.Debug("    - Resolved: " + path);
                     return path;
                 }
@@ -63,7 +63,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
         public Type[] GetTypes() {
             var types = new List<Type>();
-            foreach(var assembly in _assemblies) {
+            foreach (var assembly in _assemblies) {
                 try {
                     types.AddRange(assembly.GetTypes());
                 } catch(ReflectionTypeLoadException ex) {

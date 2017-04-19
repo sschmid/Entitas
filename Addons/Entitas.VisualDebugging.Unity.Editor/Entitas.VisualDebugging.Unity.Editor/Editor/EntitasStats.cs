@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Plugins;
@@ -32,7 +32,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 { "Systems", types.Count(implementsSystem) }
             };
 
-            foreach(var context in contexts) {
+            foreach (var context in contexts) {
                 stats.Add("Components in " + context.Key, context.Value);
             }
 
@@ -45,8 +45,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             var defaultContextName = config.contextNames[0];
             return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {
                 var contextNames = ContextsComponentDataProvider.GetContextNamesOrDefault(type, defaultContextName);
-                foreach(var contextName in contextNames) {
-                    if(!contexts.ContainsKey(contextName)) {
+                foreach (var contextName in contextNames) {
+                    if (!contexts.ContainsKey(contextName)) {
                         contexts.Add(contextName, 0);
                     }
 

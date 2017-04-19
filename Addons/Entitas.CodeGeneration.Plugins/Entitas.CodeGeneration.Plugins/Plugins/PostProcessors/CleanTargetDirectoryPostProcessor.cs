@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Entitas.Utils;
@@ -26,9 +26,9 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         void cleanDir() {
-            if(Directory.Exists(_targetDirectoryConfig.targetDirectory)) {
+            if (Directory.Exists(_targetDirectoryConfig.targetDirectory)) {
                 var files = new DirectoryInfo(_targetDirectoryConfig.targetDirectory).GetFiles("*.cs", SearchOption.AllDirectories);
-                foreach(var file in files) {
+                foreach (var file in files) {
                     try {
                         File.Delete(file.FullName);
                     } catch {

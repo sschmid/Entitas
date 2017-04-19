@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using Entitas.Utils;
 
@@ -20,10 +20,10 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
-            foreach(var file in files) {
+            foreach (var file in files) {
                 var fileName = _targetDirectoryConfig.targetDirectory + Path.DirectorySeparatorChar + file.fileName;
                 var targetDir = Path.GetDirectoryName(fileName);
-                if(!Directory.Exists(targetDir)) {
+                if (!Directory.Exists(targetDir)) {
                     Directory.CreateDirectory(targetDir);
                 }
                 File.WriteAllText(fileName, file.fileContent);

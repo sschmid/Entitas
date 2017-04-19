@@ -1,157 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PolicySet name="Entitas.mdpolicy">
-  <TextStylePolicy inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/plain" />
-  <VersionControlPolicy inheritsSet="Mono" />
-  <CSharpFormattingPolicy inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp">
-    <IndentSwitchSection>True</IndentSwitchSection>
-    <NewLinesForBracesInTypes>False</NewLinesForBracesInTypes>
-    <NewLinesForBracesInMethods>False</NewLinesForBracesInMethods>
-    <SpacingAfterMethodDeclarationName>False</SpacingAfterMethodDeclarationName>
-    <SpaceAfterMethodCallName>False</SpaceAfterMethodCallName>
-    <SpaceAfterControlFlowStatementKeyword>False</SpaceAfterControlFlowStatementKeyword>
-    <SpaceBeforeOpenSquareBracket>False</SpaceBeforeOpenSquareBracket>
-  </CSharpFormattingPolicy>
-  <NameConventionPolicy>
-    <Rules>
-      <NamingRule>
-        <Name>PascalCase</Name>
-        <AffectedEntity>Namespace, Class, Struct, Enum, Delegate, Event, EnumMember, Label</AffectedEntity>
-        <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>PascalCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Interfaces</Name>
-        <RequiredPrefixes>
-          <String>I</String>
-        </RequiredPrefixes>
-        <AffectedEntity>Interface</AffectedEntity>
-        <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>PascalCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Attributes</Name>
-        <RequiredSuffixes>
-          <String>Attribute</String>
-        </RequiredSuffixes>
-        <AffectedEntity>CustomAttributes</AffectedEntity>
-        <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>PascalCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Event Args</Name>
-        <RequiredSuffixes>
-          <String>EventArgs</String>
-        </RequiredSuffixes>
-        <AffectedEntity>CustomEventArgs</AffectedEntity>
-        <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>PascalCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Exceptions</Name>
-        <RequiredSuffixes>
-          <String>Exception</String>
-        </RequiredSuffixes>
-        <AffectedEntity>CustomExceptions</AffectedEntity>
-        <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>PascalCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>camelCase</Name>
-        <AffectedEntity>Property, Parameter, LambdaParameter, LocalVariable</AffectedEntity>
-        <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>CamelCaseWithLowerLetterUnderscore</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Fields (non public)</Name>
-        <RequiredPrefixes>
-          <String>_</String>
-        </RequiredPrefixes>
-        <AffectedEntity>Field, ReadonlyField</AffectedEntity>
-        <VisibilityMask>Private, Internal, Protected</VisibilityMask>
-        <NamingStyle>CamelCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Fields</Name>
-        <AffectedEntity>Field, ReadonlyField</AffectedEntity>
-        <VisibilityMask>Public</VisibilityMask>
-        <NamingStyle>CamelCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Methods (public)</Name>
-        <AffectedEntity>Methods</AffectedEntity>
-        <VisibilityMask>Public</VisibilityMask>
-        <NamingStyle>PascalCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Methods</Name>
-        <AffectedEntity>Methods</AffectedEntity>
-        <VisibilityMask>Private, Internal, Protected</VisibilityMask>
-        <NamingStyle>CamelCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Type Parameters</Name>
-        <RequiredPrefixes>
-          <String>T</String>
-        </RequiredPrefixes>
-        <AffectedEntity>TypeParameter</AffectedEntity>
-        <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>PascalCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Constants</Name>
-        <AffectedEntity>ConstantField</AffectedEntity>
-        <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>AllUpper</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-      <NamingRule>
-        <Name>Constants (local)</Name>
-        <AffectedEntity>LocalConstant</AffectedEntity>
-        <VisibilityMask>VisibilityMask</VisibilityMask>
-        <NamingStyle>CamelCase</NamingStyle>
-        <IncludeInstanceMembers>True</IncludeInstanceMembers>
-        <IncludeStaticEntities>True</IncludeStaticEntities>
-      </NamingRule>
-    </Rules>
-  </NameConventionPolicy>
-  <ChangeLogPolicy inheritsSet="Mono" />
-  <TextStylePolicy inheritsSet="null" scope="text/x-csharp" />
-  <TextStylePolicy inheritsSet="null" scope="application/xml" />
-  <XmlFormattingPolicy inheritsSet="Mono" inheritsScope="application/xml" scope="application/xml" />
-  <StandardHeader>
-    <Text />
-    <IncludeInNewFiles>True</IncludeInNewFiles>
-  </StandardHeader>
-  <DotNetNamingPolicy>
-    <DirectoryNamespaceAssociation>None</DirectoryNamespaceAssociation>
-    <ResourceNamePolicy>FileName</ResourceNamePolicy>
-  </DotNetNamingPolicy>
-  <TextStylePolicy inheritsSet="null" scope="text/x-fsharp" />
+<PolicySet name="Entitas">
+  <TextStylePolicy scope="text/plain">
+    <FileWidth>80</FileWidth>
+    <TabsToSpaces>True</TabsToSpaces>
+    <NoTabsAfterNonTabs>True</NoTabsAfterNonTabs>
+    <EolMarker>Unix</EolMarker>
+  </TextStylePolicy>
+  <TextStylePolicy scope="text/x-fsharp">
+    <FileWidth>80</FileWidth>
+    <TabsToSpaces>True</TabsToSpaces>
+    <NoTabsAfterNonTabs>True</NoTabsAfterNonTabs>
+    <EolMarker>Unix</EolMarker>
+  </TextStylePolicy>
   <FSharpFormattingPolicy scope="text/x-fsharp">
-    <DefaultFormat>
+    <DefaultFormat __added="0">
       <IndentOnTryWith>False</IndentOnTryWith>
       <ReorderOpenDeclaration>False</ReorderOpenDeclaration>
       <SpaceAfterComma>True</SpaceAfterComma>
@@ -161,4 +23,63 @@
       <SpaceBeforeColon>True</SpaceBeforeColon>
     </DefaultFormat>
   </FSharpFormattingPolicy>
+  <CSSFormattingPolicy scope="text/x-css">
+    <AutomaticFormatting>True</AutomaticFormatting>
+    <BracePositions>SemiExpanded</BracePositions>
+    <FormatOnPaste>True</FormatOnPaste>
+    <HierarchicalIndentation>True</HierarchicalIndentation>
+  </CSSFormattingPolicy>
+  <TextStylePolicy scope="text/x-css">
+    <FileWidth>80</FileWidth>
+    <TabsToSpaces>True</TabsToSpaces>
+    <NoTabsAfterNonTabs>True</NoTabsAfterNonTabs>
+    <EolMarker>Unix</EolMarker>
+  </TextStylePolicy>
+  <HTMLFormattingPolicy scope="text/x-html">
+    <FormatOnPaste>True</FormatOnPaste>
+    <XHTMLCodingStyle>True</XHTMLCodingStyle>
+  </HTMLFormattingPolicy>
+  <TextStylePolicy scope="text/x-html">
+    <FileWidth>80</FileWidth>
+    <TabsToSpaces>True</TabsToSpaces>
+    <NoTabsAfterNonTabs>True</NoTabsAfterNonTabs>
+    <EolMarker>Unix</EolMarker>
+  </TextStylePolicy>
+  <JSONFormattingPolicy scope="text/x-json">
+    <AutoStructureCompletion>True</AutoStructureCompletion>
+    <BracePositions>SemiExpanded</BracePositions>
+    <FormatOnPaste>True</FormatOnPaste>
+  </JSONFormattingPolicy>
+  <TextStylePolicy scope="text/x-json">
+    <FileWidth>80</FileWidth>
+    <TabsToSpaces>True</TabsToSpaces>
+    <NoTabsAfterNonTabs>True</NoTabsAfterNonTabs>
+    <EolMarker>Unix</EolMarker>
+  </TextStylePolicy>
+  <DotNetNamingPolicy>
+    <ResourceNamePolicy>FileName</ResourceNamePolicy>
+  </DotNetNamingPolicy>
+  <TextStylePolicy scope="text/x-csharp">
+    <FileWidth>80</FileWidth>
+    <TabsToSpaces>True</TabsToSpaces>
+    <NoTabsAfterNonTabs>True</NoTabsAfterNonTabs>
+    <EolMarker>Unix</EolMarker>
+  </TextStylePolicy>
+  <CSharpFormattingPolicy scope="text/x-csharp">
+    <NewLinesForBracesInTypes>False</NewLinesForBracesInTypes>
+    <NewLinesForBracesInMethods>False</NewLinesForBracesInMethods>
+    <NewLinesForBracesInProperties>False</NewLinesForBracesInProperties>
+    <NewLinesForBracesInAccessors>False</NewLinesForBracesInAccessors>
+    <NewLinesForBracesInAnonymousMethods>False</NewLinesForBracesInAnonymousMethods>
+    <NewLinesForBracesInControlBlocks>False</NewLinesForBracesInControlBlocks>
+    <NewLinesForBracesInAnonymousTypes>False</NewLinesForBracesInAnonymousTypes>
+    <NewLinesForBracesInObjectCollectionArrayInitializers>False</NewLinesForBracesInObjectCollectionArrayInitializers>
+    <NewLinesForBracesInLambdaExpressionBody>False</NewLinesForBracesInLambdaExpressionBody>
+    <NewLineForElse>False</NewLineForElse>
+    <NewLineForCatch>False</NewLineForCatch>
+    <NewLineForFinally>False</NewLineForFinally>
+  </CSharpFormattingPolicy>
+  <StandardHeader>
+    <IncludeInNewFiles>False</IncludeInNewFiles>
+  </StandardHeader>
 </PolicySet>

@@ -1,4 +1,4 @@
-﻿using Fabl;
+using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
@@ -7,7 +7,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string trigger { get { return "dry"; } }
 
         public override void Run(string[] args) {
-            if(assertProperties()) {
+            if (assertProperties()) {
                 var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromProperties();
 
                 codeGenerator.OnProgress += (title, info, progress) => {

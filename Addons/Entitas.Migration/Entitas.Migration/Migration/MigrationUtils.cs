@@ -13,7 +13,7 @@ namespace Entitas.Migration {
         }
 
         public static void WriteFiles(MigrationFile[] files) {
-            foreach(var file in files) {
+            foreach (var file in files) {
                 Console.WriteLine("Migrating: " + file.fileName);
                 File.WriteAllText(file.fileName, file.fileContent);
             }

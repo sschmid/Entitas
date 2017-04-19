@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
 
@@ -88,7 +88,7 @@ ${getIndices}
                 .Replace("${addIndices}", addIndices)
                 .Replace("${getIndices}", getIndices);
 
-            return new[] { new CodeGenFile(
+            return new [] { new CodeGenFile(
                 "Contexts.cs",
                 fileContent,
                 GetType().FullName
@@ -137,9 +137,9 @@ ${getIndices}
 
         string generateGetMethod(EntityIndexData data, string contextName) {
             var template = "";
-            if(data.GetEntityIndexType() == "Entitas.EntityIndex") {
+            if (data.GetEntityIndexType() == "Entitas.EntityIndex") {
                 template = GET_INDEX_TEMPLATE;
-            } else if(data.GetEntityIndexType() == "Entitas.PrimaryEntityIndex") {
+            } else if (data.GetEntityIndexType() == "Entitas.PrimaryEntityIndex") {
                 template = GET_PRIMARY_INDEX_TEMPLATE;
             } else {
                 return getCustomMethods(data);
@@ -166,5 +166,3 @@ ${getIndices}
         }
    }
 }
-
-

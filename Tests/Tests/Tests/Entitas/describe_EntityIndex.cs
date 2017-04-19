@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 using System.Collections.Generic;
 using System.Linq;
@@ -152,7 +152,7 @@ class describe_EntityIndex : nspec {
                     entity.retainCount.should_be(3);
 
                     var safeAerc = entity.aerc as SafeAERC;
-                    if(safeAerc != null) {
+                    if (safeAerc != null) {
                         safeAerc.owners.should_contain(index);
                     }
                 };
@@ -169,7 +169,7 @@ class describe_EntityIndex : nspec {
                     entity.retainCount.should_be(1);
 
                     var safeAerc = entity.aerc as SafeAERC;
-                    if(safeAerc != null) {
+                    if (safeAerc != null) {
                         safeAerc.owners.should_not_contain(index);
                     }
                 };
@@ -335,12 +335,12 @@ class describe_EntityIndex : nspec {
                     entity2.retainCount.should_be(3);
 
                     var safeAerc1 = entity1.aerc as SafeAERC;
-                    if(safeAerc1 != null) {
+                    if (safeAerc1 != null) {
                         safeAerc1.owners.should_contain(index);
                     }
 
                     var safeAerc2 = entity1.aerc as SafeAERC;
-                    if(safeAerc2 != null) {
+                    if (safeAerc2 != null) {
                         safeAerc2.owners.should_contain(index);
                     }
                 };
@@ -368,12 +368,12 @@ class describe_EntityIndex : nspec {
                     entity2.retainCount.should_be(3);
 
                     var safeAerc1 = entity1.aerc as SafeAERC;
-                    if(safeAerc1 != null) {
+                    if (safeAerc1 != null) {
                         safeAerc1.owners.should_not_contain(index);
                     }
 
                     var safeAerc2 = entity2.aerc as SafeAERC;
-                    if(safeAerc2 != null) {
+                    if (safeAerc2 != null) {
                         safeAerc2.owners.should_contain(index);
                     }
                 };
@@ -438,7 +438,7 @@ class describe_EntityIndex : nspec {
             index = new EntityIndex<TestEntity, string>("TestIndex", group, (e, c) => {
                 receivedComponents.Add(c);
 
-                if(c == nameAgeComponent1) {
+                if (c == nameAgeComponent1) {
                     return ((NameAgeComponent)c).name;
                 }
 

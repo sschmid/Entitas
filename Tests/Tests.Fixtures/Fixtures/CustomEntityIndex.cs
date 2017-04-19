@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Entitas;
 using Entitas.CodeGeneration.Attributes;
@@ -19,8 +19,8 @@ namespace MyNamespace {
                     var size = c is SizeComponent ? (SizeComponent)c : e.size;
 
                     _cachedList.Clear();
-                    for(int x = position.x; x < position.x + size.width; x++) {
-                        for(int y = position.y; y < position.y + size.height; y++) {
+                    for (int x = position.x; x < position.x + size.width; x++) {
+                        for (int y = position.y; y < position.y + size.height; y++) {
                             _cachedList.Add(new IntVector2(x, y));
                         }
                     }

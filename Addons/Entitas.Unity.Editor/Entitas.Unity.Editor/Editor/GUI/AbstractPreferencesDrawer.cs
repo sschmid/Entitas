@@ -1,4 +1,4 @@
-﻿using Entitas.Utils;
+using Entitas.Utils;
 
 namespace Entitas.Unity.Editor {
 
@@ -13,7 +13,7 @@ namespace Entitas.Unity.Editor {
 
         public void Draw(Properties properties) {
             _drawContent = EntitasEditorLayout.DrawSectionHeaderToggle(title, _drawContent);
-            if(_drawContent) {
+            if (_drawContent) {
                 EntitasEditorLayout.BeginSectionContent();
                 {
                     drawContent(properties);

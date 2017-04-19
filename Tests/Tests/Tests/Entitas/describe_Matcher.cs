@@ -1,11 +1,11 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_Matcher : nspec {
 
     static void assertIndicesContain(int[] indices, params int[] expectedIndices) {
         indices.Length.should_be(expectedIndices.Length);
-        for(int i = 0; i < expectedIndices.Length; i++) {
+        for (int i = 0; i < expectedIndices.Length; i++) {
             indices[i].should_be(expectedIndices[i]);
         }
     }

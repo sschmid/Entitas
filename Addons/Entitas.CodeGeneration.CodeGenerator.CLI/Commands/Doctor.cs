@@ -1,4 +1,4 @@
-﻿using Fabl;
+using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
             fabl.Debug("Entitas Code Generator version " + EntitasResources.GetVersion());
 
-            if(assertProperties()) {
+            if (assertProperties()) {
 
                 new Status().Run(args);
 

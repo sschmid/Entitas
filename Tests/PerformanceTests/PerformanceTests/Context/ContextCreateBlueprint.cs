@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using Entitas.Blueprints;
 
 public class ContextCreateBlueprint : IPerformanceTest {

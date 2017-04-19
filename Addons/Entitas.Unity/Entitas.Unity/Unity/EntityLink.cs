@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace Entitas.Unity {
@@ -12,7 +12,7 @@ namespace Entitas.Unity {
         IContext _context;
 
         public void Link(IEntity entity, IContext context) {
-            if(_entity != null) {
+            if (_entity != null) {
                 throw new Exception("EntityLink is already linked to " + _entity + "!");
             }
 
@@ -22,7 +22,7 @@ namespace Entitas.Unity {
         }
 
         public void Unlink() {
-            if(_entity == null) {
+            if (_entity == null) {
                 throw new Exception("EntityLink is already unlinked!");
             }
 
@@ -44,7 +44,7 @@ namespace Entitas.Unity {
 
         public static EntityLink Link(this GameObject gameObject, IEntity entity, IContext context) {
             var link = gameObject.GetEntityLink();
-            if(link == null) {
+            if (link == null) {
                 link = gameObject.AddComponent<EntityLink>();
             }
 

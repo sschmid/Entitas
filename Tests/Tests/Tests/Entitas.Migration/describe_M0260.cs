@@ -33,7 +33,7 @@ public static class Pools {
 
     public static Pool[] allPools {
         get {
-            if(_allPools == null) {
+            if (_allPools == null) {
                 _allPools = new [] { meta, core };
             }
 
@@ -45,9 +45,9 @@ public static class Pools {
 
     public static Pool meta {
         get {
-            if(_meta == null) {
+            if (_meta == null) {
                 _meta = new Pool(MetaComponentIds.TotalComponents);
-                #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 //var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_meta, MetaComponentIds.componentNames, MetaComponentIds.componentTypes, ""Meta Pool"");
                 //UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
@@ -61,9 +61,9 @@ public static class Pools {
 
     public static Pool core {
         get {
-            if(_core == null) {
+            if (_core == null) {
                 _core = new Pool(CoreComponentIds.TotalComponents);
-                #if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+                #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
                 //var poolObserver = new Entitas.Unity.VisualDebugging.PoolObserver(_core, CoreComponentIds.componentNames, CoreComponentIds.componentTypes, ""Core Pool"");
                 //UnityEngine.Object.DontDestroyOnLoad(poolObserver.entitiesContainer);
                 #endif
@@ -104,7 +104,7 @@ namespace Entitas {
             var component = _scoreComponentPool.Count > 0 ? _scoreComponentPool.Pop() : new ScoreComponent();
             component.value = newValue;
             ReplaceComponent(ComponentIds.Score, component);
-            if(previousComponent != null) {
+            if (previousComponent != null) {
                 _scoreComponentPool.Push(previousComponent);
             }
             return this;
@@ -126,7 +126,7 @@ namespace Entitas {
         public bool hasScore { get { return scoreEntity != null; } }
 
         public Entity SetScore(int newValue) {
-            if(hasScore) {
+            if (hasScore) {
                 //throw new SingleEntityException(Matcher.Score);
             }
             var entity = CreateEntity();
@@ -136,7 +136,7 @@ namespace Entitas {
 
         public Entity ReplaceScore(int newValue) {
             var entity = scoreEntity;
-            if(entity == null) {
+            if (entity == null) {
                 entity = SetScore(newValue);
             } else {
                 entity.ReplaceScore(newValue);
@@ -155,7 +155,7 @@ namespace Entitas {
 
         public static IMatcher Score {
             get {
-                if(_matcherScore == null) {
+                if (_matcherScore == null) {
                     _matcherScore = Matcher.AllOf(ComponentIds.Score);
                 }
 

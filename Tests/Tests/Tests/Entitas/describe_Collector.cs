@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_Collector : nspec {
@@ -106,7 +106,7 @@ class describe_Collector : nspec {
                     e.retainCount.should_be(1);
 
                     var safeAerc = e.aerc as SafeAERC;
-                    if(safeAerc != null) {
+                    if (safeAerc != null) {
                         safeAerc.owners.should_contain(collectorA);
                     }
 

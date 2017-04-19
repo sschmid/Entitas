@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Entitas.Utils;
 
 namespace Entitas.VisualDebugging.Unity.Editor {

@@ -24,7 +24,7 @@ namespace Entitas.Unity.Editor {
         }
 
         public void AddDefineSymbol(string defineSymbol) {
-            foreach(var kv in _buildTargetToDefSymbol) {
+            foreach (var kv in _buildTargetToDefSymbol) {
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(
                     kv.Key, kv.Value.Replace(defineSymbol, string.Empty) + "," + defineSymbol
                 );
@@ -32,7 +32,7 @@ namespace Entitas.Unity.Editor {
         }
 
         public void RemoveDefineSymbol(string defineSymbol) {
-            foreach(var kv in _buildTargetToDefSymbol) {
+            foreach (var kv in _buildTargetToDefSymbol) {
                 PlayerSettings.SetScriptingDefineSymbolsForGroup(
                     kv.Key, kv.Value.Replace(defineSymbol, string.Empty)
                 );

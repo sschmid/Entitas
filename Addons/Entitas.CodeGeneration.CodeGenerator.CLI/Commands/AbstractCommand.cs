@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using Entitas.Utils;
 using Fabl;
 
@@ -15,7 +15,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         protected bool assertProperties() {
-            if(File.Exists(Preferences.PATH)) {
+            if (File.Exists(Preferences.PATH)) {
                 return true;
             }
 

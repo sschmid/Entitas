@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 
@@ -20,7 +20,7 @@ namespace Entitas.VisualDebugging.Unity {
         public int totalInitializeSystemsCount {
             get {
                 var total = 0;
-                foreach(var system in _initializeSystems) {
+                foreach (var system in _initializeSystems) {
                     var debugSystems = system as DebugSystems;
                     total += debugSystems != null ? debugSystems.totalInitializeSystemsCount : 1;
                 }
@@ -31,7 +31,7 @@ namespace Entitas.VisualDebugging.Unity {
         public int totalExecuteSystemsCount {
             get {
                 var total = 0;
-                foreach(var system in _executeSystems) {
+                foreach (var system in _executeSystems) {
                     var debugSystems = system as DebugSystems;
                     total += debugSystems != null ? debugSystems.totalExecuteSystemsCount : 1;
                 }
@@ -42,7 +42,7 @@ namespace Entitas.VisualDebugging.Unity {
         public int totalCleanupSystemsCount {
             get {
                 var total = 0;
-                foreach(var system in _cleanupSystems) {
+                foreach (var system in _cleanupSystems) {
                     var debugSystems = system as DebugSystems;
                     total += debugSystems != null ? debugSystems.totalCleanupSystemsCount : 1;
                 }
@@ -53,7 +53,7 @@ namespace Entitas.VisualDebugging.Unity {
         public int totalTearDownSystemsCount {
             get {
                 var total = 0;
-                foreach(var system in _tearDownSystems) {
+                foreach (var system in _tearDownSystems) {
                     var debugSystems = system as DebugSystems;
                     total += debugSystems != null ? debugSystems.totalTearDownSystemsCount : 1;
                 }
@@ -64,7 +64,7 @@ namespace Entitas.VisualDebugging.Unity {
         public int totalSystemsCount {
             get {
                 var total = 0;
-                foreach(var system in _systems) {
+                foreach (var system in _systems) {
                     var debugSystems = system as DebugSystems;
                     total += debugSystems != null ? debugSystems.totalSystemsCount : 1;
                 }
@@ -136,7 +136,7 @@ namespace Entitas.VisualDebugging.Unity {
             SystemInfo childSystemInfo;
 
             var debugSystems = system as DebugSystems;
-            if(debugSystems != null) {
+            if (debugSystems != null) {
                 childSystemInfo = debugSystems.systemInfo;
                 debugSystems.gameObject.transform.SetParent(_gameObject.transform, false);
             } else {
@@ -145,16 +145,16 @@ namespace Entitas.VisualDebugging.Unity {
 
             childSystemInfo.parentSystemInfo = _systemInfo;
 
-            if(childSystemInfo.isInitializeSystems) {
+            if (childSystemInfo.isInitializeSystems) {
                 _initializeSystemInfos.Add(childSystemInfo);
             }
-            if(childSystemInfo.isExecuteSystems || childSystemInfo.isReactiveSystems) {
+            if (childSystemInfo.isExecuteSystems || childSystemInfo.isReactiveSystems) {
                 _executeSystemInfos.Add(childSystemInfo);
             }
-            if(childSystemInfo.isCleanupSystems) {
+            if (childSystemInfo.isCleanupSystems) {
                 _cleanupSystemInfos.Add(childSystemInfo);
             }
-            if(childSystemInfo.isTearDownSystems) {
+            if (childSystemInfo.isTearDownSystems) {
                 _tearDownSystemInfos.Add(childSystemInfo);
             }
 
@@ -162,13 +162,13 @@ namespace Entitas.VisualDebugging.Unity {
         }
 
         public void ResetDurations() {
-            foreach(var systemInfo in _executeSystemInfos) {
+            foreach (var systemInfo in _executeSystemInfos) {
                 systemInfo.ResetDurations();
             }
 
-            foreach(var system in _systems) {
+            foreach (var system in _systems) {
                 var debugSystems = system as DebugSystems;
-                if(debugSystems != null) {
+                if (debugSystems != null) {
                     debugSystems.ResetDurations();
                 }
             }
@@ -177,7 +177,7 @@ namespace Entitas.VisualDebugging.Unity {
         public override void Initialize() {
             for (int i = 0; i < _initializeSystems.Count; i++) {
                 var systemInfo = _initializeSystemInfos[i];
-                if(systemInfo.isActive) {
+                if (systemInfo.isActive) {
                     _stopwatch.Reset();
                     _stopwatch.Start();
                     _initializeSystems[i].Initialize();
@@ -188,25 +188,25 @@ namespace Entitas.VisualDebugging.Unity {
         }
 
         public override void Execute() {
-            if(!paused) {
+            if (!paused) {
                 StepExecute();
             }
         }
 
         public override void Cleanup() {
-            if(!paused) {
+            if (!paused) {
                 StepCleanup();
             }
         }
 
         public void StepExecute() {
             _executeDuration = 0;
-            if(Time.frameCount % (int)avgResetInterval == 0) {
+            if (Time.frameCount % (int)avgResetInterval == 0) {
                 ResetDurations();
             }
             for (int i = 0; i < _executeSystems.Count; i++) {
                 var systemInfo = _executeSystemInfos[i];
-                if(systemInfo.isActive) {
+                if (systemInfo.isActive) {
                     _stopwatch.Reset();
                     _stopwatch.Start();
                     _executeSystems[i].Execute();
@@ -222,7 +222,7 @@ namespace Entitas.VisualDebugging.Unity {
             _cleanupDuration = 0;
             for (int i = 0; i < _cleanupSystems.Count; i++) {
                 var systemInfo = _cleanupSystemInfos[i];
-                if(systemInfo.isActive) {
+                if (systemInfo.isActive) {
                     _stopwatch.Reset();
                     _stopwatch.Start();
                     _cleanupSystems[i].Cleanup();
@@ -237,7 +237,7 @@ namespace Entitas.VisualDebugging.Unity {
         public override void TearDown() {
             for (int i = 0; i < _tearDownSystems.Count; i++) {
                 var systemInfo = _tearDownSystemInfos[i];
-                if(systemInfo.isActive) {
+                if (systemInfo.isActive) {
                     _stopwatch.Reset();
                     _stopwatch.Start();
                     _tearDownSystems[i].TearDown();

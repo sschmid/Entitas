@@ -42,7 +42,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             var floor = rect.y + rect.height - yBorder;
             var availableHeight = floor - top;
             var max = data.Length != 0 ? data.Max() : 0f;
-            if(max % axisRounding != 0) {
+            if (max % axisRounding != 0) {
                 max = max + axisRounding - (max % axisRounding);
             }
 
@@ -101,12 +101,12 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 newLine = new Vector2(xBorder + (lineWidth * i), lineTop);
                 _linePoints[i] = new Vector3(newLine.x, newLine.y, 0);
                 linePointScale = 1f;
-                if(!mousePositionDiscovered) {
+                if (!mousePositionDiscovered) {
                     var anchorPosRadius3 = anchorRadius * 3;
                     var anchorPosRadius6 = anchorRadius * 6;
                     var anchorPos = newLine - (Vector2.up * 0.5f);
                     labelRect = new Rect(anchorPos.x - anchorPosRadius3, anchorPos.y - anchorPosRadius3, anchorPosRadius6, anchorPosRadius6);
-                    if(labelRect.Contains(Event.current.mousePosition)) {
+                    if (labelRect.Contains(Event.current.mousePosition)) {
                         mousePositionDiscovered = true;
                         mouseHoverDataValue = value;
                         linePointScale = 3f;
@@ -118,7 +118,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             Handles.matrix = Matrix4x4.identity;
             Handles.DrawAAPolyLine(2f, data.Length, _linePoints);
 
-            if(mousePositionDiscovered) {
+            if (mousePositionDiscovered) {
                 labelRect.y -= 16;
                 labelRect.width += 50;
                 labelRect.x -= 25;

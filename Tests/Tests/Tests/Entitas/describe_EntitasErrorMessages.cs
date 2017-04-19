@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas;
 using Entitas.Blueprints;
 using NSpec;

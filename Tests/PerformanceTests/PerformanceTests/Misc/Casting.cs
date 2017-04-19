@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 public class Casting : IPerformanceTest {
 
     const int n = 50000000;
@@ -14,7 +14,7 @@ public class Casting : IPerformanceTest {
             //var x = _aerc.retainCount;
 
             //var x = _aerc as SafeAERC;
-            //if(x != null) {
+            //if (x != null) {
                 
             //}
 

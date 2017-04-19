@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Attributes;
@@ -31,7 +31,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static string[] GetContextNamesOrDefault(Type type, string defaultContextName) {
             var contextNames = GetContextNames(type);
-            if(contextNames.Length == 0) {
+            if (contextNames.Length == 0) {
                 contextNames = new [] { defaultContextName };
             }
 

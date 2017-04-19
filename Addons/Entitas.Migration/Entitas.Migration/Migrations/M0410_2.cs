@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 
 namespace Entitas.Migration {
 
@@ -14,7 +14,7 @@ namespace Entitas.Migration {
             const string featureClass =
                 @"namespace Entitas {
 
-#if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
     public class Feature : Entitas.VisualDebugging.Unity.DebugSystems {
 
@@ -30,8 +30,8 @@ namespace Entitas.Migration {
         static string toSpacedCamelCase(string text) {
             var sb = new System.Text.StringBuilder(text.Length * 2);
             sb.Append(char.ToUpper(text[0]));
-            for(int i = 1; i < text.Length; i++) {
-                if(char.IsUpper(text[i]) && text[i - 1] != ' ') {
+            for (int i = 1; i < text.Length; i++) {
+                if (char.IsUpper(text[i]) && text[i - 1] != ' ') {
                     sb.Append(' ');
                 }
                 sb.Append(text[i]);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -45,7 +45,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public CodeGeneratorData[] GetData() {
-            if(_types == null) {
+            if (_types == null) {
                 _types = PluginUtil
                     .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
                     .GetTypes();
@@ -96,7 +96,7 @@ namespace Entitas.CodeGeneration.Plugins {
             data.IsCustom(true);
             data.SetEntityIndexName(type.ToCompilableString().RemoveDots());
 
-            data.SetContextNames(new[] { attribute.contextType.ToCompilableString().ShortTypeName().RemoveContextSuffix() });
+            data.SetContextNames(new [] { attribute.contextType.ToCompilableString().ShortTypeName().RemoveContextSuffix() });
 
             var getMethods = type
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance)
@@ -115,7 +115,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         string getEntityIndexType(AbstractEntityIndexAttribute attribute) {
-            switch(attribute.entityIndexType) {
+            switch (attribute.entityIndexType) {
                 case EntityIndexType.EntityIndex:
                     return "Entitas.EntityIndex";
                 case EntityIndexType.PrimaryEntityIndex:

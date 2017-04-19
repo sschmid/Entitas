@@ -1,4 +1,4 @@
-﻿using Entitas.Unity.Editor;
+using Entitas.Unity.Editor;
 using Entitas.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D contextHierarchyIcon {
             get {
-                if(_contextHierarchyIcon == null) {
+                if (_contextHierarchyIcon == null) {
                     _contextHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasContextHierarchyIcon");
                 }
                 return _contextHierarchyIcon;
@@ -19,7 +19,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D contextErrorHierarchyIcon {
             get {
-                if(_contextErrorHierarchyIcon == null) {
+                if (_contextErrorHierarchyIcon == null) {
                     _contextErrorHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasContextErrorHierarchyIcon");
                 }
                 return _contextErrorHierarchyIcon;
@@ -28,7 +28,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D entityHierarchyIcon {
             get {
-                if(_entityHierarchyIcon == null) {
+                if (_entityHierarchyIcon == null) {
                     _entityHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasEntityHierarchyIcon");
                 }
                 return _entityHierarchyIcon;
@@ -37,7 +37,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D entityErrorHierarchyIcon {
             get {
-                if(_entityErrorHierarchyIcon == null) {
+                if (_entityErrorHierarchyIcon == null) {
                     _entityErrorHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasEntityErrorHierarchyIcon");
                 }
                 return _entityErrorHierarchyIcon;
@@ -46,7 +46,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D systemsHierarchyIcon {
             get {
-                if(_systemsHierarchyIcon == null) {
+                if (_systemsHierarchyIcon == null) {
                     _systemsHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasSystemsHierarchyIcon");
                 }
                 return _systemsHierarchyIcon;
@@ -55,7 +55,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D systemsErrorHierarchyIcon {
             get {
-                if(_systemsErrorHierarchyIcon == null) {
+                if (_systemsErrorHierarchyIcon == null) {
                     _systemsErrorHierarchyIcon = EntitasEditorLayout.LoadTexture("l:EntitasSystemsErrorHierarchyIcon");
                 }
                 return _systemsErrorHierarchyIcon;
@@ -72,7 +72,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         static int _systemWarningThreshold;
 
         static EntitasHierarchyIcon() {
-            if(Preferences.HasProperties()) {
+            if (Preferences.HasProperties()) {
                 var config = new VisualDebuggingConfig();
 	            config.Configure(Preferences.LoadProperties());
                 _systemWarningThreshold = config.systemWarningThreshold;
@@ -82,7 +82,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static void onHierarchyWindowItemOnGUI(int instanceID, Rect selectionRect) {
             var gameObject = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
-            if(gameObject != null) {
+            if (gameObject != null) {
                 const float iconSize = 16f;
                 const float iconOffset = iconSize + 2f;
                 var rect = new Rect(selectionRect.x + selectionRect.width - iconOffset, selectionRect.y, iconSize, iconSize);
@@ -91,20 +91,20 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 var entityBehaviour = gameObject.GetComponent<EntityBehaviour>();
                 var debugSystemsBehaviour = gameObject.GetComponent<DebugSystemsBehaviour>();
 
-                if(contextObserver != null) {
-                    if(contextObserver.contextObserver.context.retainedEntitiesCount != 0) {
+                if (contextObserver != null) {
+                    if (contextObserver.contextObserver.context.retainedEntitiesCount != 0) {
                         GUI.DrawTexture(rect, contextErrorHierarchyIcon);
                     } else {
                         GUI.DrawTexture(rect, contextHierarchyIcon);
                     }
-                } else if(entityBehaviour != null) {
-                    if(entityBehaviour.entity.isEnabled) {
+                } else if (entityBehaviour != null) {
+                    if (entityBehaviour.entity.isEnabled) {
                         GUI.DrawTexture(rect, entityHierarchyIcon);
                     } else {
                         GUI.DrawTexture(rect, entityErrorHierarchyIcon);
                     }
-                } else if(debugSystemsBehaviour != null) {
-                    if(debugSystemsBehaviour.systems.executeDuration < _systemWarningThreshold) {
+                } else if (debugSystemsBehaviour != null) {
+                    if (debugSystemsBehaviour.systems.executeDuration < _systemWarningThreshold) {
                         GUI.DrawTexture(rect, systemsHierarchyIcon);
                     } else {
                         GUI.DrawTexture(rect, systemsErrorHierarchyIcon);

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using Entitas.Utils;
 using System.Text.RegularExpressions;

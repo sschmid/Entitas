@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas.CodeGeneration.Plugins;
 using Entitas.Utils;
 using My.Namespace;
@@ -9,7 +9,7 @@ class describe_EntityIndexDataProvider : nspec {
 
     EntityIndexData[] getData<T1, T2>(Properties properties = null) {
         var provider = new EntityIndexDataProvider(new Type[] { typeof(T1), typeof(T2) });
-        if(properties == null) {
+        if (properties == null) {
             properties = new Properties(
                 "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState" + "\n" +
                 "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"

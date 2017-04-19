@@ -14,7 +14,7 @@ namespace Entitas.Migration {
         public MigrationFile[] Migrate(string path) {
             var properties = MigrationUtils.GetFiles(path, "Entitas.properties");
 
-            for(int i = 0; i < properties.Length; i++) {
+            for (int i = 0; i < properties.Length; i++) {
                 var file = properties[i];
 
                 //Entitas.Unity.VisualDebugging.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/
@@ -31,7 +31,7 @@ namespace Entitas.Migration {
                 .Where(file => Regex.IsMatch(file.fileContent, pattern))
                 .ToArray();
 
-            for(int i = 0; i < sources.Length; i++) {
+            for (int i = 0; i < sources.Length; i++) {
                 var file = sources[i];
 
                 file.fileContent = Regex.Replace(

@@ -32,12 +32,12 @@ ${blueprints}
                 .OrderBy(name => name)
                 .ToArray();
 
-            if(blueprintNames.Length == 0) {
+            if (blueprintNames.Length == 0) {
                 return new CodeGenFile[0];
             }
 
             var blueprints = CLASS_TEMPLATE.Replace("${blueprints}", generateBlueprintGetters(blueprintNames));
-            return new[] { new CodeGenFile(
+            return new [] { new CodeGenFile(
                 "GeneratedBlueprints.cs",
                 blueprints,
                 GetType().FullName)

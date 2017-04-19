@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Entitas;
 
@@ -50,13 +50,13 @@ public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy,
     protected override void Execute(List<TestEntity> entities) {
         _didExecute += 1;
 
-        if(entities != null) {
+        if (entities != null) {
             _entities = entities.ToArray();
         } else {
             _entities = null;
         }
 
-        if(executeAction != null) {
+        if (executeAction != null) {
             executeAction(entities);
         }
     }

@@ -1,4 +1,4 @@
-﻿using NSpec;
+using NSpec;
 using Entitas.CodeGeneration.Plugins;
 
 class describe_PluginUtil : nspec {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string trigger { get { return "status"; } }
 
         public override void Run(string[] args) {
-            if(assertProperties()) {
+            if (assertProperties()) {
                 var properties = loadProperties();
                 var config = new CodeGeneratorConfig();
                 config.Configure(properties);
@@ -43,21 +43,21 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             var requiredKeys = defaultProperties.Keys.ToArray();
             var requiredKeysWithConfigurables = defaultProperties.Keys.ToArray();
 
-            if(configurables != null) {
+            if (configurables != null) {
                 requiredKeysWithConfigurables = requiredKeysWithConfigurables.Concat(configurables.Keys).ToArray();
             }
 
-            foreach(var key in Helper.GetUnusedKeys(requiredKeysWithConfigurables, properties)) {
+            foreach (var key in Helper.GetUnusedKeys(requiredKeysWithConfigurables, properties)) {
                 fabl.Info("Unused key: " + key);
             }
 
-            foreach(var key in Helper.GetMissingKeys(requiredKeys, properties)) {
+            foreach (var key in Helper.GetMissingKeys(requiredKeys, properties)) {
                 fabl.Warn("Missing key: " + key);
             }
         }
 
         static void printConfigurableKeyStatus(Dictionary<string, string> configurables, Properties properties) {
-            foreach(var kv in CodeGeneratorUtil.GetMissingConfigurables(configurables, properties)) {
+            foreach (var kv in CodeGeneratorUtil.GetMissingConfigurables(configurables, properties)) {
                 fabl.Warn("Missing key: " + kv.Key);
             }
         }
@@ -81,13 +81,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         static void printUnavailable(string[] names) {
-            foreach(var name in names) {
+            foreach (var name in names) {
                 fabl.Warn("Unavailable: " + name);
             }
         }
 
         static void printAvailable(string[] names) {
-            foreach(var name in names) {
+            foreach (var name in names) {
                 fabl.Info("Available: " + name);
             }
         }

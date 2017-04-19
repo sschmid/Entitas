@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Entitas.Utils;
@@ -23,7 +23,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static Entitas.IMatcher<${ContextName}Entity> ${ComponentName} {
         get {
-            if(_matcher${ComponentName} == null) {
+            if (_matcher${ComponentName} == null) {
                 var matcher = (Entitas.Matcher<${ContextName}Entity>)Entitas.Matcher<${ContextName}Entity>.AllOf(${Index});
                 matcher.componentNames = ${ComponentNames};
                 _matcher${ComponentName} = matcher;

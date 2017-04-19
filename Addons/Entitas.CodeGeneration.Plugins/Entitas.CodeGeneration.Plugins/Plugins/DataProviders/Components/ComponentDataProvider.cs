@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Attributes;
@@ -60,13 +60,13 @@ namespace Entitas.CodeGeneration.Plugins {
         public void Configure(Properties properties) {
             _codeGeneratorConfig.Configure(properties);
             _assembliesConfig.Configure(properties);
-            foreach(var dataProvider in _dataProviders.OfType<IConfigurable>()) {
+            foreach (var dataProvider in _dataProviders.OfType<IConfigurable>()) {
                 dataProvider.Configure(properties);
             }
         }
 
         public CodeGeneratorData[] GetData() {
-            if(_types == null) {
+            if (_types == null) {
                 _types = PluginUtil
                     .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
                     .GetTypes();
@@ -92,7 +92,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         ComponentData createDataForComponent(Type type) {
             var data = new ComponentData();
-            foreach(var provider in _dataProviders) {
+            foreach (var provider in _dataProviders) {
                 provider.Provide(type, data);
             }
 
@@ -104,7 +104,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Select(componentName => {
                     var data = createDataForComponent(type);
                     data.SetFullTypeName(componentName.AddComponentSuffix());
-                    data.SetMemberData(new[] {
+                    data.SetMemberData(new [] {
                         new MemberData(type.ToCompilableString(), "value")
                     });
 
@@ -122,8 +122,8 @@ namespace Entitas.CodeGeneration.Plugins {
                 .OfType<CustomComponentNameAttribute>()
                 .SingleOrDefault();
 
-            if(attr == null) {
-                return new[] { type.ToCompilableString().ShortTypeName().AddComponentSuffix() };
+            if (attr == null) {
+                return new [] { type.ToCompilableString().ShortTypeName().AddComponentSuffix() };
             }
 
             return attr.componentNames;

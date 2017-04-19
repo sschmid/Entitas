@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 using NSpec;
 
 class describe_Context : nspec {
@@ -40,7 +40,7 @@ class describe_Context : nspec {
         it["has default ContextInfo"] = () => {
             ctx.contextInfo.name.should_be("Unnamed Context");
             ctx.contextInfo.componentNames.Length.should_be(CID.TotalComponents);
-            for(int i = 0; i < ctx.contextInfo.componentNames.Length; i++) {
+            for (int i = 0; i < ctx.contextInfo.componentNames.Length; i++) {
                 ctx.contextInfo.componentNames[i].should_be("Index " + i);
             }
         };
@@ -145,30 +145,30 @@ class describe_Context : nspec {
 
                 const int numEntities = 10;
 
-                for(int i = 0; i < numEntities; i++) {
+                for (int i = 0; i < numEntities; i++) {
                     ctx.CreateEntity();
                 }
 
                 var order1 = new int[numEntities];
                 var entities1 = ctx.GetEntities();
-                for(int i = 0; i < numEntities; i++) {
+                for (int i = 0; i < numEntities; i++) {
                     order1[i] = entities1[i].creationIndex;
                 }
 
                 ctx.DestroyAllEntities();
                 ctx.ResetCreationIndex();
 
-                for(int i = 0; i < numEntities; i++) {
+                for (int i = 0; i < numEntities; i++) {
                     ctx.CreateEntity();
                 }
 
                 var order2 = new int[numEntities];
                 var entities2 = ctx.GetEntities();
-                for(int i = 0; i < numEntities; i++) {
+                for (int i = 0; i < numEntities; i++) {
                     order2[i] = entities2[i].creationIndex;
                 }
 
-                for(int i = 0; i < numEntities; i++) {
+                for (int i = 0; i < numEntities; i++) {
                     var index1 = order1[i];
                     var index2 = order2[i];
                     index1.should_be(index2);

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Entitas;
 using My.Namespace;
 using NSpec;
@@ -9,7 +9,7 @@ class describe_Entity : nspec {
     readonly int[] _indicesAB = { CID.ComponentA, CID.ComponentB };
 
     void assertHasComponentA(TestEntity e, IComponent componentA = null) {
-        if(componentA == null) {
+        if (componentA == null) {
             componentA = Component.A;
         }
 
@@ -53,7 +53,7 @@ class describe_Entity : nspec {
                 e.contextInfo.name.should_be("No Context");
                 e.contextInfo.componentNames.Length.should_be(CID.TotalComponents);
                 e.contextInfo.componentTypes.should_be_null();
-                for(int i = 0; i < e.contextInfo.componentNames.Length; i++) {
+                for (int i = 0; i < e.contextInfo.componentNames.Length; i++) {
                     e.contextInfo.componentNames[i].should_be(i.ToString());
                 }
             };
@@ -407,7 +407,7 @@ class describe_Entity : nspec {
                 e.retainCount.should_be(1);
 
                 var safeAerc = e.aerc as SafeAERC;
-                if(safeAerc != null) {
+                if (safeAerc != null) {
                     safeAerc.owners.should_contain(this);
                 }
             };
@@ -418,7 +418,7 @@ class describe_Entity : nspec {
                 e.retainCount.should_be(0);
 
                 var safeAerc = e.aerc as SafeAERC;
-                if(safeAerc != null) {
+                if (safeAerc != null) {
                     safeAerc.owners.should_not_contain(this);
                 }
             };

@@ -30,7 +30,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public static void AddKey(string question, string key, string value, Properties properties) {
             fabl.Info(question + ": '" + key + "' ? (y / n)");
-            if(GetUserDecision()) {
+            if (GetUserDecision()) {
                 properties[key] = value;
                 Preferences.SaveProperties(properties);
                 fabl.Info("Added: " + key);
@@ -39,7 +39,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public static void RemoveKey(string question, string key, Properties properties) {
             fabl.Warn(question + ": '" + key + "' ? (y / n)");
-            if(GetUserDecision()) {
+            if (GetUserDecision()) {
                 properties.RemoveProperty(key);
                 Preferences.SaveProperties(properties);
                 fabl.Warn("Removed: " + key);
@@ -48,7 +48,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public static void RemoveValue(string question, string value, string[] values, Action<string[]> updateAction, Properties properties) {
             fabl.Warn(question + ": '" + value + "' ? (y / n)");
-            if(GetUserDecision()) {
+            if (GetUserDecision()) {
                 var valueList = values.ToList();
                 valueList.Remove(value);
                 updateAction(valueList.ToArray());
@@ -59,7 +59,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public static void AddValue(string question, string value, string[] values, Action<string[]> updateAction, Properties properties) {
             fabl.Info(question + ": '" + value + "' ? (y / n)");
-            if(GetUserDecision()) {
+            if (GetUserDecision()) {
                 var valueList = values.ToList();
                 valueList.Add(value);
                 updateAction(CodeGeneratorUtil.GetOrderedNames(valueList.ToArray()));

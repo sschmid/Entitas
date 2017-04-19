@@ -10,18 +10,18 @@ public class EditorModeInspector : Editor {
 
         var controller = (EditorModeController)target;
 
-        if(controller.context == null) {
+        if (controller.context == null) {
             controller.context = new GameContext();
             new Entitas.VisualDebugging.Unity.ContextObserver(controller.context);
         }
 
-        if(GUILayout.Button("Reset context")) {
+        if (GUILayout.Button("Reset context")) {
             controller.context.Reset();
             controller.context.FindContextObserver().gameObject.DestroyGameObject();
             controller.context = null;
         }
 
-        if(GUILayout.Button("Create entitiy")) {
+        if (GUILayout.Button("Create entitiy")) {
             var e = (GameEntity)controller.context.CreateEntity();
             e.AddMyString("Editor Mode");
 

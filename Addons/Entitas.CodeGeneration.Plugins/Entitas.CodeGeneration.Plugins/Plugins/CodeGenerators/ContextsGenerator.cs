@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -15,7 +15,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static Contexts sharedInstance {
         get {
-            if(_sharedInstance == null) {
+            if (_sharedInstance == null) {
                 _sharedInstance = new Contexts();
             }
 
@@ -38,7 +38,7 @@ ${contextAssignments}
             method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGeneration.Attributes.PostConstructorAttribute))
         );
 
-        foreach(var postConstructor in postConstructors) {
+        foreach (var postConstructor in postConstructors) {
             postConstructor.Invoke(this, null);
         }
     }
@@ -63,7 +63,7 @@ ${contextAssignments}
                 .OrderBy(contextName => contextName)
                 .ToArray();
 
-            return new[] { new CodeGenFile(
+            return new [] { new CodeGenFile(
                 "Contexts.cs",
                 generateContextsClass(contextNames),
                 GetType().FullName)

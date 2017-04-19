@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Entitas.Unity.Editor;
 using Entitas.Utils;
 using UnityEditor;
@@ -32,7 +32,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             EditorGUILayout.BeginHorizontal();
             {
                 drawVisualDebugging();
-                if(GUILayout.Button("Show Stats", EditorStyles.miniButton)) {
+                if (GUILayout.Button("Show Stats", EditorStyles.miniButton)) {
                     EntitasStats.ShowStats();
                 }
             }
@@ -55,8 +55,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
             var changed = EditorGUI.EndChangeCheck();
 
-            if(changed) {
-                if(_enableVisualDebugging) {
+            if (changed) {
+                if (_enableVisualDebugging) {
                     _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
                 } else {
                     _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
@@ -70,7 +70,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 _visualDebuggingConfig.defaultInstanceCreatorFolderPath,
                 _visualDebuggingConfig.defaultInstanceCreatorFolderPath
             );
-            if(!string.IsNullOrEmpty(path)) {
+            if (!string.IsNullOrEmpty(path)) {
                 _visualDebuggingConfig.defaultInstanceCreatorFolderPath = path;
             }
         }
@@ -81,7 +81,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 _visualDebuggingConfig.typeDrawerFolderPath,
                 _visualDebuggingConfig.typeDrawerFolderPath
             );
-            if(!string.IsNullOrEmpty(path)) {
+            if (!string.IsNullOrEmpty(path)) {
                 _visualDebuggingConfig.typeDrawerFolderPath = path;
             }
         }

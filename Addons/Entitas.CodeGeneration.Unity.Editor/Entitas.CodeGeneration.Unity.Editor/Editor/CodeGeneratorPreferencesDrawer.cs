@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.CodeGenerator;
@@ -65,7 +65,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             var configurables = getConfigurables();
             _properties.AddProperties(configurables, false);
 
-            foreach(var kv in configurables) {
+            foreach (var kv in configurables) {
                 _properties[kv.Key] = EditorGUILayout.TextField(kv.Key.ShortTypeName().ToSpacedCamelCase(), _properties[kv.Key]);
             }
         }
@@ -90,8 +90,8 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         static string[] drawMaskField(string title, string[] types, string[] names, string[] input) {
             var mask = 0;
 
-            for(int i = 0; i < types.Length; i++) {
-                if(input.Contains(types[i])) {
+            for (int i = 0; i < types.Length; i++) {
+                if (input.Contains(types[i])) {
                     mask += (1 << i);
                 }
             }
@@ -99,9 +99,9 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             mask = EditorGUILayout.MaskField(title, mask, names);
 
             var selected = new List<string>();
-            for(int i = 0; i < types.Length; i++) {
+            for (int i = 0; i < types.Length; i++) {
                 var index = 1 << i;
-                if((index & mask) == index) {
+                if ((index & mask) == index) {
                     selected.Add(types[i]);
                 }
             }
@@ -112,7 +112,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         void drawGenerateButton() {
             var bgColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.green;
-            if(GUILayout.Button("Generate", GUILayout.Height(32))) {
+            if (GUILayout.Button("Generate", GUILayout.Height(32))) {
                 UnityCodeGenerator.Generate();
             }
             GUI.backgroundColor = bgColor;

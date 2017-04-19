@@ -16,7 +16,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
             var list = (IList)value;
             var elementType = memberType.GetGenericArguments()[0];
-            if(list.Count == 0) {
+            if (list.Count == 0) {
                 list = drawAddElement(list, memberName, elementType);
             } else {
                 EditorGUILayout.LabelField(memberName);
@@ -33,14 +33,14 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                                                   target, (newComponent, newValue) => list[localIndex] = newValue);
 
                     var action = drawEditActions(list, elementType, localIndex);
-                    if(action != null) {
+                    if (action != null) {
                         editAction = action;
                     }
                 }
                 EditorGUILayout.EndHorizontal();
             }
 
-            if(editAction != null) {
+            if (editAction != null) {
                 list = editAction();
             }
             EditorGUI.indentLevel = indent;
@@ -49,8 +49,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static Func<IList> drawEditActions(IList list, Type elementType, int index) {
-            if(EntitasEditorLayout.MiniButtonLeft("↑")) {
-                if(index > 0) {
+            if (EntitasEditorLayout.MiniButtonLeft("↑")) {
+                if (index > 0) {
                     return () => {
                         var otherIndex = index - 1;
                         var other = list[otherIndex];
@@ -61,8 +61,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
             }
 
-            if(EntitasEditorLayout.MiniButtonMid("↓")) {
-                if(index < list.Count - 1) {
+            if (EntitasEditorLayout.MiniButtonMid("↓")) {
+                if (index < list.Count - 1) {
                     return () => {
                         var otherIndex = index + 1;
                         var other = list[otherIndex];
@@ -73,9 +73,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
             }
 
-            if(EntitasEditorLayout.MiniButtonMid("+")) {
+            if (EntitasEditorLayout.MiniButtonMid("+")) {
                 object defaultValue;
-                if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                     var insertAt = index + 1;
                     return () => {
                         list.Insert(insertAt, defaultValue);
@@ -84,7 +84,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
             }
 
-            if(EntitasEditorLayout.MiniButtonRight("-")) {
+            if (EntitasEditorLayout.MiniButtonRight("-")) {
                 var removeAt = index;
                 return () => {
                     list.RemoveAt(removeAt);
@@ -99,9 +99,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.LabelField(memberName, "empty");
-                if(EntitasEditorLayout.MiniButton("add " + elementType.ToCompilableString().ShortTypeName())) {
+                if (EntitasEditorLayout.MiniButton("add " + elementType.ToCompilableString().ShortTypeName())) {
                     object defaultValue;
-                    if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                    if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                         list.Add(defaultValue);
                     }
                 }
