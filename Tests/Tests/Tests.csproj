@@ -106,6 +106,7 @@
     <Compile Include="Tests\Entitas.Utils\Extensions\describe_TypeSerializationExtension.cs" />
     <Compile Include="Tests\Entitas.Utils\Extensions\describe_DictionaryExtension.cs" />
     <Compile Include="Tests\Entitas.CodeGeneration\describe_PluginUtil.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\PostProcessors\describe_UpdateCSProjPostProcessor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -121,6 +122,7 @@
     <Folder Include="Tests\Entitas.CodeGeneration\CodeGenerators\" />
     <Folder Include="Tests\Entitas\Extensions\" />
     <Folder Include="Tests\Entitas.Utils\Extensions\" />
+    <Folder Include="Tests\Entitas.CodeGeneration\PostProcessors\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Libraries\NSpec.dll" />
