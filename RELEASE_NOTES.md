@@ -1,3 +1,35 @@
+# 0.41.2
+
+After installing please check your Entitas.properties. Due to the addition of `IConfigurable` for code generator plugins some keys in Entitas.properties changed. `entitas.exe doctor`, `entitas.exe status` and `entitas.exe fix` can help you fixing any issues. A new default Entitas.properties file will be created if none is found. The default Entitas.properties should work with Unity without modification. For reference take a look at [Match-One - Entitas.properties](https://github.com/sschmid/Match-One/blob/master/Entitas.properties)
+
+Exiting limitation mentioned in the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md) still apply (Entitas.Blueprints.CodeGeneration.Plugins is not supported in the code generator CLI)
+
+Top new features:
+- UpdateCSProjPostProcessor will update your project.csproj. Generated methods are available immediately without switchung to Unity and waiting for the project to be updated. This feels even better when using the new code generator (roslyn coming soon) where you don't even have to compile your project anymore - super fast feedback loops!
+- Better out-of-the-box experience when starting a new Unity project. Everything will work without any manual setup. Just generate :)
+- Great code generator CLI experience with helpful commands like `status` and `fix` which will let you modify Entitas.properties interactively
+- Logo refinements based on magic numbers (1.618 - golden ratio) :D
+
+#### CodeGenerator
+- Added `IConfigurable` inteface to easily create customizable and configurable code geneartor plugins
+- Fixed `ignoreNamespaces` by using the new `IConfigurable` #376
+- Added UpdateCSProjPostProcessor which updates project.csproj so you don't need to wait for Unity to update your project
+- Greatly improved the code generator CLI. `status` and `fix` command will help you a lot to spot and fix problems in Entitas.properties
+- Added `Compile.cs` to ensure `Assembly-CSharp.dll` in Unity
+- CodeGenFile converts to unix line endings when setting fileContent #352
+- Added progress indicator to code generator CLI when running with `-v` in verbose mode
+- Added multiple smaller sub configs for TargetDirectory, ContextNames, Assemblies, ProjectPath, IgnoreNamespaces
+- Placeholder `${myPlaceHolder}` in properties will remain even when overwriting
+- Caching AssemblyResolver
+
+#### VisualDebugging
+- Drawing generic text labels for configurables foun in Entitas.properties
+- Better error handling when Entitas.properties has problems
+
+### General
+- Refined logo. More pleasant to the eye and more readable in smaller icons
+
+
 # 0.41.1
 
 See and discuss changes in [Milestone 0.41.1](https://github.com/sschmid/Entitas-CSharp/milestone/14)
