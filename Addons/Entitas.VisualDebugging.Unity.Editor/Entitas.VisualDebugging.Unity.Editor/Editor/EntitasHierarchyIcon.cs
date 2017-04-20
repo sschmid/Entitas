@@ -74,7 +74,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         static EntitasHierarchyIcon() {
             if (Preferences.HasProperties()) {
                 var config = new VisualDebuggingConfig();
-	            config.Configure(Preferences.LoadProperties());
+                config.Configure(Preferences.LoadProperties());
                 _systemWarningThreshold = config.systemWarningThreshold;
                 EditorApplication.hierarchyWindowItemOnGUI += onHierarchyWindowItemOnGUI;
             }
