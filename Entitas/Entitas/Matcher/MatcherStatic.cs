@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -32,13 +32,13 @@ namespace Entitas {
         static int[] mergeIndices(int[] allOfIndices, int[] anyOfIndices, int[] noneOfIndices) {
             var indicesList = EntitasCache.GetIntList();
 
-                if(allOfIndices != null) {
+                if (allOfIndices != null) {
                     indicesList.AddRange(allOfIndices);
                 }
-                if(anyOfIndices != null) {
+                if (anyOfIndices != null) {
                     indicesList.AddRange(anyOfIndices);
                 }
-                if(noneOfIndices != null) {
+                if (noneOfIndices != null) {
                     indicesList.AddRange(noneOfIndices);
                 }
 
@@ -53,7 +53,7 @@ namespace Entitas {
             var indices = new int[matchers.Length];
             for (int i = 0; i < matchers.Length; i++) {
                 var matcher = matchers[i];
-                if(matcher.indices.Length != 1) {
+                if (matcher.indices.Length != 1) {
                     throw new MatcherException(matcher.indices.Length);
                 }
                 indices[i] = matcher.indices[0];
@@ -65,7 +65,7 @@ namespace Entitas {
         static string[] getComponentNames(IMatcher<TEntity>[] matchers) {
             for (int i = 0; i < matchers.Length; i++) {
                 var matcher = matchers[i] as Matcher<TEntity>;
-                if(matcher != null && matcher.componentNames != null) {
+                if (matcher != null && matcher.componentNames != null) {
                     return matcher.componentNames;
                 }
             }
@@ -75,7 +75,7 @@ namespace Entitas {
 
         static void setComponentNames(Matcher<TEntity> matcher, IMatcher<TEntity>[] matchers) {
             var componentNames = getComponentNames(matchers);
-            if(componentNames != null) {
+            if (componentNames != null) {
                 matcher.componentNames = componentNames;
             }
         }
@@ -83,7 +83,7 @@ namespace Entitas {
         static int[] distinctIndices(IList<int> indices) {
             var indicesSet = EntitasCache.GetIntHashSet();
 
-                foreach(var index in indices) {
+                foreach (var index in indices) {
                     indicesSet.Add(index);
                 }
                 var uniqueIndices = new int[indicesSet.Count];

@@ -17,11 +17,11 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             var elementType = memberType.GetElementType();
             var indent = EditorGUI.indentLevel;
 
-            if(array.Rank == 1) {
+            if (array.Rank == 1) {
                 array = drawRank1(array, memberName, elementType, indent, target);
-            } else if(array.Rank == 2) {
+            } else if (array.Rank == 2) {
                 array = drawRank2(array, memberName, elementType, target);
-            } else if(array.Rank == 3) {
+            } else if (array.Rank == 3) {
                 array = drawRank3(array, memberName, elementType, target);
             }
 
@@ -38,7 +38,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         Array drawRank1(Array array, string memberName, Type elementType, int indent, object target) {
             var length = array.GetLength(0);
-            if(length == 0) {
+            if (length == 0) {
                 array = drawAddElement(array, memberName, elementType);
             } else {
                 EditorGUILayout.LabelField(memberName);
@@ -55,14 +55,14 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                                                   target, (newComponent, newValue) => array.SetValue(newValue, localIndex));
 
                     var action = drawEditActions(array, elementType, localIndex);
-                    if(action != null) {
+                    if (action != null) {
                         editAction = action;
                     }
                 }
                 EditorGUILayout.EndHorizontal();
             }
 
-            if(editAction != null) {
+            if (editAction != null) {
                 array = editAction();
             }
 
@@ -73,9 +73,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.LabelField(memberName, "empty");
-                if(EntitasEditorLayout.MiniButton("add " + elementType.ToCompilableString().ShortTypeName())) {
+                if (EntitasEditorLayout.MiniButton("add " + elementType.ToCompilableString().ShortTypeName())) {
                     object defaultValue;
-                    if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                    if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                         var newArray = Array.CreateInstance(elementType, 1);
                         newArray.SetValue(defaultValue, 0);
                         array = newArray;
@@ -136,8 +136,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static Func<Array> drawEditActions(Array array, Type elementType, int index) {
-            if(EntitasEditorLayout.MiniButtonLeft("↑")) {
-                if(index > 0) {
+            if (EntitasEditorLayout.MiniButtonLeft("↑")) {
+                if (index > 0) {
                     return () => {
                         var otherIndex = index - 1;
                         var other = array.GetValue(otherIndex);
@@ -148,8 +148,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
             }
 
-            if(EntitasEditorLayout.MiniButtonMid("↓")) {
-                if(index < array.Length - 1) {
+            if (EntitasEditorLayout.MiniButtonMid("↓")) {
+                if (index < array.Length - 1) {
                     return () => {
                         var otherIndex = index + 1;
                         var other = array.GetValue(otherIndex);
@@ -160,14 +160,14 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
             }
 
-            if(EntitasEditorLayout.MiniButtonMid("+")) {
+            if (EntitasEditorLayout.MiniButtonMid("+")) {
                 object defaultValue;
-                if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                     return () => arrayInsertAt(array, elementType, defaultValue, index + 1);
                 }
             }
 
-            if(EntitasEditorLayout.MiniButtonRight("-")) {
+            if (EntitasEditorLayout.MiniButtonRight("-")) {
                 return () => arrayRemoveAt(array, elementType, index);
             }
 

@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public partial class Contexts : Entitas.Core.IContexts {
+public partial class Contexts : Entitas.IContexts {
 
     public static Contexts sharedInstance {
         get {
@@ -24,7 +24,7 @@ public partial class Contexts : Entitas.Core.IContexts {
     public GameContext game { get; set; }
     public GameStateContext gameState { get; set; }
 
-    public Entitas.Core.IContext[] allContexts { get { return new Entitas.Core.IContext [] { game, gameState }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game, gameState }; } }
 
     public Contexts() {
         game = new GameContext();
@@ -66,7 +66,7 @@ public partial class Contexts {
         CreateContextObserver(gameState);
     }
 
-    public void CreateContextObserver(Entitas.Core.IContext context) {
+    public void CreateContextObserver(Entitas.IContext context) {
         try {
             if(UnityEngine.Application.isPlaying) {
                 var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);

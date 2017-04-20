@@ -33,7 +33,6 @@
   <ItemGroup>
     <Compile Include="Entitas.Utils\Utils\Caching\ObjectCache.cs" />
     <Compile Include="Entitas.Utils\Utils\Caching\ObjectPool.cs" />
-    <Compile Include="Entitas.Utils\Utils\Configuration\Config.cs" />
     <Compile Include="Entitas.Utils\Utils\Configuration\Preferences.cs" />
     <Compile Include="Entitas.Utils\Utils\Configuration\Properties.cs" />
     <Compile Include="Entitas.Utils\Utils\Extensions\AppDomainExtension.cs" />
@@ -43,6 +42,9 @@
     <Compile Include="Entitas.Utils\Utils\PublicMemberInfo\AttributeInfo.cs" />
     <Compile Include="Entitas.Utils\Utils\PublicMemberInfo\PublicMemberInfo.cs" />
     <Compile Include="Entitas.Utils\Utils\PublicMemberInfo\PublicMemberInfoExtension.cs" />
+    <Compile Include="Entitas.Utils\Utils\Configuration\AbstractConfigurableConfig.cs" />
+    <Compile Include="Entitas.Utils\Utils\Configuration\IConfigurable.cs" />
+    <Compile Include="Entitas.Utils\Utils\Extensions\DictionaryExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.Utils\" />

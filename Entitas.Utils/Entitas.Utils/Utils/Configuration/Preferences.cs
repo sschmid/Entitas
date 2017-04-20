@@ -1,26 +1,21 @@
-using System.IO;
+﻿using System.IO;
 
 namespace Entitas.Utils {
 
     public static class Preferences {
 
-        public static string configPath {
-            get { return _configPath ?? "Entitas.properties"; }
-            set { _configPath = value; }
+        public const string PATH = "Entitas.properties";
+
+        public static bool HasProperties() {
+            return File.Exists(PATH);
         }
 
-        static string _configPath;
-
-        public static Config LoadConfig() {
-            var config = File.Exists(configPath)
-                             ? File.ReadAllText(configPath)
-                             : string.Empty;
-
-            return new Config(config);
+        public static Properties LoadProperties() {
+            return new Properties(File.ReadAllText(PATH));
         }
 
-        public static void SaveConfig(Config config) {
-            File.WriteAllText(configPath, config.ToString());
+        public static void SaveProperties(Properties properties) {
+            File.WriteAllText(PATH, properties.ToString());
         }
     }
 }

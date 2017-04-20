@@ -29,11 +29,11 @@ namespace Entitas.Unity.Editor {
             this.localVersionString = localVersionString.Trim();
             this.remoteVersionString = remoteVersionString.Trim();
 
-            if(remoteVersionString != string.Empty) {
+            if (remoteVersionString != string.Empty) {
                 var localVersion = new Version(localVersionString);
                 var remoteVersion = new Version(remoteVersionString);
 
-                switch(remoteVersion.CompareTo(localVersion)) {
+                switch (remoteVersion.CompareTo(localVersion)) {
                     case 1:
                         _updateState = UpdateState.UpdateAvailable;
                         break;
@@ -102,9 +102,9 @@ namespace Entitas.Unity.Editor {
         }
 
         static void displayUpdateInfo(UpdateInfo info) {
-            switch(info.updateState) {
+            switch (info.updateState) {
                 case UpdateState.UpdateAvailable:
-                    if(EditorUtility.DisplayDialog("Entitas Update",
+                    if (EditorUtility.DisplayDialog("Entitas Update",
                             string.Format("A newer version of Entitas is available!\n\n" +
                             "Currently installed version: {0}\n" +
                             "New version: {1}", info.localVersionString, info.remoteVersionString),
@@ -121,7 +121,7 @@ namespace Entitas.Unity.Editor {
                     );
                     break;
                 case UpdateState.AheadOfLatestRelease:
-                    if(EditorUtility.DisplayDialog("Entitas Update",
+                    if (EditorUtility.DisplayDialog("Entitas Update",
                             string.Format("Your Entitas version seems to be newer than the latest release?!?\n\n" +
                             "Currently installed version: {0}\n" +
                             "Latest release: {1}", info.localVersionString, info.remoteVersionString),
@@ -132,7 +132,7 @@ namespace Entitas.Unity.Editor {
                     }
                     break;
                 case UpdateState.NoConnection:
-                    if(EditorUtility.DisplayDialog("Entitas Update",
+                    if (EditorUtility.DisplayDialog("Entitas Update",
                             "Could not request latest Entitas version!\n\n" +
                             "Make sure that you are connected to the internet.\n",
                             "Try again",

@@ -42,6 +42,8 @@ namespace PerformanceTests {
             run<CollectorIterateCollectedEntities>();
             run<CollectorActivate>();
 
+            run<Casting>();
+
             Console.WriteLine("\nPress any key...");
             Console.Read();
         }
@@ -82,7 +84,7 @@ namespace PerformanceTests {
 
         static void run<T>() where T : IPerformanceTest, new() {
             Thread.Sleep(100);
-            if(typeof(T) == typeof(EmptyTest)) {
+            if (typeof(T) == typeof(EmptyTest)) {
                 Console.WriteLine(string.Empty);
                 return;
             }

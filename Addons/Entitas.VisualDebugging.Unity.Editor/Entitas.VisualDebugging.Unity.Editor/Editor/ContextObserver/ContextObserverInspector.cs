@@ -18,7 +18,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 EditorGUILayout.LabelField("Reusable entities", contextObserver.context.reusableEntitiesCount.ToString());
 
                 var retainedEntitiesCount = contextObserver.context.retainedEntitiesCount;
-                if(retainedEntitiesCount != 0) {
+                if (retainedEntitiesCount != 0) {
                     var c = GUI.contentColor;
                     GUI.color = Color.red;
                     EditorGUILayout.LabelField("Retained entities", retainedEntitiesCount.ToString());
@@ -28,7 +28,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                 EditorGUILayout.BeginHorizontal();
                 {
-                    if(GUILayout.Button("Create Entity")) {
+                    if (GUILayout.Button("Create Entity")) {
                         var entity = contextObserver.context.CreateEntity();
                         var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
                                                     .Single(eb => eb.entity == entity);
@@ -38,7 +38,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                     var bgColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.red;
-                    if(GUILayout.Button("Destroy All Entities")) {
+                    if (GUILayout.Button("Destroy All Entities")) {
                         contextObserver.context.DestroyAllEntities();
                     }
                     GUI.backgroundColor = bgColor;
@@ -48,11 +48,11 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             EntitasEditorLayout.EndVerticalBox();
 
             var groups = contextObserver.groups;
-            if(groups.Length != 0) {
+            if (groups.Length != 0) {
                 EntitasEditorLayout.BeginVerticalBox();
                 {
                     EditorGUILayout.LabelField("Groups (" + groups.Length + ")", EditorStyles.boldLabel);
-                    foreach(var group in groups.OrderByDescending(g => g.count)) {
+                    foreach (var group in groups.OrderByDescending(g => g.count)) {
                         EditorGUILayout.BeginHorizontal();
                         {
                             EditorGUILayout.LabelField(group.ToString());

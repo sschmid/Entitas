@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
@@ -11,25 +12,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
 
-        public Dictionary<string, string> defaultProperties {
-            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
-        }
-
-        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
-
-        Dictionary<string, string> properties {
-            get {
-                if(_properties == null) {
-                    _properties = defaultProperties;
-                }
-
-                return _properties;
-            }
-        }
-
-        Dictionary<string, string> _properties;
+        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         public const string COMPONENTS_LOOKUP = "ComponentsLookup";
 
@@ -62,8 +47,8 @@ ${componentTypes}
         const string COMPONENT_TYPES_TEMPLATE =
 @"        typeof(${ComponentType})";
 
-        public void Configure(Dictionary<string, string> properties) {
-            _properties = properties;
+        public void Configure(Properties properties) {
+            _ignoreNamespacesConfig.Configure(properties);
         }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
@@ -103,8 +88,8 @@ ${componentTypes}
             var contextNameToComponentData = data
                 .Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) => {
                     var contextNames = d.GetContextNames();
-                    foreach(var contextName in contextNames) {
-                        if(!dict.ContainsKey(contextName)) {
+                    foreach (var contextName in contextNames) {
+                        if (!dict.ContainsKey(contextName)) {
                             dict.Add(contextName, new List<ComponentData>());
                         }
 
@@ -114,7 +99,7 @@ ${componentTypes}
                     return dict;
                 });
 
-            foreach(var key in contextNameToComponentData.Keys.ToArray()) {
+            foreach (var key in contextNameToComponentData.Keys.ToArray()) {
                 contextNameToComponentData[key] = contextNameToComponentData[key]
                     .OrderBy(d => d.GetFullTypeName())
                     .ToList();
@@ -129,7 +114,7 @@ ${componentTypes}
             var componentConstants = string.Join("\n", data
                 .Select((d, index) => {
                     return COMPONENT_CONSTANTS_TEMPLATE
-                    .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(ignoreNamespaces))
+                    .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                         .Replace("${Index}", index.ToString());
                 }).ToArray());
 
@@ -138,7 +123,7 @@ ${componentTypes}
 
             var componentNames = string.Join(",\n", data
                 .Select(d => COMPONENT_NAMES_TEMPLATE
-                        .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(ignoreNamespaces))
+                        .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                 ).ToArray());
 
             var componentTypes = string.Join(",\n", data

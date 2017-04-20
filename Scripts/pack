@@ -18,7 +18,6 @@ cp "${BUILD_SRC}/${ES_MIG}.dll" "$COLLECTED_DIR/Migration/${ES_MIG}.dll"
 cp "${BUILD_SRC}/${ES_UTILS}.dll" "$COLLECTED_DIR/Migration/${ES_UTILS}.dll"
 
 cp "${ADDONS}/${ES_UE}/${ES_UE}/Editor/Images/"* "$COLLECTED_DIR/Images"
-cp "${ADDONS}/${ES_MIG_UE}/${ES_MIG_UE}/Editor/Images/"* "$COLLECTED_DIR/Images"
 cp "${ADDONS}/${ES_VD_UE}/${ES_VD_UE}/Editor/Images/"* "$COLLECTED_DIR/Images"
 
 TMP_DIR="${BUILD}/tmp"
@@ -61,6 +60,7 @@ cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
 cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/${ES_CG_P}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/${ES_CG_UE}.dll" $TMP_EDITOR
+cp "${BUILD_SRC}/Compile.cs" $TMP_ENTITAS
 
 cp "${BUILD_SRC}/${ES_MIG}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/${ES_MIG_UE}.dll" $TMP_EDITOR

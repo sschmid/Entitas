@@ -21,26 +21,26 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
             EditorGUILayout.BeginHorizontal();
             {
-                if(isEmpty) {
+                if (isEmpty) {
                     EditorGUILayout.LabelField(memberName, "empty");
                 } else {
                     EditorGUILayout.LabelField(memberName);
                 }
 
-                if(EntitasEditorLayout.MiniButton("new " + elementType.ToCompilableString().ShortTypeName())) {
+                if (EntitasEditorLayout.MiniButton("new " + elementType.ToCompilableString().ShortTypeName())) {
                     object defaultValue;
-                    if(EntityDrawer.CreateDefault(elementType, out defaultValue)) {
+                    if (EntityDrawer.CreateDefault(elementType, out defaultValue)) {
                         itemsToAdd.Add(defaultValue);
                     }
                 }
             }
             EditorGUILayout.EndHorizontal();
 
-            if(!isEmpty) {
+            if (!isEmpty) {
                 EditorGUILayout.Space();
                 var indent = EditorGUI.indentLevel;
                 EditorGUI.indentLevel = indent + 1;
-                foreach(var item in (IEnumerable)value) {
+                foreach (var item in (IEnumerable)value) {
                     EditorGUILayout.BeginHorizontal();
                     {
                         EntityDrawer.DrawObjectMember(elementType, string.Empty, item,
@@ -49,7 +49,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                             itemsToAdd.Add(newValue);
                         });
 
-                        if(EntitasEditorLayout.MiniButton("-")) {
+                        if (EntitasEditorLayout.MiniButton("-")) {
                             itemsToRemove.Add(item);
                         }
                     }
@@ -59,11 +59,11 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 EditorGUI.indentLevel = indent;
             }
 
-            foreach(var item in itemsToRemove) {
+            foreach (var item in itemsToRemove) {
                 memberType.GetMethod("Remove").Invoke(value, new [] { item });
             }
 
-            foreach(var item in itemsToAdd) {
+            foreach (var item in itemsToAdd) {
                 memberType.GetMethod("Add").Invoke(value, new [] { item });
             }
 

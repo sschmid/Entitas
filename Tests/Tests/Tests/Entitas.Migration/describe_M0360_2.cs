@@ -25,7 +25,7 @@ class describe_M0360_2 : nspec {
             //var updatedFiles = m.Migrate(dir);
             //var systemFile = updatedFiles.Single(file => file.fileName == Path.Combine(dir, "AddViewFromObjectPoolSystem.cs"));
 
-            //if(systemFile.fileContent != expected) {
+            //if (systemFile.fileContent != expected) {
             //System.Console.WriteLine(systemFile.fileContent);
             //}
 

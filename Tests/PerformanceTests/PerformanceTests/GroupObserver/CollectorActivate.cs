@@ -12,7 +12,7 @@ public class CollectorActivate : IPerformanceTest {
     }
 
     public void Run() {
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             _collector.Activate();
         }
     }

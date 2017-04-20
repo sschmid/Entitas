@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Entitas.Utils;
 using UnityEditor;
@@ -10,17 +10,17 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Dictionary<IContext, bool[]> _contextToUnfoldedComponents;
         public static Dictionary<IContext, bool[]> contextToUnfoldedComponents {
-            get { if(_contextToUnfoldedComponents == null) { _contextToUnfoldedComponents = new Dictionary<IContext, bool[]>(); } return _contextToUnfoldedComponents; }
+            get { if (_contextToUnfoldedComponents == null) { _contextToUnfoldedComponents = new Dictionary<IContext, bool[]>(); } return _contextToUnfoldedComponents; }
         }
 
         static Dictionary<IContext, string[]> _contextToComponentMemberSearch;
         public static Dictionary<IContext, string[]> contextToComponentMemberSearch {
-            get { if(_contextToComponentMemberSearch == null) { _contextToComponentMemberSearch = new Dictionary<IContext, string[]>(); } return _contextToComponentMemberSearch; }
+            get { if (_contextToComponentMemberSearch == null) { _contextToComponentMemberSearch = new Dictionary<IContext, string[]>(); } return _contextToComponentMemberSearch; }
         }
 
         static Dictionary<IContext, GUIStyle[]> _contextToColoredBoxStyles;
         public static Dictionary<IContext, GUIStyle[]> contextToColoredBoxStyles {
-            get { if(_contextToColoredBoxStyles == null) { _contextToColoredBoxStyles = new Dictionary<IContext, GUIStyle[]>(); } return _contextToColoredBoxStyles; }
+            get { if (_contextToColoredBoxStyles == null) { _contextToColoredBoxStyles = new Dictionary<IContext, GUIStyle[]>(); } return _contextToColoredBoxStyles; }
         }
 
         public struct ComponentInfo {
@@ -31,17 +31,17 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Dictionary<IContext, ComponentInfo[]> _contextToComponentInfos;
         public static Dictionary<IContext, ComponentInfo[]> contextToComponentInfos {
-            get { if(_contextToComponentInfos == null) { _contextToComponentInfos = new Dictionary<IContext, ComponentInfo[]>(); } return _contextToComponentInfos; }
+            get { if (_contextToComponentInfos == null) { _contextToComponentInfos = new Dictionary<IContext, ComponentInfo[]>(); } return _contextToComponentInfos; }
         }
 
         static GUIStyle _foldoutStyle;
         public static GUIStyle foldoutStyle {
-            get { if(_foldoutStyle == null) { _foldoutStyle = new GUIStyle(EditorStyles.foldout); _foldoutStyle.fontStyle = FontStyle.Bold; } return _foldoutStyle; }
+            get { if (_foldoutStyle == null) { _foldoutStyle = new GUIStyle(EditorStyles.foldout); _foldoutStyle.fontStyle = FontStyle.Bold; } return _foldoutStyle; }
         }
 
         static string _componentNameSearchString;
         public static string componentNameSearchString {
-            get { if(_componentNameSearchString == null) { _componentNameSearchString = string.Empty; } return _componentNameSearchString; }
+            get { if (_componentNameSearchString == null) { _componentNameSearchString = string.Empty; } return _componentNameSearchString; }
             set { _componentNameSearchString = value; }
         }
 
@@ -57,7 +57,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static bool[] getUnfoldedComponents(IContext context) {
             bool[] unfoldedComponents;
-            if(!contextToUnfoldedComponents.TryGetValue(context, out unfoldedComponents)) {
+            if (!contextToUnfoldedComponents.TryGetValue(context, out unfoldedComponents)) {
                 unfoldedComponents = new bool[context.totalComponents];
                 for (int i = 0; i < unfoldedComponents.Length; i++) {
                     unfoldedComponents[i] = true;
@@ -70,7 +70,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static string[] getComponentMemberSearch(IContext context) {
             string[] componentMemberSearch;
-            if(!contextToComponentMemberSearch.TryGetValue(context, out componentMemberSearch)) {
+            if (!contextToComponentMemberSearch.TryGetValue(context, out componentMemberSearch)) {
                 componentMemberSearch = new string[context.totalComponents];
                 for (int i = 0; i < componentMemberSearch.Length; i++) {
                     componentMemberSearch[i] = string.Empty;
@@ -83,7 +83,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static ComponentInfo[] getComponentInfos(IContext context) {
             ComponentInfo[] infos;
-            if(!contextToComponentInfos.TryGetValue(context, out infos)) {
+            if (!contextToComponentInfos.TryGetValue(context, out infos)) {
                 var contextInfo = context.contextInfo;
                 var infosList = new List<ComponentInfo>(contextInfo.componentTypes.Length);
                 for (int i = 0; i < contextInfo.componentTypes.Length; i++) {
@@ -102,7 +102,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static GUIStyle getColoredBoxStyle(IContext context, int index) {
             GUIStyle[] styles;
-            if(!contextToColoredBoxStyles.TryGetValue(context, out styles)) {
+            if (!contextToColoredBoxStyles.TryGetValue(context, out styles)) {
                 styles = new GUIStyle[context.totalComponents];
                 for (int i = 0; i < styles.Length; i++) {
                     var hue = (float)i / (float)context.totalComponents;
@@ -130,8 +130,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static IComponentDrawer getComponentDrawer(Type type) {
-            foreach(var drawer in _componentDrawers) {
-                if(drawer.HandlesType(type)) {
+            foreach (var drawer in _componentDrawers) {
+                if (drawer.HandlesType(type)) {
                     return drawer;
                 }
             }
@@ -140,8 +140,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static ITypeDrawer getTypeDrawer(Type type) {
-            foreach(var drawer in _typeDrawers) {
-                if(drawer.HandlesType(type)) {
+            foreach (var drawer in _typeDrawers) {
+                if (drawer.HandlesType(type)) {
                     return drawer;
                 }
             }

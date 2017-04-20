@@ -3,8 +3,7 @@
     public static class GroupExtension {
 
         /// Creates an Collector for this group.
-        public static Collector<TEntity> CreateCollector<TEntity>(this IGroup<TEntity> group, GroupEvent groupEvent = GroupEvent.Added)
-            where TEntity : class, IEntity, new() {
+        public static Collector<TEntity> CreateCollector<TEntity>(this IGroup<TEntity> group, GroupEvent groupEvent = GroupEvent.Added) where TEntity : class, IEntity, new() {
             return new Collector<TEntity>(group, groupEvent);
         }
     }

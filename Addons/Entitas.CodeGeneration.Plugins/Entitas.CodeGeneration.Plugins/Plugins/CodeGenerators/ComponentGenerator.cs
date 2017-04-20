@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using Entitas.Utils;
 
@@ -30,7 +30,7 @@ public sealed partial class ${FullComponentName} : Entitas.IComponent {
             var fullComponentName = data.GetFullTypeName().RemoveDots();
             var contexts = string.Join(", ", data.GetContextNames());
             var unique = data.IsUnique() ? "[Entitas.CodeGeneration.Attributes.UniqueAttribute]" : string.Empty;
-            if(!string.IsNullOrEmpty(contexts)) {
+            if (!string.IsNullOrEmpty(contexts)) {
                 contexts = "[" + contexts + "]";
             }
 

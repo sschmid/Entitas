@@ -1,7 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Entitas.CodeGeneration.Attributes;
-using Entitas.Core;
+using Entitas;
 using Entitas.VisualDebugging.Unity;
 using UnityEngine;
 

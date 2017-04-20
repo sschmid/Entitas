@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace Entitas.Unity.Editor {
             var clicked = false;
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(label, GUILayout.Width(146));
-            if(buttonText.Length > 24) {
+            if (buttonText.Length > 24) {
                 buttonText = "..." + buttonText.Substring(buttonText.Length - 24);
             }
             clicked = (GUILayout.Button(buttonText, EditorStyles.objectField));
@@ -21,9 +21,9 @@ namespace Entitas.Unity.Editor {
         }
 
         public static string ObjectFieldOpenFolderPanel(string label, string buttonText, string defaultPath) {
-            if(ObjectFieldButton(label, buttonText)) {
+            if (ObjectFieldButton(label, buttonText)) {
                 var path = defaultPath ?? "Assets/";
-                if(!Directory.Exists(path)) {
+                if (!Directory.Exists(path)) {
                     path = "Assets/";
                 }
                 path = EditorUtility.OpenFolderPanel(label, path, string.Empty);
@@ -34,9 +34,9 @@ namespace Entitas.Unity.Editor {
         }
 
         public static string ObjectFieldOpenFilePanel(string label, string buttonText, string defaultPath) {
-            if(ObjectFieldButton(label, buttonText)) {
+            if (ObjectFieldButton(label, buttonText)) {
                 var path = defaultPath ?? "Assets/";
-                if(!File.Exists(path)) {
+                if (!File.Exists(path)) {
                     path = "Assets/";
                 }
                 path = EditorUtility.OpenFilePanel(label, path, "dll");
@@ -68,7 +68,7 @@ namespace Entitas.Unity.Editor {
                 : new GUILayoutOption[0];
 
             var clicked = GUILayout.Button(c, style, options);
-            if(clicked) {
+            if (clicked) {
                 GUI.FocusControl(null);
             }
             return clicked;
@@ -92,7 +92,7 @@ namespace Entitas.Unity.Editor {
             var guiChanged = GUI.changed;
             GUILayout.BeginHorizontal();
             searchString = GUILayout.TextField(searchString, GUI.skin.FindStyle("ToolbarSeachTextField"));
-            if(GUILayout.Button(string.Empty, GUI.skin.FindStyle("ToolbarSeachCancelButton"))) {
+            if (GUILayout.Button(string.Empty, GUI.skin.FindStyle("ToolbarSeachCancelButton"))) {
                 searchString = string.Empty;
             }
             GUILayout.EndHorizontal();
@@ -102,13 +102,13 @@ namespace Entitas.Unity.Editor {
         }
 
         public static bool MatchesSearchString(string str, string search) {
-            var searches = search.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if(searches.Length == 0) {
+            var searches = search.Split(new [] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (searches.Length == 0) {
                 return true;
             }
 
-            for(int i = 0; i < searches.Length; i++) {
-                if(str.Contains(searches[i])) {
+            for (int i = 0; i < searches.Length; i++) {
+                if (str.Contains(searches[i])) {
                     return true;
                 }
             }

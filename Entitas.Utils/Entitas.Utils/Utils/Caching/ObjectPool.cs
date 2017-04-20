@@ -22,7 +22,7 @@ namespace Entitas.Utils {
         }
 
         public void Push(T obj) {
-            if(_resetMethod != null) {
+            if (_resetMethod != null) {
                 _resetMethod(obj);
             }
             _objectPool.Push(obj);

@@ -22,92 +22,52 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         string[] _availableGeneratorNames;
         string[] _availablePostProcessorNames;
 
+        Properties _properties;
+        Type[] _types;
+
         CodeGeneratorConfig _codeGeneratorConfig;
-        List<string> _contexts;
-        UnityEditorInternal.ReorderableList _contextList;
 
-        Exception _configException;
+        public override void Initialize(Properties properties) {
+            _properties = properties;
+            _codeGeneratorConfig = new CodeGeneratorConfig();
+            properties.AddProperties(_codeGeneratorConfig.defaultProperties, false);
+            _codeGeneratorConfig.Configure(properties);
 
-        public override void Initialize(Config config) {
-            Type[] types = null;
-            try {
-                types = CodeGeneratorUtil.LoadTypesFromCodeGeneratorAssemblies();
-            } catch(Exception ex) {
-                _configException = ex;
-            }
+            _types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
 
-            if(_configException == null) {
-                var defaultEnabledDataProviderNames = initPhase<ICodeGeneratorDataProvider>(types, out _availableDataProviderTypes, out _availableDataProviderNames);
-                var defaultEnabledGeneratorNames = initPhase<ICodeGenerator>(types, out _availableGeneratorTypes, out _availableGeneratorNames);
-                var defaultEnabledPostProcessorNames = initPhase<ICodeGenFilePostProcessor>(types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
+            initPhase<ICodeGeneratorDataProvider>(_types, out _availableDataProviderTypes, out _availableDataProviderNames);
+            initPhase<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
+            initPhase<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
 
-                _codeGeneratorConfig = new CodeGeneratorConfig(config, defaultEnabledDataProviderNames, defaultEnabledGeneratorNames, defaultEnabledPostProcessorNames);
-
-                _contexts = new List<string>(_codeGeneratorConfig.contexts);
-
-                _contextList = new UnityEditorInternal.ReorderableList(_contexts, typeof(string), true, true, true, true);
-                _contextList.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Contexts");
-                _contextList.drawElementCallback = (rect, index, isActive, isFocused) => {
-                    rect.width -= 20;
-                    _contexts[index] = EditorGUI.TextField(rect, _contexts[index]);
-                };
-                _contextList.onAddCallback = list => list.list.Add("New Context");
-                _contextList.onCanRemoveCallback = list => list.count > 1;
-                _contextList.onChangedCallback = list => GUI.changed = true;
-            }
+            _properties.AddProperties(getConfigurables(), false);
         }
 
-        protected override void drawContent(Config config) {
-            if(_configException == null) {
-                drawTargetFolder();
-                drawContexts();
+        protected override void drawContent(Properties properties) {
+            _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
+            _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
+            _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
 
-                _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
-                _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
-                _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
-
-                drawGenerateButton();
-            } else {
-                var style = new GUIStyle(GUI.skin.label);
-                style.wordWrap = true;
-                EditorGUILayout.LabelField(_configException.Message, style);
-            }
-        }
-
-        void drawTargetFolder() {
-            var path = EntitasEditorLayout.ObjectFieldOpenFolderPanel(
-                "Target Directory",
-                _codeGeneratorConfig.targetDirectory,
-                _codeGeneratorConfig.targetDirectory
-            );
-            if(!string.IsNullOrEmpty(path)) {
-                _codeGeneratorConfig.targetDirectory = path;
-            }
-        }
-
-        void drawContexts() {
             EditorGUILayout.Space();
+            drawConfigurables();
 
-            EditorGUILayout.BeginHorizontal();
-            {
-                GUILayout.Space(5);
-                EditorGUILayout.BeginVertical();
-                {
-                    _contextList.DoLayoutList();
-                }
-                EditorGUILayout.EndVertical();
-                GUILayout.Space(4);
+            drawGenerateButton();
+        }
+
+        Dictionary<string, string> getConfigurables() {
+            return CodeGeneratorUtil.GetConfigurables(
+                CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(_types, _codeGeneratorConfig.dataProviders),
+                CodeGeneratorUtil.GetUsed<ICodeGenerator>(_types, _codeGeneratorConfig.codeGenerators),
+                CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(_types, _codeGeneratorConfig.postProcessors)
+            );
+        }
+
+        void drawConfigurables() {
+            var configurables = getConfigurables();
+            _properties.AddProperties(configurables, false);
+
+            foreach (var kv in configurables) {
+                _properties[kv.Key] = EditorGUILayout.TextField(kv.Key.ShortTypeName().ToSpacedCamelCase(), _properties[kv.Key]);
             }
-            EditorGUILayout.EndHorizontal();
-
-            if(_contexts.Count <= 1) {
-                EditorGUILayout.HelpBox("You can optimize the memory footprint of entities by creating multiple contexts. " +
-                "The code generator generates subclasses of ContextAttribute for each context name. " +
-                "You have to assign components to one or more contexts with the generated attribute, e.g. [Game] or [Input], " +
-                "otherwise they will be ignored by the code generator.", MessageType.Info);
-            }
-
-            _codeGeneratorConfig.contexts = _contexts.ToArray();
         }
 
         static string[] initPhase<T>(Type[] types, out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {
@@ -130,8 +90,8 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         static string[] drawMaskField(string title, string[] types, string[] names, string[] input) {
             var mask = 0;
 
-            for(int i = 0; i < types.Length; i++) {
-                if(input.Contains(types[i])) {
+            for (int i = 0; i < types.Length; i++) {
+                if (input.Contains(types[i])) {
                     mask += (1 << i);
                 }
             }
@@ -139,9 +99,9 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             mask = EditorGUILayout.MaskField(title, mask, names);
 
             var selected = new List<string>();
-            for(int i = 0; i < types.Length; i++) {
+            for (int i = 0; i < types.Length; i++) {
                 var index = 1 << i;
-                if((index & mask) == index) {
+                if ((index & mask) == index) {
                     selected.Add(types[i]);
                 }
             }
@@ -152,7 +112,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         void drawGenerateButton() {
             var bgColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.green;
-            if(GUILayout.Button("Generate", GUILayout.Height(32))) {
+            if (GUILayout.Button("Generate", GUILayout.Height(32))) {
                 UnityCodeGenerator.Generate();
             }
             GUI.backgroundColor = bgColor;

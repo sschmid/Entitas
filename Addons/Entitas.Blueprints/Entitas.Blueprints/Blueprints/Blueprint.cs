@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Entitas.Blueprints {
 
@@ -16,7 +16,7 @@ namespace Entitas.Blueprints {
             this.contextIdentifier = contextIdentifier;
             this.name = name;
 
-            if(entity != null) {
+            if (entity != null) {
                 var allComponents = entity.GetComponents();
                 var componentIndices = entity.GetComponentIndices();
                 components = new ComponentBlueprint[allComponents.Length];

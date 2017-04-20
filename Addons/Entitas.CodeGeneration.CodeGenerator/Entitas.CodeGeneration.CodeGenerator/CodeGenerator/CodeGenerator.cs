@@ -19,11 +19,9 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                              ICodeGenerator[] codeGenerators,
                              ICodeGenFilePostProcessor[] postProcessors) {
 
-            _dataProviders = dataProviders;
-            _codeGenerators = codeGenerators;
-            _postProcessors = postProcessors
-                .OrderBy(pp => pp.priority)
-                .ToArray();
+            _dataProviders = dataProviders.OrderBy(i => i.priority).ToArray();
+            _codeGenerators = codeGenerators.OrderBy(i => i.priority).ToArray();
+            _postProcessors = postProcessors.OrderBy(i => i.priority).ToArray();
         }
 
         public CodeGenFile[] DryRun() {
@@ -52,13 +50,13 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             var total = dataProviders.Length + codeGenerators.Length + postProcessors.Length;
             int progress = 0;
 
-            foreach(var dataProvider in dataProviders) {
-                if(_cancel) {
+            foreach (var dataProvider in dataProviders) {
+                if (_cancel) {
                     return new CodeGenFile[0];
                 }
 
                 progress += 1;
-                if(OnProgress != null) {
+                if (OnProgress != null) {
                     OnProgress(messagePrefix + "Creating model", dataProvider.name, (float)progress / total);
                 }
 
@@ -67,13 +65,13 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
             var files = new List<CodeGenFile>();
             var dataArray = data.ToArray();
-            foreach(var generator in codeGenerators) {
-                if(_cancel) {
+            foreach (var generator in codeGenerators) {
+                if (_cancel) {
                     return new CodeGenFile[0];
                 }
 
                 progress += 1;
-                if(OnProgress != null) {
+                if (OnProgress != null) {
                     OnProgress(messagePrefix + "Creating files", generator.name, (float)progress / total);
                 }
 
@@ -81,13 +79,13 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             }
 
             var generatedFiles = files.ToArray();
-            foreach(var postProcessor in postProcessors) {
-                if(_cancel) {
+            foreach (var postProcessor in postProcessors) {
+                if (_cancel) {
                     return new CodeGenFile[0];
                 }
 
                 progress += 1;
-                if(OnProgress != null) {
+                if (OnProgress != null) {
                     OnProgress(messagePrefix + "Processing files", postProcessor.name, (float)progress / total);
                 }
 

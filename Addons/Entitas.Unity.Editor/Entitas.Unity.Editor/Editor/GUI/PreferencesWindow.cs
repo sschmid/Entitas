@@ -14,7 +14,7 @@ namespace Entitas.Unity.Editor {
         }
 
         Texture2D _headerTexture;
-        Config _config;
+        Properties _properties;
         IEntitasPreferencesDrawer[] _preferencesDrawers;
         Vector2 _scrollViewPosition;
 
@@ -22,22 +22,23 @@ namespace Entitas.Unity.Editor {
 
         void OnEnable() {
             _headerTexture = EntitasEditorLayout.LoadTexture("l:EntitasHeader");
+            _preferencesDrawers = AppDomain.CurrentDomain
+                                           .GetInstancesOf<IEntitasPreferencesDrawer>()
+                                           .OrderBy(drawer => drawer.priority)
+                                           .ToArray();
 
             try {
-                _config = Preferences.LoadConfig();
+                _properties = Preferences.HasProperties()
+                                         ? Preferences.LoadProperties()
+                                         : new Properties();
+
+                foreach (var drawer in _preferencesDrawers) {
+                    drawer.Initialize(_properties);
+                }
+
+                Preferences.SaveProperties(_properties);
             } catch(Exception ex) {
                 _configException = ex;
-            }
-
-            if(_configException == null) {
-                _preferencesDrawers = AppDomain.CurrentDomain
-                                               .GetInstancesOf<IEntitasPreferencesDrawer>()
-                                               .OrderBy(drawer => drawer.priority)
-                                               .ToArray();
-
-                foreach(var drawer in _preferencesDrawers) {
-                    drawer.Initialize(_config);
-                }
             }
         }
 
@@ -50,27 +51,27 @@ namespace Entitas.Unity.Editor {
             }
             EditorGUILayout.EndScrollView();
 
-            if(GUI.changed) {
-                Preferences.SaveConfig(_config);
+            if (GUI.changed) {
+                Preferences.SaveProperties(_properties);
             }
         }
 
         void drawToolbar() {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
-                if(GUILayout.Button("Check for Updates", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Check for Updates", EditorStyles.toolbarButton)) {
                     CheckForUpdates.DisplayUpdates();
                 }
-                if(GUILayout.Button("Chat", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Chat", EditorStyles.toolbarButton)) {
                     EntitasFeedback.EntitasChat();
                 }
-                if(GUILayout.Button("Docs", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Docs", EditorStyles.toolbarButton)) {
                     EntitasFeedback.EntitasDocs();
                 }
-                if(GUILayout.Button("Wiki", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Wiki", EditorStyles.toolbarButton)) {
                     EntitasFeedback.EntitasWiki();
                 }
-                if(GUILayout.Button("Donate", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Donate", EditorStyles.toolbarButton)) {
                     EntitasFeedback.Donate();
                 }
             }
@@ -79,24 +80,38 @@ namespace Entitas.Unity.Editor {
 
         void drawHeader() {
             var rect = EntitasEditorLayout.DrawTexture(_headerTexture);
-            if(rect.Contains(Event.current.mousePosition) && Event.current.clickCount > 0) {
+            if (rect.Contains(Event.current.mousePosition) && Event.current.clickCount > 0) {
                 Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/blob/develop/README.md");
             }
         }
 
         void drawPreferencesDrawers() {
-            if(_configException == null) {
-                for(int i = 0; i < _preferencesDrawers.Length; i++) {
-                    _preferencesDrawers[i].Draw(_config);
-                    if(i < _preferencesDrawers.Length -1) {
+            if (_configException == null) {
+                for (int i = 0; i < _preferencesDrawers.Length; i++) {
+                    try {
+                        _preferencesDrawers[i].Draw(_properties);
+                    } catch(Exception ex) {
+                        drawException(ex);
+                    }
+
+                    if (i < _preferencesDrawers.Length -1) {
                         EditorGUILayout.Space();
                     }
                 }
             } else {
-                EditorGUILayout.LabelField("Entitas.properties is not in a correct format.");
-                EditorGUILayout.Space();
-                EditorGUILayout.LabelField(_configException.Message);
+                drawException(_configException);
             }
+        }
+
+        void drawException(Exception exception) {
+            var style = new GUIStyle(GUI.skin.label);
+            style.wordWrap = true;
+            style.normal.textColor = Color.red;
+
+            EditorGUILayout.LabelField(exception.Message, style);
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Please make sure Entitas.properties is set up correctly.");
         }
     }
 }

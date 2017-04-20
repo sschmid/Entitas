@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Entitas.Migration {
@@ -23,7 +23,7 @@ namespace Entitas.Migration {
 
         MigrationFile[] updateNamespace(MigrationFile[] files, string oldNamespace, string newNamespace) {
             var filesToMigrate = files.Where(f => f.fileContent.Contains(oldNamespace)).ToArray();
-            foreach(var file in filesToMigrate) {
+            foreach (var file in filesToMigrate) {
                 file.fileContent = file.fileContent.Replace(oldNamespace, newNamespace);
             }
 

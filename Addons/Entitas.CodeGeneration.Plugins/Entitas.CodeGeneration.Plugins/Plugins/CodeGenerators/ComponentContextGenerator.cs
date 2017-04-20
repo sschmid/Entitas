@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Entitas.Utils;
@@ -12,25 +12,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
 
-        public Dictionary<string, string> defaultProperties {
-            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
-        }
-
-        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
-
-        Dictionary<string, string> properties {
-            get {
-                if(_properties == null) {
-                    _properties = defaultProperties;
-                }
-
-                return _properties;
-            }
-        }
-
-        Dictionary<string, string> _properties;
+        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string STANDARD_COMPONENT_TEMPLATE =
 @"public partial class ${ContextName}Context {
@@ -40,7 +24,7 @@ namespace Entitas.CodeGeneration.Plugins {
     public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
 
     public ${ContextName}Entity Set${ComponentName}(${memberArgs}) {
-        if(has${ComponentName}) {
+        if (has${ComponentName}) {
             throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
                 ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
         }
@@ -51,7 +35,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public void Replace${ComponentName}(${memberArgs}) {
         var entity = ${componentName}Entity;
-        if(entity == null) {
+        if (entity == null) {
             entity = Set${ComponentName}(${methodArgs});
         } else {
             entity.Replace${ComponentName}(${methodArgs});
@@ -79,8 +63,8 @@ namespace Entitas.CodeGeneration.Plugins {
         get { return ${componentName}Entity != null; }
         set {
             var entity = ${componentName}Entity;
-            if(value != (entity != null)) {
-                if(value) {
+            if (value != (entity != null)) {
+                if (value) {
                     CreateEntity().${prefixedComponentName} = true;
                 } else {
                     DestroyEntity(entity);
@@ -91,8 +75,8 @@ namespace Entitas.CodeGeneration.Plugins {
 }
 ";
 
-        public void Configure(Dictionary<string, string> properties) {
-            _properties = properties;
+        public void Configure(Properties properties) {
+            _ignoreNamespacesConfig.Configure(properties);
         }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
@@ -112,7 +96,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
             var memberData = data.GetMemberData();
-            var componentName = data.GetFullTypeName().ToComponentName(ignoreNamespaces);
+            var componentName = data.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var template = memberData.Length == 0
                                       ? FLAG_COMPONENT_TEMPLATE
                                       : STANDARD_COMPONENT_TEMPLATE;

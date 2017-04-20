@@ -1,24 +1,23 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class CleanTargetDirectoryPostProcessor : ICodeGenFilePostProcessor {
+    public class CleanTargetDirectoryPostProcessor : ICodeGenFilePostProcessor, IConfigurable {
 
         public string name { get { return "Clean target directory"; } }
         public int priority { get { return 0; } }
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return false; } }
 
-        readonly string _directory;
+        public Dictionary<string, string> defaultProperties { get { return _targetDirectoryConfig.defaultProperties; } }
 
-        public CleanTargetDirectoryPostProcessor() : this(new CodeGeneratorConfig(Preferences.LoadConfig()).targetDirectory) {
-        }
+        readonly TargetDirectoryConfig _targetDirectoryConfig = new TargetDirectoryConfig();
 
-        public CleanTargetDirectoryPostProcessor(string directory) {
-            _directory = directory.ToSafeDirectory();
+        public void Configure(Properties properties) {
+            _targetDirectoryConfig.Configure(properties);
         }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
@@ -27,9 +26,9 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         void cleanDir() {
-            if(Directory.Exists(_directory)) {
-                var files = new DirectoryInfo(_directory).GetFiles("*.cs", SearchOption.AllDirectories);
-                foreach(var file in files) {
+            if (Directory.Exists(_targetDirectoryConfig.targetDirectory)) {
+                var files = new DirectoryInfo(_targetDirectoryConfig.targetDirectory).GetFiles("*.cs", SearchOption.AllDirectories);
+                foreach (var file in files) {
                     try {
                         File.Delete(file.FullName);
                     } catch {
@@ -37,7 +36,7 @@ namespace Entitas.CodeGeneration.Plugins {
                     }
                 }
             } else {
-                Directory.CreateDirectory(_directory);
+                Directory.CreateDirectory(_targetDirectoryConfig.targetDirectory);
             }
         }
     }

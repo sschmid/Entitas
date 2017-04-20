@@ -19,7 +19,7 @@ namespace Entitas.CodeGeneration.Plugins {
 ";
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {
-            foreach(var file in files) {
+            foreach (var file in files) {
                 file.fileContent = string.Format(AUTO_GENERATED_HEADER_FORMAT, file.generatorName) + file.fileContent;
             }
 

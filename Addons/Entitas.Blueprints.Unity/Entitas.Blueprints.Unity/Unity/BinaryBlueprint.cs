@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ namespace Entitas.Blueprints.Unity {
 
         public Blueprint Deserialize() {
             Blueprint blueprint;
-            if(blueprintData == null || blueprintData.Length == 0) {
+            if (blueprintData == null || blueprintData.Length == 0) {
                 blueprint = new Blueprint(string.Empty, "New Blueprint", null);
             } else {
                 using (var stream = new MemoryStream(blueprintData)) {

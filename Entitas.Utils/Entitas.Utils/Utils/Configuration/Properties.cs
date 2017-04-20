@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -12,8 +12,15 @@ namespace Entitas.Utils {
 
         public int count { get { return _dict.Count; } }
 
+        const string placeholderPattern = @"\${(.+?)}";
+
         public string this[string key] {
-            get { return _dict[key]; }
+            get {
+                return Regex.Replace(
+                    _dict[key],
+                    placeholderPattern,
+                    match => _dict[match.Groups[1].Value]);
+            }
             set {
                 _dict[key.Trim()] = value
                     .TrimStart()
@@ -32,14 +39,25 @@ namespace Entitas.Utils {
             _dict = new Dictionary<string, string>();
             var lines = getLinesWithProperties(properties);
             addProperties(mergeMultilineValues(lines));
-            replacePlaceholders();
+        }
+
+        public Properties(Dictionary<string, string> properties) {
+            _dict = new Dictionary<string, string>(properties);
         }
 
         public bool HasKey(string key) {
             return _dict.ContainsKey(key);
         }
 
-        public void RemoveKey(string key) {
+        public void AddProperties(Dictionary<string, string> properties, bool overwriteExisting) {
+            foreach (var kv in properties) {
+                if (overwriteExisting || !HasKey(kv.Key)) {
+                    this[kv.Key] = kv.Value;
+                }
+            }
+        }
+
+        public void RemoveProperty(string key) {
             _dict.Remove(key);
         }
 
@@ -47,12 +65,26 @@ namespace Entitas.Utils {
             return new Dictionary<string, string>(_dict);
         }
 
+        void addProperties(string[] lines) {
+            var keyValueDelimiter = new [] { '=' };
+            var properties = lines.Select(
+                line => line.Split(keyValueDelimiter, 2)
+            );
+            foreach (var property in properties) {
+                if (property.Length != 2) {
+                    throw new InvalidKeyPropertiesException(property[0]);
+                }
+
+                this[property[0]] = property[1];
+            }
+        }
+
         static string convertLineEndings(string str) {
             return str.Replace("\r\n", "\n").Replace("\r", "\n");
         }
 
         static string[] getLinesWithProperties(string properties) {
-            var delimiter = new[] { '\n' };
+            var delimiter = new [] { '\n' };
             return properties
                 .Split(delimiter, StringSplitOptions.RemoveEmptyEntries)
                 .Select(line => line.TrimStart(' '))
@@ -64,7 +96,7 @@ namespace Entitas.Utils {
             var currentProperty = string.Empty;
             return lines.Aggregate(new List<string>(), (acc, line) => {
                 currentProperty += line;
-                if(currentProperty.EndsWith("\\", StringComparison.Ordinal)) {
+                if (currentProperty.EndsWith("\\", StringComparison.Ordinal)) {
                     currentProperty = currentProperty.Substring(
                         0, currentProperty.Length - 1
                     );
@@ -75,32 +107,6 @@ namespace Entitas.Utils {
 
                 return acc;
             }).ToArray();
-        }
-
-        void addProperties(string[] lines) {
-            var keyValueDelimiter = new[] { '=' };
-            var properties = lines.Select(
-                line => line.Split(keyValueDelimiter, 2)
-            );
-            foreach(var property in properties) {
-                if(property.Length != 2) {
-                    throw new InvalidKeyPropertiesException(property[0]);
-                }
-
-                this[property[0]] = property[1];
-            }
-        }
-
-        void replacePlaceholders() {
-            const string placeholderPattern = @"(?:(?<=\${).+?(?=}))";
-            foreach(var key in _dict.Keys.ToArray()) {
-                var matches = Regex.Matches(_dict[key], placeholderPattern);
-                foreach(Match match in matches) {
-                    _dict[key] = _dict[key].Replace(
-                        "${" + match.Value + "}", _dict[match.Value]
-                    );
-                }
-            }
         }
 
         public override string ToString() {

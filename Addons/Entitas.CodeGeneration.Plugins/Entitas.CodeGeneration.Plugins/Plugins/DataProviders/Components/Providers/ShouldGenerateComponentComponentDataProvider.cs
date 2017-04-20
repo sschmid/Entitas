@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -8,7 +8,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public void Provide(Type type, ComponentData data) {
             var shouldGenerateComponent = !type.ImplementsInterface<IComponent>();
             data.ShouldGenerateComponent(shouldGenerateComponent);
-            if(shouldGenerateComponent) {
+            if (shouldGenerateComponent) {
                 data.SetObjectType(type.ToCompilableString());
             }
         }

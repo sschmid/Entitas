@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -8,7 +8,7 @@ namespace Entitas {
         /// It will throw an exception if the collection doesn't have
         /// exactly one entity.
         public static IEntity SingleEntity(this ICollection<IEntity> collection) {
-            if(collection.Count != 1) {
+            if (collection.Count != 1) {
                 throw new SingleEntityException(collection.Count);
             }
 
@@ -19,7 +19,7 @@ namespace Entitas {
         /// It will throw an exception if the collection doesn't have
         /// exactly one entity.
         public static TEntity SingleEntity<TEntity>(this ICollection<TEntity> collection) where TEntity : class, IEntity, new() {
-            if(collection.Count != 1) {
+            if (collection.Count != 1) {
                 throw new SingleEntityException(collection.Count);
             }
 

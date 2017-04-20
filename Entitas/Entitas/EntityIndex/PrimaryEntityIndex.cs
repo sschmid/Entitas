@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -43,10 +43,10 @@ namespace Entitas {
         }
 
         protected override void clear() {
-            foreach(var entity in _index.Values) {
+            foreach (var entity in _index.Values) {
                 var safeAerc = entity.aerc as SafeAERC;
-                if(safeAerc != null) {
-                    if(safeAerc.owners.Contains(this)) {
+                if (safeAerc != null) {
+                    if (safeAerc.owners.Contains(this)) {
                         entity.Release(this);
                     }
                 } else {
@@ -58,7 +58,7 @@ namespace Entitas {
         }
 
         protected override void addEntity(TKey key, TEntity entity) {
-            if(_index.ContainsKey(key)) {
+            if (_index.ContainsKey(key)) {
                 throw new EntityIndexException(
                     "Entity for key '" + key + "' already exists!",
                     "Only one entity for a primary key is allowed.");
@@ -67,8 +67,8 @@ namespace Entitas {
             _index.Add(key, entity);
 
             var safeAerc = entity.aerc as SafeAERC;
-            if(safeAerc != null) {
-                if(!safeAerc.owners.Contains(this)) {
+            if (safeAerc != null) {
+                if (!safeAerc.owners.Contains(this)) {
                     entity.Retain(this);
                 }
             } else {
@@ -80,8 +80,8 @@ namespace Entitas {
             _index.Remove(key);
 
             var safeAerc = entity.aerc as SafeAERC;
-            if(safeAerc != null) {
-                if(safeAerc.owners.Contains(this)) {
+            if (safeAerc != null) {
+                if (safeAerc.owners.Contains(this)) {
                     entity.Release(this);
                 }
             } else {

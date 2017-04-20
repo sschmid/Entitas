@@ -20,7 +20,7 @@ public class CollectorDestructorController : MonoBehaviour {
         var context = Contexts.sharedInstance.game;
         for (int i = 0; i < 5000; i++) {
             var e = context.CreateEntity();
-            if(e == _initialEntity) {
+            if (e == _initialEntity) {
                 Debug.Log("Reusing entity!");
                 EditorApplication.isPlaying = false;
             }

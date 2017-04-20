@@ -7,6 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 [Game]
-public sealed partial class CoolNameComponent : Entitas.Core.IComponent {
+public sealed partial class CoolNameComponent : Entitas.IComponent {
     public BadName value;
 }

@@ -14,10 +14,10 @@ namespace Entitas.Utils {
         /// e.g. System.Collections.Generic.Dictionary<int, string> instead of
         /// System.Collections.Generic.Dictionary`2[System.Int32,System.String]
         public static string ToCompilableString(this Type type) {
-            if(_builtInTypesToString.ContainsKey(type.FullName)) {
+            if (_builtInTypesToString.ContainsKey(type.FullName)) {
                 return _builtInTypesToString[type.FullName];
             }
-            if(type.IsGenericType) {
+            if (type.IsGenericType) {
                 var genericMainType = type.FullName.Split('`')[0];
                 var genericArguments = type.GetGenericArguments().Select(
                     argType => argType.ToCompilableString()
@@ -25,11 +25,11 @@ namespace Entitas.Utils {
                 return genericMainType +
                     "<" + string.Join(", ", genericArguments) + ">";
             }
-            if(type.IsArray) {
+            if (type.IsArray) {
                 return type.GetElementType().ToCompilableString() +
                     "[" + new string(',', type.GetArrayRank() - 1) + "]";
             }
-            if(type.IsNested) {
+            if (type.IsNested) {
                 return type.FullName.Replace('+', '.');
             }
 
@@ -40,13 +40,13 @@ namespace Entitas.Utils {
         public static Type ToType(this string typeString) {
             var fullTypeName = generateTypeString(typeString);
             var type = Type.GetType(fullTypeName);
-            if(type != null) {
+            if (type != null) {
                 return type;
             }
 
-            foreach(var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
                 type = assembly.GetType(fullTypeName);
-                if(type != null) {
+                if (type != null) {
                     return type;
                 }
             }
@@ -64,7 +64,7 @@ namespace Entitas.Utils {
         }
 
         static string generateTypeString(string typeString) {
-            if(_builtInTypeStrings.ContainsKey(typeString)) {
+            if (_builtInTypeStrings.ContainsKey(typeString)) {
                 typeString = _builtInTypeStrings[typeString];
             } else {
                 typeString = generateGenericArguments(typeString);
@@ -76,7 +76,7 @@ namespace Entitas.Utils {
 
         static string generateGenericArguments(string typeString) {
             const string genericArgsPattern = @"<(?<arg>.*)>";
-            var separator = new[] { ", " };
+            var separator = new [] { ", " };
             typeString = Regex.Replace(typeString, genericArgsPattern,
                 m => {
                     var ts = generateTypeString(m.Groups["arg"].Value);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -15,25 +15,19 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
-
         public Dictionary<string, string> defaultProperties {
-            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
-        }
-
-        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
-
-        Dictionary<string, string> properties {
             get {
-                if(_properties == null) {
-                    _properties = defaultProperties;
-                }
-
-                return _properties;
+                return _assembliesConfig.defaultProperties
+                       .Merge(_contextNamesConfig.defaultProperties,
+                              _ignoreNamespacesConfig.defaultProperties);
             }
         }
 
-        Dictionary<string, string> _properties;
+        readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
+        readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
+        readonly ContextNamesConfig _contextNamesConfig = new ContextNamesConfig();
+        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
+
         Type[] _types;
 
         public EntityIndexDataProvider() : this(null) {
@@ -43,13 +37,18 @@ namespace Entitas.CodeGeneration.Plugins {
             _types = types;
         }
 
-        public void Configure(Dictionary<string, string> properties) {
-            _properties = properties;
+        public void Configure(Properties properties) {
+            _codeGeneratorConfig.Configure(properties);
+            _assembliesConfig.Configure(properties);
+            _contextNamesConfig.Configure(properties);
+            _ignoreNamespacesConfig.Configure(properties);
         }
 
         public CodeGeneratorData[] GetData() {
-            if(_types == null) {
-                _types = CodeGeneratorUtil.LoadTypesFromAssemblies();
+            if (_types == null) {
+                _types = PluginUtil
+                    .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
+                    .GetTypes();
             }
 
             var entityIndexData = _types
@@ -79,11 +78,11 @@ namespace Entitas.CodeGeneration.Plugins {
 
             data.SetEntityIndexType(getEntityIndexType(attribute));
             data.IsCustom(false);
-            data.SetEntityIndexName(type.ToCompilableString().ToComponentName(ignoreNamespaces));
+            data.SetEntityIndexName(type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces));
             data.SetKeyType(info.type.ToCompilableString());
             data.SetComponentType(type.ToCompilableString());
             data.SetMemberName(info.name);
-            data.SetContextNames(ContextsComponentDataProvider.GetContextNamesOrDefault(type));
+            data.SetContextNames(ContextsComponentDataProvider.GetContextNamesOrDefault(type, _contextNamesConfig.contextNames[0]));
 
             return data;
         }
@@ -101,8 +100,8 @@ namespace Entitas.CodeGeneration.Plugins {
 
             var getMethods = type
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                .Where(method => Attribute.IsDefined(method, typeof(EntityIndexGetMethodAttribute )))
-                .Select(method => new MethodData (
+                .Where(method => Attribute.IsDefined(method, typeof(EntityIndexGetMethodAttribute)))
+                .Select(method => new MethodData(
                     method.ReturnType.ToCompilableString(),
                     method.Name,
                     method.GetParameters()
@@ -116,7 +115,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         string getEntityIndexType(AbstractEntityIndexAttribute attribute) {
-            switch(attribute.entityIndexType) {
+            switch (attribute.entityIndexType) {
                 case EntityIndexType.EntityIndex:
                     return "Entitas.EntityIndex";
                 case EntityIndexType.PrimaryEntityIndex:

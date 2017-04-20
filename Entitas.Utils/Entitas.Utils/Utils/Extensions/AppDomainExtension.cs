@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +9,7 @@ namespace Entitas.Utils {
 
         public static Type[] GetAllTypes(this AppDomain appDomain) {
             var types = new List<Type>();
-            foreach(var assembly in appDomain.GetAssemblies()) {
+            foreach (var assembly in appDomain.GetAssemblies()) {
                 try {
                     types.AddRange(assembly.GetTypes());
                 } catch(ReflectionTypeLoadException ex) {

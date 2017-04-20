@@ -7,7 +7,7 @@
     /// UnsafeAERC doesn't check if the entity has already been
     /// retained or released. It's faster, but you lose the information
     /// about the owners.
-    public class UnsafeAERC : IAERC {
+    public sealed class UnsafeAERC : IAERC {
 
         public int retainCount { get { return _retainCount; } }
 

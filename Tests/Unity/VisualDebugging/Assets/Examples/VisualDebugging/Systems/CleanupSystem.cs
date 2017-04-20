@@ -1,4 +1,4 @@
-﻿using Entitas.Core;
+﻿using Entitas;
 
 public class CleanupSystem : ICleanupSystem {
 

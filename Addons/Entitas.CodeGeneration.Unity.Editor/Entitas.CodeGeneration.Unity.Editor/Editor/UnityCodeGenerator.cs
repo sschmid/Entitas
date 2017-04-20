@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Reflection;
 using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
 using UnityEditor;
@@ -16,13 +15,13 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
             Debug.Log("Generating...");
 
-            var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromConfig(Preferences.configPath);
+            var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromProperties();
 
             var progressOffset = 0f;
 
             codeGenerator.OnProgress += (title, info, progress) => {
                 var cancel = EditorUtility.DisplayCancelableProgressBar(title, info, progressOffset + progress / 2);
-                if(cancel) {
+                if (cancel) {
                     codeGenerator.Cancel();
                 }
             };
@@ -59,15 +58,15 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         }
 
         static void checkCanGenerate() {
-            if(EditorApplication.isCompiling) {
+            if (EditorApplication.isCompiling) {
                 throw new Exception("Cannot generate because Unity is still compiling. Please wait...");
             }
 
-            var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
+            var assembly = typeof(UnityEditor.Editor).Assembly;
             var logEntries = assembly.GetType("UnityEditorInternal.LogEntries");
             logEntries.GetMethod("Clear").Invoke(new object(), null);
             var canCompile = (int)logEntries.GetMethod("GetCount").Invoke(new object(), null) == 0;
-            if(!canCompile) {
+            if (!canCompile) {
                 Debug.Log("There are compile errors! Generated code will be based on last compiled executable.");
             }
         }

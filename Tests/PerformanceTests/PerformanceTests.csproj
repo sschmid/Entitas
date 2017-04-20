@@ -63,6 +63,7 @@
     <Compile Include="PerformanceTests\Fixtures\NameComponent.cs" />
     <Compile Include="PerformanceTests\EntityIndex\EntityIndexGetEntity.cs" />
     <Compile Include="PerformanceTests\GroupObserver\CollectorActivate.cs" />
+    <Compile Include="PerformanceTests\Misc\Casting.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
 
@@ -11,25 +11,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
-        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
 
-        public Dictionary<string, string> defaultProperties {
-            get { return new Dictionary<string, string> { { IGNORE_NAMESPACES_KEY, "false" } }; }
-        }
-
-        bool ignoreNamespaces { get { return properties[IGNORE_NAMESPACES_KEY] == "true"; } }
-
-        Dictionary<string, string> properties {
-            get {
-                if(_properties == null) {
-                    _properties = defaultProperties;
-                }
-
-                return _properties;
-            }
-        }
-
-        Dictionary<string, string> _properties;
+        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string CLASS_TEMPLATE =
 @"public partial class Contexts {
@@ -74,8 +58,8 @@ ${getIndices}
     }
 ";
 
-        public void Configure(Dictionary<string, string> properties) {
-            _properties = properties;
+        public void Configure(Properties properties) {
+            _ignoreNamespacesConfig.Configure(properties);
         }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
@@ -104,7 +88,7 @@ ${getIndices}
                 .Replace("${addIndices}", addIndices)
                 .Replace("${getIndices}", getIndices);
 
-            return new[] { new CodeGenFile(
+            return new [] { new CodeGenFile(
                 "Contexts.cs",
                 fileContent,
                 GetType().FullName
@@ -140,7 +124,7 @@ ${getIndices}
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${ComponentType}", data.GetComponentType())
                 .Replace("${MemberName}", data.GetMemberName())
-                .Replace("${componentName}", data.GetComponentType().ToComponentName(ignoreNamespaces).LowercaseFirst());
+                .Replace("${componentName}", data.GetComponentType().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces).LowercaseFirst());
         }
 
         string generateGetMethods(EntityIndexData data) {
@@ -153,9 +137,9 @@ ${getIndices}
 
         string generateGetMethod(EntityIndexData data, string contextName) {
             var template = "";
-            if(data.GetEntityIndexType() == "Entitas.EntityIndex") {
+            if (data.GetEntityIndexType() == "Entitas.EntityIndex") {
                 template = GET_INDEX_TEMPLATE;
-            } else if(data.GetEntityIndexType() == "Entitas.PrimaryEntityIndex") {
+            } else if (data.GetEntityIndexType() == "Entitas.PrimaryEntityIndex") {
                 template = GET_PRIMARY_INDEX_TEMPLATE;
             } else {
                 return getCustomMethods(data);
@@ -182,5 +166,3 @@ ${getIndices}
         }
    }
 }
-
-

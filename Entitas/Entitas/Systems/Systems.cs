@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -26,22 +26,22 @@ namespace Entitas {
         /// Adds the system instance to the systems list.
         public virtual Systems Add(ISystem system) {
             var initializeSystem = system as IInitializeSystem;
-            if(initializeSystem != null) {
+            if (initializeSystem != null) {
                 _initializeSystems.Add(initializeSystem);
             }
 
             var executeSystem = system as IExecuteSystem;
-            if(executeSystem != null) {
+            if (executeSystem != null) {
                 _executeSystems.Add(executeSystem);
             }
 
             var cleanupSystem = system as ICleanupSystem;
-            if(cleanupSystem != null) {
+            if (cleanupSystem != null) {
                 _cleanupSystems.Add(cleanupSystem);
             }
 
             var tearDownSystem = system as ITearDownSystem;
-            if(tearDownSystem != null) {
+            if (tearDownSystem != null) {
                 _tearDownSystems.Add(tearDownSystem);
             }
 
@@ -85,12 +85,12 @@ namespace Entitas {
             for (int i = 0; i < _executeSystems.Count; i++) {
                 var system = _executeSystems[i];
                 var reactiveSystem = system as IReactiveSystem;
-                if(reactiveSystem != null) {
+                if (reactiveSystem != null) {
                     reactiveSystem.Activate();
                 }
 
                 var nestedSystems = system as Systems;
-                if(nestedSystems != null) {
+                if (nestedSystems != null) {
                     nestedSystems.ActivateReactiveSystems();
                 }
             }
@@ -104,12 +104,12 @@ namespace Entitas {
             for (int i = 0; i < _executeSystems.Count; i++) {
                 var system = _executeSystems[i];
                 var reactiveSystem = system as IReactiveSystem;
-                if(reactiveSystem != null) {
+                if (reactiveSystem != null) {
                     reactiveSystem.Deactivate();
                 }
 
                 var nestedSystems = system as Systems;
-                if(nestedSystems != null) {
+                if (nestedSystems != null) {
                     nestedSystems.DeactivateReactiveSystems();
                 }
             }
@@ -120,12 +120,12 @@ namespace Entitas {
             for (int i = 0; i < _executeSystems.Count; i++) {
                 var system = _executeSystems[i];
                 var reactiveSystem = system as IReactiveSystem;
-                if(reactiveSystem != null) {
+                if (reactiveSystem != null) {
                     reactiveSystem.Clear();
                 }
 
                 var nestedSystems = system as Systems;
-                if(nestedSystems != null) {
+                if (nestedSystems != null) {
                     nestedSystems.ClearReactiveSystems();
                 }
             }

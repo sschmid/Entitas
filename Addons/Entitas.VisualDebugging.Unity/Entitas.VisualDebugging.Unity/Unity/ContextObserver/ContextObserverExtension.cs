@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 namespace Entitas.VisualDebugging.Unity
 {
@@ -7,9 +7,9 @@ namespace Entitas.VisualDebugging.Unity
 
         public static ContextObserverBehaviour FindContextObserver(this IContext context) {
             var observers = Object.FindObjectsOfType<ContextObserverBehaviour>();
-            for(int i = 0; i < observers.Length; i++) {
+            for (int i = 0; i < observers.Length; i++) {
                 var observer = observers[i];
-                if(observer.contextObserver.context == context) {
+                if (observer.contextObserver.context == context) {
                     return observer;
                 }
             }

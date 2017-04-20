@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Entitas.Utils;
 
@@ -35,10 +35,10 @@ namespace Entitas.Blueprints {
         }
 
         public IComponent CreateComponent(IEntity entity) {
-            if(_type == null) {
+            if (_type == null) {
                 _type = fullTypeName.ToType();
 
-                if(_type == null) {
+                if (_type == null) {
                     throw new ComponentBlueprintException(
                         "Type '" + fullTypeName +
                         "' doesn't exist in any assembly!",
@@ -46,7 +46,7 @@ namespace Entitas.Blueprints {
                     );
                 }
 
-                if(!_type.ImplementsInterface<IComponent>()) {
+                if (!_type.ImplementsInterface<IComponent>()) {
                     throw new ComponentBlueprintException(
                         "Type '" + fullTypeName +
                         "' doesn't implement IComponent!",
@@ -58,7 +58,7 @@ namespace Entitas.Blueprints {
 
             var component = entity.CreateComponent(index, _type);
 
-            if(_componentMembers == null) {
+            if (_componentMembers == null) {
                 var memberInfos = _type.GetPublicMemberInfos();
                 _componentMembers = new Dictionary<string, PublicMemberInfo>(
                     memberInfos.Count
@@ -73,7 +73,7 @@ namespace Entitas.Blueprints {
                 var member = members[i];
 
                 PublicMemberInfo memberInfo;
-                if(_componentMembers.TryGetValue(member.name, out memberInfo)) {
+                if (_componentMembers.TryGetValue(member.name, out memberInfo)) {
                     memberInfo.SetValue(component, member.value);
                 } else {
                     Console.WriteLine(

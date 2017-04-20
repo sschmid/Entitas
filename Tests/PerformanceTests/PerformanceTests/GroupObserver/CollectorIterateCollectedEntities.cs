@@ -10,7 +10,7 @@ public class CollectorIterateCollectedEntities : IPerformanceTest {
         var group = context.GetGroup(Matcher<Entity>.AllOf(new [] { CP.ComponentA }));
         _collector = group.CreateCollector();
 
-        for(int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             var e = context.CreateEntity();
             e.AddComponent(CP.ComponentA, new ComponentA());
         }
@@ -18,8 +18,8 @@ public class CollectorIterateCollectedEntities : IPerformanceTest {
 
     public void Run() {
         var entities = _collector.collectedEntities;
-        for(int i = 0; i < n; i++) {
-            for(var j = entities.GetEnumerator(); j.MoveNext();) {
+        for (int i = 0; i < n; i++) {
+            for (var j = entities.GetEnumerator(); j.MoveNext();) {
                 var e2 = j.Current;
             }
         }

@@ -1,4 +1,4 @@
-﻿using Entitas;
+using Entitas;
 
 public class ContextGetEntities : IPerformanceTest {
 

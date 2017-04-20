@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -62,7 +62,7 @@ namespace Entitas.Migration {
             var groupEvent = Regex.Match(oldTrigger, @".OnEntity(?<event>\w*)").Groups["event"].Value;
             var oldMatcher = Regex.Match(oldTrigger, @".*(?=.OnEntity)");
 
-            if(groupEvent == "Added") {
+            if (groupEvent == "Added") {
                 fileContent = Regex.Replace(fileContent, triggerPattern, match => string.Format(triggerReplacement, oldMatcher));
             } else {
                 fileContent = Regex.Replace(fileContent, triggerPattern, match => string.Format(triggerEventReplacement, oldMatcher, groupEvent));
@@ -79,21 +79,21 @@ namespace Entitas.Migration {
             var excludeMatcher = Regex.Match(fileContent, excludePattern).Groups["matcher"].Value;
 
             var ensureFilter = getFilter(ensureMatcher);
-            if(!string.IsNullOrEmpty(ensureFilter)) {
+            if (!string.IsNullOrEmpty(ensureFilter)) {
                 ensureFilter = "(" + ensureFilter + ")";
             }
 
             var excludeFilter = getFilter(excludeMatcher);
-            if(!string.IsNullOrEmpty(excludeFilter)) {
+            if (!string.IsNullOrEmpty(excludeFilter)) {
                 excludeFilter = "!(" + excludeFilter + ")";
             }
 
             var filter = "true";
-            if(ensureFilter != null) {
+            if (ensureFilter != null) {
                 filter = ensureFilter;
             }
-            if(excludeFilter != null) {
-                if(ensureFilter == null) {
+            if (excludeFilter != null) {
+                if (ensureFilter == null) {
                     filter = excludeFilter;
                 } else {
                     filter += " && " + excludeFilter;
@@ -122,7 +122,7 @@ namespace Entitas.Migration {
             const string noneOfPattern = @"NoneOf(\s|\n)*\((\s|\n)*(?<matchers>(.|\s|\n)*?)\)";
 
             var ensureAllOf = string.Empty;
-            if(Regex.IsMatch(matcher, allOfPattern)) {
+            if (Regex.IsMatch(matcher, allOfPattern)) {
                 ensureAllOf = string.Join(" && ", Regex.Match(matcher, allOfPattern).Groups["matchers"].Value
                                               .Split(',')
                                               .Select(m => m.Trim())
@@ -132,7 +132,7 @@ namespace Entitas.Migration {
             }
 
             var ensureAnyOf = string.Empty;
-            if(Regex.IsMatch(matcher, anyOfPattern)) {
+            if (Regex.IsMatch(matcher, anyOfPattern)) {
                 ensureAnyOf = string.Join(" || ", Regex.Match(matcher, anyOfPattern).Groups["matchers"].Value
                                               .Split(',')
                                               .Select(m => m.Trim())
@@ -142,7 +142,7 @@ namespace Entitas.Migration {
             }
 
             var ensureNoneOf = string.Empty;
-            if(Regex.IsMatch(matcher, noneOfPattern)) {
+            if (Regex.IsMatch(matcher, noneOfPattern)) {
                 ensureNoneOf = string.Join(" && !", Regex.Match(matcher, noneOfPattern).Groups["matchers"].Value
                                                .Split(',')
                                                .Select(m => m.Trim())
@@ -153,23 +153,23 @@ namespace Entitas.Migration {
 
             var filters = new List<string>();
 
-            if(!string.IsNullOrEmpty(ensureAllOf)) {
+            if (!string.IsNullOrEmpty(ensureAllOf)) {
                 ensureAllOf = "(" + ensureAllOf + ")";
                 filters.Add(ensureAllOf);
             }
 
-            if(!string.IsNullOrEmpty(ensureAnyOf)) {
+            if (!string.IsNullOrEmpty(ensureAnyOf)) {
                 ensureAnyOf = "(" + ensureAnyOf + ")";
                 filters.Add(ensureAnyOf);
             }
 
-            if(!string.IsNullOrEmpty(ensureNoneOf)) {
+            if (!string.IsNullOrEmpty(ensureNoneOf)) {
                 ensureNoneOf = "(!" + ensureNoneOf + ")";
                 filters.Add(ensureNoneOf);
             }
 
-            if(filters.Count == 0) {
-                if(Regex.IsMatch(matcher, @"\w*Matcher.\w*")) {
+            if (filters.Count == 0) {
+                if (Regex.IsMatch(matcher, @"\w*Matcher.\w*")) {
                     filters.Add(matcher.Split('.')[1]);
                 }
             }
@@ -197,15 +197,15 @@ namespace Entitas.Migration {
     }}";
 
             var construtorLogic = new List<string>();
-            if(!string.IsNullOrEmpty(setPoolsLogic)) {
+            if (!string.IsNullOrEmpty(setPoolsLogic)) {
                 construtorLogic.Add("        " + setPoolsLogic);
             }
 
-            if(!string.IsNullOrEmpty(setPoolLogic)) {
+            if (!string.IsNullOrEmpty(setPoolLogic)) {
                 construtorLogic.Add("        " + setPoolLogic);
             }
 
-            if(fileContent.Contains("__ctor_placeholder__")) {
+            if (fileContent.Contains("__ctor_placeholder__")) {
                 fileContent = fileContent.Replace(
                     "__ctor_placeholder__", string.Format(constructorFormat, className, string.Join("    \n", construtorLogic.ToArray()))
                 );
@@ -224,13 +224,13 @@ namespace Entitas.Migration {
             const string reactiveSystemExecute = @"public(\s|\n)*void(\s|\n)*Execute(\s|\n)*\((\s|\n)*List";
             const string reactiveSystemExecuteUsing = @"public(\s|\n)*void(\s|\n)*Execute(\s|\n)*\((\s|\n)*System.Collections.Generic.List";
 
-            if(Regex.IsMatch(fileContent, reactiveSystemExecuteUsing)) {
+            if (Regex.IsMatch(fileContent, reactiveSystemExecuteUsing)) {
                 fileContent = Regex.Replace(
                     fileContent,
                     reactiveSystemExecute,
                     "protected override void Execute(System.Collections.Generic.List"
                 );
-            } else if(Regex.IsMatch(fileContent, reactiveSystemExecute)) {
+            } else if (Regex.IsMatch(fileContent, reactiveSystemExecute)) {
                 fileContent = Regex.Replace(
                     fileContent,
                     reactiveSystemExecute,

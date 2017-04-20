@@ -15,9 +15,9 @@ namespace Entitas.VisualDebugging.Unity {
         }
 
         void Update() {
-            if(_contextObserver == null) {
+            if (_contextObserver == null) {
                 gameObject.DestroyGameObject();
-            } else if(_contextObserver.gameObject != null) {
+            } else if (_contextObserver.gameObject != null) {
                 _contextObserver.gameObject.name = _contextObserver.ToString();
             }
         }

@@ -17,7 +17,7 @@ namespace Readme {
 
         static void moveSystem(GameContext context) {
             var entities = context.GetEntities(Matcher<GameEntity>.AllOf(GameMatcher.Position, GameMatcher.Velocity));
-            foreach(var e in entities) {
+            foreach (var e in entities) {
                 var pos = e.position;
                 var vel = e.velocity;
                 e.ReplacePosition(pos.value + vel.value);
@@ -56,7 +56,7 @@ namespace Readme {
             // Returns all entities having MovableComponent and PositionComponent.
             // Matchers are also generated for you.
             var entities = context.GetEntities(Matcher<GameEntity>.AllOf(GameMatcher.Movable, GameMatcher.Position));
-            foreach(var e in entities) {
+            foreach (var e in entities) {
                 // do something
             }
         }
@@ -76,7 +76,7 @@ namespace Readme {
             var collector = group.CreateCollector(GroupEvent.Added);
 
             // ----------------------------
-            foreach(var e in collector.collectedEntities) {
+            foreach (var e in collector.collectedEntities) {
                 // do something
             }
             collector.ClearCollectedEntities();

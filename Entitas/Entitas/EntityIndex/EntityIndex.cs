@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Entitas {
@@ -34,7 +34,7 @@ namespace Entitas {
 
         public HashSet<TEntity> GetEntities(TKey key) {
             HashSet<TEntity> entities;
-            if(!_index.TryGetValue(key, out entities)) {
+            if (!_index.TryGetValue(key, out entities)) {
                 entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
                 _index.Add(key, entities);
             }
@@ -47,11 +47,11 @@ namespace Entitas {
         }
 
         protected override void clear() {
-            foreach(var entities in _index.Values) {
-                foreach(var entity in entities) {
+            foreach (var entities in _index.Values) {
+                foreach (var entity in entities) {
                     var safeAerc = entity.aerc as SafeAERC;
-                    if(safeAerc != null) {
-                        if(safeAerc.owners.Contains(this)) {
+                    if (safeAerc != null) {
+                        if (safeAerc.owners.Contains(this)) {
                             entity.Release(this);
                         }
                     } else {
@@ -67,8 +67,8 @@ namespace Entitas {
             GetEntities(key).Add(entity);
 
             var safeAerc = entity.aerc as SafeAERC;
-            if(safeAerc != null) {
-                if(!safeAerc.owners.Contains(this)) {
+            if (safeAerc != null) {
+                if (!safeAerc.owners.Contains(this)) {
                     entity.Retain(this);
                 }
             } else {
@@ -80,8 +80,8 @@ namespace Entitas {
             GetEntities(key).Remove(entity);
 
             var safeAerc = entity.aerc as SafeAERC;
-            if(safeAerc != null) {
-                if(safeAerc.owners.Contains(this)) {
+            if (safeAerc != null) {
+                if (safeAerc.owners.Contains(this)) {
                     entity.Release(this);
                 }
             } else {

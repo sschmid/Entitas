@@ -23,10 +23,13 @@
 │   │   └── Entitas.CodeGeneration.CodeGenerator
 │   │       └── CodeGenerator
 │   ├── Entitas.CodeGeneration.CodeGenerator.CLI
+│   │   └── Commands
 │   ├── Entitas.CodeGeneration.Plugins
 │   │   └── Entitas.CodeGeneration.Plugins
 │   │       └── Plugins
 │   │           ├── CodeGenerators
+│   │           ├── Configs
+│   │           ├── Data
 │   │           ├── DataProviders
 │   │           │   ├── Components
 │   │           │   │   └── Providers
@@ -44,7 +47,6 @@
 │   ├── Entitas.Migration.Unity.Editor
 │   │   └── Entitas.Migration.Unity.Editor
 │   │       └── Editor
-│   │           └── Images
 │   ├── Entitas.Unity
 │   │   └── Entitas.Unity
 │   │       └── Unity
@@ -84,11 +86,10 @@
 │       ├── EntityIndex
 │       ├── Extensions
 │       ├── Group
-│       ├── Interfaces
-│       │   ├── Matchers
-│       │   └── Systems
 │       ├── Matcher
+│       │   └── Interfaces
 │       └── Systems
+│           └── Interfaces
 ├── Entitas.Utils
 │   └── Entitas.Utils
 │       └── Utils
@@ -136,8 +137,7 @@
 │   │           │   ├── ICodeGenFilePostProcessor.cs
 │   │           │   ├── ICodeGenerator.cs
 │   │           │   ├── ICodeGeneratorDataProvider.cs
-│   │           │   ├── ICodeGeneratorInterface.cs
-│   │           │   └── IConfigurable.cs
+│   │           │   └── ICodeGeneratorInterface.cs
 │   │           ├── CodeGenFile.cs
 │   │           └── CodeGeneratorData.cs
 │   ├── Entitas.CodeGeneration.Attributes
@@ -158,11 +158,24 @@
 │   ├── Entitas.CodeGeneration.CodeGenerator
 │   │   └── Entitas.CodeGeneration.CodeGenerator
 │   │       └── CodeGenerator
+│   │           ├── AssemblyResolver.cs
 │   │           ├── CodeGenerator.cs
 │   │           ├── CodeGeneratorConfig.cs
-│   │           ├── CodeGeneratorUtil.cs
-│   │           └── DependencyResolver.cs
+│   │           └── CodeGeneratorUtil.cs
 │   ├── Entitas.CodeGeneration.CodeGenerator.CLI
+│   │   ├── Commands
+│   │   │   ├── AbstractCommand.cs
+│   │   │   ├── Doctor.cs
+│   │   │   ├── DryRun.cs
+│   │   │   ├── EditConfig.cs
+│   │   │   ├── FixConfig.cs
+│   │   │   ├── Generate.cs
+│   │   │   ├── Helper.cs
+│   │   │   ├── ICommand.cs
+│   │   │   ├── NewConfig.cs
+│   │   │   ├── ScanDlls.cs
+│   │   │   └── Status.cs
+│   │   ├── ArgsExtension.cs
 │   │   └── Program.cs
 │   ├── Entitas.CodeGeneration.Plugins
 │   │   └── Entitas.CodeGeneration.Plugins
@@ -179,6 +192,15 @@
 │   │           │   ├── ContextsGenerator.cs
 │   │           │   ├── EntityGenerator.cs
 │   │           │   └── EntityIndexGenerator.cs
+│   │           ├── Configs
+│   │           │   ├── AssembliesConfig.cs
+│   │           │   ├── ContextNamesConfig.cs
+│   │           │   ├── IgnoreNamespacesConfig.cs
+│   │           │   ├── ProjectPathConfig.cs
+│   │           │   └── TargetDirectoryConfig.cs
+│   │           ├── Data
+│   │           │   ├── MemberData.cs
+│   │           │   └── MethodData.cs
 │   │           ├── DataProviders
 │   │           │   ├── Components
 │   │           │   │   ├── Providers
@@ -191,7 +213,6 @@
 │   │           │   │   │   ├── ShouldGenerateComponentIndexComponentDataProvider.cs
 │   │           │   │   │   ├── ShouldGenerateMethodsComponentDataProvider.cs
 │   │           │   │   │   └── UniquePrefixComponentDataProvider.cs
-│   │           │   │   ├── AbstractComponentDataProvider.cs
 │   │           │   │   ├── ComponentData.cs
 │   │           │   │   └── ComponentDataProvider.cs
 │   │           │   ├── Contexts
@@ -207,15 +228,16 @@
 │   │           │   ├── MergeFilesPostProcessor.cs
 │   │           │   ├── NewLinePostProcessor.cs
 │   │           │   ├── TargetDirectoryStringExtension.cs
+│   │           │   ├── UpdateCSProjPostProcessor.cs
 │   │           │   └── WriteToDiskPostProcessor.cs
-│   │           ├── MemberData.cs
-│   │           └── MethodData.cs
+│   │           └── PluginUtil.cs
 │   ├── Entitas.CodeGeneration.Unity.Editor
-│   │   └── Entitas.CodeGeneration.Unity.Editor
-│   │       └── Editor
-│   │           ├── CodeGeneratorPreferencesDrawer.cs
-│   │           ├── DebugLogPostProcessor.cs
-│   │           └── UnityCodeGenerator.cs
+│   │   ├── Entitas.CodeGeneration.Unity.Editor
+│   │   │   └── Editor
+│   │   │       ├── CodeGeneratorPreferencesDrawer.cs
+│   │   │       ├── DebugLogPostProcessor.cs
+│   │   │       └── UnityCodeGenerator.cs
+│   │   └── Compile.cs
 │   ├── Entitas.Migration
 │   │   └── Entitas.Migration
 │   │       ├── Migration
@@ -239,8 +261,6 @@
 │   ├── Entitas.Migration.Unity.Editor
 │   │   └── Entitas.Migration.Unity.Editor
 │   │       └── Editor
-│   │           ├── Images
-│   │           │   └── EntitasMigrationHeader.png
 │   │           └── MigrationWindow.cs
 │   ├── Entitas.Unity
 │   │   ├── Entitas.Unity
@@ -353,7 +373,9 @@
 │       │   │   ├── ContextStillHasRetainedEntitiesException.cs
 │       │   │   └── EntityIsNotDestroyedException.cs
 │       │   ├── Context.cs
-│       │   └── ContextExtension.cs
+│       │   ├── ContextExtension.cs
+│       │   ├── IContext.cs
+│       │   └── IContexts.cs
 │       ├── Entity
 │       │   ├── Exceptions
 │       │   │   ├── EntityAlreadyHasComponentException.cs
@@ -363,12 +385,15 @@
 │       │   │   └── EntityIsNotRetainedByOwnerException.cs
 │       │   ├── Entity.cs
 │       │   ├── EntityEqualityComparer.cs
+│       │   ├── IAERC.cs
+│       │   ├── IEntity.cs
 │       │   ├── SafeAERC.cs
 │       │   └── UnsafeAERC.cs
 │       ├── EntityIndex
 │       │   ├── AbstractEntityIndex.cs
 │       │   ├── EntityIndex.cs
 │       │   ├── EntityIndexException.cs
+│       │   ├── IEntityIndex.cs
 │       │   └── PrimaryEntityIndex.cs
 │       ├── Extensions
 │       │   ├── CollectionExtension.cs
@@ -380,41 +405,35 @@
 │       │   ├── Group.cs
 │       │   ├── GroupEvent.cs
 │       │   ├── GroupExtension.cs
-│       │   └── GroupSingleEntityException.cs
-│       ├── Interfaces
-│       │   ├── Matchers
+│       │   ├── GroupSingleEntityException.cs
+│       │   └── IGroup.cs
+│       ├── Matcher
+│       │   ├── Interfaces
 │       │   │   ├── IAllOfMatcher.cs
 │       │   │   ├── IAnyOfMatcher.cs
 │       │   │   ├── ICompoundMatcher.cs
 │       │   │   ├── IMatcher.cs
 │       │   │   └── INoneOfMatcher.cs
-│       │   ├── Systems
-│       │   │   ├── ICleanupSystem.cs
-│       │   │   ├── IExecuteSystem.cs
-│       │   │   ├── IInitializeSystem.cs
-│       │   │   ├── IReactiveSystem.cs
-│       │   │   ├── ISystem.cs
-│       │   │   └── ITearDownSystem.cs
-│       │   ├── IAERC.cs
-│       │   ├── IComponent.cs
-│       │   ├── IContext.cs
-│       │   ├── IContexts.cs
-│       │   ├── IEntity.cs
-│       │   ├── IEntityIndex.cs
-│       │   └── IGroup.cs
-│       ├── Matcher
 │       │   ├── Matcher.cs
 │       │   ├── MatcherEquals.cs
 │       │   ├── MatcherException.cs
 │       │   ├── MatcherStatic.cs
 │       │   └── MatcherToString.cs
 │       ├── Systems
+│       │   ├── Interfaces
+│       │   │   ├── ICleanupSystem.cs
+│       │   │   ├── IExecuteSystem.cs
+│       │   │   ├── IInitializeSystem.cs
+│       │   │   ├── IReactiveSystem.cs
+│       │   │   ├── ISystem.cs
+│       │   │   └── ITearDownSystem.cs
 │       │   ├── ReactiveSystem.cs
 │       │   └── Systems.cs
 │       ├── ContextInfo.cs
 │       ├── EntitasCache.cs
 │       ├── EntitasException.cs
 │       ├── EntitasResources.cs
+│       ├── IComponent.cs
 │       └── version
 ├── Entitas.Utils
 │   └── Entitas.Utils
@@ -423,11 +442,13 @@
 │           │   ├── ObjectCache.cs
 │           │   └── ObjectPool.cs
 │           ├── Configuration
-│           │   ├── Config.cs
+│           │   ├── AbstractConfigurableConfig.cs
+│           │   ├── IConfigurable.cs
 │           │   ├── Preferences.cs
 │           │   └── Properties.cs
 │           ├── Extensions
 │           │   ├── AppDomainExtension.cs
+│           │   ├── DictionaryExtension.cs
 │           │   ├── InterfaceTypeExtension.cs
 │           │   ├── StringExtension.cs
 │           │   └── TypeSerializationExtension.cs

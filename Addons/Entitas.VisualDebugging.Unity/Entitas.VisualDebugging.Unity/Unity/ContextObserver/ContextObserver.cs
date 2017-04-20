@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
@@ -48,7 +48,7 @@ namespace Entitas.VisualDebugging.Unity {
                 .Append(_context.count).Append(" entities, ")
                 .Append(_context.reusableEntitiesCount).Append(" reusable, ");
 
-            if(_context.retainedEntitiesCount != 0) {
+            if (_context.retainedEntitiesCount != 0) {
                 _toStringBuilder
                     .Append(_context.retainedEntitiesCount).Append(" retained, ");
             }

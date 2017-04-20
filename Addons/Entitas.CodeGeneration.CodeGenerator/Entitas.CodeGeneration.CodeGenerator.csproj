@@ -37,7 +37,7 @@
     <Compile Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\CodeGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\CodeGeneratorConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\CodeGeneratorUtil.cs" />
-    <Compile Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\DependencyResolver.cs" />
+    <Compile Include="Entitas.CodeGeneration.CodeGenerator\CodeGenerator\AssemblyResolver.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.CodeGenerator\" />

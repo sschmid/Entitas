@@ -1,4 +1,4 @@
-﻿namespace Entitas.Blueprints {
+namespace Entitas.Blueprints {
 
     public static class BlueprintEntityExtension {
 
@@ -10,7 +10,7 @@
             var componentsLength = blueprint.components.Length;
             for (int i = 0; i < componentsLength; i++) {
                 var componentBlueprint = blueprint.components[i];
-                if(replaceComponents) {
+                if (replaceComponents) {
                     entity.ReplaceComponent(componentBlueprint.index,
                                      componentBlueprint.CreateComponent(entity));
                 } else {

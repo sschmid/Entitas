@@ -35,6 +35,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
+    <Compile Include="Commands\NewConfig.cs" />
+    <Compile Include="Commands\EditConfig.cs" />
+    <Compile Include="Commands\Doctor.cs" />
+    <Compile Include="Commands\Status.cs" />
+    <Compile Include="Commands\Helper.cs" />
+    <Compile Include="Commands\FixConfig.cs" />
+    <Compile Include="Commands\ScanDlls.cs" />
+    <Compile Include="Commands\DryRun.cs" />
+    <Compile Include="Commands\Generate.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\AbstractCommand.cs" />
+    <Compile Include="ArgsExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
@@ -53,6 +65,9 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
