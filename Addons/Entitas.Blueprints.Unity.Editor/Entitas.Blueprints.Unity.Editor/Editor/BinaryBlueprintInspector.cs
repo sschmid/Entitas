@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Entitas.Unity.Editor;
 using Entitas.Utils;
@@ -19,7 +19,7 @@ namespace Entitas.Blueprints.Unity.Editor {
                 .ToArray();
         }
 
-        [DidReloadScripts, MenuItem("Entitas/Blueprints/Update all Blueprints", false, 300)]
+        [DidReloadScripts, MenuItem("Tools/Entitas/Blueprints/Update all Blueprints", false, 300)]
         public static void UpdateAllBinaryBlueprints() {
             if (!EditorApplication.isPlayingOrWillChangePlaymode) {
                 var allContexts = findAllContexts();

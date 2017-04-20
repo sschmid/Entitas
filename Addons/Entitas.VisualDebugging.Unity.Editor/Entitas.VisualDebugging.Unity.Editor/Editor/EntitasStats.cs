@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Plugins;
@@ -10,7 +10,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
     public static class EntitasStats {
 
-        [MenuItem("Entitas/Show Stats", false, 200)]
+        [MenuItem("Tools/Entitas/Show Stats", false, 200)]
         public static void ShowStats() {
             var stats = string.Join("\n", GetStats()
                                     .Select(kv => kv.Key + ": " + kv.Value)

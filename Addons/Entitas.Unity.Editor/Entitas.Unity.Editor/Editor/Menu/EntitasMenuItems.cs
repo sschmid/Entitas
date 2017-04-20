@@ -1,21 +1,21 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Entitas.Unity.Editor {
 
     public static class EntitasMenuItems {
         
-        public const string preferences                      = "Entitas/Preferences... #%e";
+        public const string preferences                      = "Tools/Entitas/Preferences... #%e";
 
-        public const string check_for_updates                = "Entitas/Check for Updates...";
+        public const string check_for_updates                = "Tools/Entitas/Check for Updates...";
 
-        public const string documentation                    = "Entitas/Documentation...";
+        public const string documentation                    = "Tools/Entitas/Documentation...";
 
-        public const string feedback_report_a_bug            = "Entitas/Feedback/Report a bug...";
-        public const string feedback_request_a_feature       = "Entitas/Feedback/Request a feature...";
-        public const string feedback_join_the_entitas_chat   = "Entitas/Feedback/Join the Entitas chat...";
-        public const string feedback_entitas_wiki            = "Entitas/Feedback/Entitas Wiki...";
-        public const string feedback_donate                  = "Entitas/Feedback/Donate...";
+        public const string feedback_report_a_bug            = "Tools/Entitas/Feedback/Report a bug...";
+        public const string feedback_request_a_feature       = "Tools/Entitas/Feedback/Request a feature...";
+        public const string feedback_join_the_entitas_chat   = "Tools/Entitas/Feedback/Join the Entitas chat...";
+        public const string feedback_entitas_wiki            = "Tools/Entitas/Feedback/Entitas Wiki...";
+        public const string feedback_donate                  = "Tools/Entitas/Feedback/Donate...";
     }
 
     public static class EntitasMenuItemPriorities {
