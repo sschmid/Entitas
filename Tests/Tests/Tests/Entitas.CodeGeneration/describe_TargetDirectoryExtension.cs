@@ -9,6 +9,7 @@ class describe_TargetDirectoryExtension : nspec {
         it["doesn't append"] = () => "Assets/Generated".ToSafeDirectory().should_be("Assets/Generated");
         it["removes trailing '/'"] = () => "Assets/Generated/".ToSafeDirectory().should_be("Assets/Generated");
         it["appends 'Generated'"] = () => "/".ToSafeDirectory().should_be("/Generated");
-        it["appends '/Generated'"] = () => "".ToSafeDirectory().should_be("/Generated");
+        it["appends 'Generated'"] = () => "".ToSafeDirectory().should_be("Generated");
+        it["appends 'Generated'"] = () => ".".ToSafeDirectory().should_be("Generated");
     }
 }
