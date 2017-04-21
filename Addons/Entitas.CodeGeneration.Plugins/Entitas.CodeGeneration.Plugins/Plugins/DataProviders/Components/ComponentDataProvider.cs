@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Attributes;
@@ -21,14 +21,15 @@ namespace Entitas.CodeGeneration.Plugins {
                     .Select(i => i.defaultProperties)
                     .ToArray();
 
-                return _assembliesConfig
-                    .defaultProperties
-                    .Merge(dataProviderProperties);
+                return _assembliesConfig.defaultProperties
+                       .Merge(_contextsComponentDataProvider.defaultProperties)
+                       .Merge(dataProviderProperties);
             }
         }
 
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
+        readonly ContextsComponentDataProvider _contextsComponentDataProvider = new ContextsComponentDataProvider();
 
         static IComponentDataProvider[] getComponentDataProviders() {
             return new IComponentDataProvider[] {
@@ -63,6 +64,7 @@ namespace Entitas.CodeGeneration.Plugins {
             foreach (var dataProvider in _dataProviders.OfType<IConfigurable>()) {
                 dataProvider.Configure(properties);
             }
+            _contextsComponentDataProvider.Configure(properties);
         }
 
         public CodeGeneratorData[] GetData() {
@@ -113,7 +115,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         bool hasContexts(Type type) {
-            return ContextsComponentDataProvider.GetContextNames(type).Length != 0;
+            return _contextsComponentDataProvider.GetContextNames(type).Length != 0;
         }
 
         string[] getComponentNames(Type type) {
