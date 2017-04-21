@@ -92,6 +92,9 @@
     <Compile Include="Entitas\Matcher\Interfaces\ICompoundMatcher.cs" />
     <Compile Include="Entitas\Matcher\Interfaces\IMatcher.cs" />
     <Compile Include="Entitas\Matcher\Interfaces\INoneOfMatcher.cs" />
+    <Compile Include="Entitas\Collector\TriggerOnEvent.cs" />
+    <Compile Include="Entitas\Collector\CollectorContextExtension.cs" />
+    <Compile Include="Entitas\Collector\TriggerOnEventMatcherExtension.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

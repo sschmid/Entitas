@@ -1,4 +1,4 @@
-using Entitas;
+﻿using Entitas;
 using NSpec;
 
 class describe_ReactiveSystem : nspec {

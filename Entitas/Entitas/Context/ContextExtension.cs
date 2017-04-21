@@ -7,11 +7,6 @@
             return context.GetGroup(matcher).GetEntities();
         }
 
-        /// Creates an Collector.
-        public static Collector<TEntity> CreateCollector<TEntity>(this IContext<TEntity> context, IMatcher<TEntity> matcher, GroupEvent groupEvent = GroupEvent.Added) where TEntity : class, IEntity, new() {
-            return new Collector<TEntity>(context.GetGroup(matcher), groupEvent);
-        }
-
         /// Creates a new entity and adds copies of all
         /// specified components to it.
         /// If replaceExisting is true it will replace exisintg components.
