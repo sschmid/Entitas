@@ -5,7 +5,7 @@ namespace Entitas {
 
     /// A Collector can observe one or more groups from the same context
     /// and collects changed entities based on the specified groupEvent.
-    public class Collector<TEntity> : ICollector where TEntity : class, IEntity {
+    public class Collector<TEntity> : ICollector<TEntity> where TEntity : class, IEntity {
 
         /// Returns all collected entities.
         /// Call collector.ClearCollectedEntities()

@@ -9,7 +9,7 @@ namespace Entitas {
     /// of the related gameObject.
     public abstract class ReactiveSystem<TEntity> : IReactiveSystem where TEntity : class, IEntity {
 
-        readonly Collector<TEntity> _collector;
+        readonly ICollector<TEntity> _collector;
         readonly List<TEntity> _buffer;
         string _toStringCache;
 
@@ -18,13 +18,13 @@ namespace Entitas {
             _buffer = new List<TEntity>();
         }
 
-        protected ReactiveSystem(Collector<TEntity> collector) {
+        protected ReactiveSystem(ICollector<TEntity> collector) {
             _collector = collector;
             _buffer = new List<TEntity>();
         }
 
         /// Specify the collector that will trigger the ReactiveSystem.
-        protected abstract Collector<TEntity> GetTrigger(IContext<TEntity> context);
+        protected abstract ICollector<TEntity> GetTrigger(IContext<TEntity> context);
 
         /// This will exclude all entities which don't pass the filter.
         protected abstract bool Filter(TEntity entity);
