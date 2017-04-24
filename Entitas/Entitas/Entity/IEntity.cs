@@ -54,7 +54,7 @@ namespace Entitas {
         IComponent CreateComponent(int index, Type type);
         T CreateComponent<T>(int index) where T : new();
 
-        void Destroy();
+        void InternalDestroy();
         void RemoveAllOnEntityReleasedHandlers();
     }
 }

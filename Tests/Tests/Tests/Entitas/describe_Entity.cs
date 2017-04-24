@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Entitas;
 using My.Namespace;
 using NSpec;
@@ -77,7 +77,7 @@ class describe_Entity : nspec {
                 e = new TestEntity();
                 e.Initialize(1, 2, componentPools, contextInfo);
 
-                e.Destroy();
+                e.InternalDestroy();
 
                 e.Reactivate(42);
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Entitas.Utils;
 
@@ -174,7 +174,7 @@ namespace Entitas {
                 OnEntityWillBeDestroyed(this, entity);
             }
 
-            entity.Destroy();
+            entity.InternalDestroy();
 
             if (OnEntityDestroyed != null) {
                 OnEntityDestroyed(this, entity);
