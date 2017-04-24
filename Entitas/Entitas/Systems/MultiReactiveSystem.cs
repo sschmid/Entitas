@@ -7,24 +7,26 @@ namespace Entitas {
     /// A common use-case is to react to changes, e.g. a change of the position
     /// of an entity to update the gameObject.transform.position
     /// of the related gameObject.
-    public abstract class ReactiveSystem<TEntity> : IReactiveSystem where TEntity : class, IEntity {
+    public abstract class MultiReactiveSystem<TEntity, TContexts> : IReactiveSystem
+        where TEntity : class, IEntity
+        where TContexts : class, IContexts {
 
-        readonly ICollector<TEntity> _collector;
+        readonly ICollector[] _collectors;
         readonly List<TEntity> _buffer;
         string _toStringCache;
 
-        protected ReactiveSystem(IContext<TEntity> context) {
-            _collector = GetTrigger(context);
+        protected MultiReactiveSystem(TContexts contexts) {
+            _collectors = GetTrigger(contexts);
             _buffer = new List<TEntity>();
         }
 
-        protected ReactiveSystem(ICollector<TEntity> collector) {
-            _collector = collector;
+        protected MultiReactiveSystem(ICollector[] collectors) {
+            _collectors = collectors;
             _buffer = new List<TEntity>();
         }
 
         /// Specify the collector that will trigger the ReactiveSystem.
-        protected abstract ICollector<TEntity> GetTrigger(IContext<TEntity> context);
+        protected abstract ICollector[] GetTrigger(TContexts contexts);
 
         /// This will exclude all entities which don't pass the filter.
         protected abstract bool Filter(TEntity entity);
@@ -35,7 +37,9 @@ namespace Entitas {
         /// based on the specified Collector.
         /// ReactiveSystem are activated by default.
         public void Activate() {
-            _collector.Activate();
+            for (int i = 0; i < _collectors.Length; i++) {
+                _collectors[i].Activate();
+            }
         }
 
         /// Deactivates the ReactiveSystem.
@@ -43,33 +47,40 @@ namespace Entitas {
         /// This will also clear the ReactiveSystem.
         /// ReactiveSystem are activated by default.
         public void Deactivate() {
-            _collector.Deactivate();
+            for (int i = 0; i < _collectors.Length; i++) {
+                _collectors[i].Deactivate();
+            }
         }
 
         /// Clears all accumulated changes.
         public void Clear() {
-            _collector.ClearCollectedEntities();
+            for (int i = 0; i < _collectors.Length; i++) {
+                _collectors[i].ClearCollectedEntities();
+            }
         }
 
         /// Will call Execute(entities) with changed entities
         /// if there are any. Otherwise it will not call Execute(entities).
         public void Execute() {
-            if (_collector.count != 0) {
-                foreach (var e in _collector.collectedEntities) {
-                    if (Filter(e)) {
-                        e.Retain(this);
-                        _buffer.Add(e);
+            for (int i = 0; i < _collectors.Length; i++) {
+                var collector = _collectors[i];
+                if (collector.count != 0) {
+                    foreach (var e in collector.GetCollectedEntities<TEntity>()) {
+                        if (Filter(e)) {
+                            e.Retain(this);
+                            _buffer.Add(e);
+                        }
                     }
-                }
 
-                _collector.ClearCollectedEntities();
+                    collector.ClearCollectedEntities();
 
-                if (_buffer.Count != 0) {
-                    Execute(_buffer);
-                    for (int i = 0; i < _buffer.Count; i++) {
-                        _buffer[i].Release(this);
+                    if (_buffer.Count != 0) {
+                        Execute(_buffer);
+                        for (int j = 0; j < _buffer.Count; j++) {
+                            _buffer[j].Release(this);
+                        }
+                        _buffer.Clear();
                     }
-                    _buffer.Clear();
                 }
             }
         }
@@ -82,7 +93,7 @@ namespace Entitas {
             return _toStringCache;
         }
 
-        ~ReactiveSystem() {
+        ~MultiReactiveSystem() {
             Deactivate();
         }
     }

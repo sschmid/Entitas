@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Entitas {
 
@@ -11,6 +12,9 @@ namespace Entitas {
         /// Call collector.ClearCollectedEntities()
         /// once you processed all entities.
         public HashSet<TEntity> collectedEntities { get { return _collectedEntities; } }
+
+        /// Returns the number of all collected entities.
+        public int count { get { return _collectedEntities.Count; } }
 
         readonly HashSet<TEntity> _collectedEntities;
         readonly IGroup<TEntity>[] _groups;
@@ -79,6 +83,14 @@ namespace Entitas {
                 group.OnEntityRemoved -= _addEntityCache;
             }
             ClearCollectedEntities();
+        }
+
+
+        /// Returns all collected entities and casts them.
+        /// Call collector.ClearCollectedEntities()
+        /// once you processed all entities.
+        public IEnumerable<TCast> GetCollectedEntities<TCast>() where TCast : class, IEntity {
+            return _collectedEntities.Cast<TCast>();
         }
 
         /// Clears all collected entities.
