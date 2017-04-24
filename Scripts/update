@@ -2,7 +2,7 @@
 echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
-${SCRIPTS}/build
+xbuild /property:Configuration=Release /verbosity:minimal $SOLUTION
 
 # clean
 rm -rf $BUILD
