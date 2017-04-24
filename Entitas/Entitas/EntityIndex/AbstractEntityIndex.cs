@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 
 namespace Entitas {
 
-    public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : class, IEntity, new() {
+    public abstract class AbstractEntityIndex<TEntity, TKey> : IEntityIndex where TEntity : class, IEntity {
 
         public string name { get { return _name; } }
 

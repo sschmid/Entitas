@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace Entitas {
 
     /// A Collector can observe one or more groups from the same context
     /// and collects changed entities based on the specified groupEvent.
-    public class Collector<TEntity> where TEntity : class, IEntity, new() {
+    public class Collector<TEntity> where TEntity : class, IEntity {
 
         /// Returns all collected entities.
         /// Call collector.ClearCollectedEntities()

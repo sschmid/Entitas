@@ -1,6 +1,6 @@
 ﻿namespace Entitas {
 
-    public struct TriggerOnEvent<TEntity> where TEntity : class, IEntity, new() {
+    public struct TriggerOnEvent<TEntity> where TEntity : class, IEntity {
 
         public readonly IMatcher<TEntity> matcher;
         public readonly GroupEvent groupEvent;

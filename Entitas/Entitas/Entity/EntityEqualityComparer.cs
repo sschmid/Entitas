@@ -2,7 +2,7 @@
 
 namespace Entitas {
 
-    public class EntityEqualityComparer<TEntity> : IEqualityComparer<TEntity> where TEntity : class, IEntity, new() {
+    public class EntityEqualityComparer<TEntity> : IEqualityComparer<TEntity> where TEntity : class, IEntity {
 
         public static readonly IEqualityComparer<TEntity> comparer = new EntityEqualityComparer<TEntity>();
 

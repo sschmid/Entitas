@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -8,7 +8,7 @@ namespace Entitas {
     /// The created group is managed by the context and will always be up to date.
     /// It will automatically add entities that match the matcher or
     /// remove entities as soon as they don't match the matcher anymore.
-    public class Group<TEntity> : IGroup<TEntity> where TEntity : class, IEntity, new() {
+    public class Group<TEntity> : IGroup<TEntity> where TEntity : class, IEntity {
 
         /// Occurs when an entity gets added.
         public event GroupChanged<TEntity> OnEntityAdded;

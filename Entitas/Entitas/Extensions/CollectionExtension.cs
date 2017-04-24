@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -18,7 +18,7 @@ namespace Entitas {
         /// Returns the only entity in the collection.
         /// It will throw an exception if the collection doesn't have
         /// exactly one entity.
-        public static TEntity SingleEntity<TEntity>(this ICollection<TEntity> collection) where TEntity : class, IEntity, new() {
+        public static TEntity SingleEntity<TEntity>(this ICollection<TEntity> collection) where TEntity : class, IEntity {
             if (collection.Count != 1) {
                 throw new SingleEntityException(collection.Count);
             }
