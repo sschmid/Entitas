@@ -81,7 +81,7 @@ namespace Entitas.Unity.Editor {
         void drawHeader() {
             var rect = EntitasEditorLayout.DrawTexture(_headerTexture);
             if (rect.Contains(Event.current.mousePosition) && Event.current.clickCount > 0) {
-                Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/blob/develop/README.md");
+                //Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/blob/develop/README.md");
             }
         }
 
