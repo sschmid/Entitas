@@ -73,21 +73,21 @@ namespace Entitas {
                     }
 
                     collector.ClearCollectedEntities();
-
-                    if (_buffer.Count != 0) {
-                        Execute(_buffer);
-                        for (int j = 0; j < _buffer.Count; j++) {
-                            _buffer[j].Release(this);
-                        }
-                        _buffer.Clear();
-                    }
                 }
+            }
+
+            if (_buffer.Count != 0) {
+                Execute(_buffer);
+                for (int i = 0; i < _buffer.Count; i++) {
+                    _buffer[i].Release(this);
+                }
+                _buffer.Clear();
             }
         }
 
         public override string ToString() {
             if (_toStringCache == null) {
-                _toStringCache = "ReactiveSystem(" + GetType().Name + ")";
+                _toStringCache = "MultiReactiveSystem(" + GetType().Name + ")";
             }
 
             return _toStringCache;
