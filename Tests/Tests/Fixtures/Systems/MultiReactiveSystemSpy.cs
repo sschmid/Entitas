@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using Entitas;
 
-public class MultiReactiveSystemSpy : MultiReactiveSystem<ITestMultiContextEntity, Contexts> {
+public interface INameAgeEntity : IEntity, INameAge {
+}
+
+public class MultiReactiveSystemSpy : MultiReactiveSystem<INameAgeEntity, Contexts> {
 
     public int didExecute { get { return _didExecute; } }
     public IEntity[] entities { get { return _entities; } }
 
-    public Action<List<ITestMultiContextEntity>> executeAction;
+    public Action<List<INameAgeEntity>> executeAction;
 
     protected int _didExecute;
     protected IEntity[] _entities;
@@ -22,11 +25,11 @@ public class MultiReactiveSystemSpy : MultiReactiveSystem<ITestMultiContextEntit
         };
     }
 
-    protected override bool Filter(ITestMultiContextEntity entity) {
+    protected override bool Filter(INameAgeEntity entity) {
         return true;
     }
 
-    protected override void Execute(List<ITestMultiContextEntity> entities) {
+    protected override void Execute(List<INameAgeEntity> entities) {
         _didExecute += 1;
 
         if (entities != null) {

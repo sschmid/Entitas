@@ -60,7 +60,6 @@
     <Compile Include="Fixtures\CustomEntityIndex.cs" />
     <Compile Include="Fixtures\ClassWithEntitIndexAttribute.cs" />
     <Compile Include="Fixtures\Components\EntityIndexNoContextComponent.cs" />
-    <Compile Include="Fixtures\ITestMultiContextEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generated\**\*.cs" />
