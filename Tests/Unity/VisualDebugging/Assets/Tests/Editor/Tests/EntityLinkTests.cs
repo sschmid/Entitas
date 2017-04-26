@@ -4,7 +4,6 @@ using Entitas.Unity;
 using Entitas.VisualDebugging.Unity.Editor;
 using NUnit.Framework;
 using UnityEngine;
-using Entitas;
 
 public class EntityLinkTests {
 

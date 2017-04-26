@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using Entitas;
-using Entitas;
 
 public class SomeReactiveSystem : ReactiveSystem<GameEntity> {
 
     public SomeReactiveSystem(Contexts contexts) : base(contexts.game) { }
 
-    protected override Collector<GameEntity> GetTrigger(IContext<GameEntity> context) {
+    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) {
         return context.CreateCollector(Matcher<GameEntity>.AllOf(0));
     }
 

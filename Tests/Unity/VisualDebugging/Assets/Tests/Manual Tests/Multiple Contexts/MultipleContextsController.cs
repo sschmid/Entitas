@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Entitas;
-using Entitas;
 
 public class MultipleContextsController : MonoBehaviour {
 
