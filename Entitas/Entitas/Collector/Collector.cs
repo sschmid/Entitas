@@ -90,7 +90,7 @@ namespace Entitas {
         /// Call collector.ClearCollectedEntities()
         /// once you processed all entities.
         public IEnumerable<TCast> GetCollectedEntities<TCast>() where TCast : class, IEntity {
-            return (IEnumerable<TCast>)_collectedEntities;
+            return _collectedEntities.Cast<TCast>();
         }
 
         /// Clears all collected entities.

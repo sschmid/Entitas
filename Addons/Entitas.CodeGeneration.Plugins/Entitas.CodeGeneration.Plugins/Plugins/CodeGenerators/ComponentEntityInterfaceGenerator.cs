@@ -29,7 +29,8 @@ namespace Entitas.CodeGeneration.Plugins {
 ";
 
         const string ENTITY_INTERFACE_EXTENSION =
-@"public partial class ${ContextName}Entity : ${InterfaceName} { }";
+@"public partial class ${ContextName}Entity : ${InterfaceName} { }
+";
 
         const string MEMBER_ARGS_TEMPLATE =
 @"${MemberType} new${MemberName}";
