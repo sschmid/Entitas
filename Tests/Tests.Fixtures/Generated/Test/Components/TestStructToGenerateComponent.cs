@@ -44,7 +44,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> StructToGenerate {
         get {
-            if(_matcherStructToGenerate == null) {
+            if (_matcherStructToGenerate == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.StructToGenerate);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherStructToGenerate = matcher;

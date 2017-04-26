@@ -13,8 +13,8 @@ public partial class TestEntity {
     public bool isMyNamespaceMyNamespaceFlag {
         get { return HasComponent(TestComponentsLookup.MyNamespaceMyNamespaceFlag); }
         set {
-            if(value != isMyNamespaceMyNamespaceFlag) {
-                if(value) {
+            if (value != isMyNamespaceMyNamespaceFlag) {
+                if (value) {
                     AddComponent(TestComponentsLookup.MyNamespaceMyNamespaceFlag, myNamespaceMyNamespaceFlagComponent);
                 } else {
                     RemoveComponent(TestComponentsLookup.MyNamespaceMyNamespaceFlag);
@@ -38,7 +38,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> MyNamespaceMyNamespaceFlag {
         get {
-            if(_matcherMyNamespaceMyNamespaceFlag == null) {
+            if (_matcherMyNamespaceMyNamespaceFlag == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.MyNamespaceMyNamespaceFlag);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherMyNamespaceMyNamespaceFlag = matcher;

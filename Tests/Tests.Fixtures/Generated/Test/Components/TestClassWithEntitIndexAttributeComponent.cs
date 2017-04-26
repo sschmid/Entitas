@@ -44,7 +44,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> ClassWithEntitIndexAttribute {
         get {
-            if(_matcherClassWithEntitIndexAttribute == null) {
+            if (_matcherClassWithEntitIndexAttribute == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.ClassWithEntitIndexAttribute);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherClassWithEntitIndexAttribute = matcher;

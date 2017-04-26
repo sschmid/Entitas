@@ -13,7 +13,7 @@ public partial class TestContext {
     public bool hasMyNamespaceUniqueMyNamespace { get { return myNamespaceUniqueMyNamespaceEntity != null; } }
 
     public TestEntity SetMyNamespaceUniqueMyNamespace(string newValue) {
-        if(hasMyNamespaceUniqueMyNamespace) {
+        if (hasMyNamespaceUniqueMyNamespace) {
             throw new Entitas.EntitasException("Could not set MyNamespaceUniqueMyNamespace!\n" + this + " already has an entity with My.Namespace.UniqueMyNamespaceComponent!",
                 "You should check if the context already has a myNamespaceUniqueMyNamespaceEntity before setting it or use context.ReplaceMyNamespaceUniqueMyNamespace().");
         }
@@ -24,7 +24,7 @@ public partial class TestContext {
 
     public void ReplaceMyNamespaceUniqueMyNamespace(string newValue) {
         var entity = myNamespaceUniqueMyNamespaceEntity;
-        if(entity == null) {
+        if (entity == null) {
             entity = SetMyNamespaceUniqueMyNamespace(newValue);
         } else {
             entity.ReplaceMyNamespaceUniqueMyNamespace(newValue);
@@ -82,7 +82,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> MyNamespaceUniqueMyNamespace {
         get {
-            if(_matcherMyNamespaceUniqueMyNamespace == null) {
+            if (_matcherMyNamespaceUniqueMyNamespace == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.MyNamespaceUniqueMyNamespace);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherMyNamespaceUniqueMyNamespace = matcher;
