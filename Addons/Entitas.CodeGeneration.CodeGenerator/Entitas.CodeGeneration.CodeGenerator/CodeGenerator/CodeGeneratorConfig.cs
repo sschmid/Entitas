@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             get {
                 return new Dictionary<string, string> {
                     { SEARCH_PATHS_KEY, "Assets/Libraries/Entitas, Assets/Libraries/Entitas/Editor, /Applications/Unity/Unity.app/Contents/Managed, /Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity, /Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem" },
-                    { PLUGINS_PATHS_KEY, "Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins, Entitas.Blueprints.CodeGeneration.Plugins" },
+                    { PLUGINS_PATHS_KEY, "Entitas.CodeGeneration.Plugins, Entitas.VisualDebugging.CodeGeneration.Plugins" },
 
                     { DATA_PROVIDERS_KEY, string.Empty },
                     { CODE_GENERATORS_KEY, string.Empty },
