@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> Texture2D {
         get {
-            if(_matcherTexture2D == null) {
+            if (_matcherTexture2D == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Texture2D);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherTexture2D = matcher;

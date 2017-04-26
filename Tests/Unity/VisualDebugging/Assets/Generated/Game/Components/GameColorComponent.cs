@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> Color {
         get {
-            if(_matcherColor == null) {
+            if (_matcherColor == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Color);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherColor = matcher;

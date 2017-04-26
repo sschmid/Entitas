@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> Array3D {
         get {
-            if(_matcherArray3D == null) {
+            if (_matcherArray3D == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Array3D);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherArray3D = matcher;
