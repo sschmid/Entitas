@@ -2,7 +2,6 @@
 
 class describe_MultiReactiveSystem : nspec {
 
-    [Tag("focus")]
     void when_executing() {
 
         MultiReactiveSystemSpy system = null;
