@@ -54,6 +54,7 @@ namespace Entitas.Unity.Editor {
 
         const string URL_GITHUB_API_LATEST_RELEASE = "https://api.github.com/repos/sschmid/Entitas-CSharp/releases/latest";
         const string URL_GITHUB_RELEASES = "https://github.com/sschmid/Entitas-CSharp/releases";
+        const string URL_ASSET_STORE = "https://www.assetstore.unity3d.com/#!/content/87638";
 
         [MenuItem(EntitasMenuItems.check_for_updates, false, EntitasMenuItemPriorities.check_for_updates)]
         public static void DisplayUpdates() {
@@ -108,10 +109,10 @@ namespace Entitas.Unity.Editor {
                             string.Format("A newer version of Entitas is available!\n\n" +
                             "Currently installed version: {0}\n" +
                             "New version: {1}", info.localVersionString, info.remoteVersionString),
-                            "Show release",
+                            "Show in Unity Asset Store",
                             "Cancel"
                         )) {
-                        Application.OpenURL(URL_GITHUB_RELEASES);
+                        Application.OpenURL(URL_ASSET_STORE);
                     }
                     break;
                 case UpdateState.UpToDate:
@@ -125,10 +126,10 @@ namespace Entitas.Unity.Editor {
                             string.Format("Your Entitas version seems to be newer than the latest release?!?\n\n" +
                             "Currently installed version: {0}\n" +
                             "Latest release: {1}", info.localVersionString, info.remoteVersionString),
-                            "Show release",
+                            "Show in Unity Asset Store",
                             "Cancel"
                         )) {
-                        Application.OpenURL(URL_GITHUB_RELEASES);
+                        Application.OpenURL(URL_ASSET_STORE);
                     }
                     break;
                 case UpdateState.NoConnection:
