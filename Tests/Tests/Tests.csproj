@@ -107,6 +107,8 @@
     <Compile Include="Tests\Entitas.Utils\Extensions\describe_DictionaryExtension.cs" />
     <Compile Include="Tests\Entitas.CodeGeneration\describe_PluginUtil.cs" />
     <Compile Include="Tests\Entitas.CodeGeneration\PostProcessors\describe_UpdateCSProjPostProcessor.cs" />
+    <Compile Include="Tests\Entitas\describe_MultiReactiveSystem.cs" />
+    <Compile Include="Fixtures\Systems\MultiReactiveSystemSpy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

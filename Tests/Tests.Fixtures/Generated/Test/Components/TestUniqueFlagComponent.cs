@@ -14,8 +14,8 @@ public partial class TestContext {
         get { return uniqueFlagEntity != null; }
         set {
             var entity = uniqueFlagEntity;
-            if(value != (entity != null)) {
-                if(value) {
+            if (value != (entity != null)) {
+                if (value) {
                     CreateEntity().isUniqueFlag = true;
                 } else {
                     DestroyEntity(entity);
@@ -40,8 +40,8 @@ public partial class TestEntity {
     public bool isUniqueFlag {
         get { return HasComponent(TestComponentsLookup.UniqueFlag); }
         set {
-            if(value != isUniqueFlag) {
-                if(value) {
+            if (value != isUniqueFlag) {
+                if (value) {
                     AddComponent(TestComponentsLookup.UniqueFlag, uniqueFlagComponent);
                 } else {
                     RemoveComponent(TestComponentsLookup.UniqueFlag);
@@ -65,7 +65,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> UniqueFlag {
         get {
-            if(_matcherUniqueFlag == null) {
+            if (_matcherUniqueFlag == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.UniqueFlag);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherUniqueFlag = matcher;

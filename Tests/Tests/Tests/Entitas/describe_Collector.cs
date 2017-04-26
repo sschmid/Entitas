@@ -1,4 +1,4 @@
-using Entitas;
+﻿using Entitas;
 using NSpec;
 
 class describe_Collector : nspec {
@@ -8,7 +8,7 @@ class describe_Collector : nspec {
     void when_created() {
 
         IGroup<TestEntity> groupA = null;
-        Collector<TestEntity> collectorA = null;
+        ICollector<TestEntity> collectorA = null;
         IMatcher<TestEntity> matcherA = Matcher<TestEntity>.AllOf(CID.ComponentA);
 
         before = () => {

@@ -8,7 +8,7 @@ namespace Entitas {
     /// You can create and destroy entities and get groups of entities.
     /// The prefered way to create a context is to use the generated methods
     /// from the code generator, e.g. var context = new GameContext();
-    public class Context<TEntity> : IContext<TEntity> where TEntity : class, IEntity, new() {
+    public class Context<TEntity> : IContext<TEntity> where TEntity : class, IEntity {
 
         /// Occurs when an entity gets created.
         public event ContextEntityChanged OnEntityCreated;
@@ -139,7 +139,7 @@ namespace Entitas {
                 entity = _reusableEntities.Pop();
                 entity.Reactivate(_creationIndex++);
             } else {
-                entity = new TEntity();
+                entity = (TEntity)Activator.CreateInstance(typeof(TEntity));
                 entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo, _aercFactory(entity));
             }
 

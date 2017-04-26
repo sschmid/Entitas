@@ -73,6 +73,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PluginUtil.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\Configs\ProjectPathConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\UpdateCSProjPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\CodeGenerators\ComponentEntityInterfaceGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.Plugins\" />

@@ -13,7 +13,7 @@ public partial class GameContext {
     public bool hasISomeInterface { get { return iSomeInterfaceEntity != null; } }
 
     public GameEntity SetISomeInterface(ISomeInterface newValue) {
-        if(hasISomeInterface) {
+        if (hasISomeInterface) {
             throw new Entitas.EntitasException("Could not set ISomeInterface!\n" + this + " already has an entity with ISomeInterfaceComponent!",
                 "You should check if the context already has a iSomeInterfaceEntity before setting it or use context.ReplaceISomeInterface().");
         }
@@ -24,7 +24,7 @@ public partial class GameContext {
 
     public void ReplaceISomeInterface(ISomeInterface newValue) {
         var entity = iSomeInterfaceEntity;
-        if(entity == null) {
+        if (entity == null) {
             entity = SetISomeInterface(newValue);
         } else {
             entity.ReplaceISomeInterface(newValue);
@@ -82,7 +82,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> ISomeInterface {
         get {
-            if(_matcherISomeInterface == null) {
+            if (_matcherISomeInterface == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.ISomeInterface);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherISomeInterface = matcher;

@@ -44,7 +44,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> Standard {
         get {
-            if(_matcherStandard == null) {
+            if (_matcherStandard == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.Standard);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherStandard = matcher;

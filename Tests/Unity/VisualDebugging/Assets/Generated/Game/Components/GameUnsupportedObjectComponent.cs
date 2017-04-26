@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> UnsupportedObject {
         get {
-            if(_matcherUnsupportedObject == null) {
+            if (_matcherUnsupportedObject == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.UnsupportedObject);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherUnsupportedObject = matcher;

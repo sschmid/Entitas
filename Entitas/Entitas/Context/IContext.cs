@@ -33,7 +33,7 @@ namespace Entitas {
         void Reset();
     }
 
-    public interface IContext<TEntity> : IContext where TEntity : class, IEntity, new() {
+    public interface IContext<TEntity> : IContext where TEntity : class, IEntity {
 
         TEntity CreateEntity();
         void DestroyEntity(TEntity entity);

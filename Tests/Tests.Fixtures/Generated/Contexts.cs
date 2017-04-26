@@ -10,7 +10,7 @@ public partial class Contexts : Entitas.IContexts {
 
     public static Contexts sharedInstance {
         get {
-            if(_sharedInstance == null) {
+            if (_sharedInstance == null) {
                 _sharedInstance = new Contexts();
             }
 
@@ -37,7 +37,7 @@ public partial class Contexts : Entitas.IContexts {
             method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGeneration.Attributes.PostConstructorAttribute))
         );
 
-        foreach(var postConstructor in postConstructors) {
+        foreach (var postConstructor in postConstructors) {
             postConstructor.Invoke(this, null);
         }
     }

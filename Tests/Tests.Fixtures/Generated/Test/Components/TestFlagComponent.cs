@@ -13,8 +13,8 @@ public partial class TestEntity {
     public bool isFlag {
         get { return HasComponent(TestComponentsLookup.Flag); }
         set {
-            if(value != isFlag) {
-                if(value) {
+            if (value != isFlag) {
+                if (value) {
                     AddComponent(TestComponentsLookup.Flag, flagComponent);
                 } else {
                     RemoveComponent(TestComponentsLookup.Flag);
@@ -38,7 +38,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> Flag {
         get {
-            if(_matcherFlag == null) {
+            if (_matcherFlag == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.Flag);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherFlag = matcher;

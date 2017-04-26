@@ -44,7 +44,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> InterfaceToGenerate {
         get {
-            if(_matcherInterfaceToGenerate == null) {
+            if (_matcherInterfaceToGenerate == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.InterfaceToGenerate);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherInterfaceToGenerate = matcher;

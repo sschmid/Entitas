@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> MonoBehaviourSubClass {
         get {
-            if(_matcherMonoBehaviourSubClass == null) {
+            if (_matcherMonoBehaviourSubClass == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.MonoBehaviourSubClass);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherMonoBehaviourSubClass = matcher;

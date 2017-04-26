@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> DateTime {
         get {
-            if(_matcherDateTime == null) {
+            if (_matcherDateTime == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.DateTime);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherDateTime = matcher;

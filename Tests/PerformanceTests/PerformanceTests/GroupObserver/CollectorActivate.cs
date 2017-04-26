@@ -1,9 +1,9 @@
-using Entitas;
+﻿using Entitas;
 
 public class CollectorActivate : IPerformanceTest {
 
     const int n = 10000;
-    Collector<Entity> _collector;
+    ICollector<Entity> _collector;
 
     public void Before() {
         var context = Helper.CreateContext();

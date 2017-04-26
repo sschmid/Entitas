@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> Property {
         get {
-            if(_matcherProperty == null) {
+            if (_matcherProperty == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Property);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherProperty = matcher;
