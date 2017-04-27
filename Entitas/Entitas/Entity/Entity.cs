@@ -28,7 +28,12 @@ namespace Entitas {
         /// Occurs when an entity gets released and is not retained anymore.
         /// All event handlers will be removed when
         /// the entity gets destroyed by the context.
-        public event EntityReleased OnEntityReleased;
+        public event EntityEvent OnEntityReleased;
+
+        /// Occurs when calling entity.Destroy().
+        /// All event handlers will be removed when
+        /// the entity gets destroyed by the context.
+        public event EntityEvent OnDestroyEntity;
 
         /// The total amount of components an entity can possibly have.
         public int totalComponents { get { return _totalComponents; } }
@@ -359,6 +364,13 @@ namespace Entitas {
                 if (OnEntityReleased != null) {
                     OnEntityReleased(this);
                 }
+            }
+        }
+
+        // Dispatches OnDestroyEntity which will start the destroy process.
+        public void Destroy() {
+            if (OnDestroyEntity != null) {
+                OnDestroyEntity(this);
             }
         }
 

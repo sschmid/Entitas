@@ -72,7 +72,7 @@ namespace Entitas {
         // Cache delegates to avoid gc allocations
         EntityComponentChanged _cachedEntityChanged;
         EntityComponentReplaced _cachedComponentReplaced;
-        EntityReleased _cachedEntityReleased;
+        EntityEvent _cachedEntityReleased;
 
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
