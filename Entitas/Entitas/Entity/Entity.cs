@@ -382,6 +382,7 @@ namespace Entitas {
             OnComponentAdded = null;
             OnComponentReplaced = null;
             OnComponentRemoved = null;
+            OnDestroyEntity = null;
         }
 
         // Do not call this method manually. This method is called by the context.

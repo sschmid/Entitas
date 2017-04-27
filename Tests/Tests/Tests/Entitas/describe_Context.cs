@@ -57,8 +57,8 @@ class describe_Context : nspec {
 
         it["throws when destroying an entity which the context doesn't contain"] = expect<ContextDoesNotContainEntityException>(() => {
             var e = ctx.CreateEntity();
-            ctx.DestroyEntity(e);
-            ctx.DestroyEntity(e);
+            e.Destroy();
+            e.Destroy();
         });
 
         it["can ToString"] = () => {
@@ -119,14 +119,14 @@ class describe_Context : nspec {
             };
 
             it["destroys entity and removes it"] = () => {
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 ctx.HasEntity(e).should_be_false();
                 ctx.count.should_be(0);
                 ctx.GetEntities().should_be_empty();
             };
 
             it["destroys an entity and removes all its components"] = () => {
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 e.GetComponents().should_be_empty();
             };
 
@@ -197,7 +197,7 @@ class describe_Context : nspec {
             it["updates entities cache when destroying an entity"] = () => {
                 var e = ctx.CreateEntity();
                 var entities = ctx.GetEntities();
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 ctx.GetEntities().should_not_be_same(entities);
             };
         };
@@ -236,7 +236,7 @@ class describe_Context : nspec {
                     ((IContext<TestEntity>)c).GetEntities().Length.should_be(0);
                 };
                 ctx.GetEntities();
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 didDispatch.should_be(1);
             };
 
@@ -249,7 +249,7 @@ class describe_Context : nspec {
                     entity.HasComponentA().should_be_false();
                     entity.isEnabled.should_be_false();
                 };
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 didDispatch.should_be(1);
             };
 
@@ -262,7 +262,7 @@ class describe_Context : nspec {
                     newEntity.should_not_be_null();
                     newEntity.should_not_be_same(entity);
                 };
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 var reusedEntity = ctx.CreateEntity();
                 reusedEntity.should_be_same(e);
                 didDispatch.should_be(1);
@@ -296,7 +296,7 @@ class describe_Context : nspec {
                 e.OnComponentAdded += delegate { this.Fail(); };
                 e.OnComponentRemoved += delegate { this.Fail(); };
                 e.OnComponentReplaced += delegate { this.Fail(); };
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 var e2 = ctx.CreateEntity();
                 e2.should_be_same(e);
                 e2.AddComponentA();
@@ -308,7 +308,7 @@ class describe_Context : nspec {
                 var e = ctx.CreateEntity();
                 var didRelease = 0;
                 e.OnEntityReleased += entity => didRelease += 1;
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 didRelease.should_be(1);
             };
 
@@ -316,7 +316,7 @@ class describe_Context : nspec {
                 var e = ctx.CreateEntity();
                 var didRelease = 0;
                 e.OnEntityReleased += entity => didRelease += 1;
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 e.Retain(this);
                 e.Release(this);
                 didRelease.should_be(1);
@@ -327,7 +327,7 @@ class describe_Context : nspec {
                 var didRelease = 0;
                 e.OnEntityReleased += entity => didRelease += 1;
                 e.Retain(this);
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 didRelease.should_be(0);
                 e.Release(this);
                 didRelease.should_be(1);
@@ -349,14 +349,14 @@ class describe_Context : nspec {
             it["destroys entity when pushing back to object pool"] = () => {
                 var e = ctx.CreateEntity();
                 e.AddComponentA();
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 e.HasComponent(CID.ComponentA).should_be_false();
             };
 
             it["returns pushed entity"] = () => {
                 var e = ctx.CreateEntity();
                 e.AddComponentA();
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 var entity = ctx.CreateEntity();
                 entity.HasComponent(CID.ComponentA).should_be_false();
                 entity.should_be_same(e);
@@ -365,7 +365,7 @@ class describe_Context : nspec {
             it["only returns released entities"] = () => {
                 var e1 = ctx.CreateEntity();
                 e1.Retain(this);
-                ctx.DestroyEntity(e1);
+                e1.Destroy();
                 var e2 = ctx.CreateEntity();
                 e2.should_not_be_same(e1);
                 e1.Release(this);
@@ -376,7 +376,7 @@ class describe_Context : nspec {
             it["returns new entity"] = () => {
                 var e1 = ctx.CreateEntity();
                 e1.AddComponentA();
-                ctx.DestroyEntity(e1);
+                e1.Destroy();
                 ctx.CreateEntity();
                 var e2 = ctx.CreateEntity();
                 e2.HasComponent(CID.ComponentA).should_be_false();
@@ -386,7 +386,7 @@ class describe_Context : nspec {
             it["sets up entity from pool"] = () => {
                 var e = ctx.CreateEntity();
                 var creationIndex = e.creationIndex;
-                ctx.DestroyEntity(e);
+                e.Destroy();
                 var g = ctx.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
 
                 e = ctx.CreateEntity();
@@ -404,7 +404,7 @@ class describe_Context : nspec {
                 before = () => {
                     e = ctx.CreateEntity();
                     e.AddComponentA();
-                    ctx.DestroyEntity(e);
+                    e.Destroy();
                 };
 
                 it["throws when adding component"] = expect<EntityIsNotEnabledException>(() => e.AddComponentA());
@@ -471,7 +471,7 @@ class describe_Context : nspec {
 
                 it["removes destroyed entity"] = () => {
                     var g = ctx.GetGroup(matcherAB);
-                    ctx.DestroyEntity(eAB1);
+                    eAB1.Destroy();
                     g.GetEntities().should_not_contain(eAB1);
                 };
 
@@ -526,7 +526,7 @@ class describe_Context : nspec {
                     var matcher = Matcher<TestEntity>.AllOf(CID.ComponentB).NoneOf(CID.ComponentA);
                     var g = ctx.GetGroup(matcher);
                     g.OnEntityAdded += delegate { this.Fail(); };
-                    ctx.DestroyEntity(e);
+                    e.Destroy();
                 };
 
                 context["event timing"] = () => {
@@ -600,7 +600,6 @@ class describe_Context : nspec {
                     ctx.CreateEntity().creationIndex.should_be(0);
                 };
 
-
                 context["removes all event handlers"] = () => {
 
                     it["removes OnEntityCreated"] = () => {
@@ -614,14 +613,14 @@ class describe_Context : nspec {
                         ctx.OnEntityWillBeDestroyed += delegate { this.Fail(); };
                         ctx.Reset();
 
-                        ctx.DestroyEntity(ctx.CreateEntity());
+                        ctx.CreateEntity().Destroy();
                     };
 
                     it["removes OnEntityDestroyed"] = () => {
                         ctx.OnEntityDestroyed += delegate { this.Fail(); };
                         ctx.Reset();
 
-                        ctx.DestroyEntity(ctx.CreateEntity());
+                        ctx.CreateEntity().Destroy();
                     };
 
                     it["removes OnGroupCreated"] = () => {
