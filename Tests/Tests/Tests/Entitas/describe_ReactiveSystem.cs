@@ -178,7 +178,7 @@ class describe_ReactiveSystem : nspec {
                     entities[0].retainCount.should_be(1);
                 };
 
-                _context.DestroyEntity(e);
+                e.Destroy();
                 system.Execute();
                 didExecute.should_be(1);
                 e.retainCount.should_be(0);

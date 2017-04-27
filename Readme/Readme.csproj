@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,6 +34,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Readme\Generated\GameState\Components\GameStateScoreComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameUserComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameAnimatingComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameAssetComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameGameBoardElementComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameInteractiveComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameMovableComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GamePositionComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameViewComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameVelocityComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameHealthComponent.cs" />
+    <Compile Include="Readme\Generated\Input\InputComponentsLookup.cs" />
+    <Compile Include="Readme\Generated\Game\GameComponentsLookup.cs" />
+    <Compile Include="Readme\Generated\GameState\GameStateComponentsLookup.cs" />
+    <Compile Include="Readme\Generated\Game\GameAttribute.cs" />
+    <Compile Include="Readme\Generated\GameState\GameStateAttribute.cs" />
+    <Compile Include="Readme\Generated\Input\InputAttribute.cs" />
+    <Compile Include="Readme\Generated\Game\GameContext.cs" />
+    <Compile Include="Readme\Generated\GameState\GameStateContext.cs" />
+    <Compile Include="Readme\Generated\Input\InputContext.cs" />
+    <Compile Include="Readme\Generated\Game\GameMatcher.cs" />
+    <Compile Include="Readme\Generated\GameState\GameStateMatcher.cs" />
+    <Compile Include="Readme\Generated\Input\InputMatcher.cs" />
+    <Compile Include="Readme\Generated\Contexts.cs" />
+    <Compile Include="Readme\Generated\Game\GameEntity.cs" />
+    <Compile Include="Readme\Generated\GameState\GameStateEntity.cs" />
+    <Compile Include="Readme\Generated\Input\InputEntity.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Readme\ReadmeSnippets.cs" />
     <Compile Include="Readme\Components\AssetComponent.cs" />
@@ -53,9 +82,6 @@
     <Folder Include="Readme\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Readme\Generated\**\*.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Entitas.properties" />
   </ItemGroup>
   <ItemGroup>
@@ -63,21 +89,9 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Addons\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">
-      <Project>{8AA2998C-DEAD-4795-8255-55C2CEC8DED2}</Project>
-      <Name>Entitas.CodeGeneration</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Addons\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj">
       <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
       <Name>Entitas.CodeGeneration.Attributes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Addons\Entitas.CodeGeneration.CodeGenerator\Entitas.CodeGeneration.CodeGenerator.csproj">
-      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
-      <Name>Entitas.CodeGeneration.CodeGenerator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Addons\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
-      <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
-      <Name>Entitas.CodeGeneration.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

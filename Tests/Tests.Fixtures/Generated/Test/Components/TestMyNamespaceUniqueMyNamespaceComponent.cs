@@ -32,7 +32,7 @@ public partial class TestContext {
     }
 
     public void RemoveMyNamespaceUniqueMyNamespace() {
-        DestroyEntity(myNamespaceUniqueMyNamespaceEntity);
+        myNamespaceUniqueMyNamespaceEntity.Destroy();
     }
 }
 

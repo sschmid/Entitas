@@ -18,7 +18,7 @@ public partial class TestContext {
                 if (value) {
                     CreateEntity().myCustomPrefixFlag = true;
                 } else {
-                    DestroyEntity(entity);
+                    entity.Destroy();
                 }
             }
         }

@@ -18,7 +18,7 @@ public partial class TestContext {
                 if (value) {
                     CreateEntity().isMyNamespaceUniqueMyNamespaceFlag = true;
                 } else {
-                    DestroyEntity(entity);
+                    entity.Destroy();
                 }
             }
         }

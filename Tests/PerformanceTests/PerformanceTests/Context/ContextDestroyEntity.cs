@@ -15,7 +15,7 @@ public class ContextDestroyEntity : IPerformanceTest {
     public void Run() {
         var entities = _context.GetEntities();
         for (int i = 0; i < entities.Length; i++) {
-            _context.DestroyEntity(entities[i]);
+            entities[i].Destroy();
         }
     }
 }

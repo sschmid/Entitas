@@ -6,7 +6,7 @@ using Entitas.Utils;
 namespace Entitas {
 
     /// Use context.CreateEntity() to create a new entity and
-    /// context.DestroyEntity() to destroy it.
+    /// entity.Destroy() to destroy it.
     /// You can add, replace and remove IComponent to an entity.
     public class Entity : IEntity {
 
@@ -375,7 +375,7 @@ namespace Entitas {
         }
 
         // This method is used internally. Don't call it yourself.
-        // Use context.DestroyEntity(entity);
+        // Use entity.Destroy();
         public void InternalDestroy() {
             _isEnabled = false;
             RemoveAllComponents();

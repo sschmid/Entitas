@@ -166,6 +166,7 @@ namespace Entitas {
         public void DestroyEntity(TEntity entity) {
             var removed = _entities.Remove(entity);
             if (!removed) {
+                // TODO new error message, because of entity.Destroy()
                 throw new ContextDoesNotContainEntityException(
                     "'" + this + "' cannot destroy " + entity + "!",
                     "Did you call context.DestroyEntity() on a wrong context?"
@@ -201,7 +202,7 @@ namespace Entitas {
         public void DestroyAllEntities() {
             var entities = GetEntities();
             for (int i = 0; i < entities.Length; i++) {
-                DestroyEntity(entities[i]);
+                entities[i].Destroy();
             }
 
             _entities.Clear();
