@@ -13,7 +13,7 @@ public partial class GameContext {
     public bool hasUser { get { return userEntity != null; } }
 
     public GameEntity SetUser(string newName, int newAge) {
-        if(hasUser) {
+        if (hasUser) {
             throw new Entitas.EntitasException("Could not set User!\n" + this + " already has an entity with UserComponent!",
                 "You should check if the context already has a userEntity before setting it or use context.ReplaceUser().");
         }
@@ -24,7 +24,7 @@ public partial class GameContext {
 
     public void ReplaceUser(string newName, int newAge) {
         var entity = userEntity;
-        if(entity == null) {
+        if (entity == null) {
             entity = SetUser(newName, newAge);
         } else {
             entity.ReplaceUser(newName, newAge);
@@ -32,7 +32,7 @@ public partial class GameContext {
     }
 
     public void RemoveUser() {
-        DestroyEntity(userEntity);
+        userEntity.Destroy();
     }
 }
 
@@ -84,7 +84,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> User {
         get {
-            if(_matcherUser == null) {
+            if (_matcherUser == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.User);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherUser = matcher;

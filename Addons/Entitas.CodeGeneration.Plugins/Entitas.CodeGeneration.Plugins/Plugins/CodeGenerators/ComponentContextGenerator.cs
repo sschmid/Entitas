@@ -43,7 +43,7 @@ namespace Entitas.CodeGeneration.Plugins {
     }
 
     public void Remove${ComponentName}() {
-        DestroyEntity(${componentName}Entity);
+        ${componentName}Entity.Destroy();
     }
 }
 ";
@@ -67,7 +67,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 if (value) {
                     CreateEntity().${prefixedComponentName} = true;
                 } else {
-                    DestroyEntity(entity);
+                    entity.Destroy();
                 }
             }
         }

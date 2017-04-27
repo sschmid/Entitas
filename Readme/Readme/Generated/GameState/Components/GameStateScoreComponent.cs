@@ -13,7 +13,7 @@ public partial class GameStateContext {
     public bool hasScore { get { return scoreEntity != null; } }
 
     public GameStateEntity SetScore(int newValue) {
-        if(hasScore) {
+        if (hasScore) {
             throw new Entitas.EntitasException("Could not set Score!\n" + this + " already has an entity with ScoreComponent!",
                 "You should check if the context already has a scoreEntity before setting it or use context.ReplaceScore().");
         }
@@ -24,7 +24,7 @@ public partial class GameStateContext {
 
     public void ReplaceScore(int newValue) {
         var entity = scoreEntity;
-        if(entity == null) {
+        if (entity == null) {
             entity = SetScore(newValue);
         } else {
             entity.ReplaceScore(newValue);
@@ -32,7 +32,7 @@ public partial class GameStateContext {
     }
 
     public void RemoveScore() {
-        DestroyEntity(scoreEntity);
+        scoreEntity.Destroy();
     }
 }
 
@@ -82,7 +82,7 @@ public sealed partial class GameStateMatcher {
 
     public static Entitas.IMatcher<GameStateEntity> Score {
         get {
-            if(_matcherScore == null) {
+            if (_matcherScore == null) {
                 var matcher = (Entitas.Matcher<GameStateEntity>)Entitas.Matcher<GameStateEntity>.AllOf(GameStateComponentsLookup.Score);
                 matcher.componentNames = GameStateComponentsLookup.componentNames;
                 _matcherScore = matcher;

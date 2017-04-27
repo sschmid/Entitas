@@ -32,7 +32,7 @@ public partial class TestContext {
     }
 
     public void RemoveUniqueStandard() {
-        DestroyEntity(uniqueStandardEntity);
+        uniqueStandardEntity.Destroy();
     }
 }
 

@@ -18,7 +18,7 @@ public partial class TestContext {
                 if (value) {
                     CreateEntity().isUniqueFlag = true;
                 } else {
-                    DestroyEntity(entity);
+                    entity.Destroy();
                 }
             }
         }

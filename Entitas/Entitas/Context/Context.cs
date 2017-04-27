@@ -72,7 +72,8 @@ namespace Entitas {
         // Cache delegates to avoid gc allocations
         EntityComponentChanged _cachedEntityChanged;
         EntityComponentReplaced _cachedComponentReplaced;
-        EntityReleased _cachedEntityReleased;
+        EntityEvent _cachedEntityReleased;
+        EntityEvent _cachedDestroyEntity;
 
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
@@ -118,6 +119,7 @@ namespace Entitas {
             _cachedEntityChanged = updateGroupsComponentAddedOrRemoved;
             _cachedComponentReplaced = updateGroupsComponentReplaced;
             _cachedEntityReleased = onEntityReleased;
+            _cachedDestroyEntity = onDestroyEntity;
         }
 
         ContextInfo createDefaultContextInfo() {
@@ -150,6 +152,7 @@ namespace Entitas {
             entity.OnComponentRemoved += _cachedEntityChanged;
             entity.OnComponentReplaced += _cachedComponentReplaced;
             entity.OnEntityReleased += _cachedEntityReleased;
+            entity.OnDestroyEntity += _cachedDestroyEntity;
 
             if (OnEntityCreated != null) {
                 OnEntityCreated(this, entity);
@@ -160,12 +163,14 @@ namespace Entitas {
 
         /// Destroys the entity, removes all its components and pushs it back
         /// to the internal ObjectPool for entities.
+        // TODO Obsolete since 0.42.0, April 2017
+        [Obsolete("Please use entity.Destroy()")]
         public void DestroyEntity(TEntity entity) {
             var removed = _entities.Remove(entity);
             if (!removed) {
                 throw new ContextDoesNotContainEntityException(
                     "'" + this + "' cannot destroy " + entity + "!",
-                    "Did you call context.DestroyEntity() on a wrong context?"
+                    "This cannot happen!?!"
                 );
             }
             _entitiesCache = null;
@@ -198,7 +203,7 @@ namespace Entitas {
         public void DestroyAllEntities() {
             var entities = GetEntities();
             for (int i = 0; i < entities.Length; i++) {
-                DestroyEntity(entities[i]);
+                entities[i].Destroy();
             }
 
             _entities.Clear();
@@ -356,6 +361,10 @@ namespace Entitas {
             entity.RemoveAllOnEntityReleasedHandlers();
             _retainedEntities.Remove(tEntity);
             _reusableEntities.Push(tEntity);
+        }
+
+        void onDestroyEntity(IEntity entity) {
+            DestroyEntity((TEntity)entity);
         }
     }
 }

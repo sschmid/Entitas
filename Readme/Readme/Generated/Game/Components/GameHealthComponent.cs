@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> Health {
         get {
-            if(_matcherHealth == null) {
+            if (_matcherHealth == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Health);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherHealth = matcher;

@@ -397,6 +397,13 @@ class describe_Entity : nspec {
                 e.RemoveAllComponents();
                 didDispatch.should_be(2);
             };
+
+            it["dispatches OnDestroy when calling Destroy"] = () => {
+                var didDestroy = 0;
+                e.OnDestroyEntity += entity => didDestroy += 1;
+                e.Destroy();
+                didDestroy.should_be(1);
+            };
         };
 
         context["reference counting"] = () => {

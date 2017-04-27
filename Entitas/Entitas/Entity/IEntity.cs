@@ -11,14 +11,15 @@ namespace Entitas {
         IEntity entity, int index, IComponent previousComponent, IComponent newComponent
     );
 
-    public delegate void EntityReleased(IEntity entity);
+    public delegate void EntityEvent(IEntity entity);
 
     public interface IEntity : IAERC {
 
         event EntityComponentChanged OnComponentAdded;
         event EntityComponentChanged OnComponentRemoved;
         event EntityComponentReplaced OnComponentReplaced;
-        event EntityReleased OnEntityReleased;
+        event EntityEvent OnEntityReleased;
+        event EntityEvent OnDestroyEntity;
 
         int totalComponents { get; }
         int creationIndex { get; }
@@ -54,6 +55,7 @@ namespace Entitas {
         IComponent CreateComponent(int index, Type type);
         T CreateComponent<T>(int index) where T : new();
 
+        void Destroy();
         void InternalDestroy();
         void RemoveAllOnEntityReleasedHandlers();
     }
