@@ -369,6 +369,10 @@ namespace Entitas {
 
         // Dispatches OnDestroyEntity which will start the destroy process.
         public void Destroy() {
+            if (!_isEnabled) {
+                throw new EntityIsNotEnabledException("Cannot destroy " + this + "!");
+            }
+
             if (OnDestroyEntity != null) {
                 OnDestroyEntity(this);
             }

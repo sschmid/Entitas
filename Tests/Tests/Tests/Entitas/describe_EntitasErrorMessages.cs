@@ -103,10 +103,6 @@ class describe_EntitasErrorMessages : nspec {
                 new MyTestContext(1, 0, contextInfo);
             });
 
-            it["destroy entity which is not in context"] = () => printErrorMessage(() => {
-                new TestEntity().Destroy();
-            });
-
             it["destroy retained entities"] = () => printErrorMessage(() => {
                 ctx.CreateEntity().Retain(this);
                 ctx.DestroyAllEntities();

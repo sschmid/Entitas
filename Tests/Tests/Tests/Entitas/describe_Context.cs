@@ -55,12 +55,6 @@ class describe_Context : nspec {
             e.componentPools.should_be_same(ctx.componentPools);
         };
 
-        it["throws when destroying an entity which the context doesn't contain"] = expect<ContextDoesNotContainEntityException>(() => {
-            var e = ctx.CreateEntity();
-            e.Destroy();
-            e.Destroy();
-        });
-
         it["can ToString"] = () => {
             ctx.ToString().should_be("Unnamed Context");
         };
@@ -128,6 +122,16 @@ class describe_Context : nspec {
             it["destroys an entity and removes all its components"] = () => {
                 e.Destroy();
                 e.GetComponents().should_be_empty();
+            };
+
+            it["removes OnDestroyEntity handler"] = () => {
+                var didDestroy = 0;
+                ctx.OnEntityWillBeDestroyed += delegate {
+                    didDestroy += 1;
+                };
+                e.Destroy();
+                ctx.CreateEntity().Destroy();
+                didDestroy.should_be(2);
             };
 
             it["destroys all entities"] = () => {
@@ -411,6 +415,7 @@ class describe_Context : nspec {
                 it["throws when removing component"] = expect<EntityIsNotEnabledException>(() => e.RemoveComponentA());
                 it["throws when replacing component"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(new ComponentA()));
                 it["throws when replacing component with null"] = expect<EntityIsNotEnabledException>(() => e.ReplaceComponentA(null));
+                it["throws when attempting to destroy again"] = expect<EntityIsNotEnabledException>(() => e.Destroy());
             };
         };
 

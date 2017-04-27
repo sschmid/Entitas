@@ -141,7 +141,7 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityRemoved"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_context.CreateCollector(_matcherAB, GroupEvent.Removed));
+                system = new ReactiveSystemSpy(_context.CreateCollector(_matcherAB.Removed()));
             };
 
             it["executes when triggered"] = () => {
@@ -188,7 +188,7 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityAddedOrRemoved"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_context.CreateCollector(_matcherAB, GroupEvent.AddedOrRemoved));
+                system = new ReactiveSystemSpy(_context.CreateCollector(_matcherAB.AddedOrRemoved()));
             };
 
             it["executes when added"] = () => {
