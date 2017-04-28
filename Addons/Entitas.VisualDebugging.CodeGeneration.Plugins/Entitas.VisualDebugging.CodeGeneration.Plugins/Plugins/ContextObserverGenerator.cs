@@ -19,16 +19,16 @@ namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeContexObservers() {
+        try {
 ${contextObservers}
+        } catch(System.Exception) {
+        }
     }
 
     public void CreateContextObserver(Entitas.IContext context) {
-        try {
-            if (UnityEngine.Application.isPlaying) {
-                var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);
-                UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
-            }
-        } catch(System.Exception) {
+        if (UnityEngine.Application.isPlaying) {
+            var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);
+            UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
         }
     }
 
@@ -36,7 +36,7 @@ ${contextObservers}
 }
 ";
 
-        const string CONTEXT_OBSERVER_TEMPLATE = @"        CreateContextObserver(${contextName});";
+        const string CONTEXT_OBSERVER_TEMPLATE = @"            CreateContextObserver(${contextName});";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var contextNames = data

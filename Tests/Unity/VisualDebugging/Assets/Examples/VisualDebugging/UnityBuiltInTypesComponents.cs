@@ -62,7 +62,7 @@ public class RectComponent : IComponent {
     public Rect rect;
 }
 
-[Game]
+[Game, Input]
 public class MyStringComponent : IComponent {
     public string myString;
 

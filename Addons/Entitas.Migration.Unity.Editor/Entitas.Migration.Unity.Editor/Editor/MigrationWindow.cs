@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Entitas.Unity.Editor;
 using Entitas.Utils;
@@ -9,7 +9,7 @@ namespace Entitas.Migration.Unity.Editor {
 
     public class MigrationWindow : EditorWindow {
 
-        [MenuItem("Entitas/Migrate...", false, 1000)]
+        [MenuItem("Tools/Entitas/Migrate...", false, 1000)]
         public static void OpenMigrate() {
             EntitasEditorLayout.ShowWindow<MigrationWindow>("Entitas Migration - " + CheckForUpdates.GetLocalVersion());
         }

@@ -10,7 +10,7 @@ public partial class Contexts : Entitas.IContexts {
 
     public static Contexts sharedInstance {
         get {
-            if(_sharedInstance == null) {
+            if (_sharedInstance == null) {
                 _sharedInstance = new Contexts();
             }
 
@@ -22,18 +22,20 @@ public partial class Contexts : Entitas.IContexts {
     static Contexts _sharedInstance;
 
     public GameContext game { get; set; }
+    public InputContext input { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game }; } }
+    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game, input }; } }
 
     public Contexts() {
         game = new GameContext();
+        input = new InputContext();
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
             method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGeneration.Attributes.PostConstructorAttribute))
         );
 
-        foreach(var postConstructor in postConstructors) {
+        foreach (var postConstructor in postConstructors) {
             postConstructor.Invoke(this, null);
         }
     }
@@ -56,20 +58,21 @@ public partial class Contexts : Entitas.IContexts {
 //------------------------------------------------------------------------------
 public partial class Contexts {
 
-#if(!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
     public void InitializeContexObservers() {
-        CreateContextObserver(game);
+        try {
+            CreateContextObserver(game);
+            CreateContextObserver(input);
+        } catch(System.Exception) {
+        }
     }
 
     public void CreateContextObserver(Entitas.IContext context) {
-        try {
-            if(UnityEngine.Application.isPlaying) {
-                var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);
-                UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
-            }
-        } catch(System.Exception) {
+        if (UnityEngine.Application.isPlaying) {
+            var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);
+            UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
         }
     }
 

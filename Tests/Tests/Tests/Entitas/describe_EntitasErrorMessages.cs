@@ -36,7 +36,7 @@ class describe_EntitasErrorMessages : nspec {
             context["when not enabled"] = () => {
 
                 before = () => {
-                    ctx.DestroyEntity(entity);
+                    entity.Destroy();
                 };
 
                 it["add a component"] = () => printErrorMessage(() => entity.AddComponentA());
@@ -101,10 +101,6 @@ class describe_EntitasErrorMessages : nspec {
                 var componentNames = new [] { "Health", "Position", "View" };
                 var contextInfo = new ContextInfo("My Context", componentNames, null);
                 new MyTestContext(1, 0, contextInfo);
-            });
-
-            it["destroy entity which is not in context"] = () => printErrorMessage(() => {
-                ctx.DestroyEntity(new TestEntity());
             });
 
             it["destroy retained entities"] = () => printErrorMessage(() => {

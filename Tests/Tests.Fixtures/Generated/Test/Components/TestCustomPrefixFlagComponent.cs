@@ -14,11 +14,11 @@ public partial class TestContext {
         get { return customPrefixFlagEntity != null; }
         set {
             var entity = customPrefixFlagEntity;
-            if(value != (entity != null)) {
-                if(value) {
+            if (value != (entity != null)) {
+                if (value) {
                     CreateEntity().myCustomPrefixFlag = true;
                 } else {
-                    DestroyEntity(entity);
+                    entity.Destroy();
                 }
             }
         }
@@ -40,8 +40,8 @@ public partial class TestEntity {
     public bool myCustomPrefixFlag {
         get { return HasComponent(TestComponentsLookup.CustomPrefixFlag); }
         set {
-            if(value != myCustomPrefixFlag) {
-                if(value) {
+            if (value != myCustomPrefixFlag) {
+                if (value) {
                     AddComponent(TestComponentsLookup.CustomPrefixFlag, customPrefixFlagComponent);
                 } else {
                     RemoveComponent(TestComponentsLookup.CustomPrefixFlag);
@@ -65,7 +65,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> CustomPrefixFlag {
         get {
-            if(_matcherCustomPrefixFlag == null) {
+            if (_matcherCustomPrefixFlag == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.CustomPrefixFlag);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherCustomPrefixFlag = matcher;

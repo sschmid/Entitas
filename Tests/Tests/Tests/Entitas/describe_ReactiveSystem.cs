@@ -1,4 +1,4 @@
-using Entitas;
+﻿using Entitas;
 using NSpec;
 
 class describe_ReactiveSystem : nspec {
@@ -141,7 +141,7 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityRemoved"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_context.CreateCollector(_matcherAB, GroupEvent.Removed));
+                system = new ReactiveSystemSpy(_context.CreateCollector(_matcherAB.Removed()));
             };
 
             it["executes when triggered"] = () => {
@@ -178,7 +178,7 @@ class describe_ReactiveSystem : nspec {
                     entities[0].retainCount.should_be(1);
                 };
 
-                _context.DestroyEntity(e);
+                e.Destroy();
                 system.Execute();
                 didExecute.should_be(1);
                 e.retainCount.should_be(0);
@@ -188,7 +188,7 @@ class describe_ReactiveSystem : nspec {
         context["OnEntityAddedOrRemoved"] = () => {
 
             before = () => {
-                system = new ReactiveSystemSpy(_context.CreateCollector(_matcherAB, GroupEvent.AddedOrRemoved));
+                system = new ReactiveSystemSpy(_context.CreateCollector(_matcherAB.AddedOrRemoved()));
             };
 
             it["executes when added"] = () => {

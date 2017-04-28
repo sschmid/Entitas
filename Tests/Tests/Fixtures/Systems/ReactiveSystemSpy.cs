@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Entitas;
 
@@ -28,14 +28,14 @@ public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy,
 
     readonly Func<TestEntity, bool> _filter;
 
-    public ReactiveSystemSpy(Collector<TestEntity> collector) : base(collector) {
+    public ReactiveSystemSpy(ICollector<TestEntity> collector) : base(collector) {
     }
 
-    public ReactiveSystemSpy(Collector<TestEntity> collector, Func<IEntity, bool> filter) : this(collector) {
+    public ReactiveSystemSpy(ICollector<TestEntity> collector, Func<IEntity, bool> filter) : this(collector) {
         _filter = filter;
     }
 
-    protected override Collector<TestEntity> GetTrigger(IContext<TestEntity> context) {
+    protected override ICollector<TestEntity> GetTrigger(IContext<TestEntity> context) {
         return null;
     }
 

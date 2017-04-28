@@ -1,4 +1,4 @@
-using Entitas;
+﻿using Entitas;
 using NSpec;
 
 class describe_Collector : nspec {
@@ -8,7 +8,7 @@ class describe_Collector : nspec {
     void when_created() {
 
         IGroup<TestEntity> groupA = null;
-        Collector<TestEntity> collectorA = null;
+        ICollector<TestEntity> collectorA = null;
         IMatcher<TestEntity> matcherA = Matcher<TestEntity>.AllOf(CID.ComponentA);
 
         before = () => {
@@ -102,7 +102,7 @@ class describe_Collector : nspec {
                 it["retains entity even after destroy"] = () => {
                     var didExecute = 0;
                     e.OnEntityReleased += delegate { didExecute += 1; };
-                    _context.DestroyEntity(e);
+                    e.Destroy();
                     e.retainCount.should_be(1);
 
                     var safeAerc = e.aerc as SafeAERC;
@@ -114,14 +114,14 @@ class describe_Collector : nspec {
                 };
 
                 it["releases entity when clearing collected entities"] = () => {
-                    _context.DestroyEntity(e);
+                    e.Destroy();
                     collectorA.ClearCollectedEntities();
                     e.retainCount.should_be(0);
                 };
 
                 it["retains entities only once"] = () => {
                     e.ReplaceComponentA(new ComponentA());
-                    _context.DestroyEntity(e);
+                    e.Destroy();
                     e.retainCount.should_be(1);
                 };
             };

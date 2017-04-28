@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> Velocity {
         get {
-            if(_matcherVelocity == null) {
+            if (_matcherVelocity == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Velocity);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherVelocity = matcher;

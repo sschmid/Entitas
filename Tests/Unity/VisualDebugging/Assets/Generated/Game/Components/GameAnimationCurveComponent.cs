@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> AnimationCurve {
         get {
-            if(_matcherAnimationCurve == null) {
+            if (_matcherAnimationCurve == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.AnimationCurve);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherAnimationCurve = matcher;

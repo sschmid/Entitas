@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Plugins;
@@ -10,7 +10,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
     public static class EntitasStats {
 
-        [MenuItem("Entitas/Show Stats", false, 200)]
+        [MenuItem("Tools/Entitas/Show Stats", false, 200)]
         public static void ShowStats() {
             var stats = string.Join("\n", GetStats()
                                     .Select(kv => kv.Key + ": " + kv.Value)
@@ -40,11 +40,10 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static Dictionary<string, int> getContexts(Type[] components) {
-            var config = new ContextNamesConfig();
-            config.Configure(Preferences.LoadProperties());
-            var defaultContextName = config.contextNames[0];
+            var provider = new ContextsComponentDataProvider();
+            provider.Configure(Preferences.LoadProperties());
             return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {
-                var contextNames = ContextsComponentDataProvider.GetContextNamesOrDefault(type, defaultContextName);
+                var contextNames = provider.GetContextNamesOrDefault(type);
                 foreach (var contextName in contextNames) {
                     if (!contexts.ContainsKey(contextName)) {
                         contexts.Add(contextName, 0);

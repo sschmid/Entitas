@@ -1,4 +1,4 @@
-using Entitas;
+﻿using Entitas;
 using NSpec;
 
 class describe_Group : nspec {
@@ -78,7 +78,7 @@ class describe_Group : nspec {
         context["when entity is not enabled"] = () => {
 
             it["doesn't add entity"] = () => {
-                eA1.Destroy();
+                eA1.InternalDestroy();
                 handleSilently(eA1);
                 assertContainsNot(eA1);
             };

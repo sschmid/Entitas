@@ -31,6 +31,67 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestUniqueFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestComponentWithFieldsComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestComponentWithPropertiesComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestTest2ContextComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2Test2ContextComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestNameAgeComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2NameAgeComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestComponentWithFieldsAndPropertiesComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameNoContextComponent.cs" />
+    <Compile Include="Generated\Game\Components\GamePrimaryEntityIndexComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestPositionComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestSizeComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceMyNamespaceComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2MyNamespaceMyNamespaceComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceMyNamespaceFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceEntityIndexComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2MyNamespaceEntityIndexComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameMyNamespaceEntityIndexNoContextComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestNewCustomNameComponent1Component.cs" />
+    <Compile Include="Generated\Test\Components\TestNewCustomNameComponent2Component.cs" />
+    <Compile Include="Generated\Test\Components\TestClassWithEntitIndexAttributeComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2ClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestInterfaceToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStructToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\Interfaces\ITest2Context.cs" />
+    <Compile Include="Generated\Components\Interfaces\INameAge.cs" />
+    <Compile Include="Generated\Components\Interfaces\IMyNamespaceMyNamespace.cs" />
+    <Compile Include="Generated\Components\Interfaces\IMyNamespaceEntityIndex.cs" />
+    <Compile Include="Generated\Components\Interfaces\IClassToGenerate.cs" />
+    <Compile Include="Generated\Components\NewCustomNameComponent1Component.cs" />
+    <Compile Include="Generated\Components\NewCustomNameComponent2Component.cs" />
+    <Compile Include="Generated\Components\ClassWithEntitIndexAttributeComponent.cs" />
+    <Compile Include="Generated\Components\ClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\InterfaceToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\StructToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestDontGenerateMethodsComponent.cs" />
+    <Compile Include="Generated\Test\TestComponentsLookup.cs" />
+    <Compile Include="Generated\Test2\Test2ComponentsLookup.cs" />
+    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
+    <Compile Include="Generated\Game\GameAttribute.cs" />
+    <Compile Include="Generated\Test\TestAttribute.cs" />
+    <Compile Include="Generated\Test2\Test2Attribute.cs" />
+    <Compile Include="Generated\Game\GameContext.cs" />
+    <Compile Include="Generated\Test\TestContext.cs" />
+    <Compile Include="Generated\Test2\Test2Context.cs" />
+    <Compile Include="Generated\Game\GameMatcher.cs" />
+    <Compile Include="Generated\Test\TestMatcher.cs" />
+    <Compile Include="Generated\Test2\Test2Matcher.cs" />
+    <Compile Include="Generated\Contexts.cs" />
+    <Compile Include="Generated\Game\GameEntity.cs" />
+    <Compile Include="Generated\Test\TestEntity.cs" />
+    <Compile Include="Generated\Test2\Test2Entity.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Fixtures\Components\AbstractComponent.cs" />
     <Compile Include="Fixtures\Components\ComponentWithFields.cs" />
     <Compile Include="Fixtures\Components\ComponentWithProperties.cs" />
@@ -60,9 +121,7 @@
     <Compile Include="Fixtures\CustomEntityIndex.cs" />
     <Compile Include="Fixtures\ClassWithEntitIndexAttribute.cs" />
     <Compile Include="Fixtures\Components\EntityIndexNoContextComponent.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Generated\**\*.cs" />
+    <Compile Include="Fixtures\IMyEntity.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fixtures\" />

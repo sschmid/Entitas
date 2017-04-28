@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="docs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Entitas
-   &#160;<span id="projectnumber">0.41.2</span>
+   &#160;<span id="projectnumber">0.42.0</span>
    </div>
    <div id="projectbrief">Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity</div>
   </td>
@@ -87,6 +87,7 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <h3><a id="index_a"></a>- a -</h3><ul>
 <li>Activate()
 : <a class="el" href="class_entitas_1_1_collector.html#a62a76606e28311eb452d738703054074">Entitas.Collector&lt; TEntity &gt;</a>
+, <a class="el" href="class_entitas_1_1_multi_reactive_system.html#aa3eaee0cc7c63e0b838bc3bfd32168ce">Entitas.MultiReactiveSystem&lt; TEntity, TContexts &gt;</a>
 , <a class="el" href="class_entitas_1_1_reactive_system.html#ae4815d7e5183c27f2e37698536875552">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
 </li>
 <li>ActivateReactiveSystems()
@@ -109,7 +110,8 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_entitas_1_1_systems.html#ae9cb3253bb32206b420b4a041ebdcff2">Entitas.Systems</a>
 </li>
 <li>Clear()
-: <a class="el" href="class_entitas_1_1_reactive_system.html#a26f0ff01e436b1c2b995713bcbb4f2d8">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
+: <a class="el" href="class_entitas_1_1_multi_reactive_system.html#a0a4af0c302e23af1d9b44a7f68592b9a">Entitas.MultiReactiveSystem&lt; TEntity, TContexts &gt;</a>
+, <a class="el" href="class_entitas_1_1_reactive_system.html#a26f0ff01e436b1c2b995713bcbb4f2d8">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
 </li>
 <li>ClearCollectedEntities()
 : <a class="el" href="class_entitas_1_1_collector.html#a115453786e21813b6a3065bd68a3e468">Entitas.Collector&lt; TEntity &gt;</a>
@@ -139,8 +141,8 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_entitas_1_1_public_member_info_entity_extension.html#a41bb6fe71ac2306a92f7d4069386a38b">Entitas.PublicMemberInfoEntityExtension</a>
 </li>
 <li>CreateCollector&lt; TEntity &gt;()
-: <a class="el" href="class_entitas_1_1_context_extension.html#ab73231c56bb0be5ea9e80be5a783a1f3">Entitas.ContextExtension</a>
-, <a class="el" href="class_entitas_1_1_group_extension.html#a7479a1a33807ecd1310191244ec24bdf">Entitas.GroupExtension</a>
+: <a class="el" href="class_entitas_1_1_collector_context_extension.html#a2cedad6a8051a3e3d49a733aec525581">Entitas.CollectorContextExtension</a>
+, <a class="el" href="class_entitas_1_1_group_extension.html#ae57c53eca0540b768310d0661b37b26e">Entitas.GroupExtension</a>
 </li>
 <li>CreateComponent()
 : <a class="el" href="class_entitas_1_1_entity.html#a244cbd513f258aa8778198e8270dde06">Entitas.Entity</a>
@@ -157,6 +159,7 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 <h3><a id="index_d"></a>- d -</h3><ul>
 <li>Deactivate()
 : <a class="el" href="class_entitas_1_1_collector.html#a1ea1239101897b4fc71cd30a01cb579f">Entitas.Collector&lt; TEntity &gt;</a>
+, <a class="el" href="class_entitas_1_1_multi_reactive_system.html#a69789003155f0e047fbe676444e32990">Entitas.MultiReactiveSystem&lt; TEntity, TContexts &gt;</a>
 , <a class="el" href="class_entitas_1_1_reactive_system.html#abb3bb87ba0639ed54aee7cecb08c3b53">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
 </li>
 <li>DeactivateReactiveSystems()
@@ -173,7 +176,8 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 <h3><a id="index_e"></a>- e -</h3><ul>
 <li>Execute()
-: <a class="el" href="class_entitas_1_1_reactive_system.html#aa172b08e0750ee59fb1c979493a62d12">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
+: <a class="el" href="class_entitas_1_1_multi_reactive_system.html#aee2e5bb2d40dd9dde26687c673026953">Entitas.MultiReactiveSystem&lt; TEntity, TContexts &gt;</a>
+, <a class="el" href="class_entitas_1_1_reactive_system.html#aa172b08e0750ee59fb1c979493a62d12">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
 , <a class="el" href="class_entitas_1_1_systems.html#a5b3a145d250e1a5b8cfa90f9b3c0b716">Entitas.Systems</a>
 </li>
 </ul>
@@ -181,12 +185,16 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 
 <h3><a id="index_f"></a>- f -</h3><ul>
 <li>Filter()
-: <a class="el" href="class_entitas_1_1_reactive_system.html#a6121d25bc89c15a1450dc35cbb3d0fbc">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
+: <a class="el" href="class_entitas_1_1_multi_reactive_system.html#a0652019fc48525a8536a0f8ac9344df5">Entitas.MultiReactiveSystem&lt; TEntity, TContexts &gt;</a>
+, <a class="el" href="class_entitas_1_1_reactive_system.html#a6121d25bc89c15a1450dc35cbb3d0fbc">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
 </li>
 </ul>
 
 
 <h3><a id="index_g"></a>- g -</h3><ul>
+<li>GetCollectedEntities&lt; TCast &gt;()
+: <a class="el" href="class_entitas_1_1_collector.html#a65863fc5421d2d1765d0794b561c42e4">Entitas.Collector&lt; TEntity &gt;</a>
+</li>
 <li>GetComponent()
 : <a class="el" href="class_entitas_1_1_entity.html#a193c4b6412a24c9461424b060ab15506">Entitas.Entity</a>
 </li>
@@ -216,7 +224,8 @@ $(document).ready(function(){initNavTree('functions_func.html','');});
 : <a class="el" href="class_entitas_1_1_group.html#aac08cf5ddaa5b330622e032a120cdc2b">Entitas.Group&lt; TEntity &gt;</a>
 </li>
 <li>GetTrigger()
-: <a class="el" href="class_entitas_1_1_reactive_system.html#ae29f0a99a1b03743347bc7a2116a4c27">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
+: <a class="el" href="class_entitas_1_1_multi_reactive_system.html#ad1d9cb4afa1d21f6555db22ccca815f4">Entitas.MultiReactiveSystem&lt; TEntity, TContexts &gt;</a>
+, <a class="el" href="class_entitas_1_1_reactive_system.html#a26a1d7064ba530bf8baf567507d83d2d">Entitas.ReactiveSystem&lt; TEntity &gt;</a>
 </li>
 <li>Group()
 : <a class="el" href="class_entitas_1_1_group.html#acaac9039a6a059d944ccacd976980883">Entitas.Group&lt; TEntity &gt;</a>

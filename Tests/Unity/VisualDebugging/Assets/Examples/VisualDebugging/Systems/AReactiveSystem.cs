@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using Entitas;
-using Entitas;
 
 public class AReactiveSystem : ReactiveSystem<GameEntity> {
 
     public AReactiveSystem(Contexts contexts) : base(contexts.game) { }
 
-    protected override Collector<GameEntity> GetTrigger(IContext<GameEntity> context) {
+    protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) {
         return context.CreateCollector(GameMatcher.MyString);
     }
 

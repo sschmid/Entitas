@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
@@ -9,7 +9,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
     public static class UnityCodeGenerator {
 
-        [MenuItem("Entitas/Generate #%g", false, 100)]
+        [MenuItem("Tools/Entitas/Generate #%g", false, 100)]
         public static void Generate() {
             checkCanGenerate();
 

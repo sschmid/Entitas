@@ -14,11 +14,11 @@ public partial class TestContext {
         get { return myNamespaceUniqueMyNamespaceFlagEntity != null; }
         set {
             var entity = myNamespaceUniqueMyNamespaceFlagEntity;
-            if(value != (entity != null)) {
-                if(value) {
+            if (value != (entity != null)) {
+                if (value) {
                     CreateEntity().isMyNamespaceUniqueMyNamespaceFlag = true;
                 } else {
-                    DestroyEntity(entity);
+                    entity.Destroy();
                 }
             }
         }
@@ -40,8 +40,8 @@ public partial class TestEntity {
     public bool isMyNamespaceUniqueMyNamespaceFlag {
         get { return HasComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag); }
         set {
-            if(value != isMyNamespaceUniqueMyNamespaceFlag) {
-                if(value) {
+            if (value != isMyNamespaceUniqueMyNamespaceFlag) {
+                if (value) {
                     AddComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag, myNamespaceUniqueMyNamespaceFlagComponent);
                 } else {
                     RemoveComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag);
@@ -65,7 +65,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> MyNamespaceUniqueMyNamespaceFlag {
         get {
-            if(_matcherMyNamespaceUniqueMyNamespaceFlag == null) {
+            if (_matcherMyNamespaceUniqueMyNamespaceFlag == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherMyNamespaceUniqueMyNamespaceFlag = matcher;

@@ -3,6 +3,7 @@ var namespace_entitas =
     [ "AbstractEntityIndex", "class_entitas_1_1_abstract_entity_index.html", "class_entitas_1_1_abstract_entity_index" ],
     [ "CollectionExtension", "class_entitas_1_1_collection_extension.html", "class_entitas_1_1_collection_extension" ],
     [ "Collector", "class_entitas_1_1_collector.html", "class_entitas_1_1_collector" ],
+    [ "CollectorContextExtension", "class_entitas_1_1_collector_context_extension.html", "class_entitas_1_1_collector_context_extension" ],
     [ "CollectorException", "class_entitas_1_1_collector_exception.html", "class_entitas_1_1_collector_exception" ],
     [ "ComponentStringExtension", "class_entitas_1_1_component_string_extension.html", "class_entitas_1_1_component_string_extension" ],
     [ "Context", "class_entitas_1_1_context.html", "class_entitas_1_1_context" ],
@@ -34,6 +35,7 @@ var namespace_entitas =
     [ "IAllOfMatcher", "interface_entitas_1_1_i_all_of_matcher.html", "interface_entitas_1_1_i_all_of_matcher" ],
     [ "IAnyOfMatcher", "interface_entitas_1_1_i_any_of_matcher.html", "interface_entitas_1_1_i_any_of_matcher" ],
     [ "ICleanupSystem", "interface_entitas_1_1_i_cleanup_system.html", "interface_entitas_1_1_i_cleanup_system" ],
+    [ "ICollector", "interface_entitas_1_1_i_collector.html", null ],
     [ "IComponent", "interface_entitas_1_1_i_component.html", null ],
     [ "ICompoundMatcher", "interface_entitas_1_1_i_compound_matcher.html", "interface_entitas_1_1_i_compound_matcher" ],
     [ "IContext", "interface_entitas_1_1_i_context.html", null ],
@@ -50,6 +52,7 @@ var namespace_entitas =
     [ "ITearDownSystem", "interface_entitas_1_1_i_tear_down_system.html", "interface_entitas_1_1_i_tear_down_system" ],
     [ "Matcher", "class_entitas_1_1_matcher.html", null ],
     [ "MatcherException", "class_entitas_1_1_matcher_exception.html", "class_entitas_1_1_matcher_exception" ],
+    [ "MultiReactiveSystem", "class_entitas_1_1_multi_reactive_system.html", "class_entitas_1_1_multi_reactive_system" ],
     [ "PrimaryEntityIndex", "class_entitas_1_1_primary_entity_index.html", "class_entitas_1_1_primary_entity_index" ],
     [ "PublicMemberInfoEntityExtension", "class_entitas_1_1_public_member_info_entity_extension.html", "class_entitas_1_1_public_member_info_entity_extension" ],
     [ "ReactiveSystem", "class_entitas_1_1_reactive_system.html", "class_entitas_1_1_reactive_system" ],
@@ -57,5 +60,7 @@ var namespace_entitas =
     [ "SingleEntityException", "class_entitas_1_1_single_entity_exception.html", "class_entitas_1_1_single_entity_exception" ],
     [ "Systems", "class_entitas_1_1_systems.html", "class_entitas_1_1_systems" ],
     [ "SystemStringExtension", "class_entitas_1_1_system_string_extension.html", "class_entitas_1_1_system_string_extension" ],
+    [ "TriggerOnEvent", "struct_entitas_1_1_trigger_on_event.html", "struct_entitas_1_1_trigger_on_event" ],
+    [ "TriggerOnEventMatcherExtension", "class_entitas_1_1_trigger_on_event_matcher_extension.html", "class_entitas_1_1_trigger_on_event_matcher_extension" ],
     [ "UnsafeAERC", "class_entitas_1_1_unsafe_a_e_r_c.html", "class_entitas_1_1_unsafe_a_e_r_c" ]
 ];

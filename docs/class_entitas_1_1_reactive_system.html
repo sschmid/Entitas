@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="docs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Entitas
-   &#160;<span id="projectnumber">0.41.2</span>
+   &#160;<span id="projectnumber">0.42.0</span>
    </div>
    <div id="projectbrief">Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity</div>
   </td>
@@ -123,13 +123,13 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a96f4c1cb43495b26455cb777a8a99387"><td class="memItemLeft" align="right" valign="top"><a id="a96f4c1cb43495b26455cb777a8a99387"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ReactiveSystem</b> (<a class="el" href="interface_entitas_1_1_i_context.html">IContext</a>&lt; TEntity &gt; context)</td></tr>
 <tr class="separator:a96f4c1cb43495b26455cb777a8a99387"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a69b1fb34a3c08b5ff5d8512c5d0da878"><td class="memItemLeft" align="right" valign="top"><a id="a69b1fb34a3c08b5ff5d8512c5d0da878"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>ReactiveSystem</b> (<a class="el" href="class_entitas_1_1_collector.html">Collector</a>&lt; TEntity &gt; collector)</td></tr>
-<tr class="separator:a69b1fb34a3c08b5ff5d8512c5d0da878"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae29f0a99a1b03743347bc7a2116a4c27"><td class="memItemLeft" align="right" valign="top"><a id="ae29f0a99a1b03743347bc7a2116a4c27"></a>
-abstract <a class="el" href="class_entitas_1_1_collector.html">Collector</a>&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#ae29f0a99a1b03743347bc7a2116a4c27">GetTrigger</a> (<a class="el" href="interface_entitas_1_1_i_context.html">IContext</a>&lt; TEntity &gt; context)</td></tr>
-<tr class="memdesc:ae29f0a99a1b03743347bc7a2116a4c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the collector that will trigger the <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a>. <br /></td></tr>
-<tr class="separator:ae29f0a99a1b03743347bc7a2116a4c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4803234cee9ccb0b6189212b64917d3b"><td class="memItemLeft" align="right" valign="top"><a id="a4803234cee9ccb0b6189212b64917d3b"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>ReactiveSystem</b> (<a class="el" href="interface_entitas_1_1_i_collector.html">ICollector</a>&lt; TEntity &gt; collector)</td></tr>
+<tr class="separator:a4803234cee9ccb0b6189212b64917d3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26a1d7064ba530bf8baf567507d83d2d"><td class="memItemLeft" align="right" valign="top"><a id="a26a1d7064ba530bf8baf567507d83d2d"></a>
+abstract <a class="el" href="interface_entitas_1_1_i_collector.html">ICollector</a>&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#a26a1d7064ba530bf8baf567507d83d2d">GetTrigger</a> (<a class="el" href="interface_entitas_1_1_i_context.html">IContext</a>&lt; TEntity &gt; context)</td></tr>
+<tr class="memdesc:a26a1d7064ba530bf8baf567507d83d2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify the collector that will trigger the <a class="el" href="class_entitas_1_1_reactive_system.html">ReactiveSystem</a>. <br /></td></tr>
+<tr class="separator:a26a1d7064ba530bf8baf567507d83d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6121d25bc89c15a1450dc35cbb3d0fbc"><td class="memItemLeft" align="right" valign="top"><a id="a6121d25bc89c15a1450dc35cbb3d0fbc"></a>
 abstract bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_reactive_system.html#a6121d25bc89c15a1450dc35cbb3d0fbc">Filter</a> (TEntity entity)</td></tr>
 <tr class="memdesc:a6121d25bc89c15a1450dc35cbb3d0fbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">This will exclude all entities which don't pass the filter. <br /></td></tr>
@@ -145,7 +145,6 @@ abstract void&#160;</td><td class="memItemRight" valign="bottom"><b>Execute</b> 
 <table border="0" cellspacing="2" cellpadding="0">
 <tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>class</em></td><td>&#160;</td></tr>
 <tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a></em></td><td>&#160;</td></tr>
-<tr><td valign="top"><em>TEntity</em></td><td>&#160;:</td><td valign="top"><em>new()</em></td><td>&#160;</td></tr>
 </table>
 </dd>
 </dl>

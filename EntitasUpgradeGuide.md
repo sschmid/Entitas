@@ -1,11 +1,10 @@
 Entitas Upgrade Guide
 =====================
 
-Entitas provides an easy way to make upgrading to new versions a breeze.
+Entitas provides automated migration tools to help upgrading to new versions.
 Either use the command line tool `MigrationAssistant.exe` or the Migration menu
-item in Unity. After that generate again.
+item in Unity.
 
-In some cases manual steps have to be applied BEFORE installing a new version.
 This document contains checklists for every release with breaking changes.
 
 
@@ -32,6 +31,34 @@ etc...
 
 $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/RequestedFolder
 ```
+
+---
+
+Entitas 0.42.0 upgrade guide
+============================
+
+#### Breaking changes
+- Removed Entitas.Blueprints.Unity.*
+- Changed ReactiveSystem.GetTrigger method signature
+- Marked obsolete: `context.DestroyEntity(entity)`. Use `entity.Destroy()` instead
+- Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (e.g. `GameMatcher.View.Removed()`)
+
+#### After you installed
+- Removed Entitas.Blueprints.Unity.*
+  - Remove all Entitas.Blueprints.Unity.* related code
+  - Remove BinaryBlueprints from your project. Consider using extension methods as described here instead https://github.com/sschmid/Entitas-CSharp/issues/390
+  - Remove from Entitas.properties:
+    - Entitas.Blueprints.CodeGeneration.Plugins
+    - Entitas.Blueprints.CodeGeneration.Plugins.BlueprintDataProvider
+    - Entitas.Blueprints.CodeGeneration.Plugins.BlueprintsGenerator
+
+- Changed ReactiveSystem.GetTrigger() method signature
+  - find and replace `protected override Collector` -> `protected override ICollector`
+
+- Generate
+
+- Marked obsolete: `context.DestroyEntity(entity)`. Use `entity.Destroy()` instead
+- Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (see [Test Example]())
 
 ---
 

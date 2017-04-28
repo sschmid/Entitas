@@ -12,6 +12,7 @@ var class_entitas_1_1_entity =
     [ "HasComponent", "class_entitas_1_1_entity.html#a30a8ae77453c6878d45f3c1cbe31bb03", null ],
     [ "HasComponents", "class_entitas_1_1_entity.html#aee5ffe85bc1fa4fb5dc21c0a13058ffe", null ],
     [ "Initialize", "class_entitas_1_1_entity.html#a192ed8de1dc5587d7e75116f653452ad", null ],
+    [ "InternalDestroy", "class_entitas_1_1_entity.html#a32d532d719c4bed20a93d712eb828a39", null ],
     [ "Reactivate", "class_entitas_1_1_entity.html#ab2efb82aa6e7266b71492ef694b712fd", null ],
     [ "Release", "class_entitas_1_1_entity.html#ad38c42d47e73ad68c4e93db53665aa61", null ],
     [ "RemoveAllComponents", "class_entitas_1_1_entity.html#ae7bf22d8069c034a06268910c683a625", null ],
@@ -30,5 +31,6 @@ var class_entitas_1_1_entity =
     [ "OnComponentAdded", "class_entitas_1_1_entity.html#ae32e6949d12be079ed24181dca78f928", null ],
     [ "OnComponentRemoved", "class_entitas_1_1_entity.html#a16e5c42416751abe64cfd86a9b9da887", null ],
     [ "OnComponentReplaced", "class_entitas_1_1_entity.html#a83ffb44d61d4c3c137bd9377c0866e6a", null ],
-    [ "OnEntityReleased", "class_entitas_1_1_entity.html#acf35ed67ac2785651eb54b1eaddfcc73", null ]
+    [ "OnDestroyEntity", "class_entitas_1_1_entity.html#a74d478839ed98c58f9ea1d84157ed016", null ],
+    [ "OnEntityReleased", "class_entitas_1_1_entity.html#acdb078412aafe639f6990b8a98bcd836", null ]
 ];

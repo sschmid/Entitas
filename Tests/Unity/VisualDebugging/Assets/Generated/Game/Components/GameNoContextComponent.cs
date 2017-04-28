@@ -13,8 +13,8 @@ public partial class GameEntity {
     public bool isNoContext {
         get { return HasComponent(GameComponentsLookup.NoContext); }
         set {
-            if(value != isNoContext) {
-                if(value) {
+            if (value != isNoContext) {
+                if (value) {
                     AddComponent(GameComponentsLookup.NoContext, noContextComponent);
                 } else {
                     RemoveComponent(GameComponentsLookup.NoContext);
@@ -38,7 +38,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> NoContext {
         get {
-            if(_matcherNoContext == null) {
+            if (_matcherNoContext == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.NoContext);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherNoContext = matcher;

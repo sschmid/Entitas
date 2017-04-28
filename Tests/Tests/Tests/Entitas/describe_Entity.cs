@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Entitas;
 using My.Namespace;
 using NSpec;
@@ -77,7 +77,7 @@ class describe_Entity : nspec {
                 e = new TestEntity();
                 e.Initialize(1, 2, componentPools, contextInfo);
 
-                e.Destroy();
+                e.InternalDestroy();
 
                 e.Reactivate(42);
 
@@ -396,6 +396,13 @@ class describe_Entity : nspec {
                 e.OnComponentRemoved += (entity, index, component) => didDispatch += 1;
                 e.RemoveAllComponents();
                 didDispatch.should_be(2);
+            };
+
+            it["dispatches OnDestroy when calling Destroy"] = () => {
+                var didDestroy = 0;
+                e.OnDestroyEntity += entity => didDestroy += 1;
+                e.Destroy();
+                didDestroy.should_be(1);
             };
         };
 

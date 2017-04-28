@@ -13,7 +13,7 @@ public partial class GameContext {
     public bool hasUnique { get { return uniqueEntity != null; } }
 
     public GameEntity SetUnique(string newValue) {
-        if(hasUnique) {
+        if (hasUnique) {
             throw new Entitas.EntitasException("Could not set Unique!\n" + this + " already has an entity with UniqueComponent!",
                 "You should check if the context already has a uniqueEntity before setting it or use context.ReplaceUnique().");
         }
@@ -24,7 +24,7 @@ public partial class GameContext {
 
     public void ReplaceUnique(string newValue) {
         var entity = uniqueEntity;
-        if(entity == null) {
+        if (entity == null) {
             entity = SetUnique(newValue);
         } else {
             entity.ReplaceUnique(newValue);
@@ -82,7 +82,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> Unique {
         get {
-            if(_matcherUnique == null) {
+            if (_matcherUnique == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Unique);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherUnique = matcher;

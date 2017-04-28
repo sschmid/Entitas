@@ -1,6 +1,6 @@
-namespace Entitas {
+﻿namespace Entitas {
 
-    public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : class, IEntity, new() {
+    public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : class, IEntity {
 
         public int[] indices {
             get {

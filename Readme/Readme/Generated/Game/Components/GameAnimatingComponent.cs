@@ -14,11 +14,11 @@ public partial class GameContext {
         get { return animatingEntity != null; }
         set {
             var entity = animatingEntity;
-            if(value != (entity != null)) {
-                if(value) {
+            if (value != (entity != null)) {
+                if (value) {
                     CreateEntity().isAnimating = true;
                 } else {
-                    DestroyEntity(entity);
+                    entity.Destroy();
                 }
             }
         }
@@ -40,8 +40,8 @@ public partial class GameEntity {
     public bool isAnimating {
         get { return HasComponent(GameComponentsLookup.Animating); }
         set {
-            if(value != isAnimating) {
-                if(value) {
+            if (value != isAnimating) {
+                if (value) {
                     AddComponent(GameComponentsLookup.Animating, animatingComponent);
                 } else {
                     RemoveComponent(GameComponentsLookup.Animating);
@@ -65,7 +65,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> Animating {
         get {
-            if(_matcherAnimating == null) {
+            if (_matcherAnimating == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Animating);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherAnimating = matcher;

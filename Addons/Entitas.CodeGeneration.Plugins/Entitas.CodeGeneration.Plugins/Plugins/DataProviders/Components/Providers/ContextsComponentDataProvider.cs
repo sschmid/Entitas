@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration.Attributes;
@@ -17,11 +17,11 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public void Provide(Type type, ComponentData data) {
-            var contextNames = GetContextNamesOrDefault(type, _contextNamesConfig.contextNames[0]);
+            var contextNames = GetContextNamesOrDefault(type);
             data.SetContextNames(contextNames);
         }
 
-        public static string[] GetContextNames(Type type) {
+        public string[] GetContextNames(Type type) {
             return Attribute
                 .GetCustomAttributes(type)
                 .OfType<ContextAttribute>()
@@ -29,10 +29,10 @@ namespace Entitas.CodeGeneration.Plugins {
                 .ToArray();
         }
 
-        public static string[] GetContextNamesOrDefault(Type type, string defaultContextName) {
+        public string[] GetContextNamesOrDefault(Type type) {
             var contextNames = GetContextNames(type);
             if (contextNames.Length == 0) {
-                contextNames = new [] { defaultContextName };
+                contextNames = new [] { _contextNamesConfig.contextNames[0] };
             }
 
             return contextNames;

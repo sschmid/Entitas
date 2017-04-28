@@ -13,7 +13,7 @@ public partial class TestContext {
     public bool hasUniqueStandard { get { return uniqueStandardEntity != null; } }
 
     public TestEntity SetUniqueStandard(string newValue) {
-        if(hasUniqueStandard) {
+        if (hasUniqueStandard) {
             throw new Entitas.EntitasException("Could not set UniqueStandard!\n" + this + " already has an entity with UniqueStandardComponent!",
                 "You should check if the context already has a uniqueStandardEntity before setting it or use context.ReplaceUniqueStandard().");
         }
@@ -24,7 +24,7 @@ public partial class TestContext {
 
     public void ReplaceUniqueStandard(string newValue) {
         var entity = uniqueStandardEntity;
-        if(entity == null) {
+        if (entity == null) {
             entity = SetUniqueStandard(newValue);
         } else {
             entity.ReplaceUniqueStandard(newValue);
@@ -32,7 +32,7 @@ public partial class TestContext {
     }
 
     public void RemoveUniqueStandard() {
-        DestroyEntity(uniqueStandardEntity);
+        uniqueStandardEntity.Destroy();
     }
 }
 
@@ -82,7 +82,7 @@ public sealed partial class TestMatcher {
 
     public static Entitas.IMatcher<TestEntity> UniqueStandard {
         get {
-            if(_matcherUniqueStandard == null) {
+            if (_matcherUniqueStandard == null) {
                 var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.UniqueStandard);
                 matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherUniqueStandard = matcher;

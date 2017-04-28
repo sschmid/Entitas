@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Entitas.Utils;
@@ -6,7 +6,7 @@ using Entitas.Utils;
 namespace Entitas {
 
     /// Use context.CreateEntity() to create a new entity and
-    /// context.DestroyEntity() to destroy it.
+    /// entity.Destroy() to destroy it.
     /// You can add, replace and remove IComponent to an entity.
     public class Entity : IEntity {
 
@@ -28,7 +28,12 @@ namespace Entitas {
         /// Occurs when an entity gets released and is not retained anymore.
         /// All event handlers will be removed when
         /// the entity gets destroyed by the context.
-        public event EntityReleased OnEntityReleased;
+        public event EntityEvent OnEntityReleased;
+
+        /// Occurs when calling entity.Destroy().
+        /// All event handlers will be removed when
+        /// the entity gets destroyed by the context.
+        public event EntityEvent OnDestroyEntity;
 
         /// The total amount of components an entity can possibly have.
         public int totalComponents { get { return _totalComponents; } }
@@ -362,14 +367,26 @@ namespace Entitas {
             }
         }
 
-        // This method is used internally. Don't call it yourself.
-        // Use context.DestroyEntity(entity);
+        // Dispatches OnDestroyEntity which will start the destroy process.
         public void Destroy() {
+            if (!_isEnabled) {
+                throw new EntityIsNotEnabledException("Cannot destroy " + this + "!");
+            }
+
+            if (OnDestroyEntity != null) {
+                OnDestroyEntity(this);
+            }
+        }
+
+        // This method is used internally. Don't call it yourself.
+        // Use entity.Destroy();
+        public void InternalDestroy() {
             _isEnabled = false;
             RemoveAllComponents();
             OnComponentAdded = null;
             OnComponentReplaced = null;
             OnComponentRemoved = null;
+            OnDestroyEntity = null;
         }
 
         // Do not call this method manually. This method is called by the context.

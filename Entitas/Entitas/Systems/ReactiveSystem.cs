@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -7,9 +7,9 @@ namespace Entitas {
     /// A common use-case is to react to changes, e.g. a change of the position
     /// of an entity to update the gameObject.transform.position
     /// of the related gameObject.
-    public abstract class ReactiveSystem<TEntity> : IReactiveSystem where TEntity : class, IEntity, new() {
+    public abstract class ReactiveSystem<TEntity> : IReactiveSystem where TEntity : class, IEntity {
 
-        readonly Collector<TEntity> _collector;
+        readonly ICollector<TEntity> _collector;
         readonly List<TEntity> _buffer;
         string _toStringCache;
 
@@ -18,13 +18,13 @@ namespace Entitas {
             _buffer = new List<TEntity>();
         }
 
-        protected ReactiveSystem(Collector<TEntity> collector) {
+        protected ReactiveSystem(ICollector<TEntity> collector) {
             _collector = collector;
             _buffer = new List<TEntity>();
         }
 
         /// Specify the collector that will trigger the ReactiveSystem.
-        protected abstract Collector<TEntity> GetTrigger(IContext<TEntity> context);
+        protected abstract ICollector<TEntity> GetTrigger(IContext<TEntity> context);
 
         /// This will exclude all entities which don't pass the filter.
         protected abstract bool Filter(TEntity entity);
@@ -54,7 +54,7 @@ namespace Entitas {
         /// Will call Execute(entities) with changed entities
         /// if there are any. Otherwise it will not call Execute(entities).
         public void Execute() {
-            if (_collector.collectedEntities.Count != 0) {
+            if (_collector.count != 0) {
                 foreach (var e in _collector.collectedEntities) {
                     if (Filter(e)) {
                         e.Retain(this);

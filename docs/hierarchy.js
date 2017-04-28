@@ -1,7 +1,7 @@
 var hierarchy =
 [
     [ "Entitas.CollectionExtension", "class_entitas_1_1_collection_extension.html", null ],
-    [ "Entitas.Collector< TEntity >", "class_entitas_1_1_collector.html", null ],
+    [ "Entitas.CollectorContextExtension", "class_entitas_1_1_collector_context_extension.html", null ],
     [ "Entitas.ComponentStringExtension", "class_entitas_1_1_component_string_extension.html", null ],
     [ "Entitas.ContextExtension", "class_entitas_1_1_context_extension.html", null ],
     [ "Entitas.ContextInfo", "class_entitas_1_1_context_info.html", null ],
@@ -35,6 +35,12 @@ var hierarchy =
       ] ],
       [ "Entitas.SafeAERC", "class_entitas_1_1_safe_a_e_r_c.html", null ],
       [ "Entitas.UnsafeAERC", "class_entitas_1_1_unsafe_a_e_r_c.html", null ]
+    ] ],
+    [ "Entitas.ICollector", "interface_entitas_1_1_i_collector.html", [
+      [ "Entitas.ICollector< TEntity >", "interface_entitas_1_1_i_collector.html", null ]
+    ] ],
+    [ "Entitas.ICollector< TEntity >", "interface_entitas_1_1_i_collector.html", [
+      [ "Entitas.Collector< TEntity >", "class_entitas_1_1_collector.html", null ]
     ] ],
     [ "Entitas.IComponent", "interface_entitas_1_1_i_component.html", null ],
     [ "Entitas.IContext", "interface_entitas_1_1_i_context.html", [
@@ -76,6 +82,7 @@ var hierarchy =
       ] ],
       [ "Entitas.IExecuteSystem", "interface_entitas_1_1_i_execute_system.html", [
         [ "Entitas.IReactiveSystem", "interface_entitas_1_1_i_reactive_system.html", [
+          [ "Entitas.MultiReactiveSystem< TEntity, TContexts >", "class_entitas_1_1_multi_reactive_system.html", null ],
           [ "Entitas.ReactiveSystem< TEntity >", "class_entitas_1_1_reactive_system.html", null ]
         ] ],
         [ "Entitas.Systems", "class_entitas_1_1_systems.html", null ]
@@ -91,5 +98,7 @@ var hierarchy =
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
     [ "Entitas.PublicMemberInfoEntityExtension", "class_entitas_1_1_public_member_info_entity_extension.html", null ],
-    [ "Entitas.SystemStringExtension", "class_entitas_1_1_system_string_extension.html", null ]
+    [ "Entitas.SystemStringExtension", "class_entitas_1_1_system_string_extension.html", null ],
+    [ "Entitas.TriggerOnEvent< TEntity >", "struct_entitas_1_1_trigger_on_event.html", null ],
+    [ "Entitas.TriggerOnEventMatcherExtension", "class_entitas_1_1_trigger_on_event_matcher_extension.html", null ]
 ];
