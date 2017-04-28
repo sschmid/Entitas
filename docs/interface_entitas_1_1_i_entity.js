@@ -12,6 +12,7 @@ var interface_entitas_1_1_i_entity =
     [ "HasComponent", "interface_entitas_1_1_i_entity.html#ad27fc1f5b55c207e7a6d9e86e9f80eb0", null ],
     [ "HasComponents", "interface_entitas_1_1_i_entity.html#a95e0a0b85dded5564310333e7a3a37b5", null ],
     [ "Initialize", "interface_entitas_1_1_i_entity.html#a493d773192a8668999ece1222ce571e0", null ],
+    [ "InternalDestroy", "interface_entitas_1_1_i_entity.html#a563b0c0e9aa126cf3fa821e823d4f8b1", null ],
     [ "Reactivate", "interface_entitas_1_1_i_entity.html#a265ffd72d80658afa270e71775ffdefb", null ],
     [ "RemoveAllComponents", "interface_entitas_1_1_i_entity.html#a4fbbd3fd522d2f9565031bd9bef4044d", null ],
     [ "RemoveAllOnEntityReleasedHandlers", "interface_entitas_1_1_i_entity.html#a039625358dd7ff3e90df0439c4a66551", null ],
@@ -26,5 +27,6 @@ var interface_entitas_1_1_i_entity =
     [ "OnComponentAdded", "interface_entitas_1_1_i_entity.html#a8c27842b69b103f8e3ca59ba0e730656", null ],
     [ "OnComponentRemoved", "interface_entitas_1_1_i_entity.html#a94545eff3bf90fb9823f454f5b1f2fea", null ],
     [ "OnComponentReplaced", "interface_entitas_1_1_i_entity.html#a8f74d92aff907c6ae54c22e71133430d", null ],
-    [ "OnEntityReleased", "interface_entitas_1_1_i_entity.html#a2cfd9f8b9aa42875a91a80942a6a0d27", null ]
+    [ "OnDestroyEntity", "interface_entitas_1_1_i_entity.html#ac217d26a9be34ac3a87f586c565b50e2", null ],
+    [ "OnEntityReleased", "interface_entitas_1_1_i_entity.html#adbb6bb5d4cb21639c8f27058665be816", null ]
 ];

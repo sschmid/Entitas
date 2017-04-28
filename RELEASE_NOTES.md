@@ -1,3 +1,38 @@
+# 0.42.0
+
+See and discuss changes in [Milestone 0.42.0](https://github.com/sschmid/Entitas-CSharp/milestone/15)
+
+#### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+- Removed Entitas.Blueprints.Unity.*
+- Changed ReactiveSystem.GetTrigger method signature
+- Marked obsolete: `context.DestroyEntity(entity)`. Use `entity.Destroy()` instead
+- Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (see [Test Example]())
+
+## Top new features:
+- Use MultiReactiveSystem to process entities from different contexts in one system (see [Test Example](https://github.com/sschmid/Entitas-CSharp/blob/develop/Tests/Unity/VisualDebugging/Assets/Examples/VisualDebugging/Systems/SomeMultiReactiveSystem.cs))
+- Use `entity.Destroy()` instead of `context.DestroyEntity(entity)`
+- Unit Testing in external console works on Windows now
+
+#### General
+- Moved Entitas menu item under the Tools tab
+- Removed Entitas.Blueprints.Unity.* from zips
+- Creating new zip for code generator default plugins
+- UX improvements
+
+#### Entitas
+- Added MultiReactiveSystem to support reactive systems observing different contexts #303
+- Added TriggerOnEvent
+- Renamed `entity.Destroy()` to `entity.InternalDestroy()` to reduce confusion
+- Added `entity.Destroy()` instead of `context.DestroyEntity(entity)` #254
+
+#### CodeGenerator
+- Added ComponentEntityInterfaceGenerator #303
+- Updated ContextObserverGenerator to avoid `System.Security.SecurityException` on Windows #375
+- .ToSafeDirectory() supports empty string and “.” to specify current directory
+
+
 # 0.41.2
 
 After installing please check your Entitas.properties. Due to the addition of `IConfigurable` for code generator plugins some keys in Entitas.properties changed. `entitas.exe doctor`, `entitas.exe status` and `entitas.exe fix` can help you fixing any issues. A new default Entitas.properties file will be created if none is found. The default Entitas.properties should work with Unity without modification. For reference take a look at [Match-One - Entitas.properties](https://github.com/sschmid/Match-One/blob/master/Entitas.properties)

@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="docs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Entitas
-   &#160;<span id="projectnumber">0.41.2</span>
+   &#160;<span id="projectnumber">0.42.0</span>
    </div>
    <div id="projectbrief">Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity</div>
   </td>
@@ -152,6 +152,9 @@ T&#160;</td><td class="memItemRight" valign="bottom"><b>CreateComponent&lt; T &g
 <tr class="memitem:ad5d26a63d717c6a8ea37a3b28fb0ebec"><td class="memItemLeft" align="right" valign="top"><a id="ad5d26a63d717c6a8ea37a3b28fb0ebec"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Destroy</b> ()</td></tr>
 <tr class="separator:ad5d26a63d717c6a8ea37a3b28fb0ebec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a563b0c0e9aa126cf3fa821e823d4f8b1"><td class="memItemLeft" align="right" valign="top"><a id="a563b0c0e9aa126cf3fa821e823d4f8b1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InternalDestroy</b> ()</td></tr>
+<tr class="separator:a563b0c0e9aa126cf3fa821e823d4f8b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a039625358dd7ff3e90df0439c4a66551"><td class="memItemLeft" align="right" valign="top"><a id="a039625358dd7ff3e90df0439c4a66551"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>RemoveAllOnEntityReleasedHandlers</b> ()</td></tr>
 <tr class="separator:a039625358dd7ff3e90df0439c4a66551"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -199,9 +202,12 @@ EntityComponentChanged&#160;</td><td class="memItemRight" valign="bottom"><b>OnC
 <tr class="memitem:a8f74d92aff907c6ae54c22e71133430d"><td class="memItemLeft" align="right" valign="top"><a id="a8f74d92aff907c6ae54c22e71133430d"></a>
 EntityComponentReplaced&#160;</td><td class="memItemRight" valign="bottom"><b>OnComponentReplaced</b></td></tr>
 <tr class="separator:a8f74d92aff907c6ae54c22e71133430d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cfd9f8b9aa42875a91a80942a6a0d27"><td class="memItemLeft" align="right" valign="top"><a id="a2cfd9f8b9aa42875a91a80942a6a0d27"></a>
-EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityReleased</b></td></tr>
-<tr class="separator:a2cfd9f8b9aa42875a91a80942a6a0d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb6bb5d4cb21639c8f27058665be816"><td class="memItemLeft" align="right" valign="top"><a id="adbb6bb5d4cb21639c8f27058665be816"></a>
+EntityEvent&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityReleased</b></td></tr>
+<tr class="separator:adbb6bb5d4cb21639c8f27058665be816"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac217d26a9be34ac3a87f586c565b50e2"><td class="memItemLeft" align="right" valign="top"><a id="ac217d26a9be34ac3a87f586c565b50e2"></a>
+EntityEvent&#160;</td><td class="memItemRight" valign="bottom"><b>OnDestroyEntity</b></td></tr>
+<tr class="separator:ac217d26a9be34ac3a87f586c565b50e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">

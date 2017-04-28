@@ -24,7 +24,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_entity_index_8cs_source.html",
-"class_entitas_1_1_primary_entity_index.html#ae26589dec2b36c8efac116371e378704"
+"class_entitas_1_1_matcher.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

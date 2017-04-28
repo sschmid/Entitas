@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="docs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Entitas
-   &#160;<span id="projectnumber">0.41.2</span>
+   &#160;<span id="projectnumber">0.42.0</span>
    </div>
    <div id="projectbrief">Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity</div>
   </td>
@@ -149,6 +149,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aca53021bab40fc432212d2e0cb553cd2"><td class="memItemLeft" align="right" valign="top"><a id="aca53021bab40fc432212d2e0cb553cd2"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Destroy</b> ()</td></tr>
 <tr class="separator:aca53021bab40fc432212d2e0cb553cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32d532d719c4bed20a93d712eb828a39"><td class="memItemLeft" align="right" valign="top"><a id="a32d532d719c4bed20a93d712eb828a39"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InternalDestroy</b> ()</td></tr>
+<tr class="separator:a32d532d719c4bed20a93d712eb828a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8908c3b99764d7b2535d00ba9c887c3"><td class="memItemLeft" align="right" valign="top"><a id="aa8908c3b99764d7b2535d00ba9c887c3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>RemoveAllOnEntityReleasedHandlers</b> ()</td></tr>
 <tr class="separator:aa8908c3b99764d7b2535d00ba9c887c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -207,8 +210,10 @@ Events</h2></td></tr>
 <tr class="separator:a16e5c42416751abe64cfd86a9b9da887"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83ffb44d61d4c3c137bd9377c0866e6a"><td class="memItemLeft" align="right" valign="top">EntityComponentReplaced&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a83ffb44d61d4c3c137bd9377c0866e6a">OnComponentReplaced</a></td></tr>
 <tr class="separator:a83ffb44d61d4c3c137bd9377c0866e6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acf35ed67ac2785651eb54b1eaddfcc73"><td class="memItemLeft" align="right" valign="top">EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#acf35ed67ac2785651eb54b1eaddfcc73">OnEntityReleased</a></td></tr>
-<tr class="separator:acf35ed67ac2785651eb54b1eaddfcc73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdb078412aafe639f6990b8a98bcd836"><td class="memItemLeft" align="right" valign="top">EntityEvent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#acdb078412aafe639f6990b8a98bcd836">OnEntityReleased</a></td></tr>
+<tr class="separator:acdb078412aafe639f6990b8a98bcd836"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74d478839ed98c58f9ea1d84157ed016"><td class="memItemLeft" align="right" valign="top">EntityEvent&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_entity.html#a74d478839ed98c58f9ea1d84157ed016">OnDestroyEntity</a></td></tr>
+<tr class="separator:a74d478839ed98c58f9ea1d84157ed016"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header events_interface_entitas_1_1_i_entity"><td colspan="2" onclick="javascript:toggleInherit('events_interface_entitas_1_1_i_entity')"><img src="closed.png" alt="-"/>&#160;Events inherited from <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a></td></tr>
 <tr class="memitem:a8c27842b69b103f8e3ca59ba0e730656 inherit events_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a8c27842b69b103f8e3ca59ba0e730656"></a>
 EntityComponentChanged&#160;</td><td class="memItemRight" valign="bottom"><b>OnComponentAdded</b></td></tr>
@@ -219,12 +224,15 @@ EntityComponentChanged&#160;</td><td class="memItemRight" valign="bottom"><b>OnC
 <tr class="memitem:a8f74d92aff907c6ae54c22e71133430d inherit events_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a8f74d92aff907c6ae54c22e71133430d"></a>
 EntityComponentReplaced&#160;</td><td class="memItemRight" valign="bottom"><b>OnComponentReplaced</b></td></tr>
 <tr class="separator:a8f74d92aff907c6ae54c22e71133430d inherit events_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cfd9f8b9aa42875a91a80942a6a0d27 inherit events_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="a2cfd9f8b9aa42875a91a80942a6a0d27"></a>
-EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityReleased</b></td></tr>
-<tr class="separator:a2cfd9f8b9aa42875a91a80942a6a0d27 inherit events_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbb6bb5d4cb21639c8f27058665be816 inherit events_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="adbb6bb5d4cb21639c8f27058665be816"></a>
+EntityEvent&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityReleased</b></td></tr>
+<tr class="separator:adbb6bb5d4cb21639c8f27058665be816 inherit events_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac217d26a9be34ac3a87f586c565b50e2 inherit events_interface_entitas_1_1_i_entity"><td class="memItemLeft" align="right" valign="top"><a id="ac217d26a9be34ac3a87f586c565b50e2"></a>
+EntityEvent&#160;</td><td class="memItemRight" valign="bottom"><b>OnDestroyEntity</b></td></tr>
+<tr class="separator:ac217d26a9be34ac3a87f586c565b50e2 inherit events_interface_entitas_1_1_i_entity"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Use context.CreateEntity() to create a new entity and context.DestroyEntity() to destroy it. You can add, replace and remove <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> to an entity. </p>
+<div class="textblock"><p>Use context.CreateEntity() to create a new entity and entity.Destroy() to destroy it. You can add, replace and remove <a class="el" href="interface_entitas_1_1_i_component.html">IComponent</a> to an entity. </p>
 
 <p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00011">11</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -265,7 +273,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00108">108</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00113">113</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -306,7 +314,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00321">321</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00326">326</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -345,7 +353,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 </dl>
 </div>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00330">330</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00335">335</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -376,7 +384,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00211">211</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00216">216</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -407,7 +415,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00309">309</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00314">314</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -438,7 +446,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00283">283</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00288">288</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -469,7 +477,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00265">265</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00270">270</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -500,7 +508,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00271">271</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00276">276</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -531,7 +539,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_a_e_r_c.html">Entitas.IAERC</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00354">354</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00359">359</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -562,7 +570,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00138">138</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00143">143</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -603,7 +611,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_entity.html">Entitas.IEntity</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00162">162</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00167">167</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -634,7 +642,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 <p>Implements <a class="el" href="interface_entitas_1_1_i_a_e_r_c.html">Entitas.IAERC</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00343">343</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00348">348</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -662,7 +670,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 </div><div class="memdoc">
 <p>Returns a cached string to describe the entity with the following format: Entity_{creationIndex}(*{retainCount})({list of components}) </p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00383">383</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00400">400</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -688,7 +696,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 </div><div class="memdoc">
 <p>Automatic <a class="el" href="class_entitas_1_1_entity.html">Entity</a> Reference Counting (AERC) is used internally to prevent pooling retained entities. If you use retain manually you also have to release it manually at some point. </p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00062">62</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00067">67</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -713,7 +721,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 </div><div class="memdoc">
 <p>componentPools is set by the context which created the entity and is used to reuse removed components. Removed components will be pushed to the componentPool. Use entity.CreateComponent(index, type) to get a new or reusable component from the componentPool. Use entity.GetComponentPool(index) to get a componentPool for a specific component index. </p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00051">51</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00056">56</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -738,7 +746,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 </div><div class="memdoc">
 <p>The contextInfo is set by the context which created the entity and contains information about the context. It's used to provide better error messages. </p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00056">56</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00061">61</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -763,7 +771,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 </div><div class="memdoc">
 <p>Each entity has its own unique creationIndex which will be set by the context when you create the entity. </p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00038">38</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00043">43</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -788,7 +796,7 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 </div><div class="memdoc">
 <p>The context manages the state of an entity. Active entities are enabled, destroyed entities are not. </p>
 
-<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00042">42</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00047">47</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
 
 </div>
 </div>
@@ -844,14 +852,31 @@ EntityReleased&#160;</td><td class="memItemRight" valign="bottom"><b>OnEntityRel
 
 </div>
 </div>
-<a id="acf35ed67ac2785651eb54b1eaddfcc73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acf35ed67ac2785651eb54b1eaddfcc73">&#9670;&nbsp;</a></span>OnEntityReleased</h2>
+<a id="a74d478839ed98c58f9ea1d84157ed016"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74d478839ed98c58f9ea1d84157ed016">&#9670;&nbsp;</a></span>OnDestroyEntity</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">EntityReleased Entitas.Entity.OnEntityReleased</td>
+          <td class="memname">EntityEvent Entitas.Entity.OnDestroyEntity</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Occurs when calling entity.Destroy(). All event handlers will be removed when the entity gets destroyed by the context. </p>
+
+<p class="definition">Definition at line <a class="el" href="_entity_8cs_source.html#l00036">36</a> of file <a class="el" href="_entity_8cs_source.html">Entity.cs</a>.</p>
+
+</div>
+</div>
+<a id="acdb078412aafe639f6990b8a98bcd836"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdb078412aafe639f6990b8a98bcd836">&#9670;&nbsp;</a></span>OnEntityReleased</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EntityEvent Entitas.Entity.OnEntityReleased</td>
         </tr>
       </table>
 </div><div class="memdoc">

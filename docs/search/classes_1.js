@@ -2,6 +2,7 @@ var searchData=
 [
   ['collectionextension',['CollectionExtension',['../class_entitas_1_1_collection_extension.html',1,'Entitas']]],
   ['collector',['Collector',['../class_entitas_1_1_collector.html',1,'Entitas']]],
+  ['collectorcontextextension',['CollectorContextExtension',['../class_entitas_1_1_collector_context_extension.html',1,'Entitas']]],
   ['collectorexception',['CollectorException',['../class_entitas_1_1_collector_exception.html',1,'Entitas']]],
   ['componentstringextension',['ComponentStringExtension',['../class_entitas_1_1_component_string_extension.html',1,'Entitas']]],
   ['context',['Context',['../class_entitas_1_1_context.html',1,'Entitas']]],

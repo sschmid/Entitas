@@ -19,6 +19,7 @@
 │   ├── Entitas.CodeGeneration.Attributes
 │   │   └── Entitas.CodeGeneration.Attributes
 │   │       └── Attributes
+│   │           └── EntityIndex
 │   ├── Entitas.CodeGeneration.CodeGenerator
 │   │   └── Entitas.CodeGeneration.CodeGenerator
 │   │       └── CodeGenerator
@@ -143,17 +144,18 @@
 │   ├── Entitas.CodeGeneration.Attributes
 │   │   └── Entitas.CodeGeneration.Attributes
 │   │       └── Attributes
-│   │           ├── AbstractEntityIndexAttribute.cs
+│   │           ├── EntityIndex
+│   │           │   ├── AbstractEntityIndexAttribute.cs
+│   │           │   ├── EntityIndexAttribute.cs
+│   │           │   ├── EntityIndexGetMethodAttribute.cs
+│   │           │   ├── EntityIndexType.cs
+│   │           │   └── PrimaryEntityIndexAttribute.cs
 │   │           ├── ContextAttribute.cs
 │   │           ├── CustomComponentNameAttribute.cs
 │   │           ├── CustomEntityIndexAttribute.cs
 │   │           ├── CustomPrefixAttribute.cs
 │   │           ├── DontGenerateAttribute.cs
-│   │           ├── EntityIndexAttribute.cs
-│   │           ├── EntityIndexGetMethodAttribute.cs
-│   │           ├── EntityIndexType.cs
 │   │           ├── PostConstructorAttribute.cs
-│   │           ├── PrimaryEntityIndexAttribute.cs
 │   │           └── UniqueAttribute.cs
 │   ├── Entitas.CodeGeneration.CodeGenerator
 │   │   └── Entitas.CodeGeneration.CodeGenerator
@@ -183,6 +185,7 @@
 │   │           ├── CodeGenerators
 │   │           │   ├── ComponentContextGenerator.cs
 │   │           │   ├── ComponentEntityGenerator.cs
+│   │           │   ├── ComponentEntityInterfaceGenerator.cs
 │   │           │   ├── ComponentGenerator.cs
 │   │           │   ├── ComponentMatcherGenerator.cs
 │   │           │   ├── ComponentsLookupGenerator.cs
@@ -363,7 +366,11 @@
 │   └── Entitas
 │       ├── Collector
 │       │   ├── Collector.cs
-│       │   └── CollectorException.cs
+│       │   ├── CollectorContextExtension.cs
+│       │   ├── CollectorException.cs
+│       │   ├── ICollector.cs
+│       │   ├── TriggerOnEvent.cs
+│       │   └── TriggerOnEventMatcherExtension.cs
 │       ├── Context
 │       │   ├── Exceptions
 │       │   │   ├── ContextDoesNotContainEntityException.cs
@@ -427,6 +434,7 @@
 │       │   │   ├── IReactiveSystem.cs
 │       │   │   ├── ISystem.cs
 │       │   │   └── ITearDownSystem.cs
+│       │   ├── MultiReactiveSystem.cs
 │       │   ├── ReactiveSystem.cs
 │       │   └── Systems.cs
 │       ├── ContextInfo.cs
