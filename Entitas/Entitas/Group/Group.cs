@@ -76,8 +76,7 @@ namespace Entitas {
             }
         }
 
-        /// This is called by context.Reset() and context.ClearGroups() to remove
-        /// all event handlers.
+        /// This is called by context.Reset() to remove all event handlers.
         /// This is useful when you want to soft-restart your application.
         public void RemoveAllEventHandlers() {
             OnEntityAdded = null;
