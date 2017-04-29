@@ -8,7 +8,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 - Removed Entitas.Blueprints.Unity.*
 - Changed ReactiveSystem.GetTrigger method signature
 - Marked obsolete: `context.DestroyEntity(entity)`. Use `entity.Destroy()` instead
-- Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (see [Test Example]())
+- Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (e.g. GameMatcher.View.Removed())
 
 ## Top new features:
 - Use MultiReactiveSystem to process entities from different contexts in one system (see [Test Example](https://github.com/sschmid/Entitas-CSharp/blob/develop/Tests/Unity/VisualDebugging/Assets/Examples/VisualDebugging/Systems/SomeMultiReactiveSystem.cs))
