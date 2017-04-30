@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public override Dictionary<string, string> defaultProperties {
             get {
                 return new Dictionary<string, string> {
-                    { TARGET_DIRECTORY_KEY, "Assets/Generated" }
+                    { TARGET_DIRECTORY_KEY, "Assets/Sources" }
                 };
             }
         }

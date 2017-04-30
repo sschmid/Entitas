@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
-        const string INTERFACE_TEMPLATE =
+        const string STANDARD_INTERFACE_TEMPLATE =
 @"public interface ${InterfaceName} {
 
     ${ComponentType} ${componentName} { get; }
@@ -25,6 +25,13 @@ namespace Entitas.CodeGeneration.Plugins {
     void Add${ComponentName}(${memberArgs});
     void Replace${ComponentName}(${memberArgs});
     void Remove${ComponentName}();
+}
+";
+
+        const string FLAG_INTERFACE_TEMPLATE =
+@"public interface ${InterfaceName} {
+
+    bool ${prefixedName} { get; set; }
 }
 ";
 
@@ -62,11 +69,16 @@ namespace Entitas.CodeGeneration.Plugins {
             var memberData = data.GetMemberData();
             var interfaceName = "I" + componentName.RemoveComponentSuffix();
 
-            var fileContent = INTERFACE_TEMPLATE
+            var template = memberData.Length == 0
+                                     ? FLAG_INTERFACE_TEMPLATE
+                                     : STANDARD_INTERFACE_TEMPLATE;
+            
+            var fileContent = template
                 .Replace("${InterfaceName}", interfaceName)
                 .Replace("${ComponentType}", data.GetFullTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
+                .Replace("${prefixedName}", data.GetCustomComponentPrefix().LowercaseFirst() + componentName)
                 .Replace("${memberArgs}", getMemberArgs(memberData));
 
             return new CodeGenFile(

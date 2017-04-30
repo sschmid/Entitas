@@ -4,10 +4,10 @@ using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class UniquePrefixComponentDataProvider : IComponentDataProvider {
+    public class CustomPrefixComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
-            data.SetUniqueComponentPrefix(getUniqueComponentPrefix(type));
+            data.SetCustomComponentPrefix(getUniqueComponentPrefix(type));
         }
 
         string getUniqueComponentPrefix(Type type) {
@@ -21,14 +21,14 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class UniquePrefixComponentDataExtension {
 
-        public const string COMPONENT_UNIQUE_PREFIX = "component_uniquePrefix";
+        public const string COMPONENT_CUSTOM_PREFIX = "component_customPrefix";
 
-        public static string GetUniqueComponentPrefix(this ComponentData data) {
-            return (string)data[COMPONENT_UNIQUE_PREFIX];
+        public static string GetCustomComponentPrefix(this ComponentData data) {
+            return (string)data[COMPONENT_CUSTOM_PREFIX];
         }
 
-        public static void SetUniqueComponentPrefix(this ComponentData data, string prefix) {
-            data[COMPONENT_UNIQUE_PREFIX] = prefix;
+        public static void SetCustomComponentPrefix(this ComponentData data, string prefix) {
+            data[COMPONENT_CUSTOM_PREFIX] = prefix;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public override Dictionary<string, string> defaultProperties {
             get {
                 return new Dictionary<string, string> {
-                    { CONTEXTS_KEY, "Game, GameState, Input" }
+                    { CONTEXTS_KEY, "Game, Input" }
                 };
             }
         }

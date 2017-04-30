@@ -1,3 +1,16 @@
+# 0.42.1
+
+## Top new features:
+Added missing support for flag components in ComponentEntityInterfaceGenerator
+
+### General
+- CodeGenerator CLI + Plugins are now included in zips and not deployed as separate zips
+
+#### CodeGenerator
+- Added support for flag components in ComponentEntityInterfaceGenerator
+- Removed GameState from default contexts. Defaults are now Game and Input
+
+
 # 0.42.0
 
 See and discuss changes in [Milestone 0.42.0](https://github.com/sschmid/Entitas-CSharp/milestone/15)
@@ -8,7 +21,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 - Removed Entitas.Blueprints.Unity.*
 - Changed ReactiveSystem.GetTrigger method signature
 - Marked obsolete: `context.DestroyEntity(entity)`. Use `entity.Destroy()` instead
-- Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (see [Test Example]())
+- Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (e.g. GameMatcher.View.Removed())
 
 ## Top new features:
 - Use MultiReactiveSystem to process entities from different contexts in one system (see [Test Example](https://github.com/sschmid/Entitas-CSharp/blob/develop/Tests/Unity/VisualDebugging/Assets/Examples/VisualDebugging/Systems/SomeMultiReactiveSystem.cs))

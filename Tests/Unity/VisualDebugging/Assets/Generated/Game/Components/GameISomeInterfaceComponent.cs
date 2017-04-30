@@ -32,7 +32,7 @@ public partial class GameContext {
     }
 
     public void RemoveISomeInterface() {
-        DestroyEntity(iSomeInterfaceEntity);
+        iSomeInterfaceEntity.Destroy();
     }
 }
 

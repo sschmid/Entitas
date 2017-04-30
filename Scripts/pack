@@ -22,9 +22,12 @@ cp "${ADDONS}/${ES_VD_UE}/${ES_VD_UE}/Editor/Images/"* "$COLLECTED_DIR/Images"
 
 TMP_DIR="${BUILD}/tmp"
 TMP_ENTITAS="${TMP_DIR}/Entitas"
+TMP_CG="${TMP_DIR}/CodeGenerator"
+CG_PLUGINS="${TMP_CG}/Plugins"
+CG_DEFAULT="${CG_PLUGINS}/Default"
 
 # create c# zip ------------------------------------------------------------
-mkdir $TMP_DIR $TMP_ENTITAS
+mkdir $TMP_DIR $TMP_ENTITAS $TMP_CG $CG_PLUGINS $CG_DEFAULT
 
 cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
 cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_ENTITAS
@@ -36,6 +39,21 @@ cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
 cp "${COLLECTED_DIR}/"* $TMP_DIR || true
 cp -r "$COLLECTED_DIR/Migration" $TMP_DIR
 
+cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/entitas.exe"
+cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
+cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_CG
+cp "${BUILD_SRC}/fabl.dll" $TMP_CG
+
+cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $CG_DEFAULT
+cp "${BUILD_SRC}/${ES_CG_G}.dll" $CG_DEFAULT
+cp "${BUILD_SRC}/${ES_CG}.dll" $CG_DEFAULT
+cp "${BUILD_SRC}/${ES_CG_P}.dll" $CG_DEFAULT
+cp "${BUILD_SRC}/${ES}.dll" $CG_DEFAULT
+cp "${BUILD_SRC}/${ES_UTILS}.dll" $CG_DEFAULT
+cp "${BUILD_SRC}/fabl.dll" $CG_DEFAULT
+
 cp -r $DOCS "${TMP_DIR}/Documentation"
 pushd $TMP_DIR > /dev/null
   zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-CSharp.zip" ./
@@ -45,7 +63,7 @@ rm -rf $TMP_DIR
 
 # create unity zip ---------------------------------------------------------
 TMP_EDITOR="${TMP_ENTITAS}/Editor"
-mkdir $TMP_DIR $TMP_ENTITAS $TMP_EDITOR
+mkdir $TMP_DIR $TMP_ENTITAS $TMP_EDITOR $TMP_CG $CG_PLUGINS $CG_DEFAULT
 
 cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
 cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_ENTITAS
@@ -74,38 +92,12 @@ cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
 
 cp "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
 
-cp "${COLLECTED_DIR}/"* $TMP_DIR || true
-cp -r "$COLLECTED_DIR/Migration" $TMP_DIR
-cp -r "$COLLECTED_DIR/Images" $TMP_EDITOR
-
-cp -r $DOCS "${TMP_DIR}/Documentation"
-pushd $TMP_DIR > /dev/null
-  zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-Unity.zip" ./
-popd > /dev/null
-rm -rf $TMP_DIR
-# --------------------------------------------------------------------------
-
-# create code generator zip ------------------------------------------------
-TMP_CG="${TMP_DIR}/CodeGenerator"
-CG_PLUGINS="${TMP_CG}/Plugins"
-mkdir $TMP_DIR $TMP_CG $CG_PLUGINS
-
 cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/entitas.exe"
 cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_CG
 cp "${BUILD_SRC}/fabl.dll" $TMP_CG
-
-pushd $TMP_DIR > /dev/null
-  zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-CodeGenerator.zip" ./
-popd > /dev/null
-rm -rf $TMP_DIR
-# --------------------------------------------------------------------------
-
-# create code generator default plugins zip ------------------------------------------------
-CG_DEFAULT="${TMP_DIR}/Default"
-mkdir $TMP_DIR $CG_DEFAULT
 
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $CG_DEFAULT
 cp "${BUILD_SRC}/${ES_CG_G}.dll" $CG_DEFAULT
@@ -124,8 +116,13 @@ cp "${BUILD_SRC}/fabl.dll" $CG_DEFAULT
 # cp "${BUILD_SRC}/${ES_VD_U}.dll" $CG_DEFAULT
 # cp "${BUILD_SRC}/${ES_VD_UE}.dll" $CG_DEFAULT
 
+cp "${COLLECTED_DIR}/"* $TMP_DIR || true
+cp -r "$COLLECTED_DIR/Migration" $TMP_DIR
+cp -r "$COLLECTED_DIR/Images" $TMP_EDITOR
+
+cp -r $DOCS "${TMP_DIR}/Documentation"
 pushd $TMP_DIR > /dev/null
-  zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-CodeGenerator-DefaultPlugins.zip" ./
+  zip -rq "${BUILD_DEPLOY}/${PROJECT_NAME}-Unity.zip" ./
 popd > /dev/null
 rm -rf $TMP_DIR
 # --------------------------------------------------------------------------

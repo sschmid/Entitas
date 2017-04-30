@@ -9,14 +9,17 @@
 public static class InputComponentsLookup {
 
     public const int MyString = 0;
+    public const int Test = 1;
 
-    public const int TotalComponents = 1;
+    public const int TotalComponents = 2;
 
     public static readonly string[] componentNames = {
-        "MyString"
+        "MyString",
+        "Test"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(MyStringComponent)
+        typeof(MyStringComponent),
+        typeof(TestComponent)
     };
 }

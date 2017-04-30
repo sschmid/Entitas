@@ -58,7 +58,7 @@ Entitas 0.42.0 upgrade guide
 - Generate
 
 - Marked obsolete: `context.DestroyEntity(entity)`. Use `entity.Destroy()` instead
-- Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (see [Test Example]())
+- Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (e.g. `GameMatcher.View.Removed()`)
 
 ---
 

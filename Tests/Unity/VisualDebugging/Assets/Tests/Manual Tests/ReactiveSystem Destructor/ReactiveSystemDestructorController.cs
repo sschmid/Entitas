@@ -10,7 +10,7 @@ public class ReactiveSystemDestructorController : MonoBehaviour {
         new TestReactiveSystem(Contexts.sharedInstance);
         _initialEntity = context.CreateEntity();
         _initialEntity.isTest = true;
-        context.DestroyEntity(_initialEntity);
+        _initialEntity.Destroy();
     }
 
     void Update() {

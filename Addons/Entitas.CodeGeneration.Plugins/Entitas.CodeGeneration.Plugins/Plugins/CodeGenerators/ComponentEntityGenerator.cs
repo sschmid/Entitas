@@ -99,7 +99,7 @@ ${memberAssignment}
                 .Replace("${ComponentType}", data.GetFullTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${prefixedName}", data.GetUniqueComponentPrefix().LowercaseFirst() + componentName)
+                .Replace("${prefixedName}", data.GetCustomComponentPrefix().LowercaseFirst() + componentName)
                 .Replace("${Index}", index)
                 .Replace("${memberArgs}", getMemberArgs(memberData))
                 .Replace("${memberAssignment}", getMemberAssignment(memberData));

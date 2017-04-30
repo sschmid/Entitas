@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 
-public interface MyStringEntity : IEntity, IMyString { }
+public interface MyStringEntity : IEntity, IMyString, ITest { }
 
 public partial class GameEntity : MyStringEntity {}
 public partial class InputEntity : MyStringEntity {}
@@ -23,6 +23,11 @@ public class SomeMultiReactiveSystem : MultiReactiveSystem<MyStringEntity, Conte
 
     protected override void Execute(List<MyStringEntity> entities) {
         foreach(var e in entities) {
+
+            // Methods are available
+            var str = e.myString;
+            var isTest = e.isTest;
+
             UnityEngine.Debug.Log("Processed: " + (e));
         }
     }
