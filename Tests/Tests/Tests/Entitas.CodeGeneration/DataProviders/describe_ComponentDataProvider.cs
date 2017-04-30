@@ -88,11 +88,11 @@ class describe_ComponentDataProvider : nspec {
                 getData<DontGenerateMethodsComponent>().ShouldGenerateMethods().should_be_false();
             };
 
-            it["gets unique prefix"] = () => {
-                data.GetUniqueComponentPrefix().GetType().should_be(typeof(string));
-                data.GetUniqueComponentPrefix().should_be("is");
+            it["gets custom prefix"] = () => {
+                data.GetCustomComponentPrefix().GetType().should_be(typeof(string));
+                data.GetCustomComponentPrefix().should_be("is");
 
-                getData<CustomPrefixFlagComponent>().GetUniqueComponentPrefix().should_be("My");
+                getData<CustomPrefixFlagComponent>().GetCustomComponentPrefix().should_be("My");
             };
         };
 
@@ -146,8 +146,8 @@ class describe_ComponentDataProvider : nspec {
                 data.ShouldGenerateMethods().should_be_true();
             };
 
-            it["gets unique prefix"] = () => {
-                data.GetUniqueComponentPrefix().should_be("is");
+            it["gets custom prefix"] = () => {
+                data.GetCustomComponentPrefix().should_be("is");
             };
         };
 
