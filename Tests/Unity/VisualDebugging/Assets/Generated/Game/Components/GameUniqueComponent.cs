@@ -32,7 +32,7 @@ public partial class GameContext {
     }
 
     public void RemoveUnique() {
-        DestroyEntity(uniqueEntity);
+        uniqueEntity.Destroy();
     }
 }
 
