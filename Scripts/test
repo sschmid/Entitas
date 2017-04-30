@@ -3,5 +3,5 @@ echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
 # run tests
-msbuild $TEST_PROJECT /property:Configuration=Release /verbosity:minimal
+xbuild $TEST_PROJECT /property:Configuration=Release /verbosity:minimal
 mono $TEST_RUNNER
