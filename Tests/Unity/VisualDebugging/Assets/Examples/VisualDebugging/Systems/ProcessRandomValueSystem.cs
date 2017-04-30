@@ -3,10 +3,7 @@ using Entitas;
 
 public class ProcessRandomValueSystem : ReactiveSystem<GameEntity> {
 
-    readonly GameContext _context;
-
     public ProcessRandomValueSystem(Contexts contexts) : base(contexts.game) {
-        _context = contexts.game;
     }
 
     protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) {
@@ -19,7 +16,7 @@ public class ProcessRandomValueSystem : ReactiveSystem<GameEntity> {
 
     protected override void Execute(List<GameEntity> entities) {
         foreach (var e in entities) {
-            _context.DestroyEntity(e);
+            e.Destroy();
         }
     }
 }

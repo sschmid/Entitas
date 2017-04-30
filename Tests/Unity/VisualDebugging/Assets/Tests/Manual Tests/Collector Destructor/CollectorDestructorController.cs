@@ -11,7 +11,7 @@ public class CollectorDestructorController : MonoBehaviour {
         context.GetGroup(GameMatcher.Test).CreateCollector();
         _initialEntity = context.CreateEntity();
         _initialEntity.isTest = true;
-        context.DestroyEntity(_initialEntity);
+        _initialEntity.Destroy();
         // TODO
         //context.ClearGroups();
     }
