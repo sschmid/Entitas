@@ -209,13 +209,13 @@
 │   │           │   │   ├── Providers
 │   │           │   │   │   ├── ComponentTypeComponentDataProvider.cs
 │   │           │   │   │   ├── ContextsComponentDataProvider.cs
+│   │           │   │   │   ├── CustomPrefixComponentDataProvider.cs
 │   │           │   │   │   ├── IComponentDataProvider.cs
 │   │           │   │   │   ├── IsUniqueComponentDataProvider.cs
 │   │           │   │   │   ├── MemberDataComponentDataProvider.cs
 │   │           │   │   │   ├── ShouldGenerateComponentComponentDataProvider.cs
 │   │           │   │   │   ├── ShouldGenerateComponentIndexComponentDataProvider.cs
-│   │           │   │   │   ├── ShouldGenerateMethodsComponentDataProvider.cs
-│   │           │   │   │   └── UniquePrefixComponentDataProvider.cs
+│   │           │   │   │   └── ShouldGenerateMethodsComponentDataProvider.cs
 │   │           │   │   ├── ComponentData.cs
 │   │           │   │   └── ComponentDataProvider.cs
 │   │           │   ├── Contexts

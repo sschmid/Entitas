@@ -1,3 +1,16 @@
+# 0.42.1
+
+## Top new features:
+Added missing support for flag components in ComponentEntityInterfaceGenerator
+
+### General
+- CodeGenerator CLI + Plugins are now included in zips and not deployed as separate zips
+
+#### CodeGenerator
+- Added support for flag components in ComponentEntityInterfaceGenerator
+- Removed GameState from default contexts. Defaults are now Game and Input
+
+
 # 0.42.0
 
 See and discuss changes in [Milestone 0.42.0](https://github.com/sschmid/Entitas-CSharp/milestone/15)
