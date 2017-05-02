@@ -63,7 +63,11 @@ ${getIndices}
         }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            var entityIndexData = data.OfType<EntityIndexData>().ToArray();
+            var entityIndexData = data
+                .OfType<EntityIndexData>()
+                .OrderBy(d => d.GetEntityIndexName())
+                .ToArray();
+
             return entityIndexData.Length == 0
                                   ? new CodeGenFile[0]
                                   : generateEntityIndices(entityIndexData);
