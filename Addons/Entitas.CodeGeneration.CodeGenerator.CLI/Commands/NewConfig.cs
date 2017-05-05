@@ -7,6 +7,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public class NewConfig : AbstractCommand {
 
         public override string trigger { get { return "new"; } }
+        public override string description { get { return "Creates new Entitas.properties config with default values"; } }
+        public override string example { get { return "entitas new [-f]"; } }
 
         public override void Run(string[] args) {
             var currentDir = Directory.GetCurrentDirectory();

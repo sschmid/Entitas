@@ -7,6 +7,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public abstract class AbstractCommand : ICommand {
 
         public abstract string trigger { get; }
+        public abstract string description { get; }
+        public abstract string example { get; }
 
         public abstract void Run(string[] args);
 

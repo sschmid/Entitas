@@ -8,6 +8,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public class FixConfig : AbstractCommand {
 
         public override string trigger { get { return "fix"; } }
+        public override string description { get { return "Adds missing or removes unused keys interactively"; } }
+        public override string example { get { return "entitas fix"; } }
 
         public override void Run(string[] args) {
             if (assertProperties()) {
