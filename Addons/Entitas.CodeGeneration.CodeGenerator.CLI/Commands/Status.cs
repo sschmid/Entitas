@@ -59,8 +59,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         static void printConfigurableKeyStatus(Dictionary<string, string> configurables, Properties properties) {
-            foreach (var kv in CodeGeneratorUtil.GetMissingConfigurables(configurables, properties)) {
-                fabl.Warn("Missing key: " + kv.Key);
+            foreach (var key in Helper.GetMissingKeys(configurables.Keys.ToArray(), properties)) {
+                fabl.Warn("Missing key: " + key);
             }
         }
 

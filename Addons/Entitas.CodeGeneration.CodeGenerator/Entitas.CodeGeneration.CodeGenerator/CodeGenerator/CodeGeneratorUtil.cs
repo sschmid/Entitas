@@ -98,11 +98,5 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                        .Select(instance => instance.defaultProperties)
                        .ToArray());
         }
-
-        public static Dictionary<string, string> GetMissingConfigurables(Dictionary<string, string> configurables, Properties properties) {
-            return configurables
-                .Where(kv => !properties.HasKey(kv.Key))
-                .ToDictionary(kv => kv.Key, kv => kv.Value);
-        }
     }
 }
