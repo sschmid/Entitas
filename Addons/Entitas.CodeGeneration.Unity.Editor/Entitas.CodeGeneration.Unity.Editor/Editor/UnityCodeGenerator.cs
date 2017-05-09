@@ -63,7 +63,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             }
 
             var assembly = typeof(UnityEditor.Editor).Assembly;
-            var logEntries = assembly.GetType("UnityEditorInternal.LogEntries");
+            var logEntries = assembly.GetType("UnityEditor.LogEntries");
             logEntries.GetMethod("Clear").Invoke(new object(), null);
             var canCompile = (int)logEntries.GetMethod("GetCount").Invoke(new object(), null) == 0;
             if (!canCompile) {
