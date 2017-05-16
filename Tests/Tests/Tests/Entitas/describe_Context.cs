@@ -216,10 +216,10 @@ class describe_Context : nspec {
 
             it["dispatches OnEntityCreated when creating a new entity"] = () => {
                 IEntity eventEntity = null;
-                ctx.OnEntityCreated += (p, entity) => {
+                ctx.OnEntityCreated += (c, entity) => {
                     didDispatch += 1;
                     eventEntity = entity;
-                    p.should_be_same(p);
+                    c.should_be_same(ctx);
                 };
 
                 var e = ctx.CreateEntity();
