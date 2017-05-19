@@ -180,9 +180,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                         } else {
                             foreach (var info in memberInfos) {
                                 if (EntitasEditorLayout.MatchesSearchString(info.name.ToLower(), componentMemberSearch[index].ToLower())) {
-                                    var newComponentValue = info.GetValue(newComponent);
-                                    var newComponentType = newComponentValue == null ? info.type : newComponentValue.GetType();
-                                    if (DrawObjectMember(newComponentType, info.name, newComponentValue, newComponent, info.SetValue)) {
+                                    var memberValue = info.GetValue(newComponent);
+                                    var memberType = memberValue == null ? info.type : memberValue.GetType();
+                                    if (DrawObjectMember(memberType, info.name, memberValue, newComponent, info.SetValue)) {
                                         changed = true;
                                     }
                                 }
@@ -248,12 +248,10 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                         EditorGUILayout.BeginVertical();
                         {
-                            var infos = memberType.GetPublicMemberInfos();
-                            for (int i = 0; i < infos.Count; i++) {
-                                var info = infos[i];
-                                var componentValue = info.GetValue(value);
-                                var componentType = componentValue == null ? info.type : componentValue.GetType();
-                                DrawObjectMember(componentType, info.name, componentValue, value, info.SetValue);
+                            foreach (var info in memberType.GetPublicMemberInfos()) {
+                                var mValue = info.GetValue(value);
+                                var mType = mValue == null ? info.type : mValue.GetType();
+                                DrawObjectMember(mType, info.name, mValue, value, info.SetValue);
                                 if (memberType.IsValueType) {
                                     setValue(target, value);
                                 }
