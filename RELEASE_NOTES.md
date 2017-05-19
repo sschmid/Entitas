@@ -1,3 +1,17 @@
+# 0.42.2
+
+See and discuss changes in [Milestone 0.42.2](https://github.com/sschmid/Entitas-CSharp/milestone/16)
+
+#### CodeGenerator
+- Fix Code Generation NullReferenceException in Unity 2017 #414
+- EntityIndexGenerator is sorting entity indices
+- CodeGenerator fix command runs recursively #409
+- Code Generator CLI maintenance
+
+#### VisualDebugging
+- Update EntityDrawer to draw correct object type #399 #406
+
+
 # 0.42.1
 
 ## Top new features:
