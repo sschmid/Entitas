@@ -8,6 +8,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public class FixConfig : AbstractCommand {
 
         public override string trigger { get { return "fix"; } }
+        public override string description { get { return "Adds missing or removes unused keys interactively"; } }
+        public override string example { get { return "entitas fix"; } }
 
         public override void Run(string[] args) {
             if (assertProperties()) {
@@ -15,51 +17,54 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 var config = new CodeGeneratorConfig();
                 config.Configure(properties);
 
+                forceAddKeys(config.defaultProperties, properties);
+
                 Type[] types = null;
-                Dictionary<string, string> configurables = null;
 
                 try {
                     types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
-                    configurables = CodeGeneratorUtil.GetConfigurables(
-                        CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(types, config.dataProviders),
-                        CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),
-                        CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(types, config.postProcessors)
-                    );
-                } catch(Exception ex) {
-                    fixKeys(null, config.defaultProperties, properties);
+                    getConfigurables(types, config);
+                } catch (Exception ex) {
                     throw ex;
                 }
 
-                fixKeys(configurables, config.defaultProperties, properties);
-                fixConfigurableKeys(configurables, properties);
-                fixPlugins(types, config, properties);
+                var askedRemoveKeys = new HashSet<string>();
+                var askedAddKeys = new HashSet<string>();
+                while (fix(askedRemoveKeys, askedAddKeys, types, config, properties)) { }
             }
         }
 
-        static void fixKeys(Dictionary<string, string> configurables, Dictionary<string, string> defaultProperties, Properties properties) {
-            var requiredKeys = defaultProperties.Keys.ToArray();
-            var requiredKeysWithConfigurables = requiredKeys.ToList().ToArray();
+        static Dictionary<string, string> getConfigurables(Type[] types, CodeGeneratorConfig config) {
+            return CodeGeneratorUtil.GetConfigurables(
+                CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(types, config.dataProviders),
+                CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),
+                CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(types, config.postProcessors)
+            );
+        }
 
-            if (configurables != null) {
-                requiredKeysWithConfigurables = requiredKeysWithConfigurables.Concat(configurables.Keys).ToArray();
-            }
+        static void forceAddKeys(Dictionary<string, string> requiredProperties, Properties properties) {
+            var requiredKeys = requiredProperties.Keys.ToArray();
+            var missingKeys = Helper.GetMissingKeys(requiredKeys, properties);
 
-            foreach (var key in Helper.GetMissingKeys(requiredKeys, properties)) {
-                Helper.AddKey("Add missing key", key, defaultProperties[key], properties);
-            }
-
-            foreach (var key in Helper.GetUnusedKeys(requiredKeysWithConfigurables, properties)) {
-                Helper.RemoveKey("Remove unused key", key, properties);
+            foreach (var key in missingKeys) {
+                Helper.ForceAddKey("Will add missing key", key, requiredProperties[key], properties);
             }
         }
 
-        static void fixConfigurableKeys(Dictionary<string, string> configurables, Properties properties) {
-            foreach (var kv in CodeGeneratorUtil.GetMissingConfigurables(configurables, properties)) {
-                Helper.AddKey("Add missing key", kv.Key, kv.Value, properties);
-            }
+        static bool fix(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, Properties properties) {
+            var changed = fixPlugins(askedRemoveKeys, askedAddKeys, types, config, properties);
+
+            forceAddKeys(getConfigurables(types, config), properties);
+
+            var requiredKeys = config.defaultProperties.Merge(getConfigurables(types, config)).Keys.ToArray();
+            removeUnusedKeys(askedRemoveKeys, requiredKeys, properties);
+
+            return changed;
         }
 
-        static void fixPlugins(Type[] types, CodeGeneratorConfig config, Properties properties) {
+        static bool fixPlugins(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, Properties properties) {
+            var changed = false;
+
             var unavailableDataProviders = CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(types, config.dataProviders);
             var unavailableCodeGenerators = CodeGeneratorUtil.GetUnavailable<ICodeGenerator>(types, config.codeGenerators);
             var unavailablePostProcessors = CodeGeneratorUtil.GetUnavailable<ICodeGenFilePostProcessor>(types, config.postProcessors);
@@ -68,34 +73,70 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             var availableCodeGenerators = CodeGeneratorUtil.GetAvailable<ICodeGenerator>(types, config.codeGenerators);
             var availablePostProcessors = CodeGeneratorUtil.GetAvailable<ICodeGenFilePostProcessor>(types, config.postProcessors);
 
-            foreach (var dataProvider in unavailableDataProviders) {
-                Helper.RemoveValue("Remove unavailable data provider", dataProvider, config.dataProviders,
-                                   values => config.dataProviders = values, properties);
+            foreach (var key in unavailableDataProviders) {
+                if (!askedRemoveKeys.Contains(key)) {
+                    Helper.RemoveValue("Remove unavailable data provider", key, config.dataProviders,
+                                       values => config.dataProviders = values, properties);
+                    askedRemoveKeys.Add(key);
+                    changed = true;
+                }
             }
 
-            foreach (var codeGenerator in unavailableCodeGenerators) {
-                Helper.RemoveValue("Remove unavailable code generator", codeGenerator, config.codeGenerators,
-                                   values => config.codeGenerators = values, properties);
+            foreach (var key in unavailableCodeGenerators) {
+                if (!askedRemoveKeys.Contains(key)) {
+                    Helper.RemoveValue("Remove unavailable code generator", key, config.codeGenerators,
+                                       values => config.codeGenerators = values, properties);
+                    askedRemoveKeys.Add(key);
+                    changed = true;
+                }
             }
 
-            foreach (var postProcessor in unavailablePostProcessors) {
-                Helper.RemoveValue("Remove unavailable post processor", postProcessor, config.postProcessors,
-                                   values => config.postProcessors = values, properties);
+            foreach (var key in unavailablePostProcessors) {
+                if (!askedRemoveKeys.Contains(key)) {
+                    Helper.RemoveValue("Remove unavailable post processor", key, config.postProcessors,
+                                       values => config.postProcessors = values, properties);
+                    askedRemoveKeys.Add(key);
+                    changed = true;
+                }
             }
 
-            foreach (var dataProvider in availableDataProviders) {
-                Helper.AddValue("Add available data provider", dataProvider, config.dataProviders,
-                                values => config.dataProviders = values, properties);
+            foreach (var key in availableDataProviders) {
+                if (!askedAddKeys.Contains(key)) {
+                    Helper.AddValue("Add available data provider", key, config.dataProviders,
+                                    values => config.dataProviders = values, properties);
+                    askedAddKeys.Add(key);
+                    changed = true;
+                }
             }
 
-            foreach (var codeGenerator in availableCodeGenerators) {
-                Helper.AddValue("Add available code generator", codeGenerator, config.codeGenerators,
-                                values => config.codeGenerators = values, properties);
+            foreach (var key in availableCodeGenerators) {
+                if (!askedAddKeys.Contains(key)) {
+                    Helper.AddValue("Add available code generator", key, config.codeGenerators,
+                                    values => config.codeGenerators = values, properties);
+                    askedAddKeys.Add(key);
+                    changed = true;
+                }
             }
 
-            foreach (var postProcessor in availablePostProcessors) {
-                Helper.AddValue("Add available post processor", postProcessor, config.postProcessors,
-                                values => config.postProcessors = values, properties);
+            foreach (var key in availablePostProcessors) {
+                if (!askedAddKeys.Contains(key)) {
+                    Helper.AddValue("Add available post processor", key, config.postProcessors,
+                                    values => config.postProcessors = values, properties);
+                    askedAddKeys.Add(key);
+                    changed = true;
+                }
+            }
+
+            return changed;
+        }
+
+        static void removeUnusedKeys(HashSet<string> askedRemoveKeys, string[] requiredKeys, Properties properties) {
+            var unused = Helper.GetUnusedKeys(requiredKeys, properties);
+            foreach (var key in unused) {
+                if (!askedRemoveKeys.Contains(key)) {
+                    Helper.RemoveKey("Remove unused key", key, properties);
+                    askedRemoveKeys.Add(key);
+                }
             }
         }
     }

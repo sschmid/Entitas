@@ -28,6 +28,14 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             return keyChar == accept;
         }
 
+        public static void ForceAddKey(string message, string key, string value, Properties properties) {
+            fabl.Info(message + ": '" + key + "'");
+            Console.ReadKey(true);
+            properties[key] = value;
+            Preferences.SaveProperties(properties);
+            fabl.Info("Added: " + key);
+        }
+
         public static void AddKey(string question, string key, string value, Properties properties) {
             fabl.Info(question + ": '" + key + "' ? (y / n)");
             if (GetUserDecision()) {

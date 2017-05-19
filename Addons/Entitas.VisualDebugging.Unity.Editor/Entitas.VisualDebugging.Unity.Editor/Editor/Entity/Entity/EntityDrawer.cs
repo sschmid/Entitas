@@ -180,7 +180,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                         } else {
                             foreach (var info in memberInfos) {
                                 if (EntitasEditorLayout.MatchesSearchString(info.name.ToLower(), componentMemberSearch[index].ToLower())) {
-                                    if (DrawObjectMember(info.type, info.name, info.GetValue(newComponent), newComponent, info.SetValue)) {
+                                    var memberValue = info.GetValue(newComponent);
+                                    var memberType = memberValue == null ? info.type : memberValue.GetType();
+                                    if (DrawObjectMember(memberType, info.name, memberValue, newComponent, info.SetValue)) {
                                         changed = true;
                                     }
                                 }
@@ -246,10 +248,10 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                         EditorGUILayout.BeginVertical();
                         {
-                            var infos = memberType.GetPublicMemberInfos();
-                            for (int i = 0; i < infos.Count; i++) {
-                                var info = infos[i];
-                                DrawObjectMember(info.type, info.name, info.GetValue(value), value, info.SetValue);
+                            foreach (var info in memberType.GetPublicMemberInfos()) {
+                                var mValue = info.GetValue(value);
+                                var mType = mValue == null ? info.type : mValue.GetType();
+                                DrawObjectMember(mType, info.name, mValue, value, info.SetValue);
                                 if (memberType.IsValueType) {
                                     setValue(target, value);
                                 }
