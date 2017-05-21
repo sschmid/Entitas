@@ -1,3 +1,9 @@
+# 0.42.3
+
+Hotfix release for
+- Fix Code Generation NullReferenceException in Unity 2017 #414
+
+
 # 0.42.2
 
 See and discuss changes in [Milestone 0.42.2](https://github.com/sschmid/Entitas-CSharp/milestone/16)
