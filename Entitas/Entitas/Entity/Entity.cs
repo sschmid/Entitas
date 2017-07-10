@@ -160,6 +160,40 @@ namespace Entitas {
             replaceComponent(index, null);
         }
 
+        /// Removes a component at the specified index.
+        /// You can only remove a component at an index if it exists.
+        /// The prefered way is to use the
+        /// generated methods from the code generator.
+        public void RemoveStaticComponent(int index) {
+            if (!_isEnabled) {
+                throw new EntityIsNotEnabledException(
+                    "Cannot remove component '" +
+                    _contextInfo.componentNames[index] + "' from " + this + "!"
+                );
+            }
+
+            if (!HasComponent(index)) {
+                throw new EntityDoesNotHaveComponentException(
+                    index, "Cannot remove component '" +
+                    _contextInfo.componentNames[index] + "' from " + this + "!",
+                    "You should check if an entity has the component " +
+                    "before removing it."
+                );
+            }
+
+            _toStringCache = null;
+            var previousComponent = _components[index];
+            if (null != previousComponent) {
+                _components[index] = null;
+                _componentsCache = null;
+  
+                _componentIndicesCache = null;
+                if (OnComponentRemoved != null) {
+                    OnComponentRemoved(this, index, previousComponent);
+                }
+            }
+        }
+
         /// Replaces an existing component at the specified index
         /// or adds it if it doesn't exist yet.
         /// The prefered way is to use the
@@ -197,7 +231,6 @@ namespace Entitas {
                         OnComponentRemoved(this, index, previousComponent);
                     }
                 }
-
                 GetComponentPool(index).Push(previousComponent);
 
             } else {
