@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Entitas.Utils;
 
@@ -5,13 +6,13 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextsGenerator : ICodeGenerator {
 
-        public string name { get { return "Contexts"; } }
-        public int priority { get { return 0; } }
-        public bool isEnabledByDefault { get { return true; } }
-        public bool runInDryMode { get { return true; } }
+        public virtual string name { get { return "Contexts"; } }
+        public virtual int priority { get { return 0; } }
+        public virtual bool isEnabledByDefault { get { return true; } }
+        public virtual bool runInDryMode { get { return true; } }
 
         const string CONTEXTS_TEMPLATE =
-@"public partial class Contexts : Entitas.IContexts {
+@"${usingDeclarations}public partial class Contexts : Entitas.IContexts {
 
     public static Contexts sharedInstance {
         get {
@@ -33,10 +34,7 @@ ${contextProperties}
     public Contexts() {
 ${contextAssignments}
 
-        var postConstructors = System.Linq.Enumerable.Where(
-            GetType().GetMethods(),
-            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGeneration.Attributes.PostConstructorAttribute))
-        );
+${contextConstructorsList}
 
         foreach (var postConstructor in postConstructors) {
             postConstructor.Invoke(this, null);
@@ -55,6 +53,10 @@ ${contextAssignments}
         const string CONTEXT_PROPERTY_TEMPLATE = @"    public ${ContextName}Context ${contextName} { get; set; }";
         const string CONTEXT_LIST_TEMPLATE = @"${contextName}";
         const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${contextName} = new ${ContextName}Context();";
+        const string CONTEXT_CONSTRUCTORS_LIST_TEMPLATE = @"        var postConstructors = System.Linq.Enumerable.Where(
+            GetType().GetMethods(),
+            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGeneration.Attributes.PostConstructorAttribute))
+        );";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var contextNames = data
@@ -71,6 +73,7 @@ ${contextAssignments}
         }
 
         string generateContextsClass(string[] contextNames) {
+            var usingDeclarations = string.Join("\n", getUsingDeclarations());
             var contextProperties = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_PROPERTY_TEMPLATE
                         .Replace("${ContextName}", contextName)
@@ -87,11 +90,22 @@ ${contextAssignments}
                         .Replace("${ContextName}", contextName)
                         .Replace("${contextName}", contextName.LowercaseFirst())
                        ).ToArray());
+            var contextConstructorsList = generateContextConstructorsList();
 
             return CONTEXTS_TEMPLATE
+                .Replace("${usingDeclarations}", usingDeclarations)
                 .Replace("${contextProperties}", contextProperties)
                 .Replace("${contextList}", contextList)
-                .Replace("${contextAssignments}", contextAssignments);
+                .Replace("${contextAssignments}", contextAssignments)
+                .Replace("${contextConstructorsList}", contextConstructorsList);
+        }
+
+        public virtual string[] getUsingDeclarations() {
+            return new string[0];
+        }
+
+        public virtual string generateContextConstructorsList() {
+            return CONTEXT_CONSTRUCTORS_LIST_TEMPLATE;
         }
     }
 }

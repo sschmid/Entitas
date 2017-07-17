@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -40,6 +40,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\Entitas.CodeGeneration\CodeGenerators\describe_ContextsGenerator.cs" />
+    <Compile Include="Tests\Entitas.CodeGeneration\CodeGenerators\describe_ContextsPCLGenerator.cs" />
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
     <Compile Include="TestRunner.cs" />
@@ -111,21 +113,7 @@
     <Compile Include="Fixtures\Systems\MultiReactiveSystemSpy.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Tests\" />
-    <Folder Include="Libraries\" />
-    <Folder Include="Fixtures\" />
-    <Folder Include="Fixtures\Systems\" />
-    <Folder Include="Tests\Entitas\" />
-    <Folder Include="Tests\Entitas.CodeGeneration\" />
-    <Folder Include="Tests\Entitas.Utils\" />
-    <Folder Include="Tests\Entitas.Migration\" />
-    <Folder Include="Tests\Entitas.VisualDebugging.Unity\" />
-    <Folder Include="Tests\Entitas.CodeGeneration\CodeGenerators\" />
-    <Folder Include="Tests\Entitas\Extensions\" />
-    <Folder Include="Tests\Entitas.Utils\Extensions\" />
-    <Folder Include="Tests\Entitas.CodeGeneration\PostProcessors\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Libraries\NSpec.dll" />
     <None Include="Libraries\NSpecRunner.dll" />
