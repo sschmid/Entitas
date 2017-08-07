@@ -35,22 +35,29 @@ Build/deploy/Entitas-Unity
 Build/deploy/CodeGenerator
 
 Tests/Unity/Entitas.Unity/Entitas.Unity.sln
+Tests/Unity/Entitas.Unity/Entitas.Unity.Editor.csproj
 Tests/Unity/Entitas.Unity/Assets/Libraries
 Tests/Unity/Entitas.Unity/Assets/Libraries.meta
 
 Tests/Unity/CodeGenerator/CodeGenerator.sln
+Tests/Unity/CodeGenerator/CodeGenerator.csproj
+Tests/Unity/CodeGenerator/CodeGenerator.Editor.csproj
 Tests/Unity/CodeGenerator/Assets/Libraries
 Tests/Unity/CodeGenerator/Assets/Libraries.meta
 
 Tests/Unity/Blueprints/Blueprints.sln
+Tests/Unity/Blueprints/Blueprints.csproj
+Tests/Unity/Blueprints/Blueprints.Editor.csproj
 Tests/Unity/Blueprints/Assets/Libraries
 Tests/Unity/Blueprints/Assets/Libraries.meta
 
 Tests/Unity/Migration/Migration.sln
+Tests/Unity/Migration/Migration.Editor.csproj
 Tests/Unity/Migration/Assets/Libraries
 Tests/Unity/Migration/Assets/Libraries.meta
 
 Tests/Unity/VisualDebugging/VisualDebugging.sln
+Tests/Unity/VisualDebugging/VisualDebugging.csproj
+Tests/Unity/VisualDebugging/VisualDebugging.Editor.csproj
 Tests/Unity/VisualDebugging/Assets/Libraries
 Tests/Unity/VisualDebugging/Assets/Libraries.meta
-

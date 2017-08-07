@@ -38,12 +38,12 @@ public class EntityLinkTests {
         #endif
     }
 
-    [Test, ExpectedException(typeof(Exception))]
+    [Test]
     public void ThrowsWhenAlreadyLinked() {
-
-        // when
-        _link.Link(_entity, _context);
-        _link.Link(_entity, _context);
+        Assert.Throws(typeof(Exception), () => {
+            _link.Link(_entity, _context);
+            _link.Link(_entity, _context);
+        });
     }
 
     [Test]
@@ -64,11 +64,11 @@ public class EntityLinkTests {
         #endif
     }
 
-    [Test, ExpectedException(typeof(Exception))]
+    [Test]
     public void ThrowsWhenAlreadyUnlinked() {
-
-        // when
-        _link.Unlink();
+        Assert.Throws(typeof(Exception), () => {
+            _link.Unlink();
+        });
     }
 
     [Test]

@@ -44,7 +44,7 @@ public sealed partial class GameMatcher {
 
     public static Entitas.IMatcher<GameEntity> Age {
         get {
-            if(_matcherAge == null) {
+            if (_matcherAge == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Age);
                 matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherAge = matcher;
