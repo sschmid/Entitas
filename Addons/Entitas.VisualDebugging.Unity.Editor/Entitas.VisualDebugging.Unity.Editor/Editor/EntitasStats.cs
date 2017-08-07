@@ -16,20 +16,26 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                                     .Select(kv => kv.Key + ": " + kv.Value)
                                     .ToArray());
 
-            EditorUtility.DisplayDialog("Entitas Stats", stats, "Close");
             Debug.Log(stats);
+            EditorUtility.DisplayDialog("Entitas Stats", stats, "Close");
         }
 
         public static Dictionary<string, int> GetStats() {
             var types = AppDomain.CurrentDomain.GetAllTypes();
+
             var components = types
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .ToArray();
+
+            var systems = types
+                .Where(isSystem)
+                .ToArray();
+
             var contexts = getContexts(components);
 
             var stats = new Dictionary<string, int> {
                 { "Total Components", components.Length },
-                { "Systems", types.Count(implementsSystem) }
+                { "Systems", systems.Length }
             };
 
             foreach (var context in contexts) {
@@ -55,9 +61,10 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             });
         }
 
-        static bool implementsSystem(Type type) {
+        static bool isSystem(Type type) {
             return type.ImplementsInterface<ISystem>()
                 && type != typeof(ReactiveSystem<>)
+                && type != typeof(MultiReactiveSystem<,>)
                 && type != typeof(Systems)
                 && type != typeof(DebugSystems);
         }
