@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731316, g: 0.38074896, b: 0.3587254, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bbb3d40cdab4cdb873cdaa15e0cc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueprints: {fileID: 11400000, guid: 9d2564632cd0c48fa9ad4f898ead9275, type: 2}
+  blueprints: {fileID: 11400000, guid: 237c5137fef1146bab68812930d7d8a0, type: 2}
 --- !u!4 &1944477998
 Transform:
   m_ObjectHideFlags: 0

@@ -11,4 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 1916829680, guid: 8c81f45a464be490db2a2b0e109dac33, type: 3}
   m_Name: Blueprints
   m_EditorClassIdentifier: 
-  blueprints: []
+  blueprints:
+  - {fileID: 11400000, guid: 48ed3757175174e2591b30b342608ce2, type: 2}
+  - {fileID: 11400000, guid: cb163748bc6824564ae1e5838a38f869, type: 2}
