@@ -8,6 +8,6 @@ public sealed class NameAgeComponent : IComponent {
     public int age;
 
     public override string ToString() {
-        return string.Format("NameAge(" + name + ", " + age + ")");
+        return "NameAge(" + name + ", " + age + ")";
     }
 }
