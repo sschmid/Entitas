@@ -8,7 +8,7 @@
       <Title>e_trigger</Title>
       <Author>
       </Author>
-      <Description>TriggerOnEvent trigger</Description>
+      <Description>ICollector GetTrigger()</Description>
       <HelpUrl>
       </HelpUrl>
       <Shortcut>e_trigger</Shortcut>
@@ -24,15 +24,17 @@
           </Function>
         </Literal>
         <Literal Editable="true">
-          <ID>matcher</ID>
+          <ID>context</ID>
           <ToolTip>
           </ToolTip>
-          <Default>Matcher</Default>
+          <Default>Game</Default>
           <Function>
           </Function>
         </Literal>
       </Declarations>
-      <Code Language="csharp" Delimiter="$" Kind="method decl"><![CDATA[ public TriggerOnEvent trigger { get { return $matcher$.$id$.OnEntityAdded(); } }]]></Code>
+      <Code Language="csharp" Delimiter="$" Kind="method decl"><![CDATA[protected override ICollector<$context$Entity> GetTrigger(IContext<$context$Entity> context)
+    => context.CreateCollector($context$Matcher.$id$);
+]]></Code>
     </Snippet>
   </CodeSnippet>
 </CodeSnippets>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <CodeTemplates version="3.0">
   <CodeTemplate version="2.0">
     <Header>
@@ -6,17 +6,19 @@
       <Version />
       <MimeType>text/x-csharp</MimeType>
       <Shortcut>e_trigger</Shortcut>
-      <_Description>TriggerOnEvent trigger</_Description>
+      <_Description>ICollector GetTrigger()</_Description>
       <TemplateType>Expansion</TemplateType>
     </Header>
     <Variables>
-      <Variable name="matcher">
-        <Default>Matcher</Default>
-      </Variable>
       <Variable name="id">
         <Default>Some</Default>
       </Variable>
+      <Variable name="context">
+        <Default>Game</Default>
+      </Variable>
     </Variables>
-    <Code><![CDATA[public TriggerOnEvent trigger { get { return $matcher$.$id$.OnEntityAdded(); } }]]></Code>
+    <Code><![CDATA[protected override ICollector<$context$Entity> GetTrigger(IContext<$context$Entity> context)
+    => context.CreateCollector($context$Matcher.$id$);
+]]></Code>
   </CodeTemplate>
 </CodeTemplates>

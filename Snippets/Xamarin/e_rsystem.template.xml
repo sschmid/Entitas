@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CodeTemplates version="3.0">
+  <CodeTemplate version="2.0">
+    <Header>
+      <_Group>C#</_Group>
+      <Version />
+      <MimeType>text/x-csharp</MimeType>
+      <Shortcut>e_rsystem</Shortcut>
+      <_Description>Reactive System</_Description>
+      <TemplateType>Expansion</TemplateType>
+    </Header>
+    <Variables>
+      <Variable name="name">
+        <Default>Some</Default>
+      </Variable>
+      <Variable name="context">
+        <Default>Game</Default>
+      </Variable>
+    </Variables>
+    <Code><![CDATA[using System.Collections.Generic;
+using Entitas;
+
+public sealed class $name$System : ReactiveSystem<$context$Entity> {
+
+    public $name$System(Contexts contexts) : base(contexts.$context$) { }
+
+    protected override ICollector<$context$Entity> GetTrigger(IContext<$context$Entity> context)
+        => context.CreateCollector($context$Matcher.Some);
+
+    protected override bool Filter($context$Entity entity)
+        => entity.hasSome;
+
+    protected override void Execute(List<$context$Entity> entities) {
+        foreach (var e in entities) {
+$end$
+        }
+    }
+}
+]]></Code>
+  </CodeTemplate>
+</CodeTemplates>

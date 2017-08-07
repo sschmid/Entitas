@@ -1,29 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <CodeTemplates version="3.0">
   <CodeTemplate version="2.0">
     <Header>
       <_Group>C#</_Group>
       <Version />
       <MimeType>text/x-csharp</MimeType>
-      <Shortcut>e_component</Shortcut>
-      <_Description>IComponent</_Description>
+      <Shortcut>e_filter</Shortcut>
+      <_Description>bool Filter()</_Description>
       <TemplateType>Expansion</TemplateType>
     </Header>
     <Variables>
       <Variable name="context">
         <Default>Game</Default>
       </Variable>
-      <Variable name="name">
-        <Default>Some</Default>
-      </Variable>
     </Variables>
-    <Code><![CDATA[using Entitas;
-
-[$context$]
-public sealed class $name$Component : IComponent {
-
-    public string value;
-}
+    <Code><![CDATA[protected override bool Filter($context$Entity entity)
+    => entity.hasSome;
 ]]></Code>
   </CodeTemplate>
 </CodeTemplates>

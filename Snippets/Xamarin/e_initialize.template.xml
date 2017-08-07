@@ -12,6 +12,7 @@
     <Variables />
     <Code><![CDATA[public void Initialize() {
 $end$
-}]]></Code>
+}
+]]></Code>
   </CodeTemplate>
 </CodeTemplates>

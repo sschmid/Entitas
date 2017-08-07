@@ -12,6 +12,7 @@
     <Variables />
     <Code><![CDATA[public void Cleanup() {
 $end$
-}]]></Code>
+}
+]]></Code>
   </CodeTemplate>
 </CodeTemplates>
