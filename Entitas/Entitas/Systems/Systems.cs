@@ -78,7 +78,7 @@ namespace Entitas {
         }
 
         /// Request a system from the _systems List
-        public virtual T GetSystem<T>()
+        public virtual T GetSystem<T>() where T : ISystem
         {
             return (T)_systems.Find(s => s is T);
         }
