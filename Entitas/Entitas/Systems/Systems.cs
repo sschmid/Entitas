@@ -1,4 +1,8 @@
+using System;
+using System.Reflection;
 using System.Collections.Generic;
+using System.Linq;
+using Entitas.Utils;
 
 namespace Entitas {
 
@@ -14,6 +18,7 @@ namespace Entitas {
         protected readonly List<IExecuteSystem> _executeSystems;
         protected readonly List<ICleanupSystem> _cleanupSystems;
         protected readonly List<ITearDownSystem> _tearDownSystems;
+        protected readonly List<ISystem> _systems;
 
         /// Creates a new Systems instance.
         public Systems() {
@@ -21,6 +26,7 @@ namespace Entitas {
             _executeSystems = new List<IExecuteSystem>();
             _cleanupSystems = new List<ICleanupSystem>();
             _tearDownSystems = new List<ITearDownSystem>();
+            _systems = new List<ISystem>();
         }
 
         /// Adds the system instance to the systems list.
@@ -45,7 +51,39 @@ namespace Entitas {
                 _tearDownSystems.Add(tearDownSystem);
             }
 
+            _systems.Add(system);
+            
             return this;
+        }
+
+        /// Will try to resolve dependencies for elements in the _systems List  
+        /// Should be called before the Initialize method so the systems can operate with
+        /// the dependencies assigned
+        public virtual void SetupDependecies() {
+            for (int i = 0; i < _systems.Count; i++) {
+                for (int j = 0; j < _systems.Count; j++) {
+                    var dependency = _systems[j];
+                    if (dependency == null) throw new ArgumentNullException(nameof(dependency));
+                    // Get the generic interface type for the dependency : IHasSystemDependency<DepsType>
+                    var depsType = typeof(IHasSystemDependency<>).MakeGenericType(dependency.GetType());
+                    // Get the interface method
+                    var setSystemMethod = depsType.GetMethod("SetSystem");
+                    if (setSystemMethod == null) throw new ArgumentNullException(nameof(setSystemMethod));
+                    // Try call the method for assigning the dependency
+                    try {
+                        setSystemMethod.Invoke(_systems[i], new object[] {dependency});
+                    }
+                    catch {
+                        // Invokation failed, _system[i] does not implement IHasSystemDependency<DepsType>
+                    }
+                }
+            }
+        }
+
+        /// Request a system from the _systems List
+        public virtual T GetSystem<T>()
+        {
+            return (T)_systems.Find(s => s is T);
         }
 
         /// Calls Initialize() on all IInitializeSystem and other
