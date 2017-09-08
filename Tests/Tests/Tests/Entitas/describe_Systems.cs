@@ -304,12 +304,12 @@ class describe_Systems : nspec {
                 var parentSystems = new Systems();
                 parentSystems.Add(teardownSystem).Add(initializeSystem).Add(hasDependenciesSystem);
 
-                parentSystems.SetupDependecies();
+                parentSystems.SetupDependencies();
 
                 hasDependenciesSystem.initialiseSystemDeps.should_be(1);
                 hasDependenciesSystem.teardownSystemDeps.should_be(1);
 
-                parentSystems.SetupDependecies();
+                parentSystems.SetupDependencies();
 
                 hasDependenciesSystem.initialiseSystemDeps.should_be(2);
                 hasDependenciesSystem.teardownSystemDeps.should_be(2);

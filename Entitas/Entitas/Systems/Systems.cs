@@ -56,7 +56,7 @@ namespace Entitas {
         /// Will try to resolve dependencies for elements in the _systems List  
         /// Should be called before the Initialize method so the systems can operate with
         /// the dependencies assigned
-        public virtual void SetupDependecies() {
+        public virtual void SetupDependencies() {
             for (int i = 0; i < _systems.Count; i++) {
                 for (int j = 0; j < _systems.Count; j++) {
                     var dependency = _systems[j];
