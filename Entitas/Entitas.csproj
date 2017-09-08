@@ -41,6 +41,7 @@
     <Compile Include="Entitas\Entity\Entity.cs" />
     <Compile Include="Entitas\Group\Group.cs" />
     <Compile Include="Entitas\Context\Context.cs" />
+    <Compile Include="Entitas\Systems\Interfaces\IHasSystemDependency.cs" />
     <Compile Include="Entitas\Systems\Systems.cs" />
     <Compile Include="Entitas\Systems\ReactiveSystem.cs" />
     <Compile Include="Entitas\Group\GroupEvent.cs" />
