@@ -19,7 +19,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                 var retainedEntitiesCount = contextObserver.context.retainedEntitiesCount;
                 if (retainedEntitiesCount != 0) {
-                    var c = GUI.contentColor;
+                    var c = GUI.color;
                     GUI.color = Color.red;
                     EditorGUILayout.LabelField("Retained entities", retainedEntitiesCount.ToString());
                     GUI.color = c;
