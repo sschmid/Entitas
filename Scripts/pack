@@ -133,6 +133,13 @@ tar --exclude='.DS_Store' -czf "${BUILD_DEPLOY}/${PROJECT_NAME}.docset.tgz" $PRO
 popd > /dev/null
 
 # generate tree file
+
+# ensure tree is installed
+command -v treeXXX >/dev/null 2>&1 || {
+    echo >&2 "Error: tree not found! tree is required to generate tree.txt. Try \"brew install tree\".";
+    exit 1;
+}
+
 TREE_IGNORE="bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|docs|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties"
 pushd $ROOT > /dev/null
   tree -I $TREE_IGNORE --noreport -d > tree.txt
