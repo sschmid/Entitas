@@ -48,7 +48,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             EditorGUILayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var index = drawAddComponentMenu(context);
+                var index = drawAddComponentMenu(context, entity);
                 if (index >= 0) {
                     var componentType = entity.contextInfo.componentTypes[index];
                     foreach (var e in entities) {
@@ -117,7 +117,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                 EditorGUILayout.Space();
 
-                var index = drawAddComponentMenu(context);
+                var index = drawAddComponentMenu(context, entity);
                 if (index >= 0) {
                     var componentType = entity.contextInfo.componentTypes[index];
                     var component = entity.CreateComponent(index, componentType);
@@ -306,9 +306,13 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return false;
         }
 
-        static int drawAddComponentMenu(IContext context) {
-            var componentInfos = getComponentInfos(context);
-            var componentNames = componentInfos.Select(info => info.name).ToArray();
+        static int drawAddComponentMenu(IContext context, IEntity entity) {
+            var componentInfos = getComponentInfos(context)
+                .Where(info => !entity.HasComponent(info.index))
+                .ToArray();
+            var componentNames = componentInfos
+                .Select(info => info.name)
+                .ToArray();
             var index = EditorGUILayout.Popup("Add Component", -1, componentNames);
             if (index >= 0) {
                 return componentInfos[index].index;
