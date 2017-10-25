@@ -37,7 +37,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 new MemberDataComponentDataProvider(),
                 new ContextsComponentDataProvider(),
                 new IsUniqueComponentDataProvider(),
-                new CustomPrefixComponentDataProvider(),
+                new UniquePrefixComponentDataProvider(),
                 new ShouldGenerateComponentComponentDataProvider(),
                 new ShouldGenerateMethodsComponentDataProvider(),
                 new ShouldGenerateComponentIndexComponentDataProvider()

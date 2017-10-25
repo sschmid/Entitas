@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,7 +34,7 @@
     <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\ContextAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\CustomComponentNameAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\CustomEntityIndexAttribute.cs" />
-    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\CustomPrefixAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\UniquePrefixAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\DontGenerateAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\PostConstructorAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\Attributes\UniqueAttribute.cs" />

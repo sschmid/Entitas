@@ -1,6 +1,6 @@
 ﻿using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-[Context("Test"), Unique, CustomPrefix("My")]
+[Context("Test"), Unique, UniquePrefix("My")]
 public sealed class CustomPrefixFlagComponent : IComponent {
 }

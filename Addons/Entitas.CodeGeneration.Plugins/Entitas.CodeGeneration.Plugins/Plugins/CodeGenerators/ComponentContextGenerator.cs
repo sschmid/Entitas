@@ -106,7 +106,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${ComponentType}", data.GetFullTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${prefixedComponentName}", data.GetCustomComponentPrefix().LowercaseFirst() + componentName)
+                .Replace("${prefixedComponentName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
                 .Replace("${memberArgs}", getMemberArgs(memberData))
                 .Replace("${methodArgs}", getMethodArgs(memberData));
 

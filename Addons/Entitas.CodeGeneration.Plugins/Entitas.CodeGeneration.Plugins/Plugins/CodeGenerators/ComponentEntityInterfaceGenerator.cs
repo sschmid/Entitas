@@ -78,7 +78,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${ComponentType}", data.GetFullTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${prefixedName}", data.GetCustomComponentPrefix().LowercaseFirst() + componentName)
+                .Replace("${prefixedName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
                 .Replace("${memberArgs}", getMemberArgs(memberData));
 
             return new CodeGenFile(
