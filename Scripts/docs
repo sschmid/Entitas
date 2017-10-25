@@ -2,7 +2,7 @@
 echo $0
 
 # ensure doxygen is installed
-command -v doxygenXXX >/dev/null 2>&1 || {
+command -v doxygen >/dev/null 2>&1 || {
     echo >&2 "Error: doxygen not found! doxygen is required to generate docsets. Try \"brew install doxygen\".";
     exit 1;
 }
