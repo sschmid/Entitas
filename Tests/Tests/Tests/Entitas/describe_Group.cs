@@ -64,6 +64,18 @@ class describe_Group : nspec {
                 assertContains(eA1);
             };
 
+            it["enumerates group"] = () => {
+                var i = 0;
+                IEntity e = null;
+                foreach (var entity in _groupA) {
+                    i++;
+                    e = entity;
+                }
+
+                i.should_be(1);
+                e.should_be_same(eA1);
+            };
+
             context["when entity doesn't match anymore"] = () => {
 
                 it["removes entity"] = () => {

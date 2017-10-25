@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -149,6 +150,14 @@ namespace Entitas {
             return _entitiesCache;
         }
 
+        public IEnumerator<TEntity> GetEnumerator() {
+            return _entities.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() {
+            return GetEnumerator();
+        }
+
         /// Returns the only entity in this group. It will return null
         /// if the group is empty. It will throw an exception if the group
         /// has more than one entity.
@@ -156,7 +165,7 @@ namespace Entitas {
             if (_singleEntityCache == null) {
                 var c = _entities.Count;
                 if (c == 1) {
-                    using(var enumerator = _entities.GetEnumerator()) {
+                    using (var enumerator = _entities.GetEnumerator()) {
                         enumerator.MoveNext();
                         _singleEntityCache = enumerator.Current;
                     }
