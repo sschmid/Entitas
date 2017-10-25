@@ -42,15 +42,13 @@ namespace Entitas {
         }
 
         protected void indexEntities(IGroup<TEntity> group) {
-            var entities = group.GetEntities();
-            for (int i = 0; i < entities.Length; i++) {
-                var entity = entities[i];
+            foreach (var entity in group) {
                 if (_isSingleKey) {
                     addEntity(_getKey(entity, null), entity);
                 } else {
                     var keys = _getKeys(entity, null);
-                    for (int j = 0; j < keys.Length; j++) {
-                        addEntity(keys[j], entity);
+                    for (int i = 0; i < keys.Length; i++) {
+                        addEntity(keys[i], entity);
                     }
                 }
             }
