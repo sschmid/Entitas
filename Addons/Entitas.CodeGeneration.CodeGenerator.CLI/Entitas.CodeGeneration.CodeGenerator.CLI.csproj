@@ -34,7 +34,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Add.cs" />
     <Compile Include="Commands\Dump.cs" />
+    <Compile Include="Commands\Remove.cs" />
+    <Compile Include="Commands\Set.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Commands\NewConfig.cs" />
     <Compile Include="Commands\EditConfig.cs" />
