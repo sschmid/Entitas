@@ -11,29 +11,29 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public override void Run(string[] args) {
             if (args.Length == 3) {
-                if (assertProperties()) {
-                    var properties = loadProperties();
+                if (assertPreferences()) {
+                    var preferences = loadPreferences();
                     var key = args[1];
                     var value = args[2];
-                    if (properties.HasKey(key)) {
+                    if (preferences.properties.HasKey(key)) {
                         Helper.RemoveValueSilently(
                             value,
-                            properties[key].ArrayFromCSV(),
-                            values => properties[key] = values.ToCSV(),
-                            properties);
+                            preferences[key].ArrayFromCSV(),
+                            values => preferences[key] = values.ToCSV(),
+                            preferences);
                     } else {
                         fabl.Warn("Key doesn't exist: " + key);
                     }
                 }
             } else if (args.Length == 2) {
-                if (assertProperties()) {
-                    var properties = loadProperties();
+                if (assertPreferences()) {
+                    var preferences = loadPreferences();
                     var key = args[1];
-                    if (properties.HasKey(key)) {
+                    if (preferences.properties.HasKey(key)) {
                         Helper.RemoveKey(
                             "Do you want to remove",
                             key,
-                            properties);
+                            preferences);
                     } else {
                         fabl.Warn("Key doesn't exist: " + key);
                     }

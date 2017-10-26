@@ -7,15 +7,15 @@ using NSpec;
 
 class describe_EntityIndexDataProvider : nspec {
 
-    EntityIndexData[] getData<T1, T2>(Properties properties = null) {
+    EntityIndexData[] getData<T1, T2>(Preferences preferences= null) {
         var provider = new EntityIndexDataProvider(new Type[] { typeof(T1), typeof(T2) });
-        if (properties == null) {
-            properties = new Properties(
+        if (preferences == null) {
+            preferences = new Preferences(new Properties(
                 "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState" + "\n" +
                 "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"
-            );
+            ));
         }
-        provider.Configure(properties);
+        provider.Configure(preferences);
 
         return (EntityIndexData[])provider.GetData();
     }
@@ -97,17 +97,17 @@ class describe_EntityIndexDataProvider : nspec {
 
         it["configure"] = () => {
 
-            Properties properties = null;
+            Preferences preferences= null;
 
             before = () => {
-                properties = new Properties(
+                preferences = new Preferences(new Properties(
                     "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n" +
                     "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true"
-                );
+                ));
             };
 
             it["ignores namespaces"] = () => {
-                var data = getData<EntityIndexComponent, StandardComponent>(properties);
+                var data = getData<EntityIndexComponent, StandardComponent>(preferences);
                 data.Length.should_be(1);
                 var d = data[0];
 
@@ -116,7 +116,7 @@ class describe_EntityIndexDataProvider : nspec {
             };
 
             it["gets default context"] = () => {
-                var data = getData<EntityIndexNoContextComponent, StandardComponent>(properties);
+                var data = getData<EntityIndexNoContextComponent, StandardComponent>(preferences);
 
                 data.Length.should_be(1);
                 var d = data[0];

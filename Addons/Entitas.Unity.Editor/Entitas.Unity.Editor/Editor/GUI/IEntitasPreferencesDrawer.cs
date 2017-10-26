@@ -7,8 +7,8 @@ namespace Entitas.Unity.Editor {
         int priority { get; }
         string title { get; }
 
-        void Initialize(Properties properties);
+        void Initialize(Preferences preferences);
 
-        void Draw(Properties properties);
+        void Draw(Preferences preferences);
     }
 }

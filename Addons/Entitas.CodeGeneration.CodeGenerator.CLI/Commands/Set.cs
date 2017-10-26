@@ -11,18 +11,18 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public override void Run(string[] args) {
             if (args.Length == 3) {
-                if (assertProperties()) {
-                    var properties = loadProperties();
+                if (assertPreferences()) {
+                    var preferences = loadPreferences();
                     var key = args[1];
                     var value = args[2];
-                    if (properties.HasKey(key)) {
+                    if (preferences.properties.HasKey(key)) {
                         Helper.AddValueSilently(
                             value,
                             new string[0],
-                            values => properties[key] = values.ToCSV(),
-                            properties);
+                            values => preferences[key] = values.ToCSV(),
+                            preferences);
                     } else {
-                        Helper.AddKey("Key doesn't exist. Do you want to add", key, value, properties);
+                        Helper.AddKey("Key doesn't exist. Do you want to add", key, value, preferences);
                     }
                 }
             } else {

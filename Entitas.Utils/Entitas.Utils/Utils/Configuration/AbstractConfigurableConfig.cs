@@ -6,16 +6,16 @@ namespace Entitas.Utils {
 
         public abstract Dictionary<string, string> defaultProperties { get; }
 
-        public Properties properties { get { return _properties; } }
+        public Preferences preferences { get { return _preferences; } }
 
-        Properties _properties;
+        Preferences _preferences;
 
-        public virtual void Configure(Properties properties) {
-            _properties = properties;
+        public virtual void Configure(Preferences preferences) {
+            _preferences = preferences;
         }
 
         public override string ToString() {
-            return properties.ToString();
+            return _preferences.ToString();
         }
     }
 }

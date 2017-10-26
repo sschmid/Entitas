@@ -19,19 +19,19 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
         }
 
-        public int systemWarningThreshold { 
-            get { return int.Parse(properties[SYSTEM_WARNING_THRESHOLD_KEY]); }
-            set { properties[SYSTEM_WARNING_THRESHOLD_KEY] = value.ToString(); }
+        public int systemWarningThreshold {
+            get { return int.Parse(preferences[SYSTEM_WARNING_THRESHOLD_KEY]); }
+            set { preferences[SYSTEM_WARNING_THRESHOLD_KEY] = value.ToString(); }
         }
 
-        public string defaultInstanceCreatorFolderPath { 
-            get { return properties[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY]; }
-            set { properties[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY] = value; }
+        public string defaultInstanceCreatorFolderPath {
+            get { return preferences[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY]; }
+            set { preferences[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY] = value; }
         }
 
-        public string typeDrawerFolderPath { 
-            get { return properties[TYPE_DRAWER_FOLDER_PATH_KEY]; }
-            set { properties[TYPE_DRAWER_FOLDER_PATH_KEY] = value; }
+        public string typeDrawerFolderPath {
+            get { return preferences[TYPE_DRAWER_FOLDER_PATH_KEY]; }
+            set { preferences[TYPE_DRAWER_FOLDER_PATH_KEY] = value; }
         }
     }
 }

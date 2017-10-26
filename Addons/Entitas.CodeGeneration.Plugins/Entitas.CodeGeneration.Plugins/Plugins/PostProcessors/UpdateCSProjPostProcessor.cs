@@ -23,9 +23,9 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly ProjectPathConfig _projectPathConfig = new ProjectPathConfig();
         readonly TargetDirectoryConfig _targetDirectoryConfig = new TargetDirectoryConfig();
 
-        public void Configure(Properties properties) {
-            _projectPathConfig.Configure(properties);
-            _targetDirectoryConfig.Configure(properties);
+        public void Configure(Preferences preferences) {
+            _projectPathConfig.Configure(preferences);
+            _targetDirectoryConfig.Configure(preferences);
         }
 
         public CodeGenFile[] PostProcess(CodeGenFile[] files) {

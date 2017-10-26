@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -40,6 +40,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\Entitas.Utils\Configuration\describe_Preferences.cs" />
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
     <Compile Include="TestRunner.cs" />

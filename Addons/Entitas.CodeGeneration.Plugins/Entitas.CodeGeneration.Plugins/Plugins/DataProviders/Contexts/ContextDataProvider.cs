@@ -15,8 +15,8 @@ namespace Entitas.CodeGeneration.Plugins {
 
         readonly ContextNamesConfig _contextNamesConfig = new ContextNamesConfig();
 
-        public void Configure(Properties properties) {
-            _contextNamesConfig.Configure(properties);
+        public void Configure(Preferences preferences) {
+            _contextNamesConfig.Configure(preferences);
         }
 
         public CodeGeneratorData[] GetData() {

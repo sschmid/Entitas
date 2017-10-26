@@ -12,14 +12,14 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
             fabl.Debug("Entitas Code Generator version " + EntitasResources.GetVersion());
 
-            if (assertProperties()) {
+            if (assertPreferences()) {
 
                 new Status().Run(args);
 
                 fabl.Debug("Dry Run");
 
                 CodeGeneratorUtil
-                    .CodeGeneratorFromProperties()
+                    .CodeGeneratorFromPreferences()
                     .DryRun();
             }
         }

@@ -58,8 +58,8 @@ ${getIndices}
     }
 ";
 
-        public void Configure(Properties properties) {
-            _ignoreNamespacesConfig.Configure(properties);
+        public void Configure(Preferences preferences) {
+            _ignoreNamespacesConfig.Configure(preferences);
         }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {

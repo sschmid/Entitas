@@ -9,19 +9,19 @@ namespace Entitas.Unity.Editor {
 
         protected bool _drawContent = true;
 
-        public abstract void Initialize(Properties properties);
+        public abstract void Initialize(Preferences preferences);
 
-        public void Draw(Properties properties) {
+        public void Draw(Preferences preferences) {
             _drawContent = EntitasEditorLayout.DrawSectionHeaderToggle(title, _drawContent);
             if (_drawContent) {
                 EntitasEditorLayout.BeginSectionContent();
                 {
-                    drawContent(properties);
+                    drawContent(preferences);
                 }
                 EntitasEditorLayout.EndSectionContent();
             }
         }
 
-        protected abstract void drawContent(Properties properties);
+        protected abstract void drawContent(Preferences preferences);
     }
 }

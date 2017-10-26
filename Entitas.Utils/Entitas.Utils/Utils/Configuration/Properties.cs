@@ -19,7 +19,12 @@ namespace Entitas.Utils {
                 return Regex.Replace(
                     _dict[key],
                     placeholderPattern,
-                    match => _dict[match.Groups[1].Value]);
+                    match => {
+                        var matchValue = match.Groups[1].Value;
+                        return _dict.ContainsKey(matchValue)
+                            ? _dict[matchValue]
+                            : "${" + matchValue + "}";
+                    });
             }
             set {
                 _dict[key.Trim()] = value

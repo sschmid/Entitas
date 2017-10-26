@@ -6,6 +6,6 @@ namespace Entitas.Utils {
 
         Dictionary<string, string> defaultProperties { get; }
 
-        void Configure(Properties properties);
+        void Configure(Preferences preferences);
     }
 }

@@ -436,6 +436,26 @@ class describe_Properties : nspec {
 
                 assertProperties(input, expectedOutput, expectedProperties, p);
             };
+
+            it["doesn't replace placeholder when not resolvable"] = () => {
+                var input =
+                    "project.name = Entitas" + "\n" +
+                    "project.domain = com.sschmid" + "\n" +
+                    "project.bundleId = ${Xproject.domain}.${Xproject.name}" + "\n";
+
+                const string expectedOutput =
+                    "project.name = Entitas\n" +
+                    "project.domain = com.sschmid\n" +
+                    "project.bundleId = ${Xproject.domain}.${Xproject.name}\n";
+
+                var expectedProperties = new Dictionary<string, string> {
+                    { "project.name", "Entitas" },
+                    { "project.domain", "com.sschmid" },
+                    { "project.bundleId", "${Xproject.domain}.${Xproject.name}" }
+                };
+
+                assertProperties(input, expectedOutput, expectedProperties);
+            };
         };
 
         context["different line endings"] = () => {

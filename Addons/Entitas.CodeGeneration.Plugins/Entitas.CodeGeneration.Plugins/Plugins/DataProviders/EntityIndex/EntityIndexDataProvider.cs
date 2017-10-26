@@ -37,11 +37,11 @@ namespace Entitas.CodeGeneration.Plugins {
             _types = types;
         }
 
-        public void Configure(Properties properties) {
-            _codeGeneratorConfig.Configure(properties);
-            _assembliesConfig.Configure(properties);
-            _ignoreNamespacesConfig.Configure(properties);
-            _contextsComponentDataProvider.Configure(properties);
+        public void Configure(Preferences preferences) {
+            _codeGeneratorConfig.Configure(preferences);
+            _assembliesConfig.Configure(preferences);
+            _ignoreNamespacesConfig.Configure(preferences);
+            _contextsComponentDataProvider.Configure(preferences);
         }
 
         public CodeGeneratorData[] GetData() {

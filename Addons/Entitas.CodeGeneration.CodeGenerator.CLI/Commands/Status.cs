@@ -13,10 +13,10 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas status"; } }
 
         public override void Run(string[] args) {
-            if (assertProperties()) {
-                var properties = loadProperties();
+            if (assertPreferences()) {
+                var preferences = loadPreferences();
                 var config = new CodeGeneratorConfig();
-                config.Configure(properties);
+                config.Configure(preferences);
 
                 fabl.Debug(config.ToString());
 
@@ -24,7 +24,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 Dictionary<string, string> configurables = null;
 
                 try {
-                    types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
+                    types = CodeGeneratorUtil.LoadTypesFromPlugins(preferences);
                     configurables = CodeGeneratorUtil.GetConfigurables(
                         CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(types, config.dataProviders),
                         CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),
@@ -32,23 +32,23 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                     );
 
                 } catch(Exception ex) {
-                    printKeyStatus(config.defaultProperties.Keys.ToArray(), properties);
+                    printKeyStatus(config.defaultProperties.Keys.ToArray(), preferences);
                     throw ex;
                 }
 
                 var requiredKeys = config.defaultProperties.Merge(configurables).Keys.ToArray();
 
-                printKeyStatus(requiredKeys, properties);
+                printKeyStatus(requiredKeys, preferences);
                 printPluginStatus(types, config);
             }
         }
 
-        static void printKeyStatus(string[] requiredKeys, Properties properties) {
-            foreach (var key in Helper.GetUnusedKeys(requiredKeys, properties)) {
+        static void printKeyStatus(string[] requiredKeys, Preferences preferences) {
+            foreach (var key in Helper.GetUnusedKeys(requiredKeys, preferences)) {
                 fabl.Info("Unused key: " + key);
             }
 
-            foreach (var key in Helper.GetMissingKeys(requiredKeys, properties)) {
+            foreach (var key in Helper.GetMissingKeys(requiredKeys, preferences)) {
                 fabl.Warn("Missing key: " + key);
             }
         }

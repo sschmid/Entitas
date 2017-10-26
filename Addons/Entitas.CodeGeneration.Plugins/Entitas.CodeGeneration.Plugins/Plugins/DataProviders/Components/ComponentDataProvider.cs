@@ -58,13 +58,13 @@ namespace Entitas.CodeGeneration.Plugins {
             _dataProviders = dataProviders;
         }
 
-        public void Configure(Properties properties) {
-            _codeGeneratorConfig.Configure(properties);
-            _assembliesConfig.Configure(properties);
+        public void Configure(Preferences preferences) {
+            _codeGeneratorConfig.Configure(preferences);
+            _assembliesConfig.Configure(preferences);
             foreach (var dataProvider in _dataProviders.OfType<IConfigurable>()) {
-                dataProvider.Configure(properties);
+                dataProvider.Configure(preferences);
             }
-            _contextsComponentDataProvider.Configure(properties);
+            _contextsComponentDataProvider.Configure(preferences);
         }
 
         public CodeGeneratorData[] GetData() {

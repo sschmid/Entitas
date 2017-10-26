@@ -11,8 +11,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas scan"; } }
 
         public override void Run(string[] args) {
-            if (assertProperties()) {
-                printTypes(CodeGeneratorUtil.LoadTypesFromPlugins(loadProperties()));
+            if (assertPreferences()) {
+                printTypes(CodeGeneratorUtil.LoadTypesFromPlugins(loadPreferences()));
             }
         }
 

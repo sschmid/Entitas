@@ -7,15 +7,15 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
     public static class Helper {
 
-        public static string[] GetUnusedKeys(string[] requiredKeys, Properties properties) {
-            return properties.keys
-                             .Where(key => !requiredKeys.Contains(key))
-                             .ToArray();
+        public static string[] GetUnusedKeys(string[] requiredKeys, Preferences preferences) {
+            return preferences.properties.keys
+                              .Where(key => !requiredKeys.Contains(key))
+                              .ToArray();
         }
 
-        public static string[] GetMissingKeys(string[] requiredKeys, Properties properties) {
+        public static string[] GetMissingKeys(string[] requiredKeys, Preferences preferences) {
             return requiredKeys
-                .Where(key => !properties.HasKey(key))
+                .Where(key => !preferences.properties.HasKey(key))
                 .ToArray();
         }
 
@@ -28,58 +28,58 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             return keyChar == accept;
         }
 
-        public static void ForceAddKey(string message, string key, string value, Properties properties) {
+        public static void ForceAddKey(string message, string key, string value, Preferences preferences) {
             fabl.Info(message + ": '" + key + "'");
             Console.ReadKey(true);
-            properties[key] = value;
-            Preferences.SaveProperties(properties);
+            preferences[key] = value;
+            preferences.Save();
             fabl.Info("Added: " + key);
         }
 
-        public static void AddKey(string question, string key, string value, Properties properties) {
+        public static void AddKey(string question, string key, string value, Preferences preferences) {
             fabl.Info(question + ": '" + key + "' ? (y / n)");
             if (GetUserDecision()) {
-                properties[key] = value;
-                Preferences.SaveProperties(properties);
+                preferences[key] = value;
+                preferences.Save();
                 fabl.Info("Added: " + key);
             }
         }
 
-        public static void AddValue(string question, string value, string[] values, Action<string[]> updateAction, Properties properties) {
+        public static void AddValue(string question, string value, string[] values, Action<string[]> updateAction, Preferences preferences) {
             fabl.Info(question + ": '" + value + "' ? (y / n)");
             if (GetUserDecision()) {
                 var valueList = values.ToList();
                 valueList.Add(value);
                 updateAction(valueList.ToArray());
-                Preferences.SaveProperties(properties);
+                preferences.Save();
                 fabl.Info("Added: " + value);
             }
         }
 
-        public static void AddValueSilently(string value, string[] values, Action<string[]> updateAction, Properties properties) {
+        public static void AddValueSilently(string value, string[] values, Action<string[]> updateAction, Preferences preferences) {
             var valueList = values.ToList();
             valueList.Add(value);
             updateAction(valueList.ToArray());
-            Preferences.SaveProperties(properties);
+            preferences.Save();
             fabl.Info("Added: " + value);
         }
 
-        public static void RemoveKey(string question, string key, Properties properties) {
+        public static void RemoveKey(string question, string key, Preferences preferences) {
             fabl.Warn(question + ": '" + key + "' ? (y / n)");
             if (GetUserDecision()) {
-                properties.RemoveProperty(key);
-                Preferences.SaveProperties(properties);
+                preferences.properties.RemoveProperty(key);
+                preferences.Save();
                 fabl.Warn("Removed: " + key);
             }
         }
 
-        public static void RemoveValue(string question, string value, string[] values, Action<string[]> updateAction, Properties properties) {
+        public static void RemoveValue(string question, string value, string[] values, Action<string[]> updateAction, Preferences preferences) {
             fabl.Warn(question + ": '" + value + "' ? (y / n)");
             if (GetUserDecision()) {
                 var valueList = values.ToList();
                 if (valueList.Remove(value)) {
                     updateAction(valueList.ToArray());
-                    Preferences.SaveProperties(properties);
+                    preferences.Save();
                     fabl.Warn("Removed: " + value);
                 } else {
                     fabl.Warn("Value does not exist: " + value);
@@ -87,11 +87,11 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
         }
 
-        public static void RemoveValueSilently(string value, string[] values, Action<string[]> updateAction, Properties properties) {
+        public static void RemoveValueSilently(string value, string[] values, Action<string[]> updateAction, Preferences preferences) {
             var valueList = values.ToList();
             if (valueList.Remove(value)) {
                 updateAction(valueList.ToArray());
-                Preferences.SaveProperties(properties);
+                preferences.Save();
                 fabl.Warn("Removed: " + value);
             } else {
                 fabl.Warn("Value does not exist: " + value);

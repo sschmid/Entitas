@@ -18,17 +18,17 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         bool _enableVisualDebugging;
 
-        public override void Initialize(Properties properties) {
+        public override void Initialize(Preferences preferences) {
             _visualDebuggingConfig = new VisualDebuggingConfig();
-            properties.AddProperties(_visualDebuggingConfig.defaultProperties, false);
-            _visualDebuggingConfig.Configure(properties);
+            preferences.properties.AddProperties(_visualDebuggingConfig.defaultProperties, false);
+            _visualDebuggingConfig.Configure(preferences);
 
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _enableVisualDebugging = !_scriptingDefineSymbols.buildTargetToDefSymbol.Values
                 .All<string>(defs => defs.Contains(ENTITAS_DISABLE_VISUAL_DEBUGGING));
         }
 
-        protected override void drawContent(Properties properties) {
+        protected override void drawContent(Preferences preferences) {
             EditorGUILayout.BeginHorizontal();
             {
                 drawVisualDebugging();

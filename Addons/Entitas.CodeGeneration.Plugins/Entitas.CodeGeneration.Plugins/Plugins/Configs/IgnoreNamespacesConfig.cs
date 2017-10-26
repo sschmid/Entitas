@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public bool ignoreNamespaces {
-            get { return properties[IGNORE_NAMESPACES_KEY] == "true" ; }
+            get { return preferences[IGNORE_NAMESPACES_KEY] == "true" ; }
         }
     }
 }

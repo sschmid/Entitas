@@ -17,7 +17,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             if (args.isForce() || !File.Exists(path)) {
                 var defaultConfig = new CodeGeneratorConfig();
                 var properties = new Properties(defaultConfig.defaultProperties);
-                defaultConfig.Configure(properties);
+                var preferences = new Preferences(properties);
+                defaultConfig.Configure(preferences);
 
                 var propertiesString = defaultConfig.ToString();
                 File.WriteAllText(path, propertiesString);

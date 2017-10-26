@@ -9,7 +9,7 @@ class describe_ContextDataProvider : nspec {
         it["creates data for each context name"] = () => {
             var names = "Entitas.CodeGeneration.Plugins.Contexts = Input, GameState";
             var provider = new ContextDataProvider();
-            provider.Configure(new Properties(names));
+            provider.Configure(new Preferences(new Properties(names)));
 
             var data = (ContextData[])provider.GetData();
 

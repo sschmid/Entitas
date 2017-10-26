@@ -20,7 +20,7 @@ namespace Entitas.Unity.Editor {
         ScriptingDefineSymbols _scriptingDefineSymbols;
         AERCMode _scriptCallOptimization;
 
-        public override void Initialize(Properties properties) {
+        public override void Initialize(Preferences preferences) {
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _scriptCallOptimization = _scriptingDefineSymbols.buildTargetToDefSymbol.Values
                                             .All<string>(defs => defs.Contains(ENTITAS_FAST_AND_UNSAFE))
@@ -28,7 +28,7 @@ namespace Entitas.Unity.Editor {
                                                 : AERCMode.Safe;
         }
 
-        protected override void drawContent(Properties properties) {
+        protected override void drawContent(Preferences preferences) {
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.LabelField("Automatic Entity Reference Counting");

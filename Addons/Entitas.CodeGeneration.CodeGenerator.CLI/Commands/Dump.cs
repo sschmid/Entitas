@@ -10,18 +10,18 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas dump"; } }
 
         public override void Run(string[] args) {
-            if (assertProperties()) {
-                var properties = loadProperties();
-                fabl.Debug(properties.ToString());
+            if (assertPreferences()) {
+                var preferences = loadPreferences();
+                fabl.Debug(preferences.ToString());
 
-                dump(properties);
+                dump(preferences);
             }
         }
 
-        static void dump(Properties properties) {
+        static void dump(Preferences preferences) {
             const string indent = "\n    ";
-            foreach (var key in properties.keys) {
-                fabl.Info(key + indent + string.Join(indent, properties[key].ArrayFromCSV()));
+            foreach (var key in preferences.properties.keys) {
+                fabl.Info(key + indent + string.Join(indent, preferences[key].ArrayFromCSV()));
             }
         }
     }

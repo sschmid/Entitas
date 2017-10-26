@@ -12,11 +12,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public abstract void Run(string[] args);
 
-        protected Properties loadProperties() {
-            return new Properties(File.ReadAllText(Preferences.PATH));
+        protected Preferences loadPreferences() {
+            var preferences = new Preferences();
+            preferences.Load();
+            return preferences;
         }
 
-        protected bool assertProperties() {
+        protected bool assertPreferences() {
             if (File.Exists(Preferences.PATH)) {
                 return true;
             }

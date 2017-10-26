@@ -7,34 +7,35 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
     public static class CodeGeneratorUtil {
 
-        public static CodeGenerator CodeGeneratorFromProperties() {
-            var properties = Preferences.LoadProperties();
+        public static CodeGenerator CodeGeneratorFromPreferences() {
+            var preferences = new Preferences();
+            preferences.Load();
 
             var config = new CodeGeneratorConfig();
-            config.Configure(properties);
+            config.Configure(preferences);
 
-            var types = LoadTypesFromPlugins(properties);
+            var types = LoadTypesFromPlugins(preferences);
 
             var dataProviders = GetEnabledInstances<ICodeGeneratorDataProvider>(types, config.dataProviders);
             var codeGenerators = GetEnabledInstances<ICodeGenerator>(types, config.codeGenerators);
             var postProcessors = GetEnabledInstances<ICodeGenFilePostProcessor>(types, config.postProcessors);
 
-            configure(dataProviders, properties);
-            configure(codeGenerators, properties);
-            configure(postProcessors, properties);
+            configure(dataProviders, preferences);
+            configure(codeGenerators, preferences);
+            configure(postProcessors, preferences);
 
             return new CodeGenerator(dataProviders, codeGenerators, postProcessors);
         }
 
-        static void configure(ICodeGeneratorInterface[] plugins, Properties properties) {
+        static void configure(ICodeGeneratorInterface[] plugins, Preferences preferences) {
             foreach (var plugin in plugins.OfType<IConfigurable>()) {
-                plugin.Configure(properties);
+                plugin.Configure(preferences);
             }
         }
 
-        public static Type[] LoadTypesFromPlugins(Properties properties) {
+        public static Type[] LoadTypesFromPlugins(Preferences preferences) {
             var config = new CodeGeneratorConfig();
-            config.Configure(properties);
+            config.Configure(preferences);
             var resolver = new AssemblyResolver(AppDomain.CurrentDomain, config.searchPaths);
             foreach (var path in config.plugins) {
                 resolver.Load(path);

@@ -23,7 +23,7 @@ class describe_CodeGeneratorConfig : nspec {
         context["when input string"] = () => {
 
             before = () => {
-                config.Configure(new Properties(configString));
+                config.Configure(new Preferences(new Properties(configString)));
             };
 
             it["creates config"] = () => {

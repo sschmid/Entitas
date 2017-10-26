@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public string[] contextNames {
-            get { return properties[CONTEXTS_KEY].ArrayFromCSV(); }
+            get { return preferences[CONTEXTS_KEY].ArrayFromCSV(); }
         }
     }
 }

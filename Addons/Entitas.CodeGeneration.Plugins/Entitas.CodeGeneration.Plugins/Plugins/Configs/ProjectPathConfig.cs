@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public string projectPath {
-            get { return properties[PROJECT_PATH_KEY]; }
+            get { return preferences[PROJECT_PATH_KEY]; }
         }
     }
 }

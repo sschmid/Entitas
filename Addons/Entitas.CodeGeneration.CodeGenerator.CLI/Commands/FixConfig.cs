@@ -12,17 +12,17 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas fix"; } }
 
         public override void Run(string[] args) {
-            if (assertProperties()) {
-                var properties = loadProperties();
+            if (assertPreferences()) {
+                var preferences = loadPreferences();
                 var config = new CodeGeneratorConfig();
-                config.Configure(properties);
+                config.Configure(preferences);
 
-                forceAddKeys(config.defaultProperties, properties);
+                forceAddKeys(config.defaultProperties, preferences);
 
                 Type[] types = null;
 
                 try {
-                    types = CodeGeneratorUtil.LoadTypesFromPlugins(properties);
+                    types = CodeGeneratorUtil.LoadTypesFromPlugins(preferences);
                     getConfigurables(types, config);
                 } catch (Exception ex) {
                     throw ex;
@@ -30,7 +30,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
                 var askedRemoveKeys = new HashSet<string>();
                 var askedAddKeys = new HashSet<string>();
-                while (fix(askedRemoveKeys, askedAddKeys, types, config, properties)) { }
+                while (fix(askedRemoveKeys, askedAddKeys, types, config, preferences)) { }
             }
         }
 
@@ -42,27 +42,27 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             );
         }
 
-        static void forceAddKeys(Dictionary<string, string> requiredProperties, Properties properties) {
+        static void forceAddKeys(Dictionary<string, string> requiredProperties, Preferences preferences) {
             var requiredKeys = requiredProperties.Keys.ToArray();
-            var missingKeys = Helper.GetMissingKeys(requiredKeys, properties);
+            var missingKeys = Helper.GetMissingKeys(requiredKeys, preferences);
 
             foreach (var key in missingKeys) {
-                Helper.ForceAddKey("Will add missing key", key, requiredProperties[key], properties);
+                Helper.ForceAddKey("Will add missing key", key, requiredProperties[key], preferences);
             }
         }
 
-        static bool fix(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, Properties properties) {
-            var changed = fixPlugins(askedRemoveKeys, askedAddKeys, types, config, properties);
+        static bool fix(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, Preferences preferences) {
+            var changed = fixPlugins(askedRemoveKeys, askedAddKeys, types, config, preferences);
 
-            forceAddKeys(getConfigurables(types, config), properties);
+            forceAddKeys(getConfigurables(types, config), preferences);
 
             var requiredKeys = config.defaultProperties.Merge(getConfigurables(types, config)).Keys.ToArray();
-            removeUnusedKeys(askedRemoveKeys, requiredKeys, properties);
+            removeUnusedKeys(askedRemoveKeys, requiredKeys, preferences);
 
             return changed;
         }
 
-        static bool fixPlugins(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, Properties properties) {
+        static bool fixPlugins(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, Preferences preferences) {
             var changed = false;
 
             var unavailableDataProviders = CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(types, config.dataProviders);
@@ -76,7 +76,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             foreach (var key in unavailableDataProviders) {
                 if (!askedRemoveKeys.Contains(key)) {
                     Helper.RemoveValue("Remove unavailable data provider", key, config.dataProviders,
-                                       values => config.dataProviders = values, properties);
+                                       values => config.dataProviders = values, preferences);
                     askedRemoveKeys.Add(key);
                     changed = true;
                 }
@@ -85,7 +85,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             foreach (var key in unavailableCodeGenerators) {
                 if (!askedRemoveKeys.Contains(key)) {
                     Helper.RemoveValue("Remove unavailable code generator", key, config.codeGenerators,
-                                       values => config.codeGenerators = values, properties);
+                                       values => config.codeGenerators = values, preferences);
                     askedRemoveKeys.Add(key);
                     changed = true;
                 }
@@ -94,7 +94,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             foreach (var key in unavailablePostProcessors) {
                 if (!askedRemoveKeys.Contains(key)) {
                     Helper.RemoveValue("Remove unavailable post processor", key, config.postProcessors,
-                                       values => config.postProcessors = values, properties);
+                                       values => config.postProcessors = values, preferences);
                     askedRemoveKeys.Add(key);
                     changed = true;
                 }
@@ -103,7 +103,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             foreach (var key in availableDataProviders) {
                 if (!askedAddKeys.Contains(key)) {
                     Helper.AddValue("Add available data provider", key, config.dataProviders,
-                                    values => config.dataProviders = values, properties);
+                                    values => config.dataProviders = values, preferences);
                     askedAddKeys.Add(key);
                     changed = true;
                 }
@@ -112,7 +112,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             foreach (var key in availableCodeGenerators) {
                 if (!askedAddKeys.Contains(key)) {
                     Helper.AddValue("Add available code generator", key, config.codeGenerators,
-                                    values => config.codeGenerators = values, properties);
+                                    values => config.codeGenerators = values, preferences);
                     askedAddKeys.Add(key);
                     changed = true;
                 }
@@ -121,7 +121,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             foreach (var key in availablePostProcessors) {
                 if (!askedAddKeys.Contains(key)) {
                     Helper.AddValue("Add available post processor", key, config.postProcessors,
-                                    values => config.postProcessors = values, properties);
+                                    values => config.postProcessors = values, preferences);
                     askedAddKeys.Add(key);
                     changed = true;
                 }
@@ -130,11 +130,11 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             return changed;
         }
 
-        static void removeUnusedKeys(HashSet<string> askedRemoveKeys, string[] requiredKeys, Properties properties) {
-            var unused = Helper.GetUnusedKeys(requiredKeys, properties);
+        static void removeUnusedKeys(HashSet<string> askedRemoveKeys, string[] requiredKeys, Preferences preferences) {
+            var unused = Helper.GetUnusedKeys(requiredKeys, preferences);
             foreach (var key in unused) {
                 if (!askedRemoveKeys.Contains(key)) {
-                    Helper.RemoveKey("Remove unused key", key, properties);
+                    Helper.RemoveKey("Remove unused key", key, preferences);
                     askedRemoveKeys.Add(key);
                 }
             }
