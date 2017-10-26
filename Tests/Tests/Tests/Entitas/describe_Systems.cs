@@ -295,6 +295,48 @@ class describe_Systems : nspec {
 
                 system.didExecute.should_be(1);
             };
+
+            it["setup dependencies for systems"] = () => {
+                var initializeSystem = new InitializeSystemSpy();
+                var teardownSystem = new TearDownSystemSpy();
+                var hasDependenciesSystem = new HasDependencySystemSpy();
+
+                var parentSystems = new Systems();
+                parentSystems.Add(teardownSystem).Add(initializeSystem).Add(hasDependenciesSystem);
+
+                parentSystems.SetupDependencies();
+
+                hasDependenciesSystem.initialiseSystemDeps.should_be(1);
+                hasDependenciesSystem.teardownSystemDeps.should_be(1);
+
+                parentSystems.SetupDependencies();
+
+                hasDependenciesSystem.initialiseSystemDeps.should_be(2);
+                hasDependenciesSystem.teardownSystemDeps.should_be(2);
+            };
+
+            it["get system from system parent"] = () =>
+            {
+                var parentSystems = new Systems();
+                parentSystems.Add(new TearDownSystemSpy()).Add(new InitializeSystemSpy());
+
+                var initializeSystem = parentSystems.GetSystem<InitializeSystemSpy>();
+                initializeSystem.should_not_be_null();
+
+                var teardownSystem = parentSystems.GetSystem<TearDownSystemSpy>();
+                teardownSystem.should_not_be_null();
+            };
+            
+            it["get null object if requesting a system that is not added to a parent"] = () => {
+                var parentSystems = new Systems();
+                parentSystems.Add(new InitializeSystemSpy());
+
+                var initializeSystem = parentSystems.GetSystem<InitializeSystemSpy>();
+                initializeSystem.should_not_be_null();
+                
+                var teardownSystem = parentSystems.GetSystem<TearDownSystemSpy>();
+                teardownSystem.should_be_null();
+            };
         };
     }
 }
