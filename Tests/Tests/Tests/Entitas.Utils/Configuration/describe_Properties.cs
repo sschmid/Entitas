@@ -94,12 +94,12 @@ class describe_Properties : nspec {
                 assertProperties(input, expectedOutput, expectedProperties);
             };
 
-            it["keeps whitespace after value"] = () => {
+            it["removes whitespace after value"] = () => {
                 const string input = "some.key = some value ";
 
-                const string expectedOutput = "some.key = some value \n";
+                const string expectedOutput = "some.key = some value\n";
                 var expectedProperties = new Dictionary<string, string> {
-                    { "some.key", "some value " }
+                    { "some.key", "some value" }
                 };
 
                 assertProperties(input, expectedOutput, expectedProperties);
@@ -111,17 +111,17 @@ class describe_Properties : nspec {
             it["creates Properties from multiline input string"] = () => {
                 var input =
                     "some.key.1=some value 1" + "\n" +
-                    " some.key.2 = some value 2 " + "\n" +
+                    " some.key.2 = some value 2" + "\n" +
                     "some.key.3=some value 3" + "\n";
 
                 const string expectedOutput =
                     "some.key.1 = some value 1\n" +
-                    "some.key.2 = some value 2 \n" +
+                    "some.key.2 = some value 2\n" +
                     "some.key.3 = some value 3\n";
 
                 var expectedProperties = new Dictionary<string, string> {
                     { "some.key.1", "some value 1" },
-                    { "some.key.2", "some value 2 " },
+                    { "some.key.2", "some value 2" },
                     { "some.key.3", "some value 3" }
                 };
 
@@ -131,17 +131,17 @@ class describe_Properties : nspec {
             it["creates Properties from multiline input string where values contain ="] = () => {
                 var input =
                     "some.key.1=some=value 1" + "\n" +
-                    "some.key.2 ==some value 2 " + "\n" +
+                    "some.key.2 ==some value 2" + "\n" +
                     "some.key.3=some value=" + "\n";
 
                 const string expectedOutput =
                     "some.key.1 = some=value 1\n" +
-                    "some.key.2 = =some value 2 \n" +
+                    "some.key.2 = =some value 2\n" +
                     "some.key.3 = some value=\n";
 
                 var expectedProperties = new Dictionary<string, string> {
                     { "some.key.1", "some=value 1" },
-                    { "some.key.2", "=some value 2 " },
+                    { "some.key.2", "=some value 2" },
                     { "some.key.3", "some value=" }
                 };
 
@@ -153,18 +153,18 @@ class describe_Properties : nspec {
                     "\n" +
                     "some.key.1=some value 1" + "\n" +
                     "\n" +
-                    " some.key.2 = some value 2 " + "\n" +
+                    " some.key.2 = some value 2" + "\n" +
                     "\n" +
                     "some.key.3=some value 3" + "\n";
 
                 const string expectedOutput =
                     "some.key.1 = some value 1\n" +
-                    "some.key.2 = some value 2 \n" +
+                    "some.key.2 = some value 2\n" +
                     "some.key.3 = some value 3\n";
 
                 var expectedProperties = new Dictionary<string, string> {
                     { "some.key.1", "some value 1" },
-                    { "some.key.2", "some value 2 " },
+                    { "some.key.2", "some value 2" },
                     { "some.key.3", "some value 3" }
                 };
 
@@ -243,7 +243,7 @@ class describe_Properties : nspec {
                 var values = new Properties(input).values;
                 values.Length.should_be(3);
                 values.should_contain("some value 1");
-                values.should_contain("some value 2 ");
+                values.should_contain("some value 2");
                 values.should_contain("some value 3");
             };
 
@@ -331,9 +331,9 @@ class describe_Properties : nspec {
                 p["key"].should_be("value");
             };
 
-            it["keeps trailing whitespace of value"] = () => {
-                p["key"] = "value ";
-                p["key"].should_be("value ");
+            it["removes trailing whitespace of value"] = () => {
+                p["key"] = "value";
+                p["key"].should_be("value");
             };
 
             it["adds properties from dictionary"] = () => {
@@ -478,6 +478,20 @@ class describe_Properties : nspec {
                 };
 
                 assertProperties(input, expectedOutput, expectedProperties);
+            };
+        };
+
+        context["minified string"] = () => {
+
+            it["puts values in one line"] = () => {
+                var properties = new Properties(
+@"key = value1, value2, value3
+key2 = value4");
+
+                properties.ToMinifiedString().should_be(
+@"key = value1, value2, value3
+key2 = value4
+");
             };
         };
     }

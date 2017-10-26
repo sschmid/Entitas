@@ -57,12 +57,20 @@ class describe_CodeGeneratorConfig : nspec {
 
                 it["gets string"] = () => {
                     config.ToString().should_be(
-                        "Entitas.CodeGeneration.CodeGenerator.SearchPaths = newS1, newS2\n" +
-                        "Entitas.CodeGeneration.CodeGenerator.Plugins = newP1, newP2\n" +
+                        "Entitas.CodeGeneration.CodeGenerator.SearchPaths = newS1, \\\n" +
+                        "                                                   newS2\n\n" +
 
-                        "Entitas.CodeGeneration.CodeGenerator.DataProviders = newDp1, newDp2\n" +
-                        "Entitas.CodeGeneration.CodeGenerator.CodeGenerators = newCg1, newCg2\n" +
-                        "Entitas.CodeGeneration.CodeGenerator.PostProcessors = newPp1, newPp2\n"
+                        "Entitas.CodeGeneration.CodeGenerator.Plugins = newP1, \\\n" +
+                        "                                               newP2\n\n" +
+
+                        "Entitas.CodeGeneration.CodeGenerator.DataProviders = newDp1, \\\n" +
+                        "                                                     newDp2\n\n" +
+
+                        "Entitas.CodeGeneration.CodeGenerator.CodeGenerators = newCg1, \\\n" +
+                        "                                                      newCg2\n\n" +
+
+                        "Entitas.CodeGeneration.CodeGenerator.PostProcessors = newPp1, \\\n" +
+                        "                                                      newPp2\n\n"
                     );
                 };
             };

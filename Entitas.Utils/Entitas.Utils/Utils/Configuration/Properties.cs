@@ -28,7 +28,7 @@ namespace Entitas.Utils {
             }
             set {
                 _dict[key.Trim()] = value
-                    .TrimStart()
+                    .Trim()
                     .Replace("\\n", "\n")
                     .Replace("\\t", "\t");
             }
@@ -116,9 +116,24 @@ namespace Entitas.Utils {
 
         public override string ToString() {
             return _dict.Aggregate(string.Empty, (properties, kv) => {
+                var contentValues = kv.Value
+                    .Replace("\n", "\\n")
+                    .Replace("\t", "\\t")
+                    .ArrayFromCSV()
+                    .Select(value => value.PadLeft(kv.Key.Length + 3 + value.Length))
+                    .ToArray();
+
+                var content = string.Join(", \\\n", contentValues).TrimStart();
+
+                return properties + kv.Key + " = " + content + (contentValues.Length > 1 ? "\n\n" : "\n");
+            });
+        }
+
+        public string ToMinifiedString() {
+            return _dict.Aggregate(string.Empty, (properties, kv) => {
                 var content = kv.Value
-                                .Replace("\n", "\\n")
-                                .Replace("\t", "\\t");
+                    .Replace("\n", "\\n")
+                    .Replace("\t", "\\t");
 
                 return properties + kv.Key + " = " + content + "\n";
             });
