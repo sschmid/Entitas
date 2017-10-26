@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"class_entitas_1_1_group_single_entity_exception.html#a5ae395389ff4e93ef57d3c5dc95fb1f0":[1,0,0,30,0],
 "class_entitas_1_1_matcher.html":[1,0,0,50],
 "class_entitas_1_1_matcher_exception.html":[1,0,0,51],
 "class_entitas_1_1_matcher_exception.html#a5b04a297ad51a4f6201af4a41e69a26f":[1,0,0,51,0],
@@ -164,8 +165,8 @@ var NAVTREEINDEX1 =
 "interface_entitas_1_1_i_system.html":[1,0,0,48],
 "interface_entitas_1_1_i_tear_down_system.html":[1,0,0,49],
 "interface_entitas_1_1_i_tear_down_system.html#a5bca25bfebbe1069e143850a7ab2454d":[1,0,0,49,0],
-"namespace_entitas.html":[0,0,0],
 "namespace_entitas.html":[1,0,0],
+"namespace_entitas.html":[0,0,0],
 "namespaces.html":[0,0],
 "pages.html":[],
 "struct_entitas_1_1_trigger_on_event.html":[1,0,0,60],

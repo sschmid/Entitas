@@ -3,6 +3,7 @@ var class_entitas_1_1_group =
     [ "Group", "class_entitas_1_1_group.html#acaac9039a6a059d944ccacd976980883", null ],
     [ "ContainsEntity", "class_entitas_1_1_group.html#a7cf9ad55d983f23d7f9d95b22ab16553", null ],
     [ "GetEntities", "class_entitas_1_1_group.html#a7238093207c3d6c19ffdc42a49ae35f4", null ],
+    [ "GetEnumerator", "class_entitas_1_1_group.html#a5dd3ee03495d2056808caa59b09f249c", null ],
     [ "GetSingleEntity", "class_entitas_1_1_group.html#aac08cf5ddaa5b330622e032a120cdc2b", null ],
     [ "HandleEntity", "class_entitas_1_1_group.html#a62e1246c95b7c4bcbd45c57e2e8acd0f", null ],
     [ "HandleEntity", "class_entitas_1_1_group.html#a56ee47700da18c56c429ab0f1b2087d0", null ],

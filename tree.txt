@@ -153,10 +153,10 @@
 │   │           ├── ContextAttribute.cs
 │   │           ├── CustomComponentNameAttribute.cs
 │   │           ├── CustomEntityIndexAttribute.cs
-│   │           ├── CustomPrefixAttribute.cs
 │   │           ├── DontGenerateAttribute.cs
 │   │           ├── PostConstructorAttribute.cs
-│   │           └── UniqueAttribute.cs
+│   │           ├── UniqueAttribute.cs
+│   │           └── UniquePrefixAttribute.cs
 │   ├── Entitas.CodeGeneration.CodeGenerator
 │   │   └── Entitas.CodeGeneration.CodeGenerator
 │   │       └── CodeGenerator
@@ -167,15 +167,19 @@
 │   ├── Entitas.CodeGeneration.CodeGenerator.CLI
 │   │   ├── Commands
 │   │   │   ├── AbstractCommand.cs
+│   │   │   ├── Add.cs
 │   │   │   ├── Doctor.cs
 │   │   │   ├── DryRun.cs
+│   │   │   ├── Dump.cs
 │   │   │   ├── EditConfig.cs
 │   │   │   ├── FixConfig.cs
 │   │   │   ├── Generate.cs
 │   │   │   ├── Helper.cs
 │   │   │   ├── ICommand.cs
 │   │   │   ├── NewConfig.cs
+│   │   │   ├── Remove.cs
 │   │   │   ├── ScanDlls.cs
+│   │   │   ├── Set.cs
 │   │   │   └── Status.cs
 │   │   ├── ArgsExtension.cs
 │   │   └── Program.cs
@@ -209,13 +213,13 @@
 │   │           │   │   ├── Providers
 │   │           │   │   │   ├── ComponentTypeComponentDataProvider.cs
 │   │           │   │   │   ├── ContextsComponentDataProvider.cs
-│   │           │   │   │   ├── CustomPrefixComponentDataProvider.cs
 │   │           │   │   │   ├── IComponentDataProvider.cs
 │   │           │   │   │   ├── IsUniqueComponentDataProvider.cs
 │   │           │   │   │   ├── MemberDataComponentDataProvider.cs
 │   │           │   │   │   ├── ShouldGenerateComponentComponentDataProvider.cs
 │   │           │   │   │   ├── ShouldGenerateComponentIndexComponentDataProvider.cs
-│   │           │   │   │   └── ShouldGenerateMethodsComponentDataProvider.cs
+│   │           │   │   │   ├── ShouldGenerateMethodsComponentDataProvider.cs
+│   │           │   │   │   └── UniquePrefixComponentDataProvider.cs
 │   │           │   │   ├── ComponentData.cs
 │   │           │   │   └── ComponentDataProvider.cs
 │   │           │   ├── Contexts
@@ -266,10 +270,9 @@
 │   │       └── Editor
 │   │           └── MigrationWindow.cs
 │   ├── Entitas.Unity
-│   │   ├── Entitas.Unity
-│   │   │   └── Unity
-│   │   │       └── EntityLink.cs
-│   │   └── Entitas.Unity.csproj.user
+│   │   └── Entitas.Unity
+│   │       └── Unity
+│   │           └── EntityLink.cs
 │   ├── Entitas.Unity.Editor
 │   │   └── Entitas.Unity.Editor
 │   │       └── Editor
@@ -482,26 +485,21 @@
 │   ├── VisualStudio
 │   │   ├── e_cleanup.snippet
 │   │   ├── e_component.snippet
-│   │   ├── e_ensure.snippet
-│   │   ├── e_exclude.snippet
 │   │   ├── e_execute.snippet
+│   │   ├── e_filter.snippet
 │   │   ├── e_initialize.snippet
 │   │   ├── e_rexecute.snippet
-│   │   ├── e_setContext.snippet
-│   │   ├── e_setContexts.snippet
 │   │   ├── e_system.snippet
 │   │   ├── e_teardown.snippet
 │   │   └── e_trigger.snippet
 │   └── Xamarin
 │       ├── e_cleanup.template.xml
 │       ├── e_component.template.xml
-│       ├── e_ensure.template.xml
-│       ├── e_exclude.template.xml
 │       ├── e_execute.template.xml
+│       ├── e_filter.template.xml
 │       ├── e_initialize.template.xml
 │       ├── e_rexecute.template.xml
-│       ├── e_setContext.template.xml
-│       ├── e_setContexts.template.xml
+│       ├── e_rsystem.template.xml
 │       ├── e_system.template.xml
 │       ├── e_teardown.template.xml
 │       └── e_trigger.template.xml

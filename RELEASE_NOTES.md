@@ -1,3 +1,37 @@
+# 0.42.4
+
+#### Notes
+Entitas development is back on track again and the wait is over. This is probably one of the last updates before Entitas reaches 1.0.0. This verion has been tested successfully in combination with the new code generator that will work even when the code is not compiling.
+
+#### General
+- Added support for User.properties. You can now either overwrite values sepcified in Entitas.properties or use placeholders
+
+Create a new file called User.properties and specify the keys and values that should be overwritten. You can also specify placeholers like this `${myPlaceholder}` and specify the key either in Entitas.properties or User.properties.
+see: [Match One - Entitas.properties](https://github.com/sschmid/Match-One/blob/master/Entitas.properties)
+see: [Match One - User.properties](https://github.com/sschmid/Match-One/blob/master/User.properties)
+
+#### Entitas
+- Groups are now enumerable to iterate over groups circumventing the internal caching and potentially reducing memory allocations #408
+
+```csharp
+foreach (var e in group) {
+  // Look closely: no group.GetEntities()
+}
+```
+
+#### CodeGenerator CLI
+- Added commands add, set, remove, dump
+
+#### VisualDebugging
+- Fixed Entitas Stats not ignoring built-in MultiReactiveSystem in systems count
+- VisualDebugging only lets you add components that the entity doesn't already have
+- GUI fixes
+
+#### Other
+- Properties are now formatted by default for better readability
+- Ensuring dependencies in build scripts
+
+
 # 0.42.3
 
 Hotfix release for

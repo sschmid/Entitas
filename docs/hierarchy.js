@@ -56,6 +56,10 @@ var hierarchy =
         [ "Entitas.PrimaryEntityIndex< TEntity, TKey >", "class_entitas_1_1_primary_entity_index.html", null ]
       ] ]
     ] ],
+    [ "IEnumerable", null, [
+      [ "Entitas.IGroup< TEntity >", "interface_entitas_1_1_i_group.html", null ],
+      [ "Entitas.IGroup< TEntity >", "interface_entitas_1_1_i_group.html", null ]
+    ] ],
     [ "IEqualityComparer", null, [
       [ "Entitas.EntityEqualityComparer< TEntity >", "class_entitas_1_1_entity_equality_comparer.html", null ]
     ] ],
