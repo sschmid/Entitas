@@ -39,7 +39,11 @@ namespace Entitas.Utils {
         }
 
         public string this[string key] {
-            get { return new Properties(_properties.ToDictionary().Merge(_userProperties.ToDictionary()))[key]; }
+            get {
+                var mergedProperties = new Properties(_properties.ToDictionary());
+                mergedProperties.AddProperties(_userProperties.ToDictionary(), true);
+                return mergedProperties[key];
+            }
             set {
                 if (value != this[key]) {
                     _properties[key] = value;

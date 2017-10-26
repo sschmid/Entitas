@@ -53,6 +53,13 @@ class describe_Preferences : nspec {
                 preferences["key"] = "Jack";
                 preferences.properties.ToString().Contains("Jack").should_be_true();
             };
+
+            it["user properties overwrite default properties"] = () => {
+                const string newUserInput = "key = Jack!" + "\n";
+                userProperties = new Properties(newUserInput);
+                preferences = new Preferences(properties, userProperties);
+                preferences["key"].should_be("Jack!");
+            };
         };
     }
 }
