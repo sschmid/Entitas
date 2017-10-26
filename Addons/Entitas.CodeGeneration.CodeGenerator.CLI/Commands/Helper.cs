@@ -45,6 +45,25 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
         }
 
+        public static void AddValue(string question, string value, string[] values, Action<string[]> updateAction, Properties properties) {
+            fabl.Info(question + ": '" + value + "' ? (y / n)");
+            if (GetUserDecision()) {
+                var valueList = values.ToList();
+                valueList.Add(value);
+                updateAction(valueList.ToArray());
+                Preferences.SaveProperties(properties);
+                fabl.Info("Added: " + value);
+            }
+        }
+
+        public static void AddValueSilently(string value, string[] values, Action<string[]> updateAction, Properties properties) {
+            var valueList = values.ToList();
+            valueList.Add(value);
+            updateAction(valueList.ToArray());
+            Preferences.SaveProperties(properties);
+            fabl.Info("Added: " + value);
+        }
+
         public static void RemoveKey(string question, string key, Properties properties) {
             fabl.Warn(question + ": '" + key + "' ? (y / n)");
             if (GetUserDecision()) {
@@ -65,15 +84,12 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
         }
 
-        public static void AddValue(string question, string value, string[] values, Action<string[]> updateAction, Properties properties) {
-            fabl.Info(question + ": '" + value + "' ? (y / n)");
-            if (GetUserDecision()) {
-                var valueList = values.ToList();
-                valueList.Add(value);
-                updateAction(CodeGeneratorUtil.GetOrderedNames(valueList.ToArray()));
-                Preferences.SaveProperties(properties);
-                fabl.Info("Added: " + value);
-            }
+        public static void RemoveValueSilently(string value, string[] values, Action<string[]> updateAction, Properties properties) {
+            var valueList = values.ToList();
+            valueList.Remove(value);
+            updateAction(valueList.ToArray());
+            Preferences.SaveProperties(properties);
+            fabl.Warn("Removed: " + value);
         }
     }
 }
