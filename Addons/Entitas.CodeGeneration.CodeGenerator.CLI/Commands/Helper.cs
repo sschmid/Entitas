@@ -77,19 +77,25 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             fabl.Warn(question + ": '" + value + "' ? (y / n)");
             if (GetUserDecision()) {
                 var valueList = values.ToList();
-                valueList.Remove(value);
-                updateAction(valueList.ToArray());
-                Preferences.SaveProperties(properties);
-                fabl.Warn("Removed: " + value);
+                if (valueList.Remove(value)) {
+                    updateAction(valueList.ToArray());
+                    Preferences.SaveProperties(properties);
+                    fabl.Warn("Removed: " + value);
+                } else {
+                    fabl.Warn("Value does not exist: " + value);
+                }
             }
         }
 
         public static void RemoveValueSilently(string value, string[] values, Action<string[]> updateAction, Properties properties) {
             var valueList = values.ToList();
-            valueList.Remove(value);
-            updateAction(valueList.ToArray());
-            Preferences.SaveProperties(properties);
-            fabl.Warn("Removed: " + value);
+            if (valueList.Remove(value)) {
+                updateAction(valueList.ToArray());
+                Preferences.SaveProperties(properties);
+                fabl.Warn("Removed: " + value);
+            } else {
+                fabl.Warn("Value does not exist: " + value);
+            }
         }
     }
 }
