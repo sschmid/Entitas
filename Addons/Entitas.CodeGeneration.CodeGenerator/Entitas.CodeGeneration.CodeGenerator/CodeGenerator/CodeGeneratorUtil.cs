@@ -8,8 +8,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
     public static class CodeGeneratorUtil {
 
         public static CodeGenerator CodeGeneratorFromPreferences() {
-            var preferences = new Preferences();
-            preferences.Load();
+            var preferences = Preferences.sharedInstance;
 
             var config = new CodeGeneratorConfig();
             config.Configure(preferences);

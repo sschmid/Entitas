@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public string targetDirectory {
-            get { return preferences[TARGET_DIRECTORY_KEY].ToSafeDirectory(); }
+            get { return _preferences[TARGET_DIRECTORY_KEY].ToSafeDirectory(); }
         }
     }
 }

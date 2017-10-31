@@ -1,4 +1,3 @@
-using System.IO;
 using Entitas.Utils;
 using Fabl;
 
@@ -13,17 +12,15 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public abstract void Run(string[] args);
 
         protected Preferences loadPreferences() {
-            var preferences = new Preferences();
-            preferences.Load();
-            return preferences;
+            return Preferences.sharedInstance;
         }
 
         protected bool assertPreferences() {
-            if (File.Exists(Preferences.PATH)) {
+            if (Preferences.sharedInstance.propertiesExist) {
                 return true;
             }
 
-            fabl.Warn("Couldn't find " + Preferences.PATH);
+            fabl.Warn("Couldn't find " + Preferences.sharedInstance.propertiesPath);
             fabl.Info("Run 'entitas new' to create Entitas.properties with default values");
 
             return false;

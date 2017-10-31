@@ -11,16 +11,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas new [-f]"; } }
 
         public override void Run(string[] args) {
+            var preferences = loadPreferences();
             var currentDir = Directory.GetCurrentDirectory();
-            var path = currentDir + Path.DirectorySeparatorChar + Preferences.PATH;
+            var path = currentDir + Path.DirectorySeparatorChar + preferences.propertiesPath;
 
             if (args.isForce() || !File.Exists(path)) {
-                var defaultConfig = new CodeGeneratorConfig();
-                var properties = new Properties(defaultConfig.defaultProperties);
-                var preferences = new Preferences(properties);
-                defaultConfig.Configure(preferences);
-
-                var propertiesString = defaultConfig.ToString();
+                var properties = new Properties(new CodeGeneratorConfig().defaultProperties);
+                var propertiesString = properties.ToString();
                 File.WriteAllText(path, propertiesString);
 
                 fabl.Info("Created " + path);

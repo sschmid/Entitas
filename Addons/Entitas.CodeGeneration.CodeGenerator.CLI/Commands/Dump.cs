@@ -13,14 +13,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             if (assertPreferences()) {
                 var preferences = loadPreferences();
                 fabl.Debug(preferences.ToString());
-
                 dump(preferences);
             }
         }
 
         static void dump(Preferences preferences) {
             const string indent = "\n    ";
-            foreach (var key in preferences.properties.keys) {
+            foreach (var key in preferences.keys) {
                 fabl.Info(key + indent + string.Join(indent, preferences[key].ArrayFromCSV()));
             }
         }

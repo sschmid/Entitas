@@ -72,9 +72,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         static int _systemWarningThreshold;
 
         static EntitasHierarchyIcon() {
-            if (Preferences.HasProperties()) {
-                var preferences = new Preferences();
-                preferences.Load();
+            var preferences = Preferences.sharedInstance;
+            if (preferences.propertiesExist) {
                 var config = new VisualDebuggingConfig();
                 config.Configure(preferences);
                 _systemWarningThreshold = config.systemWarningThreshold;

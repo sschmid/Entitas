@@ -6,9 +6,7 @@ namespace Entitas.Utils {
 
         public abstract Dictionary<string, string> defaultProperties { get; }
 
-        public Preferences preferences { get { return _preferences; } }
-
-        Preferences _preferences;
+        protected Preferences _preferences;
 
         public virtual void Configure(Preferences preferences) {
             _preferences = preferences;

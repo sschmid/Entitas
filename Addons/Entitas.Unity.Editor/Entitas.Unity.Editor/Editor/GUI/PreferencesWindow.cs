@@ -28,10 +28,7 @@ namespace Entitas.Unity.Editor {
                                            .ToArray();
 
             try {
-                _preferences = new Preferences();
-                if (Preferences.HasProperties()) {
-                    _preferences.Load();
-                }
+                _preferences = Preferences.sharedInstance;
 
                 foreach (var drawer in _preferencesDrawers) {
                     drawer.Initialize(_preferences);

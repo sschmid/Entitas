@@ -8,14 +8,14 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public static class Helper {
 
         public static string[] GetUnusedKeys(string[] requiredKeys, Preferences preferences) {
-            return preferences.properties.keys
+            return preferences.keys
                               .Where(key => !requiredKeys.Contains(key))
                               .ToArray();
         }
 
         public static string[] GetMissingKeys(string[] requiredKeys, Preferences preferences) {
             return requiredKeys
-                .Where(key => !preferences.properties.HasKey(key))
+                .Where(key => !preferences.HasKey(key))
                 .ToArray();
         }
 

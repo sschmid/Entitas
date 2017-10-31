@@ -30,7 +30,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         public override void Initialize(Preferences preferences) {
             _preferences = preferences;
             _codeGeneratorConfig = new CodeGeneratorConfig();
-            preferences.properties.AddProperties(_codeGeneratorConfig.defaultProperties, false);
+            preferences.AddProperties(_codeGeneratorConfig.defaultProperties, false);
             _codeGeneratorConfig.Configure(preferences);
 
             _types = CodeGeneratorUtil.LoadTypesFromPlugins(preferences);
@@ -39,7 +39,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             initPhase<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
             initPhase<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
 
-            _preferences.properties.AddProperties(getConfigurables(), false);
+            _preferences.AddProperties(getConfigurables(), false);
         }
 
         protected override void drawContent(Preferences preferences) {
@@ -63,7 +63,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
         void drawConfigurables() {
             var configurables = getConfigurables();
-            _preferences.properties.AddProperties(configurables, false);
+            _preferences.AddProperties(configurables, false);
 
             foreach (var kv in configurables.OrderBy(kv => kv.Key)) {
                 _preferences[kv.Key] = EditorGUILayout.TextField(kv.Key.ShortTypeName().ToSpacedCamelCase(), _preferences[kv.Key]);

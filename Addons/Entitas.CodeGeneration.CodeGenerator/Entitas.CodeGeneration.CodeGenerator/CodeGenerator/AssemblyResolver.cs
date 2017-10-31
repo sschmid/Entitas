@@ -9,11 +9,11 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
     public class AssemblyResolver {
 
-        static Logger _logger = fabl.GetLogger(typeof(AssemblyResolver).Name);
+        static readonly Logger _logger = fabl.GetLogger(typeof(AssemblyResolver).Name);
 
         readonly AppDomain _appDomain;
-        string[] _basePaths;
-        List<Assembly> _assemblies;
+        readonly string[] _basePaths;
+        readonly List<Assembly> _assemblies;
 
         public AssemblyResolver(AppDomain appDomain, string[] basePaths) {
             _appDomain = appDomain;

@@ -9,18 +9,15 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas doctor"; } }
 
         public override void Run(string[] args) {
-
             fabl.Debug("Entitas Code Generator version " + EntitasResources.GetVersion());
-
             if (assertPreferences()) {
-
                 new Status().Run(args);
-
                 fabl.Debug("Dry Run");
-
                 CodeGeneratorUtil
                     .CodeGeneratorFromPreferences()
                     .DryRun();
+
+                fabl.Info("No problems detected. Happy coding :)");
             }
         }
     }

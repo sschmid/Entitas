@@ -26,28 +26,28 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         }
 
         public string[] searchPaths {
-            get { return preferences[SEARCH_PATHS_KEY].ArrayFromCSV(); }
-            set { preferences[SEARCH_PATHS_KEY] = value.ToCSV(); }
+            get { return _preferences[SEARCH_PATHS_KEY].ArrayFromCSV(); }
+            set { _preferences[SEARCH_PATHS_KEY] = value.ToCSV(); }
         }
 
         public string[] plugins {
-            get { return preferences[PLUGINS_PATHS_KEY].ArrayFromCSV(); }
-            set { preferences[PLUGINS_PATHS_KEY] = value.ToCSV(); }
+            get { return _preferences[PLUGINS_PATHS_KEY].ArrayFromCSV(); }
+            set { _preferences[PLUGINS_PATHS_KEY] = value.ToCSV(); }
         }
 
         public string[] dataProviders {
-            get { return preferences[DATA_PROVIDERS_KEY].ArrayFromCSV(); }
-            set { preferences[DATA_PROVIDERS_KEY] = value.ToCSV(); }
+            get { return _preferences[DATA_PROVIDERS_KEY].ArrayFromCSV(); }
+            set { _preferences[DATA_PROVIDERS_KEY] = value.ToCSV(); }
         }
 
         public string[] codeGenerators {
-            get { return preferences[CODE_GENERATORS_KEY].ArrayFromCSV(); }
-            set { preferences[CODE_GENERATORS_KEY] = value.ToCSV(); }
+            get { return _preferences[CODE_GENERATORS_KEY].ArrayFromCSV(); }
+            set { _preferences[CODE_GENERATORS_KEY] = value.ToCSV(); }
         }
 
         public string[] postProcessors {
-            get { return preferences[POST_PROCESSORS_KEY].ArrayFromCSV(); }
-            set { preferences[POST_PROCESSORS_KEY] = value.ToCSV(); }
+            get { return _preferences[POST_PROCESSORS_KEY].ArrayFromCSV(); }
+            set { _preferences[POST_PROCESSORS_KEY] = value.ToCSV(); }
         }
     }
 }

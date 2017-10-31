@@ -343,8 +343,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static void generateIDefaultInstanceCreator(string typeName) {
-            var preferences = new Preferences();
-            preferences.Load();
+            var preferences = Preferences.sharedInstance;
             var config = new VisualDebuggingConfig();
             config.Configure(preferences);
             var folder = config.defaultInstanceCreatorFolderPath;
@@ -356,8 +355,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static void generateITypeDrawer(string typeName) {
-            var preferences = new Preferences();
-            preferences.Load();
+            var preferences = Preferences.sharedInstance;
             var config = new VisualDebuggingConfig();
             config.Configure(preferences);
             var folder = config.typeDrawerFolderPath;

@@ -6,8 +6,6 @@ class describe_DictionaryExtension : nspec {
 
     void when_dictionary() {
 
-
-
         it["merges dictionary"] = () => {
             var d1 = new Dictionary<string, string> {
                 { "k1", "v1"},
