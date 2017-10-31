@@ -1,5 +1,4 @@
 using System.IO;
-using Entitas.Utils;
 using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
@@ -15,13 +14,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             var currentDir = Directory.GetCurrentDirectory();
             var path = currentDir + Path.DirectorySeparatorChar + preferences.propertiesPath;
 
-            if (args.isForce() || !File.Exists(path)) {
-                var properties = new Properties(new CodeGeneratorConfig().defaultProperties);
-                var propertiesString = properties.ToString();
-                File.WriteAllText(path, propertiesString);
+            if (args.isForce() || !preferences.propertiesExist) {
+                preferences.AddProperties(new CodeGeneratorConfig().defaultProperties, true);
+                preferences.Save();
 
-                fabl.Info("Created " + path);
-                fabl.Debug(propertiesString);
+                fabl.Info("Created " + preferences.propertiesPath);
+                fabl.Info("Created " + preferences.userPropertiesPath);
+                fabl.Debug(preferences.ToString());
 
                 new EditConfig().Run(args);
             } else {
