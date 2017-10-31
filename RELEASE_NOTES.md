@@ -1,3 +1,17 @@
+# 0.42.5
+
+#### General
+- Refactored Preferences to fully embrace Entitas.properties and User.properties
+
+#### CodeGenerator CLI
+- Added format command
+- keepAlive argument which will keep the process alive. This is very useful when using the new roslyn code generator to avoid reloading the whole parsing infrastructure. Using this argument ith roslyn results in super fast generation time
+
+```csharp
+$ entitas gen -a
+```
+
+
 # 0.42.4
 
 #### Notes

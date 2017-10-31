@@ -173,6 +173,7 @@
 │   │   │   ├── Dump.cs
 │   │   │   ├── EditConfig.cs
 │   │   │   ├── FixConfig.cs
+│   │   │   ├── Format.cs
 │   │   │   ├── Generate.cs
 │   │   │   ├── Helper.cs
 │   │   │   ├── ICommand.cs
