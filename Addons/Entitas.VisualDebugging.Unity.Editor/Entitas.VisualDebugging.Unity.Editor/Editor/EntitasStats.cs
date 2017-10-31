@@ -47,6 +47,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Dictionary<string, int> getContexts(Type[] components) {
             var preferences = Preferences.sharedInstance;
+            preferences.Refresh();
             var provider = new ContextsComponentDataProvider();
             provider.Configure(preferences);
             return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {

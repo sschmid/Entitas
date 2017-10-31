@@ -29,6 +29,7 @@ namespace Entitas.Unity.Editor {
 
             try {
                 _preferences = Preferences.sharedInstance;
+                _preferences.Refresh();
 
                 foreach (var drawer in _preferencesDrawers) {
                     drawer.Initialize(_preferences);
