@@ -44,8 +44,8 @@ namespace Entitas.CodeGeneration.Plugins {
             };
         }
 
-        Type[] _types;
-        IComponentDataProvider[] _dataProviders;
+        readonly Type[] _types;
+        readonly IComponentDataProvider[] _dataProviders;
 
         public ComponentDataProvider() : this(null) {
         }
@@ -68,18 +68,16 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public CodeGeneratorData[] GetData() {
-            if (_types == null) {
-                _types = PluginUtil
-                    .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
-                    .GetTypes();
-            }
+            var types = _types ?? PluginUtil
+                            .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
+                            .GetTypes();
 
-            var dataFromComponents = _types
+            var dataFromComponents = types
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsAbstract)
                 .Select(type => createDataForComponent(type));
 
-            var dataFromNonComponents = _types
+            var dataFromNonComponents = types
                 .Where(type => !type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsGenericType)
                 .Where(type => hasContexts(type))

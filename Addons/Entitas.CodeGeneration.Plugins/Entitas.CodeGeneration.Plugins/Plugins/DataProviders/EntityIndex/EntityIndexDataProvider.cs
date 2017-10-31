@@ -28,7 +28,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
         readonly ContextsComponentDataProvider _contextsComponentDataProvider = new ContextsComponentDataProvider();
 
-        Type[] _types;
+        readonly Type[] _types;
 
         public EntityIndexDataProvider() : this(null) {
         }
@@ -45,13 +45,11 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public CodeGeneratorData[] GetData() {
-            if (_types == null) {
-                _types = PluginUtil
-                    .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
-                    .GetTypes();
-            }
+            var types = _types ?? PluginUtil
+                .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
+                .GetTypes();
 
-            var entityIndexData = _types
+            var entityIndexData = types
                 .Where(type => !type.IsAbstract)
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .ToDictionary(
@@ -60,7 +58,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Where(kv => kv.Value.Any(info => info.attributes.Any(attr => attr.attribute is AbstractEntityIndexAttribute)))
                 .Select(kv => createEntityIndexData(kv.Key, kv.Value));
 
-            var customEntityIndexData = _types
+            var customEntityIndexData = types
                 .Where(type => !type.IsAbstract)
                 .Where(type => Attribute.IsDefined(type, typeof(CustomEntityIndexAttribute)))
                 .Select(type => createCustomEntityIndexData(type));
