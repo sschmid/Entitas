@@ -78,6 +78,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
             commandList.Add("[-v]".PadRight(pad) + " - " + "verbose output");
             commandList.Add("[-s]".PadRight(pad) + " - " + "silent output (errors only)");
+            commandList.Add("[-a]".PadRight(pad) + " - " + "keep process alive (for faster re-generation)");
 
             Console.WriteLine("Entitas Code Generator version " + EntitasResources.GetVersion());
             Console.WriteLine("usage:\n{0}", string.Join("\n", commandList));
