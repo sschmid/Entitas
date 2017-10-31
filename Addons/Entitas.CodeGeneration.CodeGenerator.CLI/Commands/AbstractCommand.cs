@@ -12,7 +12,9 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public abstract void Run(string[] args);
 
         protected Preferences loadPreferences() {
-            return Preferences.sharedInstance;
+            var preferences = Preferences.sharedInstance;
+            preferences.Refresh();
+            return preferences;
         }
 
         protected bool assertPreferences() {

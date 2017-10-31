@@ -15,5 +15,9 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public static bool isSilent(this string[] args) {
             return args.Any(arg => arg == "-s");
         }
+
+        public static bool keepAlive(this string[] args) {
+            return args.Any(arg => arg == "-a");
+        }
     }
 }

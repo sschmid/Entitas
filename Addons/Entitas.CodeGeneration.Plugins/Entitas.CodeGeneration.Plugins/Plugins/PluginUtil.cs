@@ -7,7 +7,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class PluginUtil {
 
-        static Dictionary<string, AssemblyResolver> _resolvers = new Dictionary<string, AssemblyResolver>();
+        static readonly Dictionary<string, AssemblyResolver> _resolvers = new Dictionary<string, AssemblyResolver>();
 
         public static AssemblyResolver GetAssembliesResolver(string[] assemblies, string[] basePaths) {
             var key = assemblies.ToCSV();

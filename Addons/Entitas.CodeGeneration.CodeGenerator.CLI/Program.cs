@@ -30,9 +30,20 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
             try {
                 getCommand(commands, args[0]).Run(args);
+
+                if (args.keepAlive()) {
+                    while (shouldKeepAlive()) {
+                        getCommand(commands, args[0]).Run(args);
+                    }
+                }
             } catch (Exception ex) {
                 printException(ex, args);
             }
+        }
+
+        static bool shouldKeepAlive() {
+            fabl.Info("Again ? (y / n)");
+            return Helper.GetUserDecision();
         }
 
         static ICommand getCommand(ICommand[] commands, string trigger) {
