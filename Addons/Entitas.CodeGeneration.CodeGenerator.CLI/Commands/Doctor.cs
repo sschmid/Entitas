@@ -17,7 +17,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                     .CodeGeneratorFromPreferences()
                     .DryRun();
 
-                fabl.Info("No problems detected. Happy coding :)");
+                fabl.Info("👨‍🔬  No problems detected. Happy coding :)");
             }
         }
     }

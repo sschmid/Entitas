@@ -20,6 +20,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
                 fabl.Info("Created " + preferences.propertiesPath);
                 fabl.Info("Created " + preferences.userPropertiesPath);
+                fabl.Info("👍");
                 fabl.Debug(preferences.ToString());
 
                 new EditConfig().Run(args);

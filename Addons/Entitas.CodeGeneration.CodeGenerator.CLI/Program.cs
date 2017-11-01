@@ -35,6 +35,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                     while (shouldKeepAlive()) {
                         getCommand(commands, args[0]).Run(args);
                     }
+                    fabl.Info("Goodbye, see you soon!");
                 }
             } catch (Exception ex) {
                 printException(ex, args);
@@ -43,7 +44,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         static bool shouldKeepAlive() {
             fabl.Info("Again ? (y / n)");
-            return Helper.GetUserDecision();
+            var userDecision = Helper.GetUserDecision();
+            if (userDecision) {
+                fabl.Info("👍");
+            } else {
+                fabl.Info("👋");
+            }
+            return userDecision;
         }
 
         static ICommand getCommand(ICommand[] commands, string trigger) {
@@ -80,7 +87,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             commandList.Add("[-s]".PadRight(pad) + " - " + "silent output (errors only)");
             commandList.Add("[-a]".PadRight(pad) + " - " + "keep process alive (for faster re-generation)");
 
-            Console.WriteLine("Entitas Code Generator version " + EntitasResources.GetVersion());
+            Console.WriteLine("🎃🎃🎃  Entitas Code Generator version " + EntitasResources.GetVersion());
             Console.WriteLine("usage:\n{0}", string.Join("\n", commandList));
         }
 
