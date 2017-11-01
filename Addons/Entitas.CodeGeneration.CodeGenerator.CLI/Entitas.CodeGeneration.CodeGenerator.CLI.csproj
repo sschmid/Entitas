@@ -35,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Add.cs" />
+    <Compile Include="Commands\Donate.cs" />
     <Compile Include="Commands\Dump.cs" />
     <Compile Include="Commands\Format.cs" />
     <Compile Include="Commands\Remove.cs" />

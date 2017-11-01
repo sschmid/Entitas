@@ -70,9 +70,9 @@ namespace Entitas.Unity.Editor {
                 if (GUILayout.Button("Wiki", EditorStyles.toolbarButton)) {
                     EntitasFeedback.EntitasWiki();
                 }
-                //if (GUILayout.Button("Donate", EditorStyles.toolbarButton)) {
-                //    EntitasFeedback.Donate();
-                //}
+                if (GUILayout.Button("Donate", EditorStyles.toolbarButton)) {
+                    EntitasFeedback.Donate();
+                }
             }
             EditorGUILayout.EndHorizontal();
         }

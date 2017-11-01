@@ -78,6 +78,9 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         static void printUsage(ICommand[] commands) {
+            commands = commands
+                .Where(c => c.description != null)
+                .ToArray();
             var pad = commands.Max(c => c.example.Length);
             var commandList = commands
                 .Select(c => c.example.PadRight(pad) + " - " + c.description)
