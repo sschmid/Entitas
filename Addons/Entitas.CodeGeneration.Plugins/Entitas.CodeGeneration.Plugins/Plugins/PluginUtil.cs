@@ -1,25 +1,25 @@
 using System;
 using Entitas.CodeGeneration.CodeGenerator;
 using System.Collections.Generic;
-using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
     public static class PluginUtil {
 
-        static readonly Dictionary<string, AssemblyResolver> _resolvers = new Dictionary<string, AssemblyResolver>();
+        public const string ASSEMBLY_RESOLVER_KEY = "Entitas.CodeGeneration.Plugins.AssemblyResolver";
 
-        public static AssemblyResolver GetAssembliesResolver(string[] assemblies, string[] basePaths) {
-            var key = assemblies.ToCSV();
-            if (!_resolvers.ContainsKey(key)) {
-                var resolver = new AssemblyResolver(AppDomain.CurrentDomain, basePaths);
+        public static AssemblyResolver GetCachedAssemblyResolver(Dictionary<string, object> objectCache, string[] assemblies, string[] basePaths) {
+            object cachedAssemblyResolver;
+            if (!objectCache.TryGetValue(ASSEMBLY_RESOLVER_KEY, out cachedAssemblyResolver)) {
+                cachedAssemblyResolver = new AssemblyResolver(AppDomain.CurrentDomain, basePaths);
+                var resolver = (AssemblyResolver)cachedAssemblyResolver;
                 foreach (var path in assemblies) {
                     resolver.Load(path);
                 }
-                _resolvers.Add(key, resolver);
+                objectCache.Add(ASSEMBLY_RESOLVER_KEY, cachedAssemblyResolver);
             }
 
-            return _resolvers[key];
+            return (AssemblyResolver)cachedAssemblyResolver;
         }
     }
 }

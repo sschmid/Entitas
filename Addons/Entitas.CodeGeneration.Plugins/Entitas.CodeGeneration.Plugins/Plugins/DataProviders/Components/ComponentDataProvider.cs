@@ -7,7 +7,7 @@ using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentDataProvider : ICodeGeneratorDataProvider, IConfigurable {
+    public class ComponentDataProvider : ICodeGeneratorDataProvider, IConfigurable, ICodeGeneratorCachable {
 
         public string name { get { return "Component"; } }
         public int priority { get { return 0; } }
@@ -26,6 +26,8 @@ namespace Entitas.CodeGeneration.Plugins {
                        .Merge(dataProviderProperties);
             }
         }
+
+        public Dictionary<string, object> objectCache { get; set; }
 
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
@@ -69,7 +71,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public CodeGeneratorData[] GetData() {
             var types = _types ?? PluginUtil
-                            .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
+                            .GetCachedAssemblyResolver(objectCache, _assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
                             .GetTypes();
 
             var dataFromComponents = types

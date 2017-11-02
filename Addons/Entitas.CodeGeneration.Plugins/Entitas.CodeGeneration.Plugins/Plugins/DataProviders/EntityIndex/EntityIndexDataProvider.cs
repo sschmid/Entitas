@@ -8,7 +8,7 @@ using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EntityIndexDataProvider : ICodeGeneratorDataProvider, IConfigurable {
+    public class EntityIndexDataProvider : ICodeGeneratorDataProvider, IConfigurable, ICodeGeneratorCachable {
 
         public string name { get { return "Entity Index"; } }
         public int priority { get { return 0; } }
@@ -22,6 +22,8 @@ namespace Entitas.CodeGeneration.Plugins {
                               _contextsComponentDataProvider.defaultProperties);
             }
         }
+
+        public Dictionary<string, object> objectCache { get; set; }
 
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
@@ -46,7 +48,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public CodeGeneratorData[] GetData() {
             var types = _types ?? PluginUtil
-                .GetAssembliesResolver(_assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
+                .GetCachedAssemblyResolver(objectCache, _assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
                 .GetTypes();
 
             var entityIndexData = types
