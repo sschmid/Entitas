@@ -13,6 +13,8 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         readonly ICodeGenerator[] _codeGenerators;
         readonly ICodeGenFilePostProcessor[] _postProcessors;
 
+        readonly Dictionary<string, object> _objectCache;
+
         bool _cancel;
 
         public CodeGenerator(ICodeGeneratorDataProvider[] dataProviders,
@@ -22,6 +24,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
             _dataProviders = dataProviders.OrderBy(i => i.priority).ToArray();
             _codeGenerators = codeGenerators.OrderBy(i => i.priority).ToArray();
             _postProcessors = postProcessors.OrderBy(i => i.priority).ToArray();
+            _objectCache = new Dictionary<string, object>();
         }
 
         public CodeGenFile[] DryRun() {
@@ -44,6 +47,17 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
         CodeGenFile[] generate(string messagePrefix, ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
             _cancel = false;
+
+            _objectCache.Clear();
+
+            var cachables = dataProviders
+                .Concat<ICodeGeneratorInterface>(codeGenerators)
+                .Concat<ICodeGeneratorInterface>(postProcessors)
+                .OfType<ICodeGeneratorCachable>();
+
+            foreach (var cachable in cachables) {
+                cachable.objectCache = _objectCache;
+            }
 
             var data = new List<CodeGeneratorData>();
 

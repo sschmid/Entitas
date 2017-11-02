@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Entitas.CodeGeneration;
 using Entitas.CodeGeneration.CodeGenerator;
@@ -120,7 +121,7 @@ class describe_CodeGenerator : nspec {
         };
 
         context["cancel"] = () => {
-            
+
             it["cancels"] = () => {
                 var generator = new CodeGenerator(
                     new [] { new Data_1_2_Provider() },
@@ -185,6 +186,33 @@ class describe_CodeGenerator : nspec {
                 var files = generator.DryRun();
 
                 files.Length.should_be(2);
+            };
+        };
+
+        context["caching"] = () => {
+
+            it["registers object to shared cache"] = () => {
+                var generator = new CodeGenerator(
+                    new [] { new CachableProvider(), new CachableProvider() },
+                    new [] { new DataFile1CodeGenerator() },
+                    new [] { new Processed1PostProcessor() }
+                );
+
+                var files = generator.Generate();
+                files.Length.should_be(2);
+                files[0].fileContent.should_be(files[1].fileContent);
+            };
+
+            it["resets cache before each new run"] = () => {
+                var generator = new CodeGenerator(
+                    new [] { new CachableProvider(), new CachableProvider() },
+                    new [] { new DataFile1CodeGenerator() },
+                    new [] { new Processed1PostProcessor() }
+                );
+
+                var result1 = generator.Generate()[0].fileContent;
+                var result2 = generator.Generate()[0].fileContent;
+                result1.should_not_be(result2);
             };
         };
     }
@@ -361,5 +389,27 @@ public class NoFilesPostProcessor : ICodeGenFilePostProcessor {
 
     public CodeGenFile[] PostProcess(CodeGenFile[] files) {
         return new [] { files[0] };
+    }
+}
+
+public class CachableProvider : ICodeGeneratorDataProvider, ICodeGeneratorCachable {
+
+    public string name { get { return ""; } }
+    public int priority { get { return 0; } }
+    public bool isEnabledByDefault { get { return true; } }
+    public bool runInDryMode { get { return true; } }
+
+    public Dictionary<string, object> objectCache { get; set; }
+
+    public CodeGeneratorData[] GetData() {
+        object o;
+        if (!objectCache.TryGetValue("myObject", out o)) {
+            o = new object();
+            objectCache.Add("myObject", o);
+        }
+
+        var data = new CodeGeneratorData();
+        data.Add("testKey", o.GetHashCode());
+        return new [] { data };
     }
 }

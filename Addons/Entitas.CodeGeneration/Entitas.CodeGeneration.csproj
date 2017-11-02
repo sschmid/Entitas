@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,6 +34,7 @@
     <Compile Include="Entitas.CodeGeneration\CodeGeneration\CodeGeneratorData.cs" />
     <Compile Include="Entitas.CodeGeneration\CodeGeneration\CodeGenFile.cs" />
     <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGeneratorCachable.cs" />
     <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGeneratorDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGeneratorInterface.cs" />
     <Compile Include="Entitas.CodeGeneration\CodeGeneration\Interfaces\ICodeGenFilePostProcessor.cs" />
