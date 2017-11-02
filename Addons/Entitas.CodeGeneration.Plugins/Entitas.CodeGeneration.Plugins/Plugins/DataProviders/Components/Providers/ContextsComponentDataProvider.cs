@@ -32,7 +32,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public string[] GetContextNamesOrDefault(Type type) {
             var contextNames = GetContextNames(type);
             if (contextNames.Length == 0) {
-                contextNames = new [] { _contextNamesConfig.contexts[0] };
+                contextNames = new [] { _contextNamesConfig.contextNames[0] };
             }
 
             return contextNames;

@@ -21,31 +21,13 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public CodeGeneratorData[] GetData() {
-            return _contextNamesConfig.contexts
-                .Select(context => {
+            return _contextNamesConfig.contextsWithKits
+                .Select(kv => {
                     var data = new ContextData();
-                    data.SetContextName(extractContextName(context));
-                    data.SetKits(extractKits(context));
+                    data.SetContextName(kv.Key);
+                    data.SetKits(kv.Value);
                     return data;
                 }).ToArray();
-        }
-
-        static string extractContextName(string context) {
-            return context
-                .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries)[0]
-                .Trim();
-        }
-
-        static string[] extractKits(string context) {
-            var contextSplit = context
-                .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
-
-            return contextSplit.Length > 1
-                ? contextSplit[1]
-                    .Split(new[] { "+" }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(kit => kit.Trim())
-                    .ToArray()
-                : new string[0];
         }
     }
 

@@ -22,8 +22,8 @@ namespace Entitas.CodeGeneration.Plugins {
                     .ToArray();
 
                 return _assembliesConfig.defaultProperties
-                       .Merge(_contextsComponentDataProvider.defaultProperties)
-                       .Merge(dataProviderProperties);
+                    .Merge(_contextsComponentDataProvider.defaultProperties)
+                    .Merge(dataProviderProperties);
             }
         }
 

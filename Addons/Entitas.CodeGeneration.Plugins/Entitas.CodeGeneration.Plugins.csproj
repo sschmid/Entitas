@@ -55,6 +55,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\Contexts\ContextDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\EntityIndex\EntityIndexData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\EntityIndex\EntityIndexDataProvider.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\DataProviders\Kits\KitDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\AddFileHeaderPostProcessor.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\ConsoleWriteLinePostProcessor.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Plugins\PostProcessors\MergeFilesPostProcessor.cs" />

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Entitas.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -15,8 +17,42 @@ namespace Entitas.CodeGeneration.Plugins {
             }
         }
 
-        public string[] contexts {
-            get { return _preferences[CONTEXTS_KEY].ArrayFromCSV(); }
+        public string[] contextNames {
+            get {
+                return _preferences[CONTEXTS_KEY]
+                    .ArrayFromCSV()
+                    .Select(context => extractContextName(context))
+                    .ToArray();
+            }
+        }
+
+        public Dictionary<string, string[]> contextsWithKits {
+            get {
+                return _preferences[CONTEXTS_KEY]
+                    .ArrayFromCSV()
+                    .ToDictionary(
+                        context => extractContextName(context),
+                        context => extractKits(context)
+                    );
+            }
+        }
+
+        static string extractContextName(string context) {
+            return context
+                .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries)[0]
+                .Trim();
+        }
+
+        static string[] extractKits(string context) {
+            var contextSplit = context
+                .Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+
+            return contextSplit.Length > 1
+                ? contextSplit[1]
+                    .Split(new[] { "+" }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(kit => kit.Trim())
+                    .ToArray()
+                : new string[0];
         }
     }
 }
