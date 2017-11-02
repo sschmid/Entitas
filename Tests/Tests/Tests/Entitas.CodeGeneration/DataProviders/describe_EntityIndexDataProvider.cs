@@ -7,7 +7,7 @@ using NSpec;
 
 class describe_EntityIndexDataProvider : nspec {
 
-    EntityIndexData[] getData<T1, T2>(Preferences preferences= null) {
+    EntityIndexData[] getData<T1, T2>(Preferences preferences = null) {
         var provider = new EntityIndexDataProvider(new Type[] { typeof(T1), typeof(T2) });
         if (preferences == null) {
             preferences = new Preferences(new Properties(
