@@ -90,11 +90,24 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             commandList.Add("[-s]".PadRight(pad) + " - " + "silent output (errors only)");
             commandList.Add("[-a]".PadRight(pad) + " - " + "keep process alive (for faster re-generation)");
 
-            var footer = "All preferences will be stored in " + Preferences.DEFAULT_PROPERTIES_PATH + " by default.\n" +
-                         "Each command also supports specifying a custom properties file, e.g\n" +
-                         "entitas gen MyCustom.properties";
+            var header =
+@"#   _____       _   _ _
+#  | ____|_ __ | |_(_) |_ __ _ ___
+#  |  _| | '_ \| __| | __/ _` / __|
+#  | |___| | | | |_| | || (_| \__ \
+#  |_____|_| |_|\__|_|\__\__,_|___/
+#
+#  Entitas Code Generator version " + EntitasResources.GetVersion() + "\n";
 
-            Console.WriteLine("🎃🎃🎃  Entitas Code Generator version " + EntitasResources.GetVersion());
+            var footer = "All preferences will be stored in " + Preferences.DEFAULT_PROPERTIES_PATH + " by default.\n" +
+                         "Each command also supports specifying a custom properties file.\n\n" +
+                         "EXAMPLE\n" +
+                         "  entitas new My.properties\n" +
+                         "  entitas doctor My.properties\n" +
+                         "  entitas fix My.properties\n" +
+                         "  entitas gen My.properties";
+
+            Console.WriteLine(header);
             Console.WriteLine("usage:\n{0}", string.Join("\n", commandList) + "\n\n" + footer);
         }
 
