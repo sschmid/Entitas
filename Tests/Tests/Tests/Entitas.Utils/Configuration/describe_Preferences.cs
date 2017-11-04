@@ -10,6 +10,7 @@ class describe_Preferences : nspec {
         Properties properties = null;
         Properties userProperties = null;
         Preferences preferences = null;
+
         context["when properties"] = () => {
 
             before = () => {
@@ -43,6 +44,12 @@ class describe_Preferences : nspec {
 
             it["can ToString"] = () => {
                 preferences.ToString().should_be(properties.ToString());
+            };
+
+            it["resets preferences"] = () => {
+                preferences["newKey"] = "newValue";
+                preferences.Reset();
+                preferences.HasKey("newKey").should_be_false();
             };
         };
 

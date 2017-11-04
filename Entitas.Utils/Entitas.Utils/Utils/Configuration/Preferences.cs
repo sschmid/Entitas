@@ -5,10 +5,13 @@ namespace Entitas.Utils {
 
     public class Preferences {
 
+        public const string DEFAULT_PROPERTIES_PATH = "Entitas.properties";
+        public const string DEFAULT_USER_PROPERTIES_PATH = "User.properties";
+
         public static Preferences sharedInstance {
             get {
                 if (_sharedInstance == null) {
-                    _sharedInstance = new Preferences("Entitas.properties", "User.properties");
+                    _sharedInstance = new Preferences(DEFAULT_PROPERTIES_PATH, DEFAULT_USER_PROPERTIES_PATH);
                 }
 
                 return _sharedInstance;
@@ -70,6 +73,10 @@ namespace Entitas.Utils {
 
         public bool HasKey(string key) {
             return _properties.HasKey(key) || _userProperties.HasKey(key);
+        }
+
+        public void Reset() {
+            _properties = new Properties();
         }
 
         public override string ToString() {

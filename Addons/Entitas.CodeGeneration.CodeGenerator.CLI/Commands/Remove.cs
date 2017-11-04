@@ -11,15 +11,17 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public override void Run(string[] args) {
             if (args.Length == 3) {
-                if (assertPreferences()) {
+                if (assertPreferences(args)) {
+                    var preferences = loadPreferences(args);
                     var key = args[1];
                     var value = args[2];
-                    removeValue(key, value);
+                    removeValue(key, value, preferences);
                 }
             } else if (args.Length == 2) {
-                if (assertPreferences()) {
+                if (assertPreferences(args)) {
+                    var preferences = loadPreferences(args);
                     var key = args[1];
-                    removeKey(key);
+                    removeKey(key, preferences);
                 }
             } else {
                 fabl.Warn("The remove command expects one or two arguments");
@@ -27,8 +29,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
         }
 
-        void removeValue(string key, string value) {
-            var preferences = loadPreferences();
+        void removeValue(string key, string value, Preferences preferences) {
             if (preferences.HasKey(key)) {
                 Helper.RemoveValueSilently(
                     value,
@@ -40,8 +41,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
         }
 
-        void removeKey(string key) {
-            var preferences = loadPreferences();
+        void removeKey(string key, Preferences preferences) {
             if (preferences.HasKey(key)) {
                 Helper.RemoveKey(
                     "Do you want to remove",

@@ -10,11 +10,11 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public override void Run(string[] args) {
             fabl.Debug("Entitas Code Generator version " + EntitasResources.GetVersion());
-            if (assertPreferences()) {
+            if (assertPreferences(args)) {
                 new Status().Run(args);
                 fabl.Debug("Dry Run");
                 CodeGeneratorUtil
-                    .CodeGeneratorFromPreferences()
+                    .CodeGeneratorFromPreferences(loadPreferences(args))
                     .DryRun();
 
                 fabl.Info("👨‍🔬  No problems detected. Happy coding :)");

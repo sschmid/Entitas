@@ -1,4 +1,5 @@
 using System.IO;
+using Entitas.Utils;
 using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
@@ -10,11 +11,12 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas new [-f]"; } }
 
         public override void Run(string[] args) {
-            var preferences = loadPreferences();
+            var preferences = loadPreferences(args);
             var currentDir = Directory.GetCurrentDirectory();
             var path = currentDir + Path.DirectorySeparatorChar + preferences.propertiesPath;
 
             if (args.isForce() || !preferences.propertiesExist) {
+                preferences.Reset();
                 preferences.AddProperties(new CodeGeneratorConfig().defaultProperties, true);
                 preferences.AddProperties(new CLIConfig().defaultProperties, true);
                 preferences.Save();

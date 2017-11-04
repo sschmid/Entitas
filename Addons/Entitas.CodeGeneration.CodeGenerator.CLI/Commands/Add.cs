@@ -11,10 +11,11 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         public override void Run(string[] args) {
             if (args.Length == 3) {
-                if (assertPreferences()) {
+                if (assertPreferences(args)) {
+                    var preferences = loadPreferences(args);
                     var key = args[1];
                     var value = args[2];
-                    addKeyValue(key, value);
+                    addKeyValue(key, value, preferences);
                 }
             } else {
                 fabl.Warn("The add command expects exactly two arguments");
@@ -22,8 +23,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
         }
 
-        void addKeyValue(string key, string value) {
-            var preferences = loadPreferences();
+        void addKeyValue(string key, string value, Preferences preferences) {
             if (preferences.HasKey(key)) {
                 Helper.AddValueSilently(
                     value,

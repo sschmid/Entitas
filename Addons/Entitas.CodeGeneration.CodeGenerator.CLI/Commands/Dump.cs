@@ -10,8 +10,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas dump"; } }
 
         public override void Run(string[] args) {
-            if (assertPreferences()) {
-                var preferences = loadPreferences();
+            if (assertPreferences(args)) {
+                var preferences = loadPreferences(args);
                 fabl.Debug(preferences.ToString());
                 dump(preferences);
             }

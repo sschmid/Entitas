@@ -7,8 +7,8 @@
         public override string example { get { return "entitas format"; } }
 
         public override void Run(string[] args) {
-            if (assertPreferences()) {
-                loadPreferences().Save();
+            if (assertPreferences(args)) {
+                loadPreferences(args).Save();
             }
         }
     }

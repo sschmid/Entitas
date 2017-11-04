@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             Debug.Log("Generating...");
 
             Preferences.sharedInstance.Refresh();
-            var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromPreferences();
+            var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromPreferences(Preferences.sharedInstance);
 
             var progressOffset = 0f;
 
