@@ -17,6 +17,8 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                 return new Dictionary<string, string> {
                     { SEARCH_PATHS_KEY, "Assets/Libraries/Entitas, " +
                                         "Assets/Libraries/Entitas/Editor, " +
+                                        "CodeGenerator/Plugins/Default, " +
+                                        "CodeGenerator/Plugins/Entitas.Roslyn, " +
                                         "/Applications/Unity/Unity.app/Contents/Managed, " +
                                         "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity, " +
                                         "/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem" },
