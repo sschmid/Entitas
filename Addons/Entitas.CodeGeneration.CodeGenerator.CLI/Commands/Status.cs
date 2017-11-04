@@ -18,7 +18,10 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 var config = new CodeGeneratorConfig();
                 config.Configure(preferences);
 
-                fabl.Debug(config.ToString());
+                var cliConfig = new CLIConfig();
+                cliConfig.Configure(preferences);
+
+                fabl.Debug(preferences.ToString());
 
                 Type[] types = null;
                 Dictionary<string, string> configurables = null;
@@ -32,19 +35,25 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                     );
 
                 } catch(Exception ex) {
-                    printKeyStatus(config.defaultProperties.Keys.ToArray(), preferences);
+                    printKeyStatus(config.defaultProperties.Keys.ToArray(), cliConfig, preferences);
                     throw ex;
                 }
 
-                var requiredKeys = config.defaultProperties.Merge(configurables).Keys.ToArray();
+                var requiredKeys = config.defaultProperties
+                    .Merge(cliConfig.defaultProperties)
+                    .Merge(configurables).Keys.ToArray();
 
-                printKeyStatus(requiredKeys, preferences);
+                printKeyStatus(requiredKeys, cliConfig, preferences);
                 printPluginStatus(types, config);
             }
         }
 
-        static void printKeyStatus(string[] requiredKeys, Preferences preferences) {
-            foreach (var key in Helper.GetUnusedKeys(requiredKeys, preferences)) {
+        static void printKeyStatus(string[] requiredKeys, CLIConfig cliConfig, Preferences preferences) {
+            var unusedKeys = Helper
+                .GetUnusedKeys(requiredKeys, preferences)
+                .Where(key => !cliConfig.ignoreUnusedKeys.Contains(key));
+
+            foreach (var key in unusedKeys) {
                 fabl.Info("Unused key: " + key);
             }
 

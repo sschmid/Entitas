@@ -34,6 +34,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CLIConfig.cs" />
     <Compile Include="Commands\Add.cs" />
     <Compile Include="Commands\Donate.cs" />
     <Compile Include="Commands\Dump.cs" />

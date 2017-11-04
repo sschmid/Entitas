@@ -16,6 +16,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
             if (args.isForce() || !preferences.propertiesExist) {
                 preferences.AddProperties(new CodeGeneratorConfig().defaultProperties, true);
+                preferences.AddProperties(new CLIConfig().defaultProperties, true);
                 preferences.Save();
 
                 fabl.Info("Created " + preferences.propertiesPath);

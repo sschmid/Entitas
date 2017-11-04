@@ -17,7 +17,11 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 var config = new CodeGeneratorConfig();
                 config.Configure(preferences);
 
+                var cliConfig = new CLIConfig();
+                cliConfig.Configure(preferences);
+
                 forceAddKeys(config.defaultProperties, preferences);
+                forceAddKeys(cliConfig.defaultProperties, preferences);
 
                 Type[] types = null;
 
@@ -30,7 +34,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
                 var askedRemoveKeys = new HashSet<string>();
                 var askedAddKeys = new HashSet<string>();
-                while (fix(askedRemoveKeys, askedAddKeys, types, config, preferences)) { }
+                while (fix(askedRemoveKeys, askedAddKeys, types, config, cliConfig, preferences)) { }
             }
         }
 
@@ -51,13 +55,16 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
         }
 
-        static bool fix(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, Preferences preferences) {
+        static bool fix(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, CLIConfig cliConfig, Preferences preferences) {
             var changed = fixPlugins(askedRemoveKeys, askedAddKeys, types, config, preferences);
 
             forceAddKeys(getConfigurables(types, config), preferences);
 
-            var requiredKeys = config.defaultProperties.Merge(getConfigurables(types, config)).Keys.ToArray();
-            removeUnusedKeys(askedRemoveKeys, requiredKeys, preferences);
+            var requiredKeys = config.defaultProperties
+                .Merge(cliConfig.defaultProperties)
+                .Merge(getConfigurables(types, config)).Keys.ToArray();
+
+            removeUnusedKeys(askedRemoveKeys, requiredKeys, cliConfig, preferences);
 
             return changed;
         }
@@ -130,11 +137,14 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             return changed;
         }
 
-        static void removeUnusedKeys(HashSet<string> askedRemoveKeys, string[] requiredKeys, Preferences preferences) {
-            var unused = Helper.GetUnusedKeys(requiredKeys, preferences);
-            foreach (var key in unused) {
+        static void removeUnusedKeys(HashSet<string> askedRemoveKeys, string[] requiredKeys, CLIConfig cliConfig, Preferences preferences) {
+            var unusedKeys = Helper
+                .GetUnusedKeys(requiredKeys, preferences)
+                .Where(key => !cliConfig.ignoreUnusedKeys.Contains(key));
+
+            foreach (var key in unusedKeys) {
                 if (!askedRemoveKeys.Contains(key)) {
-                    Helper.RemoveKey("Remove unused key", key, preferences);
+                    Helper.RemoveOrIgnoreKey("Remove unused key", key, cliConfig, preferences);
                     askedRemoveKeys.Add(key);
                 }
             }

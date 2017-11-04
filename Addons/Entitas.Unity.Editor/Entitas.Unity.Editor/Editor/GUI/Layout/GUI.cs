@@ -64,7 +64,7 @@ namespace Entitas.Unity.Editor {
 
         static bool miniButton(string c, GUIStyle style) {
             var options = c.Length == 1
-                           ? new [] { GUILayout.Width(19) }
+                ? new[] { GUILayout.Width(19) }
                 : new GUILayoutOption[0];
 
             var clicked = GUILayout.Button(c, style, options);

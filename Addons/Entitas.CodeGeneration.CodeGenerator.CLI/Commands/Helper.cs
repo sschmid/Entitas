@@ -5,6 +5,12 @@ using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
+    public enum UserDecision {
+        Accept,
+        Cancel,
+        Ignore
+    }
+
     public static class Helper {
 
         public static string[] GetUnusedKeys(string[] requiredKeys, Preferences preferences) {
@@ -26,6 +32,21 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             } while(keyChar != accept && keyChar != cancel);
 
             return keyChar == accept;
+        }
+
+        public static UserDecision GetComplexUserDecision(char accept = 'y', char cancel = 'n', char ignore = 'i') {
+            char keyChar;
+            do {
+                keyChar = Console.ReadKey(true).KeyChar;
+            } while(keyChar != accept && keyChar != cancel && keyChar != ignore);
+
+            if (keyChar == ignore) {
+                return UserDecision.Ignore;
+            }
+
+            return keyChar == accept
+                ? UserDecision.Accept
+                : UserDecision.Cancel;
         }
 
         public static void ForceAddKey(string message, string key, string value, Preferences preferences) {
@@ -70,6 +91,22 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 preferences.properties.RemoveProperty(key);
                 preferences.Save();
                 fabl.Warn("Removed: " + key);
+            }
+        }
+
+        public static void RemoveOrIgnoreKey(string question, string key, CLIConfig cliConfig, Preferences preferences) {
+            fabl.Warn(question + ": '" + key + "' ? (y / n / (i)gnore)");
+            var userDecision = GetComplexUserDecision();
+            if (userDecision == UserDecision.Accept) {
+                preferences.properties.RemoveProperty(key);
+                preferences.Save();
+                fabl.Warn("Removed: " + key);
+            } else if (userDecision == UserDecision.Ignore) {
+                var valueList = cliConfig.ignoreUnusedKeys.ToList();
+                valueList.Add(key);
+                cliConfig.ignoreUnusedKeys = valueList.ToArray();
+                preferences.Save();
+                fabl.Warn("Ignoring: " + key);
             }
         }
 
