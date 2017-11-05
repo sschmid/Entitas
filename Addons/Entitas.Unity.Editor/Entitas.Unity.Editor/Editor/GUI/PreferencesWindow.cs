@@ -82,6 +82,20 @@ namespace Entitas.Unity.Editor {
             if (rect.Contains(Event.current.mousePosition) && Event.current.clickCount > 0) {
                 //Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/blob/develop/README.md");
             }
+
+            const int buttonWidth = 60;
+            const int buttonHeight = 15;
+            const int padding = 4;
+            var buttonRect = new Rect(
+                rect.width - buttonWidth - padding,
+                rect.height - buttonHeight - padding,
+                buttonWidth,
+                buttonHeight
+            );
+            if (GUI.Button(buttonRect, "Edit", EditorStyles.miniButton)) {
+                System.Diagnostics.Process.Start(_preferences.propertiesPath);
+                Close();
+            }
         }
 
         void drawPreferencesDrawers() {
