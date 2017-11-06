@@ -6,8 +6,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
     public class CodeGeneratorConfig : AbstractConfigurableConfig {
 
         const string SEARCH_PATHS_KEY = "Entitas.CodeGeneration.CodeGenerator.SearchPaths";
-        const string MONO_KEY = "Entitas.CodeGeneration.CodeGenerator.Mono";
-        const string CLI_KEY = "Entitas.CodeGeneration.CodeGenerator.CLI";
         const string PLUGINS_PATHS_KEY = "Entitas.CodeGeneration.CodeGenerator.Plugins";
 
         const string DATA_PROVIDERS_KEY = "Entitas.CodeGeneration.CodeGenerator.DataProviders";
@@ -25,8 +23,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                                         "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity, " +
                                         "/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem" },
 
-                    { MONO_KEY, "/Applications/Unity/Unity.app/Contents/MonoBleedingEdge/bin/mono" },
-                    { CLI_KEY, "CodeGenerator/entitas.exe" },
                     { PLUGINS_PATHS_KEY, "Entitas.CodeGeneration.Plugins, " +
                                          "Entitas.VisualDebugging.CodeGeneration.Plugins" },
 
@@ -40,16 +36,6 @@ namespace Entitas.CodeGeneration.CodeGenerator {
         public string[] searchPaths {
             get { return _preferences[SEARCH_PATHS_KEY].ArrayFromCSV(); }
             set { _preferences[SEARCH_PATHS_KEY] = value.ToCSV(); }
-        }
-
-        public string mono {
-            get { return _preferences[MONO_KEY]; }
-            set { _preferences[MONO_KEY] = value; }
-        }
-
-        public string cli {
-            get { return _preferences[CLI_KEY]; }
-            set { _preferences[CLI_KEY] = value; }
         }
 
         public string[] plugins {

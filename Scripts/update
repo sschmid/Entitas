@@ -11,6 +11,9 @@ rm -rf $BUILD
 mkdir $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
 
 # collect sources
+cp "${ADDONS}/Libraries/fabl.dll" ${BUILD_SRC}
+cp "${ADDONS}/Libraries/fabl.Appenders.dll" ${BUILD_SRC}
+
 cp "${ES}/${BIN}/${ES}.dll" ${BUILD_SRC}
 cp "${ES_UTILS}/${BIN}/${ES_UTILS}.dll" ${BUILD_SRC}
 
@@ -20,7 +23,6 @@ cp "${ADDONS}/${ES_UE}/${BIN}/${ES_UE}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_CG}/${BIN}/${ES_CG}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_CG_ATTR}/${BIN}/${ES_CG_ATTR}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_CG_G}/${BIN}/${ES_CG_G}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_CG_G}/${BIN}/fabl.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_CG_G_CLI}/${BIN}/${ES_CG_G_CLI}.exe" ${BUILD_SRC}
 cp "${ADDONS}/${ES_CG_P}/${BIN}/${ES_CG_P}.dll" ${BUILD_SRC}
 cp "${ADDONS}/${ES_CG_UE}/${BIN}/${ES_CG_UE}.dll" ${BUILD_SRC}
@@ -94,6 +96,7 @@ cp "${BUILD_SRC}/${ES_UTILS}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_VD_U}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_VD_UE}.dll" "${libDir}/Editor/"
 cp "${BUILD_SRC}/fabl.dll" ${libDir}
+cp "${BUILD_SRC}/fabl.Appenders.dll" ${libDir}
 # --
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"

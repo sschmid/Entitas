@@ -1,8 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
+using Fabl.Appenders;
 using UnityEditor;
 using UnityEngine;
 
@@ -76,71 +78,29 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             }
         }
 
-        [MenuItem("Tools/Entitas/Generate with CLI %&g", false, 101)]
-        public static void GenerateWithCLI() {
-            Debug.Log("Generating...");
+        [MenuItem("Tools/Entitas/Generate with external Code Generator %&g", false, 101)]
+        public static void GenerateExternal() {
+            Debug.Log("Connecting...");
 
-            Preferences.sharedInstance.Refresh();
-            var config = new CodeGeneratorConfig();
-            config.Configure(Preferences.sharedInstance);
-
-            var projectRoot = Application.dataPath.Substring(0, Application.dataPath.Length - "/Assets".Length);
-            var cli = Path.Combine(projectRoot, config.cli);
-            if (!File.Exists(cli)) {
-                Debug.Log(cli + " does not exist!");
-                return;
-            }
-
-            if (Application.platform == RuntimePlatform.WindowsEditor) {
-                runCommand(cli, "gen", projectRoot);
-            } else {
-                runCommand(config.mono, cli + " gen", projectRoot);
-            }
-
-            Debug.Log("Generating done.");
+            var ip = IPAddress.Parse("127.0.0.1");
+            const int port = 3333;
+            var client = new TcpClientSocket();
+            client.OnConnect += onConnected;
+            client.OnDisconnect += onDisconnect;
+            client.Connect(ip, port);
 
             AssetDatabase.Refresh();
         }
 
-        static void runCommand(string fileName, string arguments, string workingDirectory) {
-            var startInfo = createStartInfo(workingDirectory);
-            startInfo.FileName = fileName;
-            startInfo.Arguments = arguments;
-            startProcess(startInfo);
+        static void onConnected(TcpClientSocket client) {
+            Debug.Log("Connected");
+            Debug.Log("Generating");
+            client.Send(Encoding.UTF8.GetBytes("gen"));
+            client.Disconnect();
         }
 
-        static System.Diagnostics.ProcessStartInfo createStartInfo(string workingDirectory) {
-            var startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.WorkingDirectory = workingDirectory;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            startInfo.UseShellExecute = false;
-            startInfo.CreateNoWindow = true;
-            return startInfo;
-        }
-
-        static void startProcess(System.Diagnostics.ProcessStartInfo startInfo) {
-            var process = new System.Diagnostics.Process();
-            process.StartInfo = startInfo;
-            process.OutputDataReceived += OnDataReceivedEventHandler;
-            process.ErrorDataReceived += OnErrorReceivedEventHandler;
-            process.Start();
-            process.BeginErrorReadLine();
-            process.BeginOutputReadLine();
-            process.WaitForExit();
-            process.Close();
-        }
-
-        static void OnDataReceivedEventHandler(object sender, System.Diagnostics.DataReceivedEventArgs e) {
-            if (e.Data != null) {
-                UnityEngine.Debug.Log(e.Data);
-            }
-        }
-
-        static void OnErrorReceivedEventHandler(object sender, System.Diagnostics.DataReceivedEventArgs e) {
-            if (e.Data != null) {
-                UnityEngine.Debug.Log(e.Data);
-            }
+        static void onDisconnect(AbstractTcpSocket socket) {
+            Debug.Log("Disconnected");
         }
     }
 }
