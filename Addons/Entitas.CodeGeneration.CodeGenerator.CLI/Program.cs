@@ -7,7 +7,7 @@ using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
-    class MainClass {
+    public class Program {
 
         static Dictionary<LogLevel, ConsoleColor> _consoleColors = new Dictionary<LogLevel, ConsoleColor> {
             { LogLevel.Warn, ConsoleColor.DarkYellow },
@@ -15,30 +15,32 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             { LogLevel.Fatal, ConsoleColor.DarkRed }
         };
 
+        static ICommand[] _commands;
+
         public static void Main(string[] args) {
-            var commands = AppDomain.CurrentDomain
+            _commands = AppDomain.CurrentDomain
                                     .GetInstancesOf<ICommand>()
                                     .OrderBy(c => c.trigger)
                                     .ToArray();
 
             if (args == null || args.Length == 0) {
-                printUsage(commands);
+                printUsage();
                 return;
             }
 
             setupLogging(args);
 
             try {
-                getCommand(commands, args[0]).Run(args);
+                GetCommand(args[0]).Run(args);
 
                 if (args.keepAlive()) {
                     while (shouldKeepAlive()) {
-                        getCommand(commands, args[0]).Run(args);
+                        GetCommand(args[0]).Run(args);
                     }
                     fabl.Info("Goodbye, see you soon!");
                 }
             } catch (Exception ex) {
-                printException(ex, args);
+                PrintException(ex, args);
             }
         }
 
@@ -53,8 +55,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             return userDecision;
         }
 
-        static ICommand getCommand(ICommand[] commands, string trigger) {
-            var command = commands.SingleOrDefault(c => c.trigger == trigger);
+        public static ICommand GetCommand(string trigger) {
+            var command = _commands.SingleOrDefault(c => c.trigger == trigger);
             if (command == null) {
                 throw new Exception("command not found: " + trigger);
             }
@@ -62,7 +64,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             return command;
         }
 
-        static void printException(Exception ex, string[] args) {
+        public static void PrintException(Exception ex, string[] args) {
             var loadException = ex as ReflectionTypeLoadException;
             if (loadException != null) {
                 foreach (var e in loadException.LoaderExceptions) {
@@ -77,8 +79,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
         }
 
-        static void printUsage(ICommand[] commands) {
-            commands = commands
+        static void printUsage() {
+            var commands = _commands
                 .Where(c => c.description != null)
                 .ToArray();
             var pad = commands.Max(c => c.example.Length);

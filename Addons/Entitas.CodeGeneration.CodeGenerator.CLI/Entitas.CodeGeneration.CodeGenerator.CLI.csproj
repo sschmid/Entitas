@@ -28,6 +28,9 @@
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="fabl.Appenders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libraries\fabl.Appenders.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="fabl">
       <HintPath>..\Libraries\fabl.dll</HintPath>
@@ -40,6 +43,7 @@
     <Compile Include="Commands\Dump.cs" />
     <Compile Include="Commands\Format.cs" />
     <Compile Include="Commands\Remove.cs" />
+    <Compile Include="Commands\Server.cs" />
     <Compile Include="Commands\Set.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Commands\NewConfig.cs" />
