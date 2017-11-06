@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
@@ -72,6 +73,73 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             var canCompile = (int)logEntries.GetMethod("GetCount").Invoke(new object(), null) == 0;
             if (!canCompile) {
                 Debug.Log("There are compile errors! Generated code will be based on last compiled executable.");
+            }
+        }
+
+        [MenuItem("Tools/Entitas/Generate with CLI %&g", false, 101)]
+        public static void GenerateWithCLI() {
+            Debug.Log("Generating...");
+
+            Preferences.sharedInstance.Refresh();
+            var config = new CodeGeneratorConfig();
+            config.Configure(Preferences.sharedInstance);
+
+            var projectRoot = Application.dataPath.Substring(0, Application.dataPath.Length - "/Assets".Length);
+            var cli = Path.Combine(projectRoot, config.cli);
+            if (!File.Exists(cli)) {
+                Debug.Log(cli + " does not exist!");
+                return;
+            }
+
+            if (Application.platform == RuntimePlatform.WindowsEditor) {
+                runCommand(cli, "gen", projectRoot);
+            } else {
+                runCommand(config.mono, cli + " gen", projectRoot);
+            }
+
+            Debug.Log("Generating done.");
+
+            AssetDatabase.Refresh();
+        }
+
+        static void runCommand(string fileName, string arguments, string workingDirectory) {
+            var startInfo = createStartInfo(workingDirectory);
+            startInfo.FileName = fileName;
+            startInfo.Arguments = arguments;
+            startProcess(startInfo);
+        }
+
+        static System.Diagnostics.ProcessStartInfo createStartInfo(string workingDirectory) {
+            var startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.WorkingDirectory = workingDirectory;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            startInfo.UseShellExecute = false;
+            startInfo.CreateNoWindow = true;
+            return startInfo;
+        }
+
+        static void startProcess(System.Diagnostics.ProcessStartInfo startInfo) {
+            var process = new System.Diagnostics.Process();
+            process.StartInfo = startInfo;
+            process.OutputDataReceived += OnDataReceivedEventHandler;
+            process.ErrorDataReceived += OnErrorReceivedEventHandler;
+            process.Start();
+            process.BeginErrorReadLine();
+            process.BeginOutputReadLine();
+            process.WaitForExit();
+            process.Close();
+        }
+
+        static void OnDataReceivedEventHandler(object sender, System.Diagnostics.DataReceivedEventArgs e) {
+            if (e.Data != null) {
+                UnityEngine.Debug.Log(e.Data);
+            }
+        }
+
+        static void OnErrorReceivedEventHandler(object sender, System.Diagnostics.DataReceivedEventArgs e) {
+            if (e.Data != null) {
+                UnityEngine.Debug.Log(e.Data);
             }
         }
     }
