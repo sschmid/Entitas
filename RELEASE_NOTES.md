@@ -1,3 +1,51 @@
+# 0.43.0
+
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity. Please check for updates in 2 - 4 days.
+
+#### Breaking changes
+The new code generator is part of `Entitas.Roslyn`. The Roslyn Plugins are now called `Entitas.Roslyn.CodeGeneration.Plugins`. If you already tested the new code generator beta, please update Entitas.properties
+- `Entitas.Roslyn.CodeGeneration.Plugins`
+- `Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider`
+- `Entitas.Roslyn.CodeGeneration.Plugins.EntityIndexDataProvider`
+
+New mandatory keys have been added to Entitas.properties. You can automatically add them by running `entitas fix`
+
+#### CodeGenerator
+- Added `ICodeGeneratorCachable` to cache and share objects between multiple plugins to avoid redundant calculations
+- Using the objectCache to share the AssemblyResolver between all plugins
+- Added CodeGenerator to default searchPaths
+- Added Unity menu item to generate with CLI
+
+<img width="242" alt="entitas-unity-cli" src="https://user-images.githubusercontent.com/233700/32442888-4c457022-c2fd-11e7-8665-bc9b7619e3f9.png">
+
+
+#### CodeGenerator CLI
+- Updated New command to use preferences
+- Added CLIConfig with new key `Entitas.CodeGeneration.CodeGenerator.CLI.Ignore.UnusedKeys` to add keys that should be ignored when running `entitas status` or `entitas doctor`. You can automatically ignore keys by pressing `i`
+
+<img width="906" alt="entitas-cli-ignoreunusedkeys" src="https://user-images.githubusercontent.com/233700/32444739-f3d660c0-c303-11e7-96ce-a111c9de2d89.png">
+
+- Added support for custom properties files. Each command optionally accepts a path to a properties file. This way you can have multiple different configs how to run the code generator, e.g. one with the reflection-based code generator and one with the roslyn code generator.
+
+```csharp
+entitas gen My.properties
+```
+- Pretty CLI
+
+#### Unity
+- Added Edit Button to Entitas Preferences
+
+<img width="449" alt="entitas-preferences-editbutton" src="https://user-images.githubusercontent.com/233700/32421256-c8e4fa88-c296-11e7-8c14-8d075444ed51.png">
+
+#### Asset Store Version
+- Changed project structure. The Plugins are now called `Entitas.Roslyn.CodeGeneration.Plugins`
+- Using the objectCache to share the ProjectParser between all plugins which speeds up the code generation process
+- Updated all packages to latest version and downgraded all projects from .NET 4.6.1 to .NET 4.6
+- Added more dependencies to remove warnings when running `entitas doctor` or `entitas gen`
+
+<img width="640" alt="entitas-roslyn-nowarnings" src="https://user-images.githubusercontent.com/233700/32421230-8766467a-c296-11e7-898a-0eaaa98c4e5a.png">
+
+
 # 0.42.5
 
 #### General

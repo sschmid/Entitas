@@ -137,6 +137,7 @@
 │   │           ├── Interfaces
 │   │           │   ├── ICodeGenFilePostProcessor.cs
 │   │           │   ├── ICodeGenerator.cs
+│   │           │   ├── ICodeGeneratorCachable.cs
 │   │           │   ├── ICodeGeneratorDataProvider.cs
 │   │           │   └── ICodeGeneratorInterface.cs
 │   │           ├── CodeGenFile.cs
@@ -169,6 +170,7 @@
 │   │   │   ├── AbstractCommand.cs
 │   │   │   ├── Add.cs
 │   │   │   ├── Doctor.cs
+│   │   │   ├── Donate.cs
 │   │   │   ├── DryRun.cs
 │   │   │   ├── Dump.cs
 │   │   │   ├── EditConfig.cs
@@ -183,6 +185,7 @@
 │   │   │   ├── Set.cs
 │   │   │   └── Status.cs
 │   │   ├── ArgsExtension.cs
+│   │   ├── CLIConfig.cs
 │   │   └── Program.cs
 │   ├── Entitas.CodeGeneration.Plugins
 │   │   └── Entitas.CodeGeneration.Plugins
