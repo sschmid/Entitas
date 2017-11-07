@@ -1,6 +1,41 @@
+# 0.44.0
+
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days.
+
+#### Unity CodeGenerator
+- Added new menu item which connects to an external code generator server instance
+
+#### CodeGenerator CLI
+- Added server command
+- Added client command
+- Added startCodeGenerator files for macOS and Windows
+
+#### Example
+Start the code generator server by double clicking `startCodeGenerator` on macOS or `startCodeGenerator.bat` on Windows, or use the terminal
+
+```
+$ mono CodeGenerator/entitas.exe server
+```
+
+You can now either use the new Unity menu item `Tools/Entitas/Generate with external Code Generator`
+which connects to a running server and sends the `gen` command or connect yourself like this
+
+```
+$ mono CodeGenerator/entitas.exe client gen
+```
+
+This will connect to a running server and send the `gen` command. This is useful if you want to add your own custom commands
+in your IDE like Visual Studio or Rider (or others).
+
+Using the code generator server and client is optional but can greatly improve your workflow and
+can drastically reduce the overhead of generating new files.
+
+
 # 0.43.0
 
-As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity. Please check for updates in 2 - 4 days.
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days.
 
 #### Breaking changes
 The new code generator is part of `Entitas.Roslyn`. The Roslyn Plugins are now called `Entitas.Roslyn.CodeGeneration.Plugins`. If you already tested the new code generator beta, please update Entitas.properties
@@ -17,7 +52,6 @@ New mandatory keys have been added to Entitas.properties. You can automatically 
 - Added Unity menu item to generate with CLI
 
 <img width="242" alt="entitas-unity-cli" src="https://user-images.githubusercontent.com/233700/32442888-4c457022-c2fd-11e7-8665-bc9b7619e3f9.png">
-
 
 #### CodeGenerator CLI
 - Updated New command to use preferences
@@ -63,12 +97,14 @@ $ entitas gen -a
 # 0.42.4
 
 #### Notes
-Entitas development is back on track again and the wait is over. This is probably one of the last updates before Entitas reaches 1.0.0. This verion has been tested successfully in combination with the new code generator that will work even when the code is not compiling.
+Entitas development is back on track again and the wait is over. This is probably one of the last updates before Entitas reaches 1.0.0.
+This verion has been tested successfully in combination with the new code generator that will work even when the code is not compiling.
 
 #### General
 - Added support for User.properties. You can now either overwrite values sepcified in Entitas.properties or use placeholders
 
-Create a new file called User.properties and specify the keys and values that should be overwritten. You can also specify placeholers like this `${myPlaceholder}` and specify the key either in Entitas.properties or User.properties.
+Create a new file called User.properties and specify the keys and values that should be overwritten.
+You can also specify placeholers like this `${myPlaceholder}` and specify the key either in Entitas.properties or User.properties.
 see: [Match One - Entitas.properties](https://github.com/sschmid/Match-One/blob/master/Entitas.properties)
 see: [Match One - User.properties](https://github.com/sschmid/Match-One/blob/master/User.properties)
 
@@ -164,7 +200,10 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 
 # 0.41.2
 
-After installing please check your Entitas.properties. Due to the addition of `IConfigurable` for code generator plugins some keys in Entitas.properties changed. `entitas.exe doctor`, `entitas.exe status` and `entitas.exe fix` can help you fixing any issues. A new default Entitas.properties file will be created if none is found. The default Entitas.properties should work with Unity without modification. For reference take a look at [Match-One - Entitas.properties](https://github.com/sschmid/Match-One/blob/master/Entitas.properties)
+After installing please check your Entitas.properties. Due to the addition of `IConfigurable` for code generator plugins
+some keys in Entitas.properties changed. `entitas.exe doctor`, `entitas.exe status` and `entitas.exe fix` can help you
+fixing any issues. A new default Entitas.properties file will be created if none is found. The default Entitas.properties
+should work with Unity without modification. For reference take a look at [Match-One - Entitas.properties](https://github.com/sschmid/Match-One/blob/master/Entitas.properties)
 
 Exiting limitation mentioned in the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md) still apply (Entitas.Blueprints.CodeGeneration.Plugins is not supported in the code generator CLI)
 
@@ -228,7 +267,8 @@ Missing key: Entitas.CodeGeneration.Plugins.IgnoreNamespaces
 
 See and discuss changes in [Milestone 0.41.0](https://github.com/sschmid/Entitas-CSharp/milestone/13)
 
-This milestone paves the way for a more customizable version of Entitas. A streamlined and modular project structure enables deploying Entitas as Dlls which opens the door for 3rd party Addons and the extendable command line code generator.
+This milestone paves the way for a more customizable version of Entitas. A streamlined and modular project structure enables
+deploying Entitas as Dlls which opens the door for 3rd party Addons and the extendable command line code generator.
 
 #### Breaking changes
 Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
@@ -271,7 +311,9 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 See and discuss changes in [Milestone 0.40.0](https://github.com/sschmid/Entitas-CSharp/milestone/12)
 
 #### Note
-Please update Entitas.properties by opening Entitas Preferences. Added `assemblyPath` and `codeGeneratorAssemblyPath` to code generator config. When not selected already, navigate to `Library/ScriptAssemblies/` in your Unity project and select `Assembly-CSharp.dll` for the assembly and `Assembly-CSharp-Editor.dll` for the code generator assembly.
+Please update Entitas.properties by opening Entitas Preferences. Added `assemblyPath` and `codeGeneratorAssemblyPath`
+to code generator config. When not selected already, navigate to `Library/ScriptAssemblies/` in your Unity project
+and select `Assembly-CSharp.dll` for the assembly and `Assembly-CSharp-Editor.dll` for the code generator assembly.
 
 #### Entitas.CodeGenerator
 - Add ConsoleWriteLinePostProcessor #342

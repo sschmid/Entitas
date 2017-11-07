@@ -169,6 +169,7 @@
 │   │   ├── Commands
 │   │   │   ├── AbstractCommand.cs
 │   │   │   ├── Add.cs
+│   │   │   ├── Client.cs
 │   │   │   ├── Doctor.cs
 │   │   │   ├── Donate.cs
 │   │   │   ├── DryRun.cs
@@ -182,11 +183,14 @@
 │   │   │   ├── NewConfig.cs
 │   │   │   ├── Remove.cs
 │   │   │   ├── ScanDlls.cs
+│   │   │   ├── Server.cs
 │   │   │   ├── Set.cs
 │   │   │   └── Status.cs
 │   │   ├── ArgsExtension.cs
 │   │   ├── CLIConfig.cs
-│   │   └── Program.cs
+│   │   ├── Program.cs
+│   │   ├── startCodeGenerator
+│   │   └── startCodeGenerator.bat
 │   ├── Entitas.CodeGeneration.Plugins
 │   │   └── Entitas.CodeGeneration.Plugins
 │   │       └── Plugins
