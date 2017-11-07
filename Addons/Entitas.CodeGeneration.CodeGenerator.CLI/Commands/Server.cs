@@ -15,7 +15,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas server port"; } }
 
         AbstractTcpSocket _socket;
-        List<string> _logBuffer = new List<string>();
+        readonly List<string> _logBuffer = new List<string>();
 
         public override void Run(string[] args) {
             var port = 0;
@@ -29,10 +29,10 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             _socket = server;
             server.OnDisconnect += onDisconnect;
             server.Listen(port);
-            _socket.OnReceive += onReceive;
+            server.OnReceive += onReceive;
             Console.CancelKeyPress += onCancel;
             while (true) {
-                _socket.Send(Encoding.UTF8.GetBytes(Console.ReadLine()));
+                server.Send(Encoding.UTF8.GetBytes(Console.ReadLine()));
             }
         }
 
@@ -50,7 +50,11 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 fabl.AddAppender(onLog);
                 command.Run(args);
                 fabl.RemoveAppender(onLog);
-                socket.Send(Encoding.UTF8.GetBytes(getLogBufferString()));
+                var logBufferString = getLogBufferString();
+                var sendBytes = logBufferString.Length == 0
+                    ? new byte[] { 0 }
+                    : Encoding.UTF8.GetBytes(logBufferString);
+                socket.Send(sendBytes );
             } catch (Exception ex) {
                 Program.PrintException(ex, args);
                 socket.Send(Encoding.UTF8.GetBytes(getLogBufferString() + ex.Message));
