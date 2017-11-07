@@ -5,4 +5,7 @@ public class PrimaryEntityIndexComponent : IComponent {
 
     [PrimaryEntityIndex]
     public string value;
+
+    [PrimaryEntityIndex]
+    public string value2;
 }

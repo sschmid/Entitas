@@ -24,7 +24,7 @@ class describe_EntityIndexDataProvider : nspec {
 
         it["creates data for each entity index"] = () => {
             var data = getData<EntityIndexComponent, StandardComponent>();
-            data.Length.should_be(1);
+            data.Length.should_be(2);
 
             var d = data[0];
 
@@ -50,12 +50,14 @@ class describe_EntityIndexDataProvider : nspec {
 
             d.GetMemberName().GetType().should_be(typeof(string));
             d.GetMemberName().should_be("value");
+
+            data[1].GetMemberName().should_be("value2");
         };
 
         it["creates data for each primary entity index"] = () => {
             var data = getData<PrimaryEntityIndexComponent, StandardComponent>();
 
-            data.Length.should_be(1);
+            data.Length.should_be(2);
             var d = data[0];
 
             d.GetEntityIndexType().should_be("Entitas.PrimaryEntityIndex");
@@ -66,6 +68,8 @@ class describe_EntityIndexDataProvider : nspec {
             d.GetKeyType().should_be("string");
             d.GetComponentType().should_be("PrimaryEntityIndexComponent");
             d.GetMemberName().should_be("value");
+
+            data[1].GetMemberName().should_be("value2");
         };
 
         it["ignores abstract components"] = () => {
@@ -95,7 +99,7 @@ class describe_EntityIndexDataProvider : nspec {
             data.Length.should_be(0);
         };
 
-        it["configure"] = () => {
+        context["configure"] = () => {
 
             Preferences preferences= null;
 
@@ -108,7 +112,7 @@ class describe_EntityIndexDataProvider : nspec {
 
             it["ignores namespaces"] = () => {
                 var data = getData<EntityIndexComponent, StandardComponent>(preferences);
-                data.Length.should_be(1);
+                data.Length.should_be(2);
                 var d = data[0];
 
                 d.GetEntityIndexName().should_be("EntityIndex");

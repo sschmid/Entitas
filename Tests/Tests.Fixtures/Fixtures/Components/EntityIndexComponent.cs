@@ -8,5 +8,8 @@ namespace My.Namespace {
 
         [EntityIndex]
         public string value;
+
+        [EntityIndex]
+        public string value2;
     }
 }

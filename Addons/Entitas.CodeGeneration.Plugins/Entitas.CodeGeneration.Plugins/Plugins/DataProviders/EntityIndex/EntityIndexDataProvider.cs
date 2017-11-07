@@ -58,7 +58,7 @@ namespace Entitas.CodeGeneration.Plugins {
                     type => type,
                     type => type.GetPublicMemberInfos())
                 .Where(kv => kv.Value.Any(info => info.attributes.Any(attr => attr.attribute is AbstractEntityIndexAttribute)))
-                .Select(kv => createEntityIndexData(kv.Key, kv.Value));
+                .SelectMany(kv => createEntityIndexData(kv.Key, kv.Value));
 
             var customEntityIndexData = types
                 .Where(type => !type.IsAbstract)
@@ -70,21 +70,23 @@ namespace Entitas.CodeGeneration.Plugins {
                 .ToArray();
         }
 
-        EntityIndexData createEntityIndexData(Type type, List<PublicMemberInfo> infos) {
-            var data = new EntityIndexData();
+        EntityIndexData[] createEntityIndexData(Type type, List<PublicMemberInfo> infos) {
+            return infos
+                .Where(i => i.attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1)
+                .Select(info => {
+                    var data = new EntityIndexData();
+                    var attribute = (AbstractEntityIndexAttribute)info.attributes.Single(attr => attr.attribute is AbstractEntityIndexAttribute).attribute;
 
-            var info = infos.Single(i => i.attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1);
-            var attribute = (AbstractEntityIndexAttribute)info.attributes.Single(attr => attr.attribute is AbstractEntityIndexAttribute).attribute;
+                    data.SetEntityIndexType(getEntityIndexType(attribute));
+                    data.IsCustom(false);
+                    data.SetEntityIndexName(type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces));
+                    data.SetKeyType(info.type.ToCompilableString());
+                    data.SetComponentType(type.ToCompilableString());
+                    data.SetMemberName(info.name);
+                    data.SetContextNames(_contextsComponentDataProvider.GetContextNamesOrDefault(type));
 
-            data.SetEntityIndexType(getEntityIndexType(attribute));
-            data.IsCustom(false);
-            data.SetEntityIndexName(type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces));
-            data.SetKeyType(info.type.ToCompilableString());
-            data.SetComponentType(type.ToCompilableString());
-            data.SetMemberName(info.name);
-            data.SetContextNames(_contextsComponentDataProvider.GetContextNamesOrDefault(type));
-
-            return data;
+                    return data;
+                }).ToArray();
         }
 
         EntityIndexData createCustomEntityIndexData(Type type) {
