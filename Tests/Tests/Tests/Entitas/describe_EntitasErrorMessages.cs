@@ -104,7 +104,14 @@ class describe_EntitasErrorMessages : nspec {
             });
 
             it["destroy retained entities"] = () => printErrorMessage(() => {
-                ctx.CreateEntity().Retain(this);
+                var e = ctx.CreateEntity();
+                e.Retain(this);
+                e.Retain(new object());
+
+                e = ctx.CreateEntity();
+                e.Retain(this);
+                e.Retain(new object());
+
                 ctx.DestroyAllEntities();
             });
 

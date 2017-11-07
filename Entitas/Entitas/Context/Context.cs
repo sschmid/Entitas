@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Entitas.Utils;
 
 namespace Entitas {
@@ -209,7 +210,7 @@ namespace Entitas {
             _entities.Clear();
 
             if (_retainedEntities.Count != 0) {
-                throw new ContextStillHasRetainedEntitiesException(this);
+                throw new ContextStillHasRetainedEntitiesException(this, _retainedEntities.ToArray());
             }
         }
 
