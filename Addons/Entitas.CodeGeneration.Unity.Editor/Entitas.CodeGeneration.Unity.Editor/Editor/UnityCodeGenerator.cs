@@ -76,6 +76,10 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             var canCompile = (int)logEntries.GetMethod("GetCount").Invoke(new object(), null) == 0;
             if (!canCompile) {
                 Debug.Log("There are compile errors! Generated code will be based on last compiled executable.");
+                EditorUtility.DisplayDialog("Entitas Code Generator",
+                    "There are compile errors! Generated code will be based on last compiled executable.",
+                    "Ok"
+                );
             }
         }
 
