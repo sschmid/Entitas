@@ -9,7 +9,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public class Status : AbstractCommand {
 
         public override string trigger { get { return "status"; } }
-        public override string description { get { return "Lists available and unavailable plugins"; } }
+        public override string description { get { return "List available and unavailable plugins"; } }
         public override string example { get { return "entitas status"; } }
 
         public override void Run(string[] args) {

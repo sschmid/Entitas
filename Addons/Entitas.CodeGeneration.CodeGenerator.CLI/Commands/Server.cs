@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public class Server : AbstractCommand {
 
         public override string trigger { get { return "server"; } }
-        public override string description { get { return "Starts the Entitas server"; } }
+        public override string description { get { return "Start server mode (default port is 3333)"; } }
         public override string example { get { return "entitas server port"; } }
 
         AbstractTcpSocket _socket;

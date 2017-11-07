@@ -6,7 +6,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
     public class Set : AbstractCommand {
 
         public override string trigger { get { return "set"; } }
-        public override string description { get { return "Sets the value of a key"; } }
+        public override string description { get { return "Set the value of a key"; } }
         public override string example { get { return "entitas set key value"; } }
 
         public override void Run(string[] args) {
