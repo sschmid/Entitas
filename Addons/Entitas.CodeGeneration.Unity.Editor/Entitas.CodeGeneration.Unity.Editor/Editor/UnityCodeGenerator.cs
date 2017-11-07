@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Utils;
@@ -82,21 +83,24 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         public static void GenerateExternal() {
             Debug.Log("Connecting...");
 
-            var ip = IPAddress.Parse("127.0.0.1");
-            const int port = 3333;
             var client = new TcpClientSocket();
             client.OnConnect += onConnected;
+            client.OnReceive += onReceive;
             client.OnDisconnect += onDisconnect;
-            client.Connect(ip, port);
+            client.Connect(IPAddress.Parse("127.0.0.1"), 3333);
 
             AssetDatabase.Refresh();
         }
 
         static void onConnected(TcpClientSocket client) {
-            Debug.Log("Connected");
-            Debug.Log("Generating");
+            Debug.Log("Connected.");
+            Debug.Log("Generating...");
             client.Send(Encoding.UTF8.GetBytes("gen"));
-            client.Disconnect();
+        }
+
+        static void onReceive(AbstractTcpSocket socket, Socket client, byte[] bytes) {
+            Debug.Log("Generated.");
+            socket.Disconnect();
         }
 
         static void onDisconnect(AbstractTcpSocket socket) {

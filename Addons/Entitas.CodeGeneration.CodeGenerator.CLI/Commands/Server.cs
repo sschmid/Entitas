@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -14,6 +15,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string example { get { return "entitas server port"; } }
 
         AbstractTcpSocket _socket;
+        List<string> _logBuffer = new List<string>();
 
         public override void Run(string[] args) {
             var port = 0;
@@ -41,10 +43,20 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             var args = getArgsFromMessage(message);
 
             try {
-                Program.GetCommand(args[0]).Run(args);
+                if (args[0] == trigger) {
+                    throw new Exception("Server is already running!");
+                }
+                var command = Program.GetCommand(args[0]);
+                fabl.AddAppender(onLog);
+                command.Run(args);
+                fabl.RemoveAppender(onLog);
+                socket.Send(Encoding.UTF8.GetBytes(getLogBufferString()));
             } catch (Exception ex) {
                 Program.PrintException(ex, args);
+                socket.Send(Encoding.UTF8.GetBytes(getLogBufferString() + ex.Message));
             }
+
+            _logBuffer.Clear();
         }
 
         string[] getArgsFromMessage(string command) {
@@ -60,6 +72,14 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         void onDisconnect(AbstractTcpSocket socket) {
             Environment.Exit(0);
+        }
+
+        string getLogBufferString() {
+            return string.Join("\n", _logBuffer.ToArray());
+        }
+
+        void onLog(Logger logger, LogLevel loglevel, string message) {
+            _logBuffer.Add(message);
         }
     }
 }

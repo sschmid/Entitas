@@ -65,6 +65,7 @@ cp "${BUILD_SRC}/${ES}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
 cp "${BUILD_SRC}/${ES_UTILS}.dll" ${libDir}
 cp "${BUILD_SRC}/fabl.dll" ${libDir}
+cp "${BUILD_SRC}/fabl.Appenders.dll" ${libDir}
 # --
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
@@ -121,6 +122,7 @@ cp "${BUILD_SRC}/${ES_UTILS}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_VD_U}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_VD_UE}.dll" "${libDir}/Editor/"
 cp "${BUILD_SRC}/fabl.dll" ${libDir}
+cp "${BUILD_SRC}/fabl.Appenders.dll" ${libDir}
 # --
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
 cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
