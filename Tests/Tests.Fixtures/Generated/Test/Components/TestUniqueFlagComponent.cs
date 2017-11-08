@@ -41,10 +41,16 @@ public partial class TestEntity {
         get { return HasComponent(TestComponentsLookup.UniqueFlag); }
         set {
             if (value != isUniqueFlag) {
+                var index = TestComponentsLookup.UniqueFlag;
                 if (value) {
-                    AddComponent(TestComponentsLookup.UniqueFlag, uniqueFlagComponent);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : uniqueFlagComponent;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(TestComponentsLookup.UniqueFlag);
+                    RemoveComponent(index);
                 }
             }
         }

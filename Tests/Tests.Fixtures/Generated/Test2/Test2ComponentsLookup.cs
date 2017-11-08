@@ -10,15 +10,17 @@ public static class Test2ComponentsLookup {
 
     public const int ClassToGenerate = 0;
     public const int MyNamespaceEntityIndex = 1;
-    public const int MyNamespaceMyNamespace = 2;
-    public const int NameAge = 3;
-    public const int Test2Context = 4;
+    public const int MyNamespaceMultipleEntityIndices = 2;
+    public const int MyNamespaceMyNamespace = 3;
+    public const int NameAge = 4;
+    public const int Test2Context = 5;
 
-    public const int TotalComponents = 5;
+    public const int TotalComponents = 6;
 
     public static readonly string[] componentNames = {
         "ClassToGenerate",
         "MyNamespaceEntityIndex",
+        "MyNamespaceMultipleEntityIndices",
         "MyNamespaceMyNamespace",
         "NameAge",
         "Test2Context"
@@ -27,6 +29,7 @@ public static class Test2ComponentsLookup {
     public static readonly System.Type[] componentTypes = {
         typeof(ClassToGenerateComponent),
         typeof(My.Namespace.EntityIndexComponent),
+        typeof(My.Namespace.MultipleEntityIndicesComponent),
         typeof(My.Namespace.MyNamespaceComponent),
         typeof(NameAgeComponent),
         typeof(Test2ContextComponent)

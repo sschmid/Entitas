@@ -18,22 +18,23 @@ public static class TestComponentsLookup {
     public const int Flag = 7;
     public const int InterfaceToGenerate = 8;
     public const int MyNamespaceEntityIndex = 9;
-    public const int MyNamespaceMyNamespace = 10;
-    public const int MyNamespaceMyNamespaceFlag = 11;
-    public const int MyNamespaceUniqueMyNamespace = 12;
-    public const int MyNamespaceUniqueMyNamespaceFlag = 13;
-    public const int NameAge = 14;
-    public const int NewCustomNameComponent1 = 15;
-    public const int NewCustomNameComponent2 = 16;
-    public const int Position = 17;
-    public const int Size = 18;
-    public const int Standard = 19;
-    public const int StructToGenerate = 20;
-    public const int Test2Context = 21;
-    public const int UniqueFlag = 22;
-    public const int UniqueStandard = 23;
+    public const int MyNamespaceMultipleEntityIndices = 10;
+    public const int MyNamespaceMyNamespace = 11;
+    public const int MyNamespaceMyNamespaceFlag = 12;
+    public const int MyNamespaceUniqueMyNamespace = 13;
+    public const int MyNamespaceUniqueMyNamespaceFlag = 14;
+    public const int NameAge = 15;
+    public const int NewCustomNameComponent1 = 16;
+    public const int NewCustomNameComponent2 = 17;
+    public const int Position = 18;
+    public const int Size = 19;
+    public const int Standard = 20;
+    public const int StructToGenerate = 21;
+    public const int Test2Context = 22;
+    public const int UniqueFlag = 23;
+    public const int UniqueStandard = 24;
 
-    public const int TotalComponents = 24;
+    public const int TotalComponents = 25;
 
     public static readonly string[] componentNames = {
         "ClassToGenerate",
@@ -46,6 +47,7 @@ public static class TestComponentsLookup {
         "Flag",
         "InterfaceToGenerate",
         "MyNamespaceEntityIndex",
+        "MyNamespaceMultipleEntityIndices",
         "MyNamespaceMyNamespace",
         "MyNamespaceMyNamespaceFlag",
         "MyNamespaceUniqueMyNamespace",
@@ -73,6 +75,7 @@ public static class TestComponentsLookup {
         typeof(FlagComponent),
         typeof(InterfaceToGenerateComponent),
         typeof(My.Namespace.EntityIndexComponent),
+        typeof(My.Namespace.MultipleEntityIndicesComponent),
         typeof(My.Namespace.MyNamespaceComponent),
         typeof(My.Namespace.MyNamespaceFlagComponent),
         typeof(My.Namespace.UniqueMyNamespaceComponent),

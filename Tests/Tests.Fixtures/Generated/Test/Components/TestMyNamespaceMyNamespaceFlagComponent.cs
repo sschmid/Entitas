@@ -14,10 +14,16 @@ public partial class TestEntity {
         get { return HasComponent(TestComponentsLookup.MyNamespaceMyNamespaceFlag); }
         set {
             if (value != isMyNamespaceMyNamespaceFlag) {
+                var index = TestComponentsLookup.MyNamespaceMyNamespaceFlag;
                 if (value) {
-                    AddComponent(TestComponentsLookup.MyNamespaceMyNamespaceFlag, myNamespaceMyNamespaceFlagComponent);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : myNamespaceMyNamespaceFlagComponent;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(TestComponentsLookup.MyNamespaceMyNamespaceFlag);
+                    RemoveComponent(index);
                 }
             }
         }

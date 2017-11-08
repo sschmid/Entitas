@@ -41,10 +41,16 @@ public partial class TestEntity {
         get { return HasComponent(TestComponentsLookup.CustomPrefixFlag); }
         set {
             if (value != myCustomPrefixFlag) {
+                var index = TestComponentsLookup.CustomPrefixFlag;
                 if (value) {
-                    AddComponent(TestComponentsLookup.CustomPrefixFlag, customPrefixFlagComponent);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : customPrefixFlagComponent;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(TestComponentsLookup.CustomPrefixFlag);
+                    RemoveComponent(index);
                 }
             }
         }

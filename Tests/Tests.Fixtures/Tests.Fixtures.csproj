@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -31,13 +31,12 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fixtures\Components\MultipleEntityIndicesComponent.cs" />
-    <Compile Include="Fixtures\Components\MultiplePrimaryEntityIndicesComponent.cs" />
     <Compile Include="Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameMultiplePrimaryEntityIndicesComponent.cs" />
     <Compile Include="Generated\Test\Components\TestComponentWithFieldsComponent.cs" />
     <Compile Include="Generated\Test\Components\TestComponentWithPropertiesComponent.cs" />
     <Compile Include="Generated\Test\Components\TestFlagComponent.cs" />
@@ -51,6 +50,8 @@
     <Compile Include="Generated\Game\Components\GamePrimaryEntityIndexComponent.cs" />
     <Compile Include="Generated\Test\Components\TestPositionComponent.cs" />
     <Compile Include="Generated\Test\Components\TestSizeComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceMultipleEntityIndicesComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2MyNamespaceMultipleEntityIndicesComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceMyNamespaceComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2MyNamespaceMyNamespaceComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceMyNamespaceFlagComponent.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Generated\Test\Components\TestStructToGenerateComponent.cs" />
     <Compile Include="Generated\Components\Interfaces\ITest2Context.cs" />
     <Compile Include="Generated\Components\Interfaces\INameAge.cs" />
+    <Compile Include="Generated\Components\Interfaces\IMyNamespaceMultipleEntityIndices.cs" />
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceMyNamespace.cs" />
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceEntityIndex.cs" />
     <Compile Include="Generated\Components\Interfaces\IClassToGenerate.cs" />
@@ -76,9 +78,9 @@
     <Compile Include="Generated\Components\InterfaceToGenerateComponent.cs" />
     <Compile Include="Generated\Components\StructToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestDontGenerateMethodsComponent.cs" />
+    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Test\TestComponentsLookup.cs" />
     <Compile Include="Generated\Test2\Test2ComponentsLookup.cs" />
-    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Game\GameAttribute.cs" />
     <Compile Include="Generated\Test\TestAttribute.cs" />
     <Compile Include="Generated\Test2\Test2Attribute.cs" />
@@ -92,6 +94,10 @@
     <Compile Include="Generated\Game\GameEntity.cs" />
     <Compile Include="Generated\Test\TestEntity.cs" />
     <Compile Include="Generated\Test2\Test2Entity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\Components\MultipleEntityIndicesComponent.cs" />
+    <Compile Include="Fixtures\Components\MultiplePrimaryEntityIndicesComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\Components\AbstractComponent.cs" />

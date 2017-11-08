@@ -41,10 +41,16 @@ public partial class TestEntity {
         get { return HasComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag); }
         set {
             if (value != isMyNamespaceUniqueMyNamespaceFlag) {
+                var index = TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag;
                 if (value) {
-                    AddComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag, myNamespaceUniqueMyNamespaceFlagComponent);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : myNamespaceUniqueMyNamespaceFlagComponent;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag);
+                    RemoveComponent(index);
                 }
             }
         }

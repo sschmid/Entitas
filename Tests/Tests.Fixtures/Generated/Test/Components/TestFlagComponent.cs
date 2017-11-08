@@ -14,10 +14,16 @@ public partial class TestEntity {
         get { return HasComponent(TestComponentsLookup.Flag); }
         set {
             if (value != isFlag) {
+                var index = TestComponentsLookup.Flag;
                 if (value) {
-                    AddComponent(TestComponentsLookup.Flag, flagComponent);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : flagComponent;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(TestComponentsLookup.Flag);
+                    RemoveComponent(index);
                 }
             }
         }
