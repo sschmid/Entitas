@@ -57,10 +57,16 @@ ${memberAssignment}
         get { return HasComponent(${Index}); }
         set {
             if (value != ${prefixedName}) {
+                var index = ${Index};
                 if (value) {
-                    AddComponent(${Index}, ${componentName}Component);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : ${componentName}Component;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(${Index});
+                    RemoveComponent(index);
                 }
             }
         }
