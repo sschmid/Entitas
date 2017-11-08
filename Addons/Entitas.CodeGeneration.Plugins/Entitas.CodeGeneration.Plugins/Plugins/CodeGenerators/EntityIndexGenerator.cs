@@ -36,7 +36,7 @@ ${getIndices}
         const string ADD_INDEX_TEMPLATE =
 @"        ${contextName}.AddEntityIndex(new ${IndexType}<${ContextName}Entity, ${KeyType}>(
             ${IndexName},
-            ${contextName}.GetGroup(${ContextName}Matcher.${IndexName}),
+            ${contextName}.GetGroup(${ContextName}Matcher.${Matcher}),
             (e, c) => ((${ComponentType})c).${MemberName}));";
 
         const string ADD_CUSTOM_INDEX_TEMPLATE =
@@ -76,7 +76,10 @@ ${getIndices}
         CodeGenFile[] generateEntityIndices(EntityIndexData[] data) {
 
             var indexConstants = string.Join("\n", data
-                                        .Select(d => INDEX_CONSTANTS_TEMPLATE.Replace("${IndexName}", d.GetEntityIndexName()))
+                                        .Select(d => INDEX_CONSTANTS_TEMPLATE
+                                                    .Replace("${IndexName}", d.GetHasMultiple()
+                                                        ? d.GetEntityIndexName() + d.GetMemberName().UppercaseFirst()
+                                                        : d.GetEntityIndexName()))
                                         .ToArray());
 
             var addIndices = string.Join("\n\n", data
@@ -123,7 +126,10 @@ ${getIndices}
             return ADD_INDEX_TEMPLATE
                 .Replace("${contextName}", contextName.LowercaseFirst())
                 .Replace("${ContextName}", contextName)
-                .Replace("${IndexName}", data.GetEntityIndexName())
+                .Replace("${IndexName}", data.GetHasMultiple()
+                    ? data.GetEntityIndexName() + data.GetMemberName().UppercaseFirst()
+                    : data.GetEntityIndexName())
+                .Replace("${Matcher}", data.GetEntityIndexName())
                 .Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${ComponentType}", data.GetComponentType())
@@ -151,7 +157,9 @@ ${getIndices}
 
             return template
                 .Replace("${ContextName}", contextName)
-                .Replace("${IndexName}", data.GetEntityIndexName())
+                .Replace("${IndexName}", data.GetHasMultiple()
+                    ? data.GetEntityIndexName() + data.GetMemberName().UppercaseFirst()
+                    : data.GetEntityIndexName())
                 .Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${MemberName}", data.GetMemberName());
@@ -165,7 +173,9 @@ ${getIndices}
                     .Replace("${ContextName}", data.GetContextNames()[0])
                     .Replace("${methodArgs}", string.Join(", ", m.parameters.Select(p => p.type + " " + p.name).ToArray()))
                     .Replace("${IndexType}", data.GetEntityIndexType())
-                    .Replace("${IndexName}", data.GetEntityIndexName())
+                    .Replace("${IndexName}", data.GetHasMultiple()
+                        ? data.GetEntityIndexName() + data.GetMemberName().UppercaseFirst()
+                        : data.GetEntityIndexName())
                     .Replace("${args}", string.Join(", ", m.parameters.Select(p => p.name).ToArray()))).ToArray());
         }
    }
