@@ -60,7 +60,7 @@ ${memberAssignment}
                 if (value) {
                     AddComponent(${Index}, ${componentName}Component);
                 } else {
-                    RemoveComponent(${Index});
+                    RemoveStaticComponent(${Index});
                 }
             }
         }
