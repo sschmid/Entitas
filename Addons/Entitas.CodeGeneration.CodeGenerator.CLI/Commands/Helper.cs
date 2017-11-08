@@ -50,7 +50,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         public static void ForceAddKey(string message, string key, string value, Preferences preferences) {
-            fabl.Info(message + ": '" + key + "'");
+            fabl.Info(message + ": '" + key + "' (press any key)");
             Console.ReadKey(true);
             preferences[key] = value;
             preferences.Save();
