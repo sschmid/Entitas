@@ -99,7 +99,7 @@ namespace Entitas.CodeGeneration.Plugins {
             data.SetEntityIndexType(type.ToCompilableString());
             data.IsCustom(true);
             data.SetEntityIndexName(type.ToCompilableString().RemoveDots());
-
+            data.SetHasMultiple(false);
             data.SetContextNames(new [] { attribute.contextType.ToCompilableString().ShortTypeName().RemoveContextSuffix() });
 
             var getMethods = type
