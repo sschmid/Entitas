@@ -20,6 +20,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                                         "CodeGenerator/Plugins/Default, " +
                                         "CodeGenerator/Plugins/Entitas.Roslyn, " +
                                         "/Applications/Unity/Unity.app/Contents/Managed, " +
+                                        "/Applications/Unity/Unity.app/Contents/Managed/UnityEngine, " +
                                         "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity, " +
                                         "/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem" },
 
