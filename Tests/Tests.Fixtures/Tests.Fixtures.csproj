@@ -31,6 +31,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fixtures\Components\MultipleEntityIndicesComponent.cs" />
+    <Compile Include="Fixtures\Components\MultiplePrimaryEntityIndicesComponent.cs" />
     <Compile Include="Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />

@@ -71,6 +71,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         EntityIndexData[] createEntityIndexData(Type type, List<PublicMemberInfo> infos) {
+            var hasMultiple = infos.Count(i => i.attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1) > 1;
             return infos
                 .Where(i => i.attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1)
                 .Select(info => {
@@ -83,6 +84,7 @@ namespace Entitas.CodeGeneration.Plugins {
                     data.SetKeyType(info.type.ToCompilableString());
                     data.SetComponentType(type.ToCompilableString());
                     data.SetMemberName(info.name);
+                    data.SetHasMultiple(hasMultiple);
                     data.SetContextNames(_contextsComponentDataProvider.GetContextNamesOrDefault(type));
 
                     return data;
@@ -141,6 +143,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public const string ENTITY_INDEX_KEY_TYPE = "entityIndex_keyType";
         public const string ENTITY_INDEX_COMPONENT_TYPE = "entityIndex_componentType";
         public const string ENTITY_INDEX_MEMBER_NAME = "entityIndex_memberName";
+        public const string ENTITY_INDEX_HAS_MULTIPLE = "entityIndex_has_multiple";
 
         public static string GetEntityIndexType(this EntityIndexData data) {
             return (string)data[ENTITY_INDEX_TYPE];
@@ -204,6 +207,14 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static void SetMemberName(this EntityIndexData data, string memberName) {
             data[ENTITY_INDEX_MEMBER_NAME] = memberName;
+        }
+
+        public static bool GetHasMultiple(this EntityIndexData data) {
+            return (bool)data[ENTITY_INDEX_HAS_MULTIPLE];
+        }
+
+        public static void SetHasMultiple(this EntityIndexData data, bool hasMultiple) {
+            data[ENTITY_INDEX_HAS_MULTIPLE] = hasMultiple;
         }
     }
 }
