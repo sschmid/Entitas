@@ -41,6 +41,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
                 printKeyStatus(requiredKeys, cliConfig, preferences);
                 printPluginStatus(types, config);
+                printCollisions(config);
             }
         }
 
@@ -85,6 +86,26 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         static void printAvailable(string[] names) {
             foreach (var name in names) {
                 fabl.Info("Available: " + name);
+            }
+        }
+
+        static void printCollisions(CodeGeneratorConfig config) {
+            printDuplicates(config.dataProviders);
+            printDuplicates(config.codeGenerators);
+            printDuplicates(config.postProcessors);
+        }
+
+        static void printDuplicates(string[] names) {
+            var shortNames = names
+                .Select(name => name.ShortTypeName())
+                .ToArray();
+
+            var duplicates = names
+                .Where(name => shortNames.Count(n => n == name.ShortTypeName()) > 1)
+                .OrderBy(name => name.ShortTypeName());
+
+            foreach (var duplicate in duplicates) {
+                fabl.Warn("Potential collision detected: " + duplicate.ShortTypeName() + " -> " + duplicate);
             }
         }
     }
