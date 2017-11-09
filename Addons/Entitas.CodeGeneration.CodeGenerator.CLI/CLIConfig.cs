@@ -5,14 +5,12 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
     public class CLIConfig : AbstractConfigurableConfig {
 
-        const string IGNORE_UNUSED_KEYS_KEY = "Entitas.CodeGeneration.CodeGenerator.CLI.Ignore.UnusedKeys";
+        const string IGNORE_UNUSED_KEYS_KEY = "CodeGenerator.CLI.Ignore.UnusedKeys";
 
         public override Dictionary<string, string> defaultProperties {
             get {
                 return new Dictionary<string, string> {
-                    { IGNORE_UNUSED_KEYS_KEY, "Entitas.VisualDebugging.Unity.Editor.SystemWarningThreshold, " +
-                                              "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath, " +
-                                              "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath" }
+                    { IGNORE_UNUSED_KEYS_KEY, string.Empty }
                 };
             }
         }
