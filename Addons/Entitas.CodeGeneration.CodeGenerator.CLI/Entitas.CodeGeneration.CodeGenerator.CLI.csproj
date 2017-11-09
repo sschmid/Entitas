@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="CLIConfig.cs" />
     <Compile Include="Commands\Add.cs" />
+    <Compile Include="Commands\AutoImport.cs" />
     <Compile Include="Commands\Client.cs" />
     <Compile Include="Commands\Donate.cs" />
     <Compile Include="Commands\Dump.cs" />
