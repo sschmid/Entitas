@@ -5,28 +5,18 @@ namespace Entitas.CodeGeneration.CodeGenerator {
 
     public class CodeGeneratorConfig : AbstractConfigurableConfig {
 
-        const string SEARCH_PATHS_KEY = "Entitas.CodeGeneration.CodeGenerator.SearchPaths";
-        const string PLUGINS_PATHS_KEY = "Entitas.CodeGeneration.CodeGenerator.Plugins";
+        const string SEARCH_PATHS_KEY = "CodeGenerator.SearchPaths";
+        const string PLUGINS_PATHS_KEY = "CodeGenerator.Plugins";
 
-        const string DATA_PROVIDERS_KEY = "Entitas.CodeGeneration.CodeGenerator.DataProviders";
-        const string CODE_GENERATORS_KEY = "Entitas.CodeGeneration.CodeGenerator.CodeGenerators";
-        const string POST_PROCESSORS_KEY = "Entitas.CodeGeneration.CodeGenerator.PostProcessors";
+        const string DATA_PROVIDERS_KEY = "CodeGenerator.DataProviders";
+        const string CODE_GENERATORS_KEY = "CodeGenerator.CodeGenerators";
+        const string POST_PROCESSORS_KEY = "CodeGenerator.PostProcessors";
 
         public override Dictionary<string, string> defaultProperties {
             get {
                 return new Dictionary<string, string> {
-                    { SEARCH_PATHS_KEY, "Assets/Libraries/Entitas, " +
-                                        "Assets/Libraries/Entitas/Editor, " +
-                                        "CodeGenerator/Plugins/Default, " +
-                                        "CodeGenerator/Plugins/Entitas.Roslyn, " +
-                                        "/Applications/Unity/Unity.app/Contents/Managed, " +
-                                        "/Applications/Unity/Unity.app/Contents/Managed/UnityEngine, " +
-                                        "/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity, " +
-                                        "/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem" },
-
-                    { PLUGINS_PATHS_KEY, "Entitas.CodeGeneration.Plugins, " +
-                                         "Entitas.VisualDebugging.CodeGeneration.Plugins" },
-
+                    { SEARCH_PATHS_KEY, "CodeGenerator/Plugins" },
+                    { PLUGINS_PATHS_KEY, string.Empty },
                     { DATA_PROVIDERS_KEY, string.Empty },
                     { CODE_GENERATORS_KEY, string.Empty },
                     { POST_PROCESSORS_KEY, string.Empty }
