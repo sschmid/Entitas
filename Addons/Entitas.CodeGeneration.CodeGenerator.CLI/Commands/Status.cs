@@ -24,15 +24,11 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 fabl.Debug(preferences.ToString());
 
                 Type[] types = null;
-                Dictionary<string, string> configurables = null;
+                Dictionary<string, string> defaultProperties = null;
 
                 try {
                     types = CodeGeneratorUtil.LoadTypesFromPlugins(preferences);
-                    configurables = CodeGeneratorUtil.GetDefaultProperties(
-                        CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGeneratorDataProvider>(types, config.dataProviders),
-                        CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenerator>(types, config.codeGenerators),
-                        CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenFilePostProcessor>(types, config.postProcessors)
-                    );
+                    defaultProperties = CodeGeneratorUtil.GetDefaultProperties(types, config);
 
                 } catch(Exception ex) {
                     printKeyStatus(config.defaultProperties.Keys.ToArray(), cliConfig, preferences);
@@ -41,7 +37,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
                 var requiredKeys = config.defaultProperties
                     .Merge(cliConfig.defaultProperties)
-                    .Merge(configurables).Keys.ToArray();
+                    .Merge(defaultProperties).Keys.ToArray();
 
                 printKeyStatus(requiredKeys, cliConfig, preferences);
                 printPluginStatus(types, config);

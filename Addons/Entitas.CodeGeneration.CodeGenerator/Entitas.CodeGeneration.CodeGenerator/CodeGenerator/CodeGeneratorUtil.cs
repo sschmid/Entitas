@@ -76,13 +76,13 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                     .ToArray();
         }
 
-        public static Dictionary<string, string> GetDefaultProperties(ICodeGeneratorDataProvider[] dataProviders, ICodeGenerator[] codeGenerators, ICodeGenFilePostProcessor[] postProcessors) {
+        public static Dictionary<string, string> GetDefaultProperties(Type[] types, CodeGeneratorConfig config) {
             return new Dictionary<string, string>()
-                .Merge(dataProviders.OfType<IConfigurable>()
-                       .Concat(codeGenerators.OfType<IConfigurable>())
-                       .Concat(postProcessors.OfType<IConfigurable>())
-                       .Select(instance => instance.defaultProperties)
-                       .ToArray());
+                .Merge(GetEnabledInstancesOf<ICodeGeneratorDataProvider>(types, config.dataProviders).OfType<IConfigurable>()
+               .Concat(GetEnabledInstancesOf<ICodeGenerator>(types, config.codeGenerators).OfType<IConfigurable>())
+               .Concat(GetEnabledInstancesOf<ICodeGenFilePostProcessor>(types, config.postProcessors).OfType<IConfigurable>())
+               .Select(instance => instance.defaultProperties)
+               .ToArray());
         }
     }
 }

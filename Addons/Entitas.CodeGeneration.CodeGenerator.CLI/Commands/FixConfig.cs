@@ -27,7 +27,10 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
                 try {
                     types = CodeGeneratorUtil.LoadTypesFromPlugins(preferences);
-                    getConfigurables(types, config);
+                    // A test to check if all types can be resolved and instantiated.
+                    CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGeneratorDataProvider>(types, config.dataProviders);
+                    CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenerator>(types, config.codeGenerators);
+                    CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenFilePostProcessor>(types, config.postProcessors);
                 } catch (Exception ex) {
                     throw ex;
                 }
@@ -36,14 +39,6 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 var askedAddKeys = new HashSet<string>();
                 while (fix(askedRemoveKeys, askedAddKeys, types, config, cliConfig, preferences)) { }
             }
-        }
-
-        static Dictionary<string, string> getConfigurables(Type[] types, CodeGeneratorConfig config) {
-            return CodeGeneratorUtil.GetDefaultProperties(
-                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGeneratorDataProvider>(types, config.dataProviders),
-                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenerator>(types, config.codeGenerators),
-                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenFilePostProcessor>(types, config.postProcessors)
-            );
         }
 
         static void forceAddKeys(Dictionary<string, string> requiredProperties, Preferences preferences) {
@@ -58,11 +53,11 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         static bool fix(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, CLIConfig cliConfig, Preferences preferences) {
             var changed = fixPlugins(askedRemoveKeys, askedAddKeys, types, config, preferences);
 
-            forceAddKeys(getConfigurables(types, config), preferences);
+            forceAddKeys(CodeGeneratorUtil.GetDefaultProperties(types, config), preferences);
 
             var requiredKeys = config.defaultProperties
                 .Merge(cliConfig.defaultProperties)
-                .Merge(getConfigurables(types, config)).Keys.ToArray();
+                .Merge(CodeGeneratorUtil.GetDefaultProperties(types, config)).Keys.ToArray();
 
             removeUnusedKeys(askedRemoveKeys, requiredKeys, cliConfig, preferences);
 

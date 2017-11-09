@@ -35,11 +35,11 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
             _types = CodeGeneratorUtil.LoadTypesFromPlugins(preferences);
 
-            initPhase<ICodeGeneratorDataProvider>(_types, out _availableDataProviderTypes, out _availableDataProviderNames);
-            initPhase<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
-            initPhase<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
+            setTypesAndNames<ICodeGeneratorDataProvider>(_types, out _availableDataProviderTypes, out _availableDataProviderNames);
+            setTypesAndNames<ICodeGenerator>(_types, out _availableGeneratorTypes, out _availableGeneratorNames);
+            setTypesAndNames<ICodeGenFilePostProcessor>(_types, out _availablePostProcessorTypes, out _availablePostProcessorNames);
 
-            _preferences.AddProperties(getConfigurables(), false);
+            _preferences.AddProperties(CodeGeneratorUtil.GetDefaultProperties(_types, _codeGeneratorConfig), false);
         }
 
         protected override void drawContent(Preferences preferences) {
@@ -53,24 +53,16 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             drawGenerateButton();
         }
 
-        Dictionary<string, string> getConfigurables() {
-            return CodeGeneratorUtil.GetDefaultProperties(
-                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGeneratorDataProvider>(_types, _codeGeneratorConfig.dataProviders),
-                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenerator>(_types, _codeGeneratorConfig.codeGenerators),
-                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenFilePostProcessor>(_types, _codeGeneratorConfig.postProcessors)
-            );
-        }
-
         void drawConfigurables() {
-            var configurables = getConfigurables();
-            _preferences.AddProperties(configurables, false);
+            var defaultProperties = CodeGeneratorUtil.GetDefaultProperties(_types, _codeGeneratorConfig);
+            _preferences.AddProperties(defaultProperties, false);
 
-            foreach (var kv in configurables.OrderBy(kv => kv.Key)) {
+            foreach (var kv in defaultProperties.OrderBy(kv => kv.Key)) {
                 _preferences[kv.Key] = EditorGUILayout.TextField(kv.Key.ShortTypeName().ToSpacedCamelCase(), _preferences[kv.Key]);
             }
         }
 
-        static string[] initPhase<T>(Type[] types, out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {
+        static void setTypesAndNames<T>(Type[] types, out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {
             IEnumerable<T> instances = CodeGeneratorUtil.GetOrderedInstancesOf<T>(types);
 
             availableTypes = instances
@@ -79,11 +71,6 @@ namespace Entitas.CodeGeneration.Unity.Editor {
 
             availableNames = instances
                 .Select(instance => instance.name)
-                .ToArray();
-
-            return instances
-                .Where(instance => instance.isEnabledByDefault)
-                .Select(instance => instance.GetType().ToCompilableString())
                 .ToArray();
         }
 
