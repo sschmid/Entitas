@@ -54,10 +54,10 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         }
 
         Dictionary<string, string> getConfigurables() {
-            return CodeGeneratorUtil.GetConfigurables(
-                CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(_types, _codeGeneratorConfig.dataProviders),
-                CodeGeneratorUtil.GetUsed<ICodeGenerator>(_types, _codeGeneratorConfig.codeGenerators),
-                CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(_types, _codeGeneratorConfig.postProcessors)
+            return CodeGeneratorUtil.GetDefaultProperties(
+                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGeneratorDataProvider>(_types, _codeGeneratorConfig.dataProviders),
+                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenerator>(_types, _codeGeneratorConfig.codeGenerators),
+                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenFilePostProcessor>(_types, _codeGeneratorConfig.postProcessors)
             );
         }
 
@@ -71,7 +71,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         }
 
         static string[] initPhase<T>(Type[] types, out string[] availableTypes, out string[] availableNames) where T : ICodeGeneratorInterface {
-            IEnumerable<T> instances = CodeGeneratorUtil.GetOrderedInstances<T>(types);
+            IEnumerable<T> instances = CodeGeneratorUtil.GetOrderedInstancesOf<T>(types);
 
             availableTypes = instances
                 .Select(instance => instance.GetType().ToCompilableString())

@@ -39,10 +39,10 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         }
 
         static Dictionary<string, string> getConfigurables(Type[] types, CodeGeneratorConfig config) {
-            return CodeGeneratorUtil.GetConfigurables(
-                CodeGeneratorUtil.GetUsed<ICodeGeneratorDataProvider>(types, config.dataProviders),
-                CodeGeneratorUtil.GetUsed<ICodeGenerator>(types, config.codeGenerators),
-                CodeGeneratorUtil.GetUsed<ICodeGenFilePostProcessor>(types, config.postProcessors)
+            return CodeGeneratorUtil.GetDefaultProperties(
+                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGeneratorDataProvider>(types, config.dataProviders),
+                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenerator>(types, config.codeGenerators),
+                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenFilePostProcessor>(types, config.postProcessors)
             );
         }
 
@@ -72,13 +72,13 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         static bool fixPlugins(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, Preferences preferences) {
             var changed = false;
 
-            var unavailableDataProviders = CodeGeneratorUtil.GetUnavailable<ICodeGeneratorDataProvider>(types, config.dataProviders);
-            var unavailableCodeGenerators = CodeGeneratorUtil.GetUnavailable<ICodeGenerator>(types, config.codeGenerators);
-            var unavailablePostProcessors = CodeGeneratorUtil.GetUnavailable<ICodeGenFilePostProcessor>(types, config.postProcessors);
+            var unavailableDataProviders = CodeGeneratorUtil.GetUnavailableNamesOf<ICodeGeneratorDataProvider>(types, config.dataProviders);
+            var unavailableCodeGenerators = CodeGeneratorUtil.GetUnavailableNamesOf<ICodeGenerator>(types, config.codeGenerators);
+            var unavailablePostProcessors = CodeGeneratorUtil.GetUnavailableNamesOf<ICodeGenFilePostProcessor>(types, config.postProcessors);
 
-            var availableDataProviders = CodeGeneratorUtil.GetAvailable<ICodeGeneratorDataProvider>(types, config.dataProviders);
-            var availableCodeGenerators = CodeGeneratorUtil.GetAvailable<ICodeGenerator>(types, config.codeGenerators);
-            var availablePostProcessors = CodeGeneratorUtil.GetAvailable<ICodeGenFilePostProcessor>(types, config.postProcessors);
+            var availableDataProviders = CodeGeneratorUtil.GetAvailableNamesOf<ICodeGeneratorDataProvider>(types, config.dataProviders);
+            var availableCodeGenerators = CodeGeneratorUtil.GetAvailableNamesOf<ICodeGenerator>(types, config.codeGenerators);
+            var availablePostProcessors = CodeGeneratorUtil.GetAvailableNamesOf<ICodeGenFilePostProcessor>(types, config.postProcessors);
 
             foreach (var key in unavailableDataProviders) {
                 if (!askedRemoveKeys.Contains(key)) {
