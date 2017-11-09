@@ -35,7 +35,7 @@ namespace Entitas.CodeGeneration.CodeGenerator {
                 assembly = Assembly.LoadFrom(args.Name);
             } catch(Exception) {
                 var name = new AssemblyName(args.Name).Name;
-                if (!name.EndsWith(".dll", StringComparison.Ordinal)) {
+                if (!name.EndsWith(".dll", StringComparison.Ordinal) && !name.EndsWith(".exe", StringComparison.Ordinal)) {
                     name += ".dll";
                 }
 
