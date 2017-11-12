@@ -32,6 +32,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entitas.Migration\Migrations\M0450.cs" />
     <Compile Include="Entitas.Migration\Migration\IMigration.cs" />
     <Compile Include="Entitas.Migration\Migration\MigrationFile.cs" />
     <Compile Include="Entitas.Migration\Migration\MigrationUtils.cs" />

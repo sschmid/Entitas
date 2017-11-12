@@ -40,6 +40,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tests\Entitas.Migration\describe_M0450.cs" />
     <Compile Include="Tests\Entitas.Utils\Configuration\describe_Preferences.cs" />
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
