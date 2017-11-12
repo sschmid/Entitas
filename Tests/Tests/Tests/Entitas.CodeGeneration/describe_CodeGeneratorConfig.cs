@@ -5,12 +5,12 @@ using NSpec;
 class describe_CodeGeneratorConfig : nspec {
 
     const string configString =
-        "Entitas.CodeGeneration.CodeGenerator.SearchPaths = sp1, sp2" + "\n" +
-        "Entitas.CodeGeneration.CodeGenerator.Plugins = p1, p2" + "\n" +
+        "CodeGenerator.SearchPaths = sp1, sp2" + "\n" +
+        "CodeGenerator.Plugins = p1, p2" + "\n" +
 
-        "Entitas.CodeGeneration.CodeGenerator.DataProviders = dp1,dp2,dp3" + "\n" +
-        "Entitas.CodeGeneration.CodeGenerator.CodeGenerators = cg1, cg2, cg3" + "\n" +
-        "Entitas.CodeGeneration.CodeGenerator.PostProcessors = pp1 , pp2 , pp3" + "\n";
+        "CodeGenerator.DataProviders = dp1,dp2,dp3" + "\n" +
+        "CodeGenerator.CodeGenerators = cg1, cg2, cg3" + "\n" +
+        "CodeGenerator.PostProcessors = pp1 , pp2 , pp3" + "\n";
 
     void when_creating_config() {
 
@@ -57,20 +57,20 @@ class describe_CodeGeneratorConfig : nspec {
 
                 it["gets string"] = () => {
                     config.ToString().should_be(
-                        "Entitas.CodeGeneration.CodeGenerator.SearchPaths = newS1, \\\n" +
-                        "                                                   newS2\n\n" +
+                        "CodeGenerator.SearchPaths = newS1, \\\n" +
+                        "                            newS2\n\n" +
 
-                        "Entitas.CodeGeneration.CodeGenerator.Plugins = newP1, \\\n" +
-                        "                                               newP2\n\n" +
+                        "CodeGenerator.Plugins = newP1, \\\n" +
+                        "                        newP2\n\n" +
 
-                        "Entitas.CodeGeneration.CodeGenerator.DataProviders = newDp1, \\\n" +
-                        "                                                     newDp2\n\n" +
+                        "CodeGenerator.DataProviders = newDp1, \\\n" +
+                        "                              newDp2\n\n" +
 
-                        "Entitas.CodeGeneration.CodeGenerator.CodeGenerators = newCg1, \\\n" +
-                        "                                                      newCg2\n\n" +
+                        "CodeGenerator.CodeGenerators = newCg1, \\\n" +
+                        "                               newCg2\n\n" +
 
-                        "Entitas.CodeGeneration.CodeGenerator.PostProcessors = newPp1, \\\n" +
-                        "                                                      newPp2\n\n"
+                        "CodeGenerator.PostProcessors = newPp1, \\\n" +
+                        "                               newPp2\n\n"
                     );
                 };
             };
