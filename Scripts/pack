@@ -27,7 +27,7 @@ TMP_DIR="${BUILD}/tmp"
 TMP_ENTITAS="${TMP_DIR}/Entitas"
 TMP_CG="${TMP_DIR}/CodeGenerator"
 CG_PLUGINS="${TMP_CG}/Plugins"
-CG_DEFAULT="${CG_PLUGINS}/Default"
+CG_DEFAULT="${CG_PLUGINS}/Entitas"
 
 # create c# zip ------------------------------------------------------------
 mkdir $TMP_DIR $TMP_ENTITAS $TMP_CG $CG_PLUGINS $CG_DEFAULT
