@@ -9,18 +9,12 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string description { get { return "List all config keys and values"; } }
         public override string example { get { return "entitas dump"; } }
 
-        public override void Run(string[] args) {
-            if (assertPreferences(args)) {
-                var preferences = loadPreferences(args);
-                fabl.Debug(preferences.ToString());
-                dump(preferences);
-            }
-        }
+        protected override void run() {
+            fabl.Debug(_preferences.ToString());
 
-        static void dump(Preferences preferences) {
             const string indent = "\n    ";
-            foreach (var key in preferences.keys) {
-                fabl.Info(key + indent + string.Join(indent, preferences[key].ArrayFromCSV()));
+            foreach (var key in _preferences.keys) {
+                fabl.Info(key + indent + string.Join(indent, _preferences[key].ArrayFromCSV()));
             }
         }
     }

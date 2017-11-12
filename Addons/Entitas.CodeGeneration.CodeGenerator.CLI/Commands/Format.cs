@@ -6,10 +6,8 @@
         public override string description { get { return "Format the properties file"; } }
         public override string example { get { return "entitas format"; } }
 
-        public override void Run(string[] args) {
-            if (assertPreferences(args)) {
-                loadPreferences(args).Save();
-            }
+        protected override void run() {
+            _preferences.Save();
         }
     }
 }

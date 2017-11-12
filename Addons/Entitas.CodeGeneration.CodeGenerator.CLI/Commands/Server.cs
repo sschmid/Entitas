@@ -17,10 +17,10 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         AbstractTcpSocket _socket;
         readonly List<string> _logBuffer = new List<string>();
 
-        public override void Run(string[] args) {
+        protected override void run() {
             var port = 0;
             try {
-                port = int.Parse(args[1]);
+                port = int.Parse(_args[0]);
             } catch (Exception) {
                 port = 3333;
             }

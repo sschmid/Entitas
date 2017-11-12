@@ -16,14 +16,14 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         string _command;
 
-        public override void Run(string[] args) {
+        protected override void run() {
             var port = 0;
             try {
-                port = int.Parse(args[1]);
-                _command = string.Join(" ", args.Skip(2).ToArray());
+                port = int.Parse(_rawArgs[1]);
+                _command = string.Join(" ", _rawArgs.Skip(2).ToArray());
             } catch (Exception) {
                 port = 3333;
-                _command = string.Join(" ", args.Skip(1).ToArray());
+                _command = string.Join(" ", _rawArgs.Skip(1).ToArray());
             }
 
             var client = new TcpClientSocket();

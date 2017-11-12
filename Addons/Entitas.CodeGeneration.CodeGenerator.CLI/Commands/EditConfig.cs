@@ -8,12 +8,9 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string description { get { return "Open Entitas.properties config"; } }
         public override string example { get { return "entitas edit"; } }
 
-        public override void Run(string[] args) {
-            if (assertPreferences(args)) {
-                var preferences = loadPreferences(args);
-                fabl.Debug("Opening " + preferences.propertiesPath);
-                System.Diagnostics.Process.Start(preferences.propertiesPath);
-            }
+        protected override void run() {
+            fabl.Debug("Opening " + _preferences.propertiesPath);
+            System.Diagnostics.Process.Start(_preferences.propertiesPath);
         }
     }
 }

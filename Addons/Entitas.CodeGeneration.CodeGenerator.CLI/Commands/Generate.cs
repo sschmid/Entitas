@@ -8,17 +8,15 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string description { get { return "Generate files based on Entitas.properties"; } }
         public override string example { get { return "entitas gen"; } }
 
-        public override void Run(string[] args) {
-            if (assertPreferences(args)) {
-                var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromPreferences(loadPreferences(args));
+        protected override void run() {
+            var codeGenerator = CodeGeneratorUtil.CodeGeneratorFromPreferences(_preferences);
 
-                codeGenerator.OnProgress += (title, info, progress) => {
-                    var p = (int)(progress * 100);
-                    fabl.Debug(string.Format("{0}: {1} ({2}%)", title, info, p));
-                };
+            codeGenerator.OnProgress += (title, info, progress) => {
+                var p = (int)(progress * 100);
+                fabl.Debug(string.Format("{0}: {1} ({2}%)", title, info, p));
+            };
 
-                codeGenerator.Generate();
-            }
+            codeGenerator.Generate();
         }
     }
 }

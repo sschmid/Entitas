@@ -11,7 +11,7 @@ namespace Entitas.Utils {
         public static Preferences sharedInstance {
             get {
                 if (_sharedInstance == null) {
-                    _sharedInstance = new Preferences(DEFAULT_PROPERTIES_PATH, DEFAULT_USER_PROPERTIES_PATH);
+                    _sharedInstance = new Preferences();
                 }
 
                 return _sharedInstance;
@@ -36,6 +36,9 @@ namespace Entitas.Utils {
         readonly string _userPropertiesPath;
         Properties _properties;
         Properties _userProperties;
+
+        public Preferences() : this(DEFAULT_PROPERTIES_PATH, DEFAULT_USER_PROPERTIES_PATH) {
+        }
 
         public Preferences(string propertiesPath, string userPropertiesPath) {
             _propertiesPath = propertiesPath;

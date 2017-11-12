@@ -4,18 +4,18 @@ using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
-    public class NewConfig : AbstractCommand {
+    public class NewConfig : ICommand {
 
-        public override string trigger { get { return "new"; } }
-        public override string description { get { return "Create new Entitas.properties config with default values"; } }
-        public override string example { get { return "entitas new [-f]"; } }
+        public string trigger { get { return "new"; } }
+        public string description { get { return "Create new Entitas.properties config with default values"; } }
+        public string example { get { return "entitas new [-f]"; } }
 
-        public override void Run(string[] args) {
-            var preferences = loadPreferences(args);
+        public void Run(string[] args) {
             var currentDir = Directory.GetCurrentDirectory();
-            var path = currentDir + Path.DirectorySeparatorChar + preferences.propertiesPath;
+            var path = currentDir + Path.DirectorySeparatorChar + args.GetPropertiesPath();
 
-            if (args.isForce() || !preferences.propertiesExist) {
+            if (args.isForce() || !File.Exists(path)) {
+                var preferences = new Preferences(path, Preferences.DEFAULT_USER_PROPERTIES_PATH);
                 preferences.Reset();
                 preferences.AddProperties(new CodeGeneratorConfig().defaultProperties, true);
                 preferences.AddProperties(new CLIConfig().defaultProperties, true);

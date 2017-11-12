@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using Entitas.Utils;
 using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
@@ -11,18 +10,15 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string description { get { return "Find and import all plugins"; } }
         public override string example { get { return "entitas auto-import"; } }
 
-        public override void Run(string[] args) {
-            if (assertPreferences(args)) {
-                var preferences = loadPreferences(args);
-                fabl.Debug(preferences.ToString());
-                autoImport(preferences);
-                new FixConfig().Run(args);
-            }
+        protected override void run() {
+            fabl.Debug(_preferences.ToString());
+            autoImport();
+            new FixConfig().Run(_rawArgs);
         }
 
-        static void autoImport(Preferences preferences) {
+        void autoImport() {
             var config = new CodeGeneratorConfig();
-            config.Configure(preferences);
+            config.Configure(_preferences);
 
             var plugins = config.searchPaths
                 .SelectMany(path => Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories))
@@ -38,7 +34,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 .Distinct()
                 .ToArray();
 
-            preferences.Save();
+            _preferences.Save();
         }
     }
 }

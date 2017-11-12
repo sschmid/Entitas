@@ -12,37 +12,34 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string description { get { return "List available and unavailable plugins"; } }
         public override string example { get { return "entitas status"; } }
 
-        public override void Run(string[] args) {
-            if (assertPreferences(args)) {
-                var preferences = loadPreferences(args);
-                var config = new CodeGeneratorConfig();
-                config.Configure(preferences);
+        protected override void run() {
+            var config = new CodeGeneratorConfig();
+            config.Configure(_preferences);
 
-                var cliConfig = new CLIConfig();
-                cliConfig.Configure(preferences);
+            var cliConfig = new CLIConfig();
+            cliConfig.Configure(_preferences);
 
-                fabl.Debug(preferences.ToString());
+            fabl.Debug(_preferences.ToString());
 
-                Type[] types = null;
-                Dictionary<string, string> defaultProperties = null;
+            Type[] types = null;
+            Dictionary<string, string> defaultProperties = null;
 
-                try {
-                    types = CodeGeneratorUtil.LoadTypesFromPlugins(preferences);
-                    defaultProperties = CodeGeneratorUtil.GetDefaultProperties(types, config);
+            try {
+                types = CodeGeneratorUtil.LoadTypesFromPlugins(_preferences);
+                defaultProperties = CodeGeneratorUtil.GetDefaultProperties(types, config);
 
-                } catch(Exception ex) {
-                    printKeyStatus(config.defaultProperties.Keys.ToArray(), cliConfig, preferences);
-                    throw ex;
-                }
-
-                var requiredKeys = config.defaultProperties
-                    .Merge(cliConfig.defaultProperties)
-                    .Merge(defaultProperties).Keys.ToArray();
-
-                printKeyStatus(requiredKeys, cliConfig, preferences);
-                printPluginStatus(types, config);
-                printCollisions(config);
+            } catch(Exception ex) {
+                printKeyStatus(config.defaultProperties.Keys.ToArray(), cliConfig, _preferences);
+                throw ex;
             }
+
+            var requiredKeys = config.defaultProperties
+                .Merge(cliConfig.defaultProperties)
+                .Merge(defaultProperties).Keys.ToArray();
+
+            printKeyStatus(requiredKeys, cliConfig, _preferences);
+            printPluginStatus(types, config);
+            printCollisions(config);
         }
 
         static void printKeyStatus(string[] requiredKeys, CLIConfig cliConfig, Preferences preferences) {

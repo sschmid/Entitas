@@ -12,34 +12,31 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string description { get { return "Add missing or remove unused keys interactively"; } }
         public override string example { get { return "entitas fix"; } }
 
-        public override void Run(string[] args) {
-            if (assertPreferences(args)) {
-                var preferences = loadPreferences(args);
-                var config = new CodeGeneratorConfig();
-                config.Configure(preferences);
+        protected override void run() {
+            var config = new CodeGeneratorConfig();
+            config.Configure(_preferences);
 
-                var cliConfig = new CLIConfig();
-                cliConfig.Configure(preferences);
+            var cliConfig = new CLIConfig();
+            cliConfig.Configure(_preferences);
 
-                forceAddKeys(config.defaultProperties, preferences);
-                forceAddKeys(cliConfig.defaultProperties, preferences);
+            forceAddKeys(config.defaultProperties, _preferences);
+            forceAddKeys(cliConfig.defaultProperties, _preferences);
 
-                Type[] types = null;
+            Type[] types = null;
 
-                try {
-                    types = CodeGeneratorUtil.LoadTypesFromPlugins(preferences);
-                    // A test to check if all types can be resolved and instantiated.
-                    CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGeneratorDataProvider>(types, config.dataProviders);
-                    CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenerator>(types, config.codeGenerators);
-                    CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenFilePostProcessor>(types, config.postProcessors);
-                } catch (Exception ex) {
-                    throw ex;
-                }
-
-                var askedRemoveKeys = new HashSet<string>();
-                var askedAddKeys = new HashSet<string>();
-                while (fix(askedRemoveKeys, askedAddKeys, types, config, cliConfig, preferences)) { }
+            try {
+                types = CodeGeneratorUtil.LoadTypesFromPlugins(_preferences);
+                // A test to check if all types can be resolved and instantiated.
+                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGeneratorDataProvider>(types, config.dataProviders);
+                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenerator>(types, config.codeGenerators);
+                CodeGeneratorUtil.GetEnabledInstancesOf<ICodeGenFilePostProcessor>(types, config.postProcessors);
+            } catch (Exception ex) {
+                throw ex;
             }
+
+            var askedRemoveKeys = new HashSet<string>();
+            var askedAddKeys = new HashSet<string>();
+            while (fix(askedRemoveKeys, askedAddKeys, types, config, cliConfig, _preferences)) { }
         }
 
         static void forceAddKeys(Dictionary<string, string> requiredProperties, Preferences preferences) {

@@ -9,29 +9,24 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string description { get { return "Add a value to a key"; } }
         public override string example { get { return "entitas add key value"; } }
 
-        public override void Run(string[] args) {
-            if (args.Length == 3) {
-                if (assertPreferences(args)) {
-                    var preferences = loadPreferences(args);
-                    var key = args[1];
-                    var value = args[2];
-                    addKeyValue(key, value, preferences);
-                }
+        protected override void run() {
+            if (_args.Length == 2) {
+                addKeyValue(_args[0], _args[1]);
             } else {
                 fabl.Warn("The add command expects exactly two arguments");
                 fabl.Info("E.g. entitas add Entitas.CodeGeneration.Plugins.Contexts Input");
             }
         }
 
-        void addKeyValue(string key, string value, Preferences preferences) {
-            if (preferences.HasKey(key)) {
+        void addKeyValue(string key, string value) {
+            if (_preferences.HasKey(key)) {
                 Helper.AddValueSilently(
                     value,
-                    preferences[key].ArrayFromCSV(),
-                    values => preferences[key] = values.ToCSV(),
-                    preferences);
+                    _preferences[key].ArrayFromCSV(),
+                    values => _preferences[key] = values.ToCSV(),
+                    _preferences);
             } else {
-                Helper.AddKey("Key doesn't exist. Do you want to add", key, value, preferences);
+                Helper.AddKey("Key doesn't exist. Do you want to add", key, value, _preferences);
             }
         }
     }

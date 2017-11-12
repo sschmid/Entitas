@@ -6,7 +6,7 @@
         public override string description { get { return null; } }
         public override string example { get { return null; } }
 
-        public override void Run(string[] args) {
+        protected override void run() {
             System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852");
         }
     }

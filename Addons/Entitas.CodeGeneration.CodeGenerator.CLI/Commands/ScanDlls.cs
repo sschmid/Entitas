@@ -10,13 +10,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
         public override string description { get { return "Scan and print available types found in specified assemblies"; } }
         public override string example { get { return "entitas scan"; } }
 
-        public override void Run(string[] args) {
-            if (assertPreferences(args)) {
-                printTypes(CodeGeneratorUtil.LoadTypesFromPlugins(loadPreferences(args)));
-            }
-        }
-
-        static void printTypes(Type[] types) {
+        protected override void run() {
+            var types = CodeGeneratorUtil.LoadTypesFromPlugins(_preferences);
             var orderedTypes = types
                 .OrderBy(type => type.Assembly.GetName().Name)
                 .ThenBy(type => type.FullName);
