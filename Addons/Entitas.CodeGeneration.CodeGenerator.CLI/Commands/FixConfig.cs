@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Entitas.Utils;
+using Fabl;
 
 namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
@@ -52,6 +53,7 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         static bool fix(HashSet<string> askedRemoveKeys, HashSet<string> askedAddKeys, Type[] types, CodeGeneratorConfig config, CLIConfig cliConfig, Preferences preferences) {
             var changed = fixPlugins(askedRemoveKeys, askedAddKeys, types, config, preferences);
+            changed |= fixCollisions(askedAddKeys, config, preferences);
 
             forceAddKeys(CodeGeneratorUtil.GetDefaultProperties(types, config), preferences);
 
@@ -130,6 +132,87 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             }
 
             return changed;
+        }
+
+        static bool fixCollisions(HashSet<string> askedAddKeys, CodeGeneratorConfig config, Preferences preferences) {
+            var changed = fixDuplicates(askedAddKeys, config.dataProviders, values => {
+                config.dataProviders = values;
+                return config.dataProviders;
+            }, preferences);
+
+            changed = fixDuplicates(askedAddKeys, config.codeGenerators, values => {
+                config.codeGenerators = values;
+                return config.codeGenerators;
+            }, preferences) | changed;
+
+            return fixDuplicates(askedAddKeys, config.postProcessors, values => {
+                config.postProcessors = values;
+                return config.postProcessors;
+            }, preferences) | changed;
+        }
+
+        static bool fixDuplicates(HashSet<string> askedAddKeys, string[] values, Func<string[], string[]> updateAction, Preferences preferences) {
+            var changed = false;
+            var duplicates = getDuplicates(values);
+
+            foreach (var duplicate in duplicates) {
+                fabl.Info("Potential collision: " + duplicate);
+                fabl.Info("0: Keep all (no changes)");
+
+                var collisions = values
+                    .Where(name => name.EndsWith(duplicate))
+                    .ToArray();
+
+                printCollisions(collisions);
+                var inputChars = getInputChars(collisions);
+                var keyChar = Helper.GetGenericUserDecision(inputChars);
+                if (keyChar != '0') {
+                    var index = int.Parse(keyChar.ToString()) - 1;
+                    var keep = collisions[index];
+
+                    foreach (var collision in collisions) {
+                        if (collision != keep) {
+                            Helper.RemoveValueSilently(
+                                collision,
+                                values,
+                                result => values = updateAction(result),
+                                preferences);
+                            askedAddKeys.Add(collision);
+                            changed = true;
+                        }
+                    }
+                }
+            }
+
+            return changed;
+        }
+
+        static string[] getDuplicates(string[] values) {
+            var shortNames = values
+                .Select(name => name.ShortTypeName())
+                .ToArray();
+
+            return values
+                .Where(name => shortNames.Count(n => n == name.ShortTypeName()) > 1)
+                .Select(name => name.ShortTypeName())
+                .Distinct()
+                .OrderBy(name => name.ShortTypeName())
+                .ToArray();
+        }
+
+        static void printCollisions(string[] collisions) {
+            for (int i = 0; i < collisions.Length; i++) {
+                fabl.Info((i + 1) + ": Keep " + collisions[i]);
+            }
+        }
+
+        static char[] getInputChars(string[] collisions) {
+            var chars = new char[collisions.Length + 1];
+            for (int i = 0; i < collisions.Length; i++) {
+                chars[i] = (i + 1).ToString()[0];
+            }
+            chars[chars.Length - 1] = '0';
+            return chars;
         }
 
         static void removeUnusedKeys(HashSet<string> askedRemoveKeys, string[] requiredKeys, CLIConfig cliConfig, Preferences preferences) {

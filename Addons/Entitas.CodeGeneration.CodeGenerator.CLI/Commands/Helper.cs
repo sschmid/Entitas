@@ -49,6 +49,15 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
                 : UserDecision.Cancel;
         }
 
+        public static char GetGenericUserDecision(char[] chars) {
+            char keyChar;
+            do {
+                keyChar = Console.ReadKey(true).KeyChar;
+            } while(!chars.Contains(keyChar));
+
+            return keyChar;
+        }
+
         public static void ForceAddKey(string message, string key, string value, Preferences preferences) {
             fabl.Info(message + ": '" + key + "' (press any key)");
             Console.ReadKey(true);
