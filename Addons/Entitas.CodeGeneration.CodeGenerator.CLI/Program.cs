@@ -32,13 +32,6 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
             try {
                 GetCommand(args[0]).Run(args);
-
-                if (args.keepAlive()) {
-                    while (shouldKeepAlive()) {
-                        GetCommand(args[0]).Run(args);
-                    }
-                    fabl.Info("Goodbye, see you soon!");
-                }
             } catch (Exception ex) {
                 PrintException(ex, args);
             }
@@ -90,7 +83,6 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
             commandList.Add("[-v]".PadRight(pad) + " - " + "verbose output");
             commandList.Add("[-s]".PadRight(pad) + " - " + "silent output (errors only)");
-            commandList.Add("[-a]".PadRight(pad) + " - " + "keep process alive (for faster re-generation)");
 
             var header =
 @"#   _____       _   _ _
