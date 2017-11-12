@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -19,10 +20,10 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             var port = 0;
             try {
                 port = int.Parse(args[1]);
-                _command = args[2];
+                _command = string.Join(" ", args.Skip(2).ToArray());
             } catch (Exception) {
                 port = 3333;
-                _command = args[1];
+                _command = string.Join(" ", args.Skip(1).ToArray());
             }
 
             var client = new TcpClientSocket();
