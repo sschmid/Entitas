@@ -42,7 +42,7 @@ cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
 cp "${COLLECTED_DIR}/"* $TMP_DIR || true
 cp -r "$COLLECTED_DIR/Migration" $TMP_DIR
 
-cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/entitas.exe"
+cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/Entitas.exe"
 cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
@@ -97,7 +97,7 @@ cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
 cp "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
 cp "${BUILD_SRC}/fabl.Appenders.dll" $TMP_ENTITAS
 
-cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/entitas.exe"
+cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/Entitas.exe"
 cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
