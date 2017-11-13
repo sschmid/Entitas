@@ -34,6 +34,40 @@ $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/RequestedFolder
 
 ---
 
+Entitas 0.45.0 upgrade guide
+============================
+
+#### Breaking changes
+
+Use the command line tool `MigrationAssistant.exe` and apply Migration 0.45.0 to
+automatically rename the changed keys in Entitas.properties
+
+`MigrationAssistant.exe 0.45.0 path/to/project`
+
+The following keys in Entitas.properties changed from:
+
+- Entitas.CodeGeneration.CodeGenerator.SearchPaths
+- Entitas.CodeGeneration.CodeGenerator.Plugins
+- Entitas.CodeGeneration.CodeGenerator.DataProviders
+- Entitas.CodeGeneration.CodeGenerator.CodeGenerators
+- Entitas.CodeGeneration.CodeGenerator.PostProcessors
+- Entitas.CodeGeneration.CodeGenerator.CLI.Ignore.UnusedKeys
+
+to:
+
+- CodeGenerator.SearchPaths
+- CodeGenerator.Plugins
+- CodeGenerator.DataProviders
+- CodeGenerator.CodeGenerators
+- CodeGenerator.PostProcessors
+- CodeGenerator.CLI.Ignore.UnusedKeys
+
+The default plugins are now in folder called `Entitas` instead of `Default`. Please update
+the searchPaths in Entitas.properties.
+`Entitas.exe` is now uppercase with capital E
+
+---
+
 Entitas 0.42.0 upgrade guide
 ============================
 

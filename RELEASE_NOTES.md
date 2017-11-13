@@ -1,3 +1,64 @@
+# 0.45.0
+
+Thanks for the feedback on the new code generator so far. This update contains a lot of great improvments.
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days.
+
+
+#### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+
+#### Entitas
+- Fixed flag components increasing the componentPool stack #445
+- Logging all retained entities in ContextStillHasRetainedEntitiesException #448
+- Added support for multiple indexed members per component #464
+
+```
+public sealed class MyComponent : IComponent {
+
+  // Multiple fields are now supported
+
+  [EntityIndex]
+  public int value;
+
+  [EntityIndex]
+  public int otherValue;
+}
+
+// will generate
+context.GetEntitiesWithMyValue(...);
+context.GetEntitiesWithMyOtherValue(...);
+```
+
+
+#### CodeGenerator
+- Displaying more prominent popup in Unity when trying to generate with compile errors #463
+
+![entitas-codegenerator-compileerrorpopup](https://user-images.githubusercontent.com/233700/32519395-e8dccbdc-c40c-11e7-8a6c-08f176b23244.png)
+
+- AssemblyResolver won't append dll to exe extension
+- Changed code generator keys and removed default values
+- Changed code generator cli keys and removed default values
+- Added auto-import command. Use `entitas auto-import` to automatically populate Entitas.properties
+- `entitas status` command will detect potential collisions, e.g. duplicate providers from the default plugins and the roslyn plugins
+- `entitas fix` can resolve plugin collisions
+- `entitas fix` command will tell you to press any key
+- Removed `-a` keepAlive in favour of `entitas server` and `entitas client`
+- Fixed client only sending first command to server #482
+- Default Plugins are now in folder called Entitas
+- Refactored all commands and simplified many utils methods
+- `Entitas.exe` now with capital E
+
+
+#### Roslyn
+- Added custom support for multi-dimensional arrays types like `int[,,]` #481
+Let me know if more types need custom support.
+
+#### Migration
+- Added migration for 0.45.0
+
+
 # 0.44.0
 
 As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.

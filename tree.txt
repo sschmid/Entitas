@@ -169,6 +169,7 @@
 │   │   ├── Commands
 │   │   │   ├── AbstractCommand.cs
 │   │   │   ├── Add.cs
+│   │   │   ├── AutoImport.cs
 │   │   │   ├── Client.cs
 │   │   │   ├── Doctor.cs
 │   │   │   ├── Donate.cs
@@ -189,8 +190,8 @@
 │   │   ├── ArgsExtension.cs
 │   │   ├── CLIConfig.cs
 │   │   ├── Program.cs
-│   │   ├── startCodeGenerator
-│   │   └── startCodeGenerator.bat
+│   │   ├── StartCodeGenerator.bat
+│   │   └── startCodeGenerator
 │   ├── Entitas.CodeGeneration.Plugins
 │   │   └── Entitas.CodeGeneration.Plugins
 │   │       └── Plugins
@@ -270,7 +271,8 @@
 │   │           ├── M0360_2.cs
 │   │           ├── M0410_1.cs
 │   │           ├── M0410_2.cs
-│   │           └── M0410_3.cs
+│   │           ├── M0410_3.cs
+│   │           └── M0450.cs
 │   ├── Entitas.Migration.CLI
 │   │   └── Program.cs
 │   ├── Entitas.Migration.Unity.Editor
@@ -513,6 +515,7 @@
 │       └── e_trigger.template.xml
 ├── CONTRIBUTING.md
 ├── EntitasUpgradeGuide.md
+├── ISSUE_TEMPLATE.md
 ├── LICENSE.txt
 ├── README.md
 ├── RELEASE_NOTES.md
