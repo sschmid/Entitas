@@ -39,6 +39,9 @@ class describe_M0450 : nspec {
 
             file.fileContent.Contains("Entitas.CodeGeneration.CodeGenerator.PostProcessors").should_be_false();
             file.fileContent.Contains("CodeGenerator.PostProcessors").should_be_true();
+
+            file.fileContent.Contains("Entitas.CodeGeneration.CodeGenerator.CLI.Ignore.UnusedKeys").should_be_false();
+            file.fileContent.Contains("CodeGenerator.CLI.Ignore.UnusedKeys").should_be_true();
         };
     }
 }

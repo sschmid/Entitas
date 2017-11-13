@@ -20,6 +20,8 @@
                 file.fileContent = file.fileContent.Replace("Entitas.CodeGeneration.CodeGenerator.DataProviders", "CodeGenerator.DataProviders");
                 file.fileContent = file.fileContent.Replace("Entitas.CodeGeneration.CodeGenerator.CodeGenerators", "CodeGenerator.CodeGenerators");
                 file.fileContent = file.fileContent.Replace("Entitas.CodeGeneration.CodeGenerator.PostProcessors", "CodeGenerator.PostProcessors");
+
+                file.fileContent = file.fileContent.Replace("Entitas.CodeGeneration.CodeGenerator.CLI.Ignore.UnusedKeys", "CodeGenerator.CLI.Ignore.UnusedKeys");
             }
 
             return properties;
