@@ -1,3 +1,12 @@
+# 0.45.1
+
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days.
+
+#### CodeGenerator
+- Added Auto Import Button to Entitas Preferences. This will detect plugins and automatically set them in Entitas.properties
+
+
 # 0.45.0
 
 Thanks for the feedback on the new code generator so far. This update contains a lot of great improvments.
