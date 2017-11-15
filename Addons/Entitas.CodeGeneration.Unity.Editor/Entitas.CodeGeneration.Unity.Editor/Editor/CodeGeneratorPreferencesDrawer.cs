@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Entitas.CodeGeneration.CodeGenerator;
 using Entitas.Unity.Editor;
@@ -43,6 +44,15 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         }
 
         protected override void drawContent(Preferences preferences) {
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.LabelField("Auto Import Plugins");
+                if (EntitasEditorLayout.MiniButton("Auto Import")) {
+                    autoImport();
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+
             _codeGeneratorConfig.dataProviders = drawMaskField("Data Providers", _availableDataProviderTypes, _availableDataProviderNames, _codeGeneratorConfig.dataProviders);
             _codeGeneratorConfig.codeGenerators = drawMaskField("Code Generators", _availableGeneratorTypes, _availableGeneratorNames, _codeGeneratorConfig.codeGenerators);
             _codeGeneratorConfig.postProcessors = drawMaskField("Post Processors", _availablePostProcessorTypes, _availablePostProcessorNames, _codeGeneratorConfig.postProcessors);
@@ -51,6 +61,35 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             drawConfigurables();
 
             drawGenerateButton();
+        }
+
+        void autoImport() {
+            var config = new CodeGeneratorConfig();
+            config.Configure(_preferences);
+
+            var plugins = config.searchPaths
+                .Concat(new [] { "Assets"})
+                .SelectMany(path => Directory.Exists(path)
+                    ? Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories)
+                    : new string[0])
+                .Where(path => path.ToLower().EndsWith(".plugins.dll"));
+
+            config.searchPaths = config.searchPaths
+                .Concat(plugins.Select(path => Path.GetDirectoryName(path)))
+                .Distinct()
+                .ToArray();
+
+            config.plugins = plugins
+                .Select(path => Path.GetFileNameWithoutExtension(path))
+                .Distinct()
+                .ToArray();
+
+            _preferences.Save();
+
+            Initialize(_preferences);
+            _codeGeneratorConfig.dataProviders = _availableDataProviderTypes;
+            _codeGeneratorConfig.codeGenerators = _availableGeneratorTypes;
+            _codeGeneratorConfig.postProcessors = _availablePostProcessorTypes;
         }
 
         void drawConfigurables() {

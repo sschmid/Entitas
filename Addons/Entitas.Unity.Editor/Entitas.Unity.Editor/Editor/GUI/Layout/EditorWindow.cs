@@ -7,7 +7,7 @@ namespace Entitas.Unity.Editor {
 
         public static void ShowWindow<T>(string title) where T : EditorWindow {
             var window = EditorWindow.GetWindow<T>(true, title);
-            window.minSize = window.maxSize = new Vector2(415f, 547);
+            window.minSize = window.maxSize = new Vector2(415f, 564);
             window.Show();
         }
 
