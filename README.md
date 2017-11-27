@@ -1,4 +1,17 @@
 <p align="center">
+    <a href="https://assetstore.unity.com/search/?order_by=relevance&q=on_sale%3Ayes&q=entitas&rows=42">
+        <img src="https://pbs.twimg.com/media/DPoe0aQXcAAlj8i.jpg" alt="Entitas on Unity Mega Sale"></a>
+</p>
+
+Entitas on Unity Asset Store Mega Sale
+================================================================
+
+## Today is your last day to save up 15% of Entitas on the Unity Asset Store!
+## Get Entitast today: [Entitas on the Unity Asset Store](https://assetstore.unity.com/search/?order_by=relevance&q=on_sale%3Ayes&q=entitas&rows=42)
+
+---
+
+<p align="center">
     <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas-Header.png" alt="Entitas">
 </p>
 
