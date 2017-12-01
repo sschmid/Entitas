@@ -1,4 +1,6 @@
-﻿namespace Entitas.CodeGeneration.CodeGenerator.CLI {
+﻿using Fabl;
+
+namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
     public class Donate : AbstractCommand {
 
@@ -7,6 +9,32 @@
         public override string example { get { return null; } }
 
         protected override void run() {
+
+            const string heart =
+@"        @@@@@@           @@@@@@
+      @@@@@@@@@@       @@@@@@@@@@
+    @@@@@@@@@@@@@@   @@@@@@@@@@@@@@
+  @@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@
+        @@@@@@@@@@@@@@@@@@@@@@@
+          @@@@@@@@@@@@@@@@@@@
+            @@@@@@@@@@@@@@@
+              @@@@@@@@@@@
+                @@@@@@@
+                  @@@
+                   @
+";
+
+            fabl.Error(heart);
+
             System.Diagnostics.Process.Start("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=BTMLSDQULZ852");
         }
     }
