@@ -84,8 +84,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
             commandList.Add("[-v]".PadRight(pad) + " - " + "verbose output");
             commandList.Add("[-s]".PadRight(pad) + " - " + "silent output (errors only)");
 
-            var header =
-@"#   _____       _   _ _
+            var header = @"
+#   _____       _   _ _
 #  | ____|_ __ | |_(_) |_ __ _ ___
 #  |  _| | '_ \| __| | __/ _` / __|
 #  | |___| | | | |_| | || (_| \__ \

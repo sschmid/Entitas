@@ -10,8 +10,8 @@ namespace Entitas.CodeGeneration.CodeGenerator.CLI {
 
         protected override void run() {
 
-            const string heart =
-@"        @@@@@@           @@@@@@
+            const string heart = @"
+        @@@@@@           @@@@@@
       @@@@@@@@@@       @@@@@@@@@@
     @@@@@@@@@@@@@@   @@@@@@@@@@@@@@
   @@@@@@@@@@@@@@@@@ @@@@@@@@@@@@@@@@@
