@@ -18,15 +18,67 @@ namespace Entitas.Unity.Editor {
             FastAndUnsafe
         }
 
+        Texture2D _headerTexture;
         ScriptingDefineSymbols _scriptingDefineSymbols;
         AERCMode _scriptCallOptimization;
 
         public override void Initialize(Preferences preferences) {
+            _headerTexture = EditorLayout.LoadTexture("l:EntitasHeader");
+
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _scriptCallOptimization = _scriptingDefineSymbols.buildTargetToDefSymbol.Values
-                                            .All<string>(defs => defs.Contains(ENTITAS_FAST_AND_UNSAFE))
-                                                ? AERCMode.FastAndUnsafe
-                                                : AERCMode.Safe;
+                .All<string>(defs => defs.Contains(ENTITAS_FAST_AND_UNSAFE))
+                ? AERCMode.FastAndUnsafe
+                : AERCMode.Safe;
+        }
+
+        public override void Draw(Preferences preferences) {
+            drawToolbar();
+            drawHeader(preferences);
+            base.Draw(preferences);
+        }
+
+        void drawToolbar() {
+            EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
+            {
+                if (GUILayout.Button("Check for Updates", EditorStyles.toolbarButton)) {
+                    CheckForUpdates.DisplayUpdates();
+                }
+                if (GUILayout.Button("Chat", EditorStyles.toolbarButton)) {
+                    EntitasFeedback.EntitasChat();
+                }
+                if (GUILayout.Button("Docs", EditorStyles.toolbarButton)) {
+                    EntitasFeedback.EntitasDocs();
+                }
+                if (GUILayout.Button("Wiki", EditorStyles.toolbarButton)) {
+                    EntitasFeedback.EntitasWiki();
+                }
+                if (GUILayout.Button("Donate", EditorStyles.toolbarButton)) {
+                    EntitasFeedback.Donate();
+                }
+            }
+            EditorGUILayout.EndHorizontal();
+        }
+
+        void drawHeader(Preferences preferences) {
+            var rect = EditorLayout.DrawTexture(_headerTexture);
+//            if (rect.Contains(Event.current.mousePosition) && Event.current.clickCount > 0) {
+//                Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/blob/develop/README.md");
+//            }
+
+            const int buttonWidth = 60;
+            const int buttonHeight = 15;
+            const int padding = 4;
+            var buttonRect = new Rect(
+                rect.width - buttonWidth - padding,
+                rect.y + rect.height - buttonHeight - padding,
+                buttonWidth,
+                buttonHeight
+            );
+            if (GUI.Button(buttonRect, "Edit", EditorStyles.miniButton)) {
+                EditorWindow.focusedWindow.Close();
+                System.Diagnostics.Process.Start(preferences.propertiesPath);
+            }
         }
 
         protected override void drawContent(Preferences preferences) {

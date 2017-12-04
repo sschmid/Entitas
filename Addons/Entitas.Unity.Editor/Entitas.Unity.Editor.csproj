@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entitas.Unity.Editor\EntitasPreferencesDrawer.cs" />
+    <Compile Include="Entitas.Unity.Editor\EntitasPreferencesWindow.cs" />
     <Compile Include="Entitas.Unity.Editor\Menu\CheckForUpdates.cs" />
     <Compile Include="Entitas.Unity.Editor\Menu\EntitasMenuItems.cs" />
   </ItemGroup>

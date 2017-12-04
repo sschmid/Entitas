@@ -15,12 +15,9 @@ cp -v "${ROOT}/EntitasUpgradeGuide.md" "$COLLECTED_DIR/EntitasUpgradeGuide.md"
 cp -v "${ROOT}/LICENSE.txt" "$COLLECTED_DIR/LICENSE.txt"
 cp "${BUILD_SRC}/${ES_MIG_CLI}.exe" "$COLLECTED_DIR/Migration/MigrationAssistant.exe"
 cp "${BUILD_SRC}/${ES_MIG}.dll" "$COLLECTED_DIR/Migration/${ES_MIG}.dll"
-cp "${BUILD_SRC}/${ES_UTILS}.dll" "$COLLECTED_DIR/Migration/${ES_UTILS}.dll"
 
-cp "${ADDONS}/${ES_UE}/${ES_UE}/Editor/Images/"* "$COLLECTED_DIR/Images"
-cp "${ADDONS}/${ES_VD_UE}/${ES_VD_UE}/Editor/Images/"* "$COLLECTED_DIR/Images"
-cp "${ADDONS}/${ES_CG_G_CLI}/startCodeGenerator" "$COLLECTED_DIR/startCodeGenerator"
-cp "${ADDONS}/${ES_CG_G_CLI}/StartCodeGenerator.bat" "$COLLECTED_DIR/StartCodeGenerator.bat"
+cp "${ADDONS}/${ES_UE}/${ES_UE}/Images/"* "$COLLECTED_DIR/Images"
+cp "${ADDONS}/${ES_VD_UE}/${ES_VD_UE}/Images/"* "$COLLECTED_DIR/Images"
 
 
 TMP_DIR="${BUILD}/tmp"
@@ -33,7 +30,6 @@ CG_DEFAULT="${CG_PLUGINS}/Entitas"
 mkdir $TMP_DIR $TMP_ENTITAS $TMP_CG $CG_PLUGINS $CG_DEFAULT
 
 cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_ENTITAS
 
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
 
@@ -42,21 +38,11 @@ cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
 cp "${COLLECTED_DIR}/"* $TMP_DIR || true
 cp -r "$COLLECTED_DIR/Migration" $TMP_DIR
 
-cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/Entitas.exe"
-cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_CG
-cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
-cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_CG
-cp "${BUILD_SRC}/fabl.dll" $TMP_CG
-cp "${BUILD_SRC}/fabl.Appenders.dll" $TMP_CG
 
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $CG_DEFAULT
-cp "${BUILD_SRC}/${ES_CG_G}.dll" $CG_DEFAULT
-cp "${BUILD_SRC}/${ES_CG}.dll" $CG_DEFAULT
 cp "${BUILD_SRC}/${ES_CG_P}.dll" $CG_DEFAULT
 cp "${BUILD_SRC}/${ES}.dll" $CG_DEFAULT
-cp "${BUILD_SRC}/${ES_UTILS}.dll" $CG_DEFAULT
-cp "${BUILD_SRC}/fabl.dll" $CG_DEFAULT
 
 cp -r $DOCS "${TMP_DIR}/Documentation"
 pushd $TMP_DIR > /dev/null
@@ -70,14 +56,11 @@ TMP_EDITOR="${TMP_ENTITAS}/Editor"
 mkdir $TMP_DIR $TMP_ENTITAS $TMP_EDITOR $TMP_CG $CG_PLUGINS $CG_DEFAULT
 
 cp "${BUILD_SRC}/${ES}.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_ENTITAS
 
 cp "${BUILD_SRC}/${ES_U}.dll" $TMP_ENTITAS
 cp "${BUILD_SRC}/${ES_UE}.dll" $TMP_EDITOR
 
-cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/${ES_CG_P}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/${ES_CG_UE}.dll" $TMP_EDITOR
 cp "${BUILD_SRC}/Compile.cs" $TMP_ENTITAS
@@ -94,26 +77,13 @@ cp "${BUILD_SRC}/${ES_BP}.dll" $TMP_ENTITAS
 # cp "${BUILD_SRC}/${ES_BP_U}.dll" $TMP_ENTITAS
 # cp "${BUILD_SRC}/${ES_BP_UE}.dll" $TMP_EDITOR
 
-cp "${BUILD_SRC}/fabl.dll" $TMP_ENTITAS
-cp "${BUILD_SRC}/fabl.Appenders.dll" $TMP_ENTITAS
-
-cp "${BUILD_SRC}/${ES_CG_G_CLI}.exe" "$TMP_CG/Entitas.exe"
-cp "${BUILD_SRC}/${ES_CG_G}.dll" $TMP_CG
-cp "${BUILD_SRC}/${ES_CG}.dll" $TMP_CG
 cp "${BUILD_SRC}/${ES}.dll" $TMP_CG
-cp "${BUILD_SRC}/${ES_UTILS}.dll" $TMP_CG
-cp "${BUILD_SRC}/fabl.dll" $TMP_CG
-cp "${BUILD_SRC}/fabl.Appenders.dll" $TMP_CG
 
 cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" $CG_DEFAULT
-cp "${BUILD_SRC}/${ES_CG_G}.dll" $CG_DEFAULT
-cp "${BUILD_SRC}/${ES_CG}.dll" $CG_DEFAULT
 cp "${BUILD_SRC}/${ES_CG_P}.dll" $CG_DEFAULT
 cp "${BUILD_SRC}/${ES}.dll" $CG_DEFAULT
-cp "${BUILD_SRC}/${ES_UTILS}.dll" $CG_DEFAULT
 cp "${BUILD_SRC}/${ES_VD_CG_P}.dll" $CG_DEFAULT
-cp "${BUILD_SRC}/fabl.dll" $CG_DEFAULT
-
+nullString 
 # cp "${BUILD_SRC}/${ES_BP_CG_P}.dll" $CG_DEFAULT
 # cp "${BUILD_SRC}/${ES_BP}.dll" $CG_DEFAULT
 # cp "${BUILD_SRC}/${ES_BP_U}.dll" $CG_DEFAULT
