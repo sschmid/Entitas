@@ -14,14 +14,14 @@ class check_namespaces : nspec {
         var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
 
         it["processes roughly the correct number of files"] = () => {
-            sourceFiles.Count.should_be_greater_than(200);
-            sourceFiles.Count.should_be_less_than(300);
+            sourceFiles.Count.should_be_greater_than(150);
+            sourceFiles.Count.should_be_less_than(250);
         };
 
         System.Console.WriteLine("sourceFiles: " + sourceFiles.Count);
 
         const string namespacePattern = @"(?:^namespace)\s.*\b";
-        string expectedNamespacePattern = string.Format(@"[^\{0}]*", Path.DirectorySeparatorChar);
+        var expectedNamespacePattern = string.Format(@"[^\{0}]*", Path.DirectorySeparatorChar);
 
         var addonsDir = dir("Addons");
 

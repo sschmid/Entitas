@@ -10,15 +10,11 @@ ADDONS="${ROOT}/Addons"
 ADDONS_PLAYGROUND="${ROOT}/Tests/Unity"
 
 ES="Entitas"
-ES_UTILS="Entitas.Utils"
 
 ES_U="Entitas.Unity"
 ES_UE="Entitas.Unity.Editor"
 
-ES_CG="Entitas.CodeGeneration"
 ES_CG_ATTR="Entitas.CodeGeneration.Attributes"
-ES_CG_G="Entitas.CodeGeneration.CodeGenerator"
-ES_CG_G_CLI="Entitas.CodeGeneration.CodeGenerator.CLI"
 ES_CG_P="Entitas.CodeGeneration.Plugins"
 ES_CG_UE="Entitas.CodeGeneration.Unity.Editor"
 
@@ -35,6 +31,7 @@ ES_BP_CG_P="Entitas.Blueprints.CodeGeneration.Plugins"
 ES_BP_U="Entitas.Blueprints.Unity"
 ES_BP_UE="Entitas.Blueprints.Unity.Editor"
 
+DD="../DesperateDevs/Build/src/"
 BIN="bin/Release"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

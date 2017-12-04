@@ -66,23 +66,21 @@ namespace Entitas.CodeGeneration.Unity.Editor {
         }
 
         void autoImport() {
-            var config = new CodeGeneratorConfig();
-            config.Configure(_preferences);
-
-            var plugins = config.searchPaths
+            var plugins = _codeGeneratorConfig.searchPaths
                 .Concat(new[] { "Assets" })
                 .SelectMany(path => Directory.Exists(path)
                     ? Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories)
                     : new string[0])
-                .Where(path => path.ToLower().EndsWith(".plugins.dll"));
+                .Where(path => path.EndsWith(".plugins.dll", StringComparison.OrdinalIgnoreCase))
+                .ToArray();
 
-            config.searchPaths = config.searchPaths
-                .Concat(plugins.Select(path => Path.GetDirectoryName(path)))
+            _codeGeneratorConfig.searchPaths = _codeGeneratorConfig.searchPaths
+                .Concat(plugins.Select(Path.GetDirectoryName))
                 .Distinct()
                 .ToArray();
 
-            config.plugins = plugins
-                .Select(path => Path.GetFileNameWithoutExtension(path))
+            _codeGeneratorConfig.plugins = plugins
+                .Select(Path.GetFileNameWithoutExtension)
                 .Distinct()
                 .ToArray();
 

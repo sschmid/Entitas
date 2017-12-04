@@ -11,7 +11,7 @@ namespace Entitas.Blueprints.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string CLASS_TEMPLATE =
-@"using Entitas.Blueprints;
+            @"using Entitas.Blueprints;
 using Entitas.Blueprints.Unity;
 
 public static class BlueprintsExtension {
@@ -21,7 +21,7 @@ ${blueprints}
 ";
 
         const string GETTER_TEMPLATE =
-@"    public static Blueprint ${ValidPropertyName}(this Blueprints blueprints) {
+            @"    public static Blueprint ${ValidPropertyName}(this Blueprints blueprints) {
         return blueprints.GetBlueprint(""${Name}"");
     }";
 

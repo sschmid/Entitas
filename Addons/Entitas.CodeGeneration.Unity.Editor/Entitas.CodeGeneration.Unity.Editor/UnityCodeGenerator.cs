@@ -93,7 +93,7 @@ namespace Entitas.CodeGeneration.Unity.Editor {
             client.OnConnected += onConnected;
             client.OnReceived += onReceive;
             client.OnDisconnected += onDisconnect;
-            client.Connect(IPAddress.Parse("127.0.0.1"), 3333);
+            client.Connect(IPAddress.Loopback, 3333);
 
             AssetDatabase.Refresh();
         }
