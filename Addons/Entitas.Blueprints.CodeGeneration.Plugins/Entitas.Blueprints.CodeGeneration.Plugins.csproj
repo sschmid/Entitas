@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -28,28 +28,29 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="UnityEditor">
-      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
+    <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    <Reference Include="System" />
+    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.Blueprints.CodeGeneration.Plugins\Plugins\BlueprintData.cs" />
-    <Compile Include="Entitas.Blueprints.CodeGeneration.Plugins\Plugins\BlueprintDataProvider.cs" />
-    <Compile Include="Entitas.Blueprints.CodeGeneration.Plugins\Plugins\BlueprintsGenerator.cs" />
+    <Compile Include="Entitas.Blueprints.CodeGeneration.Plugins\BlueprintData.cs" />
+    <Compile Include="Entitas.Blueprints.CodeGeneration.Plugins\BlueprintDataProvider.cs" />
+    <Compile Include="Entitas.Blueprints.CodeGeneration.Plugins\BlueprintsGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.Blueprints.CodeGeneration.Plugins\" />
-    <Folder Include="Entitas.Blueprints.CodeGeneration.Plugins\Plugins\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">
-      <Project>{8AA2998C-DEAD-4795-8255-55C2CEC8DED2}</Project>
-      <Name>Entitas.CodeGeneration</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entitas.Blueprints.Unity.Editor\Entitas.Blueprints.Unity.Editor.csproj">
       <Project>{79E05CCF-61CE-49AB-9E9A-D7672DD6A763}</Project>
       <Name>Entitas.Blueprints.Unity.Editor</Name>

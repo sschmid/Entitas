@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -29,20 +29,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.VisualDebugging.Unity\Unity\ContextObserver\ContextObserver.cs" />
-    <Compile Include="Entitas.VisualDebugging.Unity\Unity\ContextObserver\ContextObserverBehaviour.cs" />
-    <Compile Include="Entitas.VisualDebugging.Unity\Unity\ContextObserver\ContextObserverExtension.cs" />
-    <Compile Include="Entitas.VisualDebugging.Unity\Unity\DebugSystems\DebugSystems.cs" />
-    <Compile Include="Entitas.VisualDebugging.Unity\Unity\DebugSystems\DebugSystemsBehaviour.cs" />
-    <Compile Include="Entitas.VisualDebugging.Unity\Unity\DebugSystems\SystemInfo.cs" />
-    <Compile Include="Entitas.VisualDebugging.Unity\Unity\Entity\DontDrawComponentAttribute.cs" />
-    <Compile Include="Entitas.VisualDebugging.Unity\Unity\Entity\EntityBehaviour.cs" />
-    <Compile Include="Entitas.VisualDebugging.Unity\Unity\GameObjectDestroyExtension.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\ContextObserver\ContextObserver.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\ContextObserver\ContextObserverBehaviour.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\ContextObserver\ContextObserverExtension.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\DebugSystems\DebugSystems.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\DebugSystems\DebugSystemsBehaviour.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\DebugSystems\SystemInfo.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Entity\DontDrawComponentAttribute.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\Entity\EntityBehaviour.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\GameObjectDestroyExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.VisualDebugging.Unity\" />
-    <Folder Include="Entitas.VisualDebugging.Unity\Unity\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

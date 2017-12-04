@@ -101,7 +101,7 @@ namespace Entitas.Migration {
             }
 
             const string filterReplacement =
-@"    protected override bool Filter(Entity entity) {{
+                @"    protected override bool Filter(Entity entity) {{
         // TODO Entitas 0.36.0 Migration
         // ensure was: {0}
         // exclude was: {1}
@@ -124,31 +124,31 @@ namespace Entitas.Migration {
             var ensureAllOf = string.Empty;
             if (Regex.IsMatch(matcher, allOfPattern)) {
                 ensureAllOf = string.Join(" && ", Regex.Match(matcher, allOfPattern).Groups["matchers"].Value
-                                              .Split(',')
-                                              .Select(m => m.Trim())
-                                              .Select(m => m.Split('.')[1])
-                                              .Select(m => "entity.has" + m)
-                                              .ToArray());
+                    .Split(',')
+                    .Select(m => m.Trim())
+                    .Select(m => m.Split('.')[1])
+                    .Select(m => "entity.has" + m)
+                    .ToArray());
             }
 
             var ensureAnyOf = string.Empty;
             if (Regex.IsMatch(matcher, anyOfPattern)) {
                 ensureAnyOf = string.Join(" || ", Regex.Match(matcher, anyOfPattern).Groups["matchers"].Value
-                                              .Split(',')
-                                              .Select(m => m.Trim())
-                                              .Select(m => m.Split('.')[1])
-                                              .Select(m => "entity.has" + m)
-                                              .ToArray());
+                    .Split(',')
+                    .Select(m => m.Trim())
+                    .Select(m => m.Split('.')[1])
+                    .Select(m => "entity.has" + m)
+                    .ToArray());
             }
 
             var ensureNoneOf = string.Empty;
             if (Regex.IsMatch(matcher, noneOfPattern)) {
                 ensureNoneOf = string.Join(" && !", Regex.Match(matcher, noneOfPattern).Groups["matchers"].Value
-                                               .Split(',')
-                                               .Select(m => m.Trim())
-                                               .Select(m => m.Split('.')[1])
-                                               .Select(m => "entity.has" + m)
-                                               .ToArray());
+                    .Split(',')
+                    .Select(m => m.Trim())
+                    .Select(m => m.Split('.')[1])
+                    .Select(m => "entity.has" + m)
+                    .ToArray());
             }
 
             var filters = new List<string>();
@@ -175,8 +175,8 @@ namespace Entitas.Migration {
             }
 
             return filters.Count == 0
-                      ? null
-                      : string.Join(" && ", filters.ToArray());
+                ? null
+                : string.Join(" && ", filters.ToArray());
         }
 
         string migrateSetPoolsSetPool(string fileContent) {
@@ -192,7 +192,7 @@ namespace Entitas.Migration {
             var className = Regex.Match(fileContent, classNamePattern).Groups["className"].Value;
 
             const string constructorFormat =
-@"public {0}(Contexts contexts) : base(context) {{
+                @"public {0}(Contexts contexts) : base(context) {{
 {1}
     }}";
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -29,14 +29,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.Blueprints.Unity\Unity\BinaryBlueprint.cs" />
-    <Compile Include="Entitas.Blueprints.Unity\Unity\Blueprints.cs" />
-    <Compile Include="Entitas.Blueprints.Unity\Unity\BlueprintsNotFoundException.cs" />
+    <Compile Include="Entitas.Blueprints.Unity\BinaryBlueprint.cs" />
+    <Compile Include="Entitas.Blueprints.Unity\Blueprints.cs" />
+    <Compile Include="Entitas.Blueprints.Unity\BlueprintsNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Blueprints\Entitas.Blueprints.csproj">
@@ -47,9 +47,6 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entitas.Blueprints.Unity\Unity\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

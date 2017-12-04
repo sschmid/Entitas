@@ -1,0 +1,7 @@
+#!/bin/bash -e
+echo $0
+source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
+
+DD="../DesperateDevs/Build/src"
+
+cp -r "$DD/"* "Libraries"

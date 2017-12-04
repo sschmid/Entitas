@@ -1,6 +1,7 @@
 using System;
+using DesperateDevs.Serialization;
+using DesperateDevs.Utils;
 using Entitas.CodeGeneration.Plugins;
-using Entitas.Utils;
 using My.Namespace;
 using NSpec;
 
@@ -13,7 +14,7 @@ class describe_ComponentDataProvider : nspec {
     ComponentData[] getMultipleData<T>(Preferences preferences = null) {
         var provider = new ComponentDataProvider(new Type[] { typeof(T) });
         if (preferences == null) {
-            preferences = new Preferences(new Properties("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"));
+            preferences = new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState");
         }
         provider.Configure(preferences);
 
@@ -156,9 +157,9 @@ class describe_ComponentDataProvider : nspec {
             it["creates data for each type"] = () => {
                 var types = new [] { typeof(NameAgeComponent), typeof(Test2ContextComponent) };
                 var provider = new ComponentDataProvider(types);
-                provider.Configure(new Preferences(new Properties(
+                provider.Configure(new TestPreferences(
                     "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"
-                )));
+                ));
                 var data = provider.GetData();
                 data.Length.should_be(types.Length);
             };
@@ -192,9 +193,9 @@ class describe_ComponentDataProvider : nspec {
             ComponentData data = null;
 
             before = () => {
-                var preferences = new Preferences(new Properties(
+                var preferences = new TestPreferences(
                     "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n"
-                ));
+                );
 
                 type = typeof(NoContextComponent);
                 data = getData<NoContextComponent>(preferences);

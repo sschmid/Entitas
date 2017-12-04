@@ -28,6 +28,9 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\Libraries\DesperateDevs.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
@@ -118,11 +121,5 @@
     <EmbeddedResource Include="Entitas\version">
       <LogicalName>version</LogicalName>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entitas.Utils\Entitas.Utils.csproj">
-      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
-      <Name>Entitas.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

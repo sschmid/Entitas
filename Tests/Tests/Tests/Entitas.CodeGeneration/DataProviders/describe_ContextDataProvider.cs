@@ -1,6 +1,5 @@
 ﻿using Entitas.CodeGeneration.Plugins;
 using NSpec;
-using Entitas.Utils;
 
 class describe_ContextDataProvider : nspec {
 
@@ -9,7 +8,7 @@ class describe_ContextDataProvider : nspec {
         it["creates data for each context name"] = () => {
             var names = "Entitas.CodeGeneration.Plugins.Contexts = Input, GameState";
             var provider = new ContextDataProvider();
-            provider.Configure(new Preferences(new Properties(names)));
+            provider.Configure(new TestPreferences(names));
 
             var data = (ContextData[])provider.GetData();
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Entitas.Utils;
+using DesperateDevs.Utils;
 
 namespace Entitas {
 

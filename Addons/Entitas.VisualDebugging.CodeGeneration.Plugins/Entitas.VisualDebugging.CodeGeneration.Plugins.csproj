@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -29,25 +29,22 @@
     <AssemblyName>Entitas.VisualDebugging.CodeGeneration.Plugins</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\Plugins\ContextObserverGenerator.cs" />
-    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\Plugins\FeatureClassGenerator.cs" />
+    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\ContextObserverGenerator.cs" />
+    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\FeatureClassGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.VisualDebugging.CodeGeneration.Plugins\" />
-    <Folder Include="Entitas.VisualDebugging.CodeGeneration.Plugins\Plugins\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">
-      <Project>{8AA2998C-DEAD-4795-8255-55C2CEC8DED2}</Project>
-      <Name>Entitas.CodeGeneration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
-      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
-      <Name>Entitas.Utils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
       <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
       <Name>Entitas.CodeGeneration.Plugins</Name>

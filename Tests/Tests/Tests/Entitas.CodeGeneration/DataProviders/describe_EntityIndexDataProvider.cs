@@ -1,6 +1,6 @@
 using System;
+using DesperateDevs.Serialization;
 using Entitas.CodeGeneration.Plugins;
-using Entitas.Utils;
 using My.Namespace;
 using MyNamespace;
 using NSpec;
@@ -10,10 +10,10 @@ class describe_EntityIndexDataProvider : nspec {
     EntityIndexData[] getData<T1, T2>(Preferences preferences= null) {
         var provider = new EntityIndexDataProvider(new Type[] { typeof(T1), typeof(T2) });
         if (preferences == null) {
-            preferences = new Preferences(new Properties(
+            preferences = new TestPreferences(
                 "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState" + "\n" +
                 "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"
-            ));
+            );
         }
         provider.Configure(preferences);
 
@@ -127,10 +127,10 @@ class describe_EntityIndexDataProvider : nspec {
             Preferences preferences= null;
 
             before = () => {
-                preferences = new Preferences(new Properties(
+                preferences = new TestPreferences(
                     "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n" +
                     "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true"
-                ));
+                );
             };
 
             it["ignores namespaces"] = () => {

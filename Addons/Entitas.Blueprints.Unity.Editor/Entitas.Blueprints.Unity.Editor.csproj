@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -28,18 +28,24 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    <Reference Include="DesperateDevs.Unity.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Unity.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
+    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.Blueprints.Unity.Editor\Editor\BinaryBlueprintInspector.cs" />
-    <Compile Include="Entitas.Blueprints.Unity.Editor\Editor\BinaryBlueprintPostprocessor.cs" />
-    <Compile Include="Entitas.Blueprints.Unity.Editor\Editor\BlueprintsInspector.cs" />
+    <Compile Include="Entitas.Blueprints.Unity.Editor\BinaryBlueprintInspector.cs" />
+    <Compile Include="Entitas.Blueprints.Unity.Editor\BinaryBlueprintPostprocessor.cs" />
+    <Compile Include="Entitas.Blueprints.Unity.Editor\BlueprintsInspector.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor.csproj">
@@ -54,10 +60,6 @@
       <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
       <Name>Entitas.Blueprints</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
-      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
-      <Name>Entitas.Utils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
       <Project>{9AF72B25-85B0-4FDC-85C3-660926C82438}</Project>
       <Name>Entitas.Unity.Editor</Name>
@@ -69,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.Blueprints.Unity.Editor\" />
-    <Folder Include="Entitas.Blueprints.Unity.Editor\Editor\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

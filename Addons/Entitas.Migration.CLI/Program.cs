@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Entitas.Utils;
+using DesperateDevs.Utils;
 
 namespace Entitas.Migration.CLI {
 

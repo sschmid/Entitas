@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGeneration;
+﻿using DesperateDevs.CodeGeneration;
 using Entitas.CodeGeneration.Plugins;
 using NSpec;
 

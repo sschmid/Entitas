@@ -28,43 +28,45 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="fabl.Appenders, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\fabl.Appenders.dll</HintPath>
+    <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Networking, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Unity.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Unity.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Utils.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.CodeGeneration.Unity.Editor\Editor\CodeGeneratorPreferencesDrawer.cs" />
-    <Compile Include="Entitas.CodeGeneration.Unity.Editor\Editor\DebugLogPostProcessor.cs" />
-    <Compile Include="Entitas.CodeGeneration.Unity.Editor\Editor\UnityCodeGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Unity.Editor\CodeGeneratorPreferencesDrawer.cs" />
+    <Compile Include="Entitas.CodeGeneration.Unity.Editor\DebugLogPostProcessor.cs" />
+    <Compile Include="Entitas.CodeGeneration.Unity.Editor\UnityCodeGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
       <Project>{9AF72B25-85B0-4FDC-85C3-660926C82438}</Project>
       <Name>Entitas.Unity.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Entitas.CodeGeneration\Entitas.CodeGeneration.csproj">
-      <Project>{8AA2998C-DEAD-4795-8255-55C2CEC8DED2}</Project>
-      <Name>Entitas.CodeGeneration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
-      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
-      <Name>Entitas.Utils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.CodeGeneration.CodeGenerator\Entitas.CodeGeneration.CodeGenerator.csproj">
-      <Project>{986CCDD6-4931-4A2C-93BD-9EDB64FAAEB6}</Project>
-      <Name>Entitas.CodeGeneration.CodeGenerator</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.Unity.Editor\" />
-    <Folder Include="Entitas.CodeGeneration.Unity.Editor\Editor\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

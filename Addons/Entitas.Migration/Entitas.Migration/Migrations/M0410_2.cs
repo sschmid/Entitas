@@ -56,7 +56,7 @@ namespace Entitas.Migration {
 
 }";
 
-            return new [] { new MigrationFile(path + Path.DirectorySeparatorChar + "Feature.cs", featureClass) };
+            return new[] { new MigrationFile(path + Path.DirectorySeparatorChar + "Feature.cs", featureClass) };
         }
     }
 }

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -28,44 +28,40 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="UnityEditor">
-      <HintPath>..\Libraries\UnityEditor.dll</HintPath>
+    <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
+    <Reference Include="DesperateDevs.Unity.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Unity.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.Unity.Editor\Editor\EntitasPreferencesDrawer.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\GUI\AbstractPreferencesDrawer.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\GUI\EntitasStyles.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\GUI\IEntitasPreferencesDrawer.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\GUI\Layout\EditorWindow.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\GUI\Layout\GUI.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\GUI\Layout\Layout.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\GUI\PreferencesWindow.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\Menu\CheckForUpdates.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\Menu\EntitasMenuItems.cs" />
-    <Compile Include="Entitas.Unity.Editor\Editor\ScriptingDefineSymbols.cs" />
+    <Compile Include="Entitas.Unity.Editor\EntitasPreferencesDrawer.cs" />
+    <Compile Include="Entitas.Unity.Editor\Menu\CheckForUpdates.cs" />
+    <Compile Include="Entitas.Unity.Editor\Menu\EntitasMenuItems.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.Unity.Editor\" />
-    <Folder Include="Entitas.Unity.Editor\Editor\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Entitas.Utils\Entitas.Utils.csproj">
-      <Project>{344251CF-6CA3-4272-B92E-69CCF7D26700}</Project>
-      <Name>Entitas.Utils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Entitas.Unity.Editor\Editor\Images\EntitasHeader.png" />
-    <None Include="Entitas.Unity.Editor\Editor\Images\EntitasHeader.png.meta" />
+    <None Include="Entitas.Unity.Editor\Images\EntitasHeader.png" />
+    <None Include="Entitas.Unity.Editor\Images\EntitasHeader.png.meta" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
