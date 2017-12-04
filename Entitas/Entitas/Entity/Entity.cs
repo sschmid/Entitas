@@ -121,7 +121,7 @@ namespace Entitas {
             if (HasComponent(index)) {
                 throw new EntityAlreadyHasComponentException(
                     index, "Cannot add component '" +
-                    _contextInfo.componentNames[index] + "' to " + this + "!",
+                           _contextInfo.componentNames[index] + "' to " + this + "!",
                     "You should check if an entity already has the component " +
                     "before adding it or use entity.ReplaceComponent()."
                 );
@@ -151,7 +151,7 @@ namespace Entitas {
             if (!HasComponent(index)) {
                 throw new EntityDoesNotHaveComponentException(
                     index, "Cannot remove component '" +
-                    _contextInfo.componentNames[index] + "' from " + this + "!",
+                           _contextInfo.componentNames[index] + "' from " + this + "!",
                     "You should check if an entity has the component " +
                     "before removing it."
                 );
@@ -217,7 +217,7 @@ namespace Entitas {
             if (!HasComponent(index)) {
                 throw new EntityDoesNotHaveComponentException(
                     index, "Cannot get component '" +
-                    _contextInfo.componentNames[index] + "' from " + this + "!",
+                           _contextInfo.componentNames[index] + "' from " + this + "!",
                     "You should check if an entity has the component " +
                     "before getting it."
                 );
@@ -231,14 +231,14 @@ namespace Entitas {
             if (_componentsCache == null) {
                 var components = EntitasCache.GetIComponentList();
 
-                    for (int i = 0; i < _components.Length; i++) {
-                        var component = _components[i];
-                        if (component != null) {
-                            components.Add(component);
-                        }
+                for (int i = 0; i < _components.Length; i++) {
+                    var component = _components[i];
+                    if (component != null) {
+                        components.Add(component);
                     }
+                }
 
-                    _componentsCache = components.ToArray();
+                _componentsCache = components.ToArray();
 
                 EntitasCache.PushIComponentList(components);
             }
@@ -251,13 +251,13 @@ namespace Entitas {
             if (_componentIndicesCache == null) {
                 var indices = EntitasCache.GetIntList();
 
-                    for (int i = 0; i < _components.Length; i++) {
-                        if (_components[i] != null) {
-                            indices.Add(i);
-                        }
+                for (int i = 0; i < _components.Length; i++) {
+                    if (_components[i] != null) {
+                        indices.Add(i);
                     }
+                }
 
-                    _componentIndicesCache = indices.ToArray();
+                _componentIndicesCache = indices.ToArray();
 
                 EntitasCache.PushIntList(indices);
             }
@@ -326,8 +326,8 @@ namespace Entitas {
         public IComponent CreateComponent(int index, Type type) {
             var componentPool = GetComponentPool(index);
             return componentPool.Count > 0
-                        ? componentPool.Pop()
-                        : (IComponent)Activator.CreateInstance(type);
+                ? componentPool.Pop()
+                : (IComponent)Activator.CreateInstance(type);
         }
 
         /// Returns a new or reusable component from the componentPool
@@ -418,7 +418,7 @@ namespace Entitas {
                     var component = components[i];
                     var type = component.GetType();
                     var implementsToString = type.GetMethod("ToString")
-                                                 .DeclaringType.ImplementsInterface<IComponent>();
+                        .DeclaringType.ImplementsInterface<IComponent>();
                     _toStringBuilder.Append(
                         implementsToString
                             ? component.ToString()

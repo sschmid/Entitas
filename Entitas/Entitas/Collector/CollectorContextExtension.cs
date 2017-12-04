@@ -1,17 +1,6 @@
-﻿using System;
-
-namespace Entitas {
+﻿namespace Entitas {
 
     public static class CollectorContextExtension {
-
-        /// Creates a Collector.
-        // TODO Obsolete since 0.42.0, April 2017
-        [Obsolete("Please use context.CreateCollector(Matcher.Xyz.Added()) (or .Removed(), or .AddedOrRemoved())")]
-        public static ICollector<TEntity> CreateCollector<TEntity>(
-            this IContext<TEntity> context, IMatcher<TEntity> matcher, GroupEvent groupEvent) where TEntity : class, IEntity {
-
-            return context.CreateCollector(new TriggerOnEvent<TEntity>(matcher, groupEvent));
-        }
 
         /// Creates a Collector.
         public static ICollector<TEntity> CreateCollector<TEntity>(

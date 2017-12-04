@@ -26,7 +26,7 @@ namespace Entitas {
 
         /// Creates a Collector and will collect changed entities
         /// based on the specified groupEvent.
-        public Collector(IGroup<TEntity> group, GroupEvent groupEvent) : this(new [] { group }, new [] { groupEvent }) {
+        public Collector(IGroup<TEntity> group, GroupEvent groupEvent) : this(new[] { group }, new[] { groupEvent }) {
         }
 
         /// Creates a Collector and will collect changed entities
@@ -84,7 +84,6 @@ namespace Entitas {
             }
             ClearCollectedEntities();
         }
-
 
         /// Returns all collected entities and casts them.
         /// Call collector.ClearCollectedEntities()

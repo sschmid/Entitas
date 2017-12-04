@@ -71,23 +71,15 @@ namespace Entitas {
         TEntity[] _entitiesCache;
 
         // Cache delegates to avoid gc allocations
-        EntityComponentChanged _cachedEntityChanged;
-        EntityComponentReplaced _cachedComponentReplaced;
-        EntityEvent _cachedEntityReleased;
-        EntityEvent _cachedDestroyEntity;
+        readonly EntityComponentChanged _cachedEntityChanged;
+        readonly EntityComponentReplaced _cachedComponentReplaced;
+        readonly EntityEvent _cachedEntityReleased;
+        readonly EntityEvent _cachedDestroyEntity;
 
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
         public Context(int totalComponents) : this(totalComponents, 0, null, null) {
         }
-
-        // TODO Obsolete since 0.41.0, April 2017
-        [Obsolete("Migration Support for 0.41.0. Please use new Context(totalComponents, startCreationIndex, contextInfo, aercFactory)")]
-        public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo)
-            : this(totalComponents,
-                   startCreationIndex,
-                   contextInfo,
-                   (entity) => new SafeAERC(entity)) { }
 
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
@@ -104,17 +96,15 @@ namespace Entitas {
                 _contextInfo = createDefaultContextInfo();
             }
 
-            _aercFactory = aercFactory == null
-                ? (entity) => new SafeAERC(entity)
-                : aercFactory;
+            _aercFactory = aercFactory ?? (entity => new SafeAERC(entity));
 
             _groupsForIndex = new List<IGroup<TEntity>>[totalComponents];
             _componentPools = new Stack<IComponent>[totalComponents];
             _entityIndices = new Dictionary<string, IEntityIndex>();
             _groupChangedListPool = new ObjectPool<List<GroupChanged<TEntity>>>(
-                                        () => new List<GroupChanged<TEntity>>(),
-                                        list => list.Clear()
-                                    );
+                () => new List<GroupChanged<TEntity>>(),
+                list => list.Clear()
+            );
 
             // Cache delegates to avoid gc allocations
             _cachedEntityChanged = updateGroupsComponentAddedOrRemoved;
@@ -149,6 +139,7 @@ namespace Entitas {
             _entities.Add(entity);
             entity.Retain(this);
             _entitiesCache = null;
+
             entity.OnComponentAdded += _cachedEntityChanged;
             entity.OnComponentRemoved += _cachedEntityChanged;
             entity.OnComponentReplaced += _cachedComponentReplaced;
@@ -160,43 +151,6 @@ namespace Entitas {
             }
 
             return entity;
-        }
-
-        /// Destroys the entity, removes all its components and pushs it back
-        /// to the internal ObjectPool for entities.
-        // TODO Obsolete since 0.42.0, April 2017
-        [Obsolete("Please use entity.Destroy()")]
-        public void DestroyEntity(TEntity entity) {
-            var removed = _entities.Remove(entity);
-            if (!removed) {
-                throw new ContextDoesNotContainEntityException(
-                    "'" + this + "' cannot destroy " + entity + "!",
-                    "This cannot happen!?!"
-                );
-            }
-            _entitiesCache = null;
-
-            if (OnEntityWillBeDestroyed != null) {
-                OnEntityWillBeDestroyed(this, entity);
-            }
-
-            entity.InternalDestroy();
-
-            if (OnEntityDestroyed != null) {
-                OnEntityDestroyed(this, entity);
-            }
-
-            if (entity.retainCount == 1) {
-                // Can be released immediately without
-                // adding to _retainedEntities
-                entity.OnEntityReleased -= _cachedEntityReleased;
-                _reusableEntities.Push(entity);
-                entity.Release(this);
-                entity.RemoveAllOnEntityReleasedHandlers();
-            } else {
-                _retainedEntities.Add(entity);
-                entity.Release(this);
-            }
         }
 
         /// Destroys all entities in the context.
@@ -319,20 +273,20 @@ namespace Entitas {
             if (groups != null) {
                 var events = _groupChangedListPool.Get();
 
-                    var tEntity = (TEntity)entity;
+                var tEntity = (TEntity)entity;
 
-                    for (int i = 0; i < groups.Count; i++) {
-                        events.Add(groups[i].HandleEntity(tEntity));
-                    }
+                for (int i = 0; i < groups.Count; i++) {
+                    events.Add(groups[i].HandleEntity(tEntity));
+                }
 
-                    for (int i = 0; i < events.Count; i++) {
-                        var groupChangedEvent = events[i];
-                        if (groupChangedEvent != null) {
-                            groupChangedEvent(
-                                groups[i], tEntity, index, component
-                            );
-                        }
+                for (int i = 0; i < events.Count; i++) {
+                    var groupChangedEvent = events[i];
+                    if (groupChangedEvent != null) {
+                        groupChangedEvent(
+                            groups[i], tEntity, index, component
+                        );
                     }
+                }
 
                 _groupChangedListPool.Push(events);
             }
@@ -365,7 +319,37 @@ namespace Entitas {
         }
 
         void onDestroyEntity(IEntity entity) {
-            DestroyEntity((TEntity)entity);
+            var tEntity = (TEntity)entity;
+            var removed = _entities.Remove(tEntity);
+            if (!removed) {
+                throw new ContextDoesNotContainEntityException(
+                    "'" + this + "' cannot destroy " + tEntity + "!",
+                    "This cannot happen!?!"
+                );
+            }
+            _entitiesCache = null;
+
+            if (OnEntityWillBeDestroyed != null) {
+                OnEntityWillBeDestroyed(this, tEntity);
+            }
+
+            tEntity.InternalDestroy();
+
+            if (OnEntityDestroyed != null) {
+                OnEntityDestroyed(this, tEntity);
+            }
+
+            if (tEntity.retainCount == 1) {
+                // Can be released immediately without
+                // adding to _retainedEntities
+                tEntity.OnEntityReleased -= _cachedEntityReleased;
+                _reusableEntities.Push(tEntity);
+                tEntity.Release(this);
+                tEntity.RemoveAllOnEntityReleasedHandlers();
+            } else {
+                _retainedEntities.Add(tEntity);
+                tEntity.Release(this);
+            }
         }
     }
 }

@@ -6,14 +6,14 @@
 
         public static string AddSystemSuffix(this string componentName) {
             return componentName.EndsWith(COMPONENT_SUFFIX, System.StringComparison.Ordinal)
-                                ? componentName
-                                : componentName + COMPONENT_SUFFIX;
+                ? componentName
+                : componentName + COMPONENT_SUFFIX;
         }
 
         public static string RemoveSystemSuffix(this string componentName) {
             return componentName.EndsWith(COMPONENT_SUFFIX, System.StringComparison.Ordinal)
-                                ? componentName.Substring(0, componentName.Length - COMPONENT_SUFFIX.Length)
-                                : componentName;
+                ? componentName.Substring(0, componentName.Length - COMPONENT_SUFFIX.Length)
+                : componentName;
         }
     }
 }

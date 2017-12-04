@@ -6,9 +6,9 @@ namespace Entitas {
 
         int count { get; }
 
-		void Activate();
-		void Deactivate();
-		void ClearCollectedEntities();
+        void Activate();
+        void Deactivate();
+        void ClearCollectedEntities();
 
         IEnumerable<TCast> GetCollectedEntities<TCast>() where TCast : class, IEntity;
     }

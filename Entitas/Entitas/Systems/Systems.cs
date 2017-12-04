@@ -4,8 +4,7 @@ namespace Entitas {
 
     /// Systems provide a convenient way to group systems.
     /// You can add IInitializeSystem, IExecuteSystem, ICleanupSystem,
-    /// ITearDownSystem, ReactiveS
-    /// ystem and other nested Systems instances.
+    /// ITearDownSystem, ReactiveSystem and other nested Systems instances.
     /// All systems will be initialized and executed based on the order
     /// you added them.
     public class Systems : IInitializeSystem, IExecuteSystem, ICleanupSystem, ITearDownSystem {

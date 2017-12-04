@@ -11,9 +11,9 @@
         /// specified components to it.
         /// If replaceExisting is true it will replace exisintg components.
         public static TEntity CloneEntity<TEntity>(this IContext<TEntity> context,
-                                          IEntity entity,
-                                          bool replaceExisting = false,
-                                          params int[] indices)
+            IEntity entity,
+            bool replaceExisting = false,
+            params int[] indices)
             where TEntity : class, IEntity {
             var target = context.CreateEntity();
             entity.CopyTo(target, replaceExisting, indices);

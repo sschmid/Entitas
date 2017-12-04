@@ -8,7 +8,7 @@ namespace Entitas {
             var assembly = typeof(Entity).Assembly;
             var stream = assembly.GetManifestResourceStream("version");
             var version = "";
-            using(var reader = new StreamReader(stream)) {
+            using (var reader = new StreamReader(stream)) {
                 version = reader.ReadToEnd();
             }
 

@@ -32,17 +32,17 @@ namespace Entitas {
         static int[] mergeIndices(int[] allOfIndices, int[] anyOfIndices, int[] noneOfIndices) {
             var indicesList = EntitasCache.GetIntList();
 
-                if (allOfIndices != null) {
-                    indicesList.AddRange(allOfIndices);
-                }
-                if (anyOfIndices != null) {
-                    indicesList.AddRange(anyOfIndices);
-                }
-                if (noneOfIndices != null) {
-                    indicesList.AddRange(noneOfIndices);
-                }
+            if (allOfIndices != null) {
+                indicesList.AddRange(allOfIndices);
+            }
+            if (anyOfIndices != null) {
+                indicesList.AddRange(anyOfIndices);
+            }
+            if (noneOfIndices != null) {
+                indicesList.AddRange(noneOfIndices);
+            }
 
-                var mergedIndices = distinctIndices(indicesList);
+            var mergedIndices = distinctIndices(indicesList);
 
             EntitasCache.PushIntList(indicesList);
 
@@ -83,12 +83,12 @@ namespace Entitas {
         static int[] distinctIndices(IList<int> indices) {
             var indicesSet = EntitasCache.GetIntHashSet();
 
-                foreach (var index in indices) {
-                    indicesSet.Add(index);
-                }
-                var uniqueIndices = new int[indicesSet.Count];
-                indicesSet.CopyTo(uniqueIndices);
-                Array.Sort(uniqueIndices);
+            foreach (var index in indices) {
+                indicesSet.Add(index);
+            }
+            var uniqueIndices = new int[indicesSet.Count];
+            indicesSet.CopyTo(uniqueIndices);
+            Array.Sort(uniqueIndices);
 
             EntitasCache.PushIntHashSet(indicesSet);
 

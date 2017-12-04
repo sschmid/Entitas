@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -37,10 +36,6 @@ namespace Entitas {
     public interface IContext<TEntity> : IContext where TEntity : class, IEntity {
 
         TEntity CreateEntity();
-
-        // TODO Obsolete since 0.42.0, April 2017
-        [Obsolete("Please use entity.Destroy()")]
-        void DestroyEntity(TEntity entity);
 
         bool HasEntity(TEntity entity);
         TEntity[] GetEntities();

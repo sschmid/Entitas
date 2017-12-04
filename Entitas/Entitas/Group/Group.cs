@@ -87,8 +87,8 @@ namespace Entitas {
 
         public GroupChanged<TEntity> HandleEntity(TEntity entity) {
             return _matcher.Matches(entity)
-                       ? (addEntitySilently(entity) ? OnEntityAdded : null)
-                       : (removeEntitySilently(entity) ? OnEntityRemoved : null);
+                ? (addEntitySilently(entity) ? OnEntityAdded : null)
+                : (removeEntitySilently(entity) ? OnEntityRemoved : null);
         }
 
         bool addEntitySilently(TEntity entity) {
