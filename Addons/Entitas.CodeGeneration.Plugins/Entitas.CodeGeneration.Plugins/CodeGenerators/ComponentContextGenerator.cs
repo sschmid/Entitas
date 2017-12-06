@@ -98,14 +98,14 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
             var memberData = data.GetMemberData();
-            var componentName = data.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var template = memberData.Length == 0
                 ? FLAG_COMPONENT_TEMPLATE
                 : STANDARD_COMPONENT_TEMPLATE;
 
             var fileContent = template
                 .Replace("${ContextName}", contextName)
-                .Replace("${ComponentType}", data.GetFullTypeName())
+                .Replace("${ComponentType}", data.GetTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
                 .Replace("${prefixedComponentName}", data.GetUniquePrefix().LowercaseFirst() + componentName)

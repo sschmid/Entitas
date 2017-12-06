@@ -59,6 +59,8 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\AssembliesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\ContextNamesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\IgnoreNamespacesConfig.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Configs\TemplateConfigExtension.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Configs\TemplatesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\ComponentData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\ComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\Providers\ComponentTypeComponentDataProvider.cs" />
@@ -90,6 +92,12 @@
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Entitas.CodeGeneration.Plugins\Templates\FlagComponentContext.txt" />
+    <Content Include="Entitas.CodeGeneration.Plugins\Templates\MethodArgument.txt" />
+    <Content Include="Entitas.CodeGeneration.Plugins\Templates\MethodParameter.txt" />
+    <Content Include="Entitas.CodeGeneration.Plugins\Templates\ComponentContext.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -18,7 +18,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class IsUniqueComponentDataExtension {
 
-        public const string COMPONENT_IS_UNIQUE = "component_isUnique";
+        public const string COMPONENT_IS_UNIQUE = "Component.Unique";
 
         public static bool IsUnique(this ComponentData data) {
             return (bool)data[COMPONENT_IS_UNIQUE];

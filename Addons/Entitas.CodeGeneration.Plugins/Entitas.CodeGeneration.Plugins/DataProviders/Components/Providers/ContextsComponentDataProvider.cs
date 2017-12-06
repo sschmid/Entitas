@@ -41,7 +41,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class ContextsComponentDataExtension {
 
-        public const string COMPONENT_CONTEXTS = "component_contexts";
+        public const string COMPONENT_CONTEXTS = "Component.Contexts";
 
         public static string[] GetContextNames(this ComponentData data) {
             return (string[])data[COMPONENT_CONTEXTS];

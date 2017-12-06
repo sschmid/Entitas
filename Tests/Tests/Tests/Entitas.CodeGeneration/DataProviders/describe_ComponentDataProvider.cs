@@ -38,8 +38,8 @@ class describe_ComponentDataProvider : nspec {
             };
 
             it["gets full type name"] = () => {
-                data.GetFullTypeName().GetType().should_be(typeof(string));
-                data.GetFullTypeName().should_be(type.ToCompilableString());
+                data.GetTypeName().GetType().should_be(typeof(string));
+                data.GetTypeName().should_be(type.ToCompilableString());
             };
 
             it["gets contexts"] = () => {
@@ -114,7 +114,7 @@ class describe_ComponentDataProvider : nspec {
             it["gets full type name"] = () => {
                 // Not the type, but the component that should be generated
                 // See: no namespace
-                data.GetFullTypeName().should_be("ClassToGenerateComponent");
+                data.GetTypeName().should_be("ClassToGenerateComponent");
             };
 
             it["gets contexts"] = () => {
@@ -182,8 +182,8 @@ class describe_ComponentDataProvider : nspec {
                 data1.GetObjectType().should_be(type.ToCompilableString());
                 data2.GetObjectType().should_be(type.ToCompilableString());
 
-                data1.GetFullTypeName().should_be("NewCustomNameComponent1Component");
-                data2.GetFullTypeName().should_be("NewCustomNameComponent2Component");
+                data1.GetTypeName().should_be("NewCustomNameComponent1Component");
+                data2.GetTypeName().should_be("NewCustomNameComponent2Component");
             };
         };
 

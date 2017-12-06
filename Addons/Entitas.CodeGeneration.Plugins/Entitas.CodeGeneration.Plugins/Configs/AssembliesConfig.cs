@@ -16,6 +16,9 @@ namespace Entitas.CodeGeneration.Plugins {
             }
         }
 
-        public string[] assemblies { get { return _preferences[ASSEMBLIES_KEY].ArrayFromCSV(); } }
+        public string[] assemblies {
+            get { return _preferences[ASSEMBLIES_KEY].ArrayFromCSV(); }
+            set { _preferences[ASSEMBLIES_KEY] = value.ToCSV(); }
+        }
     }
 }

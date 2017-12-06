@@ -14,10 +14,16 @@ public partial class GameEntity {
         get { return HasComponent(GameComponentsLookup.NoContext); }
         set {
             if (value != isNoContext) {
+                var index = GameComponentsLookup.NoContext;
                 if (value) {
-                    AddComponent(GameComponentsLookup.NoContext, noContextComponent);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : noContextComponent;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(GameComponentsLookup.NoContext);
+                    RemoveComponent(index);
                 }
             }
         }

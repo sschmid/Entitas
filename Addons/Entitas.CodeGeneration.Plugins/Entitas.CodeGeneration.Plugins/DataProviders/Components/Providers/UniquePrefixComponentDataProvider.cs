@@ -21,7 +21,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class UniquePrefixComponentDataExtension {
 
-        public const string COMPONENT_UNIQUE_PREFIX = "component_uniquePrefix";
+        public const string COMPONENT_UNIQUE_PREFIX = "Component.UniquePrefix";
 
         public static string GetUniquePrefix(this ComponentData data) {
             return (string)data[COMPONENT_UNIQUE_PREFIX];

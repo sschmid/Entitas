@@ -1,0 +1,18 @@
+public partial class ${ContextName}Context {
+
+    public ${ContextName}Entity ${componentName}Entity { get { return GetGroup(${ContextName}Matcher.${ComponentName}).GetSingleEntity(); } }
+
+    public bool ${prefixedComponentName} {
+        get { return ${componentName}Entity != null; }
+        set {
+            var entity = ${componentName}Entity;
+            if (value != (entity != null)) {
+                if (value) {
+                    CreateEntity().${prefixedComponentName} = true;
+                } else {
+                    entity.Destroy();
+                }
+            }
+        }
+    }
+}

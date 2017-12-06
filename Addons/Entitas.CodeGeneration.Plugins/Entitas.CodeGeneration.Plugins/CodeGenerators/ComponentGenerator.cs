@@ -28,7 +28,7 @@ public sealed partial class ${FullComponentName} : Entitas.IComponent {
         }
 
         CodeGenFile generateComponentClass(ComponentData data) {
-            var fullComponentName = data.GetFullTypeName().RemoveDots();
+            var fullComponentName = data.GetTypeName().RemoveDots();
             var contexts = string.Join(", ", data.GetContextNames());
             var unique = data.IsUnique() ? "[Entitas.CodeGeneration.Attributes.UniqueAttribute]" : string.Empty;
             if (!string.IsNullOrEmpty(contexts)) {

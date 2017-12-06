@@ -55,7 +55,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         CodeGenFile generateMatcher(string contextName, ComponentData data) {
-            var componentName = data.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
             var componentNames = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + ".componentNames";
 

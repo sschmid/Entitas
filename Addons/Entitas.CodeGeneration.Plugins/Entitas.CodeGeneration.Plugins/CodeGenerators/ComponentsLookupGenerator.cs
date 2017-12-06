@@ -102,7 +102,7 @@ ${componentTypes}
 
             foreach (var key in contextNameToComponentData.Keys.ToArray()) {
                 contextNameToComponentData[key] = contextNameToComponentData[key]
-                    .OrderBy(d => d.GetFullTypeName())
+                    .OrderBy(d => d.GetTypeName())
                     .ToList();
             }
 
@@ -115,7 +115,7 @@ ${componentTypes}
             var componentConstants = string.Join("\n", data
                 .Select((d, index) => {
                     return COMPONENT_CONSTANTS_TEMPLATE
-                        .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
+                        .Replace("${ComponentName}", d.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                         .Replace("${Index}", index.ToString());
                 }).ToArray());
 
@@ -124,12 +124,12 @@ ${componentTypes}
 
             var componentNames = string.Join(",\n", data
                 .Select(d => COMPONENT_NAMES_TEMPLATE
-                    .Replace("${ComponentName}", d.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
+                    .Replace("${ComponentName}", d.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                 ).ToArray());
 
             var componentTypes = string.Join(",\n", data
                 .Select(d => COMPONENT_TYPES_TEMPLATE
-                    .Replace("${ComponentType}", d.GetFullTypeName())
+                    .Replace("${ComponentType}", d.GetTypeName())
                 ).ToArray());
 
             var fileContent = COMPONENTS_LOOKUP_TEMPLATE

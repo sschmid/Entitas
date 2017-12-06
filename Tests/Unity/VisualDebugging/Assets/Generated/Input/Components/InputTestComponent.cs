@@ -14,10 +14,16 @@ public partial class InputEntity {
         get { return HasComponent(InputComponentsLookup.Test); }
         set {
             if (value != isTest) {
+                var index = InputComponentsLookup.Test;
                 if (value) {
-                    AddComponent(InputComponentsLookup.Test, testComponent);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : testComponent;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(InputComponentsLookup.Test);
+                    RemoveComponent(index);
                 }
             }
         }

@@ -16,8 +16,8 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class ShouldGenerateComponentComponentDataExtension {
 
-        public const string COMPONENT_GENERATE_COMPONENT = "component_generateComponent";
-        public const string COMPONENT_OBJECT_TYPE = "component_objectType";
+        public const string COMPONENT_GENERATE_COMPONENT = "Component.GenerateObjectComponent";
+        public const string COMPONENT_OBJECT_TYPE = "Component.ObjectType";
 
         public static bool ShouldGenerateComponent(this ComponentData data) {
             return (bool)data[COMPONENT_GENERATE_COMPONENT];

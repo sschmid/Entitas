@@ -95,7 +95,7 @@ ${memberAssignment}
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var componentName = data.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
             var memberData = data.GetMemberData();
             var template = memberData.Length == 0
@@ -104,7 +104,7 @@ ${memberAssignment}
 
             var fileContent = template
                 .Replace("${ContextName}", contextName)
-                .Replace("${ComponentType}", data.GetFullTypeName())
+                .Replace("${ComponentType}", data.GetTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
                 .Replace("${prefixedName}", data.GetUniquePrefix().LowercaseFirst() + componentName)

@@ -4,7 +4,6 @@ ROOT="$SCRIPTS/.."
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 PROJECT_NAME="Entitas"
-
 ADDONS="$ROOT/Addons"
 ADDONS_TEST="$ROOT/Tests/Unity"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -38,4 +37,12 @@ cp_dll() {
 
 cp_exe() {
     cp "$ROOT/$1/$BIN/$1.exe" $2
+}
+
+cp_addon_dll() {
+    cp "$ADDONS/$1/$BIN/$1.dll" $2
+}
+
+cp_addon_exe() {
+    cp "$ADDONS/$1/$BIN/$1.exe" $2
 }

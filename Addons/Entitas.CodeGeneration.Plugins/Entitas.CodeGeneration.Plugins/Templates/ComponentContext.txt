@@ -1,0 +1,29 @@
+public partial class ${ContextName}Context {
+
+    public ${ContextName}Entity ${componentName}Entity { get { return GetGroup(${ContextName}Matcher.${ComponentName}).GetSingleEntity(); } }
+    public ${ComponentType} ${componentName} { get { return ${componentName}Entity.${componentName}; } }
+    public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
+
+    public ${ContextName}Entity Set${ComponentName}(${MethodParameter}) {
+        if (has${ComponentName}) {
+            throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
+                ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
+        }
+        var entity = CreateEntity();
+        entity.Add${ComponentName}(${methodsArguments});
+        return entity;
+    }
+
+    public void Replace${ComponentName}(${MethodParameter}) {
+        var entity = ${componentName}Entity;
+        if (entity == null) {
+            entity = Set${ComponentName}(${methodsArguments});
+        } else {
+            entity.Replace${ComponentName}(${methodsArguments});
+        }
+    }
+
+    public void Remove${ComponentName}() {
+        ${componentName}Entity.Destroy();
+    }
+}

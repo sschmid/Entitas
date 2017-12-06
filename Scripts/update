@@ -2,8 +2,8 @@
 echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
-$SCRIPTS/pull
-$SCRIPTS/test
+# $SCRIPTS/pull
+# $SCRIPTS/test
 $SCRIPTS/build
 
 # clean
@@ -13,28 +13,29 @@ rm -rf $BUILD
 mkdir $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
 
 # Blueprints
-cp_dll "$ADDONS/$DNS.Blueprints" $BUILD_SRC
-cp_dll "$ADDONS/$DNS.Blueprints.CodeGeneration.Plugins" $BUILD_SRC
-cp_dll "$ADDONS/$DNS.Blueprints.Unity" $BUILD_SRC
-cp_dll "$ADDONS/$DNS.Blueprints.Unity.Editor" $BUILD_SRC
+cp_addon_dll "$DNS.Blueprints" $BUILD_SRC
+cp_addon_dll "$DNS.Blueprints.CodeGeneration.Plugins" $BUILD_SRC
+cp_addon_dll "$DNS.Blueprints.CodeGeneration.Unity.Plugins" $BUILD_SRC
+cp_addon_dll "$DNS.Blueprints.Unity" $BUILD_SRC
+cp_addon_dll "$DNS.Blueprints.Unity.Editor" $BUILD_SRC
 
 # CodeGeneration
-cp_dll "$ADDONS/$DNS.CodeGeneration.Attributes" $BUILD_SRC
-cp_dll "$ADDONS/$DNS.CodeGeneration.Plugins" $BUILD_SRC
+cp_addon_dll "$DNS.CodeGeneration.Attributes" $BUILD_SRC
+cp_addon_dll "$DNS.CodeGeneration.Plugins" $BUILD_SRC
 
 # Migration
-cp_dll "$ADDONS/$DNS.Migration" $BUILD_SRC
-cp_exe "$ADDONS/$DNS.Migration.CLI" $BUILD_SRC
-cp_dll "$ADDONS/$DNS.Migration.Unity.Editor" $BUILD_SRC
+cp_addon_dll "$DNS.Migration" $BUILD_SRC
+cp_addon_exe "$DNS.Migration.CLI" $BUILD_SRC
+cp_addon_dll "$DNS.Migration.Unity.Editor" $BUILD_SRC
 
 # Unity
-cp_dll "$ADDONS/$DNS.Unity" $BUILD_SRC
-cp_dll "$ADDONS/$DNS.Unity.Editor" $BUILD_SRC
+cp_addon_dll "$DNS.Unity" $BUILD_SRC
+cp_addon_dll "$DNS.Unity.Editor" $BUILD_SRC
 
 # VisualDebugging
-cp_dll "$ADDONS/$DNS.VisualDebugging.CodeGeneration.Plugins" $BUILD_SRC
-cp_dll "$ADDONS/$DNS.VisualDebugging.Unity" $BUILD_SRC
-cp_dll "$ADDONS/$DNS.VisualDebugging.Unity.Editor" $BUILD_SRC
+cp_addon_dll "$DNS.VisualDebugging.CodeGeneration.Plugins" $BUILD_SRC
+cp_addon_dll "$DNS.VisualDebugging.Unity" $BUILD_SRC
+cp_addon_dll "$DNS.VisualDebugging.Unity.Editor" $BUILD_SRC
 
 # Entitas
 cp_dll $DNS $BUILD_SRC
@@ -44,61 +45,110 @@ cp_dll $DNS $BUILD_SRC
 
 DDD="$ROOT/Libraries/DesperateDevs"
 
+# Entitas.Unity
+libDir="$ADDONS_TEST/Entitas.Unity/Assets/Libraries"
+editorLibDir="$libDir/Editor"
+rm -rf $libDir
+mkdir $libDir $editorLibDir "$editorLibDir/Images"
+cp_addon_dll "$DNS.Unity.Editor" $editorLibDir
+cp_addon_dll "$DNS.Unity" $libDir
+# --- project dependencies
+cp_dll $DNS $libDir
+# --- desperate devs dependencies
+cp "$DDD.Serialization.dll" $libDir
+cp "$DDD.Unity.Editor.dll" $editorLibDir
+cp "$DDD.Utils.dll" $libDir
+cp "$DDD.Logging.dll" $libDir
+# ---
+cp "${ADDONS}/$DNS.Unity.Editor/$DNS.Unity.Editor/Images/"* "$editorLibDir/Images"
+
+
+# VisualDebugging
+libDir="$ADDONS_TEST/VisualDebugging/Assets/Libraries"
+editorLibDir="$libDir/Editor"
+rm -rf $libDir
+mkdir $libDir $editorLibDir "$editorLibDir/Images"
+cp_addon_dll "$DNS.VisualDebugging.Unity.Editor" $editorLibDir
+cp_addon_dll "$DNS.VisualDebugging.CodeGeneration.Plugins" $editorLibDir
+# --- project dependencies
+cp_dll $DNS $libDir
+cp_addon_dll "$DNS.CodeGeneration.Plugins" $editorLibDir
+cp_addon_dll "$DNS.Unity" $libDir
+cp_addon_dll "$DNS.Unity.Editor" $editorLibDir
+cp_addon_dll "$DNS.VisualDebugging.Unity" $libDir
+cp_addon_dll "$DNS.CodeGeneration.Attributes" $libDir
+# --- desperate devs dependencies
+cp "$DDD.CodeGeneration.dll" $editorLibDir
+cp "$DDD.CodeGeneration.Plugins.dll" $editorLibDir
+cp "$DDD.CodeGeneration.Unity.Plugins.dll" $editorLibDir
+cp "$DDD.CodeGeneration.CodeGenerator.dll" $editorLibDir
+cp "$DDD.CodeGeneration.CodeGenerator.Unity.Editor.dll" $editorLibDir
+cp "$DDD.Networking.dll" $libDir
+cp "$DDD.Serialization.dll" $libDir
+cp "$DDD.Unity.Editor.dll" $editorLibDir
+cp "$DDD.Utils.dll" $libDir
+cp "$DDD.Logging.dll" $libDir
+# ---
+cp "${ADDONS}/$DNS.Unity.Editor/$DNS.Unity.Editor/Images/"* "$editorLibDir/Images"
+
+
+
+
+
+
+
+
+
+
+
 # Blueprints
 libDir="$ADDONS_TEST/Blueprints/Assets/Libraries"
 editorLibDir="$libDir/Editor"
 rm -rf $libDir
 mkdir $libDir $editorLibDir
-cp_dll "$DNS.Blueprints.Unity.Editor" $editorLibDir
+cp_addon_dll "$DNS.Blueprints.Unity.Editor" $editorLibDir
 # --- project dependencies
 cp_dll $DNS $libDir
-cp_dll "$DNS.Blueprints" $libDir
-cp_dll "$DNS.Blueprints.Unity" $libDir
-cp_dll "$DNS.Unity.Editor" $editorLibDir
-cp_dll "$DNS.VisualDebugging.Unity.Editor" $editorLibDir
-# --- desperate devs dependencies
-cp "$DDD.Unity.Editor" $editorLibDir
-cp "$DDD.Utils" $libDir
 
 
-# Entitas.Unity
-libDir="$ADDONS_TEST/Entitas.Unity/Assets/Libraries"
-editorLibDir="$libDir/Editor"
-rm -rf $libDir
-mkdir $libDir $editorLibDir
-cp_dll "$DNS.Unity.Editor" $editorLibDir
-# --- project dependencies
-cp_dll $DNS $libDir
+
+
+cp_addon_dll "$DNS.Blueprints" $libDir
+cp_addon_dll "$DNS.Blueprints.Unity" $libDir
+cp_addon_dll "$DNS.Unity.Editor" $editorLibDir
+cp_addon_dll "$DNS.VisualDebugging.Unity.Editor" $editorLibDir
+# ---
+cp_addon_dll "$DNS.Blueprints.CodeGeneration.Plugins" $editorLibDir
+cp_addon_dll "$DNS.Blueprints.CodeGeneration.Unity.Plugins" $editorLibDir
 # --- desperate devs dependencies
-cp "$DDD.Serialization" $libDir
-cp "$DDD.Unity.Editor" $editorLibDir
+cp "$DDD.Unity.Editor.dll" $editorLibDir
+cp "$DDD.Utils.dll" $libDir
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Migration
 libDir="$ADDONS_TEST/Migration/Assets/Libraries"
 editorLibDir="$libDir/Editor"
 rm -rf $libDir
 mkdir $libDir $editorLibDir
-cp_dll "$DNS.Migration.Unity.Editor" $editorLibDir
+cp_addon_dll "$DNS.Migration.Unity.Editor" $editorLibDir
 # --- project dependencies
-cp_dll "$DNS.Migration" $libDir
-cp_dll "$DNS.Unity.Editor" $editorLibDir
+cp_addon_dll "$DNS.Migration" $libDir
+cp_addon_dll "$DNS.Unity.Editor" $editorLibDir
 # --- desperate devs dependencies
-cp "$DDD.Unity.Editor" $editorLibDir
-cp "$DDD.Utils" $libDir
+cp "$DDD.Unity.Editor.dll" $editorLibDir
+cp "$DDD.Utils.dll" $libDir
 
-# VisualDebugging
-libDir="$ADDONS_TEST/VisualDebugging/Assets/Libraries"
-editorLibDir="$libDir/Editor"
-rm -rf $libDir
-mkdir $libDir $editorLibDir
-cp_dll "$DNS.VisualDebugging.Unity.Editor" $editorLibDir
-# --- project dependencies
-cp_dll $DNS $libDir
-cp_dll "$DNS.CodeGeneration.Plugins" $editorLibDir
-cp_dll "$DNS.Unity" $libDir
-cp_dll "$DNS.VisualDebugging.Unity" $libDir
-# --- desperate devs dependencies
-cp "$DDD.CodeGeneration.CodeGenerator" $editorLibDir
-cp "$DDD.Serialization" $libDir
-cp "$DDD.Unity.Editor" $editorLibDir
-cp "$DDD.Utils" $libDir

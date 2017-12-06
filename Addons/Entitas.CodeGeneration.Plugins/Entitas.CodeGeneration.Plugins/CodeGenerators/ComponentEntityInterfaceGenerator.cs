@@ -67,7 +67,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         CodeGenFile generateInterface(ComponentData data) {
-            var componentName = data.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var memberData = data.GetMemberData();
             var interfaceName = "I" + componentName.RemoveComponentSuffix();
 
@@ -77,7 +77,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
             var fileContent = template
                 .Replace("${InterfaceName}", interfaceName)
-                .Replace("${ComponentType}", data.GetFullTypeName())
+                .Replace("${ComponentType}", data.GetTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
                 .Replace("${prefixedName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
@@ -93,7 +93,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         CodeGenFile generateEntityInterfaceExtension(string contextName, ComponentData data) {
-            var componentName = data.GetFullTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var interfaceName = "I" + componentName.RemoveComponentSuffix();
 
             var fileContent = ENTITY_INTERFACE_EXTENSION

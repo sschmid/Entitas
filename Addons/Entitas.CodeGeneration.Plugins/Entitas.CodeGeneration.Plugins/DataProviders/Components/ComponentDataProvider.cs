@@ -88,9 +88,9 @@ namespace Entitas.CodeGeneration.Plugins {
                 .SelectMany(createDataForNonComponent)
                 .ToArray();
 
-            var generatedComponentsLookup = dataFromNonComponents.ToLookup(data => data.GetFullTypeName());
+            var generatedComponentsLookup = dataFromNonComponents.ToLookup(data => data.GetTypeName());
             return dataFromComponents
-                .Where(data => !generatedComponentsLookup.Contains(data.GetFullTypeName()))
+                .Where(data => !generatedComponentsLookup.Contains(data.GetTypeName()))
                 .Concat(dataFromNonComponents)
                 .ToArray();
         }
@@ -108,7 +108,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return getComponentNames(type)
                 .Select(componentName => {
                     var data = createDataForComponent(type);
-                    data.SetFullTypeName(componentName.AddComponentSuffix());
+                    data.SetlTypeName(componentName.AddComponentSuffix());
                     data.SetMemberData(new[] {
                         new MemberData(type.ToCompilableString(), "value")
                     });
