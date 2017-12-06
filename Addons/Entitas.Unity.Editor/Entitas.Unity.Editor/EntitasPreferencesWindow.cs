@@ -8,9 +8,12 @@ namespace Entitas.Unity.Editor {
 
         [MenuItem(EntitasMenuItems.preferences, false, EntitasMenuItemPriorities.preferences)]
         public static void OpenPreferences() {
-            EditorLayout.ShowWindow<PreferencesWindow>(
+            var window = EditorLayout.GetWindow<PreferencesWindow>(
                 "Entitas " + CheckForUpdates.GetLocalVersion(),
                 new Vector2(415f, 564));
+
+            window.preferencesName = "Entitas";
+            window.Show();
         }
     }
 }

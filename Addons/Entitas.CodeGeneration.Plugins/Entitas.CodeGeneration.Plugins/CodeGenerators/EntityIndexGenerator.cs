@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.CodeGeneration.CodeGenerator;
 using DesperateDevs.Serialization;
 using DesperateDevs.Utils;
 
@@ -86,11 +85,11 @@ ${getIndices}
                 .ToArray());
 
             var addIndices = string.Join("\n\n", data
-                .Select(d => generateAddMethods(d))
+                .Select(generateAddMethods)
                 .ToArray());
 
             var getIndices = string.Join("\n\n", data
-                .Select(d => generateGetMethods(d))
+                .Select(generateGetMethods)
                 .ToArray());
 
             var fileContent = CLASS_TEMPLATE

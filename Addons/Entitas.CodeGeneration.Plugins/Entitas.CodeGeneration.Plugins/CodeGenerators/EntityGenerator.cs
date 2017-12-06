@@ -19,7 +19,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ContextData>()
-                .Select(d => generateEntityClass(d))
+                .Select(generateEntityClass)
                 .ToArray();
         }
 

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using DesperateDevs.CodeGeneration.CodeGenerator;
+using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 

@@ -2,4 +2,4 @@
 echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
-cp -r "${DD}/"* "Libraries"
+cp -r "../DesperateDevs/Build/src/"* "Libraries"

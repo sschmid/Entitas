@@ -14,8 +14,8 @@ namespace Entitas.Blueprints.Unity.Editor {
 
         public static BinaryBlueprint[] FindAllBlueprints() {
             return AssetDatabase.FindAssets("l:" + BinaryBlueprintPostprocessor.ASSET_LABEL)
-                .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
-                .Select(path => AssetDatabase.LoadAssetAtPath<BinaryBlueprint>(path))
+                .Select(AssetDatabase.GUIDToAssetPath)
+                .Select(AssetDatabase.LoadAssetAtPath<BinaryBlueprint>)
                 .ToArray();
         }
 

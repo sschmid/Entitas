@@ -2,8 +2,9 @@
 echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
-${SCRIPTS}/pull
-xbuild /property:Configuration=Release /verbosity:minimal $SOLUTION
+$SCRIPTS/pull
+$SCRIPTS/test
+$SCRIPTS/build
 
 # clean
 rm -rf $BUILD
@@ -11,103 +12,93 @@ rm -rf $BUILD
 # create folder structure
 mkdir $BUILD $BUILD_SRC $BUILD_DOCS $BUILD_DEPLOY
 
-# collect sources
-cp "${ES}/${BIN}/${ES}.dll" ${BUILD_SRC}
-
-cp "${ADDONS}/${ES_U}/${BIN}/${ES_U}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_UE}/${BIN}/${ES_UE}.dll" ${BUILD_SRC}
-
-cp "${ADDONS}/${ES_CG_ATTR}/${BIN}/${ES_CG_ATTR}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_CG_P}/${BIN}/${ES_CG_P}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_CG_UE}/${BIN}/${ES_CG_UE}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_CG_UE}/Compile.cs" ${BUILD_SRC}
-
-cp "${ADDONS}/${ES_MIG}/${BIN}/${ES_MIG}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_MIG_CLI}/${BIN}/${ES_MIG_CLI}.exe" ${BUILD_SRC}
-cp "${ADDONS}/${ES_MIG_UE}/${BIN}/${ES_MIG_UE}.dll" ${BUILD_SRC}
-
-cp "${ADDONS}/${ES_VD_CG_P}/${BIN}/${ES_VD_CG_P}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_VD_U}/${BIN}/${ES_VD_U}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_VD_UE}/${BIN}/${ES_VD_UE}.dll" ${BUILD_SRC}
-
-cp "${ADDONS}/${ES_BP}/${BIN}/${ES_BP}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_BP_CG_P}/${BIN}/${ES_BP_CG_P}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_BP_U}/${BIN}/${ES_BP_U}.dll" ${BUILD_SRC}
-cp "${ADDONS}/${ES_BP_UE}/${BIN}/${ES_BP_UE}.dll" ${BUILD_SRC}
-
-
-# update project dependencies
-
-# Entitas.Unity
-libDir="${ADDONS_PLAYGROUND}/Entitas.Unity/Assets/Libraries"
-rm -rf ${libDir}
-mkdir ${libDir}
-mkdir "${libDir}/Editor"
-mkdir "${libDir}/Editor/Images"
-cp "${BUILD_SRC}/${ES}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
-cp -r "${DD}/DesperateDevs.Utils.dll" ${libDir}
-cp -r "${DD}/DesperateDevs.Unity.Editor.dll" "${libDir}/Editor/"
-cp -r "${DD}/DesperateDevs.Serialization.dll" ${libDir}
-cp "${ADDONS}/${ES_UE}/${ES_UE}/Images/"* "${libDir}/Editor/Images"
+# Blueprints
+cp_dll "$ADDONS/$DNS.Blueprints" $BUILD_SRC
+cp_dll "$ADDONS/$DNS.Blueprints.CodeGeneration.Plugins" $BUILD_SRC
+cp_dll "$ADDONS/$DNS.Blueprints.Unity" $BUILD_SRC
+cp_dll "$ADDONS/$DNS.Blueprints.Unity.Editor" $BUILD_SRC
 
 # CodeGeneration
-libDir="${ADDONS_PLAYGROUND}/CodeGenerator/Assets/Libraries"
-rm -rf ${libDir}
-mkdir ${libDir}
-mkdir "${libDir}/Editor"
-cp "${BUILD_SRC}/${ES_CG_UE}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
-# --
-cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
+cp_dll "$ADDONS/$DNS.CodeGeneration.Attributes" $BUILD_SRC
+cp_dll "$ADDONS/$DNS.CodeGeneration.Plugins" $BUILD_SRC
 
 # Migration
-libDir="${ADDONS_PLAYGROUND}/Migration/Assets/Libraries"
-rm -rf ${libDir}
-mkdir ${libDir}
-mkdir "${libDir}/Editor"
-cp "${BUILD_SRC}/${ES}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_MIG}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_MIG_UE}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
+cp_dll "$ADDONS/$DNS.Migration" $BUILD_SRC
+cp_exe "$ADDONS/$DNS.Migration.CLI" $BUILD_SRC
+cp_dll "$ADDONS/$DNS.Migration.Unity.Editor" $BUILD_SRC
+
+# Unity
+cp_dll "$ADDONS/$DNS.Unity" $BUILD_SRC
+cp_dll "$ADDONS/$DNS.Unity.Editor" $BUILD_SRC
 
 # VisualDebugging
-libDir="${ADDONS_PLAYGROUND}/VisualDebugging/Assets/Libraries"
-rm -rf ${libDir}
-mkdir ${libDir}
-mkdir "${libDir}/Editor"
-cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_U}.dll" "${libDir}"
-cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_VD_U}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_VD_UE}.dll" "${libDir}/Editor/"
-# --
-cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_CG_UE}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_VD_CG_P}.dll" "${libDir}/Editor/"
+cp_dll "$ADDONS/$DNS.VisualDebugging.CodeGeneration.Plugins" $BUILD_SRC
+cp_dll "$ADDONS/$DNS.VisualDebugging.Unity" $BUILD_SRC
+cp_dll "$ADDONS/$DNS.VisualDebugging.Unity.Editor" $BUILD_SRC
+
+# Entitas
+cp_dll $DNS $BUILD_SRC
+
+
+# update unity project
+
+DDD="$ROOT/Libraries/DesperateDevs"
 
 # Blueprints
-libDir="${ADDONS_PLAYGROUND}/Blueprints/Assets/Libraries"
-rm -rf ${libDir}
-mkdir ${libDir}
-mkdir "${libDir}/Editor"
-cp "${BUILD_SRC}/${ES_BP}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_BP_U}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_BP_UE}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_UE}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_VD_U}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_VD_UE}.dll" "${libDir}/Editor/"
-# --
-cp "${BUILD_SRC}/${ES_CG_ATTR}.dll" ${libDir}
-cp "${BUILD_SRC}/${ES_CG_P}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_CG_UE}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_VD_CG_P}.dll" "${libDir}/Editor/"
-cp "${BUILD_SRC}/${ES_BP_CG_P}.dll" "${libDir}/Editor/"
+libDir="$ADDONS_TEST/Blueprints/Assets/Libraries"
+editorLibDir="$libDir/Editor"
+rm -rf $libDir
+mkdir $libDir $editorLibDir
+cp_dll "$DNS.Blueprints.Unity.Editor" $editorLibDir
+# --- project dependencies
+cp_dll $DNS $libDir
+cp_dll "$DNS.Blueprints" $libDir
+cp_dll "$DNS.Blueprints.Unity" $libDir
+cp_dll "$DNS.Unity.Editor" $editorLibDir
+cp_dll "$DNS.VisualDebugging.Unity.Editor" $editorLibDir
+# --- desperate devs dependencies
+cp "$DDD.Unity.Editor" $editorLibDir
+cp "$DDD.Utils" $libDir
+
+
+# Entitas.Unity
+libDir="$ADDONS_TEST/Entitas.Unity/Assets/Libraries"
+editorLibDir="$libDir/Editor"
+rm -rf $libDir
+mkdir $libDir $editorLibDir
+cp_dll "$DNS.Unity.Editor" $editorLibDir
+# --- project dependencies
+cp_dll $DNS $libDir
+# --- desperate devs dependencies
+cp "$DDD.Serialization" $libDir
+cp "$DDD.Unity.Editor" $editorLibDir
+
+# Migration
+libDir="$ADDONS_TEST/Migration/Assets/Libraries"
+editorLibDir="$libDir/Editor"
+rm -rf $libDir
+mkdir $libDir $editorLibDir
+cp_dll "$DNS.Migration.Unity.Editor" $editorLibDir
+# --- project dependencies
+cp_dll "$DNS.Migration" $libDir
+cp_dll "$DNS.Unity.Editor" $editorLibDir
+# --- desperate devs dependencies
+cp "$DDD.Unity.Editor" $editorLibDir
+cp "$DDD.Utils" $libDir
+
+# VisualDebugging
+libDir="$ADDONS_TEST/VisualDebugging/Assets/Libraries"
+editorLibDir="$libDir/Editor"
+rm -rf $libDir
+mkdir $libDir $editorLibDir
+cp_dll "$DNS.VisualDebugging.Unity.Editor" $editorLibDir
+# --- project dependencies
+cp_dll $DNS $libDir
+cp_dll "$DNS.CodeGeneration.Plugins" $editorLibDir
+cp_dll "$DNS.Unity" $libDir
+cp_dll "$DNS.VisualDebugging.Unity" $libDir
+# --- desperate devs dependencies
+cp "$DDD.CodeGeneration.CodeGenerator" $editorLibDir
+cp "$DDD.Serialization" $libDir
+cp "$DDD.Unity.Editor" $editorLibDir
+cp "$DDD.Utils" $libDir

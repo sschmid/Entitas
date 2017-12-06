@@ -32,10 +32,9 @@ namespace Entitas.Unity.Editor {
                 : AERCMode.Safe;
         }
 
-        public override void Draw(Preferences preferences) {
+        public override void DrawHeader(Preferences preferences) {
             drawToolbar();
             drawHeader(preferences);
-            base.Draw(preferences);
         }
 
         void drawToolbar() {

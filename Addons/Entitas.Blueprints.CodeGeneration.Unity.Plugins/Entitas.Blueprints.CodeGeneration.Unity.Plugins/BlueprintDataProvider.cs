@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using DesperateDevs.CodeGeneration;
+using Entitas.Blueprints.CodeGeneration.Plugins;
 using Entitas.Blueprints.Unity.Editor;
 
-namespace Entitas.Blueprints.CodeGeneration.Plugins {
+namespace Entitas.Blueprints.CodeGeneration.Unity.Plugins {
 
     public class BlueprintDataProvider : IDataProvider {
 
@@ -27,19 +28,6 @@ namespace Entitas.Blueprints.CodeGeneration.Plugins {
                     data.SetBlueprintName(blueprintName);
                     return data;
                 }).ToArray();
-        }
-    }
-
-    public static class BlueprintDataProviderExtension {
-
-        public const string BLUEPRINT_NAME = "blueprint_name";
-
-        public static string GetBlueprintName(this BlueprintData data) {
-            return (string)data[BLUEPRINT_NAME];
-        }
-
-        public static void SetBlueprintName(this BlueprintData data, string blueprintName) {
-            data[BLUEPRINT_NAME] = blueprintName;
         }
     }
 }

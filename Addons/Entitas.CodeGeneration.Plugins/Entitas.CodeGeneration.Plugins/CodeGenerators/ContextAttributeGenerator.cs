@@ -22,7 +22,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ContextData>()
-                .Select(d => generateAttributeClass(d))
+                .Select(generateAttributeClass)
                 .ToArray();
         }
 

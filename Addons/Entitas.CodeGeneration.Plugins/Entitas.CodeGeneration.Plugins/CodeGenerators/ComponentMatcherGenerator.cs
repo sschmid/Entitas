@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.CodeGeneration.CodeGenerator;
 using DesperateDevs.Serialization;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -45,7 +44,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateIndex())
-                .SelectMany(d => generateMatcher(d))
+                .SelectMany(generateMatcher)
                 .ToArray();
         }
 

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.CodeGeneration.CodeGenerator;
 using DesperateDevs.Serialization;
 using DesperateDevs.Utils;
 
@@ -85,7 +84,7 @@ ${memberAssignment}
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
-                .SelectMany(d => generateExtensions(d))
+                .SelectMany(generateExtensions)
                 .ToArray();
         }
 

@@ -1,57 +1,41 @@
 #!/bin/bash -e
 SCRIPTS="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
-ROOT="${SCRIPTS}/.."
+ROOT="$SCRIPTS/.."
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-UNITY="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
 PROJECT_NAME="Entitas"
 
-ADDONS="${ROOT}/Addons"
-ADDONS_PLAYGROUND="${ROOT}/Tests/Unity"
-
-ES="Entitas"
-
-ES_U="Entitas.Unity"
-ES_UE="Entitas.Unity.Editor"
-
-ES_CG_ATTR="Entitas.CodeGeneration.Attributes"
-ES_CG_P="Entitas.CodeGeneration.Plugins"
-ES_CG_UE="Entitas.CodeGeneration.Unity.Editor"
-
-ES_MIG="Entitas.Migration"
-ES_MIG_CLI="Entitas.Migration.CLI"
-ES_MIG_UE="Entitas.Migration.Unity.Editor"
-
-ES_VD_CG_P="Entitas.VisualDebugging.CodeGeneration.Plugins"
-ES_VD_U="Entitas.VisualDebugging.Unity"
-ES_VD_UE="Entitas.VisualDebugging.Unity.Editor"
-
-ES_BP="Entitas.Blueprints"
-ES_BP_CG_P="Entitas.Blueprints.CodeGeneration.Plugins"
-ES_BP_U="Entitas.Blueprints.Unity"
-ES_BP_UE="Entitas.Blueprints.Unity.Editor"
-
-DD="../DesperateDevs/Build/src/"
-BIN="bin/Release"
+ADDONS="$ROOT/Addons"
+ADDONS_TEST="$ROOT/Tests/Unity"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-SOLUTION="${ROOT}/${PROJECT_NAME}.sln"
-PROJECT_VERSION=`cat ${ROOT}/${PROJECT_NAME}/${PROJECT_NAME}/version`
+SOLUTION="$ROOT/$PROJECT_NAME.sln"
+PROJECT_VERSION=`cat $ROOT/$PROJECT_NAME/$PROJECT_NAME/version`
+DNS=$PROJECT_NAME
+BIN="bin/Release"
 
-TEST_PROJECT="${ROOT}/Tests/Tests/Tests.csproj"
-TEST_RUNNER="${ROOT}/Tests/Tests/bin/Release/Tests.exe"
+TEST_PROJECT="$ROOT/Tests/Tests/Tests.csproj"
+TEST_RUNNER="$ROOT/Tests/Tests/$BIN/Tests.exe"
 
 # build
-BUILD="${ROOT}/Build"
-BUILD_SRC="${BUILD}/src"
-BUILD_DOCS="${BUILD}/docs"
-BUILD_DEPLOY="${BUILD}/deploy"
+BUILD="$ROOT/Build"
+BUILD_SRC="$BUILD/src"
+BUILD_DOCS="$BUILD/docs"
+BUILD_DEPLOY="$BUILD/deploy"
 
 DOCS="$ROOT/docs"
-DOCS_RES="${SCRIPTS}/docs_resources"
-DOCSET="com.sschmid.${PROJECT_NAME}.docset"
+DOCS_RES="$SCRIPTS/docs_resources"
+DOCSET="com.sschmid.$PROJECT_NAME.docset"
 DOCSET_KEY="entitas"
 
 cpe() {
-  rsync -ar --include-from "${SCRIPTS}/rsync_include.txt" --exclude-from "${SCRIPTS}/rsync_exclude.txt" $1 $2
+  rsync -ar --include-from "$SCRIPTS/rsync_include.txt" --exclude-from "$SCRIPTS/rsync_exclude.txt" $1 $2
+}
+
+cp_dll() {
+    cp "$ROOT/$1/$BIN/$1.dll" $2
+}
+
+cp_exe() {
+    cp "$ROOT/$1/$BIN/$1.exe" $2
 }

@@ -65,7 +65,7 @@ namespace Entitas.CodeGeneration.Plugins {
             var customEntityIndexData = types
                 .Where(type => !type.IsAbstract)
                 .Where(type => Attribute.IsDefined(type, typeof(CustomEntityIndexAttribute)))
-                .Select(type => createCustomEntityIndexData(type));
+                .Select(createCustomEntityIndexData);
 
             return entityIndexData
                 .Concat(customEntityIndexData)

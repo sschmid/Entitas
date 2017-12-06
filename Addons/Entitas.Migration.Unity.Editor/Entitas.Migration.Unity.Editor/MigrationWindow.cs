@@ -12,7 +12,9 @@ namespace Entitas.Migration.Unity.Editor {
 
         [MenuItem("Tools/Entitas/Migrate...", false, 1000)]
         public static void OpenMigrate() {
-            EditorLayout.ShowWindow<MigrationWindow>("Entitas Migration - " + CheckForUpdates.GetLocalVersion(), new Vector2(415f, 564));
+            EditorLayout
+                .GetWindow<MigrationWindow>("Entitas Migration - " + CheckForUpdates.GetLocalVersion(), new Vector2(415f, 564))
+                .Show();
         }
 
         Texture2D _headerTexture;

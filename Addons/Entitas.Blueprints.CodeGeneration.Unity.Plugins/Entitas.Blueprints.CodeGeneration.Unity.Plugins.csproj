@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{68AFC167-E6B6-4E9B-8C52-84854B004CAD}</ProjectGuid>
+    <ProjectGuid>{205014A8-1E4A-40D2-A368-9D2497EA9AE1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.CodeGeneration.Unity.Editor</RootNamespace>
-    <AssemblyName>Entitas.CodeGeneration.Unity.Editor</AssemblyName>
+    <RootNamespace>Entitas.Blueprints.CodeGeneration.Unity.Plugins</RootNamespace>
+    <AssemblyName>Entitas.Blueprints.CodeGeneration.Unity.Plugins</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
     <LangVersion>4</LangVersion>
@@ -32,21 +32,6 @@
     <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.dll</HintPath>
     </Reference>
-    <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
-    </Reference>
-    <Reference Include="DesperateDevs.Networking, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="DesperateDevs.Unity.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.Unity.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.Utils.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\UnityEditor.dll</HintPath>
@@ -54,20 +39,33 @@
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.CodeGeneration.Unity.Editor\CodeGeneratorPreferencesDrawer.cs" />
-    <Compile Include="Entitas.CodeGeneration.Unity.Editor\DebugLogPostProcessor.cs" />
-    <Compile Include="Entitas.CodeGeneration.Unity.Editor\UnityCodeGenerator.cs" />
+    <Compile Include="Entitas.Blueprints.CodeGeneration.Unity.Plugins\BlueprintDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
-      <Project>{9AF72B25-85B0-4FDC-85C3-660926C82438}</Project>
-      <Name>Entitas.Unity.Editor</Name>
+    <Folder Include="Entitas.Blueprints.CodeGeneration.Unity.Plugins\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas.Blueprints.CodeGeneration.Plugins\Entitas.Blueprints.CodeGeneration.Plugins.csproj">
+      <Project>{09DBBDC0-EEA5-42C5-B9A9-E83C0C6FCD8E}</Project>
+      <Name>Entitas.Blueprints.CodeGeneration.Plugins</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entitas.CodeGeneration.Unity.Editor\" />
+    <ProjectReference Include="..\Entitas.Blueprints.Unity.Editor\Entitas.Blueprints.Unity.Editor.csproj">
+      <Project>{79E05CCF-61CE-49AB-9E9A-D7672DD6A763}</Project>
+      <Name>Entitas.Blueprints.Unity.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.Blueprints.Unity\Entitas.Blueprints.Unity.csproj">
+      <Project>{026FFA2B-1F8D-4E05-A54D-67AB5B611985}</Project>
+      <Name>Entitas.Blueprints.Unity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entitas.Blueprints\Entitas.Blueprints.csproj">
+      <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
+      <Name>Entitas.Blueprints</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

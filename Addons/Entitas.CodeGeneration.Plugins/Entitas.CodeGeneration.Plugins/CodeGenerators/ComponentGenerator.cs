@@ -23,7 +23,7 @@ public sealed partial class ${FullComponentName} : Entitas.IComponent {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateComponent())
-                .Select(d => generateComponentClass(d))
+                .Select(generateComponentClass)
                 .ToArray();
         }
 

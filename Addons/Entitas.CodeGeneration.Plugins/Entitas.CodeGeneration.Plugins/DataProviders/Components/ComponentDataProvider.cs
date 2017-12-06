@@ -79,13 +79,14 @@ namespace Entitas.CodeGeneration.Plugins {
             var dataFromComponents = types
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsAbstract)
-                .Select(type => createDataForComponent(type));
+                .Select(createDataForComponent);
 
             var dataFromNonComponents = types
                 .Where(type => !type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsGenericType)
                 .Where(type => hasContexts(type))
-                .SelectMany(type => createDataForNonComponent(type));
+                .SelectMany(createDataForNonComponent)
+                .ToArray();
 
             var generatedComponentsLookup = dataFromNonComponents.ToLookup(data => data.GetFullTypeName());
             return dataFromComponents

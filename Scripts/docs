@@ -9,8 +9,8 @@ command -v doxygen >/dev/null 2>&1 || {
 
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
-DOXYFILE_HTML="${DOCS_RES}/html.doxyfile"
-DOXYFILE_DOCSET="${DOCS_RES}/docset.doxyfile"
+DOXYFILE_HTML="$DOCS_RES/html.doxyfile"
+DOXYFILE_DOCSET="$DOCS_RES/docset.doxyfile"
 
 generate_doc() {
   echo "Generating $1: PROJECT_NUMBER = $PROJECT_VERSION"
@@ -28,13 +28,13 @@ pushd $ROOT > /dev/null
     # In order for Dash to associate this docset with the project keyword,
     # we have to manually modify the generated plist.
     # http://stackoverflow.com/questions/14678025/how-do-i-specify-a-keyword-for-dash-with-doxygen
-    sed -i .bak -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>${DOCSET_KEY}<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/" "${DOCSET}/Contents/Info.plist"
+    sed -i .bak -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>$DOCSET_KEY<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/" "${DOCSET}/Contents/Info.plist"
     rm "${DOCSET}/Contents/Info.plist.bak"
 
-    cp "${DOCS_RES}/icon.png" $DOCSET
-    cp "${DOCS_RES}/icon@2x.png" $DOCSET
-    rm -rf "${PROJECT_NAME}.docset"
-    mv $DOCSET "${PROJECT_NAME}.docset"
+    cp "$DOCS_RES/icon.png" $DOCSET
+    cp "$DOCS_RES/icon@2x.png" $DOCSET
+    rm -rf "$PROJECT_NAME.docset"
+    mv $DOCSET "$PROJECT_NAME.docset"
   popd > /dev/null
   rm -rf $DOCS
   rsync -ar "${BUILD_DOCS}/html/" $DOCS

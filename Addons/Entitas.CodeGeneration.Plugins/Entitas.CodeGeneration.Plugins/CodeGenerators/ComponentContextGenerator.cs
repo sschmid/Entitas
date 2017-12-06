@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.CodeGeneration.CodeGenerator;
 using DesperateDevs.Serialization;
 using DesperateDevs.Utils;
 
@@ -87,7 +86,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
                 .Where(d => d.IsUnique())
-                .SelectMany(d => generateExtensions(d))
+                .SelectMany(generateExtensions)
                 .ToArray();
         }
 
