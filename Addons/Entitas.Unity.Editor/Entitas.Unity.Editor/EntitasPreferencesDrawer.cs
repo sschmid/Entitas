@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using DesperateDevs.Serialization;
 using DesperateDevs.Unity.Editor;
@@ -65,7 +66,9 @@ namespace Entitas.Unity.Editor {
 //                Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/blob/develop/README.md");
 //            }
 
-            const int buttonWidth = 60;
+            var propertiesPath = Path.GetFileName(preferences.propertiesPath);
+
+            var buttonWidth = 60 + propertiesPath.Length * 5;
             const int buttonHeight = 15;
             const int padding = 4;
             var buttonRect = new Rect(
@@ -74,7 +77,8 @@ namespace Entitas.Unity.Editor {
                 buttonWidth,
                 buttonHeight
             );
-            if (GUI.Button(buttonRect, "Edit", EditorStyles.miniButton)) {
+
+            if (GUI.Button(buttonRect, "Edit " + propertiesPath, EditorStyles.miniButton)) {
                 EditorWindow.focusedWindow.Close();
                 System.Diagnostics.Process.Start(preferences.propertiesPath);
             }
