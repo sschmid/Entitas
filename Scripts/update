@@ -2,8 +2,8 @@
 echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
-# $SCRIPTS/pull
-# $SCRIPTS/test
+$SCRIPTS/pull
+$SCRIPTS/test
 $SCRIPTS/build
 
 # clean
@@ -126,21 +126,6 @@ cp "$DDD.Logging.dll" $libDir
 cp "${ADDONS}/$DNS.Unity.Editor/$DNS.Unity.Editor/Images/"* "$editorLibDir/Images"
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Migration
 libDir="$ADDONS_TEST/Migration/Assets/Libraries"
 editorLibDir="$libDir/Editor"
@@ -148,9 +133,11 @@ rm -rf $libDir
 mkdir $libDir $editorLibDir
 cp_addon_dll "$DNS.Migration.Unity.Editor" $editorLibDir
 # --- project dependencies
-cp_addon_dll "$DNS.Migration" $libDir
+cp_dll $DNS $libDir
+cp_addon_dll "$DNS.Migration" $editorLibDir
 cp_addon_dll "$DNS.Unity.Editor" $editorLibDir
 # --- desperate devs dependencies
 cp "$DDD.Unity.Editor.dll" $editorLibDir
+cp "$DDD.Serialization.dll" $libDir
 cp "$DDD.Utils.dll" $libDir
-
+cp "$DDD.Logging.dll" $libDir
