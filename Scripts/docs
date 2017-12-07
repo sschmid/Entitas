@@ -15,7 +15,7 @@ DOXYFILE_DOCSET="$DOCS_RES/docset.doxyfile"
 generate_doc() {
   echo "Generating $1: PROJECT_NUMBER = $PROJECT_VERSION"
   sed -i .bak -e "s/PROJECT_NUMBER.*/PROJECT_NUMBER         = $PROJECT_VERSION/" $1
-  rm "${1}.bak"
+  rm "$1.bak"
   doxygen $1
 }
 
@@ -23,13 +23,13 @@ generate_doc() {
 pushd $ROOT > /dev/null
   generate_doc $DOXYFILE_HTML
   generate_doc $DOXYFILE_DOCSET
-  pushd "${BUILD_DOCS}/docset" > /dev/null
+  pushd "$BUILD_DOCS/docset" > /dev/null
     make
     # In order for Dash to associate this docset with the project keyword,
     # we have to manually modify the generated plist.
     # http://stackoverflow.com/questions/14678025/how-do-i-specify-a-keyword-for-dash-with-doxygen
-    sed -i .bak -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>$DOCSET_KEY<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/" "${DOCSET}/Contents/Info.plist"
-    rm "${DOCSET}/Contents/Info.plist.bak"
+    sed -i .bak -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>$DOCSET_KEY<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/" "$DOCSET/Contents/Info.plist"
+    rm "$DOCSET/Contents/Info.plist.bak"
 
     cp "$DOCS_RES/icon.png" $DOCSET
     cp "$DOCS_RES/icon@2x.png" $DOCSET
@@ -37,5 +37,5 @@ pushd $ROOT > /dev/null
     mv $DOCSET "$PROJECT_NAME.docset"
   popd > /dev/null
   rm -rf $DOCS
-  rsync -ar "${BUILD_DOCS}/html/" $DOCS
+  rsync -ar "$BUILD_DOCS/html/" $DOCS
 popd > /dev/null

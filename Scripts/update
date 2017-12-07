@@ -43,8 +43,6 @@ cp_dll $DNS $BUILD_SRC
 
 # update unity project
 
-DDD="$ROOT/Libraries/DesperateDevs"
-
 # Entitas.Unity
 libDir="$ADDONS_TEST/Entitas.Unity/Assets/Libraries"
 editorLibDir="$libDir/Editor"
@@ -60,7 +58,7 @@ cp "$DDD.Unity.Editor.dll" $editorLibDir
 cp "$DDD.Utils.dll" $libDir
 cp "$DDD.Logging.dll" $libDir
 # ---
-cp "${ADDONS}/$DNS.Unity.Editor/$DNS.Unity.Editor/Images/"* "$editorLibDir/Images"
+cp "$ADDONS/$DNS.Unity.Editor/$DNS.Unity.Editor/Images/"* "$editorLibDir/Images"
 
 
 # VisualDebugging
@@ -89,7 +87,7 @@ cp "$DDD.Unity.Editor.dll" $editorLibDir
 cp "$DDD.Utils.dll" $libDir
 cp "$DDD.Logging.dll" $libDir
 # ---
-cp "${ADDONS}/$DNS.Unity.Editor/$DNS.Unity.Editor/Images/"* "$editorLibDir/Images"
+cp "ADDONS/$DNS.Unity.Editor/$DNS.Unity.Editor/Images/"* "$editorLibDir/Images"
 
 
 # Blueprints
@@ -123,7 +121,7 @@ cp "$DDD.Unity.Editor.dll" $editorLibDir
 cp "$DDD.Utils.dll" $libDir
 cp "$DDD.Logging.dll" $libDir
 # ---
-cp "${ADDONS}/$DNS.Unity.Editor/$DNS.Unity.Editor/Images/"* "$editorLibDir/Images"
+cp "$ADDONS/$DNS.Unity.Editor/$DNS.Unity.Editor/Images/"* "$editorLibDir/Images"
 
 
 # Migration

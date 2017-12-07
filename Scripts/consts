@@ -6,6 +6,7 @@ ROOT="$SCRIPTS/.."
 PROJECT_NAME="Entitas"
 ADDONS="$ROOT/Addons"
 ADDONS_TEST="$ROOT/Tests/Unity"
+DDD="$ROOT/Libraries/DesperateDevs"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 SOLUTION="$ROOT/$PROJECT_NAME.sln"
