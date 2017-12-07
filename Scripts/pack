@@ -3,7 +3,6 @@ echo $0
 source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
 
 $SCRIPTS/update
-$SCRIPTS/test
 $SCRIPTS/docs
 
 # collect
