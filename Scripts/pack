@@ -84,6 +84,8 @@ cp "$BUILD_SRC/$DNS.VisualDebugging.CodeGeneration.Plugins.dll" $TMP_EDITOR
 cp "$BUILD_SRC/$DNS.VisualDebugging.Unity.dll" $TMP_ENTITAS
 cp "$BUILD_SRC/$DNS.VisualDebugging.Unity.Editor.dll" $TMP_EDITOR
 # ---
+cp "$LIBS/Compile.cs" $TMP_ENTITAS
+# ---
 cp "$DDD.CodeGeneration.dll" $TMP_EDITOR
 cp "$DDD.CodeGeneration.CodeGenerator.dll" $TMP_EDITOR
 cp "$DDD.CodeGeneration.CodeGenerator.Unity.Editor.dll" $TMP_EDITOR
