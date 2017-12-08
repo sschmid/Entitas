@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="Entitas.VisualDebugging.Unity.Editor\ContextObserver\ContextObserverInspector.cs" />
     <Compile Include="Entitas.VisualDebugging.Unity.Editor\DebugSystems\DebugSystemsInspector.cs" />
-    <Compile Include="Entitas.VisualDebugging.Unity.Editor\DebugSystems\SystemsMonitor.cs" />
     <Compile Include="Entitas.VisualDebugging.Unity.Editor\EntitasHierarchyIcon.cs" />
     <Compile Include="Entitas.VisualDebugging.Unity.Editor\EntitasStats.cs" />
     <Compile Include="Entitas.VisualDebugging.Unity.Editor\EntityLinkInspector.cs" />

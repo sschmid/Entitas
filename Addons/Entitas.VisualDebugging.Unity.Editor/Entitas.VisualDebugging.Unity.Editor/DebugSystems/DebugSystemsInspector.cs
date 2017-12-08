@@ -20,7 +20,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             ExecutionTimeDescending
         }
 
-        SystemsMonitor _systemsMonitor;
+        Graph _systemsMonitor;
         Queue<float> _systemMonitorData;
         const int SYSTEM_MONITOR_DATA_LENGTH = 60;
 
@@ -87,7 +87,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         void drawSystemsMonitor(DebugSystems systems) {
             if (_systemsMonitor == null) {
-                _systemsMonitor = new SystemsMonitor(SYSTEM_MONITOR_DATA_LENGTH);
+                _systemsMonitor = new Graph(SYSTEM_MONITOR_DATA_LENGTH);
                 _systemMonitorData = new Queue<float>(new float[SYSTEM_MONITOR_DATA_LENGTH]);
             }
 
