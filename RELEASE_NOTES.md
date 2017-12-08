@@ -1,3 +1,57 @@
+# 0.46.0
+
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days.
+
+This release is a maintenance release as announced here:
+
+https://github.com/sschmid/Entitas-CSharp/issues/508
+
+As the project got more mature the Entitas repository not only contained the ECS core but also a few other
+modules like Logging, Serialization, Networking, Code Generator, Common Utils and more.
+The goal of this refactoring was to extract reusable modules and increase the focus of the Entitas repository
+on ECS. Reusable modules have been successfully extracted to their own standalone projects. Overall, with the
+increased focus that is achieved by having standalone projects I expect the quality to raise, too. This is
+generally the case when you have reusable code that is battle tested in multiple different scenarios.
+
+As mentioned in #508 those projects all have the `DesperateDevs` namespace. You maybe already know about
+Desperate Devs because of the new YouTube channel where I will upload more and more Video on ECS,
+best practices and Software Architecture. Subscribe if you don't want to miss future videos.
+
+https://www.youtube.com/channel/UC2q7q7tcrwWHu5GSGyt_JEQ
+
+As a result of this refactoring I was able to remove a lot of noise from the Entitas repository and I could
+easily fix platform depended bugs without any distraction.
+
+<img width="385" alt="entitas-desperatedevs" src="https://user-images.githubusercontent.com/233700/33746219-2011570a-dbbc-11e7-9631-4e8730fa7847.png">
+
+Entitas will benefit from having the Desperate Devs dependencies as it enforces modularity and reusability.
+Additionally, it will be possible to use awesome tools like TCPezy (DesperateDev.Networking) and Jenny (DesperateDevs.CodeGeneration) independently.
+
+
+#### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+#### Obsolete notice
+- Removed methods marked obsolete in 0.42.0 from April 2017
+- Blueprints are now completely removed from the zip files (sources still available)
+
+#### Preferences
+- Showing properties name in Edit Button
+
+#### Jenny (aka Code Generator)
+- CodeGeneratorPreferencesDrawer will keep unavailable plugins #496
+- Added Display Dialog for auto import
+- Added a secret and hidden cli command, can you find it? ❤️
+
+#### TCPezy (aka entitas server)
+- Fixed Unhandled Exception (appeared on Windows only) #489
+
+#### Other
+- Changed language level of all projects to C# 4.0
+- Deleted CodeGenerator Unity Test project
+
+
 # 0.45.1
 
 As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.

@@ -34,6 +34,43 @@ $ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/RequestedFolder
 
 ---
 
+Entitas 0.46.0 upgrade guide
+============================
+
+#### Breaking changes
+
+Removed methods marked obsolete in 0.42.0 from April 2017
+- `context.CreateCollector<TEntity>(IMatcher<TEntity> matcher, GroupEvent groupEvent)`
+- `new Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo)`
+- `context.DestroyEntity(TEnity entity)`
+
+#### After you installed
+
+First, edit the file `Generated/Feature.cs` and comment or delete the lines with compiler errors.
+
+Then, run auto-import to use the new DesperateDevs.CodeGeneration.Plugins and generate.
+
+Entitas.properties can be named differently now. By default it will be called
+Preferences.properties. Additionally, you can delete User.properties or rename it
+to Xyz.userproperties. If this file doesn't exist, it will automatically be generated for you.
+You can have multiple properties and userproperties files now, e.g.
+Preferences.properties and Roslyn.properties. In Unity it will automatically find and use
+the first file. When using the Code Generator CLI (called Jenny now) you can explicitly
+specify files like this
+
+```
+// will find and use the first file
+$ jenny gen
+
+// specify a file
+$ jenny gen Roslyn.properties
+
+// optionally specify an other userproperties
+jenny gen Roslyn.properties My.userproperties
+```
+
+---
+
 Entitas 0.45.0 upgrade guide
 ============================
 

@@ -1,14 +1,12 @@
 var class_entitas_1_1_context =
 [
     [ "Context", "class_entitas_1_1_context.html#aea531d30886cb31528bcb63ba57e0e51", null ],
-    [ "Context", "class_entitas_1_1_context.html#a5df73044069c137a1a5059cc11c070ad", null ],
     [ "Context", "class_entitas_1_1_context.html#abe95a09f2f4a4306d33c8eaa8c77dd96", null ],
     [ "AddEntityIndex", "class_entitas_1_1_context.html#a9921fe1978e800bb692d0c429d51e485", null ],
     [ "ClearComponentPool", "class_entitas_1_1_context.html#a65f75d0b04e3b03b6965fb70a6aae9de", null ],
     [ "ClearComponentPools", "class_entitas_1_1_context.html#a5d328db5cc7eea11a02a3e9bdc86a412", null ],
     [ "CreateEntity", "class_entitas_1_1_context.html#ad78318367db3cdeb5ccf9470a1916d71", null ],
     [ "DestroyAllEntities", "class_entitas_1_1_context.html#a6e2997c233e248d860cc85f33aa596af", null ],
-    [ "DestroyEntity", "class_entitas_1_1_context.html#a9b07a0567ab3e36cdff980ee441f6ec9", null ],
     [ "GetEntities", "class_entitas_1_1_context.html#a7ec3a1e5b8e186d2dec13ebed26d2dcc", null ],
     [ "GetEntityIndex", "class_entitas_1_1_context.html#a596fdd33a0be12f534af444f4b36e076", null ],
     [ "GetGroup", "class_entitas_1_1_context.html#a5395e55b7d034cb6e33a86f4f73104c4", null ],
