@@ -300,7 +300,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 "Generate",
                 "Cancel"
             )) {
-                generateIDefaultInstanceCreator(typeName);
+                GenerateIDefaultInstanceCreator(typeName);
             }
 
             defaultValue = null;
@@ -336,14 +336,14 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                         "Generate",
                         "Cancel"
                     )) {
-                        generateITypeDrawer(typeName);
+                        GenerateITypeDrawer(typeName);
                     }
                 }
             }
             EditorGUILayout.EndHorizontal();
         }
 
-        static void generateIDefaultInstanceCreator(string typeName) {
+        public static void GenerateIDefaultInstanceCreator(string typeName) {
             var preferences = Preferences.sharedInstance;
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.defaultInstanceCreatorFolderPath;
@@ -354,7 +354,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             generateTemplate(folder, filePath, template);
         }
 
-        static void generateITypeDrawer(string typeName) {
+        public static void GenerateITypeDrawer(string typeName) {
             var preferences = Preferences.sharedInstance;
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.typeDrawerFolderPath;
