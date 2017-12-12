@@ -29,11 +29,20 @@
     <ExternalConsole>true</ExternalConsole>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DesperateDevs.Analytics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Analytics.dll</HintPath>
+    </Reference>
     <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.dll</HintPath>
     </Reference>
     <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.CodeGeneration.Plugins, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.Plugins.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Logging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\DesperateDevs.Logging.dll</HintPath>
     </Reference>
     <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\DesperateDevs.Serialization.dll</HintPath>
@@ -79,6 +88,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\Data\MemberData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Data\MethodData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\PluginUtil.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\PostProcessors\UsagePostProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.Plugins\" />

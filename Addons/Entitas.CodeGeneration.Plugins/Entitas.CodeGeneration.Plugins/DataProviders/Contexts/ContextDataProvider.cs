@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.CodeGeneration.CodeGenerator;
 using DesperateDevs.Serialization;
 
 namespace Entitas.CodeGeneration.Plugins {

@@ -32,8 +32,8 @@ CG_P_DD="$CG_PLUGINS/Jenny"
 mkdir $TMP_DIR $TMP_ENTITAS $TMP_CG $CG_PLUGINS $CG_P_ES $CG_P_DD
 
 # --- Entitas
-cp "$BUILD_SRC/$DNS.CodeGeneration.Attributes.dll" $TMP_ENTITAS
 cp "$BUILD_SRC/$DNS.dll" $TMP_ENTITAS
+cp "$BUILD_SRC/$DNS.CodeGeneration.Attributes.dll" $TMP_ENTITAS
 # ---
 cp "$DDD.Utils.dll" $TMP_ENTITAS
 # ---
@@ -41,10 +41,10 @@ cp "$COLLECTED_DIR/"* $TMP_DIR || true
 cp -r "$COLLECTED_DIR/Migration" $TMP_DIR
 
 # --- Code Generator
-cp "$DDD.CodeGeneration.CodeGenerator.CLI.exe" "$TMP_CG/Jenny.exe"
 cp "$DDD.CLI.dll" $TMP_CG
 cp "$DDD.CodeGeneration.dll" $TMP_CG
 cp "$DDD.CodeGeneration.CodeGenerator.dll" $TMP_CG
+cp "$DDD.CodeGeneration.CodeGenerator.CLI.exe" "$TMP_CG/Jenny.exe"
 cp "$DDD.Logging.dll" $TMP_CG
 cp "$DDD.Logging.Formatters.dll" $TMP_CG
 cp "$DDD.Networking.dll" $TMP_CG
@@ -53,9 +53,11 @@ cp "$DDD.Utils.dll" $TMP_CG
 
 # --- Jenny
 cp "$DDD.CodeGeneration.Plugins.dll" $CG_P_DD
+cp "$DDD.Analytics.dll" $CG_P_DD
 # --- Entitas
 cp "$BUILD_SRC/$DNS.CodeGeneration.Plugins.dll" $CG_P_ES
 cp "$BUILD_SRC/$DNS.CodeGeneration.Attributes.dll" $CG_P_ES
+cp "$DDD.Analytics.dll" $CG_P_ES
 cp "$BUILD_SRC/$DNS.dll" $CG_P_ES
 
 # zip
@@ -91,6 +93,7 @@ cp "$DDD.CodeGeneration.CodeGenerator.dll" $TMP_EDITOR
 cp "$DDD.CodeGeneration.CodeGenerator.Unity.Editor.dll" $TMP_EDITOR
 cp "$DDD.CodeGeneration.Plugins.dll" $TMP_EDITOR
 cp "$DDD.CodeGeneration.Unity.Plugins.dll" $TMP_EDITOR
+cp "$DDD.Analytics.dll" $TMP_EDITOR
 cp "$DDD.Logging.dll" $TMP_ENTITAS
 cp "$DDD.Networking.dll" $TMP_ENTITAS
 cp "$DDD.Unity.Editor.dll" $TMP_EDITOR
@@ -111,9 +114,11 @@ cp "$DDD.Utils.dll" $TMP_CG
 # --- Jenny
 cp "$DDD.CodeGeneration.Plugins.dll" $CG_P_DD
 cp "$DDD.CodeGeneration.Unity.Plugins.dll" $CG_P_DD
+cp "$DDD.Analytics.dll" $CG_P_DD
 # --- Entitas
 cp "$BUILD_SRC/$DNS.CodeGeneration.Plugins.dll" $CG_P_ES
 cp "$BUILD_SRC/$DNS.CodeGeneration.Attributes.dll" $CG_P_ES
+cp "$DDD.Analytics.dll" $CG_P_ES
 cp "$BUILD_SRC/$DNS.VisualDebugging.CodeGeneration.Plugins.dll" $CG_P_ES
 cp "$BUILD_SRC/$DNS.dll" $CG_P_ES
 
