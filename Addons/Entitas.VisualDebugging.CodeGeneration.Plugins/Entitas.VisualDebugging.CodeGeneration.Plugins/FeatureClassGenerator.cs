@@ -30,10 +30,10 @@ public class Feature : Entitas.VisualDebugging.Unity.DebugSystems {
 
 public class Feature : Entitas.Systems {
 
-    private System.Collections.Generic.List<string> _initializeSystemNames;
-    private System.Collections.Generic.List<string> _executeSystemNames;
-    private System.Collections.Generic.List<string> _cleanupSystemNames;
-    private System.Collections.Generic.List<string> _tearDownSystemNames;
+    System.Collections.Generic.List<string> _initializeSystemNames;
+    System.Collections.Generic.List<string> _executeSystemNames;
+    System.Collections.Generic.List<string> _cleanupSystemNames;
+    System.Collections.Generic.List<string> _tearDownSystemNames;
 
     public Feature(string name) : this() {
     }
