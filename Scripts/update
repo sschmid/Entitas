@@ -81,6 +81,7 @@ cp "$DDD.CodeGeneration.Plugins.dll" $editorLibDir
 cp "$DDD.CodeGeneration.Unity.Plugins.dll" $editorLibDir
 cp "$DDD.CodeGeneration.CodeGenerator.dll" $editorLibDir
 cp "$DDD.CodeGeneration.CodeGenerator.Unity.Editor.dll" $editorLibDir
+cp "$DDD.Analytics.dll" $editorLibDir
 cp "$DDD.Networking.dll" $libDir
 cp "$DDD.Serialization.dll" $libDir
 cp "$DDD.Unity.Editor.dll" $editorLibDir
@@ -115,6 +116,7 @@ cp "$DDD.CodeGeneration.Plugins.dll" $editorLibDir
 cp "$DDD.CodeGeneration.Unity.Plugins.dll" $editorLibDir
 cp "$DDD.CodeGeneration.CodeGenerator.dll" $editorLibDir
 cp "$DDD.CodeGeneration.CodeGenerator.Unity.Editor.dll" $editorLibDir
+cp "$DDD.Analytics.dll" $editorLibDir
 cp "$DDD.Networking.dll" $libDir
 cp "$DDD.Serialization.dll" $libDir
 cp "$DDD.Unity.Editor.dll" $editorLibDir

@@ -87,8 +87,8 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\EntityIndex\EntityIndexDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Data\MemberData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Data\MethodData.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\EntitasHook.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\PluginUtil.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\PostProcessors\UsagePostProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.CodeGeneration.Plugins\" />
