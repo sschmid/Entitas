@@ -12,11 +12,13 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         public override string title { get { return "Visual Debugging"; } }
 
         const string ENTITAS_DISABLE_VISUAL_DEBUGGING = "ENTITAS_DISABLE_VISUAL_DEBUGGING";
+        const string ENTITAS_DISABLE_DEEP_PROFILING = "ENTITAS_DISABLE_DEEP_PROFILING";
 
         VisualDebuggingConfig _visualDebuggingConfig;
         ScriptingDefineSymbols _scriptingDefineSymbols;
 
         bool _enableVisualDebugging;
+        bool _enableDeviceDeepProfiling;
 
         public override void Initialize(Preferences preferences) {
             _visualDebuggingConfig = preferences.CreateAndConfigure<VisualDebuggingConfig>();
@@ -25,6 +27,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _enableVisualDebugging = !_scriptingDefineSymbols.buildTargetToDefSymbol.Values
                 .All<string>(defs => defs.Contains(ENTITAS_DISABLE_VISUAL_DEBUGGING));
+            _enableDeviceDeepProfiling = !_scriptingDefineSymbols.buildTargetToDefSymbol.Values
+                .All<string>(defs => defs.Contains(ENTITAS_DISABLE_DEEP_PROFILING));
         }
 
         public override void DrawHeader(Preferences preferences) {
@@ -51,19 +55,28 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         void drawVisualDebugging() {
-            EditorGUI.BeginChangeCheck();
-            {
-                _enableVisualDebugging = EditorGUILayout.Toggle("Enable Visual Debugging", _enableVisualDebugging);
-            }
-            var changed = EditorGUI.EndChangeCheck();
+            EditorGUILayout.BeginVertical(); {
+                EditorGUI.BeginChangeCheck();
+                {
+                    _enableVisualDebugging = EditorGUILayout.Toggle("Enable Visual Debugging", _enableVisualDebugging);
+                    _enableDeviceDeepProfiling = EditorGUILayout.Toggle("Enable Device Profiling", _enableDeviceDeepProfiling);
+                }
+                var changed = EditorGUI.EndChangeCheck();
 
-            if (changed) {
-                if (_enableVisualDebugging) {
-                    _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
-                } else {
-                    _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
+                if (changed) {
+                    if (_enableVisualDebugging) {
+                        _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
+                    } else {
+                        _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
+                    }
+                    if (_enableDeviceDeepProfiling) {
+                        _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_DEEP_PROFILING);
+                    } else {
+                        _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_DEEP_PROFILING);
+                    }
                 }
             }
+            EditorGUILayout.EndVertical();
         }
 
         void drawDefaultInstanceCreator() {

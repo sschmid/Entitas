@@ -26,7 +26,7 @@ public class Feature : Entitas.VisualDebugging.Unity.DebugSystems {
     }
 }
 
-#elif (!ENTITAS_DISABLE_PROFILING && DEVELOPMENT_BUILD)
+#elif (!ENTITAS_DISABLE_DEEP_PROFILING && DEVELOPMENT_BUILD)
 
 public class Feature : Entitas.Systems {
 
