@@ -1,3 +1,18 @@
+# 0.46.1
+
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days.
+
+#### Entitas.VisualDebugging.CodeGeneration.Plugins
+-  Added deep device profiling support to generated Feature class #497
+
+#### Unity
+- Added buttons to generate DefaultInstanceDrawer and TypeDrawer
+- Added deep device profiling toggle to Entitas Preferences
+
+<img width="415" alt="Entitas - Deep Device Profiling" src="https://user-images.githubusercontent.com/233700/33909162-f4e1a684-df8a-11e7-89d9-1e910554b954.png">
+
+
 # 0.46.0
 
 As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.

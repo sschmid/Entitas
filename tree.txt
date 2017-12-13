@@ -162,6 +162,7 @@
 │   │       │   ├── FlagComponentContext.txt
 │   │       │   ├── MethodArgument.txt
 │   │       │   └── MethodParameter.txt
+│   │       ├── EntitasHook.cs
 │   │       └── PluginUtil.cs
 │   ├── Entitas.Migration
 │   │   └── Entitas.Migration

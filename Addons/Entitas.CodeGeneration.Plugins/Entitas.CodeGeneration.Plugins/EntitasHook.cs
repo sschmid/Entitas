@@ -11,11 +11,12 @@ namespace Entitas.CodeGeneration.Plugins {
         protected override string name { get { return "entitas"; } }
 
         protected override TrackingData GetData() {
+            var types = AppDomain.CurrentDomain.GetAllTypes();
             return new UserTrackingData {
                 {
                     "x", "v:" + EntitasResources.GetVersion() +
-                         ",e:" + (AppDomain.CurrentDomain.GetAllTypes().Any(type => type.FullName == "DesperateDevs.CodeGeneration.CodeGenerator.CLI.Program") ? "s" : "u") +
-                         ",p:" + (_dataProviders.Any(i => i.name.Contains("Roslyn")) ? "1" : "0") +
+                         ",e:" + (types.Any(type => type.FullName == "DesperateDevs.CodeGeneration.CodeGenerator.CLI.Program") ? "s" : "u") +
+                         ",p:" + (types.Any(type => type.FullName == "Entitas.Roslyn.CodeGeneration.Plugins.PluginUtil") ? "1" : "0") +
                          ",f:" + _files.Length +
                          ",cp:" + _files.Count(f => f.fileName.EndsWith("Component.cs", StringComparison.OrdinalIgnoreCase)) +
                          ",cx:" + _files.Count(f => f.fileName.EndsWith("Context.cs", StringComparison.OrdinalIgnoreCase)) +
