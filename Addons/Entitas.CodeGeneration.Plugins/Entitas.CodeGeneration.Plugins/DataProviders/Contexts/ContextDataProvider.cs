@@ -9,7 +9,6 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public string name { get { return "Context"; } }
         public int priority { get { return 0; } }
-        public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
         public Dictionary<string, string> defaultProperties { get { return _contextNamesConfig.defaultProperties; } }

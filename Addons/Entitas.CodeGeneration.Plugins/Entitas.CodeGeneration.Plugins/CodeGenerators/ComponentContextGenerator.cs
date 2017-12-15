@@ -11,7 +11,6 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public string name { get { return "Component (Context API)"; } }
         public int priority { get { return 0; } }
-        public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
         public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }

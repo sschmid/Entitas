@@ -6,7 +6,6 @@ namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
 
         public string name { get { return "Feature Class"; } }
         public int priority { get { return 0; } }
-        public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
         const string FEATURE_TEMPLATE =

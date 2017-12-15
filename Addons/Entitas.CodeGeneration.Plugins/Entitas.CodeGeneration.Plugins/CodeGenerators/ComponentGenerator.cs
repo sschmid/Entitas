@@ -9,7 +9,6 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public string name { get { return "Component"; } }
         public int priority { get { return 0; } }
-        public bool isEnabledByDefault { get { return true; } }
         public bool runInDryMode { get { return true; } }
 
         const string COMPONENT_TEMPLATE =
