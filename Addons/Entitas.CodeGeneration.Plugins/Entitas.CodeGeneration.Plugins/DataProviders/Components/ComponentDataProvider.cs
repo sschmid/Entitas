@@ -9,7 +9,7 @@ using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentDataProvider : IDataProvider, IConfigurable, ICachable {
+    public class ComponentDataProvider : IDataProvider, IConfigurable, ICachable, IDoctor {
 
         public string name { get { return "Component"; } }
         public int priority { get { return 0; } }
@@ -131,6 +131,29 @@ namespace Entitas.CodeGeneration.Plugins {
             }
 
             return attr.componentNames;
+        }
+
+        public Diagnosis Diagnose() {
+            var isStandalone = AppDomain.CurrentDomain
+                .GetAllTypes()
+                .Any(type => type.FullName == "DesperateDevs.CodeGeneration.CodeGenerator.CLI.Program");
+
+            if (isStandalone) {
+                var typeName = typeof(ComponentDataProvider).FullName;
+                if (_codeGeneratorConfig.dataProviders.Contains(typeName)) {
+                    return new Diagnosis(
+                        typeName + " loads and reflects " + string.Join(", ", _assembliesConfig.assemblies) + " and therefore doesn't support server mode!",
+                        "Don't use the code generator in server mode with " + typeName,
+                        DiagnosisSeverity.Hint
+                    );
+                }
+            }
+
+            return Diagnosis.Healthy;
+        }
+
+        public bool Fix() {
+            return false;
         }
     }
 }
