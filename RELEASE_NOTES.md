@@ -1,3 +1,18 @@
+# 0.46.2
+
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days.
+
+#### Code Generation
+- Added `IDoctor` for custom diagnosis and custom symptoms treatment :) Will help improving the 
+  code generator setup experience that is aimimg for a one-click setup
+- Implemented IDoctor for ComponentDataProvider, EntityIndexDataProvider and DebugLogPostProcessor
+- Removed `isEnabledByDefault`from all plugins
+
+#### TCPezy
+- ResolveHost returns IPv4 address to fix issue with server / client mode on windows
+
+
 # 0.46.1
 
 As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
