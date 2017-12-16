@@ -12,7 +12,7 @@ namespace Entitas.Unity.Editor {
             Preferences.sharedInstance = null;
             var window = EditorLayout.GetWindow<PreferencesWindow>(
                 "Entitas " + CheckForUpdates.GetLocalVersion(),
-                new Vector2(415f, 583));
+                new Vector2(415f, 600));
 
             window.preferencesName = "Entitas";
             window.Show();

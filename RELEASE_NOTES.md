@@ -1,3 +1,14 @@
+# 0.46.3
+
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days.
+
+#### Code Generation
+- Added `IPreProcessor`
+- Added TargetFrameworkProfilePreProcessor
+- Fixed problems with Roslyn Generator and Visual Studio on Windows #503
+
+
 # 0.46.2
 
 As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
