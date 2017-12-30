@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using DesperateDevs.Serialization;
@@ -77,6 +78,34 @@ namespace Entitas.Unity.Editor {
                 buttonWidth,
                 buttonHeight
             );
+
+            var allPreferences = Preferences.FindAll("*.properties");
+            if (allPreferences != null && allPreferences.Length > 1) {
+                var r = new Rect(
+                    rect.width - 50 - padding,
+                    buttonRect.y,
+                    50,
+                    buttonHeight
+                );
+
+                if (GUI.Button(r, "Switch", EditorStyles.miniButton)) {
+                    var path = EditorPrefs.GetString(PreferencesWindow.PREFERENCES_KEY);
+                    var index = Array.IndexOf(allPreferences, path);
+                    if (index >= 0) {
+                        index += 1;
+                        if (index >= allPreferences.Length) {
+                            index = 0;
+                        }
+
+                        EditorPrefs.SetString(PreferencesWindow.PREFERENCES_KEY, allPreferences[index]);
+                        var window = EditorWindow.focusedWindow;
+                        window.Close();
+                        EntitasPreferencesWindow.OpenPreferences();
+                    }
+                }
+
+                buttonRect.x -= r.width + padding;
+            }
 
             if (GUI.Button(buttonRect, "Edit " + propertiesPath, EditorStyles.miniButton)) {
                 EditorWindow.focusedWindow.Close();
