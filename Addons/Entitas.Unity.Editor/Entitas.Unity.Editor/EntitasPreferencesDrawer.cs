@@ -88,15 +88,15 @@ namespace Entitas.Unity.Editor {
                     buttonHeight
                 );
 
+                allPreferences = allPreferences.Select(Path.GetFileName).ToArray();
                 if (GUI.Button(r, "Switch", EditorStyles.miniButton)) {
-                    var path = EditorPrefs.GetString(PreferencesWindow.PREFERENCES_KEY);
+                    var path = Path.GetFileName(EditorPrefs.GetString(PreferencesWindow.PREFERENCES_KEY));
                     var index = Array.IndexOf(allPreferences, path);
                     if (index >= 0) {
                         index += 1;
                         if (index >= allPreferences.Length) {
                             index = 0;
                         }
-
                         EditorPrefs.SetString(PreferencesWindow.PREFERENCES_KEY, allPreferences[index]);
                         var window = EditorWindow.focusedWindow;
                         window.Close();
