@@ -243,6 +243,7 @@ github_create_release() {
   local upload_url="${GITHUB_UPLOAD}/${id}/assets"
 
   pushd "${BUILD_DIST}" > /dev/null
+    echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${PROJECT}.zip" "${upload_url}?name=${PROJECT}.zip")" | tr -d "\r"
     echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${PROJECT}.docset.tgz" "${upload_url}?name=${PROJECT}.docset.tgz")" | tr -d "\r"
   popd > /dev/null
 }
