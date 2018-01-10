@@ -234,7 +234,7 @@ github_create_release() {
   require jq
   read_version
   local changes="$(cat ${ROOT}/changes.md)"
-  changes="${changes//$'\n'/'\n'}"
+  changes="${changes//$'\n'/\n}"
   local data="{\"tag_name\": \"${VERSION}\", \"name\": \"${GITHUB_RELEASE_PREFIX} ${VERSION}\", \"body\": \"${changes}\"}"
   local response="$(curl -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" -d "${data}" ${GITHUB_API}/repos/${GITHUB_REPO}/releases)"
 
