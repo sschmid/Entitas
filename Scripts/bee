@@ -1,0 +1,592 @@
+#!/bin/bash
+set -e
+
+# Shell Style Guide
+# https://google.github.io/styleguide/shell.xml
+
+################################################################################
+# Globals
+################################################################################
+readonly SCRIPTS="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)"
+readonly ROOT="$(dirname ${SCRIPTS})"
+
+readonly PROJECT="Entitas"
+readonly SOLUTION="${ROOT}/${PROJECT}.sln"
+readonly BIN="bin/Release"
+readonly VERSION_PATH="${ROOT}/${PROJECT}/${PROJECT}/version.txt"
+
+readonly LIBS="${ROOT}/Libraries"
+declare -a -r DEPENDENDCIES=(
+  "../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/${BIN}/"
+  "../DesperateDevs/DesperateDevs.CodeGeneration.Plugins/${BIN}/"
+  "../DesperateDevs/DesperateDevs.CodeGeneration.Unity.Plugins/${BIN}/"
+  "../DesperateDevs/DesperateDevs.Unity.Editor/${BIN}/"
+  "../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/Compile.cs"
+)
+
+readonly TESTS_PROJECT="${ROOT}/Tests/Tests/Tests.csproj"
+readonly TESTS_RUNNER="${ROOT}/Tests/Tests/${BIN}/Tests.exe"
+
+readonly BUILD="${ROOT}/Build"
+readonly BUILD_SRC="${BUILD}/src"
+readonly BUILD_FILES="${BUILD_SRC}/files"
+readonly BUILD_DOCS="${BUILD}/docs"
+readonly BUILD_DIST="${BUILD}/dist"
+
+readonly DOCS="${ROOT}/docs"
+readonly DOCS_RES="${SCRIPTS}/docs_resources"
+readonly DOCSET="com.desperatedevs.${PROJECT}.docset"
+readonly DOCSET_KEY="$(echo ${PROJECT} | tr "[:upper:]" "[:lower:]")"
+
+readonly GITHUB_REPO="sschmid/Entitas-CSharp"
+readonly GITHUB_RELEASE_PREFIX="${PROJECT}"
+readonly GITHUB_RELEASES="https://github.com/${GITHUB_REPO}/releases"
+readonly GITHUB_API="https://api.github.com"
+readonly GITHUB_UPLOAD="https://uploads.github.com/repos/${GITHUB_REPO}/releases"
+source "${SCRIPTS}/private.sh"
+
+################################################################################
+# Utils
+################################################################################
+log() {
+  echo "🐝  $@"
+}
+
+err() {
+  echo "❌  ERROR: $@" >&2
+}
+
+logb() {
+  echo ""
+  echo "################################################################################"
+  echo "# 🐝  $@"
+  echo "################################################################################"
+}
+
+logf() {
+  logb "${FUNCNAME[1]} $@"
+}
+
+clean_dir() {
+  logf "$@"
+  rm -rf "$@"
+  mkdir -p "$@"
+}
+
+require() {
+  command -v "$1" > /dev/null 2>&1 || {
+    err "Error: $1 not found! $1 is required. Try \"brew install $1\"."
+    exit 1
+  }
+}
+
+sync_files() {
+  rsync -ai --include-from "${SCRIPTS}/rsync_include.txt" --exclude-from "${SCRIPTS}/rsync_exclude.txt" "$1" "$2"
+}
+
+################################################################################
+# Atomic Tasks
+################################################################################
+update() {
+  logf
+  for d in "${DEPENDENDCIES[@]}"; do
+    sync_files ${d} "${LIBS}"
+  done
+}
+
+build() {
+  local path
+  if [[ $# -eq 1 ]]; then
+    path="$1"
+  else
+    path="${SOLUTION}"
+  fi
+
+  logf "${path}"
+  xbuild /property:Configuration=Release /verbosity:minimal "${path}"
+}
+
+clean() {
+  logf
+  xbuild /target:Clean /property:Configuration=Release /verbosity:minimal "${SOLUTION}"
+}
+
+build_tests() {
+  build "${TESTS_PROJECT}"
+}
+
+run_tests() {
+  logf
+  mono "${TESTS_RUNNER}" $@
+}
+
+read_version() {
+  VERSION="$(cat ${VERSION_PATH})"
+}
+
+write_version() {
+  echo "$1" > "${VERSION_PATH}"
+  cat "${VERSION_PATH}"
+}
+
+bump_major() {
+  logf
+  read_version
+  local major=${VERSION%%.*}
+  write_version "$((major+1)).0.0"
+}
+
+bump_minor() {
+  logf
+  read_version
+  local major=${VERSION%%.*}
+  local sv=${VERSION%.*}
+  local minor=${sv##*.}
+  write_version "${major}.$((minor+1)).0"
+}
+
+bump_patch() {
+  logf
+  read_version
+  local major=${VERSION%%.*}
+  local sv=${VERSION%.*}
+  local minor=${sv##*.}
+  local patch=${VERSION##*.}
+  write_version "${major}.${minor}.$((patch+1))"
+}
+
+generate_doc() {
+  logf "$1"
+  read_version
+  sed -i .bak -e "s/PROJECT_NUMBER.*/PROJECT_NUMBER         = ${VERSION}/" "$1"
+  rm "$1.bak"
+  doxygen "$1"
+}
+
+docs() {
+  logf
+  require doxygen
+  clean_dir "${BUILD_DOCS}"
+  pushd ${ROOT} > /dev/null
+    generate_doc "${DOCS_RES}/html.doxyfile"
+    generate_doc "${DOCS_RES}/docset.doxyfile"
+    pushd "${BUILD_DOCS}/docset" > /dev/null
+      make
+      # In order for Dash to associate this docset with the project keyword,
+      # we have to manually modify the generated plist.
+      # http://stackoverflow.com/questions/14678025/how-do-i-specify-a-keyword-for-dash-with-doxygen
+      sed -i .bak -e "s/<\/dict>/<key>DocSetPlatformFamily<\/key><string>${DOCSET_KEY}<\/string><key>DashDocSetFamily<\/key><string>doxy<\/string><\/dict>/" "${DOCSET}/Contents/Info.plist"
+      rm "${DOCSET}/Contents/Info.plist.bak"
+
+      cp "${DOCS_RES}/icon.png" "${DOCSET}"
+      cp "${DOCS_RES}/icon@2x.png" "${DOCSET}"
+      mv ${DOCSET} "${PROJECT}.docset"
+    popd > /dev/null
+    rm -rf ${DOCS}
+    rsync -air "${BUILD_DOCS}/html/" "${DOCS}"
+  popd > /dev/null
+}
+
+create_tree() {
+  logf
+  require tree
+  local ignore="bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|docs|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties|tree.txt"
+  pushd ${ROOT} > /dev/null
+    tree -I ${ignore} --noreport -d > tree.txt
+    tree -I ${ignore} --noreport --dirsfirst >> tree.txt
+    cat tree.txt
+  popd > /dev/null
+}
+
+merge_release_notes() {
+  logf
+  local tmp="${ROOT}/TempRELEASE_NOTES.md"
+  read_version
+  echo "# ${VERSION}" > "${tmp}"
+  echo "" >> ${tmp}
+  cat "${ROOT}/changes.md" >> "${tmp}"
+  echo "" >> "${tmp}"
+  echo "" >> "${tmp}"
+  cat "${ROOT}/RELEASE_NOTES.md" >> "${tmp}"
+  mv "${tmp}" "${ROOT}/RELEASE_NOTES.md"
+}
+
+git_commit_release() {
+  logf
+  read_version
+  git add .
+  git commit -am "Release ${VERSION}"
+  git checkout master
+  git merge develop
+  git tag "${VERSION}"
+  git checkout develop
+}
+
+git_push_all() {
+  logf
+  git push origin master
+  git push origin develop
+  git push --tags
+}
+
+github_create_release() {
+  logf
+  require jq
+  read_version
+  local changes="$(cat ${ROOT}/changes.md)"
+  changes="${changes//$'\n'/'\n'}"
+  local data="{\"tag_name\": \"${VERSION}\", \"name\": \"${GITHUB_RELEASE_PREFIX} ${VERSION}\", \"body\": \"${changes}\"}"
+  local response="$(curl -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" -d "${data}" ${GITHUB_API}/repos/${GITHUB_REPO}/releases)"
+
+  # Assets
+  local id="$(echo ${response} | jq .id)"
+  local upload_url="${GITHUB_UPLOAD}/${id}/assets"
+
+  pushd "${BUILD_DIST}" > /dev/null
+    echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${PROJECT}.docset.tgz" "${upload_url}?name=${PROJECT}.docset.tgz")" | tr -d "\r"
+  popd > /dev/null
+}
+
+################################################################################
+# Workflows
+################################################################################
+clean_build() {
+  logf
+  clean
+  build
+}
+
+tests() {
+  logf
+  build_tests
+  run_tests "$@"
+}
+
+################################################################################
+# Test projects
+################################################################################
+collect_entitas_unity() {
+  logf
+  local entitas_dir="${BUILD_SRC}/Unity/Entitas/Assets/Entitas"
+  local editor_dir="${entitas_dir}/Editor"
+  local plugins_dir="${editor_dir}/Plugins"
+  local images_dir="${entitas_dir}/Images"
+  clean_dir "${entitas_dir}" "${editor_dir}" "${plugins_dir}" "${images_dir}"
+
+  declare -a -r projects=(
+    'Entitas'
+
+    'Addons/Entitas.CodeGeneration.Attributes'
+    'Addons/Entitas.CodeGeneration.Plugins'
+
+    'Addons/Entitas.Migration'
+    'Addons/Entitas.Migration.Unity.Editor'
+
+    'Addons/Entitas.Unity'
+    'Addons/Entitas.Unity.Editor'
+
+    'Addons/Entitas.VisualDebugging.Unity'
+    'Addons/Entitas.VisualDebugging.Unity.Editor'
+    'Addons/Entitas.VisualDebugging.CodeGeneration.Plugins'
+  )
+  for p in "${projects[@]}"; do
+    sync_files "${ROOT}/${p}/${BIN}/" "${entitas_dir}"
+  done
+
+  for d in "${DEPENDENDCIES[@]}"; do
+    sync_files ${d} "${entitas_dir}"
+  done
+
+  declare -a -r editor=(
+    'DesperateDevs.Analytics.dll'
+    'DesperateDevs.CodeGeneration.CodeGenerator.dll'
+    'DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll'
+    'DesperateDevs.CodeGeneration.dll'
+    'DesperateDevs.Networking.dll'
+    'DesperateDevs.Serialization.dll'
+    'DesperateDevs.Unity.Editor.dll'
+
+    'Entitas.Migration.dll'
+    'Entitas.Migration.Unity.Editor.dll'
+    'Entitas.Unity.Editor.dll'
+    'Entitas.VisualDebugging.Unity.Editor.dll'
+  )
+  for f in "${editor[@]}"; do
+    mv "${entitas_dir}/${f}" "${editor_dir}"
+  done
+
+  declare -a -r plugins=(
+    'DesperateDevs.CodeGeneration.Plugins.dll'
+    'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
+
+    'Entitas.CodeGeneration.Plugins.dll'
+    'Entitas.VisualDebugging.CodeGeneration.Plugins.dll'
+  )
+  for f in "${plugins[@]}"; do
+    mv "${entitas_dir}/${f}" "${plugins_dir}"
+  done
+
+  declare -a -r images=(
+    "Addons/Entitas.Unity.Editor/Entitas.Unity.Editor/Images/"
+    "Addons/Entitas.VisualDebugging.Unity.Editor/Entitas.VisualDebugging.Unity.Editor/Images/"
+  )
+  for d in "${images[@]}"; do
+    sync_files "${ROOT}/${d}" "${images_dir}"
+  done
+}
+
+collect_entitas_with_blueprints_unity() {
+  logf
+  local entitas_dir="${BUILD_SRC}/Unity/Entitas/Assets/Entitas-Blueprints"
+  local editor_dir="${entitas_dir}/Editor"
+  local plugins_dir="${editor_dir}/Plugins"
+  local images_dir="${entitas_dir}/Images"
+  clean_dir "${entitas_dir}" "${editor_dir}" "${plugins_dir}" "${images_dir}"
+
+  declare -a -r projects=(
+    'Entitas'
+
+    'Addons/Entitas.CodeGeneration.Attributes'
+    'Addons/Entitas.CodeGeneration.Plugins'
+
+    'Addons/Entitas.Blueprints'
+    'Addons/Entitas.Blueprints.CodeGeneration.Plugins'
+    'Addons/Entitas.Blueprints.CodeGeneration.Unity.Plugins'
+    'Addons/Entitas.Blueprints.Unity'
+    'Addons/Entitas.Blueprints.Unity.Editor'
+
+    'Addons/Entitas.Migration'
+    'Addons/Entitas.Migration.Unity.Editor'
+
+    'Addons/Entitas.Unity'
+    'Addons/Entitas.Unity.Editor'
+
+    'Addons/Entitas.VisualDebugging.Unity'
+    'Addons/Entitas.VisualDebugging.Unity.Editor'
+    'Addons/Entitas.VisualDebugging.CodeGeneration.Plugins'
+  )
+  for p in "${projects[@]}"; do
+    sync_files "${ROOT}/${p}/${BIN}/" "${entitas_dir}"
+  done
+
+  for d in "${DEPENDENDCIES[@]}"; do
+    sync_files ${d} "${entitas_dir}"
+  done
+
+  declare -a -r editor=(
+    'DesperateDevs.Analytics.dll'
+    'DesperateDevs.CodeGeneration.CodeGenerator.dll'
+    'DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll'
+    'DesperateDevs.CodeGeneration.dll'
+    'DesperateDevs.Networking.dll'
+    'DesperateDevs.Serialization.dll'
+    'DesperateDevs.Unity.Editor.dll'
+
+    'Entitas.Migration.dll'
+    'Entitas.Migration.Unity.Editor.dll'
+    'Entitas.Unity.Editor.dll'
+    'Entitas.VisualDebugging.Unity.Editor.dll'
+
+    'Entitas.Blueprints.Unity.Editor.dll'
+  )
+  for f in "${editor[@]}"; do
+    mv "${entitas_dir}/${f}" "${editor_dir}"
+  done
+
+  declare -a -r plugins=(
+    'DesperateDevs.CodeGeneration.Plugins.dll'
+    'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
+
+    'Entitas.CodeGeneration.Plugins.dll'
+    'Entitas.VisualDebugging.CodeGeneration.Plugins.dll'
+
+    'Entitas.Blueprints.CodeGeneration.Plugins.dll'
+    'Entitas.Blueprints.CodeGeneration.Unity.Plugins.dll'
+  )
+  for f in "${plugins[@]}"; do
+    mv "${entitas_dir}/${f}" "${plugins_dir}"
+  done
+
+  declare -a -r images=(
+    "Addons/Entitas.Unity.Editor/Entitas.Unity.Editor/Images/"
+    "Addons/Entitas.VisualDebugging.Unity.Editor/Entitas.VisualDebugging.Unity.Editor/Images/"
+  )
+  for d in "${images[@]}"; do
+    sync_files "${ROOT}/${d}" "${images_dir}"
+  done
+}
+
+sync_unity_blueprints() {
+  logf
+  collect_entitas_with_blueprints_unity
+  local unity_libs="${ROOT}/Tests/Unity/Blueprints/Assets/Libraries"
+  clean_dir "${unity_libs}"
+  sync_files "${BUILD_SRC}/Unity/Entitas/Assets/Entitas-Blueprints" "${unity_libs}"
+}
+
+sync_unity_visualdebugging() {
+  logf
+  collect_entitas_unity
+  local unity_libs="${ROOT}/Tests/Unity/VisualDebugging/Assets/Libraries"
+  clean_dir "${unity_libs}"
+  sync_files "${BUILD_SRC}/Unity/Entitas/Assets/Entitas" "${unity_libs}"
+}
+
+sync() {
+  clean_dir "${BUILD_SRC}"
+  sync_unity_blueprints
+  sync_unity_visualdebugging
+}
+
+pack_entitas_unity() {
+  logf
+  local tmp_dir="${BUILD}/tmp"
+  clean_dir "${tmp_dir}"
+
+  mkdir -p "${tmp_dir}/Assets/Entitas/Editor/Images"
+  mkdir -p "${tmp_dir}/Assets/Entitas/Editor/Plugins"
+
+  declare -a -r projects=(
+    'Entitas'
+
+    'Addons/Entitas.CodeGeneration.Attributes'
+    'Addons/Entitas.CodeGeneration.Plugins'
+
+    'Addons/Entitas.Migration'
+    'Addons/Entitas.Migration.Unity.Editor'
+
+    'Addons/Entitas.Unity'
+    'Addons/Entitas.Unity.Editor'
+
+    'Addons/Entitas.VisualDebugging.Unity'
+    'Addons/Entitas.VisualDebugging.Unity.Editor'
+    'Addons/Entitas.VisualDebugging.CodeGeneration.Plugins'
+  )
+  for p in "${projects[@]}"; do
+    sync_files "${ROOT}/${p}/${BIN}/" "${tmp_dir}/Assets/Entitas"
+  done
+
+  for d in "${DEPENDENDCIES[@]}"; do
+    sync_files ${d} "${tmp_dir}/Assets/Entitas"
+  done
+
+  declare -a -r unity_editor=(
+    'DesperateDevs.Analytics.dll'
+    'DesperateDevs.CodeGeneration.CodeGenerator.dll'
+    'DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll'
+    'DesperateDevs.CodeGeneration.dll'
+    'DesperateDevs.Networking.dll'
+    'DesperateDevs.Serialization.dll'
+    'DesperateDevs.Unity.Editor.dll'
+
+    'Entitas.Migration.dll'
+    'Entitas.Migration.Unity.Editor.dll'
+    'Entitas.Unity.Editor.dll'
+    'Entitas.VisualDebugging.Unity.Editor.dll'
+  )
+  for f in "${unity_editor[@]}"; do
+    mv "${tmp_dir}/Assets/Entitas/${f}" "${tmp_dir}/Assets/Entitas/Editor"
+  done
+
+  declare -a -r plugins=(
+    'DesperateDevs.CodeGeneration.Plugins.dll'
+    'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
+
+    'Entitas.CodeGeneration.Plugins.dll'
+    'Entitas.VisualDebugging.CodeGeneration.Plugins.dll'
+  )
+  for f in "${plugins[@]}"; do
+    mv "${tmp_dir}/Assets/Entitas/${f}" "${tmp_dir}/Assets/Entitas/Editor/Plugins"
+  done
+
+  declare -a -r images=(
+    "Addons/Entitas.Unity.Editor/Entitas.Unity.Editor/Images"
+    "Addons/Entitas.VisualDebugging.Unity.Editor/Entitas.VisualDebugging.Unity.Editor/Images"
+  )
+  for d in "${images[@]}"; do
+    sync_files "${ROOT}/${d}/" "${tmp_dir}/Assets/Entitas/Editor/Images"
+  done
+
+  sync_files "${BUILD_FILES}/" "${tmp_dir}"
+
+  pushd "${tmp_dir}" > /dev/null
+    zip -rq "$BUILD_DIST/${PROJECT}.zip" ./
+  popd > /dev/null
+  rm -rf "${tmp_dir}"
+}
+
+collect() {
+  logf
+  clean_dir "${BUILD_SRC}"
+  clean_dir "${BUILD_FILES}"
+
+  declare -a -r files=(
+    'EntitasUpgradeGuide.md'
+    'LICENSE.txt'
+    'README.md'
+    'RELEASE_NOTES.md'
+  )
+  for f in "${files[@]}"; do
+    sync_files "${ROOT}/${f}" "${BUILD_FILES}"
+  done
+}
+
+pack() {
+  logf
+  clean_build
+  tests
+
+  clean_dir "${BUILD_DIST}"
+
+  docs
+  # create docset tgz
+  pushd "${BUILD_DOCS}/docset" > /dev/null
+    tar --exclude='.DS_Store' -czf "${BUILD_DIST}/${PROJECT}.docset.tgz" "${PROJECT}.docset"
+  popd > /dev/null
+
+  create_tree
+  collect
+  pack_entitas_unity
+}
+
+dist() {
+  logf
+  merge_release_notes
+  pack
+  git_commit_release
+  git_push_all
+  github_create_release
+  open "${GITHUB_RELEASES}"
+}
+
+dist_major() {
+  bump_major
+  dist
+}
+
+dist_minor() {
+  bump_minor
+  dist
+}
+
+dist_patch() {
+  bump_patch
+  dist
+}
+
+################################################################################
+# Bee
+################################################################################
+main() {
+  if [[ $# -ge 1 ]]; then
+    local start=${SECONDS}
+    $@
+    local elapsed=$((${SECONDS} - ${start}))
+    log "bzzzz (${elapsed} seconds)"
+  else
+    logb "Commands:"
+    compgen -A function
+  fi
+}
+
+main "$@"

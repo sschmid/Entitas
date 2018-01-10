@@ -1,7 +1,0 @@
-#!/bin/bash -e
-echo $0
-source "$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)/consts"
-
-# build project
-xbuild /target:Clean /property:Configuration=Release /verbosity:minimal $SOLUTION
-xbuild /property:Configuration=Release /verbosity:minimal $SOLUTION

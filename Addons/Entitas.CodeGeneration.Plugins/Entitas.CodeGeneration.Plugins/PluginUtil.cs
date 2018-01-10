@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using DesperateDevs.Utils;
 
@@ -11,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public static AssemblyResolver GetCachedAssemblyResolver(Dictionary<string, object> objectCache, string[] assemblies, string[] basePaths) {
             object cachedAssemblyResolver;
             if (!objectCache.TryGetValue(ASSEMBLY_RESOLVER_KEY, out cachedAssemblyResolver)) {
-                cachedAssemblyResolver = new AssemblyResolver(AppDomain.CurrentDomain, basePaths);
+                cachedAssemblyResolver = new AssemblyResolver(false, basePaths);
                 var resolver = (AssemblyResolver)cachedAssemblyResolver;
                 foreach (var path in assemblies) {
                     resolver.Load(path);

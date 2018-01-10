@@ -119,8 +119,8 @@
     <Folder Include="Entitas\Matcher\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Entitas\version">
-      <LogicalName>version</LogicalName>
+    <EmbeddedResource Include="Entitas\version.txt">
+      <LogicalName>version.txt</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -38,12 +38,6 @@
     <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
     </Reference>
-    <Reference Include="DesperateDevs.CodeGeneration.Plugins, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.Plugins.dll</HintPath>
-    </Reference>
-    <Reference Include="DesperateDevs.Logging, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\DesperateDevs.Serialization.dll</HintPath>
     </Reference>

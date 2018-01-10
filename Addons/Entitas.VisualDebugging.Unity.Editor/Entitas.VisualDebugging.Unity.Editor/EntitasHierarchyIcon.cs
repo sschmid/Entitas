@@ -1,3 +1,4 @@
+using System;
 using DesperateDevs.Serialization;
 using DesperateDevs.Unity.Editor;
 using UnityEditor;
@@ -72,12 +73,15 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         static int _systemWarningThreshold;
 
         static EntitasHierarchyIcon() {
-            var preferences = Preferences.sharedInstance;
-            if (preferences.propertiesExist) {
+            try {
+                var preferences = Preferences.sharedInstance;
                 var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
                 _systemWarningThreshold = config.systemWarningThreshold;
-                EditorApplication.hierarchyWindowItemOnGUI += onHierarchyWindowItemOnGUI;
+            } catch (Exception) {
+                _systemWarningThreshold = int.MaxValue;
             }
+
+            EditorApplication.hierarchyWindowItemOnGUI += onHierarchyWindowItemOnGUI;
         }
 
         static void onHierarchyWindowItemOnGUI(int instanceID, Rect selectionRect) {

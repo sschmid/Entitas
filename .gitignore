@@ -1,81 +1,38 @@
-# Windows
+# OS
 Thumbs.db
-
-# Mac
 .DS_Store
 
-# Unity
-Library
-Temp
-ProjectVersion.txt
-*.unitypackage
-*-CSharp-vs.csproj
-*-CSharp.csproj
-*-CSharp-Editor.csproj
-*-CSharp-Editor-vs.csproj
-
-# Xamarin
+# Solution
 obj
 bin
 *.userprefs
 *.user
 test-results
 
-# Visual Studio
+# IDEs
 .vs
-
-# Visual Studio Code
 .vscode
-
-# Rider
 .idea
+**/Assets/Plugins/Editor/JetBrains
+**/Assets/Plugins/Editor/JetBrains.meta
+
+# Unity
+Library
+Temp
+*.unitypackage
+Assembly-CSharp*.csproj
 
 # Custom
 Build/*
-!Build/deploy/
-Build/deploy/Entitas-CSharp
-Build/deploy/Entitas-Unity
-Build/deploy/CodeGenerator
+!Build/dist/
+Build/dist/Entitas-CSharp
+Build/dist/Entitas-Unity
+Build/dist/CodeGenerator
 
-Tests/Unity/Entitas.Unity/Entitas.Unity.sln
-Tests/Unity/Entitas.Unity/Entitas.Unity.Editor.csproj
-Tests/Unity/Entitas.Unity/Assets/Libraries
-Tests/Unity/Entitas.Unity/Assets/Libraries.meta
-Tests/Unity/Entitas.Unity/Assets/Plugins
-Tests/Unity/Entitas.Unity/Assets/Plugins.meta
-Tests/Unity/Entitas.Unity/Assembly-CSharp-Editor-firstpass.csproj
+**/Assets/Libraries
+**/Assets/Libraries.meta
+Tests/Unity/CodeGenerator/Jenny
 
-Tests/Unity/CodeGenerator/CodeGenerator.sln
-Tests/Unity/CodeGenerator/CodeGenerator.csproj
-Tests/Unity/CodeGenerator/CodeGenerator.Editor.csproj
-Tests/Unity/CodeGenerator/Assets/Libraries
-Tests/Unity/CodeGenerator/Assets/Libraries.meta
-Tests/Unity/CodeGenerator/Assets/Plugins
-Tests/Unity/CodeGenerator/Assets/Plugins.meta
-Tests/Unity/CodeGenerator/Assembly-CSharp-Editor-firstpass.csproj
-
-Tests/Unity/Blueprints/Blueprints.sln
-Tests/Unity/Blueprints/Blueprints.csproj
-Tests/Unity/Blueprints/Blueprints.Editor.csproj
-Tests/Unity/Blueprints/Assets/Libraries
-Tests/Unity/Blueprints/Assets/Libraries.meta
-Tests/Unity/Blueprints/Assets/Plugins
-Tests/Unity/Blueprints/Assets/Plugins.meta
-Tests/Unity/Blueprints/Assembly-CSharp-Editor-firstpass.csproj
-
-Tests/Unity/Migration/Migration.sln
-Tests/Unity/Migration/Migration.Editor.csproj
-Tests/Unity/Migration/Assets/Libraries
-Tests/Unity/Migration/Assets/Libraries.meta
-Tests/Unity/Migration/Assets/Plugins
-Tests/Unity/Migration/Assets/Plugins.meta
-Tests/Unity/Migration/Assembly-CSharp-Editor-firstpass.csproj
-
-Tests/Unity/VisualDebugging/VisualDebugging.sln
-Tests/Unity/VisualDebugging/VisualDebugging.csproj
-Tests/Unity/VisualDebugging/VisualDebugging.Editor.csproj
-Tests/Unity/VisualDebugging/Assets/Libraries
-Tests/Unity/VisualDebugging/Assets/Libraries.meta
-Tests/Unity/VisualDebugging/Assets/Plugins
-Tests/Unity/VisualDebugging/Assets/Plugins.meta
-Tests/Unity/VisualDebugging/Assembly-CSharp-Editor-firstpass.csproj
+private.sh
+Blueprints.sln
+VisualDebugging.sln

@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8bbb3d40cdab4cdb873cdaa15e0cc72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueprints: {fileID: 11400000, guid: 37e4c556e6b2b4cee99af4289170aa99, type: 2}
+  blueprints: {fileID: 11400000, guid: ea93152a45ce4461b985cafa21f10054, type: 2}
 --- !u!4 &1944477998
 Transform:
   m_ObjectHideFlags: 0

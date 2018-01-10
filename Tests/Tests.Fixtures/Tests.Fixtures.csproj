@@ -32,6 +32,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\Components\Array3dComponent.cs" />
+    <Compile Include="Fixtures\Components\GeneratedContextComponent.cs" />
+    <Compile Include="Fixtures\Components\InheritedComponent.cs" />
     <Compile Include="Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />

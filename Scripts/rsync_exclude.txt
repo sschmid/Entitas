@@ -1,3 +1,5 @@
 .DS_Store
 Thumbs.db
 *.meta
+UnityEditor.dll
+UnityEngine.dll
