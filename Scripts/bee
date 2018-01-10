@@ -438,88 +438,9 @@ sync() {
   sync_unity_visualdebugging
 }
 
-pack_entitas_unity() {
+collect_files() {
   logf
-  local tmp_dir="${BUILD}/tmp"
-  clean_dir "${tmp_dir}"
-
-  mkdir -p "${tmp_dir}/Assets/Entitas/Editor/Images"
-  mkdir -p "${tmp_dir}/Assets/Entitas/Editor/Plugins"
-
-  declare -a -r projects=(
-    'Entitas'
-
-    'Addons/Entitas.CodeGeneration.Attributes'
-    'Addons/Entitas.CodeGeneration.Plugins'
-
-    'Addons/Entitas.Migration'
-    'Addons/Entitas.Migration.Unity.Editor'
-
-    'Addons/Entitas.Unity'
-    'Addons/Entitas.Unity.Editor'
-
-    'Addons/Entitas.VisualDebugging.Unity'
-    'Addons/Entitas.VisualDebugging.Unity.Editor'
-    'Addons/Entitas.VisualDebugging.CodeGeneration.Plugins'
-  )
-  for p in "${projects[@]}"; do
-    sync_files "${ROOT}/${p}/${BIN}/" "${tmp_dir}/Assets/Entitas"
-  done
-
-  for d in "${DEPENDENDCIES[@]}"; do
-    sync_files ${d} "${tmp_dir}/Assets/Entitas"
-  done
-
-  declare -a -r unity_editor=(
-    'DesperateDevs.Analytics.dll'
-    'DesperateDevs.CodeGeneration.CodeGenerator.dll'
-    'DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll'
-    'DesperateDevs.CodeGeneration.dll'
-    'DesperateDevs.Networking.dll'
-    'DesperateDevs.Serialization.dll'
-    'DesperateDevs.Unity.Editor.dll'
-
-    'Entitas.Migration.dll'
-    'Entitas.Migration.Unity.Editor.dll'
-    'Entitas.Unity.Editor.dll'
-    'Entitas.VisualDebugging.Unity.Editor.dll'
-  )
-  for f in "${unity_editor[@]}"; do
-    mv "${tmp_dir}/Assets/Entitas/${f}" "${tmp_dir}/Assets/Entitas/Editor"
-  done
-
-  declare -a -r plugins=(
-    'DesperateDevs.CodeGeneration.Plugins.dll'
-    'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
-
-    'Entitas.CodeGeneration.Plugins.dll'
-    'Entitas.VisualDebugging.CodeGeneration.Plugins.dll'
-  )
-  for f in "${plugins[@]}"; do
-    mv "${tmp_dir}/Assets/Entitas/${f}" "${tmp_dir}/Assets/Entitas/Editor/Plugins"
-  done
-
-  declare -a -r images=(
-    "Addons/Entitas.Unity.Editor/Entitas.Unity.Editor/Images"
-    "Addons/Entitas.VisualDebugging.Unity.Editor/Entitas.VisualDebugging.Unity.Editor/Images"
-  )
-  for d in "${images[@]}"; do
-    sync_files "${ROOT}/${d}/" "${tmp_dir}/Assets/Entitas/Editor/Images"
-  done
-
-  sync_files "${BUILD_FILES}/" "${tmp_dir}"
-
-  pushd "${tmp_dir}" > /dev/null
-    zip -rq "$BUILD_DIST/${PROJECT}.zip" ./
-  popd > /dev/null
-  rm -rf "${tmp_dir}"
-}
-
-collect() {
-  logf
-  clean_dir "${BUILD_SRC}"
   clean_dir "${BUILD_FILES}"
-
   declare -a -r files=(
     'EntitasUpgradeGuide.md'
     'LICENSE.txt'
@@ -527,8 +448,24 @@ collect() {
     'RELEASE_NOTES.md'
   )
   for f in "${files[@]}"; do
-    sync_files "${ROOT}/${f}" "${BUILD_FILES}"
+    sync_files "${ROOT}/${f}" "${BUILD_FILES}/${f}"
   done
+}
+
+pack_entitas_unity() {
+  logf
+  collect_files
+  collect_entitas_unity
+  local tmp_dir="${BUILD}/tmp"
+  clean_dir "${tmp_dir}"
+
+  sync_files "${BUILD_FILES}/" "${tmp_dir}"
+  sync_files "${BUILD_SRC}/Unity/Entitas/Assets" "${tmp_dir}"
+
+  pushd "${tmp_dir}" > /dev/null
+    zip -rq "$BUILD_DIST/${PROJECT}.zip" ./
+  popd > /dev/null
+  rm -rf "${tmp_dir}"
 }
 
 pack() {
@@ -536,7 +473,7 @@ pack() {
   clean_build
   tests
 
-  clean_dir "${BUILD_DIST}"
+  clean_dir "${BUILD_SRC}" "${BUILD_DIST}"
 
   docs
   # create docset tgz
@@ -545,7 +482,6 @@ pack() {
   popd > /dev/null
 
   create_tree
-  collect
   pack_entitas_unity
 }
 

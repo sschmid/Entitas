@@ -25,14 +25,11 @@ Assembly-CSharp*.csproj
 # Custom
 Build/*
 !Build/dist/
-Build/dist/Entitas-CSharp
-Build/dist/Entitas-Unity
-Build/dist/CodeGenerator
+Build/dist/Entitas
 
 **/Assets/Libraries
 **/Assets/Libraries.meta
 Tests/Unity/CodeGenerator/Jenny
-
 private.sh
 Blueprints.sln
 VisualDebugging.sln
