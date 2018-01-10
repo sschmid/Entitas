@@ -270,7 +270,7 @@ collect_entitas_unity() {
   local entitas_dir="${BUILD_SRC}/Unity/Entitas/Assets/Entitas"
   local editor_dir="${entitas_dir}/Editor"
   local plugins_dir="${editor_dir}/Plugins"
-  local images_dir="${entitas_dir}/Images"
+  local images_dir="${editor_dir}/Images"
   clean_dir "${entitas_dir}" "${editor_dir}" "${plugins_dir}" "${images_dir}"
 
   declare -a -r projects=(
@@ -340,7 +340,7 @@ collect_entitas_with_blueprints_unity() {
   local entitas_dir="${BUILD_SRC}/Unity/Entitas/Assets/Entitas-Blueprints"
   local editor_dir="${entitas_dir}/Editor"
   local plugins_dir="${editor_dir}/Plugins"
-  local images_dir="${entitas_dir}/Images"
+  local images_dir="${editor_dir}/Images"
   clean_dir "${entitas_dir}" "${editor_dir}" "${plugins_dir}" "${images_dir}"
 
   declare -a -r projects=(
