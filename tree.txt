@@ -349,7 +349,7 @@
 │       ├── EntitasException.cs
 │       ├── EntitasResources.cs
 │       ├── IComponent.cs
-│       └── version
+│       └── version.txt
 ├── Scripts
 │   ├── docs_resources
 │   │   ├── docs-logo.png
@@ -357,14 +357,10 @@
 │   │   ├── html.doxyfile
 │   │   ├── icon.png
 │   │   └── icon@2x.png
-│   ├── build
-│   ├── consts
-│   ├── pack
-│   ├── pull
+│   ├── bee
+│   ├── private.sh
 │   ├── rsync_exclude.txt
-│   ├── rsync_include.txt
-│   ├── test
-│   └── update
+│   └── rsync_include.txt
 ├── Snippets
 │   ├── VisualStudio
 │   │   ├── e_cleanup.snippet
@@ -393,6 +389,6 @@
 ├── LICENSE.txt
 ├── README.md
 ├── RELEASE_NOTES.md
+├── changes.md
 ├── icon.png
-├── policy.mdpolicy
-└── tree.txt
+└── policy.mdpolicy
