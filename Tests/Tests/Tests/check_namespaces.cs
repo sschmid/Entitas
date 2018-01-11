@@ -44,11 +44,11 @@ class check_namespaces : nspec {
                 .Replace("namespace ", string.Empty)
                 .Trim();
 
-            each.Add(new NSpecTuple<string, string, string>(fileName, foundNamespace, expectedNamespace));
+            each.Add(new NSpecTuple<string, string, string>(Path.GetFileName(fileName), foundNamespace, expectedNamespace));
         }
 
         each.Do((fileName, given, expected) =>
-            it["{0} namespace should be {2}".With(fileName, given, expected)] = () => given.should_be(expected)
+            it["{0} namespace is {2}".With(fileName, given, expected)] = () => given.should_be(expected)
         );
     }
 }
