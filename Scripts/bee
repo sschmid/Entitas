@@ -43,7 +43,9 @@ readonly GITHUB_RELEASE_PREFIX="${PROJECT}"
 readonly GITHUB_RELEASES="https://github.com/${GITHUB_REPO}/releases"
 readonly GITHUB_API="https://api.github.com"
 readonly GITHUB_UPLOAD="https://uploads.github.com/repos/${GITHUB_REPO}/releases"
-source "${SCRIPTS}/private.sh"
+if [[ -f "${SCRIPTS}/private.sh" ]]; then
+  source "${SCRIPTS}/private.sh"
+fi
 
 ################################################################################
 # Utils
