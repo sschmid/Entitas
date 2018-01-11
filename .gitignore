@@ -23,10 +23,7 @@ Temp
 Assembly-CSharp*.csproj
 
 # Custom
-Build/*
-!Build/dist/
-Build/dist/Entitas
-
+Build
 **/Assets/Libraries
 **/Assets/Libraries.meta
 Tests/Unity/CodeGenerator/Jenny
