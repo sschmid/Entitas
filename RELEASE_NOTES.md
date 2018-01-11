@@ -1,3 +1,15 @@
+# 0.47.1
+
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days here: https://www.assetstore.unity3d.com/#!/content/87638
+
+#### Jenny
+- Handling BadImageFormatException
+- Not showing warnings for unresolved assemblies anymore
+- Fixed closing AssemblyResolver before all plugin dependencies were loaded
+- Fixed jenny server construction not complete before executing client command
+
+
 # 0.47.0
 
 #### General

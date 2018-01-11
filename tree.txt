@@ -67,11 +67,8 @@
 │       │   └── Interfaces
 │       └── Systems
 │           └── Interfaces
-├── Scripts
-│   └── docs_resources
-└── Snippets
-    ├── VisualStudio
-    └── Xamarin
+└── Scripts
+    └── docs_resources
 .
 ├── Addons
 │   ├── Entitas.Blueprints
@@ -361,28 +358,6 @@
 │   ├── private.sh
 │   ├── rsync_exclude.txt
 │   └── rsync_include.txt
-├── Snippets
-│   ├── VisualStudio
-│   │   ├── e_cleanup.snippet
-│   │   ├── e_component.snippet
-│   │   ├── e_execute.snippet
-│   │   ├── e_filter.snippet
-│   │   ├── e_initialize.snippet
-│   │   ├── e_rexecute.snippet
-│   │   ├── e_system.snippet
-│   │   ├── e_teardown.snippet
-│   │   └── e_trigger.snippet
-│   └── Xamarin
-│       ├── e_cleanup.template.xml
-│       ├── e_component.template.xml
-│       ├── e_execute.template.xml
-│       ├── e_filter.template.xml
-│       ├── e_initialize.template.xml
-│       ├── e_rexecute.template.xml
-│       ├── e_rsystem.template.xml
-│       ├── e_system.template.xml
-│       ├── e_teardown.template.xml
-│       └── e_trigger.template.xml
 ├── CONTRIBUTING.md
 ├── EntitasUpgradeGuide.md
 ├── ISSUE_TEMPLATE.md
@@ -390,5 +365,4 @@
 ├── README.md
 ├── RELEASE_NOTES.md
 ├── changes.md
-├── icon.png
-└── policy.mdpolicy
+└── icon.png
