@@ -89,13 +89,6 @@ sync_files() {
 ################################################################################
 # Tasks
 ################################################################################
-update() {
-  logf
-  for d in "${DEPENDENDCIES[@]}"; do
-    sync_files ${d} "${LIBS}"
-  done
-}
-
 build() {
   local path
   if [[ $# -eq 1 ]]; then
@@ -129,32 +122,6 @@ read_version() {
 write_version() {
   echo "$1" > "${VERSION_PATH}"
   cat "${VERSION_PATH}"
-}
-
-bump_major() {
-  logf
-  read_version
-  local major=${VERSION%%.*}
-  write_version "$((major+1)).0.0"
-}
-
-bump_minor() {
-  logf
-  read_version
-  local major=${VERSION%%.*}
-  local sv=${VERSION%.*}
-  local minor=${sv##*.}
-  write_version "${major}.$((minor+1)).0"
-}
-
-bump_patch() {
-  logf
-  read_version
-  local major=${VERSION%%.*}
-  local sv=${VERSION%.*}
-  local minor=${sv##*.}
-  local patch=${VERSION##*.}
-  write_version "${major}.${minor}.$((patch+1))"
 }
 
 generate_doc() {
@@ -197,56 +164,6 @@ create_tree() {
     tree -I ${ignore} --noreport -d > tree.txt
     tree -I ${ignore} --noreport --dirsfirst >> tree.txt
     cat tree.txt
-  popd > /dev/null
-}
-
-merge_release_notes() {
-  logf
-  local tmp="${ROOT}/TempRELEASE_NOTES.md"
-  read_version
-  echo "# ${VERSION}" > "${tmp}"
-  echo "" >> ${tmp}
-  cat "${ROOT}/changes.md" >> "${tmp}"
-  echo "" >> "${tmp}"
-  echo "" >> "${tmp}"
-  cat "${ROOT}/RELEASE_NOTES.md" >> "${tmp}"
-  mv "${tmp}" "${ROOT}/RELEASE_NOTES.md"
-}
-
-git_commit_release() {
-  logf
-  read_version
-  git add .
-  git commit -am "Release ${VERSION}"
-  git checkout master
-  git merge develop
-  git tag "${VERSION}"
-  git checkout develop
-}
-
-git_push_all() {
-  logf
-  git push origin master
-  git push origin develop
-  git push --tags
-}
-
-github_create_release() {
-  logf
-  require jq
-  read_version
-  local changes="$(cat ${ROOT}/changes.md)"
-  changes="${changes//$'\n'/\n}"
-  local data="{\"tag_name\": \"${VERSION}\", \"name\": \"${GITHUB_RELEASE_PREFIX} ${VERSION}\", \"body\": \"${changes}\"}"
-  local response="$(curl -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" -d "${data}" ${GITHUB_API}/repos/${GITHUB_REPO}/releases)"
-
-  # Assets
-  local id="$(echo ${response} | jq .id)"
-  local upload_url="${GITHUB_UPLOAD}/${id}/assets"
-
-  pushd "${BUILD_DIST}" > /dev/null
-    echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${PROJECT}.zip" "${upload_url}?name=${PROJECT}.zip")" | tr -d "\r"
-    echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${PROJECT}.docset.tgz" "${upload_url}?name=${PROJECT}.docset.tgz")" | tr -d "\r"
   popd > /dev/null
 }
 
@@ -485,8 +402,16 @@ pack_entitas_unity() {
   rm -rf "${tmp_dir}"
 }
 
+update() {
+  logf
+  for d in "${DEPENDENDCIES[@]}"; do
+    sync_files ${d} "${LIBS}"
+  done
+}
+
 pack() {
   logf
+  update
   clean_build
   tests
 
@@ -498,8 +423,61 @@ pack() {
     tar --exclude='.DS_Store' -czf "${BUILD_DIST}/${PROJECT}.docset.tgz" "${PROJECT}.docset"
   popd > /dev/null
 
-  create_tree
   pack_entitas_unity
+  create_tree
+}
+
+################################################################################
+# Distribution
+################################################################################
+merge_release_notes() {
+  logf
+  local tmp="${ROOT}/TempRELEASE_NOTES.md"
+  read_version
+  echo "# ${VERSION}" > "${tmp}"
+  echo "" >> ${tmp}
+  cat "${ROOT}/changes.md" >> "${tmp}"
+  echo "" >> "${tmp}"
+  echo "" >> "${tmp}"
+  cat "${ROOT}/RELEASE_NOTES.md" >> "${tmp}"
+  mv "${tmp}" "${ROOT}/RELEASE_NOTES.md"
+}
+
+git_commit_release() {
+  logf
+  read_version
+  git add .
+  git commit -am "Release ${VERSION}"
+  git checkout master
+  git merge develop
+  git tag "${VERSION}"
+  git checkout develop
+}
+
+git_push_all() {
+  logf
+  git push origin master
+  git push origin develop
+  git push --tags
+}
+
+github_create_release() {
+  logf
+  require jq
+  read_version
+  local changes="$(cat ${ROOT}/changes.md)"
+  changes="${changes//$'\n'/\n}"
+  local data="{\"tag_name\": \"${VERSION}\", \"name\": \"${GITHUB_RELEASE_PREFIX} ${VERSION}\", \"body\": \"${changes}\"}"
+  local response="$(curl -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" -d "${data}" ${GITHUB_API}/repos/${GITHUB_REPO}/releases)"
+
+  # Assets
+  local id="$(echo ${response} | jq .id)"
+  local upload_url="${GITHUB_UPLOAD}/${id}/assets"
+
+  pushd "${BUILD_DIST}" > /dev/null
+    echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${PROJECT}.zip" "${upload_url}?name=${PROJECT}.zip")" | tr -d "\r"
+    echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${PROJECT}.docset.tgz" "${upload_url}?name=${PROJECT}.docset.tgz")" | tr -d "\r"
+  popd > /dev/null
 }
 
 dist() {
@@ -510,6 +488,32 @@ dist() {
   git_push_all
   github_create_release
   open "${GITHUB_RELEASES}"
+}
+
+bump_major() {
+  logf
+  read_version
+  local major=${VERSION%%.*}
+  write_version "$((major+1)).0.0"
+}
+
+bump_minor() {
+  logf
+  read_version
+  local major=${VERSION%%.*}
+  local sv=${VERSION%.*}
+  local minor=${sv##*.}
+  write_version "${major}.$((minor+1)).0"
+}
+
+bump_patch() {
+  logf
+  read_version
+  local major=${VERSION%%.*}
+  local sv=${VERSION%.*}
+  local minor=${sv##*.}
+  local patch=${VERSION##*.}
+  write_version "${major}.${minor}.$((patch+1))"
 }
 
 dist_major() {
