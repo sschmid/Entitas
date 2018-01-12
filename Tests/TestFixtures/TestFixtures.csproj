@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -31,14 +31,15 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fixtures\Components\Array3dComponent.cs" />
-    <Compile Include="Fixtures\Components\GeneratedContextComponent.cs" />
-    <Compile Include="Fixtures\Components\InheritedComponent.cs" />
     <Compile Include="Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameArray3dComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameGeneratedContextComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameInheritedComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameBaseComponent.cs" />
     <Compile Include="Generated\Game\Components\GameMultiplePrimaryEntityIndicesComponent.cs" />
     <Compile Include="Generated\Test\Components\TestComponentWithFieldsComponent.cs" />
     <Compile Include="Generated\Test\Components\TestComponentWithPropertiesComponent.cs" />
@@ -97,6 +98,11 @@
     <Compile Include="Generated\Game\GameEntity.cs" />
     <Compile Include="Generated\Test\TestEntity.cs" />
     <Compile Include="Generated\Test2\Test2Entity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\Components\Array3dComponent.cs" />
+    <Compile Include="Fixtures\Components\GeneratedContextComponent.cs" />
+    <Compile Include="Fixtures\Components\InheritedComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\Components\MultipleEntityIndicesComponent.cs" />
