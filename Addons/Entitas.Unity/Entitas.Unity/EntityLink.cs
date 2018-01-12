@@ -31,6 +31,13 @@ namespace Entitas.Unity {
             _context = null;
         }
 
+        void OnDestroy() {
+            throw new EntitasException(
+                "EntityLink got destroyed but is still linked to " + _entity + "!",
+                "Please call gameObject.Unlink() before it is destroyed."
+            );
+        }
+
         public override string ToString() {
             return "EntityLink(" + gameObject.name + ")";
         }
