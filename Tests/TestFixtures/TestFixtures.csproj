@@ -5,8 +5,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6F01CC45-F951-43A5-923E-D3778F9DD435}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Tests.Fixtures</RootNamespace>
-    <AssemblyName>Tests.Fixtures</AssemblyName>
+    <RootNamespace>TestFixtures</RootNamespace>
+    <AssemblyName>TestFixtures</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>

@@ -38,7 +38,6 @@ public static class TestExtensions {
                         !p.Contains(dir("Generated")) &&
                         !p.Contains(dir("Libraries")) &&
                         !p.Contains(dir("Tests")) &&
-                        !p.Contains(dir("Tests.Fixtures")) &&
                         !p.Contains(dir("Examples")) &&
                         !p.Contains(dir("Readme")) &&
                         !p.Contains(dir("Build")) &&

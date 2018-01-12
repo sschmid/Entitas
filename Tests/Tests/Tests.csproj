@@ -121,9 +121,9 @@
     <Folder Include="Tests\Entitas\Extensions\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tests.Fixtures\Tests.Fixtures.csproj">
+    <ProjectReference Include="..\TestFixtures\TestFixtures.csproj">
       <Project>{6F01CC45-F951-43A5-923E-D3778F9DD435}</Project>
-      <Name>Tests.Fixtures</Name>
+      <Name>TestFixtures</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Addons\Entitas.Blueprints.Unity\Entitas.Blueprints.Unity.csproj">
       <Project>{026FFA2B-1F8D-4E05-A54D-67AB5B611985}</Project>

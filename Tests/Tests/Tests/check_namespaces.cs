@@ -32,7 +32,6 @@ class check_namespaces : nspec {
                                .Replace(dir(projectRoot), string.Empty)
                                .Replace(addonsDir, string.Empty);
 
-
             string expectedNamespace;
             expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
                 .ToString()
