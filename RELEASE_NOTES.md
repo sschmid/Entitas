@@ -1,3 +1,31 @@
+# 0.47.2
+
+As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
+Please check for updates in 2 - 4 days here: https://www.assetstore.unity3d.com/#!/content/87638
+
+Here's another update to improve the code generator experience. Thanks again for all your great feedback!
+And thanks for going through this with me :) We're almost there!
+
+#### Breaking changes
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+
+#### Entitas
+- Added migration 0.47.2
+
+#### Jenny
+- Added silent mode for `jenny fix` to simplify `jenny auto-import` experience. Use `-s`, e.g `jenny auto-import -s`
+- Added a potential fix for `jenny client gen` command never completes #546
+- Renamed keys from `CodeGenerator.*` to `Jenny.*`. Please apply migration 0.47.2
+- Added support to run CLI from any location
+- Warning when no properties found
+- Removed leading "./" from added searchPaths added by `jenny auto-import`
+- The Roslyn foundation moved to DesperateDevs
+- Using the latest Roslyn libs
+
+#### Other
+- Entitas project cleanup and maintenance
+- Added more automation tasks to bee 🐝
+
 # 0.47.1
 
 As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.

@@ -179,7 +179,8 @@
 │   │           ├── M0410_1.cs
 │   │           ├── M0410_2.cs
 │   │           ├── M0410_3.cs
-│   │           └── M0450.cs
+│   │           ├── M0450.cs
+│   │           └── M0472.cs
 │   ├── Entitas.Migration.CLI
 │   │   └── Program.cs
 │   ├── Entitas.Migration.Unity.Editor

@@ -2,35 +2,37 @@ Entitas Upgrade Guide
 =====================
 
 Entitas provides automated migration tools to help upgrading to new versions.
-Either use the command line tool `MigrationAssistant.exe` or the Migration menu
-item in Unity.
+You can apply automatic migrations in Unity by opening the Entitas Migration Window
+`Tools > Entitas > Migrate...`
 
 This document contains checklists for every release with breaking changes.
 
+Entitas 0.47.2 upgrade guide
+============================
 
-Example
-```
-$ mono MigrationAssistant.exe
-usage:
-[-l]             - print all available versions
-[version] [path] - apply migration of version [version] to source files located at [path]
+#### Breaking changes
 
+Apply Migration 0.47.2 to automatically rename the changed keys your properties files.
 
-$ mono MigrationAssistant.exe -l
-========================================
-0.18.0
-  - Migrates IReactiveSystem GetXyz methods to getters
-  - Use on folder, where all systems are located
-========================================
-0.19.0
-  - Migrates IReactiveSystem.Execute to accept List<Entity>
-  - Use on folder, where all systems are located
-========================================
-etc...
+The following keys changed from:
 
+- CodeGenerator.SearchPaths
+- CodeGenerator.Plugins
+- CodeGenerator.PreProcessors
+- CodeGenerator.DataProviders
+- CodeGenerator.CodeGenerators
+- CodeGenerator.PostProcessors
+- CodeGenerator.CLI.Ignore.UnusedKeys or Ignore.Keys
 
-$ mono MigrationAssistant.exe 0.26.0 /Path/To/Project/RequestedFolder
-```
+to:
+
+- Jenny.SearchPaths
+- Jenny.Plugins
+- Jenny.PreProcessors
+- Jenny.DataProviders
+- Jenny.CodeGenerators
+- Jenny.PostProcessors
+- Jenny.Ignore.Keys
 
 ---
 
