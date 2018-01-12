@@ -1,3 +1,21 @@
+# 0.47.3
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+See and discuss changes in [Milestone 0.47.3](https://github.com/sschmid/Entitas-CSharp/milestone/17?closed=1)
+
+(Finally went back to Milestone development :) Transparency FTW!)
+
+#### Entitas
+- EntityLink will immediately throw an exception if the gameObject is destroyed but still linked to an entity #470
+- Fixed VisualDebugging Toggle in the Entitas Preferences Window #540
+
+#### Jenny
+- Even more support for multiple properties, see #550
+
+
 # 0.47.2
 
 As always, the Unity Asset Store version might take a few days to be processed and accepted by Unity.
