@@ -476,6 +476,12 @@ git_push_all() {
   git push --tags
 }
 
+github_release_attach_zip() {
+  local upload_url="$1"
+  local asset="$2"
+  echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${asset}" "${upload_url}?name=${asset}")" | tr -d "\r"
+}
+
 github_create_release() {
   logf
   require jq
@@ -490,8 +496,8 @@ github_create_release() {
   local upload_url="${GITHUB_UPLOAD}/${id}/assets"
 
   pushd "${BUILD_DIST}" > /dev/null
-    echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${PROJECT}.zip" "${upload_url}?name=${PROJECT}.zip")" | tr -d "\r"
-    echo "$(curl -H "Content-Type:application/zip" -H "Authorization: token ${GITHUB_ACCESS_TOKEN}" --data-binary @"${PROJECT}.docset.tgz" "${upload_url}?name=${PROJECT}.docset.tgz")" | tr -d "\r"
+    github_release_attach_zip "${upload_url}" "${PROJECT}.zip"
+    github_release_attach_zip "${upload_url}" "${PROJECT}.docset.tgz"
   popd > /dev/null
 }
 
@@ -501,6 +507,10 @@ dist() {
   pack
   git_commit_release
   git_push_all
+
+  log "bzzz... giving GitHub some time to process..."
+  sleep 10
+
   github_create_release
   open "${GITHUB_RELEASES}"
 }
