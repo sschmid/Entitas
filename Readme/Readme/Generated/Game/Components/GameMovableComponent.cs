@@ -14,10 +14,16 @@ public partial class GameEntity {
         get { return HasComponent(GameComponentsLookup.Movable); }
         set {
             if (value != isMovable) {
+                var index = GameComponentsLookup.Movable;
                 if (value) {
-                    AddComponent(GameComponentsLookup.Movable, movableComponent);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : movableComponent;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(GameComponentsLookup.Movable);
+                    RemoveComponent(index);
                 }
             }
         }

@@ -41,10 +41,16 @@ public partial class GameEntity {
         get { return HasComponent(GameComponentsLookup.Animating); }
         set {
             if (value != isAnimating) {
+                var index = GameComponentsLookup.Animating;
                 if (value) {
-                    AddComponent(GameComponentsLookup.Animating, animatingComponent);
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : animatingComponent;
+
+                    AddComponent(index, component);
                 } else {
-                    RemoveComponent(GameComponentsLookup.Animating);
+                    RemoveComponent(index);
                 }
             }
         }
