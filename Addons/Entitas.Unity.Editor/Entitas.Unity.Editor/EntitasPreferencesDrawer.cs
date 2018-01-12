@@ -80,7 +80,7 @@ namespace Entitas.Unity.Editor {
             );
 
             var allPreferences = Preferences.FindAll("*.properties");
-            if (allPreferences != null && allPreferences.Length > 1) {
+            if (allPreferences.Length > 1) {
                 var r = new Rect(
                     rect.width - 50 - padding,
                     buttonRect.y,

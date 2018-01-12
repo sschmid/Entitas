@@ -23,6 +23,7 @@ Temp
 Assembly-CSharp*.csproj
 
 # Custom
+*.userproperties
 Build
 **/Assets/Libraries
 **/Assets/Libraries.meta
