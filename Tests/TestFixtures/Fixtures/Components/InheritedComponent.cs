@@ -1,8 +1,8 @@
 ﻿using Entitas;
 
-public class InheritedComponent : BaseComponent {
+public class InheritedComponent : ParentComponent {
 }
 
-public class BaseComponent : IComponent {
+public class ParentComponent : IComponent {
     public float value;
 }

@@ -39,7 +39,7 @@
     <Compile Include="Generated\Game\Components\GameArray3dComponent.cs" />
     <Compile Include="Generated\Game\Components\GameGeneratedContextComponent.cs" />
     <Compile Include="Generated\Game\Components\GameInheritedComponent.cs" />
-    <Compile Include="Generated\Game\Components\GameBaseComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameParentComponent.cs" />
     <Compile Include="Generated\Game\Components\GameMultiplePrimaryEntityIndicesComponent.cs" />
     <Compile Include="Generated\Test\Components\TestComponentWithFieldsComponent.cs" />
     <Compile Include="Generated\Test\Components\TestComponentWithPropertiesComponent.cs" />

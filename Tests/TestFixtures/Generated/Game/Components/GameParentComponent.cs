@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public BaseComponent base { get { return (BaseComponent)GetComponent(GameComponentsLookup.Base); } }
-    public bool hasBase { get { return HasComponent(GameComponentsLookup.Base); } }
+    public ParentComponent parent { get { return (ParentComponent)GetComponent(GameComponentsLookup.Parent); } }
+    public bool hasParent { get { return HasComponent(GameComponentsLookup.Parent); } }
 
-    public void AddBase(float newValue) {
-        var index = GameComponentsLookup.Base;
-        var component = CreateComponent<BaseComponent>(index);
+    public void AddParent(float newValue) {
+        var index = GameComponentsLookup.Parent;
+        var component = CreateComponent<ParentComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
-    public void ReplaceBase(float newValue) {
-        var index = GameComponentsLookup.Base;
-        var component = CreateComponent<BaseComponent>(index);
+    public void ReplaceParent(float newValue) {
+        var index = GameComponentsLookup.Parent;
+        var component = CreateComponent<ParentComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveBase() {
-        RemoveComponent(GameComponentsLookup.Base);
+    public void RemoveParent() {
+        RemoveComponent(GameComponentsLookup.Parent);
     }
 }
 
@@ -40,17 +40,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherBase;
+    static Entitas.IMatcher<GameEntity> _matcherParent;
 
-    public static Entitas.IMatcher<GameEntity> Base {
+    public static Entitas.IMatcher<GameEntity> Parent {
         get {
-            if (_matcherBase == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Base);
+            if (_matcherParent == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Parent);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherBase = matcher;
+                _matcherParent = matcher;
             }
 
-            return _matcherBase;
+            return _matcherParent;
         }
     }
 }

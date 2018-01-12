@@ -180,6 +180,7 @@ tests() {
 }
 
 generate() {
+  build
   declare -a -r properties=(
     'Tests/TestFixtures/Preferences.properties'
     'Readme/Prefrences.properties'
