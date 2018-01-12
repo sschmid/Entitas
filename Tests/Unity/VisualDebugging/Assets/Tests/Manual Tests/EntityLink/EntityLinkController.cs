@@ -9,6 +9,8 @@ public class EntityLinkController : MonoBehaviour {
         var go = new GameObject();
         go.Link(e, context);
 
+//        go.Unlink();
+
         Destroy(go);
     }
 }
