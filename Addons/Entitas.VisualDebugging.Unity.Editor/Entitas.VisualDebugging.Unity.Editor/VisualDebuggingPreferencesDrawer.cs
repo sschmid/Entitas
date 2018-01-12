@@ -60,16 +60,24 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 EditorGUI.BeginChangeCheck();
                 {
                     _enableVisualDebugging = EditorGUILayout.Toggle("Enable Visual Debugging", _enableVisualDebugging);
-                    _enableDeviceDeepProfiling = EditorGUILayout.Toggle("Enable Device Profiling", _enableDeviceDeepProfiling);
                 }
-                var changed = EditorGUI.EndChangeCheck();
+                var visualDebuggingChanged = EditorGUI.EndChangeCheck();
 
-                if (changed) {
+                if (visualDebuggingChanged ) {
                     if (_enableVisualDebugging) {
                         _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
                     } else {
                         _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
                     }
+                }
+
+                EditorGUI.BeginChangeCheck();
+                {
+                    _enableDeviceDeepProfiling = EditorGUILayout.Toggle("Enable Device Profiling", _enableDeviceDeepProfiling);
+                }
+                var deviceDeepProfilingChanged = EditorGUI.EndChangeCheck();
+
+                if (deviceDeepProfilingChanged) {
                     if (_enableDeviceDeepProfiling) {
                         _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_DEEP_PROFILING);
                     } else {
