@@ -179,6 +179,20 @@ tests() {
   run_tests "$@"
 }
 
+generate() {
+  declare -a -r properties=(
+    'Tests/TestFixtures/Preferences.properties'
+    'Readme/Prefrences.properties'
+  )
+  for p in "${properties[@]}"; do
+    local dir=$(dirname ${p})
+    pushd "${dir}" > /dev/null
+      logb "Generating ${p}"
+      mono "${ROOT}/../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.CLI/bin/Release/DesperateDevs.CodeGeneration.CodeGenerator.CLI.exe" gen "${ROOT}/${p}"
+    popd > /dev/null
+  done
+}
+
 collect_entitas_unity() {
   logf
   local entitas_dir="${BUILD_SRC}/Unity/Entitas/Assets/Entitas"
