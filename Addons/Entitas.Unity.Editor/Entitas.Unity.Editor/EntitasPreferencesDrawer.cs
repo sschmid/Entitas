@@ -79,7 +79,10 @@ namespace Entitas.Unity.Editor {
                 buttonHeight
             );
 
-            var allPreferences = Preferences.FindAll("*.properties");
+            var allPreferences = Preferences.FindAll("*.properties")
+                .Select(Path.GetFileName)
+                .ToArray();
+
             if (allPreferences.Length > 1) {
                 var r = new Rect(
                     rect.width - 50 - padding,
@@ -88,9 +91,8 @@ namespace Entitas.Unity.Editor {
                     buttonHeight
                 );
 
-                allPreferences = allPreferences.Select(Path.GetFileName).ToArray();
                 if (GUI.Button(r, "Switch", EditorStyles.miniButton)) {
-                    var path = Path.GetFileName(EditorPrefs.GetString(PreferencesWindow.PREFERENCES_KEY));
+                    var path = EditorPrefs.GetString(PreferencesWindow.PREFERENCES_KEY);
                     var index = Array.IndexOf(allPreferences, path);
                     if (index >= 0) {
                         index += 1;
