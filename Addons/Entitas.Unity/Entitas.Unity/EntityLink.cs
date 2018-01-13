@@ -10,6 +10,7 @@ namespace Entitas.Unity {
 
         IEntity _entity;
         IContext _context;
+        bool _applicationIsQuitting;
 
         public void Link(IEntity entity, IContext context) {
             if (_entity != null) {
@@ -32,12 +33,16 @@ namespace Entitas.Unity {
         }
 
         void OnDestroy() {
-            if (_entity != null) {
+            if (!_applicationIsQuitting && _entity != null) {
                 throw new EntitasException(
                     "EntityLink got destroyed but is still linked to " + _entity + "!",
                     "Please call gameObject.Unlink() before it is destroyed."
                 );
             }
+        }
+
+        void OnApplicationQuit() {
+            _applicationIsQuitting = true;
         }
 
         public override string ToString() {
