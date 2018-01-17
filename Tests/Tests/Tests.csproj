@@ -29,16 +29,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.dll</HintPath>
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs.CodeGeneration.dll</HintPath>
     </Reference>
     <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
     </Reference>
     <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.Serialization.dll</HintPath>
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.Utils.dll</HintPath>
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs.Utils.dll</HintPath>
     </Reference>
     <Reference Include="NSpec, Version=1.0.7.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\NSpec.dll</HintPath>

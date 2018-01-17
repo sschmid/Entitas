@@ -30,10 +30,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.Serialization.dll</HintPath>
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="DesperateDevs.Unity.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.Unity.Editor.dll</HintPath>
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs.Unity.Editor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">

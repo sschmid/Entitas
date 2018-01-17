@@ -30,7 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\DesperateDevs.CodeGeneration.dll</HintPath>
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs.CodeGeneration.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
