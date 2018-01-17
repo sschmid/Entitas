@@ -408,8 +408,8 @@ pack_entitas_unity() {
   local tmp_dir="${BUILD}/tmp"
   clean_dir "${tmp_dir}"
 
-  sync_files "${BUILD_FILES}/" "${tmp_dir}"
   sync_files "${BUILD_SRC}/Unity/Entitas/Assets" "${tmp_dir}"
+  sync_files "${BUILD_FILES}/" "${tmp_dir}/Assets/Entitas"
 
   pushd "${tmp_dir}" > /dev/null
     zip -rq "$BUILD_DIST/${PROJECT}.zip" ./
