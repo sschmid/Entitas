@@ -15,7 +15,7 @@ readonly SOLUTION="${ROOT}/${PROJECT}.sln"
 readonly BIN="bin/Release"
 readonly VERSION_PATH="${ROOT}/${PROJECT}/${PROJECT}/version.txt"
 
-readonly LIBS="${ROOT}/Libraries"
+readonly DEPENDENDCIES_DIR="${ROOT}/Libraries/Dependencies"
 declare -a -r DEPENDENDCIES=(
   "../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/${BIN}/"
   "../DesperateDevs/DesperateDevs.CodeGeneration.Plugins/${BIN}/"
@@ -224,9 +224,7 @@ collect_entitas_unity() {
     sync_files "${ROOT}/${p}/${BIN}/" "${entitas_dir}"
   done
 
-  for d in "${DEPENDENDCIES[@]}"; do
-    sync_files ${d} "${entitas_dir}"
-  done
+  sync_files "${DEPENDENDCIES_DIR}/" "${entitas_dir}"
 
   declare -a -r editor=(
     'DesperateDevs.Analytics.dll'
@@ -308,9 +306,7 @@ collect_entitas_with_blueprints_unity() {
     sync_files "${ROOT}/${p}/${BIN}/" "${entitas_dir}"
   done
 
-  for d in "${DEPENDENDCIES[@]}"; do
-    sync_files ${d} "${entitas_dir}"
-  done
+  sync_files "${DEPENDENDCIES_DIR}/" "${entitas_dir}"
 
   declare -a -r editor=(
     'DesperateDevs.Analytics.dll'
@@ -419,8 +415,9 @@ pack_entitas_unity() {
 
 update() {
   logf
+  clean_dir "${DEPENDENDCIES_DIR}"
   for d in "${DEPENDENDCIES[@]}"; do
-    sync_files ${d} "${LIBS}"
+    sync_files ${d} "${DEPENDENDCIES_DIR}"
   done
 }
 

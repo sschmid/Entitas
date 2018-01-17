@@ -13,20 +13,19 @@ $ git branch master origin/master
 $ git flow init -d
 ````
 
-Open `Entitas.sln` and run the Tests project to ensure everything works as expected. Alternatively run the test script
+Open `Entitas.sln` and run the Tests project as a console application to ensure everything works as expected. Alternatively run the tests script
 
 ```
-$ ./Scripts/test
+$ ./Scripts/bee tests
 ```
 
-Use the [policy.mdpolicy][policy] to make sure to conform to the given code style.
-
-If you plan to make changes to the Entitas.Unity project, run
+To manually tests your changes in a Unity project, run
 ```
-$ ./Scripts/update
+$ ./Scripts/bee build
+$ ./Scripts/bee sync
 ```
 
-This will copy all required Entitas source files to the Entitas.Unity project's `Library` folder. Entitas must be considered as a dependency. Any changes to Entitas source code within the `Library` folder in the Entitas.Unity project won't be committed and will be overwritten when running `update` again. Changes to Entitas must be done in the `Entitas.sln` project.
+This will build Entitas and copy all required assemblies to the Tests/Unity/VisualDebugging project's `Library` folder. Changes to Entitas must be done in the `Entitas.sln` project.
 
 [Create a new ticket][issues-new] to let people know what you're working on and to encourage a discussion. Follow the git-flow conventions and create a new feature branch starting with `#` and the issue number:
 
@@ -44,4 +43,3 @@ By submitting a pull request, you represent that you have the right to license y
 [pulls]: https://github.com/sschmid/Entitas-CSharp/pulls "Pull Requests"
 [issues-new]: https://github.com/sschmid/Entitas-CSharp/issues/new "New issue"
 [license]: https://github.com/sschmid/Entitas-CSharp/blob/develop/LICENSE.txt "License"
-[policy]: https://github.com/sschmid/Entitas-CSharp/blob/develop/policy.mdpolicy "Policy"
