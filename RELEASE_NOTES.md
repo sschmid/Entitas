@@ -1,3 +1,13 @@
+# 0.47.8
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+#### Jenny
+🛠 Fixed `The given assembly name or codebase was invalid` on windows #561
+
+
 # 0.47.7
 
 As always, the Unity Asset Store version might take a few days to be processed

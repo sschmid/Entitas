@@ -5,7 +5,7 @@
 #---------------------------------------------------------------------------
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "Entitas"
-PROJECT_NUMBER         = 0.47.7
+PROJECT_NUMBER         = 0.47.8
 PROJECT_BRIEF          = "Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity"
 PROJECT_LOGO           = "Scripts/docs_resources/docs-logo.png"
 OUTPUT_DIRECTORY       = "Build/docs"
