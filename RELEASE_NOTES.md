@@ -1,3 +1,18 @@
+# 0.47.9
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+#### Jenny
+🛠 Fixed issue with Entitas.Roslyn plugin and non-components with context attibute #564
+🛠 Fixed `auto-import` not making relative search paths on Windows
+
+#### Other
+⚙️ Included readme files in zip
+⚙️ Updated CONTRIBUTING.md and updated bee 🐝
+
+
 # 0.47.8
 
 As always, the Unity Asset Store version might take a few days to be processed
