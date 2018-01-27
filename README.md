@@ -52,7 +52,7 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
 
 ---
 
-Unity Unite Talks
+Video Tutorials & Unity Unite Talks
 =================
 
 | Entity - Shmup - Part 1 | Entity system architecture with Unity | ECS architecture with Unity by example |
