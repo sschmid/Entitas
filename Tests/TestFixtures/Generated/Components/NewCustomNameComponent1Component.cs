@@ -6,7 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-[Test]
 public sealed class NewCustomNameComponent1Component : Entitas.IComponent {
     public CustomName value;
 }

@@ -12,8 +12,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string COMPONENT_TEMPLATE =
-@"${Contexts}${Unique}
-public sealed class ${FullComponentName} : Entitas.IComponent {
+@"public sealed class ${FullComponentName} : Entitas.IComponent {
     public ${Type} value;
 }
 ";
@@ -28,19 +27,11 @@ public sealed class ${FullComponentName} : Entitas.IComponent {
 
         CodeGenFile generateComponentClass(ComponentData data) {
             var fullComponentName = data.GetTypeName().RemoveDots();
-            var contexts = string.Join(", ", data.GetContextNames());
-            var unique = data.IsUnique() ? "[Entitas.CodeGeneration.Attributes.UniqueAttribute]" : string.Empty;
-            if (!string.IsNullOrEmpty(contexts)) {
-                contexts = "[" + contexts + "]";
-            }
-
             return new CodeGenFile(
                 "Components" + Path.DirectorySeparatorChar + fullComponentName + ".cs",
                 COMPONENT_TEMPLATE
                     .Replace("${FullComponentName}", fullComponentName)
-                    .Replace("${Type}", data.GetObjectType())
-                    .Replace("${Contexts}", contexts)
-                    .Replace("${Unique}", unique),
+                    .Replace("${Type}", data.GetObjectType()),
                 GetType().FullName
             );
         }

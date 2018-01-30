@@ -6,7 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-[Test]
 public sealed class ClassWithEntitIndexAttributeComponent : Entitas.IComponent {
     public ClassWithEntitIndexAttribute value;
 }

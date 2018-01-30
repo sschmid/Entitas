@@ -6,7 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-[Test]
 public sealed class InterfaceToGenerateComponent : Entitas.IComponent {
     public My.Namespace.InterfaceToGenerate value;
 }
