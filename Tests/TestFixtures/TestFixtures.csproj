@@ -36,6 +36,10 @@
     <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagEntityEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardEntityEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardEventComponent.cs" />
     <Compile Include="Generated\Game\Components\GameArray3dComponent.cs" />
     <Compile Include="Generated\Game\Components\GameGeneratedContextComponent.cs" />
     <Compile Include="Generated\Game\Components\GameInheritedComponent.cs" />
@@ -65,6 +69,8 @@
     <Compile Include="Generated\Test\Components\TestNewCustomNameComponent1Component.cs" />
     <Compile Include="Generated\Test\Components\TestNewCustomNameComponent2Component.cs" />
     <Compile Include="Generated\Test\Components\TestClassWithEntitIndexAttributeComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestEventToGenerateComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2EventToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestClassToGenerateComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestInterfaceToGenerateComponent.cs" />
@@ -74,16 +80,18 @@
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceMultipleEntityIndices.cs" />
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceMyNamespace.cs" />
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceEntityIndex.cs" />
+    <Compile Include="Generated\Components\Interfaces\IEventToGenerate.cs" />
     <Compile Include="Generated\Components\Interfaces\IClassToGenerate.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent1Component.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent2Component.cs" />
     <Compile Include="Generated\Components\ClassWithEntitIndexAttributeComponent.cs" />
+    <Compile Include="Generated\Components\EventToGenerateComponent.cs" />
     <Compile Include="Generated\Components\ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Components\InterfaceToGenerateComponent.cs" />
     <Compile Include="Generated\Components\StructToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestDontGenerateMethodsComponent.cs" />
-    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Test\TestComponentsLookup.cs" />
+    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Test2\Test2ComponentsLookup.cs" />
     <Compile Include="Generated\Game\GameAttribute.cs" />
     <Compile Include="Generated\Test\TestAttribute.cs" />
@@ -98,6 +106,25 @@
     <Compile Include="Generated\Game\GameEntity.cs" />
     <Compile Include="Generated\Test\TestEntity.cs" />
     <Compile Include="Generated\Test2\Test2Entity.cs" />
+    <Compile Include="Generated\Test\Events\Interfaces\ITestFlagEntityEventEvent.cs" />
+    <Compile Include="Generated\Test\Events\Interfaces\ITestFlagEventEvent.cs" />
+    <Compile Include="Generated\Test\Events\Interfaces\ITestStandardEntityEventEvent.cs" />
+    <Compile Include="Generated\Test\Events\Interfaces\ITestStandardEventEvent.cs" />
+    <Compile Include="Generated\Test\Events\Interfaces\ITestEventToGenerateEvent.cs" />
+    <Compile Include="Generated\Test2\Events\Interfaces\ITest2EventToGenerateEvent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\ObjectsToGenerate\EventToGenerate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\Components\FlagEntityEventComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\Components\FlagEventComponent.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\Components\StandardEntityEventComponent.cs" />
+    <Compile Include="Fixtures\Components\StandardEventComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\Components\Array3dComponent.cs" />

@@ -7,6 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 [Test]
-public sealed partial class ClassWithEntitIndexAttributeComponent : Entitas.IComponent {
+public sealed class ClassWithEntitIndexAttributeComponent : Entitas.IComponent {
     public ClassWithEntitIndexAttribute value;
 }

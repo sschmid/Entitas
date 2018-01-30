@@ -15,26 +15,31 @@ public static class TestComponentsLookup {
     public const int ComponentWithProperties = 4;
     public const int CustomPrefixFlag = 5;
     public const int DontGenerateMethods = 6;
-    public const int Flag = 7;
-    public const int InterfaceToGenerate = 8;
-    public const int MyNamespaceEntityIndex = 9;
-    public const int MyNamespaceMultipleEntityIndices = 10;
-    public const int MyNamespaceMyNamespace = 11;
-    public const int MyNamespaceMyNamespaceFlag = 12;
-    public const int MyNamespaceUniqueMyNamespace = 13;
-    public const int MyNamespaceUniqueMyNamespaceFlag = 14;
-    public const int NameAge = 15;
-    public const int NewCustomNameComponent1 = 16;
-    public const int NewCustomNameComponent2 = 17;
-    public const int Position = 18;
-    public const int Size = 19;
-    public const int Standard = 20;
-    public const int StructToGenerate = 21;
-    public const int Test2Context = 22;
-    public const int UniqueFlag = 23;
-    public const int UniqueStandard = 24;
+    public const int EventToGenerate = 7;
+    public const int Flag = 8;
+    public const int FlagEntityEvent = 9;
+    public const int FlagEvent = 10;
+    public const int InterfaceToGenerate = 11;
+    public const int MyNamespaceEntityIndex = 12;
+    public const int MyNamespaceMultipleEntityIndices = 13;
+    public const int MyNamespaceMyNamespace = 14;
+    public const int MyNamespaceMyNamespaceFlag = 15;
+    public const int MyNamespaceUniqueMyNamespace = 16;
+    public const int MyNamespaceUniqueMyNamespaceFlag = 17;
+    public const int NameAge = 18;
+    public const int NewCustomNameComponent1 = 19;
+    public const int NewCustomNameComponent2 = 20;
+    public const int Position = 21;
+    public const int Size = 22;
+    public const int Standard = 23;
+    public const int StandardEntityEvent = 24;
+    public const int StandardEvent = 25;
+    public const int StructToGenerate = 26;
+    public const int Test2Context = 27;
+    public const int UniqueFlag = 28;
+    public const int UniqueStandard = 29;
 
-    public const int TotalComponents = 25;
+    public const int TotalComponents = 30;
 
     public static readonly string[] componentNames = {
         "ClassToGenerate",
@@ -44,7 +49,10 @@ public static class TestComponentsLookup {
         "ComponentWithProperties",
         "CustomPrefixFlag",
         "DontGenerateMethods",
+        "EventToGenerate",
         "Flag",
+        "FlagEntityEvent",
+        "FlagEvent",
         "InterfaceToGenerate",
         "MyNamespaceEntityIndex",
         "MyNamespaceMultipleEntityIndices",
@@ -58,6 +66,8 @@ public static class TestComponentsLookup {
         "Position",
         "Size",
         "Standard",
+        "StandardEntityEvent",
+        "StandardEvent",
         "StructToGenerate",
         "Test2Context",
         "UniqueFlag",
@@ -72,7 +82,10 @@ public static class TestComponentsLookup {
         typeof(ComponentWithProperties),
         typeof(CustomPrefixFlagComponent),
         typeof(DontGenerateMethodsComponent),
+        typeof(EventToGenerateComponent),
         typeof(FlagComponent),
+        typeof(FlagEntityEventComponent),
+        typeof(FlagEventComponent),
         typeof(InterfaceToGenerateComponent),
         typeof(My.Namespace.EntityIndexComponent),
         typeof(My.Namespace.MultipleEntityIndicesComponent),
@@ -86,6 +99,8 @@ public static class TestComponentsLookup {
         typeof(PositionComponent),
         typeof(SizeComponent),
         typeof(StandardComponent),
+        typeof(StandardEntityEventComponent),
+        typeof(StandardEventComponent),
         typeof(StructToGenerateComponent),
         typeof(Test2ContextComponent),
         typeof(UniqueFlagComponent),

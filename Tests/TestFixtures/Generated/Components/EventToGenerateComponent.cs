@@ -7,6 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 [Test, Test2]
-public sealed class ClassToGenerateComponent : Entitas.IComponent {
-    public My.Namespace.ClassToGenerate value;
+public sealed class EventToGenerateComponent : Entitas.IComponent {
+    public My.Namespace.EventToGenerate value;
 }

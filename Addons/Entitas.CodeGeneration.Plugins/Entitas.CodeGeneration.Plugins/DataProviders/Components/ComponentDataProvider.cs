@@ -43,7 +43,8 @@ namespace Entitas.CodeGeneration.Plugins {
                 new UniquePrefixComponentDataProvider(),
                 new ShouldGenerateComponentComponentDataProvider(),
                 new ShouldGenerateMethodsComponentDataProvider(),
-                new ShouldGenerateComponentIndexComponentDataProvider()
+                new ShouldGenerateComponentIndexComponentDataProvider(),
+                new EventComponentDataProvider()
             };
         }
 

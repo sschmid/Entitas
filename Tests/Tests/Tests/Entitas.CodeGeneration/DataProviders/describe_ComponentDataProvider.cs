@@ -95,6 +95,20 @@ class describe_ComponentDataProvider : nspec {
 
                 getData<CustomPrefixFlagComponent>().GetUniquePrefix().should_be("My");
             };
+
+            it["gets event"] = () => {
+                data.GetEventData().should_be_null();
+
+                var eventData = getData<StandardEventComponent>().GetEventData();
+                eventData.bindToEntity.should_be_false();
+                eventData.priority.should_be(0);
+            };
+
+            it["gets event bind to entity"] = () => {
+                var eventData = getData<StandardEntityEventComponent>().GetEventData();
+                eventData.bindToEntity.should_be_true();
+                eventData.priority.should_be(1);
+            };
         };
 
         context["non component"] = () => {
@@ -149,6 +163,14 @@ class describe_ComponentDataProvider : nspec {
 
             it["gets unique prefix"] = () => {
                 data.GetUniquePrefix().should_be("is");
+            };
+
+            it["gets event"] = () => {
+                data.GetEventData().should_be_null();
+
+                var eventData = getData<EventToGenerate>().GetEventData();
+                eventData.bindToEntity.should_be_false();
+                eventData.priority.should_be(0);
             };
         };
 

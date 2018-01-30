@@ -59,6 +59,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ContextsGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EntityGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EntityIndexGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EventInterfaceGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\AssembliesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\ContextNamesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\IgnoreNamespacesConfig.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\ComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\Providers\ComponentTypeComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\Providers\ContextsComponentDataProvider.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\Providers\EventComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\Providers\IComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\Providers\IsUniqueComponentDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Components\Providers\MemberDataComponentDataProvider.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Contexts\ContextDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\EntityIndex\EntityIndexData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\EntityIndex\EntityIndexDataProvider.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\Data\EventData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Data\MemberData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Data\MethodData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\EntitasHook.cs" />

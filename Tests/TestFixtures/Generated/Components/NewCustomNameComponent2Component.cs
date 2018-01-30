@@ -7,6 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 [Test]
-public sealed partial class NewCustomNameComponent2Component : Entitas.IComponent {
+public sealed class NewCustomNameComponent2Component : Entitas.IComponent {
     public CustomName value;
 }
