@@ -129,6 +129,8 @@
     <Compile Include="Generated\Events\Systems\TestStandardEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\TestEventToGenerateEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\Test2EventToGenerateEventSystem.cs" />
+    <Compile Include="Generated\Events\EventSystems.cs" />
+    <Compile Include="Generated\Feature.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\ObjectsToGenerate\EventToGenerate.cs" />

@@ -62,6 +62,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EventComponentGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EventInterfaceGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EventSystemGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EventSystemsGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\AssembliesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\ContextNamesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\IgnoreNamespacesConfig.cs" />
