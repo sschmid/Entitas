@@ -36,6 +36,12 @@
     <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestEventToGenerateListenerComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2EventToGenerateListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestFlagEntityEventComponent.cs" />
     <Compile Include="Generated\Test\Components\TestFlagEventComponent.cs" />
     <Compile Include="Generated\Test\Components\TestStandardEntityEventComponent.cs" />
@@ -75,6 +81,7 @@
     <Compile Include="Generated\Test2\Components\Test2ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestInterfaceToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestStructToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\Interfaces\IEventToGenerateListener.cs" />
     <Compile Include="Generated\Components\Interfaces\ITest2Context.cs" />
     <Compile Include="Generated\Components\Interfaces\INameAge.cs" />
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceMultipleEntityIndices.cs" />
@@ -91,8 +98,8 @@
     <Compile Include="Generated\Components\StructToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestDontGenerateMethodsComponent.cs" />
     <Compile Include="Generated\Test\TestComponentsLookup.cs" />
-    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Test2\Test2ComponentsLookup.cs" />
+    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Game\GameAttribute.cs" />
     <Compile Include="Generated\Test\TestAttribute.cs" />
     <Compile Include="Generated\Test2\Test2Attribute.cs" />
@@ -106,6 +113,11 @@
     <Compile Include="Generated\Game\GameEntity.cs" />
     <Compile Include="Generated\Test\TestEntity.cs" />
     <Compile Include="Generated\Test2\Test2Entity.cs" />
+    <Compile Include="Generated\Events\Components\FlagEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\FlagEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\StandardEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\StandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\EventToGenerateListenerComponent.cs" />
     <Compile Include="Generated\Events\Interfaces\IFlagEntityEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IFlagEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IStandardEntityEventListener.cs" />

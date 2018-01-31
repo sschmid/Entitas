@@ -35,11 +35,11 @@ namespace Entitas.CodeGeneration.Plugins {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.GetEventData() != null)
-                .Select(generateExtension)
+                .Select(generateInterface)
                 .ToArray();
         }
 
-        CodeGenFile generateExtension(ComponentData data) {
+        CodeGenFile generateInterface(ComponentData data) {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var memberData = data.GetMemberData();
 
