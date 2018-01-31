@@ -6,12 +6,12 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IMyNamespaceEntityIndex {
+public interface INameAgeEntity {
 
-    My.Namespace.EntityIndexComponent myNamespaceEntityIndex { get; }
-    bool hasMyNamespaceEntityIndex { get; }
+    NameAgeComponent nameAge { get; }
+    bool hasNameAge { get; }
 
-    void AddMyNamespaceEntityIndex(string newValue);
-    void ReplaceMyNamespaceEntityIndex(string newValue);
-    void RemoveMyNamespaceEntityIndex();
+    void AddNameAge(string newName, int newAge);
+    void ReplaceNameAge(string newName, int newAge);
+    void RemoveNameAge();
 }

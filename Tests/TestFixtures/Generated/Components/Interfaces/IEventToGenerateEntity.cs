@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IEventToGenerate {
+public interface IEventToGenerateEntity {
 
     EventToGenerateComponent eventToGenerate { get; }
     bool hasEventToGenerate { get; }

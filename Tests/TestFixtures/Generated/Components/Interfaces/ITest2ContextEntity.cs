@@ -6,12 +6,12 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IClassToGenerate {
+public interface ITest2ContextEntity {
 
-    ClassToGenerateComponent classToGenerate { get; }
-    bool hasClassToGenerate { get; }
+    Test2ContextComponent test2Context { get; }
+    bool hasTest2Context { get; }
 
-    void AddClassToGenerate(My.Namespace.ClassToGenerate newValue);
-    void ReplaceClassToGenerate(My.Namespace.ClassToGenerate newValue);
-    void RemoveClassToGenerate();
+    void AddTest2Context(string newValue);
+    void ReplaceTest2Context(string newValue);
+    void RemoveTest2Context();
 }

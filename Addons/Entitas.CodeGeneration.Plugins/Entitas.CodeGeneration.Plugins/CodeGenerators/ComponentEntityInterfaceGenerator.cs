@@ -18,7 +18,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string STANDARD_INTERFACE_TEMPLATE =
-@"public interface ${InterfaceName} {
+@"public interface ${InterfaceName}Entity {
 
     ${ComponentType} ${componentName} { get; }
     bool has${ComponentName} { get; }
@@ -30,14 +30,14 @@ namespace Entitas.CodeGeneration.Plugins {
 ";
 
         const string FLAG_INTERFACE_TEMPLATE =
-@"public interface ${InterfaceName} {
+@"public interface ${InterfaceName}Entity {
 
     bool ${prefixedName} { get; set; }
 }
 ";
 
         const string ENTITY_INTERFACE_EXTENSION =
-            @"public partial class ${ContextName}Entity : ${InterfaceName} { }
+            @"public partial class ${ContextName}Entity : ${InterfaceName}Entity { }
 ";
 
         const string MEMBER_ARGS_TEMPLATE =
@@ -85,7 +85,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return new CodeGenFile(
                 "Components" + Path.DirectorySeparatorChar +
                 "Interfaces" + Path.DirectorySeparatorChar +
-                interfaceName + ".cs",
+                interfaceName + "Entity.cs",
                 fileContent,
                 GetType().FullName
             );

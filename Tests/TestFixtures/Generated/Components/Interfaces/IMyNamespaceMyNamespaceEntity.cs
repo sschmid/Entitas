@@ -6,12 +6,12 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IEventToGenerateListener {
+public interface IMyNamespaceMyNamespaceEntity {
 
-    EventToGenerateListenerComponent eventToGenerateListener { get; }
-    bool hasEventToGenerateListener { get; }
+    My.Namespace.MyNamespaceComponent myNamespaceMyNamespace { get; }
+    bool hasMyNamespaceMyNamespace { get; }
 
-    void AddEventToGenerateListener(IEventToGenerateListener newValue);
-    void ReplaceEventToGenerateListener(IEventToGenerateListener newValue);
-    void RemoveEventToGenerateListener();
+    void AddMyNamespaceMyNamespace(string newValue);
+    void ReplaceMyNamespaceMyNamespace(string newValue);
+    void RemoveMyNamespaceMyNamespace();
 }
