@@ -9,7 +9,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class EventInterfaceGenerator : ICodeGenerator, IConfigurable {
 
-        public string name { get { return "Event (Interface)"; } }
+        public string name { get { return "Event (Listener Interface)"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
@@ -17,10 +17,10 @@ namespace Entitas.CodeGeneration.Plugins {
 
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
-        const string STANDARD_INTERFACE_TEMPLATE =
-@"public interface I${ContextName}${ComponentName}Event {
+        const string INTERFACE_TEMPLATE =
+@"public interface I${ComponentName}Listener {
 
-    void On${ComponentName}Changed(${memberArgs});
+    void On${ComponentName}(${memberArgs});
 }
 ";
 
@@ -35,17 +35,11 @@ namespace Entitas.CodeGeneration.Plugins {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.GetEventData() != null)
-                .SelectMany(generateExtensions)
+                .Select(generateExtension)
                 .ToArray();
         }
 
-        CodeGenFile[] generateExtensions(ComponentData data) {
-            return data.GetContextNames()
-                .Select(contextName => generateExtension(contextName, data))
-                .ToArray();
-        }
-
-        CodeGenFile generateExtension(string contextName, ComponentData data) {
+        CodeGenFile generateExtension(ComponentData data) {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var memberData = data.GetMemberData();
 
@@ -53,22 +47,14 @@ namespace Entitas.CodeGeneration.Plugins {
                 memberData = new[] { new MemberData("bool", data.GetUniquePrefix().LowercaseFirst() + componentName) };
             }
 
-            if (data.GetEventData().bindToEntity) {
-                memberData = memberData
-                    .Concat(new[] { new MemberData(contextName + "Entity", "entity") })
-                    .ToArray();
-            }
-
-            var fileContent = STANDARD_INTERFACE_TEMPLATE
-                .Replace("${ContextName}", contextName)
+            var fileContent = INTERFACE_TEMPLATE
                 .Replace("${ComponentName}", componentName)
                 .Replace("${memberArgs}", getMemberArgs(memberData));
 
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar +
                 "Events" + Path.DirectorySeparatorChar +
                 "Interfaces" + Path.DirectorySeparatorChar +
-                "I" + contextName + componentName + "Event.cs",
+                "I" + componentName + "Listener.cs",
                 fileContent,
                 GetType().FullName
             );

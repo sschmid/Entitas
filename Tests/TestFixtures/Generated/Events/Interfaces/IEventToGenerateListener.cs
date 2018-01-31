@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface ITestEventToGenerateEvent {
+public interface IEventToGenerateListener {
 
-    void OnEventToGenerateChanged(My.Namespace.EventToGenerate value);
+    void OnEventToGenerate(My.Namespace.EventToGenerate value);
 }

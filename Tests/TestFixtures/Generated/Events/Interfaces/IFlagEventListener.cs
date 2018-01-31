@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface ITest2EventToGenerateEvent {
+public interface IFlagEventListener {
 
-    void OnEventToGenerateChanged(My.Namespace.EventToGenerate value);
+    void OnFlagEvent(bool isFlagEvent);
 }

@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface ITestFlagEventEvent {
+public interface IStandardEventListener {
 
-    void OnFlagEventChanged(bool isFlagEvent);
+    void OnStandardEvent(string value);
 }

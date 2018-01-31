@@ -106,12 +106,11 @@
     <Compile Include="Generated\Game\GameEntity.cs" />
     <Compile Include="Generated\Test\TestEntity.cs" />
     <Compile Include="Generated\Test2\Test2Entity.cs" />
-    <Compile Include="Generated\Test\Events\Interfaces\ITestFlagEntityEventEvent.cs" />
-    <Compile Include="Generated\Test\Events\Interfaces\ITestFlagEventEvent.cs" />
-    <Compile Include="Generated\Test\Events\Interfaces\ITestStandardEntityEventEvent.cs" />
-    <Compile Include="Generated\Test\Events\Interfaces\ITestStandardEventEvent.cs" />
-    <Compile Include="Generated\Test\Events\Interfaces\ITestEventToGenerateEvent.cs" />
-    <Compile Include="Generated\Test2\Events\Interfaces\ITest2EventToGenerateEvent.cs" />
+    <Compile Include="Generated\Events\Interfaces\IFlagEntityEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IFlagEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IStandardEntityEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IEventToGenerateListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\ObjectsToGenerate\EventToGenerate.cs" />
