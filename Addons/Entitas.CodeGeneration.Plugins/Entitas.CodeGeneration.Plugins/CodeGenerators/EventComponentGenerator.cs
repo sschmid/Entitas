@@ -38,7 +38,6 @@ public sealed class ${ComponentName}ListenerComponent : Entitas.IComponent {
 
         CodeGenFile generateComponent(ComponentData data) {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-
             var contexts = string.Join(", ", data.GetContextNames());
             if (!string.IsNullOrEmpty(contexts)) {
                 contexts = "[" + contexts + "]";

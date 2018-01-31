@@ -123,6 +123,12 @@
     <Compile Include="Generated\Events\Interfaces\IStandardEntityEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IStandardEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IEventToGenerateListener.cs" />
+    <Compile Include="Generated\Events\Systems\TestFlagEntityEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestFlagEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestStandardEntityEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestStandardEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestEventToGenerateEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\Test2EventToGenerateEventSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\ObjectsToGenerate\EventToGenerate.cs" />

@@ -42,7 +42,6 @@ namespace Entitas.CodeGeneration.Plugins {
         CodeGenFile generateInterface(ComponentData data) {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var memberData = data.GetMemberData();
-
             if (memberData.Length == 0) {
                 memberData = new[] { new MemberData("bool", data.GetUniquePrefix().LowercaseFirst() + componentName) };
             }
