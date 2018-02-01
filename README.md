@@ -58,7 +58,7 @@ Video Tutorials & Unity Unite Talks
 | Entitas ECS Unity Tutorial | Entity system architecture with Unity | ECS architecture with Unity by example |
 |:-------------------------------------:|:-------------------------------------:|:--------------------------------------:|
 | [![Entity - Shmup - Part 1][entitas-shmup-part-1-video-thumbnail]][entitas-shmup-part-1-video] | [![Unite Europe 2015][unite-europe-2015-video-thumbnail]][unite-europe-2015-video] | [![Unite Europe 2016][unite-europe-2016-video-thumbnail]][unite-europe-2016-video] |
-| Entitas Setup & Basics| [» Open the slides on SlideShare: Unite Europe 2015](http://www.slideshare.net/sschmid/uniteeurope-2015) | [» Open the slides on SlideShare: Unite Europe 2016](http://www.slideshare.net/sschmid/uniteeurope-2016) |
+| Setup & Basics| [» Open the slides on SlideShare: Unite Europe 2015](http://www.slideshare.net/sschmid/uniteeurope-2015) | [» Open the slides on SlideShare: Unite Europe 2016](http://www.slideshare.net/sschmid/uniteeurope-2016) |
 
 
 First glimpse
