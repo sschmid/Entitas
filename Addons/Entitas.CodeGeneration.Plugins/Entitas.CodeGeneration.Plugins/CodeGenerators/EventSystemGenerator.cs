@@ -27,7 +27,10 @@ namespace Entitas.CodeGeneration.Plugins {
     }
 
     protected override Entitas.ICollector<${ContextName}Entity> GetTrigger(Entitas.IContext<${ContextName}Entity> context) {
-        return Entitas.CollectorContextExtension.CreateCollector(context, ${ContextName}Matcher.${ComponentName});
+        return Entitas.CollectorContextExtension.CreateCollector(
+            context,
+            Entitas.TriggerOnEventMatcherExtension.${GroupEvent}(${ContextName}Matcher.${ComponentName})
+        );
     }
 
     protected override bool Filter(${ContextName}Entity entity) {
@@ -52,7 +55,10 @@ namespace Entitas.CodeGeneration.Plugins {
     }
 
     protected override Entitas.ICollector<${ContextName}Entity> GetTrigger(Entitas.IContext<${ContextName}Entity> context) {
-        return Entitas.CollectorContextExtension.CreateCollector(context, ${ContextName}Matcher.${ComponentName});
+        return Entitas.CollectorContextExtension.CreateCollector(
+            context,
+            Entitas.TriggerOnEventMatcherExtension.${GroupEvent}(${ContextName}Matcher.${ComponentName})
+        );
     }
 
     protected override bool Filter(${ContextName}Entity entity) {
@@ -93,6 +99,10 @@ namespace Entitas.CodeGeneration.Plugins {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var memberData = data.GetMemberData();
 
+            var groupEvent = memberData.Length == 0
+                ? "AddedOrRemoved"
+                : "Added";
+
             var filter = memberData.Length == 0
                 ? "true"
                 : "entity.has" + componentName;
@@ -114,6 +124,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${contextName}", contextName.LowercaseFirst())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
+                .Replace("${GroupEvent}", groupEvent)
                 .Replace("${filter}", filter)
                 .Replace("${cachedAccess}", cachedAccess)
                 .Replace("${methodArgs}", methodArgs);
