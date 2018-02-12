@@ -98,7 +98,6 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Select(createDataForEvents)
                 .ToArray();
 
-
             return merge(dataFromEvents, merge(dataFromNonComponents, dataFromComponents));
         }
 
@@ -141,6 +140,7 @@ namespace Entitas.CodeGeneration.Plugins {
             dataForEvent.SetMemberData(new[] {
                 new MemberData("I" + componentName, "value")
             });
+
             return dataForEvent;
         }
 

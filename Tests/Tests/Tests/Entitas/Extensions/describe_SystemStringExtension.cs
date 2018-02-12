@@ -1,7 +1,7 @@
 ﻿using Entitas;
 using NSpec;
 
-class describe_ : nspec {
+class describe_SystemStringExtension : nspec {
 
     const string SYSTEM_SUFFIX = "System";
 

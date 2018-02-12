@@ -107,6 +107,7 @@
 │   │       ├── CustomComponentNameAttribute.cs
 │   │       ├── CustomEntityIndexAttribute.cs
 │   │       ├── DontGenerateAttribute.cs
+│   │       ├── EventAttribute.cs
 │   │       ├── PostConstructorAttribute.cs
 │   │       ├── UniqueAttribute.cs
 │   │       └── UniquePrefixAttribute.cs
@@ -124,7 +125,11 @@
 │   │       │   ├── ContextMatcherGenerator.cs
 │   │       │   ├── ContextsGenerator.cs
 │   │       │   ├── EntityGenerator.cs
-│   │       │   └── EntityIndexGenerator.cs
+│   │       │   ├── EntityIndexGenerator.cs
+│   │       │   ├── EventComponentGenerator.cs
+│   │       │   ├── EventInterfaceGenerator.cs
+│   │       │   ├── EventSystemGenerator.cs
+│   │       │   └── EventSystemsGenerator.cs
 │   │       ├── Configs
 │   │       │   ├── AssembliesConfig.cs
 │   │       │   ├── ContextNamesConfig.cs
@@ -132,6 +137,7 @@
 │   │       │   ├── TemplateConfigExtension.cs
 │   │       │   └── TemplatesConfig.cs
 │   │       ├── Data
+│   │       │   ├── EventData.cs
 │   │       │   ├── MemberData.cs
 │   │       │   └── MethodData.cs
 │   │       ├── DataProviders
@@ -139,6 +145,7 @@
 │   │       │   │   ├── Providers
 │   │       │   │   │   ├── ComponentTypeComponentDataProvider.cs
 │   │       │   │   │   ├── ContextsComponentDataProvider.cs
+│   │       │   │   │   ├── EventComponentDataProvider.cs
 │   │       │   │   │   ├── IComponentDataProvider.cs
 │   │       │   │   │   ├── IsUniqueComponentDataProvider.cs
 │   │       │   │   │   ├── MemberDataComponentDataProvider.cs

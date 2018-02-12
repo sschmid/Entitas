@@ -1,3 +1,23 @@
+# 1.1.0
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+#### Entitas
+🆕 Added Events aka Reactive-UI #591
+⚠️ Changed `ComponentEntityInterfaceGenerator` to generate `IXyzEntity` insetad of `IXyz` to avoid name collisions with `EventInterfaceGenerator`
+⚙️ Added enum support for Code Generator Attributes
+⚙️ Removed `partial` keyword from ComponentGenerator
+⚙️ Removed attributes from generated components
+
+#### Jenny
+🆕 Added `Jenny-Auto-Import` scripts to reducde terminal interaction
+⚙️ Added silent `-s` info to Jenny help page
+⚙️ Using Console.WriteLine when prompting user input to support silent mode
+⚙️ CodeGeneratorData can now be cloned
+
+
 # 1.0.0
 
 As always, the Unity Asset Store version might take a few days to be processed
