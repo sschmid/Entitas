@@ -24,6 +24,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
                 return _assembliesConfig.defaultProperties
                     .Merge(_contextsComponentDataProvider.defaultProperties)
+                    .Merge(_ignoreNamespacesConfig.defaultProperties)
                     .Merge(dataProviderProperties);
             }
         }
@@ -33,6 +34,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
         readonly ContextsComponentDataProvider _contextsComponentDataProvider = new ContextsComponentDataProvider();
+        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         static IComponentDataProvider[] getComponentDataProviders() {
             return new IComponentDataProvider[] {
@@ -68,7 +70,9 @@ namespace Entitas.CodeGeneration.Plugins {
             foreach (var dataProvider in _dataProviders.OfType<IConfigurable>()) {
                 dataProvider.Configure(preferences);
             }
+
             _contextsComponentDataProvider.Configure(preferences);
+            _ignoreNamespacesConfig.Configure(preferences);
         }
 
         public CodeGeneratorData[] GetData() {
@@ -89,7 +93,13 @@ namespace Entitas.CodeGeneration.Plugins {
                 .SelectMany(createDataForNonComponent)
                 .ToArray();
 
-            return merge(dataFromNonComponents, dataFromComponents);
+            var dataFromEvents = dataFromComponents
+                .Where(data => data.GetEventData() != null)
+                .Select(createDataForEvents)
+                .ToArray();
+
+
+            return merge(dataFromEvents, merge(dataFromNonComponents, dataFromComponents));
         }
 
         ComponentData[] merge(ComponentData[] prioData, ComponentData[] redundantData) {
@@ -120,6 +130,18 @@ namespace Entitas.CodeGeneration.Plugins {
 
                     return data;
                 }).ToArray();
+        }
+
+        ComponentData createDataForEvents(ComponentData data) {
+            var dataForEvent = new ComponentData(data);
+            dataForEvent.SetEventData(null);
+            var componentName = dataForEvent.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+            componentName += "Listener";
+            dataForEvent.SetlTypeName(componentName.AddComponentSuffix());
+            dataForEvent.SetMemberData(new[] {
+                new MemberData("I" + componentName, "value")
+            });
+            return dataForEvent;
         }
 
         bool hasContexts(Type type) {

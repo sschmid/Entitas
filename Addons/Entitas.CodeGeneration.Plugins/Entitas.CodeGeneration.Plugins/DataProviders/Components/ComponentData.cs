@@ -4,6 +4,12 @@ using DesperateDevs.Utils;
 namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentData : CodeGeneratorData {
+
+        public ComponentData() {
+        }
+
+        public ComponentData(ComponentData data) : base(data) {
+        }
     }
 
     public static class ComponentDataExtension {

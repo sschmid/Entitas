@@ -14,8 +14,11 @@ class describe_ComponentDataProvider : nspec {
     ComponentData[] getMultipleData<T>(Preferences preferences = null) {
         var provider = new ComponentDataProvider(new Type[] { typeof(T) });
         if (preferences == null) {
-            preferences = new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState");
+            preferences = new TestPreferences(
+                @"Entitas.CodeGeneration.Plugins.Contexts = Game, GameState
+Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
         }
+
         provider.Configure(preferences);
 
         return (ComponentData[])provider.GetData();
@@ -33,9 +36,7 @@ class describe_ComponentDataProvider : nspec {
                 data = getData<MyNamespaceComponent>();
             };
 
-            it["get data"] = () => {
-                data.should_not_be_null();
-            };
+            it["get data"] = () => { data.should_not_be_null(); };
 
             it["gets full type name"] = () => {
                 data.GetTypeName().GetType().should_be(typeof(string));
@@ -121,9 +122,7 @@ class describe_ComponentDataProvider : nspec {
                 data = getData<ClassToGenerate>();
             };
 
-            it["get data"] = () => {
-                data.should_not_be_null();
-            };
+            it["get data"] = () => { data.should_not_be_null(); };
 
             it["gets full type name"] = () => {
                 // Not the type, but the component that should be generated
@@ -138,9 +137,7 @@ class describe_ComponentDataProvider : nspec {
                 contextNames[1].should_be("Test2");
             };
 
-            it["gets unique"] = () => {
-                data.IsUnique().should_be_false();
-            };
+            it["gets unique"] = () => { data.IsUnique().should_be_false(); };
 
             it["gets member data"] = () => {
                 data.GetMemberData().Length.should_be(1);
@@ -153,17 +150,11 @@ class describe_ComponentDataProvider : nspec {
                 data.GetObjectType().should_be(typeof(ClassToGenerate).ToCompilableString());
             };
 
-            it["gets generate index"] = () => {
-                data.ShouldGenerateIndex().should_be_true();
-            };
+            it["gets generate index"] = () => { data.ShouldGenerateIndex().should_be_true(); };
 
-            it["gets generate methods"] = () => {
-                data.ShouldGenerateMethods().should_be_true();
-            };
+            it["gets generate methods"] = () => { data.ShouldGenerateMethods().should_be_true(); };
 
-            it["gets unique prefix"] = () => {
-                data.GetUniquePrefix().should_be("is");
-            };
+            it["gets unique prefix"] = () => { data.GetUniquePrefix().should_be("is"); };
 
             it["gets event"] = () => {
                 data.GetEventData().should_be_null();
@@ -177,13 +168,34 @@ class describe_ComponentDataProvider : nspec {
         context["multiple types"] = () => {
 
             it["creates data for each type"] = () => {
-                var types = new [] { typeof(NameAgeComponent), typeof(Test2ContextComponent) };
+                var types = new[] { typeof(NameAgeComponent), typeof(Test2ContextComponent) };
                 var provider = new ComponentDataProvider(types);
                 provider.Configure(new TestPreferences(
                     "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"
                 ));
                 var data = provider.GetData();
                 data.Length.should_be(types.Length);
+            };
+
+            it["ignores duplicates from non components"] = () => {
+                var types = new[] { typeof(ClassToGenerate), typeof(ClassToGenerateComponent) };
+                var provider = new ComponentDataProvider(types);
+                provider.Configure(new TestPreferences(
+                    "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"
+                ));
+                var data = provider.GetData();
+                data.Length.should_be(1);
+            };
+
+            it["ignores duplicates from events"] = () => {
+                var types = new[] { typeof(StandardEventComponent), typeof(StandardEventListenerComponent) };
+                var provider = new ComponentDataProvider(types);
+                provider.Configure(new TestPreferences(
+                    @"Entitas.CodeGeneration.Plugins.Contexts = Game, GameState
+Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"));
+
+                var data = provider.GetData();
+                data.Length.should_be(2);
             };
         };
 
