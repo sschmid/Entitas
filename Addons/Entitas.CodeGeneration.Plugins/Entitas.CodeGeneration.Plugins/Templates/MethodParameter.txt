@@ -1,1 +1,0 @@
-${MemberType} new${MemberName}

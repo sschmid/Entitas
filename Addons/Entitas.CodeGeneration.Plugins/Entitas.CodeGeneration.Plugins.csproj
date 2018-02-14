@@ -103,11 +103,5 @@
       <Name>Entitas</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="Entitas.CodeGeneration.Plugins\Templates\FlagComponentContext.txt" />
-    <Content Include="Entitas.CodeGeneration.Plugins\Templates\MethodArgument.txt" />
-    <Content Include="Entitas.CodeGeneration.Plugins\Templates\MethodParameter.txt" />
-    <Content Include="Entitas.CodeGeneration.Plugins\Templates\ComponentContext.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
