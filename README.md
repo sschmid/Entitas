@@ -55,10 +55,10 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
 Video Tutorials & Unity Unite Talks
 =================
 
-| Entitas ECS Unity Tutorial | Entity system architecture with Unity | ECS architecture with Unity by example |
-|:-------------------------------------:|:-------------------------------------:|:--------------------------------------:|
-| [![Entity - Shmup - Part 1][entitas-shmup-part-1-video-thumbnail]][entitas-shmup-part-1-video] | [![Unite Europe 2015][unite-europe-2015-video-thumbnail]][unite-europe-2015-video] | [![Unite Europe 2016][unite-europe-2016-video-thumbnail]][unite-europe-2016-video] |
-| Setup & Basics| [» Open the slides on SlideShare: Unite Europe 2015](http://www.slideshare.net/sschmid/uniteeurope-2015) | [» Open the slides on SlideShare: Unite Europe 2016](http://www.slideshare.net/sschmid/uniteeurope-2016) |
+| Entitas ECS Unity Tutorial        | Entitas ECS Unity Tutorial        | Entity system architecture with Unity                                | ECS architecture with Unity by example                               |
+|:---------------------------------:|:---------------------------------:|:--------------------------------------------------------------------:|:--------------------------------------------------------------------:|
+| [![Shmup1][shmup1-thumb]][shmup1] | [![Shmup2][shmup2-thumb]][shmup2] | [![Unite 15][unite15-thumb]][unite15]                                | [![Unite 16][unite16-thumb]][unite16]                                |
+| Setup & Basics                    | Git & Unit Tests                  | [» Open the slides on SlideShare: Unite Europe 2015][unite15-slides] | [» Open the slides on SlideShare: Unite Europe 2016][unite16-slides] |
 
 
 First glimpse
@@ -179,12 +179,16 @@ Entitas is available in
 [wiki-example-projects]: https://github.com/sschmid/Entitas-CSharp/wiki/Example-projects "Wiki - Example Projects"
 [wiki-games-and-examples]: https://github.com/sschmid/Entitas-CSharp/wiki/%23madeWithEntitas "Wiki - #madeWithEntitas"
 
-[entitas-shmup-part-1-video-thumbnail]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas-Shmup-Part-1.jpg "Video: Entitas - Shmup - Part 1"
-[entitas-shmup-part-1-video]: https://www.youtube.com/watch?v=L-18XRTarOM "Video: Entitas - Shmup - Part 1"
-[unite-europe-2015-video-thumbnail]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2015-Video.png "Video: Watch the Entitas Talk at Unite Europe 2015"
-[unite-europe-2015-video]: https://www.youtube.com/watch?v=Re5kGtxTW6E "Video: Watch the Entitas Talk at Unite Europe 2015"
-[unite-europe-2016-video-thumbnail]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2016-Video.png "Video: Watch the Entitas Talk at Unite Europe 2016"
-[unite-europe-2016-video]: https://www.youtube.com/watch?v=Phx7IJ3XUzg "Video: Watch the Entitas Talk at Unite Europe 2016"
+[shmup1-thumb]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas-Shmup-Part-1.jpg "Video: Entitas - Shmup - Part 1"
+[shmup1]: https://www.youtube.com/watch?v=L-18XRTarOM "Video: Entitas - Shmup - Part 1"
+[shmup2-thumb]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas-Shmup-Part-2.jpg "Video: Entitas - Shmup - Part 2"
+[shmup2]: https://www.youtube.com/watch?v=DZpvUnj2dGI "Video: Entitas - Shmup - Part 2"
+[unite15-thumb]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2015-Video.png "Video: Watch the Entitas Talk at Unite Europe 2015"
+[unite15]: https://www.youtube.com/watch?v=Re5kGtxTW6E "Video: Watch the Entitas Talk at Unite Europe 2015"
+[unite15-slides]: http://www.slideshare.net/sschmid/uniteeurope-2015 "SlideShare: Unite Europe 2015"
+[unite16-thumb]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2016-Video.png "Video: Watch the Entitas Talk at Unite Europe 2016"
+[unite16]: https://www.youtube.com/watch?v=Phx7IJ3XUzg "Video: Watch the Entitas Talk at Unite Europe 2016"
+[unite16-slides]: http://www.slideshare.net/sschmid/uniteeurope-2016 "SlideShare: Unite Europe 2016"
 
 [releases]: https://github.com/sschmid/Entitas-CSharp/releases "Releases"
 [issues-new]: https://github.com/sschmid/Entitas-CSharp/issues/new "New issue"
