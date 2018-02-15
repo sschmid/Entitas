@@ -20,10 +20,10 @@ namespace Entitas.CodeGeneration.Plugins {
         const string SYSTEM_TEMPLATE =
 @"public sealed class ${ContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
 
-    readonly Entitas.IGroup<${ContextName}Entity> _listsners;
+    readonly Entitas.IGroup<${ContextName}Entity> _listeners;
 
     public ${ContextName}${ComponentName}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
-        _listsners = contexts.${contextName}.GetGroup(${ContextName}Matcher.${ComponentName}Listener);
+        _listeners = contexts.${contextName}.GetGroup(${ContextName}Matcher.${ComponentName}Listener);
     }
 
     protected override Entitas.ICollector<${ContextName}Entity> GetTrigger(Entitas.IContext<${ContextName}Entity> context) {
@@ -40,7 +40,7 @@ namespace Entitas.CodeGeneration.Plugins {
     protected override void Execute(System.Collections.Generic.List<${ContextName}Entity> entities) {
         foreach (var e in entities) {
             ${cachedAccess}
-            foreach (var listener in _listsners) {
+            foreach (var listener in _listeners) {
                 listener.${componentName}Listener.value.On${ComponentName}(${methodArgs});
             }
         }

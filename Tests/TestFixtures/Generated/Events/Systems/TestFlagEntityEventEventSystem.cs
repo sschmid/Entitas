@@ -12,7 +12,10 @@ public sealed class TestFlagEntityEventEventSystem : Entitas.ReactiveSystem<Test
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
-        return Entitas.CollectorContextExtension.CreateCollector(context, TestMatcher.FlagEntityEvent);
+        return Entitas.CollectorContextExtension.CreateCollector(
+            context,
+            Entitas.TriggerOnEventMatcherExtension.AddedOrRemoved(TestMatcher.FlagEntityEvent)
+        );
     }
 
     protected override bool Filter(TestEntity entity) {

@@ -8,14 +8,17 @@
 //------------------------------------------------------------------------------
 public sealed class Test2EventToGenerateEventSystem : Entitas.ReactiveSystem<Test2Entity> {
 
-    readonly Entitas.IGroup<Test2Entity> _listsners;
+    readonly Entitas.IGroup<Test2Entity> _listeners;
 
     public Test2EventToGenerateEventSystem(Contexts contexts) : base(contexts.test2) {
-        _listsners = contexts.test2.GetGroup(Test2Matcher.EventToGenerateListener);
+        _listeners = contexts.test2.GetGroup(Test2Matcher.EventToGenerateListener);
     }
 
     protected override Entitas.ICollector<Test2Entity> GetTrigger(Entitas.IContext<Test2Entity> context) {
-        return Entitas.CollectorContextExtension.CreateCollector(context, Test2Matcher.EventToGenerate);
+        return Entitas.CollectorContextExtension.CreateCollector(
+            context,
+            Entitas.TriggerOnEventMatcherExtension.Added(Test2Matcher.EventToGenerate)
+        );
     }
 
     protected override bool Filter(Test2Entity entity) {
@@ -25,7 +28,7 @@ public sealed class Test2EventToGenerateEventSystem : Entitas.ReactiveSystem<Tes
     protected override void Execute(System.Collections.Generic.List<Test2Entity> entities) {
         foreach (var e in entities) {
             var component = e.eventToGenerate;
-            foreach (var listener in _listsners) {
+            foreach (var listener in _listeners) {
                 listener.eventToGenerateListener.value.OnEventToGenerate(component.value);
             }
         }

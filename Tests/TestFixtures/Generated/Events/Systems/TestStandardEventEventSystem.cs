@@ -8,14 +8,17 @@
 //------------------------------------------------------------------------------
 public sealed class TestStandardEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
-    readonly Entitas.IGroup<TestEntity> _listsners;
+    readonly Entitas.IGroup<TestEntity> _listeners;
 
     public TestStandardEventEventSystem(Contexts contexts) : base(contexts.test) {
-        _listsners = contexts.test.GetGroup(TestMatcher.StandardEventListener);
+        _listeners = contexts.test.GetGroup(TestMatcher.StandardEventListener);
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
-        return Entitas.CollectorContextExtension.CreateCollector(context, TestMatcher.StandardEvent);
+        return Entitas.CollectorContextExtension.CreateCollector(
+            context,
+            Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.StandardEvent)
+        );
     }
 
     protected override bool Filter(TestEntity entity) {
@@ -25,7 +28,7 @@ public sealed class TestStandardEventEventSystem : Entitas.ReactiveSystem<TestEn
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             var component = e.standardEvent;
-            foreach (var listener in _listsners) {
+            foreach (var listener in _listeners) {
                 listener.standardEventListener.value.OnStandardEvent(component.value);
             }
         }

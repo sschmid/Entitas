@@ -9,11 +9,11 @@
 public sealed class EventSystems : Feature {
 
     public EventSystems(Contexts contexts) {
-        Add(new TestEventToGenerateEventSystem(contexts));
-        Add(new Test2EventToGenerateEventSystem(contexts));
-        Add(new TestFlagEventEventSystem(contexts));
-        Add(new TestStandardEventEventSystem(contexts));
-        Add(new TestFlagEntityEventEventSystem(contexts));
-        Add(new TestStandardEntityEventEventSystem(contexts));
+        Add(new TestEventToGenerateEventSystem(contexts)); // priority: 0
+        Add(new Test2EventToGenerateEventSystem(contexts)); // priority: 0
+        Add(new TestFlagEventEventSystem(contexts)); // priority: 0
+        Add(new TestStandardEventEventSystem(contexts)); // priority: 0
+        Add(new TestFlagEntityEventEventSystem(contexts)); // priority: 1
+        Add(new TestStandardEntityEventEventSystem(contexts)); // priority: 1
     }
 }

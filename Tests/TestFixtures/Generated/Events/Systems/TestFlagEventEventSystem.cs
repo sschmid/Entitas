@@ -8,14 +8,17 @@
 //------------------------------------------------------------------------------
 public sealed class TestFlagEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
-    readonly Entitas.IGroup<TestEntity> _listsners;
+    readonly Entitas.IGroup<TestEntity> _listeners;
 
     public TestFlagEventEventSystem(Contexts contexts) : base(contexts.test) {
-        _listsners = contexts.test.GetGroup(TestMatcher.FlagEventListener);
+        _listeners = contexts.test.GetGroup(TestMatcher.FlagEventListener);
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
-        return Entitas.CollectorContextExtension.CreateCollector(context, TestMatcher.FlagEvent);
+        return Entitas.CollectorContextExtension.CreateCollector(
+            context,
+            Entitas.TriggerOnEventMatcherExtension.AddedOrRemoved(TestMatcher.FlagEvent)
+        );
     }
 
     protected override bool Filter(TestEntity entity) {
@@ -25,7 +28,7 @@ public sealed class TestFlagEventEventSystem : Entitas.ReactiveSystem<TestEntity
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             var isFlagEvent = e.isFlagEvent;
-            foreach (var listener in _listsners) {
+            foreach (var listener in _listeners) {
                 listener.flagEventListener.value.OnFlagEvent(isFlagEvent);
             }
         }
