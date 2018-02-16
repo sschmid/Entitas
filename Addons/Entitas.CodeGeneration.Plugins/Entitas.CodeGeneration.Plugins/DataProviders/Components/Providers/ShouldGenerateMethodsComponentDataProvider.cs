@@ -18,7 +18,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class ShouldGenerateMethodsComponentDataExtension {
 
-        public const string COMPONENT_GENERATE_METHODS = "Component.GenerateMethods";
+        public const string COMPONENT_GENERATE_METHODS = "Component.Generate.Methods";
 
         public static bool ShouldGenerateMethods(this ComponentData data) {
             return (bool)data[COMPONENT_GENERATE_METHODS];

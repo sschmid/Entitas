@@ -6,7 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IEventToGenerateListener {
-
-    void OnEventToGenerate(My.Namespace.EventToGenerate value);
+public interface ITestStandardEventListener {
+    void OnStandardEvent(TestEntity entity, string value);
 }

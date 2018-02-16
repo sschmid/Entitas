@@ -9,15 +9,15 @@ namespace Entitas.CodeGeneration.Plugins {
             var shouldGenerateComponent = !type.ImplementsInterface<IComponent>();
             data.ShouldGenerateComponent(shouldGenerateComponent);
             if (shouldGenerateComponent) {
-                data.SetObjectType(type.ToCompilableString());
+                data.SetObjectTypeName(type.ToCompilableString());
             }
         }
     }
 
     public static class ShouldGenerateComponentComponentDataExtension {
 
-        public const string COMPONENT_GENERATE_COMPONENT = "Component.GenerateObjectComponent";
-        public const string COMPONENT_OBJECT_TYPE = "Component.ObjectType";
+        public const string COMPONENT_GENERATE_COMPONENT = "Component.Generate.Object";
+        public const string COMPONENT_OBJECT_TYPE = "Component.ObjectTypeName";
 
         public static bool ShouldGenerateComponent(this ComponentData data) {
             return (bool)data[COMPONENT_GENERATE_COMPONENT];
@@ -27,11 +27,11 @@ namespace Entitas.CodeGeneration.Plugins {
             data[COMPONENT_GENERATE_COMPONENT] = generate;
         }
 
-        public static string GetObjectType(this ComponentData data) {
+        public static string GetObjectTypeName(this ComponentData data) {
             return (string)data[COMPONENT_OBJECT_TYPE];
         }
 
-        public static void SetObjectType(this ComponentData data, string type) {
+        public static void SetObjectTypeName(this ComponentData data, string type) {
             data[COMPONENT_OBJECT_TYPE] = type;
         }
     }

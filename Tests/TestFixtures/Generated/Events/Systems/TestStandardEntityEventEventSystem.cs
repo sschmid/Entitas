@@ -13,19 +13,18 @@ public sealed class TestStandardEntityEventEventSystem : Entitas.ReactiveSystem<
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context,
-            Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.StandardEntityEvent)
+            context, Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.StandardEntityEvent)
         );
     }
 
     protected override bool Filter(TestEntity entity) {
-        return entity.hasStandardEntityEvent && entity.hasStandardEntityEventListener;
+        return entity.hasStandardEntityEvent && entity.hasTestStandardEntityEventListener;
     }
 
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             var component = e.standardEntityEvent;
-            e.standardEntityEventListener.value.OnStandardEntityEvent(component.value);
+            e.testStandardEntityEventListener.value.OnStandardEntityEvent(e, component.value);
         }
     }
 }

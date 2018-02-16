@@ -94,8 +94,8 @@ namespace Entitas.CodeGeneration.Plugins {
                 .ToArray();
 
             var dataFromEvents = dataFromComponents
-                .Where(data => data.GetEventData() != null)
-                .Select(createDataForEvents)
+                .Where(data => data.IsEvent())
+                .SelectMany(createDataForEvents)
                 .ToArray();
 
             return merge(dataFromEvents, merge(dataFromNonComponents, dataFromComponents));
@@ -131,17 +131,21 @@ namespace Entitas.CodeGeneration.Plugins {
                 }).ToArray();
         }
 
-        ComponentData createDataForEvents(ComponentData data) {
+        ComponentData[] createDataForEvents(ComponentData data) {
             var dataForEvent = new ComponentData(data);
-            dataForEvent.SetEventData(null);
+            dataForEvent.IsEvent(false);
             var componentName = dataForEvent.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            componentName += "Listener";
-            dataForEvent.SetlTypeName(componentName.AddComponentSuffix());
-            dataForEvent.SetMemberData(new[] {
-                new MemberData("I" + componentName, "value")
-            });
-
-            return dataForEvent;
+            return dataForEvent.GetContextNames()
+                .Select(contextName => {
+                    var listenerComponentName = contextName + componentName + "Listener";
+                    dataForEvent.SetlTypeName(listenerComponentName.AddComponentSuffix());
+                    dataForEvent.SetMemberData(new[] {
+                        new MemberData("I" + listenerComponentName, "value")
+                    });
+                    dataForEvent.SetContextNames(new [] { contextName });
+                    return dataForEvent;
+                })
+                .ToArray();
         }
 
         bool hasContexts(Type type) {

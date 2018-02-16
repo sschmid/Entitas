@@ -6,8 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-[Test]
-public sealed class StandardEntityEventListenerComponent : Entitas.IComponent {
-
-    public IStandardEntityEventListener value;
+public sealed class TestFlagEventListenerComponent : Entitas.IComponent {
+    public ITestFlagEventListener value;
 }

@@ -23,13 +23,12 @@ namespace Entitas.CodeGeneration.Plugins {
     readonly Entitas.IGroup<${ContextName}Entity> _listeners;
 
     public ${ContextName}${ComponentName}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
-        _listeners = contexts.${contextName}.GetGroup(${ContextName}Matcher.${ComponentName}Listener);
+        _listeners = contexts.${contextName}.GetGroup(${ContextName}Matcher.${ContextName}${ComponentName}Listener);
     }
 
     protected override Entitas.ICollector<${ContextName}Entity> GetTrigger(Entitas.IContext<${ContextName}Entity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context,
-            Entitas.TriggerOnEventMatcherExtension.${GroupEvent}(${ContextName}Matcher.${ComponentName})
+            context, Entitas.TriggerOnEventMatcherExtension.${GroupEvent}(${ContextName}Matcher.${ComponentName})
         );
     }
 
@@ -41,7 +40,7 @@ namespace Entitas.CodeGeneration.Plugins {
         foreach (var e in entities) {
             ${cachedAccess}
             foreach (var listener in _listeners) {
-                listener.${componentName}Listener.value.On${ComponentName}(${methodArgs});
+                listener.${contextName}${ComponentName}Listener.value.On${ComponentName}(e, ${methodArgs});
             }
         }
     }
@@ -56,19 +55,18 @@ namespace Entitas.CodeGeneration.Plugins {
 
     protected override Entitas.ICollector<${ContextName}Entity> GetTrigger(Entitas.IContext<${ContextName}Entity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context,
-            Entitas.TriggerOnEventMatcherExtension.${GroupEvent}(${ContextName}Matcher.${ComponentName})
+            context, Entitas.TriggerOnEventMatcherExtension.${GroupEvent}(${ContextName}Matcher.${ComponentName})
         );
     }
 
     protected override bool Filter(${ContextName}Entity entity) {
-        return ${filter} && entity.has${ComponentName}Listener;
+        return ${filter} && entity.has${ContextName}${ComponentName}Listener;
     }
 
     protected override void Execute(System.Collections.Generic.List<${ContextName}Entity> entities) {
         foreach (var e in entities) {
             ${cachedAccess}
-            e.${componentName}Listener.value.On${ComponentName}(${methodArgs});
+            e.${contextName}${ComponentName}Listener.value.On${ComponentName}(e, ${methodArgs});
         }
     }
 }
@@ -84,7 +82,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
-                .Where(d => d.GetEventData() != null)
+                .Where(d => d.IsEvent())
                 .SelectMany(generateSystems)
                 .ToArray();
         }
@@ -115,7 +113,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 ? data.GetUniquePrefix() + componentName
                 : getMethodArgs(memberData);
 
-            var template = data.GetEventData().bindToEntity
+            var template = data.GetBindToEntity()
                 ? ENTITY_SYSTEM_TEMPLATE
                 : SYSTEM_TEMPLATE;
 
@@ -123,7 +121,6 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${ContextName}", contextName)
                 .Replace("${contextName}", contextName.LowercaseFirst())
                 .Replace("${ComponentName}", componentName)
-                .Replace("${componentName}", componentName.LowercaseFirst())
                 .Replace("${GroupEvent}", groupEvent)
                 .Replace("${filter}", filter)
                 .Replace("${cachedAccess}", cachedAccess)

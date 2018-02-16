@@ -6,12 +6,12 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IEventToGenerateEntity {
+public interface IUniqueClassToGenerateEntity {
 
-    EventToGenerateComponent eventToGenerate { get; }
-    bool hasEventToGenerate { get; }
+    UniqueClassToGenerateComponent uniqueClassToGenerate { get; }
+    bool hasUniqueClassToGenerate { get; }
 
-    void AddEventToGenerate(My.Namespace.EventToGenerate newValue);
-    void ReplaceEventToGenerate(My.Namespace.EventToGenerate newValue);
-    void RemoveEventToGenerate();
+    void AddUniqueClassToGenerate(My.Namespace.UniqueClassToGenerate newValue);
+    void ReplaceUniqueClassToGenerate(My.Namespace.UniqueClassToGenerate newValue);
+    void RemoveUniqueClassToGenerate();
 }

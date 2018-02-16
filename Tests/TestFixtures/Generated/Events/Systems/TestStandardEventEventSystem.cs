@@ -11,13 +11,12 @@ public sealed class TestStandardEventEventSystem : Entitas.ReactiveSystem<TestEn
     readonly Entitas.IGroup<TestEntity> _listeners;
 
     public TestStandardEventEventSystem(Contexts contexts) : base(contexts.test) {
-        _listeners = contexts.test.GetGroup(TestMatcher.StandardEventListener);
+        _listeners = contexts.test.GetGroup(TestMatcher.TestStandardEventListener);
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context,
-            Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.StandardEvent)
+            context, Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.StandardEvent)
         );
     }
 
@@ -29,7 +28,7 @@ public sealed class TestStandardEventEventSystem : Entitas.ReactiveSystem<TestEn
         foreach (var e in entities) {
             var component = e.standardEvent;
             foreach (var listener in _listeners) {
-                listener.standardEventListener.value.OnStandardEvent(component.value);
+                listener.testStandardEventListener.value.OnStandardEvent(e, component.value);
             }
         }
     }

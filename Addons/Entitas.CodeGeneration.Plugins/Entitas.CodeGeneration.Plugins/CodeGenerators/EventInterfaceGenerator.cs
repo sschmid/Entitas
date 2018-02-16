@@ -18,9 +18,8 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string INTERFACE_TEMPLATE =
-@"public interface I${ComponentName}Listener {
-
-    void On${ComponentName}(${memberArgs});
+            @"public interface I${ContextName}${ComponentName}Listener {
+    void On${ComponentName}(${ContextName}Entity entity, ${memberArgs});
 }
 ";
 
@@ -34,12 +33,18 @@ namespace Entitas.CodeGeneration.Plugins {
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
-                .Where(d => d.GetEventData() != null)
-                .Select(generateInterface)
+                .Where(d => d.IsEvent())
+                .SelectMany(generateInterfaces)
                 .ToArray();
         }
 
-        CodeGenFile generateInterface(ComponentData data) {
+        CodeGenFile[] generateInterfaces(ComponentData data) {
+            return data.GetContextNames()
+                .Select(contextName => generateInterface(contextName, data))
+                .ToArray();
+        }
+
+        CodeGenFile generateInterface(string contextName, ComponentData data) {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var memberData = data.GetMemberData();
             if (memberData.Length == 0) {
@@ -47,13 +52,14 @@ namespace Entitas.CodeGeneration.Plugins {
             }
 
             var fileContent = INTERFACE_TEMPLATE
+                .Replace("${ContextName}", contextName)
                 .Replace("${ComponentName}", componentName)
                 .Replace("${memberArgs}", getMemberArgs(memberData));
 
             return new CodeGenFile(
                 "Events" + Path.DirectorySeparatorChar +
                 "Interfaces" + Path.DirectorySeparatorChar +
-                "I" + componentName + "Listener.cs",
+                "I" + contextName + componentName + "Listener.cs",
                 fileContent,
                 GetType().FullName
             );

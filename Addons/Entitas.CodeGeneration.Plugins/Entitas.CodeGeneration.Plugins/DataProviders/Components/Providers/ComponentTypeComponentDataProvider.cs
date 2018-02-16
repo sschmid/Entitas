@@ -12,7 +12,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class ComponentTypeComponentDataExtension {
 
-        public const string COMPONENT_TYPE = "Component.ComponentType";
+        public const string COMPONENT_TYPE = "Component.TypeName";
 
         public static string GetTypeName(this ComponentData data) {
             return (string)data[COMPONENT_TYPE];

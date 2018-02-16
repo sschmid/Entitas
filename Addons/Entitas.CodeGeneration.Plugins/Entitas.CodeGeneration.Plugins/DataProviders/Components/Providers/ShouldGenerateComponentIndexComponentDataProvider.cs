@@ -22,7 +22,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class ShouldGenerateComponentIndexComponentDataExtension {
 
-        public const string COMPONENT_GENERATE_INDEX = "Component.GenerateIndex";
+        public const string COMPONENT_GENERATE_INDEX = "Component.Generate.Index";
 
         public static bool ShouldGenerateIndex(this ComponentData data) {
             return (bool)data[COMPONENT_GENERATE_INDEX];

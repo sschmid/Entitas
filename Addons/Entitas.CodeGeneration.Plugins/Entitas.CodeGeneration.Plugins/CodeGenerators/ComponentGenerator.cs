@@ -31,7 +31,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 "Components" + Path.DirectorySeparatorChar + fullComponentName + ".cs",
                 COMPONENT_TEMPLATE
                     .Replace("${FullComponentName}", fullComponentName)
-                    .Replace("${Type}", data.GetObjectType()),
+                    .Replace("${Type}", data.GetObjectTypeName()),
                 GetType().FullName
             );
         }

@@ -84,7 +84,6 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\Contexts\ContextDataProvider.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\EntityIndex\EntityIndexData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\DataProviders\EntityIndex\EntityIndexDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Data\EventData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Data\MemberData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Data\MethodData.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\EntitasHook.cs" />

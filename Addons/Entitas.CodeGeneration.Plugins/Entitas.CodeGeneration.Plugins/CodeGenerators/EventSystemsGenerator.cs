@@ -34,8 +34,8 @@ ${systems}
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var orderedEventData = data
                 .OfType<ComponentData>()
-                .Where(d => d.GetEventData() != null)
-                .OrderBy(d => d.GetEventData().priority)
+                .Where(d => d.IsEvent())
+                .OrderBy(d => d.GetPriority())
                 .ThenBy(d => d.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                 .ToArray();
 
@@ -72,7 +72,7 @@ ${systems}
             return SYSTEM_ADD_TEMPLATE
                 .Replace("${ContextName}", contextName)
                 .Replace("${ComponentName}", data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
-                .Replace("${priority}", data.GetEventData().priority.ToString());
+                .Replace("${priority}", data.GetPriority().ToString());
         }
     }
 }

@@ -17,10 +17,8 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string COMPONENT_TEMPLATE =
-@"${Contexts}
-public sealed class ${ComponentName}ListenerComponent : Entitas.IComponent {
-
-    public I${ComponentName}Listener value;
+@"public sealed class ${ContextName}${ComponentName}ListenerComponent : Entitas.IComponent {
+    public I${ContextName}${ComponentName}Listener value;
 }
 ";
 
@@ -31,26 +29,27 @@ public sealed class ${ComponentName}ListenerComponent : Entitas.IComponent {
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
-                .Where(d => d.GetEventData() != null)
-                .Select(generateComponent)
+                .Where(d => d.IsEvent())
+                .SelectMany(generateComponents)
                 .ToArray();
         }
 
-        CodeGenFile generateComponent(ComponentData data) {
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            var contexts = string.Join(", ", data.GetContextNames());
-            if (!string.IsNullOrEmpty(contexts)) {
-                contexts = "[" + contexts + "]";
-            }
+        CodeGenFile[] generateComponents(ComponentData data) {
+            return data.GetContextNames()
+                .Select(contextName => generateComponent(contextName, data))
+                .ToArray();
+        }
 
+        CodeGenFile generateComponent(string contextName, ComponentData data) {
+            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var fileContent = COMPONENT_TEMPLATE
-                .Replace("${Contexts}", contexts)
+                .Replace("${ContextName}", contextName)
                 .Replace("${ComponentName}", componentName);
 
             return new CodeGenFile(
                 "Events" + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
-                componentName + "Listener".AddComponentSuffix() + ".cs",
+                contextName + componentName + "Listener".AddComponentSuffix() + ".cs",
                 fileContent,
                 GetType().FullName
             );

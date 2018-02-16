@@ -7,32 +7,48 @@ namespace Entitas.CodeGeneration.Plugins {
     public class EventComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
-            data.SetEventData(getEventData(type));
-        }
-
-        EventData getEventData(Type type) {
             var attr = Attribute.GetCustomAttributes(type)
                 .OfType<EventAttribute>()
                 .SingleOrDefault();
 
             if (attr != null) {
-                return new EventData(attr.bindToEntity, attr.priority);
+                data.IsEvent(true);
+                data.SetBindToEntity(attr.bindToEntity);
+                data.SetPriority(attr.priority);
+            } else {
+                data.IsEvent(false);
             }
-
-            return null;
         }
     }
 
-    public static class EventComponentDataDataExtension {
+    public static class EventComponentDataExtension {
 
         public const string COMPONENT_EVENT = "Component.Event";
+        public const string COMPONENT_EVENT_BIND_TO_ENTITY = "Component.Event.BindToEntity";
+        public const string COMPONENT_EVENT_PRIORITY = "Component.Event.Priority";
 
-        public static EventData GetEventData(this ComponentData data) {
-            return (EventData)data[COMPONENT_EVENT];
+        public static bool IsEvent(this ComponentData data) {
+            return (bool)data[COMPONENT_EVENT];
         }
 
-        public static void SetEventData(this ComponentData data, EventData eventData) {
-            data[COMPONENT_EVENT] = eventData;
+        public static void IsEvent(this ComponentData data, bool isEvent) {
+            data[COMPONENT_EVENT] = isEvent;
+        }
+
+        public static bool GetBindToEntity(this ComponentData data) {
+            return (bool)data[COMPONENT_EVENT_BIND_TO_ENTITY];
+        }
+
+        public static void SetBindToEntity(this ComponentData data, bool bindToEntity) {
+            data[COMPONENT_EVENT_BIND_TO_ENTITY] = bindToEntity;
+        }
+
+        public static int GetPriority(this ComponentData data) {
+            return (int)data[COMPONENT_EVENT_PRIORITY];
+        }
+
+        public static void SetPriority(this ComponentData data, int priority) {
+            data[COMPONENT_EVENT_PRIORITY] = priority;
         }
     }
 }

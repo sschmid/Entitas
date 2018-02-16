@@ -97,18 +97,32 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                 getData<CustomPrefixFlagComponent>().GetUniquePrefix().should_be("My");
             };
 
-            it["gets event"] = () => {
-                data.GetEventData().should_be_null();
-
-                var eventData = getData<StandardEventComponent>().GetEventData();
-                eventData.bindToEntity.should_be_false();
-                eventData.priority.should_be(0);
+            it["gets is no event"] = () => {
+                data.IsEvent().GetType().should_be(typeof(bool));
+                data.IsEvent().should_be_false();
             };
 
-            it["gets event bind to entity"] = () => {
-                var eventData = getData<StandardEntityEventComponent>().GetEventData();
-                eventData.bindToEntity.should_be_true();
-                eventData.priority.should_be(1);
+            it["gets event"] = () => { getData<StandardEventComponent>().IsEvent().should_be_true(); };
+
+            it["gets event bindToEntity"] = () => {
+                getData<StandardEventComponent>().GetBindToEntity().GetType().should_be(typeof(bool));
+                getData<StandardEventComponent>().GetBindToEntity().should_be_false();
+                getData<StandardEntityEventComponent>().GetBindToEntity().should_be_true();
+            };
+
+            it["gets event priority"] = () => {
+                getData<StandardEventComponent>().GetPriority().GetType().should_be(typeof(int));
+                getData<StandardEntityEventComponent>().GetPriority().should_be(1);
+            };
+
+            it["creates data for event listeners"] = () => {
+                var d = getMultipleData<StandardEventComponent>();
+                d.Length.should_be(2);
+                d[1].IsEvent().should_be_false();
+                d[1].GetTypeName().should_be("TestStandardEventListenerComponent");
+                d[1].GetMemberData().Length.should_be(1);
+                d[1].GetMemberData()[0].name.should_be("value");
+                d[1].GetMemberData()[0].type.should_be("ITestStandardEventListener");
             };
         };
 
@@ -147,7 +161,7 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
             it["gets generate component"] = () => {
                 data.ShouldGenerateComponent().GetType().should_be(typeof(bool));
                 data.ShouldGenerateComponent().should_be_true();
-                data.GetObjectType().should_be(typeof(ClassToGenerate).ToCompilableString());
+                data.GetObjectTypeName().should_be(typeof(ClassToGenerate).ToCompilableString());
             };
 
             it["gets generate index"] = () => { data.ShouldGenerateIndex().should_be_true(); };
@@ -156,13 +170,13 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
 
             it["gets unique prefix"] = () => { data.GetUniquePrefix().should_be("is"); };
 
-            it["gets event"] = () => {
-                data.GetEventData().should_be_null();
+            it["gets is no event"] = () => { data.IsEvent().should_be_false(); };
 
-                var eventData = getData<EventToGenerate>().GetEventData();
-                eventData.bindToEntity.should_be_false();
-                eventData.priority.should_be(0);
-            };
+            it["gets event"] = () => { getData<EventToGenerate>().IsEvent().should_be_true(); };
+
+            it["gets event bindToEntity"] = () => { getData<EventToGenerate>().GetBindToEntity().should_be_false(); };
+
+            it["gets event priority"] = () => { getData<EventToGenerate>().GetPriority().should_be(0); };
         };
 
         context["multiple types"] = () => {
@@ -186,17 +200,6 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                 var data = provider.GetData();
                 data.Length.should_be(1);
             };
-
-            it["ignores duplicates from events"] = () => {
-                var types = new[] { typeof(StandardEventComponent), typeof(StandardEventListenerComponent) };
-                var provider = new ComponentDataProvider(types);
-                provider.Configure(new TestPreferences(
-                    @"Entitas.CodeGeneration.Plugins.Contexts = Game, GameState
-Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"));
-
-                var data = provider.GetData();
-                data.Length.should_be(2);
-            };
         };
 
         context["multiple custom component names"] = () => {
@@ -213,8 +216,8 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"));
             };
 
             it["creates data for each custom component name"] = () => {
-                data1.GetObjectType().should_be(type.ToCompilableString());
-                data2.GetObjectType().should_be(type.ToCompilableString());
+                data1.GetObjectTypeName().should_be(type.ToCompilableString());
+                data2.GetObjectTypeName().should_be(type.ToCompilableString());
 
                 data1.GetTypeName().should_be("NewCustomNameComponent1Component");
                 data2.GetTypeName().should_be("NewCustomNameComponent2Component");
