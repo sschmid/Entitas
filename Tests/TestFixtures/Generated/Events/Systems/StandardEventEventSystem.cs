@@ -6,12 +6,12 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class TestStandardEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
+public sealed class StandardEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
     readonly Entitas.IGroup<TestEntity> _listeners;
 
-    public TestStandardEventEventSystem(Contexts contexts) : base(contexts.test) {
-        _listeners = contexts.test.GetGroup(TestMatcher.TestStandardEventListener);
+    public StandardEventEventSystem(Contexts contexts) : base(contexts.test) {
+        _listeners = contexts.test.GetGroup(TestMatcher.StandardEventListener);
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
@@ -28,7 +28,7 @@ public sealed class TestStandardEventEventSystem : Entitas.ReactiveSystem<TestEn
         foreach (var e in entities) {
             var component = e.standardEvent;
             foreach (var listener in _listeners) {
-                listener.testStandardEventListener.value.OnStandardEvent(e, component.value);
+                listener.standardEventListener.value.OnStandardEvent(e, component.value);
             }
         }
     }

@@ -17,33 +17,35 @@ public static class TestComponentsLookup {
     public const int DontGenerateMethods = 6;
     public const int Flag = 7;
     public const int FlagEntityEvent = 8;
-    public const int FlagEvent = 9;
-    public const int InterfaceToGenerate = 10;
-    public const int MyNamespaceEntityIndex = 11;
-    public const int MyNamespaceMultipleEntityIndices = 12;
-    public const int MyNamespaceMyNamespace = 13;
-    public const int MyNamespaceMyNamespaceFlag = 14;
-    public const int MyNamespaceUniqueMyNamespace = 15;
-    public const int MyNamespaceUniqueMyNamespaceFlag = 16;
-    public const int NameAge = 17;
-    public const int NewCustomNameComponent1 = 18;
-    public const int NewCustomNameComponent2 = 19;
-    public const int Position = 20;
-    public const int Size = 21;
-    public const int Standard = 22;
-    public const int StandardEntityEvent = 23;
-    public const int StandardEvent = 24;
-    public const int StructToGenerate = 25;
-    public const int Test2Context = 26;
-    public const int TestFlagEntityEventListener = 27;
-    public const int TestFlagEventListener = 28;
-    public const int TestStandardEntityEventListener = 29;
-    public const int TestStandardEventListener = 30;
-    public const int UniqueClassToGenerate = 31;
-    public const int UniqueFlag = 32;
-    public const int UniqueStandard = 33;
+    public const int FlagEntityEventListener = 9;
+    public const int FlagEvent = 10;
+    public const int FlagEventListener = 11;
+    public const int InterfaceToGenerate = 12;
+    public const int MultipleContextStandardEvent = 13;
+    public const int MyNamespaceEntityIndex = 14;
+    public const int MyNamespaceMultipleEntityIndices = 15;
+    public const int MyNamespaceMyNamespace = 16;
+    public const int MyNamespaceMyNamespaceFlag = 17;
+    public const int MyNamespaceUniqueMyNamespace = 18;
+    public const int MyNamespaceUniqueMyNamespaceFlag = 19;
+    public const int NameAge = 20;
+    public const int NewCustomNameComponent1 = 21;
+    public const int NewCustomNameComponent2 = 22;
+    public const int Position = 23;
+    public const int Size = 24;
+    public const int Standard = 25;
+    public const int StandardEntityEvent = 26;
+    public const int StandardEntityEventListener = 27;
+    public const int StandardEvent = 28;
+    public const int StandardEventListener = 29;
+    public const int StructToGenerate = 30;
+    public const int Test2Context = 31;
+    public const int TestMultipleContextStandardEventListener = 32;
+    public const int UniqueClassToGenerate = 33;
+    public const int UniqueFlag = 34;
+    public const int UniqueStandard = 35;
 
-    public const int TotalComponents = 34;
+    public const int TotalComponents = 36;
 
     public static readonly string[] componentNames = {
         "ClassToGenerate",
@@ -55,8 +57,11 @@ public static class TestComponentsLookup {
         "DontGenerateMethods",
         "Flag",
         "FlagEntityEvent",
+        "FlagEntityEventListener",
         "FlagEvent",
+        "FlagEventListener",
         "InterfaceToGenerate",
+        "MultipleContextStandardEvent",
         "MyNamespaceEntityIndex",
         "MyNamespaceMultipleEntityIndices",
         "MyNamespaceMyNamespace",
@@ -70,13 +75,12 @@ public static class TestComponentsLookup {
         "Size",
         "Standard",
         "StandardEntityEvent",
+        "StandardEntityEventListener",
         "StandardEvent",
+        "StandardEventListener",
         "StructToGenerate",
         "Test2Context",
-        "TestFlagEntityEventListener",
-        "TestFlagEventListener",
-        "TestStandardEntityEventListener",
-        "TestStandardEventListener",
+        "TestMultipleContextStandardEventListener",
         "UniqueClassToGenerate",
         "UniqueFlag",
         "UniqueStandard"
@@ -92,8 +96,11 @@ public static class TestComponentsLookup {
         typeof(DontGenerateMethodsComponent),
         typeof(FlagComponent),
         typeof(FlagEntityEventComponent),
+        typeof(FlagEntityEventListenerComponent),
         typeof(FlagEventComponent),
+        typeof(FlagEventListenerComponent),
         typeof(InterfaceToGenerateComponent),
+        typeof(MultipleContextStandardEventComponent),
         typeof(My.Namespace.EntityIndexComponent),
         typeof(My.Namespace.MultipleEntityIndicesComponent),
         typeof(My.Namespace.MyNamespaceComponent),
@@ -107,13 +114,12 @@ public static class TestComponentsLookup {
         typeof(SizeComponent),
         typeof(StandardComponent),
         typeof(StandardEntityEventComponent),
+        typeof(StandardEntityEventListenerComponent),
         typeof(StandardEventComponent),
+        typeof(StandardEventListenerComponent),
         typeof(StructToGenerateComponent),
         typeof(Test2ContextComponent),
-        typeof(TestFlagEntityEventListenerComponent),
-        typeof(TestFlagEventListenerComponent),
-        typeof(TestStandardEntityEventListenerComponent),
-        typeof(TestStandardEventListenerComponent),
+        typeof(TestMultipleContextStandardEventListenerComponent),
         typeof(UniqueClassToGenerateComponent),
         typeof(UniqueFlagComponent),
         typeof(UniqueStandardComponent)

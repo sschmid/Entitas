@@ -6,29 +6,29 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class TestFlagEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
+public sealed class TestMultipleContextStandardEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
     readonly Entitas.IGroup<TestEntity> _listeners;
 
-    public TestFlagEventEventSystem(Contexts contexts) : base(contexts.test) {
-        _listeners = contexts.test.GetGroup(TestMatcher.TestFlagEventListener);
+    public TestMultipleContextStandardEventEventSystem(Contexts contexts) : base(contexts.test) {
+        _listeners = contexts.test.GetGroup(TestMatcher.TestMultipleContextStandardEventListener);
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context, Entitas.TriggerOnEventMatcherExtension.AddedOrRemoved(TestMatcher.FlagEvent)
+            context, Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.MultipleContextStandardEvent)
         );
     }
 
     protected override bool Filter(TestEntity entity) {
-        return true;
+        return entity.hasMultipleContextStandardEvent;
     }
 
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
-            var isFlagEvent = e.isFlagEvent;
+            var component = e.multipleContextStandardEvent;
             foreach (var listener in _listeners) {
-                listener.testFlagEventListener.value.OnFlagEvent(e, isFlagEvent);
+                listener.testMultipleContextStandardEventListener.value.OnMultipleContextStandardEvent(e, component.value);
             }
         }
     }

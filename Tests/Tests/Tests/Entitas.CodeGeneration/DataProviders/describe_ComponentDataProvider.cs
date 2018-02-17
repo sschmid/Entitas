@@ -171,12 +171,6 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
             it["gets unique prefix"] = () => { data.GetUniquePrefix().should_be("is"); };
 
             it["gets is no event"] = () => { data.IsEvent().should_be_false(); };
-
-            it["gets event"] = () => { getData<EventToGenerate>().IsEvent().should_be_true(); };
-
-            it["gets event bindToEntity"] = () => { getData<EventToGenerate>().GetBindToEntity().should_be_false(); };
-
-            it["gets event priority"] = () => { getData<EventToGenerate>().GetPriority().should_be(0); };
         };
 
         context["multiple types"] = () => {

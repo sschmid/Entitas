@@ -25,7 +25,7 @@ ${systems}
 }
 ";
 
-        const string SYSTEM_ADD_TEMPLATE = @"        Add(new ${ContextName}${ComponentName}EventSystem(contexts)); // priority: ${priority}";
+        const string SYSTEM_ADD_TEMPLATE = @"        Add(new ${OptionalContextName}${ComponentName}EventSystem(contexts)); // priority: ${priority}";
 
         public void Configure(Preferences preferences) {
             _ignoreNamespacesConfig.Configure(preferences);
@@ -69,8 +69,9 @@ ${systems}
         }
 
         string generateAddSystem(string contextName, ComponentData data) {
+            var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
             return SYSTEM_ADD_TEMPLATE
-                .Replace("${ContextName}", contextName)
+                .Replace("${OptionalContextName}", optionalContextName)
                 .Replace("${ComponentName}", data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                 .Replace("${priority}", data.GetPriority().ToString());
         }

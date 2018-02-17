@@ -132,17 +132,18 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         ComponentData[] createDataForEvents(ComponentData data) {
-            var dataForEvent = new ComponentData(data);
-            dataForEvent.IsEvent(false);
-            var componentName = dataForEvent.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            return dataForEvent.GetContextNames()
+            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+            return data.GetContextNames()
                 .Select(contextName => {
-                    var listenerComponentName = contextName + componentName + "Listener";
+                    var dataForEvent = new ComponentData(data);
+                    dataForEvent.IsEvent(false);
+                    var optionalContextName = dataForEvent.GetContextNames().Length > 1 ? contextName : string.Empty;
+                    var listenerComponentName = optionalContextName + componentName + "Listener";
                     dataForEvent.SetlTypeName(listenerComponentName.AddComponentSuffix());
                     dataForEvent.SetMemberData(new[] {
                         new MemberData("I" + listenerComponentName, "value")
                     });
-                    dataForEvent.SetContextNames(new [] { contextName });
+                    dataForEvent.SetContextNames(new[] { contextName });
                     return dataForEvent;
                 })
                 .ToArray();

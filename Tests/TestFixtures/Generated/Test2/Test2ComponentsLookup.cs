@@ -9,32 +9,38 @@
 public static class Test2ComponentsLookup {
 
     public const int ClassToGenerate = 0;
-    public const int MyNamespaceEntityIndex = 1;
-    public const int MyNamespaceMultipleEntityIndices = 2;
-    public const int MyNamespaceMyNamespace = 3;
-    public const int NameAge = 4;
-    public const int Test2Context = 5;
-    public const int UniqueClassToGenerate = 6;
+    public const int MultipleContextStandardEvent = 1;
+    public const int MyNamespaceEntityIndex = 2;
+    public const int MyNamespaceMultipleEntityIndices = 3;
+    public const int MyNamespaceMyNamespace = 4;
+    public const int NameAge = 5;
+    public const int Test2Context = 6;
+    public const int Test2MultipleContextStandardEventListener = 7;
+    public const int UniqueClassToGenerate = 8;
 
-    public const int TotalComponents = 7;
+    public const int TotalComponents = 9;
 
     public static readonly string[] componentNames = {
         "ClassToGenerate",
+        "MultipleContextStandardEvent",
         "MyNamespaceEntityIndex",
         "MyNamespaceMultipleEntityIndices",
         "MyNamespaceMyNamespace",
         "NameAge",
         "Test2Context",
+        "Test2MultipleContextStandardEventListener",
         "UniqueClassToGenerate"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(ClassToGenerateComponent),
+        typeof(MultipleContextStandardEventComponent),
         typeof(My.Namespace.EntityIndexComponent),
         typeof(My.Namespace.MultipleEntityIndicesComponent),
         typeof(My.Namespace.MyNamespaceComponent),
         typeof(NameAgeComponent),
         typeof(Test2ContextComponent),
+        typeof(Test2MultipleContextStandardEventListenerComponent),
         typeof(UniqueClassToGenerateComponent)
     };
 }

@@ -18,12 +18,12 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string SYSTEM_TEMPLATE =
-@"public sealed class ${ContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
+@"public sealed class ${OptionalContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
 
     readonly Entitas.IGroup<${ContextName}Entity> _listeners;
 
-    public ${ContextName}${ComponentName}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
-        _listeners = contexts.${contextName}.GetGroup(${ContextName}Matcher.${ContextName}${ComponentName}Listener);
+    public ${OptionalContextName}${ComponentName}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
+        _listeners = contexts.${contextName}.GetGroup(${ContextName}Matcher.${OptionalContextName}${ComponentName}Listener);
     }
 
     protected override Entitas.ICollector<${ContextName}Entity> GetTrigger(Entitas.IContext<${ContextName}Entity> context) {
@@ -40,7 +40,7 @@ namespace Entitas.CodeGeneration.Plugins {
         foreach (var e in entities) {
             ${cachedAccess}
             foreach (var listener in _listeners) {
-                listener.${contextName}${ComponentName}Listener.value.On${ComponentName}(e, ${methodArgs});
+                listener.${optionalContextName}${contextDependentComponentName}Listener.value.On${ComponentName}(e, ${methodArgs});
             }
         }
     }
@@ -48,9 +48,9 @@ namespace Entitas.CodeGeneration.Plugins {
 ";
 
         const string ENTITY_SYSTEM_TEMPLATE =
-@"public sealed class ${ContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
+@"public sealed class ${OptionalContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
 
-    public ${ContextName}${ComponentName}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
+    public ${OptionalContextName}${ComponentName}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
     }
 
     protected override Entitas.ICollector<${ContextName}Entity> GetTrigger(Entitas.IContext<${ContextName}Entity> context) {
@@ -60,13 +60,13 @@ namespace Entitas.CodeGeneration.Plugins {
     }
 
     protected override bool Filter(${ContextName}Entity entity) {
-        return ${filter} && entity.has${ContextName}${ComponentName}Listener;
+        return ${filter} && entity.has${OptionalContextName}${ComponentName}Listener;
     }
 
     protected override void Execute(System.Collections.Generic.List<${ContextName}Entity> entities) {
         foreach (var e in entities) {
             ${cachedAccess}
-            e.${contextName}${ComponentName}Listener.value.On${ComponentName}(e, ${methodArgs});
+            e.${optionalContextName}${contextDependentComponentName}Listener.value.On${ComponentName}(e, ${methodArgs});
         }
     }
 }
@@ -94,6 +94,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         CodeGenFile generateSystem(string contextName, ComponentData data) {
+            var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var memberData = data.GetMemberData();
 
@@ -120,7 +121,10 @@ namespace Entitas.CodeGeneration.Plugins {
             var fileContent = template
                 .Replace("${ContextName}", contextName)
                 .Replace("${contextName}", contextName.LowercaseFirst())
+                .Replace("${OptionalContextName}", optionalContextName)
+                .Replace("${optionalContextName}", optionalContextName == string.Empty ? string.Empty: optionalContextName.LowercaseFirst())
                 .Replace("${ComponentName}", componentName)
+                .Replace("${contextDependentComponentName}", optionalContextName == string.Empty ? componentName.LowercaseFirst() : componentName)
                 .Replace("${GroupEvent}", groupEvent)
                 .Replace("${filter}", filter)
                 .Replace("${cachedAccess}", cachedAccess)
@@ -129,7 +133,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return new CodeGenFile(
                 "Events" + Path.DirectorySeparatorChar +
                 "Systems" + Path.DirectorySeparatorChar +
-                contextName + componentName + "EventSystem.cs",
+                optionalContextName + componentName + "EventSystem.cs",
                 fileContent,
                 GetType().FullName
             );

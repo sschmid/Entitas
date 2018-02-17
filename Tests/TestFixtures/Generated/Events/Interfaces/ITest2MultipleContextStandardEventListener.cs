@@ -6,6 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IFlagEntityEventListener {
-    void OnFlagEntityEvent(TestEntity entity, bool isFlagEntityEvent);
+public interface ITest2MultipleContextStandardEventListener {
+    void OnMultipleContextStandardEvent(Test2Entity entity, string value);
 }

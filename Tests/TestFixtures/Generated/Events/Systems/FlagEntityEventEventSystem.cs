@@ -6,25 +6,25 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class TestStandardEntityEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
+public sealed class FlagEntityEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
-    public TestStandardEntityEventEventSystem(Contexts contexts) : base(contexts.test) {
+    public FlagEntityEventEventSystem(Contexts contexts) : base(contexts.test) {
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context, Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.StandardEntityEvent)
+            context, Entitas.TriggerOnEventMatcherExtension.AddedOrRemoved(TestMatcher.FlagEntityEvent)
         );
     }
 
     protected override bool Filter(TestEntity entity) {
-        return entity.hasStandardEntityEvent && entity.hasTestStandardEntityEventListener;
+        return true && entity.hasFlagEntityEventListener;
     }
 
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
-            var component = e.standardEntityEvent;
-            e.testStandardEntityEventListener.value.OnStandardEntityEvent(e, component.value);
+            var isFlagEntityEvent = e.isFlagEntityEvent;
+            e.flagEntityEventListener.value.OnFlagEntityEvent(e, isFlagEntityEvent);
         }
     }
 }

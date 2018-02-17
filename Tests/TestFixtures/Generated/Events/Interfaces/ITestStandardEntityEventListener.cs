@@ -6,6 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface ITestStandardEntityEventListener {
+public interface IStandardEntityEventListener {
     void OnStandardEntityEvent(TestEntity entity, string value);
 }

@@ -18,7 +18,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string INTERFACE_TEMPLATE =
-            @"public interface I${ContextName}${ComponentName}Listener {
+            @"public interface I${OptionalContextName}${ComponentName}Listener {
     void On${ComponentName}(${ContextName}Entity entity, ${memberArgs});
 }
 ";
@@ -45,6 +45,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         CodeGenFile generateInterface(string contextName, ComponentData data) {
+            var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var memberData = data.GetMemberData();
             if (memberData.Length == 0) {
@@ -53,6 +54,8 @@ namespace Entitas.CodeGeneration.Plugins {
 
             var fileContent = INTERFACE_TEMPLATE
                 .Replace("${ContextName}", contextName)
+                .Replace("${OptionalContextName}", optionalContextName)
+                .Replace("${ComponentName}", componentName)
                 .Replace("${ComponentName}", componentName)
                 .Replace("${memberArgs}", getMemberArgs(memberData));
 
