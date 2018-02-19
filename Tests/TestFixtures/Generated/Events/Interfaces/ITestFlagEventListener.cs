@@ -7,5 +7,5 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public interface IFlagEventListener {
-    void OnFlagEvent(TestEntity entity, bool isFlagEvent);
+    void OnFlagEventRemoved(TestEntity entity);
 }

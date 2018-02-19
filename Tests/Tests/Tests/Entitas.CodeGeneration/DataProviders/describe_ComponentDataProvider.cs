@@ -1,6 +1,7 @@
 using System;
 using DesperateDevs.Serialization;
 using DesperateDevs.Utils;
+using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.Plugins;
 using My.Namespace;
 using NSpec;
@@ -108,6 +109,12 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                 getData<StandardEventComponent>().GetBindToEntity().GetType().should_be(typeof(bool));
                 getData<StandardEventComponent>().GetBindToEntity().should_be_false();
                 getData<StandardEntityEventComponent>().GetBindToEntity().should_be_true();
+            };
+
+            it["gets event type"] = () => {
+                getData<StandardEventComponent>().GetEventType().GetType().should_be(typeof(EventType));
+                getData<StandardEventComponent>().GetEventType().should_be(EventType.Added);
+                getData<StandardEntityEventComponent>().GetEventType().should_be(EventType.Removed);
             };
 
             it["gets event priority"] = () => {

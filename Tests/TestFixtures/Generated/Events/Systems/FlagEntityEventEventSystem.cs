@@ -13,18 +13,18 @@ public sealed class FlagEntityEventEventSystem : Entitas.ReactiveSystem<TestEnti
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context, Entitas.TriggerOnEventMatcherExtension.AddedOrRemoved(TestMatcher.FlagEntityEvent)
+            context, Entitas.TriggerOnEventMatcherExtension.Added(TestMatcher.FlagEntityEvent)
         );
     }
 
     protected override bool Filter(TestEntity entity) {
-        return true && entity.hasFlagEntityEventListener;
+        return entity.isFlagEntityEvent && entity.hasFlagEntityEventListener;
     }
 
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             var isFlagEntityEvent = e.isFlagEntityEvent;
-            e.flagEntityEventListener.value.OnFlagEntityEvent(e, isFlagEntityEvent);
+            e.flagEntityEventListener.value.OnFlagEntityEventAdded(e);
         }
     }
 }

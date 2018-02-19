@@ -17,7 +17,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string COMPONENT_TEMPLATE =
-@"public sealed class ${OptionalContextName}${ComponentName}ListenerComponent : Entitas.IComponent {
+            @"public sealed class ${OptionalContextName}${ComponentName}ListenerComponent : Entitas.IComponent {
     public I${OptionalContextName}${ComponentName}Listener value;
 }
 ";
@@ -43,6 +43,7 @@ namespace Entitas.CodeGeneration.Plugins {
         CodeGenFile generateComponent(string contextName, ComponentData data) {
             var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+
             var fileContent = COMPONENT_TEMPLATE
                 .Replace("${OptionalContextName}", optionalContextName)
                 .Replace("${ComponentName}", componentName);

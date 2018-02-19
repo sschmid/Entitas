@@ -7,5 +7,5 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 public interface IStandardEntityEventListener {
-    void OnStandardEntityEvent(TestEntity entity, string value);
+    void OnStandardEntityEventRemoved(TestEntity entity);
 }

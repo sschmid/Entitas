@@ -4,6 +4,7 @@ using System.Linq;
 using DesperateDevs.CodeGeneration;
 using DesperateDevs.Serialization;
 using DesperateDevs.Utils;
+using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
 
@@ -18,7 +19,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string SYSTEM_TEMPLATE =
-@"public sealed class ${OptionalContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
+            @"public sealed class ${OptionalContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
 
     readonly Entitas.IGroup<${ContextName}Entity> _listeners;
 
@@ -40,7 +41,7 @@ namespace Entitas.CodeGeneration.Plugins {
         foreach (var e in entities) {
             ${cachedAccess}
             foreach (var listener in _listeners) {
-                listener.${optionalContextName}${contextDependentComponentName}Listener.value.On${ComponentName}(e, ${methodArgs});
+                listener.${optionalContextName}${contextDependentComponentName}Listener.value.On${ComponentName}${EventType}(e${methodArgs});
             }
         }
     }
@@ -48,7 +49,7 @@ namespace Entitas.CodeGeneration.Plugins {
 ";
 
         const string ENTITY_SYSTEM_TEMPLATE =
-@"public sealed class ${OptionalContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
+            @"public sealed class ${OptionalContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
 
     public ${OptionalContextName}${ComponentName}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
     }
@@ -60,13 +61,13 @@ namespace Entitas.CodeGeneration.Plugins {
     }
 
     protected override bool Filter(${ContextName}Entity entity) {
-        return ${filter} && entity.has${OptionalContextName}${ComponentName}Listener;
+        return ${filter};
     }
 
     protected override void Execute(System.Collections.Generic.List<${ContextName}Entity> entities) {
         foreach (var e in entities) {
             ${cachedAccess}
-            e.${optionalContextName}${contextDependentComponentName}Listener.value.On${ComponentName}(e, ${methodArgs});
+            e.${optionalContextName}${contextDependentComponentName}Listener.value.On${ComponentName}${EventType}(e${methodArgs});
         }
     }
 }
@@ -98,21 +99,60 @@ namespace Entitas.CodeGeneration.Plugins {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var memberData = data.GetMemberData();
 
-            var groupEvent = memberData.Length == 0
-                ? "AddedOrRemoved"
-                : "Added";
+            var methodArgs = ", " + (memberData.Length == 0
+                                 ? data.GetUniquePrefix() + componentName
+                                 : getMethodArgs(memberData));
 
-            var filter = memberData.Length == 0
-                ? "true"
-                : "entity.has" + componentName;
+            var eventTypeSuffix = string.Empty;
+            var filter = string.Empty;
+            if (data.GetMemberData().Length == 0) {
+                switch (data.GetEventType()) {
+                    case EventType.Added:
+                        eventTypeSuffix = "Added";
+                        methodArgs = string.Empty;
+                        filter = "entity." + data.GetUniquePrefix() + componentName;
+                        break;
+                    case EventType.Removed:
+                        eventTypeSuffix = "Removed";
+                        methodArgs = string.Empty;
+                        filter = "!entity." + data.GetUniquePrefix() + componentName;
+                        break;
+                    case EventType.AddedOrRemoved:
+                        filter = "true";
+                        break;
+                }
+            } else {
+                switch (data.GetEventType()) {
+                    case EventType.Added:
+                        filter = "entity.has" + componentName;
+                        break;
+                    case EventType.Removed:
+                        eventTypeSuffix = "Removed";
+                        methodArgs = string.Empty;
+                        filter = "!entity.has" + componentName;
+                        break;
+                    case EventType.AddedOrRemoved:
+                        eventTypeSuffix = "AddedOrRemoved";
+                        filter = "true";
+                        break;
+                }
+            }
+
+            if (data.GetBindToEntity()) {
+                if (filter == "true") {
+                    filter = "entity.has${OptionalContextName}${ComponentName}Listener";
+                } else {
+                    filter += " && entity.has${OptionalContextName}${ComponentName}Listener";
+                }
+            }
+
+            filter = filter
+                .Replace("${OptionalContextName}", optionalContextName)
+                .Replace("${ComponentName}", componentName);
 
             var cachedAccess = memberData.Length == 0
                 ? "var " + data.GetUniquePrefix() + componentName + " = e." + data.GetUniquePrefix() + componentName + ";"
                 : "var component = e." + componentName.LowercaseFirst() + ";";
-
-            var methodArgs = memberData.Length == 0
-                ? data.GetUniquePrefix() + componentName
-                : getMethodArgs(memberData);
 
             var template = data.GetBindToEntity()
                 ? ENTITY_SYSTEM_TEMPLATE
@@ -122,12 +162,13 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${ContextName}", contextName)
                 .Replace("${contextName}", contextName.LowercaseFirst())
                 .Replace("${OptionalContextName}", optionalContextName)
-                .Replace("${optionalContextName}", optionalContextName == string.Empty ? string.Empty: optionalContextName.LowercaseFirst())
+                .Replace("${optionalContextName}", optionalContextName == string.Empty ? string.Empty : optionalContextName.LowercaseFirst())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${contextDependentComponentName}", optionalContextName == string.Empty ? componentName.LowercaseFirst() : componentName)
-                .Replace("${GroupEvent}", groupEvent)
+                .Replace("${GroupEvent}", data.GetEventType().ToString())
                 .Replace("${filter}", filter)
                 .Replace("${cachedAccess}", cachedAccess)
+                .Replace("${EventType}", eventTypeSuffix)
                 .Replace("${methodArgs}", methodArgs);
 
             return new CodeGenFile(

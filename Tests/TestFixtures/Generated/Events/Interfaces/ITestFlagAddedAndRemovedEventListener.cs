@@ -6,6 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IFlagEntityEventListener {
-    void OnFlagEntityEventAdded(TestEntity entity);
+public interface IFlagAddedAndRemovedEventListener {
+    void OnFlagAddedAndRemovedEvent(TestEntity entity, bool isFlagAddedAndRemovedEvent);
 }

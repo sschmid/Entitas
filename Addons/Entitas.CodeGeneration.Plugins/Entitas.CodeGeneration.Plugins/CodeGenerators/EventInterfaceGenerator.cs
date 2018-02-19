@@ -4,6 +4,7 @@ using System.Linq;
 using DesperateDevs.CodeGeneration;
 using DesperateDevs.Serialization;
 using DesperateDevs.Utils;
+using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
 
@@ -19,7 +20,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         const string INTERFACE_TEMPLATE =
             @"public interface I${OptionalContextName}${ComponentName}Listener {
-    void On${ComponentName}(${ContextName}Entity entity, ${memberArgs});
+    void On${ComponentName}${EventType}(${ContextName}Entity entity${memberArgs});
 }
 ";
 
@@ -52,12 +53,38 @@ namespace Entitas.CodeGeneration.Plugins {
                 memberData = new[] { new MemberData("bool", data.GetUniquePrefix().LowercaseFirst() + componentName) };
             }
 
+            var eventTypeSuffix = string.Empty;
+            var memberArgs = ", " + getMemberArgs(memberData);
+            if (data.GetMemberData().Length == 0) {
+                switch (data.GetEventType()) {
+                    case EventType.Added:
+                        eventTypeSuffix = "Added";
+                        memberArgs = string.Empty;
+                        break;
+                    case EventType.Removed:
+                        eventTypeSuffix = "Removed";
+                        memberArgs = string.Empty;
+                        break;
+                }
+            } else {
+                switch (data.GetEventType()) {
+                    case EventType.Removed:
+                        eventTypeSuffix = "Removed";
+                        memberArgs = string.Empty;
+                        break;
+                    case EventType.AddedOrRemoved:
+                        eventTypeSuffix = "AddedOrRemoved";
+                        break;
+                }
+            }
+
             var fileContent = INTERFACE_TEMPLATE
                 .Replace("${ContextName}", contextName)
                 .Replace("${OptionalContextName}", optionalContextName)
                 .Replace("${ComponentName}", componentName)
                 .Replace("${ComponentName}", componentName)
-                .Replace("${memberArgs}", getMemberArgs(memberData));
+                .Replace("${EventType}", eventTypeSuffix)
+                .Replace("${memberArgs}", memberArgs);
 
             return new CodeGenFile(
                 "Events" + Path.DirectorySeparatorChar +
