@@ -119,10 +119,26 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                 var d = getMultipleData<StandardEventComponent>();
                 d.Length.should_be(2);
                 d[1].IsEvent().should_be_false();
-                d[1].GetTypeName().should_be("TestStandardEventListenerComponent");
+                d[1].GetTypeName().should_be("StandardEventListenerComponent");
                 d[1].GetMemberData().Length.should_be(1);
                 d[1].GetMemberData()[0].name.should_be("value");
-                d[1].GetMemberData()[0].type.should_be("ITestStandardEventListener");
+                d[1].GetMemberData()[0].type.should_be("IStandardEventListener");
+            };
+
+            it["creates data for event listeners with multiple contexts"] = () => {
+                var d = getMultipleData<MultipleContextStandardEventComponent>();
+                d.Length.should_be(3);
+                d[1].IsEvent().should_be_false();
+                d[1].GetTypeName().should_be("TestMultipleContextStandardEventListenerComponent");
+                d[1].GetMemberData().Length.should_be(1);
+                d[1].GetMemberData()[0].name.should_be("value");
+                d[1].GetMemberData()[0].type.should_be("ITestMultipleContextStandardEventListener");
+
+                d[2].IsEvent().should_be_false();
+                d[2].GetTypeName().should_be("Test2MultipleContextStandardEventListenerComponent");
+                d[2].GetMemberData().Length.should_be(1);
+                d[2].GetMemberData()[0].name.should_be("value");
+                d[2].GetMemberData()[0].type.should_be("ITest2MultipleContextStandardEventListener");
             };
         };
 
