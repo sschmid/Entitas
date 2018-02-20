@@ -35,7 +35,7 @@ ${systems}
             var orderedEventData = data
                 .OfType<ComponentData>()
                 .Where(d => d.IsEvent())
-                .OrderBy(d => d.GetPriority())
+                .OrderBy(d => d.GetEventPriority())
                 .ThenBy(d => d.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                 .ToArray();
 
@@ -73,7 +73,7 @@ ${systems}
             return SYSTEM_ADD_TEMPLATE
                 .Replace("${OptionalContextName}", optionalContextName)
                 .Replace("${ComponentName}", data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
-                .Replace("${priority}", data.GetPriority().ToString());
+                .Replace("${priority}", data.GetEventPriority().ToString());
         }
     }
 }

@@ -13,9 +13,9 @@ namespace Entitas.CodeGeneration.Plugins {
 
             if (attr != null) {
                 data.IsEvent(true);
-                data.SetBindToEntity(attr.bindToEntity);
+                data.SetEventBindToEntity(attr.bindToEntity);
                 data.SetEventType(attr.eventType);
-                data.SetPriority(attr.priority);
+                data.SetEventPriority(attr.priority);
             } else {
                 data.IsEvent(false);
             }
@@ -37,11 +37,11 @@ namespace Entitas.CodeGeneration.Plugins {
             data[COMPONENT_EVENT] = isEvent;
         }
 
-        public static bool GetBindToEntity(this ComponentData data) {
+        public static bool GetEventBindToEntity(this ComponentData data) {
             return (bool)data[COMPONENT_EVENT_BIND_TO_ENTITY];
         }
 
-        public static void SetBindToEntity(this ComponentData data, bool bindToEntity) {
+        public static void SetEventBindToEntity(this ComponentData data, bool bindToEntity) {
             data[COMPONENT_EVENT_BIND_TO_ENTITY] = bindToEntity;
         }
 
@@ -53,11 +53,11 @@ namespace Entitas.CodeGeneration.Plugins {
             data[COMPONENT_EVENT_TYPE] = eventType;
         }
 
-        public static int GetPriority(this ComponentData data) {
+        public static int GetEventPriority(this ComponentData data) {
             return (int)data[COMPONENT_EVENT_PRIORITY];
         }
 
-        public static void SetPriority(this ComponentData data, int priority) {
+        public static void SetEventPriority(this ComponentData data, int priority) {
             data[COMPONENT_EVENT_PRIORITY] = priority;
         }
     }

@@ -138,7 +138,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 }
             }
 
-            if (data.GetBindToEntity()) {
+            if (data.GetEventBindToEntity()) {
                 if (filter == "true") {
                     filter = "entity.has${OptionalContextName}${ComponentName}Listener";
                 } else {
@@ -154,7 +154,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 ? "var " + data.GetUniquePrefix() + componentName + " = e." + data.GetUniquePrefix() + componentName + ";"
                 : "var component = e." + componentName.LowercaseFirst() + ";";
 
-            var template = data.GetBindToEntity()
+            var template = data.GetEventBindToEntity()
                 ? ENTITY_SYSTEM_TEMPLATE
                 : SYSTEM_TEMPLATE;
 

@@ -106,9 +106,9 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
             it["gets event"] = () => { getData<StandardEventComponent>().IsEvent().should_be_true(); };
 
             it["gets event bindToEntity"] = () => {
-                getData<StandardEventComponent>().GetBindToEntity().GetType().should_be(typeof(bool));
-                getData<StandardEventComponent>().GetBindToEntity().should_be_false();
-                getData<StandardEntityEventComponent>().GetBindToEntity().should_be_true();
+                getData<StandardEventComponent>().GetEventBindToEntity().GetType().should_be(typeof(bool));
+                getData<StandardEventComponent>().GetEventBindToEntity().should_be_false();
+                getData<StandardEntityEventComponent>().GetEventBindToEntity().should_be_true();
             };
 
             it["gets event type"] = () => {
@@ -118,8 +118,8 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
             };
 
             it["gets event priority"] = () => {
-                getData<StandardEventComponent>().GetPriority().GetType().should_be(typeof(int));
-                getData<StandardEntityEventComponent>().GetPriority().should_be(1);
+                getData<StandardEventComponent>().GetEventPriority().GetType().should_be(typeof(int));
+                getData<StandardEntityEventComponent>().GetEventPriority().should_be(1);
             };
 
             it["creates data for event listeners"] = () => {
