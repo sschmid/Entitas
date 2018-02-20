@@ -18,12 +18,11 @@
 │   │       ├── CodeGenerators
 │   │       ├── Configs
 │   │       ├── Data
-│   │       ├── DataProviders
-│   │       │   ├── Components
-│   │       │   │   └── Providers
-│   │       │   ├── Contexts
-│   │       │   └── EntityIndex
-│   │       └── Templates
+│   │       └── DataProviders
+│   │           ├── Components
+│   │           │   └── Providers
+│   │           ├── Contexts
+│   │           └── EntityIndex
 │   ├── Entitas.Migration
 │   │   └── Entitas.Migration
 │   │       ├── Migration
@@ -137,7 +136,6 @@
 │   │       │   ├── TemplateConfigExtension.cs
 │   │       │   └── TemplatesConfig.cs
 │   │       ├── Data
-│   │       │   ├── EventData.cs
 │   │       │   ├── MemberData.cs
 │   │       │   └── MethodData.cs
 │   │       ├── DataProviders
@@ -161,11 +159,6 @@
 │   │       │   └── EntityIndex
 │   │       │       ├── EntityIndexData.cs
 │   │       │       └── EntityIndexDataProvider.cs
-│   │       ├── Templates
-│   │       │   ├── ComponentContext.txt
-│   │       │   ├── FlagComponentContext.txt
-│   │       │   ├── MethodArgument.txt
-│   │       │   └── MethodParameter.txt
 │   │       ├── EntitasHook.cs
 │   │       └── PluginUtil.cs
 │   ├── Entitas.Migration

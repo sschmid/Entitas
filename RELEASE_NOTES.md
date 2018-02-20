@@ -1,3 +1,24 @@
+# 1.2.0
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+This update improves the new Entitas Events introduced in 1.1.0
+
+Breaking changes are marked with ⚠️️
+
+#### Entitas
+⚙️ Added support for multiple contexts for events. Context prefix will be skipped if a component only has one context in favour of a nicer API
+⚠️️ Passing sender entity as first argument in event delegate
+🆕 Added new optional event types `EventType.Added`, `EventType.Removed`, `EventType.AddedOrRemoved`
+🛠 Fixed typo `_listsners` in event generator Thanks to @FNGgames
+
+
+#### Jenny
+🛠 Fixed `scan` command
+
+
 # 1.1.0
 
 As always, the Unity Asset Store version might take a few days to be processed
