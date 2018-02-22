@@ -89,7 +89,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return new CodeGenFile(
                 "Events" + Path.DirectorySeparatorChar +
                 "Interfaces" + Path.DirectorySeparatorChar +
-                "I" + contextName + componentName + "Listener.cs",
+                "I" + optionalContextName + componentName + "Listener.cs",
                 fileContent,
                 GetType().FullName
             );
