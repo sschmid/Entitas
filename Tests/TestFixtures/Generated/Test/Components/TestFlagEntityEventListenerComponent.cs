@@ -11,14 +11,14 @@ public partial class TestEntity {
     public FlagEntityEventListenerComponent flagEntityEventListener { get { return (FlagEntityEventListenerComponent)GetComponent(TestComponentsLookup.FlagEntityEventListener); } }
     public bool hasFlagEntityEventListener { get { return HasComponent(TestComponentsLookup.FlagEntityEventListener); } }
 
-    public void AddFlagEntityEventListener(IFlagEntityEventListener newValue) {
+    public void AddFlagEntityEventListener(System.Collections.Generic.List<IFlagEntityEventListener> newValue) {
         var index = TestComponentsLookup.FlagEntityEventListener;
         var component = CreateComponent<FlagEntityEventListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
-    public void ReplaceFlagEntityEventListener(IFlagEntityEventListener newValue) {
+    public void ReplaceFlagEntityEventListener(System.Collections.Generic.List<IFlagEntityEventListener> newValue) {
         var index = TestComponentsLookup.FlagEntityEventListener;
         var component = CreateComponent<FlagEntityEventListenerComponent>(index);
         component.value = newValue;

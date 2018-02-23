@@ -11,14 +11,14 @@ public partial class TestEntity {
     public FlagAddedAndRemovedEventListenerComponent flagAddedAndRemovedEventListener { get { return (FlagAddedAndRemovedEventListenerComponent)GetComponent(TestComponentsLookup.FlagAddedAndRemovedEventListener); } }
     public bool hasFlagAddedAndRemovedEventListener { get { return HasComponent(TestComponentsLookup.FlagAddedAndRemovedEventListener); } }
 
-    public void AddFlagAddedAndRemovedEventListener(IFlagAddedAndRemovedEventListener newValue) {
+    public void AddFlagAddedAndRemovedEventListener(System.Collections.Generic.List<IFlagAddedAndRemovedEventListener> newValue) {
         var index = TestComponentsLookup.FlagAddedAndRemovedEventListener;
         var component = CreateComponent<FlagAddedAndRemovedEventListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
-    public void ReplaceFlagAddedAndRemovedEventListener(IFlagAddedAndRemovedEventListener newValue) {
+    public void ReplaceFlagAddedAndRemovedEventListener(System.Collections.Generic.List<IFlagAddedAndRemovedEventListener> newValue) {
         var index = TestComponentsLookup.FlagAddedAndRemovedEventListener;
         var component = CreateComponent<FlagAddedAndRemovedEventListenerComponent>(index);
         component.value = newValue;

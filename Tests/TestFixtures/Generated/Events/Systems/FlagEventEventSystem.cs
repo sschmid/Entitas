@@ -27,8 +27,10 @@ public sealed class FlagEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             var isFlagEvent = e.isFlagEvent;
-            foreach (var listener in _listeners) {
-                listener.flagEventListener.value.OnFlagEventRemoved(e);
+            foreach (var listenerEntity in _listeners) {
+                foreach (var listener in listenerEntity.flagEventListener.value) {
+                    listener.OnFlagEventRemoved(e);
+                }
             }
         }
     }

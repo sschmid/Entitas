@@ -11,14 +11,14 @@ public partial class TestEntity {
     public TestMultipleContextStandardEventListenerComponent testMultipleContextStandardEventListener { get { return (TestMultipleContextStandardEventListenerComponent)GetComponent(TestComponentsLookup.TestMultipleContextStandardEventListener); } }
     public bool hasTestMultipleContextStandardEventListener { get { return HasComponent(TestComponentsLookup.TestMultipleContextStandardEventListener); } }
 
-    public void AddTestMultipleContextStandardEventListener(ITestMultipleContextStandardEventListener newValue) {
+    public void AddTestMultipleContextStandardEventListener(System.Collections.Generic.List<ITestMultipleContextStandardEventListener> newValue) {
         var index = TestComponentsLookup.TestMultipleContextStandardEventListener;
         var component = CreateComponent<TestMultipleContextStandardEventListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
-    public void ReplaceTestMultipleContextStandardEventListener(ITestMultipleContextStandardEventListener newValue) {
+    public void ReplaceTestMultipleContextStandardEventListener(System.Collections.Generic.List<ITestMultipleContextStandardEventListener> newValue) {
         var index = TestComponentsLookup.TestMultipleContextStandardEventListener;
         var component = CreateComponent<TestMultipleContextStandardEventListenerComponent>(index);
         component.value = newValue;

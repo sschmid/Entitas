@@ -27,8 +27,10 @@ public sealed class FlagAddedAndRemovedEventEventSystem : Entitas.ReactiveSystem
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             var isFlagAddedAndRemovedEvent = e.isFlagAddedAndRemovedEvent;
-            foreach (var listener in _listeners) {
-                listener.flagAddedAndRemovedEventListener.value.OnFlagAddedAndRemovedEvent(e, isFlagAddedAndRemovedEvent);
+            foreach (var listenerEntity in _listeners) {
+                foreach (var listener in listenerEntity.flagAddedAndRemovedEventListener.value) {
+                    listener.OnFlagAddedAndRemovedEvent(e, isFlagAddedAndRemovedEvent);
+                }
             }
         }
     }

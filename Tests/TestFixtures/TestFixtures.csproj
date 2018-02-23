@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -95,6 +95,14 @@
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceEntityIndexEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IUniqueClassToGenerateEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IClassToGenerateEntity.cs" />
+    <Compile Include="Generated\Events\Components\FlagAddedAndRemovedEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\StandardAddedAndRemovedEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\TestMultipleContextStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\Test2MultipleContextStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\FlagEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\FlagEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\StandardEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\StandardEventListenerComponent.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent1Component.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent2Component.cs" />
     <Compile Include="Generated\Components\ClassWithEntitIndexAttributeComponent.cs" />
@@ -119,22 +127,14 @@
     <Compile Include="Generated\Game\GameEntity.cs" />
     <Compile Include="Generated\Test\TestEntity.cs" />
     <Compile Include="Generated\Test2\Test2Entity.cs" />
-    <Compile Include="Generated\Events\Components\FlagAddedAndRemovedEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\StandardAddedAndRemovedEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\TestMultipleContextStandardEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\Test2MultipleContextStandardEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\FlagEntityEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\FlagEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\StandardEntityEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\StandardEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Interfaces\ITestFlagAddedAndRemovedEventListener.cs" />
-    <Compile Include="Generated\Events\Interfaces\ITestStandardAddedAndRemovedEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IFlagAddedAndRemovedEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IStandardAddedAndRemovedEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITestMultipleContextStandardEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITest2MultipleContextStandardEventListener.cs" />
-    <Compile Include="Generated\Events\Interfaces\ITestFlagEntityEventListener.cs" />
-    <Compile Include="Generated\Events\Interfaces\ITestFlagEventListener.cs" />
-    <Compile Include="Generated\Events\Interfaces\ITestStandardEntityEventListener.cs" />
-    <Compile Include="Generated\Events\Interfaces\ITestStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IFlagEntityEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IFlagEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IStandardEntityEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IStandardEventListener.cs" />
     <Compile Include="Generated\Events\Systems\FlagAddedAndRemovedEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\StandardAddedAndRemovedEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\TestMultipleContextStandardEventEventSystem.cs" />

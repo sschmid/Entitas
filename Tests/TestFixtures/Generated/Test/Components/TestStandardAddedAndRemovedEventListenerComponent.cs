@@ -11,14 +11,14 @@ public partial class TestEntity {
     public StandardAddedAndRemovedEventListenerComponent standardAddedAndRemovedEventListener { get { return (StandardAddedAndRemovedEventListenerComponent)GetComponent(TestComponentsLookup.StandardAddedAndRemovedEventListener); } }
     public bool hasStandardAddedAndRemovedEventListener { get { return HasComponent(TestComponentsLookup.StandardAddedAndRemovedEventListener); } }
 
-    public void AddStandardAddedAndRemovedEventListener(IStandardAddedAndRemovedEventListener newValue) {
+    public void AddStandardAddedAndRemovedEventListener(System.Collections.Generic.List<IStandardAddedAndRemovedEventListener> newValue) {
         var index = TestComponentsLookup.StandardAddedAndRemovedEventListener;
         var component = CreateComponent<StandardAddedAndRemovedEventListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
-    public void ReplaceStandardAddedAndRemovedEventListener(IStandardAddedAndRemovedEventListener newValue) {
+    public void ReplaceStandardAddedAndRemovedEventListener(System.Collections.Generic.List<IStandardAddedAndRemovedEventListener> newValue) {
         var index = TestComponentsLookup.StandardAddedAndRemovedEventListener;
         var component = CreateComponent<StandardAddedAndRemovedEventListenerComponent>(index);
         component.value = newValue;

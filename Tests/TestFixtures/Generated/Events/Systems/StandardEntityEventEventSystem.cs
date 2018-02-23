@@ -24,7 +24,9 @@ public sealed class StandardEntityEventEventSystem : Entitas.ReactiveSystem<Test
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             var component = e.standardEntityEvent;
-            e.standardEntityEventListener.value.OnStandardEntityEventRemoved(e);
+            foreach (var listener in e.standardEntityEventListener.value) {
+                listener.OnStandardEntityEventRemoved(e);
+            }
         }
     }
 }

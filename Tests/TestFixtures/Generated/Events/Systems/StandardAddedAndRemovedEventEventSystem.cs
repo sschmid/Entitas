@@ -27,8 +27,10 @@ public sealed class StandardAddedAndRemovedEventEventSystem : Entitas.ReactiveSy
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             var component = e.standardAddedAndRemovedEvent;
-            foreach (var listener in _listeners) {
-                listener.standardAddedAndRemovedEventListener.value.OnStandardAddedAndRemovedEventAddedOrRemoved(e, component.value);
+            foreach (var listenerEntity in _listeners) {
+                foreach (var listener in listenerEntity.standardAddedAndRemovedEventListener.value) {
+                    listener.OnStandardAddedAndRemovedEventAddedOrRemoved(e, component.value);
+                }
             }
         }
     }

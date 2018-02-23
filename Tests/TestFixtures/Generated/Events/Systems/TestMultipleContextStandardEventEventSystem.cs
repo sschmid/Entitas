@@ -27,8 +27,10 @@ public sealed class TestMultipleContextStandardEventEventSystem : Entitas.Reacti
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             var component = e.multipleContextStandardEvent;
-            foreach (var listener in _listeners) {
-                listener.testMultipleContextStandardEventListener.value.OnMultipleContextStandardEvent(e, component.value);
+            foreach (var listenerEntity in _listeners) {
+                foreach (var listener in listenerEntity.testMultipleContextStandardEventListener.value) {
+                    listener.OnMultipleContextStandardEvent(e, component.value);
+                }
             }
         }
     }
