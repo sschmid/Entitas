@@ -129,7 +129,7 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                 d[1].GetTypeName().should_be("StandardEventListenerComponent");
                 d[1].GetMemberData().Length.should_be(1);
                 d[1].GetMemberData()[0].name.should_be("value");
-                d[1].GetMemberData()[0].type.should_be("IStandardEventListener");
+                d[1].GetMemberData()[0].type.should_be("System.Collections.Generic.List<IStandardEventListener>");
             };
 
             it["creates data for event listeners with multiple contexts"] = () => {
@@ -139,13 +139,13 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                 d[1].GetTypeName().should_be("TestMultipleContextStandardEventListenerComponent");
                 d[1].GetMemberData().Length.should_be(1);
                 d[1].GetMemberData()[0].name.should_be("value");
-                d[1].GetMemberData()[0].type.should_be("ITestMultipleContextStandardEventListener");
+                d[1].GetMemberData()[0].type.should_be("System.Collections.Generic.List<ITestMultipleContextStandardEventListener>");
 
                 d[2].IsEvent().should_be_false();
                 d[2].GetTypeName().should_be("Test2MultipleContextStandardEventListenerComponent");
                 d[2].GetMemberData().Length.should_be(1);
                 d[2].GetMemberData()[0].name.should_be("value");
-                d[2].GetMemberData()[0].type.should_be("ITest2MultipleContextStandardEventListener");
+                d[2].GetMemberData()[0].type.should_be("System.Collections.Generic.List<ITest2MultipleContextStandardEventListener>");
             };
         };
 

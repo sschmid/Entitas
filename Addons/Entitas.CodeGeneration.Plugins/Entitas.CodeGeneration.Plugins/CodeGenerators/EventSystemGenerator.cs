@@ -40,8 +40,10 @@ namespace Entitas.CodeGeneration.Plugins {
     protected override void Execute(System.Collections.Generic.List<${ContextName}Entity> entities) {
         foreach (var e in entities) {
             ${cachedAccess}
-            foreach (var listener in _listeners) {
-                listener.${optionalContextName}${contextDependentComponentName}Listener.value.On${ComponentName}${EventType}(e${methodArgs});
+            foreach (var listenerEntity in _listeners) {
+                foreach (var listener in listenerEntity.${optionalContextName}${contextDependentComponentName}Listener.value) {
+                    listener.On${ComponentName}${EventType}(e${methodArgs});
+                }
             }
         }
     }
@@ -67,7 +69,9 @@ namespace Entitas.CodeGeneration.Plugins {
     protected override void Execute(System.Collections.Generic.List<${ContextName}Entity> entities) {
         foreach (var e in entities) {
             ${cachedAccess}
-            e.${optionalContextName}${contextDependentComponentName}Listener.value.On${ComponentName}${EventType}(e${methodArgs});
+            foreach (var listener in e.${optionalContextName}${contextDependentComponentName}Listener.value) {
+                listener.On${ComponentName}${EventType}(e${methodArgs});
+            }
         }
     }
 }

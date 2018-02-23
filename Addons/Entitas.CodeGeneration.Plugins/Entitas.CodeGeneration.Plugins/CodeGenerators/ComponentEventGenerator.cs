@@ -3,12 +3,13 @@ using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
 using DesperateDevs.Serialization;
+using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EventComponentGenerator : ICodeGenerator, IConfigurable {
+    public class ComponentEventGenerator : ICodeGenerator, IConfigurable {
 
-        public string name { get { return "Event (Component)"; } }
+        public string name { get { return "Component (Event)"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
@@ -17,8 +18,25 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string COMPONENT_TEMPLATE =
-            @"public sealed class ${OptionalContextName}${ComponentName}ListenerComponent : Entitas.IComponent {
-    public System.Collections.Generic.List<I${OptionalContextName}${ComponentName}Listener> value;
+            @"public partial class ${ContextName}Entity {
+
+    public void Add${OptionalContextName}${ComponentName}Listener(I${OptionalContextName}${ComponentName}Listener value) {
+        var listeners = has${OptionalContextName}${ComponentName}Listener
+            ? ${optionalContextName}${contextDependentComponentName}Listener.value
+            : new System.Collections.Generic.List<I${OptionalContextName}${ComponentName}Listener>();
+        listeners.Add(value);
+        Replace${OptionalContextName}${ComponentName}Listener(listeners);
+    }
+
+    public void Remove${OptionalContextName}${ComponentName}Listener(I${OptionalContextName}${ComponentName}Listener value) {
+        var listeners = ${optionalContextName}${contextDependentComponentName}Listener.value;
+        listeners.Remove(value);
+        if (listeners.Count == 0) {
+            Remove${OptionalContextName}${ComponentName}Listener();
+        } else {
+            Replace${OptionalContextName}${ComponentName}Listener(listeners);
+        }
+    }
 }
 ";
 
@@ -45,8 +63,12 @@ namespace Entitas.CodeGeneration.Plugins {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
 
             var fileContent = COMPONENT_TEMPLATE
+                .Replace("${ContextName}", contextName)
                 .Replace("${OptionalContextName}", optionalContextName)
-                .Replace("${ComponentName}", componentName);
+                .Replace("${optionalContextName}", optionalContextName == string.Empty ? string.Empty : optionalContextName.LowercaseFirst())
+                .Replace("${ComponentName}", componentName)
+                .Replace("${componentName}", componentName.LowercaseFirst())
+                .Replace("${contextDependentComponentName}", optionalContextName == string.Empty ? componentName.LowercaseFirst() : componentName);
 
             return new CodeGenFile(
                 "Events" + Path.DirectorySeparatorChar +

@@ -141,7 +141,7 @@ namespace Entitas.CodeGeneration.Plugins {
                     var listenerComponentName = optionalContextName + componentName + "Listener";
                     dataForEvent.SetlTypeName(listenerComponentName.AddComponentSuffix());
                     dataForEvent.SetMemberData(new[] {
-                        new MemberData("I" + listenerComponentName, "value")
+                        new MemberData("System.Collections.Generic.List<I" + listenerComponentName + ">", "value")
                     });
                     dataForEvent.SetContextNames(new[] { contextName });
                     return dataForEvent;

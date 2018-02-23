@@ -50,6 +50,7 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentContextGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentEntityGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentEntityInterfaceGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentEventGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentMatcherGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentsLookupGenerator.cs" />
