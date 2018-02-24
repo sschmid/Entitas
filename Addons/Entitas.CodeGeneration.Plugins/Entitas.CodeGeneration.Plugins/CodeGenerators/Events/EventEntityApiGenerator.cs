@@ -28,10 +28,10 @@ namespace Entitas.CodeGeneration.Plugins {
         Replace${OptionalContextName}${ComponentName}${EventType}Listener(listeners);
     }
 
-    public void Remove${OptionalContextName}${ComponentName}Listener(I${OptionalContextName}${ComponentName}${EventType}Listener value) {
+    public void Remove${OptionalContextName}${ComponentName}Listener(I${OptionalContextName}${ComponentName}${EventType}Listener value, bool removeComponentWhenEmpty = true) {
         var listeners = ${optionalContextName}${contextDependentComponentName}${EventType}Listener.value;
         listeners.Remove(value);
-        if (listeners.Count == 0) {
+        if (removeComponentWhenEmpty && listeners.Count == 0) {
             Remove${OptionalContextName}${ComponentName}${EventType}Listener();
         } else {
             Replace${OptionalContextName}${ComponentName}${EventType}Listener(listeners);
