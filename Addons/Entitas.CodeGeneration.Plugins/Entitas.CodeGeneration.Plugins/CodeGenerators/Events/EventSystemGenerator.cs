@@ -115,7 +115,7 @@ namespace Entitas.CodeGeneration.Plugins {
                     var filter = getFilter(data, eventData, componentName, optionalContextName, eventTypeSuffix);
 
                     var cachedAccess = memberData.Length == 0
-                        ? "var " + data.GetUniquePrefix() + componentName + " = e." + data.GetUniquePrefix() + componentName + ";"
+                        ? string.Empty
                         : "var component = e." + componentName.LowercaseFirst() + ";";
 
                     if (eventData.eventType == EventType.Removed) {
@@ -160,9 +160,6 @@ namespace Entitas.CodeGeneration.Plugins {
                     case EventType.Removed:
                         filter = "!entity." + data.GetUniquePrefix() + componentName;
                         break;
-                    case EventType.AddedOrRemoved:
-                        filter = "true";
-                        break;
                 }
             } else {
                 switch (eventData.eventType) {
@@ -172,14 +169,11 @@ namespace Entitas.CodeGeneration.Plugins {
                     case EventType.Removed:
                         filter = "!entity.has" + componentName;
                         break;
-                    case EventType.AddedOrRemoved:
-                        filter = "true";
-                        break;
                 }
             }
 
             if (eventData.bindToEntity) {
-                if (filter == "true") {
+                if (filter == string.Empty) {
                     filter = "entity.has${OptionalContextName}${ComponentName}${EventType}Listener";
                 } else {
                     filter += " && entity.has${OptionalContextName}${ComponentName}${EventType}Listener";

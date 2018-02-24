@@ -7,8 +7,6 @@ namespace Entitas.CodeGeneration.Plugins {
         public static string GetEventTypeSuffix(this ComponentData data, EventData eventData) {
             if (data.GetMemberData().Length == 0) {
                 switch (eventData.eventType) {
-                    case EventType.Added:
-                        return "Added";
                     case EventType.Removed:
                         return "Removed";
                 }
@@ -16,8 +14,6 @@ namespace Entitas.CodeGeneration.Plugins {
                 switch (eventData.eventType) {
                     case EventType.Removed:
                         return "Removed";
-                    case EventType.AddedOrRemoved:
-                        return "AddedOrRemoved";
                 }
             }
 
