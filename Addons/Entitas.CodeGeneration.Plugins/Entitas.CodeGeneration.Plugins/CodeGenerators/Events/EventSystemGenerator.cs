@@ -118,6 +118,11 @@ namespace Entitas.CodeGeneration.Plugins {
                         ? "var " + data.GetUniquePrefix() + componentName + " = e." + data.GetUniquePrefix() + componentName + ";"
                         : "var component = e." + componentName.LowercaseFirst() + ";";
 
+                    if (eventData.eventType == EventType.Removed) {
+                        methodArgs = string.Empty;
+                        cachedAccess = string.Empty;
+                    }
+
                     var template = eventData.bindToEntity
                         ? ENTITY_SYSTEM_TEMPLATE
                         : SYSTEM_TEMPLATE;
