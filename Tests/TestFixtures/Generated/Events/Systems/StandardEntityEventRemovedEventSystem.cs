@@ -6,31 +6,26 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class StandardAddedAndRemovedEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
+public sealed class StandardEntityEventRemovedEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
-    readonly Entitas.IGroup<TestEntity> _listeners;
-
-    public StandardAddedAndRemovedEventEventSystem(Contexts contexts) : base(contexts.test) {
-        _listeners = contexts.test.GetGroup(TestMatcher.StandardAddedAndRemovedEventListener);
+    public StandardEntityEventRemovedEventSystem(Contexts contexts) : base(contexts.test) {
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context, Entitas.TriggerOnEventMatcherExtension.AddedOrRemoved(TestMatcher.StandardAddedAndRemovedEvent)
+            context, Entitas.TriggerOnEventMatcherExtension.Removed(TestMatcher.StandardEntityEvent)
         );
     }
 
     protected override bool Filter(TestEntity entity) {
-        return true;
+        return !entity.hasStandardEntityEvent && entity.hasStandardEntityEventRemovedListener;
     }
 
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
-            var component = e.standardAddedAndRemovedEvent;
-            foreach (var listenerEntity in _listeners) {
-                foreach (var listener in listenerEntity.standardAddedAndRemovedEventListener.value) {
-                    listener.OnStandardAddedAndRemovedEventAddedOrRemoved(e, component.value);
-                }
+            
+            foreach (var listener in e.standardEntityEventRemovedListener.value) {
+                listener.OnStandardEntityEventRemoved(e);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -31,7 +31,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fixtures\Components\MultipleEventsStandardEventComponent.cs" />
     <Compile Include="Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />
@@ -39,8 +38,8 @@
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueClassToGenerateComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2UniqueClassToGenerateComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestFlagAddedAndRemovedEventComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestStandardAddedAndRemovedEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMultipleEventsStandardEventComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2MultipleEventsStandardEventComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMultipleContextStandardEventComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2MultipleContextStandardEventComponent.cs" />
     <Compile Include="Generated\Test\Components\TestFlagEntityEventComponent.cs" />
@@ -80,14 +79,17 @@
     <Compile Include="Generated\Test2\Components\Test2ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestInterfaceToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestStructToGenerateComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestFlagAddedAndRemovedEventListenerComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestStandardAddedAndRemovedEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestTestMultipleEventsStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestTestMultipleEventsStandardEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2Test2MultipleEventsStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2Test2MultipleEventsStandardEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestTestMultipleContextStandardEventListenerComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2Test2MultipleContextStandardEventListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestFlagEntityEventListenerComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestFlagEventListenerComponent.cs" />
-    <Compile Include="Generated\Test\Components\TestStandardEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardEntityEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Components\Interfaces\IMultipleEventsStandardEventEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IMultipleContextStandardEventEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\ITest2ContextEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\INameAgeEntity.cs" />
@@ -96,14 +98,6 @@
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceEntityIndexEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IUniqueClassToGenerateEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IClassToGenerateEntity.cs" />
-    <Compile Include="Generated\Events\Components\FlagAddedAndRemovedEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\StandardAddedAndRemovedEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\TestMultipleContextStandardEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\Test2MultipleContextStandardEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\FlagEntityEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\FlagEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\StandardEntityEventListenerComponent.cs" />
-    <Compile Include="Generated\Events\Components\StandardEventListenerComponent.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent1Component.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent2Component.cs" />
     <Compile Include="Generated\Components\ClassWithEntitIndexAttributeComponent.cs" />
@@ -111,10 +105,10 @@
     <Compile Include="Generated\Components\ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Components\InterfaceToGenerateComponent.cs" />
     <Compile Include="Generated\Components\StructToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\TestComponentLookup.cs" />
+    <Compile Include="Generated\Test2\Test2ComponentLookup.cs" />
+    <Compile Include="Generated\Game\GameComponentLookup.cs" />
     <Compile Include="Generated\Test\Components\TestDontGenerateMethodsComponent.cs" />
-    <Compile Include="Generated\Test\TestComponentsLookup.cs" />
-    <Compile Include="Generated\Test2\Test2ComponentsLookup.cs" />
-    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Game\GameAttribute.cs" />
     <Compile Include="Generated\Test\TestAttribute.cs" />
     <Compile Include="Generated\Test2\Test2Attribute.cs" />
@@ -128,28 +122,41 @@
     <Compile Include="Generated\Game\GameEntity.cs" />
     <Compile Include="Generated\Test\TestEntity.cs" />
     <Compile Include="Generated\Test2\Test2Entity.cs" />
-    <Compile Include="Generated\Events\Interfaces\IFlagAddedAndRemovedEventListener.cs" />
-    <Compile Include="Generated\Events\Interfaces\IStandardAddedAndRemovedEventListener.cs" />
+    <Compile Include="Generated\Events\Components\TestMultipleEventsStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\TestMultipleEventsStandardEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\Test2MultipleEventsStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\Test2MultipleEventsStandardEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\TestMultipleContextStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\Test2MultipleContextStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\FlagEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\FlagEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\StandardEntityEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\StandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITestMultipleEventsStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITestMultipleEventsStandardEventRemovedListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITest2MultipleEventsStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITest2MultipleEventsStandardEventRemovedListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITestMultipleContextStandardEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITest2MultipleContextStandardEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IFlagEntityEventListener.cs" />
-    <Compile Include="Generated\Events\Interfaces\IFlagEventListener.cs" />
-    <Compile Include="Generated\Events\Interfaces\IStandardEntityEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IFlagEventRemovedListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IStandardEntityEventRemovedListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IStandardEventListener.cs" />
-    <Compile Include="Generated\Events\Systems\FlagAddedAndRemovedEventEventSystem.cs" />
-    <Compile Include="Generated\Events\Systems\StandardAddedAndRemovedEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestMultipleEventsStandardEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestMultipleEventsStandardEventRemovedEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\Test2MultipleEventsStandardEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\Test2MultipleEventsStandardEventRemovedEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\TestMultipleContextStandardEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\Test2MultipleContextStandardEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\FlagEntityEventEventSystem.cs" />
-    <Compile Include="Generated\Events\Systems\FlagEventEventSystem.cs" />
-    <Compile Include="Generated\Events\Systems\StandardEntityEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\FlagEventRemovedEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\StandardEntityEventRemovedEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\StandardEventEventSystem.cs" />
     <Compile Include="Generated\Events\EventSystems.cs" />
     <Compile Include="Generated\Feature.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fixtures\Components\FlagAddedAndRemovedEventComponent.cs" />
-    <Compile Include="Fixtures\Components\StandardAddedAndRemovedEventComponent.cs" />
+    <Compile Include="Fixtures\Components\MultipleEventsStandardEventComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\Components\MultipleContextStandardEventComponent.cs" />

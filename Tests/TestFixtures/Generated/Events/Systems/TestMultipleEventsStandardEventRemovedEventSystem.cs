@@ -6,26 +6,26 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class StandardEntityEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
+public sealed class TestMultipleEventsStandardEventRemovedEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
-    public StandardEntityEventEventSystem(Contexts contexts) : base(contexts.test) {
+    public TestMultipleEventsStandardEventRemovedEventSystem(Contexts contexts) : base(contexts.test) {
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
         return Entitas.CollectorContextExtension.CreateCollector(
-            context, Entitas.TriggerOnEventMatcherExtension.Removed(TestMatcher.StandardEntityEvent)
+            context, Entitas.TriggerOnEventMatcherExtension.Removed(TestMatcher.MultipleEventsStandardEvent)
         );
     }
 
     protected override bool Filter(TestEntity entity) {
-        return !entity.hasStandardEntityEvent && entity.hasStandardEntityEventListener;
+        return !entity.hasMultipleEventsStandardEvent && entity.hasTestMultipleEventsStandardEventRemovedListener;
     }
 
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
-            var component = e.standardEntityEvent;
-            foreach (var listener in e.standardEntityEventListener.value) {
-                listener.OnStandardEntityEventRemoved(e);
+            
+            foreach (var listener in e.testMultipleEventsStandardEventRemovedListener.value) {
+                listener.OnMultipleEventsStandardEventRemoved(e);
             }
         }
     }
