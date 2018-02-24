@@ -16,6 +16,8 @@
 │   ├── Entitas.CodeGeneration.Plugins
 │   │   └── Entitas.CodeGeneration.Plugins
 │   │       ├── CodeGenerators
+│   │       │   ├── Component
+│   │       │   └── Events
 │   │       ├── Configs
 │   │       ├── Data
 │   │       └── DataProviders
@@ -113,22 +115,25 @@
 │   ├── Entitas.CodeGeneration.Plugins
 │   │   └── Entitas.CodeGeneration.Plugins
 │   │       ├── CodeGenerators
-│   │       │   ├── ComponentContextGenerator.cs
-│   │       │   ├── ComponentEntityGenerator.cs
-│   │       │   ├── ComponentEntityInterfaceGenerator.cs
-│   │       │   ├── ComponentGenerator.cs
-│   │       │   ├── ComponentMatcherGenerator.cs
-│   │       │   ├── ComponentsLookupGenerator.cs
+│   │       │   ├── Component
+│   │       │   │   ├── ComponentContextApiGenerator.cs
+│   │       │   │   ├── ComponentEntityApiGenerator.cs
+│   │       │   │   ├── ComponentEntityApiInterfaceGenerator.cs
+│   │       │   │   ├── ComponentGenerator.cs
+│   │       │   │   ├── ComponentLookupGenerator.cs
+│   │       │   │   └── ComponentMatcherApiGenerator.cs
+│   │       │   ├── Events
+│   │       │   │   ├── EventEntityApiGenerator.cs
+│   │       │   │   ├── EventListenerComponentGenerator.cs
+│   │       │   │   ├── EventListenertInterfaceGenerator.cs
+│   │       │   │   ├── EventSystemGenerator.cs
+│   │       │   │   └── EventSystemsGenerator.cs
 │   │       │   ├── ContextAttributeGenerator.cs
 │   │       │   ├── ContextGenerator.cs
 │   │       │   ├── ContextMatcherGenerator.cs
 │   │       │   ├── ContextsGenerator.cs
 │   │       │   ├── EntityGenerator.cs
-│   │       │   ├── EntityIndexGenerator.cs
-│   │       │   ├── EventComponentGenerator.cs
-│   │       │   ├── EventInterfaceGenerator.cs
-│   │       │   ├── EventSystemGenerator.cs
-│   │       │   └── EventSystemsGenerator.cs
+│   │       │   └── EntityIndexGenerator.cs
 │   │       ├── Configs
 │   │       │   ├── AssembliesConfig.cs
 │   │       │   ├── ContextNamesConfig.cs

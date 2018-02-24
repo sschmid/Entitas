@@ -1,3 +1,19 @@
+# 1.3.0
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+This update improves the new Entitas Events introduced in 1.1.0
+
+Breaking changes are marked with ⚠️️
+
+#### Entitas
+⚙️ Added support for multiple event listeners per entity
+⚙️ EventInterfaceGenerator generates correct filename matching the class name. Thanks to @c0ffeeartc
+⚠️️ Renamed some generators. Please use `auto-import` to update the generator names
+
+
 # 1.2.0
 
 As always, the Unity Asset Store version might take a few days to be processed
