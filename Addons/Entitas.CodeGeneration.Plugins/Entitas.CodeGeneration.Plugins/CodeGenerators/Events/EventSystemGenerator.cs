@@ -19,12 +19,12 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string SYSTEM_TEMPLATE =
-            @"public sealed class ${OptionalContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
+            @"public sealed class ${OptionalContextName}${ComponentName}${EventType}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
 
     readonly Entitas.IGroup<${ContextName}Entity> _listeners;
 
-    public ${OptionalContextName}${ComponentName}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
-        _listeners = contexts.${contextName}.GetGroup(${ContextName}Matcher.${OptionalContextName}${ComponentName}Listener);
+    public ${OptionalContextName}${ComponentName}${EventType}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
+        _listeners = contexts.${contextName}.GetGroup(${ContextName}Matcher.${OptionalContextName}${ComponentName}${EventType}Listener);
     }
 
     protected override Entitas.ICollector<${ContextName}Entity> GetTrigger(Entitas.IContext<${ContextName}Entity> context) {
@@ -41,7 +41,7 @@ namespace Entitas.CodeGeneration.Plugins {
         foreach (var e in entities) {
             ${cachedAccess}
             foreach (var listenerEntity in _listeners) {
-                foreach (var listener in listenerEntity.${optionalContextName}${contextDependentComponentName}Listener.value) {
+                foreach (var listener in listenerEntity.${optionalContextName}${contextDependentComponentName}${EventType}Listener.value) {
                     listener.On${ComponentName}${EventType}(e${methodArgs});
                 }
             }
@@ -51,9 +51,9 @@ namespace Entitas.CodeGeneration.Plugins {
 ";
 
         const string ENTITY_SYSTEM_TEMPLATE =
-            @"public sealed class ${OptionalContextName}${ComponentName}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
+            @"public sealed class ${OptionalContextName}${ComponentName}${EventType}EventSystem : Entitas.ReactiveSystem<${ContextName}Entity> {
 
-    public ${OptionalContextName}${ComponentName}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
+    public ${OptionalContextName}${ComponentName}${EventType}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
     }
 
     protected override Entitas.ICollector<${ContextName}Entity> GetTrigger(Entitas.IContext<${ContextName}Entity> context) {
@@ -69,7 +69,7 @@ namespace Entitas.CodeGeneration.Plugins {
     protected override void Execute(System.Collections.Generic.List<${ContextName}Entity> entities) {
         foreach (var e in entities) {
             ${cachedAccess}
-            foreach (var listener in e.${optionalContextName}${contextDependentComponentName}Listener.value) {
+            foreach (var listener in e.${optionalContextName}${contextDependentComponentName}${EventType}Listener.value) {
                 listener.On${ComponentName}${EventType}(e${methodArgs});
             }
         }
@@ -94,31 +94,65 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile[] generateSystems(ComponentData data) {
             return data.GetContextNames()
-                .Select(contextName => generateSystem(contextName, data))
+                .SelectMany(contextName => generateSystem(contextName, data))
                 .ToArray();
         }
 
-        CodeGenFile generateSystem(string contextName, ComponentData data) {
-            var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            var memberData = data.GetMemberData();
+        CodeGenFile[] generateSystem(string contextName, ComponentData data) {
+            return data.GetEventData()
+                .Select(eventData => {
+                    var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
+                    var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+                    var memberData = data.GetMemberData();
 
-            var methodArgs = ", " + (memberData.Length == 0
-                                 ? data.GetUniquePrefix() + componentName
-                                 : getMethodArgs(memberData));
+                    var eventTypeSuffix = data.GetEventTypeSuffix(eventData);
+                    var methodArgs = ", " + (memberData.Length == 0
+                                         ? data.GetUniquePrefix() + componentName
+                                         : getMethodArgs(memberData));
 
-            var eventTypeSuffix = string.Empty;
+                    methodArgs = data.GetArgs(eventData, methodArgs);
+
+                    var filter = getFilter(data, eventData, componentName, optionalContextName, eventTypeSuffix);
+
+                    var cachedAccess = memberData.Length == 0
+                        ? "var " + data.GetUniquePrefix() + componentName + " = e." + data.GetUniquePrefix() + componentName + ";"
+                        : "var component = e." + componentName.LowercaseFirst() + ";";
+
+                    var template = eventData.bindToEntity
+                        ? ENTITY_SYSTEM_TEMPLATE
+                        : SYSTEM_TEMPLATE;
+
+                    var fileContent = template
+                        .Replace("${ContextName}", contextName)
+                        .Replace("${contextName}", contextName.LowercaseFirst())
+                        .Replace("${OptionalContextName}", optionalContextName)
+                        .Replace("${optionalContextName}", optionalContextName == string.Empty ? string.Empty : optionalContextName.LowercaseFirst())
+                        .Replace("${ComponentName}", componentName)
+                        .Replace("${contextDependentComponentName}", optionalContextName == string.Empty ? componentName.LowercaseFirst() : componentName)
+                        .Replace("${GroupEvent}", eventData.eventType.ToString())
+                        .Replace("${filter}", filter)
+                        .Replace("${cachedAccess}", cachedAccess)
+                        .Replace("${EventType}", eventTypeSuffix)
+                        .Replace("${methodArgs}", methodArgs);
+
+                    return new CodeGenFile(
+                        "Events" + Path.DirectorySeparatorChar +
+                        "Systems" + Path.DirectorySeparatorChar +
+                        optionalContextName + componentName + eventTypeSuffix + "EventSystem.cs",
+                        fileContent,
+                        GetType().FullName
+                    );
+                }).ToArray();
+        }
+
+        string getFilter(ComponentData data, EventData eventData, string componentName, string optionalContextName, string eventTypeSuffix) {
             var filter = string.Empty;
             if (data.GetMemberData().Length == 0) {
-                switch (data.GetEventType()) {
+                switch (eventData.eventType) {
                     case EventType.Added:
-                        eventTypeSuffix = "Added";
-                        methodArgs = string.Empty;
                         filter = "entity." + data.GetUniquePrefix() + componentName;
                         break;
                     case EventType.Removed:
-                        eventTypeSuffix = "Removed";
-                        methodArgs = string.Empty;
                         filter = "!entity." + data.GetUniquePrefix() + componentName;
                         break;
                     case EventType.AddedOrRemoved:
@@ -126,62 +160,31 @@ namespace Entitas.CodeGeneration.Plugins {
                         break;
                 }
             } else {
-                switch (data.GetEventType()) {
+                switch (eventData.eventType) {
                     case EventType.Added:
                         filter = "entity.has" + componentName;
                         break;
                     case EventType.Removed:
-                        eventTypeSuffix = "Removed";
-                        methodArgs = string.Empty;
                         filter = "!entity.has" + componentName;
                         break;
                     case EventType.AddedOrRemoved:
-                        eventTypeSuffix = "AddedOrRemoved";
                         filter = "true";
                         break;
                 }
             }
 
-            if (data.GetEventBindToEntity()) {
+            if (eventData.bindToEntity) {
                 if (filter == "true") {
-                    filter = "entity.has${OptionalContextName}${ComponentName}Listener";
+                    filter = "entity.has${OptionalContextName}${ComponentName}${EventType}Listener";
                 } else {
-                    filter += " && entity.has${OptionalContextName}${ComponentName}Listener";
+                    filter += " && entity.has${OptionalContextName}${ComponentName}${EventType}Listener";
                 }
             }
 
-            filter = filter
+            return filter
                 .Replace("${OptionalContextName}", optionalContextName)
-                .Replace("${ComponentName}", componentName);
-
-            var cachedAccess = memberData.Length == 0
-                ? "var " + data.GetUniquePrefix() + componentName + " = e." + data.GetUniquePrefix() + componentName + ";"
-                : "var component = e." + componentName.LowercaseFirst() + ";";
-
-            var template = data.GetEventBindToEntity()
-                ? ENTITY_SYSTEM_TEMPLATE
-                : SYSTEM_TEMPLATE;
-
-            var fileContent = template
-                .Replace("${ContextName}", contextName)
-                .Replace("${contextName}", contextName.LowercaseFirst())
-                .Replace("${OptionalContextName}", optionalContextName)
-                .Replace("${optionalContextName}", optionalContextName == string.Empty ? string.Empty : optionalContextName.LowercaseFirst())
                 .Replace("${ComponentName}", componentName)
-                .Replace("${contextDependentComponentName}", optionalContextName == string.Empty ? componentName.LowercaseFirst() : componentName)
-                .Replace("${GroupEvent}", data.GetEventType().ToString())
-                .Replace("${filter}", filter)
-                .Replace("${cachedAccess}", cachedAccess)
-                .Replace("${EventType}", eventTypeSuffix)
-                .Replace("${methodArgs}", methodArgs);
-
-            return new CodeGenFile(
-                "Events" + Path.DirectorySeparatorChar +
-                "Systems" + Path.DirectorySeparatorChar +
-                optionalContextName + componentName + "EventSystem.cs",
-                fileContent,
-                GetType().FullName
-            );
+                .Replace("${EventType}", eventTypeSuffix);
         }
 
         string getMethodArgs(MemberData[] memberData) {

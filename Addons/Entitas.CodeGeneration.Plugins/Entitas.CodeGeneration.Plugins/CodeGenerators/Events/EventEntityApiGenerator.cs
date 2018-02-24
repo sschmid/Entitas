@@ -20,21 +20,21 @@ namespace Entitas.CodeGeneration.Plugins {
         const string COMPONENT_TEMPLATE =
             @"public partial class ${ContextName}Entity {
 
-    public void Add${OptionalContextName}${ComponentName}Listener(I${OptionalContextName}${ComponentName}Listener value) {
-        var listeners = has${OptionalContextName}${ComponentName}Listener
-            ? ${optionalContextName}${contextDependentComponentName}Listener.value
-            : new System.Collections.Generic.List<I${OptionalContextName}${ComponentName}Listener>();
+    public void Add${OptionalContextName}${ComponentName}${EventType}Listener(I${OptionalContextName}${ComponentName}${EventType}Listener value) {
+        var listeners = has${OptionalContextName}${ComponentName}${EventType}Listener
+            ? ${optionalContextName}${contextDependentComponentName}${EventType}Listener.value
+            : new System.Collections.Generic.List<I${OptionalContextName}${ComponentName}${EventType}Listener>();
         listeners.Add(value);
-        Replace${OptionalContextName}${ComponentName}Listener(listeners);
+        Replace${OptionalContextName}${ComponentName}${EventType}Listener(listeners);
     }
 
-    public void Remove${OptionalContextName}${ComponentName}Listener(I${OptionalContextName}${ComponentName}Listener value) {
-        var listeners = ${optionalContextName}${contextDependentComponentName}Listener.value;
+    public void Remove${OptionalContextName}${ComponentName}Listener(I${OptionalContextName}${ComponentName}${EventType}Listener value) {
+        var listeners = ${optionalContextName}${contextDependentComponentName}${EventType}Listener.value;
         listeners.Remove(value);
         if (listeners.Count == 0) {
-            Remove${OptionalContextName}${ComponentName}Listener();
+            Remove${OptionalContextName}${ComponentName}${EventType}Listener();
         } else {
-            Replace${OptionalContextName}${ComponentName}Listener(listeners);
+            Replace${OptionalContextName}${ComponentName}${EventType}Listener(listeners);
         }
     }
 }
@@ -54,29 +54,34 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile[] generateComponents(ComponentData data) {
             return data.GetContextNames()
-                .Select(contextName => generateComponent(contextName, data))
+                .SelectMany(contextName => generateComponent(contextName, data))
                 .ToArray();
         }
 
-        CodeGenFile generateComponent(string contextName, ComponentData data) {
-            var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+        CodeGenFile[] generateComponent(string contextName, ComponentData data) {
+            return data.GetEventData()
+                .Select(eventData => {
+                    var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
+                    var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+                    var eventTypeSuffix = data.GetEventTypeSuffix(eventData);
 
-            var fileContent = COMPONENT_TEMPLATE
-                .Replace("${ContextName}", contextName)
-                .Replace("${OptionalContextName}", optionalContextName)
-                .Replace("${optionalContextName}", optionalContextName == string.Empty ? string.Empty : optionalContextName.LowercaseFirst())
-                .Replace("${ComponentName}", componentName)
-                .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${contextDependentComponentName}", optionalContextName == string.Empty ? componentName.LowercaseFirst() : componentName);
+                    var fileContent = COMPONENT_TEMPLATE
+                        .Replace("${ContextName}", contextName)
+                        .Replace("${OptionalContextName}", optionalContextName)
+                        .Replace("${optionalContextName}", optionalContextName == string.Empty ? string.Empty : optionalContextName.LowercaseFirst())
+                        .Replace("${ComponentName}", componentName)
+                        .Replace("${componentName}", componentName.LowercaseFirst())
+                        .Replace("${EventType}", eventTypeSuffix)
+                        .Replace("${contextDependentComponentName}", optionalContextName == string.Empty ? componentName.LowercaseFirst() : componentName);
 
-            return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar +
-                "Components" + Path.DirectorySeparatorChar +
-                contextName + optionalContextName + componentName + "Listener".AddComponentSuffix() + ".cs",
-                fileContent,
-                GetType().FullName
-            );
+                    return new CodeGenFile(
+                        contextName + Path.DirectorySeparatorChar +
+                        "Components" + Path.DirectorySeparatorChar +
+                        contextName + optionalContextName + componentName + eventTypeSuffix + "Listener".AddComponentSuffix() + ".cs",
+                        fileContent,
+                        GetType().FullName
+                    );
+                }).ToArray();
         }
     }
 }

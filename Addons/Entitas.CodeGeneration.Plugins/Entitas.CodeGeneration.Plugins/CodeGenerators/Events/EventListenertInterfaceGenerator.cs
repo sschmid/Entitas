@@ -19,7 +19,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string INTERFACE_TEMPLATE =
-            @"public interface I${OptionalContextName}${ComponentName}Listener {
+            @"public interface I${OptionalContextName}${ComponentName}${EventType}Listener {
     void On${ComponentName}${EventType}(${ContextName}Entity entity${memberArgs});
 }
 ";
@@ -41,58 +41,40 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile[] generateInterfaces(ComponentData data) {
             return data.GetContextNames()
-                .Select(contextName => generateInterface(contextName, data))
+                .SelectMany(contextName => generateInterface(contextName, data))
                 .ToArray();
         }
 
-        CodeGenFile generateInterface(string contextName, ComponentData data) {
-            var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            var memberData = data.GetMemberData();
-            if (memberData.Length == 0) {
-                memberData = new[] { new MemberData("bool", data.GetUniquePrefix().LowercaseFirst() + componentName) };
-            }
+        CodeGenFile[] generateInterface(string contextName, ComponentData data) {
+            return data.GetEventData()
+                .Select(eventData => {
+                    var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
+                    var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+                    var memberData = data.GetMemberData();
+                    if (memberData.Length == 0) {
+                        memberData = new[] { new MemberData("bool", data.GetUniquePrefix().LowercaseFirst() + componentName) };
+                    }
 
-            var eventTypeSuffix = string.Empty;
-            var memberArgs = ", " + getMemberArgs(memberData);
-            if (data.GetMemberData().Length == 0) {
-                switch (data.GetEventType()) {
-                    case EventType.Added:
-                        eventTypeSuffix = "Added";
-                        memberArgs = string.Empty;
-                        break;
-                    case EventType.Removed:
-                        eventTypeSuffix = "Removed";
-                        memberArgs = string.Empty;
-                        break;
-                }
-            } else {
-                switch (data.GetEventType()) {
-                    case EventType.Removed:
-                        eventTypeSuffix = "Removed";
-                        memberArgs = string.Empty;
-                        break;
-                    case EventType.AddedOrRemoved:
-                        eventTypeSuffix = "AddedOrRemoved";
-                        break;
-                }
-            }
+                    var eventTypeSuffix = data.GetEventTypeSuffix(eventData);
+                    var memberArgs = ", " + getMemberArgs(memberData);
+                    memberArgs = data.GetArgs(eventData, memberArgs);
 
-            var fileContent = INTERFACE_TEMPLATE
-                .Replace("${ContextName}", contextName)
-                .Replace("${OptionalContextName}", optionalContextName)
-                .Replace("${ComponentName}", componentName)
-                .Replace("${ComponentName}", componentName)
-                .Replace("${EventType}", eventTypeSuffix)
-                .Replace("${memberArgs}", memberArgs);
+                    var fileContent = INTERFACE_TEMPLATE
+                        .Replace("${ContextName}", contextName)
+                        .Replace("${OptionalContextName}", optionalContextName)
+                        .Replace("${ComponentName}", componentName)
+                        .Replace("${ComponentName}", componentName)
+                        .Replace("${EventType}", eventTypeSuffix)
+                        .Replace("${memberArgs}", memberArgs);
 
-            return new CodeGenFile(
-                "Events" + Path.DirectorySeparatorChar +
-                "Interfaces" + Path.DirectorySeparatorChar +
-                "I" + optionalContextName + componentName + "Listener.cs",
-                fileContent,
-                GetType().FullName
-            );
+                    return new CodeGenFile(
+                        "Events" + Path.DirectorySeparatorChar +
+                        "Interfaces" + Path.DirectorySeparatorChar +
+                        "I" + optionalContextName + componentName + eventTypeSuffix + "Listener.cs",
+                        fileContent,
+                        GetType().FullName
+                    );
+                }).ToArray();
         }
 
         string getMemberArgs(MemberData[] memberData) {

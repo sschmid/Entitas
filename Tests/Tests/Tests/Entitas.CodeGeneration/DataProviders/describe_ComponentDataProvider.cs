@@ -105,21 +105,36 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
 
             it["gets event"] = () => { getData<StandardEventComponent>().IsEvent().should_be_true(); };
 
+            it["gets multiple events"] = () => {
+                var d = getData<MultipleEventsStandardEventComponent>();
+                d.IsEvent().should_be_true();
+                var eventData = d.GetEventData();
+                eventData.Length.should_be(2);
+
+                eventData[0].bindToEntity.should_be_false();
+                eventData[0].eventType.should_be(EventType.Added);
+                eventData[0].priority.should_be(1);
+
+                eventData[1].bindToEntity.should_be_true();
+                eventData[1].eventType.should_be(EventType.Removed);
+                eventData[1].priority.should_be(2);
+            };
+
             it["gets event bindToEntity"] = () => {
-                getData<StandardEventComponent>().GetEventBindToEntity().GetType().should_be(typeof(bool));
-                getData<StandardEventComponent>().GetEventBindToEntity().should_be_false();
-                getData<StandardEntityEventComponent>().GetEventBindToEntity().should_be_true();
+                getData<StandardEventComponent>().GetEventData()[0].bindToEntity.GetType().should_be(typeof(bool));
+                getData<StandardEventComponent>().GetEventData()[0].bindToEntity.should_be_false();
+                getData<StandardEntityEventComponent>().GetEventData()[0].bindToEntity.should_be_true();
             };
 
             it["gets event type"] = () => {
-                getData<StandardEventComponent>().GetEventType().GetType().should_be(typeof(EventType));
-                getData<StandardEventComponent>().GetEventType().should_be(EventType.Added);
-                getData<StandardEntityEventComponent>().GetEventType().should_be(EventType.Removed);
+                getData<StandardEventComponent>().GetEventData()[0].eventType.GetType().should_be(typeof(EventType));
+                getData<StandardEventComponent>().GetEventData()[0].eventType.should_be(EventType.Added);
+                getData<StandardEntityEventComponent>().GetEventData()[0].eventType.should_be(EventType.Removed);
             };
 
             it["gets event priority"] = () => {
-                getData<StandardEventComponent>().GetEventPriority().GetType().should_be(typeof(int));
-                getData<StandardEntityEventComponent>().GetEventPriority().should_be(1);
+                getData<StandardEventComponent>().GetEventData()[0].priority.GetType().should_be(typeof(int));
+                getData<StandardEntityEventComponent>().GetEventData()[0].priority.should_be(1);
             };
 
             it["creates data for event listeners"] = () => {

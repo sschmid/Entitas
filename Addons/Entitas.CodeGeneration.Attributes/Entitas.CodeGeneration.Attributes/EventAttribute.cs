@@ -2,7 +2,7 @@
 
 namespace Entitas.CodeGeneration.Attributes {
 
-    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum)]
+    [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum, AllowMultiple = true)]
     public class EventAttribute : Attribute {
 
         public readonly bool bindToEntity;

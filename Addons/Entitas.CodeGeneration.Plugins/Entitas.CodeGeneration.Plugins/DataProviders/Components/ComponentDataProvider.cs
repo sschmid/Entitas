@@ -134,19 +134,21 @@ namespace Entitas.CodeGeneration.Plugins {
         ComponentData[] createDataForEvents(ComponentData data) {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             return data.GetContextNames()
-                .Select(contextName => {
-                    var dataForEvent = new ComponentData(data);
-                    dataForEvent.IsEvent(false);
-                    var optionalContextName = dataForEvent.GetContextNames().Length > 1 ? contextName : string.Empty;
-                    var listenerComponentName = optionalContextName + componentName + "Listener";
-                    dataForEvent.SetlTypeName(listenerComponentName.AddComponentSuffix());
-                    dataForEvent.SetMemberData(new[] {
-                        new MemberData("System.Collections.Generic.List<I" + listenerComponentName + ">", "value")
-                    });
-                    dataForEvent.SetContextNames(new[] { contextName });
-                    return dataForEvent;
-                })
-                .ToArray();
+                .SelectMany(contextName =>
+                    data.GetEventData().Select(eventData => {
+                        var dataForEvent = new ComponentData(data);
+                        dataForEvent.IsEvent(false);
+                        var eventTypeSuffix = data.GetEventTypeSuffix(eventData);
+                        var optionalContextName = dataForEvent.GetContextNames().Length > 1 ? contextName : string.Empty;
+                        var listenerComponentName = optionalContextName + componentName + eventTypeSuffix + "Listener";
+                        dataForEvent.SetlTypeName(listenerComponentName.AddComponentSuffix());
+                        dataForEvent.SetMemberData(new[] {
+                            new MemberData("System.Collections.Generic.List<I" + listenerComponentName + ">", "value")
+                        });
+                        dataForEvent.SetContextNames(new[] { contextName });
+                        return dataForEvent;
+                    }).ToArray()
+                ).ToArray();
         }
 
         bool hasContexts(Type type) {

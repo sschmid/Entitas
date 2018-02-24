@@ -17,8 +17,8 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string COMPONENT_TEMPLATE =
-            @"public sealed class ${OptionalContextName}${ComponentName}ListenerComponent : Entitas.IComponent {
-    public System.Collections.Generic.List<I${OptionalContextName}${ComponentName}Listener> value;
+            @"public sealed class ${OptionalContextName}${ComponentName}${EventType}ListenerComponent : Entitas.IComponent {
+    public System.Collections.Generic.List<I${OptionalContextName}${ComponentName}${EventType}Listener> value;
 }
 ";
 
@@ -36,25 +36,30 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile[] generateComponents(ComponentData data) {
             return data.GetContextNames()
-                .Select(contextName => generateComponent(contextName, data))
+                .SelectMany(contextName => generateComponent(contextName, data))
                 .ToArray();
         }
 
-        CodeGenFile generateComponent(string contextName, ComponentData data) {
-            var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+        CodeGenFile[] generateComponent(string contextName, ComponentData data) {
+            return data.GetEventData()
+                .Select(eventData => {
+                    var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
+                    var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+                    var eventTypeSuffix = data.GetEventTypeSuffix(eventData);
 
-            var fileContent = COMPONENT_TEMPLATE
-                .Replace("${OptionalContextName}", optionalContextName)
-                .Replace("${ComponentName}", componentName);
+                    var fileContent = COMPONENT_TEMPLATE
+                        .Replace("${OptionalContextName}", optionalContextName)
+                        .Replace("${ComponentName}", componentName)
+                        .Replace("${EventType}", eventTypeSuffix);
 
-            return new CodeGenFile(
-                "Events" + Path.DirectorySeparatorChar +
-                "Components" + Path.DirectorySeparatorChar +
-                optionalContextName + componentName + "Listener".AddComponentSuffix() + ".cs",
-                fileContent,
-                GetType().FullName
-            );
+                    return new CodeGenFile(
+                        "Events" + Path.DirectorySeparatorChar +
+                        "Components" + Path.DirectorySeparatorChar +
+                        optionalContextName + componentName + eventTypeSuffix + "Listener".AddComponentSuffix() + ".cs",
+                        fileContent,
+                        GetType().FullName
+                    );
+                }).ToArray();
         }
     }
 }

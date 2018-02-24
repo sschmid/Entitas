@@ -7,15 +7,17 @@ namespace Entitas.CodeGeneration.Plugins {
     public class EventComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
-            var attr = Attribute.GetCustomAttributes(type)
+            var attrs = Attribute.GetCustomAttributes(type)
                 .OfType<EventAttribute>()
-                .SingleOrDefault();
+                .ToArray();
 
-            if (attr != null) {
+            if (attrs.Length > 0) {
                 data.IsEvent(true);
-                data.SetEventBindToEntity(attr.bindToEntity);
-                data.SetEventType(attr.eventType);
-                data.SetEventPriority(attr.priority);
+                var eventData = attrs
+                    .Select(attr => new EventData(attr.bindToEntity, attr.eventType, attr.priority))
+                    .ToArray();
+
+                data.SetEventData(eventData);
             } else {
                 data.IsEvent(false);
             }
@@ -25,9 +27,7 @@ namespace Entitas.CodeGeneration.Plugins {
     public static class EventComponentDataExtension {
 
         public const string COMPONENT_EVENT = "Component.Event";
-        public const string COMPONENT_EVENT_BIND_TO_ENTITY = "Component.Event.BindToEntity";
-        public const string COMPONENT_EVENT_TYPE = "Component.Event.Type";
-        public const string COMPONENT_EVENT_PRIORITY = "Component.Event.Priority";
+        public const string COMPONENT_EVENT_DATA = "Component.Event.Data";
 
         public static bool IsEvent(this ComponentData data) {
             return (bool)data[COMPONENT_EVENT];
@@ -37,28 +37,12 @@ namespace Entitas.CodeGeneration.Plugins {
             data[COMPONENT_EVENT] = isEvent;
         }
 
-        public static bool GetEventBindToEntity(this ComponentData data) {
-            return (bool)data[COMPONENT_EVENT_BIND_TO_ENTITY];
+        public static EventData[] GetEventData(this ComponentData data) {
+            return (EventData[])data[COMPONENT_EVENT_DATA];
         }
 
-        public static void SetEventBindToEntity(this ComponentData data, bool bindToEntity) {
-            data[COMPONENT_EVENT_BIND_TO_ENTITY] = bindToEntity;
-        }
-
-        public static EventType GetEventType(this ComponentData data) {
-            return (EventType)data[COMPONENT_EVENT_TYPE];
-        }
-
-        public static void SetEventType(this ComponentData data, EventType eventType) {
-            data[COMPONENT_EVENT_TYPE] = eventType;
-        }
-
-        public static int GetEventPriority(this ComponentData data) {
-            return (int)data[COMPONENT_EVENT_PRIORITY];
-        }
-
-        public static void SetEventPriority(this ComponentData data, int priority) {
-            data[COMPONENT_EVENT_PRIORITY] = priority;
+        public static void SetEventData(this ComponentData data, EventData[] eventData) {
+            data[COMPONENT_EVENT_DATA] = eventData;
         }
     }
 }

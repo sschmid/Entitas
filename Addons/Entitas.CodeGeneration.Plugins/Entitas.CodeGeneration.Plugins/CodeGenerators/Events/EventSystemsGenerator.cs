@@ -25,7 +25,7 @@ ${systems}
 }
 ";
 
-        const string SYSTEM_ADD_TEMPLATE = @"        Add(new ${OptionalContextName}${ComponentName}EventSystem(contexts)); // priority: ${priority}";
+        const string SYSTEM_ADD_TEMPLATE = @"        Add(new ${OptionalContextName}${ComponentName}${EventType}EventSystem(contexts)); // priority: ${priority}";
 
         public void Configure(Preferences preferences) {
             _ignoreNamespacesConfig.Configure(preferences);
@@ -35,14 +35,15 @@ ${systems}
             var orderedEventData = data
                 .OfType<ComponentData>()
                 .Where(d => d.IsEvent())
-                .OrderBy(d => d.GetEventPriority())
-                .ThenBy(d => d.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
+                .SelectMany(d => d.GetEventData().Select(eventData => new DataTuple { componentData = d, eventData = eventData }).ToArray())
+                .OrderBy(tuple => tuple.eventData.priority)
+                .ThenBy(tuple => tuple.componentData.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
                 .ToArray();
 
             return new[] { generateEventSystems(orderedEventData) };
         }
 
-        CodeGenFile generateEventSystems(ComponentData[] data) {
+        CodeGenFile generateEventSystems(DataTuple[] data) {
             var systems = generateSystemList(data);
 
             var fileContent = SYSTEMS_TEMPLATE
@@ -56,24 +57,31 @@ ${systems}
             );
         }
 
-        string generateSystemList(ComponentData[] data) {
+        string generateSystemList(DataTuple[] data) {
             return string.Join("\n", data
                 .SelectMany(generateSystemListForData)
                 .ToArray());
         }
 
-        string[] generateSystemListForData(ComponentData data) {
-            return data.GetContextNames()
+        string[] generateSystemListForData(DataTuple data) {
+            return data.componentData.GetContextNames()
                 .Select(contextName => generateAddSystem(contextName, data))
                 .ToArray();
         }
 
-        string generateAddSystem(string contextName, ComponentData data) {
-            var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
+        string generateAddSystem(string contextName, DataTuple data) {
+            var optionalContextName = data.componentData.GetContextNames().Length > 1 ? contextName : string.Empty;
+            var eventTypeSuffix = data.componentData.GetEventTypeSuffix(data.eventData);
             return SYSTEM_ADD_TEMPLATE
                 .Replace("${OptionalContextName}", optionalContextName)
-                .Replace("${ComponentName}", data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
-                .Replace("${priority}", data.GetEventPriority().ToString());
+                .Replace("${ComponentName}", data.componentData.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces))
+                .Replace("${EventType}", eventTypeSuffix)
+                .Replace("${priority}", data.eventData.priority.ToString());
+        }
+
+        struct DataTuple {
+            public ComponentData componentData;
+            public EventData eventData;
         }
     }
 }
