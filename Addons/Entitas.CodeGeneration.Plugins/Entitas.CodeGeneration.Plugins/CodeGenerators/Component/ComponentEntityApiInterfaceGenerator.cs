@@ -7,9 +7,9 @@ using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentEntityInterfaceGenerator : ICodeGenerator, IConfigurable {
+    public class ComponentEntityApiInterfaceGenerator : ICodeGenerator, IConfigurable {
 
-        public string name { get { return "Component (Entity Interface)"; } }
+        public string name { get { return "Component (Entity API Interface)"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
@@ -18,7 +18,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string STANDARD_INTERFACE_TEMPLATE =
-@"public interface ${InterfaceName}Entity {
+            @"public interface ${InterfaceName}Entity {
 
     ${ComponentType} ${componentName} { get; }
     bool has${ComponentName} { get; }
@@ -30,7 +30,7 @@ namespace Entitas.CodeGeneration.Plugins {
 ";
 
         const string FLAG_INTERFACE_TEMPLATE =
-@"public interface ${InterfaceName}Entity {
+            @"public interface ${InterfaceName}Entity {
 
     bool ${prefixedName} { get; set; }
 }

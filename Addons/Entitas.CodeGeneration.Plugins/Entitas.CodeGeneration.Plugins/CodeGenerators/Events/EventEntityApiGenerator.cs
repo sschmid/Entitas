@@ -7,9 +7,9 @@ using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentEventGenerator : ICodeGenerator, IConfigurable {
+    public class EventEntityApiGenerator : ICodeGenerator, IConfigurable {
 
-        public string name { get { return "Component (Event)"; } }
+        public string name { get { return "Event (Entity API)"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
@@ -71,9 +71,9 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${contextDependentComponentName}", optionalContextName == string.Empty ? componentName.LowercaseFirst() : componentName);
 
             return new CodeGenFile(
-                "Events" + Path.DirectorySeparatorChar +
+                contextName + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
-                optionalContextName + componentName + "Listener".AddComponentSuffix() + ".cs",
+                contextName + optionalContextName + componentName + "Listener".AddComponentSuffix() + ".cs",
                 fileContent,
                 GetType().FullName
             );

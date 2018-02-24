@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string ENTITY_TEMPLATE =
-@"public sealed partial class ${ContextName}Entity : Entitas.Entity {
+            @"public sealed partial class ${ContextName}Entity : Entitas.Entity {
 }
 ";
 

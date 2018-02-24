@@ -8,7 +8,7 @@ using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EventInterfaceGenerator : ICodeGenerator, IConfigurable {
+    public class EventListenertInterfaceGenerator : ICodeGenerator, IConfigurable {
 
         public string name { get { return "Event (Listener Interface)"; } }
         public int priority { get { return 0; } }

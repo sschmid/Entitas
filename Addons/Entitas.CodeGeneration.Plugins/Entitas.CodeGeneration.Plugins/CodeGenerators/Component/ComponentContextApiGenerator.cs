@@ -7,9 +7,9 @@ using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentEntityGenerator : ICodeGenerator, IConfigurable {
+    public class ComponentContextApiGenerator : ICodeGenerator, IConfigurable {
 
-        public string name { get { return "Component (Entity API)"; } }
+        public string name { get { return "Component (Context API)"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
@@ -18,27 +18,33 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string STANDARD_COMPONENT_TEMPLATE =
-@"public partial class ${ContextName}Entity {
+            @"public partial class ${ContextName}Context {
 
-    public ${ComponentType} ${componentName} { get { return (${ComponentType})GetComponent(${Index}); } }
-    public bool has${ComponentName} { get { return HasComponent(${Index}); } }
+    public ${ContextName}Entity ${componentName}Entity { get { return GetGroup(${ContextName}Matcher.${ComponentName}).GetSingleEntity(); } }
+    public ${ComponentType} ${componentName} { get { return ${componentName}Entity.${componentName}; } }
+    public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
 
-    public void Add${ComponentName}(${memberArgs}) {
-        var index = ${Index};
-        var component = CreateComponent<${ComponentType}>(index);
-${memberAssignment}
-        AddComponent(index, component);
+    public ${ContextName}Entity Set${ComponentName}(${memberArgs}) {
+        if (has${ComponentName}) {
+            throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
+                ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
+        }
+        var entity = CreateEntity();
+        entity.Add${ComponentName}(${methodArgs});
+        return entity;
     }
 
     public void Replace${ComponentName}(${memberArgs}) {
-        var index = ${Index};
-        var component = CreateComponent<${ComponentType}>(index);
-${memberAssignment}
-        ReplaceComponent(index, component);
+        var entity = ${componentName}Entity;
+        if (entity == null) {
+            entity = Set${ComponentName}(${methodArgs});
+        } else {
+            entity.Replace${ComponentName}(${methodArgs});
+        }
     }
 
     public void Remove${ComponentName}() {
-        RemoveComponent(${Index});
+        ${componentName}Entity.Destroy();
     }
 }
 ";
@@ -46,28 +52,23 @@ ${memberAssignment}
         const string MEMBER_ARGS_TEMPLATE =
             @"${MemberType} new${MemberName}";
 
-        const string MEMBER_ASSIGNMENT_TEMPLATE =
-            @"        component.${memberName} = new${MemberName};";
+        const string METHOD_ARGS_TEMPLATE =
+            @"new${MemberName}";
 
         const string FLAG_COMPONENT_TEMPLATE =
-@"public partial class ${ContextName}Entity {
+            @"public partial class ${ContextName}Context {
 
-    static readonly ${ComponentType} ${componentName}Component = new ${ComponentType}();
+    public ${ContextName}Entity ${componentName}Entity { get { return GetGroup(${ContextName}Matcher.${ComponentName}).GetSingleEntity(); } }
 
-    public bool ${prefixedName} {
-        get { return HasComponent(${Index}); }
+    public bool ${prefixedComponentName} {
+        get { return ${componentName}Entity != null; }
         set {
-            if (value != ${prefixedName}) {
-                var index = ${Index};
+            var entity = ${componentName}Entity;
+            if (value != (entity != null)) {
                 if (value) {
-                    var componentPool = GetComponentPool(index);
-                    var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : ${componentName}Component;
-
-                    AddComponent(index, component);
+                    CreateEntity().${prefixedComponentName} = true;
                 } else {
-                    RemoveComponent(index);
+                    entity.Destroy();
                 }
             }
         }
@@ -83,6 +84,7 @@ ${memberAssignment}
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
+                .Where(d => d.IsUnique())
                 .SelectMany(generateExtensions)
                 .ToArray();
         }
@@ -94,9 +96,8 @@ ${memberAssignment}
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
             var memberData = data.GetMemberData();
+            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             var template = memberData.Length == 0
                 ? FLAG_COMPONENT_TEMPLATE
                 : STANDARD_COMPONENT_TEMPLATE;
@@ -106,10 +107,9 @@ ${memberAssignment}
                 .Replace("${ComponentType}", data.GetTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${prefixedName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
-                .Replace("${Index}", index)
+                .Replace("${prefixedComponentName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
                 .Replace("${memberArgs}", getMemberArgs(memberData))
-                .Replace("${memberAssignment}", getMemberAssignment(memberData));
+                .Replace("${methodArgs}", getMethodArgs(memberData));
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
@@ -124,23 +124,18 @@ ${memberAssignment}
             var args = memberData
                 .Select(info => MEMBER_ARGS_TEMPLATE
                     .Replace("${MemberType}", info.type)
-                    .Replace("${MemberName}", info.name.UppercaseFirst())
-                )
+                    .Replace("${MemberName}", info.name.UppercaseFirst()))
                 .ToArray();
 
             return string.Join(", ", args);
         }
 
-        string getMemberAssignment(MemberData[] memberData) {
-            var assignments = memberData
-                .Select(info => MEMBER_ASSIGNMENT_TEMPLATE
-                    .Replace("${MemberType}", info.type)
-                    .Replace("${memberName}", info.name)
-                    .Replace("${MemberName}", info.name.UppercaseFirst())
-                )
+        string getMethodArgs(MemberData[] memberData) {
+            var args = memberData
+                .Select(info => METHOD_ARGS_TEMPLATE.Replace("${MemberName}", info.name.UppercaseFirst()))
                 .ToArray();
 
-            return string.Join("\n", assignments);
+            return string.Join(", ", args);
         }
     }
 }

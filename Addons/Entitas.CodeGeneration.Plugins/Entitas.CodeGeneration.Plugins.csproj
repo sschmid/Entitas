@@ -47,23 +47,23 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentContextGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentEntityGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentEntityInterfaceGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentEventGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentMatcherGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ComponentsLookupGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\ComponentContextApiGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\ComponentEntityApiGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\ComponentEntityApiInterfaceGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\ComponentGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\ComponentLookupGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\ComponentMatcherApiGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ContextAttributeGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ContextGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ContextMatcherGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\ContextsGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EntityGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EntityIndexGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EventComponentGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EventInterfaceGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EventSystemGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EventSystemsGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventEntityApiGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventListenerComponentGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventListenertInterfaceGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventSystemGenerator.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventSystemsGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\AssembliesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\ContextNamesConfig.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\Configs\IgnoreNamespacesConfig.cs" />

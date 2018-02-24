@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string CONTEXTS_TEMPLATE =
-@"public partial class Contexts : Entitas.IContexts {
+            @"public partial class Contexts : Entitas.IContexts {
 
     public static Contexts sharedInstance {
         get {

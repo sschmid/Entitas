@@ -17,7 +17,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string CLASS_TEMPLATE =
-@"public partial class Contexts {
+            @"public partial class Contexts {
 
 ${indexConstants}
 
@@ -35,7 +35,7 @@ ${getIndices}
         const string INDEX_CONSTANTS_TEMPLATE = @"    public const string ${IndexName} = ""${IndexName}"";";
 
         const string ADD_INDEX_TEMPLATE =
-@"        ${contextName}.AddEntityIndex(new ${IndexType}<${ContextName}Entity, ${KeyType}>(
+            @"        ${contextName}.AddEntityIndex(new ${IndexType}<${ContextName}Entity, ${KeyType}>(
             ${IndexName},
             ${contextName}.GetGroup(${ContextName}Matcher.${Matcher}),
             (e, c) => ((${ComponentType})c).${MemberName}));";
@@ -44,17 +44,17 @@ ${getIndices}
             @"        ${contextName}.AddEntityIndex(new ${IndexType}(${contextName}));";
 
         const string GET_INDEX_TEMPLATE =
-@"    public static System.Collections.Generic.HashSet<${ContextName}Entity> GetEntitiesWith${IndexName}(this ${ContextName}Context context, ${KeyType} ${MemberName}) {
+            @"    public static System.Collections.Generic.HashSet<${ContextName}Entity> GetEntitiesWith${IndexName}(this ${ContextName}Context context, ${KeyType} ${MemberName}) {
         return ((${IndexType}<${ContextName}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${IndexName})).GetEntities(${MemberName});
     }";
 
         const string GET_PRIMARY_INDEX_TEMPLATE =
-@"    public static ${ContextName}Entity GetEntityWith${IndexName}(this ${ContextName}Context context, ${KeyType} ${MemberName}) {
+            @"    public static ${ContextName}Entity GetEntityWith${IndexName}(this ${ContextName}Context context, ${KeyType} ${MemberName}) {
         return ((${IndexType}<${ContextName}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${IndexName})).GetEntity(${MemberName});
     }";
 
         const string CUSTOM_METHOD_TEMPLATE =
-@"    public static ${ReturnType} ${MethodName}(this ${ContextName}Context context, ${methodArgs}) {
+            @"    public static ${ReturnType} ${MethodName}(this ${ContextName}Context context, ${methodArgs}) {
         return ((${IndexType})(context.GetEntityIndex(Contexts.${IndexName}))).${MethodName}(${args});
     }
 ";

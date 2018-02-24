@@ -7,9 +7,9 @@ using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentContextGenerator : ICodeGenerator, IConfigurable {
+    public class ComponentEntityApiGenerator : ICodeGenerator, IConfigurable {
 
-        public string name { get { return "Component (Context API)"; } }
+        public string name { get { return "Component (Entity API)"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
@@ -18,33 +18,27 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string STANDARD_COMPONENT_TEMPLATE =
-@"public partial class ${ContextName}Context {
+            @"public partial class ${ContextName}Entity {
 
-    public ${ContextName}Entity ${componentName}Entity { get { return GetGroup(${ContextName}Matcher.${ComponentName}).GetSingleEntity(); } }
-    public ${ComponentType} ${componentName} { get { return ${componentName}Entity.${componentName}; } }
-    public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
+    public ${ComponentType} ${componentName} { get { return (${ComponentType})GetComponent(${Index}); } }
+    public bool has${ComponentName} { get { return HasComponent(${Index}); } }
 
-    public ${ContextName}Entity Set${ComponentName}(${memberArgs}) {
-        if (has${ComponentName}) {
-            throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
-                ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
-        }
-        var entity = CreateEntity();
-        entity.Add${ComponentName}(${methodArgs});
-        return entity;
+    public void Add${ComponentName}(${memberArgs}) {
+        var index = ${Index};
+        var component = CreateComponent<${ComponentType}>(index);
+${memberAssignment}
+        AddComponent(index, component);
     }
 
     public void Replace${ComponentName}(${memberArgs}) {
-        var entity = ${componentName}Entity;
-        if (entity == null) {
-            entity = Set${ComponentName}(${methodArgs});
-        } else {
-            entity.Replace${ComponentName}(${methodArgs});
-        }
+        var index = ${Index};
+        var component = CreateComponent<${ComponentType}>(index);
+${memberAssignment}
+        ReplaceComponent(index, component);
     }
 
     public void Remove${ComponentName}() {
-        ${componentName}Entity.Destroy();
+        RemoveComponent(${Index});
     }
 }
 ";
@@ -52,23 +46,28 @@ namespace Entitas.CodeGeneration.Plugins {
         const string MEMBER_ARGS_TEMPLATE =
             @"${MemberType} new${MemberName}";
 
-        const string METHOD_ARGS_TEMPLATE =
-            @"new${MemberName}";
+        const string MEMBER_ASSIGNMENT_TEMPLATE =
+            @"        component.${memberName} = new${MemberName};";
 
         const string FLAG_COMPONENT_TEMPLATE =
-@"public partial class ${ContextName}Context {
+            @"public partial class ${ContextName}Entity {
 
-    public ${ContextName}Entity ${componentName}Entity { get { return GetGroup(${ContextName}Matcher.${ComponentName}).GetSingleEntity(); } }
+    static readonly ${ComponentType} ${componentName}Component = new ${ComponentType}();
 
-    public bool ${prefixedComponentName} {
-        get { return ${componentName}Entity != null; }
+    public bool ${prefixedName} {
+        get { return HasComponent(${Index}); }
         set {
-            var entity = ${componentName}Entity;
-            if (value != (entity != null)) {
+            if (value != ${prefixedName}) {
+                var index = ${Index};
                 if (value) {
-                    CreateEntity().${prefixedComponentName} = true;
+                    var componentPool = GetComponentPool(index);
+                    var component = componentPool.Count > 0
+                            ? componentPool.Pop()
+                            : ${componentName}Component;
+
+                    AddComponent(index, component);
                 } else {
-                    entity.Destroy();
+                    RemoveComponent(index);
                 }
             }
         }
@@ -84,7 +83,6 @@ namespace Entitas.CodeGeneration.Plugins {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
-                .Where(d => d.IsUnique())
                 .SelectMany(generateExtensions)
                 .ToArray();
         }
@@ -96,8 +94,9 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var memberData = data.GetMemberData();
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
+            var index = contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
+            var memberData = data.GetMemberData();
             var template = memberData.Length == 0
                 ? FLAG_COMPONENT_TEMPLATE
                 : STANDARD_COMPONENT_TEMPLATE;
@@ -107,9 +106,10 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${ComponentType}", data.GetTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${prefixedComponentName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
+                .Replace("${prefixedName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
+                .Replace("${Index}", index)
                 .Replace("${memberArgs}", getMemberArgs(memberData))
-                .Replace("${methodArgs}", getMethodArgs(memberData));
+                .Replace("${memberAssignment}", getMemberAssignment(memberData));
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
@@ -124,18 +124,23 @@ namespace Entitas.CodeGeneration.Plugins {
             var args = memberData
                 .Select(info => MEMBER_ARGS_TEMPLATE
                     .Replace("${MemberType}", info.type)
-                    .Replace("${MemberName}", info.name.UppercaseFirst()))
+                    .Replace("${MemberName}", info.name.UppercaseFirst())
+                )
                 .ToArray();
 
             return string.Join(", ", args);
         }
 
-        string getMethodArgs(MemberData[] memberData) {
-            var args = memberData
-                .Select(info => METHOD_ARGS_TEMPLATE.Replace("${MemberName}", info.name.UppercaseFirst()))
+        string getMemberAssignment(MemberData[] memberData) {
+            var assignments = memberData
+                .Select(info => MEMBER_ASSIGNMENT_TEMPLATE
+                    .Replace("${MemberType}", info.type)
+                    .Replace("${memberName}", info.name)
+                    .Replace("${MemberName}", info.name.UppercaseFirst())
+                )
                 .ToArray();
 
-            return string.Join(", ", args);
+            return string.Join("\n", assignments);
         }
     }
 }

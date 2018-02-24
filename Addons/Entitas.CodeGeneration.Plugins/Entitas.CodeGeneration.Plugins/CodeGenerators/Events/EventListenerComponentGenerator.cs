@@ -6,9 +6,9 @@ using DesperateDevs.Serialization;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EventComponentGenerator : ICodeGenerator, IConfigurable {
+    public class EventListenerComponentGenerator : ICodeGenerator, IConfigurable {
 
-        public string name { get { return "Event (Component)"; } }
+        public string name { get { return "Event (Listener Component)"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 

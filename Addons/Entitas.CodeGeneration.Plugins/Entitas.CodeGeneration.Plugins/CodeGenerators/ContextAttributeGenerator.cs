@@ -6,12 +6,12 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextAttributeGenerator : ICodeGenerator {
 
-        public string name { get { return "Context Attribute"; } }
+        public string name { get { return "Context (Attribute)"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
         const string ATTRIBUTE_TEMPLATE =
-@"public sealed class ${ContextName}Attribute : Entitas.CodeGeneration.Attributes.ContextAttribute {
+            @"public sealed class ${ContextName}Attribute : Entitas.CodeGeneration.Attributes.ContextAttribute {
 
     public ${ContextName}Attribute() : base(""${ContextName}"") {
     }

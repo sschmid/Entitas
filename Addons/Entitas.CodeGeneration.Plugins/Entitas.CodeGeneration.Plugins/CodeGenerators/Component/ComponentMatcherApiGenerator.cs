@@ -6,7 +6,7 @@ using DesperateDevs.Serialization;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentMatcherGenerator : ICodeGenerator, IConfigurable {
+    public class ComponentMatcherApiGenerator : ICodeGenerator, IConfigurable {
 
         public string name { get { return "Component (Matcher API)"; } }
         public int priority { get { return 0; } }
@@ -17,7 +17,7 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string STANDARD_COMPONENT_TEMPLATE =
-@"public sealed partial class ${ContextName}Matcher {
+            @"public sealed partial class ${ContextName}Matcher {
 
     static Entitas.IMatcher<${ContextName}Entity> _matcher${ComponentName};
 
@@ -55,8 +55,8 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile generateMatcher(string contextName, ComponentData data) {
             var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            var index = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
-            var componentNames = contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP + ".componentNames";
+            var index = contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
+            var componentNames = contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + ".componentNames";
 
             var fileContent = STANDARD_COMPONENT_TEMPLATE
                 .Replace("${ContextName}", contextName)

@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string CONTEXT_TEMPLATE =
-@"public sealed partial class ${ContextName}Context : Entitas.Context<${ContextName}Entity> {
+            @"public sealed partial class ${ContextName}Context : Entitas.Context<${ContextName}Entity> {
 
     public ${ContextName}Context()
         : base(
@@ -48,7 +48,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 contextName + Path.DirectorySeparatorChar + contextName + "Context.cs",
                 CONTEXT_TEMPLATE
                     .Replace("${ContextName}", contextName)
-                    .Replace("${Lookup}", contextName + ComponentsLookupGenerator.COMPONENTS_LOOKUP),
+                    .Replace("${Lookup}", contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP),
                 GetType().FullName
             );
         }

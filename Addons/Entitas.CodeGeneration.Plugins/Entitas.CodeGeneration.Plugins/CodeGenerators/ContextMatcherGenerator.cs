@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string CONTEXT_TEMPLATE =
-@"public sealed partial class ${ContextName}Matcher {
+            @"public sealed partial class ${ContextName}Matcher {
 
     public static Entitas.IAllOfMatcher<${ContextName}Entity> AllOf(params int[] indices) {
         return Entitas.Matcher<${ContextName}Entity>.AllOf(indices);

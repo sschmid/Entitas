@@ -6,9 +6,9 @@ using DesperateDevs.Serialization;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentsLookupGenerator : ICodeGenerator, IConfigurable {
+    public class ComponentLookupGenerator : ICodeGenerator, IConfigurable {
 
-        public string name { get { return "Components Lookup"; } }
+        public string name { get { return "Component (Lookup)"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
@@ -16,10 +16,10 @@ namespace Entitas.CodeGeneration.Plugins {
 
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
-        public const string COMPONENTS_LOOKUP = "ComponentsLookup";
+        public const string COMPONENTS_LOOKUP = "ComponentLookup";
 
         const string COMPONENTS_LOOKUP_TEMPLATE =
-@"public static class ${Lookup} {
+            @"public static class ${Lookup} {
 
 ${componentConstants}
 
