@@ -138,6 +138,7 @@ namespace Entitas.CodeGeneration.Plugins {
                     data.GetEventData().Select(eventData => {
                         var dataForEvent = new ComponentData(data);
                         dataForEvent.IsEvent(false);
+                        dataForEvent.IsUnique(false);
                         var eventTypeSuffix = data.GetEventTypeSuffix(eventData);
                         var optionalContextName = dataForEvent.GetContextNames().Length > 1 ? contextName : string.Empty;
                         var listenerComponentName = optionalContextName + componentName + eventTypeSuffix + "Listener";
