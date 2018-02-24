@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -12,14 +11,14 @@ namespace Entitas {
         IComponent previousComponent, IComponent newComponent
     ) where TEntity : class, IEntity;
 
-    public interface IGroup : IEnumerable {
+    public interface IGroup {
 
         int count { get; }
 
         void RemoveAllEventHandlers();
     }
 
-    public interface IGroup<TEntity> : IGroup, IEnumerable<TEntity> where TEntity : class, IEntity {
+    public interface IGroup<TEntity> : IGroup where TEntity : class, IEntity {
 
         event GroupChanged<TEntity> OnEntityAdded;
         event GroupChanged<TEntity> OnEntityRemoved;
@@ -29,7 +28,6 @@ namespace Entitas {
 
         void HandleEntitySilently(TEntity entity);
         void HandleEntity(TEntity entity, int index, IComponent component);
-
         GroupChanged<TEntity> HandleEntity(TEntity entity);
 
         void UpdateEntity(TEntity entity, int index, IComponent previousComponent, IComponent newComponent);
@@ -37,6 +35,9 @@ namespace Entitas {
         bool ContainsEntity(TEntity entity);
 
         TEntity[] GetEntities();
+        List<TEntity> GetEntities(List<TEntity> buffer);
         TEntity GetSingleEntity();
+
+        HashSet<TEntity>.Enumerator GetEnumerator();
     }
 }

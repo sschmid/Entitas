@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Entitas {
 
@@ -150,12 +149,15 @@ namespace Entitas {
             return _entitiesCache;
         }
 
-        public IEnumerator<TEntity> GetEnumerator() {
-            return _entities.GetEnumerator();
+        /// Fills the buffer with all entities which are currently in this group.
+        public List<TEntity> GetEntities(List<TEntity> buffer) {
+            buffer.Clear();
+            buffer.AddRange(_entities);
+            return buffer;
         }
 
-        IEnumerator IEnumerable.GetEnumerator() {
-            return GetEnumerator();
+        public HashSet<TEntity>.Enumerator GetEnumerator() {
+            return _entities.GetEnumerator();
         }
 
         /// Returns the only entity in this group. It will return null
