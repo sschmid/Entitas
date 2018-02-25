@@ -1,39 +1,31 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.Serialization;
 using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentEntityApiGenerator : ICodeGenerator, IConfigurable {
+    public class ComponentEntityApiGenerator : AbstractComponentGenerator {
 
-        public string name { get { return "Component (Entity API)"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public override string name { get { return "Component (Entity API)"; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
-
-        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
-
-        const string STANDARD_COMPONENT_TEMPLATE =
-            @"public partial class ${ContextName}Entity {
+        const string STANDARD_TEMPLATE =
+            @"public partial class ${EntityType} {
 
     public ${ComponentType} ${componentName} { get { return (${ComponentType})GetComponent(${Index}); } }
     public bool has${ComponentName} { get { return HasComponent(${Index}); } }
 
-    public void Add${ComponentName}(${memberArgs}) {
+    public void Add${ComponentName}(${methodParameters}) {
         var index = ${Index};
         var component = CreateComponent<${ComponentType}>(index);
-${memberAssignment}
+${memberAssignmentList}
         AddComponent(index, component);
     }
 
-    public void Replace${ComponentName}(${memberArgs}) {
+    public void Replace${ComponentName}(${methodParameters}) {
         var index = ${Index};
         var component = CreateComponent<${ComponentType}>(index);
-${memberAssignment}
+${memberAssignmentList}
         ReplaceComponent(index, component);
     }
 
@@ -43,21 +35,15 @@ ${memberAssignment}
 }
 ";
 
-        const string MEMBER_ARGS_TEMPLATE =
-            @"${MemberType} new${MemberName}";
-
-        const string MEMBER_ASSIGNMENT_TEMPLATE =
-            @"        component.${memberName} = new${MemberName};";
-
-        const string FLAG_COMPONENT_TEMPLATE =
-            @"public partial class ${ContextName}Entity {
+        const string FLAG_TEMPLATE =
+            @"public partial class ${EntityType} {
 
     static readonly ${ComponentType} ${componentName}Component = new ${ComponentType}();
 
-    public bool ${prefixedName} {
+    public bool ${prefixedComponentName} {
         get { return HasComponent(${Index}); }
         set {
-            if (value != ${prefixedName}) {
+            if (value != ${prefixedComponentName}) {
                 var index = ${Index};
                 if (value) {
                     var componentPool = GetComponentPool(index);
@@ -75,72 +61,46 @@ ${memberAssignment}
 }
 ";
 
-        public void Configure(Preferences preferences) {
-            _ignoreNamespacesConfig.Configure(preferences);
-        }
-
-        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+        public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
-                .SelectMany(generateExtensions)
+                .SelectMany(generate)
                 .ToArray();
         }
 
-        CodeGenFile[] generateExtensions(ComponentData data) {
+        CodeGenFile[] generate(ComponentData data) {
             return data.GetContextNames()
-                .Select(contextName => generateExtension(contextName, data))
+                .Select(contextName => generate(contextName, data))
                 .ToArray();
         }
 
-        CodeGenFile generateExtension(string contextName, ComponentData data) {
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            var index = contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + "." + componentName;
-            var memberData = data.GetMemberData();
-            var template = memberData.Length == 0
-                ? FLAG_COMPONENT_TEMPLATE
-                : STANDARD_COMPONENT_TEMPLATE;
+        CodeGenFile generate(string contextName, ComponentData data) {
+            var template = data.GetMemberData().Length == 0
+                ? FLAG_TEMPLATE
+                : STANDARD_TEMPLATE;
+
+            var index = contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + "." + data.ComponentName();
 
             var fileContent = template
-                .Replace("${ContextName}", contextName)
-                .Replace("${ComponentType}", data.GetTypeName())
-                .Replace("${ComponentName}", componentName)
-                .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${prefixedName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
+                .Replace(data, contextName)
                 .Replace("${Index}", index)
-                .Replace("${memberArgs}", getMemberArgs(memberData))
-                .Replace("${memberAssignment}", getMemberAssignment(memberData));
+                .Replace("${memberAssignmentList}", getMemberAssignmentList(data.GetMemberData()));
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
-                contextName + componentName.AddComponentSuffix() + ".cs",
+                data.ComponentNameWithContext(contextName).AddComponentSuffix() + ".cs",
                 fileContent,
                 GetType().FullName
             );
         }
 
-        string getMemberArgs(MemberData[] memberData) {
-            var args = memberData
-                .Select(info => MEMBER_ARGS_TEMPLATE
-                    .Replace("${MemberType}", info.type)
-                    .Replace("${MemberName}", info.name.UppercaseFirst())
-                )
-                .ToArray();
-
-            return string.Join(", ", args);
-        }
-
-        string getMemberAssignment(MemberData[] memberData) {
-            var assignments = memberData
-                .Select(info => MEMBER_ASSIGNMENT_TEMPLATE
-                    .Replace("${MemberType}", info.type)
-                    .Replace("${memberName}", info.name)
-                    .Replace("${MemberName}", info.name.UppercaseFirst())
-                )
-                .ToArray();
-
-            return string.Join("\n", assignments);
+        string getMemberAssignmentList(MemberData[] memberData) {
+            return string.Join("\n", memberData
+                .Select(info => "        component." + info.name + " = new" + info.name.UppercaseFirst() + ";")
+                .ToArray()
+            );
         }
     }
 }

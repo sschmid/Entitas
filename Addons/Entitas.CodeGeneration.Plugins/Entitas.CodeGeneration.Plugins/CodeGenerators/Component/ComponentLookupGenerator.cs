@@ -16,7 +16,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
-        public const string COMPONENTS_LOOKUP = "ComponentLookup";
+        public const string COMPONENTS_LOOKUP = "ComponentsLookup";
 
         const string COMPONENTS_LOOKUP_TEMPLATE =
             @"public static class ${Lookup} {
