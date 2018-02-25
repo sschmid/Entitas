@@ -21,14 +21,15 @@ namespace Entitas.CodeGeneration.Plugins {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateComponent())
-                .Select(generateComponentClass)
+                .Select(generate)
                 .ToArray();
         }
 
-        CodeGenFile generateComponentClass(ComponentData data) {
+        CodeGenFile generate(ComponentData data) {
             var fullComponentName = data.GetTypeName().RemoveDots();
             return new CodeGenFile(
-                "Components" + Path.DirectorySeparatorChar + fullComponentName + ".cs",
+                "Components" + Path.DirectorySeparatorChar +
+                fullComponentName + ".cs",
                 COMPONENT_TEMPLATE
                     .Replace("${FullComponentName}", fullComponentName)
                     .Replace("${Type}", data.GetObjectTypeName()),
