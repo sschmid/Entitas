@@ -31,14 +31,16 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public static string Replace(this string template, ComponentData data, string contextName, EventData eventData) {
-            var eventListener = data.GetContextNames().Length > 1
+            var eventListener = data.EventListener(contextName, eventData);
+            var lowerEventListener = data.GetContextNames().Length > 1
                 ? contextName.LowercaseFirst() + data.ComponentName() + "Listener"
                 : data.ComponentName().LowercaseFirst() + "Listener";
 
             return template
                 .Replace(data, contextName)
-                .Replace("${EventListener}", data.EventListener(contextName, eventData))
-                .Replace("${eventListener}", eventListener);
+                .Replace("${EventListenerComponent}", eventListener.AddComponentSuffix())
+                .Replace("${EventListener}", eventListener)
+                .Replace("${eventListener}", lowerEventListener);
         }
 
         public static string EventListener(this ComponentData data, string contextName, EventData eventData) {
