@@ -5,7 +5,7 @@ class describe_ContextStringExtension : nspec {
 
     const string CONTEXT_SUFFIX = "Context";
 
-    void when_entity() {
+    void when_context() {
 
         context["when adding ContextSuffix"] = () => {
 

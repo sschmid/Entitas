@@ -47,6 +47,8 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\CodeGeneratorExtentions.cs" />
+    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\AbstractComponentGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\ComponentContextApiGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\ComponentEntityApiGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Component\ComponentEntityApiInterfaceGenerator.cs" />

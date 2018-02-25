@@ -31,7 +31,6 @@ namespace Entitas.CodeGeneration.Plugins {
 
         const string FLAG_INTERFACE_TEMPLATE =
             @"public interface ${InterfaceName}Entity {
-
     bool ${prefixedName} { get; set; }
 }
 ";

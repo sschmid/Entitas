@@ -5,7 +5,7 @@ class describe_ComponentStringExtension : nspec {
 
     const string COMPONENT_SUFFIX = "Component";
 
-    void when_entity() {
+    void when_component() {
 
         context["when adding ComponentSuffix"] = () => {
 
