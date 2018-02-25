@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
-        const string CONTEXT_TEMPLATE =
+        const string TEMPLATE =
             @"public sealed partial class ${ContextType} : Entitas.Context<${EntityType}> {
 
     public ${ContextType}()
@@ -47,7 +47,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 contextName.AddContextSuffix() + ".cs",
-                CONTEXT_TEMPLATE.Replace(contextName),
+                TEMPLATE.Replace(contextName),
                 GetType().FullName
             );
         }

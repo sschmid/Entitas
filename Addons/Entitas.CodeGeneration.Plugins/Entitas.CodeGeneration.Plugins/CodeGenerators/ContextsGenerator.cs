@@ -1,6 +1,5 @@
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
@@ -10,7 +9,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
-        const string CONTEXTS_TEMPLATE =
+        const string TEMPLATE =
             @"public partial class Contexts : Entitas.IContexts {
 
     public static Contexts sharedInstance {
@@ -26,12 +25,12 @@ namespace Entitas.CodeGeneration.Plugins {
 
     static Contexts _sharedInstance;
 
-${contextProperties}
+${contextPropertiesList}
 
     public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { ${contextList} }; } }
 
     public Contexts() {
-${contextAssignments}
+${contextAssignmentsList}
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
@@ -52,9 +51,9 @@ ${contextAssignments}
 }
 ";
 
-        const string CONTEXT_PROPERTY_TEMPLATE = @"    public ${ContextName}Context ${contextName} { get; set; }";
+        const string CONTEXT_PROPERTY_TEMPLATE = @"    public ${ContextType} ${contextName} { get; set; }";
         const string CONTEXT_LIST_TEMPLATE = @"${contextName}";
-        const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${contextName} = new ${ContextName}Context();";
+        const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${contextName} = new ${Context}();";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var contextNames = data
@@ -66,33 +65,28 @@ ${contextAssignments}
             return new[] {
                 new CodeGenFile(
                     "Contexts.cs",
-                    generateContextsClass(contextNames),
+                    generate(contextNames),
                     GetType().FullName)
             };
         }
 
-        string generateContextsClass(string[] contextNames) {
-            var contextProperties = string.Join("\n", contextNames
-                .Select(contextName => CONTEXT_PROPERTY_TEMPLATE
-                    .Replace("${ContextName}", contextName)
-                    .Replace("${contextName}", contextName.LowercaseFirst())
-                ).ToArray());
+        string generate(string[] contextNames) {
+            var contextPropertiesList = string.Join("\n", contextNames
+                .Select(contextName => CONTEXT_PROPERTY_TEMPLATE.Replace(contextName))
+                .ToArray());
 
             var contextList = string.Join(", ", contextNames
-                .Select(contextName => CONTEXT_LIST_TEMPLATE
-                    .Replace("${contextName}", contextName.LowercaseFirst())
-                ).ToArray());
+                .Select(contextName => CONTEXT_LIST_TEMPLATE.Replace(contextName))
+                .ToArray());
 
-            var contextAssignments = string.Join("\n", contextNames
-                .Select(contextName => CONTEXT_ASSIGNMENT_TEMPLATE
-                    .Replace("${ContextName}", contextName)
-                    .Replace("${contextName}", contextName.LowercaseFirst())
-                ).ToArray());
+            var contextAssignmentsList = string.Join("\n", contextNames
+                .Select(contextName => CONTEXT_ASSIGNMENT_TEMPLATE.Replace(contextName))
+                .ToArray());
 
-            return CONTEXTS_TEMPLATE
-                .Replace("${contextProperties}", contextProperties)
+            return TEMPLATE
+                .Replace("${contextPropertiesList}", contextPropertiesList)
                 .Replace("${contextList}", contextList)
-                .Replace("${contextAssignments}", contextAssignments);
+                .Replace("${contextAssignmentsList}", contextAssignmentsList);
         }
     }
 }

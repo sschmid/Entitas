@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
-        const string CONTEXT_TEMPLATE =
+        const string TEMPLATE =
             @"public sealed partial class ${MatcherType} {
 
     public static Entitas.IAllOfMatcher<${EntityType}> AllOf(params int[] indices) {
@@ -43,7 +43,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 contextName.AddMatcherSuffix() + ".cs",
-                CONTEXT_TEMPLATE.Replace(contextName),
+                TEMPLATE.Replace(contextName),
                 GetType().FullName
             );
         }
