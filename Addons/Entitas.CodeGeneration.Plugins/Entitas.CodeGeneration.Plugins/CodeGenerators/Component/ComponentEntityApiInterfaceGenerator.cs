@@ -14,8 +14,8 @@ namespace Entitas.CodeGeneration.Plugins {
     ${ComponentType} ${componentName} { get; }
     bool has${ComponentName} { get; }
 
-    void Add${ComponentName}(${methodParameters});
-    void Replace${ComponentName}(${methodParameters});
+    void Add${ComponentName}(${newMethodParameters});
+    void Replace${ComponentName}(${newMethodParameters});
     void Remove${ComponentName}();
 }
 ";

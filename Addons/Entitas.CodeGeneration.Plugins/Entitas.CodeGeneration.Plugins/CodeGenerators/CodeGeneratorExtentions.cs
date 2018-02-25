@@ -26,7 +26,8 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
                 .Replace("${prefixedComponentName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
-                .Replace("${methodParameters}", getMethodParameters(data.GetMemberData()))
+                .Replace("${newMethodParameters}", getMethodParameters(data.GetMemberData(), true))
+                .Replace("${methodParameters}", getMethodParameters(data.GetMemberData(), false))
                 .Replace("${methodArgs}", getMethodArgs(data.GetMemberData()));
         }
 
@@ -49,7 +50,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return optionalContextName + data.ComponentName() + eventTypeSuffix + "Listener";
         }
 
-        static string getEventMethodArgs(this ComponentData data, EventData eventData, string args) {
+        public static string GetEventMethodArgs(this ComponentData data, EventData eventData, string args) {
             if (data.GetMemberData().Length == 0) {
                 return string.Empty;
             }
@@ -59,9 +60,9 @@ namespace Entitas.CodeGeneration.Plugins {
                 : args;
         }
 
-        static string getMethodParameters(MemberData[] memberData) {
+        static string getMethodParameters(MemberData[] memberData, bool newPrefix) {
             return string.Join(", ", memberData
-                .Select(info => info.type + " new" + info.name.UppercaseFirst())
+                .Select(info => info.type + (newPrefix ? " new" : " ") + info.name.UppercaseFirst())
                 .ToArray());
         }
 

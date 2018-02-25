@@ -15,7 +15,7 @@ namespace Entitas.CodeGeneration.Plugins {
     public ${ComponentType} ${componentName} { get { return ${componentName}Entity.${componentName}; } }
     public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
 
-    public ${EntityType} Set${ComponentName}(${methodParameters}) {
+    public ${EntityType} Set${ComponentName}(${newMethodParameters}) {
         if (has${ComponentName}) {
             throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
                 ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
@@ -25,7 +25,7 @@ namespace Entitas.CodeGeneration.Plugins {
         return entity;
     }
 
-    public void Replace${ComponentName}(${methodParameters}) {
+    public void Replace${ComponentName}(${newMethodParameters}) {
         var entity = ${componentName}Entity;
         if (entity == null) {
             entity = Set${ComponentName}(${methodArgs});

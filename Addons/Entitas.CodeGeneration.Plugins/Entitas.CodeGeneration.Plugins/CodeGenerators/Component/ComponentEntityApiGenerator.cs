@@ -15,14 +15,14 @@ namespace Entitas.CodeGeneration.Plugins {
     public ${ComponentType} ${componentName} { get { return (${ComponentType})GetComponent(${Index}); } }
     public bool has${ComponentName} { get { return HasComponent(${Index}); } }
 
-    public void Add${ComponentName}(${methodParameters}) {
+    public void Add${ComponentName}(${newMethodParameters}) {
         var index = ${Index};
         var component = CreateComponent<${ComponentType}>(index);
 ${memberAssignmentList}
         AddComponent(index, component);
     }
 
-    public void Replace${ComponentName}(${methodParameters}) {
+    public void Replace${ComponentName}(${newMethodParameters}) {
         var index = ${Index};
         var component = CreateComponent<${ComponentType}>(index);
 ${memberAssignmentList}
