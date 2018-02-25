@@ -31,7 +31,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class ContextDataExtension {
 
-        public const string CONTEXT_NAME = "context_name";
+        public const string CONTEXT_NAME = "Context.Name";
 
         public static string GetContextName(this ContextData data) {
             return (string)data[CONTEXT_NAME];

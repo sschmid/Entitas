@@ -156,18 +156,18 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class EntityIndexDataExtension {
 
-        public const string ENTITY_INDEX_TYPE = "entityIndex_type";
+        public const string ENTITY_INDEX_TYPE = "EntityIndex.Type";
 
-        public const string ENTITY_INDEX_IS_CUSTOM = "entityIndex_isCustom";
-        public const string ENTITY_INDEX_CUSTOM_METHODS = "entityIndex_customMethods";
+        public const string ENTITY_INDEX_IS_CUSTOM = "EntityIndex.Custom";
+        public const string ENTITY_INDEX_CUSTOM_METHODS = "EntityIndex.CustomMethods";
 
-        public const string ENTITY_INDEX_NAME = "entityIndex_name";
-        public const string ENTITY_INDEX_CONTEXT_NAMES = "entityIndex_contextNames";
+        public const string ENTITY_INDEX_NAME = "EntityIndex.Name";
+        public const string ENTITY_INDEX_CONTEXT_NAMES = "EntityIndex.ContextNames";
 
-        public const string ENTITY_INDEX_KEY_TYPE = "entityIndex_keyType";
-        public const string ENTITY_INDEX_COMPONENT_TYPE = "entityIndex_componentType";
-        public const string ENTITY_INDEX_MEMBER_NAME = "entityIndex_memberName";
-        public const string ENTITY_INDEX_HAS_MULTIPLE = "entityIndex_has_multiple";
+        public const string ENTITY_INDEX_KEY_TYPE = "EntityIndex.KeyType";
+        public const string ENTITY_INDEX_COMPONENT_TYPE = "EntityIndex.ComponentType";
+        public const string ENTITY_INDEX_MEMBER_NAME = "EntityIndex.MemberName";
+        public const string ENTITY_INDEX_HAS_MULTIPLE = "EntityIndex.HasMultiple";
 
         public static string GetEntityIndexType(this EntityIndexData data) {
             return (string)data[ENTITY_INDEX_TYPE];

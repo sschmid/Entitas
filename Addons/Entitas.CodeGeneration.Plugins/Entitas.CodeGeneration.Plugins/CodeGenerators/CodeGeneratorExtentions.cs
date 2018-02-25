@@ -54,7 +54,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${Event}", data.Event(contextName, eventData))
                 .Replace("${EventListener}", eventListener)
                 .Replace("${eventListener}", lowerEventListener)
-                .Replace("${EventType}", getEventTypeSuffix(eventData));
+                .Replace("${EventType}", GetEventTypeSuffix(eventData));
         }
 
         public static string PrefixedComponentName(this ComponentData data) {
@@ -63,7 +63,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static string Event(this ComponentData data, string contextName, EventData eventData) {
             var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
-            return optionalContextName + data.ComponentName() + getEventTypeSuffix(eventData);
+            return optionalContextName + data.ComponentName() + GetEventTypeSuffix(eventData);
         }
 
         public static string EventListener(this ComponentData data, string contextName, EventData eventData) {
@@ -80,7 +80,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 : args;
         }
 
-        static string getEventTypeSuffix(EventData eventData) {
+        public static string GetEventTypeSuffix(this EventData eventData) {
             return eventData.eventType == EventType.Removed ? "Removed" : string.Empty;
         }
 
