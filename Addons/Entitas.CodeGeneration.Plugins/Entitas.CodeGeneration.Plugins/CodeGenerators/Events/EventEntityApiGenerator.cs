@@ -4,7 +4,7 @@ using DesperateDevs.CodeGeneration;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EventEntityApiGenerator : AbstractComponentGenerator {
+    public class EventEntityApiGenerator : AbstractGenerator {
 
         public override string name { get { return "Event (Entity API)"; } }
 

@@ -4,7 +4,7 @@ using DesperateDevs.CodeGeneration;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentContextApiGenerator : AbstractComponentGenerator {
+    public class ComponentContextApiGenerator : AbstractGenerator {
 
         public override string name { get { return "Component (Context API)"; } }
 

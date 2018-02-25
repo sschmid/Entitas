@@ -4,7 +4,7 @@ using DesperateDevs.CodeGeneration;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EventSystemsGenerator : AbstractComponentGenerator {
+    public class EventSystemsGenerator : AbstractGenerator {
 
         public override string name { get { return "Event (Systems)"; } }
 

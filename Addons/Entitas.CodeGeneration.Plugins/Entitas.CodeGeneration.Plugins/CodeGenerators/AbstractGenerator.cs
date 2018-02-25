@@ -4,7 +4,7 @@ using DesperateDevs.Serialization;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public abstract class AbstractComponentGenerator : ICodeGenerator, IConfigurable {
+    public abstract class AbstractGenerator : ICodeGenerator, IConfigurable {
 
         public abstract string name { get; }
         public int priority { get { return 0; } }

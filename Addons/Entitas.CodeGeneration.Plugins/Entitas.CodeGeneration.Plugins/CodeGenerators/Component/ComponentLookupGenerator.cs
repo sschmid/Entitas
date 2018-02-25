@@ -5,7 +5,7 @@ using DesperateDevs.CodeGeneration;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentLookupGenerator : AbstractComponentGenerator {
+    public class ComponentLookupGenerator : AbstractGenerator {
 
         public override string name { get { return "Component (Lookup)"; } }
 

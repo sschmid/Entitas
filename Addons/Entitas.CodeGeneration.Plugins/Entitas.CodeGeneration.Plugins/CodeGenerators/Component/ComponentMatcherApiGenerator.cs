@@ -4,7 +4,7 @@ using DesperateDevs.CodeGeneration;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentMatcherApiGenerator : AbstractComponentGenerator {
+    public class ComponentMatcherApiGenerator : AbstractGenerator {
 
         public override string name { get { return "Component (Matcher API)"; } }
 

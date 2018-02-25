@@ -5,7 +5,7 @@ using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EventListenertInterfaceGenerator : AbstractComponentGenerator {
+    public class EventListenertInterfaceGenerator : AbstractGenerator {
 
         public override string name { get { return "Event (Listener Interface)"; } }
 

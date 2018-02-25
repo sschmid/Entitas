@@ -6,7 +6,7 @@ using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EventSystemGenerator : AbstractComponentGenerator {
+    public class EventSystemGenerator : AbstractGenerator {
 
         public override string name { get { return "Event (System)"; } }
 
