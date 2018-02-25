@@ -34,7 +34,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Select(eventData => {
                     var memberData = data.GetMemberData();
                     if (memberData.Length == 0) {
-                        memberData = new[] { new MemberData("bool", data.GetUniquePrefix().LowercaseFirst() + data.ComponentName()) };
+                        memberData = new[] { new MemberData("bool", data.PrefixedComponentName()) };
                     }
 
                     var fileContent = TEMPLATE

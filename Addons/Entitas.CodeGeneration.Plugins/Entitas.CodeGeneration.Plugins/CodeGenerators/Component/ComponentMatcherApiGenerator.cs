@@ -42,9 +42,10 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         CodeGenFile generate(string contextName, ComponentData data) {
-            var fileContent = TEMPLATE.Replace(data, contextName)
+            var fileContent = TEMPLATE
                 .Replace("${Index}", contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + "." + data.ComponentName())
-                .Replace("${componentNames}", contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + ".componentNames");
+                .Replace("${componentNames}", contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + ".componentNames")
+                .Replace(data, contextName);
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +

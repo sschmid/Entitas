@@ -83,9 +83,9 @@ ${memberAssignmentList}
             var index = contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + "." + data.ComponentName();
 
             var fileContent = template
-                .Replace(data, contextName)
                 .Replace("${Index}", index)
-                .Replace("${memberAssignmentList}", getMemberAssignmentList(data.GetMemberData()));
+                .Replace("${memberAssignmentList}", getMemberAssignmentList(data.GetMemberData()))
+                .Replace(data, contextName);
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
