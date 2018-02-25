@@ -62,7 +62,6 @@
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EntityGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\EntityIndexGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventEntityApiGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventExtension.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventListenerComponentGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventListenertInterfaceGenerator.cs" />
     <Compile Include="Entitas.CodeGeneration.Plugins\CodeGenerators\Events\EventSystemGenerator.cs" />
