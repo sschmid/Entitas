@@ -16,11 +16,11 @@ ${componentConstantsList}
 
 ${totalComponentsConstant}
 
-    public static readonly string[] componentNamesList = {
+    public static readonly string[] componentNames = {
 ${componentNamesList}
     };
 
-    public static readonly System.Type[] componentTypesList = {
+    public static readonly System.Type[] componentTypes = {
 ${componentTypesList}
     };
 }
@@ -101,6 +101,7 @@ ${componentTypesList}
                 ).ToArray());
 
             var fileContent = TEMPLATE
+                .Replace("${Lookup}", contextName + CodeGeneratorExtentions.LOOKUP)
                 .Replace("${componentConstantsList}", componentConstantsList)
                 .Replace("${totalComponentsConstant}", totalComponentsConstant)
                 .Replace("${componentNamesList}", componentNamesList)

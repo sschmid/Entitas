@@ -151,7 +151,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         string getMethodArgs(MemberData[] memberData) {
             return string.Join(", ", memberData
-                .Select(info => "component." + info)
+                .Select(info => "component." + info.name)
                 .ToArray()
             );
         }

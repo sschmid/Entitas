@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public override string name { get { return "Event (Listener Interface)"; } }
 
         const string TEMPLATE =
-            @"public interface I${OptionalContextName}${ComponentName}${EventType}Listener {
+            @"public interface I${EventListener} {
     void On${ComponentName}${EventType}(${ContextName}Entity entity${methodParameters});
 }
 ";
