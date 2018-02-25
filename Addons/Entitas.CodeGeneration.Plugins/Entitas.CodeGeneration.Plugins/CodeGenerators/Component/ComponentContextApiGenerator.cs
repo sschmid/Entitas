@@ -81,13 +81,11 @@ namespace Entitas.CodeGeneration.Plugins {
                 ? FLAG_TEMPLATE
                 : STANDARD_TEMPLATE;
 
-            var fileContent = template.Replace(data, contextName);
-
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
                 data.ComponentNameWithContext(contextName).AddComponentSuffix() + ".cs",
-                fileContent,
+                template.Replace(data, contextName),
                 GetType().FullName
             );
         }

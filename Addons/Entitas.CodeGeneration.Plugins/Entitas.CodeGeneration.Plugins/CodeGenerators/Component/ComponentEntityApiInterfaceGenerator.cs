@@ -1,121 +1,70 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.Serialization;
-using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class ComponentEntityApiInterfaceGenerator : ICodeGenerator, IConfigurable {
+    public class ComponentEntityApiInterfaceGenerator : AbstractComponentGenerator {
 
-        public string name { get { return "Component (Entity API Interface)"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public override string name { get { return "Component (Entity API Interface)"; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
-
-        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
-
-        const string STANDARD_INTERFACE_TEMPLATE =
-            @"public interface ${InterfaceName}Entity {
+        const string STANDARD_TEMPLATE =
+            @"public interface I${ComponentName}Entity {
 
     ${ComponentType} ${componentName} { get; }
     bool has${ComponentName} { get; }
 
-    void Add${ComponentName}(${memberArgs});
-    void Replace${ComponentName}(${memberArgs});
+    void Add${ComponentName}(${methodParameters});
+    void Replace${ComponentName}(${methodParameters});
     void Remove${ComponentName}();
 }
 ";
 
-        const string FLAG_INTERFACE_TEMPLATE =
-            @"public interface ${InterfaceName}Entity {
-    bool ${prefixedName} { get; set; }
+        const string FLAG_TEMPLATE =
+            @"public interface I${ComponentName}Entity {
+    bool ${prefixedComponentName} { get; set; }
 }
 ";
 
-        const string ENTITY_INTERFACE_EXTENSION =
-            @"public partial class ${ContextName}Entity : ${InterfaceName}Entity { }
-";
+        const string ENTITY_INTERFACE_TEMPLATE = "public partial class ${EntityType} : I${ComponentName}Entity { }\n";
 
-        const string MEMBER_ARGS_TEMPLATE =
-            @"${MemberType} new${MemberName}";
-
-        public void Configure(Preferences preferences) {
-            _ignoreNamespacesConfig.Configure(preferences);
-        }
-
-        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+        public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
-                .SelectMany(generateExtensions)
+                .Where(d => d.GetContextNames().Length > 1)
+                .SelectMany(generate)
                 .ToArray();
         }
 
-        CodeGenFile[] generateExtensions(ComponentData data) {
-            if (data.GetContextNames().Length > 1) {
-                return new[] { generateInterface(data) }.Concat(
-                    data.GetContextNames().Select(contextName => generateEntityInterfaceExtension(contextName, data))
-                ).ToArray();
-            }
-
-            return new CodeGenFile[0];
+        CodeGenFile[] generate(ComponentData data) {
+            return new[] { generateInterface(data) }
+                .Concat(data.GetContextNames().Select(contextName => generateEntityInterface(contextName, data)))
+                .ToArray();
         }
 
         CodeGenFile generateInterface(ComponentData data) {
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            var memberData = data.GetMemberData();
-            var interfaceName = "I" + componentName.RemoveComponentSuffix();
-
-            var template = memberData.Length == 0
-                ? FLAG_INTERFACE_TEMPLATE
-                : STANDARD_INTERFACE_TEMPLATE;
-
-            var fileContent = template
-                .Replace("${InterfaceName}", interfaceName)
-                .Replace("${ComponentType}", data.GetTypeName())
-                .Replace("${ComponentName}", componentName)
-                .Replace("${componentName}", componentName.LowercaseFirst())
-                .Replace("${prefixedName}", data.GetUniquePrefix().LowercaseFirst() + componentName)
-                .Replace("${memberArgs}", getMemberArgs(memberData));
+            var template = data.GetMemberData().Length == 0
+                ? FLAG_TEMPLATE
+                : STANDARD_TEMPLATE;
 
             return new CodeGenFile(
                 "Components" + Path.DirectorySeparatorChar +
                 "Interfaces" + Path.DirectorySeparatorChar +
-                interfaceName + "Entity.cs",
-                fileContent,
+                "I" + data.ComponentName() + "Entity.cs",
+                template.Replace(data, string.Empty),
                 GetType().FullName
             );
         }
 
-        CodeGenFile generateEntityInterfaceExtension(string contextName, ComponentData data) {
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
-            var interfaceName = "I" + componentName.RemoveComponentSuffix();
-
-            var fileContent = ENTITY_INTERFACE_EXTENSION
-                .Replace("${InterfaceName}", "I" + componentName.RemoveComponentSuffix())
-                .Replace("${ContextName}", contextName);
-
+        CodeGenFile generateEntityInterface(string contextName, ComponentData data) {
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
                 "Components" + Path.DirectorySeparatorChar +
-                contextName + componentName.AddComponentSuffix() + ".cs",
-                fileContent,
+                data.ComponentNameWithContext(contextName).AddComponentSuffix() + ".cs",
+                ENTITY_INTERFACE_TEMPLATE.Replace(data, contextName),
                 GetType().FullName
             );
-        }
-
-        string getMemberArgs(MemberData[] memberData) {
-            var args = memberData
-                .Select(info => MEMBER_ARGS_TEMPLATE
-                    .Replace("${MemberType}", info.type)
-                    .Replace("${MemberName}", info.name.UppercaseFirst())
-                )
-                .ToArray();
-
-            return string.Join(", ", args);
         }
     }
 }
