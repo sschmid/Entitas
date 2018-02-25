@@ -11,22 +11,22 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string CONTEXT_TEMPLATE =
-            @"public sealed partial class ${ContextName}Matcher {
+            @"public sealed partial class ${MatcherType} {
 
-    public static Entitas.IAllOfMatcher<${ContextName}Entity> AllOf(params int[] indices) {
-        return Entitas.Matcher<${ContextName}Entity>.AllOf(indices);
+    public static Entitas.IAllOfMatcher<${EntityType}> AllOf(params int[] indices) {
+        return Entitas.Matcher<${EntityType}>.AllOf(indices);
     }
 
-    public static Entitas.IAllOfMatcher<${ContextName}Entity> AllOf(params Entitas.IMatcher<${ContextName}Entity>[] matchers) {
-          return Entitas.Matcher<${ContextName}Entity>.AllOf(matchers);
+    public static Entitas.IAllOfMatcher<${EntityType}> AllOf(params Entitas.IMatcher<${EntityType}>[] matchers) {
+          return Entitas.Matcher<${EntityType}>.AllOf(matchers);
     }
 
-    public static Entitas.IAnyOfMatcher<${ContextName}Entity> AnyOf(params int[] indices) {
-          return Entitas.Matcher<${ContextName}Entity>.AnyOf(indices);
+    public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params int[] indices) {
+          return Entitas.Matcher<${EntityType}>.AnyOf(indices);
     }
 
-    public static Entitas.IAnyOfMatcher<${ContextName}Entity> AnyOf(params Entitas.IMatcher<${ContextName}Entity>[] matchers) {
-          return Entitas.Matcher<${ContextName}Entity>.AnyOf(matchers);
+    public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params Entitas.IMatcher<${EntityType}>[] matchers) {
+          return Entitas.Matcher<${EntityType}>.AnyOf(matchers);
     }
 }
 ";
@@ -34,16 +34,16 @@ namespace Entitas.CodeGeneration.Plugins {
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ContextData>()
-                .Select(generateContextClass)
+                .Select(generate)
                 .ToArray();
         }
 
-        CodeGenFile generateContextClass(ContextData data) {
+        CodeGenFile generate(ContextData data) {
             var contextName = data.GetContextName();
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar + contextName + "Matcher.cs",
-                CONTEXT_TEMPLATE
-                    .Replace("${ContextName}", contextName),
+                contextName + Path.DirectorySeparatorChar +
+                contextName.AddMatcherSuffix() + ".cs",
+                CONTEXT_TEMPLATE.Replace(contextName),
                 GetType().FullName
             );
         }
