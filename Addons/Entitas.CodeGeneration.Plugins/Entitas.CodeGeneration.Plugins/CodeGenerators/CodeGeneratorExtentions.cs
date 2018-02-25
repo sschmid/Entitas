@@ -6,6 +6,8 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public static class CodeGeneratorExtentions {
 
+        public const string LOOKUP = "ComponentsLookup";
+
         public static bool ignoreNamespaces;
 
         public static string ComponentName(this ComponentData data) {
@@ -16,20 +18,28 @@ namespace Entitas.CodeGeneration.Plugins {
             return contextName + data.ComponentName();
         }
 
-        public static string Replace(this string template, ComponentData data, string contextName) {
-            var componentName = data.ComponentName();
+        public static string Replace(this string template, string contextName) {
             return template
+                .Replace("${ContextName}", contextName)
                 .Replace("${contextName}", contextName.LowercaseFirst())
                 .Replace("${ContextType}", contextName.AddContextSuffix())
                 .Replace("${EntityType}", contextName.AddEntitySuffix())
                 .Replace("${MatcherType}", contextName.AddMatcherSuffix())
+                .Replace("${Lookup}", contextName + LOOKUP);
+        }
+
+        public static string Replace(this string template, ComponentData data, string contextName) {
+            var componentName = data.ComponentName();
+            return template
+                .Replace(contextName)
                 .Replace("${ComponentType}", data.GetTypeName())
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
                 .Replace("${prefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${newMethodParameters}", getMethodParameters(data.GetMemberData(), true))
                 .Replace("${methodParameters}", getMethodParameters(data.GetMemberData(), false))
-                .Replace("${methodArgs}", getMethodArgs(data.GetMemberData()));
+                .Replace("${methodArgs}", getMethodArgs(data.GetMemberData()))
+                .Replace("${Index}", contextName + LOOKUP + "." + data.ComponentName());
         }
 
         public static string Replace(this string template, ComponentData data, string contextName, EventData eventData) {

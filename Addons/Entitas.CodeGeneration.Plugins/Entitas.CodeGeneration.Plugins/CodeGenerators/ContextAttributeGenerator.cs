@@ -21,15 +21,16 @@ namespace Entitas.CodeGeneration.Plugins {
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ContextData>()
-                .Select(generateAttributeClass)
+                .Select(generate)
                 .ToArray();
         }
 
-        CodeGenFile generateAttributeClass(ContextData data) {
+        CodeGenFile generate(ContextData data) {
             var contextName = data.GetContextName();
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar + contextName + "Attribute.cs",
-                ATTRIBUTE_TEMPLATE.Replace("${ContextName}", contextName),
+                contextName + Path.DirectorySeparatorChar +
+                contextName + "Attribute.cs",
+                ATTRIBUTE_TEMPLATE.Replace(contextName),
                 GetType().FullName
             );
         }

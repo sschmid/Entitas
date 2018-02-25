@@ -80,10 +80,7 @@ ${memberAssignmentList}
                 ? FLAG_TEMPLATE
                 : STANDARD_TEMPLATE;
 
-            var index = contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP + "." + data.ComponentName();
-
             var fileContent = template
-                .Replace("${Index}", index)
                 .Replace("${memberAssignmentList}", getMemberAssignmentList(data.GetMemberData()))
                 .Replace(data, contextName);
 

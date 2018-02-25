@@ -9,8 +9,6 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public override string name { get { return "Component (Lookup)"; } }
 
-        public const string COMPONENTS_LOOKUP = "ComponentsLookup";
-
         const string TEMPLATE =
             @"public static class ${Lookup} {
 
@@ -103,7 +101,6 @@ ${componentTypesList}
                 ).ToArray());
 
             var fileContent = TEMPLATE
-                .Replace("${Lookup}", contextName + COMPONENTS_LOOKUP)
                 .Replace("${componentConstantsList}", componentConstantsList)
                 .Replace("${totalComponentsConstant}", totalComponentsConstant)
                 .Replace("${componentNamesList}", componentNamesList)
@@ -111,7 +108,7 @@ ${componentTypesList}
 
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
-                contextName + COMPONENTS_LOOKUP + ".cs",
+                contextName + "ComponentsLookup.cs",
                 fileContent,
                 GetType().FullName
             );

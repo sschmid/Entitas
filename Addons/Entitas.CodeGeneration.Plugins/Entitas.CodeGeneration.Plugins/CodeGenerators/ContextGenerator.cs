@@ -11,9 +11,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public bool runInDryMode { get { return true; } }
 
         const string CONTEXT_TEMPLATE =
-            @"public sealed partial class ${ContextName}Context : Entitas.Context<${ContextName}Entity> {
+            @"public sealed partial class ${ContextType} : Entitas.Context<${EntityType}> {
 
-    public ${ContextName}Context()
+    public ${ContextType}()
         : base(
             ${Lookup}.TotalComponents,
             0,
@@ -45,10 +45,9 @@ namespace Entitas.CodeGeneration.Plugins {
         CodeGenFile generateContextClass(ContextData data) {
             var contextName = data.GetContextName();
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar + contextName + "Context.cs",
-                CONTEXT_TEMPLATE
-                    .Replace("${ContextName}", contextName)
-                    .Replace("${Lookup}", contextName + ComponentLookupGenerator.COMPONENTS_LOOKUP),
+                contextName + Path.DirectorySeparatorChar +
+                contextName.AddContextSuffix() + ".cs",
+                CONTEXT_TEMPLATE.Replace(contextName),
                 GetType().FullName
             );
         }
