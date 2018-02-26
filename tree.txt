@@ -128,6 +128,8 @@
 │   │       │   │   ├── EventListenertInterfaceGenerator.cs
 │   │       │   │   ├── EventSystemGenerator.cs
 │   │       │   │   └── EventSystemsGenerator.cs
+│   │       │   ├── AbstractGenerator.cs
+│   │       │   ├── CodeGeneratorExtentions.cs
 │   │       │   ├── ContextAttributeGenerator.cs
 │   │       │   ├── ContextGenerator.cs
 │   │       │   ├── ContextMatcherGenerator.cs
@@ -141,6 +143,7 @@
 │   │       │   ├── TemplateConfigExtension.cs
 │   │       │   └── TemplatesConfig.cs
 │   │       ├── Data
+│   │       │   ├── EventData.cs
 │   │       │   ├── MemberData.cs
 │   │       │   └── MethodData.cs
 │   │       ├── DataProviders
@@ -316,6 +319,8 @@
 │       │   ├── CollectionExtension.cs
 │       │   ├── ComponentStringExtension.cs
 │       │   ├── ContextStringExtension.cs
+│       │   ├── EntityStringExtension.cs
+│       │   ├── MatcherStringExtension.cs
 │       │   ├── PublicMemberInfoEntityExtension.cs
 │       │   └── SystemStringExtension.cs
 │       ├── Group

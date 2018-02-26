@@ -30,7 +30,7 @@
   <td id="projectlogo"><img alt="Logo" src="docs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Entitas
-   &#160;<span id="projectnumber">1.3.0</span>
+   &#160;<span id="projectnumber">1.4.0</span>
    </div>
    <div id="projectbrief">Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity</div>
   </td>
@@ -130,9 +130,13 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 TEntity []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_group.html#a7238093207c3d6c19ffdc42a49ae35f4">GetEntities</a> ()</td></tr>
 <tr class="memdesc:a7238093207c3d6c19ffdc42a49ae35f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all entities which are currently in this group. <br /></td></tr>
 <tr class="separator:a7238093207c3d6c19ffdc42a49ae35f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dd3ee03495d2056808caa59b09f249c"><td class="memItemLeft" align="right" valign="top"><a id="a5dd3ee03495d2056808caa59b09f249c"></a>
-IEnumerator&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetEnumerator</b> ()</td></tr>
-<tr class="separator:a5dd3ee03495d2056808caa59b09f249c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac172a1a6ac1f671552c208d7bc07d99e"><td class="memItemLeft" align="right" valign="top"><a id="ac172a1a6ac1f671552c208d7bc07d99e"></a>
+List&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_group.html#ac172a1a6ac1f671552c208d7bc07d99e">GetEntities</a> (List&lt; TEntity &gt; buffer)</td></tr>
+<tr class="memdesc:ac172a1a6ac1f671552c208d7bc07d99e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills the buffer with all entities which are currently in this group. <br /></td></tr>
+<tr class="separator:ac172a1a6ac1f671552c208d7bc07d99e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21879ceded3ae5b57fcfb8c08d7eb39b"><td class="memItemLeft" align="right" valign="top"><a id="a21879ceded3ae5b57fcfb8c08d7eb39b"></a>
+HashSet&lt; TEntity &gt;.Enumerator&#160;</td><td class="memItemRight" valign="bottom"><b>GetEnumerator</b> ()</td></tr>
+<tr class="separator:a21879ceded3ae5b57fcfb8c08d7eb39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac08cf5ddaa5b330622e032a120cdc2b"><td class="memItemLeft" align="right" valign="top">TEntity&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_group.html#aac08cf5ddaa5b330622e032a120cdc2b">GetSingleEntity</a> ()</td></tr>
 <tr class="separator:aac08cf5ddaa5b330622e032a120cdc2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3df87e47a39bdc6ab58f4ec505e5fd8e"><td class="memItemLeft" align="right" valign="top"><a id="a3df87e47a39bdc6ab58f4ec505e5fd8e"></a>
@@ -177,7 +181,7 @@ GroupUpdated&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"
 </dl>
 </div>
 
-<p class="definition">Definition at line <a class="el" href="_group_8cs_source.html#l00012">12</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_8cs_source.html#l00011">11</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acaac9039a6a059d944ccacd976980883"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acaac9039a6a059d944ccacd976980883">&#9670;&nbsp;</a></span>Group()</h2>
@@ -204,7 +208,7 @@ GroupUpdated&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"
 </div><div class="memdoc">
 <p>Use context.GetGroup(matcher) to get a group of entities which match the specified matcher. </p>
 
-<p class="definition">Definition at line <a class="el" href="_group_8cs_source.html#l00041">41</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_8cs_source.html#l00040">40</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
 
 </div>
 </div>
@@ -233,7 +237,7 @@ GroupUpdated&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"
 </div><div class="memdoc">
 <p>Returns the only entity in this group. It will return null if the group is empty. It will throw an exception if the group has more than one entity. </p>
 
-<p class="definition">Definition at line <a class="el" href="_group_8cs_source.html#l00164">164</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_8cs_source.html#l00166">166</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
 
 </div>
 </div>
@@ -261,7 +265,7 @@ GroupUpdated&lt; TEntity &gt;&#160;</td><td class="memItemRight" valign="bottom"
 </div><div class="memdoc">
 <p>This is called by context.Reset() to remove all event handlers. This is useful when you want to soft-restart your application. </p>
 
-<p class="definition">Definition at line <a class="el" href="_group_8cs_source.html#l00082">82</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_group_8cs_source.html#l00081">81</a> of file <a class="el" href="_group_8cs_source.html">Group.cs</a>.</p>
 
 </div>
 </div>

@@ -12,5 +12,6 @@ var searchData=
   ['entityisalreadyretainedbyownerexception',['EntityIsAlreadyRetainedByOwnerException',['../class_entitas_1_1_entity_is_already_retained_by_owner_exception.html',1,'Entitas']]],
   ['entityisnotdestroyedexception',['EntityIsNotDestroyedException',['../class_entitas_1_1_entity_is_not_destroyed_exception.html',1,'Entitas']]],
   ['entityisnotenabledexception',['EntityIsNotEnabledException',['../class_entitas_1_1_entity_is_not_enabled_exception.html',1,'Entitas']]],
-  ['entityisnotretainedbyownerexception',['EntityIsNotRetainedByOwnerException',['../class_entitas_1_1_entity_is_not_retained_by_owner_exception.html',1,'Entitas']]]
+  ['entityisnotretainedbyownerexception',['EntityIsNotRetainedByOwnerException',['../class_entitas_1_1_entity_is_not_retained_by_owner_exception.html',1,'Entitas']]],
+  ['entitystringextension',['EntityStringExtension',['../class_entitas_1_1_entity_string_extension.html',1,'Entitas']]]
 ];

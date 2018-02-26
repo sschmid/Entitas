@@ -1,3 +1,21 @@
+# 1.4.0
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+Breaking changes are marked with ⚠️️
+
+#### Entitas
+🆕 Added group.GetEntities(buffer) #624
+🆕 Made group iteration alloc free #624
+⚙️ Added support for multiple events per component
+⚙️ Added `removeComponentWhenEmpty` to optionally remove or keep empty listener component
+🛠 Fixed accessing non existing component in generated event system for EventType.Removed
+🛠 Fixed events inheriting unique attribute from component
+⚠️ Removed EventType.AddedOrRemoved
+💄 Refactored and simplified all code generators
+
 # 1.3.0
 
 As always, the Unity Asset Store version might take a few days to be processed

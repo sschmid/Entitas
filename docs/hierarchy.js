@@ -8,6 +8,7 @@ var hierarchy =
     [ "Entitas.ContextStringExtension", "class_entitas_1_1_context_string_extension.html", null ],
     [ "Entitas.EntitasCache", "class_entitas_1_1_entitas_cache.html", null ],
     [ "Entitas.EntitasResources", "class_entitas_1_1_entitas_resources.html", null ],
+    [ "Entitas.EntityStringExtension", "class_entitas_1_1_entity_string_extension.html", null ],
     [ "Exception", null, [
       [ "Entitas.EntitasException", "class_entitas_1_1_entitas_exception.html", [
         [ "Entitas.CollectorException", "class_entitas_1_1_collector_exception.html", null ],
@@ -56,10 +57,6 @@ var hierarchy =
         [ "Entitas.PrimaryEntityIndex< TEntity, TKey >", "class_entitas_1_1_primary_entity_index.html", null ]
       ] ]
     ] ],
-    [ "IEnumerable", null, [
-      [ "Entitas.IGroup< TEntity >", "interface_entitas_1_1_i_group.html", null ],
-      [ "Entitas.IGroup< TEntity >", "interface_entitas_1_1_i_group.html", null ]
-    ] ],
     [ "IEqualityComparer", null, [
       [ "Entitas.EntityEqualityComparer< TEntity >", "class_entitas_1_1_entity_equality_comparer.html", null ]
     ] ],
@@ -101,6 +98,7 @@ var hierarchy =
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
+    [ "Entitas.MatcherStringExtension", "class_entitas_1_1_matcher_string_extension.html", null ],
     [ "Entitas.PublicMemberInfoEntityExtension", "class_entitas_1_1_public_member_info_entity_extension.html", null ],
     [ "Entitas.SystemStringExtension", "class_entitas_1_1_system_string_extension.html", null ],
     [ "Entitas.TriggerOnEvent< TEntity >", "struct_entitas_1_1_trigger_on_event.html", null ],
