@@ -38,7 +38,7 @@ namespace Entitas.CodeGeneration.Plugins {
                     }
 
                     var fileContent = TEMPLATE
-                        .Replace("${methodParameters}", data.GetEventMethodArgs(eventData, ", " + getMethodParameters(memberData)))
+                        .Replace("${methodParameters}", data.GetEventMethodArgs(eventData, ", " + memberData.GetMethodParameters(false)))
                         .Replace(data, contextName, eventData);
 
                     return new CodeGenFile(
@@ -49,13 +49,6 @@ namespace Entitas.CodeGeneration.Plugins {
                         GetType().FullName
                     );
                 }).ToArray();
-        }
-
-        string getMethodParameters(MemberData[] memberData) {
-            return string.Join(", ", memberData
-                .Select(info => info.type + " " + info.name)
-                .ToArray()
-            );
         }
     }
 }

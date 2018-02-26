@@ -36,9 +36,10 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${ComponentName}", componentName)
                 .Replace("${componentName}", componentName.LowercaseFirst())
                 .Replace("${prefixedComponentName}", data.PrefixedComponentName())
-                .Replace("${newMethodParameters}", getMethodParameters(data.GetMemberData(), true))
-                .Replace("${methodParameters}", getMethodParameters(data.GetMemberData(), false))
-                .Replace("${methodArgs}", getMethodArgs(data.GetMemberData()))
+                .Replace("${newMethodParameters}", GetMethodParameters(data.GetMemberData(), true))
+                .Replace("${methodParameters}", GetMethodParameters(data.GetMemberData(), false))
+                .Replace("${newMethodArgs}", GetMethodArgs(data.GetMemberData(), true))
+                .Replace("${methodArgs}", GetMethodArgs(data.GetMemberData(), false))
                 .Replace("${Index}", contextName + LOOKUP + "." + data.ComponentName());
         }
 
@@ -84,15 +85,15 @@ namespace Entitas.CodeGeneration.Plugins {
             return eventData.eventType == EventType.Removed ? "Removed" : string.Empty;
         }
 
-        static string getMethodParameters(MemberData[] memberData, bool newPrefix) {
+        public static string GetMethodParameters(this MemberData[] memberData, bool newPrefix) {
             return string.Join(", ", memberData
-                .Select(info => info.type + (newPrefix ? " new" : " ") + info.name.UppercaseFirst())
+                .Select(info => info.type + (newPrefix ? " new" + info.name.UppercaseFirst() : " " + info.name))
                 .ToArray());
         }
 
-        static string getMethodArgs(MemberData[] memberData) {
+        public static string GetMethodArgs(MemberData[] memberData, bool newPrefix) {
             return string.Join(", ", memberData
-                .Select(info => "new" + info.name.UppercaseFirst())
+                .Select(info => (newPrefix ? "new" + info.name.UppercaseFirst() : info.name))
                 .ToArray()
             );
         }

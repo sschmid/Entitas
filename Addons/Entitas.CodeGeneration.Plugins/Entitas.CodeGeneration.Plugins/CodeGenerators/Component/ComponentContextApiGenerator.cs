@@ -21,16 +21,16 @@ namespace Entitas.CodeGeneration.Plugins {
                 ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
         }
         var entity = CreateEntity();
-        entity.Add${ComponentName}(${methodArgs});
+        entity.Add${ComponentName}(${newMethodArgs});
         return entity;
     }
 
     public void Replace${ComponentName}(${newMethodParameters}) {
         var entity = ${componentName}Entity;
         if (entity == null) {
-            entity = Set${ComponentName}(${methodArgs});
+            entity = Set${ComponentName}(${newMethodArgs});
         } else {
-            entity.Replace${ComponentName}(${methodArgs});
+            entity.Replace${ComponentName}(${newMethodArgs});
         }
     }
 
