@@ -1,3 +1,20 @@
+# 1.4.1
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+This is a hotfix release to patch the bugs introduced by the code generator refactoring from 1.4.0.
+
+#### Entitas
+🛠 Fixed component name generation for EventType.Removed #631 (thanks to @hegi25)
+
+#### Jenny
+🛠 Fixed jenny "Collection was modified; enumeration operation may not execute." #628
+🛠 Fixed jenny "Index was outside the bounds of the array." #628
+
+
+
 # 1.4.0
 
 As always, the Unity Asset Store version might take a few days to be processed
