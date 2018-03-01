@@ -38,6 +38,7 @@ namespace Entitas {
         List<TEntity> GetEntities(List<TEntity> buffer);
         TEntity GetSingleEntity();
 
+        IEnumerable<TEntity> AsEnumerable();
         HashSet<TEntity>.Enumerator GetEnumerator();
     }
 }

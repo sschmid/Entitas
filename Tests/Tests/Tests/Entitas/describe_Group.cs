@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Entitas;
 using NSpec;
 
@@ -99,6 +100,10 @@ class describe_Group : nspec {
 
                 i.should_be(1);
                 e.should_be_same(eA1);
+            };
+
+            it["returns enumerable"] = () => {
+                _groupA.AsEnumerable().Single().should_be_same(eA1);
             };
 
             context["when entity doesn't match anymore"] = () => {
