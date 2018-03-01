@@ -9,7 +9,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public override string name { get { return "Component (Entity API Interface)"; } }
 
         const string STANDARD_TEMPLATE =
-            @"public interface I${ComponentName}Entity {
+            @"public partial interface I${ComponentName}Entity {
 
     ${ComponentType} ${componentName} { get; }
     bool has${ComponentName} { get; }
@@ -21,7 +21,7 @@ namespace Entitas.CodeGeneration.Plugins {
 ";
 
         const string FLAG_TEMPLATE =
-            @"public interface I${ComponentName}Entity {
+            @"public partial interface I${ComponentName}Entity {
     bool ${prefixedComponentName} { get; set; }
 }
 ";
