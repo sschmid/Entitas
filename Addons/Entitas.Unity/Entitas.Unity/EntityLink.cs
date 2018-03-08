@@ -34,9 +34,8 @@ namespace Entitas.Unity {
 
         void OnDestroy() {
             if (!_applicationIsQuitting && _entity != null) {
-                throw new EntitasException(
-                    "EntityLink got destroyed but is still linked to " + _entity + "!",
-                    "Please call gameObject.Unlink() before it is destroyed."
+                Debug.LogWarning("EntityLink got destroyed but is still linked to " + _entity + "!\n" +
+                                 "Please call gameObject.Unlink() before it is destroyed."
                 );
             }
         }
