@@ -8,18 +8,18 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    static readonly InteractiveComponent interactiveComponent = new InteractiveComponent();
+    static readonly PlayerComponent playerComponent = new PlayerComponent();
 
-    public bool isInteractive {
-        get { return HasComponent(GameComponentsLookup.Interactive); }
+    public bool isPlayer {
+        get { return HasComponent(GameComponentsLookup.Player); }
         set {
-            if (value != isInteractive) {
-                var index = GameComponentsLookup.Interactive;
+            if (value != isPlayer) {
+                var index = GameComponentsLookup.Player;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
                             ? componentPool.Pop()
-                            : interactiveComponent;
+                            : playerComponent;
 
                     AddComponent(index, component);
                 } else {
@@ -40,17 +40,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherInteractive;
+    static Entitas.IMatcher<GameEntity> _matcherPlayer;
 
-    public static Entitas.IMatcher<GameEntity> Interactive {
+    public static Entitas.IMatcher<GameEntity> Player {
         get {
-            if (_matcherInteractive == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Interactive);
+            if (_matcherPlayer == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Player);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherInteractive = matcher;
+                _matcherPlayer = matcher;
             }
 
-            return _matcherInteractive;
+            return _matcherPlayer;
         }
     }
 }

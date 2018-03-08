@@ -34,33 +34,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Readme\Generated\Game\Components\GameHighscoreComponent.cs" />
     <Compile Include="Readme\Generated\GameState\Components\GameStateScoreComponent.cs" />
     <Compile Include="Readme\Generated\Game\Components\GameUserComponent.cs" />
     <Compile Include="Readme\Generated\Game\Components\GameAnimatingComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GamePositionComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameHealthComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GamePlayerComponent.cs" />
+    <Compile Include="Readme\Generated\Game\Components\GameGameOverComponent.cs" />
+    <Compile Include="Readme\Generated\Input\Components\InputInputComponent.cs" />
     <Compile Include="Readme\Generated\Game\Components\GameAssetComponent.cs" />
     <Compile Include="Readme\Generated\Game\Components\GameGameBoardElementComponent.cs" />
     <Compile Include="Readme\Generated\Game\Components\GameInteractiveComponent.cs" />
     <Compile Include="Readme\Generated\Game\Components\GameMovableComponent.cs" />
-    <Compile Include="Readme\Generated\Game\Components\GamePositionComponent.cs" />
     <Compile Include="Readme\Generated\Game\Components\GameViewComponent.cs" />
     <Compile Include="Readme\Generated\Game\Components\GameVelocityComponent.cs" />
-    <Compile Include="Readme\Generated\Game\Components\GameHealthComponent.cs" />
-    <Compile Include="Readme\Generated\Input\InputComponentsLookup.cs" />
     <Compile Include="Readme\Generated\Game\GameComponentsLookup.cs" />
+    <Compile Include="Readme\Generated\Input\InputComponentsLookup.cs" />
     <Compile Include="Readme\Generated\GameState\GameStateComponentsLookup.cs" />
     <Compile Include="Readme\Generated\Game\GameAttribute.cs" />
-    <Compile Include="Readme\Generated\GameState\GameStateAttribute.cs" />
     <Compile Include="Readme\Generated\Input\InputAttribute.cs" />
+    <Compile Include="Readme\Generated\GameState\GameStateAttribute.cs" />
     <Compile Include="Readme\Generated\Game\GameContext.cs" />
-    <Compile Include="Readme\Generated\GameState\GameStateContext.cs" />
     <Compile Include="Readme\Generated\Input\InputContext.cs" />
+    <Compile Include="Readme\Generated\GameState\GameStateContext.cs" />
     <Compile Include="Readme\Generated\Game\GameMatcher.cs" />
-    <Compile Include="Readme\Generated\GameState\GameStateMatcher.cs" />
     <Compile Include="Readme\Generated\Input\InputMatcher.cs" />
+    <Compile Include="Readme\Generated\GameState\GameStateMatcher.cs" />
     <Compile Include="Readme\Generated\Contexts.cs" />
     <Compile Include="Readme\Generated\Game\GameEntity.cs" />
-    <Compile Include="Readme\Generated\GameState\GameStateEntity.cs" />
     <Compile Include="Readme\Generated\Input\InputEntity.cs" />
+    <Compile Include="Readme\Generated\GameState\GameStateEntity.cs" />
+    <Compile Include="Readme\Generated\Events\EventSystems.cs" />
+    <Compile Include="Readme\Generated\Feature.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Readme\Terminology.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -69,20 +78,15 @@
     <Compile Include="Readme\Components\GameBoardElementComponent.cs" />
     <Compile Include="Readme\Components\InteractiveComponent.cs" />
     <Compile Include="Readme\Components\MovableComponent.cs" />
-    <Compile Include="Readme\Components\PositionComponent.cs" />
     <Compile Include="Readme\Components\ScoreComponent.cs" />
     <Compile Include="Readme\Components\ViewComponent.cs" />
     <Compile Include="Readme\Components\VelocityComponent.cs" />
-    <Compile Include="Readme\Components\HealthComponent.cs" />
     <Compile Include="Readme\Components\UserComponent.cs" />
     <Compile Include="Readme\Components\AnimatingComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Readme\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Entitas.properties" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entitas\Entitas.csproj">
