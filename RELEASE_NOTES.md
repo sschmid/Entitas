@@ -1,3 +1,25 @@
+# 1.4.2
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+This is a hotfix release to patch the bugs introduced by the code generator refactoring from 1.4.0.
+
+#### Entitas
+🛠 Fixed needing to generate code twice to when event got removed #620
+⚙️ Added group.AsEnumerable() to support linq
+⚙️ Added partial keyword to ComponentEntityApiInterfaceGenerator #607
+⚙️ Changed EntityLink exception to be a warning
+⚙️ ComponentData can clone CodeGeneratorData
+
+#### Jenny
+🆕 Added ValidateProjectPathPreProcessor #572 #563
+
+#### DesperateDevs
+⚙️ Added logger.Reset()
+
+
 # 1.4.1
 
 As always, the Unity Asset Store version might take a few days to be processed

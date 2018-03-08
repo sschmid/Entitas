@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"class_entitas_1_1_group.html#ae48b92ee4d75ca6ec41d1e1187e3b1a2":[1,0,0,29,14],
 "class_entitas_1_1_group_extension.html":[1,0,0,30],
 "class_entitas_1_1_group_extension.html#ae57c53eca0540b768310d0661b37b26e":[1,0,0,30,0],
 "class_entitas_1_1_group_single_entity_exception.html":[1,0,0,31],

@@ -1,6 +1,7 @@
 var class_entitas_1_1_group =
 [
     [ "Group", "class_entitas_1_1_group.html#acaac9039a6a059d944ccacd976980883", null ],
+    [ "AsEnumerable", "class_entitas_1_1_group.html#aabd89b39a6f29a02fba43cc597fb3ce7", null ],
     [ "ContainsEntity", "class_entitas_1_1_group.html#a7cf9ad55d983f23d7f9d95b22ab16553", null ],
     [ "GetEntities", "class_entitas_1_1_group.html#a7238093207c3d6c19ffdc42a49ae35f4", null ],
     [ "GetEntities", "class_entitas_1_1_group.html#ac172a1a6ac1f671552c208d7bc07d99e", null ],
