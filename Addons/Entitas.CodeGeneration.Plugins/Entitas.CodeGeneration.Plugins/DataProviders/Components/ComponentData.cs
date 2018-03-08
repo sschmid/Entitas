@@ -8,7 +8,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public ComponentData() {
         }
 
-        public ComponentData(ComponentData data) : base(data) {
+        public ComponentData(CodeGeneratorData data) : base(data) {
         }
     }
 
