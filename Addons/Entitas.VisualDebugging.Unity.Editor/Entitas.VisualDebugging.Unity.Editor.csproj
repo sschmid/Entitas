@@ -88,6 +88,10 @@
     <Folder Include="Entitas.VisualDebugging.Unity.Editor\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGeneration.Attributes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj">
       <Project>{70222463-4E60-4862-8C18-1EBA6CA63353}</Project>
       <Name>Entitas.VisualDebugging.Unity</Name>
@@ -95,10 +99,6 @@
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
       <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
       <Name>Entitas</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
-      <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
-      <Name>Entitas.CodeGeneration.Plugins</Name>
     </ProjectReference>
     <ProjectReference Include="..\Entitas.Unity\Entitas.Unity.csproj">
       <Project>{CB3ADCB3-E842-4A71-B32E-15ABDE7311F6}</Project>

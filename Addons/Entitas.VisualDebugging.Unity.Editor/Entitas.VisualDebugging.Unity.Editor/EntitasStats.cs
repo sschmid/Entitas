@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DesperateDevs.Serialization;
 using DesperateDevs.Utils;
-using Entitas.CodeGeneration.Plugins;
+using Entitas.CodeGeneration.Attributes;
 using UnityEditor;
 using UnityEngine;
 
@@ -47,10 +46,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         static Dictionary<string, int> getContexts(Type[] components) {
-            var preferences = Preferences.sharedInstance;
-            var provider = preferences.CreateAndConfigure<ContextsComponentDataProvider>();
             return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {
-                var contextNames = provider.GetContextNamesOrDefault(type);
+                var contextNames = getContextNamesOrDefault(type);
                 foreach (var contextName in contextNames) {
                     if (!contexts.ContainsKey(contextName)) {
                         contexts.Add(contextName, 0);
@@ -60,6 +57,24 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
                 return contexts;
             });
+        }
+
+
+        static string[] getContextNames(Type type) {
+            return Attribute
+                .GetCustomAttributes(type)
+                .OfType<ContextAttribute>()
+                .Select(attr => attr.contextName)
+                .ToArray();
+        }
+
+        static string[] getContextNamesOrDefault(Type type) {
+            var contextNames = getContextNames(type);
+            if (contextNames.Length == 0) {
+                contextNames = new[] { "Default" };
+            }
+
+            return contextNames;
         }
 
         static bool isSystem(Type type) {
