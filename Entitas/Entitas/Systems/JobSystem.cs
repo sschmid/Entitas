@@ -5,7 +5,7 @@ namespace Entitas {
     /// A JobSystem calls Execute(entities) with subsets of entities
     /// and distributes the workload over the specified amount of threads.
     /// Don't use the generated methods like AddXyz() and ReplaceXyz() when
-    /// writing multi-threaded code int Entitas.
+    /// writing multi-threaded code in Entitas.
     public abstract class JobSystem<TEntity> : IExecuteSystem where TEntity : class, IEntity {
 
         readonly IGroup<TEntity> _group;
