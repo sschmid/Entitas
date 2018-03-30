@@ -1,4 +1,5 @@
-﻿using NSpec;
+﻿using System;
+using NSpec;
 
 class describe_JobSystem : nspec {
 
@@ -51,6 +52,41 @@ class describe_JobSystem : nspec {
             for (int i = 0; i < entities.Length; i++) {
                 entities[i].nameAge.name.should_be("e" + i + "-Processed");
             }
+        };
+
+        it["throws when thread throws"] = expect<Exception>(() => {
+            var system = new TestJobSystem(ctx, 2);
+            system.exception = new Exception("Test Exception");
+            for (int i = 0; i < 10; i++) {
+                var e = ctx.CreateEntity();
+                e.AddNameAge("e" + i, -1);
+            }
+
+            system.Execute();
+        });
+
+        it["recovers from exception"] = () => {
+            var system = new TestJobSystem(ctx, 2);
+            system.exception = new Exception("Test Exception");
+            for (int i = 0; i < 10; i++) {
+                var e = ctx.CreateEntity();
+                e.AddNameAge("e" + i, -1);
+            }
+
+            var didThrow = 0;
+            try {
+                system.Execute();
+            } catch (Exception e) {
+                didThrow += 1;
+            }
+
+            didThrow.should_be(1);
+
+            system.exception = null;
+
+            system.Execute();
+
+            true.should_be_true();
         };
     }
 }
