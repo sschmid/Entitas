@@ -1,3 +1,39 @@
+# 1.5.0
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+#### Entitas
+🆕 Added JobSystem for multi threading as a proof of concept.
+
+```csharp
+public sealed class RotateSystem : JobSystem<GameEntity> {
+
+    public RotateSystem(GameContext context, int threads) :
+        base(context.GetGroup(GameMatcher.AllOf(GameMatcher.Rotation, GameMatcher.RotationVector)), threads) {
+    }
+
+    protected override void Execute(GameEntity entity) {
+        entity.rotation.value = entity.rotation.value * Quaternion.Euler(entity.rotationVector.value);
+    }
+}
+```
+
+Limitations:
+- Don't use generated methods like Add() and Replace()
+- Modify component values directly
+See https://github.com/sschmid/Entitas-CSharp/issues/325#issuecomment-373961878
+
+This is not a general purpose solution for all problems. It can be used to solve certain performance intense areas in your game. It can be very useful if there's a very large number of entities that have to be processed, or if the data transformation involves heavy calulations.
+
+⚠️ EventSystemsGenerator generates EventSystems per context now.
+🛠 Removed dependency on Entitas.CodeGeneration.Plugins from Entitas.VisualDebugging.Unity.Editor #312
+
+#### DesperateDevs
+🆕 Added EnsureStandalonePreProcessor to prevent accidentally generating in Unity
+
+
 # 1.4.2
 
 As always, the Unity Asset Store version might take a few days to be processed
