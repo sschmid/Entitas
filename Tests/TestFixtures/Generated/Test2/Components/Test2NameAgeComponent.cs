@@ -8,11 +8,11 @@
 //------------------------------------------------------------------------------
 public partial class Test2Entity {
 
-    public NameAgeComponent nameAge { get { return (NameAgeComponent)GetComponent(Test2ComponentLookup.NameAge); } }
-    public bool hasNameAge { get { return HasComponent(Test2ComponentLookup.NameAge); } }
+    public NameAgeComponent nameAge { get { return (NameAgeComponent)GetComponent(Test2ComponentsLookup.NameAge); } }
+    public bool hasNameAge { get { return HasComponent(Test2ComponentsLookup.NameAge); } }
 
     public void AddNameAge(string newName, int newAge) {
-        var index = Test2ComponentLookup.NameAge;
+        var index = Test2ComponentsLookup.NameAge;
         var component = CreateComponent<NameAgeComponent>(index);
         component.name = newName;
         component.age = newAge;
@@ -20,7 +20,7 @@ public partial class Test2Entity {
     }
 
     public void ReplaceNameAge(string newName, int newAge) {
-        var index = Test2ComponentLookup.NameAge;
+        var index = Test2ComponentsLookup.NameAge;
         var component = CreateComponent<NameAgeComponent>(index);
         component.name = newName;
         component.age = newAge;
@@ -28,7 +28,7 @@ public partial class Test2Entity {
     }
 
     public void RemoveNameAge() {
-        RemoveComponent(Test2ComponentLookup.NameAge);
+        RemoveComponent(Test2ComponentsLookup.NameAge);
     }
 }
 
@@ -57,8 +57,8 @@ public sealed partial class Test2Matcher {
     public static Entitas.IMatcher<Test2Entity> NameAge {
         get {
             if (_matcherNameAge == null) {
-                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentLookup.NameAge);
-                matcher.componentNames = Test2ComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentsLookup.NameAge);
+                matcher.componentNames = Test2ComponentsLookup.componentNames;
                 _matcherNameAge = matcher;
             }
 

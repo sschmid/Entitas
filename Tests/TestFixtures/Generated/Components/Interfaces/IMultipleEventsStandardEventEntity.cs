@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IMultipleEventsStandardEventEntity {
+public partial interface IMultipleEventsStandardEventEntity {
 
     MultipleEventsStandardEventComponent multipleEventsStandardEvent { get; }
     bool hasMultipleEventsStandardEvent { get; }

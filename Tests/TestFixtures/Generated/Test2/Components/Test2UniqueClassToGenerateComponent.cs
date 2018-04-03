@@ -46,25 +46,25 @@ public partial class Test2Context {
 //------------------------------------------------------------------------------
 public partial class Test2Entity {
 
-    public UniqueClassToGenerateComponent uniqueClassToGenerate { get { return (UniqueClassToGenerateComponent)GetComponent(Test2ComponentLookup.UniqueClassToGenerate); } }
-    public bool hasUniqueClassToGenerate { get { return HasComponent(Test2ComponentLookup.UniqueClassToGenerate); } }
+    public UniqueClassToGenerateComponent uniqueClassToGenerate { get { return (UniqueClassToGenerateComponent)GetComponent(Test2ComponentsLookup.UniqueClassToGenerate); } }
+    public bool hasUniqueClassToGenerate { get { return HasComponent(Test2ComponentsLookup.UniqueClassToGenerate); } }
 
     public void AddUniqueClassToGenerate(My.Namespace.UniqueClassToGenerate newValue) {
-        var index = Test2ComponentLookup.UniqueClassToGenerate;
+        var index = Test2ComponentsLookup.UniqueClassToGenerate;
         var component = CreateComponent<UniqueClassToGenerateComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceUniqueClassToGenerate(My.Namespace.UniqueClassToGenerate newValue) {
-        var index = Test2ComponentLookup.UniqueClassToGenerate;
+        var index = Test2ComponentsLookup.UniqueClassToGenerate;
         var component = CreateComponent<UniqueClassToGenerateComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveUniqueClassToGenerate() {
-        RemoveComponent(Test2ComponentLookup.UniqueClassToGenerate);
+        RemoveComponent(Test2ComponentsLookup.UniqueClassToGenerate);
     }
 }
 
@@ -93,8 +93,8 @@ public sealed partial class Test2Matcher {
     public static Entitas.IMatcher<Test2Entity> UniqueClassToGenerate {
         get {
             if (_matcherUniqueClassToGenerate == null) {
-                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentLookup.UniqueClassToGenerate);
-                matcher.componentNames = Test2ComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentsLookup.UniqueClassToGenerate);
+                matcher.componentNames = Test2ComponentsLookup.componentNames;
                 _matcherUniqueClassToGenerate = matcher;
             }
 

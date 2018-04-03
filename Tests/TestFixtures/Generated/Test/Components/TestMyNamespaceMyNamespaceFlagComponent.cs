@@ -11,10 +11,10 @@ public partial class TestEntity {
     static readonly My.Namespace.MyNamespaceFlagComponent myNamespaceMyNamespaceFlagComponent = new My.Namespace.MyNamespaceFlagComponent();
 
     public bool isMyNamespaceMyNamespaceFlag {
-        get { return HasComponent(TestComponentLookup.MyNamespaceMyNamespaceFlag); }
+        get { return HasComponent(TestComponentsLookup.MyNamespaceMyNamespaceFlag); }
         set {
             if (value != isMyNamespaceMyNamespaceFlag) {
-                var index = TestComponentLookup.MyNamespaceMyNamespaceFlag;
+                var index = TestComponentsLookup.MyNamespaceMyNamespaceFlag;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> MyNamespaceMyNamespaceFlag {
         get {
             if (_matcherMyNamespaceMyNamespaceFlag == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.MyNamespaceMyNamespaceFlag);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.MyNamespaceMyNamespaceFlag);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherMyNamespaceMyNamespaceFlag = matcher;
             }
 

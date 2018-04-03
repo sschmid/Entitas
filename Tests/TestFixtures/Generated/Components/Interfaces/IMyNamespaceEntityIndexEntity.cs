@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IMyNamespaceEntityIndexEntity {
+public partial interface IMyNamespaceEntityIndexEntity {
 
     My.Namespace.EntityIndexComponent myNamespaceEntityIndex { get; }
     bool hasMyNamespaceEntityIndex { get; }

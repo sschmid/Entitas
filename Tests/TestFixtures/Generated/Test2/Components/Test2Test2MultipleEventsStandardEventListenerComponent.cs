@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class Test2Entity {
 
-    public Test2MultipleEventsStandardEventListenerComponent test2MultipleEventsStandardEventListener { get { return (Test2MultipleEventsStandardEventListenerComponent)GetComponent(Test2ComponentLookup.Test2MultipleEventsStandardEventListener); } }
-    public bool hasTest2MultipleEventsStandardEventListener { get { return HasComponent(Test2ComponentLookup.Test2MultipleEventsStandardEventListener); } }
+    public Test2MultipleEventsStandardEventListenerComponent test2MultipleEventsStandardEventListener { get { return (Test2MultipleEventsStandardEventListenerComponent)GetComponent(Test2ComponentsLookup.Test2MultipleEventsStandardEventListener); } }
+    public bool hasTest2MultipleEventsStandardEventListener { get { return HasComponent(Test2ComponentsLookup.Test2MultipleEventsStandardEventListener); } }
 
     public void AddTest2MultipleEventsStandardEventListener(System.Collections.Generic.List<ITest2MultipleEventsStandardEventListener> newValue) {
-        var index = Test2ComponentLookup.Test2MultipleEventsStandardEventListener;
+        var index = Test2ComponentsLookup.Test2MultipleEventsStandardEventListener;
         var component = CreateComponent<Test2MultipleEventsStandardEventListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceTest2MultipleEventsStandardEventListener(System.Collections.Generic.List<ITest2MultipleEventsStandardEventListener> newValue) {
-        var index = Test2ComponentLookup.Test2MultipleEventsStandardEventListener;
+        var index = Test2ComponentsLookup.Test2MultipleEventsStandardEventListener;
         var component = CreateComponent<Test2MultipleEventsStandardEventListenerComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveTest2MultipleEventsStandardEventListener() {
-        RemoveComponent(Test2ComponentLookup.Test2MultipleEventsStandardEventListener);
+        RemoveComponent(Test2ComponentsLookup.Test2MultipleEventsStandardEventListener);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class Test2Matcher {
     public static Entitas.IMatcher<Test2Entity> Test2MultipleEventsStandardEventListener {
         get {
             if (_matcherTest2MultipleEventsStandardEventListener == null) {
-                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentLookup.Test2MultipleEventsStandardEventListener);
-                matcher.componentNames = Test2ComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentsLookup.Test2MultipleEventsStandardEventListener);
+                matcher.componentNames = Test2ComponentsLookup.componentNames;
                 _matcherTest2MultipleEventsStandardEventListener = matcher;
             }
 

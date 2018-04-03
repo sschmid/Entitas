@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public PrimaryEntityIndexComponent primaryEntityIndex { get { return (PrimaryEntityIndexComponent)GetComponent(GameComponentLookup.PrimaryEntityIndex); } }
-    public bool hasPrimaryEntityIndex { get { return HasComponent(GameComponentLookup.PrimaryEntityIndex); } }
+    public PrimaryEntityIndexComponent primaryEntityIndex { get { return (PrimaryEntityIndexComponent)GetComponent(GameComponentsLookup.PrimaryEntityIndex); } }
+    public bool hasPrimaryEntityIndex { get { return HasComponent(GameComponentsLookup.PrimaryEntityIndex); } }
 
     public void AddPrimaryEntityIndex(string newValue) {
-        var index = GameComponentLookup.PrimaryEntityIndex;
+        var index = GameComponentsLookup.PrimaryEntityIndex;
         var component = CreateComponent<PrimaryEntityIndexComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplacePrimaryEntityIndex(string newValue) {
-        var index = GameComponentLookup.PrimaryEntityIndex;
+        var index = GameComponentsLookup.PrimaryEntityIndex;
         var component = CreateComponent<PrimaryEntityIndexComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemovePrimaryEntityIndex() {
-        RemoveComponent(GameComponentLookup.PrimaryEntityIndex);
+        RemoveComponent(GameComponentsLookup.PrimaryEntityIndex);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class GameMatcher {
     public static Entitas.IMatcher<GameEntity> PrimaryEntityIndex {
         get {
             if (_matcherPrimaryEntityIndex == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentLookup.PrimaryEntityIndex);
-                matcher.componentNames = GameComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.PrimaryEntityIndex);
+                matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherPrimaryEntityIndex = matcher;
             }
 

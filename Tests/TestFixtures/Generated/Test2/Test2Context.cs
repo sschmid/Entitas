@@ -10,12 +10,12 @@ public sealed partial class Test2Context : Entitas.Context<Test2Entity> {
 
     public Test2Context()
         : base(
-            Test2ComponentLookup.TotalComponents,
+            Test2ComponentsLookup.TotalComponents,
             0,
             new Entitas.ContextInfo(
                 "Test2",
-                Test2ComponentLookup.componentNames,
-                Test2ComponentLookup.componentTypes
+                Test2ComponentsLookup.componentNames,
+                Test2ComponentsLookup.componentTypes
             ),
             (entity) =>
 

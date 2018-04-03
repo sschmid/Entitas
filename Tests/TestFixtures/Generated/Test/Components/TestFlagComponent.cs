@@ -11,10 +11,10 @@ public partial class TestEntity {
     static readonly FlagComponent flagComponent = new FlagComponent();
 
     public bool isFlag {
-        get { return HasComponent(TestComponentLookup.Flag); }
+        get { return HasComponent(TestComponentsLookup.Flag); }
         set {
             if (value != isFlag) {
-                var index = TestComponentLookup.Flag;
+                var index = TestComponentsLookup.Flag;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> Flag {
         get {
             if (_matcherFlag == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.Flag);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.Flag);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherFlag = matcher;
             }
 

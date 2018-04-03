@@ -38,10 +38,10 @@ public partial class TestEntity {
     static readonly UniqueFlagComponent uniqueFlagComponent = new UniqueFlagComponent();
 
     public bool isUniqueFlag {
-        get { return HasComponent(TestComponentLookup.UniqueFlag); }
+        get { return HasComponent(TestComponentsLookup.UniqueFlag); }
         set {
             if (value != isUniqueFlag) {
-                var index = TestComponentLookup.UniqueFlag;
+                var index = TestComponentsLookup.UniqueFlag;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
@@ -72,8 +72,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> UniqueFlag {
         get {
             if (_matcherUniqueFlag == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.UniqueFlag);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.UniqueFlag);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherUniqueFlag = matcher;
             }
 

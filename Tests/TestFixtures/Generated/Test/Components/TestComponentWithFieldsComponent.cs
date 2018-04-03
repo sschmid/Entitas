@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public ComponentWithFields componentWithFields { get { return (ComponentWithFields)GetComponent(TestComponentLookup.ComponentWithFields); } }
-    public bool hasComponentWithFields { get { return HasComponent(TestComponentLookup.ComponentWithFields); } }
+    public ComponentWithFields componentWithFields { get { return (ComponentWithFields)GetComponent(TestComponentsLookup.ComponentWithFields); } }
+    public bool hasComponentWithFields { get { return HasComponent(TestComponentsLookup.ComponentWithFields); } }
 
     public void AddComponentWithFields(string newPublicField) {
-        var index = TestComponentLookup.ComponentWithFields;
+        var index = TestComponentsLookup.ComponentWithFields;
         var component = CreateComponent<ComponentWithFields>(index);
         component.publicField = newPublicField;
         AddComponent(index, component);
     }
 
     public void ReplaceComponentWithFields(string newPublicField) {
-        var index = TestComponentLookup.ComponentWithFields;
+        var index = TestComponentsLookup.ComponentWithFields;
         var component = CreateComponent<ComponentWithFields>(index);
         component.publicField = newPublicField;
         ReplaceComponent(index, component);
     }
 
     public void RemoveComponentWithFields() {
-        RemoveComponent(TestComponentLookup.ComponentWithFields);
+        RemoveComponent(TestComponentsLookup.ComponentWithFields);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> ComponentWithFields {
         get {
             if (_matcherComponentWithFields == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.ComponentWithFields);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.ComponentWithFields);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherComponentWithFields = matcher;
             }
 

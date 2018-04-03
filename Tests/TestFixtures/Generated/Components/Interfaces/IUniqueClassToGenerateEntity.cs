@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IUniqueClassToGenerateEntity {
+public partial interface IUniqueClassToGenerateEntity {
 
     UniqueClassToGenerateComponent uniqueClassToGenerate { get; }
     bool hasUniqueClassToGenerate { get; }

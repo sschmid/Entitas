@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class GameComponentLookup {
+public static class GameComponentsLookup {
 
     public const int Array3d = 0;
     public const int GeneratedContext = 1;

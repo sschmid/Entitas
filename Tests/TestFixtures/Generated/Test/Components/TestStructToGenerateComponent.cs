@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public StructToGenerateComponent structToGenerate { get { return (StructToGenerateComponent)GetComponent(TestComponentLookup.StructToGenerate); } }
-    public bool hasStructToGenerate { get { return HasComponent(TestComponentLookup.StructToGenerate); } }
+    public StructToGenerateComponent structToGenerate { get { return (StructToGenerateComponent)GetComponent(TestComponentsLookup.StructToGenerate); } }
+    public bool hasStructToGenerate { get { return HasComponent(TestComponentsLookup.StructToGenerate); } }
 
     public void AddStructToGenerate(My.Namespace.StructToGenerate newValue) {
-        var index = TestComponentLookup.StructToGenerate;
+        var index = TestComponentsLookup.StructToGenerate;
         var component = CreateComponent<StructToGenerateComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceStructToGenerate(My.Namespace.StructToGenerate newValue) {
-        var index = TestComponentLookup.StructToGenerate;
+        var index = TestComponentsLookup.StructToGenerate;
         var component = CreateComponent<StructToGenerateComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveStructToGenerate() {
-        RemoveComponent(TestComponentLookup.StructToGenerate);
+        RemoveComponent(TestComponentsLookup.StructToGenerate);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> StructToGenerate {
         get {
             if (_matcherStructToGenerate == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.StructToGenerate);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.StructToGenerate);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherStructToGenerate = matcher;
             }
 

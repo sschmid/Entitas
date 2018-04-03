@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class Test2ComponentLookup {
+public static class Test2ComponentsLookup {
 
     public const int ClassToGenerate = 0;
     public const int MultipleContextStandardEvent = 1;

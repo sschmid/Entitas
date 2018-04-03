@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public TestMultipleContextStandardEventListenerComponent testMultipleContextStandardEventListener { get { return (TestMultipleContextStandardEventListenerComponent)GetComponent(TestComponentLookup.TestMultipleContextStandardEventListener); } }
-    public bool hasTestMultipleContextStandardEventListener { get { return HasComponent(TestComponentLookup.TestMultipleContextStandardEventListener); } }
+    public TestMultipleContextStandardEventListenerComponent testMultipleContextStandardEventListener { get { return (TestMultipleContextStandardEventListenerComponent)GetComponent(TestComponentsLookup.TestMultipleContextStandardEventListener); } }
+    public bool hasTestMultipleContextStandardEventListener { get { return HasComponent(TestComponentsLookup.TestMultipleContextStandardEventListener); } }
 
     public void AddTestMultipleContextStandardEventListener(System.Collections.Generic.List<ITestMultipleContextStandardEventListener> newValue) {
-        var index = TestComponentLookup.TestMultipleContextStandardEventListener;
+        var index = TestComponentsLookup.TestMultipleContextStandardEventListener;
         var component = CreateComponent<TestMultipleContextStandardEventListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceTestMultipleContextStandardEventListener(System.Collections.Generic.List<ITestMultipleContextStandardEventListener> newValue) {
-        var index = TestComponentLookup.TestMultipleContextStandardEventListener;
+        var index = TestComponentsLookup.TestMultipleContextStandardEventListener;
         var component = CreateComponent<TestMultipleContextStandardEventListenerComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveTestMultipleContextStandardEventListener() {
-        RemoveComponent(TestComponentLookup.TestMultipleContextStandardEventListener);
+        RemoveComponent(TestComponentsLookup.TestMultipleContextStandardEventListener);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> TestMultipleContextStandardEventListener {
         get {
             if (_matcherTestMultipleContextStandardEventListener == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.TestMultipleContextStandardEventListener);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.TestMultipleContextStandardEventListener);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherTestMultipleContextStandardEventListener = matcher;
             }
 

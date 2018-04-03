@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IMyNamespaceMyNamespaceEntity {
+public partial interface IMyNamespaceMyNamespaceEntity {
 
     My.Namespace.MyNamespaceComponent myNamespaceMyNamespace { get; }
     bool hasMyNamespaceMyNamespace { get; }

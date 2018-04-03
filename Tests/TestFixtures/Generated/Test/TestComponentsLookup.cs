@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public static class TestComponentLookup {
+public static class TestComponentsLookup {
 
     public const int ClassToGenerate = 0;
     public const int ClassWithEntitIndexAttribute = 1;

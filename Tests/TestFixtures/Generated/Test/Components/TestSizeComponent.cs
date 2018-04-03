@@ -8,11 +8,11 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public SizeComponent size { get { return (SizeComponent)GetComponent(TestComponentLookup.Size); } }
-    public bool hasSize { get { return HasComponent(TestComponentLookup.Size); } }
+    public SizeComponent size { get { return (SizeComponent)GetComponent(TestComponentsLookup.Size); } }
+    public bool hasSize { get { return HasComponent(TestComponentsLookup.Size); } }
 
     public void AddSize(int newWidth, int newHeight) {
-        var index = TestComponentLookup.Size;
+        var index = TestComponentsLookup.Size;
         var component = CreateComponent<SizeComponent>(index);
         component.width = newWidth;
         component.height = newHeight;
@@ -20,7 +20,7 @@ public partial class TestEntity {
     }
 
     public void ReplaceSize(int newWidth, int newHeight) {
-        var index = TestComponentLookup.Size;
+        var index = TestComponentsLookup.Size;
         var component = CreateComponent<SizeComponent>(index);
         component.width = newWidth;
         component.height = newHeight;
@@ -28,7 +28,7 @@ public partial class TestEntity {
     }
 
     public void RemoveSize() {
-        RemoveComponent(TestComponentLookup.Size);
+        RemoveComponent(TestComponentsLookup.Size);
     }
 }
 
@@ -47,8 +47,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> Size {
         get {
             if (_matcherSize == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.Size);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.Size);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherSize = matcher;
             }
 

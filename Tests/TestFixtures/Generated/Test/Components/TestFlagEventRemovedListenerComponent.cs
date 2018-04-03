@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public FlagEventRemovedListenerComponent flagEventRemovedListener { get { return (FlagEventRemovedListenerComponent)GetComponent(TestComponentLookup.FlagEventRemovedListener); } }
-    public bool hasFlagEventRemovedListener { get { return HasComponent(TestComponentLookup.FlagEventRemovedListener); } }
+    public FlagEventRemovedListenerComponent flagEventRemovedListener { get { return (FlagEventRemovedListenerComponent)GetComponent(TestComponentsLookup.FlagEventRemovedListener); } }
+    public bool hasFlagEventRemovedListener { get { return HasComponent(TestComponentsLookup.FlagEventRemovedListener); } }
 
     public void AddFlagEventRemovedListener(System.Collections.Generic.List<IFlagEventRemovedListener> newValue) {
-        var index = TestComponentLookup.FlagEventRemovedListener;
+        var index = TestComponentsLookup.FlagEventRemovedListener;
         var component = CreateComponent<FlagEventRemovedListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceFlagEventRemovedListener(System.Collections.Generic.List<IFlagEventRemovedListener> newValue) {
-        var index = TestComponentLookup.FlagEventRemovedListener;
+        var index = TestComponentsLookup.FlagEventRemovedListener;
         var component = CreateComponent<FlagEventRemovedListenerComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveFlagEventRemovedListener() {
-        RemoveComponent(TestComponentLookup.FlagEventRemovedListener);
+        RemoveComponent(TestComponentsLookup.FlagEventRemovedListener);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> FlagEventRemovedListener {
         get {
             if (_matcherFlagEventRemovedListener == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.FlagEventRemovedListener);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.FlagEventRemovedListener);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherFlagEventRemovedListener = matcher;
             }
 
@@ -73,7 +73,7 @@ public partial class TestEntity {
         ReplaceFlagEventRemovedListener(listeners);
     }
 
-    public void RemoveFlagEventListener(IFlagEventRemovedListener value, bool removeComponentWhenEmpty = true) {
+    public void RemoveFlagEventRemovedListener(IFlagEventRemovedListener value, bool removeComponentWhenEmpty = true) {
         var listeners = flagEventRemovedListener.value;
         listeners.Remove(value);
         if (removeComponentWhenEmpty && listeners.Count == 0) {

@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public ClassToGenerateComponent classToGenerate { get { return (ClassToGenerateComponent)GetComponent(TestComponentLookup.ClassToGenerate); } }
-    public bool hasClassToGenerate { get { return HasComponent(TestComponentLookup.ClassToGenerate); } }
+    public ClassToGenerateComponent classToGenerate { get { return (ClassToGenerateComponent)GetComponent(TestComponentsLookup.ClassToGenerate); } }
+    public bool hasClassToGenerate { get { return HasComponent(TestComponentsLookup.ClassToGenerate); } }
 
     public void AddClassToGenerate(My.Namespace.ClassToGenerate newValue) {
-        var index = TestComponentLookup.ClassToGenerate;
+        var index = TestComponentsLookup.ClassToGenerate;
         var component = CreateComponent<ClassToGenerateComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceClassToGenerate(My.Namespace.ClassToGenerate newValue) {
-        var index = TestComponentLookup.ClassToGenerate;
+        var index = TestComponentsLookup.ClassToGenerate;
         var component = CreateComponent<ClassToGenerateComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveClassToGenerate() {
-        RemoveComponent(TestComponentLookup.ClassToGenerate);
+        RemoveComponent(TestComponentsLookup.ClassToGenerate);
     }
 }
 
@@ -55,8 +55,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> ClassToGenerate {
         get {
             if (_matcherClassToGenerate == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.ClassToGenerate);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.ClassToGenerate);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherClassToGenerate = matcher;
             }
 

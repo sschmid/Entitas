@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface INameAgeEntity {
+public partial interface INameAgeEntity {
 
     NameAgeComponent nameAge { get; }
     bool hasNameAge { get; }

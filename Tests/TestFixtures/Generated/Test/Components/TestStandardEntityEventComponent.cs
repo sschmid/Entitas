@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public StandardEntityEventComponent standardEntityEvent { get { return (StandardEntityEventComponent)GetComponent(TestComponentLookup.StandardEntityEvent); } }
-    public bool hasStandardEntityEvent { get { return HasComponent(TestComponentLookup.StandardEntityEvent); } }
+    public StandardEntityEventComponent standardEntityEvent { get { return (StandardEntityEventComponent)GetComponent(TestComponentsLookup.StandardEntityEvent); } }
+    public bool hasStandardEntityEvent { get { return HasComponent(TestComponentsLookup.StandardEntityEvent); } }
 
     public void AddStandardEntityEvent(string newValue) {
-        var index = TestComponentLookup.StandardEntityEvent;
+        var index = TestComponentsLookup.StandardEntityEvent;
         var component = CreateComponent<StandardEntityEventComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceStandardEntityEvent(string newValue) {
-        var index = TestComponentLookup.StandardEntityEvent;
+        var index = TestComponentsLookup.StandardEntityEvent;
         var component = CreateComponent<StandardEntityEventComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveStandardEntityEvent() {
-        RemoveComponent(TestComponentLookup.StandardEntityEvent);
+        RemoveComponent(TestComponentsLookup.StandardEntityEvent);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> StandardEntityEvent {
         get {
             if (_matcherStandardEntityEvent == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.StandardEntityEvent);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.StandardEntityEvent);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherStandardEntityEvent = matcher;
             }
 

@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public Test2ContextComponent test2Context { get { return (Test2ContextComponent)GetComponent(TestComponentLookup.Test2Context); } }
-    public bool hasTest2Context { get { return HasComponent(TestComponentLookup.Test2Context); } }
+    public Test2ContextComponent test2Context { get { return (Test2ContextComponent)GetComponent(TestComponentsLookup.Test2Context); } }
+    public bool hasTest2Context { get { return HasComponent(TestComponentsLookup.Test2Context); } }
 
     public void AddTest2Context(string newValue) {
-        var index = TestComponentLookup.Test2Context;
+        var index = TestComponentsLookup.Test2Context;
         var component = CreateComponent<Test2ContextComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceTest2Context(string newValue) {
-        var index = TestComponentLookup.Test2Context;
+        var index = TestComponentsLookup.Test2Context;
         var component = CreateComponent<Test2ContextComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveTest2Context() {
-        RemoveComponent(TestComponentLookup.Test2Context);
+        RemoveComponent(TestComponentsLookup.Test2Context);
     }
 }
 
@@ -55,8 +55,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> Test2Context {
         get {
             if (_matcherTest2Context == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.Test2Context);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.Test2Context);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherTest2Context = matcher;
             }
 

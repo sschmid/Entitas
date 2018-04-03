@@ -8,11 +8,11 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public My.Namespace.MultipleEntityIndicesComponent myNamespaceMultipleEntityIndices { get { return (My.Namespace.MultipleEntityIndicesComponent)GetComponent(TestComponentLookup.MyNamespaceMultipleEntityIndices); } }
-    public bool hasMyNamespaceMultipleEntityIndices { get { return HasComponent(TestComponentLookup.MyNamespaceMultipleEntityIndices); } }
+    public My.Namespace.MultipleEntityIndicesComponent myNamespaceMultipleEntityIndices { get { return (My.Namespace.MultipleEntityIndicesComponent)GetComponent(TestComponentsLookup.MyNamespaceMultipleEntityIndices); } }
+    public bool hasMyNamespaceMultipleEntityIndices { get { return HasComponent(TestComponentsLookup.MyNamespaceMultipleEntityIndices); } }
 
     public void AddMyNamespaceMultipleEntityIndices(string newValue, string newValue2) {
-        var index = TestComponentLookup.MyNamespaceMultipleEntityIndices;
+        var index = TestComponentsLookup.MyNamespaceMultipleEntityIndices;
         var component = CreateComponent<My.Namespace.MultipleEntityIndicesComponent>(index);
         component.value = newValue;
         component.value2 = newValue2;
@@ -20,7 +20,7 @@ public partial class TestEntity {
     }
 
     public void ReplaceMyNamespaceMultipleEntityIndices(string newValue, string newValue2) {
-        var index = TestComponentLookup.MyNamespaceMultipleEntityIndices;
+        var index = TestComponentsLookup.MyNamespaceMultipleEntityIndices;
         var component = CreateComponent<My.Namespace.MultipleEntityIndicesComponent>(index);
         component.value = newValue;
         component.value2 = newValue2;
@@ -28,7 +28,7 @@ public partial class TestEntity {
     }
 
     public void RemoveMyNamespaceMultipleEntityIndices() {
-        RemoveComponent(TestComponentLookup.MyNamespaceMultipleEntityIndices);
+        RemoveComponent(TestComponentsLookup.MyNamespaceMultipleEntityIndices);
     }
 }
 
@@ -57,8 +57,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> MyNamespaceMultipleEntityIndices {
         get {
             if (_matcherMyNamespaceMultipleEntityIndices == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.MyNamespaceMultipleEntityIndices);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.MyNamespaceMultipleEntityIndices);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherMyNamespaceMultipleEntityIndices = matcher;
             }
 

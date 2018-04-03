@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public Array3dComponent array3d { get { return (Array3dComponent)GetComponent(GameComponentLookup.Array3d); } }
-    public bool hasArray3d { get { return HasComponent(GameComponentLookup.Array3d); } }
+    public Array3dComponent array3d { get { return (Array3dComponent)GetComponent(GameComponentsLookup.Array3d); } }
+    public bool hasArray3d { get { return HasComponent(GameComponentsLookup.Array3d); } }
 
     public void AddArray3d(int[,,] newValue) {
-        var index = GameComponentLookup.Array3d;
+        var index = GameComponentsLookup.Array3d;
         var component = CreateComponent<Array3dComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceArray3d(int[,,] newValue) {
-        var index = GameComponentLookup.Array3d;
+        var index = GameComponentsLookup.Array3d;
         var component = CreateComponent<Array3dComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveArray3d() {
-        RemoveComponent(GameComponentLookup.Array3d);
+        RemoveComponent(GameComponentsLookup.Array3d);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class GameMatcher {
     public static Entitas.IMatcher<GameEntity> Array3d {
         get {
             if (_matcherArray3d == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentLookup.Array3d);
-                matcher.componentNames = GameComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Array3d);
+                matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherArray3d = matcher;
             }
 

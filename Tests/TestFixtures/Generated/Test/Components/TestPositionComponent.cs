@@ -8,11 +8,11 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public PositionComponent position { get { return (PositionComponent)GetComponent(TestComponentLookup.Position); } }
-    public bool hasPosition { get { return HasComponent(TestComponentLookup.Position); } }
+    public PositionComponent position { get { return (PositionComponent)GetComponent(TestComponentsLookup.Position); } }
+    public bool hasPosition { get { return HasComponent(TestComponentsLookup.Position); } }
 
     public void AddPosition(int newX, int newY) {
-        var index = TestComponentLookup.Position;
+        var index = TestComponentsLookup.Position;
         var component = CreateComponent<PositionComponent>(index);
         component.x = newX;
         component.y = newY;
@@ -20,7 +20,7 @@ public partial class TestEntity {
     }
 
     public void ReplacePosition(int newX, int newY) {
-        var index = TestComponentLookup.Position;
+        var index = TestComponentsLookup.Position;
         var component = CreateComponent<PositionComponent>(index);
         component.x = newX;
         component.y = newY;
@@ -28,7 +28,7 @@ public partial class TestEntity {
     }
 
     public void RemovePosition() {
-        RemoveComponent(TestComponentLookup.Position);
+        RemoveComponent(TestComponentsLookup.Position);
     }
 }
 
@@ -47,8 +47,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> Position {
         get {
             if (_matcherPosition == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.Position);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.Position);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherPosition = matcher;
             }
 

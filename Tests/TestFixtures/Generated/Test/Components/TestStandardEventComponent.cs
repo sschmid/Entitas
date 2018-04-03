@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public StandardEventComponent standardEvent { get { return (StandardEventComponent)GetComponent(TestComponentLookup.StandardEvent); } }
-    public bool hasStandardEvent { get { return HasComponent(TestComponentLookup.StandardEvent); } }
+    public StandardEventComponent standardEvent { get { return (StandardEventComponent)GetComponent(TestComponentsLookup.StandardEvent); } }
+    public bool hasStandardEvent { get { return HasComponent(TestComponentsLookup.StandardEvent); } }
 
     public void AddStandardEvent(string newValue) {
-        var index = TestComponentLookup.StandardEvent;
+        var index = TestComponentsLookup.StandardEvent;
         var component = CreateComponent<StandardEventComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceStandardEvent(string newValue) {
-        var index = TestComponentLookup.StandardEvent;
+        var index = TestComponentsLookup.StandardEvent;
         var component = CreateComponent<StandardEventComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveStandardEvent() {
-        RemoveComponent(TestComponentLookup.StandardEvent);
+        RemoveComponent(TestComponentsLookup.StandardEvent);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> StandardEvent {
         get {
             if (_matcherStandardEvent == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.StandardEvent);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.StandardEvent);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherStandardEvent = matcher;
             }
 

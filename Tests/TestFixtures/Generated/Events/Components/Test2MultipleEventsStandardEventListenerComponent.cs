@@ -6,6 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+[Entitas.CodeGeneration.Attributes.DontGenerate(false)]
 public sealed class Test2MultipleEventsStandardEventListenerComponent : Entitas.IComponent {
     public System.Collections.Generic.List<ITest2MultipleEventsStandardEventListener> value;
 }

@@ -11,10 +11,10 @@ public partial class TestEntity {
     static readonly FlagEventComponent flagEventComponent = new FlagEventComponent();
 
     public bool isFlagEvent {
-        get { return HasComponent(TestComponentLookup.FlagEvent); }
+        get { return HasComponent(TestComponentsLookup.FlagEvent); }
         set {
             if (value != isFlagEvent) {
-                var index = TestComponentLookup.FlagEvent;
+                var index = TestComponentsLookup.FlagEvent;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> FlagEvent {
         get {
             if (_matcherFlagEvent == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.FlagEvent);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.FlagEvent);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherFlagEvent = matcher;
             }
 

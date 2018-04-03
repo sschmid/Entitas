@@ -38,10 +38,10 @@ public partial class TestEntity {
     static readonly My.Namespace.UniqueMyNamespaceFlagComponent myNamespaceUniqueMyNamespaceFlagComponent = new My.Namespace.UniqueMyNamespaceFlagComponent();
 
     public bool isMyNamespaceUniqueMyNamespaceFlag {
-        get { return HasComponent(TestComponentLookup.MyNamespaceUniqueMyNamespaceFlag); }
+        get { return HasComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag); }
         set {
             if (value != isMyNamespaceUniqueMyNamespaceFlag) {
-                var index = TestComponentLookup.MyNamespaceUniqueMyNamespaceFlag;
+                var index = TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
@@ -72,8 +72,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> MyNamespaceUniqueMyNamespaceFlag {
         get {
             if (_matcherMyNamespaceUniqueMyNamespaceFlag == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.MyNamespaceUniqueMyNamespaceFlag);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.MyNamespaceUniqueMyNamespaceFlag);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherMyNamespaceUniqueMyNamespaceFlag = matcher;
             }
 

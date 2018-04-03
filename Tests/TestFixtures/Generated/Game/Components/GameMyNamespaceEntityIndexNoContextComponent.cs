@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public My.Namespace.EntityIndexNoContextComponent myNamespaceEntityIndexNoContext { get { return (My.Namespace.EntityIndexNoContextComponent)GetComponent(GameComponentLookup.MyNamespaceEntityIndexNoContext); } }
-    public bool hasMyNamespaceEntityIndexNoContext { get { return HasComponent(GameComponentLookup.MyNamespaceEntityIndexNoContext); } }
+    public My.Namespace.EntityIndexNoContextComponent myNamespaceEntityIndexNoContext { get { return (My.Namespace.EntityIndexNoContextComponent)GetComponent(GameComponentsLookup.MyNamespaceEntityIndexNoContext); } }
+    public bool hasMyNamespaceEntityIndexNoContext { get { return HasComponent(GameComponentsLookup.MyNamespaceEntityIndexNoContext); } }
 
     public void AddMyNamespaceEntityIndexNoContext(string newValue) {
-        var index = GameComponentLookup.MyNamespaceEntityIndexNoContext;
+        var index = GameComponentsLookup.MyNamespaceEntityIndexNoContext;
         var component = CreateComponent<My.Namespace.EntityIndexNoContextComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMyNamespaceEntityIndexNoContext(string newValue) {
-        var index = GameComponentLookup.MyNamespaceEntityIndexNoContext;
+        var index = GameComponentsLookup.MyNamespaceEntityIndexNoContext;
         var component = CreateComponent<My.Namespace.EntityIndexNoContextComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveMyNamespaceEntityIndexNoContext() {
-        RemoveComponent(GameComponentLookup.MyNamespaceEntityIndexNoContext);
+        RemoveComponent(GameComponentsLookup.MyNamespaceEntityIndexNoContext);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class GameMatcher {
     public static Entitas.IMatcher<GameEntity> MyNamespaceEntityIndexNoContext {
         get {
             if (_matcherMyNamespaceEntityIndexNoContext == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentLookup.MyNamespaceEntityIndexNoContext);
-                matcher.componentNames = GameComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.MyNamespaceEntityIndexNoContext);
+                matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherMyNamespaceEntityIndexNoContext = matcher;
             }
 

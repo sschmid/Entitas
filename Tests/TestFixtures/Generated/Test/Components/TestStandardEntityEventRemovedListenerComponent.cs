@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public StandardEntityEventRemovedListenerComponent standardEntityEventRemovedListener { get { return (StandardEntityEventRemovedListenerComponent)GetComponent(TestComponentLookup.StandardEntityEventRemovedListener); } }
-    public bool hasStandardEntityEventRemovedListener { get { return HasComponent(TestComponentLookup.StandardEntityEventRemovedListener); } }
+    public StandardEntityEventRemovedListenerComponent standardEntityEventRemovedListener { get { return (StandardEntityEventRemovedListenerComponent)GetComponent(TestComponentsLookup.StandardEntityEventRemovedListener); } }
+    public bool hasStandardEntityEventRemovedListener { get { return HasComponent(TestComponentsLookup.StandardEntityEventRemovedListener); } }
 
     public void AddStandardEntityEventRemovedListener(System.Collections.Generic.List<IStandardEntityEventRemovedListener> newValue) {
-        var index = TestComponentLookup.StandardEntityEventRemovedListener;
+        var index = TestComponentsLookup.StandardEntityEventRemovedListener;
         var component = CreateComponent<StandardEntityEventRemovedListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceStandardEntityEventRemovedListener(System.Collections.Generic.List<IStandardEntityEventRemovedListener> newValue) {
-        var index = TestComponentLookup.StandardEntityEventRemovedListener;
+        var index = TestComponentsLookup.StandardEntityEventRemovedListener;
         var component = CreateComponent<StandardEntityEventRemovedListenerComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveStandardEntityEventRemovedListener() {
-        RemoveComponent(TestComponentLookup.StandardEntityEventRemovedListener);
+        RemoveComponent(TestComponentsLookup.StandardEntityEventRemovedListener);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> StandardEntityEventRemovedListener {
         get {
             if (_matcherStandardEntityEventRemovedListener == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.StandardEntityEventRemovedListener);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.StandardEntityEventRemovedListener);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherStandardEntityEventRemovedListener = matcher;
             }
 
@@ -73,7 +73,7 @@ public partial class TestEntity {
         ReplaceStandardEntityEventRemovedListener(listeners);
     }
 
-    public void RemoveStandardEntityEventListener(IStandardEntityEventRemovedListener value, bool removeComponentWhenEmpty = true) {
+    public void RemoveStandardEntityEventRemovedListener(IStandardEntityEventRemovedListener value, bool removeComponentWhenEmpty = true) {
         var listeners = standardEntityEventRemovedListener.value;
         listeners.Remove(value);
         if (removeComponentWhenEmpty && listeners.Count == 0) {

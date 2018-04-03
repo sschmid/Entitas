@@ -8,11 +8,11 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public NameAgeComponent nameAge { get { return (NameAgeComponent)GetComponent(TestComponentLookup.NameAge); } }
-    public bool hasNameAge { get { return HasComponent(TestComponentLookup.NameAge); } }
+    public NameAgeComponent nameAge { get { return (NameAgeComponent)GetComponent(TestComponentsLookup.NameAge); } }
+    public bool hasNameAge { get { return HasComponent(TestComponentsLookup.NameAge); } }
 
     public void AddNameAge(string newName, int newAge) {
-        var index = TestComponentLookup.NameAge;
+        var index = TestComponentsLookup.NameAge;
         var component = CreateComponent<NameAgeComponent>(index);
         component.name = newName;
         component.age = newAge;
@@ -20,7 +20,7 @@ public partial class TestEntity {
     }
 
     public void ReplaceNameAge(string newName, int newAge) {
-        var index = TestComponentLookup.NameAge;
+        var index = TestComponentsLookup.NameAge;
         var component = CreateComponent<NameAgeComponent>(index);
         component.name = newName;
         component.age = newAge;
@@ -28,7 +28,7 @@ public partial class TestEntity {
     }
 
     public void RemoveNameAge() {
-        RemoveComponent(TestComponentLookup.NameAge);
+        RemoveComponent(TestComponentsLookup.NameAge);
     }
 }
 
@@ -57,8 +57,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> NameAge {
         get {
             if (_matcherNameAge == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.NameAge);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.NameAge);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherNameAge = matcher;
             }
 

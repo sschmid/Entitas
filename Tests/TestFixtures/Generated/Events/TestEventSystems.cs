@@ -6,9 +6,9 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class EventSystems : Feature {
+public sealed class TestEventSystems : Feature {
 
-    public EventSystems(Contexts contexts) {
+    public TestEventSystems(Contexts contexts) {
         Add(new FlagEventRemovedEventSystem(contexts)); // priority: 0
         Add(new TestMultipleContextStandardEventEventSystem(contexts)); // priority: 0
         Add(new Test2MultipleContextStandardEventEventSystem(contexts)); // priority: 0

@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public ClassWithEntitIndexAttributeComponent classWithEntitIndexAttribute { get { return (ClassWithEntitIndexAttributeComponent)GetComponent(TestComponentLookup.ClassWithEntitIndexAttribute); } }
-    public bool hasClassWithEntitIndexAttribute { get { return HasComponent(TestComponentLookup.ClassWithEntitIndexAttribute); } }
+    public ClassWithEntitIndexAttributeComponent classWithEntitIndexAttribute { get { return (ClassWithEntitIndexAttributeComponent)GetComponent(TestComponentsLookup.ClassWithEntitIndexAttribute); } }
+    public bool hasClassWithEntitIndexAttribute { get { return HasComponent(TestComponentsLookup.ClassWithEntitIndexAttribute); } }
 
     public void AddClassWithEntitIndexAttribute(ClassWithEntitIndexAttribute newValue) {
-        var index = TestComponentLookup.ClassWithEntitIndexAttribute;
+        var index = TestComponentsLookup.ClassWithEntitIndexAttribute;
         var component = CreateComponent<ClassWithEntitIndexAttributeComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceClassWithEntitIndexAttribute(ClassWithEntitIndexAttribute newValue) {
-        var index = TestComponentLookup.ClassWithEntitIndexAttribute;
+        var index = TestComponentsLookup.ClassWithEntitIndexAttribute;
         var component = CreateComponent<ClassWithEntitIndexAttributeComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveClassWithEntitIndexAttribute() {
-        RemoveComponent(TestComponentLookup.ClassWithEntitIndexAttribute);
+        RemoveComponent(TestComponentsLookup.ClassWithEntitIndexAttribute);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> ClassWithEntitIndexAttribute {
         get {
             if (_matcherClassWithEntitIndexAttribute == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.ClassWithEntitIndexAttribute);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.ClassWithEntitIndexAttribute);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherClassWithEntitIndexAttribute = matcher;
             }
 

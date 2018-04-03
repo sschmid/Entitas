@@ -46,25 +46,25 @@ public partial class TestContext {
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public My.Namespace.UniqueMyNamespaceComponent myNamespaceUniqueMyNamespace { get { return (My.Namespace.UniqueMyNamespaceComponent)GetComponent(TestComponentLookup.MyNamespaceUniqueMyNamespace); } }
-    public bool hasMyNamespaceUniqueMyNamespace { get { return HasComponent(TestComponentLookup.MyNamespaceUniqueMyNamespace); } }
+    public My.Namespace.UniqueMyNamespaceComponent myNamespaceUniqueMyNamespace { get { return (My.Namespace.UniqueMyNamespaceComponent)GetComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespace); } }
+    public bool hasMyNamespaceUniqueMyNamespace { get { return HasComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespace); } }
 
     public void AddMyNamespaceUniqueMyNamespace(string newValue) {
-        var index = TestComponentLookup.MyNamespaceUniqueMyNamespace;
+        var index = TestComponentsLookup.MyNamespaceUniqueMyNamespace;
         var component = CreateComponent<My.Namespace.UniqueMyNamespaceComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMyNamespaceUniqueMyNamespace(string newValue) {
-        var index = TestComponentLookup.MyNamespaceUniqueMyNamespace;
+        var index = TestComponentsLookup.MyNamespaceUniqueMyNamespace;
         var component = CreateComponent<My.Namespace.UniqueMyNamespaceComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveMyNamespaceUniqueMyNamespace() {
-        RemoveComponent(TestComponentLookup.MyNamespaceUniqueMyNamespace);
+        RemoveComponent(TestComponentsLookup.MyNamespaceUniqueMyNamespace);
     }
 }
 
@@ -83,8 +83,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> MyNamespaceUniqueMyNamespace {
         get {
             if (_matcherMyNamespaceUniqueMyNamespace == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.MyNamespaceUniqueMyNamespace);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.MyNamespaceUniqueMyNamespace);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherMyNamespaceUniqueMyNamespace = matcher;
             }
 

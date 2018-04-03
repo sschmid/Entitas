@@ -10,12 +10,12 @@ public sealed partial class GameContext : Entitas.Context<GameEntity> {
 
     public GameContext()
         : base(
-            GameComponentLookup.TotalComponents,
+            GameComponentsLookup.TotalComponents,
             0,
             new Entitas.ContextInfo(
                 "Game",
-                GameComponentLookup.componentNames,
-                GameComponentLookup.componentTypes
+                GameComponentsLookup.componentNames,
+                GameComponentsLookup.componentTypes
             ),
             (entity) =>
 

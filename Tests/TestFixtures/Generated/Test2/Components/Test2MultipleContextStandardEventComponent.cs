@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class Test2Entity {
 
-    public MultipleContextStandardEventComponent multipleContextStandardEvent { get { return (MultipleContextStandardEventComponent)GetComponent(Test2ComponentLookup.MultipleContextStandardEvent); } }
-    public bool hasMultipleContextStandardEvent { get { return HasComponent(Test2ComponentLookup.MultipleContextStandardEvent); } }
+    public MultipleContextStandardEventComponent multipleContextStandardEvent { get { return (MultipleContextStandardEventComponent)GetComponent(Test2ComponentsLookup.MultipleContextStandardEvent); } }
+    public bool hasMultipleContextStandardEvent { get { return HasComponent(Test2ComponentsLookup.MultipleContextStandardEvent); } }
 
     public void AddMultipleContextStandardEvent(string newValue) {
-        var index = Test2ComponentLookup.MultipleContextStandardEvent;
+        var index = Test2ComponentsLookup.MultipleContextStandardEvent;
         var component = CreateComponent<MultipleContextStandardEventComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMultipleContextStandardEvent(string newValue) {
-        var index = Test2ComponentLookup.MultipleContextStandardEvent;
+        var index = Test2ComponentsLookup.MultipleContextStandardEvent;
         var component = CreateComponent<MultipleContextStandardEventComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveMultipleContextStandardEvent() {
-        RemoveComponent(Test2ComponentLookup.MultipleContextStandardEvent);
+        RemoveComponent(Test2ComponentsLookup.MultipleContextStandardEvent);
     }
 }
 
@@ -55,8 +55,8 @@ public sealed partial class Test2Matcher {
     public static Entitas.IMatcher<Test2Entity> MultipleContextStandardEvent {
         get {
             if (_matcherMultipleContextStandardEvent == null) {
-                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentLookup.MultipleContextStandardEvent);
-                matcher.componentNames = Test2ComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentsLookup.MultipleContextStandardEvent);
+                matcher.componentNames = Test2ComponentsLookup.componentNames;
                 _matcherMultipleContextStandardEvent = matcher;
             }
 

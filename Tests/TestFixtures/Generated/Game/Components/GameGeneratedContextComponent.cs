@@ -11,10 +11,10 @@ public partial class GameEntity {
     static readonly GeneratedContextComponent generatedContextComponent = new GeneratedContextComponent();
 
     public bool isGeneratedContext {
-        get { return HasComponent(GameComponentLookup.GeneratedContext); }
+        get { return HasComponent(GameComponentsLookup.GeneratedContext); }
         set {
             if (value != isGeneratedContext) {
-                var index = GameComponentLookup.GeneratedContext;
+                var index = GameComponentsLookup.GeneratedContext;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
@@ -45,8 +45,8 @@ public sealed partial class GameMatcher {
     public static Entitas.IMatcher<GameEntity> GeneratedContext {
         get {
             if (_matcherGeneratedContext == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentLookup.GeneratedContext);
-                matcher.componentNames = GameComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.GeneratedContext);
+                matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherGeneratedContext = matcher;
             }
 

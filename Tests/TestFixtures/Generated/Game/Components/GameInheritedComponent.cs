@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public InheritedComponent inherited { get { return (InheritedComponent)GetComponent(GameComponentLookup.Inherited); } }
-    public bool hasInherited { get { return HasComponent(GameComponentLookup.Inherited); } }
+    public InheritedComponent inherited { get { return (InheritedComponent)GetComponent(GameComponentsLookup.Inherited); } }
+    public bool hasInherited { get { return HasComponent(GameComponentsLookup.Inherited); } }
 
     public void AddInherited(float newValue) {
-        var index = GameComponentLookup.Inherited;
+        var index = GameComponentsLookup.Inherited;
         var component = CreateComponent<InheritedComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceInherited(float newValue) {
-        var index = GameComponentLookup.Inherited;
+        var index = GameComponentsLookup.Inherited;
         var component = CreateComponent<InheritedComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveInherited() {
-        RemoveComponent(GameComponentLookup.Inherited);
+        RemoveComponent(GameComponentsLookup.Inherited);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class GameMatcher {
     public static Entitas.IMatcher<GameEntity> Inherited {
         get {
             if (_matcherInherited == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentLookup.Inherited);
-                matcher.componentNames = GameComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Inherited);
+                matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherInherited = matcher;
             }
 

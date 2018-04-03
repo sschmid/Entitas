@@ -11,10 +11,10 @@ public partial class GameEntity {
     static readonly NoContextComponent noContextComponent = new NoContextComponent();
 
     public bool isNoContext {
-        get { return HasComponent(GameComponentLookup.NoContext); }
+        get { return HasComponent(GameComponentsLookup.NoContext); }
         set {
             if (value != isNoContext) {
-                var index = GameComponentLookup.NoContext;
+                var index = GameComponentsLookup.NoContext;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
@@ -45,8 +45,8 @@ public sealed partial class GameMatcher {
     public static Entitas.IMatcher<GameEntity> NoContext {
         get {
             if (_matcherNoContext == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentLookup.NoContext);
-                matcher.componentNames = GameComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.NoContext);
+                matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherNoContext = matcher;
             }
 

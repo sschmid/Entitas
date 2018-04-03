@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public ParentComponent parent { get { return (ParentComponent)GetComponent(GameComponentLookup.Parent); } }
-    public bool hasParent { get { return HasComponent(GameComponentLookup.Parent); } }
+    public ParentComponent parent { get { return (ParentComponent)GetComponent(GameComponentsLookup.Parent); } }
+    public bool hasParent { get { return HasComponent(GameComponentsLookup.Parent); } }
 
     public void AddParent(float newValue) {
-        var index = GameComponentLookup.Parent;
+        var index = GameComponentsLookup.Parent;
         var component = CreateComponent<ParentComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceParent(float newValue) {
-        var index = GameComponentLookup.Parent;
+        var index = GameComponentsLookup.Parent;
         var component = CreateComponent<ParentComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveParent() {
-        RemoveComponent(GameComponentLookup.Parent);
+        RemoveComponent(GameComponentsLookup.Parent);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class GameMatcher {
     public static Entitas.IMatcher<GameEntity> Parent {
         get {
             if (_matcherParent == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentLookup.Parent);
-                matcher.componentNames = GameComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Parent);
+                matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherParent = matcher;
             }
 

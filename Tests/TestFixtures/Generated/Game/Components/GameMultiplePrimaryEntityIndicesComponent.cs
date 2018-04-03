@@ -8,11 +8,11 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public MultiplePrimaryEntityIndicesComponent multiplePrimaryEntityIndices { get { return (MultiplePrimaryEntityIndicesComponent)GetComponent(GameComponentLookup.MultiplePrimaryEntityIndices); } }
-    public bool hasMultiplePrimaryEntityIndices { get { return HasComponent(GameComponentLookup.MultiplePrimaryEntityIndices); } }
+    public MultiplePrimaryEntityIndicesComponent multiplePrimaryEntityIndices { get { return (MultiplePrimaryEntityIndicesComponent)GetComponent(GameComponentsLookup.MultiplePrimaryEntityIndices); } }
+    public bool hasMultiplePrimaryEntityIndices { get { return HasComponent(GameComponentsLookup.MultiplePrimaryEntityIndices); } }
 
     public void AddMultiplePrimaryEntityIndices(string newValue, string newValue2) {
-        var index = GameComponentLookup.MultiplePrimaryEntityIndices;
+        var index = GameComponentsLookup.MultiplePrimaryEntityIndices;
         var component = CreateComponent<MultiplePrimaryEntityIndicesComponent>(index);
         component.value = newValue;
         component.value2 = newValue2;
@@ -20,7 +20,7 @@ public partial class GameEntity {
     }
 
     public void ReplaceMultiplePrimaryEntityIndices(string newValue, string newValue2) {
-        var index = GameComponentLookup.MultiplePrimaryEntityIndices;
+        var index = GameComponentsLookup.MultiplePrimaryEntityIndices;
         var component = CreateComponent<MultiplePrimaryEntityIndicesComponent>(index);
         component.value = newValue;
         component.value2 = newValue2;
@@ -28,7 +28,7 @@ public partial class GameEntity {
     }
 
     public void RemoveMultiplePrimaryEntityIndices() {
-        RemoveComponent(GameComponentLookup.MultiplePrimaryEntityIndices);
+        RemoveComponent(GameComponentsLookup.MultiplePrimaryEntityIndices);
     }
 }
 
@@ -47,8 +47,8 @@ public sealed partial class GameMatcher {
     public static Entitas.IMatcher<GameEntity> MultiplePrimaryEntityIndices {
         get {
             if (_matcherMultiplePrimaryEntityIndices == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentLookup.MultiplePrimaryEntityIndices);
-                matcher.componentNames = GameComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.MultiplePrimaryEntityIndices);
+                matcher.componentNames = GameComponentsLookup.componentNames;
                 _matcherMultiplePrimaryEntityIndices = matcher;
             }
 

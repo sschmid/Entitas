@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class Test2Entity {
 
-    public My.Namespace.MyNamespaceComponent myNamespaceMyNamespace { get { return (My.Namespace.MyNamespaceComponent)GetComponent(Test2ComponentLookup.MyNamespaceMyNamespace); } }
-    public bool hasMyNamespaceMyNamespace { get { return HasComponent(Test2ComponentLookup.MyNamespaceMyNamespace); } }
+    public My.Namespace.MyNamespaceComponent myNamespaceMyNamespace { get { return (My.Namespace.MyNamespaceComponent)GetComponent(Test2ComponentsLookup.MyNamespaceMyNamespace); } }
+    public bool hasMyNamespaceMyNamespace { get { return HasComponent(Test2ComponentsLookup.MyNamespaceMyNamespace); } }
 
     public void AddMyNamespaceMyNamespace(string newValue) {
-        var index = Test2ComponentLookup.MyNamespaceMyNamespace;
+        var index = Test2ComponentsLookup.MyNamespaceMyNamespace;
         var component = CreateComponent<My.Namespace.MyNamespaceComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMyNamespaceMyNamespace(string newValue) {
-        var index = Test2ComponentLookup.MyNamespaceMyNamespace;
+        var index = Test2ComponentsLookup.MyNamespaceMyNamespace;
         var component = CreateComponent<My.Namespace.MyNamespaceComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveMyNamespaceMyNamespace() {
-        RemoveComponent(Test2ComponentLookup.MyNamespaceMyNamespace);
+        RemoveComponent(Test2ComponentsLookup.MyNamespaceMyNamespace);
     }
 }
 
@@ -55,8 +55,8 @@ public sealed partial class Test2Matcher {
     public static Entitas.IMatcher<Test2Entity> MyNamespaceMyNamespace {
         get {
             if (_matcherMyNamespaceMyNamespace == null) {
-                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentLookup.MyNamespaceMyNamespace);
-                matcher.componentNames = Test2ComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentsLookup.MyNamespaceMyNamespace);
+                matcher.componentNames = Test2ComponentsLookup.componentNames;
                 _matcherMyNamespaceMyNamespace = matcher;
             }
 

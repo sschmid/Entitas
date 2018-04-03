@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public FlagEntityEventListenerComponent flagEntityEventListener { get { return (FlagEntityEventListenerComponent)GetComponent(TestComponentLookup.FlagEntityEventListener); } }
-    public bool hasFlagEntityEventListener { get { return HasComponent(TestComponentLookup.FlagEntityEventListener); } }
+    public FlagEntityEventListenerComponent flagEntityEventListener { get { return (FlagEntityEventListenerComponent)GetComponent(TestComponentsLookup.FlagEntityEventListener); } }
+    public bool hasFlagEntityEventListener { get { return HasComponent(TestComponentsLookup.FlagEntityEventListener); } }
 
     public void AddFlagEntityEventListener(System.Collections.Generic.List<IFlagEntityEventListener> newValue) {
-        var index = TestComponentLookup.FlagEntityEventListener;
+        var index = TestComponentsLookup.FlagEntityEventListener;
         var component = CreateComponent<FlagEntityEventListenerComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceFlagEntityEventListener(System.Collections.Generic.List<IFlagEntityEventListener> newValue) {
-        var index = TestComponentLookup.FlagEntityEventListener;
+        var index = TestComponentsLookup.FlagEntityEventListener;
         var component = CreateComponent<FlagEntityEventListenerComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveFlagEntityEventListener() {
-        RemoveComponent(TestComponentLookup.FlagEntityEventListener);
+        RemoveComponent(TestComponentsLookup.FlagEntityEventListener);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> FlagEntityEventListener {
         get {
             if (_matcherFlagEntityEventListener == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.FlagEntityEventListener);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.FlagEntityEventListener);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherFlagEntityEventListener = matcher;
             }
 

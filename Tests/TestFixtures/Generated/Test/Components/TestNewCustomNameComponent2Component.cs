@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public NewCustomNameComponent2Component newCustomNameComponent2 { get { return (NewCustomNameComponent2Component)GetComponent(TestComponentLookup.NewCustomNameComponent2); } }
-    public bool hasNewCustomNameComponent2 { get { return HasComponent(TestComponentLookup.NewCustomNameComponent2); } }
+    public NewCustomNameComponent2Component newCustomNameComponent2 { get { return (NewCustomNameComponent2Component)GetComponent(TestComponentsLookup.NewCustomNameComponent2); } }
+    public bool hasNewCustomNameComponent2 { get { return HasComponent(TestComponentsLookup.NewCustomNameComponent2); } }
 
     public void AddNewCustomNameComponent2(CustomName newValue) {
-        var index = TestComponentLookup.NewCustomNameComponent2;
+        var index = TestComponentsLookup.NewCustomNameComponent2;
         var component = CreateComponent<NewCustomNameComponent2Component>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceNewCustomNameComponent2(CustomName newValue) {
-        var index = TestComponentLookup.NewCustomNameComponent2;
+        var index = TestComponentsLookup.NewCustomNameComponent2;
         var component = CreateComponent<NewCustomNameComponent2Component>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveNewCustomNameComponent2() {
-        RemoveComponent(TestComponentLookup.NewCustomNameComponent2);
+        RemoveComponent(TestComponentsLookup.NewCustomNameComponent2);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> NewCustomNameComponent2 {
         get {
             if (_matcherNewCustomNameComponent2 == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.NewCustomNameComponent2);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.NewCustomNameComponent2);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherNewCustomNameComponent2 = matcher;
             }
 

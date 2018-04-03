@@ -46,25 +46,25 @@ public partial class TestContext {
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public UniqueStandardComponent uniqueStandard { get { return (UniqueStandardComponent)GetComponent(TestComponentLookup.UniqueStandard); } }
-    public bool hasUniqueStandard { get { return HasComponent(TestComponentLookup.UniqueStandard); } }
+    public UniqueStandardComponent uniqueStandard { get { return (UniqueStandardComponent)GetComponent(TestComponentsLookup.UniqueStandard); } }
+    public bool hasUniqueStandard { get { return HasComponent(TestComponentsLookup.UniqueStandard); } }
 
     public void AddUniqueStandard(string newValue) {
-        var index = TestComponentLookup.UniqueStandard;
+        var index = TestComponentsLookup.UniqueStandard;
         var component = CreateComponent<UniqueStandardComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceUniqueStandard(string newValue) {
-        var index = TestComponentLookup.UniqueStandard;
+        var index = TestComponentsLookup.UniqueStandard;
         var component = CreateComponent<UniqueStandardComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveUniqueStandard() {
-        RemoveComponent(TestComponentLookup.UniqueStandard);
+        RemoveComponent(TestComponentsLookup.UniqueStandard);
     }
 }
 
@@ -83,8 +83,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> UniqueStandard {
         get {
             if (_matcherUniqueStandard == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.UniqueStandard);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.UniqueStandard);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherUniqueStandard = matcher;
             }
 

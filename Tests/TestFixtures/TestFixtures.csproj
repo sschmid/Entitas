@@ -105,9 +105,9 @@
     <Compile Include="Generated\Components\ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Components\InterfaceToGenerateComponent.cs" />
     <Compile Include="Generated\Components\StructToGenerateComponent.cs" />
-    <Compile Include="Generated\Test\TestComponentLookup.cs" />
-    <Compile Include="Generated\Test2\Test2ComponentLookup.cs" />
-    <Compile Include="Generated\Game\GameComponentLookup.cs" />
+    <Compile Include="Generated\Test\TestComponentsLookup.cs" />
+    <Compile Include="Generated\Test2\Test2ComponentsLookup.cs" />
+    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Test\Components\TestDontGenerateMethodsComponent.cs" />
     <Compile Include="Generated\Game\GameAttribute.cs" />
     <Compile Include="Generated\Test\TestAttribute.cs" />
@@ -152,7 +152,8 @@
     <Compile Include="Generated\Events\Systems\FlagEventRemovedEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\StandardEntityEventRemovedEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\StandardEventEventSystem.cs" />
-    <Compile Include="Generated\Events\EventSystems.cs" />
+    <Compile Include="Generated\Events\TestEventSystems.cs" />
+    <Compile Include="Generated\Events\Test2EventSystems.cs" />
     <Compile Include="Generated\Feature.cs" />
   </ItemGroup>
   <ItemGroup>

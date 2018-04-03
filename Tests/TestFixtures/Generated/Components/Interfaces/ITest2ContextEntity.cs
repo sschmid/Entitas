@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface ITest2ContextEntity {
+public partial interface ITest2ContextEntity {
 
     Test2ContextComponent test2Context { get; }
     bool hasTest2Context { get; }

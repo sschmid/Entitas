@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public StandardComponent standard { get { return (StandardComponent)GetComponent(TestComponentLookup.Standard); } }
-    public bool hasStandard { get { return HasComponent(TestComponentLookup.Standard); } }
+    public StandardComponent standard { get { return (StandardComponent)GetComponent(TestComponentsLookup.Standard); } }
+    public bool hasStandard { get { return HasComponent(TestComponentsLookup.Standard); } }
 
     public void AddStandard(string newValue) {
-        var index = TestComponentLookup.Standard;
+        var index = TestComponentsLookup.Standard;
         var component = CreateComponent<StandardComponent>(index);
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceStandard(string newValue) {
-        var index = TestComponentLookup.Standard;
+        var index = TestComponentsLookup.Standard;
         var component = CreateComponent<StandardComponent>(index);
         component.value = newValue;
         ReplaceComponent(index, component);
     }
 
     public void RemoveStandard() {
-        RemoveComponent(TestComponentLookup.Standard);
+        RemoveComponent(TestComponentsLookup.Standard);
     }
 }
 
@@ -45,8 +45,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> Standard {
         get {
             if (_matcherStandard == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.Standard);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.Standard);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherStandard = matcher;
             }
 

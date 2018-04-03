@@ -38,10 +38,10 @@ public partial class TestEntity {
     static readonly CustomPrefixFlagComponent customPrefixFlagComponent = new CustomPrefixFlagComponent();
 
     public bool myCustomPrefixFlag {
-        get { return HasComponent(TestComponentLookup.CustomPrefixFlag); }
+        get { return HasComponent(TestComponentsLookup.CustomPrefixFlag); }
         set {
             if (value != myCustomPrefixFlag) {
-                var index = TestComponentLookup.CustomPrefixFlag;
+                var index = TestComponentsLookup.CustomPrefixFlag;
                 if (value) {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
@@ -72,8 +72,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> CustomPrefixFlag {
         get {
             if (_matcherCustomPrefixFlag == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.CustomPrefixFlag);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.CustomPrefixFlag);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherCustomPrefixFlag = matcher;
             }
 

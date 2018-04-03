@@ -8,11 +8,11 @@
 //------------------------------------------------------------------------------
 public partial class TestEntity {
 
-    public ComponentWithFieldsAndProperties componentWithFieldsAndProperties { get { return (ComponentWithFieldsAndProperties)GetComponent(TestComponentLookup.ComponentWithFieldsAndProperties); } }
-    public bool hasComponentWithFieldsAndProperties { get { return HasComponent(TestComponentLookup.ComponentWithFieldsAndProperties); } }
+    public ComponentWithFieldsAndProperties componentWithFieldsAndProperties { get { return (ComponentWithFieldsAndProperties)GetComponent(TestComponentsLookup.ComponentWithFieldsAndProperties); } }
+    public bool hasComponentWithFieldsAndProperties { get { return HasComponent(TestComponentsLookup.ComponentWithFieldsAndProperties); } }
 
     public void AddComponentWithFieldsAndProperties(string newPublicField, string newPublicProperty) {
-        var index = TestComponentLookup.ComponentWithFieldsAndProperties;
+        var index = TestComponentsLookup.ComponentWithFieldsAndProperties;
         var component = CreateComponent<ComponentWithFieldsAndProperties>(index);
         component.publicField = newPublicField;
         component.publicProperty = newPublicProperty;
@@ -20,7 +20,7 @@ public partial class TestEntity {
     }
 
     public void ReplaceComponentWithFieldsAndProperties(string newPublicField, string newPublicProperty) {
-        var index = TestComponentLookup.ComponentWithFieldsAndProperties;
+        var index = TestComponentsLookup.ComponentWithFieldsAndProperties;
         var component = CreateComponent<ComponentWithFieldsAndProperties>(index);
         component.publicField = newPublicField;
         component.publicProperty = newPublicProperty;
@@ -28,7 +28,7 @@ public partial class TestEntity {
     }
 
     public void RemoveComponentWithFieldsAndProperties() {
-        RemoveComponent(TestComponentLookup.ComponentWithFieldsAndProperties);
+        RemoveComponent(TestComponentsLookup.ComponentWithFieldsAndProperties);
     }
 }
 
@@ -47,8 +47,8 @@ public sealed partial class TestMatcher {
     public static Entitas.IMatcher<TestEntity> ComponentWithFieldsAndProperties {
         get {
             if (_matcherComponentWithFieldsAndProperties == null) {
-                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentLookup.ComponentWithFieldsAndProperties);
-                matcher.componentNames = TestComponentLookup.componentNames;
+                var matcher = (Entitas.Matcher<TestEntity>)Entitas.Matcher<TestEntity>.AllOf(TestComponentsLookup.ComponentWithFieldsAndProperties);
+                matcher.componentNames = TestComponentsLookup.componentNames;
                 _matcherComponentWithFieldsAndProperties = matcher;
             }
 
