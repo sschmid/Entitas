@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
 
@@ -9,9 +10,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public override string name { get { return "Event (Systems)"; } }
 
         const string TEMPLATE =
-            @"public sealed class EventSystems : Feature {
+            @"public sealed class ${ContextName}EventSystems : Feature {
 
-    public EventSystems(Contexts contexts) {
+    public ${ContextName}EventSystems(Contexts contexts) {
 ${systemsList}
     }
 }
@@ -20,24 +21,55 @@ ${systemsList}
         const string SYSTEM_ADD_TEMPLATE = @"        Add(new ${Event}EventSystem(contexts)); // priority: ${priority}";
 
         public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            var orderedEventData = data
+            return generate(data
                 .OfType<ComponentData>()
                 .Where(d => d.IsEvent())
-                .SelectMany(d => d.GetEventData().Select(eventData => new DataTuple { componentData = d, eventData = eventData }).ToArray())
-                .OrderBy(tuple => tuple.eventData.priority)
-                .ThenBy(tuple => tuple.componentData.ComponentName())
-                .ToArray();
-
-            return new[] { generate(orderedEventData) };
+                .ToArray());
         }
 
-        CodeGenFile generate(DataTuple[] data) {
+        CodeGenFile[] generate(ComponentData[] data) {
+            var contextNameToComponentData = data
+                .Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) => {
+                    var contextNames = d.GetContextNames();
+                    foreach (var contextName in contextNames) {
+                        if (!dict.ContainsKey(contextName)) {
+                            dict.Add(contextName, new List<ComponentData>());
+                        }
 
-            var fileContent = TEMPLATE.Replace("${systemsList}", generateSystemList(data));
+                        dict[contextName].Add(d);
+                    }
+
+                    return dict;
+                });
+
+            var contextNameToDataTuple = new Dictionary<string, List<DataTuple>>();
+            foreach (var key in contextNameToComponentData.Keys.ToArray()) {
+                var orderedEventData = contextNameToComponentData[key]
+                    .SelectMany(d => d.GetEventData().Select(eventData => new DataTuple { componentData = d, eventData = eventData }).ToArray())
+                    .OrderBy(tuple => tuple.eventData.priority)
+                    .ThenBy(tuple => tuple.componentData.ComponentName())
+                    .ToList();
+
+                contextNameToDataTuple.Add(key, orderedEventData);
+            }
+
+            return generate(contextNameToDataTuple);
+        }
+
+        CodeGenFile[] generate(Dictionary<string, List<DataTuple>> contextNameToDataTuple) {
+            return contextNameToDataTuple
+                .Select(kv => generateSystem(kv.Key, kv.Value.ToArray()))
+                .ToArray();
+        }
+
+        CodeGenFile generateSystem(string contextName, DataTuple[] data) {
+            var fileContent = TEMPLATE
+                .Replace("${systemsList}", generateSystemList(data))
+                .Replace(contextName);
 
             return new CodeGenFile(
                 "Events" + Path.DirectorySeparatorChar +
-                "EventSystems.cs",
+                contextName + "EventSystems.cs",
                 fileContent,
                 GetType().FullName
             );
