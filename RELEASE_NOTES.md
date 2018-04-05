@@ -1,3 +1,16 @@
+# 1.5.1
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+#### DesperateDevs
+⚙️ Added better error message to EnsureStandalonePreProcessor
+
+When EnsureStandalonePreProcessor is activated it will prevent you from accidentally generating in Unity.
+To generate in Unity make sure EnsureStandalonePreProcessor is not activated.
+
+
 # 1.5.0
 
 As always, the Unity Asset Store version might take a few days to be processed
