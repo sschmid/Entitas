@@ -1,3 +1,17 @@
+# 1.5.2
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+#### Entitas
+🛠 Fixed EventSystemsGenerator generated EventSystems per context but those systems contained EventSystems from all context
+
+#### DesperateDevs
+🛠 Added TcpMessageParser to reliably receive separate messages from a tcp stream
+
+
+
 # 1.5.1
 
 As always, the Unity Asset Store version might take a few days to be processed
