@@ -64,7 +64,7 @@ ${systemsList}
 
         CodeGenFile generateSystem(string contextName, DataTuple[] data) {
             var fileContent = TEMPLATE
-                .Replace("${systemsList}", generateSystemList(data))
+                .Replace("${systemsList}", generateSystemList(contextName, data))
                 .Replace(contextName);
 
             return new CodeGenFile(
@@ -75,15 +75,16 @@ ${systemsList}
             );
         }
 
-        string generateSystemList(DataTuple[] data) {
+        string generateSystemList(string contextName, DataTuple[] data) {
             return string.Join("\n", data
-                .SelectMany(generateSystemListForData)
+                .SelectMany(tuple => generateSystemListForData(contextName, tuple))
                 .ToArray());
         }
 
-        string[] generateSystemListForData(DataTuple data) {
+        string[] generateSystemListForData(string contextName, DataTuple data) {
             return data.componentData.GetContextNames()
-                .Select(contextName => generateAddSystem(contextName, data))
+                .Where(ctxName => ctxName == contextName)
+                .Select(ctxName => generateAddSystem(ctxName, data))
                 .ToArray();
         }
 
