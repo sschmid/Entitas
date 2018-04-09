@@ -6,7 +6,7 @@ namespace Entitas.CodeGeneration.Plugins {
     public class ComponentTypeComponentDataProvider : IComponentDataProvider {
 
         public void Provide(Type type, ComponentData data) {
-            data.SetlTypeName(type.ToCompilableString());
+            data.SetTypeName(type.ToCompilableString());
         }
     }
 
@@ -18,7 +18,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return (string)data[COMPONENT_TYPE];
         }
 
-        public static void SetlTypeName(this ComponentData data, string fullTypeName) {
+        public static void SetTypeName(this ComponentData data, string fullTypeName) {
             data[COMPONENT_TYPE] = fullTypeName;
         }
     }
