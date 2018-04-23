@@ -37,6 +37,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddMyDouble(4.2f);
             e.AddMyFloat(4.2f);
             e.AddMyInt(42);
+            e.AddMyHiddenInt(42);
             e.AddRect(new Rect(1f, 2f, 3f, 4f));
             e.AddMyString("Hello, world!");
             e.AddVector2(new Vector2(1f, 2f));

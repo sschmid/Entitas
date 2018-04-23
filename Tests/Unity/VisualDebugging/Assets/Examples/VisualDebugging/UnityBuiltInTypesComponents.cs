@@ -1,4 +1,5 @@
 ﻿using Entitas;
+using Entitas.VisualDebugging.Unity;
 using UnityEngine;
 
 [Game]
@@ -54,6 +55,11 @@ public class MyFloatComponent : IComponent {
 
 [Game]
 public class MyIntComponent : IComponent {
+    public int myInt;
+}
+
+[Game, DontDrawComponent]
+public class MyHiddenIntComponent : IComponent {
     public int myInt;
 }
 

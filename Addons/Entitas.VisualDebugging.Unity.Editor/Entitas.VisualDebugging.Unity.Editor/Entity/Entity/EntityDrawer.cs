@@ -17,6 +17,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             if (GUILayout.Button("Destroy Entity")) {
                 entity.Destroy();
             }
+
             GUI.backgroundColor = bgColor;
 
             DrawComponents(context, entity);
@@ -36,6 +37,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                             if (EditorLayout.MiniButton("Release")) {
                                 entity.Release(owner);
                             }
+
                             EditorGUILayout.EndHorizontal();
                         }
                     }
@@ -108,6 +110,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                             unfoldedComponents[i] = false;
                         }
                     }
+
                     if (EditorLayout.MiniButtonRight("▾")) {
                         for (int i = 0; i < unfoldedComponents.Length; i++) {
                             unfoldedComponents[i] = true;
@@ -147,54 +150,59 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 var boxStyle = getColoredBoxStyle(context, index);
                 EditorGUILayout.BeginVertical(boxStyle);
                 {
-                    var memberInfos = componentType.GetPublicMemberInfos();
-                    EditorGUILayout.BeginHorizontal();
-                    {
-                        if (memberInfos.Count == 0) {
-                            EditorGUILayout.LabelField(componentName, EditorStyles.boldLabel);
-                        } else {
-                            unfoldedComponents[index] = EditorLayout.Foldout(unfoldedComponents[index], componentName, foldoutStyle);
-                            if (unfoldedComponents[index]) {
-                                componentMemberSearch[index] = memberInfos.Count > 5
-                                    ? EditorLayout.SearchTextField(componentMemberSearch[index])
-                                    : string.Empty;
+                    if (!Attribute.IsDefined(componentType, typeof(DontDrawComponentAttribute))) {
+                        var memberInfos = componentType.GetPublicMemberInfos();
+                        EditorGUILayout.BeginHorizontal();
+                        {
+                            if (memberInfos.Count == 0) {
+                                EditorGUILayout.LabelField(componentName, EditorStyles.boldLabel);
+                            } else {
+                                unfoldedComponents[index] = EditorLayout.Foldout(unfoldedComponents[index], componentName, foldoutStyle);
+                                if (unfoldedComponents[index]) {
+                                    componentMemberSearch[index] = memberInfos.Count > 5
+                                        ? EditorLayout.SearchTextField(componentMemberSearch[index])
+                                        : string.Empty;
+                                }
+                            }
+
+                            if (EditorLayout.MiniButton("-")) {
+                                entity.RemoveComponent(index);
                             }
                         }
-                        if (EditorLayout.MiniButton("-")) {
-                            entity.RemoveComponent(index);
-                        }
-                    }
-                    EditorGUILayout.EndHorizontal();
+                        EditorGUILayout.EndHorizontal();
 
-                    if (unfoldedComponents[index]) {
-                        var newComponent = entity.CreateComponent(index, componentType);
-                        component.CopyPublicMemberValues(newComponent);
+                        if (unfoldedComponents[index]) {
+                            var newComponent = entity.CreateComponent(index, componentType);
+                            component.CopyPublicMemberValues(newComponent);
 
-                        var changed = false;
-                        var componentDrawer = getComponentDrawer(componentType);
-                        if (componentDrawer != null) {
-                            EditorGUI.BeginChangeCheck();
-                            {
-                                componentDrawer.DrawComponent(newComponent);
-                            }
-                            changed = EditorGUI.EndChangeCheck();
-                        } else {
-                            foreach (var info in memberInfos) {
-                                if (EditorLayout.MatchesSearchString(info.name.ToLower(), componentMemberSearch[index].ToLower())) {
-                                    var memberValue = info.GetValue(newComponent);
-                                    var memberType = memberValue == null ? info.type : memberValue.GetType();
-                                    if (DrawObjectMember(memberType, info.name, memberValue, newComponent, info.SetValue)) {
-                                        changed = true;
+                            var changed = false;
+                            var componentDrawer = getComponentDrawer(componentType);
+                            if (componentDrawer != null) {
+                                EditorGUI.BeginChangeCheck();
+                                {
+                                    componentDrawer.DrawComponent(newComponent);
+                                }
+                                changed = EditorGUI.EndChangeCheck();
+                            } else {
+                                foreach (var info in memberInfos) {
+                                    if (EditorLayout.MatchesSearchString(info.name.ToLower(), componentMemberSearch[index].ToLower())) {
+                                        var memberValue = info.GetValue(newComponent);
+                                        var memberType = memberValue == null ? info.type : memberValue.GetType();
+                                        if (DrawObjectMember(memberType, info.name, memberValue, newComponent, info.SetValue)) {
+                                            changed = true;
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        if (changed) {
-                            entity.ReplaceComponent(index, newComponent);
-                        } else {
-                            entity.GetComponentPool(index).Push(newComponent);
+                            if (changed) {
+                                entity.ReplaceComponent(index, newComponent);
+                            } else {
+                                entity.GetComponentPool(index).Push(newComponent);
+                            }
                         }
+                    } else {
+                        EditorGUILayout.LabelField(componentName, "[DontDrawComponent]", EditorStyles.boldLabel);
                     }
                 }
                 EditorLayout.EndVerticalBox();
@@ -271,6 +279,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     if (EditorLayout.MiniButton("×")) {
                         setValue(target, null);
                     }
+
                     EditorGUILayout.EndHorizontal();
                 }
             }
@@ -369,6 +378,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             if (!Directory.Exists(folder)) {
                 Directory.CreateDirectory(folder);
             }
+
             File.WriteAllText(filePath, template);
             EditorApplication.isPlaying = false;
             AssetDatabase.Refresh();
