@@ -1,11 +1,7 @@
 using System;
-using System.IO;
-using System.Net;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Entitas.Unity.Editor {
 
@@ -73,33 +69,28 @@ namespace Entitas.Unity.Editor {
         }
 
         public static string GetRemoteVersion() {
-            string latestRelease = null;
             try {
-                latestRelease = requestLatestRelease();
-            } catch(Exception) {
-                latestRelease = string.Empty;
+                return JsonUtility.FromJson<ResponseData>(requestLatestRelease()).tag_name;
+            } catch (Exception) {
+                // ignored
             }
 
-            return parseVersion(latestRelease);
+            return string.Empty;
         }
 
         static string requestLatestRelease() {
-            ServicePointManager.ServerCertificateValidationCallback += trustSource;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(URL_GITHUB_API_LATEST_RELEASE);
-            httpWebRequest.UserAgent = Environment.UserName + "sschmid/Entitas-CSharp/Entitas.Unity/CheckForUpdates";
-            httpWebRequest.Timeout = 15000;
-            var webResponse = httpWebRequest.GetResponse();
-            ServicePointManager.ServerCertificateValidationCallback -= trustSource;
             var response = string.Empty;
-            using(var streamReader = new StreamReader(webResponse.GetResponseStream())) {
-                response = streamReader.ReadToEnd();
-            }
-            return response;
-        }
+            using (var www = UnityWebRequest.Get(URL_GITHUB_API_LATEST_RELEASE)) {
+                var asyncOperation = www.SendWebRequest();
+                while (!asyncOperation.isDone) {
+                }
 
-        static string parseVersion(string response) {
-            const string versionPattern = @"(?<=""tag_name"":"").*?(?="")";
-            return Regex.Match(response, versionPattern).Value;
+                if (!www.isNetworkError && !www.isHttpError) {
+                    response = asyncOperation.webRequest.downloadHandler.text;
+                }
+            }
+
+            return response;
         }
 
         static void displayUpdateInfo(UpdateInfo info) {
@@ -145,8 +136,8 @@ namespace Entitas.Unity.Editor {
             }
         }
 
-        static bool trustSource(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) {
-            return true;
+        struct ResponseData {
+            public string tag_name;
         }
     }
 }
