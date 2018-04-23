@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-[Game]
-public sealed partial class SomeClassComponent : Entitas.IComponent {
+[Entitas.CodeGeneration.Attributes.DontGenerate(false)]
+public sealed class SomeClassComponent : Entitas.IComponent {
     public SomeClass value;
 }

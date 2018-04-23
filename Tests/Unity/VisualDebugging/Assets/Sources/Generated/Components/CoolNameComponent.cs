@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-[Game]
-public sealed partial class CoolNameComponent : Entitas.IComponent {
+[Entitas.CodeGeneration.Attributes.DontGenerate(false)]
+public sealed class CoolNameComponent : Entitas.IComponent {
     public BadName value;
 }

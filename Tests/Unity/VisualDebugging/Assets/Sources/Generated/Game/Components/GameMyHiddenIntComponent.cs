@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public SomeClassComponent someClass { get { return (SomeClassComponent)GetComponent(GameComponentsLookup.SomeClass); } }
-    public bool hasSomeClass { get { return HasComponent(GameComponentsLookup.SomeClass); } }
+    public MyHiddenIntComponent myHiddenInt { get { return (MyHiddenIntComponent)GetComponent(GameComponentsLookup.MyHiddenInt); } }
+    public bool hasMyHiddenInt { get { return HasComponent(GameComponentsLookup.MyHiddenInt); } }
 
-    public void AddSomeClass(SomeClass newValue) {
-        var index = GameComponentsLookup.SomeClass;
-        var component = CreateComponent<SomeClassComponent>(index);
-        component.value = newValue;
+    public void AddMyHiddenInt(int newMyInt) {
+        var index = GameComponentsLookup.MyHiddenInt;
+        var component = CreateComponent<MyHiddenIntComponent>(index);
+        component.myInt = newMyInt;
         AddComponent(index, component);
     }
 
-    public void ReplaceSomeClass(SomeClass newValue) {
-        var index = GameComponentsLookup.SomeClass;
-        var component = CreateComponent<SomeClassComponent>(index);
-        component.value = newValue;
+    public void ReplaceMyHiddenInt(int newMyInt) {
+        var index = GameComponentsLookup.MyHiddenInt;
+        var component = CreateComponent<MyHiddenIntComponent>(index);
+        component.myInt = newMyInt;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveSomeClass() {
-        RemoveComponent(GameComponentsLookup.SomeClass);
+    public void RemoveMyHiddenInt() {
+        RemoveComponent(GameComponentsLookup.MyHiddenInt);
     }
 }
 
@@ -40,17 +40,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherSomeClass;
+    static Entitas.IMatcher<GameEntity> _matcherMyHiddenInt;
 
-    public static Entitas.IMatcher<GameEntity> SomeClass {
+    public static Entitas.IMatcher<GameEntity> MyHiddenInt {
         get {
-            if (_matcherSomeClass == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.SomeClass);
+            if (_matcherMyHiddenInt == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.MyHiddenInt);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherSomeClass = matcher;
+                _matcherMyHiddenInt = matcher;
             }
 
-            return _matcherSomeClass;
+            return _matcherMyHiddenInt;
         }
     }
 }

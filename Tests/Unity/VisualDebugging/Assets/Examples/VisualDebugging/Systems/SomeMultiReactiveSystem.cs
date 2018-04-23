@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Entitas;
 
-public interface MyStringEntity : IEntity, IMyString, ITest { }
+public interface MyStringEntity : IEntity, IMyStringEntity, ITestEntity { }
 
 public partial class GameEntity : MyStringEntity {}
 public partial class InputEntity : MyStringEntity {}
