@@ -22,13 +22,13 @@ namespace Entitas.Unity.Editor {
 
         Texture2D _headerTexture;
         ScriptingDefineSymbols _scriptingDefineSymbols;
-        AERCMode _scriptCallOptimization;
+        AERCMode _aercMode;
 
         public override void Initialize(Preferences preferences) {
             _headerTexture = EditorLayout.LoadTexture("l:EntitasHeader");
 
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
-            _scriptCallOptimization = _scriptingDefineSymbols.buildTargetToDefSymbol.Values
+            _aercMode = _scriptingDefineSymbols.buildTargetToDefSymbol.Values
                 .All<string>(defs => defs.Contains(ENTITAS_FAST_AND_UNSAFE))
                 ? AERCMode.FastAndUnsafe
                 : AERCMode.Safe;
@@ -120,20 +120,20 @@ namespace Entitas.Unity.Editor {
             {
                 EditorGUILayout.LabelField("Automatic Entity Reference Counting");
                 var buttonStyle = new GUIStyle(EditorStyles.miniButtonLeft);
-                if (_scriptCallOptimization == AERCMode.Safe) {
+                if (_aercMode == AERCMode.Safe) {
                     buttonStyle.normal = buttonStyle.active;
                 }
                 if (GUILayout.Button("Safe", buttonStyle)) {
-                    _scriptCallOptimization = AERCMode.Safe;
+                    _aercMode = AERCMode.Safe;
                     _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }
 
                 buttonStyle = new GUIStyle(EditorStyles.miniButtonRight);
-                if (_scriptCallOptimization == AERCMode.FastAndUnsafe) {
+                if (_aercMode == AERCMode.FastAndUnsafe) {
                     buttonStyle.normal = buttonStyle.active;
                 }
                 if (GUILayout.Button("Fast And Unsafe", buttonStyle)) {
-                    _scriptCallOptimization = AERCMode.FastAndUnsafe;
+                    _aercMode = AERCMode.FastAndUnsafe;
                     _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }
             }
