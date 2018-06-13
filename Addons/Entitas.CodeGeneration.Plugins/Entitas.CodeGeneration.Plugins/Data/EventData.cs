@@ -4,12 +4,12 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class EventData {
 
-        public readonly bool bindToEntity;
+        public readonly EventTarget eventTarget;
         public readonly EventType eventType;
         public readonly int priority;
 
-        public EventData(bool bindToEntity, EventType eventType, int priority) {
-            this.bindToEntity = bindToEntity;
+        public EventData(EventTarget eventTarget, EventType eventType, int priority) {
+            this.eventTarget = eventTarget;
             this.eventType = eventType;
             this.priority = priority;
         }

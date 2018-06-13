@@ -5,15 +5,20 @@ namespace Entitas.CodeGeneration.Attributes {
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum, AllowMultiple = true)]
     public class EventAttribute : Attribute {
 
-        public readonly bool bindToEntity;
+        public readonly EventTarget eventTarget;
         public readonly EventType eventType;
         public readonly int priority;
 
-        public EventAttribute(bool bindToEntity, EventType eventType = EventType.Added, int priority = 0) {
-            this.bindToEntity = bindToEntity;
+        public EventAttribute(EventTarget eventTarget, EventType eventType = EventType.Added, int priority = 0) {
+            this.eventTarget = eventTarget;
             this.eventType = eventType;
             this.priority = priority;
         }
+    }
+
+    public enum EventTarget {
+        Any,
+        Self
     }
 
     public enum EventType {

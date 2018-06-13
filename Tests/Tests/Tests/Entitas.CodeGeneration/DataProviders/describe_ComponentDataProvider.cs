@@ -111,19 +111,19 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                 var eventData = d.GetEventData();
                 eventData.Length.should_be(2);
 
-                eventData[0].bindToEntity.should_be_false();
+                eventData[0].eventTarget.should_be(EventTarget.Any);
                 eventData[0].eventType.should_be(EventType.Added);
                 eventData[0].priority.should_be(1);
 
-                eventData[1].bindToEntity.should_be_true();
+                eventData[1].eventTarget.should_be(EventTarget.Self);
                 eventData[1].eventType.should_be(EventType.Removed);
                 eventData[1].priority.should_be(2);
             };
 
             it["gets event bindToEntity"] = () => {
-                getData<StandardEventComponent>().GetEventData()[0].bindToEntity.GetType().should_be(typeof(bool));
-                getData<StandardEventComponent>().GetEventData()[0].bindToEntity.should_be_false();
-                getData<StandardEntityEventComponent>().GetEventData()[0].bindToEntity.should_be_true();
+                getData<StandardEventComponent>().GetEventData()[0].eventTarget.GetType().should_be(typeof(EventTarget));
+                getData<StandardEventComponent>().GetEventData()[0].eventTarget.should_be(EventTarget.Any);
+                getData<StandardEntityEventComponent>().GetEventData()[0].eventTarget.should_be(EventTarget.Self);
             };
 
             it["gets event type"] = () => {

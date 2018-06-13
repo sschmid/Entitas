@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public override string name { get { return "Event (System)"; } }
 
-        const string TEMPLATE =
+        const string ANY_TARGET_TEMPLATE =
             @"public sealed class ${Event}EventSystem : Entitas.ReactiveSystem<${EntityType}> {
 
     readonly Entitas.IGroup<${EntityType}> _listeners;
@@ -48,7 +48,7 @@ namespace Entitas.CodeGeneration.Plugins {
 }
 ";
 
-        const string BIND_TO_ENTITY_TEMPLATE =
+        const string SELF_TARGET_TEMPLATE =
             @"public sealed class ${Event}EventSystem : Entitas.ReactiveSystem<${EntityType}> {
 
     readonly System.Collections.Generic.List<I${EventListener}> _listenerBuffer;
@@ -110,9 +110,9 @@ namespace Entitas.CodeGeneration.Plugins {
                         cachedAccess = string.Empty;
                     }
 
-                    var template = eventData.bindToEntity
-                        ? BIND_TO_ENTITY_TEMPLATE
-                        : TEMPLATE;
+                    var template = eventData.eventTarget == EventTarget.Self
+                        ? SELF_TARGET_TEMPLATE
+                        : ANY_TARGET_TEMPLATE;
 
                     var fileContent = template
                         .Replace("${GroupEvent}", eventData.eventType.ToString())
@@ -153,7 +153,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 }
             }
 
-            if (eventData.bindToEntity) {
+            if (eventData.eventTarget == EventTarget.Self) {
                 filter += " && entity.has" + data.EventListener(contextName, eventData);
             }
 

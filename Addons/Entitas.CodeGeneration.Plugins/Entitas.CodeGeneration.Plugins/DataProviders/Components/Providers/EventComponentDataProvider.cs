@@ -14,7 +14,7 @@ namespace Entitas.CodeGeneration.Plugins {
             if (attrs.Length > 0) {
                 data.IsEvent(true);
                 var eventData = attrs
-                    .Select(attr => new EventData(attr.bindToEntity, attr.eventType, attr.priority))
+                    .Select(attr => new EventData(attr.eventTarget, attr.eventType, attr.priority))
                     .ToArray();
 
                 data.SetEventData(eventData);
