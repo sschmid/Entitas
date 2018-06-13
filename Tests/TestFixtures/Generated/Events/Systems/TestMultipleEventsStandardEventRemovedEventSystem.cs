@@ -8,7 +8,10 @@
 //------------------------------------------------------------------------------
 public sealed class TestMultipleEventsStandardEventRemovedEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
+    readonly System.Collections.Generic.List<ITestMultipleEventsStandardEventRemovedListener> _listenerBuffer;
+
     public TestMultipleEventsStandardEventRemovedEventSystem(Contexts contexts) : base(contexts.test) {
+        _listenerBuffer = new System.Collections.Generic.List<ITestMultipleEventsStandardEventRemovedListener>();
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
@@ -24,7 +27,9 @@ public sealed class TestMultipleEventsStandardEventRemovedEventSystem : Entitas.
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             
-            foreach (var listener in e.testMultipleEventsStandardEventRemovedListener.value) {
+            _listenerBuffer.Clear();
+            _listenerBuffer.AddRange(e.testMultipleEventsStandardEventRemovedListener.value);
+            foreach (var listener in _listenerBuffer) {
                 listener.OnMultipleEventsStandardEventRemoved(e);
             }
         }

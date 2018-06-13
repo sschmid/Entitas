@@ -8,7 +8,10 @@
 //------------------------------------------------------------------------------
 public sealed class FlagEntityEventEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
+    readonly System.Collections.Generic.List<IFlagEntityEventListener> _listenerBuffer;
+
     public FlagEntityEventEventSystem(Contexts contexts) : base(contexts.test) {
+        _listenerBuffer = new System.Collections.Generic.List<IFlagEntityEventListener>();
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
@@ -23,8 +26,10 @@ public sealed class FlagEntityEventEventSystem : Entitas.ReactiveSystem<TestEnti
 
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
-            
-            foreach (var listener in e.flagEntityEventListener.value) {
+
+            _listenerBuffer.Clear();
+            _listenerBuffer.AddRange(e.flagEntityEventListener.value);
+            foreach (var listener in _listenerBuffer) {
                 listener.OnFlagEntityEvent(e);
             }
         }

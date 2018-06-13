@@ -11,13 +11,10 @@ public sealed class TestEventSystems : Feature {
     public TestEventSystems(Contexts contexts) {
         Add(new FlagEventRemovedEventSystem(contexts)); // priority: 0
         Add(new TestMultipleContextStandardEventEventSystem(contexts)); // priority: 0
-        Add(new Test2MultipleContextStandardEventEventSystem(contexts)); // priority: 0
         Add(new StandardEventEventSystem(contexts)); // priority: 0
         Add(new FlagEntityEventEventSystem(contexts)); // priority: 1
         Add(new TestMultipleEventsStandardEventEventSystem(contexts)); // priority: 1
-        Add(new Test2MultipleEventsStandardEventEventSystem(contexts)); // priority: 1
         Add(new StandardEntityEventRemovedEventSystem(contexts)); // priority: 1
         Add(new TestMultipleEventsStandardEventRemovedEventSystem(contexts)); // priority: 2
-        Add(new Test2MultipleEventsStandardEventRemovedEventSystem(contexts)); // priority: 2
     }
 }

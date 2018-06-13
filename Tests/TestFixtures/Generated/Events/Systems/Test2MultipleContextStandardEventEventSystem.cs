@@ -9,9 +9,13 @@
 public sealed class Test2MultipleContextStandardEventEventSystem : Entitas.ReactiveSystem<Test2Entity> {
 
     readonly Entitas.IGroup<Test2Entity> _listeners;
+    readonly System.Collections.Generic.List<Test2Entity> _entityBuffer;
+    readonly System.Collections.Generic.List<ITest2MultipleContextStandardEventListener> _listenerBuffer;
 
     public Test2MultipleContextStandardEventEventSystem(Contexts contexts) : base(contexts.test2) {
         _listeners = contexts.test2.GetGroup(Test2Matcher.Test2MultipleContextStandardEventListener);
+        _entityBuffer = new System.Collections.Generic.List<Test2Entity>();
+        _listenerBuffer = new System.Collections.Generic.List<ITest2MultipleContextStandardEventListener>();
     }
 
     protected override Entitas.ICollector<Test2Entity> GetTrigger(Entitas.IContext<Test2Entity> context) {
@@ -27,8 +31,10 @@ public sealed class Test2MultipleContextStandardEventEventSystem : Entitas.React
     protected override void Execute(System.Collections.Generic.List<Test2Entity> entities) {
         foreach (var e in entities) {
             var component = e.multipleContextStandardEvent;
-            foreach (var listenerEntity in _listeners) {
-                foreach (var listener in listenerEntity.test2MultipleContextStandardEventListener.value) {
+            foreach (var listenerEntity in _listeners.GetEntities(_entityBuffer)) {
+                _listenerBuffer.Clear();
+                _listenerBuffer.AddRange(listenerEntity.test2MultipleContextStandardEventListener.value);
+                foreach (var listener in _listenerBuffer) {
                     listener.OnMultipleContextStandardEvent(e, component.value);
                 }
             }

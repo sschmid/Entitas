@@ -9,9 +9,13 @@
 public sealed class FlagEventRemovedEventSystem : Entitas.ReactiveSystem<TestEntity> {
 
     readonly Entitas.IGroup<TestEntity> _listeners;
+    readonly System.Collections.Generic.List<TestEntity> _entityBuffer;
+    readonly System.Collections.Generic.List<IFlagEventRemovedListener> _listenerBuffer;
 
     public FlagEventRemovedEventSystem(Contexts contexts) : base(contexts.test) {
         _listeners = contexts.test.GetGroup(TestMatcher.FlagEventRemovedListener);
+        _entityBuffer = new System.Collections.Generic.List<TestEntity>();
+        _listenerBuffer = new System.Collections.Generic.List<IFlagEventRemovedListener>();
     }
 
     protected override Entitas.ICollector<TestEntity> GetTrigger(Entitas.IContext<TestEntity> context) {
@@ -27,8 +31,10 @@ public sealed class FlagEventRemovedEventSystem : Entitas.ReactiveSystem<TestEnt
     protected override void Execute(System.Collections.Generic.List<TestEntity> entities) {
         foreach (var e in entities) {
             
-            foreach (var listenerEntity in _listeners) {
-                foreach (var listener in listenerEntity.flagEventRemovedListener.value) {
+            foreach (var listenerEntity in _listeners.GetEntities(_entityBuffer)) {
+                _listenerBuffer.Clear();
+                _listenerBuffer.AddRange(listenerEntity.flagEventRemovedListener.value);
+                foreach (var listener in _listenerBuffer) {
                     listener.OnFlagEventRemoved(e);
                 }
             }
