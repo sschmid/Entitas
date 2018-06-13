@@ -55,6 +55,7 @@
     <Compile Include="Fixtures\Systems\TestJobSystem.cs" />
     <Compile Include="Fixtures\TestProperties.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0450.cs" />
+    <Compile Include="Tests\Entitas\describe_Events.cs" />
     <Compile Include="Tests\Entitas\describe_JobSystem.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_EntityStringExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_MatcherStringExtension.cs" />

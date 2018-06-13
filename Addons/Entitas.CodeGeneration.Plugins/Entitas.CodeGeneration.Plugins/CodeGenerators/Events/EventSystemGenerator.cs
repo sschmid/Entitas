@@ -14,9 +14,13 @@ namespace Entitas.CodeGeneration.Plugins {
             @"public sealed class ${Event}EventSystem : Entitas.ReactiveSystem<${EntityType}> {
 
     readonly Entitas.IGroup<${EntityType}> _listeners;
+    readonly System.Collections.Generic.List<${EntityType}> _entityBuffer;
+    readonly System.Collections.Generic.List<I${EventListener}> _listenerBuffer;
 
     public ${Event}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
         _listeners = contexts.${contextName}.GetGroup(${MatcherType}.${EventListener});
+        _entityBuffer = new System.Collections.Generic.List<${EntityType}>();
+        _listenerBuffer = new System.Collections.Generic.List<I${EventListener}>();
     }
 
     protected override Entitas.ICollector<${EntityType}> GetTrigger(Entitas.IContext<${EntityType}> context) {
@@ -32,8 +36,10 @@ namespace Entitas.CodeGeneration.Plugins {
     protected override void Execute(System.Collections.Generic.List<${EntityType}> entities) {
         foreach (var e in entities) {
             ${cachedAccess}
-            foreach (var listenerEntity in _listeners) {
-                foreach (var listener in listenerEntity.${eventListener}.value) {
+            foreach (var listenerEntity in _listeners.GetEntities(_entityBuffer)) {
+                _listenerBuffer.Clear();
+                _listenerBuffer.AddRange(listenerEntity.${eventListener}.value);
+                foreach (var listener in _listenerBuffer) {
                     listener.On${ComponentName}${EventType}(e${methodArgs});
                 }
             }
@@ -45,7 +51,10 @@ namespace Entitas.CodeGeneration.Plugins {
         const string BIND_TO_ENTITY_TEMPLATE =
             @"public sealed class ${Event}EventSystem : Entitas.ReactiveSystem<${EntityType}> {
 
+    readonly System.Collections.Generic.List<I${EventListener}> _listenerBuffer;
+
     public ${Event}EventSystem(Contexts contexts) : base(contexts.${contextName}) {
+        _listenerBuffer = new System.Collections.Generic.List<I${EventListener}>();
     }
 
     protected override Entitas.ICollector<${EntityType}> GetTrigger(Entitas.IContext<${EntityType}> context) {
@@ -61,7 +70,9 @@ namespace Entitas.CodeGeneration.Plugins {
     protected override void Execute(System.Collections.Generic.List<${EntityType}> entities) {
         foreach (var e in entities) {
             ${cachedAccess}
-            foreach (var listener in e.${eventListener}.value) {
+            _listenerBuffer.Clear();
+            _listenerBuffer.AddRange(e.${eventListener}.value);
+            foreach (var listener in _listenerBuffer) {
                 listener.On${ComponentName}${EventType}(e${methodArgs});
             }
         }
