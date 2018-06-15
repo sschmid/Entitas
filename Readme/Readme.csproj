@@ -65,7 +65,6 @@
     <Compile Include="Readme\Generated\Game\GameEntity.cs" />
     <Compile Include="Readme\Generated\Input\InputEntity.cs" />
     <Compile Include="Readme\Generated\GameState\GameStateEntity.cs" />
-    <Compile Include="Readme\Generated\Events\EventSystems.cs" />
     <Compile Include="Readme\Generated\Feature.cs" />
   </ItemGroup>
   <ItemGroup>
