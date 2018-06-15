@@ -82,7 +82,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                    && type != typeof(ReactiveSystem<>)
                    && type != typeof(MultiReactiveSystem<,>)
                    && type != typeof(Systems)
-                   && type != typeof(DebugSystems);
+                   && type != typeof(DebugSystems)
+                   && type != typeof(JobSystem<>)
+                   && type.FullName != "Feature";
         }
     }
 }
