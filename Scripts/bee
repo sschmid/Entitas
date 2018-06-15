@@ -15,7 +15,7 @@ readonly SOLUTION="${ROOT}/${PROJECT}.sln"
 readonly BIN="bin/Release"
 readonly VERSION_PATH="${ROOT}/${PROJECT}/${PROJECT}/version.txt"
 
-readonly DEPENDENDCIES_DIR="${ROOT}/Libraries/Dependencies"
+readonly DEPENDENDCIES_DIR="${ROOT}/Libraries/Dependencies/DesperateDevs"
 declare -a -r DEPENDENDCIES=(
   "../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/${BIN}/"
   "../DesperateDevs/DesperateDevs.CodeGeneration.Plugins/${BIN}/"
@@ -197,12 +197,13 @@ generate() {
 collect_entitas_unity() {
   logf
   local entitas_dir="${BUILD_SRC}/Unity/Entitas/Assets/Entitas"
-  local editor_dir="${entitas_dir}/Editor"
-  local plugins_dir="${editor_dir}/Plugins"
-  local desperatedevs_plugins_dir="${plugins_dir}/DesperateDevs"
-  local entitas_plugins_dir="${plugins_dir}/Entitas"
-  local images_dir="${editor_dir}/Images"
-  clean_dir "${entitas_dir}" "${editor_dir}" "${plugins_dir}" "${desperatedevs_plugins_dir}" "${entitas_plugins_dir}" "${images_dir}"
+  local entitas_editor_dir="${entitas_dir}/Editor"
+  local entitas_plugins_dir="${entitas_editor_dir}/Plugins"
+  local desperatedevs_dir="${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs"
+  local desperatedevs_editor_dir="${desperatedevs_dir}/Editor"
+  local desperatedevs_plugins_dir="${desperatedevs_editor_dir}/Plugins"
+  local images_dir="${entitas_editor_dir}/Images"
+  clean_dir "${entitas_dir}" "${entitas_editor_dir}" "${entitas_plugins_dir}" "${desperatedevs_dir}" "${desperatedevs_editor_dir}" "${desperatedevs_plugins_dir}" "${images_dir}"
 
   declare -a -r projects=(
     'Entitas'
@@ -226,30 +227,14 @@ collect_entitas_unity() {
 
   sync_files "${DEPENDENDCIES_DIR}/" "${entitas_dir}"
 
-  declare -a -r editor=(
-    'DesperateDevs.Analytics.dll'
-    'DesperateDevs.CodeGeneration.CodeGenerator.dll'
-    'DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll'
-    'DesperateDevs.CodeGeneration.dll'
-    'DesperateDevs.Networking.dll'
-    'DesperateDevs.Serialization.dll'
-    'DesperateDevs.Unity.Editor.dll'
-
+  declare -a -r entitas_editor=(
     'Entitas.Migration.dll'
     'Entitas.Migration.Unity.Editor.dll'
     'Entitas.Unity.Editor.dll'
     'Entitas.VisualDebugging.Unity.Editor.dll'
   )
-  for f in "${editor[@]}"; do
-    mv "${entitas_dir}/${f}" "${editor_dir}"
-  done
-
-  declare -a -r desperatedevs_plugins=(
-    'DesperateDevs.CodeGeneration.Plugins.dll'
-    'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
-  )
-  for f in "${desperatedevs_plugins[@]}"; do
-    mv "${entitas_dir}/${f}" "${desperatedevs_plugins_dir}"
+  for f in "${entitas_editor[@]}"; do
+    mv "${entitas_dir}/${f}" "${entitas_editor_dir}"
   done
 
   declare -a -r entitas_plugins=(
@@ -266,6 +251,36 @@ collect_entitas_unity() {
   )
   for d in "${images[@]}"; do
     sync_files "${ROOT}/${d}" "${images_dir}"
+  done
+
+  declare -a -r desperatedevs=(
+    'Compile.cs'
+    'DesperateDevs.Logging.dll'
+    'DesperateDevs.Networking.dll'
+    'DesperateDevs.Serialization.dll'
+    'DesperateDevs.Utils.dll'
+  )
+  for f in "${desperatedevs[@]}"; do
+    mv "${entitas_dir}/${f}" "${desperatedevs_dir}"
+  done
+
+  declare -a -r desperatedevs_editor=(
+    'DesperateDevs.Analytics.dll'
+    'DesperateDevs.CodeGeneration.CodeGenerator.dll'
+    'DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll'
+    'DesperateDevs.CodeGeneration.dll'
+    'DesperateDevs.Unity.Editor.dll'
+  )
+  for f in "${desperatedevs_editor[@]}"; do
+    mv "${entitas_dir}/${f}" "${desperatedevs_editor_dir}"
+  done
+
+  declare -a -r desperatedevs_plugins=(
+    'DesperateDevs.CodeGeneration.Plugins.dll'
+    'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
+  )
+  for f in "${desperatedevs_plugins[@]}"; do
+    mv "${entitas_dir}/${f}" "${desperatedevs_plugins_dir}"
   done
 }
 

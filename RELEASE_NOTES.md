@@ -1,3 +1,32 @@
+# 1.6.0
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+#### General
+⚠️ Changed Entitas Asset Store package structure by separating Desperate Devs dlls into their own folder
+Please run `jenny auto-import -s` or modify `Preferences.properties` to update the paths to the plugins if necessary
+
+
+#### Entitas
+🛠 Added support to remove event listeners within event callback #698
+
+⚠️ Improved Entitas Event API `[Event(bool)]` #717
+Use "find and replace" to update all your EventAttribute usages
+`[Event(true)]` is now `[Event(EventTarget.Self)]`
+`[Event(false)]` is now `[Event(EventTarget.Any)]`
+
+⚙️ Added support for `[DontDrawComponent]` for all components #678
+💄 Updated comments for `group.RemoveAllEventHandlers()` #684
+🛠 Fixed check for updates
+
+
+#### DesperateDevs
+⚙️ Updated `TargetFrameworkProfilePreProcessor` #721
+🛠 Added `str.ToUnixPath()`
+
+
 # 1.5.2
 
 As always, the Unity Asset Store version might take a few days to be processed
