@@ -509,7 +509,7 @@ github_create_release() {
 
   pushd "${BUILD_DIST}" > /dev/null
     github_release_attach_zip "${upload_url}" "${PROJECT}.zip"
-    github_release_attach_zip "${upload_url}" "${PROJECT}.docset.tgz"
+#    github_release_attach_zip "${upload_url}" "${PROJECT}.docset.tgz"
   popd > /dev/null
 }
 

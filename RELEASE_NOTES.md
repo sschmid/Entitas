@@ -1,3 +1,21 @@
+# 1.6.1
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+#### Entitas
+🛠 Fixed context.Reset() which doesn't remove event hanlders anymore. Closes #725
+🛠 Updated EntitasStats to exclude JobSystem and Feature
+
+#### Jenny
+🛠 Fixed Jenny dropdown UI to not show 'mixed...' anymore
+⚙️ Added Jenny Server toggle to UI
+⚙️ Added dry run option
+⚠️ Removed EnsureStandalonePreProcessor
+🆕 Added WarnIfCompilationErrorsPreProcessor
+
+
 # 1.6.0
 
 As always, the Unity Asset Store version might take a few days to be processed
