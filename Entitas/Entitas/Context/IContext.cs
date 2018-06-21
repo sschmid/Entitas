@@ -30,6 +30,7 @@ namespace Entitas {
         void ResetCreationIndex();
         void ClearComponentPool(int index);
         void ClearComponentPools();
+        void RemoveAllEventHandlers();
         void Reset();
     }
 

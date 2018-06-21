@@ -194,6 +194,7 @@ namespace Entitas {
                 for (int i = 0; i < entities.Length; i++) {
                     group.HandleEntitySilently(entities[i]);
                 }
+
                 _groups.Add(matcher, group);
 
                 for (int i = 0; i < matcher.indices.Length; i++) {
@@ -201,6 +202,7 @@ namespace Entitas {
                     if (_groupsForIndex[index] == null) {
                         _groupsForIndex[index] = new List<IGroup<TEntity>>();
                     }
+
                     _groupsForIndex[index].Add(group);
                 }
 
@@ -257,7 +259,12 @@ namespace Entitas {
         public void Reset() {
             DestroyAllEntities();
             ResetCreationIndex();
+        }
 
+        /// Removes all event handlers
+        /// OnEntityCreated, OnEntityWillBeDestroyed,
+        /// OnEntityDestroyed and OnGroupCreated
+        public void RemoveAllEventHandlers() {
             OnEntityCreated = null;
             OnEntityWillBeDestroyed = null;
             OnEntityDestroyed = null;
@@ -312,6 +319,7 @@ namespace Entitas {
                     "Cannot release " + entity + "!"
                 );
             }
+
             var tEntity = (TEntity)entity;
             entity.RemoveAllOnEntityReleasedHandlers();
             _retainedEntities.Remove(tEntity);
@@ -327,6 +335,7 @@ namespace Entitas {
                     "This cannot happen!?!"
                 );
             }
+
             _entitiesCache = null;
 
             if (OnEntityWillBeDestroyed != null) {

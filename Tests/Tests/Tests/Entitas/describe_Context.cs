@@ -609,28 +609,28 @@ class describe_Context : nspec {
 
                     it["removes OnEntityCreated"] = () => {
                         ctx.OnEntityCreated += delegate { this.Fail(); };
-                        ctx.Reset();
+                        ctx.RemoveAllEventHandlers();
 
                         ctx.CreateEntity();
                     };
 
                     it["removes OnEntityWillBeDestroyed"] = () => {
                         ctx.OnEntityWillBeDestroyed += delegate { this.Fail(); };
-                        ctx.Reset();
+                        ctx.RemoveAllEventHandlers();
 
                         ctx.CreateEntity().Destroy();
                     };
 
                     it["removes OnEntityDestroyed"] = () => {
                         ctx.OnEntityDestroyed += delegate { this.Fail(); };
-                        ctx.Reset();
+                        ctx.RemoveAllEventHandlers();
 
                         ctx.CreateEntity().Destroy();
                     };
 
                     it["removes OnGroupCreated"] = () => {
                         ctx.OnGroupCreated += delegate { this.Fail(); };
-                        ctx.Reset();
+                        ctx.RemoveAllEventHandlers();
 
                         ctx.GetGroup(Matcher<TestEntity>.AllOf(0));
                     };
