@@ -5,7 +5,7 @@ and accepted by Unity. Please check for updates in 2 - 4 days here:
 https://www.assetstore.unity3d.com/#!/content/87638
 
 #### Entitas
-🛠 Fixed context.Reset() which doesn't remove event hanlders anymore. Closes #725
+🛠 Fixed context.Reset() which doesn't remove event handlers anymore #725
 🛠 Updated EntitasStats to exclude JobSystem and Feature
 
 #### Jenny
@@ -398,7 +398,7 @@ As always, the Unity Asset Store version might take a few days to be processed a
 Please check for updates in 2 - 4 days.
 
 #### Code Generation
-- Added `IDoctor` for custom diagnosis and custom symptoms treatment :) Will help improving the 
+- Added `IDoctor` for custom diagnosis and custom symptoms treatment :) Will help improving the
   code generator setup experience that is aimimg for a one-click setup
 - Implemented IDoctor for ComponentDataProvider, EntityIndexDataProvider and DebugLogPostProcessor
 - Removed `isEnabledByDefault`from all plugins
