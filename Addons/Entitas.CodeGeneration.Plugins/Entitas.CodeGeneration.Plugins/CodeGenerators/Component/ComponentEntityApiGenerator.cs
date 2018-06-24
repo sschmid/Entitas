@@ -22,6 +22,9 @@ ${memberAssignmentList}
         AddComponent(index, component);
     }
 
+${helpList}
+
+
     public void Replace${ComponentName}(${newMethodParameters}) {
         var index = ${Index};
         var component = CreateComponent<${ComponentType}>(index);
@@ -76,12 +79,14 @@ ${memberAssignmentList}
         }
 
         CodeGenFile generate(string contextName, ComponentData data) {
+            
             var template = data.GetMemberData().Length == 0
                 ? FLAG_TEMPLATE
                 : STANDARD_TEMPLATE;
 
             var fileContent = template
                 .Replace("${memberAssignmentList}", getMemberAssignmentList(data.GetMemberData()))
+                .Replace("${helpList}", getMemberTypeHelpList(contextName,data.GetMemberData()))
                 .Replace(data, contextName);
 
             return new CodeGenFile(
@@ -93,6 +98,13 @@ ${memberAssignmentList}
             );
         }
 
+        string getMemberTypeHelpList(string contextName,MemberData[] memberData)
+        {
+            return string.Join("\n", memberData
+                .Select(info => "    public " + info.type + " ${ComponentType}" + info.name + "{ get{ return ${componentName}" + "." + info.name + ";} set{${componentName}."+ info.name + "=value;} }")
+                .ToArray()
+            );
+        }
         string getMemberAssignmentList(MemberData[] memberData) {
             return string.Join("\n", memberData
                 .Select(info => "        component." + info.name + " = new" + info.name.UppercaseFirst() + ";")

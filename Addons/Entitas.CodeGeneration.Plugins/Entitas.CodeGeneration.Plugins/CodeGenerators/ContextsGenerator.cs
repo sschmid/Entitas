@@ -49,11 +49,17 @@ ${contextAssignmentsList}
         }
     }
 }
+
+public static class  ContextsExtension
+{
+${contexExtensionList}
+}
 ";
 
         const string CONTEXT_PROPERTY_TEMPLATE = @"    public ${ContextType} ${contextName} { get; set; }";
         const string CONTEXT_LIST_TEMPLATE = @"${contextName}";
         const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${contextName} = new ${ContextType}();";
+        const string CONTEXTEXTENSION_LIST_TEMPLATE = @"    public static ${ContextType} Get${ContextType}(this object obj){ return Contexts.sharedInstance.${contextName};}";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var contextNames = data
@@ -69,7 +75,7 @@ ${contextAssignmentsList}
                     GetType().FullName)
             };
         }
-
+        
         string generate(string[] contextNames) {
             var contextPropertiesList = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_PROPERTY_TEMPLATE.Replace(contextName))
@@ -79,14 +85,19 @@ ${contextAssignmentsList}
                 .Select(contextName => CONTEXT_LIST_TEMPLATE.Replace(contextName))
                 .ToArray());
 
+            var contexExtensionList = string.Join("\n", contextNames
+                .Select(contextName => CONTEXTEXTENSION_LIST_TEMPLATE.Replace(contextName))
+                .ToArray());
+
             var contextAssignmentsList = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_ASSIGNMENT_TEMPLATE.Replace(contextName))
                 .ToArray());
-
+            
             return TEMPLATE
                 .Replace("${contextPropertiesList}", contextPropertiesList)
                 .Replace("${contextList}", contextList)
-                .Replace("${contextAssignmentsList}", contextAssignmentsList);
+                .Replace("${contextAssignmentsList}", contextAssignmentsList)
+                .Replace("${contexExtensionList}", contexExtensionList);
         }
     }
 }
