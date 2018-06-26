@@ -18,6 +18,18 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public void Provide(Type type, ComponentData data) {
             var contextNames = GetContextNamesOrDefault(type);
+
+            if (contextNames.Distinct().ToArray().Length != contextNames.Length) {
+                var duplicatedContextNames = contextNames.GroupBy(_ => _)
+                    .Where(n => n.Count() > 1)
+                    .Select(n => n.Key).ToArray();
+                var duplicateContexts = string.Join(", ", duplicatedContextNames);
+                    
+                throw new EntitasException(
+                    "Duplicate context attributes defined for component '" + type.Name + "'",
+                    "The duplicate context names are: " + duplicateContexts);
+            }
+
             data.SetContextNames(contextNames);
         }
 
