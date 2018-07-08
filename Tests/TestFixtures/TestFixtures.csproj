@@ -38,6 +38,8 @@
     <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueClassToGenerateComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2UniqueClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameCleanupDestroyComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameCleanupRemoveComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMultipleEventsStandardEventComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2MultipleEventsStandardEventComponent.cs" />
     <Compile Include="Generated\Test\Components\TestMultipleContextStandardEventComponent.cs" />
@@ -105,9 +107,9 @@
     <Compile Include="Generated\Components\ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Components\InterfaceToGenerateComponent.cs" />
     <Compile Include="Generated\Components\StructToGenerateComponent.cs" />
+    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Test\TestComponentsLookup.cs" />
     <Compile Include="Generated\Test2\Test2ComponentsLookup.cs" />
-    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Test\Components\TestDontGenerateMethodsComponent.cs" />
     <Compile Include="Generated\Game\GameAttribute.cs" />
     <Compile Include="Generated\Test\TestAttribute.cs" />
@@ -155,6 +157,10 @@
     <Compile Include="Generated\Events\TestEventSystems.cs" />
     <Compile Include="Generated\Events\Test2EventSystems.cs" />
     <Compile Include="Generated\Feature.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\Components\CleanupDestroyComponent.cs" />
+    <Compile Include="Fixtures\Components\CleanupRemoveComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\Components\MultipleEventsStandardEventComponent.cs" />
