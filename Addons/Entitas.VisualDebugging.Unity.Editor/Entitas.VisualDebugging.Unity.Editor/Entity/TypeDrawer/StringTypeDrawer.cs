@@ -10,7 +10,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         }
 
         public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
-            return EditorGUILayout.TextField(memberName, (string)value);
+            return EditorGUILayout.DelayedTextField(memberName, (string)value);
         }
     }
 }
