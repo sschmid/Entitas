@@ -58,6 +58,7 @@
     <Compile Include="Tests\Entitas\describe_Events.cs" />
     <Compile Include="Tests\Entitas\describe_JobSystem.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_EntityStringExtension.cs" />
+    <Compile Include="Tests\Entitas\Extensions\describe_ListenerStringExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_MatcherStringExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_PublicMemberInfoEntityExtension.cs" />
     <Compile Include="Tests\TestExtensions.cs" />
