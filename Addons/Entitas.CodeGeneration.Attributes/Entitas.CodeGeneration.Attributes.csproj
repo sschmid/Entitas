@@ -32,6 +32,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entitas.CodeGeneration.Attributes\CleanupAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\ContextAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\CustomComponentNameAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\CustomEntityIndexAttribute.cs" />
