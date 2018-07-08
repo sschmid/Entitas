@@ -2,7 +2,7 @@
 
     public static class EntityStringExtension {
 
-        const string ENTITY_SUFFIX = "Entity";
+        public const string ENTITY_SUFFIX = "Entity";
 
         public static string AddEntitySuffix(this string str) {
             return str.EndsWith(ENTITY_SUFFIX, System.StringComparison.Ordinal)

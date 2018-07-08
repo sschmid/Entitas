@@ -2,7 +2,7 @@ namespace Entitas {
 
     public static class ComponentStringExtension {
 
-        const string COMPONENT_SUFFIX = "Component";
+        public const string COMPONENT_SUFFIX = "Component";
 
         public static string AddComponentSuffix(this string str) {
             return str.EndsWith(COMPONENT_SUFFIX, System.StringComparison.Ordinal)

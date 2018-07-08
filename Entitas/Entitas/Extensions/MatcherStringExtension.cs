@@ -2,7 +2,7 @@
 
     public static class MatcherStringExtension {
 
-        const string MATCHER_SUFFIX = "Matcher";
+        public const string MATCHER_SUFFIX = "Matcher";
 
         public static string AddMatcherSuffix(this string str) {
             return str.EndsWith(MATCHER_SUFFIX, System.StringComparison.Ordinal)

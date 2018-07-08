@@ -2,7 +2,7 @@
 
     public static class ListenerStringExtension {
 
-        const string LISTENER_SUFFIX = "Listener";
+        public const string LISTENER_SUFFIX = "Listener";
 
         public static string AddListenerSuffix(this string str) {
             return str.EndsWith(LISTENER_SUFFIX, System.StringComparison.Ordinal)

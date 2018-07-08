@@ -2,7 +2,7 @@
 
     public static class ContextStringExtension {
 
-        const string CONTEXT_SUFFIX = "Context";
+        public const string CONTEXT_SUFFIX = "Context";
 
         public static string AddContextSuffix(this string str) {
             return str.EndsWith(CONTEXT_SUFFIX, System.StringComparison.Ordinal)
