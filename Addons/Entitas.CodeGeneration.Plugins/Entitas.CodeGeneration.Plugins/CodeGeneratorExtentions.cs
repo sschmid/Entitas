@@ -59,7 +59,7 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public static string PrefixedComponentName(this ComponentData data) {
-            return data.GetUniquePrefix().LowercaseFirst() + data.ComponentName();
+            return data.GetFlagPrefix().LowercaseFirst() + data.ComponentName();
         }
 
         public static string Event(this ComponentData data, string contextName, EventData eventData) {

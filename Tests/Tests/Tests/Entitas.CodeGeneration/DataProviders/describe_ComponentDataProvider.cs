@@ -91,11 +91,11 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                 getData<DontGenerateMethodsComponent>().ShouldGenerateMethods().should_be_false();
             };
 
-            it["gets unique prefix"] = () => {
-                data.GetUniquePrefix().GetType().should_be(typeof(string));
-                data.GetUniquePrefix().should_be("is");
+            it["gets flag prefix"] = () => {
+                data.GetFlagPrefix().GetType().should_be(typeof(string));
+                data.GetFlagPrefix().should_be("is");
 
-                getData<CustomPrefixFlagComponent>().GetUniquePrefix().should_be("My");
+                getData<CustomPrefixFlagComponent>().GetFlagPrefix().should_be("My");
             };
 
             it["gets is no event"] = () => {
@@ -206,7 +206,7 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
 
             it["gets generate methods"] = () => { data.ShouldGenerateMethods().should_be_true(); };
 
-            it["gets unique prefix"] = () => { data.GetUniquePrefix().should_be("is"); };
+            it["gets flag prefix"] = () => { data.GetFlagPrefix().should_be("is"); };
 
             it["gets is no event"] = () => { data.IsEvent().should_be_false(); };
         };
