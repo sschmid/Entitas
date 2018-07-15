@@ -57,9 +57,6 @@
     <Compile Include="Tests\Entitas.Migration\describe_M0450.cs" />
     <Compile Include="Tests\Entitas\describe_Events.cs" />
     <Compile Include="Tests\Entitas\describe_JobSystem.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_EntityStringExtension.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_ListenerStringExtension.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_MatcherStringExtension.cs" />
     <Compile Include="Tests\Entitas\Extensions\describe_PublicMemberInfoEntityExtension.cs" />
     <Compile Include="Tests\TestExtensions.cs" />
     <Compile Include="Tests\check_namespaces.cs" />
@@ -107,9 +104,7 @@
     <Compile Include="Tests\Entitas.CodeGeneration\DataProviders\describe_EntityIndexDataProvider.cs" />
     <Compile Include="Tests\Entitas.CodeGeneration\describe_CustomEntityIndex.cs" />
     <Compile Include="Tests\Entitas.CodeGeneration\CodeGenerators\describe_EntityIndexGenerator.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_ComponentStringExtension.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_ContextStringExtension.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_SystemStringExtension.cs" />
+    <Compile Include="Tests\Entitas\Extensions\describe_EntitasStringExtension.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasResources.cs" />
     <Compile Include="Tests\Entitas\describe_MultiReactiveSystem.cs" />
     <Compile Include="Fixtures\Systems\MultiReactiveSystemSpy.cs" />

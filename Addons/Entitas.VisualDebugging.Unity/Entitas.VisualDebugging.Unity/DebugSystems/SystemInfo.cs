@@ -57,21 +57,14 @@ namespace Entitas.VisualDebugging.Unity {
         double _maxCleanupDuration;
         int _cleanupDurationsCount;
 
-        const string SYSTEM_SUFFIX = "System";
-
         public SystemInfo(ISystem system) {
             _system = system;
             _interfaceFlags = getInterfaceFlags(system);
 
             var debugSystem = system as DebugSystems;
-            if (debugSystem != null) {
-                _systemName = debugSystem.name;
-            } else {
-                var systemType = system.GetType();
-                _systemName = systemType.Name.EndsWith(SYSTEM_SUFFIX, StringComparison.Ordinal)
-                    ? systemType.Name.Substring(0, systemType.Name.Length - SYSTEM_SUFFIX.Length)
-                    : systemType.Name;
-            }
+            _systemName = debugSystem != null
+                ? debugSystem.name
+                : system.GetType().Name.RemoveSystemSuffix();
 
             isActive = true;
         }

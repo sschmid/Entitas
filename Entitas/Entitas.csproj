@@ -35,9 +35,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entitas\Extensions\EntityStringExtension.cs" />
-    <Compile Include="Entitas\Extensions\ListenerStringExtension.cs" />
-    <Compile Include="Entitas\Extensions\MatcherStringExtension.cs" />
     <Compile Include="Entitas\Matcher\Matcher.cs" />
     <Compile Include="Entitas\Matcher\MatcherToString.cs" />
     <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
@@ -74,10 +71,8 @@
     <Compile Include="Entitas\EntitasCache.cs" />
     <Compile Include="Entitas\EntitasResources.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
-    <Compile Include="Entitas\Extensions\ComponentStringExtension.cs" />
-    <Compile Include="Entitas\Extensions\ContextStringExtension.cs" />
     <Compile Include="Entitas\Extensions\PublicMemberInfoEntityExtension.cs" />
-    <Compile Include="Entitas\Extensions\SystemStringExtension.cs" />
+    <Compile Include="Entitas\Extensions\EntitasStringExtension.cs" />
     <Compile Include="Entitas\Entity\UnsafeAERC.cs" />
     <Compile Include="Entitas\Entity\SafeAERC.cs" />
     <Compile Include="Entitas\ContextInfo.cs" />
