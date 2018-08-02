@@ -159,7 +159,7 @@ namespace Entitas.CodeGeneration.Plugins {
         string[] getComponentNames(Type type) {
             var attr = Attribute
                 .GetCustomAttributes(type)
-                .OfType<CustomComponentNameAttribute>()
+                .OfType<ComponentNameAttribute>()
                 .SingleOrDefault();
 
             if (attr == null) {

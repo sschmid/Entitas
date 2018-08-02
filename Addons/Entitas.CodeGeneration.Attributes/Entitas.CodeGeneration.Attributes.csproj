@@ -34,7 +34,7 @@
   <ItemGroup>
     <Compile Include="Entitas.CodeGeneration.Attributes\CleanupAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\ContextAttribute.cs" />
-    <Compile Include="Entitas.CodeGeneration.Attributes\CustomComponentNameAttribute.cs" />
+    <Compile Include="Entitas.CodeGeneration.Attributes\ComponentNameAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\CustomEntityIndexAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\DontGenerateAttribute.cs" />
     <Compile Include="Entitas.CodeGeneration.Attributes\EntityIndex\AbstractEntityIndexAttribute.cs" />
