@@ -52,6 +52,8 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddTexture2D(new Texture2D(2, 2));
 
             // Custom
+            e.isFlag = true;
+            e.myCustomFlag = true;
             e.AddMonoBehaviourSubClass(new GameObject().AddComponent<MonoBehaviourSubClass>());
             e.AddCustomObject(new CustomObject("Custom Object"));
             e.AddSystemObject(new object());

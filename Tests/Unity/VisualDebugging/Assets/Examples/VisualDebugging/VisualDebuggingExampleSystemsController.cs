@@ -43,7 +43,7 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
     Systems createSubSystems() {
         var allSystems = createAllSystemCombinations();
         var subSystems = new Feature("Sub Systems").Add(allSystems);
-        
+
         return new Feature("Systems with SubSystems")
             .Add(allSystems)
             .Add(allSystems)

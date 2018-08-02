@@ -390,6 +390,7 @@ sync_unity_visualdebugging() {
   local unity_libs="${ROOT}/Tests/Unity/VisualDebugging/Assets/Libraries"
   clean_dir "${unity_libs}"
   sync_files "${BUILD_SRC}/Unity/Entitas/Assets/Entitas" "${unity_libs}"
+  sync_files "${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs" "${unity_libs}"
 }
 
 sync() {

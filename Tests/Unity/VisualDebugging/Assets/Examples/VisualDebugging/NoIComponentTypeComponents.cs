@@ -40,14 +40,14 @@ public class SomeGenericClass<T> {
 }
 
 [Game, Unique]
-public class ISomeInterface {
+public interface ISomeInterface {
 }
 
-[Game, CustomComponentName("CoolNameComponent")]
+[Game, ComponentName("CoolNameComponent")]
 public class BadName {
 }
-    
-[Serializable, Game, CustomComponentName("PositionComponent", "VelocityComponent")]
+
+[Serializable, Game, ComponentName("PositionComponent", "VelocityComponent")]
 public struct IntVector2 {
     public int x;
     public int y;

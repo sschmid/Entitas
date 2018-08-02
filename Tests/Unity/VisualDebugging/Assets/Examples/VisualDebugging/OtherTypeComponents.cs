@@ -5,6 +5,14 @@ using Entitas;
 using Entitas.VisualDebugging.Unity;
 using UnityEngine;
 
+[Game]
+public class FlagComponent : IComponent {
+}
+
+[Game, FlagPrefix("my")]
+public class CustomFlagComponent : IComponent {
+}
+
 public class CustomObject {
     public string name;
 
