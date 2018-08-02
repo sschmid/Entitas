@@ -93,12 +93,14 @@ namespace Entitas.CodeGeneration.Plugins {
                 .SelectMany(createDataForNonComponent)
                 .ToArray();
 
-            var dataFromEvents = dataFromComponents
+            var mergedData = merge(dataFromNonComponents, dataFromComponents);
+
+            var dataFromEvents = mergedData
                 .Where(data => data.IsEvent())
                 .SelectMany(createDataForEvents)
                 .ToArray();
 
-            return merge(dataFromEvents, merge(dataFromNonComponents, dataFromComponents));
+            return merge(dataFromEvents, mergedData);
         }
 
         ComponentData[] merge(ComponentData[] prioData, ComponentData[] redundantData) {
@@ -139,6 +141,7 @@ namespace Entitas.CodeGeneration.Plugins {
                         var dataForEvent = new ComponentData(data);
                         dataForEvent.IsEvent(false);
                         dataForEvent.IsUnique(false);
+                        dataForEvent.ShouldGenerateComponent(false);
                         var eventTypeSuffix = eventData.GetEventTypeSuffix();
                         var optionalContextName = dataForEvent.GetContextNames().Length > 1 ? contextName : string.Empty;
                         var listenerComponentName = optionalContextName + componentName + eventTypeSuffix + "Listener";

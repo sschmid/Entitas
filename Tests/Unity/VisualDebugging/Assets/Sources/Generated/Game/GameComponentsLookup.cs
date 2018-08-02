@@ -34,33 +34,37 @@ public static class GameComponentsLookup {
     public const int MyChar = 23;
     public const int MyDouble = 24;
     public const int MyEnum = 25;
-    public const int MyFlags = 26;
-    public const int MyFloat = 27;
-    public const int MyHiddenInt = 28;
-    public const int MyInt = 29;
-    public const int MyString = 30;
-    public const int NoContext = 31;
-    public const int Person = 32;
-    public const int Position = 33;
-    public const int Property = 34;
-    public const int Rect = 35;
-    public const int SimpleObject = 36;
-    public const int SomeClass = 37;
-    public const int SomeOtherClass = 38;
-    public const int SomeStruct = 39;
-    public const int SystemObject = 40;
-    public const int Test = 41;
-    public const int Texture2D = 42;
-    public const int Texture = 43;
-    public const int Unique = 44;
-    public const int UnityObject = 45;
-    public const int UnsupportedObject = 46;
-    public const int Vector2 = 47;
-    public const int Vector3 = 48;
-    public const int Vector4 = 49;
-    public const int Velocity = 50;
+    public const int MyEventClass = 26;
+    public const int MyEventClassListener = 27;
+    public const int MyEvent = 28;
+    public const int MyEventListener = 29;
+    public const int MyFlags = 30;
+    public const int MyFloat = 31;
+    public const int MyHiddenInt = 32;
+    public const int MyInt = 33;
+    public const int MyString = 34;
+    public const int NoContext = 35;
+    public const int Person = 36;
+    public const int Position = 37;
+    public const int Property = 38;
+    public const int Rect = 39;
+    public const int SimpleObject = 40;
+    public const int SomeClass = 41;
+    public const int SomeOtherClass = 42;
+    public const int SomeStruct = 43;
+    public const int SystemObject = 44;
+    public const int Test = 45;
+    public const int Texture2D = 46;
+    public const int Texture = 47;
+    public const int Unique = 48;
+    public const int UnityObject = 49;
+    public const int UnsupportedObject = 50;
+    public const int Vector2 = 51;
+    public const int Vector3 = 52;
+    public const int Vector4 = 53;
+    public const int Velocity = 54;
 
-    public const int TotalComponents = 51;
+    public const int TotalComponents = 55;
 
     public static readonly string[] componentNames = {
         "AnArray",
@@ -89,6 +93,10 @@ public static class GameComponentsLookup {
         "MyChar",
         "MyDouble",
         "MyEnum",
+        "MyEventClass",
+        "MyEventClassListener",
+        "MyEvent",
+        "MyEventListener",
         "MyFlags",
         "MyFloat",
         "MyHiddenInt",
@@ -143,6 +151,10 @@ public static class GameComponentsLookup {
         typeof(MyCharComponent),
         typeof(MyDoubleComponent),
         typeof(MyEnumComponent),
+        typeof(MyEventClassComponent),
+        typeof(MyEventClassListenerComponent),
+        typeof(MyEventComponent),
+        typeof(MyEventListenerComponent),
         typeof(MyFlagsComponent),
         typeof(MyFloatComponent),
         typeof(MyHiddenIntComponent),

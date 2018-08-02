@@ -9,6 +9,7 @@
 public sealed class Test2EventSystems : Feature {
 
     public Test2EventSystems(Contexts contexts) {
+        Add(new Test2EventToGenerateEventSystem(contexts)); // priority: 0
         Add(new Test2MultipleContextStandardEventEventSystem(contexts)); // priority: 0
         Add(new Test2MultipleEventsStandardEventEventSystem(contexts)); // priority: 1
         Add(new Test2MultipleEventsStandardEventRemovedEventSystem(contexts)); // priority: 2

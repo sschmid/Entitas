@@ -31,6 +31,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\Test\Components\TestUniqueEventComponent.cs" />
     <Compile Include="Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueFlagComponent.cs" />
     <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />
@@ -77,10 +78,13 @@
     <Compile Include="Generated\Test\Components\TestNewCustomNameComponent1Component.cs" />
     <Compile Include="Generated\Test\Components\TestNewCustomNameComponent2Component.cs" />
     <Compile Include="Generated\Test\Components\TestClassWithEntitIndexAttributeComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestEventToGenerateComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2EventToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestClassToGenerateComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestInterfaceToGenerateComponent.cs" />
     <Compile Include="Generated\Test\Components\TestStructToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestUniqueEventListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestTestMultipleEventsStandardEventListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestTestMultipleEventsStandardEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Test2\Components\Test2Test2MultipleEventsStandardEventListenerComponent.cs" />
@@ -91,6 +95,8 @@
     <Compile Include="Generated\Test\Components\TestFlagEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestStandardEntityEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Test\Components\TestStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestTestEventToGenerateListenerComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2Test2EventToGenerateListenerComponent.cs" />
     <Compile Include="Generated\Components\Interfaces\IMultipleEventsStandardEventEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IMultipleContextStandardEventEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\ITest2ContextEntity.cs" />
@@ -99,16 +105,18 @@
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceMyNamespaceEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IMyNamespaceEntityIndexEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IUniqueClassToGenerateEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\IEventToGenerateEntity.cs" />
     <Compile Include="Generated\Components\Interfaces\IClassToGenerateEntity.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent1Component.cs" />
     <Compile Include="Generated\Components\NewCustomNameComponent2Component.cs" />
     <Compile Include="Generated\Components\ClassWithEntitIndexAttributeComponent.cs" />
     <Compile Include="Generated\Components\UniqueClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\EventToGenerateComponent.cs" />
     <Compile Include="Generated\Components\ClassToGenerateComponent.cs" />
     <Compile Include="Generated\Components\InterfaceToGenerateComponent.cs" />
     <Compile Include="Generated\Components\StructToGenerateComponent.cs" />
-    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Test\TestComponentsLookup.cs" />
+    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
     <Compile Include="Generated\Test2\Test2ComponentsLookup.cs" />
     <Compile Include="Generated\Test\Components\TestDontGenerateMethodsComponent.cs" />
     <Compile Include="Generated\Game\GameAttribute.cs" />
@@ -124,6 +132,7 @@
     <Compile Include="Generated\Game\GameEntity.cs" />
     <Compile Include="Generated\Test\TestEntity.cs" />
     <Compile Include="Generated\Test2\Test2Entity.cs" />
+    <Compile Include="Generated\Events\Components\UniqueEventListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\TestMultipleEventsStandardEventListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\TestMultipleEventsStandardEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\Test2MultipleEventsStandardEventListenerComponent.cs" />
@@ -134,6 +143,9 @@
     <Compile Include="Generated\Events\Components\FlagEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\StandardEntityEventRemovedListenerComponent.cs" />
     <Compile Include="Generated\Events\Components\StandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\TestEventToGenerateListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\Test2EventToGenerateListenerComponent.cs" />
+    <Compile Include="Generated\Events\Interfaces\IUniqueEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITestMultipleEventsStandardEventListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITestMultipleEventsStandardEventRemovedListener.cs" />
     <Compile Include="Generated\Events\Interfaces\ITest2MultipleEventsStandardEventListener.cs" />
@@ -144,6 +156,9 @@
     <Compile Include="Generated\Events\Interfaces\IFlagEventRemovedListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IStandardEntityEventRemovedListener.cs" />
     <Compile Include="Generated\Events\Interfaces\IStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITestEventToGenerateListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITest2EventToGenerateListener.cs" />
+    <Compile Include="Generated\Events\Systems\UniqueEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\TestMultipleEventsStandardEventEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\TestMultipleEventsStandardEventRemovedEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\Test2MultipleEventsStandardEventEventSystem.cs" />
@@ -154,9 +169,14 @@
     <Compile Include="Generated\Events\Systems\FlagEventRemovedEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\StandardEntityEventRemovedEventSystem.cs" />
     <Compile Include="Generated\Events\Systems\StandardEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestEventToGenerateEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\Test2EventToGenerateEventSystem.cs" />
     <Compile Include="Generated\Events\TestEventSystems.cs" />
     <Compile Include="Generated\Events\Test2EventSystems.cs" />
     <Compile Include="Generated\Feature.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\Components\UniqueEventComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fixtures\Components\CleanupDestroyComponent.cs" />

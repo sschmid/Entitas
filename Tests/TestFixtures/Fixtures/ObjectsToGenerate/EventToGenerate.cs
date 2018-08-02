@@ -1,6 +1,8 @@
-﻿namespace My.Namespace {
+﻿using Entitas.CodeGeneration.Attributes;
 
-//    [Context("Test"), Context("Test2"), Event(false)]
+namespace My.Namespace {
+
+    [Context("Test"), Context("Test2"), Event(EventTarget.Any)]
     public sealed class EventToGenerate {
         public string value;
     }

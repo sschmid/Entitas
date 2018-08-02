@@ -9,22 +9,25 @@
 public static class Test2ComponentsLookup {
 
     public const int ClassToGenerate = 0;
-    public const int MultipleContextStandardEvent = 1;
-    public const int MultipleEventsStandardEvent = 2;
-    public const int MyNamespaceEntityIndex = 3;
-    public const int MyNamespaceMultipleEntityIndices = 4;
-    public const int MyNamespaceMyNamespace = 5;
-    public const int NameAge = 6;
-    public const int Test2Context = 7;
-    public const int Test2MultipleContextStandardEventListener = 8;
-    public const int Test2MultipleEventsStandardEventListener = 9;
-    public const int Test2MultipleEventsStandardEventRemovedListener = 10;
-    public const int UniqueClassToGenerate = 11;
+    public const int EventToGenerate = 1;
+    public const int MultipleContextStandardEvent = 2;
+    public const int MultipleEventsStandardEvent = 3;
+    public const int MyNamespaceEntityIndex = 4;
+    public const int MyNamespaceMultipleEntityIndices = 5;
+    public const int MyNamespaceMyNamespace = 6;
+    public const int NameAge = 7;
+    public const int Test2Context = 8;
+    public const int Test2EventToGenerateListener = 9;
+    public const int Test2MultipleContextStandardEventListener = 10;
+    public const int Test2MultipleEventsStandardEventListener = 11;
+    public const int Test2MultipleEventsStandardEventRemovedListener = 12;
+    public const int UniqueClassToGenerate = 13;
 
-    public const int TotalComponents = 12;
+    public const int TotalComponents = 14;
 
     public static readonly string[] componentNames = {
         "ClassToGenerate",
+        "EventToGenerate",
         "MultipleContextStandardEvent",
         "MultipleEventsStandardEvent",
         "MyNamespaceEntityIndex",
@@ -32,6 +35,7 @@ public static class Test2ComponentsLookup {
         "MyNamespaceMyNamespace",
         "NameAge",
         "Test2Context",
+        "Test2EventToGenerateListener",
         "Test2MultipleContextStandardEventListener",
         "Test2MultipleEventsStandardEventListener",
         "Test2MultipleEventsStandardEventRemovedListener",
@@ -40,6 +44,7 @@ public static class Test2ComponentsLookup {
 
     public static readonly System.Type[] componentTypes = {
         typeof(ClassToGenerateComponent),
+        typeof(EventToGenerateComponent),
         typeof(MultipleContextStandardEventComponent),
         typeof(MultipleEventsStandardEventComponent),
         typeof(My.Namespace.EntityIndexComponent),
@@ -47,6 +52,7 @@ public static class Test2ComponentsLookup {
         typeof(My.Namespace.MyNamespaceComponent),
         typeof(NameAgeComponent),
         typeof(Test2ContextComponent),
+        typeof(Test2EventToGenerateListenerComponent),
         typeof(Test2MultipleContextStandardEventListenerComponent),
         typeof(Test2MultipleEventsStandardEventListenerComponent),
         typeof(Test2MultipleEventsStandardEventRemovedListenerComponent),

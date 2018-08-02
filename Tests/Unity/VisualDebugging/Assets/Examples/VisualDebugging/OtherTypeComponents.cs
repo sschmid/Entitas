@@ -161,3 +161,12 @@ public class ManyMembersComponent : IComponent {
     public string field11;
     public string field12;
 }
+
+[Game, Event(EventTarget.Any)]
+public class MyEventComponent : IComponent {
+    public string value;
+}
+
+[Game, Event(EventTarget.Any)]
+    public class MyEventClass {
+}

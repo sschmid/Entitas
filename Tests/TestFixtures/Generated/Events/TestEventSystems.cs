@@ -9,9 +9,11 @@
 public sealed class TestEventSystems : Feature {
 
     public TestEventSystems(Contexts contexts) {
+        Add(new TestEventToGenerateEventSystem(contexts)); // priority: 0
         Add(new FlagEventRemovedEventSystem(contexts)); // priority: 0
         Add(new TestMultipleContextStandardEventEventSystem(contexts)); // priority: 0
         Add(new StandardEventEventSystem(contexts)); // priority: 0
+        Add(new UniqueEventEventSystem(contexts)); // priority: 0
         Add(new FlagEntityEventEventSystem(contexts)); // priority: 1
         Add(new TestMultipleEventsStandardEventEventSystem(contexts)); // priority: 1
         Add(new StandardEntityEventRemovedEventSystem(contexts)); // priority: 1
