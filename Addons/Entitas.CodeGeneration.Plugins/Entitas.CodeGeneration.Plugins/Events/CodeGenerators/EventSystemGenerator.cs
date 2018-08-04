@@ -103,7 +103,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
                     var cachedAccess = data.GetMemberData().Length == 0
                         ? string.Empty
-                        : "var component = e." + data.ComponentName().LowercaseFirst() + ";";
+                        : "var component = e." + data.ComponentName().LowercaseFirst().AddKeywordPrefixIfInvalid() + ";";
 
                     if (eventData.eventType == EventType.Removed) {
                         methodArgs = string.Empty;

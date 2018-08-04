@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.CodeDom.Compiler;
+using System.Linq;
 using DesperateDevs.Utils;
 using Entitas.CodeGeneration.Attributes;
 
@@ -9,6 +10,9 @@ namespace Entitas.CodeGeneration.Plugins {
         public const string LOOKUP = "ComponentsLookup";
 
         public static bool ignoreNamespaces;
+        
+        public static readonly CodeDomProvider provider = CodeDomProvider.CreateProvider("C#");
+        private const string KEYWORD_PREFIX = "@";
 
         public static string ComponentName(this ComponentData data) {
             return data.GetTypeName().ToComponentName(ignoreNamespaces);
@@ -30,17 +34,23 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static string Replace(this string template, ComponentData data, string contextName) {
             var componentName = data.ComponentName();
+            
+            var lowercaseFirst = componentName.LowercaseFirst();
+            var validName      = lowercaseFirst.AddKeywordPrefixIfInvalid();
+
             return template
                 .Replace(contextName)
                 .Replace("${ComponentType}", data.GetTypeName())
                 .Replace("${ComponentName}", componentName)
-                .Replace("${componentName}", componentName.LowercaseFirst())
+                .Replace("${componentName}", lowercaseFirst)
+                .Replace("${componentNameValid}", validName)
                 .Replace("${prefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${newMethodParameters}", GetMethodParameters(data.GetMemberData(), true))
                 .Replace("${methodParameters}", GetMethodParameters(data.GetMemberData(), false))
                 .Replace("${newMethodArgs}", GetMethodArgs(data.GetMemberData(), true))
                 .Replace("${methodArgs}", GetMethodArgs(data.GetMemberData(), false))
                 .Replace("${Index}", contextName + LOOKUP + "." + data.ComponentName());
+
         }
 
         public static string Replace(this string template, ComponentData data, string contextName, EventData eventData) {
@@ -96,6 +106,15 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Select(info => (newPrefix ? "new" + info.name.UppercaseFirst() : info.name))
                 .ToArray()
             );
+        }
+        
+        public static string AddKeywordPrefixIfInvalid(this string name)
+        {
+            if (!provider.IsValidIdentifier(name)){
+                name = KEYWORD_PREFIX + name;
+            }
+
+            return name;
         }
     }
 }
