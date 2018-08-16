@@ -111,8 +111,8 @@
 │   │       │   ├── EntityIndexType.cs
 │   │       │   └── PrimaryEntityIndexAttribute.cs
 │   │       ├── CleanupAttribute.cs
+│   │       ├── ComponentNameAttribute.cs
 │   │       ├── ContextAttribute.cs
-│   │       ├── CustomComponentNameAttribute.cs
 │   │       ├── CustomEntityIndexAttribute.cs
 │   │       ├── DontGenerateAttribute.cs
 │   │       ├── EventAttribute.cs
@@ -330,13 +330,8 @@
 │       │   └── PrimaryEntityIndex.cs
 │       ├── Extensions
 │       │   ├── CollectionExtension.cs
-│       │   ├── ComponentStringExtension.cs
-│       │   ├── ContextStringExtension.cs
-│       │   ├── EntityStringExtension.cs
-│       │   ├── ListenerStringExtension.cs
-│       │   ├── MatcherStringExtension.cs
-│       │   ├── PublicMemberInfoEntityExtension.cs
-│       │   └── SystemStringExtension.cs
+│       │   ├── EntitasStringExtension.cs
+│       │   └── PublicMemberInfoEntityExtension.cs
 │       ├── Group
 │       │   ├── Group.cs
 │       │   ├── GroupEvent.cs

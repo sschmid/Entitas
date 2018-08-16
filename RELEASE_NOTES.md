@@ -1,3 +1,24 @@
+# 1.8.0
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+https://www.assetstore.unity3d.com/#!/content/87638
+
+#### Entitas
+⚙️ Enabled [Event] for non components #743
+⚠️ Renamed `CustomComponentNameAttribute` to `ComponentNameAttribute`
+
+
+#### Jenny
+⚙️ Added more logs to `gen` command
+```csharp
+Generating using /Users/sschmid/Dev/C#/Half-life3/Jenny.properties
+Generating done (13220 files in 4 seconds)
+```
+⚙️ Added group to ICommand to support grouped usage overview
+#### Asset Store Version
+
+
 # 1.7.0
 
 As always, the Unity Asset Store version might take a few days to be processed
