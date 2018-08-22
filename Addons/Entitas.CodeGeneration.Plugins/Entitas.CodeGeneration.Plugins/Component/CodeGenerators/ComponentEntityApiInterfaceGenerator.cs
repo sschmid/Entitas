@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.Plugins {
         const string STANDARD_TEMPLATE =
             @"public partial interface I${ComponentName}Entity {
 
-    ${ComponentType} ${componentName} { get; }
+    ${ComponentType} ${validComponentName} { get; }
     bool has${ComponentName} { get; }
 
     void Add${ComponentName}(${newMethodParameters});

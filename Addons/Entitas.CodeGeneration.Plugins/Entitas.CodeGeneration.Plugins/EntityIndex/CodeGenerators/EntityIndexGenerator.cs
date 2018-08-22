@@ -137,7 +137,10 @@ ${getIndices}
                 .Replace("${KeyType}", data.GetKeyType())
                 .Replace("${ComponentType}", data.GetComponentType())
                 .Replace("${MemberName}", data.GetMemberName())
-                .Replace("${componentName}", data.GetComponentType().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces).LowercaseFirst());
+                .Replace("${componentName}", data.GetComponentType()
+                    .ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces)
+                    .LowercaseFirst()
+                    .AddPrefixIfIsKeyword());
         }
 
         string generateGetMethods(EntityIndexData data) {

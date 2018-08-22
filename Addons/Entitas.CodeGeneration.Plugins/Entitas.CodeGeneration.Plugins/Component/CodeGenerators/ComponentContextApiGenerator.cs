@@ -12,7 +12,7 @@ namespace Entitas.CodeGeneration.Plugins {
             @"public partial class ${ContextType} {
 
     public ${EntityType} ${componentName}Entity { get { return GetGroup(${MatcherType}.${ComponentName}).GetSingleEntity(); } }
-    public ${ComponentType} ${componentNameValid} { get { return ${componentName}Entity.${componentNameValid}; } }
+    public ${ComponentType} ${validComponentName} { get { return ${componentName}Entity.${componentName}; } }
     public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
 
     public ${EntityType} Set${ComponentName}(${newMethodParameters}) {

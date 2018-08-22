@@ -12,7 +12,7 @@ namespace Entitas.CodeGeneration.Plugins {
         const string STANDARD_TEMPLATE =
             @"public partial class ${EntityType} {
 
-    public ${ComponentType} ${componentNameValid} { get { return (${ComponentType})GetComponent(${Index}); } }
+    public ${ComponentType} ${validComponentName} { get { return (${ComponentType})GetComponent(${Index}); } }
     public bool has${ComponentName} { get { return HasComponent(${Index}); } }
 
     public void Add${ComponentName}(${newMethodParameters}) {

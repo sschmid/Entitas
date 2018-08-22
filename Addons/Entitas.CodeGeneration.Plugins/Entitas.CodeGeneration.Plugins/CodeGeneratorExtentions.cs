@@ -9,13 +9,22 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public const string LOOKUP = "ComponentsLookup";
 
+        const string KEYWORD_PREFIX = "@";
+
         public static bool ignoreNamespaces;
-        
-        public static readonly CodeDomProvider provider = CodeDomProvider.CreateProvider("C#");
-        private const string KEYWORD_PREFIX = "@";
+
+        static readonly CodeDomProvider provider = CodeDomProvider.CreateProvider("C#");
 
         public static string ComponentName(this ComponentData data) {
             return data.GetTypeName().ToComponentName(ignoreNamespaces);
+        }
+
+        public static string ComponentNameLowercaseFirst(this ComponentData data) {
+            return ComponentName(data).LowercaseFirst();
+        }
+
+        public static string ComponentNameValidLowercaseFirst(this ComponentData data) {
+            return ComponentName(data).LowercaseFirst().AddPrefixIfIsKeyword();
         }
 
         public static string ComponentNameWithContext(this ComponentData data, string contextName) {
@@ -33,17 +42,12 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public static string Replace(this string template, ComponentData data, string contextName) {
-            var componentName = data.ComponentName();
-            
-            var lowercaseFirst = componentName.LowercaseFirst();
-            var validName      = lowercaseFirst.AddKeywordPrefixIfInvalid();
-
             return template
                 .Replace(contextName)
                 .Replace("${ComponentType}", data.GetTypeName())
-                .Replace("${ComponentName}", componentName)
-                .Replace("${componentName}", lowercaseFirst)
-                .Replace("${componentNameValid}", validName)
+                .Replace("${ComponentName}", data.ComponentName())
+                .Replace("${componentName}", data.ComponentNameLowercaseFirst())
+                .Replace("${validComponentName}", data.ComponentNameValidLowercaseFirst())
                 .Replace("${prefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${newMethodParameters}", GetMethodParameters(data.GetMemberData(), true))
                 .Replace("${methodParameters}", GetMethodParameters(data.GetMemberData(), false))
@@ -57,7 +61,7 @@ namespace Entitas.CodeGeneration.Plugins {
             var eventListener = data.EventListener(contextName, eventData);
             var lowerEventListener = data.GetContextNames().Length > 1
                 ? contextName.LowercaseFirst() + data.ComponentName() + GetEventTypeSuffix(eventData).AddListenerSuffix()
-                : data.ComponentName().LowercaseFirst() + GetEventTypeSuffix(eventData).AddListenerSuffix();
+                : data.ComponentNameLowercaseFirst() + GetEventTypeSuffix(eventData).AddListenerSuffix();
 
             return template
                 .Replace(data, contextName)
@@ -107,10 +111,9 @@ namespace Entitas.CodeGeneration.Plugins {
                 .ToArray()
             );
         }
-        
-        public static string AddKeywordPrefixIfInvalid(this string name)
-        {
-            if (!provider.IsValidIdentifier(name)){
+
+        public static string AddPrefixIfIsKeyword(this string name) {
+            if (!provider.IsValidIdentifier(name)) {
                 name = KEYWORD_PREFIX + name;
             }
 
