@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.CodeDom.Compiler;
+using System.Linq;
 using DesperateDevs.Utils;
 using Entitas.CodeGeneration.Attributes;
 
@@ -8,10 +9,22 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public const string LOOKUP = "ComponentsLookup";
 
+        const string KEYWORD_PREFIX = "@";
+
         public static bool ignoreNamespaces;
+
+        static readonly CodeDomProvider provider = CodeDomProvider.CreateProvider("C#");
 
         public static string ComponentName(this ComponentData data) {
             return data.GetTypeName().ToComponentName(ignoreNamespaces);
+        }
+
+        public static string ComponentNameLowercaseFirst(this ComponentData data) {
+            return ComponentName(data).LowercaseFirst();
+        }
+
+        public static string ComponentNameValidLowercaseFirst(this ComponentData data) {
+            return ComponentName(data).LowercaseFirst().AddPrefixIfIsKeyword();
         }
 
         public static string ComponentNameWithContext(this ComponentData data, string contextName) {
@@ -29,25 +42,26 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public static string Replace(this string template, ComponentData data, string contextName) {
-            var componentName = data.ComponentName();
             return template
                 .Replace(contextName)
                 .Replace("${ComponentType}", data.GetTypeName())
-                .Replace("${ComponentName}", componentName)
-                .Replace("${componentName}", componentName.LowercaseFirst())
+                .Replace("${ComponentName}", data.ComponentName())
+                .Replace("${componentName}", data.ComponentNameLowercaseFirst())
+                .Replace("${validComponentName}", data.ComponentNameValidLowercaseFirst())
                 .Replace("${prefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${newMethodParameters}", GetMethodParameters(data.GetMemberData(), true))
                 .Replace("${methodParameters}", GetMethodParameters(data.GetMemberData(), false))
                 .Replace("${newMethodArgs}", GetMethodArgs(data.GetMemberData(), true))
                 .Replace("${methodArgs}", GetMethodArgs(data.GetMemberData(), false))
                 .Replace("${Index}", contextName + LOOKUP + "." + data.ComponentName());
+
         }
 
         public static string Replace(this string template, ComponentData data, string contextName, EventData eventData) {
             var eventListener = data.EventListener(contextName, eventData);
             var lowerEventListener = data.GetContextNames().Length > 1
                 ? contextName.LowercaseFirst() + data.ComponentName() + GetEventTypeSuffix(eventData).AddListenerSuffix()
-                : data.ComponentName().LowercaseFirst() + GetEventTypeSuffix(eventData).AddListenerSuffix();
+                : data.ComponentNameLowercaseFirst() + GetEventTypeSuffix(eventData).AddListenerSuffix();
 
             return template
                 .Replace(data, contextName)
@@ -96,6 +110,14 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Select(info => (newPrefix ? "new" + info.name.UppercaseFirst() : info.name))
                 .ToArray()
             );
+        }
+
+        public static string AddPrefixIfIsKeyword(this string name) {
+            if (!provider.IsValidIdentifier(name)) {
+                name = KEYWORD_PREFIX + name;
+            }
+
+            return name;
         }
     }
 }
