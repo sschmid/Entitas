@@ -27,7 +27,7 @@ namespace Entitas {
         protected JobSystem(IGroup<TEntity> group) : this(group, Environment.ProcessorCount) {
         }
 
-        public void Execute() {
+        public virtual void Execute() {
             _threadsRunning = _threads;
             var entities = _group.GetEntities();
             var remainder = entities.Length % _threads;
