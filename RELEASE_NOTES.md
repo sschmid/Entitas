@@ -1,3 +1,24 @@
+# 1.8.2
+
+As always, the Unity Asset Store version might take a few days to be processed
+and accepted by Unity. Please check for updates in 2 - 4 days here:
+http://u3d.as/NuJ
+
+#### Entitas
+⚙️ Add "@" in front of component name if it is a C# keyword #744 #756 @roygear
+⚙️ Added convenience ctor to JobSystem to use all available threads on the device
+⚙️ JobSystem.Execute() is now virtual
+
+
+#### Jenny
+🛠 Fixed delays when running `jenny server`
+🆕 `jenny wiz` beta. Running Jenny.exe without args will automatically run `jenny wiz`
+🆕 `jenny help` aka man page
+
+Jenny Wizard is wip. If you have feedback or feature request, please add a comment here
+https://github.com/sschmid/Entitas-CSharp/issues/778
+
+
 # 1.8.1
 
 As always, the Unity Asset Store version might take a few days to be processed
@@ -5,7 +26,7 @@ and accepted by Unity. Please check for updates in 2 - 4 days here:
 https://www.assetstore.unity3d.com/#!/content/87638
 
 #### Entitas
-⚙️ Add "@" in front of component name if it is a C# keyword # 744 #756 @roygear
+⚙️ Add "@" in front of component name if it is a C# keyword #744 #756 @roygear
 ⚙️ Added convenience ctor to JobSystem to use all available threads on the device
 ⚙️ JobSystem.Execute() is now virtual
 
