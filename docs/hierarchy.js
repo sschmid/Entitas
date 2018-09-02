@@ -2,13 +2,11 @@ var hierarchy =
 [
     [ "Entitas.CollectionExtension", "class_entitas_1_1_collection_extension.html", null ],
     [ "Entitas.CollectorContextExtension", "class_entitas_1_1_collector_context_extension.html", null ],
-    [ "Entitas.ComponentStringExtension", "class_entitas_1_1_component_string_extension.html", null ],
     [ "Entitas.ContextExtension", "class_entitas_1_1_context_extension.html", null ],
     [ "Entitas.ContextInfo", "class_entitas_1_1_context_info.html", null ],
-    [ "Entitas.ContextStringExtension", "class_entitas_1_1_context_string_extension.html", null ],
     [ "Entitas.EntitasCache", "class_entitas_1_1_entitas_cache.html", null ],
     [ "Entitas.EntitasResources", "class_entitas_1_1_entitas_resources.html", null ],
-    [ "Entitas.EntityStringExtension", "class_entitas_1_1_entity_string_extension.html", null ],
+    [ "Entitas.EntitasStringExtension", "class_entitas_1_1_entitas_string_extension.html", null ],
     [ "Exception", null, [
       [ "Entitas.EntitasException", "class_entitas_1_1_entitas_exception.html", [
         [ "Entitas.CollectorException", "class_entitas_1_1_collector_exception.html", null ],
@@ -86,6 +84,7 @@ var hierarchy =
           [ "Entitas.MultiReactiveSystem< TEntity, TContexts >", "class_entitas_1_1_multi_reactive_system.html", null ],
           [ "Entitas.ReactiveSystem< TEntity >", "class_entitas_1_1_reactive_system.html", null ]
         ] ],
+        [ "Entitas.JobSystem< TEntity >", "class_entitas_1_1_job_system.html", null ],
         [ "Entitas.Systems", "class_entitas_1_1_systems.html", null ]
       ] ],
       [ "Entitas.IInitializeSystem", "interface_entitas_1_1_i_initialize_system.html", [
@@ -95,12 +94,11 @@ var hierarchy =
         [ "Entitas.Systems", "class_entitas_1_1_systems.html", null ]
       ] ]
     ] ],
+    [ "Entitas.Job< TEntity >", "class_entitas_1_1_job.html", null ],
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
     [ "Entitas.Matcher< TEntity >", "class_entitas_1_1_matcher.html", null ],
-    [ "Entitas.MatcherStringExtension", "class_entitas_1_1_matcher_string_extension.html", null ],
     [ "Entitas.PublicMemberInfoEntityExtension", "class_entitas_1_1_public_member_info_entity_extension.html", null ],
-    [ "Entitas.SystemStringExtension", "class_entitas_1_1_system_string_extension.html", null ],
     [ "Entitas.TriggerOnEvent< TEntity >", "struct_entitas_1_1_trigger_on_event.html", null ],
     [ "Entitas.TriggerOnEventMatcherExtension", "class_entitas_1_1_trigger_on_event_matcher_extension.html", null ]
 ];

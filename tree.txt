@@ -75,7 +75,7 @@
 │       └── Systems
 │           └── Interfaces
 └── Scripts
-    └── docs_resources
+    └── res
 .
 ├── Addons
 │   ├── Entitas.Blueprints
@@ -369,14 +369,12 @@
 │       ├── IComponent.cs
 │       └── version.txt
 ├── Scripts
-│   ├── docs_resources
+│   ├── res
 │   │   ├── docs-logo.png
 │   │   ├── docset.doxyfile
 │   │   ├── html.doxyfile
 │   │   ├── icon.png
 │   │   └── icon@2x.png
-│   ├── bee
-│   ├── private.sh
 │   ├── rsync_exclude.txt
 │   └── rsync_include.txt
 ├── CONTRIBUTING.md
@@ -386,4 +384,5 @@
 ├── README.md
 ├── RELEASE_NOTES.md
 ├── changes.md
-└── icon.png
+├── icon.png
+└── project.sh

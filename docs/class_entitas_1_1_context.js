@@ -11,6 +11,7 @@ var class_entitas_1_1_context =
     [ "GetEntityIndex", "class_entitas_1_1_context.html#a596fdd33a0be12f534af444f4b36e076", null ],
     [ "GetGroup", "class_entitas_1_1_context.html#a5395e55b7d034cb6e33a86f4f73104c4", null ],
     [ "HasEntity", "class_entitas_1_1_context.html#a8dc55cc92fb7b80aaf48d18ed48346e6", null ],
+    [ "RemoveAllEventHandlers", "class_entitas_1_1_context.html#acca3015253954ec2e2878bdb20402eb0", null ],
     [ "Reset", "class_entitas_1_1_context.html#a60f65a4d43272c707911f90705d58c32", null ],
     [ "ResetCreationIndex", "class_entitas_1_1_context.html#ac065a992fc8f1d8609f1400bde1b1e8c", null ],
     [ "ToString", "class_entitas_1_1_context.html#ae4ee1909178ab3f426810e08ea9178ee", null ],
