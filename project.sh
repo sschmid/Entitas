@@ -1,6 +1,8 @@
 #!/bin/bash
 
+source "${HOME}/.bee/entitas"
 BUILD="${ROOT}/Build"
+BUILD_DIST="${BUILD}/dist"
 
 # utils
 UTILS_RSYNC_INCLUDE="${ROOT}/Scripts/rsync_include.txt"
@@ -44,14 +46,13 @@ GITHUB_CHANGES="${CHANGELOG_CHANGES}"
 GITHUB_RELEASE_PREFIX="${DOTNET_PROJECT_NAME}"
 GITHUB_REPO="sschmid/Entitas-CSharp"
 declare -a -r GITHUB_ATTACHMENTS_ZIP=(
-  "${DOTNET_PROJECT_NAME}.zip"
-#  "${DOTNET_PROJECT_NAME}.docset.tgz"
+  "${BUILD_DIST}/${DOTNET_PROJECT_NAME}.zip"
+#  "${BUILD_DIST}/${DOTNET_PROJECT_NAME}.docset.tgz"
 )
 
 # entitas
 BUILD_SRC="${BUILD}/src"
 BUILD_FILES="${BUILD_SRC}/files"
-BUILD_DIST="${BUILD}/dist"
 
 DEPS_DIR="${ROOT}/Libraries/Dependencies/DesperateDevs"
 declare -a -r DEPS=(
