@@ -2,6 +2,10 @@
 
 Ignore - this is an automated debug test release
 
+# 1.8.3
+
+Ignore - this is an automated debug test release
+
 # 1.8.2
 
 As always, the Unity Asset Store version might take a few days to be processed
