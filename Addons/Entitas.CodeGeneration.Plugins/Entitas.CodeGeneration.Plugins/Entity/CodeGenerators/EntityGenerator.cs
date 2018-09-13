@@ -18,11 +18,11 @@ namespace Entitas.CodeGeneration.Plugins {
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             return data
                 .OfType<ContextData>()
-                .Select(generte)
+                .Select(generate)
                 .ToArray();
         }
 
-        CodeGenFile generte(ContextData data) {
+        CodeGenFile generate(ContextData data) {
             var contextName = data.GetContextName();
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +
