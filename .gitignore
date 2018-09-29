@@ -23,13 +23,11 @@ Temp
 Assembly-CSharp*.csproj
 
 # Custom
+CHANGES.md
 *.userproperties
 Build
 **/Assets/Libraries
 **/Assets/Libraries.meta
 Tests/Unity/CodeGenerator/Jenny
-private.sh
 Blueprints.sln
 VisualDebugging.sln
-changes.md
-bee.sln
