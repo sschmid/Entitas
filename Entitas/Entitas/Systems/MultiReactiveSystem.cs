@@ -77,11 +77,10 @@ namespace Entitas {
             }
 
             if (_buffer.Count != 0) {
-                try{
+                try {
                     Execute(_buffer);
-                }
-                finally{
-                    for (int i = 0; i < _buffer.Count; i++){
+                } finally {
+                    for (int i = 0; i < _buffer.Count; i++) {
                         _buffer[i].Release(this);
                     }
                     _buffer.Clear();
