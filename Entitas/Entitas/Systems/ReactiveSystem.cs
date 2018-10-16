@@ -69,8 +69,7 @@ namespace Entitas {
                         Execute(_buffer);
                     }
                     finally{
-                        for (int i = 0; i < _buffer.Count; i++)
-                        {
+                        for (int i = 0; i < _buffer.Count; i++){
                             _buffer[i].Release(this);
                         }
                         _buffer.Clear();
