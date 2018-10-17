@@ -1,6 +1,6 @@
 language: csharp
 sudo: required
 install:
-- bash -c "$(curl -fsSL https://raw.githubusercontent.com/sschmid/bee/master/install)"
+- sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/sschmid/bee/master/install)"
 script:
 - bee dotnet::tests
