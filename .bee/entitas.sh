@@ -3,6 +3,7 @@
 BUILD="Build"
 BUILD_SRC="${BUILD}/src"
 BUILD_FILES="${BUILD_SRC}/files"
+BUILD_DIST="${BUILD}/dist"
 
 DEPS_DIR="Libraries/Dependencies/DesperateDevs"
 DEPS=(
@@ -192,8 +193,12 @@ entitas::pack_entitas_unity() {
   utils::sync "${BUILD_SRC}/Unity/Entitas/Assets" "${tmp_dir}"
   utils::sync "${BUILD_FILES}/" "${tmp_dir}/Assets/Entitas"
 
+  pushd "${BUILD_DIST}" > /dev/null
+    local abs_build_dist="$(pwd)"
+  popd > /dev/null
+
   pushd "${tmp_dir}" > /dev/null
-    zip -rq "$BUILD_DIST/${PROJECT_NAME}.zip" ./
+    zip -rq "${abs_build_dist}/${PROJECT}.zip" ./
   popd > /dev/null
   rm -rf "${tmp_dir}"
 }
@@ -201,15 +206,15 @@ entitas::pack_entitas_unity() {
 entitas::pack() {
   log_func
   entitas::update
-  dotnet::clean_build
+  dotnet::rebuild
   dotnet::tests
 
   utils::clean_dir "${BUILD_SRC}" "${BUILD_DIST}"
 
-  docs::generate
+  doxygen::generate
 #  create docset tgz
 #  pushd "${DOCS_BUILD}/docset" > /dev/null
-#    tar --exclude='.DS_Store' -czf "${BUILD_DIST}/${PROJECT_NAME}.docset.tgz" "${PROJECT_NAME}.docset"
+#    tar --exclude='.DS_Store' -czf "${BUILD_DIST}/${PROJECT_NAME}.docset.tgz" "${PROJECT}.docset"
 #  popd > /dev/null
 
   entitas::pack_entitas_unity

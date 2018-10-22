@@ -40,4 +40,4 @@ UTILS_RSYNC_INCLUDE="${RESOURCES}"/utils/rsync_include.txt
 UTILS_RSYNC_EXCLUDE="${RESOURCES}"/utils/rsync_exclude.txt
 
 # version
-VERSION_PATH=version.txt
+VERSION_PATH="${PROJECT}/${PROJECT}"/version.txt
