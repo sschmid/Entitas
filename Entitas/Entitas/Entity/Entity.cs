@@ -180,7 +180,9 @@ namespace Entitas {
         }
 
         void replaceComponent(int index, IComponent replacement) {
-            _toStringCache = null;
+            // TODO VD PERFORMANCE
+            // _toStringCache = null;
+
             var previousComponent = _components[index];
             if (replacement != previousComponent) {
                 _components[index] = replacement;
@@ -193,6 +195,10 @@ namespace Entitas {
                     }
                 } else {
                     _componentIndicesCache = null;
+
+                    // TODO VD PERFORMANCE
+                    _toStringCache = null;
+
                     if (OnComponentRemoved != null) {
                         OnComponentRemoved(this, index, previousComponent);
                     }
@@ -347,7 +353,9 @@ namespace Entitas {
         /// release it manually at some point.
         public void Retain(object owner) {
             _aerc.Retain(owner);
-            _toStringCache = null;
+
+            // TODO VD PERFORMANCE
+            // _toStringCache = null;
         }
 
         /// Releases the entity. An owner can only release an entity
@@ -358,7 +366,9 @@ namespace Entitas {
         /// release it manually at some point.
         public void Release(object owner) {
             _aerc.Release(owner);
-            _toStringCache = null;
+
+            // TODO VD PERFORMANCE
+            // _toStringCache = null;
 
             if (_aerc.retainCount == 0) {
                 if (OnEntityReleased != null) {
@@ -406,9 +416,12 @@ namespace Entitas {
                 _toStringBuilder
                     .Append("Entity_")
                     .Append(_creationIndex)
-                    .Append("(*")
-                    .Append(retainCount)
-                    .Append(")")
+
+                    // TODO VD PERFORMANCE
+//                    .Append("(*")
+//                    .Append(retainCount)
+//                    .Append(")")
+
                     .Append("(");
 
                 const string separator = ", ";
@@ -417,13 +430,19 @@ namespace Entitas {
                 for (int i = 0; i < components.Length; i++) {
                     var component = components[i];
                     var type = component.GetType();
-                    var implementsToString = type.GetMethod("ToString")
-                        .DeclaringType.ImplementsInterface<IComponent>();
-                    _toStringBuilder.Append(
-                        implementsToString
-                            ? component.ToString()
-                            : type.ToCompilableString().RemoveComponentSuffix()
-                    );
+
+                    // TODO VD PERFORMANCE
+                    _toStringCache = null;
+
+//                    var implementsToString = type.GetMethod("ToString")
+//                        .DeclaringType.ImplementsInterface<IComponent>();
+//                    _toStringBuilder.Append(
+//                        implementsToString
+//                            ? component.ToString()
+//                            : type.ToCompilableString().RemoveComponentSuffix()
+//                    );
+
+                    _toStringBuilder.Append(component.ToString());
 
                     if (i < lastSeparator) {
                         _toStringBuilder.Append(separator);
