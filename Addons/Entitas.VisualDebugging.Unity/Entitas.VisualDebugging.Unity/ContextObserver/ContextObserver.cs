@@ -13,6 +13,7 @@ namespace Entitas.VisualDebugging.Unity {
         readonly IContext _context;
         readonly List<IGroup> _groups;
         readonly GameObject _gameObject;
+        readonly Stack<EntityBehaviour> _entityBehaviourPool = new Stack<EntityBehaviour>();
 
         StringBuilder _toStringBuilder = new StringBuilder();
 
@@ -32,8 +33,11 @@ namespace Entitas.VisualDebugging.Unity {
         }
 
         void onEntityCreated(IContext context, IEntity entity) {
-            var entityBehaviour = new GameObject().AddComponent<EntityBehaviour>();
-            entityBehaviour.Init(context, entity);
+            var entityBehaviour = _entityBehaviourPool.Count > 0
+                ? _entityBehaviourPool.Pop()
+                : new GameObject().AddComponent<EntityBehaviour>();
+
+            entityBehaviour.Init(context, entity, _entityBehaviourPool);
             entityBehaviour.transform.SetParent(_gameObject.transform, false);
         }
 
