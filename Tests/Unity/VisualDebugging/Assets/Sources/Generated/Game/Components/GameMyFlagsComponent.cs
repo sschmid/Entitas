@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyFlags(MyFlagsComponent.MyFlags newMyFlags) {
         var index = GameComponentsLookup.MyFlags;
-        var component = CreateComponent<MyFlagsComponent>(index);
+        var component = (MyFlagsComponent)CreateComponent(index, typeof(MyFlagsComponent));
         component.myFlags = newMyFlags;
         AddComponent(index, component);
     }
 
     public void ReplaceMyFlags(MyFlagsComponent.MyFlags newMyFlags) {
         var index = GameComponentsLookup.MyFlags;
-        var component = CreateComponent<MyFlagsComponent>(index);
+        var component = (MyFlagsComponent)CreateComponent(index, typeof(MyFlagsComponent));
         component.myFlags = newMyFlags;
         ReplaceComponent(index, component);
     }

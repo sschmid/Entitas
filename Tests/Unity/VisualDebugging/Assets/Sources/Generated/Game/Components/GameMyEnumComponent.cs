@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyEnum(MyEnumComponent.MyEnum newMyEnum) {
         var index = GameComponentsLookup.MyEnum;
-        var component = CreateComponent<MyEnumComponent>(index);
+        var component = (MyEnumComponent)CreateComponent(index, typeof(MyEnumComponent));
         component.myEnum = newMyEnum;
         AddComponent(index, component);
     }
 
     public void ReplaceMyEnum(MyEnumComponent.MyEnum newMyEnum) {
         var index = GameComponentsLookup.MyEnum;
-        var component = CreateComponent<MyEnumComponent>(index);
+        var component = (MyEnumComponent)CreateComponent(index, typeof(MyEnumComponent));
         component.myEnum = newMyEnum;
         ReplaceComponent(index, component);
     }

@@ -51,14 +51,14 @@ public partial class GameEntity {
 
     public void AddISomeInterface(ISomeInterface newValue) {
         var index = GameComponentsLookup.ISomeInterface;
-        var component = CreateComponent<ISomeInterfaceComponent>(index);
+        var component = (ISomeInterfaceComponent)CreateComponent(index, typeof(ISomeInterfaceComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceISomeInterface(ISomeInterface newValue) {
         var index = GameComponentsLookup.ISomeInterface;
-        var component = CreateComponent<ISomeInterfaceComponent>(index);
+        var component = (ISomeInterfaceComponent)CreateComponent(index, typeof(ISomeInterfaceComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

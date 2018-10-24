@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
         var index = GameComponentsLookup.AnimationCurve;
-        var component = CreateComponent<AnimationCurveComponent>(index);
+        var component = (AnimationCurveComponent)CreateComponent(index, typeof(AnimationCurveComponent));
         component.animationCurve = newAnimationCurve;
         AddComponent(index, component);
     }
 
     public void ReplaceAnimationCurve(UnityEngine.AnimationCurve newAnimationCurve) {
         var index = GameComponentsLookup.AnimationCurve;
-        var component = CreateComponent<AnimationCurveComponent>(index);
+        var component = (AnimationCurveComponent)CreateComponent(index, typeof(AnimationCurveComponent));
         component.animationCurve = newAnimationCurve;
         ReplaceComponent(index, component);
     }

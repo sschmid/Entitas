@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddSimpleObject(SimpleObject newSimpleObject) {
         var index = GameComponentsLookup.SimpleObject;
-        var component = CreateComponent<SimpleObjectComponent>(index);
+        var component = (SimpleObjectComponent)CreateComponent(index, typeof(SimpleObjectComponent));
         component.simpleObject = newSimpleObject;
         AddComponent(index, component);
     }
 
     public void ReplaceSimpleObject(SimpleObject newSimpleObject) {
         var index = GameComponentsLookup.SimpleObject;
-        var component = CreateComponent<SimpleObjectComponent>(index);
+        var component = (SimpleObjectComponent)CreateComponent(index, typeof(SimpleObjectComponent));
         component.simpleObject = newSimpleObject;
         ReplaceComponent(index, component);
     }

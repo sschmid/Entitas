@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddList(System.Collections.Generic.List<string> newList) {
         var index = GameComponentsLookup.List;
-        var component = CreateComponent<ListComponent>(index);
+        var component = (ListComponent)CreateComponent(index, typeof(ListComponent));
         component.list = newList;
         AddComponent(index, component);
     }
 
     public void ReplaceList(System.Collections.Generic.List<string> newList) {
         var index = GameComponentsLookup.List;
-        var component = CreateComponent<ListComponent>(index);
+        var component = (ListComponent)CreateComponent(index, typeof(ListComponent));
         component.list = newList;
         ReplaceComponent(index, component);
     }

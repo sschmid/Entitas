@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddRect(UnityEngine.Rect newRect) {
         var index = GameComponentsLookup.Rect;
-        var component = CreateComponent<RectComponent>(index);
+        var component = (RectComponent)CreateComponent(index, typeof(RectComponent));
         component.rect = newRect;
         AddComponent(index, component);
     }
 
     public void ReplaceRect(UnityEngine.Rect newRect) {
         var index = GameComponentsLookup.Rect;
-        var component = CreateComponent<RectComponent>(index);
+        var component = (RectComponent)CreateComponent(index, typeof(RectComponent));
         component.rect = newRect;
         ReplaceComponent(index, component);
     }

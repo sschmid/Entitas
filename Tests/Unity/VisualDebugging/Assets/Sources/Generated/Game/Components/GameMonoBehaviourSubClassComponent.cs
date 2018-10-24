@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
         var index = GameComponentsLookup.MonoBehaviourSubClass;
-        var component = CreateComponent<MonoBehaviourSubClassComponent>(index);
+        var component = (MonoBehaviourSubClassComponent)CreateComponent(index, typeof(MonoBehaviourSubClassComponent));
         component.monoBehaviour = newMonoBehaviour;
         AddComponent(index, component);
     }
 
     public void ReplaceMonoBehaviourSubClass(MonoBehaviourSubClass newMonoBehaviour) {
         var index = GameComponentsLookup.MonoBehaviourSubClass;
-        var component = CreateComponent<MonoBehaviourSubClassComponent>(index);
+        var component = (MonoBehaviourSubClassComponent)CreateComponent(index, typeof(MonoBehaviourSubClassComponent));
         component.monoBehaviour = newMonoBehaviour;
         ReplaceComponent(index, component);
     }

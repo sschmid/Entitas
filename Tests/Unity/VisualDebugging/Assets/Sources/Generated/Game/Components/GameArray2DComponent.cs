@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddArray2D(string[,] newArray2d) {
         var index = GameComponentsLookup.Array2D;
-        var component = CreateComponent<Array2DComponent>(index);
+        var component = (Array2DComponent)CreateComponent(index, typeof(Array2DComponent));
         component.array2d = newArray2d;
         AddComponent(index, component);
     }
 
     public void ReplaceArray2D(string[,] newArray2d) {
         var index = GameComponentsLookup.Array2D;
-        var component = CreateComponent<Array2DComponent>(index);
+        var component = (Array2DComponent)CreateComponent(index, typeof(Array2DComponent));
         component.array2d = newArray2d;
         ReplaceComponent(index, component);
     }

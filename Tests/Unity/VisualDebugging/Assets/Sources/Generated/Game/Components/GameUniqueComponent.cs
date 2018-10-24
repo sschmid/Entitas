@@ -51,14 +51,14 @@ public partial class GameEntity {
 
     public void AddUnique(string newValue) {
         var index = GameComponentsLookup.Unique;
-        var component = CreateComponent<UniqueComponent>(index);
+        var component = (UniqueComponent)CreateComponent(index, typeof(UniqueComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceUnique(string newValue) {
         var index = GameComponentsLookup.Unique;
-        var component = CreateComponent<UniqueComponent>(index);
+        var component = (UniqueComponent)CreateComponent(index, typeof(UniqueComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

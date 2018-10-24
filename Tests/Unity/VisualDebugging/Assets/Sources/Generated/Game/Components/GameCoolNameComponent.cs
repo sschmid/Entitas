@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddCoolName(BadName newValue) {
         var index = GameComponentsLookup.CoolName;
-        var component = CreateComponent<CoolNameComponent>(index);
+        var component = (CoolNameComponent)CreateComponent(index, typeof(CoolNameComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceCoolName(BadName newValue) {
         var index = GameComponentsLookup.CoolName;
-        var component = CreateComponent<CoolNameComponent>(index);
+        var component = (CoolNameComponent)CreateComponent(index, typeof(CoolNameComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

@@ -11,7 +11,7 @@ class ContextTests {
 
     [Test]
     public void ensures_same_deterministic_order_when_getting_entities_after_DestroyAllEntities() {
-        var context = new Context<Entity>(1);
+        var context = new Context<Entity>(1, () => new GameEntity());
 
         const int numEntities = 10;
         for (int i = 0; i < numEntities; i++) {

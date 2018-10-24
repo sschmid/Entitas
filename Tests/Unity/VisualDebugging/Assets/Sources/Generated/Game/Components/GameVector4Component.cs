@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddVector4(UnityEngine.Vector4 newVector4) {
         var index = GameComponentsLookup.Vector4;
-        var component = CreateComponent<Vector4Component>(index);
+        var component = (Vector4Component)CreateComponent(index, typeof(Vector4Component));
         component.vector4 = newVector4;
         AddComponent(index, component);
     }
 
     public void ReplaceVector4(UnityEngine.Vector4 newVector4) {
         var index = GameComponentsLookup.Vector4;
-        var component = CreateComponent<Vector4Component>(index);
+        var component = (Vector4Component)CreateComponent(index, typeof(Vector4Component));
         component.vector4 = newVector4;
         ReplaceComponent(index, component);
     }

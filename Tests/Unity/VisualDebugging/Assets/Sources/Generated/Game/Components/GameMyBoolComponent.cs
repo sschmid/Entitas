@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyBool(bool newMyBool) {
         var index = GameComponentsLookup.MyBool;
-        var component = CreateComponent<MyBoolComponent>(index);
+        var component = (MyBoolComponent)CreateComponent(index, typeof(MyBoolComponent));
         component.myBool = newMyBool;
         AddComponent(index, component);
     }
 
     public void ReplaceMyBool(bool newMyBool) {
         var index = GameComponentsLookup.MyBool;
-        var component = CreateComponent<MyBoolComponent>(index);
+        var component = (MyBoolComponent)CreateComponent(index, typeof(MyBoolComponent));
         component.myBool = newMyBool;
         ReplaceComponent(index, component);
     }

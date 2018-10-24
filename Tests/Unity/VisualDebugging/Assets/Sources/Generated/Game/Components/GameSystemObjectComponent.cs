@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddSystemObject(object newSystemObject) {
         var index = GameComponentsLookup.SystemObject;
-        var component = CreateComponent<SystemObjectComponent>(index);
+        var component = (SystemObjectComponent)CreateComponent(index, typeof(SystemObjectComponent));
         component.systemObject = newSystemObject;
         AddComponent(index, component);
     }
 
     public void ReplaceSystemObject(object newSystemObject) {
         var index = GameComponentsLookup.SystemObject;
-        var component = CreateComponent<SystemObjectComponent>(index);
+        var component = (SystemObjectComponent)CreateComponent(index, typeof(SystemObjectComponent));
         component.systemObject = newSystemObject;
         ReplaceComponent(index, component);
     }

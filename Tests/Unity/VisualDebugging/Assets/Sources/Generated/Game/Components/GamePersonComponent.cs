@@ -13,7 +13,7 @@ public partial class GameEntity {
 
     public void AddPerson(string newName, string newGender) {
         var index = GameComponentsLookup.Person;
-        var component = CreateComponent<PersonComponent>(index);
+        var component = (PersonComponent)CreateComponent(index, typeof(PersonComponent));
         component.name = newName;
         component.gender = newGender;
         AddComponent(index, component);
@@ -21,7 +21,7 @@ public partial class GameEntity {
 
     public void ReplacePerson(string newName, string newGender) {
         var index = GameComponentsLookup.Person;
-        var component = CreateComponent<PersonComponent>(index);
+        var component = (PersonComponent)CreateComponent(index, typeof(PersonComponent));
         component.name = newName;
         component.gender = newGender;
         ReplaceComponent(index, component);

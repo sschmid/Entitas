@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddHashSet(System.Collections.Generic.HashSet<string> newHashset) {
         var index = GameComponentsLookup.HashSet;
-        var component = CreateComponent<HashSetComponent>(index);
+        var component = (HashSetComponent)CreateComponent(index, typeof(HashSetComponent));
         component.hashset = newHashset;
         AddComponent(index, component);
     }
 
     public void ReplaceHashSet(System.Collections.Generic.HashSet<string> newHashset) {
         var index = GameComponentsLookup.HashSet;
-        var component = CreateComponent<HashSetComponent>(index);
+        var component = (HashSetComponent)CreateComponent(index, typeof(HashSetComponent));
         component.hashset = newHashset;
         ReplaceComponent(index, component);
     }

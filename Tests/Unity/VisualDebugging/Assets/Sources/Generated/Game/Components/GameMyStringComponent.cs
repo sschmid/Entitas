@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyString(string newMyString) {
         var index = GameComponentsLookup.MyString;
-        var component = CreateComponent<MyStringComponent>(index);
+        var component = (MyStringComponent)CreateComponent(index, typeof(MyStringComponent));
         component.myString = newMyString;
         AddComponent(index, component);
     }
 
     public void ReplaceMyString(string newMyString) {
         var index = GameComponentsLookup.MyString;
-        var component = CreateComponent<MyStringComponent>(index);
+        var component = (MyStringComponent)CreateComponent(index, typeof(MyStringComponent));
         component.myString = newMyString;
         ReplaceComponent(index, component);
     }

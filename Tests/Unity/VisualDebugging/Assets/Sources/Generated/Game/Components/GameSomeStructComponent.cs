@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddSomeStruct(SomeStruct newValue) {
         var index = GameComponentsLookup.SomeStruct;
-        var component = CreateComponent<SomeStructComponent>(index);
+        var component = (SomeStructComponent)CreateComponent(index, typeof(SomeStructComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceSomeStruct(SomeStruct newValue) {
         var index = GameComponentsLookup.SomeStruct;
-        var component = CreateComponent<SomeStructComponent>(index);
+        var component = (SomeStructComponent)CreateComponent(index, typeof(SomeStructComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

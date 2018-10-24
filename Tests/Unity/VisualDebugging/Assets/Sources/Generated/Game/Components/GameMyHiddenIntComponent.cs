@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyHiddenInt(int newMyInt) {
         var index = GameComponentsLookup.MyHiddenInt;
-        var component = CreateComponent<MyHiddenIntComponent>(index);
+        var component = (MyHiddenIntComponent)CreateComponent(index, typeof(MyHiddenIntComponent));
         component.myInt = newMyInt;
         AddComponent(index, component);
     }
 
     public void ReplaceMyHiddenInt(int newMyInt) {
         var index = GameComponentsLookup.MyHiddenInt;
-        var component = CreateComponent<MyHiddenIntComponent>(index);
+        var component = (MyHiddenIntComponent)CreateComponent(index, typeof(MyHiddenIntComponent));
         component.myInt = newMyInt;
         ReplaceComponent(index, component);
     }

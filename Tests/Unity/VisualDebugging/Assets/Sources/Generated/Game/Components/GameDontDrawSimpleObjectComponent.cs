@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddDontDrawSimpleObject(SimpleObject newSimpleObject) {
         var index = GameComponentsLookup.DontDrawSimpleObject;
-        var component = CreateComponent<DontDrawSimpleObjectComponent>(index);
+        var component = (DontDrawSimpleObjectComponent)CreateComponent(index, typeof(DontDrawSimpleObjectComponent));
         component.simpleObject = newSimpleObject;
         AddComponent(index, component);
     }
 
     public void ReplaceDontDrawSimpleObject(SimpleObject newSimpleObject) {
         var index = GameComponentsLookup.DontDrawSimpleObject;
-        var component = CreateComponent<DontDrawSimpleObjectComponent>(index);
+        var component = (DontDrawSimpleObjectComponent)CreateComponent(index, typeof(DontDrawSimpleObjectComponent));
         component.simpleObject = newSimpleObject;
         ReplaceComponent(index, component);
     }

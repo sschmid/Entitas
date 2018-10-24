@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddCustomObject(CustomObject newCustomObject) {
         var index = GameComponentsLookup.CustomObject;
-        var component = CreateComponent<CustomObjectComponent>(index);
+        var component = (CustomObjectComponent)CreateComponent(index, typeof(CustomObjectComponent));
         component.customObject = newCustomObject;
         AddComponent(index, component);
     }
 
     public void ReplaceCustomObject(CustomObject newCustomObject) {
         var index = GameComponentsLookup.CustomObject;
-        var component = CreateComponent<CustomObjectComponent>(index);
+        var component = (CustomObjectComponent)CreateComponent(index, typeof(CustomObjectComponent));
         component.customObject = newCustomObject;
         ReplaceComponent(index, component);
     }

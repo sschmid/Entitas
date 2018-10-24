@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddColor(UnityEngine.Color newColor) {
         var index = GameComponentsLookup.Color;
-        var component = CreateComponent<ColorComponent>(index);
+        var component = (ColorComponent)CreateComponent(index, typeof(ColorComponent));
         component.color = newColor;
         AddComponent(index, component);
     }
 
     public void ReplaceColor(UnityEngine.Color newColor) {
         var index = GameComponentsLookup.Color;
-        var component = CreateComponent<ColorComponent>(index);
+        var component = (ColorComponent)CreateComponent(index, typeof(ColorComponent));
         component.color = newColor;
         ReplaceComponent(index, component);
     }
