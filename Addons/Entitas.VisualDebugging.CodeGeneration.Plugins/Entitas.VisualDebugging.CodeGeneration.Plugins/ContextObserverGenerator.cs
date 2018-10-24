@@ -17,7 +17,7 @@ namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
-    public void InitializeContexObservers() {
+    public void InitializeContextObservers() {
         try {
 ${contextObservers}
         } catch(System.Exception) {
