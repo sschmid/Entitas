@@ -20,11 +20,11 @@ public sealed partial class GameStateContext : Entitas.Context<GameStateEntity> 
             (entity) =>
 
 #if (ENTITAS_FAST_AND_UNSAFE)
-                new Entitas.UnsafeAERC()
+                new Entitas.UnsafeAERC(),
 #else
-                new Entitas.SafeAERC(entity)
+                new Entitas.SafeAERC(entity),
 #endif
-
+            () => new GameStateEntity()
         ) {
     }
 }

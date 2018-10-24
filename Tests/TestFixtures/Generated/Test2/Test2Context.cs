@@ -20,11 +20,11 @@ public sealed partial class Test2Context : Entitas.Context<Test2Entity> {
             (entity) =>
 
 #if (ENTITAS_FAST_AND_UNSAFE)
-                new Entitas.UnsafeAERC()
+                new Entitas.UnsafeAERC(),
 #else
-                new Entitas.SafeAERC(entity)
+                new Entitas.SafeAERC(entity),
 #endif
-
+            () => new Test2Entity()
         ) {
     }
 }
