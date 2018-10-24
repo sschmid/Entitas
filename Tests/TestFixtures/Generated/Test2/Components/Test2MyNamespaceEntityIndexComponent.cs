@@ -13,14 +13,14 @@ public partial class Test2Entity {
 
     public void AddMyNamespaceEntityIndex(string newValue) {
         var index = Test2ComponentsLookup.MyNamespaceEntityIndex;
-        var component = CreateComponent<My.Namespace.EntityIndexComponent>(index);
+        var component = (My.Namespace.EntityIndexComponent)CreateComponent(index, typeof(My.Namespace.EntityIndexComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMyNamespaceEntityIndex(string newValue) {
         var index = Test2ComponentsLookup.MyNamespaceEntityIndex;
-        var component = CreateComponent<My.Namespace.EntityIndexComponent>(index);
+        var component = (My.Namespace.EntityIndexComponent)CreateComponent(index, typeof(My.Namespace.EntityIndexComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

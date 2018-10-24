@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddComponentWithProperties(string newPublicProperty) {
         var index = TestComponentsLookup.ComponentWithProperties;
-        var component = CreateComponent<ComponentWithProperties>(index);
+        var component = (ComponentWithProperties)CreateComponent(index, typeof(ComponentWithProperties));
         component.publicProperty = newPublicProperty;
         AddComponent(index, component);
     }
 
     public void ReplaceComponentWithProperties(string newPublicProperty) {
         var index = TestComponentsLookup.ComponentWithProperties;
-        var component = CreateComponent<ComponentWithProperties>(index);
+        var component = (ComponentWithProperties)CreateComponent(index, typeof(ComponentWithProperties));
         component.publicProperty = newPublicProperty;
         ReplaceComponent(index, component);
     }

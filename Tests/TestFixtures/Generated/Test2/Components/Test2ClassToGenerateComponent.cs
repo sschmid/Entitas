@@ -13,14 +13,14 @@ public partial class Test2Entity {
 
     public void AddClassToGenerate(My.Namespace.ClassToGenerate newValue) {
         var index = Test2ComponentsLookup.ClassToGenerate;
-        var component = CreateComponent<ClassToGenerateComponent>(index);
+        var component = (ClassToGenerateComponent)CreateComponent(index, typeof(ClassToGenerateComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceClassToGenerate(My.Namespace.ClassToGenerate newValue) {
         var index = Test2ComponentsLookup.ClassToGenerate;
-        var component = CreateComponent<ClassToGenerateComponent>(index);
+        var component = (ClassToGenerateComponent)CreateComponent(index, typeof(ClassToGenerateComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

@@ -13,7 +13,7 @@ public partial class TestEntity {
 
     public void AddPosition(int newX, int newY) {
         var index = TestComponentsLookup.Position;
-        var component = CreateComponent<PositionComponent>(index);
+        var component = (PositionComponent)CreateComponent(index, typeof(PositionComponent));
         component.x = newX;
         component.y = newY;
         AddComponent(index, component);
@@ -21,7 +21,7 @@ public partial class TestEntity {
 
     public void ReplacePosition(int newX, int newY) {
         var index = TestComponentsLookup.Position;
-        var component = CreateComponent<PositionComponent>(index);
+        var component = (PositionComponent)CreateComponent(index, typeof(PositionComponent));
         component.x = newX;
         component.y = newY;
         ReplaceComponent(index, component);

@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddTest2Context(string newValue) {
         var index = TestComponentsLookup.Test2Context;
-        var component = CreateComponent<Test2ContextComponent>(index);
+        var component = (Test2ContextComponent)CreateComponent(index, typeof(Test2ContextComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceTest2Context(string newValue) {
         var index = TestComponentsLookup.Test2Context;
-        var component = CreateComponent<Test2ContextComponent>(index);
+        var component = (Test2ContextComponent)CreateComponent(index, typeof(Test2ContextComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

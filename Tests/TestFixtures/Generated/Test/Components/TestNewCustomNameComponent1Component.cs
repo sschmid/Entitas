@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddNewCustomNameComponent1(CustomName newValue) {
         var index = TestComponentsLookup.NewCustomNameComponent1;
-        var component = CreateComponent<NewCustomNameComponent1Component>(index);
+        var component = (NewCustomNameComponent1Component)CreateComponent(index, typeof(NewCustomNameComponent1Component));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceNewCustomNameComponent1(CustomName newValue) {
         var index = TestComponentsLookup.NewCustomNameComponent1;
-        var component = CreateComponent<NewCustomNameComponent1Component>(index);
+        var component = (NewCustomNameComponent1Component)CreateComponent(index, typeof(NewCustomNameComponent1Component));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

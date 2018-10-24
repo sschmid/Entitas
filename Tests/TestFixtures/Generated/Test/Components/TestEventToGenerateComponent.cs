@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddEventToGenerate(My.Namespace.EventToGenerate newValue) {
         var index = TestComponentsLookup.EventToGenerate;
-        var component = CreateComponent<EventToGenerateComponent>(index);
+        var component = (EventToGenerateComponent)CreateComponent(index, typeof(EventToGenerateComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceEventToGenerate(My.Namespace.EventToGenerate newValue) {
         var index = TestComponentsLookup.EventToGenerate;
-        var component = CreateComponent<EventToGenerateComponent>(index);
+        var component = (EventToGenerateComponent)CreateComponent(index, typeof(EventToGenerateComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

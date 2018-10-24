@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyNamespaceEntityIndexNoContext(string newValue) {
         var index = GameComponentsLookup.MyNamespaceEntityIndexNoContext;
-        var component = CreateComponent<My.Namespace.EntityIndexNoContextComponent>(index);
+        var component = (My.Namespace.EntityIndexNoContextComponent)CreateComponent(index, typeof(My.Namespace.EntityIndexNoContextComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMyNamespaceEntityIndexNoContext(string newValue) {
         var index = GameComponentsLookup.MyNamespaceEntityIndexNoContext;
-        var component = CreateComponent<My.Namespace.EntityIndexNoContextComponent>(index);
+        var component = (My.Namespace.EntityIndexNoContextComponent)CreateComponent(index, typeof(My.Namespace.EntityIndexNoContextComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

@@ -13,7 +13,7 @@ public partial class TestEntity {
 
     public void AddMyNamespaceMultipleEntityIndices(string newValue, string newValue2) {
         var index = TestComponentsLookup.MyNamespaceMultipleEntityIndices;
-        var component = CreateComponent<My.Namespace.MultipleEntityIndicesComponent>(index);
+        var component = (My.Namespace.MultipleEntityIndicesComponent)CreateComponent(index, typeof(My.Namespace.MultipleEntityIndicesComponent));
         component.value = newValue;
         component.value2 = newValue2;
         AddComponent(index, component);
@@ -21,7 +21,7 @@ public partial class TestEntity {
 
     public void ReplaceMyNamespaceMultipleEntityIndices(string newValue, string newValue2) {
         var index = TestComponentsLookup.MyNamespaceMultipleEntityIndices;
-        var component = CreateComponent<My.Namespace.MultipleEntityIndicesComponent>(index);
+        var component = (My.Namespace.MultipleEntityIndicesComponent)CreateComponent(index, typeof(My.Namespace.MultipleEntityIndicesComponent));
         component.value = newValue;
         component.value2 = newValue2;
         ReplaceComponent(index, component);

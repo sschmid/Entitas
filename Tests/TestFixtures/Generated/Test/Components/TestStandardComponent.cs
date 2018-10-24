@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddStandard(string newValue) {
         var index = TestComponentsLookup.Standard;
-        var component = CreateComponent<StandardComponent>(index);
+        var component = (StandardComponent)CreateComponent(index, typeof(StandardComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceStandard(string newValue) {
         var index = TestComponentsLookup.Standard;
-        var component = CreateComponent<StandardComponent>(index);
+        var component = (StandardComponent)CreateComponent(index, typeof(StandardComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }
