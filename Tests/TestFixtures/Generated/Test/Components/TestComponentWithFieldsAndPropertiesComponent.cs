@@ -13,7 +13,7 @@ public partial class TestEntity {
 
     public void AddComponentWithFieldsAndProperties(string newPublicField, string newPublicProperty) {
         var index = TestComponentsLookup.ComponentWithFieldsAndProperties;
-        var component = CreateComponent<ComponentWithFieldsAndProperties>(index);
+        var component = (ComponentWithFieldsAndProperties)CreateComponent(index, typeof(ComponentWithFieldsAndProperties));
         component.publicField = newPublicField;
         component.publicProperty = newPublicProperty;
         AddComponent(index, component);
@@ -21,7 +21,7 @@ public partial class TestEntity {
 
     public void ReplaceComponentWithFieldsAndProperties(string newPublicField, string newPublicProperty) {
         var index = TestComponentsLookup.ComponentWithFieldsAndProperties;
-        var component = CreateComponent<ComponentWithFieldsAndProperties>(index);
+        var component = (ComponentWithFieldsAndProperties)CreateComponent(index, typeof(ComponentWithFieldsAndProperties));
         component.publicField = newPublicField;
         component.publicProperty = newPublicProperty;
         ReplaceComponent(index, component);

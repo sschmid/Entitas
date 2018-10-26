@@ -13,7 +13,7 @@ public partial class TestEntity {
 
     public void AddSize(int newWidth, int newHeight) {
         var index = TestComponentsLookup.Size;
-        var component = CreateComponent<SizeComponent>(index);
+        var component = (SizeComponent)CreateComponent(index, typeof(SizeComponent));
         component.width = newWidth;
         component.height = newHeight;
         AddComponent(index, component);
@@ -21,7 +21,7 @@ public partial class TestEntity {
 
     public void ReplaceSize(int newWidth, int newHeight) {
         var index = TestComponentsLookup.Size;
-        var component = CreateComponent<SizeComponent>(index);
+        var component = (SizeComponent)CreateComponent(index, typeof(SizeComponent));
         component.width = newWidth;
         component.height = newHeight;
         ReplaceComponent(index, component);

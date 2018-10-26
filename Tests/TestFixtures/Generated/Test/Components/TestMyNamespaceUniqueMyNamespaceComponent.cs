@@ -51,14 +51,14 @@ public partial class TestEntity {
 
     public void AddMyNamespaceUniqueMyNamespace(string newValue) {
         var index = TestComponentsLookup.MyNamespaceUniqueMyNamespace;
-        var component = CreateComponent<My.Namespace.UniqueMyNamespaceComponent>(index);
+        var component = (My.Namespace.UniqueMyNamespaceComponent)CreateComponent(index, typeof(My.Namespace.UniqueMyNamespaceComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMyNamespaceUniqueMyNamespace(string newValue) {
         var index = TestComponentsLookup.MyNamespaceUniqueMyNamespace;
-        var component = CreateComponent<My.Namespace.UniqueMyNamespaceComponent>(index);
+        var component = (My.Namespace.UniqueMyNamespaceComponent)CreateComponent(index, typeof(My.Namespace.UniqueMyNamespaceComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

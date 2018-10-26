@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddAsset(string newName) {
         var index = GameComponentsLookup.Asset;
-        var component = CreateComponent<AssetComponent>(index);
+        var component = (AssetComponent)CreateComponent(index, typeof(AssetComponent));
         component.name = newName;
         AddComponent(index, component);
     }
 
     public void ReplaceAsset(string newName) {
         var index = GameComponentsLookup.Asset;
-        var component = CreateComponent<AssetComponent>(index);
+        var component = (AssetComponent)CreateComponent(index, typeof(AssetComponent));
         component.name = newName;
         ReplaceComponent(index, component);
     }

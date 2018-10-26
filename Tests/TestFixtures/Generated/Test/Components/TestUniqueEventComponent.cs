@@ -51,14 +51,14 @@ public partial class TestEntity {
 
     public void AddUniqueEvent(string newValue) {
         var index = TestComponentsLookup.UniqueEvent;
-        var component = CreateComponent<UniqueEventComponent>(index);
+        var component = (UniqueEventComponent)CreateComponent(index, typeof(UniqueEventComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceUniqueEvent(string newValue) {
         var index = TestComponentsLookup.UniqueEvent;
-        var component = CreateComponent<UniqueEventComponent>(index);
+        var component = (UniqueEventComponent)CreateComponent(index, typeof(UniqueEventComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

@@ -3,6 +3,7 @@
 BUILD="Build"
 BUILD_SRC="${BUILD}/src"
 BUILD_FILES="${BUILD_SRC}/files"
+BUILD_DIST="${BUILD}/dist"
 
 DEPS_DIR="Libraries/Dependencies/DesperateDevs"
 DEPS=(
@@ -85,7 +86,7 @@ entitas::update() {
   log_func
   utils::clean_dir "${DEPS_DIR}"
   for d in "${DEPS[@]}"; do
-    utils::sync_files "${d}" "${DEPS_DIR}"
+    utils::sync "${d}" "${DEPS_DIR}"
   done
 }
 
@@ -116,11 +117,11 @@ entitas::collect_entitas_unity() {
   utils::clean_dir "${entitas_dir}" "${entitas_editor_dir}" "${entitas_plugins_dir}" "${images_dir}" \
             "${desperatedevs_dir}" "${desperatedevs_editor_dir}" "${desperatedevs_plugins_dir}"
 
-  for p in "${ENTITAS_PROJECTS[@]}"; do utils::sync_files "${p}/bin/Release/" "${entitas_dir}"; done
-  utils::sync_files "${DEPS_DIR}/" "${entitas_dir}"
+  for p in "${ENTITAS_PROJECTS[@]}"; do utils::sync "${p}/bin/Release/" "${entitas_dir}"; done
+  utils::sync "${DEPS_DIR}/" "${entitas_dir}"
   for f in "${ENTITAS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${entitas_editor_dir}"; done
   for f in "${ENTITAS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${entitas_plugins_dir}"; done
-  for f in "${IMAGES[@]}"; do utils::sync_files "${f}" "${images_dir}"; done
+  for f in "${IMAGES[@]}"; do utils::sync "${f}" "${images_dir}"; done
   for f in "${DESPERATEDEVS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_dir}"; done
   for f in "${DESPERATEDEVS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_editor_dir}"; done
   for f in "${DESPERATEDEVS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_plugins_dir}"; done
@@ -138,14 +139,14 @@ entitas::collect_entitas_with_blueprints_unity() {
   utils::clean_dir "${entitas_dir}" "${entitas_editor_dir}" "${entitas_plugins_dir}" "${images_dir}" \
             "${desperatedevs_dir}" "${desperatedevs_editor_dir}" "${desperatedevs_plugins_dir}"
 
-  for p in "${ENTITAS_PROJECTS[@]}"; do utils::sync_files "${p}/bin/Release/" "${entitas_dir}"; done
-  for p in "${BLUEPRINTS_PROJECTS[@]}"; do utils::sync_files "${p}/bin/Release/" "${entitas_dir}"; done
-  utils::sync_files "${DEPS_DIR}/" "${entitas_dir}"
+  for p in "${ENTITAS_PROJECTS[@]}"; do utils::sync "${p}/bin/Release/" "${entitas_dir}"; done
+  for p in "${BLUEPRINTS_PROJECTS[@]}"; do utils::sync "${p}/bin/Release/" "${entitas_dir}"; done
+  utils::sync "${DEPS_DIR}/" "${entitas_dir}"
   for f in "${ENTITAS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${entitas_editor_dir}"; done
   for f in "${BLUEPRINTS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${entitas_editor_dir}"; done
   for f in "${ENTITAS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${entitas_plugins_dir}"; done
   for f in "${BLUEPRINTS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${entitas_plugins_dir}"; done
-  for d in "${IMAGES[@]}"; do utils::sync_files "${d}" "${images_dir}"; done
+  for d in "${IMAGES[@]}"; do utils::sync "${d}" "${images_dir}"; done
   for f in "${DESPERATEDEVS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_dir}"; done
   for f in "${DESPERATEDEVS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_editor_dir}"; done
   for f in "${DESPERATEDEVS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_plugins_dir}"; done
@@ -155,7 +156,7 @@ entitas::collect_files() {
   log_func
   utils::clean_dir "${BUILD_FILES}"
   for f in "${FILES[@]}"; do
-    utils::sync_files "${f}" "${BUILD_FILES}/${f}"
+    utils::sync "${f}" "${BUILD_FILES}/${f}"
   done
 }
 
@@ -164,8 +165,8 @@ entitas::sync_unity_visualdebugging() {
   entitas::collect_entitas_unity
   local unity_libs="Tests/Unity/VisualDebugging/Assets/Libraries"
   utils::clean_dir "${unity_libs}"
-  utils::sync_files "${BUILD_SRC}/Unity/Entitas/Assets/Entitas" "${unity_libs}"
-  utils::sync_files "${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs" "${unity_libs}"
+  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets/Entitas" "${unity_libs}"
+  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs" "${unity_libs}"
 }
 
 entitas::sync_unity_blueprints() {
@@ -173,8 +174,8 @@ entitas::sync_unity_blueprints() {
   entitas::collect_entitas_with_blueprints_unity
   local unity_libs="Tests/Unity/Blueprints/Assets/Libraries"
   utils::clean_dir "${unity_libs}"
-  utils::sync_files "${BUILD_SRC}/Unity/Entitas/Assets/Entitas-Blueprints" "${unity_libs}"
-  utils::sync_files "${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs" "${unity_libs}"
+  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets/Entitas-Blueprints" "${unity_libs}"
+  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs" "${unity_libs}"
 }
 
 entitas::sync() {
@@ -189,11 +190,15 @@ entitas::pack_entitas_unity() {
   local tmp_dir="${BUILD}/tmp"
   utils::clean_dir "${tmp_dir}"
 
-  utils::sync_files "${BUILD_SRC}/Unity/Entitas/Assets" "${tmp_dir}"
-  utils::sync_files "${BUILD_FILES}/" "${tmp_dir}/Assets/Entitas"
+  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets" "${tmp_dir}"
+  utils::sync "${BUILD_FILES}/" "${tmp_dir}/Assets/Entitas"
+
+  pushd "${BUILD_DIST}" > /dev/null
+    local abs_build_dist="$(pwd)"
+  popd > /dev/null
 
   pushd "${tmp_dir}" > /dev/null
-    zip -rq "$BUILD_DIST/${PROJECT_NAME}.zip" ./
+    zip -rq "${abs_build_dist}/${PROJECT}.zip" ./
   popd > /dev/null
   rm -rf "${tmp_dir}"
 }
@@ -201,15 +206,15 @@ entitas::pack_entitas_unity() {
 entitas::pack() {
   log_func
   entitas::update
-  dotnet::clean_build
+  dotnet::rebuild
   dotnet::tests
 
   utils::clean_dir "${BUILD_SRC}" "${BUILD_DIST}"
 
-  docs::generate
+  doxygen::generate
 #  create docset tgz
 #  pushd "${DOCS_BUILD}/docset" > /dev/null
-#    tar --exclude='.DS_Store' -czf "${BUILD_DIST}/${PROJECT_NAME}.docset.tgz" "${PROJECT_NAME}.docset"
+#    tar --exclude='.DS_Store' -czf "${BUILD_DIST}/${PROJECT_NAME}.docset.tgz" "${PROJECT}.docset"
 #  popd > /dev/null
 
   entitas::pack_entitas_unity

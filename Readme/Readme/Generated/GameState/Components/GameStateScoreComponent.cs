@@ -51,14 +51,14 @@ public partial class GameStateEntity {
 
     public void AddScore(int newValue) {
         var index = GameStateComponentsLookup.Score;
-        var component = CreateComponent<ScoreComponent>(index);
+        var component = (ScoreComponent)CreateComponent(index, typeof(ScoreComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceScore(int newValue) {
         var index = GameStateComponentsLookup.Score;
-        var component = CreateComponent<ScoreComponent>(index);
+        var component = (ScoreComponent)CreateComponent(index, typeof(ScoreComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

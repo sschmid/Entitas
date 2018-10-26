@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddFlagEventRemovedListener(System.Collections.Generic.List<IFlagEventRemovedListener> newValue) {
         var index = TestComponentsLookup.FlagEventRemovedListener;
-        var component = CreateComponent<FlagEventRemovedListenerComponent>(index);
+        var component = (FlagEventRemovedListenerComponent)CreateComponent(index, typeof(FlagEventRemovedListenerComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceFlagEventRemovedListener(System.Collections.Generic.List<IFlagEventRemovedListener> newValue) {
         var index = TestComponentsLookup.FlagEventRemovedListener;
-        var component = CreateComponent<FlagEventRemovedListenerComponent>(index);
+        var component = (FlagEventRemovedListenerComponent)CreateComponent(index, typeof(FlagEventRemovedListenerComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

@@ -13,14 +13,14 @@ public partial class InputEntity {
 
     public void AddInput(UnityEngine.Vector2 newPosition) {
         var index = InputComponentsLookup.Input;
-        var component = CreateComponent<InputComponent>(index);
+        var component = (InputComponent)CreateComponent(index, typeof(InputComponent));
         component.position = newPosition;
         AddComponent(index, component);
     }
 
     public void ReplaceInput(UnityEngine.Vector2 newPosition) {
         var index = InputComponentsLookup.Input;
-        var component = CreateComponent<InputComponent>(index);
+        var component = (InputComponent)CreateComponent(index, typeof(InputComponent));
         component.position = newPosition;
         ReplaceComponent(index, component);
     }

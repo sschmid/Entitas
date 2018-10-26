@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 PROJECT="Entitas"
 PLUGINS=(changelog dotnet doxygen git github tree utils version)
+RESOURCES=.bee
+
+source "${RESOURCES}"/entitas.sh
 
 # changelog => version
 CHANGELOG_PATH=CHANGELOG.md
@@ -13,11 +16,11 @@ DOTNET_TESTS_RUNNER=Tests/Tests/bin/Release/Tests.exe
 
 # doxygen => utils version
 DOXYGEN_EXPORT_PATH=docs
-DOXYGEN_DOXY_FILES=(bee/docs/html.doxyfile)
+DOXYGEN_DOXY_FILES=("${RESOURCES}"/docs/html.doxyfile)
 DOXYGEN_DOCSET_NAME="${PROJECT}.docset"
 DOXYGEN_DOCSET="com.desperatedevs.${PROJECT}.docset"
 DOXYGEN_DOCSET_KEY="$(echo "${PROJECT}" | tr "[:upper:]" "[:lower:]")"
-DOXYGEN_DOCSET_ICONS=(bee/docs/icon.png bee/docs/icon@2x.png)
+DOXYGEN_DOCSET_ICONS=("${RESOURCES}"/docs/icon.png "${RESOURCES}"/docs/icon@2x.png)
 
 # github => version
 GITHUB_CHANGES=CHANGES.md
@@ -33,11 +36,8 @@ TREE_IGNORE="bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|docs|
 TREE_PATH=tree.txt
 
 # utils
-UTILS_RSYNC_INCLUDE=bee/utils/rsync_include.txt
-UTILS_RSYNC_EXCLUDE=bee/utils/rsync_exclude.txt
+UTILS_RSYNC_INCLUDE="${RESOURCES}"/utils/rsync_include.txt
+UTILS_RSYNC_EXCLUDE="${RESOURCES}"/utils/rsync_exclude.txt
 
 # version
-VERSION_PATH=version.txt
-
-# entitas
-source bee/entitas.sh
+VERSION_PATH="${PROJECT}/${PROJECT}"/version.txt

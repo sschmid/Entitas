@@ -13,7 +13,7 @@ public partial class Test2Entity {
 
     public void AddNameAge(string newName, int newAge) {
         var index = Test2ComponentsLookup.NameAge;
-        var component = CreateComponent<NameAgeComponent>(index);
+        var component = (NameAgeComponent)CreateComponent(index, typeof(NameAgeComponent));
         component.name = newName;
         component.age = newAge;
         AddComponent(index, component);
@@ -21,7 +21,7 @@ public partial class Test2Entity {
 
     public void ReplaceNameAge(string newName, int newAge) {
         var index = Test2ComponentsLookup.NameAge;
-        var component = CreateComponent<NameAgeComponent>(index);
+        var component = (NameAgeComponent)CreateComponent(index, typeof(NameAgeComponent));
         component.name = newName;
         component.age = newAge;
         ReplaceComponent(index, component);

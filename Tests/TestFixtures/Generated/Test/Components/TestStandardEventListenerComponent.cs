@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddStandardEventListener(System.Collections.Generic.List<IStandardEventListener> newValue) {
         var index = TestComponentsLookup.StandardEventListener;
-        var component = CreateComponent<StandardEventListenerComponent>(index);
+        var component = (StandardEventListenerComponent)CreateComponent(index, typeof(StandardEventListenerComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceStandardEventListener(System.Collections.Generic.List<IStandardEventListener> newValue) {
         var index = TestComponentsLookup.StandardEventListener;
-        var component = CreateComponent<StandardEventListenerComponent>(index);
+        var component = (StandardEventListenerComponent)CreateComponent(index, typeof(StandardEventListenerComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

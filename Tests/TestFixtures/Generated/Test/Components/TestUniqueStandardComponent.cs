@@ -51,14 +51,14 @@ public partial class TestEntity {
 
     public void AddUniqueStandard(string newValue) {
         var index = TestComponentsLookup.UniqueStandard;
-        var component = CreateComponent<UniqueStandardComponent>(index);
+        var component = (UniqueStandardComponent)CreateComponent(index, typeof(UniqueStandardComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceUniqueStandard(string newValue) {
         var index = TestComponentsLookup.UniqueStandard;
-        var component = CreateComponent<UniqueStandardComponent>(index);
+        var component = (UniqueStandardComponent)CreateComponent(index, typeof(UniqueStandardComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddInherited(float newValue) {
         var index = GameComponentsLookup.Inherited;
-        var component = CreateComponent<InheritedComponent>(index);
+        var component = (InheritedComponent)CreateComponent(index, typeof(InheritedComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceInherited(float newValue) {
         var index = GameComponentsLookup.Inherited;
-        var component = CreateComponent<InheritedComponent>(index);
+        var component = (InheritedComponent)CreateComponent(index, typeof(InheritedComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }
