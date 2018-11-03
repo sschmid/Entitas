@@ -12,16 +12,19 @@ namespace Entitas {
         where TContexts : class, IContexts {
 
         readonly ICollector[] _collectors;
+        readonly HashSet<TEntity> _collectedEntities;
         readonly List<TEntity> _buffer;
         string _toStringCache;
 
         protected MultiReactiveSystem(TContexts contexts) {
             _collectors = GetTrigger(contexts);
+            _collectedEntities = new HashSet<TEntity>();
             _buffer = new List<TEntity>();
         }
 
         protected MultiReactiveSystem(ICollector[] collectors) {
             _collectors = collectors;
+            _collectedEntities = new HashSet<TEntity>();
             _buffer = new List<TEntity>();
         }
 
@@ -65,14 +68,15 @@ namespace Entitas {
             for (int i = 0; i < _collectors.Length; i++) {
                 var collector = _collectors[i];
                 if (collector.count != 0) {
-                    foreach (var e in collector.GetCollectedEntities<TEntity>()) {
-                        if (Filter(e)) {
-                            e.Retain(this);
-                            _buffer.Add(e);
-                        }
-                    }
-
+                    _collectedEntities.UnionWith(collector.GetCollectedEntities<TEntity>());
                     collector.ClearCollectedEntities();
+                }
+            }
+
+            foreach (var e in _collectedEntities) {
+                if (Filter(e)) {
+                    e.Retain(this);
+                    _buffer.Add(e);
                 }
             }
 
@@ -83,6 +87,7 @@ namespace Entitas {
                     for (int i = 0; i < _buffer.Count; i++) {
                         _buffer[i].Release(this);
                     }
+                    _collectedEntities.Clear();
                     _buffer.Clear();
                 }
             }

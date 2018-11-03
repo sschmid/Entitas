@@ -52,6 +52,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fixtures\Systems\MultiTriggeredMultiReactiveSystemSpy.cs" />
     <Compile Include="Fixtures\Systems\TestJobSystem.cs" />
     <Compile Include="Fixtures\TestProperties.cs" />
     <Compile Include="Tests\Entitas.Migration\describe_M0450.cs" />
