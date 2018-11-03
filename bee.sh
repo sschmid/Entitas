@@ -27,8 +27,8 @@ GITHUB_CHANGES=CHANGES.md
 GITHUB_RELEASE_PREFIX="${PROJECT} "
 GITHUB_REPO="sschmid/Entitas-CSharp"
 GITHUB_ATTACHMENTS_ZIP=("Build/dist/${PROJECT}.zip")
-if [[ -f "${HOME}/.bee/github" ]]; then
-  source "${HOME}/.bee/github"
+if [[ -f "${HOME}/.bee/github.sh" ]]; then
+  source "${HOME}/.bee/github.sh"
 fi
 
 # tree
