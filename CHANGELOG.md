@@ -1,3 +1,7 @@
+## [1.9.1] - 2018-11-03
+### Added
+- Fix MultiReactive system retaining entities multiple times #818
+
 ## [1.9.0] - 2018-11-03
 ### Added
 - Optimize generated code #780
