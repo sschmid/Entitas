@@ -5,7 +5,8 @@
 - Optimize Visual Debugging performance #799
   - This increases the performance especially when having thousands of entities
 - Generate XML documentation #792
-- Using latest bee
+  - This will show documentation in the IDE
+- Using latest [bee](https://github.com/sschmid/bee)
 
 ### Changed
 - Release retained entities when ReactiveSystem.Execute() has an exception #812
