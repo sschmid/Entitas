@@ -9,6 +9,36 @@
 - Using latest [bee](https://github.com/sschmid/bee)
 
 ### Changed
+- Context ctor signature changed. Generate to fix compiler errors.
+  If you don't use the [Entitas.Roslyn plugins](http://u3d.as/NuJ) from the Unity Asset Store,
+  you have to manually fix the affected generated context classes.  E.g. `Generated/Game/GameContext.cs`,
+  add `() => new GameEntity()` as a last argument
+
+```csharp
+public sealed partial class GameContext : Entitas.Context<GameEntity> {
+
+    public GameContext()
+        : base(
+            GameComponentsLookup.TotalComponents,
+            0,
+            new Entitas.ContextInfo(
+                "Game",
+                GameComponentsLookup.componentNames,
+                GameComponentsLookup.componentTypes
+            ),
+            (entity) =>
+
+#if (ENTITAS_FAST_AND_UNSAFE)
+                new Entitas.UnsafeAERC(),
+#else
+                new Entitas.SafeAERC(entity),
+#endif
+            () => new GameEntity() // <---------- update here
+        ) {
+    }
+}
+```
+
 - Release retained entities when ReactiveSystem.Execute() has an exception #812
   - This fixes spamming the Unity console with error messages
 
