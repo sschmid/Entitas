@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyEvent(string newValue) {
         var index = GameComponentsLookup.MyEvent;
-        var component = CreateComponent<MyEventComponent>(index);
+        var component = (MyEventComponent)CreateComponent(index, typeof(MyEventComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMyEvent(string newValue) {
         var index = GameComponentsLookup.MyEvent;
-        var component = CreateComponent<MyEventComponent>(index);
+        var component = (MyEventComponent)CreateComponent(index, typeof(MyEventComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

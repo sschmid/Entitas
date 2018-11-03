@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddJaggedArray(string[][] newJaggedArray) {
         var index = GameComponentsLookup.JaggedArray;
-        var component = CreateComponent<JaggedArrayComponent>(index);
+        var component = (JaggedArrayComponent)CreateComponent(index, typeof(JaggedArrayComponent));
         component.jaggedArray = newJaggedArray;
         AddComponent(index, component);
     }
 
     public void ReplaceJaggedArray(string[][] newJaggedArray) {
         var index = GameComponentsLookup.JaggedArray;
-        var component = CreateComponent<JaggedArrayComponent>(index);
+        var component = (JaggedArrayComponent)CreateComponent(index, typeof(JaggedArrayComponent));
         component.jaggedArray = newJaggedArray;
         ReplaceComponent(index, component);
     }

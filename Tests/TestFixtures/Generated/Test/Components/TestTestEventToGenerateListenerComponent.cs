@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddTestEventToGenerateListener(System.Collections.Generic.List<ITestEventToGenerateListener> newValue) {
         var index = TestComponentsLookup.TestEventToGenerateListener;
-        var component = CreateComponent<TestEventToGenerateListenerComponent>(index);
+        var component = (TestEventToGenerateListenerComponent)CreateComponent(index, typeof(TestEventToGenerateListenerComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceTestEventToGenerateListener(System.Collections.Generic.List<ITestEventToGenerateListener> newValue) {
         var index = TestComponentsLookup.TestEventToGenerateListener;
-        var component = CreateComponent<TestEventToGenerateListenerComponent>(index);
+        var component = (TestEventToGenerateListenerComponent)CreateComponent(index, typeof(TestEventToGenerateListenerComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

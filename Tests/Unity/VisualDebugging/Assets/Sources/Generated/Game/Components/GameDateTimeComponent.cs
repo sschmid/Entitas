@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddDateTime(System.DateTime newDate) {
         var index = GameComponentsLookup.DateTime;
-        var component = CreateComponent<DateTimeComponent>(index);
+        var component = (DateTimeComponent)CreateComponent(index, typeof(DateTimeComponent));
         component.date = newDate;
         AddComponent(index, component);
     }
 
     public void ReplaceDateTime(System.DateTime newDate) {
         var index = GameComponentsLookup.DateTime;
-        var component = CreateComponent<DateTimeComponent>(index);
+        var component = (DateTimeComponent)CreateComponent(index, typeof(DateTimeComponent));
         component.date = newDate;
         ReplaceComponent(index, component);
     }

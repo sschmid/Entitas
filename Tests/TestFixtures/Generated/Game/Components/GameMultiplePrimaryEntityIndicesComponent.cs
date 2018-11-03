@@ -13,7 +13,7 @@ public partial class GameEntity {
 
     public void AddMultiplePrimaryEntityIndices(string newValue, string newValue2) {
         var index = GameComponentsLookup.MultiplePrimaryEntityIndices;
-        var component = CreateComponent<MultiplePrimaryEntityIndicesComponent>(index);
+        var component = (MultiplePrimaryEntityIndicesComponent)CreateComponent(index, typeof(MultiplePrimaryEntityIndicesComponent));
         component.value = newValue;
         component.value2 = newValue2;
         AddComponent(index, component);
@@ -21,7 +21,7 @@ public partial class GameEntity {
 
     public void ReplaceMultiplePrimaryEntityIndices(string newValue, string newValue2) {
         var index = GameComponentsLookup.MultiplePrimaryEntityIndices;
-        var component = CreateComponent<MultiplePrimaryEntityIndicesComponent>(index);
+        var component = (MultiplePrimaryEntityIndicesComponent)CreateComponent(index, typeof(MultiplePrimaryEntityIndicesComponent));
         component.value = newValue;
         component.value2 = newValue2;
         ReplaceComponent(index, component);

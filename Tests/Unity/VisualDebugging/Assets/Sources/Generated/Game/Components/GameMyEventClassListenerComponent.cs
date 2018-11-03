@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyEventClassListener(System.Collections.Generic.List<IMyEventClassListener> newValue) {
         var index = GameComponentsLookup.MyEventClassListener;
-        var component = CreateComponent<MyEventClassListenerComponent>(index);
+        var component = (MyEventClassListenerComponent)CreateComponent(index, typeof(MyEventClassListenerComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMyEventClassListener(System.Collections.Generic.List<IMyEventClassListener> newValue) {
         var index = GameComponentsLookup.MyEventClassListener;
-        var component = CreateComponent<MyEventClassListenerComponent>(index);
+        var component = (MyEventClassListenerComponent)CreateComponent(index, typeof(MyEventClassListenerComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

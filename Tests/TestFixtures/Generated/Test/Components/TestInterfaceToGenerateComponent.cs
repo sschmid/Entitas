@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddInterfaceToGenerate(My.Namespace.InterfaceToGenerate newValue) {
         var index = TestComponentsLookup.InterfaceToGenerate;
-        var component = CreateComponent<InterfaceToGenerateComponent>(index);
+        var component = (InterfaceToGenerateComponent)CreateComponent(index, typeof(InterfaceToGenerateComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceInterfaceToGenerate(My.Namespace.InterfaceToGenerate newValue) {
         var index = TestComponentsLookup.InterfaceToGenerate;
-        var component = CreateComponent<InterfaceToGenerateComponent>(index);
+        var component = (InterfaceToGenerateComponent)CreateComponent(index, typeof(InterfaceToGenerateComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

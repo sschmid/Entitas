@@ -51,14 +51,14 @@ public partial class GameEntity {
 
     public void AddHighscore(int newValue) {
         var index = GameComponentsLookup.Highscore;
-        var component = CreateComponent<HighscoreComponent>(index);
+        var component = (HighscoreComponent)CreateComponent(index, typeof(HighscoreComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceHighscore(int newValue) {
         var index = GameComponentsLookup.Highscore;
-        var component = CreateComponent<HighscoreComponent>(index);
+        var component = (HighscoreComponent)CreateComponent(index, typeof(HighscoreComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

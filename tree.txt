@@ -60,22 +60,20 @@
 │           │   ├── Entity
 │           │   └── TypeDrawer
 │           └── Images
-├── Entitas
-│   └── Entitas
-│       ├── Collector
-│       ├── Context
-│       │   └── Exceptions
-│       ├── Entity
-│       │   └── Exceptions
-│       ├── EntityIndex
-│       ├── Extensions
-│       ├── Group
-│       ├── Matcher
-│       │   └── Interfaces
-│       └── Systems
-│           └── Interfaces
-└── Scripts
-    └── res
+└── Entitas
+    └── Entitas
+        ├── Collector
+        ├── Context
+        │   └── Exceptions
+        ├── Entity
+        │   └── Exceptions
+        ├── EntityIndex
+        ├── Extensions
+        ├── Group
+        ├── Matcher
+        │   └── Interfaces
+        └── Systems
+            └── Interfaces
 .
 ├── Addons
 │   ├── Entitas.Blueprints
@@ -368,21 +366,12 @@
 │       ├── EntitasResources.cs
 │       ├── IComponent.cs
 │       └── version.txt
-├── Scripts
-│   ├── res
-│   │   ├── docs-logo.png
-│   │   ├── docset.doxyfile
-│   │   ├── html.doxyfile
-│   │   ├── icon.png
-│   │   └── icon@2x.png
-│   ├── rsync_exclude.txt
-│   └── rsync_include.txt
+├── CHANGELOG.md
+├── CHANGES.md
 ├── CONTRIBUTING.md
 ├── EntitasUpgradeGuide.md
 ├── ISSUE_TEMPLATE.md
 ├── LICENSE.txt
 ├── README.md
-├── RELEASE_NOTES.md
-├── changes.md
-├── icon.png
-└── project.sh
+├── bee.sh
+└── icon.png

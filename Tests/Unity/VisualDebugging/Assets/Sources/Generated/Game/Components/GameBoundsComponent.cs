@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddBounds(UnityEngine.Bounds newBounds) {
         var index = GameComponentsLookup.Bounds;
-        var component = CreateComponent<BoundsComponent>(index);
+        var component = (BoundsComponent)CreateComponent(index, typeof(BoundsComponent));
         component.bounds = newBounds;
         AddComponent(index, component);
     }
 
     public void ReplaceBounds(UnityEngine.Bounds newBounds) {
         var index = GameComponentsLookup.Bounds;
-        var component = CreateComponent<BoundsComponent>(index);
+        var component = (BoundsComponent)CreateComponent(index, typeof(BoundsComponent));
         component.bounds = newBounds;
         ReplaceComponent(index, component);
     }

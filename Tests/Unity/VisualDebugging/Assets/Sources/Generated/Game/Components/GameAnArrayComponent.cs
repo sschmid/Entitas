@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddAnArray(string[] newArray) {
         var index = GameComponentsLookup.AnArray;
-        var component = CreateComponent<AnArrayComponent>(index);
+        var component = (AnArrayComponent)CreateComponent(index, typeof(AnArrayComponent));
         component.array = newArray;
         AddComponent(index, component);
     }
 
     public void ReplaceAnArray(string[] newArray) {
         var index = GameComponentsLookup.AnArray;
-        var component = CreateComponent<AnArrayComponent>(index);
+        var component = (AnArrayComponent)CreateComponent(index, typeof(AnArrayComponent));
         component.array = newArray;
         ReplaceComponent(index, component);
     }

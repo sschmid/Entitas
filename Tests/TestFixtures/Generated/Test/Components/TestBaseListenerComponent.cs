@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddBaseListener(System.Collections.Generic.List<IBaseListener> newValue) {
         var index = TestComponentsLookup.BaseListener;
-        var component = CreateComponent<BaseListenerComponent>(index);
+        var component = (BaseListenerComponent)CreateComponent(index, typeof(BaseListenerComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceBaseListener(System.Collections.Generic.List<IBaseListener> newValue) {
         var index = TestComponentsLookup.BaseListener;
-        var component = CreateComponent<BaseListenerComponent>(index);
+        var component = (BaseListenerComponent)CreateComponent(index, typeof(BaseListenerComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

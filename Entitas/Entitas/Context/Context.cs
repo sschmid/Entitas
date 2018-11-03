@@ -55,6 +55,7 @@ namespace Entitas {
         readonly Stack<IComponent>[] _componentPools;
         readonly ContextInfo _contextInfo;
         readonly Func<IEntity, IAERC> _aercFactory;
+        readonly Func<TEntity> _entityFactory;
 
         readonly HashSet<TEntity> _entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
         readonly Stack<TEntity> _reusableEntities = new Stack<TEntity>();
@@ -78,12 +79,12 @@ namespace Entitas {
 
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
-        public Context(int totalComponents) : this(totalComponents, 0, null, null) {
+        public Context(int totalComponents, Func<TEntity> entityFactory) : this(totalComponents, 0, null, null, entityFactory) {
         }
 
         /// The prefered way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
-        public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory) {
+        public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory, Func<TEntity> entityFactory) {
             _totalComponents = totalComponents;
             _creationIndex = startCreationIndex;
 
@@ -97,6 +98,7 @@ namespace Entitas {
             }
 
             _aercFactory = aercFactory ?? (entity => new SafeAERC(entity));
+            _entityFactory = entityFactory;
 
             _groupsForIndex = new List<IGroup<TEntity>>[totalComponents];
             _componentPools = new Stack<IComponent>[totalComponents];
@@ -132,7 +134,7 @@ namespace Entitas {
                 entity = _reusableEntities.Pop();
                 entity.Reactivate(_creationIndex++);
             } else {
-                entity = (TEntity)Activator.CreateInstance(typeof(TEntity));
+                entity = _entityFactory();
                 entity.Initialize(_creationIndex++, _totalComponents, _componentPools, _contextInfo, _aercFactory(entity));
             }
 

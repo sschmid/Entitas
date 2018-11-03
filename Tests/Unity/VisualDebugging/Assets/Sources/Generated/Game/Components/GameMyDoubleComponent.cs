@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyDouble(double newMyDouble) {
         var index = GameComponentsLookup.MyDouble;
-        var component = CreateComponent<MyDoubleComponent>(index);
+        var component = (MyDoubleComponent)CreateComponent(index, typeof(MyDoubleComponent));
         component.myDouble = newMyDouble;
         AddComponent(index, component);
     }
 
     public void ReplaceMyDouble(double newMyDouble) {
         var index = GameComponentsLookup.MyDouble;
-        var component = CreateComponent<MyDoubleComponent>(index);
+        var component = (MyDoubleComponent)CreateComponent(index, typeof(MyDoubleComponent));
         component.myDouble = newMyDouble;
         ReplaceComponent(index, component);
     }

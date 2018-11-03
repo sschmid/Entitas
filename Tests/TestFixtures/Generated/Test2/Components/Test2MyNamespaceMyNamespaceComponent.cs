@@ -13,14 +13,14 @@ public partial class Test2Entity {
 
     public void AddMyNamespaceMyNamespace(string newValue) {
         var index = Test2ComponentsLookup.MyNamespaceMyNamespace;
-        var component = CreateComponent<My.Namespace.MyNamespaceComponent>(index);
+        var component = (My.Namespace.MyNamespaceComponent)CreateComponent(index, typeof(My.Namespace.MyNamespaceComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMyNamespaceMyNamespace(string newValue) {
         var index = Test2ComponentsLookup.MyNamespaceMyNamespace;
-        var component = CreateComponent<My.Namespace.MyNamespaceComponent>(index);
+        var component = (My.Namespace.MyNamespaceComponent)CreateComponent(index, typeof(My.Namespace.MyNamespaceComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddUnityObject(UnityEngine.Object newUnityObject) {
         var index = GameComponentsLookup.UnityObject;
-        var component = CreateComponent<UnityObjectComponent>(index);
+        var component = (UnityObjectComponent)CreateComponent(index, typeof(UnityObjectComponent));
         component.unityObject = newUnityObject;
         AddComponent(index, component);
     }
 
     public void ReplaceUnityObject(UnityEngine.Object newUnityObject) {
         var index = GameComponentsLookup.UnityObject;
-        var component = CreateComponent<UnityObjectComponent>(index);
+        var component = (UnityObjectComponent)CreateComponent(index, typeof(UnityObjectComponent));
         component.unityObject = newUnityObject;
         ReplaceComponent(index, component);
     }

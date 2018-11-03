@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddMyFloat(float newMyFloat) {
         var index = GameComponentsLookup.MyFloat;
-        var component = CreateComponent<MyFloatComponent>(index);
+        var component = (MyFloatComponent)CreateComponent(index, typeof(MyFloatComponent));
         component.myFloat = newMyFloat;
         AddComponent(index, component);
     }
 
     public void ReplaceMyFloat(float newMyFloat) {
         var index = GameComponentsLookup.MyFloat;
-        var component = CreateComponent<MyFloatComponent>(index);
+        var component = (MyFloatComponent)CreateComponent(index, typeof(MyFloatComponent));
         component.myFloat = newMyFloat;
         ReplaceComponent(index, component);
     }

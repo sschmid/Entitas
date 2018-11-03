@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddClassWithEntitIndexAttribute(ClassWithEntitIndexAttribute newValue) {
         var index = TestComponentsLookup.ClassWithEntitIndexAttribute;
-        var component = CreateComponent<ClassWithEntitIndexAttributeComponent>(index);
+        var component = (ClassWithEntitIndexAttributeComponent)CreateComponent(index, typeof(ClassWithEntitIndexAttributeComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceClassWithEntitIndexAttribute(ClassWithEntitIndexAttribute newValue) {
         var index = TestComponentsLookup.ClassWithEntitIndexAttribute;
-        var component = CreateComponent<ClassWithEntitIndexAttributeComponent>(index);
+        var component = (ClassWithEntitIndexAttributeComponent)CreateComponent(index, typeof(ClassWithEntitIndexAttributeComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

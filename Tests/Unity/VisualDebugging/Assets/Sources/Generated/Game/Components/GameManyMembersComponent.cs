@@ -13,7 +13,7 @@ public partial class GameEntity {
 
     public void AddManyMembers(string newField1, string newField2, string newField3, string newField4, string newField5, string newField6, string newField7, string newField8, string newField9, string newField10, string newField11, string newField12) {
         var index = GameComponentsLookup.ManyMembers;
-        var component = CreateComponent<ManyMembersComponent>(index);
+        var component = (ManyMembersComponent)CreateComponent(index, typeof(ManyMembersComponent));
         component.field1 = newField1;
         component.field2 = newField2;
         component.field3 = newField3;
@@ -31,7 +31,7 @@ public partial class GameEntity {
 
     public void ReplaceManyMembers(string newField1, string newField2, string newField3, string newField4, string newField5, string newField6, string newField7, string newField8, string newField9, string newField10, string newField11, string newField12) {
         var index = GameComponentsLookup.ManyMembers;
-        var component = CreateComponent<ManyMembersComponent>(index);
+        var component = (ManyMembersComponent)CreateComponent(index, typeof(ManyMembersComponent));
         component.field1 = newField1;
         component.field2 = newField2;
         component.field3 = newField3;

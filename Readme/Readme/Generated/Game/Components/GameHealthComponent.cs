@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddHealth(int newValue) {
         var index = GameComponentsLookup.Health;
-        var component = CreateComponent<HealthComponent>(index);
+        var component = (HealthComponent)CreateComponent(index, typeof(HealthComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceHealth(int newValue) {
         var index = GameComponentsLookup.Health;
-        var component = CreateComponent<HealthComponent>(index);
+        var component = (HealthComponent)CreateComponent(index, typeof(HealthComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

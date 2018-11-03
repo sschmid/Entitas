@@ -13,14 +13,14 @@ public partial class Test2Entity {
 
     public void AddMultipleContextStandardEvent(string newValue) {
         var index = Test2ComponentsLookup.MultipleContextStandardEvent;
-        var component = CreateComponent<MultipleContextStandardEventComponent>(index);
+        var component = (MultipleContextStandardEventComponent)CreateComponent(index, typeof(MultipleContextStandardEventComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMultipleContextStandardEvent(string newValue) {
         var index = Test2ComponentsLookup.MultipleContextStandardEvent;
-        var component = CreateComponent<MultipleContextStandardEventComponent>(index);
+        var component = (MultipleContextStandardEventComponent)CreateComponent(index, typeof(MultipleContextStandardEventComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

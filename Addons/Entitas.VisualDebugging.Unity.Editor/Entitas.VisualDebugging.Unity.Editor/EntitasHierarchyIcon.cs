@@ -92,22 +92,29 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 var rect = new Rect(selectionRect.x + selectionRect.width - iconOffset, selectionRect.y, iconSize, iconSize);
 
                 var contextObserver = gameObject.GetComponent<ContextObserverBehaviour>();
-                var entityBehaviour = gameObject.GetComponent<EntityBehaviour>();
-                var debugSystemsBehaviour = gameObject.GetComponent<DebugSystemsBehaviour>();
-
                 if (contextObserver != null) {
                     if (contextObserver.contextObserver.context.retainedEntitiesCount != 0) {
                         GUI.DrawTexture(rect, contextErrorHierarchyIcon);
                     } else {
                         GUI.DrawTexture(rect, contextHierarchyIcon);
                     }
-                } else if (entityBehaviour != null) {
+
+                    return;
+                }
+
+                var entityBehaviour = gameObject.GetComponent<EntityBehaviour>();
+                if (entityBehaviour != null) {
                     if (entityBehaviour.entity.isEnabled) {
                         GUI.DrawTexture(rect, entityHierarchyIcon);
                     } else {
                         GUI.DrawTexture(rect, entityErrorHierarchyIcon);
                     }
-                } else if (debugSystemsBehaviour != null) {
+
+                    return;
+                }
+
+                var debugSystemsBehaviour = gameObject.GetComponent<DebugSystemsBehaviour>();
+                if (debugSystemsBehaviour != null) {
                     if (debugSystemsBehaviour.systems.executeDuration < _systemWarningThreshold) {
                         GUI.DrawTexture(rect, systemsHierarchyIcon);
                     } else {

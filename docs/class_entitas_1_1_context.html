@@ -31,7 +31,7 @@
   <td id="projectlogo"><img alt="Logo" src="docs-logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Entitas
-   &#160;<span id="projectnumber">1.8.3</span>
+   &#160;<span id="projectnumber">1.9.0</span>
    </div>
    <div id="projectbrief">Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity</div>
   </td>
@@ -109,10 +109,10 @@ Inheritance diagram for Entitas.Context&lt; TEntity &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aea531d30886cb31528bcb63ba57e0e51"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context.html#aea531d30886cb31528bcb63ba57e0e51">Context</a> (int <a class="el" href="class_entitas_1_1_context.html#a49fba33ba0488022060671ef79c86be3">totalComponents</a>)</td></tr>
-<tr class="separator:aea531d30886cb31528bcb63ba57e0e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe95a09f2f4a4306d33c8eaa8c77dd96"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context.html#abe95a09f2f4a4306d33c8eaa8c77dd96">Context</a> (int <a class="el" href="class_entitas_1_1_context.html#a49fba33ba0488022060671ef79c86be3">totalComponents</a>, int startCreationIndex, <a class="el" href="class_entitas_1_1_context_info.html">ContextInfo</a> <a class="el" href="class_entitas_1_1_context.html#abdde35988b55cdbc905ba9b50326ed70">contextInfo</a>, Func&lt; <a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a>, <a class="el" href="interface_entitas_1_1_i_a_e_r_c.html">IAERC</a> &gt; aercFactory)</td></tr>
-<tr class="separator:abe95a09f2f4a4306d33c8eaa8c77dd96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87933d1337245e5a0ff28396f85d8de5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context.html#a87933d1337245e5a0ff28396f85d8de5">Context</a> (int <a class="el" href="class_entitas_1_1_context.html#a49fba33ba0488022060671ef79c86be3">totalComponents</a>, Func&lt; TEntity &gt; entityFactory)</td></tr>
+<tr class="separator:a87933d1337245e5a0ff28396f85d8de5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb7b862ad57b7cfe37ae3abd2e4223ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context.html#abb7b862ad57b7cfe37ae3abd2e4223ac">Context</a> (int <a class="el" href="class_entitas_1_1_context.html#a49fba33ba0488022060671ef79c86be3">totalComponents</a>, int startCreationIndex, <a class="el" href="class_entitas_1_1_context_info.html">ContextInfo</a> <a class="el" href="class_entitas_1_1_context.html#abdde35988b55cdbc905ba9b50326ed70">contextInfo</a>, Func&lt; <a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a>, <a class="el" href="interface_entitas_1_1_i_a_e_r_c.html">IAERC</a> &gt; aercFactory, Func&lt; TEntity &gt; entityFactory)</td></tr>
+<tr class="separator:abb7b862ad57b7cfe37ae3abd2e4223ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad78318367db3cdeb5ccf9470a1916d71"><td class="memItemLeft" align="right" valign="top">TEntity&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context.html#ad78318367db3cdeb5ccf9470a1916d71">CreateEntity</a> ()</td></tr>
 <tr class="separator:ad78318367db3cdeb5ccf9470a1916d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e2997c233e248d860cc85f33aa596af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_entitas_1_1_context.html#a6e2997c233e248d860cc85f33aa596af">DestroyAllEntities</a> ()</td></tr>
@@ -203,8 +203,8 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
 
 <p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00012">12</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aea531d30886cb31528bcb63ba57e0e51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea531d30886cb31528bcb63ba57e0e51">&#9670;&nbsp;</a></span>Context() <span class="overload">[1/2]</span></h2>
+<a id="a87933d1337245e5a0ff28396f85d8de5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87933d1337245e5a0ff28396f85d8de5">&#9670;&nbsp;</a></span>Context() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -216,8 +216,18 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
           <td class="memname"><a class="el" href="class_entitas_1_1_context.html">Entitas.Context</a>&lt; TEntity &gt;.<a class="el" href="class_entitas_1_1_context.html">Context</a> </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>totalComponents</em></td><td>)</td>
+          <td class="paramname"><em>totalComponents</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">Func&lt; TEntity &gt;&#160;</td>
+          <td class="paramname"><em>entityFactory</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -228,12 +238,12 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </div><div class="memdoc">
 <p>The prefered way to create a context is to use the generated methods from the code generator, e.g. var context = new GameContext(); </p>
 
-<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00081">81</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00082">82</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
 
 </div>
 </div>
-<a id="abe95a09f2f4a4306d33c8eaa8c77dd96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe95a09f2f4a4306d33c8eaa8c77dd96">&#9670;&nbsp;</a></span>Context() <span class="overload">[2/2]</span></h2>
+<a id="abb7b862ad57b7cfe37ae3abd2e4223ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb7b862ad57b7cfe37ae3abd2e4223ac">&#9670;&nbsp;</a></span>Context() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -263,7 +273,13 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">Func&lt; <a class="el" href="interface_entitas_1_1_i_entity.html">IEntity</a>, <a class="el" href="interface_entitas_1_1_i_a_e_r_c.html">IAERC</a> &gt;&#160;</td>
-          <td class="paramname"><em>aercFactory</em>&#160;</td>
+          <td class="paramname"><em>aercFactory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; TEntity &gt;&#160;</td>
+          <td class="paramname"><em>entityFactory</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -279,7 +295,7 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </div><div class="memdoc">
 <p>The prefered way to create a context is to use the generated methods from the code generator, e.g. var context = new GameContext(); </p>
 
-<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00086">86</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00087">87</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
 
 </div>
 </div>
@@ -309,7 +325,7 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </div><div class="memdoc">
 <p>Adds the <a class="el" href="interface_entitas_1_1_i_entity_index.html">IEntityIndex</a> for the specified name. There can only be one <a class="el" href="interface_entitas_1_1_i_entity_index.html">IEntityIndex</a> per name. </p>
 
-<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00219">219</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00221">221</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
 
 </div>
 </div>
@@ -337,7 +353,7 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </div><div class="memdoc">
 <p>Creates a new entity or gets a reusable entity from the internal ObjectPool for entities. </p>
 
-<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00128">128</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00130">130</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
 
 </div>
 </div>
@@ -365,7 +381,7 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </div><div class="memdoc">
 <p>Destroys all entities in the context. Throws an exception if there are still retained entities. </p>
 
-<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00158">158</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00160">160</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
 
 </div>
 </div>
@@ -394,7 +410,7 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </div><div class="memdoc">
 <p>Returns a group for the specified matcher. Calling context.GetGroup(matcher) with the same matcher will always return the same instance of the group. </p>
 
-<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00189">189</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00191">191</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
 
 </div>
 </div>
@@ -422,7 +438,7 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </div><div class="memdoc">
 <p>Removes all event handlers OnEntityCreated, OnEntityWillBeDestroyed, OnEntityDestroyed and OnGroupCreated </p>
 
-<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00267">267</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00269">269</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
 
 </div>
 </div>
@@ -450,7 +466,7 @@ ContextGroupChanged&#160;</td><td class="memItemRight" valign="bottom"><a class=
 </div><div class="memdoc">
 <p>Resets the context (destroys all entities and resets creationIndex back to 0). </p>
 
-<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00259">259</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_context_8cs_source.html#l00261">261</a> of file <a class="el" href="_context_8cs_source.html">Context.cs</a>.</p>
 
 </div>
 </div>

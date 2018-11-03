@@ -196,20 +196,20 @@ class describe_Entity : nspec {
                     e.GetComponentIndices().should_be_empty();
                 };
 
-                it["can ToString and removes *Component suffix"] = () => {
+                it["can ToString and doesn't removes *Component suffix"] = () => {
                     e.AddComponent(0, new StandardComponent());
                     e.Retain(this);
-                    e.ToString().should_be("Entity_0(*1)(Standard, ComponentA, ComponentB)");
+                    e.ToString().should_be("Entity_0(StandardComponent, ComponentA, ComponentB)");
                 };
 
                 it["uses component.ToString()"] = () => {
                     e.AddComponent(0, new NameAgeComponent { name = "Max", age = 42 });
-                    e.ToString().should_be("Entity_0(*0)(NameAge(Max, 42), ComponentA, ComponentB)");
+                    e.ToString().should_be("Entity_0(NameAge(Max, 42), ComponentA, ComponentB)");
                 };
 
                 it["uses full component name with namespace if ToString is not implemented"] = () => {
                     e.AddComponent(0, new MyNamespaceComponent());
-                    e.ToString().should_be("Entity_0(*0)(My.Namespace.MyNamespace, ComponentA, ComponentB)");
+                    e.ToString().should_be("Entity_0(My.Namespace.MyNamespaceComponent, ComponentA, ComponentB)");
                 };
             };
         };
@@ -586,9 +586,9 @@ class describe_Entity : nspec {
                         e.ToString().should_not_be_same(cache);
                     };
 
-                    it["updates cache when a component was replaced"] = () => {
+                    it["doesn't update cache when a component was replaced"] = () => {
                         e.ReplaceComponentA(new ComponentA());
-                        e.ToString().should_not_be_same(cache);
+                        e.ToString().should_be_same(cache);
                     };
 
                     it["updates cache when all components were removed"] = () => {
@@ -596,24 +596,24 @@ class describe_Entity : nspec {
                         e.ToString().should_not_be_same(cache);
                     };
 
-                    it["updates cache when entity gets retained"] = () => {
+                    it["doesn't update cache when entity gets retained"] = () => {
                         e.Retain(this);
-                        e.ToString().should_not_be_same(cache);
+                        e.ToString().should_be_same(cache);
                     };
 
-                    it["updates cache when entity gets released"] = () => {
+                    it["doesn't update cache when entity gets released"] = () => {
                         e.Retain(this);
                         e.Retain(new object());
                         cache = e.ToString();
                         e.Release(this);
-                        e.ToString().should_not_be_same(cache);
+                        e.ToString().should_be_same(cache);
                     };
 
-                    it["released entity has updated cache"] = () => {
+                    it["released entity doesn't have updated cache"] = () => {
                         e.Retain(this);
                         cache = e.ToString();
-                        e.OnEntityReleased += (entity) => {
-                            e.ToString().should_not_be_same(cache);
+                        e.OnEntityReleased += entity => {
+                            e.ToString().should_be_same(cache);
                         };
                         e.Release(this);
                     };

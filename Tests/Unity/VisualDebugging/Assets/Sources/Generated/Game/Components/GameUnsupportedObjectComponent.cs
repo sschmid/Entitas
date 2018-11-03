@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddUnsupportedObject(UnsupportedObject newUnsupportedObject) {
         var index = GameComponentsLookup.UnsupportedObject;
-        var component = CreateComponent<UnsupportedObjectComponent>(index);
+        var component = (UnsupportedObjectComponent)CreateComponent(index, typeof(UnsupportedObjectComponent));
         component.unsupportedObject = newUnsupportedObject;
         AddComponent(index, component);
     }
 
     public void ReplaceUnsupportedObject(UnsupportedObject newUnsupportedObject) {
         var index = GameComponentsLookup.UnsupportedObject;
-        var component = CreateComponent<UnsupportedObjectComponent>(index);
+        var component = (UnsupportedObjectComponent)CreateComponent(index, typeof(UnsupportedObjectComponent));
         component.unsupportedObject = newUnsupportedObject;
         ReplaceComponent(index, component);
     }

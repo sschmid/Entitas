@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddTexture2D(UnityEngine.Texture2D newTexture2D) {
         var index = GameComponentsLookup.Texture2D;
-        var component = CreateComponent<Texture2DComponent>(index);
+        var component = (Texture2DComponent)CreateComponent(index, typeof(Texture2DComponent));
         component.texture2D = newTexture2D;
         AddComponent(index, component);
     }
 
     public void ReplaceTexture2D(UnityEngine.Texture2D newTexture2D) {
         var index = GameComponentsLookup.Texture2D;
-        var component = CreateComponent<Texture2DComponent>(index);
+        var component = (Texture2DComponent)CreateComponent(index, typeof(Texture2DComponent));
         component.texture2D = newTexture2D;
         ReplaceComponent(index, component);
     }

@@ -6,7 +6,7 @@ public class ObjectGetProperty : IPerformanceTest {
     IContext<Entity> _context;
 
     public void Before() {
-        _context = new Context<Entity>(1);
+        _context = new Context<Entity>(1, () => new Entity());
     }
 
     public void Run() {

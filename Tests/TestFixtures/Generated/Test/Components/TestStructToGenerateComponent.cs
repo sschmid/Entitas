@@ -13,14 +13,14 @@ public partial class TestEntity {
 
     public void AddStructToGenerate(My.Namespace.StructToGenerate newValue) {
         var index = TestComponentsLookup.StructToGenerate;
-        var component = CreateComponent<StructToGenerateComponent>(index);
+        var component = (StructToGenerateComponent)CreateComponent(index, typeof(StructToGenerateComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceStructToGenerate(My.Namespace.StructToGenerate newValue) {
         var index = TestComponentsLookup.StructToGenerate;
-        var component = CreateComponent<StructToGenerateComponent>(index);
+        var component = (StructToGenerateComponent)CreateComponent(index, typeof(StructToGenerateComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }

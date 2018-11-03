@@ -15,7 +15,7 @@ public class EntityAddComponent : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            _e.AddComponent(CP.ComponentA, _e.CreateComponent<ComponentA>(CP.ComponentA));
+            _e.AddComponent(CP.ComponentA, _e.CreateComponent(CP.ComponentA, typeof(ComponentA)));
             _e.RemoveComponent(CP.ComponentA);
         }
     }

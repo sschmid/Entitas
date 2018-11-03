@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddTexture(UnityEngine.Texture newTexture) {
         var index = GameComponentsLookup.Texture;
-        var component = CreateComponent<TextureComponent>(index);
+        var component = (TextureComponent)CreateComponent(index, typeof(TextureComponent));
         component.texture = newTexture;
         AddComponent(index, component);
     }
 
     public void ReplaceTexture(UnityEngine.Texture newTexture) {
         var index = GameComponentsLookup.Texture;
-        var component = CreateComponent<TextureComponent>(index);
+        var component = (TextureComponent)CreateComponent(index, typeof(TextureComponent));
         component.texture = newTexture;
         ReplaceComponent(index, component);
     }

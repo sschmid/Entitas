@@ -13,7 +13,7 @@ public partial class GameEntity {
 
     public void AddDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
         var index = GameComponentsLookup.DictArray;
-        var component = CreateComponent<DictArrayComponent>(index);
+        var component = (DictArrayComponent)CreateComponent(index, typeof(DictArrayComponent));
         component.dict = newDict;
         component.dictArray = newDictArray;
         AddComponent(index, component);
@@ -21,7 +21,7 @@ public partial class GameEntity {
 
     public void ReplaceDictArray(System.Collections.Generic.Dictionary<int, string[]> newDict, System.Collections.Generic.Dictionary<int, string[]>[] newDictArray) {
         var index = GameComponentsLookup.DictArray;
-        var component = CreateComponent<DictArrayComponent>(index);
+        var component = (DictArrayComponent)CreateComponent(index, typeof(DictArrayComponent));
         component.dict = newDict;
         component.dictArray = newDictArray;
         ReplaceComponent(index, component);

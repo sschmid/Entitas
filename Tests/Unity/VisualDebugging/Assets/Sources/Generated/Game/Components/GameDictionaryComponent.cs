@@ -13,14 +13,14 @@ public partial class GameEntity {
 
     public void AddDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
         var index = GameComponentsLookup.Dictionary;
-        var component = CreateComponent<DictionaryComponent>(index);
+        var component = (DictionaryComponent)CreateComponent(index, typeof(DictionaryComponent));
         component.dict = newDict;
         AddComponent(index, component);
     }
 
     public void ReplaceDictionary(System.Collections.Generic.Dictionary<string, string> newDict) {
         var index = GameComponentsLookup.Dictionary;
-        var component = CreateComponent<DictionaryComponent>(index);
+        var component = (DictionaryComponent)CreateComponent(index, typeof(DictionaryComponent));
         component.dict = newDict;
         ReplaceComponent(index, component);
     }

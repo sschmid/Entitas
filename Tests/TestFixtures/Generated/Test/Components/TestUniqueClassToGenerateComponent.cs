@@ -51,14 +51,14 @@ public partial class TestEntity {
 
     public void AddUniqueClassToGenerate(My.Namespace.UniqueClassToGenerate newValue) {
         var index = TestComponentsLookup.UniqueClassToGenerate;
-        var component = CreateComponent<UniqueClassToGenerateComponent>(index);
+        var component = (UniqueClassToGenerateComponent)CreateComponent(index, typeof(UniqueClassToGenerateComponent));
         component.value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceUniqueClassToGenerate(My.Namespace.UniqueClassToGenerate newValue) {
         var index = TestComponentsLookup.UniqueClassToGenerate;
-        var component = CreateComponent<UniqueClassToGenerateComponent>(index);
+        var component = (UniqueClassToGenerateComponent)CreateComponent(index, typeof(UniqueClassToGenerateComponent));
         component.value = newValue;
         ReplaceComponent(index, component);
     }
