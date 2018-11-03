@@ -1,3 +1,15 @@
+## [1.9.0] - 2018-11-03
+### Added
+- Optimize generated code #780
+  - This increases entity and component creation performance
+- Optimize Visual Debugging performance #799
+  - This increases the performance especially when having thousands of entities
+- Generate XML documentation #792
+- Using latest bee
+
+### Changed
+- Release retained entities when ReactiveSystem.Execute() has an exception #812
+  - This fixes spamming the Unity console with error messages
 # 1.8.2
 
 As always, the Unity Asset Store version might take a few days to be processed
