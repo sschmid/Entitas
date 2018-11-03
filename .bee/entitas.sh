@@ -207,7 +207,7 @@ entitas::pack() {
   log_func
   entitas::update
   dotnet::rebuild
-  dotnet::tests
+  nspec::run
 
   utils::clean_dir "${BUILD_SRC}" "${BUILD_DIST}"
 
