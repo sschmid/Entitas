@@ -1,6 +1,6 @@
 ## [1.9.2] - 2018-11-04
 ### Added
-- Fix MultiReactive system retaining entities multiple times #818
+- Hotfix for Unity Asset Store missing mono hosted msbuild
 
 ## [1.9.1] - 2018-11-03
 ### Added
