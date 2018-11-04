@@ -1,19 +1,21 @@
 Contributing to Entitas
 =======================
 
-The project is hosted on [GitHub][github-entitas] where you can [report issues][issues], fork the project and [submit pull requests][pulls].
-Entitas is developed with [TDD (Test Driven Development)](https://en.wikipedia.org/wiki/Test-driven_development) and [nspec](http://nspec.org). New features are introduced following the [git-flow](https://github.com/nvie/gitflow) conventions.
+The project is hosted on [GitHub][repo] where you can [report issues][issues], fork the project and [submit pull requests][pulls].
+Entitas is developed with [TDD (Test Driven Development)](https://en.wikipedia.org/wiki/Test-driven_development) and [nspec](http://nspec.org).
+New features are introduced following the [git-flow](https://github.com/nvie/gitflow) conventions.
 
 Setup Entitas on your machine
 =============================
 
-Fork the repository on [GitHub][github-entitas] and clone your forked repository to your machine
+Fork the repository on [GitHub][repo] and clone your forked repository to your machine
 
 ```
 $ git clone https://github.com/<username>/Entitas-CSharp.git
 ````
 
-If you want to contribute please consider to set up [git-flow](https://github.com/nvie/gitflow). The default branch of this repository is `develop`
+If you want to contribute please consider to set up [git-flow](https://github.com/nvie/gitflow).
+The default branch of this repository is `master`
 
 ````
 $ cd Entitas-CSharp
@@ -58,7 +60,7 @@ Thanks for your contributions and happy coding :)
 
 Simon
 
-[github-entitas]: https://github.com/sschmid/Entitas-CSharp "sschmid/Entitas-CSharp"
+[repo]: https://github.com/sschmid/Entitas-CSharp "sschmid/Entitas-CSharp"
 [issues]: https://github.com/sschmid/Entitas-CSharp/issues "Issues"
 [pulls]: https://github.com/sschmid/Entitas-CSharp/pulls "Pull Requests"
 [issues-new]: https://github.com/sschmid/Entitas-CSharp/issues/new "New issue"
