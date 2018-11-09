@@ -6,19 +6,16 @@ namespace Entitas.Unity {
     public class EntityLink : MonoBehaviour {
 
         public IEntity entity { get { return _entity; } }
-        public IContext context { get { return _context; } }
 
         IEntity _entity;
-        IContext _context;
         bool _applicationIsQuitting;
 
-        public void Link(IEntity entity, IContext context) {
+        public void Link(IEntity entity) {
             if (_entity != null) {
                 throw new Exception("EntityLink is already linked to " + _entity + "!");
             }
 
             _entity = entity;
-            _context = context;
             _entity.Retain(this);
         }
 
@@ -29,7 +26,6 @@ namespace Entitas.Unity {
 
             _entity.Release(this);
             _entity = null;
-            _context = null;
         }
 
         void OnDestroy() {
@@ -55,13 +51,13 @@ namespace Entitas.Unity {
             return gameObject.GetComponent<EntityLink>();
         }
 
-        public static EntityLink Link(this GameObject gameObject, IEntity entity, IContext context) {
+        public static EntityLink Link(this GameObject gameObject, IEntity entity) {
             var link = gameObject.GetEntityLink();
             if (link == null) {
                 link = gameObject.AddComponent<EntityLink>();
             }
 
-            link.Link(entity, context);
+            link.Link(entity);
             return link;
         }
 

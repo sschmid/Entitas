@@ -11,7 +11,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
     public static partial class EntityDrawer {
 
-        public static void DrawEntity(IContext context, IEntity entity) {
+        public static void DrawEntity(IEntity entity) {
             var bgColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.red;
             if (GUILayout.Button("Destroy Entity")) {
@@ -20,7 +20,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
             GUI.backgroundColor = bgColor;
 
-            DrawComponents(context, entity);
+            DrawComponents(entity);
 
             EditorGUILayout.Space();
 
@@ -46,12 +46,12 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
         }
 
-        public static void DrawMultipleEntities(IContext context, IEntity[] entities) {
+        public static void DrawMultipleEntities(IEntity[] entities) {
             EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();
             {
                 var entity = entities[0];
-                var index = drawAddComponentMenu(context, entity);
+                var index = drawAddComponentMenu(entity);
                 if (index >= 0) {
                     var componentType = entity.contextInfo.componentTypes[index];
                     foreach (var e in entities) {
@@ -96,9 +96,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
         }
 
-        public static void DrawComponents(IContext context, IEntity entity) {
-            var unfoldedComponents = getUnfoldedComponents(context);
-            var componentMemberSearch = getComponentMemberSearch(context);
+        public static void DrawComponents(IEntity entity) {
+            var unfoldedComponents = getUnfoldedComponents(entity);
+            var componentMemberSearch = getComponentMemberSearch(entity);
 
             EditorLayout.BeginVerticalBox();
             {
@@ -121,7 +121,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                 EditorGUILayout.Space();
 
-                var index = drawAddComponentMenu(context, entity);
+                var index = drawAddComponentMenu(entity);
                 if (index >= 0) {
                     var componentType = entity.contextInfo.componentTypes[index];
                     var component = entity.CreateComponent(index, componentType);
@@ -137,17 +137,17 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 var indices = entity.GetComponentIndices();
                 var components = entity.GetComponents();
                 for (int i = 0; i < components.Length; i++) {
-                    DrawComponent(unfoldedComponents, componentMemberSearch, context, entity, indices[i], components[i]);
+                    DrawComponent(unfoldedComponents, componentMemberSearch, entity, indices[i], components[i]);
                 }
             }
             EditorLayout.EndVerticalBox();
         }
 
-        public static void DrawComponent(bool[] unfoldedComponents, string[] componentMemberSearch, IContext context, IEntity entity, int index, IComponent component) {
+        public static void DrawComponent(bool[] unfoldedComponents, string[] componentMemberSearch, IEntity entity, int index, IComponent component) {
             var componentType = component.GetType();
             var componentName = componentType.Name.RemoveComponentSuffix();
             if (EditorLayout.MatchesSearchString(componentName.ToLower(), componentNameSearchString.ToLower())) {
-                var boxStyle = getColoredBoxStyle(context, index);
+                var boxStyle = getColoredBoxStyle(entity, index);
                 EditorGUILayout.BeginVertical(boxStyle);
                 {
                     if (!Attribute.IsDefined(componentType, typeof(DontDrawComponentAttribute))) {
@@ -316,8 +316,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return false;
         }
 
-        static int drawAddComponentMenu(IContext context, IEntity entity) {
-            var componentInfos = getComponentInfos(context)
+        static int drawAddComponentMenu(IEntity entity) {
+            var componentInfos = getComponentInfos(entity)
                 .Where(info => !entity.HasComponent(info.index))
                 .ToArray();
             var componentNames = componentInfos

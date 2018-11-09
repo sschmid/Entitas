@@ -29,7 +29,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                 EditorGUILayout.Space();
 
-                EntityDrawer.DrawEntity(link.context, link.entity);
+                EntityDrawer.DrawEntity(link.entity);
             } else {
                 EditorGUILayout.LabelField("Not linked to an entity");
             }

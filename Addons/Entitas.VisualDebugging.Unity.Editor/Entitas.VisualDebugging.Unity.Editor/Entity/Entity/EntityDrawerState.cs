@@ -8,19 +8,19 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
     public static partial class EntityDrawer {
 
-        static Dictionary<IContext, bool[]> _contextToUnfoldedComponents;
-        public static Dictionary<IContext, bool[]> contextToUnfoldedComponents {
-            get { if (_contextToUnfoldedComponents == null) { _contextToUnfoldedComponents = new Dictionary<IContext, bool[]>(); } return _contextToUnfoldedComponents; }
+        static Dictionary<string, bool[]> _contextToUnfoldedComponents;
+        public static Dictionary<string, bool[]> contextToUnfoldedComponents {
+            get { if (_contextToUnfoldedComponents == null) { _contextToUnfoldedComponents = new Dictionary<string, bool[]>(); } return _contextToUnfoldedComponents; }
         }
 
-        static Dictionary<IContext, string[]> _contextToComponentMemberSearch;
-        public static Dictionary<IContext, string[]> contextToComponentMemberSearch {
-            get { if (_contextToComponentMemberSearch == null) { _contextToComponentMemberSearch = new Dictionary<IContext, string[]>(); } return _contextToComponentMemberSearch; }
+        static Dictionary<string, string[]> _contextToComponentMemberSearch;
+        public static Dictionary<string, string[]> contextToComponentMemberSearch {
+            get { if (_contextToComponentMemberSearch == null) { _contextToComponentMemberSearch = new Dictionary<string, string[]>(); } return _contextToComponentMemberSearch; }
         }
 
-        static Dictionary<IContext, GUIStyle[]> _contextToColoredBoxStyles;
-        public static Dictionary<IContext, GUIStyle[]> contextToColoredBoxStyles {
-            get { if (_contextToColoredBoxStyles == null) { _contextToColoredBoxStyles = new Dictionary<IContext, GUIStyle[]>(); } return _contextToColoredBoxStyles; }
+        static Dictionary<string, GUIStyle[]> _contextToColoredBoxStyles;
+        public static Dictionary<string, GUIStyle[]> contextToColoredBoxStyles {
+            get { if (_contextToColoredBoxStyles == null) { _contextToColoredBoxStyles = new Dictionary<string, GUIStyle[]>(); } return _contextToColoredBoxStyles; }
         }
 
         public struct ComponentInfo {
@@ -29,9 +29,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             public Type type;
         }
 
-        static Dictionary<IContext, ComponentInfo[]> _contextToComponentInfos;
-        public static Dictionary<IContext, ComponentInfo[]> contextToComponentInfos {
-            get { if (_contextToComponentInfos == null) { _contextToComponentInfos = new Dictionary<IContext, ComponentInfo[]>(); } return _contextToComponentInfos; }
+        static Dictionary<string, ComponentInfo[]> _contextToComponentInfos;
+        public static Dictionary<string, ComponentInfo[]> contextToComponentInfos {
+            get { if (_contextToComponentInfos == null) { _contextToComponentInfos = new Dictionary<string, ComponentInfo[]>(); } return _contextToComponentInfos; }
         }
 
         static GUIStyle _foldoutStyle;
@@ -55,36 +55,36 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             _componentDrawers = AppDomain.CurrentDomain.GetInstancesOf<IComponentDrawer>();
         }
 
-        static bool[] getUnfoldedComponents(IContext context) {
+        static bool[] getUnfoldedComponents(IEntity entity) {
             bool[] unfoldedComponents;
-            if (!contextToUnfoldedComponents.TryGetValue(context, out unfoldedComponents)) {
-                unfoldedComponents = new bool[context.totalComponents];
+            if (!contextToUnfoldedComponents.TryGetValue(entity.contextInfo.name, out unfoldedComponents)) {
+                unfoldedComponents = new bool[entity.totalComponents];
                 for (int i = 0; i < unfoldedComponents.Length; i++) {
                     unfoldedComponents[i] = true;
                 }
-                contextToUnfoldedComponents.Add(context, unfoldedComponents);
+                contextToUnfoldedComponents.Add(entity.contextInfo.name, unfoldedComponents);
             }
 
             return unfoldedComponents;
         }
 
-        static string[] getComponentMemberSearch(IContext context) {
+        static string[] getComponentMemberSearch(IEntity entity) {
             string[] componentMemberSearch;
-            if (!contextToComponentMemberSearch.TryGetValue(context, out componentMemberSearch)) {
-                componentMemberSearch = new string[context.totalComponents];
+            if (!contextToComponentMemberSearch.TryGetValue(entity.contextInfo.name, out componentMemberSearch)) {
+                componentMemberSearch = new string[entity.totalComponents];
                 for (int i = 0; i < componentMemberSearch.Length; i++) {
                     componentMemberSearch[i] = string.Empty;
                 }
-                contextToComponentMemberSearch.Add(context, componentMemberSearch);
+                contextToComponentMemberSearch.Add(entity.contextInfo.name, componentMemberSearch);
             }
 
             return componentMemberSearch;
         }
 
-        static ComponentInfo[] getComponentInfos(IContext context) {
+        static ComponentInfo[] getComponentInfos(IEntity entity) {
             ComponentInfo[] infos;
-            if (!contextToComponentInfos.TryGetValue(context, out infos)) {
-                var contextInfo = context.contextInfo;
+            if (!contextToComponentInfos.TryGetValue(entity.contextInfo.name, out infos)) {
+                var contextInfo = entity.contextInfo;
                 var infosList = new List<ComponentInfo>(contextInfo.componentTypes.Length);
                 for (int i = 0; i < contextInfo.componentTypes.Length; i++) {
                     infosList.Add(new ComponentInfo {
@@ -94,25 +94,25 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     });
                 }
                 infos = infosList.ToArray();
-                contextToComponentInfos.Add(context, infos);
+                contextToComponentInfos.Add(entity.contextInfo.name, infos);
             }
 
             return infos;
         }
 
-        static GUIStyle getColoredBoxStyle(IContext context, int index) {
+        static GUIStyle getColoredBoxStyle(IEntity entity, int index) {
             GUIStyle[] styles;
-            if (!contextToColoredBoxStyles.TryGetValue(context, out styles)) {
-                styles = new GUIStyle[context.totalComponents];
+            if (!contextToColoredBoxStyles.TryGetValue(entity.contextInfo.name, out styles)) {
+                styles = new GUIStyle[entity.totalComponents];
                 for (int i = 0; i < styles.Length; i++) {
-                    var hue = (float)i / (float)context.totalComponents;
+                    var hue = (float)i / (float)entity.totalComponents;
                     var componentColor = Color.HSVToRGB(hue, 0.7f, 1f);
                     componentColor.a = 0.15f;
                     var style = new GUIStyle(GUI.skin.box);
                     style.normal.background = createTexture(2, 2, componentColor);
                     styles[i] = style;
                 }
-                contextToColoredBoxStyles.Add(context, styles);
+                contextToColoredBoxStyles.Add(entity.contextInfo.name, styles);
             }
 
             return styles[index];
