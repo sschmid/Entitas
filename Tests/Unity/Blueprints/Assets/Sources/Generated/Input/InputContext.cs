@@ -20,11 +20,11 @@ public sealed partial class InputContext : Entitas.Context<InputEntity> {
             (entity) =>
 
 #if (ENTITAS_FAST_AND_UNSAFE)
-                new Entitas.UnsafeAERC()
+                new Entitas.UnsafeAERC(),
 #else
-                new Entitas.SafeAERC(entity)
+                new Entitas.SafeAERC(entity),
 #endif
-
+            () => new InputEntity()
         ) {
     }
 }

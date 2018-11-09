@@ -27,11 +27,10 @@ public class EntityLinkTests {
         var retainCount = _entity.retainCount;
 
         // when
-        _link.Link(_entity, _context);
+        _link.Link(_entity);
 
         // then
         Assert.AreSame(_entity, _link.entity);
-        Assert.AreSame(_context, _link.context);
         Assert.AreEqual(retainCount + 1, _entity.retainCount);
         #if !ENTITAS_FAST_AND_UNSAFE
         Assert.IsTrue(((SafeAERC)_entity.aerc).owners.Contains(_link));
@@ -41,8 +40,8 @@ public class EntityLinkTests {
     [Test]
     public void ThrowsWhenAlreadyLinked() {
         Assert.Throws(typeof(Exception), () => {
-            _link.Link(_entity, _context);
-            _link.Link(_entity, _context);
+            _link.Link(_entity);
+            _link.Link(_entity);
         });
     }
 
@@ -50,7 +49,7 @@ public class EntityLinkTests {
     public void UnlinksEntityReleasesEntity() {
 
         // given
-        _link.Link(_entity, _context);
+        _link.Link(_entity);
         var retainCount = _entity.retainCount;
 
         // when
@@ -58,7 +57,6 @@ public class EntityLinkTests {
 
         Assert.AreEqual(retainCount - 1, _entity.retainCount);
         Assert.IsNull(_link.entity);
-        Assert.IsNull(_link.context);
         #if !ENTITAS_FAST_AND_UNSAFE
         Assert.IsFalse(((SafeAERC)_entity.aerc).owners.Contains(_link));
         #endif
@@ -84,12 +82,11 @@ public class EntityLinkTests {
         var retainCount = _entity.retainCount;
 
         // when
-        var link = gameObject.Link(_entity, _context);
+        var link = gameObject.Link(_entity);
 
         // then
         Assert.AreSame(link, gameObject.GetEntityLink());
         Assert.AreSame(_entity, link.entity);
-        Assert.AreSame(_context, link.context);
         Assert.AreEqual(retainCount + 1, _entity.retainCount);
     }
 
@@ -98,7 +95,7 @@ public class EntityLinkTests {
 
         // given
         var gameObject = new GameObject();
-        var link = gameObject.Link(_entity, _context);
+        var link = gameObject.Link(_entity);
         var retainCount = _entity.retainCount;
 
         // when
@@ -108,7 +105,6 @@ public class EntityLinkTests {
         Assert.AreSame(link, gameObject.GetEntityLink());
         Assert.AreEqual(retainCount - 1, _entity.retainCount);
         Assert.IsNull(link.entity);
-        Assert.IsNull(link.context);
     }
 
     [Test]
@@ -116,17 +112,16 @@ public class EntityLinkTests {
 
         // given
         var gameObject = new GameObject();
-        var link1 = gameObject.Link(_context.CreateEntity(), new GameContext());
+        var link1 = gameObject.Link(_context.CreateEntity());
         gameObject.Unlink();
 
         // when
-        var link2 = gameObject.Link(_entity, _context);
+        var link2 = gameObject.Link(_entity);
 
         // then
         Assert.AreEqual(1, gameObject.GetComponents<EntityLink>().Length);
         Assert.AreSame(link1, link2);
         Assert.AreSame(_entity, link2.entity);
-        Assert.AreSame(_context, link2.context);
     }
 
     [Test]

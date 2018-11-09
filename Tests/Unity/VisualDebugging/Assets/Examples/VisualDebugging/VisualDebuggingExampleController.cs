@@ -46,7 +46,7 @@ public class VisualDebuggingExampleController : MonoBehaviour {
             e.AddMyBool(true);
             e.AddUnityObject(new UnityEngine.Object());
             var go = new GameObject("Player");
-            go.Link(e, context);
+            go.Link(e);
             e.AddGameObject(go);
             e.AddTexture(new CustomRenderTexture(32, 32));
             e.AddTexture2D(new Texture2D(2, 2));

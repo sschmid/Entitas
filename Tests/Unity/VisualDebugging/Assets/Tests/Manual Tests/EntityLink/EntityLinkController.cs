@@ -8,7 +8,7 @@ public class EntityLinkController : MonoBehaviour {
         var e = context.CreateEntity();
 
         var go = new GameObject();
-        go.Link(e, context);
+        go.Link(e);
 
         e.AddGameObject(go);
 
