@@ -5,4 +5,4 @@ before_install:
 install:
 - sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/sschmid/bee/master/install)"
 script:
-- bee dotnet::tests
+- bee nspec::run
