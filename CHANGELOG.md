@@ -1,3 +1,10 @@
+## [1.10.0] - 2018-11-14
+### Changed
+- Remove IContext from EntityLink.Link() method signature
+
+### Upgrade
+- Remove IContext from EntityLink.Link() method signature
+
 ## [1.9.2] - 2018-11-04
 ### Added
 - Hotfix for Unity Asset Store missing mono hosted msbuild
