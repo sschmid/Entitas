@@ -16,10 +16,10 @@ public static class Test2ComponentsLookup {
     public const int MyNamespaceMultipleEntityIndices = 5;
     public const int MyNamespaceMyNamespace = 6;
     public const int NameAge = 7;
-    public const int Test2Context = 8;
-    public const int Test2EventToGenerateListener = 9;
-    public const int Test2MultipleContextStandardEventListener = 10;
-    public const int Test2MultipleEventsStandardEventListener = 11;
+    public const int Test2AnyEventToGenerateListener = 8;
+    public const int Test2AnyMultipleContextStandardEventListener = 9;
+    public const int Test2AnyMultipleEventsStandardEventListener = 10;
+    public const int Test2Context = 11;
     public const int Test2MultipleEventsStandardEventRemovedListener = 12;
     public const int UniqueClassToGenerate = 13;
 
@@ -34,10 +34,10 @@ public static class Test2ComponentsLookup {
         "MyNamespaceMultipleEntityIndices",
         "MyNamespaceMyNamespace",
         "NameAge",
+        "Test2AnyEventToGenerateListener",
+        "Test2AnyMultipleContextStandardEventListener",
+        "Test2AnyMultipleEventsStandardEventListener",
         "Test2Context",
-        "Test2EventToGenerateListener",
-        "Test2MultipleContextStandardEventListener",
-        "Test2MultipleEventsStandardEventListener",
         "Test2MultipleEventsStandardEventRemovedListener",
         "UniqueClassToGenerate"
     };
@@ -51,10 +51,10 @@ public static class Test2ComponentsLookup {
         typeof(My.Namespace.MultipleEntityIndicesComponent),
         typeof(My.Namespace.MyNamespaceComponent),
         typeof(NameAgeComponent),
+        typeof(Test2AnyEventToGenerateListenerComponent),
+        typeof(Test2AnyMultipleContextStandardEventListenerComponent),
+        typeof(Test2AnyMultipleEventsStandardEventListenerComponent),
         typeof(Test2ContextComponent),
-        typeof(Test2EventToGenerateListenerComponent),
-        typeof(Test2MultipleContextStandardEventListenerComponent),
-        typeof(Test2MultipleEventsStandardEventListenerComponent),
         typeof(Test2MultipleEventsStandardEventRemovedListenerComponent),
         typeof(UniqueClassToGenerateComponent)
     };
