@@ -1,3 +1,12 @@
+## [1.11.0] - 2018-11-19
+### Added
+- Add support for multiple event attributes with different event target #810
+
+### Upgrade
+- All listener interfaces with `EventTarget.Any` need to be renamed
+  - `IPositionListener` -> `IAnyPositionListener`
+  - `OnPosition` -> `OnAnyPosition`
+
 ## [1.10.0] - 2018-11-14
 ### Changed
 - Remove IContext from EntityLink.Link() method signature
