@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         const string TEMPLATE =
             @"public interface I${EventListener} {
-    void On${ComponentName}${EventType}(${ContextName}Entity entity${methodParameters});
+    void On${EventComponentName}${EventType}(${ContextName}Entity entity${methodParameters});
 }
 ";
 

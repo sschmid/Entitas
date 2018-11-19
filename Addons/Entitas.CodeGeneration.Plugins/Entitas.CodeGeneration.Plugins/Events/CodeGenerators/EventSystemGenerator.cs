@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.Utils;
 using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -40,7 +39,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 _listenerBuffer.Clear();
                 _listenerBuffer.AddRange(listenerEntity.${eventListener}.value);
                 foreach (var listener in _listenerBuffer) {
-                    listener.On${ComponentName}${EventType}(e${methodArgs});
+                    listener.On${EventComponentName}${EventType}(e${methodArgs});
                 }
             }
         }

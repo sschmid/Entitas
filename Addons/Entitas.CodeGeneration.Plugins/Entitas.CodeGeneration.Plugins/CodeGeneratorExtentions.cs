@@ -19,10 +19,6 @@ namespace Entitas.CodeGeneration.Plugins {
             return data.GetTypeName().ToComponentName(ignoreNamespaces);
         }
 
-        public static string ComponentNameLowercaseFirst(this ComponentData data) {
-            return ComponentName(data).LowercaseFirst();
-        }
-
         public static string ComponentNameValidLowercaseFirst(this ComponentData data) {
             return ComponentName(data).LowercaseFirst().AddPrefixIfIsKeyword();
         }
@@ -46,7 +42,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace(contextName)
                 .Replace("${ComponentType}", data.GetTypeName())
                 .Replace("${ComponentName}", data.ComponentName())
-                .Replace("${componentName}", data.ComponentNameLowercaseFirst())
+                .Replace("${componentName}", data.ComponentName().LowercaseFirst())
                 .Replace("${validComponentName}", data.ComponentNameValidLowercaseFirst())
                 .Replace("${prefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${newMethodParameters}", GetMethodParameters(data.GetMemberData(), true))
@@ -59,16 +55,13 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static string Replace(this string template, ComponentData data, string contextName, EventData eventData) {
             var eventListener = data.EventListener(contextName, eventData);
-            var lowerEventListener = data.GetContextNames().Length > 1
-                ? contextName.LowercaseFirst() + data.ComponentName() + GetEventTypeSuffix(eventData).AddListenerSuffix()
-                : data.ComponentNameLowercaseFirst() + GetEventTypeSuffix(eventData).AddListenerSuffix();
-
             return template
                 .Replace(data, contextName)
+                .Replace("${EventComponentName}", data.EventComponentName(eventData))
                 .Replace("${EventListenerComponent}", eventListener.AddComponentSuffix())
                 .Replace("${Event}", data.Event(contextName, eventData))
                 .Replace("${EventListener}", eventListener)
-                .Replace("${eventListener}", lowerEventListener)
+                .Replace("${eventListener}", eventListener.LowercaseFirst())
                 .Replace("${EventType}", GetEventTypeSuffix(eventData));
         }
 
@@ -78,11 +71,21 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static string Event(this ComponentData data, string contextName, EventData eventData) {
             var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
-            return optionalContextName + data.ComponentName() + GetEventTypeSuffix(eventData);
+            return optionalContextName + eventData.GetEventPrefix() + data.ComponentName() + GetEventTypeSuffix(eventData);
         }
 
         public static string EventListener(this ComponentData data, string contextName, EventData eventData) {
-            return data.Event(contextName, eventData) + "Listener";
+            return data.Event(contextName, eventData).AddListenerSuffix();
+        }
+
+        public static string EventComponentName(this ComponentData data, EventData eventData) {
+            var componentName = data.GetTypeName().ToComponentName(ignoreNamespaces);
+            var shortComponentName = data.GetTypeName().ToComponentName(true);
+            var eventComponentName = componentName.Replace(
+                shortComponentName,
+                eventData.GetEventPrefix() + shortComponentName
+            );
+            return eventComponentName;
         }
 
         public static string GetEventMethodArgs(this ComponentData data, EventData eventData, string args) {
@@ -97,6 +100,10 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static string GetEventTypeSuffix(this EventData eventData) {
             return eventData.eventType == EventType.Removed ? "Removed" : string.Empty;
+        }
+
+        public static string GetEventPrefix(this EventData eventData) {
+            return eventData.eventTarget == EventTarget.Any ? "Any" : string.Empty;
         }
 
         public static string GetMethodParameters(this MemberData[] memberData, bool newPrefix) {

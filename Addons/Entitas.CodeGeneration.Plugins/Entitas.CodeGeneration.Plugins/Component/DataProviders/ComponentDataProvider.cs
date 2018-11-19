@@ -134,7 +134,6 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         ComponentData[] createDataForEvents(ComponentData data) {
-            var componentName = data.GetTypeName().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces);
             return data.GetContextNames()
                 .SelectMany(contextName =>
                     data.GetEventData().Select(eventData => {
@@ -142,9 +141,10 @@ namespace Entitas.CodeGeneration.Plugins {
                         dataForEvent.IsEvent(false);
                         dataForEvent.IsUnique(false);
                         dataForEvent.ShouldGenerateComponent(false);
+                        var eventComponentName = data.EventComponentName(eventData);
                         var eventTypeSuffix = eventData.GetEventTypeSuffix();
                         var optionalContextName = dataForEvent.GetContextNames().Length > 1 ? contextName : string.Empty;
-                        var listenerComponentName = optionalContextName + componentName + eventTypeSuffix + "Listener";
+                        var listenerComponentName = optionalContextName + eventComponentName + eventTypeSuffix + "Listener";
                         dataForEvent.SetTypeName(listenerComponentName.AddComponentSuffix());
                         dataForEvent.SetMemberData(new[] {
                             new MemberData("System.Collections.Generic.List<I" + listenerComponentName + ">", "value")

@@ -10,9 +10,9 @@ class describe_Events : nspec {
 
         context["event"] = () => {
 
-            StandardEventEventSystem eventSystem = null;
+            AnyStandardEventEventSystem eventSystem = null;
 
-            before = () => { eventSystem = new StandardEventEventSystem(contexts); };
+            before = () => { eventSystem = new AnyStandardEventEventSystem(contexts); };
 
             it["can remove listener in callback"] = () => {
                 var eventTest = new RemoveEventTest(contexts, false);
@@ -73,7 +73,7 @@ class describe_Events : nspec {
     }
 }
 
-class RemoveEventTest : IStandardEventListener, IFlagEntityEventListener {
+class RemoveEventTest : IAnyStandardEventListener, IFlagEntityEventListener {
 
     public TestEntity listener => _listener;
     public string value => _value;
@@ -86,12 +86,12 @@ class RemoveEventTest : IStandardEventListener, IFlagEntityEventListener {
     public RemoveEventTest(Contexts contexts, bool removeComponentWhenEmpty) {
         _removeComponentWhenEmpty = removeComponentWhenEmpty;
         _listener = contexts.test.CreateEntity();
-        _listener.AddStandardEventListener(this);
+        _listener.AddAnyStandardEventListener(this);
         _listener.AddFlagEntityEventListener(this);
     }
 
-    public void OnStandardEvent(TestEntity entity, string value) {
-        _listener.RemoveStandardEventListener(this, _removeComponentWhenEmpty);
+    public void OnAnyStandardEvent(TestEntity entity, string value) {
+        _listener.RemoveAnyStandardEventListener(this, _removeComponentWhenEmpty);
         _value = value;
     }
 
