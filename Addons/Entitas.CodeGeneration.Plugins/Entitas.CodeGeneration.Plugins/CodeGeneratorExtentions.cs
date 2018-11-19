@@ -71,7 +71,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static string Event(this ComponentData data, string contextName, EventData eventData) {
             var optionalContextName = data.GetContextNames().Length > 1 ? contextName : string.Empty;
-            return optionalContextName + eventData.GetEventPrefix() + data.ComponentName() + GetEventTypeSuffix(eventData);
+            return optionalContextName + EventComponentName(data, eventData) + GetEventTypeSuffix(eventData);
         }
 
         public static string EventListener(this ComponentData data, string contextName, EventData eventData) {
