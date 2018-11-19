@@ -12,6 +12,8 @@ public sealed class TestEventSystems : Feature {
         Add(new AnyBaseEventSystem(contexts)); // priority: 0
         Add(new TestAnyEventToGenerateEventSystem(contexts)); // priority: 0
         Add(new AnyFlagEventRemovedEventSystem(contexts)); // priority: 0
+        Add(new AnyMixedEventEventSystem(contexts)); // priority: 0
+        Add(new MixedEventEventSystem(contexts)); // priority: 0
         Add(new TestAnyMultipleContextStandardEventEventSystem(contexts)); // priority: 0
         Add(new AnyStandardEventEventSystem(contexts)); // priority: 0
         Add(new AnyUniqueEventEventSystem(contexts)); // priority: 0
