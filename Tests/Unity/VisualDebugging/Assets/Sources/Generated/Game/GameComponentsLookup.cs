@@ -10,34 +10,34 @@ public static class GameComponentsLookup {
 
     public const int AnArray = 0;
     public const int AnimationCurve = 1;
-    public const int Array2D = 2;
-    public const int Array3D = 3;
-    public const int Bounds = 4;
-    public const int Color = 5;
-    public const int CoolName = 6;
-    public const int CustomFlag = 7;
-    public const int CustomObject = 8;
-    public const int DateTime = 9;
-    public const int DictArray = 10;
-    public const int Dictionary = 11;
-    public const int DontDrawSimpleObject = 12;
-    public const int Flag = 13;
-    public const int GameObject = 14;
-    public const int HashSet = 15;
-    public const int ISomeInterface = 16;
-    public const int JaggedArray = 17;
-    public const int ListArray = 18;
-    public const int List = 19;
-    public const int ManyMembers = 20;
-    public const int MonoBehaviourSubClass = 21;
-    public const int MyBool = 22;
-    public const int MyChar = 23;
-    public const int MyDouble = 24;
-    public const int MyEnum = 25;
-    public const int MyEventClass = 26;
-    public const int MyEventClassListener = 27;
-    public const int MyEvent = 28;
-    public const int MyEventListener = 29;
+    public const int AnyMyEventClassListener = 2;
+    public const int AnyMyEventListener = 3;
+    public const int Array2D = 4;
+    public const int Array3D = 5;
+    public const int Bounds = 6;
+    public const int Color = 7;
+    public const int CoolName = 8;
+    public const int CustomFlag = 9;
+    public const int CustomObject = 10;
+    public const int DateTime = 11;
+    public const int DictArray = 12;
+    public const int Dictionary = 13;
+    public const int DontDrawSimpleObject = 14;
+    public const int Flag = 15;
+    public const int GameObject = 16;
+    public const int HashSet = 17;
+    public const int ISomeInterface = 18;
+    public const int JaggedArray = 19;
+    public const int ListArray = 20;
+    public const int List = 21;
+    public const int ManyMembers = 22;
+    public const int MonoBehaviourSubClass = 23;
+    public const int MyBool = 24;
+    public const int MyChar = 25;
+    public const int MyDouble = 26;
+    public const int MyEnum = 27;
+    public const int MyEventClass = 28;
+    public const int MyEvent = 29;
     public const int MyFlags = 30;
     public const int MyFloat = 31;
     public const int MyHiddenInt = 32;
@@ -69,6 +69,8 @@ public static class GameComponentsLookup {
     public static readonly string[] componentNames = {
         "AnArray",
         "AnimationCurve",
+        "AnyMyEventClassListener",
+        "AnyMyEventListener",
         "Array2D",
         "Array3D",
         "Bounds",
@@ -94,9 +96,7 @@ public static class GameComponentsLookup {
         "MyDouble",
         "MyEnum",
         "MyEventClass",
-        "MyEventClassListener",
         "MyEvent",
-        "MyEventListener",
         "MyFlags",
         "MyFloat",
         "MyHiddenInt",
@@ -127,6 +127,8 @@ public static class GameComponentsLookup {
     public static readonly System.Type[] componentTypes = {
         typeof(AnArrayComponent),
         typeof(AnimationCurveComponent),
+        typeof(AnyMyEventClassListenerComponent),
+        typeof(AnyMyEventListenerComponent),
         typeof(Array2DComponent),
         typeof(Array3DComponent),
         typeof(BoundsComponent),
@@ -152,9 +154,7 @@ public static class GameComponentsLookup {
         typeof(MyDoubleComponent),
         typeof(MyEnumComponent),
         typeof(MyEventClassComponent),
-        typeof(MyEventClassListenerComponent),
         typeof(MyEventComponent),
-        typeof(MyEventListenerComponent),
         typeof(MyFlagsComponent),
         typeof(MyFloatComponent),
         typeof(MyHiddenIntComponent),

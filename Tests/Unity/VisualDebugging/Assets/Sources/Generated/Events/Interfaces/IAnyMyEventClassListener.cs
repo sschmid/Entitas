@@ -6,6 +6,6 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public interface IMyEventListener {
-    void OnMyEvent(GameEntity entity, string value);
+public interface IAnyMyEventClassListener {
+    void OnAnyMyEventClass(GameEntity entity, MyEventClass value);
 }

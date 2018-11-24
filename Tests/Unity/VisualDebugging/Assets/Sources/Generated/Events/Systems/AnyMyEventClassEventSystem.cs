@@ -6,16 +6,16 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class MyEventClassEventSystem : Entitas.ReactiveSystem<GameEntity> {
+public sealed class AnyMyEventClassEventSystem : Entitas.ReactiveSystem<GameEntity> {
 
     readonly Entitas.IGroup<GameEntity> _listeners;
     readonly System.Collections.Generic.List<GameEntity> _entityBuffer;
-    readonly System.Collections.Generic.List<IMyEventClassListener> _listenerBuffer;
+    readonly System.Collections.Generic.List<IAnyMyEventClassListener> _listenerBuffer;
 
-    public MyEventClassEventSystem(Contexts contexts) : base(contexts.game) {
-        _listeners = contexts.game.GetGroup(GameMatcher.MyEventClassListener);
+    public AnyMyEventClassEventSystem(Contexts contexts) : base(contexts.game) {
+        _listeners = contexts.game.GetGroup(GameMatcher.AnyMyEventClassListener);
         _entityBuffer = new System.Collections.Generic.List<GameEntity>();
-        _listenerBuffer = new System.Collections.Generic.List<IMyEventClassListener>();
+        _listenerBuffer = new System.Collections.Generic.List<IAnyMyEventClassListener>();
     }
 
     protected override Entitas.ICollector<GameEntity> GetTrigger(Entitas.IContext<GameEntity> context) {
@@ -33,9 +33,9 @@ public sealed class MyEventClassEventSystem : Entitas.ReactiveSystem<GameEntity>
             var component = e.myEventClass;
             foreach (var listenerEntity in _listeners.GetEntities(_entityBuffer)) {
                 _listenerBuffer.Clear();
-                _listenerBuffer.AddRange(listenerEntity.myEventClassListener.value);
+                _listenerBuffer.AddRange(listenerEntity.anyMyEventClassListener.value);
                 foreach (var listener in _listenerBuffer) {
-                    listener.OnMyEventClass(e, component.value);
+                    listener.OnAnyMyEventClass(e, component.value);
                 }
             }
         }
