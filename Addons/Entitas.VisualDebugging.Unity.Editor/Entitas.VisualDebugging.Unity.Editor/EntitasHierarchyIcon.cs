@@ -1,6 +1,7 @@
 using System;
 using DesperateDevs.Serialization;
 using DesperateDevs.Unity.Editor;
+using Entitas.Unity;
 using UnityEditor;
 using UnityEngine;
 
@@ -45,6 +46,15 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
         }
 
+        static Texture2D entityLinkHierarchyIcon {
+            get {
+                if (_entityLinkHierarchyIcon == null) {
+                    _entityLinkHierarchyIcon = EditorLayout.LoadTexture("l:EntitasEntityLinkHierarchyIcon");
+                }
+                return _entityLinkHierarchyIcon;
+            }
+        }
+
         static Texture2D systemsHierarchyIcon {
             get {
                 if (_systemsHierarchyIcon == null) {
@@ -67,6 +77,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         static Texture2D _contextErrorHierarchyIcon;
         static Texture2D _entityHierarchyIcon;
         static Texture2D _entityErrorHierarchyIcon;
+        static Texture2D _entityLinkHierarchyIcon;
         static Texture2D _systemsHierarchyIcon;
         static Texture2D _systemsErrorHierarchyIcon;
 
@@ -108,6 +119,17 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                         GUI.DrawTexture(rect, entityHierarchyIcon);
                     } else {
                         GUI.DrawTexture(rect, entityErrorHierarchyIcon);
+                    }
+
+                    return;
+                }
+
+                var entityLink = gameObject.GetComponent<EntityLink>();
+                if (entityLink != null) {
+                    if (entityLink.entity.isEnabled) {
+                        GUI.DrawTexture(rect, entityLinkHierarchyIcon);
+                    } else {
+                        GUI.DrawTexture(rect, entityLinkHierarchyIcon);
                     }
 
                     return;
