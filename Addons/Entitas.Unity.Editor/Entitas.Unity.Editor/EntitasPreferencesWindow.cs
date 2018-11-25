@@ -10,11 +10,8 @@ namespace Entitas.Unity.Editor
         [MenuItem(EntitasMenuItems.preferences, false, EntitasMenuItemPriorities.preferences)]
         public static void OpenPreferences()
         {
-            var window = EditorLayout.GetWindow<EntitasPreferencesWindow>(
-                "Entitas " + CheckForUpdates.GetLocalVersion(),
-                new Vector2(415f, 350)
-            );
-
+            var window = GetWindow<EntitasPreferencesWindow>(true, "Entitas " + CheckForUpdates.GetLocalVersion());
+            window.minSize = new Vector2(415f, 348f);
             window.Initialize(
                 "Entitas.properties",
                 Environment.UserName + ".userproperties",

@@ -12,6 +12,7 @@ DEPS=(
   "../DesperateDevs/DesperateDevs.CodeGeneration.Unity.Plugins/bin/Release/"
   "../DesperateDevs/DesperateDevs.Unity.Editor/bin/Release/"
   "../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/Compile.cs"
+  "../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/Images/"
 )
 ENTITAS_PROJECTS=(
   'Entitas'
@@ -77,6 +78,10 @@ DESPERATEDEVS_EDITOR=(
   'DesperateDevs.CodeGeneration.dll'
   'DesperateDevs.Unity.Editor.dll'
 )
+DESPERATEDEVS_IMAGES=(
+  'JennyHeader.png'
+  'JennyHeader.png.meta'
+)
 DESPERATEDEVS_PLUGINS=(
   'DesperateDevs.CodeGeneration.Plugins.dll'
   'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
@@ -113,9 +118,10 @@ entitas::collect_entitas_unity() {
   local images_dir="${entitas_editor_dir}/Images"
   local desperatedevs_dir="${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs"
   local desperatedevs_editor_dir="${desperatedevs_dir}/Editor"
+  local desperatedevs_images_dir="${desperatedevs_editor_dir}/Images"
   local desperatedevs_plugins_dir="${desperatedevs_editor_dir}/Plugins"
   utils::clean_dir "${entitas_dir}" "${entitas_editor_dir}" "${entitas_plugins_dir}" "${images_dir}" \
-            "${desperatedevs_dir}" "${desperatedevs_editor_dir}" "${desperatedevs_plugins_dir}"
+            "${desperatedevs_dir}" "${desperatedevs_editor_dir}" "${desperatedevs_images_dir}" "${desperatedevs_plugins_dir}"
 
   for p in "${ENTITAS_PROJECTS[@]}"; do utils::sync "${p}/bin/Release/" "${entitas_dir}"; done
   utils::sync "${DEPS_DIR}/" "${entitas_dir}"
@@ -124,6 +130,7 @@ entitas::collect_entitas_unity() {
   for f in "${IMAGES[@]}"; do utils::sync "${f}" "${images_dir}"; done
   for f in "${DESPERATEDEVS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_dir}"; done
   for f in "${DESPERATEDEVS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_editor_dir}"; done
+  for f in "${DESPERATEDEVS_IMAGES[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_images_dir}"; done
   for f in "${DESPERATEDEVS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_plugins_dir}"; done
 }
 
@@ -135,9 +142,10 @@ entitas::collect_entitas_with_blueprints_unity() {
   local images_dir="${entitas_editor_dir}/Images"
   local desperatedevs_dir="${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs"
   local desperatedevs_editor_dir="${desperatedevs_dir}/Editor"
+  local desperatedevs_images_dir="${desperatedevs_editor_dir}/Images"
   local desperatedevs_plugins_dir="${desperatedevs_editor_dir}/Plugins"
   utils::clean_dir "${entitas_dir}" "${entitas_editor_dir}" "${entitas_plugins_dir}" "${images_dir}" \
-            "${desperatedevs_dir}" "${desperatedevs_editor_dir}" "${desperatedevs_plugins_dir}"
+            "${desperatedevs_dir}" "${desperatedevs_editor_dir}" "${desperatedevs_images_dir}" "${desperatedevs_plugins_dir}"
 
   for p in "${ENTITAS_PROJECTS[@]}"; do utils::sync "${p}/bin/Release/" "${entitas_dir}"; done
   for p in "${BLUEPRINTS_PROJECTS[@]}"; do utils::sync "${p}/bin/Release/" "${entitas_dir}"; done
@@ -149,6 +157,7 @@ entitas::collect_entitas_with_blueprints_unity() {
   for d in "${IMAGES[@]}"; do utils::sync "${d}" "${images_dir}"; done
   for f in "${DESPERATEDEVS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_dir}"; done
   for f in "${DESPERATEDEVS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_editor_dir}"; done
+  for f in "${DESPERATEDEVS_IMAGES[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_images_dir}"; done
   for f in "${DESPERATEDEVS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_plugins_dir}"; done
 }
 
