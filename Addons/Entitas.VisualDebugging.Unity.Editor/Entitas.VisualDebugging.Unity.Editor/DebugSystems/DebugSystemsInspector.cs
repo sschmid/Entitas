@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DesperateDevs.Serialization;
@@ -5,12 +6,13 @@ using DesperateDevs.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
-
+namespace Entitas.VisualDebugging.Unity.Editor
+{
     [CustomEditor(typeof(DebugSystemsBehaviour))]
-    public class DebugSystemsInspector : UnityEditor.Editor {
-
-        enum SortMethod {
+    public class DebugSystemsInspector : UnityEditor.Editor
+    {
+        enum SortMethod
+        {
             OrderOfOccurrence,
 
             Name,
@@ -45,13 +47,15 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         GUIContent _stepButtonContent;
         GUIContent _pauseButtonContent;
 
-        void OnEnable() {
-            var preferences = Preferences.sharedInstance;
+        void OnEnable()
+        {
+            var preferences = new Preferences("Entitas.properties", Environment.UserName + ".userproperties");
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             _systemWarningThreshold = config.systemWarningThreshold;
         }
 
-        public override void OnInspectorGUI() {
+        public override void OnInspectorGUI()
+        {
             var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
             var systems = debugSystemsBehaviour.systems;
 
@@ -69,9 +73,11 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             EditorUtility.SetDirty(target);
         }
 
-        static void drawSystemsOverview(DebugSystems systems) {
+        static void drawSystemsOverview(DebugSystems systems)
+        {
             _showDetails = EditorLayout.DrawSectionHeaderToggle("Details", _showDetails);
-            if (_showDetails) {
+            if (_showDetails)
+            {
                 EditorLayout.BeginSectionContent();
                 {
                     EditorGUILayout.LabelField(systems.name, EditorStyles.boldLabel);
@@ -85,14 +91,17 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
         }
 
-        void drawSystemsMonitor(DebugSystems systems) {
-            if (_systemsMonitor == null) {
+        void drawSystemsMonitor(DebugSystems systems)
+        {
+            if (_systemsMonitor == null)
+            {
                 _systemsMonitor = new Graph(SYSTEM_MONITOR_DATA_LENGTH);
                 _systemMonitorData = new Queue<float>(new float[SYSTEM_MONITOR_DATA_LENGTH]);
             }
 
             _showSystemsMonitor = EditorLayout.DrawSectionHeaderToggle("Performance", _showSystemsMonitor);
-            if (_showSystemsMonitor) {
+            if (_showSystemsMonitor)
+            {
                 EditorLayout.BeginSectionContent();
                 {
                     EditorGUILayout.BeginHorizontal();
@@ -104,16 +113,19 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                         }
                         EditorGUILayout.EndVertical();
 
-                        if (_stepButtonContent == null) {
+                        if (_stepButtonContent == null)
+                        {
                             _stepButtonContent = EditorGUIUtility.IconContent("StepButton On");
                         }
-                        if (_pauseButtonContent == null) {
+                        if (_pauseButtonContent == null)
+                        {
                             _pauseButtonContent = EditorGUIUtility.IconContent("PauseButton On");
                         }
 
                         systems.paused = GUILayout.Toggle(systems.paused, _pauseButtonContent, "CommandLeft");
 
-                        if (GUILayout.Button(_stepButtonContent, "CommandRight")) {
+                        if (GUILayout.Button(_stepButtonContent, "CommandRight"))
+                        {
                             systems.paused = true;
                             systems.StepExecute();
                             systems.StepCleanup();
@@ -122,7 +134,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     }
                     EditorGUILayout.EndHorizontal();
 
-                    if (!EditorApplication.isPaused && !systems.paused) {
+                    if (!EditorApplication.isPaused && !systems.paused)
+                    {
                         addDuration((float)systems.executeDuration + (float)systems.cleanupDuration);
                     }
                     _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
@@ -131,15 +144,18 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
         }
 
-        void drawSystemList(DebugSystems systems) {
+        void drawSystemList(DebugSystems systems)
+        {
             _showSystemsList = EditorLayout.DrawSectionHeaderToggle("Systems", _showSystemsList);
-            if (_showSystemsList) {
+            if (_showSystemsList)
+            {
                 EditorLayout.BeginSectionContent();
                 {
                     EditorGUILayout.BeginHorizontal();
                     {
                         DebugSystems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", DebugSystems.avgResetInterval);
-                        if (GUILayout.Button("Reset Ø now", EditorStyles.miniButton, GUILayout.Width(88))) {
+                        if (GUILayout.Button("Reset Ø now", EditorStyles.miniButton, GUILayout.Width(88)))
+                        {
                             systems.ResetDurations();
                         }
                     }
@@ -160,11 +176,13 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     EditorGUILayout.Space();
 
                     _showInitializeSystems = EditorLayout.DrawSectionHeaderToggle("Initialize Systems", _showInitializeSystems);
-                    if (_showInitializeSystems && shouldShowSystems(systems, SystemInterfaceFlags.IInitializeSystem)) {
+                    if (_showInitializeSystems && shouldShowSystems(systems, SystemInterfaceFlags.IInitializeSystem))
+                    {
                         EditorLayout.BeginSectionContent();
                         {
                             var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.IInitializeSystem);
-                            if (systemsDrawn == 0) {
+                            if (systemsDrawn == 0)
+                            {
                                 EditorGUILayout.LabelField(string.Empty);
                             }
                         }
@@ -172,11 +190,13 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     }
 
                     _showExecuteSystems = EditorLayout.DrawSectionHeaderToggle("Execute Systems", _showExecuteSystems);
-                    if (_showExecuteSystems && shouldShowSystems(systems, SystemInterfaceFlags.IExecuteSystem)) {
+                    if (_showExecuteSystems && shouldShowSystems(systems, SystemInterfaceFlags.IExecuteSystem))
+                    {
                         EditorLayout.BeginSectionContent();
                         {
                             var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.IExecuteSystem);
-                            if (systemsDrawn == 0) {
+                            if (systemsDrawn == 0)
+                            {
                                 EditorGUILayout.LabelField(string.Empty);
                             }
                         }
@@ -184,11 +204,13 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     }
 
                     _showCleanupSystems = EditorLayout.DrawSectionHeaderToggle("Cleanup Systems", _showCleanupSystems);
-                    if (_showCleanupSystems && shouldShowSystems(systems, SystemInterfaceFlags.ICleanupSystem)) {
+                    if (_showCleanupSystems && shouldShowSystems(systems, SystemInterfaceFlags.ICleanupSystem))
+                    {
                         EditorLayout.BeginSectionContent();
                         {
                             var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.ICleanupSystem);
-                            if (systemsDrawn == 0) {
+                            if (systemsDrawn == 0)
+                            {
                                 EditorGUILayout.LabelField(string.Empty);
                             }
                         }
@@ -196,11 +218,13 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     }
 
                     _showTearDownSystems = EditorLayout.DrawSectionHeaderToggle("TearDown Systems", _showTearDownSystems);
-                    if (_showTearDownSystems && shouldShowSystems(systems, SystemInterfaceFlags.ITearDownSystem)) {
+                    if (_showTearDownSystems && shouldShowSystems(systems, SystemInterfaceFlags.ITearDownSystem))
+                    {
                         EditorLayout.BeginSectionContent();
                         {
                             var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.ITearDownSystem);
-                            if (systemsDrawn == 0) {
+                            if (systemsDrawn == 0)
+                            {
                                 EditorGUILayout.LabelField(string.Empty);
                             }
                         }
@@ -211,10 +235,12 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
         }
 
-        int drawSystemInfos(DebugSystems systems, SystemInterfaceFlags type) {
+        int drawSystemInfos(DebugSystems systems, SystemInterfaceFlags type)
+        {
             SystemInfo[] systemInfos = null;
 
-            switch (type) {
+            switch (type)
+            {
                 case SystemInterfaceFlags.IInitializeSystem:
                     systemInfos = systems.initializeSystemInfos
                         .Where(systemInfo => systemInfo.initializationDuration >= _threshold)
@@ -240,24 +266,31 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             systemInfos = getSortedSystemInfos(systemInfos, _systemSortMethod);
 
             var systemsDrawn = 0;
-            foreach (var systemInfo in systemInfos) {
+            foreach (var systemInfo in systemInfos)
+            {
                 var debugSystems = systemInfo.system as DebugSystems;
-                if (debugSystems != null) {
-                    if (!shouldShowSystems(debugSystems, type)) {
+                if (debugSystems != null)
+                {
+                    if (!shouldShowSystems(debugSystems, type))
+                    {
                         continue;
                     }
                 }
 
-                if (EditorLayout.MatchesSearchString(systemInfo.systemName.ToLower(), _systemNameSearchString.ToLower())) {
+                if (EditorLayout.MatchesSearchString(systemInfo.systemName.ToLower(), _systemNameSearchString.ToLower()))
+                {
                     EditorGUILayout.BeginHorizontal();
                     {
                         var indent = EditorGUI.indentLevel;
                         EditorGUI.indentLevel = 0;
 
                         var wasActive = systemInfo.isActive;
-                        if (systemInfo.areAllParentsActive) {
+                        if (systemInfo.areAllParentsActive)
+                        {
                             systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
-                        } else {
+                        }
+                        else
+                        {
                             EditorGUI.BeginDisabledGroup(true);
                             {
                                 EditorGUILayout.Toggle(false, GUILayout.Width(20));
@@ -267,18 +300,24 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                         EditorGUI.indentLevel = indent;
 
-                        if (systemInfo.isActive != wasActive) {
+                        if (systemInfo.isActive != wasActive)
+                        {
                             var reactiveSystem = systemInfo.system as IReactiveSystem;
-                            if (reactiveSystem != null) {
-                                if (systemInfo.isActive) {
+                            if (reactiveSystem != null)
+                            {
+                                if (systemInfo.isActive)
+                                {
                                     reactiveSystem.Activate();
-                                } else {
+                                }
+                                else
+                                {
                                     reactiveSystem.Deactivate();
                                 }
                             }
                         }
 
-                        switch (type) {
+                        switch (type)
+                        {
                             case SystemInterfaceFlags.IInitializeSystem:
                                 EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.initializationDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.IInitializeSystem));
                                 break;
@@ -305,7 +344,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
 
                 var debugSystem = systemInfo.system as DebugSystems;
-                if (debugSystem != null) {
+                if (debugSystem != null)
+                {
                     var indent = EditorGUI.indentLevel;
                     EditorGUI.indentLevel += 1;
                     systemsDrawn += drawSystemInfos(debugSystem, type);
@@ -316,24 +356,29 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return systemsDrawn;
         }
 
-        static SystemInfo[] getSortedSystemInfos(SystemInfo[] systemInfos, SortMethod sortMethod) {
-            if (sortMethod == SortMethod.Name) {
+        static SystemInfo[] getSortedSystemInfos(SystemInfo[] systemInfos, SortMethod sortMethod)
+        {
+            if (sortMethod == SortMethod.Name)
+            {
                 return systemInfos
                     .OrderBy(systemInfo => systemInfo.systemName)
                     .ToArray();
             }
-            if (sortMethod == SortMethod.NameDescending) {
+            if (sortMethod == SortMethod.NameDescending)
+            {
                 return systemInfos
                     .OrderByDescending(systemInfo => systemInfo.systemName)
                     .ToArray();
             }
 
-            if (sortMethod == SortMethod.ExecutionTime) {
+            if (sortMethod == SortMethod.ExecutionTime)
+            {
                 return systemInfos
                     .OrderBy(systemInfo => systemInfo.averageExecutionDuration)
                     .ToArray();
             }
-            if (sortMethod == SortMethod.ExecutionTimeDescending) {
+            if (sortMethod == SortMethod.ExecutionTimeDescending)
+            {
                 return systemInfos
                     .OrderByDescending(systemInfo => systemInfo.averageExecutionDuration)
                     .ToArray();
@@ -342,12 +387,15 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return systemInfos;
         }
 
-        static bool shouldShowSystems(DebugSystems systems, SystemInterfaceFlags type) {
-            if (!_hideEmptySystems) {
+        static bool shouldShowSystems(DebugSystems systems, SystemInterfaceFlags type)
+        {
+            if (!_hideEmptySystems)
+            {
                 return true;
             }
 
-            switch (type) {
+            switch (type)
+            {
                 case SystemInterfaceFlags.IInitializeSystem:
                     return systems.totalInitializeSystemsCount > 0;
                 case SystemInterfaceFlags.IExecuteSystem:
@@ -361,17 +409,20 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             }
         }
 
-        GUIStyle getSystemStyle(SystemInfo systemInfo, SystemInterfaceFlags systemFlag) {
+        GUIStyle getSystemStyle(SystemInfo systemInfo, SystemInterfaceFlags systemFlag)
+        {
             var style = new GUIStyle(GUI.skin.label);
             var color = systemInfo.isReactiveSystems && EditorGUIUtility.isProSkin
                 ? Color.white
                 : style.normal.textColor;
 
-            if (systemFlag == SystemInterfaceFlags.IExecuteSystem && systemInfo.averageExecutionDuration >= _systemWarningThreshold) {
+            if (systemFlag == SystemInterfaceFlags.IExecuteSystem && systemInfo.averageExecutionDuration >= _systemWarningThreshold)
+            {
                 color = Color.red;
             }
 
-            if (systemFlag == SystemInterfaceFlags.ICleanupSystem && systemInfo.averageCleanupDuration >= _systemWarningThreshold) {
+            if (systemFlag == SystemInterfaceFlags.ICleanupSystem && systemInfo.averageCleanupDuration >= _systemWarningThreshold)
+            {
                 color = Color.red;
             }
 
@@ -380,12 +431,15 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             return style;
         }
 
-        void addDuration(float duration) {
+        void addDuration(float duration)
+        {
             // OnInspectorGUI is called twice per frame - only add duration once
-            if (Time.renderedFrameCount != _lastRenderedFrameCount) {
+            if (Time.renderedFrameCount != _lastRenderedFrameCount)
+            {
                 _lastRenderedFrameCount = Time.renderedFrameCount;
 
-                if (_systemMonitorData.Count >= SYSTEM_MONITOR_DATA_LENGTH) {
+                if (_systemMonitorData.Count >= SYSTEM_MONITOR_DATA_LENGTH)
+                {
                     _systemMonitorData.Dequeue();
                 }
 

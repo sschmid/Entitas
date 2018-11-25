@@ -5,14 +5,15 @@ using Entitas.Unity;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
-
+namespace Entitas.VisualDebugging.Unity.Editor
+{
     [InitializeOnLoad]
-    public static class EntitasHierarchyIcon {
-
+    public static class EntitasHierarchyIcon
+    {
         static Texture2D contextHierarchyIcon {
             get {
-                if (_contextHierarchyIcon == null) {
+                if (_contextHierarchyIcon == null)
+                {
                     _contextHierarchyIcon = EditorLayout.LoadTexture("l:EntitasContextHierarchyIcon");
                 }
                 return _contextHierarchyIcon;
@@ -21,7 +22,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D contextErrorHierarchyIcon {
             get {
-                if (_contextErrorHierarchyIcon == null) {
+                if (_contextErrorHierarchyIcon == null)
+                {
                     _contextErrorHierarchyIcon = EditorLayout.LoadTexture("l:EntitasContextErrorHierarchyIcon");
                 }
                 return _contextErrorHierarchyIcon;
@@ -30,7 +32,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D entityHierarchyIcon {
             get {
-                if (_entityHierarchyIcon == null) {
+                if (_entityHierarchyIcon == null)
+                {
                     _entityHierarchyIcon = EditorLayout.LoadTexture("l:EntitasEntityHierarchyIcon");
                 }
                 return _entityHierarchyIcon;
@@ -39,7 +42,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D entityErrorHierarchyIcon {
             get {
-                if (_entityErrorHierarchyIcon == null) {
+                if (_entityErrorHierarchyIcon == null)
+                {
                     _entityErrorHierarchyIcon = EditorLayout.LoadTexture("l:EntitasEntityErrorHierarchyIcon");
                 }
                 return _entityErrorHierarchyIcon;
@@ -48,7 +52,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D entityLinkHierarchyIcon {
             get {
-                if (_entityLinkHierarchyIcon == null) {
+                if (_entityLinkHierarchyIcon == null)
+                {
                     _entityLinkHierarchyIcon = EditorLayout.LoadTexture("l:EntitasEntityLinkHierarchyIcon");
                 }
                 return _entityLinkHierarchyIcon;
@@ -57,7 +62,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D systemsHierarchyIcon {
             get {
-                if (_systemsHierarchyIcon == null) {
+                if (_systemsHierarchyIcon == null)
+                {
                     _systemsHierarchyIcon = EditorLayout.LoadTexture("l:EntitasSystemsHierarchyIcon");
                 }
                 return _systemsHierarchyIcon;
@@ -66,7 +72,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static Texture2D systemsErrorHierarchyIcon {
             get {
-                if (_systemsErrorHierarchyIcon == null) {
+                if (_systemsErrorHierarchyIcon == null)
+                {
                     _systemsErrorHierarchyIcon = EditorLayout.LoadTexture("l:EntitasSystemsErrorHierarchyIcon");
                 }
                 return _systemsErrorHierarchyIcon;
@@ -83,30 +90,40 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         static int _systemWarningThreshold;
 
-        static EntitasHierarchyIcon() {
-            try {
-                var preferences = Preferences.sharedInstance;
+        static EntitasHierarchyIcon()
+        {
+            try
+            {
+                var preferences = new Preferences("Entitas.properties", Environment.UserName + ".userproperties");
                 var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
                 _systemWarningThreshold = config.systemWarningThreshold;
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 _systemWarningThreshold = int.MaxValue;
             }
 
             EditorApplication.hierarchyWindowItemOnGUI += onHierarchyWindowItemOnGUI;
         }
 
-        static void onHierarchyWindowItemOnGUI(int instanceID, Rect selectionRect) {
+        static void onHierarchyWindowItemOnGUI(int instanceID, Rect selectionRect)
+        {
             var gameObject = EditorUtility.InstanceIDToObject(instanceID) as GameObject;
-            if (gameObject != null) {
+            if (gameObject != null)
+            {
                 const float iconSize = 16f;
                 const float iconOffset = iconSize + 2f;
                 var rect = new Rect(selectionRect.x + selectionRect.width - iconOffset, selectionRect.y, iconSize, iconSize);
 
                 var contextObserver = gameObject.GetComponent<ContextObserverBehaviour>();
-                if (contextObserver != null) {
-                    if (contextObserver.contextObserver.context.retainedEntitiesCount != 0) {
+                if (contextObserver != null)
+                {
+                    if (contextObserver.contextObserver.context.retainedEntitiesCount != 0)
+                    {
                         GUI.DrawTexture(rect, contextErrorHierarchyIcon);
-                    } else {
+                    }
+                    else
+                    {
                         GUI.DrawTexture(rect, contextHierarchyIcon);
                     }
 
@@ -114,10 +131,14 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
 
                 var entityBehaviour = gameObject.GetComponent<EntityBehaviour>();
-                if (entityBehaviour != null) {
-                    if (entityBehaviour.entity.isEnabled) {
+                if (entityBehaviour != null)
+                {
+                    if (entityBehaviour.entity.isEnabled)
+                    {
                         GUI.DrawTexture(rect, entityHierarchyIcon);
-                    } else {
+                    }
+                    else
+                    {
                         GUI.DrawTexture(rect, entityErrorHierarchyIcon);
                     }
 
@@ -125,10 +146,14 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
 
                 var entityLink = gameObject.GetComponent<EntityLink>();
-                if (entityLink != null) {
-                    if (entityLink.entity.isEnabled) {
+                if (entityLink != null)
+                {
+                    if (entityLink.entity.isEnabled)
+                    {
                         GUI.DrawTexture(rect, entityLinkHierarchyIcon);
-                    } else {
+                    }
+                    else
+                    {
                         GUI.DrawTexture(rect, entityLinkHierarchyIcon);
                     }
 
@@ -136,10 +161,14 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
 
                 var debugSystemsBehaviour = gameObject.GetComponent<DebugSystemsBehaviour>();
-                if (debugSystemsBehaviour != null) {
-                    if (debugSystemsBehaviour.systems.executeDuration < _systemWarningThreshold) {
+                if (debugSystemsBehaviour != null)
+                {
+                    if (debugSystemsBehaviour.systems.executeDuration < _systemWarningThreshold)
+                    {
                         GUI.DrawTexture(rect, systemsHierarchyIcon);
-                    } else {
+                    }
+                    else
+                    {
                         GUI.DrawTexture(rect, systemsErrorHierarchyIcon);
                     }
                 }

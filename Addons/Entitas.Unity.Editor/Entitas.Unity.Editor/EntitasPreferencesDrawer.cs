@@ -1,21 +1,19 @@
-using System;
-using System.IO;
 using System.Linq;
 using DesperateDevs.Serialization;
 using DesperateDevs.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.Unity.Editor {
-
-    public class EntitasPreferencesDrawer : AbstractPreferencesDrawer {
-
-        public override int priority { get { return 0; } }
+namespace Entitas.Unity.Editor
+{
+    public class EntitasPreferencesDrawer : AbstractPreferencesDrawer
+    {
         public override string title { get { return "Entitas"; } }
 
         const string ENTITAS_FAST_AND_UNSAFE = "ENTITAS_FAST_AND_UNSAFE";
 
-        enum AERCMode {
+        enum AERCMode
+        {
             Safe,
             FastAndUnsafe
         }
@@ -24,7 +22,8 @@ namespace Entitas.Unity.Editor {
         ScriptingDefineSymbols _scriptingDefineSymbols;
         AERCMode _aercMode;
 
-        public override void Initialize(Preferences preferences) {
+        public override void Initialize(Preferences preferences)
+        {
             _headerTexture = EditorLayout.LoadTexture("l:EntitasHeader");
 
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
@@ -34,105 +33,68 @@ namespace Entitas.Unity.Editor {
                 : AERCMode.Safe;
         }
 
-        public override void DrawHeader(Preferences preferences) {
+        public override void DrawHeader(Preferences preferences)
+        {
             drawToolbar();
             drawHeader(preferences);
         }
 
-        void drawToolbar() {
+        void drawToolbar()
+        {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
-                if (GUILayout.Button("Check for Updates", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Check for Updates", EditorStyles.toolbarButton))
+                {
                     CheckForUpdates.DisplayUpdates();
                 }
-                if (GUILayout.Button("Chat", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Chat", EditorStyles.toolbarButton))
+                {
                     EntitasFeedback.EntitasChat();
                 }
-                if (GUILayout.Button("Docs", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Docs", EditorStyles.toolbarButton))
+                {
                     EntitasFeedback.EntitasDocs();
                 }
-                if (GUILayout.Button("Wiki", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Wiki", EditorStyles.toolbarButton))
+                {
                     EntitasFeedback.EntitasWiki();
                 }
-                if (GUILayout.Button("Donate", EditorStyles.toolbarButton)) {
+                if (GUILayout.Button("Donate", EditorStyles.toolbarButton))
+                {
                     EntitasFeedback.Donate();
                 }
             }
             EditorGUILayout.EndHorizontal();
         }
 
-        void drawHeader(Preferences preferences) {
-            var rect = EditorLayout.DrawTexture(_headerTexture);
-//            if (rect.Contains(Event.current.mousePosition) && Event.current.clickCount > 0) {
-//                Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/blob/develop/README.md");
-//            }
-
-            var propertiesPath = Path.GetFileName(preferences.propertiesPath);
-
-            var buttonWidth = 60 + propertiesPath.Length * 5;
-            const int buttonHeight = 15;
-            const int padding = 4;
-            var buttonRect = new Rect(
-                rect.width - buttonWidth - padding,
-                rect.y + rect.height - buttonHeight - padding,
-                buttonWidth,
-                buttonHeight
-            );
-
-            var allPreferences = Preferences.FindAll("*.properties")
-                .Select(Path.GetFileName)
-                .ToArray();
-
-            if (allPreferences.Length > 1) {
-                var r = new Rect(
-                    rect.width - 50 - padding,
-                    buttonRect.y,
-                    50,
-                    buttonHeight
-                );
-
-                if (GUI.Button(r, "Switch", EditorStyles.miniButton)) {
-                    var path = EditorPrefs.GetString(PreferencesWindow.PREFERENCES_KEY);
-                    var index = Array.IndexOf(allPreferences, path);
-                    if (index >= 0) {
-                        index += 1;
-                        if (index >= allPreferences.Length) {
-                            index = 0;
-                        }
-                        EditorPrefs.SetString(PreferencesWindow.PREFERENCES_KEY, allPreferences[index]);
-                        var window = EditorWindow.focusedWindow;
-                        window.Close();
-                        EntitasPreferencesWindow.OpenPreferences();
-                    }
-                }
-
-                buttonRect.x -= r.width + padding;
-            }
-
-            if (GUI.Button(buttonRect, "Edit " + propertiesPath, EditorStyles.miniButton)) {
-                EditorWindow.focusedWindow.Close();
-                System.Diagnostics.Process.Start(preferences.propertiesPath);
-            }
+        void drawHeader(Preferences preferences)
+        {
+            EditorLayout.DrawTexture(_headerTexture);
         }
 
-        protected override void drawContent(Preferences preferences) {
+        protected override void drawContent(Preferences preferences)
+        {
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.LabelField("Automatic Entity Reference Counting");
                 var buttonStyle = new GUIStyle(EditorStyles.miniButtonLeft);
-                if (_aercMode == AERCMode.Safe) {
+                if (_aercMode == AERCMode.Safe)
+                {
                     buttonStyle.normal = buttonStyle.active;
                 }
-                if (GUILayout.Button("Safe", buttonStyle)) {
+                if (GUILayout.Button("Safe", buttonStyle))
+                {
                     _aercMode = AERCMode.Safe;
                     _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }
 
                 buttonStyle = new GUIStyle(EditorStyles.miniButtonRight);
-                if (_aercMode == AERCMode.FastAndUnsafe) {
+                if (_aercMode == AERCMode.FastAndUnsafe)
+                {
                     buttonStyle.normal = buttonStyle.active;
                 }
-                if (GUILayout.Button("Fast And Unsafe", buttonStyle)) {
+                if (GUILayout.Button("Fast And Unsafe", buttonStyle))
+                {
                     _aercMode = AERCMode.FastAndUnsafe;
                     _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_FAST_AND_UNSAFE);
                 }
