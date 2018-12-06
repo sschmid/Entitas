@@ -65,6 +65,9 @@ namespace Entitas {
         /// release it manually at some point.
         public IAERC aerc { get { return _aerc; } }
 
+        readonly List<IComponent> _componentBuffer;
+        readonly List<int> _indexBuffer;
+
         int _creationIndex;
         bool _isEnabled;
 
@@ -78,6 +81,11 @@ namespace Entitas {
         int[] _componentIndicesCache;
         string _toStringCache;
         StringBuilder _toStringBuilder;
+
+        public Entity() {
+            _componentBuffer = new List<IComponent>();
+            _indexBuffer = new List<int>();
+        }
 
         public void Initialize(int creationIndex, int totalComponents, Stack<IComponent>[] componentPools, ContextInfo contextInfo = null, IAERC aerc = null) {
             Reactivate(creationIndex);
@@ -234,18 +242,15 @@ namespace Entitas {
         /// Returns all added components.
         public IComponent[] GetComponents() {
             if (_componentsCache == null) {
-                var components = EntitasCache.GetIComponentList();
-
                 for (int i = 0; i < _components.Length; i++) {
                     var component = _components[i];
                     if (component != null) {
-                        components.Add(component);
+                        _componentBuffer.Add(component);
                     }
                 }
 
-                _componentsCache = components.ToArray();
-
-                EntitasCache.PushIComponentList(components);
+                _componentsCache = _componentBuffer.ToArray();
+                _componentBuffer.Clear();
             }
 
             return _componentsCache;
@@ -254,17 +259,14 @@ namespace Entitas {
         /// Returns all indices of added components.
         public int[] GetComponentIndices() {
             if (_componentIndicesCache == null) {
-                var indices = EntitasCache.GetIntList();
-
                 for (int i = 0; i < _components.Length; i++) {
                     if (_components[i] != null) {
-                        indices.Add(i);
+                        _indexBuffer.Add(i);
                     }
                 }
 
-                _componentIndicesCache = indices.ToArray();
-
-                EntitasCache.PushIntList(indices);
+                _componentIndicesCache = _indexBuffer.ToArray();
+                _indexBuffer.Clear();
             }
 
             return _componentIndicesCache;

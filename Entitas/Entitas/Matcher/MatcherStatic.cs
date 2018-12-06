@@ -5,6 +5,9 @@ namespace Entitas {
 
     public partial class Matcher<TEntity> {
 
+        static readonly List<int> _indexBuffer = new List<int>();
+        static readonly HashSet<int> _indexSetBuffer = new HashSet<int>();
+
         public static IAllOfMatcher<TEntity> AllOf(params int[] indices) {
             var matcher = new Matcher<TEntity>();
             matcher._allOfIndices = distinctIndices(indices);
@@ -30,21 +33,19 @@ namespace Entitas {
         }
 
         static int[] mergeIndices(int[] allOfIndices, int[] anyOfIndices, int[] noneOfIndices) {
-            var indicesList = EntitasCache.GetIntList();
-
             if (allOfIndices != null) {
-                indicesList.AddRange(allOfIndices);
+                _indexBuffer.AddRange(allOfIndices);
             }
             if (anyOfIndices != null) {
-                indicesList.AddRange(anyOfIndices);
+                _indexBuffer.AddRange(anyOfIndices);
             }
             if (noneOfIndices != null) {
-                indicesList.AddRange(noneOfIndices);
+                _indexBuffer.AddRange(noneOfIndices);
             }
 
-            var mergedIndices = distinctIndices(indicesList);
+            var mergedIndices = distinctIndices(_indexBuffer);
 
-            EntitasCache.PushIntList(indicesList);
+            _indexBuffer.Clear();
 
             return mergedIndices;
         }
@@ -81,16 +82,15 @@ namespace Entitas {
         }
 
         static int[] distinctIndices(IList<int> indices) {
-            var indicesSet = EntitasCache.GetIntHashSet();
-
             foreach (var index in indices) {
-                indicesSet.Add(index);
+                _indexSetBuffer.Add(index);
             }
-            var uniqueIndices = new int[indicesSet.Count];
-            indicesSet.CopyTo(uniqueIndices);
+
+            var uniqueIndices = new int[_indexSetBuffer.Count];
+            _indexSetBuffer.CopyTo(uniqueIndices);
             Array.Sort(uniqueIndices);
 
-            EntitasCache.PushIntHashSet(indicesSet);
+            _indexSetBuffer.Clear();
 
             return uniqueIndices;
         }

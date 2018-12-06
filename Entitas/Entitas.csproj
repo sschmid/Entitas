@@ -69,7 +69,6 @@
     <Compile Include="Entitas\Matcher\MatcherException.cs" />
     <Compile Include="Entitas\Collector\Collector.cs" />
     <Compile Include="Entitas\Collector\CollectorException.cs" />
-    <Compile Include="Entitas\EntitasCache.cs" />
     <Compile Include="Entitas\EntitasResources.cs" />
     <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
     <Compile Include="Entitas\Extensions\PublicMemberInfoEntityExtension.cs" />

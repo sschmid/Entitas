@@ -74,7 +74,6 @@
     <Compile Include="Fixtures\MyTestContext.cs" />
     <Compile Include="Tests\Entitas\describe_Collector.cs" />
     <Compile Include="Tests\Entitas\describe_Context.cs" />
-    <Compile Include="Tests\Entitas\describe_EntitasCache.cs" />
     <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
     <Compile Include="Tests\Entitas\describe_Entity.cs" />
     <Compile Include="Tests\Entitas\describe_EntityIndex.cs" />
