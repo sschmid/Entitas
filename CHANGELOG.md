@@ -1,3 +1,7 @@
+## [1.12.1] - 2018-12-09
+### Added
+- Fix Jenny.exe load default `Jenny.properties` when not specified
+
 ## [1.12.0] - 2018-12-09
 ### Added
 - Add Preferences require concrete properties path
