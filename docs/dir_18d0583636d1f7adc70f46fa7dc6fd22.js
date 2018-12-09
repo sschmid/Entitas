@@ -9,7 +9,6 @@ var dir_18d0583636d1f7adc70f46fa7dc6fd22 =
     [ "Matcher", "dir_5b9febb0a1643b31f73c828c94068ca9.html", "dir_5b9febb0a1643b31f73c828c94068ca9" ],
     [ "Systems", "dir_aabce02430428d6c26c4e027d3d4d2b3.html", "dir_aabce02430428d6c26c4e027d3d4d2b3" ],
     [ "ContextInfo.cs", "_context_info_8cs_source.html", null ],
-    [ "EntitasCache.cs", "_entitas_cache_8cs_source.html", null ],
     [ "EntitasException.cs", "_entitas_exception_8cs_source.html", null ],
     [ "EntitasResources.cs", "_entitas_resources_8cs_source.html", null ],
     [ "IComponent.cs", "_i_component_8cs_source.html", null ]

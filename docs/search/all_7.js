@@ -14,7 +14,7 @@ var searchData=
   ['ientity',['IEntity',['../interface_entitas_1_1_i_entity.html',1,'Entitas']]],
   ['ientityindex',['IEntityIndex',['../interface_entitas_1_1_i_entity_index.html',1,'Entitas']]],
   ['iexecutesystem',['IExecuteSystem',['../interface_entitas_1_1_i_execute_system.html',1,'Entitas']]],
-  ['igroup',['IGroup',['../interface_entitas_1_1_i_group.html',1,'Entitas.IGroup&lt; TEntity &gt;'],['../interface_entitas_1_1_i_group.html',1,'Entitas.IGroup']]],
+  ['igroup',['IGroup',['../interface_entitas_1_1_i_group.html',1,'Entitas.IGroup'],['../interface_entitas_1_1_i_group.html',1,'Entitas.IGroup&lt; TEntity &gt;']]],
   ['igroup_3c_20tentity_20_3e',['IGroup&lt; TEntity &gt;',['../interface_entitas_1_1_i_group.html',1,'Entitas']]],
   ['iinitializesystem',['IInitializeSystem',['../interface_entitas_1_1_i_initialize_system.html',1,'Entitas']]],
   ['imatcher',['IMatcher',['../interface_entitas_1_1_i_matcher.html',1,'Entitas']]],

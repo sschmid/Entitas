@@ -4,7 +4,6 @@ var hierarchy =
     [ "Entitas.CollectorContextExtension", "class_entitas_1_1_collector_context_extension.html", null ],
     [ "Entitas.ContextExtension", "class_entitas_1_1_context_extension.html", null ],
     [ "Entitas.ContextInfo", "class_entitas_1_1_context_info.html", null ],
-    [ "Entitas.EntitasCache", "class_entitas_1_1_entitas_cache.html", null ],
     [ "Entitas.EntitasResources", "class_entitas_1_1_entitas_resources.html", null ],
     [ "Entitas.EntitasStringExtension", "class_entitas_1_1_entitas_string_extension.html", null ],
     [ "Exception", null, [

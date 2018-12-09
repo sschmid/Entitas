@@ -13,7 +13,6 @@ var namespace_entitas =
     [ "ContextInfo", "class_entitas_1_1_context_info.html", "class_entitas_1_1_context_info" ],
     [ "ContextInfoException", "class_entitas_1_1_context_info_exception.html", "class_entitas_1_1_context_info_exception" ],
     [ "ContextStillHasRetainedEntitiesException", "class_entitas_1_1_context_still_has_retained_entities_exception.html", "class_entitas_1_1_context_still_has_retained_entities_exception" ],
-    [ "EntitasCache", "class_entitas_1_1_entitas_cache.html", "class_entitas_1_1_entitas_cache" ],
     [ "EntitasException", "class_entitas_1_1_entitas_exception.html", "class_entitas_1_1_entitas_exception" ],
     [ "EntitasResources", "class_entitas_1_1_entitas_resources.html", "class_entitas_1_1_entitas_resources" ],
     [ "EntitasStringExtension", "class_entitas_1_1_entitas_string_extension.html", "class_entitas_1_1_entitas_string_extension" ],

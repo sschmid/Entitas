@@ -278,6 +278,7 @@
 │           │   ├── EntitasContextHierarchyIcon.png
 │           │   ├── EntitasEntityErrorHierarchyIcon.png
 │           │   ├── EntitasEntityHierarchyIcon.png
+│           │   ├── EntitasEntityLinkHierarchyIcon.png
 │           │   ├── EntitasSystemsErrorHierarchyIcon.png
 │           │   └── EntitasSystemsHierarchyIcon.png
 │           ├── EntitasHierarchyIcon.cs
@@ -361,7 +362,6 @@
 │       │   ├── ReactiveSystem.cs
 │       │   └── Systems.cs
 │       ├── ContextInfo.cs
-│       ├── EntitasCache.cs
 │       ├── EntitasException.cs
 │       ├── EntitasResources.cs
 │       ├── IComponent.cs

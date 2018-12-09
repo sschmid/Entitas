@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['entitascache',['EntitasCache',['../class_entitas_1_1_entitas_cache.html',1,'Entitas']]],
   ['entitasexception',['EntitasException',['../class_entitas_1_1_entitas_exception.html',1,'Entitas']]],
   ['entitasresources',['EntitasResources',['../class_entitas_1_1_entitas_resources.html',1,'Entitas']]],
   ['entitasstringextension',['EntitasStringExtension',['../class_entitas_1_1_entitas_string_extension.html',1,'Entitas']]],

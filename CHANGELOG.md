@@ -1,3 +1,21 @@
+## [1.12.0] - 2018-12-09
+### Added
+- Add Preferences require concrete properties path
+- Add CodeGeneratorPreferencesWindow
+- Add EntitasEntityLinkHierarchyIcon
+
+### Changed
+- Move Jenny Unity Preferences to its own editor window `Tools/Jenny/Preferences...`
+
+### Removed
+- Remove EntitasCache
+
+### Upgrade
+- Jenny has been decoupled from Entitas even more
+- Jenny now stores its config in Jenny.properties by default
+- Entitas now stores its config in Entitas.properties by default
+- Please split Preferences.properties into Entitas.properties and Jenny.properties or delete them to automatically create new default files
+
 ## [1.11.0] - 2018-11-19
 ### Added
 - Add support for multiple event attributes with different event target #810

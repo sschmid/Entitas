@@ -16,11 +16,11 @@ namespace Entitas.CodeGeneration.Plugins {
                 {
                     "x", "v:" + EntitasResources.GetVersion() +
                          ",e:" + (types.Any(type => type.FullName == "DesperateDevs.CodeGeneration.CodeGenerator.CLI.Program") ? "s" : "u") +
-                         ",p:" + (types.Any(type => type.FullName == "Entitas.Roslyn.CodeGeneration.Plugins.PluginUtil") ? "1" : "0") +
+                         ",p:" + (types.Any(type => type.FullName == "DesperateDevs.Roslyn.CodeGeneration.Plugins.PluginUtil") ? "1" : "0") +
                          ",f:" + _files.Length +
                          ",cp:" + _files.Count(f => f.fileName.EndsWith("Component.cs", StringComparison.OrdinalIgnoreCase)) +
                          ",cx:" + _files.Count(f => f.fileName.EndsWith("Context.cs", StringComparison.OrdinalIgnoreCase)) +
-                         ",l:" + _files.Select(file => file.fileContent.ToUnixLineEndings()).Sum(content => content.Split(new[] { '\n' }).Length)
+                         ",l:" + _files.Select(file => file.fileContent.ToUnixLineEndings()).Sum(content => content.Split('\n').Length)
                 }
             };
         }

@@ -1,5 +1,6 @@
 var class_entitas_1_1_entity =
 [
+    [ "Entity", "class_entitas_1_1_entity.html#abaa8bcd610c8fb792842e9e15ae99f4e", null ],
     [ "AddComponent", "class_entitas_1_1_entity.html#a684593bfe766e01ff4776bfbf841156a", null ],
     [ "CreateComponent", "class_entitas_1_1_entity.html#a244cbd513f258aa8778198e8270dde06", null ],
     [ "CreateComponent< T >", "class_entitas_1_1_entity.html#aa39f7df6971b2436c7775c71c6ab24bd", null ],
