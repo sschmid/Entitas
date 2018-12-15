@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: 27b806265ee874b86aa2d28aba93ace2
+guid: 8efbceefe59cd4553baf36a0ef025dc1
 labels:
-- EntitasEntityHierarchyIcon
+- EntitasEntityLinkWarnHierarchyIcon
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}
@@ -29,8 +29,8 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -3
-  maxTextureSize: 256
+  textureFormat: 1
+  maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
     filterMode: 0
