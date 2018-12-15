@@ -279,6 +279,7 @@
 │           │   ├── EntitasEntityErrorHierarchyIcon.png
 │           │   ├── EntitasEntityHierarchyIcon.png
 │           │   ├── EntitasEntityLinkHierarchyIcon.png
+│           │   ├── EntitasEntityLinkWarnHierarchyIcon.png
 │           │   ├── EntitasSystemsErrorHierarchyIcon.png
 │           │   └── EntitasSystemsHierarchyIcon.png
 │           ├── EntitasHierarchyIcon.cs

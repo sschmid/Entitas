@@ -1,3 +1,7 @@
+## [1.12.2] - 2018-12-15
+### Fixed
+- Fix EntityLinkHierarchyIcon #843
+
 ## [1.12.1] - 2018-12-09
 ### Added
 - Fix Jenny.exe load default `Jenny.properties` when not specified
