@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 namespace Entitas {
 
+    /// <summary>
     /// Automatic Entity Reference Counting (AERC)
     /// is used internally to prevent pooling retained entities.
     /// If you use retain manually you also have to
@@ -9,6 +10,7 @@ namespace Entitas {
     /// SafeAERC checks if the entity has already been
     /// retained or released. It's slower, but you keep the information
     /// about the owners.
+    /// </summary>
     public sealed class SafeAERC : IAERC {
 
         public int retainCount { get { return _owners.Count; } }

@@ -2,9 +2,11 @@ namespace Entitas.Blueprints {
 
     public static class BlueprintEntityExtension {
 
+        /// <summary>
         /// Adds all components from the blueprint to the entity.
         /// When 'replaceComponents' is set to true entity.ReplaceComponent()
         /// will be used instead of entity.AddComponent().
+        /// </summary>
         public static void ApplyBlueprint(this IEntity entity, Blueprint blueprint,
             bool replaceComponents = false) {
             var componentsLength = blueprint.components.Length;

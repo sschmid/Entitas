@@ -2,14 +2,18 @@
 
     public static class CollectorContextExtension {
 
+        /// <summary>
         /// Creates a Collector.
+        /// </summary>
         public static ICollector<TEntity> CreateCollector<TEntity>(
             this IContext<TEntity> context, IMatcher<TEntity> matcher) where TEntity : class, IEntity {
 
             return context.CreateCollector(new TriggerOnEvent<TEntity>(matcher, GroupEvent.Added));
         }
 
+        /// <summary>
         /// Creates a Collector.
+        /// </summary>
         public static ICollector<TEntity> CreateCollector<TEntity>(
             this IContext<TEntity> context, params TriggerOnEvent<TEntity>[] triggers) where TEntity : class, IEntity {
 
