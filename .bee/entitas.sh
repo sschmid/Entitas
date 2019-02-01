@@ -79,8 +79,8 @@ DESPERATEDEVS_EDITOR=(
   'DesperateDevs.Unity.Editor.dll'
 )
 DESPERATEDEVS_IMAGES=(
-  'JennyHeader.png'
-  'JennyHeader.png.meta'
+  'Jenny-Header.png'
+  'Jenny-Header.png.meta'
 )
 DESPERATEDEVS_PLUGINS=(
   'DesperateDevs.CodeGeneration.Plugins.dll'
@@ -96,7 +96,7 @@ entitas::update() {
 }
 
 entitas::generate() {
-  dotnet::build
+  msbuild::build
   local properties=(
     'Tests/TestFixtures/Preferences.properties'
     'Readme/Prefrences.properties'
@@ -215,7 +215,7 @@ entitas::pack_entitas_unity() {
 entitas::pack() {
   log_func
   entitas::update
-  dotnet::rebuild
+  msbuild::rebuild
   nspec::run
 
   utils::clean_dir "${BUILD_SRC}" "${BUILD_DIST}"

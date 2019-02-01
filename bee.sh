@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 PROJECT="Entitas"
-PLUGINS=(changelog dotnet doxygen git github nspec tree utils version)
+PLUGINS=(changelog doxygen git github msbuild nspec tree utils version)
 RESOURCES=.bee
 
 source "${RESOURCES}"/entitas.sh
@@ -8,9 +8,6 @@ source "${RESOURCES}"/entitas.sh
 # changelog => version
 CHANGELOG_PATH=CHANGELOG.md
 CHANGELOG_CHANGES=CHANGES.md
-
-# dotnet
-DOTNET_SOLUTION="${PROJECT}.sln"
 
 # doxygen => utils version
 DOXYGEN_EXPORT_PATH=docs
@@ -29,7 +26,10 @@ if [[ -f "${HOME}/.bee/github.sh" ]]; then
   source "${HOME}/.bee/github.sh"
 fi
 
-# nspec => dotnet
+# msbuild
+MSBUILD_SOLUTION="${PROJECT}.sln"
+
+# nspec => msbuild
 NSPEC_TESTS_PROJECT=Tests/Tests/Tests.csproj
 NSPEC_TESTS_RUNNER=Tests/Tests/bin/Release/Tests.exe
 

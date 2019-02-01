@@ -108,7 +108,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static string GetMethodParameters(this MemberData[] memberData, bool newPrefix) {
             return string.Join(", ", memberData
-                .Select(info => info.type + (newPrefix ? " new" + info.name.UppercaseFirst() : " " + info.name))
+                .Select(info => info.type + (newPrefix ? " new" + info.name.UppercaseFirst() : " " + info.name.LowercaseFirst()))
                 .ToArray());
         }
 
