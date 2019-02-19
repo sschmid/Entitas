@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 8fecc08fe51ec4ba990bfd58e4ed14b5
 labels:
-- EntitasSystemsErrorHierarchyIcon
+- EntitasSystemsWarnHierarchyIcon
 TextureImporter:
   fileIDToRecycleName: {}
   externalObjects: {}

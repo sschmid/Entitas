@@ -62,7 +62,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
                 var visualDebuggingChanged = EditorGUI.EndChangeCheck();
 
-                if (visualDebuggingChanged ) {
+                if (visualDebuggingChanged) {
                     if (_enableVisualDebugging) {
                         _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
                     } else {
