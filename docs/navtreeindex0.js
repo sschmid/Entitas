@@ -146,7 +146,7 @@ var NAVTREEINDEX0 =
 "class_entitas_1_1_context_still_has_retained_entities_exception.html":[1,0,0,12],
 "class_entitas_1_1_context_still_has_retained_entities_exception.html#a587217a3d7b0ff7df8961b78c41c0a77":[1,0,0,12,0],
 "class_entitas_1_1_entitas_exception.html":[1,0,0,13],
-"class_entitas_1_1_entitas_exception.html#ac74de9af77681f86a70155fda1d76d5d":[1,0,0,13,0],
+"class_entitas_1_1_entitas_exception.html#aff2cb4dab71bd90ec9c84bf2d320f94a":[1,0,0,13,0],
 "class_entitas_1_1_entitas_resources.html":[1,0,0,14],
 "class_entitas_1_1_entitas_resources.html#a24bdf0c5d30034e5f1dbc6b40ebdb7e1":[1,0,0,14,0],
 "class_entitas_1_1_entitas_string_extension.html":[1,0,0,15],

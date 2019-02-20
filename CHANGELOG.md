@@ -1,3 +1,14 @@
+## [1.13.0] - 2019-02-20
+### Added
+- Update roslyn
+- Update hierarchy icons
+
+### Changed
+- Change Preferences minified and doubleQuoteMode api
+
+### Fixed
+- Fix hierarchy icon null warning
+
 ## [1.12.2] - 2018-12-15
 ### Fixed
 - Fix EntityLinkHierarchyIcon #843

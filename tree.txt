@@ -280,8 +280,8 @@
 │           │   ├── EntitasEntityHierarchyIcon.png
 │           │   ├── EntitasEntityLinkHierarchyIcon.png
 │           │   ├── EntitasEntityLinkWarnHierarchyIcon.png
-│           │   ├── EntitasSystemsErrorHierarchyIcon.png
-│           │   └── EntitasSystemsHierarchyIcon.png
+│           │   ├── EntitasSystemsHierarchyIcon.png
+│           │   └── EntitasSystemsWarnHierarchyIcon.png
 │           ├── EntitasHierarchyIcon.cs
 │           ├── EntitasStats.cs
 │           ├── EntityLinkInspector.cs
