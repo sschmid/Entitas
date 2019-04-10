@@ -8,6 +8,7 @@
         public const string SYSTEM_SUFFIX = "System";
         public const string MATCHER_SUFFIX = "Matcher";
         public const string LISTENER_SUFFIX = "Listener";
+        public const string ATTRIBUTE_SUFFIX = "Attribute";
 
         public static string AddContextSuffix(this string str) {
             return addSuffix(str, CONTEXT_SUFFIX);
@@ -79,6 +80,18 @@
 
         public static bool HasListenerSuffix(this string str) {
             return hasSuffix(str, LISTENER_SUFFIX);
+        }
+        
+        public static string AddAttributeSuffix(this string str) {
+            return addSuffix(str, ATTRIBUTE_SUFFIX);
+        }
+
+        public static string RemoveAttributeSuffix(this string str) {
+            return removeSuffix(str, ATTRIBUTE_SUFFIX);
+        }
+
+        public static bool HasAttributeSuffix(this string str) {
+            return hasSuffix(str, ATTRIBUTE_SUFFIX);
         }
 
         static string addSuffix(string str, string suffix) {
