@@ -62,9 +62,16 @@ namespace Entitas.VisualDebugging.Unity {
             _interfaceFlags = getInterfaceFlags(system);
 
             var debugSystem = system as DebugSystems;
-            _systemName = debugSystem != null
-                ? debugSystem.name
-                : system.GetType().Name.RemoveSystemSuffix();
+            if (debugSystem != null)
+            {
+                _systemName = debugSystem.name;
+            }
+            else
+            {
+                var customNameProvider = system as ICustomDisplayName;
+                _systemName = customNameProvider?.DisplayName
+                    ?? TypeHelper.GetTypeName(system.GetType()).RemoveSystemSuffix();
+            }
 
             isActive = true;
         }

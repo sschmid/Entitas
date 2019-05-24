@@ -164,7 +164,10 @@ namespace Entitas.VisualDebugging.Unity.Editor
         public static void DrawComponent(bool[] unfoldedComponents, string[] componentMemberSearch, IEntity entity, int index, IComponent component)
         {
             var componentType = component.GetType();
-            var componentName = componentType.Name.RemoveComponentSuffix();
+            var customNameProvider = component as ICustomDisplayName;
+            var componentName = customNameProvider?.DisplayName 
+                ?? TypeHelper.GetTypeName(componentType).RemoveComponentSuffix();
+
             if (EditorLayout.MatchesSearchString(componentName.ToLower(), componentNameSearchString.ToLower()))
             {
                 var boxStyle = getColoredBoxStyle(entity, index);
