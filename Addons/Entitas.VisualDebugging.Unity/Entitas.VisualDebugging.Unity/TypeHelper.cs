@@ -13,12 +13,16 @@ namespace Entitas.VisualDebugging.Unity
             {
                 var simpleName = type.Name.Substring(0, type.Name.IndexOf('`'));
                 string genericTypeParams = string.Empty;
-                for (int i = 0; i < type.GenericTypeArguments.Length; i++)
+                var args = !type.IsGenericTypeDefinition
+                    ? type.GetGenericArguments()
+                    : Type.EmptyTypes;
+
+                for (int i = 0; i < args.Length; i++)
                 {
                     if (i > 0) genericTypeParams += ",";
-                    genericTypeParams += GetTypeName(type.GenericTypeArguments[i]);
+                    genericTypeParams += GetTypeName(args[i]);
                 }
-                return string.Format("{0}<{1}>", simpleName, string.Join(", ", genericTypeParams));
+                return string.Format("{0}<{1}>", simpleName, genericTypeParams);
             }
             return type.Name;
         }

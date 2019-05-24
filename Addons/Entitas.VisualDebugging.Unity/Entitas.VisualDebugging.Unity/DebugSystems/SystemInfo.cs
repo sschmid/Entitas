@@ -69,8 +69,14 @@ namespace Entitas.VisualDebugging.Unity {
             else
             {
                 var customNameProvider = system as ICustomDisplayName;
-                _systemName = customNameProvider?.DisplayName
-                    ?? TypeHelper.GetTypeName(system.GetType()).RemoveSystemSuffix();
+                if (customNameProvider != null)
+                {
+                    _systemName = customNameProvider.DisplayName;
+                }
+                else
+                {
+                    _systemName = TypeHelper.GetTypeName(system.GetType()).RemoveSystemSuffix();
+                }
             }
 
             isActive = true;

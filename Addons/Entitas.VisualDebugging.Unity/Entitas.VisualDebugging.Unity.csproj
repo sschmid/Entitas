@@ -44,6 +44,8 @@
     <Compile Include="Entitas.VisualDebugging.Unity\Entity\DontDrawComponentAttribute.cs" />
     <Compile Include="Entitas.VisualDebugging.Unity\Entity\EntityBehaviour.cs" />
     <Compile Include="Entitas.VisualDebugging.Unity\GameObjectDestroyExtension.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\ICustomDisplayName.cs" />
+    <Compile Include="Entitas.VisualDebugging.Unity\TypeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj">
@@ -51,8 +53,6 @@
       <Name>Entitas</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entitas.VisualDebugging.Unity\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

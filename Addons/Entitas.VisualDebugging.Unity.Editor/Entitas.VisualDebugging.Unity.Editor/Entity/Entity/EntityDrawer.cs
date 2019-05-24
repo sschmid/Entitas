@@ -165,8 +165,9 @@ namespace Entitas.VisualDebugging.Unity.Editor
         {
             var componentType = component.GetType();
             var customNameProvider = component as ICustomDisplayName;
-            var componentName = customNameProvider?.DisplayName 
-                ?? TypeHelper.GetTypeName(componentType).RemoveComponentSuffix();
+            var componentName = customNameProvider != null
+                ? customNameProvider.DisplayName
+                : TypeHelper.GetTypeName(componentType).RemoveComponentSuffix();                
 
             if (EditorLayout.MatchesSearchString(componentName.ToLower(), componentNameSearchString.ToLower()))
             {
