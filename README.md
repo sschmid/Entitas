@@ -173,7 +173,7 @@ Entitas is available in
 - [Haskell](https://github.com/mhaemmerle/entitas-haskell)
 - [Erlang](https://github.com/mhaemmerle/entitas_erl)
 - [Clojure](https://github.com/mhaemmerle/entitas-clj)
-
+- [Crystal](https://github.com/spoved/entitas.cr)
 
 [clean-coders]: https://cleancoders.com "Clean Coders"
 
