@@ -4,9 +4,18 @@ using System.Collections.Generic;
 namespace Entitas {
 
     public partial class Matcher<TEntity> {
+        
+        [ThreadStatic] static List<int> _indexBufferThreadStatic;
+        static List<int> _indexBuffer
+        {
+            get { return _indexBufferThreadStatic ?? (_indexBufferThreadStatic = new List<int>()); }
+        }
 
-        static readonly List<int> _indexBuffer = new List<int>();
-        static readonly HashSet<int> _indexSetBuffer = new HashSet<int>();
+        [ThreadStatic] static HashSet<int> _indexSetBufferThreadStatic;
+        static HashSet<int> _indexSetBuffer
+        {
+            get { return _indexSetBufferThreadStatic ?? (_indexSetBufferThreadStatic = new HashSet<int>()); }
+        }
 
         public static IAllOfMatcher<TEntity> AllOf(params int[] indices) {
             var matcher = new Matcher<TEntity>();
