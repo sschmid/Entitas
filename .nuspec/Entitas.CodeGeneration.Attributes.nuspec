@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Entitas.CodeGeneration.Attributes</id>
+    <title>Entitas Code Generation Attributes</title>
+    <version>1.13.0</version>
+    <authors>Simon Schmid,Maxim Zaks</authors>
+    <owners>Simon Schmid,Maxim Zaks,DesperateDevs</owners>
+    <copyright>Simon Schmid 2014-2018</copyright>
+    <developmentDependency>false</developmentDependency>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <icon>content/any/any/icon.png</icon>
+    <projectUrl>https://github.com/sschmid/Entitas-CSharp/tree/1.13.0/Addons/Entitas.CodeGeneration.Attributes</projectUrl>
+    <iconUrl>https://i.postimg.cc/7hnDWT48/icon.png</iconUrl>
+    <description>Code generation attributes for Entitas.
+    Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity.</description>
+    <language>en-DE</language>
+    <tags>entitas c-sharp entitas-csharp unity ecs entity-component entity-framework entity entity-component-system tdd test-driven-development performance design-pattern paradigmshift paradigm design-patterns game gamedev game-development game-engine</tags>
+    <repository type="git" url="https://github.com/sschmid/Entitas-CSharp.git" branch="1.13.0" />
+    <dependencies>
+      <group targetFramework="net35"/>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="net20" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="..\Addons\Entitas.CodeGeneration.Attributes\bin\Release\Entitas.CodeGeneration.Attributes.dll" target="lib/net35"/>
+    <file src="icon.png" target="content/any/any/icon.png"/>
+    <file src="readme.txt" target=""/>
+    <file src="..\README.md" target=""/>
+    <file src="..\CHANGELOG.md" target=""/>
+    <file src="..\CONTRIBUTING.md" target=""/>
+    <file src="..\EntitasUpgradeGuide.md" target=""/>
+  </files>
+</package>

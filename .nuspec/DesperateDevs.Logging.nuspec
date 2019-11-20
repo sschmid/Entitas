@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>DesperateDevs.Logging</id>
+    <title>DesperateDevs Logging Utilities</title>
+    <version>0.0.0</version>
+    <authors>Simon Schmid,Maxim Zaks</authors>
+    <owners>Simon Schmid,Maxim Zaks,DesperateDevs</owners>
+    <copyright>Simon Schmid 2014-2018</copyright>
+    <description>DesperateDevs logging utilities.</description>
+    <language>en-DE</language>
+    <developmentDependency>false</developmentDependency>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/sschmid/Entitas-CSharp/tree/1.13.0/Libraries/Dependencies/DesperateDevs</projectUrl>
+    <repository type="git" url="https://github.com/sschmid/Entitas-CSharp.git" branch="1.13.0" />
+    <dependencies>
+      <group targetFramework="net20"/>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="mscorlib" targetFramework="net20" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Logging.dll" target="lib\net20"/>
+  </files>
+</package>
