@@ -23,6 +23,6 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Logging.dll" target="lib\net20"/>
+    <file src="..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Logging.dll" target="lib/net20"/>
   </files>
 </package>

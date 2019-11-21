@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>Entitas.CodeGeneration.Attributes</id>
-    <title>Entitas Code Generation Attributes</title>
+    <id>Entitas.Blueprints.CodeGeneration.Plugins</id>
+    <title>Entitas Blueprints Code Generation Plugins</title>
     <version>1.13.0</version>
     <authors>Simon Schmid,Maxim Zaks</authors>
     <owners>Simon Schmid,Maxim Zaks,DesperateDevs</owners>
@@ -12,22 +12,24 @@
     <license type="expression">MIT</license>
     <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
     <icon>icon.png</icon>
-    <projectUrl>https://github.com/sschmid/Entitas-CSharp/tree/1.13.0/Addons/Entitas.CodeGeneration.Attributes</projectUrl>
+    <projectUrl>https://github.com/sschmid/Entitas-CSharp/tree/1.13.0/Addons/Entitas.Blueprints.CodeGeneration.Plugins</projectUrl>
     <iconUrl>https://i.postimg.cc/7hnDWT48/icon.png</iconUrl>
-    <description>Code generation attributes for Entitas.
+    <description>Code generation plugins for the deprecated Blueprints module of Entitas.
 Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity.</description>
     <language>en-DE</language>
     <tags>entitas c-sharp entitas-csharp unity ecs entity-component entity-framework entity entity-component-system tdd test-driven-development performance design-pattern paradigmshift paradigm design-patterns game gamedev game-development game-engine</tags>
     <repository type="git" url="https://github.com/sschmid/Entitas-CSharp.git" branch="1.13.0" />
     <dependencies>
-      <group targetFramework="net35"/>
+      <group targetFramework="net35">
+        <dependency id="DesperateDevs.CodeGeneration" version="0.0.0"/>
+      </group>
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="net20" />
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="..\Addons\Entitas.CodeGeneration.Attributes\bin\Release\Entitas.CodeGeneration.Attributes.dll" target="lib/net35"/>
+    <file src="..\Addons\Entitas.Blueprints.CodeGeneration.Plugins\bin\Release\Entitas.Blueprints.CodeGeneration.Plugins.dll" target="lib/net35"/>
     <file src="icon.png" target=""/>
     <file src="readme.txt" target=""/>
     <file src="..\README.md" target=""/>

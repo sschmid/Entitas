@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net35</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="DesperateDevs.Analytics" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.CodeGeneration.CodeGenerator" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.CodeGeneration" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.CodeGeneration.Plugins" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.CodeGeneration.Unity.Plugins" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.Logging" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.Networking" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.Serialization" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.Unity.Editor" Version="0.0.0"/>
+      <PackageReference Include="DesperateDevs.Utils" Version="0.0.0"/>
+      <PackageReference Include="Entitas.Blueprints.CodeGeneration.Plugins" Version="1.13.0" />
+      <PackageReference Include="Entitas.Blueprints.CodeGeneration.Unity.Plugins" Version="1.13.0" />
+      <PackageReference Include="Entitas.Blueprints" Version="1.13.0" />
+      <PackageReference Include="Entitas.Blueprints.Unity.Editor" Version="1.13.0" />
+      <PackageReference Include="Entitas.Blueprints.Unity" Version="1.13.0" />
+      <PackageReference Include="Entitas.CodeGeneration.Attributes" Version="1.13.0" />
+      <PackageReference Include="Entitas.CodeGeneration.Plugins" Version="1.13.0" />
+      <!-- <PackageReference Include="Entitas.Migration" Version="1.13.0" /> -->
+      <!-- <PackageReference Include="Entitas.Migration.Unity.Editor" Version="1.13.0" /> -->
+      <PackageReference Include="Entitas" Version="1.13.0" />
+      <PackageReference Include="Entitas.Unity" Version="1.13.0" />
+      <PackageReference Include="Entitas.Unity.Editor" Version="1.13.0" />
+      <PackageReference Include="Entitas.VisualDebugging.CodeGeneration.Plugins" Version="1.13.0" />
+      <PackageReference Include="Entitas.VisualDebugging.Unity" Version="1.13.0" />
+      <!-- <PackageReference Include="Entitas.VisualDebugging.Unity.Editor" Version="1.13.0" /> -->
+    </ItemGroup>
+</Project>

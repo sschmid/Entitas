@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>Entitas.CodeGeneration.Attributes</id>
-    <title>Entitas Code Generation Attributes</title>
+    <id>Entitas.VisualDebugging.Unity</id>
+    <title>Entitas Visual Debugging for Unity.</title>
     <version>1.13.0</version>
     <authors>Simon Schmid,Maxim Zaks</authors>
     <owners>Simon Schmid,Maxim Zaks,DesperateDevs</owners>
@@ -12,22 +12,31 @@
     <license type="expression">MIT</license>
     <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
     <icon>icon.png</icon>
-    <projectUrl>https://github.com/sschmid/Entitas-CSharp/tree/1.13.0/Addons/Entitas.CodeGeneration.Attributes</projectUrl>
+    <projectUrl>https://github.com/sschmid/Entitas-CSharp/tree/1.13.0/Addons/Entitas.VisualDebugging.Unity</projectUrl>
     <iconUrl>https://i.postimg.cc/7hnDWT48/icon.png</iconUrl>
-    <description>Code generation attributes for Entitas.
+    <description>Unity visual debugging support for Entitas.
 Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity.</description>
     <language>en-DE</language>
     <tags>entitas c-sharp entitas-csharp unity ecs entity-component entity-framework entity entity-component-system tdd test-driven-development performance design-pattern paradigmshift paradigm design-patterns game gamedev game-development game-engine</tags>
     <repository type="git" url="https://github.com/sschmid/Entitas-CSharp.git" branch="1.13.0" />
     <dependencies>
-      <group targetFramework="net35"/>
+      <group targetFramework="net35">
+        <dependency id="Entitas" version="1.13.0"/>
+      </group>
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="net20" />
     </frameworkAssemblies>
+    <references>
+      <group targetFramework="net35">
+        <reference file="Entitas.VisualDebugging.Unity.dll"/>
+      </group>
+    </references>
   </metadata>
   <files>
-    <file src="..\Addons\Entitas.CodeGeneration.Attributes\bin\Release\Entitas.CodeGeneration.Attributes.dll" target="lib/net35"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity\bin\Release\Entitas.VisualDebugging.Unity.dll" target="lib/net35"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity\bin\Release\Entitas.VisualDebugging.Unity.dll" target="ref/net35"/>
+    <file src="..\Libraries\UnityEngine.dll" target="lib/net35"/>
     <file src="icon.png" target=""/>
     <file src="readme.txt" target=""/>
     <file src="..\README.md" target=""/>

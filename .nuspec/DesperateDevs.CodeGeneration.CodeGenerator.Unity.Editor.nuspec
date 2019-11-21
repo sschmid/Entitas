@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor</id>
+    <title>DesperateDevs code generator for the Unity Editor</title>
+    <version>0.0.0</version>
+    <authors>Simon Schmid,Maxim Zaks</authors>
+    <owners>Simon Schmid,Maxim Zaks,DesperateDevs</owners>
+    <copyright>Simon Schmid 2014-2018</copyright>
+    <description>DesperateDevs code generator for the Unity editor.</description>
+    <language>en-DE</language>
+    <developmentDependency>false</developmentDependency>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/sschmid/Entitas-CSharp/tree/1.13.0/Libraries/Dependencies/DesperateDevs</projectUrl>
+    <repository type="git" url="https://github.com/sschmid/Entitas-CSharp.git" branch="1.13.0" />
+    <dependencies>
+      <group targetFramework="net35">
+        <dependency id="DesperateDevs.CodeGeneration" version="0.0.0"/>
+        <dependency id="DesperateDevs.CodeGeneration.CodeGenerator" version="0.0.0"/>
+        <dependency id="DesperateDevs.Networking" version="0.0.0"/>
+        <dependency id="DesperateDevs.Serialization" version="0.0.0"/>
+        <dependency id="DesperateDevs.Unity.Editor" version="0.0.0"/>
+        <dependency id="DesperateDevs.Utils" version="0.0.0"/>
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="mscorlib" targetFramework="net20" />
+      <frameworkAssembly assemblyName="System" targetFramework="net35" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="net35" />
+    </frameworkAssemblies>
+    <references>
+      <group targetFramework="net35">
+        <reference file="DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll"/>
+      </group>
+    </references>
+  </metadata>
+  <files>
+    <file src="..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll" target="lib/net35"/>
+    <file src="..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll" target="ref/net35"/>
+    <file src="..\Libraries\UnityEditor.dll" target="lib/net35"/>
+    <file src="..\Libraries\UnityEngine.dll" target="lib/net35"/>
+  </files>
+</package>

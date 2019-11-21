@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>DesperateDevs.Utils</id>
-    <title>DesperateDevs Utilities</title>
+    <id>DesperateDevs.CodeGeneration.Plugins</id>
+    <title>DesperateDevs Code Generation Plugins</title>
     <version>0.0.0</version>
     <authors>Simon Schmid,Maxim Zaks</authors>
     <owners>Simon Schmid,Maxim Zaks,DesperateDevs</owners>
     <copyright>Simon Schmid 2014-2018</copyright>
-    <description>DesperateDevs miscellaneous utilities.</description>
+    <description>DesperateDevs code generation plugins.</description>
     <language>en-DE</language>
     <developmentDependency>false</developmentDependency>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -17,7 +17,10 @@
     <repository type="git" url="https://github.com/sschmid/Entitas-CSharp.git" branch="1.13.0" />
     <dependencies>
       <group targetFramework="net35">
+        <dependency id="DesperateDevs.CodeGeneration" version="0.0.0"/>
         <dependency id="DesperateDevs.Logging" version="0.0.0"/>
+        <dependency id="DesperateDevs.Serialization" version="0.0.0"/>
+        <dependency id="DesperateDevs.Utils" version="0.0.0"/>
       </group>
     </dependencies>
     <frameworkAssemblies>
@@ -27,6 +30,6 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll" target="lib/net35"/>
+    <file src="..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.Plugins.dll" target="lib/net35"/>
   </files>
 </package>
