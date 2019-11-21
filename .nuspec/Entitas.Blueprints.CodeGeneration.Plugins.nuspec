@@ -26,6 +26,9 @@ Entitas is a super fast Entity Component System (ECS) Framework specifically mad
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="net20" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="net35" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework="net20" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="net20" />
     </frameworkAssemblies>
   </metadata>
   <files>

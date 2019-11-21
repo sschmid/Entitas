@@ -7,7 +7,7 @@
     <authors>Simon Schmid,Maxim Zaks</authors>
     <owners>Simon Schmid,Maxim Zaks,DesperateDevs</owners>
     <copyright>Simon Schmid 2014-2018</copyright>
-    <description>DesperateDevs Unity editor utilities.</description>
+    <description>DesperateDevs utilities for the Unity editor.</description>
     <language>en-DE</language>
     <developmentDependency>false</developmentDependency>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

@@ -2,12 +2,12 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor</id>
-    <title>DesperateDevs code generator for the Unity Editor</title>
+    <title>DesperateDevs Code Generator for the Unity Editor</title>
     <version>0.0.0</version>
     <authors>Simon Schmid,Maxim Zaks</authors>
     <owners>Simon Schmid,Maxim Zaks,DesperateDevs</owners>
     <copyright>Simon Schmid 2014-2018</copyright>
-    <description>DesperateDevs code generator for the Unity editor.</description>
+    <description>Unity editor support for the DesperateDevs code generator.</description>
     <language>en-DE</language>
     <developmentDependency>false</developmentDependency>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

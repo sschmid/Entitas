@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>DesperateDevs.Networking</id>
-    <title>DesperateDevs Networking</title>
+    <title>DesperateDevs Networking Utilities</title>
     <version>0.0.0</version>
     <authors>Simon Schmid,Maxim Zaks</authors>
     <owners>Simon Schmid,Maxim Zaks,DesperateDevs</owners>

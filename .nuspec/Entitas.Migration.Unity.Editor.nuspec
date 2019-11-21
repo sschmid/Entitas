@@ -20,14 +20,27 @@ Entitas is a super fast Entity Component System (ECS) Framework specifically mad
     <tags>entitas c-sharp entitas-csharp unity ecs entity-component entity-framework entity entity-component-system tdd test-driven-development performance design-pattern paradigmshift paradigm design-patterns game gamedev game-development game-engine</tags>
     <repository type="git" url="https://github.com/sschmid/Entitas-CSharp.git" branch="1.13.0" />
     <dependencies>
-      <group targetFramework="net35"/>
+      <group targetFramework="net35">
+        <dependency id="DesperateDevs.Unity.Editor" version="0.0.0"/>
+        <dependency id="DesperateDevs.Utils" version="0.0.0"/>
+        <dependency id="Entitas.Migration" version="1.13.0"/>
+        <dependency id="Entitas.Unity.Editor" version="1.13.0"/>
+      </group>
     </dependencies>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="net20" />
     </frameworkAssemblies>
+    <references>
+      <group targetFramework="net35">
+        <reference file="Entitas.Migration.Unity.Editor.dll"/>
+      </group>
+    </references>
   </metadata>
   <files>
-    <file src="..\Addons\Entitas.Migration\bin\Release\Entitas.Migration.dll" target="lib/net35"/>
+    <file src="..\Addons\Entitas.Migration.Unity.Editor\bin\Release\Entitas.Migration.Unity.Editor.dll" target="lib/net35"/>
+    <file src="..\Addons\Entitas.Migration.Unity.Editor\bin\Release\Entitas.Migration.Unity.Editor.dll" target="ref/net35"/>
+    <file src="..\Libraries\UnityEditor.dll" target="lib/net35"/>
+    <file src="..\Libraries\UnityEngine.dll" target="lib/net35"/>
     <file src="Entitas.Migration.Unity.Editor.targets" target="build"/>
     <file src="..\Addons\Entitas.Unity.Editor\Entitas.Unity.Editor\Images\EntitasHeader.png" target="images"/>
     <file src="..\Addons\Entitas.Unity.Editor\Entitas.Unity.Editor\Images\EntitasHeader.png.meta" target="images"/>

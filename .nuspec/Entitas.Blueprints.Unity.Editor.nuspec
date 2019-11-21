@@ -12,7 +12,7 @@
     <license type="expression">MIT</license>
     <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
     <icon>icon.png</icon>
-    <projectUrl>https://github.com/sschmid/Entitas-CSharp/tree/1.13.0/Addons/Entitas.Blueprints.Unity</projectUrl>
+    <projectUrl>https://github.com/sschmid/Entitas-CSharp/tree/1.13.0/Addons/Entitas.Blueprints.Unity.Editor</projectUrl>
     <iconUrl>https://i.postimg.cc/7hnDWT48/icon.png</iconUrl>
     <description>Unity editor support for the deprecated Blueprints module of Entitas.
 Entitas is a super fast Entity Component System (ECS) Framework specifically made for C# and Unity.</description>
