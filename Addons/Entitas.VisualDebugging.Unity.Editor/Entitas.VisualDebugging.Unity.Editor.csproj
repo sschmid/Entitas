@@ -114,8 +114,6 @@
     <None Include="Entitas.VisualDebugging.Unity.Editor\Images\EntitasEntityErrorHierarchyIcon.png.meta" />
     <None Include="Entitas.VisualDebugging.Unity.Editor\Images\EntitasEntityHierarchyIcon.png" />
     <None Include="Entitas.VisualDebugging.Unity.Editor\Images\EntitasEntityHierarchyIcon.png.meta" />
-    <None Include="Entitas.VisualDebugging.Unity.Editor\Images\EntitasSystemsErrorHierarchyIcon.png" />
-    <None Include="Entitas.VisualDebugging.Unity.Editor\Images\EntitasSystemsErrorHierarchyIcon.png.meta" />
     <None Include="Entitas.VisualDebugging.Unity.Editor\Images\EntitasSystemsHierarchyIcon.png" />
     <None Include="Entitas.VisualDebugging.Unity.Editor\Images\EntitasSystemsHierarchyIcon.png.meta" />
   </ItemGroup>
