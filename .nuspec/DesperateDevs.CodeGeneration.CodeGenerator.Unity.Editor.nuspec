@@ -41,5 +41,8 @@
     <file src="..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll" target="ref/net35"/>
     <file src="..\Libraries\UnityEditor.dll" target="lib/net35"/>
     <file src="..\Libraries\UnityEngine.dll" target="lib/net35"/>
+    <file src="DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.targets" target="build"/>
+    <file src="..\Libraries\Dependencies\DesperateDevs\Jenny-Header.png" target="images"/>
+    <file src="..\Libraries\Dependencies\DesperateDevs\Jenny-Header.png.meta" target="images"/>
   </files>
 </package>

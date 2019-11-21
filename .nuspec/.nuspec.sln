@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = ".nuspec", ".nuspec.csproj", "{B98971DE-4FB5-483B-9C98-7163D7325B7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B98971DE-4FB5-483B-9C98-7163D7325B7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B98971DE-4FB5-483B-9C98-7163D7325B7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B98971DE-4FB5-483B-9C98-7163D7325B7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B98971DE-4FB5-483B-9C98-7163D7325B7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

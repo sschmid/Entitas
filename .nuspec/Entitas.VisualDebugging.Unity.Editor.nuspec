@@ -42,8 +42,19 @@ Entitas is a super fast Entity Component System (ECS) Framework specifically mad
   <files>
     <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\bin\Release\Entitas.VisualDebugging.Unity.Editor.dll" target="lib/net35"/>
     <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\bin\Release\Entitas.VisualDebugging.Unity.Editor.dll" target="ref/net35"/>
+    <file src="Entitas.VisualDebugging.Unity.Editor.targets" target="build"/>
     <file src="..\Libraries\UnityEditor.dll" target="lib/net35"/>
     <file src="..\Libraries\UnityEngine.dll" target="lib/net35"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasContextErrorHierarchyIcon.png" target="images"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasContextErrorHierarchyIcon.png.meta" target="images"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasContextHierarchyIcon.png" target="images"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasContextHierarchyIcon.png.meta" target="images"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasEntityErrorHierarchyIcon.png" target="images"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasEntityErrorHierarchyIcon.png.meta" target="images"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasEntityHierarchyIcon.png" target="images"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasEntityHierarchyIcon.png.meta" target="images"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasSystemsHierarchyIcon.png" target="images"/>
+    <file src="..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor\Images\EntitasSystemsHierarchyIcon.png.meta" target="images"/>
     <file src="icon.png" target=""/>
     <file src="readme.txt" target=""/>
     <file src="..\README.md" target=""/>
