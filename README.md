@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    <a href="https://discord.gg/7BgdKKN">
+    <a href="https://discord.gg/uHrVx5Z">
         <img src="https://img.shields.io/discord/599321316377624601.svg?logo=discord&logoColor=FFFFFF&label=Discord&labelColor=6A7EC2&color=7389D8" alt="Entitas on Discord"></a>
     <a href="https://gitter.im/sschmid/Entitas-CSharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">
         <img src="https://img.shields.io/static/v1.svg?logo=gitter&label=Gitter&labelColor=C20254&message=1k&color=D80161" alt="Join the chat at https://gitter.im/sschmid/Entitas-CSharp"></a>
