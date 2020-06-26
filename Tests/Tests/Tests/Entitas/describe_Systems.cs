@@ -97,11 +97,27 @@ class describe_Systems : nspec {
                 system.didInitialize.should_be(1);
             };
 
+            it["removes IInitializeSystem"] = () => {
+                var system = new InitializeSystemSpy();
+                systems.Add(system);
+                systems.Remove(system);
+                systems.Initialize();
+                system.didInitialize.should_be(0);
+            };
+
             it["executes IExecuteSystem"] = () => {
                 var system = new ExecuteSystemSpy();
                 systems.Add(system);
                 systems.Execute();
                 system.didExecute.should_be(1);
+            };
+
+            it["remove IExecuteSystem"] = () => {
+                var system = new ExecuteSystemSpy();
+                systems.Add(system);
+                systems.Remove(system);
+                systems.Execute();
+                system.didExecute.should_be(0);
             };
 
             it["wraps IReactiveSystem in a ReactiveSystem"] = () => {
@@ -120,11 +136,43 @@ class describe_Systems : nspec {
                 system.didExecute.should_be(1);
             };
 
+            it["adds ReactiveSystem"] = () => {
+                var system = new ReactiveSystemSpy(ctx.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA)));
+                systems.Add(system);
+                systems.Remove(system);
+                ctx.CreateEntity().AddComponentA();
+                systems.Execute();
+                system.didExecute.should_be(0);
+            };
+
             it["cleans up ICleanupSystem"] = () => {
                 var system = new CleanupSystemSpy();
                 systems.Add(system);
                 systems.Cleanup();
                 system.didCleanup.should_be(1);
+            };
+
+            it["removes ICleanupSystem"] = () => {
+                var system = new CleanupSystemSpy();
+                systems.Add(system);
+                systems.Remove(system);
+                systems.Cleanup();
+                system.didCleanup.should_be(0);
+            };
+
+            it["tears down ITearDownSystem"] = () => {
+                var system = new TearDownSystemSpy();
+                systems.Add(system);
+                systems.TearDown();
+                system.didTearDown.should_be(1);
+            };
+
+            it["removes ITearDownSystem"] = () => {
+                var system = new TearDownSystemSpy();
+                systems.Add(system);
+                systems.Remove(system);
+                systems.TearDown();
+                system.didTearDown.should_be(0);
             };
 
             it["initializes, executes, cleans up and tears down InitializeExecuteCleanupTearDownSystemSpy"] = () => {
@@ -172,7 +220,6 @@ class describe_Systems : nspec {
                 systems.TearDown();
                 system.didTearDown.should_be(1);
             };
-
 
             it["initializes, executes, cleans up and tears down systems recursively"] = () => {
                 var system = createReactiveSystem(ctx);

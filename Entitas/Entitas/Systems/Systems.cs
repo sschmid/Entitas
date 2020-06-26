@@ -24,27 +24,21 @@ namespace Entitas {
 
         /// Adds the system instance to the systems list.
         public virtual Systems Add(ISystem system) {
-            var initializeSystem = system as IInitializeSystem;
-            if (initializeSystem != null) {
-                _initializeSystems.Add(initializeSystem);
-            }
-
-            var executeSystem = system as IExecuteSystem;
-            if (executeSystem != null) {
-                _executeSystems.Add(executeSystem);
-            }
-
-            var cleanupSystem = system as ICleanupSystem;
-            if (cleanupSystem != null) {
-                _cleanupSystems.Add(cleanupSystem);
-            }
-
-            var tearDownSystem = system as ITearDownSystem;
-            if (tearDownSystem != null) {
-                _tearDownSystems.Add(tearDownSystem);
-            }
+            if (system is IInitializeSystem initializeSystem) _initializeSystems.Add(initializeSystem);
+            if (system is IExecuteSystem executeSystem) _executeSystems.Add(executeSystem);
+            if (system is ICleanupSystem cleanupSystem) _cleanupSystems.Add(cleanupSystem);
+            if (system is ITearDownSystem tearDownSystem) _tearDownSystems.Add(tearDownSystem);
 
             return this;
+        }
+
+        /// Removes the system instance from the systems list.
+        public void Remove(ISystem system)
+        {
+            if (system is IInitializeSystem initializeSystem) _initializeSystems.Remove(initializeSystem);
+            if (system is IExecuteSystem executeSystem) _executeSystems.Remove(executeSystem);
+            if (system is ICleanupSystem cleanupSystem) _cleanupSystems.Remove(cleanupSystem);
+            if (system is ITearDownSystem tearDownSystem) _tearDownSystems.Remove(tearDownSystem);
         }
 
         /// Calls Initialize() on all IInitializeSystem and other

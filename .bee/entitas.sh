@@ -87,8 +87,18 @@ DESPERATEDEVS_PLUGINS=(
   'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
 )
 
+entitas::build() {
+  msbuild -verbosity:quiet /property:Configuration=Release Entitas.sln
+}
+
+entitas::rebuild() {
+  msbuild /t:Clean /p:Configuration=Release /v:m Entitas.sln
+  msbuild -verbosity:quiet /property:Configuration=Release Entitas.sln
+}
+
 entitas::run_tests() {
   msbuild -verbosity:quiet /property:Configuration=Release Tests/Tests/Tests.csproj
+  mono Tests/Tests/bin/Release/Tests.exe "$@"
   mono Tests/Tests/bin/Release/Tests.exe "$@"
 }
 
@@ -101,7 +111,7 @@ entitas::update() {
 }
 
 entitas::generate() {
-  msbuild::build
+  entitas::build
   local properties=(
     'Tests/TestFixtures/Preferences.properties'
     'Readme/Prefrences.properties'
@@ -220,8 +230,9 @@ entitas::pack_entitas_unity() {
 entitas::pack() {
   log_func
   entitas::update
-  msbuild::rebuild
-  nspec::run
+  entitas::rebuild
+
+  entitas::run_tests
 
   utils::clean_dir "${BUILD_SRC}" "${BUILD_DIST}"
 
