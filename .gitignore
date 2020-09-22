@@ -8,6 +8,7 @@ bin
 *.userprefs
 *.user
 test-results
+packages
 
 # IDEs
 .vs
