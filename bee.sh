@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 PROJECT="Entitas"
-PLUGINS=(changelog doxygen git github msbuild nspec tree utils version)
+PLUGINS=(changelog doxygen git github tree utils version)
 RESOURCES=.bee
 
 source "${RESOURCES}"/entitas.sh

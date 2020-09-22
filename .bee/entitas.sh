@@ -87,6 +87,11 @@ DESPERATEDEVS_PLUGINS=(
   'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
 )
 
+entitas::run_tests() {
+  msbuild -verbosity:quiet /property:Configuration=Release Tests/Tests/Tests.csproj
+  mono Tests/Tests/bin/Release/Tests.exe "$@"
+}
+
 entitas::update() {
   log_func
   utils::clean_dir "${DEPS_DIR}"
