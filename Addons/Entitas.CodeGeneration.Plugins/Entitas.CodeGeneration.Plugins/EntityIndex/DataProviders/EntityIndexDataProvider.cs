@@ -19,8 +19,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public Dictionary<string, string> defaultProperties {
             get {
                 return _assembliesConfig.defaultProperties
-                    .Merge(_ignoreNamespacesConfig.defaultProperties,
-                        _contextsComponentDataProvider.defaultProperties);
+                    .Merge(_contextsComponentDataProvider.defaultProperties);
             }
         }
 
@@ -28,7 +27,6 @@ namespace Entitas.CodeGeneration.Plugins {
 
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
-        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
         readonly ContextsComponentDataProvider _contextsComponentDataProvider = new ContextsComponentDataProvider();
 
         readonly Type[] _types;
@@ -43,7 +41,6 @@ namespace Entitas.CodeGeneration.Plugins {
         public void Configure(Preferences preferences) {
             _codeGeneratorConfig.Configure(preferences);
             _assembliesConfig.Configure(preferences);
-            _ignoreNamespacesConfig.Configure(preferences);
             _contextsComponentDataProvider.Configure(preferences);
         }
 
@@ -81,7 +78,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
                     data.SetEntityIndexType(getEntityIndexType(attribute));
                     data.IsCustom(false);
-                    data.SetEntityIndexName(type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces));
+                    data.SetEntityIndexName(type.ToCompilableString().ToComponentName());
                     data.SetKeyType(info.type.ToCompilableString());
                     data.SetComponentType(type.ToCompilableString());
                     data.SetMemberName(info.name);

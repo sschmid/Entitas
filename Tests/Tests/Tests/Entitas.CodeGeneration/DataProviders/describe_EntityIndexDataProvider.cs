@@ -10,10 +10,7 @@ class describe_EntityIndexDataProvider : nspec {
     EntityIndexData[] getData<T1, T2>(Preferences preferences= null) {
         var provider = new EntityIndexDataProvider(new Type[] { typeof(T1), typeof(T2) });
         if (preferences == null) {
-            preferences = new TestPreferences(
-                "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState" + "\n" +
-                "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"
-            );
+            preferences = new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState");
         }
         provider.Configure(preferences);
 
@@ -127,19 +124,7 @@ class describe_EntityIndexDataProvider : nspec {
             Preferences preferences= null;
 
             before = () => {
-                preferences = new TestPreferences(
-                    "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n" +
-                    "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true"
-                );
-            };
-
-            it["ignores namespaces"] = () => {
-                var data = getData<EntityIndexComponent, StandardComponent>(preferences);
-                data.Length.should_be(1);
-                var d = data[0];
-
-                d.GetEntityIndexName().should_be("EntityIndex");
-
+                preferences = new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext");
             };
 
             it["gets default context"] = () => {

@@ -11,12 +11,10 @@ namespace Entitas.CodeGeneration.Plugins {
 
         const string KEYWORD_PREFIX = "@";
 
-        public static bool ignoreNamespaces;
-
         static readonly CodeDomProvider provider = CodeDomProvider.CreateProvider("C#");
 
         public static string ComponentName(this ComponentData data) {
-            return data.GetTypeName().ToComponentName(ignoreNamespaces);
+            return data.GetTypeName().ToComponentName();
         }
 
         public static string ComponentNameValidLowercaseFirst(this ComponentData data) {
@@ -79,8 +77,8 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         public static string EventComponentName(this ComponentData data, EventData eventData) {
-            var componentName = data.GetTypeName().ToComponentName(ignoreNamespaces);
-            var shortComponentName = data.GetTypeName().ToComponentName(true);
+            var componentName = data.GetTypeName().ToComponentName();
+            var shortComponentName = data.GetTypeName().ToComponentName();
             var eventComponentName = componentName.Replace(
                 shortComponentName,
                 eventData.GetEventPrefix() + shortComponentName

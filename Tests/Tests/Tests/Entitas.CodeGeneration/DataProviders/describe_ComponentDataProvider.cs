@@ -15,9 +15,7 @@ class describe_ComponentDataProvider : nspec {
     ComponentData[] getMultipleData<T>(Preferences preferences = null) {
         var provider = new ComponentDataProvider(new Type[] { typeof(T) });
         if (preferences == null) {
-            preferences = new TestPreferences(
-                @"Entitas.CodeGeneration.Plugins.Contexts = Game, GameState
-Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
+            preferences = new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState");
         }
 
         provider.Configure(preferences);

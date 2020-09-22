@@ -24,7 +24,6 @@ namespace Entitas.CodeGeneration.Plugins {
 
                 return _assembliesConfig.defaultProperties
                     .Merge(_contextsComponentDataProvider.defaultProperties)
-                    .Merge(_ignoreNamespacesConfig.defaultProperties)
                     .Merge(dataProviderProperties);
             }
         }
@@ -34,7 +33,6 @@ namespace Entitas.CodeGeneration.Plugins {
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
         readonly ContextsComponentDataProvider _contextsComponentDataProvider = new ContextsComponentDataProvider();
-        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         static IComponentDataProvider[] getComponentDataProviders() {
             return new IComponentDataProvider[] {
@@ -72,7 +70,6 @@ namespace Entitas.CodeGeneration.Plugins {
             }
 
             _contextsComponentDataProvider.Configure(preferences);
-            _ignoreNamespacesConfig.Configure(preferences);
         }
 
         public CodeGeneratorData[] GetData() {

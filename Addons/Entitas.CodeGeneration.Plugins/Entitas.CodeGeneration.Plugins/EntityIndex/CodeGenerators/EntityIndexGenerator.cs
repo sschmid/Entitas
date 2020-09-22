@@ -1,20 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.Serialization;
 using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EntityIndexGenerator : ICodeGenerator, IConfigurable {
+    public class EntityIndexGenerator : ICodeGenerator {
 
         public string name { get { return "Entity Index"; } }
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
-
-        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
-
-        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
         const string CLASS_TEMPLATE =
             @"public partial class Contexts {
@@ -58,10 +53,6 @@ ${getIndices}
         return ((${IndexType})(context.GetEntityIndex(Contexts.${IndexName}))).${MethodName}(${args});
     }
 ";
-
-        public void Configure(Preferences preferences) {
-            _ignoreNamespacesConfig.Configure(preferences);
-        }
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) {
             var entityIndexData = data
@@ -138,7 +129,7 @@ ${getIndices}
                 .Replace("${ComponentType}", data.GetComponentType())
                 .Replace("${MemberName}", data.GetMemberName())
                 .Replace("${componentName}", data.GetComponentType()
-                    .ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces)
+                    .ToComponentName()
                     .LowercaseFirst()
                     .AddPrefixIfIsKeyword());
         }
