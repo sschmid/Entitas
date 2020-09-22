@@ -3,17 +3,20 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using NSpec;
 
-class check_namespaces : nspec {
-
-    static string dir(params string[] paths) {
+class check_namespaces : nspec
+{
+    static string dir(params string[] paths)
+    {
         return paths.Aggregate(string.Empty, (pathString, p) => pathString + p + Path.DirectorySeparatorChar);
     }
 
-    void when_checking_namespaces() {
+    void when_checking_namespaces()
+    {
         var projectRoot = TestExtensions.GetProjectRoot();
         var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
 
-        it["processes roughly the correct number of files"] = () => {
+        it["processes roughly the correct number of files"] = () =>
+        {
             sourceFiles.Count.should_be_greater_than(150);
             sourceFiles.Count.should_be_less_than(250);
         };
@@ -27,10 +30,11 @@ class check_namespaces : nspec {
 
         var each = new Each<string, string, string>();
 
-        foreach (var file in sourceFiles) {
+        foreach (var file in sourceFiles)
+        {
             var fileName = file.Key
-                               .Replace(dir(projectRoot), string.Empty)
-                               .Replace(addonsDir, string.Empty);
+                .Replace(dir(projectRoot), string.Empty)
+                .Replace(addonsDir, string.Empty);
 
             string expectedNamespace;
             expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
