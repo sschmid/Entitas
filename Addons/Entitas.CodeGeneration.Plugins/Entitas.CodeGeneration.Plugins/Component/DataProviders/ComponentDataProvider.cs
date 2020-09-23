@@ -37,6 +37,7 @@ namespace Entitas.CodeGeneration.Plugins {
         static IComponentDataProvider[] getComponentDataProviders() {
             return new IComponentDataProvider[] {
                 new ComponentTypeComponentDataProvider(),
+                new NamespaceComponentDataProvider(),
                 new MemberDataComponentDataProvider(),
                 new ContextsComponentDataProvider(),
                 new IsUniqueComponentDataProvider(),
