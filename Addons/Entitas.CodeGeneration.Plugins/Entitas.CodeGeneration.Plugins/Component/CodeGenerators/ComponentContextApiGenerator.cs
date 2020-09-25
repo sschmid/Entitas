@@ -65,36 +65,20 @@ namespace Entitas.CodeGeneration.Plugins
         return context.GetGroup(${ComponentName}Matcher.Instance).GetSingleEntity();
     }
 
-    public static bool Has${ComponentName}(this ${ContextName}Context context)
+    public static bool ${PrefixedComponentName}(this ${ContextName}Context context)
     {
         return context.Get${ComponentName}Entity() != null;
     }
 
-    public static ${ContextName}Entity Set${ComponentName}(this ${ContextName}Context context)
-    {
-        if (context.Has${ComponentName}())
-        {
-            throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + context + "" already has an entity with ${ComponentType}!"",
-                ""You should check if the context already has a ${ComponentName} entity before setting it or use context.Replace${ComponentName}()."");
-        }
-
-        return context.CreateEntity();
-    }
-
-    public static ${ContextName}Entity Replace${ComponentName}(this ${ContextName}Context context)
-    {
+    public static void ${PrefixedComponentName}(this ${ContextName}Context context, bool value) {
         var entity = context.Get${ComponentName}Entity();
-        if (entity == null)
-            entity = context.Set${ComponentName}();
-        else
-            entity.Replace${ComponentName}();
-
-        return entity;
-    }
-
-    public static void Remove${ComponentName}(this ${ContextName}Context context)
-    {
-        context.Get${ComponentName}Entity().Destroy();
+        if (value != (entity != null))
+        {
+            if (value)
+                context.CreateEntity().${PrefixedComponentName}(true);
+            else
+                entity.Destroy();
+        }
     }
 }
 ";

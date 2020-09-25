@@ -45,7 +45,7 @@ namespace Entitas.CodeGeneration.Plugins
                 .Replace("${ComponentName}", data.GetTypeName().ToComponentName())
                 .Replace("${componentName}", data.GetTypeName().ToComponentName().LowercaseFirst())
                 .Replace("${validComponentName}", data.ComponentNameValidLowercaseFirst())
-                .Replace("${prefixedComponentName}", data.PrefixedComponentName())
+                .Replace("${PrefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${newMethodParameters}", GetMethodParameters(data.GetMemberData(), true))
                 .Replace("${methodParameters}", GetMethodParameters(data.GetMemberData(), false))
                 .Replace("${newMethodArgs}", GetMethodArgs(data.GetMemberData(), true))
@@ -68,7 +68,7 @@ namespace Entitas.CodeGeneration.Plugins
 
         public static string PrefixedComponentName(this ComponentData data)
         {
-            return data.GetFlagPrefix().LowercaseFirst() + data.GetTypeName().ToComponentName();
+            return data.GetFlagPrefix().UppercaseFirst() + data.GetTypeName().ToComponentName();
         }
 
         public static string Event(this ComponentData data, string contextName, EventData eventData)

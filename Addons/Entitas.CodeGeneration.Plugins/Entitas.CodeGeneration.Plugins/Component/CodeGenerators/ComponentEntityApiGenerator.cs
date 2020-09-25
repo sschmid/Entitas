@@ -52,14 +52,14 @@ ${memberAssignmentList}
 {
     static readonly ${ComponentName}Component _${componentName}Component = new ${ComponentName}Component();
 
-    public static bool Is${ComponentName}(this ${ContextName}Entity entity)
+    public static bool ${PrefixedComponentName}(this ${ContextName}Entity entity)
     {
         return entity.HasComponent(${ComponentName}ComponentIndex.Value);
     }
 
-    public static ${ContextName}Entity Is${ComponentName}(this ${ContextName}Entity entity, bool value)
+    public static ${ContextName}Entity ${PrefixedComponentName}(this ${ContextName}Entity entity, bool value)
     {
-        if (value != entity.Is${ComponentName}())
+        if (value != entity.${PrefixedComponentName}())
         {
             var index = ${ComponentName}ComponentIndex.Value;
             if (value)
