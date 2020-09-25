@@ -81,7 +81,7 @@ namespace Entitas {
             }
         }
 
-        static int[] distinctIndices(IList<int> indices) {
+        protected static int[] distinctIndices(IList<int> indices) {
             foreach (var index in indices) {
                 _indexSetBuffer.Add(index);
             }

@@ -11,19 +11,19 @@ namespace Entitas.CodeGeneration.Plugins {
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
-        const string CLASS_TEMPLATE =
-            @"public partial class Contexts {
-
+        const string CLASS_TEMPLATE = @"public partial class Contexts
+{
 ${indexConstants}
 
     [Entitas.CodeGeneration.Attributes.PostConstructor]
-    public void InitializeEntityIndices() {
+    public void InitializeEntityIndices()
+    {
 ${addIndices}
     }
 }
 
-public static class ContextsExtensions {
-
+public static class ContextsExtensions
+{
 ${getIndices}
 }";
 

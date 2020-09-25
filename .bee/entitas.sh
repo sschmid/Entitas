@@ -87,6 +87,10 @@ DESPERATEDEVS_PLUGINS=(
   'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
 )
 
+entitas::build() {
+  msbuild -verbosity:quiet /property:Configuration=Release Entitas.sln
+}
+
 entitas::run_tests() {
   msbuild -verbosity:quiet /property:Configuration=Release Tests/Tests/Tests.csproj
   mono Tests/Tests/bin/Release/Tests.exe "$@"

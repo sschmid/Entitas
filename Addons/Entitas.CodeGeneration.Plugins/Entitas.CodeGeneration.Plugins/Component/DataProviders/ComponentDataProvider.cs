@@ -38,6 +38,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return new IComponentDataProvider[] {
                 new ComponentTypeComponentDataProvider(),
                 new NamespaceComponentDataProvider(),
+                new ComponentNameComponentDataProvider(),
                 new MemberDataComponentDataProvider(),
                 new ContextsComponentDataProvider(),
                 new IsUniqueComponentDataProvider(),
@@ -84,14 +85,15 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Select(createDataForComponent)
                 .ToArray();
 
-            var dataFromNonComponents = types
-                .Where(type => !type.ImplementsInterface<IComponent>())
-                .Where(type => !type.IsGenericType)
-                .Where(hasContexts)
-                .SelectMany(createDataForNonComponent)
-                .ToArray();
+            // var dataFromNonComponents = types
+            //     .Where(type => !type.ImplementsInterface<IComponent>())
+            //     .Where(type => !type.IsGenericType)
+            //     .Where(hasContexts)
+            //     .SelectMany(createDataForNonComponent)
+            //     .ToArray();
 
-            var mergedData = merge(dataFromNonComponents, dataFromComponents);
+            // var mergedData = merge(dataFromNonComponents, dataFromComponents);
+            var mergedData = dataFromComponents;
 
             var dataFromEvents = mergedData
                 .Where(data => data.IsEvent())
@@ -118,18 +120,18 @@ namespace Entitas.CodeGeneration.Plugins {
             return data;
         }
 
-        ComponentData[] createDataForNonComponent(Type type) {
-            return getComponentNames(type)
-                .Select(componentName => {
-                    var data = createDataForComponent(type);
-                    data.SetTypeName(componentName.AddComponentSuffix());
-                    data.SetMemberData(new[] {
-                        new MemberData(type.ToCompilableString(), "value")
-                    });
-
-                    return data;
-                }).ToArray();
-        }
+        // ComponentData[] createDataForNonComponent(Type type) {
+        //     return getComponentNames(type)
+        //         .Select(componentName => {
+        //             var data = createDataForComponent(type);
+        //             data.SetTypeName(componentName.AddComponentSuffix());
+        //             data.SetMemberData(new[] {
+        //                 new MemberData(type.ToCompilableString(), "value")
+        //             });
+        //
+        //             return data;
+        //         }).ToArray();
+        // }
 
         ComponentData[] createDataForEvents(ComponentData data) {
             return data.GetContextNames()
@@ -141,11 +143,12 @@ namespace Entitas.CodeGeneration.Plugins {
                         dataForEvent.ShouldGenerateComponent(false);
                         var eventComponentName = data.EventComponentName(eventData);
                         var eventTypeSuffix = eventData.GetEventTypeSuffix();
-                        var optionalContextName = dataForEvent.GetContextNames().Length > 1 ? contextName : string.Empty;
-                        var listenerComponentName = optionalContextName + eventComponentName + eventTypeSuffix.AddListenerSuffix();
+                        // var optionalContextName = dataForEvent.GetContextNames().Length > 1 ? contextName : string.Empty;
+                        // var listenerComponentName = optionalContextName + eventComponentName + eventTypeSuffix.AddListenerSuffix();
+                        var listenerComponentName = eventComponentName + eventTypeSuffix.AddListenerSuffix();
                         dataForEvent.SetTypeName(listenerComponentName.AddComponentSuffix());
                         dataForEvent.SetMemberData(new[] {
-                            new MemberData("System.Collections.Generic.List<I" + listenerComponentName + ">", "value")
+                            new MemberData("System.Collections.Generic.List<I" + listenerComponentName + ">", "Value")
                         });
                         dataForEvent.SetContextNames(new[] { contextName });
                         return dataForEvent;

@@ -17,12 +17,12 @@
 
         public string[] componentNames { get; set; }
 
-        int[] _indices;
-        int[] _allOfIndices;
-        int[] _anyOfIndices;
-        int[] _noneOfIndices;
+        protected int[] _indices;
+        protected int[] _allOfIndices;
+        protected int[] _anyOfIndices;
+        protected int[] _noneOfIndices;
 
-        Matcher() {
+        protected Matcher() {
         }
 
         IAnyOfMatcher<TEntity> IAllOfMatcher<TEntity>.AnyOf(params int[] indices) {

@@ -32,7 +32,7 @@ class describe_EntityIndexDataProvider : nspec {
             d.IsCustom().should_be_false();
 
             d.GetEntityIndexName().GetType().should_be(typeof(string));
-            d.GetEntityIndexName().should_be("MyNamespaceEntityIndex");
+            d.GetEntityIndexName().should_be("EntityIndex");
 
             d.GetContextNames().GetType().should_be(typeof(string[]));
             d.GetContextNames().Length.should_be(2);
@@ -56,10 +56,10 @@ class describe_EntityIndexDataProvider : nspec {
             var data = getData<MultipleEntityIndicesComponent, StandardComponent>();
             data.Length.should_be(2);
 
-            data[0].GetEntityIndexName().should_be("MyNamespaceMultipleEntityIndices");
+            data[0].GetEntityIndexName().should_be("MultipleEntityIndices");
             data[0].GetHasMultiple().should_be_true();
 
-            data[1].GetEntityIndexName().should_be("MyNamespaceMultipleEntityIndices");
+            data[1].GetEntityIndexName().should_be("MultipleEntityIndices");
             data[1].GetHasMultiple().should_be_true();
         };
 

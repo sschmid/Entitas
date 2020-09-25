@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using DesperateDevs.CodeGeneration;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -8,10 +7,10 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public override string name { get { return "Event (Listener Component)"; } }
 
-        const string TEMPLATE =
-            @"[Entitas.CodeGeneration.Attributes.DontGenerate(false)]
-public sealed class ${EventListenerComponent} : Entitas.IComponent {
-    public System.Collections.Generic.List<I${EventListener}> value;
+        const string TEMPLATE = @"[Entitas.CodeGeneration.Attributes.DontGenerate(false)]
+public sealed class ${EventListenerComponent} : Entitas.IComponent
+{
+    public System.Collections.Generic.List<I${EventListener}> Value;
 }
 ";
 
@@ -31,13 +30,18 @@ public sealed class ${EventListenerComponent} : Entitas.IComponent {
 
         CodeGenFile[] generate(string contextName, ComponentData data) {
             return data.GetEventData()
-                .Select(eventData => new CodeGenFile(
-                    "Events" + Path.DirectorySeparatorChar +
-                    "Components" + Path.DirectorySeparatorChar +
-                    data.EventListener(contextName, eventData).AddComponentSuffix() + ".cs",
-                    TEMPLATE.Replace(data, contextName, eventData),
-                    GetType().FullName
-                )).ToArray();
+                .Select(eventData =>
+                {
+                    var fileContent = TEMPLATE
+                        .Replace(data, contextName, eventData)
+                        .WrapInNamespace(data.GetNamespace(), contextName);
+
+                    return new CodeGenFile(
+                        data.GetTypeName().ToFileName(contextName),
+                        fileContent,
+                        GetType().FullName
+                    );
+                }).ToArray();
         }
     }
 }

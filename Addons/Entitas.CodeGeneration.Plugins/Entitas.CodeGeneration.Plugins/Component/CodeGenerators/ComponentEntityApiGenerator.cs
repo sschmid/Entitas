@@ -1,67 +1,89 @@
-using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
 using DesperateDevs.Utils;
 
-namespace Entitas.CodeGeneration.Plugins {
+namespace Entitas.CodeGeneration.Plugins
+{
+    public class ComponentEntityApiGenerator : AbstractGenerator
+    {
+        public override string name
+        {
+            get { return "Component Entity Extension"; }
+        }
 
-    public class ComponentEntityApiGenerator : AbstractGenerator {
-
-        public override string name { get { return "Component (Entity API)"; } }
-
-        const string STANDARD_TEMPLATE =
-            @"public partial class ${EntityType} {
-
-    public ${ComponentType} ${validComponentName} { get { return (${ComponentType})GetComponent(${Index}); } }
-    public bool has${ComponentName} { get { return HasComponent(${Index}); } }
-
-    public void Add${ComponentName}(${newMethodParameters}) {
-        var index = ${Index};
-        var component = (${ComponentType})CreateComponent(index, typeof(${ComponentType}));
-${memberAssignmentList}
-        AddComponent(index, component);
+        const string STANDARD_TEMPLATE = @"public static class ${ComponentName}EntityExtension
+{
+    public static ${ComponentType} Get${ComponentName}(this ${ContextName}Entity entity)
+    {
+        return (${ComponentType})entity.GetComponent(${ComponentName}ComponentIndex.Value);
     }
 
-    public void Replace${ComponentName}(${newMethodParameters}) {
-        var index = ${Index};
-        var component = (${ComponentType})CreateComponent(index, typeof(${ComponentType}));
-${memberAssignmentList}
-        ReplaceComponent(index, component);
+    public static bool Has${ComponentName}(this ${ContextName}Entity entity)
+    {
+        return entity.HasComponent(${ComponentName}ComponentIndex.Value);
     }
 
-    public void Remove${ComponentName}() {
-        RemoveComponent(${Index});
+    public static ${ContextName}Entity Add${ComponentName}(this ${ContextName}Entity entity, ${newMethodParameters})
+    {
+        var index = ${ComponentName}ComponentIndex.Value;
+        var component = entity.CreateComponent<${ComponentType}>(index);
+${memberAssignmentList}
+        entity.AddComponent(index, component);
+        return entity;
+    }
+
+    public static ${ContextName}Entity Replace${ComponentName}(this ${ContextName}Entity entity, ${newMethodParameters})
+    {
+        var index = ${ComponentName}ComponentIndex.Value;
+        var component = entity.CreateComponent<${ComponentType}>(index);
+${memberAssignmentList}
+        entity.ReplaceComponent(index, component);
+        return entity;
+    }
+
+    public static void Remove${ComponentName}(this ${ContextName}Entity entity)
+    {
+        entity.RemoveComponent(${ComponentName}ComponentIndex.Value);
     }
 }
 ";
 
-        const string FLAG_TEMPLATE =
-            @"public partial class ${EntityType} {
+        const string FLAG_TEMPLATE = @"public static class ${ComponentName}EntityExtension
+{
+    static readonly ${ComponentName}Component _${componentName}Component = new ${ComponentName}Component();
 
-    static readonly ${ComponentType} ${componentName}Component = new ${ComponentType}();
+    public static bool Is${ComponentName}(this ${ContextName}Entity entity)
+    {
+        return entity.HasComponent(${ComponentName}ComponentIndex.Value);
+    }
 
-    public bool ${prefixedComponentName} {
-        get { return HasComponent(${Index}); }
-        set {
-            if (value != ${prefixedComponentName}) {
-                var index = ${Index};
-                if (value) {
-                    var componentPool = GetComponentPool(index);
-                    var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : ${componentName}Component;
+    public static ${ContextName}Entity Is${ComponentName}(this ${ContextName}Entity entity, bool value)
+    {
+        if (value != entity.Is${ComponentName}())
+        {
+            var index = ${ComponentName}ComponentIndex.Value;
+            if (value)
+            {
+                var componentPool = entity.GetComponentPool(index);
+                var component = componentPool.Count > 0
+                    ? componentPool.Pop()
+                    : _${componentName}Component;
 
-                    AddComponent(index, component);
-                } else {
-                    RemoveComponent(index);
-                }
+                entity.AddComponent(index, component);
+            }
+            else
+            {
+                entity.RemoveComponent(index);
             }
         }
+
+        return entity;
     }
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
+        public override CodeGenFile[] Generate(CodeGeneratorData[] data)
+        {
             return data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateMethods())
@@ -69,31 +91,33 @@ ${memberAssignmentList}
                 .ToArray();
         }
 
-        CodeGenFile[] generate(ComponentData data) {
+        CodeGenFile[] generate(ComponentData data)
+        {
             return data.GetContextNames()
                 .Select(contextName => generate(contextName, data))
                 .ToArray();
         }
 
-        CodeGenFile generate(string contextName, ComponentData data) {
+        CodeGenFile generate(string contextName, ComponentData data)
+        {
             var template = data.GetMemberData().Length == 0
                 ? FLAG_TEMPLATE
                 : STANDARD_TEMPLATE;
 
             var fileContent = template
                 .Replace("${memberAssignmentList}", getMemberAssignmentList(data.GetMemberData()))
-                .Replace(data, contextName);
+                .Replace(data, contextName)
+                .WrapInNamespace(data.GetNamespace(), contextName);
 
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar +
-                "Components" + Path.DirectorySeparatorChar +
-                data.ComponentNameWithContext(contextName).AddComponentSuffix() + ".cs",
+                data.GetTypeName().ToFileName(contextName),
                 fileContent,
                 GetType().FullName
             );
         }
 
-        string getMemberAssignmentList(MemberData[] memberData) {
+        string getMemberAssignmentList(MemberData[] memberData)
+        {
             return string.Join("\n", memberData
                 .Select(info => "        component." + info.name + " = new" + info.name.UppercaseFirst() + ";")
                 .ToArray()

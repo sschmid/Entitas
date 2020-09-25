@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
 
@@ -10,8 +9,8 @@ namespace Entitas.CodeGeneration.Plugins {
         public int priority { get { return 0; } }
         public bool runInDryMode { get { return true; } }
 
-        const string TEMPLATE =
-            @"public sealed partial class ${EntityType} : Entitas.Entity {
+        const string TEMPLATE = @"public sealed class ${EntityType} : Entitas.Entity
+{
 }
 ";
 
@@ -25,8 +24,7 @@ namespace Entitas.CodeGeneration.Plugins {
         CodeGenFile generate(ContextData data) {
             var contextName = data.GetContextName();
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar +
-                contextName.AddEntitySuffix() + ".cs",
+                "Entity".ToFileName(contextName),
                 TEMPLATE.Replace(contextName),
                 GetType().FullName
             );

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using DesperateDevs.CodeGeneration;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -8,8 +7,8 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public override string name { get { return "Event (Listener Interface)"; } }
 
-        const string TEMPLATE =
-            @"public interface I${EventListener} {
+        const string TEMPLATE = @"public interface I${EventListener}
+{
     void On${EventComponentName}${EventType}(${ContextName}Entity entity${methodParameters});
 }
 ";
@@ -38,12 +37,11 @@ namespace Entitas.CodeGeneration.Plugins {
 
                     var fileContent = TEMPLATE
                         .Replace("${methodParameters}", data.GetEventMethodArgs(eventData, ", " + memberData.GetMethodParameters(false)))
-                        .Replace(data, contextName, eventData);
+                        .Replace(data, contextName, eventData)
+                        .WrapInNamespace(data.GetNamespace(), contextName);
 
                     return new CodeGenFile(
-                        "Events" + Path.DirectorySeparatorChar +
-                        "Interfaces" + Path.DirectorySeparatorChar +
-                        "I" + data.EventListener(contextName, eventData) + ".cs",
+                        data.GetTypeName().ToFileName(contextName),
                         fileContent,
                         GetType().FullName
                     );

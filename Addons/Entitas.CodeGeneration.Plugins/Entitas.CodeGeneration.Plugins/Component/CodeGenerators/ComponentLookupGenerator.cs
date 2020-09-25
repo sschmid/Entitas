@@ -84,7 +84,7 @@ ${componentTypesList}
         CodeGenFile generateComponentsLookupClass(string contextName, ComponentData[] data) {
             var componentConstantsList = string.Join("\n", data
                 .Select((d, index) => COMPONENT_CONSTANT_TEMPLATE
-                    .Replace("${ComponentName}", d.ComponentName())
+                    .Replace("${ComponentName}", d.GetTypeName().ToComponentName())
                     .Replace("${Index}", index.ToString())).ToArray());
 
             var totalComponentsConstant = TOTAL_COMPONENTS_CONSTANT_TEMPLATE
@@ -92,7 +92,7 @@ ${componentTypesList}
 
             var componentNamesList = string.Join(",\n", data
                 .Select(d => COMPONENT_NAME_TEMPLATE
-                    .Replace("${ComponentName}", d.ComponentName())
+                    .Replace("${ComponentName}", d.GetTypeName().ToComponentName())
                 ).ToArray());
 
             var componentTypesList = string.Join(",\n", data

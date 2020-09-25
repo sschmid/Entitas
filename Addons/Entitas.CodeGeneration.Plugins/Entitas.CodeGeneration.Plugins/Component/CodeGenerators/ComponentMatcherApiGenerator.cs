@@ -1,4 +1,3 @@
-using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
 
@@ -6,23 +5,17 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentMatcherApiGenerator : AbstractGenerator {
 
-        public override string name { get { return "Component (Matcher API)"; } }
+        public override string name { get { return "Component Matcher"; } }
 
-        const string TEMPLATE =
-            @"public sealed partial class ${MatcherType} {
+        const string TEMPLATE = @"public sealed class ${ComponentName}Matcher : Entitas.Matcher<${ContextName}Entity>
+{
+    public static ${ComponentName}Matcher Instance => _instance ?? (_instance = new ${ComponentName}Matcher());
 
-    static Entitas.IMatcher<${EntityType}> _matcher${ComponentName};
+    static ${ComponentName}Matcher _instance;
 
-    public static Entitas.IMatcher<${EntityType}> ${ComponentName} {
-        get {
-            if (_matcher${ComponentName} == null) {
-                var matcher = (Entitas.Matcher<${EntityType}>)Entitas.Matcher<${EntityType}>.AllOf(${Index});
-                matcher.componentNames = ${componentNames};
-                _matcher${ComponentName} = matcher;
-            }
-
-            return _matcher${ComponentName};
-        }
+    ${ComponentName}Matcher()
+    {
+        _allOfIndices = distinctIndices(new[] {${ComponentName}ComponentIndex.Value});
     }
 }
 ";
@@ -44,12 +37,11 @@ namespace Entitas.CodeGeneration.Plugins {
         CodeGenFile generate(string contextName, ComponentData data) {
             var fileContent = TEMPLATE
                 .Replace("${componentNames}", contextName + CodeGeneratorExtentions.LOOKUP + ".componentNames")
-                .Replace(data, contextName);
+                .Replace(data, contextName)
+                .WrapInNamespace(data.GetNamespace(), contextName);
 
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar +
-                "Components" + Path.DirectorySeparatorChar +
-                data.ComponentNameWithContext(contextName).AddComponentSuffix() + ".cs",
+                data.GetTypeName().ToFileName(contextName),
                 fileContent,
                 GetType().FullName
             );

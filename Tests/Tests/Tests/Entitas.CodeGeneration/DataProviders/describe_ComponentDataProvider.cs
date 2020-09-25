@@ -53,6 +53,12 @@ class describe_ComponentDataProvider : nspec
                 data.GetNamespace().should_be("My.Namespace");
             };
 
+            it["gets component name"] = () =>
+            {
+                data.GetComponentName().GetType().should_be(typeof(string));
+                data.GetComponentName().should_be("MyNamespace");
+            };
+
             it["gets contexts"] = () =>
             {
                 var contextNames = data.GetContextNames();
@@ -166,7 +172,7 @@ class describe_ComponentDataProvider : nspec
                 d[1].IsEvent().should_be_false();
                 d[1].GetTypeName().should_be("AnyStandardEventListenerComponent");
                 d[1].GetMemberData().Length.should_be(1);
-                d[1].GetMemberData()[0].name.should_be("value");
+                d[1].GetMemberData()[0].name.should_be("Value");
                 d[1].GetMemberData()[0].type.should_be("System.Collections.Generic.List<IAnyStandardEventListener>");
             };
 
@@ -183,20 +189,20 @@ class describe_ComponentDataProvider : nspec
                 var d = getMultipleData<MultipleContextStandardEventComponent>();
                 d.Length.should_be(3);
                 d[1].IsEvent().should_be_false();
-                d[1].GetTypeName().should_be("TestAnyMultipleContextStandardEventListenerComponent");
+                d[1].GetTypeName().should_be("AnyMultipleContextStandardEventListenerComponent");
                 d[1].GetMemberData().Length.should_be(1);
-                d[1].GetMemberData()[0].name.should_be("value");
-                d[1].GetMemberData()[0].type.should_be("System.Collections.Generic.List<ITestAnyMultipleContextStandardEventListener>");
+                d[1].GetMemberData()[0].name.should_be("Value");
+                d[1].GetMemberData()[0].type.should_be("System.Collections.Generic.List<IAnyMultipleContextStandardEventListener>");
 
                 d[2].IsEvent().should_be_false();
-                d[2].GetTypeName().should_be("Test2AnyMultipleContextStandardEventListenerComponent");
+                d[2].GetTypeName().should_be("AnyMultipleContextStandardEventListenerComponent");
                 d[2].GetMemberData().Length.should_be(1);
-                d[2].GetMemberData()[0].name.should_be("value");
-                d[2].GetMemberData()[0].type.should_be("System.Collections.Generic.List<ITest2AnyMultipleContextStandardEventListener>");
+                d[2].GetMemberData()[0].name.should_be("Value");
+                d[2].GetMemberData()[0].type.should_be("System.Collections.Generic.List<IAnyMultipleContextStandardEventListener>");
             };
         };
 
-        context["non component"] = () =>
+        xcontext["non component"] = () =>
         {
             Type type = null;
             ComponentData data = null;
@@ -301,7 +307,7 @@ class describe_ComponentDataProvider : nspec
             };
         };
 
-        context["multiple custom component names"] = () =>
+        xcontext["multiple custom component names"] = () =>
         {
             Type type = null;
             ComponentData data1 = null;
