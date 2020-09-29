@@ -30,11 +30,21 @@
     <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Serialization.dll</HintPath>
+    </Reference>
+    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entitas.Migration\Migrations\M0450.cs" />
     <Compile Include="Entitas.Migration\Migrations\M0472.cs" />
+    <Compile Include="Entitas.Migration\Migrations\M200.cs" />
     <Compile Include="Entitas.Migration\Migration\IMigration.cs" />
     <Compile Include="Entitas.Migration\Migration\MigrationFile.cs" />
     <Compile Include="Entitas.Migration\Migration\MigrationUtils.cs" />
@@ -51,7 +61,12 @@
     <Compile Include="Entitas.Migration\Migrations\M0410_3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
+      <Project>{84d279d3-76d8-4271-b895-83d46b08753c}</Project>
+      <Name>Entitas.CodeGeneration.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Folder Include="Entitas.Migration\" />
     <Folder Include="Entitas.Migration\Migration\" />
