@@ -98,7 +98,7 @@ entitas::rebuild() {
 
 entitas::run_tests() {
   msbuild -verbosity:quiet /property:Configuration=Release Tests/Tests/Tests.csproj
-  mono Tests/Tests/bin/Release/net472/Tests.exe "$@"
+  mono Tests/Tests/bin/Release/Tests.exe "$@"
 }
 
 entitas::update() {
