@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <OutDir>bin\$(Configuration)\</OutDir>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+</Project>
