@@ -1,186 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E2247925-03D6-40FC-AFA4-D7DA01FA6F4E}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Tests</RootNamespace>
-    <AssemblyName>Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.dll</HintPath>
-    </Reference>
-    <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
-    </Reference>
-    <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
+    <ProjectReference Include="..\TestFixtures\TestFixtures.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSpec" Version="3.1.0" />
+    <PackageReference Include="Shouldly" Version="3.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DesperateDevs.Serialization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
-    </Reference>
-    <Reference Include="NSpec, Version=1.0.7.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\NSpec.dll</HintPath>
-    </Reference>
-    <Reference Include="NSpecRunner, Version=1.0.7.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\NSpecRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <HintPath>..\..\Libraries\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Fixtures\Systems\MultiTriggeredMultiReactiveSystemSpy.cs" />
-    <Compile Include="Fixtures\Systems\TestJobSystem.cs" />
-    <Compile Include="Fixtures\TestProperties.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0450.cs" />
-    <Compile Include="Tests\Entitas\describe_Events.cs" />
-    <Compile Include="Tests\Entitas\describe_JobSystem.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_PublicMemberInfoEntityExtension.cs" />
-    <Compile Include="Tests\TestExtensions.cs" />
-    <Compile Include="Tests\check_namespaces.cs" />
-    <Compile Include="TestRunner.cs" />
-    <Compile Include="Fixtures\Systems\CleanupSystemSpy.cs" />
-    <Compile Include="Fixtures\Systems\ExecuteSystemSpy.cs" />
-    <Compile Include="Fixtures\Systems\InitializeSystemSpy.cs" />
-    <Compile Include="Fixtures\Systems\ReactiveSystemSpy.cs" />
-    <Compile Include="Fixtures\Systems\TearDownSystemSpy.cs" />
-    <Compile Include="Fixtures\AnotherComponentInterface.cs" />
-    <Compile Include="Fixtures\Components.cs" />
-    <Compile Include="Fixtures\NestedClass.cs" />
-    <Compile Include="Fixtures\SomeEnum.cs" />
-    <Compile Include="Fixtures\MyTestContext.cs" />
-    <Compile Include="Tests\Entitas\describe_Collector.cs" />
-    <Compile Include="Tests\Entitas\describe_Context.cs" />
-    <Compile Include="Tests\Entitas\describe_EntitasErrorMessages.cs" />
-    <Compile Include="Tests\Entitas\describe_Entity.cs" />
-    <Compile Include="Tests\Entitas\describe_EntityIndex.cs" />
-    <Compile Include="Tests\Entitas\describe_Group.cs" />
-    <Compile Include="Tests\Entitas\describe_Matcher.cs" />
-    <Compile Include="Tests\Entitas\describe_ReactiveSystem.cs" />
-    <Compile Include="Tests\Entitas\describe_Systems.cs" />
-    <Compile Include="Tests\Entitas.Blueprints\describe_Blueprints.cs" />
-    <Compile Include="Tests\Entitas.CodeGeneration\DataProviders\describe_ComponentDataProvider.cs" />
-    <Compile Include="Tests\Entitas.CodeGeneration\DataProviders\describe_ContextDataProvider.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0180.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0190.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0220.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0260.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0300.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0320.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0360_1.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_M0360_2.cs" />
-    <Compile Include="Tests\Entitas.Migration\describe_MigrationUtils.cs" />
-    <Compile Include="Tests\Entitas.VisualDebugging.Unity\describe_SystemInfo.cs" />
-    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestCleanupSystem.cs" />
-    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestExecuteSystem.cs" />
-    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestInitializeSystem.cs" />
-    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestReactiveSystem.cs" />
-    <Compile Include="Tests\Entitas.VisualDebugging.Unity\Fixtures\TestTearDownSystem.cs" />
-    <Compile Include="Tests\Entitas\describe_ContextInfo.cs" />
-    <Compile Include="Tests\Entitas\describe_EntitasException.cs" />
-    <Compile Include="Tests\Entitas.CodeGeneration\DataProviders\describe_EntityIndexDataProvider.cs" />
-    <Compile Include="Tests\Entitas.CodeGeneration\describe_CustomEntityIndex.cs" />
-    <Compile Include="Tests\Entitas.CodeGeneration\CodeGenerators\describe_EntityIndexGenerator.cs" />
-    <Compile Include="Tests\Entitas\Extensions\describe_EntitasStringExtension.cs" />
-    <Compile Include="Tests\Entitas\describe_EntitasResources.cs" />
-    <Compile Include="Tests\Entitas\describe_MultiReactiveSystem.cs" />
-    <Compile Include="Fixtures\Systems\MultiReactiveSystemSpy.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Tests\" />
-    <Folder Include="Fixtures\" />
-    <Folder Include="Fixtures\Systems\" />
-    <Folder Include="Tests\Entitas\" />
-    <Folder Include="Tests\Entitas.CodeGeneration\" />
-    <Folder Include="Tests\Entitas.Migration\" />
-    <Folder Include="Tests\Entitas.VisualDebugging.Unity\" />
-    <Folder Include="Tests\Entitas.CodeGeneration\CodeGenerators\" />
-    <Folder Include="Tests\Entitas\Extensions\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TestFixtures\TestFixtures.csproj">
-      <Project>{6F01CC45-F951-43A5-923E-D3778F9DD435}</Project>
-      <Name>TestFixtures</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Blueprints.Unity\Entitas.Blueprints.Unity.csproj">
-      <Project>{026FFA2B-1F8D-4E05-A54D-67AB5B611985}</Project>
-      <Name>Entitas.Blueprints.Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Blueprints.Unity.Editor\Entitas.Blueprints.Unity.Editor.csproj">
-      <Project>{79E05CCF-61CE-49AB-9E9A-D7672DD6A763}</Project>
-      <Name>Entitas.Blueprints.Unity.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj">
-      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
-      <Name>Entitas.CodeGeneration.Attributes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
-      <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
-      <Name>Entitas.CodeGeneration.Plugins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Migration\Entitas.Migration.csproj">
-      <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
-      <Name>Entitas.Migration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Migration.CLI\Entitas.Migration.CLI.csproj">
-      <Project>{6A0B40E1-360D-455E-853F-5CF6024B8E2A}</Project>
-      <Name>Entitas.Migration.CLI</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Migration.Unity.Editor\Entitas.Migration.Unity.Editor.csproj">
-      <Project>{A4B431D0-D02D-4856-9FCD-FC55EFFF3028}</Project>
-      <Name>Entitas.Migration.Unity.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj">
-      <Project>{9AF72B25-85B0-4FDC-85C3-660926C82438}</Project>
-      <Name>Entitas.Unity.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.CodeGeneration.Plugins\Entitas.VisualDebugging.CodeGeneration.Plugins.csproj">
-      <Project>{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}</Project>
-      <Name>Entitas.VisualDebugging.CodeGeneration.Plugins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj">
-      <Project>{70222463-4E60-4862-8C18-1EBA6CA63353}</Project>
-      <Name>Entitas.VisualDebugging.Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.Unity.Editor\Entitas.VisualDebugging.Unity.Editor.csproj">
-      <Project>{6DCBB57A-C3A3-4055-B99E-0C97A0D3C4CA}</Project>
-      <Name>Entitas.VisualDebugging.Unity.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
-      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
-      <Name>Entitas</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Blueprints\Entitas.Blueprints.csproj">
-      <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
-      <Name>Entitas.Blueprints</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Addons\Entitas.Blueprints.CodeGeneration.Plugins\Entitas.Blueprints.CodeGeneration.Plugins.csproj">
-      <Project>{205014A8-1E4A-40D2-A368-9D2497EA9AE1}</Project>
-      <Name>Entitas.Blueprints.CodeGeneration.Plugins</Name>
-    </ProjectReference>
-  </ItemGroup>
+
 </Project>

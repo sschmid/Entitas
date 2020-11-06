@@ -1,125 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Entitas</RootNamespace>
-    <AssemblyName>Entitas</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
-    <LangVersion>7.3</LangVersion>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <DocumentationFile>bin\Release\Entitas.xml</DocumentationFile>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="DesperateDevs.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Entitas\Matcher\Matcher.cs" />
-    <Compile Include="Entitas\Matcher\MatcherToString.cs" />
-    <Compile Include="Entitas\Matcher\MatcherEquals.cs" />
-    <Compile Include="Entitas\Matcher\MatcherStatic.cs" />
-    <Compile Include="Entitas\EntityIndex\EntityIndex.cs" />
-    <Compile Include="Entitas\EntityIndex\AbstractEntityIndex.cs" />
-    <Compile Include="Entitas\EntityIndex\PrimaryEntityIndex.cs" />
-    <Compile Include="Entitas\Entity\Entity.cs" />
-    <Compile Include="Entitas\Group\Group.cs" />
-    <Compile Include="Entitas\Context\Context.cs" />
-    <Compile Include="Entitas\Systems\JobSystem.cs" />
-    <Compile Include="Entitas\Systems\Systems.cs" />
-    <Compile Include="Entitas\Systems\ReactiveSystem.cs" />
-    <Compile Include="Entitas\Group\GroupEvent.cs" />
-    <Compile Include="Entitas\Context\ContextExtension.cs" />
-    <Compile Include="Entitas\Group\GroupExtension.cs" />
-    <Compile Include="Entitas\Context\Exceptions\ContextDoesNotContainEntityException.cs" />
-    <Compile Include="Entitas\Context\Exceptions\ContextEntityIndexDoesAlreadyExistException.cs" />
-    <Compile Include="Entitas\Context\Exceptions\ContextEntityIndexDoesNotExistException.cs" />
-    <Compile Include="Entitas\Context\Exceptions\ContextStillHasRetainedEntitiesException.cs" />
-    <Compile Include="Entitas\Context\Exceptions\EntityIsNotDestroyedException.cs" />
-    <Compile Include="Entitas\Context\Exceptions\ContextInfoException.cs" />
-    <Compile Include="Entitas\Entity\EntityEqualityComparer.cs" />
-    <Compile Include="Entitas\Entity\Exceptions\EntityAlreadyHasComponentException.cs" />
-    <Compile Include="Entitas\Entity\Exceptions\EntityDoesNotHaveComponentException.cs" />
-    <Compile Include="Entitas\Entity\Exceptions\EntityIsAlreadyRetainedByOwnerException.cs" />
-    <Compile Include="Entitas\Entity\Exceptions\EntityIsNotEnabledException.cs" />
-    <Compile Include="Entitas\Entity\Exceptions\EntityIsNotRetainedByOwnerException.cs" />
-    <Compile Include="Entitas\Group\GroupSingleEntityException.cs" />
-    <Compile Include="Entitas\EntityIndex\EntityIndexException.cs" />
-    <Compile Include="Entitas\Matcher\MatcherException.cs" />
-    <Compile Include="Entitas\Collector\Collector.cs" />
-    <Compile Include="Entitas\Collector\CollectorException.cs" />
-    <Compile Include="Entitas\EntitasResources.cs" />
-    <Compile Include="Entitas\Extensions\CollectionExtension.cs" />
-    <Compile Include="Entitas\Extensions\PublicMemberInfoEntityExtension.cs" />
-    <Compile Include="Entitas\Extensions\EntitasStringExtension.cs" />
-    <Compile Include="Entitas\Entity\UnsafeAERC.cs" />
-    <Compile Include="Entitas\Entity\SafeAERC.cs" />
-    <Compile Include="Entitas\ContextInfo.cs" />
-    <Compile Include="Entitas\EntitasException.cs" />
-    <Compile Include="Entitas\Context\IContext.cs" />
-    <Compile Include="Entitas\Entity\IAERC.cs" />
-    <Compile Include="Entitas\IComponent.cs" />
-    <Compile Include="Entitas\Context\IContexts.cs" />
-    <Compile Include="Entitas\Entity\IEntity.cs" />
-    <Compile Include="Entitas\EntityIndex\IEntityIndex.cs" />
-    <Compile Include="Entitas\Group\IGroup.cs" />
-    <Compile Include="Entitas\Systems\Interfaces\ICleanupSystem.cs" />
-    <Compile Include="Entitas\Systems\Interfaces\IExecuteSystem.cs" />
-    <Compile Include="Entitas\Systems\Interfaces\IInitializeSystem.cs" />
-    <Compile Include="Entitas\Systems\Interfaces\IReactiveSystem.cs" />
-    <Compile Include="Entitas\Systems\Interfaces\ISystem.cs" />
-    <Compile Include="Entitas\Systems\Interfaces\ITearDownSystem.cs" />
-    <Compile Include="Entitas\Matcher\Interfaces\IAllOfMatcher.cs" />
-    <Compile Include="Entitas\Matcher\Interfaces\IAnyOfMatcher.cs" />
-    <Compile Include="Entitas\Matcher\Interfaces\ICompoundMatcher.cs" />
-    <Compile Include="Entitas\Matcher\Interfaces\IMatcher.cs" />
-    <Compile Include="Entitas\Matcher\Interfaces\INoneOfMatcher.cs" />
-    <Compile Include="Entitas\Collector\TriggerOnEvent.cs" />
-    <Compile Include="Entitas\Collector\CollectorContextExtension.cs" />
-    <Compile Include="Entitas\Collector\TriggerOnEventMatcherExtension.cs" />
-    <Compile Include="Entitas\Collector\ICollector.cs" />
-    <Compile Include="Entitas\Systems\MultiReactiveSystem.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Entitas\" />
-    <Folder Include="Entitas\Matcher\" />
-    <Folder Include="Entitas\EntityIndex\" />
-    <Folder Include="Entitas\Entity\" />
-    <Folder Include="Entitas\Group\" />
-    <Folder Include="Entitas\Context\" />
-    <Folder Include="Entitas\Systems\" />
-    <Folder Include="Entitas\Context\Exceptions\" />
-    <Folder Include="Entitas\Entity\Exceptions\" />
-    <Folder Include="Entitas\Collector\" />
-    <Folder Include="Entitas\Extensions\" />
-    <Folder Include="Entitas\Systems\Interfaces\" />
-    <Folder Include="Entitas\Matcher\Interfaces\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Entitas\version.txt">
-      <LogicalName>version.txt</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
+
 </Project>

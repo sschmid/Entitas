@@ -1,110 +1,30 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{84D279D3-76D8-4271-B895-83D46B08753C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.CodeGeneration.Plugins</RootNamespace>
-    <AssemblyName>Entitas.CodeGeneration.Plugins</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
-    <LangVersion>7.3</LangVersion>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ExternalConsole>true</ExternalConsole>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ExternalConsole>true</ExternalConsole>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="DesperateDevs.Analytics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="DesperateDevs.Analytics, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Analytics.dll</HintPath>
     </Reference>
-    <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="DesperateDevs.CodeGeneration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.dll</HintPath>
     </Reference>
-    <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="DesperateDevs.CodeGeneration.CodeGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.CodeGenerator.dll</HintPath>
     </Reference>
-    <Reference Include="DesperateDevs.Serialization, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="DesperateDevs.Serialization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Serialization.dll</HintPath>
     </Reference>
-    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="DesperateDevs.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Entitas.CodeGeneration.Plugins\AbstractGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\CodeGeneratorExtentions.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentContextApiGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentEntityApiGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentEntityApiInterfaceGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentLookupGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\CodeGenerators\ComponentMatcherApiGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\ComponentData.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ComponentTypeComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ContextsComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\EventComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\IComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\IsUniqueComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\MemberDataComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ShouldGenerateComponentComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ShouldGenerateComponentIndexComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\ShouldGenerateMethodsComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Component\DataProviders\ComponentDataProviders\FlagPrefixComponentDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Configs\AssembliesConfig.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Configs\ContextNamesConfig.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Configs\IgnoreNamespacesConfig.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Configs\TemplateConfigExtension.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Configs\TemplatesConfig.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Context\CodeGenerators\ContextAttributeGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Context\CodeGenerators\ContextGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Context\CodeGenerators\ContextMatcherGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Context\CodeGenerators\ContextsGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Context\ContextData.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Context\DataProviders\ContextDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Data\MemberData.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Data\MethodData.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\EntitasHook.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\EntityIndex\CodeGenerators\EntityIndexGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\EntityIndex\DataProviders\EntityIndexDataProvider.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\EntityIndex\EntityIndexData.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Entity\CodeGenerators\EntityGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Events\CodeGenerators\EventEntityApiGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Events\CodeGenerators\EventListenerComponentGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Events\CodeGenerators\EventListenertInterfaceGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Events\CodeGenerators\EventSystemGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Events\CodeGenerators\EventSystemsGenerator.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\Events\EventData.cs" />
-    <Compile Include="Entitas.CodeGeneration.Plugins\PluginUtil.cs" />
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
+    <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entitas.CodeGeneration.Plugins\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj">
-      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
-      <Name>Entitas.CodeGeneration.Attributes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
-      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
-      <Name>Entitas</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
 </Project>
