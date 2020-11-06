@@ -1,71 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{205014A8-1E4A-40D2-A368-9D2497EA9AE1}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.Blueprints.CodeGeneration.Unity.Plugins</RootNamespace>
-    <AssemblyName>Entitas.Blueprints.CodeGeneration.Unity.Plugins</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
-    <LangVersion>7.3</LangVersion>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <ProjectReference Include="..\Entitas.Blueprints.CodeGeneration.Plugins\Entitas.Blueprints.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="..\Entitas.Blueprints.Unity.Editor\Entitas.Blueprints.Unity.Editor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DesperateDevs.CodeGeneration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="UnityEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Entitas.Blueprints.CodeGeneration.Unity.Plugins\BlueprintDataProvider.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entitas.Blueprints.CodeGeneration.Unity.Plugins\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entitas.Blueprints.CodeGeneration.Plugins\Entitas.Blueprints.CodeGeneration.Plugins.csproj">
-      <Project>{09DBBDC0-EEA5-42C5-B9A9-E83C0C6FCD8E}</Project>
-      <Name>Entitas.Blueprints.CodeGeneration.Plugins</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.Blueprints.Unity.Editor\Entitas.Blueprints.Unity.Editor.csproj">
-      <Project>{79E05CCF-61CE-49AB-9E9A-D7672DD6A763}</Project>
-      <Name>Entitas.Blueprints.Unity.Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.Blueprints.Unity\Entitas.Blueprints.Unity.csproj">
-      <Project>{026FFA2B-1F8D-4E05-A54D-67AB5B611985}</Project>
-      <Name>Entitas.Blueprints.Unity</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Entitas.Blueprints\Entitas.Blueprints.csproj">
-      <Project>{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}</Project>
-      <Name>Entitas.Blueprints</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
 </Project>

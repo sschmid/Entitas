@@ -1,47 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6A0B40E1-360D-455E-853F-5CF6024B8E2A}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Entitas.Migration.CLI</RootNamespace>
-    <AssemblyName>Entitas.Migration.CLI</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
-    <LangVersion>7.3</LangVersion>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ExternalConsole>true</ExternalConsole>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ExternalConsole>true</ExternalConsole>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="DesperateDevs.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj">
-      <Project>{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}</Project>
-      <Name>Entitas.Migration</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
 </Project>

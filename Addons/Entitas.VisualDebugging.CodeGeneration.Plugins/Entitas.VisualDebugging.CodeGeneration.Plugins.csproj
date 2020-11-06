@@ -1,55 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Entitas.VisualDebugging.CodeGeneration.Plugins</RootNamespace>
-    <AssemblyName>Entitas.VisualDebugging.CodeGeneration</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <ReleaseVersion>1.0.0</ReleaseVersion>
-    <LangVersion>7.3</LangVersion>
+    <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <AssemblyName>Entitas.VisualDebugging.CodeGeneration.Plugins</AssemblyName>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="DesperateDevs.CodeGeneration, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="DesperateDevs.CodeGeneration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.dll</HintPath>
     </Reference>
-    <Reference Include="DesperateDevs.Utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="DesperateDevs.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\ContextObserverGenerator.cs" />
-    <Compile Include="Entitas.VisualDebugging.CodeGeneration.Plugins\FeatureClassGenerator.cs" />
+    <ProjectReference Include="..\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entitas.VisualDebugging.CodeGeneration.Plugins\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj">
-      <Project>{84D279D3-76D8-4271-B895-83D46B08753C}</Project>
-      <Name>Entitas.CodeGeneration.Plugins</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
 </Project>
