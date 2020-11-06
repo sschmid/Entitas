@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using NSpec;
+using Shouldly;
 
 class describe_Collector : nspec {
 
@@ -23,7 +24,7 @@ class describe_Collector : nspec {
             };
 
             it["is empty when nothing happend"] = () => {
-                collectorA.collectedEntities.should_be_empty();
+                collectorA.collectedEntities.ShouldBeEmpty();
             };
 
             context["when entity collected"] = () => {
@@ -36,16 +37,16 @@ class describe_Collector : nspec {
 
                 it["returns collected entities"] = () => {
                     var entities = collectorA.collectedEntities;
-                    entities.Count.should_be(1);
-                    entities.should_contain(e);
+                    entities.Count.ShouldBe(1);
+                    entities.ShouldContain(e);
                 };
 
                 it["only collects matching entities"] = () => {
                     createEB();
 
                     var entities = collectorA.collectedEntities;
-                    entities.Count.should_be(1);
-                    entities.should_contain(e);
+                    entities.Count.ShouldBe(1);
+                    entities.ShouldContain(e);
                 };
 
                 it["collects entities only once"] = () => {
@@ -53,24 +54,24 @@ class describe_Collector : nspec {
                     e.AddComponentA();
 
                     var entities = collectorA.collectedEntities;
-                    entities.Count.should_be(1);
-                    entities.should_contain(e);
+                    entities.Count.ShouldBe(1);
+                    entities.ShouldContain(e);
                 };
 
                 it["clears collected entities"] = () => {
                     collectorA.ClearCollectedEntities();
-                    collectorA.collectedEntities.should_be_empty();
+                    collectorA.collectedEntities.ShouldBeEmpty();
                 };
 
                 it["clears collected entities on deactivation"] = () => {
                     collectorA.Deactivate();
-                    collectorA.collectedEntities.should_be_empty();
+                    collectorA.collectedEntities.ShouldBeEmpty();
                 };
 
                 it["doesn't collect entities when deactivated"] = () => {
                     collectorA.Deactivate();
                     createEA();
-                    collectorA.collectedEntities.should_be_empty();
+                    collectorA.collectedEntities.ShouldBeEmpty();
                 };
 
                 it["continues collecting when activated"] = () => {
@@ -82,12 +83,12 @@ class describe_Collector : nspec {
                     var e2 = createEA();
 
                     var entities = collectorA.collectedEntities;
-                    entities.Count.should_be(1);
-                    entities.should_contain(e2);
+                    entities.Count.ShouldBe(1);
+                    entities.ShouldContain(e2);
                 };
 
                 it["can ToString"] = () => {
-                    collectorA.ToString().should_be("Collector(Group(AllOf(1)))");
+                    collectorA.ToString().ShouldBe("Collector(Group(AllOf(1)))");
                 };
             };
 
@@ -103,26 +104,26 @@ class describe_Collector : nspec {
                     var didExecute = 0;
                     e.OnEntityReleased += delegate { didExecute += 1; };
                     e.Destroy();
-                    e.retainCount.should_be(1);
+                    e.retainCount.ShouldBe(1);
 
                     var safeAerc = e.aerc as SafeAERC;
                     if (safeAerc != null) {
-                        safeAerc.owners.should_contain(collectorA);
+                        safeAerc.owners.ShouldContain(collectorA);
                     }
 
-                    didExecute.should_be(0);
+                    didExecute.ShouldBe(0);
                 };
 
                 it["releases entity when clearing collected entities"] = () => {
                     e.Destroy();
                     collectorA.ClearCollectedEntities();
-                    e.retainCount.should_be(0);
+                    e.retainCount.ShouldBe(0);
                 };
 
                 it["retains entities only once"] = () => {
                     e.ReplaceComponentA(new ComponentA());
                     e.Destroy();
-                    e.retainCount.should_be(1);
+                    e.retainCount.ShouldBe(1);
                 };
             };
         };
@@ -135,12 +136,12 @@ class describe_Collector : nspec {
 
             it["returns collected entities"] = () => {
                 var e = createEA();
-                collectorA.collectedEntities.should_be_empty();
+                collectorA.collectedEntities.ShouldBeEmpty();
 
                 e.RemoveComponentA();
                 var entities = collectorA.collectedEntities;
-                entities.Count.should_be(1);
-                entities.should_contain(e);
+                entities.Count.ShouldBe(1);
+                entities.ShouldContain(e);
             };
         };
 
@@ -153,14 +154,14 @@ class describe_Collector : nspec {
             it["returns collected entities"] = () => {
                 var e = createEA();
                 var entities = collectorA.collectedEntities;
-                entities.Count.should_be(1);
-                entities.should_contain(e);
+                entities.Count.ShouldBe(1);
+                entities.ShouldContain(e);
                 collectorA.ClearCollectedEntities();
 
                 e.RemoveComponentA();
                 entities = collectorA.collectedEntities;
-                entities.Count.should_be(1);
-                entities.should_contain(e);
+                entities.Count.ShouldBe(1);
+                entities.ShouldContain(e);
             };
         };
 
@@ -199,13 +200,13 @@ class describe_Collector : nspec {
                     var eB = createEB();
 
                     var entities = collectorA.collectedEntities;
-                    entities.Count.should_be(2);
-                    entities.should_contain(eA);
-                    entities.should_contain(eB);
+                    entities.Count.ShouldBe(2);
+                    entities.ShouldContain(eA);
+                    entities.ShouldContain(eB);
                 };
 
                 it["can ToString"] = () => {
-                    collectorA.ToString().should_be("Collector(Group(AllOf(1)), Group(AllOf(2)))");
+                    collectorA.ToString().ShouldBe("Collector(Group(AllOf(1)), Group(AllOf(2)))");
                 };
             };
 
@@ -223,14 +224,14 @@ class describe_Collector : nspec {
                 it["returns collected entities"] = () => {
                     var eA = createEA();
                     var eB = createEB();
-                    collectorA.collectedEntities.should_be_empty();
+                    collectorA.collectedEntities.ShouldBeEmpty();
 
                     eA.RemoveComponentA();
                     eB.RemoveComponentB();
                     var entities = collectorA.collectedEntities;
-                    entities.Count.should_be(2);
-                    entities.should_contain(eA);
-                    entities.should_contain(eB);
+                    entities.Count.ShouldBe(2);
+                    entities.ShouldContain(eA);
+                    entities.ShouldContain(eB);
                 };
             };
 
@@ -249,17 +250,17 @@ class describe_Collector : nspec {
                     var eA = createEA();
                     var eB = createEB();
                     var entities = collectorA.collectedEntities;
-                    entities.Count.should_be(2);
-                    entities.should_contain(eA);
-                    entities.should_contain(eB);
+                    entities.Count.ShouldBe(2);
+                    entities.ShouldContain(eA);
+                    entities.ShouldContain(eB);
                     collectorA.ClearCollectedEntities();
 
                     eA.RemoveComponentA();
                     eB.RemoveComponentB();
                     entities = collectorA.collectedEntities;
-                    entities.Count.should_be(2);
-                    entities.should_contain(eA);
-                    entities.should_contain(eB);
+                    entities.Count.ShouldBe(2);
+                    entities.ShouldContain(eA);
+                    entities.ShouldContain(eB);
                 };
             };
 
@@ -278,15 +279,15 @@ class describe_Collector : nspec {
                     var eA = createEA();
                     var eB = createEB();
                     var entities = collectorA.collectedEntities;
-                    entities.Count.should_be(1);
-                    entities.should_contain(eA);
+                    entities.Count.ShouldBe(1);
+                    entities.ShouldContain(eA);
                     collectorA.ClearCollectedEntities();
 
                     eA.RemoveComponentA();
                     eB.RemoveComponentB();
                     entities = collectorA.collectedEntities;
-                    entities.Count.should_be(1);
-                    entities.should_contain(eB);
+                    entities.Count.ShouldBe(1);
+                    entities.ShouldContain(eB);
                 };
             };
         };

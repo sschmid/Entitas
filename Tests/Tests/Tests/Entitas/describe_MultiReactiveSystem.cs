@@ -1,4 +1,5 @@
 ﻿using NSpec;
+using Shouldly;
 
 class describe_MultiReactiveSystem : nspec {
 
@@ -29,24 +30,24 @@ class describe_MultiReactiveSystem : nspec {
             };
 
             it["processes entities from different contexts"] = () => {
-                system.entities.Length.should_be(2);
-                system.entities.should_contain(e1);
-                system.entities.should_contain(e2);
+                system.entities.Length.ShouldBe(2);
+                system.entities.ShouldContain(e1);
+                system.entities.ShouldContain(e2);
 
-                e1.nameAge.age.should_be(52);
-                e2.nameAge.age.should_be(34);
+                e1.nameAge.age.ShouldBe(52);
+                e2.nameAge.age.ShouldBe(34);
             };
 
             it["executes once"] = () => {
-                system.didExecute.should_be(1);
+                system.didExecute.ShouldBe(1);
             };
 
             it["retains once even when multiple collectors contain entity"] = () => {
-                system.didExecute.should_be(1);
+                system.didExecute.ShouldBe(1);
             };
 
             it["can ToString"] = () => {
-                system.ToString().should_be("MultiReactiveSystem(MultiReactiveSystemSpy)");
+                system.ToString().ShouldBe("MultiReactiveSystem(MultiReactiveSystemSpy)");
             };
         };
 
@@ -69,16 +70,16 @@ class describe_MultiReactiveSystem : nspec {
             };
 
             it["executes once"] = () => {
-                system.didExecute.should_be(1);
+                system.didExecute.ShouldBe(1);
             };
 
             it["merges collected entities and removes duplicates"] = () => {
-                system.entities.Length.should_be(1);
+                system.entities.Length.ShouldBe(1);
             };
 
             it["clears merged collected entities"] = () => {
                 system.Execute();
-                system.didExecute.should_be(1);
+                system.didExecute.ShouldBe(1);
             };
         };
     }

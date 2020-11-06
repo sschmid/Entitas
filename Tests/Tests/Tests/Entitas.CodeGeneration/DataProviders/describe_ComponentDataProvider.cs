@@ -5,6 +5,7 @@ using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.Plugins;
 using My.Namespace;
 using NSpec;
+using Shouldly;
 
 class describe_ComponentDataProvider : nspec
 {
@@ -39,166 +40,166 @@ class describe_ComponentDataProvider : nspec
                 data = getData<MyNamespaceComponent>();
             };
 
-            it["get data"] = () => { data.should_not_be_null(); };
+            it["get data"] = () => { data.ShouldNotBeNull(); };
 
             it["gets full type name"] = () =>
             {
-                data.GetTypeName().GetType().should_be(typeof(string));
-                data.GetTypeName().should_be("My.Namespace.MyNamespaceComponent");
+                data.GetTypeName().GetType().ShouldBe(typeof(string));
+                data.GetTypeName().ShouldBe("My.Namespace.MyNamespaceComponent");
             };
 
             it["gets namespace"] = () =>
             {
-                data.GetNamespace().GetType().should_be(typeof(string));
-                data.GetNamespace().should_be("My.Namespace");
+                data.GetNamespace().GetType().ShouldBe(typeof(string));
+                data.GetNamespace().ShouldBe("My.Namespace");
             };
 
             it["gets component name"] = () =>
             {
-                data.GetComponentName().GetType().should_be(typeof(string));
-                data.GetComponentName().should_be("MyNamespace");
+                data.GetComponentName().GetType().ShouldBe(typeof(string));
+                data.GetComponentName().ShouldBe("MyNamespace");
             };
 
             it["gets contexts"] = () =>
             {
                 var contextNames = data.GetContextNames();
-                contextNames.GetType().should_be(typeof(string[]));
-                contextNames.Length.should_be(2);
-                contextNames[0].should_be("Test");
-                contextNames[1].should_be("Test2");
+                contextNames.GetType().ShouldBe(typeof(string[]));
+                contextNames.Length.ShouldBe(2);
+                contextNames[0].ShouldBe("Test");
+                contextNames[1].ShouldBe("Test2");
             };
 
             it["sets first context as default when component has no context"] = () =>
             {
                 var contextNames = getData<NoContextComponent>().GetContextNames();
-                contextNames.Length.should_be(1);
-                contextNames[0].should_be("Game");
+                contextNames.Length.ShouldBe(1);
+                contextNames[0].ShouldBe("Game");
             };
 
             it["gets unique"] = () =>
             {
-                data.IsUnique().GetType().should_be(typeof(bool));
-                data.IsUnique().should_be_false();
+                data.IsUnique().GetType().ShouldBe(typeof(bool));
+                data.IsUnique().ShouldBeFalse();
 
-                getData<UniqueStandardComponent>().IsUnique().should_be_true();
+                getData<UniqueStandardComponent>().IsUnique().ShouldBeTrue();
             };
 
             it["gets member data"] = () =>
             {
-                data.GetMemberData().GetType().should_be(typeof(MemberData[]));
-                data.GetMemberData().Length.should_be(1);
-                data.GetMemberData()[0].type.should_be("string");
+                data.GetMemberData().GetType().ShouldBe(typeof(MemberData[]));
+                data.GetMemberData().Length.ShouldBe(1);
+                data.GetMemberData()[0].type.ShouldBe("string");
             };
 
             it["gets generate component"] = () =>
             {
-                data.ShouldGenerateComponent().GetType().should_be(typeof(bool));
-                data.ShouldGenerateComponent().should_be_false();
-                data.ContainsKey(ShouldGenerateComponentComponentDataExtension.COMPONENT_OBJECT_TYPE).should_be_false();
+                data.ShouldGenerateComponent().GetType().ShouldBe(typeof(bool));
+                data.ShouldGenerateComponent().ShouldBeFalse();
+                data.ContainsKey(ShouldGenerateComponentComponentDataExtension.COMPONENT_OBJECT_TYPE).ShouldBeFalse();
             };
 
             it["gets generate index"] = () =>
             {
-                data.ShouldGenerateIndex().GetType().should_be(typeof(bool));
-                data.ShouldGenerateIndex().should_be_true();
+                data.ShouldGenerateIndex().GetType().ShouldBe(typeof(bool));
+                data.ShouldGenerateIndex().ShouldBeTrue();
 
-                getData<DontGenerateIndexComponent>().ShouldGenerateIndex().should_be_false();
+                getData<DontGenerateIndexComponent>().ShouldGenerateIndex().ShouldBeFalse();
             };
 
             it["gets generate methods"] = () =>
             {
-                data.ShouldGenerateMethods().GetType().should_be(typeof(bool));
-                data.ShouldGenerateMethods().should_be_true();
+                data.ShouldGenerateMethods().GetType().ShouldBe(typeof(bool));
+                data.ShouldGenerateMethods().ShouldBeTrue();
 
-                getData<DontGenerateMethodsComponent>().ShouldGenerateMethods().should_be_false();
+                getData<DontGenerateMethodsComponent>().ShouldGenerateMethods().ShouldBeFalse();
             };
 
             it["gets flag prefix"] = () =>
             {
-                data.GetFlagPrefix().GetType().should_be(typeof(string));
-                data.GetFlagPrefix().should_be("is");
+                data.GetFlagPrefix().GetType().ShouldBe(typeof(string));
+                data.GetFlagPrefix().ShouldBe("is");
 
-                getData<CustomPrefixFlagComponent>().GetFlagPrefix().should_be("My");
+                getData<CustomPrefixFlagComponent>().GetFlagPrefix().ShouldBe("My");
             };
 
             it["gets is no event"] = () =>
             {
-                data.IsEvent().GetType().should_be(typeof(bool));
-                data.IsEvent().should_be_false();
+                data.IsEvent().GetType().ShouldBe(typeof(bool));
+                data.IsEvent().ShouldBeFalse();
             };
 
-            it["gets event"] = () => { getData<StandardEventComponent>().IsEvent().should_be_true(); };
+            it["gets event"] = () => { getData<StandardEventComponent>().IsEvent().ShouldBeTrue(); };
 
             it["gets multiple events"] = () =>
             {
                 var d = getData<MultipleEventsStandardEventComponent>();
-                d.IsEvent().should_be_true();
+                d.IsEvent().ShouldBeTrue();
                 var eventData = d.GetEventData();
-                eventData.Length.should_be(2);
+                eventData.Length.ShouldBe(2);
 
-                eventData[0].eventTarget.should_be(EventTarget.Any);
-                eventData[0].eventType.should_be(EventType.Added);
-                eventData[0].priority.should_be(1);
+                eventData[0].eventTarget.ShouldBe(EventTarget.Any);
+                eventData[0].eventType.ShouldBe(EventType.Added);
+                eventData[0].priority.ShouldBe(1);
 
-                eventData[1].eventTarget.should_be(EventTarget.Self);
-                eventData[1].eventType.should_be(EventType.Removed);
-                eventData[1].priority.should_be(2);
+                eventData[1].eventTarget.ShouldBe(EventTarget.Self);
+                eventData[1].eventType.ShouldBe(EventType.Removed);
+                eventData[1].priority.ShouldBe(2);
             };
 
             it["gets event target"] = () =>
             {
-                getData<StandardEventComponent>().GetEventData()[0].eventTarget.GetType().should_be(typeof(EventTarget));
-                getData<StandardEventComponent>().GetEventData()[0].eventTarget.should_be(EventTarget.Any);
-                getData<StandardEntityEventComponent>().GetEventData()[0].eventTarget.should_be(EventTarget.Self);
+                getData<StandardEventComponent>().GetEventData()[0].eventTarget.GetType().ShouldBe(typeof(EventTarget));
+                getData<StandardEventComponent>().GetEventData()[0].eventTarget.ShouldBe(EventTarget.Any);
+                getData<StandardEntityEventComponent>().GetEventData()[0].eventTarget.ShouldBe(EventTarget.Self);
             };
 
             it["gets event type"] = () =>
             {
-                getData<StandardEventComponent>().GetEventData()[0].eventType.GetType().should_be(typeof(EventType));
-                getData<StandardEventComponent>().GetEventData()[0].eventType.should_be(EventType.Added);
-                getData<StandardEntityEventComponent>().GetEventData()[0].eventType.should_be(EventType.Removed);
+                getData<StandardEventComponent>().GetEventData()[0].eventType.GetType().ShouldBe(typeof(EventType));
+                getData<StandardEventComponent>().GetEventData()[0].eventType.ShouldBe(EventType.Added);
+                getData<StandardEntityEventComponent>().GetEventData()[0].eventType.ShouldBe(EventType.Removed);
             };
 
             it["gets event priority"] = () =>
             {
-                getData<StandardEventComponent>().GetEventData()[0].priority.GetType().should_be(typeof(int));
-                getData<StandardEntityEventComponent>().GetEventData()[0].priority.should_be(1);
+                getData<StandardEventComponent>().GetEventData()[0].priority.GetType().ShouldBe(typeof(int));
+                getData<StandardEntityEventComponent>().GetEventData()[0].priority.ShouldBe(1);
             };
 
             it["creates data for event listeners"] = () =>
             {
                 var d = getMultipleData<StandardEventComponent>();
-                d.Length.should_be(2);
-                d[1].IsEvent().should_be_false();
-                d[1].GetTypeName().should_be("AnyStandardEventListenerComponent");
-                d[1].GetMemberData().Length.should_be(1);
-                d[1].GetMemberData()[0].name.should_be("Value");
-                d[1].GetMemberData()[0].type.should_be("System.Collections.Generic.List<IAnyStandardEventListener>");
+                d.Length.ShouldBe(2);
+                d[1].IsEvent().ShouldBeFalse();
+                d[1].GetTypeName().ShouldBe("AnyStandardEventListenerComponent");
+                d[1].GetMemberData().Length.ShouldBe(1);
+                d[1].GetMemberData()[0].name.ShouldBe("Value");
+                d[1].GetMemberData()[0].type.ShouldBe("System.Collections.Generic.List<IAnyStandardEventListener>");
             };
 
             it["creates data for unique event listeners"] = () =>
             {
                 var d = getMultipleData<UniqueEventComponent>();
-                d.Length.should_be(2);
-                d[1].IsEvent().should_be_false();
-                d[1].IsUnique().should_be_false();
+                d.Length.ShouldBe(2);
+                d[1].IsEvent().ShouldBeFalse();
+                d[1].IsUnique().ShouldBeFalse();
             };
 
             it["creates data for event listeners with multiple contexts"] = () =>
             {
                 var d = getMultipleData<MultipleContextStandardEventComponent>();
-                d.Length.should_be(3);
-                d[1].IsEvent().should_be_false();
-                d[1].GetTypeName().should_be("AnyMultipleContextStandardEventListenerComponent");
-                d[1].GetMemberData().Length.should_be(1);
-                d[1].GetMemberData()[0].name.should_be("Value");
-                d[1].GetMemberData()[0].type.should_be("System.Collections.Generic.List<IAnyMultipleContextStandardEventListener>");
+                d.Length.ShouldBe(3);
+                d[1].IsEvent().ShouldBeFalse();
+                d[1].GetTypeName().ShouldBe("AnyMultipleContextStandardEventListenerComponent");
+                d[1].GetMemberData().Length.ShouldBe(1);
+                d[1].GetMemberData()[0].name.ShouldBe("Value");
+                d[1].GetMemberData()[0].type.ShouldBe("System.Collections.Generic.List<IAnyMultipleContextStandardEventListener>");
 
-                d[2].IsEvent().should_be_false();
-                d[2].GetTypeName().should_be("AnyMultipleContextStandardEventListenerComponent");
-                d[2].GetMemberData().Length.should_be(1);
-                d[2].GetMemberData()[0].name.should_be("Value");
-                d[2].GetMemberData()[0].type.should_be("System.Collections.Generic.List<IAnyMultipleContextStandardEventListener>");
+                d[2].IsEvent().ShouldBeFalse();
+                d[2].GetTypeName().ShouldBe("AnyMultipleContextStandardEventListenerComponent");
+                d[2].GetMemberData().Length.ShouldBe(1);
+                d[2].GetMemberData()[0].name.ShouldBe("Value");
+                d[2].GetMemberData()[0].type.ShouldBe("System.Collections.Generic.List<IAnyMultipleContextStandardEventListener>");
             };
         };
 
@@ -213,72 +214,72 @@ class describe_ComponentDataProvider : nspec
                 data = getData<ClassToGenerate>();
             };
 
-            it["get data"] = () => { data.should_not_be_null(); };
+            it["get data"] = () => { data.ShouldNotBeNull(); };
 
             it["gets full type name"] = () =>
             {
                 // Not the type, but the component that should be generated
                 // See: no namespace
-                data.GetTypeName().should_be("ClassToGenerateComponent");
+                data.GetTypeName().ShouldBe("ClassToGenerateComponent");
             };
 
             it["gets contexts"] = () =>
             {
                 var contextNames = data.GetContextNames();
-                contextNames.Length.should_be(2);
-                contextNames[0].should_be("Test");
-                contextNames[1].should_be("Test2");
+                contextNames.Length.ShouldBe(2);
+                contextNames[0].ShouldBe("Test");
+                contextNames[1].ShouldBe("Test2");
             };
 
-            it["gets unique"] = () => { data.IsUnique().should_be_false(); };
+            it["gets unique"] = () => { data.IsUnique().ShouldBeFalse(); };
 
             it["gets member data"] = () =>
             {
-                data.GetMemberData().Length.should_be(1);
-                data.GetMemberData()[0].type.should_be(type.ToCompilableString());
+                data.GetMemberData().Length.ShouldBe(1);
+                data.GetMemberData()[0].type.ShouldBe(type.ToCompilableString());
             };
 
             it["gets generate component"] = () =>
             {
-                data.ShouldGenerateComponent().GetType().should_be(typeof(bool));
-                data.ShouldGenerateComponent().should_be_true();
-                data.GetObjectTypeName().should_be(typeof(ClassToGenerate).ToCompilableString());
+                data.ShouldGenerateComponent().GetType().ShouldBe(typeof(bool));
+                data.ShouldGenerateComponent().ShouldBeTrue();
+                data.GetObjectTypeName().ShouldBe(typeof(ClassToGenerate).ToCompilableString());
             };
 
-            it["gets generate index"] = () => { data.ShouldGenerateIndex().should_be_true(); };
+            it["gets generate index"] = () => { data.ShouldGenerateIndex().ShouldBeTrue(); };
 
-            it["gets generate methods"] = () => { data.ShouldGenerateMethods().should_be_true(); };
+            it["gets generate methods"] = () => { data.ShouldGenerateMethods().ShouldBeTrue(); };
 
-            it["gets flag prefix"] = () => { data.GetFlagPrefix().should_be("is"); };
+            it["gets flag prefix"] = () => { data.GetFlagPrefix().ShouldBe("is"); };
 
-            it["gets is no event"] = () => { data.IsEvent().should_be_false(); };
+            it["gets is no event"] = () => { data.IsEvent().ShouldBeFalse(); };
 
             it["gets event"] = () =>
             {
-                getData<EventToGenerate>().GetEventData().Length.should_be(1);
+                getData<EventToGenerate>().GetEventData().Length.ShouldBe(1);
                 var eventData = getData<EventToGenerate>().GetEventData()[0];
-                eventData.eventTarget.should_be(EventTarget.Any);
-                eventData.eventType.should_be(EventType.Added);
-                eventData.priority.should_be(0);
+                eventData.eventTarget.ShouldBe(EventTarget.Any);
+                eventData.eventType.ShouldBe(EventType.Added);
+                eventData.priority.ShouldBe(0);
             };
 
             it["creates data for event listeners"] = () =>
             {
                 var d = getMultipleData<EventToGenerate>();
-                d.Length.should_be(3);
-                d[1].IsEvent().should_be_false();
-                d[1].ShouldGenerateComponent().should_be_false();
-                d[1].GetTypeName().should_be("TestAnyEventToGenerateListenerComponent");
-                d[1].GetMemberData().Length.should_be(1);
-                d[1].GetMemberData()[0].name.should_be("value");
-                d[1].GetMemberData()[0].type.should_be("System.Collections.Generic.List<ITestAnyEventToGenerateListener>");
+                d.Length.ShouldBe(3);
+                d[1].IsEvent().ShouldBeFalse();
+                d[1].ShouldGenerateComponent().ShouldBeFalse();
+                d[1].GetTypeName().ShouldBe("TestAnyEventToGenerateListenerComponent");
+                d[1].GetMemberData().Length.ShouldBe(1);
+                d[1].GetMemberData()[0].name.ShouldBe("value");
+                d[1].GetMemberData()[0].type.ShouldBe("System.Collections.Generic.List<ITestAnyEventToGenerateListener>");
 
-                d[2].IsEvent().should_be_false();
-                d[2].ShouldGenerateComponent().should_be_false();
-                d[2].GetTypeName().should_be("Test2AnyEventToGenerateListenerComponent");
-                d[2].GetMemberData().Length.should_be(1);
-                d[2].GetMemberData()[0].name.should_be("value");
-                d[2].GetMemberData()[0].type.should_be("System.Collections.Generic.List<ITest2AnyEventToGenerateListener>");
+                d[2].IsEvent().ShouldBeFalse();
+                d[2].ShouldGenerateComponent().ShouldBeFalse();
+                d[2].GetTypeName().ShouldBe("Test2AnyEventToGenerateListenerComponent");
+                d[2].GetMemberData().Length.ShouldBe(1);
+                d[2].GetMemberData()[0].name.ShouldBe("value");
+                d[2].GetMemberData()[0].type.ShouldBe("System.Collections.Generic.List<ITest2AnyEventToGenerateListener>");
             };
         };
 
@@ -292,7 +293,7 @@ class describe_ComponentDataProvider : nspec
                     "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"
                 ));
                 var data = provider.GetData();
-                data.Length.should_be(types.Length);
+                data.Length.ShouldBe(types.Length);
             };
 
             it["ignores duplicates from non components"] = () =>
@@ -303,7 +304,7 @@ class describe_ComponentDataProvider : nspec
                     "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"
                 ));
                 var data = provider.GetData();
-                data.Length.should_be(1);
+                data.Length.ShouldBe(1);
             };
         };
 
@@ -323,11 +324,11 @@ class describe_ComponentDataProvider : nspec
 
             it["creates data for each custom component name"] = () =>
             {
-                data1.GetObjectTypeName().should_be(type.ToCompilableString());
-                data2.GetObjectTypeName().should_be(type.ToCompilableString());
+                data1.GetObjectTypeName().ShouldBe(type.ToCompilableString());
+                data2.GetObjectTypeName().ShouldBe(type.ToCompilableString());
 
-                data1.GetTypeName().should_be("NewCustomNameComponent1Component");
-                data2.GetTypeName().should_be("NewCustomNameComponent2Component");
+                data1.GetTypeName().ShouldBe("NewCustomNameComponent1Component");
+                data2.GetTypeName().ShouldBe("NewCustomNameComponent2Component");
             };
         };
 
@@ -349,8 +350,8 @@ class describe_ComponentDataProvider : nspec
             it["gets default context"] = () =>
             {
                 var contextNames = data.GetContextNames();
-                contextNames.Length.should_be(1);
-                contextNames[0].should_be("ConfiguredContext");
+                contextNames.Length.ShouldBe(1);
+                contextNames[0].ShouldBe("ConfiguredContext");
             };
         };
     }

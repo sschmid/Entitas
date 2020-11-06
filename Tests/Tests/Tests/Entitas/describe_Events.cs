@@ -1,4 +1,5 @@
 ﻿using NSpec;
+using Shouldly;
 
 class describe_Events : nspec {
 
@@ -20,7 +21,7 @@ class describe_Events : nspec {
                 contexts.test.CreateEntity().AddStandardEvent("Test");
                 eventSystem.Execute();
 
-                eventTest.value.should_be("Test");
+                eventTest.value.ShouldBe("Test");
             };
 
             it["can remove listener in callback in the middle"] = () => {
@@ -31,9 +32,9 @@ class describe_Events : nspec {
                 contexts.test.CreateEntity().AddStandardEvent("Test");
                 eventSystem.Execute();
 
-                eventTest1.value.should_be("Test");
-                eventTest2.value.should_be("Test");
-                eventTest3.value.should_be("Test");
+                eventTest1.value.ShouldBe("Test");
+                eventTest2.value.ShouldBe("Test");
+                eventTest3.value.ShouldBe("Test");
             };
 
             it["can remove listener in callback and remove component"] = () => {
@@ -42,7 +43,7 @@ class describe_Events : nspec {
                 contexts.test.CreateEntity().AddStandardEvent("Test");
                 eventSystem.Execute();
 
-                eventTest.value.should_be("Test");
+                eventTest.value.ShouldBe("Test");
             };
         };
 
@@ -58,7 +59,7 @@ class describe_Events : nspec {
                 eventTest.listener.isFlagEntityEvent = true;
                 eventSystem.Execute();
 
-                eventTest.value.should_be("true");
+                eventTest.value.ShouldBe("true");
             };
 
             it["can remove listener in callback and remove component"] = () => {
@@ -67,7 +68,7 @@ class describe_Events : nspec {
                 eventTest.listener.isFlagEntityEvent = true;
                 eventSystem.Execute();
 
-                eventTest.value.should_be("true");
+                eventTest.value.ShouldBe("true");
             };
         };
     }

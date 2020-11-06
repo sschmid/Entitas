@@ -4,6 +4,7 @@ using Entitas.CodeGeneration.Plugins;
 using My.Namespace;
 using MyNamespace;
 using NSpec;
+using Shouldly;
 
 class describe_EntityIndexDataProvider : nspec {
 
@@ -21,102 +22,102 @@ class describe_EntityIndexDataProvider : nspec {
 
         it["creates data for single entity index"] = () => {
             var data = getData<EntityIndexComponent, StandardComponent>();
-            data.Length.should_be(1);
+            data.Length.ShouldBe(1);
 
             var d = data[0];
 
-            d.GetEntityIndexType().GetType().should_be(typeof(string));
-            d.GetEntityIndexType().should_be("Entitas.EntityIndex");
+            d.GetEntityIndexType().GetType().ShouldBe(typeof(string));
+            d.GetEntityIndexType().ShouldBe("Entitas.EntityIndex");
 
-            d.IsCustom().GetType().should_be(typeof(bool));
-            d.IsCustom().should_be_false();
+            d.IsCustom().GetType().ShouldBe(typeof(bool));
+            d.IsCustom().ShouldBeFalse();
 
-            d.GetEntityIndexName().GetType().should_be(typeof(string));
-            d.GetEntityIndexName().should_be("EntityIndex");
+            d.GetEntityIndexName().GetType().ShouldBe(typeof(string));
+            d.GetEntityIndexName().ShouldBe("EntityIndex");
 
-            d.GetContextNames().GetType().should_be(typeof(string[]));
-            d.GetContextNames().Length.should_be(2);
-            d.GetContextNames()[0].should_be("Test");
-            d.GetContextNames()[1].should_be("Test2");
+            d.GetContextNames().GetType().ShouldBe(typeof(string[]));
+            d.GetContextNames().Length.ShouldBe(2);
+            d.GetContextNames()[0].ShouldBe("Test");
+            d.GetContextNames()[1].ShouldBe("Test2");
 
-            d.GetKeyType().GetType().should_be(typeof(string));
-            d.GetKeyType().should_be("string");
+            d.GetKeyType().GetType().ShouldBe(typeof(string));
+            d.GetKeyType().ShouldBe("string");
 
-            d.GetComponentType().GetType().should_be(typeof(string));
-            d.GetComponentType().should_be("My.Namespace.EntityIndexComponent");
+            d.GetComponentType().GetType().ShouldBe(typeof(string));
+            d.GetComponentType().ShouldBe("My.Namespace.EntityIndexComponent");
 
-            d.GetMemberName().GetType().should_be(typeof(string));
-            d.GetMemberName().should_be("value");
+            d.GetMemberName().GetType().ShouldBe(typeof(string));
+            d.GetMemberName().ShouldBe("value");
 
-            d.GetHasMultiple().GetType().should_be(typeof(bool));
-            d.GetHasMultiple().should_be_false();
+            d.GetHasMultiple().GetType().ShouldBe(typeof(bool));
+            d.GetHasMultiple().ShouldBeFalse();
         };
 
         it["creates data for multiple entity index"] = () => {
             var data = getData<MultipleEntityIndicesComponent, StandardComponent>();
-            data.Length.should_be(2);
+            data.Length.ShouldBe(2);
 
-            data[0].GetEntityIndexName().should_be("MultipleEntityIndices");
-            data[0].GetHasMultiple().should_be_true();
+            data[0].GetEntityIndexName().ShouldBe("MultipleEntityIndices");
+            data[0].GetHasMultiple().ShouldBeTrue();
 
-            data[1].GetEntityIndexName().should_be("MultipleEntityIndices");
-            data[1].GetHasMultiple().should_be_true();
+            data[1].GetEntityIndexName().ShouldBe("MultipleEntityIndices");
+            data[1].GetHasMultiple().ShouldBeTrue();
         };
 
         it["creates data for single primary entity index"] = () => {
             var data = getData<PrimaryEntityIndexComponent, StandardComponent>();
 
-            data.Length.should_be(1);
+            data.Length.ShouldBe(1);
             var d = data[0];
 
-            d.GetEntityIndexType().should_be("Entitas.PrimaryEntityIndex");
-            d.IsCustom().should_be_false();
-            d.GetEntityIndexName().should_be("PrimaryEntityIndex");
-            d.GetContextNames().Length.should_be(1);
-            d.GetContextNames()[0].should_be("Game");
-            d.GetKeyType().should_be("string");
-            d.GetComponentType().should_be("PrimaryEntityIndexComponent");
-            d.GetMemberName().should_be("value");
-            d.GetHasMultiple().should_be_false();
+            d.GetEntityIndexType().ShouldBe("Entitas.PrimaryEntityIndex");
+            d.IsCustom().ShouldBeFalse();
+            d.GetEntityIndexName().ShouldBe("PrimaryEntityIndex");
+            d.GetContextNames().Length.ShouldBe(1);
+            d.GetContextNames()[0].ShouldBe("Game");
+            d.GetKeyType().ShouldBe("string");
+            d.GetComponentType().ShouldBe("PrimaryEntityIndexComponent");
+            d.GetMemberName().ShouldBe("value");
+            d.GetHasMultiple().ShouldBeFalse();
         };
 
         it["creates data for multiple primary entity index"] = () => {
             var data = getData<MultiplePrimaryEntityIndicesComponent, StandardComponent>();
 
-            data.Length.should_be(2);
+            data.Length.ShouldBe(2);
 
-            data[0].GetEntityIndexName().should_be("MultiplePrimaryEntityIndices");
-            data[0].GetHasMultiple().should_be_true();
+            data[0].GetEntityIndexName().ShouldBe("MultiplePrimaryEntityIndices");
+            data[0].GetHasMultiple().ShouldBeTrue();
 
-            data[1].GetEntityIndexName().should_be("MultiplePrimaryEntityIndices");
-            data[1].GetHasMultiple().should_be_true();
+            data[1].GetEntityIndexName().ShouldBe("MultiplePrimaryEntityIndices");
+            data[1].GetHasMultiple().ShouldBeTrue();
         };
 
         it["ignores abstract components"] = () => {
             var data = getData<AbstractEntityIndexComponent, StandardComponent>();
-            data.Length.should_be(0);
+            data.Length.ShouldBe(0);
         };
 
         it["creates data for custom entity index class"] = () => {
             var data = getData<CustomEntityIndex, StandardComponent>();
 
-            data.Length.should_be(1);
+            data.Length.ShouldBe(1);
             var d = data[0];
 
-            d.GetEntityIndexType().should_be("MyNamespace.CustomEntityIndex");
-            d.IsCustom().should_be_true();
-            d.GetEntityIndexName().should_be("MyNamespaceCustomEntityIndex");
-            d.GetContextNames().Length.should_be(1);
-            d.GetContextNames()[0].should_be("Test");
+            d.GetEntityIndexType().ShouldBe("MyNamespace.CustomEntityIndex");
+            d.IsCustom().ShouldBeTrue();
+            d.GetEntityIndexName().ShouldBe("MyNamespaceCustomEntityIndex");
+            d.GetContextNames().Length.ShouldBe(1);
+            d.GetContextNames()[0].ShouldBe("Test");
 
             var methods = d.GetCustomMethods();
-            methods.GetType().should_be(typeof(MethodData[]));
-            methods.Length.should_be(2);
+            methods.GetType().ShouldBe(typeof(MethodData[]));
+            methods.Length.ShouldBe(2);
         };
 
         it["ignores non IComponent"] = () => {
             var data = getData<ClassWithEntitIndexAttribute, StandardComponent>();
-            data.Length.should_be(0);
+            data.Length.ShouldBe(0);
         };
 
         context["configure"] = () => {
@@ -130,11 +131,11 @@ class describe_EntityIndexDataProvider : nspec {
             it["gets default context"] = () => {
                 var data = getData<EntityIndexNoContextComponent, StandardComponent>(preferences);
 
-                data.Length.should_be(1);
+                data.Length.ShouldBe(1);
                 var d = data[0];
 
-                d.GetContextNames().Length.should_be(1);
-                d.GetContextNames()[0].should_be("ConfiguredContext");
+                d.GetContextNames().Length.ShouldBe(1);
+                d.GetContextNames()[0].ShouldBe("ConfiguredContext");
             };
         };
     }

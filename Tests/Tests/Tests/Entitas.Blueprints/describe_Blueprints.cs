@@ -1,6 +1,7 @@
 using Entitas;
 using Entitas.Blueprints;
 using NSpec;
+using Shouldly;
 
 class describe_Blueprints : nspec {
 
@@ -22,9 +23,9 @@ class describe_Blueprints : nspec {
                 const int index = 42;
 
                 var componentBlueprint = new ComponentBlueprint(index, component);
-                componentBlueprint.index.should_be(index);
-                componentBlueprint.fullTypeName.should_be(component.GetType().FullName);
-                componentBlueprint.members.Length.should_be(0);
+                componentBlueprint.index.ShouldBe(index);
+                componentBlueprint.fullTypeName.ShouldBe(component.GetType().FullName);
+                componentBlueprint.members.Length.ShouldBe(0);
             };
 
             it["throws when unknown type"] = expect<ComponentBlueprintException>(() => {
@@ -47,15 +48,15 @@ class describe_Blueprints : nspec {
                 const int index = 24;
 
                 var componentBlueprint = new ComponentBlueprint(index, component);
-                componentBlueprint.index.should_be(index);
-                componentBlueprint.fullTypeName.should_be(component.GetType().FullName);
-                componentBlueprint.members.Length.should_be(2);
+                componentBlueprint.index.ShouldBe(index);
+                componentBlueprint.fullTypeName.ShouldBe(component.GetType().FullName);
+                componentBlueprint.members.Length.ShouldBe(2);
 
-                componentBlueprint.members[0].name.should_be("name");
-                componentBlueprint.members[0].value.should_be(component.name);
+                componentBlueprint.members[0].name.ShouldBe("name");
+                componentBlueprint.members[0].value.ShouldBe(component.name);
 
-                componentBlueprint.members[1].name.should_be("age");
-                componentBlueprint.members[1].value.should_be(component.age);
+                componentBlueprint.members[1].name.ShouldBe("age");
+                componentBlueprint.members[1].value.ShouldBe(component.age);
             };
 
             it["creates a component and sets members values"] = () => {
@@ -68,8 +69,8 @@ class describe_Blueprints : nspec {
                 };
 
                 var component = (ComponentWithFieldsAndProperties)componentBlueprint.CreateComponent(entity);
-                component.publicField.should_be("publicFieldValue");
-                component.publicProperty.should_be("publicPropertyValue");
+                component.publicField.ShouldBe("publicFieldValue");
+                component.publicProperty.ShouldBe("publicPropertyValue");
             };
 
             it["ignores invalid member name"] = () => {
@@ -88,9 +89,9 @@ class describe_Blueprints : nspec {
 
             it["creates an empty blueprint from a null entity"] = () => {
                 var blueprint = new Blueprint("My Context", "Hero", null);
-                blueprint.contextIdentifier.should_be("My Context");
-                blueprint.name.should_be("Hero");
-                blueprint.components.Length.should_be(0);
+                blueprint.contextIdentifier.ShouldBe("My Context");
+                blueprint.name.ShouldBe("Hero");
+                blueprint.components.Length.ShouldBe(0);
             };
 
             it["creates a blueprint from an entity"] = () => {
@@ -103,15 +104,15 @@ class describe_Blueprints : nspec {
                 entity.AddComponent(CID.ComponentB, component);
 
                 var blueprint = new Blueprint("My Context", "Hero", entity);
-                blueprint.contextIdentifier.should_be("My Context");
-                blueprint.name.should_be("Hero");
-                blueprint.components.Length.should_be(2);
+                blueprint.contextIdentifier.ShouldBe("My Context");
+                blueprint.name.ShouldBe("Hero");
+                blueprint.components.Length.ShouldBe(2);
 
-                blueprint.components[0].index.should_be(CID.ComponentA);
-                blueprint.components[0].fullTypeName.should_be(Component.A.GetType().FullName);
+                blueprint.components[0].index.ShouldBe(CID.ComponentA);
+                blueprint.components[0].fullTypeName.ShouldBe(Component.A.GetType().FullName);
 
-                blueprint.components[1].index.should_be(CID.ComponentB);
-                blueprint.components[1].fullTypeName.should_be(component.GetType().FullName);
+                blueprint.components[1].index.ShouldBe(CID.ComponentB);
+                blueprint.components[1].fullTypeName.ShouldBe(component.GetType().FullName);
             };
 
             context["when applying blueprint"] = () => {
@@ -139,14 +140,14 @@ class describe_Blueprints : nspec {
 
                 it["applies blueprint to entity"] = () => {
                     entity.ApplyBlueprint(blueprint);
-                    entity.GetComponents().Length.should_be(2);
+                    entity.GetComponents().Length.ShouldBe(2);
 
-                    entity.GetComponent(CID.ComponentA).GetType().should_be(typeof(ComponentA));
+                    entity.GetComponent(CID.ComponentA).GetType().ShouldBe(typeof(ComponentA));
 
                     var nameAgeComponent = (NameAgeComponent)entity.GetComponent(CID.ComponentB);
-                    nameAgeComponent.GetType().should_be(typeof(NameAgeComponent));
-                    nameAgeComponent.name.should_be("Max");
-                    nameAgeComponent.age.should_be(42);
+                    nameAgeComponent.GetType().ShouldBe(typeof(NameAgeComponent));
+                    nameAgeComponent.name.ShouldBe("Max");
+                    nameAgeComponent.age.ShouldBe(42);
                 };
 
                 it["throws when entity already has a component which should be added from blueprint"] = expect<EntityAlreadyHasComponentException>(() => {
@@ -179,7 +180,7 @@ class describe_Blueprints : nspec {
 
                     entity.ApplyBlueprint(blueprint);
 
-                    entity.GetComponentA().should_be_same(componentA);
+                    entity.GetComponentA().ShouldBeSameAs(componentA);
                 };
             };
         };

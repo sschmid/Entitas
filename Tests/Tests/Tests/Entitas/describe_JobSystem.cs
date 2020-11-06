@@ -1,5 +1,6 @@
 ﻿using System;
 using NSpec;
+using Shouldly;
 
 class describe_JobSystem : nspec {
 
@@ -14,7 +15,7 @@ class describe_JobSystem : nspec {
             var e = ctx.CreateEntity();
             e.AddNameAge("e", -1);
             system.Execute();
-            e.nameAge.name.should_be("e-Processed");
+            e.nameAge.name.ShouldBe("e-Processed");
         };
 
         // ignored to pass travis
@@ -28,15 +29,15 @@ class describe_JobSystem : nspec {
             system.Execute();
 
             var entities = ctx.GetEntities();
-            entities.Length.should_be(4);
+            entities.Length.ShouldBe(4);
             for (int i = 0; i < entities.Length; i++) {
-                entities[i].nameAge.name.should_be("e" + i + "-Processed");
+                entities[i].nameAge.name.ShouldBe("e" + i + "-Processed");
             }
 
-            entities[0].nameAge.age.should_be(entities[1].nameAge.age);
-            entities[2].nameAge.age.should_be(entities[3].nameAge.age);
+            entities[0].nameAge.age.ShouldBe(entities[1].nameAge.age);
+            entities[2].nameAge.age.ShouldBe(entities[3].nameAge.age);
 
-            entities[0].nameAge.age.should_not_be(entities[2].nameAge.age);
+            entities[0].nameAge.age.ShouldNotBe(entities[2].nameAge.age);
         };
 
         it["processes all entities when count is not dividable by numThreads"] = () => {
@@ -49,9 +50,9 @@ class describe_JobSystem : nspec {
             system.Execute();
 
             var entities = ctx.GetEntities();
-            entities.Length.should_be(103);
+            entities.Length.ShouldBe(103);
             for (int i = 0; i < entities.Length; i++) {
-                entities[i].nameAge.name.should_be("e" + i + "-Processed");
+                entities[i].nameAge.name.ShouldBe("e" + i + "-Processed");
             }
         };
 
@@ -81,13 +82,13 @@ class describe_JobSystem : nspec {
                 didThrow += 1;
             }
 
-            didThrow.should_be(1);
+            didThrow.ShouldBe(1);
 
             system.exception = null;
 
             system.Execute();
 
-            true.should_be_true();
+            true.ShouldBeTrue();
         };
     }
 }

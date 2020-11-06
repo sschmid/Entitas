@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using NSpec;
+using Shouldly;
 
 class describe_PublicMemberInfoEntityExtension : nspec {
 
@@ -22,10 +23,10 @@ class describe_PublicMemberInfoEntityExtension : nspec {
             it["doesn't change entity if original doesn't have any components"] = () => {
                 entity.CopyTo(target);
 
-                entity.creationIndex.should_be(0);
-                target.creationIndex.should_be(1);
+                entity.creationIndex.ShouldBe(0);
+                target.creationIndex.ShouldBe(1);
 
-                target.GetComponents().Length.should_be(0);
+                target.GetComponents().Length.ShouldBe(0);
             };
 
             it["adds copies of all components to target entity"] = () => {
@@ -34,16 +35,16 @@ class describe_PublicMemberInfoEntityExtension : nspec {
 
                 entity.CopyTo(target);
 
-                target.GetComponents().Length.should_be(2);
-                target.HasComponentA().should_be_true();
-                target.HasComponentB().should_be_true();
-                target.GetComponentA().should_not_be_same(Component.A);
-                target.GetComponent(CID.ComponentB).should_not_be_same(nameAge);
+                target.GetComponents().Length.ShouldBe(2);
+                target.HasComponentA().ShouldBeTrue();
+                target.HasComponentB().ShouldBeTrue();
+                target.GetComponentA().ShouldNotBeSameAs(Component.A);
+                target.GetComponent(CID.ComponentB).ShouldNotBeSameAs(nameAge);
 
                 var clonedComponent = (NameAgeComponent)target.GetComponent(CID.ComponentB);
 
-                clonedComponent.name.should_be(nameAge.name);
-                clonedComponent.age.should_be(nameAge.age);
+                clonedComponent.name.ShouldBe(nameAge.name);
+                clonedComponent.age.ShouldBe(nameAge.age);
             };
 
             it["throws when target already has a component at index"] = base.expect<EntityAlreadyHasComponentException>(() => {
@@ -64,10 +65,10 @@ class describe_PublicMemberInfoEntityExtension : nspec {
                 entity.CopyTo(target, true);
 
                 var copy = target.GetComponent(CID.ComponentB);
-                copy.should_not_be_same(nameAge);
-                copy.should_not_be_same(component);
-                ((NameAgeComponent)copy).name.should_be(nameAge.name);
-                ((NameAgeComponent)copy).age.should_be(nameAge.age);
+                copy.ShouldNotBeSameAs(nameAge);
+                copy.ShouldNotBeSameAs(component);
+                ((NameAgeComponent)copy).name.ShouldBe(nameAge.name);
+                ((NameAgeComponent)copy).age.ShouldBe(nameAge.age);
             };
 
             it["only adds copies of specified components to target entity"] = () => {
@@ -77,9 +78,9 @@ class describe_PublicMemberInfoEntityExtension : nspec {
 
                 entity.CopyTo(target, false, CID.ComponentB, CID.ComponentC);
 
-                target.GetComponents().Length.should_be(2);
-                target.HasComponentB().should_be_true();
-                target.HasComponentC().should_be_true();
+                target.GetComponents().Length.ShouldBe(2);
+                target.HasComponentB().ShouldBeTrue();
+                target.HasComponentC().ShouldBeTrue();
             };
 
             it["uses component pool"] = () => {
@@ -90,7 +91,7 @@ class describe_PublicMemberInfoEntityExtension : nspec {
 
                 entity.CopyTo(target);
 
-                target.GetComponentA().should_be_same(component);
+                target.GetComponentA().ShouldBeSameAs(component);
             };
         };
     }

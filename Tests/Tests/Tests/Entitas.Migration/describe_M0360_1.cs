@@ -2,6 +2,7 @@
 using System.Linq;
 using Entitas.Migration;
 using NSpec;
+using Shouldly;
 
 class describe_M0360_1 : nspec {
 
@@ -17,16 +18,16 @@ class describe_M0360_1 : nspec {
 
         it["finds all files"] = () => {
             var updatedFiles = m.Migrate(dir);
-            updatedFiles.Length.should_be(1);
-            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "Entitas.properties")).should_be_true();
+            updatedFiles.Length.ShouldBe(1);
+            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "Entitas.properties")).ShouldBeTrue();
         };
 
         it["updates Entitas.properties"] = () => {
             var updatedFiles = m.Migrate(dir);
             var file = updatedFiles[0];
 
-            file.fileContent.Contains("Entitas.CodeGenerator.Pools").should_be_false();
-            file.fileContent.Contains("Entitas.CodeGenerator.Contexts").should_be_true();
+            file.fileContent.Contains("Entitas.CodeGenerator.Pools").ShouldBeFalse();
+            file.fileContent.Contains("Entitas.CodeGenerator.Contexts").ShouldBeTrue();
         };
     }
 }

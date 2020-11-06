@@ -1,12 +1,13 @@
 ﻿using Entitas;
 using NSpec;
+using Shouldly;
 
 class describe_EntitasStringExtension : nspec {
 
     const string WORD = "Word";
 
     void assertSameWord(string word1, string word2) {
-        word1.should_be(word2);
+        word1.ShouldBe(word2);
     }
 
     void when_string() {
@@ -55,21 +56,21 @@ class describe_EntitasStringExtension : nspec {
         context["checking for suffix"] = () => {
 
             it["doesn't have suffix"] = () => {
-                WORD.HasContextSuffix().should_be_false();
-                WORD.HasEntitySuffix().should_be_false();
-                WORD.HasComponentSuffix().should_be_false();
-                WORD.HasSystemSuffix().should_be_false();
-                WORD.HasMatcherSuffix().should_be_false();
-                WORD.HasListenerSuffix().should_be_false();
+                WORD.HasContextSuffix().ShouldBeFalse();
+                WORD.HasEntitySuffix().ShouldBeFalse();
+                WORD.HasComponentSuffix().ShouldBeFalse();
+                WORD.HasSystemSuffix().ShouldBeFalse();
+                WORD.HasMatcherSuffix().ShouldBeFalse();
+                WORD.HasListenerSuffix().ShouldBeFalse();
             };
 
             it["has suffix"] = () => {
-                (WORD + EntitasStringExtension.CONTEXT_SUFFIX).HasContextSuffix().should_be_true();
-                (WORD + EntitasStringExtension.ENTITY_SUFFIX).HasEntitySuffix().should_be_true();
-                (WORD + EntitasStringExtension.COMPONENT_SUFFIX).HasComponentSuffix().should_be_true();
-                (WORD + EntitasStringExtension.SYSTEM_SUFFIX).HasSystemSuffix().should_be_true();
-                (WORD + EntitasStringExtension.MATCHER_SUFFIX).HasMatcherSuffix().should_be_true();
-                (WORD + EntitasStringExtension.LISTENER_SUFFIX).HasListenerSuffix().should_be_true();
+                (WORD + EntitasStringExtension.CONTEXT_SUFFIX).HasContextSuffix().ShouldBeTrue();
+                (WORD + EntitasStringExtension.ENTITY_SUFFIX).HasEntitySuffix().ShouldBeTrue();
+                (WORD + EntitasStringExtension.COMPONENT_SUFFIX).HasComponentSuffix().ShouldBeTrue();
+                (WORD + EntitasStringExtension.SYSTEM_SUFFIX).HasSystemSuffix().ShouldBeTrue();
+                (WORD + EntitasStringExtension.MATCHER_SUFFIX).HasMatcherSuffix().ShouldBeTrue();
+                (WORD + EntitasStringExtension.LISTENER_SUFFIX).HasListenerSuffix().ShouldBeTrue();
             };
         };
     }

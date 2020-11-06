@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using Entitas.Migration;
 using NSpec;
+using Shouldly;
 
 class describe_M0260 : nspec {
 
@@ -17,15 +18,15 @@ class describe_M0260 : nspec {
 
         it["finds all files"] = () => {
             var updatedFiles = m.Migrate(dir);
-            updatedFiles.Length.should_be(2);
-            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "Pools.cs")).should_be_true();
-            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "ScoreComponentGeneratedExtension.cs")).should_be_true();
+            updatedFiles.Length.ShouldBe(2);
+            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "Pools.cs")).ShouldBeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "ScoreComponentGeneratedExtension.cs")).ShouldBeTrue();
         };
 
         it["deactivates code in Pools.cs"] = () => {
             var updatedFiles = m.Migrate(dir);
             var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(dir, "Pools.cs"));
-            poolsFile.fileContent.should_be(@"using Entitas;
+            poolsFile.fileContent.ShouldBe(@"using Entitas;
 
 public static class Pools {
 
@@ -79,7 +80,7 @@ public static class Pools {
         it["deactivates code in components"] = () => {
             var updatedFiles = m.Migrate(dir);
             var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(dir, "ScoreComponentGeneratedExtension.cs"));
-            poolsFile.fileContent.should_be(@"using System.Collections.Generic;
+            poolsFile.fileContent.ShouldBe(@"using System.Collections.Generic;
 
 namespace Entitas {
     public partial class Entity {

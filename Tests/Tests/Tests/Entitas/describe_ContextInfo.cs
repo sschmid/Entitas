@@ -1,5 +1,6 @@
 using Entitas;
 using NSpec;
+using Shouldly;
 
 class describe_ContextInfo : nspec {
 
@@ -13,9 +14,9 @@ class describe_ContextInfo : nspec {
 
             var info = new ContextInfo(contextName, componentNames, componentTypes);
 
-            info.name.should_be(contextName);
-            info.componentNames.should_be_same(componentNames);
-            info.componentTypes.should_be_same(componentTypes);
+            info.name.ShouldBe(contextName);
+            info.componentNames.ShouldBeSameAs(componentNames);
+            info.componentTypes.ShouldBeSameAs(componentTypes);
         };
     }
 }

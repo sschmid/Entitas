@@ -2,6 +2,7 @@ using System.IO;
 using System.Linq;
 using Entitas.Migration;
 using NSpec;
+using Shouldly;
 
 class describe_M0360_2 : nspec {
 
@@ -17,8 +18,8 @@ class describe_M0360_2 : nspec {
 
         it["finds all reactive system"] = () => {
             var updatedFiles = m.Migrate(dir);
-            updatedFiles.Length.should_be(1);
-            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "AddViewFromObjectPoolSystem.cs")).should_be_true();
+            updatedFiles.Length.ShouldBe(1);
+            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "AddViewFromObjectPoolSystem.cs")).ShouldBeTrue();
         };
 
         xit["migrates to new api"] = () => {
@@ -29,7 +30,7 @@ class describe_M0360_2 : nspec {
             //System.Console.WriteLine(systemFile.fileContent);
             //}
 
-            //systemFile.fileContent.should_be(expected);
+            //systemFile.fileContent.ShouldBe(expected);
         };
     }
 

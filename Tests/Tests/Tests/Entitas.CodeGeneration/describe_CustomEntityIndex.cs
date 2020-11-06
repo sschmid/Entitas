@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using MyNamespace;
 using NSpec;
+using Shouldly;
 
 class describe_CustomEntityIndex : nspec {
 
@@ -14,10 +15,10 @@ class describe_CustomEntityIndex : nspec {
             e.AddPosition(2, 3);
             e.AddSize(2, 2);
 
-            index.GetEntities(new IntVector2(2, 3)).Single().should_be_same(e);
-            index.GetEntities(new IntVector2(3, 3)).Single().should_be_same(e);
-            index.GetEntities(new IntVector2(2, 4)).Single().should_be_same(e);
-            index.GetEntities(new IntVector2(3, 4)).Single().should_be_same(e);
+            index.GetEntities(new IntVector2(2, 3)).Single().ShouldBeSameAs(e);
+            index.GetEntities(new IntVector2(3, 3)).Single().ShouldBeSameAs(e);
+            index.GetEntities(new IntVector2(2, 4)).Single().ShouldBeSameAs(e);
+            index.GetEntities(new IntVector2(3, 4)).Single().ShouldBeSameAs(e);
         };
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Entitas;
 using NSpec;
+using Shouldly;
 
 class describe_ReactiveSystem : nspec {
 
@@ -7,13 +8,13 @@ class describe_ReactiveSystem : nspec {
 
     static void assertEntities(IReactiveSystemSpy system, TestEntity entity, int didExecute = 1) {
         if (entity == null) {
-            system.didExecute.should_be(0);
-            system.entities.should_be_null();
+            system.didExecute.ShouldBe(0);
+            system.entities.ShouldBeNull();
 
         } else {
-            system.didExecute.should_be(didExecute);
-            system.entities.Length.should_be(1);
-            system.entities.should_contain(entity);
+            system.didExecute.ShouldBe(didExecute);
+            system.entities.Length.ShouldBe(1);
+            system.entities.ShouldContain(entity);
         }
     }
 
@@ -74,8 +75,8 @@ class describe_ReactiveSystem : nspec {
                 var e = createEntityAB();
                 var retainCount = e.retainCount;
                 system.Execute();
-                retainCount.should_be(3); // retained by context, group and collector
-                e.retainCount.should_be(2); // retained by context and group
+                retainCount.ShouldBe(3); // retained by context, group and collector
+                e.retainCount.ShouldBe(2); // retained by context and group
             };
 
             it["collects changed entities in execute"] = () => {
@@ -134,7 +135,7 @@ class describe_ReactiveSystem : nspec {
             };
 
             it["can ToString"] = () => {
-                system.ToString().should_be("ReactiveSystem(ReactiveSystemSpy)");
+                system.ToString().ShouldBe("ReactiveSystem(ReactiveSystemSpy)");
             };
         };
 
@@ -175,13 +176,13 @@ class describe_ReactiveSystem : nspec {
                 var didExecute = 0;
                 system.executeAction = entities => {
                     didExecute += 1;
-                    entities[0].retainCount.should_be(1);
+                    entities[0].retainCount.ShouldBe(1);
                 };
 
                 e.Destroy();
                 system.Execute();
-                didExecute.should_be(1);
-                e.retainCount.should_be(0);
+                didExecute.ShouldBe(1);
+                e.retainCount.ShouldBe(0);
             };
         };
 
@@ -266,19 +267,19 @@ class describe_ReactiveSystem : nspec {
                 var didExecute = 0;
                 system.executeAction = entities => {
                     didExecute += 1;
-                    eAB2.retainCount.should_be(3); // retained by context, group and collector
+                    eAB2.retainCount.ShouldBe(3); // retained by context, group and collector
                 };
 
                 system.Execute();
-                didExecute.should_be(1);
+                didExecute.ShouldBe(1);
 
                 system.Execute();
 
-                system.entities.Length.should_be(1);
-                system.entities[0].should_be_same(eAB2);
+                system.entities.Length.ShouldBe(1);
+                system.entities[0].ShouldBeSameAs(eAB2);
 
-                eAB1.retainCount.should_be(2); // retained by context and group
-                eAB2.retainCount.should_be(2);
+                eAB1.retainCount.ShouldBe(2); // retained by context and group
+                eAB2.retainCount.ShouldBe(2);
             };
         };
 

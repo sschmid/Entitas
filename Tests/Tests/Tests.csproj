@@ -2,9 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Addons\Entitas.Blueprints\Entitas.Blueprints.csproj" />
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="..\..\Addons\Entitas.Migration\Entitas.Migration.csproj" />
+    <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj" />
     <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
     <ProjectReference Include="..\TestFixtures\TestFixtures.csproj" />
   </ItemGroup>
@@ -15,9 +20,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="DesperateDevs.CodeGeneration, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.CodeGeneration.dll</HintPath>
+    </Reference>
     <Reference Include="DesperateDevs.Serialization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="DesperateDevs.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Tests\Entitas.Migration\Fixtures\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Tests\Entitas.Migration\Fixtures\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Tests\Entitas.Migration\Fixtures\**" />
   </ItemGroup>
 
 </Project>

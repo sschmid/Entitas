@@ -1,4 +1,5 @@
 using NSpec;
+using Shouldly;
 using Entitas.VisualDebugging.Unity;
 
 class describe_SystemInfo : nspec {
@@ -9,77 +10,77 @@ class describe_SystemInfo : nspec {
             var system = new TestInitializeSystem();
             var info = new SystemInfo(system);
 
-            info.system.should_be_same(system);
-            info.systemName.should_be("TestInitialize");
+            info.system.ShouldBeSameAs(system);
+            info.systemName.ShouldBe("TestInitialize");
 
-            info.isInitializeSystems.should_be_true();
-            info.isExecuteSystems.should_be_false();
-            info.isCleanupSystems.should_be_false();
-            info.isTearDownSystems.should_be_false();
-            info.isReactiveSystems.should_be_false();
+            info.isInitializeSystems.ShouldBeTrue();
+            info.isExecuteSystems.ShouldBeFalse();
+            info.isCleanupSystems.ShouldBeFalse();
+            info.isTearDownSystems.ShouldBeFalse();
+            info.isReactiveSystems.ShouldBeFalse();
 
-            info.accumulatedExecutionDuration.should_be(0);
-            info.minExecutionDuration.should_be(0);
-            info.maxExecutionDuration.should_be(0);
-            info.averageExecutionDuration.should_be(0);
+            info.accumulatedExecutionDuration.ShouldBe(0);
+            info.minExecutionDuration.ShouldBe(0);
+            info.maxExecutionDuration.ShouldBe(0);
+            info.averageExecutionDuration.ShouldBe(0);
 
-            info.isActive.should_be_true();
+            info.isActive.ShouldBeTrue();
         };
 
         it["creates systemInfo for execute system"] = () => {
             var system = new TestExecuteSystem();
             var info = new SystemInfo(system);
 
-            info.systemName.should_be("TestExecute");
-            info.isInitializeSystems.should_be_false();
-            info.isExecuteSystems.should_be_true();
-            info.isCleanupSystems.should_be_false();
-            info.isTearDownSystems.should_be_false();
-            info.isReactiveSystems.should_be_false();
+            info.systemName.ShouldBe("TestExecute");
+            info.isInitializeSystems.ShouldBeFalse();
+            info.isExecuteSystems.ShouldBeTrue();
+            info.isCleanupSystems.ShouldBeFalse();
+            info.isTearDownSystems.ShouldBeFalse();
+            info.isReactiveSystems.ShouldBeFalse();
         };
 
         it["creates systemInfo for cleanup system"] = () => {
             var system = new TestCleanupSystem();
             var info = new SystemInfo(system);
 
-            info.systemName.should_be("TestCleanup");
-            info.isInitializeSystems.should_be_false();
-            info.isExecuteSystems.should_be_false();
-            info.isCleanupSystems.should_be_true();
-            info.isTearDownSystems.should_be_false();
-            info.isReactiveSystems.should_be_false();
+            info.systemName.ShouldBe("TestCleanup");
+            info.isInitializeSystems.ShouldBeFalse();
+            info.isExecuteSystems.ShouldBeFalse();
+            info.isCleanupSystems.ShouldBeTrue();
+            info.isTearDownSystems.ShouldBeFalse();
+            info.isReactiveSystems.ShouldBeFalse();
         };
 
         it["creates systemInfo for teardown system"] = () => {
             var system = new TestTearDownSystem();
             var info = new SystemInfo(system);
 
-            info.systemName.should_be("TestTearDown");
-            info.isInitializeSystems.should_be_false();
-            info.isExecuteSystems.should_be_false();
-            info.isCleanupSystems.should_be_false();
-            info.isTearDownSystems.should_be_true();
-            info.isReactiveSystems.should_be_false();
+            info.systemName.ShouldBe("TestTearDown");
+            info.isInitializeSystems.ShouldBeFalse();
+            info.isExecuteSystems.ShouldBeFalse();
+            info.isCleanupSystems.ShouldBeFalse();
+            info.isTearDownSystems.ShouldBeTrue();
+            info.isReactiveSystems.ShouldBeFalse();
         };
 
         it["creates systemInfo for reactive system"] = () => {
             var system = new TestReactiveSystem(new MyTestContext());
             var info = new SystemInfo(system);
 
-            info.systemName.should_be("TestReactive");
+            info.systemName.ShouldBe("TestReactive");
 
-            info.isInitializeSystems.should_be_false();
-            info.isExecuteSystems.should_be_false();
-            info.isCleanupSystems.should_be_false();
-            info.isTearDownSystems.should_be_false();
-            info.isReactiveSystems.should_be_true();
+            info.isInitializeSystems.ShouldBeFalse();
+            info.isExecuteSystems.ShouldBeFalse();
+            info.isCleanupSystems.ShouldBeFalse();
+            info.isTearDownSystems.ShouldBeFalse();
+            info.isReactiveSystems.ShouldBeTrue();
         };
 
         xit["uses name of DebugSystem"] = () => {
             const string systemName = "My System";
             var system = new DebugSystems(systemName);
             var info = new SystemInfo(system);
-            info.systemName.should_be(systemName);
+            info.systemName.ShouldBe(systemName);
         };
 
         context["when created"] = () => {
@@ -93,20 +94,20 @@ class describe_SystemInfo : nspec {
             it["adds execution duration"] = () => {
                 info.AddExecutionDuration(42);
 
-                info.accumulatedExecutionDuration.should_be(42);
-                info.minExecutionDuration.should_be(42);
-                info.maxExecutionDuration.should_be(42);
-                info.averageExecutionDuration.should_be(42);
+                info.accumulatedExecutionDuration.ShouldBe(42);
+                info.minExecutionDuration.ShouldBe(42);
+                info.maxExecutionDuration.ShouldBe(42);
+                info.averageExecutionDuration.ShouldBe(42);
             };
 
             it["adds another execution duration"] = () => {
                 info.AddExecutionDuration(20);
                 info.AddExecutionDuration(10);
 
-                info.accumulatedExecutionDuration.should_be(30);
-                info.minExecutionDuration.should_be(10);
-                info.maxExecutionDuration.should_be(20);
-                info.averageExecutionDuration.should_be(15);
+                info.accumulatedExecutionDuration.ShouldBe(30);
+                info.minExecutionDuration.ShouldBe(10);
+                info.maxExecutionDuration.ShouldBe(20);
+                info.averageExecutionDuration.ShouldBe(15);
             };
 
             it["resets durations"] = () => {
@@ -115,10 +116,10 @@ class describe_SystemInfo : nspec {
 
                 info.ResetDurations();
 
-                info.accumulatedExecutionDuration.should_be(0);
-                info.minExecutionDuration.should_be(10);
-                info.maxExecutionDuration.should_be(20);
-                info.averageExecutionDuration.should_be(0);
+                info.accumulatedExecutionDuration.ShouldBe(0);
+                info.minExecutionDuration.ShouldBe(10);
+                info.maxExecutionDuration.ShouldBe(20);
+                info.averageExecutionDuration.ShouldBe(0);
             };
 
             it["keeps min duration after reset"] = () => {
@@ -129,10 +130,10 @@ class describe_SystemInfo : nspec {
 
                 info.AddExecutionDuration(15);
 
-                info.accumulatedExecutionDuration.should_be(15);
-                info.minExecutionDuration.should_be(10);
-                info.maxExecutionDuration.should_be(20);
-                info.averageExecutionDuration.should_be(15);
+                info.accumulatedExecutionDuration.ShouldBe(15);
+                info.minExecutionDuration.ShouldBe(10);
+                info.maxExecutionDuration.ShouldBe(20);
+                info.averageExecutionDuration.ShouldBe(15);
             };
         };
     }

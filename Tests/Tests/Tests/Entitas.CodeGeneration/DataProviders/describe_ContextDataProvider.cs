@@ -1,5 +1,6 @@
 ﻿using Entitas.CodeGeneration.Plugins;
 using NSpec;
+using Shouldly;
 
 class describe_ContextDataProvider : nspec {
 
@@ -12,9 +13,9 @@ class describe_ContextDataProvider : nspec {
 
             var data = (ContextData[])provider.GetData();
 
-            data.Length.should_be(2);
-            data[0].GetContextName().should_be("Input");
-            data[1].GetContextName().should_be("GameState");
+            data.Length.ShouldBe(2);
+            data[0].GetContextName().ShouldBe("Input");
+            data[1].GetContextName().ShouldBe("GameState");
         };
     }
 }

@@ -10,4 +10,11 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Entitas\version.txt" />
+    <EmbeddedResource Include="Entitas\version.txt">
+      <LogicalName>version.txt</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>
