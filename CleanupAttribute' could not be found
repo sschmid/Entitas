@@ -1,0 +1,15 @@
+using Entitas;
+
+[Game, Cleanup(CleanupMode.DestroyEntity)]
+public class DebugMessage2 : IComponent
+{
+
+    public string message;
+}
+
+error message:
+The type or namespace name 'CleanupAttribute' could not be found (are you missing a using directive or an assembly reference?) [Assembly-CSharp]csharp(CS0246)
+The type or namespace name 'Cleanup' could not be found (are you missing a using directive or an assembly reference?) [Assembly-CSharp]
+
+
+hello, how to resolve it?
