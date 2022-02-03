@@ -20,7 +20,8 @@ namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
     public void InitializeContextObservers() {
         try {
 ${contextObservers}
-        } catch(System.Exception) {
+        } catch(System.Exception e) {
+            UnityEngine.Debug.LogError(e);
         }
     }
 
