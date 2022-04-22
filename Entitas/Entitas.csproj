@@ -10,4 +10,11 @@
     <ProjectReference Include="..\DesperateDevs\src\DesperateDevs.Reflection\src\DesperateDevs.Reflection.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Entitas\version.txt" />
+    <EmbeddedResource Include="Entitas\version.txt">
+      <LogicalName>version.txt</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

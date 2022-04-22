@@ -29,6 +29,7 @@ public static class TestExtensions
     {
         return Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories)
             .Where(p =>
+                !p.Contains(dir("DesperateDevs")) &&
                 !p.Contains(dir("Generated")) &&
                 !p.Contains(dir("Libraries")) &&
                 !p.Contains(dir("Tests")) &&
