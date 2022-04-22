@@ -101,7 +101,7 @@ ${componentTypesList}
                 ).ToArray());
 
             var fileContent = TEMPLATE
-                .Replace("${Lookup}", contextName + CodeGeneratorExtentions.LOOKUP)
+                .Replace("${Lookup}", contextName + CodeGeneratorExtensions.LOOKUP)
                 .Replace("${componentConstantsList}", componentConstantsList)
                 .Replace("${totalComponentsConstant}", totalComponentsConstant)
                 .Replace("${componentNamesList}", componentNamesList)

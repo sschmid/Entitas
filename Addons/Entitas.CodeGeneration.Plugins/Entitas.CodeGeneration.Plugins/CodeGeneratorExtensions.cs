@@ -5,7 +5,7 @@ using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public static class CodeGeneratorExtentions {
+    public static class CodeGeneratorExtensions {
 
         public const string LOOKUP = "ComponentsLookup";
 

@@ -43,7 +43,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         CodeGenFile generate(string contextName, ComponentData data) {
             var fileContent = TEMPLATE
-                .Replace("${componentNames}", contextName + CodeGeneratorExtentions.LOOKUP + ".componentNames")
+                .Replace("${componentNames}", contextName + CodeGeneratorExtensions.LOOKUP + ".componentNames")
                 .Replace(data, contextName);
 
             return new CodeGenFile(
