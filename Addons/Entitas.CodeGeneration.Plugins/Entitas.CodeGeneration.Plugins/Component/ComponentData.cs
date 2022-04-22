@@ -1,5 +1,5 @@
 ﻿using DesperateDevs.CodeGeneration;
-using DesperateDevs.Utils;
+using DesperateDevs.Extensions;
 
 namespace Entitas.CodeGeneration.Plugins {
 

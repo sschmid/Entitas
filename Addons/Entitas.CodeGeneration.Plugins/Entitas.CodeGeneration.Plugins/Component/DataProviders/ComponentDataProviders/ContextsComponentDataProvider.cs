@@ -8,7 +8,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextsComponentDataProvider : IComponentDataProvider, IConfigurable {
 
-        public Dictionary<string, string> defaultProperties { get { return _contextNamesConfig.defaultProperties; } }
+        public Dictionary<string, string> DefaultProperties { get { return _contextNamesConfig.DefaultProperties; } }
 
         readonly ContextNamesConfig _contextNamesConfig = new ContextNamesConfig();
 

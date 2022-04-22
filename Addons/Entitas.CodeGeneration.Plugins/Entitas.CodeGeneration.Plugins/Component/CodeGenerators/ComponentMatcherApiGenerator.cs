@@ -6,7 +6,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentMatcherApiGenerator : AbstractGenerator {
 
-        public override string name { get { return "Component (Matcher API)"; } }
+        public override string Name { get { return "Component (Matcher API)"; } }
 
         const string TEMPLATE =
             @"public sealed partial class ${MatcherType} {

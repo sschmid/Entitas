@@ -5,9 +5,9 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextsGenerator : ICodeGenerator {
 
-        public string name { get { return "Contexts"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Contexts"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
         const string TEMPLATE =
             @"public partial class Contexts : Entitas.IContexts {

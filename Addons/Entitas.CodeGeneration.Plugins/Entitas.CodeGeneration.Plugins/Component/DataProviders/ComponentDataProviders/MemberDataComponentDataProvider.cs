@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
-using DesperateDevs.Utils;
+using DesperateDevs.Extensions;
+using DesperateDevs.Reflection;
 
 namespace Entitas.CodeGeneration.Plugins {
 
@@ -9,8 +10,8 @@ namespace Entitas.CodeGeneration.Plugins {
         public void Provide(Type type, ComponentData data) {
             var memberData = type.GetPublicMemberInfos()
                 .Select(info => new MemberData(
-                    info.type.ToCompilableString(),
-                    info.name))
+                    info.Type.ToCompilableString(),
+                    info.Name))
                 .ToArray();
 
             data.SetMemberData(memberData);

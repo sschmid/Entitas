@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
+using DesperateDevs.Extensions;
 using DesperateDevs.Unity.Editor;
-using DesperateDevs.Utils;
 using UnityEditor;
 
 namespace Entitas.VisualDebugging.Unity.Editor {

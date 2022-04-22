@@ -6,7 +6,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentEntityApiInterfaceGenerator : AbstractGenerator {
 
-        public override string name { get { return "Component (Entity API Interface)"; } }
+        public override string Name { get { return "Component (Entity API Interface)"; } }
 
         const string STANDARD_TEMPLATE =
             @"public partial interface I${ComponentName}Entity {

@@ -10,9 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\UnityEngine.dll</HintPath>
-    </Reference>
+    <Reference Include="$(UnityEngine)" />
   </ItemGroup>
 
 </Project>

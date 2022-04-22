@@ -1,18 +1,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
+using DesperateDevs.Extensions;
 using DesperateDevs.Serialization;
-using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
     public class EntityIndexGenerator : ICodeGenerator, IConfigurable {
 
-        public string name { get { return "Entity Index"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Entity Index"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
+        public Dictionary<string, string> DefaultProperties { get { return _ignoreNamespacesConfig.DefaultProperties; } }
 
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 

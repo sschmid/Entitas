@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using DesperateDevs.Extensions;
 using DesperateDevs.Serialization;
-using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
@@ -8,7 +9,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         const string CONTEXTS_KEY = "Entitas.CodeGeneration.Plugins.Contexts";
 
-        public override Dictionary<string, string> defaultProperties {
+        public override Dictionary<string, string> DefaultProperties {
             get {
                 return new Dictionary<string, string> {
                     { CONTEXTS_KEY, "Game, Input" }
@@ -16,9 +17,20 @@ namespace Entitas.CodeGeneration.Plugins {
             }
         }
 
+        readonly bool _minified;
+        readonly bool _removeEmptyEntries;
+
+        public ContextNamesConfig() : this(false, true) { }
+
+        public ContextNamesConfig(bool minified, bool removeEmptyEntries)
+        {
+            _minified = minified;
+            _removeEmptyEntries = removeEmptyEntries;
+        }
+
         public string[] contextNames {
-            get { return _preferences[CONTEXTS_KEY].ArrayFromCSV(); }
-            set { _preferences[CONTEXTS_KEY] = value.ToCSV(); }
+            get { return _preferences[CONTEXTS_KEY].FromCSV(_removeEmptyEntries).ToArray(); }
+            set { _preferences[CONTEXTS_KEY] = value.ToCSV(_minified, _removeEmptyEntries); }
         }
     }
 }

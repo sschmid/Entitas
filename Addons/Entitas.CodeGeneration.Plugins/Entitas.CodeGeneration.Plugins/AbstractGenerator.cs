@@ -6,11 +6,11 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public abstract class AbstractGenerator : ICodeGenerator, IConfigurable {
 
-        public abstract string name { get; }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public abstract string Name { get; }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _ignoreNamespacesConfig.defaultProperties; } }
+        public Dictionary<string, string> DefaultProperties { get { return _ignoreNamespacesConfig.DefaultProperties; } }
 
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 

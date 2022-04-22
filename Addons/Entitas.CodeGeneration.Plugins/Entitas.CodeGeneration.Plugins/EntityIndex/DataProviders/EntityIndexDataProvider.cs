@@ -4,27 +4,28 @@ using System.Linq;
 using System.Reflection;
 using DesperateDevs.CodeGeneration;
 using DesperateDevs.CodeGeneration.CodeGenerator;
+using DesperateDevs.Extensions;
+using DesperateDevs.Reflection;
 using DesperateDevs.Serialization;
-using DesperateDevs.Utils;
 using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
 
     public class EntityIndexDataProvider : IDataProvider, IConfigurable, ICachable, IDoctor {
 
-        public string name { get { return "Entity Index"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Entity Index"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
-        public Dictionary<string, string> defaultProperties {
+        public Dictionary<string, string> DefaultProperties {
             get {
-                return _assembliesConfig.defaultProperties
-                    .Merge(_ignoreNamespacesConfig.defaultProperties,
-                        _contextsComponentDataProvider.defaultProperties);
+                return _assembliesConfig.DefaultProperties
+                    .Merge(_ignoreNamespacesConfig.DefaultProperties,
+                        _contextsComponentDataProvider.DefaultProperties);
             }
         }
 
-        public Dictionary<string, object> objectCache { get; set; }
+        public Dictionary<string, object> ObjectCache { get; set; }
 
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
@@ -49,7 +50,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public CodeGeneratorData[] GetData() {
             var types = _types ?? PluginUtil
-                            .GetCachedAssemblyResolver(objectCache, _assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
+                            .GetCachedAssemblyResolver(ObjectCache, _assembliesConfig.assemblies, _codeGeneratorConfig.SearchPaths)
                             .GetTypes();
 
             var entityIndexData = types
@@ -58,7 +59,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .ToDictionary(
                     type => type,
                     type => type.GetPublicMemberInfos())
-                .Where(kv => kv.Value.Any(info => info.attributes.Any(attr => attr.attribute is AbstractEntityIndexAttribute)))
+                .Where(kv => kv.Value.Any(info => info.Attributes.Any(attr => attr.attribute is AbstractEntityIndexAttribute)))
                 .SelectMany(kv => createEntityIndexData(kv.Key, kv.Value));
 
             var customEntityIndexData = types
@@ -72,19 +73,19 @@ namespace Entitas.CodeGeneration.Plugins {
         }
 
         EntityIndexData[] createEntityIndexData(Type type, List<PublicMemberInfo> infos) {
-            var hasMultiple = infos.Count(i => i.attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1) > 1;
+            var hasMultiple = infos.Count(i => i.Attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1) > 1;
             return infos
-                .Where(i => i.attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1)
+                .Where(i => i.Attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1)
                 .Select(info => {
                     var data = new EntityIndexData();
-                    var attribute = (AbstractEntityIndexAttribute)info.attributes.Single(attr => attr.attribute is AbstractEntityIndexAttribute).attribute;
+                    var attribute = (AbstractEntityIndexAttribute)info.Attributes.Single(attr => attr.attribute is AbstractEntityIndexAttribute).attribute;
 
                     data.SetEntityIndexType(getEntityIndexType(attribute));
                     data.IsCustom(false);
                     data.SetEntityIndexName(type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces));
-                    data.SetKeyType(info.type.ToCompilableString());
+                    data.SetKeyType(info.Type.ToCompilableString());
                     data.SetComponentType(type.ToCompilableString());
-                    data.SetMemberName(info.name);
+                    data.SetMemberName(info.Name);
                     data.SetHasMultiple(hasMultiple);
                     data.SetContextNames(_contextsComponentDataProvider.GetContextNamesOrDefault(type));
 
@@ -137,7 +138,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
             if (isStandalone) {
                 var typeName = typeof(EntityIndexDataProvider).FullName;
-                if (_codeGeneratorConfig.dataProviders.Contains(typeName)) {
+                if (_codeGeneratorConfig.DataProviders.Contains(typeName)) {
                     return new Diagnosis(
                         typeName + " loads and reflects " + string.Join(", ", _assembliesConfig.assemblies) + " and therefore doesn't support server mode!",
                         "Don't use the code generator in server mode with " + typeName,
@@ -149,7 +150,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return Diagnosis.Healthy;
         }
 
-        public bool Fix() {
+        public bool ApplyFix() {
             return false;
         }
     }

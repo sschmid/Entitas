@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using DesperateDevs.Utils;
+using System.Linq;
+using DesperateDevs.Extensions;
 using UnityEditor;
 using UnityEngine;
 
@@ -50,9 +51,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         public static readonly IComponentDrawer[] _componentDrawers;
 
         static EntityDrawer() {
-            _defaultInstanceCreators = AppDomain.CurrentDomain.GetInstancesOf<IDefaultInstanceCreator>();
-            _typeDrawers = AppDomain.CurrentDomain.GetInstancesOf<ITypeDrawer>();
-            _componentDrawers = AppDomain.CurrentDomain.GetInstancesOf<IComponentDrawer>();
+            _defaultInstanceCreators = AppDomain.CurrentDomain.GetInstancesOf<IDefaultInstanceCreator>().ToArray();
+            _typeDrawers = AppDomain.CurrentDomain.GetInstancesOf<ITypeDrawer>().ToArray();
+            _componentDrawers = AppDomain.CurrentDomain.GetInstancesOf<IComponentDrawer>().ToArray();
         }
 
         static bool[] getUnfoldedComponents(IEntity entity) {

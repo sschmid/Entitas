@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using DesperateDevs.Utils;
+using DesperateDevs.Extensions;
+using DesperateDevs.Reflection;
 
 namespace Entitas.Blueprints {
 
@@ -29,7 +30,7 @@ namespace Entitas.Blueprints {
             for (int i = 0; i < memberInfos.Count; i++) {
                 var info = memberInfos[i];
                 members[i] = new SerializableMember(
-                    info.name, info.GetValue(component)
+                    info.Name, info.GetValue(component)
                 );
             }
         }
@@ -65,7 +66,7 @@ namespace Entitas.Blueprints {
                 );
                 for (int i = 0; i < memberInfos.Count; i++) {
                     var info = memberInfos[i];
-                    _componentMembers.Add(info.name, info);
+                    _componentMembers.Add(info.Name, info);
                 }
             }
 

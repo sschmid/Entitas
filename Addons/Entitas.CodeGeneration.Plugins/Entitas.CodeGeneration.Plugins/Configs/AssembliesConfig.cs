@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using DesperateDevs.Extensions;
 using DesperateDevs.Serialization;
-using DesperateDevs.Utils;
 
 namespace Entitas.CodeGeneration.Plugins {
 
@@ -8,7 +9,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         const string ASSEMBLIES_KEY = "Entitas.CodeGeneration.Plugins.Assemblies";
 
-        public override Dictionary<string, string> defaultProperties {
+        public override Dictionary<string, string> DefaultProperties {
             get {
                 return new Dictionary<string, string> {
                     { ASSEMBLIES_KEY, "Library/ScriptAssemblies/Assembly-CSharp.dll" }
@@ -16,9 +17,20 @@ namespace Entitas.CodeGeneration.Plugins {
             }
         }
 
+        readonly bool _minified;
+        readonly bool _removeEmptyEntries;
+
+        public AssembliesConfig() : this(false, true) { }
+
+        public AssembliesConfig(bool minified, bool removeEmptyEntries)
+        {
+            _minified = minified;
+            _removeEmptyEntries = removeEmptyEntries;
+        }
+
         public string[] assemblies {
-            get { return _preferences[ASSEMBLIES_KEY].ArrayFromCSV(); }
-            set { _preferences[ASSEMBLIES_KEY] = value.ToCSV(); }
+            get { return _preferences[ASSEMBLIES_KEY].FromCSV(_removeEmptyEntries).ToArray(); }
+            set { _preferences[ASSEMBLIES_KEY] = value.ToCSV(_minified, _removeEmptyEntries); }
         }
     }
 }

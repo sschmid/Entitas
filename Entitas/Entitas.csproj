@@ -5,9 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="DesperateDevs.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
-    </Reference>
+    <Content Include="..\DesperateDevs\src\DesperateDevs.Caching\src\DesperateDevs.Caching.csproj">
+      <Link>DesperateDevs.Caching.csproj</Link>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DesperateDevs\src\DesperateDevs.Caching\src\DesperateDevs.Caching.csproj" />
+    <ProjectReference Include="..\DesperateDevs\src\DesperateDevs.Reflection\src\DesperateDevs.Reflection.csproj" />
   </ItemGroup>
 
 </Project>

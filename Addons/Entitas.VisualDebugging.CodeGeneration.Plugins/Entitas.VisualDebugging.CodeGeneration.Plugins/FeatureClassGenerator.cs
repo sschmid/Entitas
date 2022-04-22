@@ -4,9 +4,9 @@ namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
 
     public class FeatureClassGenerator : ICodeGenerator {
 
-        public string name { get { return "Feature Class"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Feature Class"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
         const string FEATURE_TEMPLATE =
 @"#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)

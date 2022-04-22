@@ -6,7 +6,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class EventListenerComponentGenerator : AbstractGenerator {
 
-        public override string name { get { return "Event (Listener Component)"; } }
+        public override string Name { get { return "Event (Listener Component)"; } }
 
         const string TEMPLATE =
             @"[Entitas.CodeGeneration.Attributes.DontGenerate(false)]

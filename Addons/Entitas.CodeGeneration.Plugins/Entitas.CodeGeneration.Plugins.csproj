@@ -23,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.CodeGeneration.CodeGenerator\src\DesperateDevs.CodeGeneration.CodeGenerator.csproj" />
+    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.CodeGeneration\src\DesperateDevs.CodeGeneration.csproj" />
+    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Serialization\src\DesperateDevs.Serialization.csproj" />
     <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
     <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
   </ItemGroup>

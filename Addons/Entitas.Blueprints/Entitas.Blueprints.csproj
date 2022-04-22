@@ -8,10 +8,4 @@
     <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="DesperateDevs.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

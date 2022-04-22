@@ -6,9 +6,9 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextMatcherGenerator : ICodeGenerator {
 
-        public string name { get { return "Context (Matcher API)"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Context (Matcher API)"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
         const string TEMPLATE =
             @"public sealed partial class ${MatcherType} {

@@ -6,7 +6,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentContextApiGenerator : AbstractGenerator {
 
-        public override string name { get { return "Component (Context API)"; } }
+        public override string Name { get { return "Component (Context API)"; } }
 
         const string STANDARD_TEMPLATE =
             @"public partial class ${ContextType} {

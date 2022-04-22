@@ -5,13 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\UnityEngine.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Entitas.Blueprints\Entitas.Blueprints.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.Blueprints\Entitas.Blueprints.csproj" />
+    <Reference Include="$(UnityEngine)" />
   </ItemGroup>
 
 </Project>

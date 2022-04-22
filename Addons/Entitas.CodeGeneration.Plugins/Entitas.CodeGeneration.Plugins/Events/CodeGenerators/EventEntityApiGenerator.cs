@@ -6,7 +6,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class EventEntityApiGenerator : AbstractGenerator {
 
-        public override string name { get { return "Event (Entity API)"; } }
+        public override string Name { get { return "Event (Entity API)"; } }
 
         const string TEMPLATE =
             @"public partial class ${EntityType} {

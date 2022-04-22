@@ -10,4 +10,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.CodeGeneration\src\DesperateDevs.CodeGeneration.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DesperateDevs.Utils;
+using DesperateDevs.Extensions;
 using Entitas.CodeGeneration.Attributes;
 using UnityEditor;
 using UnityEngine;

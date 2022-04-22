@@ -8,7 +8,7 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
     public class VisualDebuggingPreferencesDrawer : AbstractPreferencesDrawer {
 
-        public override string title { get { return "Visual Debugging"; } }
+        public override string Title { get { return "Visual Debugging"; } }
 
         const string ENTITAS_DISABLE_VISUAL_DEBUGGING = "ENTITAS_DISABLE_VISUAL_DEBUGGING";
         const string ENTITAS_DISABLE_DEEP_PROFILING = "ENTITAS_DISABLE_DEEP_PROFILING";
@@ -21,19 +21,19 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
         public override void Initialize(Preferences preferences) {
             _visualDebuggingConfig = preferences.CreateAndConfigure<VisualDebuggingConfig>();
-            preferences.properties.AddProperties(_visualDebuggingConfig.defaultProperties, false);
+            preferences.Properties.AddProperties(_visualDebuggingConfig.DefaultProperties, false);
 
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
-            _enableVisualDebugging = !_scriptingDefineSymbols.buildTargetToDefSymbol.Values
-                .All<string>(defs => defs.Contains(ENTITAS_DISABLE_VISUAL_DEBUGGING));
-            _enableDeviceDeepProfiling = !_scriptingDefineSymbols.buildTargetToDefSymbol.Values
-                .All<string>(defs => defs.Contains(ENTITAS_DISABLE_DEEP_PROFILING));
+            _enableVisualDebugging = !ScriptingDefineSymbols.BuildTargetGroups
+                .All(buildTarget => PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTarget).Contains(ENTITAS_DISABLE_VISUAL_DEBUGGING));
+            _enableDeviceDeepProfiling = !ScriptingDefineSymbols.BuildTargetGroups
+                .All(buildTarget => PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTarget).Contains(ENTITAS_DISABLE_DEEP_PROFILING));
         }
 
         public override void DrawHeader(Preferences preferences) {
         }
 
-        protected override void drawContent(Preferences preferences) {
+        protected override void OnDrawContent(Preferences preferences) {
             EditorGUILayout.BeginHorizontal();
             {
                 drawVisualDebugging();
@@ -64,9 +64,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                 if (visualDebuggingChanged) {
                     if (_enableVisualDebugging) {
-                        _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
+                        _scriptingDefineSymbols.RemoveForAll(ENTITAS_DISABLE_VISUAL_DEBUGGING);
                     } else {
-                        _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_VISUAL_DEBUGGING);
+                        _scriptingDefineSymbols.AddForAll(ENTITAS_DISABLE_VISUAL_DEBUGGING);
                     }
                 }
 
@@ -78,9 +78,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                 if (deviceDeepProfilingChanged) {
                     if (_enableDeviceDeepProfiling) {
-                        _scriptingDefineSymbols.RemoveDefineSymbol(ENTITAS_DISABLE_DEEP_PROFILING);
+                        _scriptingDefineSymbols.RemoveForAll(ENTITAS_DISABLE_DEEP_PROFILING);
                     } else {
-                        _scriptingDefineSymbols.AddDefineSymbol(ENTITAS_DISABLE_DEEP_PROFILING);
+                        _scriptingDefineSymbols.AddForAll(ENTITAS_DISABLE_DEEP_PROFILING);
                     }
                 }
             }

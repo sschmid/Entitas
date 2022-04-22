@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using DesperateDevs.Utils;
+using DesperateDevs.Reflection;
 
 namespace Entitas.CodeGeneration.Plugins {
 

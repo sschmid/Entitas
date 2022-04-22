@@ -1,15 +1,15 @@
 using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.Utils;
+using DesperateDevs.Extensions;
 
 namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentGenerator : ICodeGenerator {
 
-        public string name { get { return "Component"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Component"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
         const string COMPONENT_TEMPLATE =
             @"[Entitas.CodeGeneration.Attributes.DontGenerate(false)]

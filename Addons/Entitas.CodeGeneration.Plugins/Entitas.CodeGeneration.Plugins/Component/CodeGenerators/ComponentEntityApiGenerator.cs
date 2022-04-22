@@ -1,13 +1,13 @@
 using System.IO;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.Utils;
+using DesperateDevs.Extensions;
 
 namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentEntityApiGenerator : AbstractGenerator {
 
-        public override string name { get { return "Component (Entity API)"; } }
+        public override string Name { get { return "Component (Entity API)"; } }
 
         const string STANDARD_TEMPLATE =
             @"public partial class ${EntityType} {

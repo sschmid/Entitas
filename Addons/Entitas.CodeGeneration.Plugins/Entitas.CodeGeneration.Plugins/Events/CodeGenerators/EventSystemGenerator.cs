@@ -7,7 +7,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class EventSystemGenerator : AbstractGenerator {
 
-        public override string name { get { return "Event (System)"; } }
+        public override string Name { get { return "Event (System)"; } }
 
         const string ANY_TARGET_TEMPLATE =
             @"public sealed class ${Event}EventSystem : Entitas.ReactiveSystem<${EntityType}> {

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Serialization\src\DesperateDevs.Serialization.csproj" />
     <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
     <ProjectReference Include="..\TestFixtures\TestFixtures.csproj" />
   </ItemGroup>

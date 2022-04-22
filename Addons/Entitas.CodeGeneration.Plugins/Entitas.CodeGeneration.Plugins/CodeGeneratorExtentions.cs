@@ -1,6 +1,6 @@
 ﻿using System.CodeDom.Compiler;
 using System.Linq;
-using DesperateDevs.Utils;
+using DesperateDevs.Extensions;
 using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {

@@ -7,7 +7,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentLookupGenerator : AbstractGenerator {
 
-        public override string name { get { return "Component (Lookup)"; } }
+        public override string Name { get { return "Component (Lookup)"; } }
 
         const string TEMPLATE =
             @"public static class ${Lookup} {
@@ -37,12 +37,12 @@ ${componentTypesList}
                 .Where(d => d.ShouldGenerateIndex())
                 .ToArray());
 
-            var existingFileNames = new HashSet<string>(lookups.Select(file => file.fileName));
+            var existingFileNames = new HashSet<string>(lookups.Select(file => file.FileName));
 
             var emptyLookups = generateEmptyLookups(data
                     .OfType<ContextData>()
                     .ToArray())
-                .Where(file => !existingFileNames.Contains(file.fileName))
+                .Where(file => !existingFileNames.Contains(file.FileName))
                 .ToArray();
 
             return lookups.Concat(emptyLookups).ToArray();

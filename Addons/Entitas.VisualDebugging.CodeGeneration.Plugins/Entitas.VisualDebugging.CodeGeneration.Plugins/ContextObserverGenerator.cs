@@ -1,15 +1,15 @@
 using System.Linq;
 using DesperateDevs.CodeGeneration;
-using DesperateDevs.Utils;
+using DesperateDevs.Extensions;
 using Entitas.CodeGeneration.Plugins;
 
 namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
 
     public class ContextObserverGenerator : ICodeGenerator {
 
-        public string name { get { return "Context Observer"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Context Observer"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
         const string CONTEXTS_TEMPLATE =
 @"public partial class Contexts {

@@ -6,7 +6,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class EventListenertInterfaceGenerator : AbstractGenerator {
 
-        public override string name { get { return "Event (Listener Interface)"; } }
+        public override string Name { get { return "Event (Listener Interface)"; } }
 
         const string TEMPLATE =
             @"public interface I${EventListener} {

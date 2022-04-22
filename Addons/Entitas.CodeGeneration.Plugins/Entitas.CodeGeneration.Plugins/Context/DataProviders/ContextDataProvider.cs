@@ -7,11 +7,11 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextDataProvider : IDataProvider, IConfigurable {
 
-        public string name { get { return "Context"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Context"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
-        public Dictionary<string, string> defaultProperties { get { return _contextNamesConfig.defaultProperties; } }
+        public Dictionary<string, string> DefaultProperties { get { return _contextNamesConfig.DefaultProperties; } }
 
         readonly ContextNamesConfig _contextNamesConfig = new ContextNamesConfig();
 

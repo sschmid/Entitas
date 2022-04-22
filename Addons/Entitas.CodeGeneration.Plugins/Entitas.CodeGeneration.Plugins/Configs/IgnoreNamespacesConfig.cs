@@ -7,7 +7,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
 
-        public override Dictionary<string, string> defaultProperties {
+        public override Dictionary<string, string> DefaultProperties {
             get {
                 return new Dictionary<string, string> {
                     { IGNORE_NAMESPACES_KEY, "false" }

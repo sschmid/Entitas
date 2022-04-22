@@ -5,9 +5,9 @@ namespace Entitas.Blueprints.CodeGeneration.Plugins {
 
     public class BlueprintsGenerator : ICodeGenerator {
 
-        public string name { get { return "Blueprint"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Blueprint"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
         const string CLASS_TEMPLATE =
             @"using Entitas.Blueprints;

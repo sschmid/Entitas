@@ -3,33 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using DesperateDevs.CodeGeneration;
 using DesperateDevs.CodeGeneration.CodeGenerator;
+using DesperateDevs.Extensions;
 using DesperateDevs.Serialization;
-using DesperateDevs.Utils;
 using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
 
     public class ComponentDataProvider : IDataProvider, IConfigurable, ICachable, IDoctor {
 
-        public string name { get { return "Component"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Component"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
-        public Dictionary<string, string> defaultProperties {
+        public Dictionary<string, string> DefaultProperties {
             get {
                 var dataProviderProperties = _dataProviders
                     .OfType<IConfigurable>()
-                    .Select(i => i.defaultProperties)
+                    .Select(i => i.DefaultProperties)
                     .ToArray();
 
-                return _assembliesConfig.defaultProperties
-                    .Merge(_contextsComponentDataProvider.defaultProperties)
-                    .Merge(_ignoreNamespacesConfig.defaultProperties)
+                return _assembliesConfig.DefaultProperties
+                    .Merge(_contextsComponentDataProvider.DefaultProperties)
+                    .Merge(_ignoreNamespacesConfig.DefaultProperties)
                     .Merge(dataProviderProperties);
             }
         }
 
-        public Dictionary<string, object> objectCache { get; set; }
+        public Dictionary<string, object> ObjectCache { get; set; }
 
         readonly CodeGeneratorConfig _codeGeneratorConfig = new CodeGeneratorConfig();
         readonly AssembliesConfig _assembliesConfig = new AssembliesConfig();
@@ -77,7 +77,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public CodeGeneratorData[] GetData() {
             var types = _types ?? PluginUtil
-                            .GetCachedAssemblyResolver(objectCache, _assembliesConfig.assemblies, _codeGeneratorConfig.searchPaths)
+                            .GetCachedAssemblyResolver(ObjectCache, _assembliesConfig.assemblies, _codeGeneratorConfig.SearchPaths)
                             .GetTypes();
 
             var dataFromComponents = types
@@ -179,7 +179,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
             if (isStandalone) {
                 var typeName = typeof(ComponentDataProvider).FullName;
-                if (_codeGeneratorConfig.dataProviders.Contains(typeName)) {
+                if (_codeGeneratorConfig.DataProviders.Contains(typeName)) {
                     return new Diagnosis(
                         typeName + " loads and reflects " + string.Join(", ", _assembliesConfig.assemblies) + " and therefore doesn't support server mode!",
                         "Don't use the code generator in server mode with " + typeName,
@@ -191,7 +191,7 @@ namespace Entitas.CodeGeneration.Plugins {
             return Diagnosis.Healthy;
         }
 
-        public bool Fix() {
+        public bool ApplyFix() {
             return false;
         }
     }

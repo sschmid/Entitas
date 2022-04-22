@@ -6,9 +6,9 @@ namespace Entitas.CodeGeneration.Plugins {
 
     public class ContextAttributeGenerator : ICodeGenerator {
 
-        public string name { get { return "Context (Attribute)"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Context (Attribute)"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
         const string TEMPLATE =
             @"public sealed class ${ContextName}Attribute : Entitas.CodeGeneration.Attributes.ContextAttribute {

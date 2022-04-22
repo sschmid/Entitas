@@ -7,9 +7,9 @@ namespace Entitas.Blueprints.CodeGeneration.Unity.Plugins {
 
     public class BlueprintDataProvider : IDataProvider {
 
-        public string name { get { return "Blueprint"; } }
-        public int priority { get { return 0; } }
-        public bool runInDryMode { get { return true; } }
+        public string Name { get { return "Blueprint"; } }
+        public int Order { get { return 0; } }
+        public bool RunInDryMode { get { return true; } }
 
         readonly string[] _blueprintNames;
 
