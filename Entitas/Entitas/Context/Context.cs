@@ -7,7 +7,7 @@ namespace Entitas {
 
     /// A context manages the lifecycle of entities and groups.
     /// You can create and destroy entities and get groups of entities.
-    /// The prefered way to create a context is to use the generated methods
+    /// The preferred way to create a context is to use the generated methods
     /// from the code generator, e.g. var context = new GameContext();
     public class Context<TEntity> : IContext<TEntity> where TEntity : class, IEntity {
 
@@ -77,12 +77,12 @@ namespace Entitas {
         readonly EntityEvent _cachedEntityReleased;
         readonly EntityEvent _cachedDestroyEntity;
 
-        /// The prefered way to create a context is to use the generated methods
+        /// The preferred way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
         public Context(int totalComponents, Func<TEntity> entityFactory) : this(totalComponents, 0, null, null, entityFactory) {
         }
 
-        /// The prefered way to create a context is to use the generated methods
+        /// The preferred way to create a context is to use the generated methods
         /// from the code generator, e.g. var context = new GameContext();
         public Context(int totalComponents, int startCreationIndex, ContextInfo contextInfo, Func<IEntity, IAERC> aercFactory, Func<TEntity> entityFactory) {
             _totalComponents = totalComponents;

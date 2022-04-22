@@ -115,7 +115,7 @@ namespace Entitas {
         /// Adds a component at the specified index.
         /// You can only have one component at an index.
         /// Each component type must have its own constant index.
-        /// The prefered way is to use the
+        /// The preferred way is to use the
         /// generated methods from the code generator.
         public void AddComponent(int index, IComponent component) {
             if (!_isEnabled) {
@@ -145,7 +145,7 @@ namespace Entitas {
 
         /// Removes a component at the specified index.
         /// You can only remove a component at an index if it exists.
-        /// The prefered way is to use the
+        /// The preferred way is to use the
         /// generated methods from the code generator.
         public void RemoveComponent(int index) {
             if (!_isEnabled) {
@@ -169,7 +169,7 @@ namespace Entitas {
 
         /// Replaces an existing component at the specified index
         /// or adds it if it doesn't exist yet.
-        /// The prefered way is to use the
+        /// The preferred way is to use the
         /// generated methods from the code generator.
         public void ReplaceComponent(int index, IComponent component) {
             if (!_isEnabled) {
@@ -224,7 +224,7 @@ namespace Entitas {
 
         /// Returns a component at the specified index.
         /// You can only get a component at an index if it exists.
-        /// The prefered way is to use the
+        /// The preferred way is to use the
         /// generated methods from the code generator.
         public IComponent GetComponent(int index) {
             if (!HasComponent(index)) {
