@@ -5,15 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="DesperateDevs.Serialization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Serialization.dll</HintPath>
-    </Reference>
-    <Reference Include="DesperateDevs.Unity.Editor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Unity.Editor.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Unity.Editor\src\DesperateDevs.Unity.Editor.csproj" />
     <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
   </ItemGroup>

@@ -15,10 +15,4 @@
     <PackageReference Include="Shouldly" Version="3.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="DesperateDevs.Serialization, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Serialization.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

@@ -3,16 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Reference Include="DesperateDevs.Unity.Editor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Unity.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="DesperateDevs.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Unity.Editor\src\DesperateDevs.Unity.Editor.csproj" />
     <ProjectReference Include="..\Entitas.Blueprints.Unity\Entitas.Blueprints.Unity.csproj" />

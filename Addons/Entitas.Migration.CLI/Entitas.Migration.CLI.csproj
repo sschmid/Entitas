@@ -5,12 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="DesperateDevs.Utils, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Libraries\Dependencies\DesperateDevs\DesperateDevs.Utils.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj" />
   </ItemGroup>
 
