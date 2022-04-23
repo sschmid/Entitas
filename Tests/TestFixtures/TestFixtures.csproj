@@ -1,12 +1,256 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6F01CC45-F951-43A5-923E-D3778F9DD435}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TestFixtures</RootNamespace>
+    <AssemblyName>TestFixtures</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <ReleaseVersion>1.0.0</ReleaseVersion>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
-    <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
+    <Reference Include="System" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Compile Include="Generated\Test\Components\TestUniqueEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestCustomPrefixFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestUniqueFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestUniqueStandardComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceUniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestUniqueClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2UniqueClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMixedEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestBaseComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameCleanupDestroyComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameCleanupRemoveComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMultipleEventsStandardEventComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2MultipleEventsStandardEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMultipleContextStandardEventComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2MultipleContextStandardEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagEntityEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardEntityEventComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardEventComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameArray3dComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameGeneratedContextComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameInheritedComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameParentComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameMultiplePrimaryEntityIndicesComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestComponentWithFieldsComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestComponentWithPropertiesComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestTest2ContextComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2Test2ContextComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestNameAgeComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2NameAgeComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestComponentWithFieldsAndPropertiesComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameNoContextComponent.cs" />
+    <Compile Include="Generated\Game\Components\GamePrimaryEntityIndexComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestPositionComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestSizeComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceMultipleEntityIndicesComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2MyNamespaceMultipleEntityIndicesComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceMyNamespaceComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2MyNamespaceMyNamespaceComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceMyNamespaceFlagComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMyNamespaceEntityIndexComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2MyNamespaceEntityIndexComponent.cs" />
+    <Compile Include="Generated\Game\Components\GameMyNamespaceEntityIndexNoContextComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestNewCustomNameComponent1Component.cs" />
+    <Compile Include="Generated\Test\Components\TestNewCustomNameComponent2Component.cs" />
+    <Compile Include="Generated\Test\Components\TestClassWithEntitIndexAttributeComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestEventToGenerateComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2EventToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2ClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestInterfaceToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStructToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestAnyMixedEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestMixedEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestAnyBaseListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestAnyUniqueEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestTestAnyMultipleEventsStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestTestMultipleEventsStandardEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2Test2AnyMultipleEventsStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2Test2MultipleEventsStandardEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestTestAnyMultipleContextStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2Test2AnyMultipleContextStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestFlagEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestAnyFlagEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestStandardEntityEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestAnyStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Test\Components\TestTestAnyEventToGenerateListenerComponent.cs" />
+    <Compile Include="Generated\Test2\Components\Test2Test2AnyEventToGenerateListenerComponent.cs" />
+    <Compile Include="Generated\Components\Interfaces\IMultipleEventsStandardEventEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\IMultipleContextStandardEventEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\ITest2ContextEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\INameAgeEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\IMyNamespaceMultipleEntityIndicesEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\IMyNamespaceMyNamespaceEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\IMyNamespaceEntityIndexEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\IUniqueClassToGenerateEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\IEventToGenerateEntity.cs" />
+    <Compile Include="Generated\Components\Interfaces\IClassToGenerateEntity.cs" />
+    <Compile Include="Generated\Components\NewCustomNameComponent1Component.cs" />
+    <Compile Include="Generated\Components\NewCustomNameComponent2Component.cs" />
+    <Compile Include="Generated\Components\ClassWithEntitIndexAttributeComponent.cs" />
+    <Compile Include="Generated\Components\UniqueClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\EventToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\ClassToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\InterfaceToGenerateComponent.cs" />
+    <Compile Include="Generated\Components\StructToGenerateComponent.cs" />
+    <Compile Include="Generated\Test\TestComponentsLookup.cs" />
+    <Compile Include="Generated\Game\GameComponentsLookup.cs" />
+    <Compile Include="Generated\Test2\Test2ComponentsLookup.cs" />
+    <Compile Include="Generated\Test\Components\TestDontGenerateMethodsComponent.cs" />
+    <Compile Include="Generated\Game\GameAttribute.cs" />
+    <Compile Include="Generated\Test\TestAttribute.cs" />
+    <Compile Include="Generated\Test2\Test2Attribute.cs" />
+    <Compile Include="Generated\Game\GameContext.cs" />
+    <Compile Include="Generated\Test\TestContext.cs" />
+    <Compile Include="Generated\Test2\Test2Context.cs" />
+    <Compile Include="Generated\Game\GameMatcher.cs" />
+    <Compile Include="Generated\Test\TestMatcher.cs" />
+    <Compile Include="Generated\Test2\Test2Matcher.cs" />
+    <Compile Include="Generated\Contexts.cs" />
+    <Compile Include="Generated\Game\GameEntity.cs" />
+    <Compile Include="Generated\Test\TestEntity.cs" />
+    <Compile Include="Generated\Test2\Test2Entity.cs" />
+    <Compile Include="Generated\Events\Components\AnyMixedEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\MixedEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\AnyBaseListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\AnyUniqueEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\TestAnyMultipleEventsStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\TestMultipleEventsStandardEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\Test2AnyMultipleEventsStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\Test2MultipleEventsStandardEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\TestAnyMultipleContextStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\Test2AnyMultipleContextStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\FlagEntityEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\AnyFlagEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\StandardEntityEventRemovedListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\AnyStandardEventListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\TestAnyEventToGenerateListenerComponent.cs" />
+    <Compile Include="Generated\Events\Components\Test2AnyEventToGenerateListenerComponent.cs" />
+    <Compile Include="Generated\Events\Interfaces\IAnyMixedEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IMixedEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IAnyBaseListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IAnyUniqueEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITestAnyMultipleEventsStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITestMultipleEventsStandardEventRemovedListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITest2AnyMultipleEventsStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITest2MultipleEventsStandardEventRemovedListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITestAnyMultipleContextStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITest2AnyMultipleContextStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IFlagEntityEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IAnyFlagEventRemovedListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IStandardEntityEventRemovedListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\IAnyStandardEventListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITestAnyEventToGenerateListener.cs" />
+    <Compile Include="Generated\Events\Interfaces\ITest2AnyEventToGenerateListener.cs" />
+    <Compile Include="Generated\Events\Systems\AnyMixedEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\MixedEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\AnyBaseEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\AnyUniqueEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestAnyMultipleEventsStandardEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestMultipleEventsStandardEventRemovedEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\Test2AnyMultipleEventsStandardEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\Test2MultipleEventsStandardEventRemovedEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestAnyMultipleContextStandardEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\Test2AnyMultipleContextStandardEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\FlagEntityEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\AnyFlagEventRemovedEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\StandardEntityEventRemovedEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\AnyStandardEventEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\TestAnyEventToGenerateEventSystem.cs" />
+    <Compile Include="Generated\Events\Systems\Test2AnyEventToGenerateEventSystem.cs" />
+    <Compile Include="Generated\Events\TestEventSystems.cs" />
+    <Compile Include="Generated\Events\Test2EventSystems.cs" />
+    <Compile Include="Generated\Feature.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fixtures\Components\MixedEventComponent.cs" />
+    <Compile Include="Fixtures\Components\BaseComponent.cs" />
+    <Compile Include="Fixtures\Components\UniqueEventComponent.cs" />
+    <Compile Include="Fixtures\Components\CleanupDestroyComponent.cs" />
+    <Compile Include="Fixtures\Components\CleanupRemoveComponent.cs" />
+    <Compile Include="Fixtures\Components\MultipleEventsStandardEventComponent.cs" />
+    <Compile Include="Fixtures\Components\MultipleContextStandardEventComponent.cs" />
+    <Compile Include="Fixtures\ObjectsToGenerate\UniqueClassToGenerate.cs" />
+    <Compile Include="Fixtures\ObjectsToGenerate\EventToGenerate.cs" />
+    <Compile Include="Fixtures\Components\FlagEntityEventComponent.cs" />
+    <Compile Include="Fixtures\Components\FlagEventComponent.cs" />
+    <Compile Include="Fixtures\Components\StandardEntityEventComponent.cs" />
+    <Compile Include="Fixtures\Components\StandardEventComponent.cs" />
+    <Compile Include="Fixtures\Components\Array3dComponent.cs" />
+    <Compile Include="Fixtures\Components\GeneratedContextComponent.cs" />
+    <Compile Include="Fixtures\Components\InheritedComponent.cs" />
+    <Compile Include="Fixtures\Components\MultipleEntityIndicesComponent.cs" />
+    <Compile Include="Fixtures\Components\MultiplePrimaryEntityIndicesComponent.cs" />
+    <Compile Include="Fixtures\Components\AbstractComponent.cs" />
+    <Compile Include="Fixtures\Components\ComponentWithFields.cs" />
+    <Compile Include="Fixtures\Components\ComponentWithProperties.cs" />
+    <Compile Include="Fixtures\Components\CustomName.cs" />
+    <Compile Include="Fixtures\Components\CustomPrefixFlagComponent.cs" />
+    <Compile Include="Fixtures\Components\DontGenerateIndexComponent.cs" />
+    <Compile Include="Fixtures\Components\DontGenerateMethodsComponent.cs" />
+    <Compile Include="Fixtures\Components\FlagComponent.cs" />
+    <Compile Include="Fixtures\Components\MyNamespaceComponent.cs" />
+    <Compile Include="Fixtures\Components\MyNamespaceFlagComponent.cs" />
+    <Compile Include="Fixtures\Components\StandardComponent.cs" />
+    <Compile Include="Fixtures\Components\Test2ContextComponent.cs" />
+    <Compile Include="Fixtures\Components\UniqueFlagComponent.cs" />
+    <Compile Include="Fixtures\Components\UniqueMyNamespaceComponent.cs" />
+    <Compile Include="Fixtures\Components\UniqueMyNamespaceFlagComponent.cs" />
+    <Compile Include="Fixtures\Components\UniqueStandardComponent.cs" />
+    <Compile Include="Fixtures\ObjectsToGenerate\ClassToGenerate.cs" />
+    <Compile Include="Fixtures\ObjectsToGenerate\InterfaceToGenerate.cs" />
+    <Compile Include="Fixtures\ObjectsToGenerate\StructToGenerate.cs" />
+    <Compile Include="Fixtures\Components\NameAgeComponent.cs" />
+    <Compile Include="Fixtures\TestMemberAttribute.cs" />
+    <Compile Include="Fixtures\Components\ComponentWithFieldsAndProperties.cs" />
+    <Compile Include="Fixtures\Components\NoContextComponent.cs" />
+    <Compile Include="Fixtures\Components\EntityIndexComponent.cs" />
+    <Compile Include="Fixtures\Components\AbstractEntityIndexComponent.cs" />
+    <Compile Include="Fixtures\Components\PrimaryEntityIndexComponent.cs" />
+    <Compile Include="Fixtures\CustomEntityIndex.cs" />
+    <Compile Include="Fixtures\ClassWithEntitIndexAttribute.cs" />
+    <Compile Include="Fixtures\Components\EntityIndexNoContextComponent.cs" />
+    <Compile Include="Fixtures\IMyEntity.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Fixtures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj">
+      <Project>{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}</Project>
+      <Name>Entitas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj">
+      <Project>{76A16CFD-7488-41D3-989B-CA2F1840E638}</Project>
+      <Name>Entitas.CodeGeneration.Attributes</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
