@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using DesperateDevs.Extensions;
 using DesperateDevs.Reflection;
 
@@ -26,8 +27,8 @@ namespace Entitas.Blueprints {
             fullTypeName = _type.FullName;
 
             var memberInfos = _type.GetPublicMemberInfos();
-            members = new SerializableMember[memberInfos.Count];
-            for (int i = 0; i < memberInfos.Count; i++) {
+            members = new SerializableMember[memberInfos.Length];
+            for (int i = 0; i < memberInfos.Length; i++) {
                 var info = memberInfos[i];
                 members[i] = new SerializableMember(
                     info.Name, info.GetValue(component)
@@ -62,9 +63,9 @@ namespace Entitas.Blueprints {
             if (_componentMembers == null) {
                 var memberInfos = _type.GetPublicMemberInfos();
                 _componentMembers = new Dictionary<string, PublicMemberInfo>(
-                    memberInfos.Count
+                    memberInfos.Length
                 );
-                for (int i = 0; i < memberInfos.Count; i++) {
+                for (int i = 0; i < memberInfos.Length; i++) {
                     var info = memberInfos[i];
                     _componentMembers.Add(info.Name, info);
                 }

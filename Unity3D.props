@@ -1,1 +1,33 @@
-DesperateDevs/Unity3D.props
+<Project>
+
+  <Choose>
+    <When Condition="$([MSBuild]::IsOsPlatform(Windows))">
+      <PropertyGroup>
+        <OSApplicationPath>C:/Program Files</OSApplicationPath>
+        <UnityManagedPath>Editor/Data/Managed</UnityManagedPath>
+      </PropertyGroup>
+    </When>
+    <When Condition="$([MSBuild]::IsOsPlatform(OSX))">
+      <PropertyGroup>
+        <OSApplicationPath>/Applications</OSApplicationPath>
+        <UnityManagedPath>Unity.app/Contents/Managed</UnityManagedPath>
+      </PropertyGroup>
+    </When>
+    <When Condition="$([MSBuild]::IsOsPlatform(Linux))">
+      <PropertyGroup>
+        <OSApplicationPath>$([System.Environment]::GetFolderPath('System.Environment+SpecialFolder.UserProfile'))</OSApplicationPath>
+        <UnityManagedPath>Editor/Data/Managed</UnityManagedPath>
+      </PropertyGroup>
+    </When>
+  </Choose>
+
+  <PropertyGroup>
+    <UnityHubPath>$(OSApplicationPath)/Unity/Hub/Editor</UnityHubPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <UnityEnginePath>$(UnityManagedPath)/UnityEngine.dll</UnityEnginePath>
+    <UnityEditorPath>$(UnityManagedPath)/UnityEditor.dll</UnityEditorPath>
+  </PropertyGroup>
+
+</Project>

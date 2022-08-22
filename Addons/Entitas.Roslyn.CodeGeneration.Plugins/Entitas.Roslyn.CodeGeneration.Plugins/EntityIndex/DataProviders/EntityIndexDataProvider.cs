@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DesperateDevs.CodeGeneration;
-using DesperateDevs.CodeGeneration.Plugins;
+using Jenny;
+using Jenny.Plugins;
 using DesperateDevs.Extensions;
 using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
@@ -20,9 +20,11 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins {
 
         public Dictionary<string, string> DefaultProperties {
             get {
-                return _ignoreNamespacesConfig.DefaultProperties
-                       .Merge(_projectPathConfig.DefaultProperties,
-                              _contextsComponentDataProvider.DefaultProperties);
+                return _ignoreNamespacesConfig.DefaultProperties.Merge(new[]
+                {
+                    _projectPathConfig.DefaultProperties,
+                    _contextsComponentDataProvider.DefaultProperties
+                });
             }
         }
 
@@ -48,7 +50,7 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins {
         }
 
         public CodeGeneratorData[] GetData() {
-            var types = _types ?? DesperateDevs.Roslyn.CodeGeneration.Plugins.PluginUtil
+            var types = _types ?? Jenny.Plugins.Roslyn.PluginUtil
                             .GetCachedProjectParser(ObjectCache, _projectPathConfig.ProjectPath)
                             .GetTypes();
 

@@ -1,6 +1,6 @@
 using System.IO;
 using System.Linq;
-using DesperateDevs.CodeGeneration;
+using Jenny;
 using DesperateDevs.Extensions;
 
 namespace Entitas.CodeGeneration.Plugins {

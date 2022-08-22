@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
-using DesperateDevs.CodeGeneration;
+using Jenny;
 using Entitas.CodeGeneration.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -102,7 +102,7 @@ namespace Entitas.CodeGeneration.Plugins {
 
                     var cachedAccess = data.GetMemberData().Length == 0
                         ? string.Empty
-                        : "var component = e." + data.ComponentNameValidLowercaseFirst() + ";";
+                        : "var component = e." + data.ComponentNameValidLowerFirst() + ";";
 
                     if (eventData.eventType == EventType.Removed) {
                         methodArgs = string.Empty;

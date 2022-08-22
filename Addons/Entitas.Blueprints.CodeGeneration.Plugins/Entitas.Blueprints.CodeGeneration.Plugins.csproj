@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.CodeGeneration\src\DesperateDevs.CodeGeneration.csproj" />
+    <PackageReference Include="Jenny" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

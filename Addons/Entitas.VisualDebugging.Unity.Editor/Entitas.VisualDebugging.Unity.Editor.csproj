@@ -6,8 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Serialization\src\DesperateDevs.Serialization.csproj" />
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Unity.Editor\src\DesperateDevs.Unity.Editor.csproj" />
+    <PackageReference Include="DesperateDevs.Serialization" Version="1.0.0" />
+    <PackageReference Include="DesperateDevs.Unity.Editor" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
     <ProjectReference Include="..\Entitas.Unity\Entitas.Unity.csproj" />
     <ProjectReference Include="..\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj" />

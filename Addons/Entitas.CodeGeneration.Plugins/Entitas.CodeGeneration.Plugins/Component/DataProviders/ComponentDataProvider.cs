@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DesperateDevs.CodeGeneration;
-using DesperateDevs.CodeGeneration.CodeGenerator;
+using Jenny;
+using Jenny.Generator;
 using DesperateDevs.Extensions;
+using DesperateDevs.Reflection;
 using DesperateDevs.Serialization;
 using Entitas.CodeGeneration.Attributes;
 

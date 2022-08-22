@@ -5,8 +5,4 @@
     <PackageVersion>0.1.0</PackageVersion>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj" />
-  </ItemGroup>
-
 </Project>

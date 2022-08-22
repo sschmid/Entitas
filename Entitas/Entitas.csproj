@@ -6,15 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DesperateDevs\src\DesperateDevs.Caching\src\DesperateDevs.Caching.csproj" />
-    <ProjectReference Include="..\DesperateDevs\src\DesperateDevs.Reflection\src\DesperateDevs.Reflection.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Entitas\version.txt" />
     <EmbeddedResource Include="Entitas\version.txt">
       <LogicalName>version.txt</LogicalName>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DesperateDevs.Caching" Version="1.0.0" />
+    <PackageReference Include="DesperateDevs.Reflection" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

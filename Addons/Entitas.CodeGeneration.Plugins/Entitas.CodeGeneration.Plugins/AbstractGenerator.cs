@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using DesperateDevs.CodeGeneration;
+using Jenny;
 using DesperateDevs.Serialization;
 
 namespace Entitas.CodeGeneration.Plugins {

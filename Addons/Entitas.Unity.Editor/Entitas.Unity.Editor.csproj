@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Unity.Editor\src\DesperateDevs.Unity.Editor.csproj" />
+    <PackageReference Include="DesperateDevs.Unity.Editor" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
   </ItemGroup>
 

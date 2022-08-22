@@ -8,20 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DesperateDevs.Roslyn" Version="1.0.0" />
+    <PackageReference Include="DesperateDevs.Serialization" Version="1.0.0" />
+    <PackageReference Include="NSpec" Version="1.0.7" />
+    <PackageReference Include="NUnit" Version="2.6.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Addons\Entitas.Blueprints\Entitas.Blueprints.csproj" />
     <ProjectReference Include="..\..\Addons\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj" />
     <ProjectReference Include="..\..\Addons\Entitas.Migration\Entitas.Migration.csproj" />
     <ProjectReference Include="..\..\Addons\Entitas.Roslyn.CodeGeneration.Plugins\Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
     <ProjectReference Include="..\..\Addons\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj" />
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Roslyn\src\DesperateDevs.Roslyn.csproj" />
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Serialization\src\DesperateDevs.Serialization.csproj" />
     <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
     <ProjectReference Include="..\TestFixtures\TestFixtures.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NSpec" Version="1.0.7" />
-    <PackageReference Include="NUnit" Version="2.6.4" />
   </ItemGroup>
 
   <ItemGroup>

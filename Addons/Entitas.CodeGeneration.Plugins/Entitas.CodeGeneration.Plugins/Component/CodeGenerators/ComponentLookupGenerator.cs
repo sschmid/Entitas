@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using DesperateDevs.CodeGeneration;
+using Jenny;
 
 namespace Entitas.CodeGeneration.Plugins {
 

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DesperateDevs.CodeGeneration;
-using DesperateDevs.CodeGeneration.CodeGenerator;
+using Jenny;
+using Jenny.Generator;
 using DesperateDevs.Extensions;
 using DesperateDevs.Reflection;
 using DesperateDevs.Serialization;
@@ -19,9 +19,11 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public Dictionary<string, string> DefaultProperties {
             get {
-                return _assembliesConfig.DefaultProperties
-                    .Merge(_ignoreNamespacesConfig.DefaultProperties,
-                        _contextsComponentDataProvider.DefaultProperties);
+                return _assembliesConfig.DefaultProperties.Merge(new []
+                {
+                    _ignoreNamespacesConfig.DefaultProperties, 
+                    _contextsComponentDataProvider.DefaultProperties
+                });
             }
         }
 
@@ -59,7 +61,7 @@ namespace Entitas.CodeGeneration.Plugins {
                 .ToDictionary(
                     type => type,
                     type => type.GetPublicMemberInfos())
-                .Where(kv => kv.Value.Any(info => info.Attributes.Any(attr => attr.attribute is AbstractEntityIndexAttribute)))
+                .Where(kv => kv.Value.Any(info => info.Attributes.Any(attr => attr.Attribute is AbstractEntityIndexAttribute)))
                 .SelectMany(kv => createEntityIndexData(kv.Key, kv.Value));
 
             var customEntityIndexData = types
@@ -72,13 +74,13 @@ namespace Entitas.CodeGeneration.Plugins {
                 .ToArray();
         }
 
-        EntityIndexData[] createEntityIndexData(Type type, List<PublicMemberInfo> infos) {
-            var hasMultiple = infos.Count(i => i.Attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1) > 1;
+        EntityIndexData[] createEntityIndexData(Type type, PublicMemberInfo[] infos) {
+            var hasMultiple = infos.Count(i => i.Attributes.Count(attr => attr.Attribute is AbstractEntityIndexAttribute) == 1) > 1;
             return infos
-                .Where(i => i.Attributes.Count(attr => attr.attribute is AbstractEntityIndexAttribute) == 1)
+                .Where(i => i.Attributes.Count(attr => attr.Attribute is AbstractEntityIndexAttribute) == 1)
                 .Select(info => {
                     var data = new EntityIndexData();
-                    var attribute = (AbstractEntityIndexAttribute)info.Attributes.Single(attr => attr.attribute is AbstractEntityIndexAttribute).attribute;
+                    var attribute = (AbstractEntityIndexAttribute)info.Attributes.Single(attr => attr.Attribute is AbstractEntityIndexAttribute).Attribute;
 
                     data.SetEntityIndexType(getEntityIndexType(attribute));
                     data.IsCustom(false);

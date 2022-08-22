@@ -1,4 +1,4 @@
-﻿using DesperateDevs.CodeGeneration;
+﻿using Jenny;
 using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.Plugins;
 

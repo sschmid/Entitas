@@ -1,5 +1,5 @@
 using System.Linq;
-using DesperateDevs.CodeGeneration;
+using Jenny;
 using DesperateDevs.Extensions;
 using Entitas.CodeGeneration.Plugins;
 
@@ -55,7 +55,7 @@ ${contextObservers}
         string generateContextsClass(string[] contextNames) {
             var contextObservers = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_OBSERVER_TEMPLATE
-                    .Replace("${contextName}", contextName.LowercaseFirst())
+                    .Replace("${contextName}", contextName.ToLowerFirst())
                 ).ToArray());
 
             return CONTEXTS_TEMPLATE

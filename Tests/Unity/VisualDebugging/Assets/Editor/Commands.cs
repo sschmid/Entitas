@@ -1,4 +1,4 @@
-﻿using DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor;
+﻿using Jenny.CodeGenerator.Unity.Editor;
 using UnityEditor;
 
 public static class Commands {

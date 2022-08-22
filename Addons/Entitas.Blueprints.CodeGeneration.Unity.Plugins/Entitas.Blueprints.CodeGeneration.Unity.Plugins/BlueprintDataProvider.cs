@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using DesperateDevs.CodeGeneration;
+using Jenny;
 using Entitas.Blueprints.CodeGeneration.Plugins;
 using Entitas.Blueprints.Unity.Editor;
 

@@ -1,1 +1,49 @@
-DesperateDevs/Directory.Build.props
+<Project>
+
+  <PropertyGroup>
+    <DefaultTargetFramework>netstandard2.1</DefaultTargetFramework>
+    <DefaultNetTargetFramework>net6.0</DefaultNetTargetFramework>
+    <DefaultTestTargetFramework>net6.0</DefaultTestTargetFramework>
+    <LangVersion>default</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup Label="NuGet">
+    <None Include="../../../icon.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+  <PropertyGroup Label="Docker">
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildProjectDirectory)/obj/**/*</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(MSBuildProjectDirectory)/bin/**/*</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(DOTNET_RUNNING_IN_CONTAINER)' == 'true'">
+    <BaseIntermediateOutputPath>$(MSBuildProjectDirectory)/obj/container/</BaseIntermediateOutputPath>
+    <BaseOutputPath>$(MSBuildProjectDirectory)/bin/container/</BaseOutputPath>
+  </PropertyGroup>
+
+  <Import Project="Unity3D.props" />
+  <PropertyGroup Label="Unity3D">
+    <UnityVersion>2021.3.0f1</UnityVersion>
+    <UnityEditor>$(UnityHubPath)/$(UnityVersion)/$(UnityEditorPath)</UnityEditor>
+    <UnityEngine>$(UnityHubPath)/$(UnityVersion)/$(UnityEnginePath)</UnityEngine>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(DOTNET_RUNNING_IN_CONTAINER)' == 'true'">
+    <UnityEditor>$(MSBuildStartupDirectory)/build/Managed/UnityEditor.dll</UnityEditor>
+    <UnityEngine>$(MSBuildStartupDirectory)/build/Managed/UnityEngine.dll</UnityEngine>
+  </PropertyGroup>
+
+  <ItemGroup Label="Tests">
+    <PackageReference Update="xunit.runner.visualstudio">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Update="coverlet.collector">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

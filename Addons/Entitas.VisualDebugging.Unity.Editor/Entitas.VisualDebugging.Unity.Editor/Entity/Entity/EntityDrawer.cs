@@ -176,7 +176,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                         var memberInfos = componentType.GetPublicMemberInfos();
                         EditorGUILayout.BeginHorizontal();
                         {
-                            if (memberInfos.Count == 0)
+                            if (memberInfos.Length == 0)
                             {
                                 EditorGUILayout.LabelField(componentName, EditorStyles.boldLabel);
                             }
@@ -185,7 +185,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                                 unfoldedComponents[index] = EditorLayout.Foldout(unfoldedComponents[index], componentName, foldoutStyle);
                                 if (unfoldedComponents[index])
                                 {
-                                    componentMemberSearch[index] = memberInfos.Count > 5
+                                    componentMemberSearch[index] = memberInfos.Length > 5
                                         ? EditorLayout.SearchTextField(componentMemberSearch[index])
                                         : string.Empty;
                                 }

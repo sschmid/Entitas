@@ -6,15 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.CodeGeneration.CodeGenerator\src\DesperateDevs.CodeGeneration.CodeGenerator.csproj" />
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.CodeGeneration\src\DesperateDevs.CodeGeneration.csproj" />
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Serialization\src\DesperateDevs.Serialization.csproj" />
-    <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
-    <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
+    <PackageReference Include="DesperateDevs.Serialization" Version="1.0.0" />
+    <PackageReference Include="Jenny" Version="1.0.0" />
+    <PackageReference Include="Jenny.Generator" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.CodeDom" Version="6.0.0" />
+    <ProjectReference Include="..\..\Entitas\Entitas.csproj" />
+    <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
   </ItemGroup>
 
 </Project>

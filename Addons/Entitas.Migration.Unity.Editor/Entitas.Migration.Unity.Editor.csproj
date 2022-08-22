@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DesperateDevs\src\DesperateDevs.Unity.Editor\src\DesperateDevs.Unity.Editor.csproj" />
     <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj" />
     <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj" />
   </ItemGroup>

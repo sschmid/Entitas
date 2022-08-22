@@ -19,8 +19,8 @@ namespace Entitas.CodeGeneration.Plugins {
             return data.GetTypeName().ToComponentName(ignoreNamespaces);
         }
 
-        public static string ComponentNameValidLowercaseFirst(this ComponentData data) {
-            return ComponentName(data).LowercaseFirst().AddPrefixIfIsKeyword();
+        public static string ComponentNameValidLowerFirst(this ComponentData data) {
+            return ComponentName(data).ToLowerFirst().AddPrefixIfIsKeyword();
         }
 
         public static string ComponentNameWithContext(this ComponentData data, string contextName) {
@@ -30,7 +30,7 @@ namespace Entitas.CodeGeneration.Plugins {
         public static string Replace(this string template, string contextName) {
             return template
                 .Replace("${ContextName}", contextName)
-                .Replace("${contextName}", contextName.LowercaseFirst())
+                .Replace("${contextName}", contextName.ToLowerFirst())
                 .Replace("${ContextType}", contextName.AddContextSuffix())
                 .Replace("${EntityType}", contextName.AddEntitySuffix())
                 .Replace("${MatcherType}", contextName.AddMatcherSuffix())
@@ -42,8 +42,8 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace(contextName)
                 .Replace("${ComponentType}", data.GetTypeName())
                 .Replace("${ComponentName}", data.ComponentName())
-                .Replace("${componentName}", data.ComponentName().LowercaseFirst())
-                .Replace("${validComponentName}", data.ComponentNameValidLowercaseFirst())
+                .Replace("${componentName}", data.ComponentName().ToLowerFirst())
+                .Replace("${validComponentName}", data.ComponentNameValidLowerFirst())
                 .Replace("${prefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${newMethodParameters}", GetMethodParameters(data.GetMemberData(), true))
                 .Replace("${methodParameters}", GetMethodParameters(data.GetMemberData(), false))
@@ -61,12 +61,12 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Replace("${EventListenerComponent}", eventListener.AddComponentSuffix())
                 .Replace("${Event}", data.Event(contextName, eventData))
                 .Replace("${EventListener}", eventListener)
-                .Replace("${eventListener}", eventListener.LowercaseFirst())
+                .Replace("${eventListener}", eventListener.ToLowerFirst())
                 .Replace("${EventType}", GetEventTypeSuffix(eventData));
         }
 
         public static string PrefixedComponentName(this ComponentData data) {
-            return data.GetFlagPrefix().LowercaseFirst() + data.ComponentName();
+            return data.GetFlagPrefix().ToLowerFirst() + data.ComponentName();
         }
 
         public static string Event(this ComponentData data, string contextName, EventData eventData) {
@@ -108,13 +108,13 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public static string GetMethodParameters(this MemberData[] memberData, bool newPrefix) {
             return string.Join(", ", memberData
-                .Select(info => info.type + (newPrefix ? " new" + info.name.UppercaseFirst() : " " + info.name.LowercaseFirst()))
+                .Select(info => info.type + (newPrefix ? " new" + info.name.ToUpperFirst() : " " + info.name.ToLowerFirst()))
                 .ToArray());
         }
 
         public static string GetMethodArgs(MemberData[] memberData, bool newPrefix) {
             return string.Join(", ", memberData
-                .Select(info => (newPrefix ? "new" + info.name.UppercaseFirst() : info.name))
+                .Select(info => (newPrefix ? "new" + info.name.ToUpperFirst() : info.name))
                 .ToArray()
             );
         }

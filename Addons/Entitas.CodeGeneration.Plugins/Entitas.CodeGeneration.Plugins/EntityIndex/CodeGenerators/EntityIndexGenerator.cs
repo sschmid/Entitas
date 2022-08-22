@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using DesperateDevs.CodeGeneration;
+using Jenny;
 using DesperateDevs.Extensions;
 using DesperateDevs.Serialization;
 
@@ -79,7 +79,7 @@ ${getIndices}
             var indexConstants = string.Join("\n", data
                 .Select(d => INDEX_CONSTANTS_TEMPLATE
                     .Replace("${IndexName}", d.GetHasMultiple()
-                        ? d.GetEntityIndexName() + d.GetMemberName().UppercaseFirst()
+                        ? d.GetEntityIndexName() + d.GetMemberName().ToUpperFirst()
                         : d.GetEntityIndexName()))
                 .ToArray());
 
@@ -121,16 +121,16 @@ ${getIndices}
 
         string generateCustomMethods(EntityIndexData data) {
             return ADD_CUSTOM_INDEX_TEMPLATE
-                .Replace("${contextName}", data.GetContextNames()[0].LowercaseFirst())
+                .Replace("${contextName}", data.GetContextNames()[0].ToLowerFirst())
                 .Replace("${IndexType}", data.GetEntityIndexType());
         }
 
         string generateMethods(EntityIndexData data, string contextName) {
             return ADD_INDEX_TEMPLATE
-                .Replace("${contextName}", contextName.LowercaseFirst())
+                .Replace("${contextName}", contextName.ToLowerFirst())
                 .Replace("${ContextName}", contextName)
                 .Replace("${IndexName}", data.GetHasMultiple()
-                    ? data.GetEntityIndexName() + data.GetMemberName().UppercaseFirst()
+                    ? data.GetEntityIndexName() + data.GetMemberName().ToUpperFirst()
                     : data.GetEntityIndexName())
                 .Replace("${Matcher}", data.GetEntityIndexName())
                 .Replace("${IndexType}", data.GetEntityIndexType())
@@ -139,7 +139,7 @@ ${getIndices}
                 .Replace("${MemberName}", data.GetMemberName())
                 .Replace("${componentName}", data.GetComponentType()
                     .ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces)
-                    .LowercaseFirst()
+                    .ToLowerFirst()
                     .AddPrefixIfIsKeyword());
         }
 
@@ -164,7 +164,7 @@ ${getIndices}
             return template
                 .Replace("${ContextName}", contextName)
                 .Replace("${IndexName}", data.GetHasMultiple()
-                    ? data.GetEntityIndexName() + data.GetMemberName().UppercaseFirst()
+                    ? data.GetEntityIndexName() + data.GetMemberName().ToUpperFirst()
                     : data.GetEntityIndexName())
                 .Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${KeyType}", data.GetKeyType())
@@ -180,7 +180,7 @@ ${getIndices}
                     .Replace("${methodArgs}", string.Join(", ", m.parameters.Select(p => p.type + " " + p.name).ToArray()))
                     .Replace("${IndexType}", data.GetEntityIndexType())
                     .Replace("${IndexName}", data.GetHasMultiple()
-                        ? data.GetEntityIndexName() + data.GetMemberName().UppercaseFirst()
+                        ? data.GetEntityIndexName() + data.GetMemberName().ToUpperFirst()
                         : data.GetEntityIndexName())
                     .Replace("${args}", string.Join(", ", m.parameters.Select(p => p.name).ToArray()))).ToArray());
         }

@@ -1,6 +1,6 @@
 using System.IO;
 using System.Linq;
-using DesperateDevs.CodeGeneration;
+using Jenny;
 using DesperateDevs.Extensions;
 
 namespace Entitas.CodeGeneration.Plugins {
@@ -95,7 +95,7 @@ ${memberAssignmentList}
 
         string getMemberAssignmentList(MemberData[] memberData) {
             return string.Join("\n", memberData
-                .Select(info => "        component." + info.name + " = new" + info.name.UppercaseFirst() + ";")
+                .Select(info => "        component." + info.name + " = new" + info.name.ToUpperFirst() + ";")
                 .ToArray()
             );
         }
