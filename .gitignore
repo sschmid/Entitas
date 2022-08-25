@@ -5,10 +5,7 @@ Thumbs.db
 # Solution
 obj
 bin
-*.userprefs
 *.user
-test-results
-packages
 
 # IDEs
 .vs
@@ -20,15 +17,18 @@ packages
 # Unity
 Library
 Temp
+Logs
+UserSettings
 *.unitypackage
-Assembly-CSharp*.csproj
 
 # Custom
 CHANGES.md
 *.userproperties
-Build
-**/Assets/Libraries
-**/Assets/Libraries.meta
-Tests/Unity/CodeGenerator/Jenny
-Blueprints.sln
-VisualDebugging.sln
+build
+Tests/Unity/**/*.sln
+Tests/Unity/**/*.csproj
+Tests/Unity/**/Jenny
+Tests/Unity/**/Assets/Entitas
+Tests/Unity/**/Assets/Entitas.meta
+Tests/Unity/**/Assets/Generated
+Tests/Unity/**/Assets/Generated.meta
