@@ -1,5 +1,4 @@
-﻿using System.CodeDom.Compiler;
-using System.Linq;
+﻿using System.Linq;
 using DesperateDevs.Extensions;
 using Entitas.CodeGeneration.Attributes;
 
@@ -9,18 +8,14 @@ namespace Entitas.CodeGeneration.Plugins {
 
         public const string LOOKUP = "ComponentsLookup";
 
-        const string KEYWORD_PREFIX = "@";
-
         public static bool ignoreNamespaces;
-
-        static readonly CodeDomProvider provider = CodeDomProvider.CreateProvider("C#");
 
         public static string ComponentName(this ComponentData data) {
             return data.GetTypeName().ToComponentName(ignoreNamespaces);
         }
 
         public static string ComponentNameValidLowerFirst(this ComponentData data) {
-            return ComponentName(data).ToLowerFirst().AddPrefixIfIsKeyword();
+            return ComponentName(data).ToLowerFirst();
         }
 
         public static string ComponentNameWithContext(this ComponentData data, string contextName) {
@@ -117,14 +112,6 @@ namespace Entitas.CodeGeneration.Plugins {
                 .Select(info => (newPrefix ? "new" + info.name.ToUpperFirst() : info.name))
                 .ToArray()
             );
-        }
-
-        public static string AddPrefixIfIsKeyword(this string name) {
-            if (!provider.IsValidIdentifier(name)) {
-                name = KEYWORD_PREFIX + name;
-            }
-
-            return name;
         }
     }
 }
