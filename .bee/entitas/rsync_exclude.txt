@@ -1,0 +1,16 @@
+.DS_Store
+Thumbs.db
+*.pdb
+*.config
+*.json
+*.xml
+Bee.BeeDriver.dll
+BeeBuildProgramCommon.Data.dll
+ExCSS.Unity.dll
+PlayerBuildProgramLibrary.Data.dll
+ScriptCompilationBuildProgram.Data.dll
+Unity.Cecil.dll
+Unity.CompilationPipeline.Common.dll
+Unity.IL2CPP.BeeSettings.dll
+UnityEditor.dll
+UnityEngine.dll

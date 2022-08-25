@@ -1,112 +1,46 @@
-#!/usr/bin/env bash
+: "${BUILD:=build}"
 
-BUILD="Build"
 BUILD_SRC="${BUILD}/src"
-BUILD_FILES="${BUILD_SRC}/files"
 BUILD_DIST="${BUILD}/dist"
 
-DEPS_DIR="Libraries/Dependencies/DesperateDevs"
-DEPS=(
-  "../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/bin/Release/"
-  "../DesperateDevs/DesperateDevs.CodeGeneration.Plugins/bin/Release/"
-  "../DesperateDevs/DesperateDevs.CodeGeneration.Unity.Plugins/bin/Release/"
-  "../DesperateDevs/DesperateDevs.Unity.Editor/bin/Release/"
-  "../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/Compile.cs"
-  "../DesperateDevs/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor/Images/"
-)
-ENTITAS_PROJECTS=(
-  'Entitas'
+entitas::help() {
+  cat << 'EOF'
+template:
 
-  'Addons/Entitas.CodeGeneration.Attributes'
-  'Addons/Entitas.CodeGeneration.Plugins'
+usage:
+  clean                           delete build directory and all bin and obj directories
+  build                           build solution
+  rebuild                         clean and build solution
+  test [args]                     run unit tests
+  
+  TODO generate
 
-  'Addons/Entitas.Migration'
-  'Addons/Entitas.Migration.Unity.Editor'
+  pack                            pack Entitas and Jenny
+  zip                             create Entitas.zip and Jenny.zip
+  restore_unity_visualdebugging   copy source code and samples to all unity projects
+  
+  TODO release
 
-  'Addons/Entitas.Unity'
-  'Addons/Entitas.Unity.Editor'
+EOF
+}
 
-  'Addons/Entitas.VisualDebugging.Unity'
-  'Addons/Entitas.VisualDebugging.Unity.Editor'
-  'Addons/Entitas.VisualDebugging.CodeGeneration.Plugins'
-)
-ENTITAS_EDITOR=(
-  'Entitas.Migration.dll'
-  'Entitas.Migration.Unity.Editor.dll'
-  'Entitas.Unity.Editor.dll'
-  'Entitas.VisualDebugging.Unity.Editor.dll'
-)
-ENTITAS_PLUGINS=(
-  'Entitas.CodeGeneration.Plugins.dll'
-  'Entitas.VisualDebugging.CodeGeneration.Plugins.dll'
-)
-BLUEPRINTS_PROJECTS=(
-  'Addons/Entitas.Blueprints'
-  'Addons/Entitas.Blueprints.CodeGeneration.Plugins'
-  'Addons/Entitas.Blueprints.CodeGeneration.Unity.Plugins'
-  'Addons/Entitas.Blueprints.Unity'
-  'Addons/Entitas.Blueprints.Unity.Editor'
-)
-BLUEPRINTS_EDITOR=(
-  'Entitas.Blueprints.Unity.Editor.dll'
-)
-BLUEPRINTS_PLUGINS=(
-  'Entitas.Blueprints.CodeGeneration.Plugins.dll'
-  'Entitas.Blueprints.CodeGeneration.Unity.Plugins.dll'
-)
-IMAGES=(
-  "Addons/Entitas.Unity.Editor/Entitas.Unity.Editor/Images/"
-  "Addons/Entitas.VisualDebugging.Unity.Editor/Entitas.VisualDebugging.Unity.Editor/Images/"
-)
-FILES=(
-  'EntitasUpgradeGuide.md'
-  'LICENSE.txt'
-  'README.md'
-  'CHANGELOG.md'
-)
-DESPERATEDEVS=(
-  'Compile.cs'
-  'DesperateDevs.Logging.dll'
-  'DesperateDevs.Networking.dll'
-  'DesperateDevs.Serialization.dll'
-  'DesperateDevs.Utils.dll'
-)
-DESPERATEDEVS_EDITOR=(
-  'DesperateDevs.Analytics.dll'
-  'DesperateDevs.CodeGeneration.CodeGenerator.dll'
-  'DesperateDevs.CodeGeneration.CodeGenerator.Unity.Editor.dll'
-  'DesperateDevs.CodeGeneration.dll'
-  'DesperateDevs.Unity.Editor.dll'
-)
-DESPERATEDEVS_IMAGES=(
-  'Jenny-Header.png'
-  'Jenny-Header.png.meta'
-)
-DESPERATEDEVS_PLUGINS=(
-  'DesperateDevs.CodeGeneration.Plugins.dll'
-  'DesperateDevs.CodeGeneration.Unity.Plugins.dll'
-)
+entitas::clean() {
+  find . -type d -name obj -exec rm -rf {} +
+  find . -type d -name bin -exec rm -rf {} +
+  rm -rf "${BUILD}"
+}
 
 entitas::build() {
-  msbuild -verbosity:quiet /property:Configuration=Release Entitas.sln
+  dotnet build -c Release
 }
 
 entitas::rebuild() {
-  msbuild /t:Clean /p:Configuration=Release /v:m Entitas.sln
-  msbuild -verbosity:quiet /property:Configuration=Release Entitas.sln
+  entitas::clean
+  dotnet build -c Release
 }
 
-entitas::run_tests() {
-  msbuild -verbosity:quiet /property:Configuration=Release Tests/Tests/Tests.csproj
-  mono Tests/Tests/bin/Release/Tests.exe "$@"
-}
-
-entitas::update() {
-  log_func
-  utils::clean_dir "${DEPS_DIR}"
-  for d in "${DEPS[@]}"; do
-    utils::sync "${d}" "${DEPS_DIR}"
-  done
+entitas::test() {
+  dotnet run --project Tests/Tests/Tests.csproj
 }
 
 entitas::generate() {
@@ -115,161 +49,160 @@ entitas::generate() {
     'Tests/TestFixtures/Preferences.properties'
     'Readme/Prefrences.properties'
   )
+  local dir
   for p in "${properties[@]}"; do
-    local dir="$(dirname ${p})"
-    pushd "${dir}" > /dev/null
-      log_strong "Generating ${p}"
-      jenny gen "$(basename ${p})"
-    popd > /dev/null
+    dir="$(dirname "${p}")"
+    pushd "${dir}" > /dev/null || exit
+      bee::log_info "Generating ${p}"
+      jenny gen "$(basename "${p}")"
+    popd > /dev/null || exit
   done
-}
-
-entitas::collect_entitas_unity() {
-  log_func
-  local entitas_dir="${BUILD_SRC}/Unity/Entitas/Assets/Entitas"
-  local entitas_editor_dir="${entitas_dir}/Editor"
-  local entitas_plugins_dir="${entitas_editor_dir}/Plugins"
-  local images_dir="${entitas_editor_dir}/Images"
-  local desperatedevs_dir="${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs"
-  local desperatedevs_editor_dir="${desperatedevs_dir}/Editor"
-  local desperatedevs_images_dir="${desperatedevs_editor_dir}/Images"
-  local desperatedevs_plugins_dir="${desperatedevs_editor_dir}/Plugins"
-  utils::clean_dir "${entitas_dir}" "${entitas_editor_dir}" "${entitas_plugins_dir}" "${images_dir}" \
-            "${desperatedevs_dir}" "${desperatedevs_editor_dir}" "${desperatedevs_images_dir}" "${desperatedevs_plugins_dir}"
-
-  for p in "${ENTITAS_PROJECTS[@]}"; do utils::sync "${p}/bin/Release/" "${entitas_dir}"; done
-  utils::sync "${DEPS_DIR}/" "${entitas_dir}"
-  for f in "${ENTITAS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${entitas_editor_dir}"; done
-  for f in "${ENTITAS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${entitas_plugins_dir}"; done
-  for f in "${IMAGES[@]}"; do utils::sync "${f}" "${images_dir}"; done
-  for f in "${DESPERATEDEVS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_dir}"; done
-  for f in "${DESPERATEDEVS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_editor_dir}"; done
-  for f in "${DESPERATEDEVS_IMAGES[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_images_dir}"; done
-  for f in "${DESPERATEDEVS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_plugins_dir}"; done
-}
-
-entitas::collect_entitas_with_blueprints_unity() {
-  log_func
-  local entitas_dir="${BUILD_SRC}/Unity/Entitas/Assets/Entitas-Blueprints"
-  local entitas_editor_dir="${entitas_dir}/Editor"
-  local entitas_plugins_dir="${entitas_editor_dir}/Plugins"
-  local images_dir="${entitas_editor_dir}/Images"
-  local desperatedevs_dir="${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs"
-  local desperatedevs_editor_dir="${desperatedevs_dir}/Editor"
-  local desperatedevs_images_dir="${desperatedevs_editor_dir}/Images"
-  local desperatedevs_plugins_dir="${desperatedevs_editor_dir}/Plugins"
-  utils::clean_dir "${entitas_dir}" "${entitas_editor_dir}" "${entitas_plugins_dir}" "${images_dir}" \
-            "${desperatedevs_dir}" "${desperatedevs_editor_dir}" "${desperatedevs_images_dir}" "${desperatedevs_plugins_dir}"
-
-  for p in "${ENTITAS_PROJECTS[@]}"; do utils::sync "${p}/bin/Release/" "${entitas_dir}"; done
-  for p in "${BLUEPRINTS_PROJECTS[@]}"; do utils::sync "${p}/bin/Release/" "${entitas_dir}"; done
-  utils::sync "${DEPS_DIR}/" "${entitas_dir}"
-  for f in "${ENTITAS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${entitas_editor_dir}"; done
-  for f in "${BLUEPRINTS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${entitas_editor_dir}"; done
-  for f in "${ENTITAS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${entitas_plugins_dir}"; done
-  for f in "${BLUEPRINTS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${entitas_plugins_dir}"; done
-  for d in "${IMAGES[@]}"; do utils::sync "${d}" "${images_dir}"; done
-  for f in "${DESPERATEDEVS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_dir}"; done
-  for f in "${DESPERATEDEVS_EDITOR[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_editor_dir}"; done
-  for f in "${DESPERATEDEVS_IMAGES[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_images_dir}"; done
-  for f in "${DESPERATEDEVS_PLUGINS[@]}"; do mv "${entitas_dir}/${f}" "${desperatedevs_plugins_dir}"; done
-}
-
-entitas::collect_files() {
-  log_func
-  utils::clean_dir "${BUILD_FILES}"
-  for f in "${FILES[@]}"; do
-    utils::sync "${f}" "${BUILD_FILES}/${f}"
-  done
-}
-
-entitas::sync_unity_visualdebugging() {
-  log_func
-  entitas::collect_entitas_unity
-  local unity_libs="Tests/Unity/VisualDebugging/Assets/Libraries"
-  utils::clean_dir "${unity_libs}"
-  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets/Entitas" "${unity_libs}"
-  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs" "${unity_libs}"
-}
-
-entitas::sync_unity_blueprints() {
-  log_func
-  entitas::collect_entitas_with_blueprints_unity
-  local unity_libs="Tests/Unity/Blueprints/Assets/Libraries"
-  utils::clean_dir "${unity_libs}"
-  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets/Entitas-Blueprints" "${unity_libs}"
-  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets/DesperateDevs" "${unity_libs}"
-}
-
-entitas::sync() {
-  entitas::sync_unity_visualdebugging
-  entitas::sync_unity_blueprints
-}
-
-entitas::pack_entitas_unity() {
-  log_func
-  entitas::collect_entitas_unity
-  entitas::collect_files
-  local tmp_dir="${BUILD}/tmp"
-  utils::clean_dir "${tmp_dir}"
-
-  utils::sync "${BUILD_SRC}/Unity/Entitas/Assets" "${tmp_dir}"
-  utils::sync "${BUILD_FILES}/" "${tmp_dir}/Assets/Entitas"
-
-  pushd "${BUILD_DIST}" > /dev/null
-    local abs_build_dist="$(pwd)"
-  popd > /dev/null
-
-  pushd "${tmp_dir}" > /dev/null
-    zip -rq "${abs_build_dist}/${PROJECT}.zip" ./
-  popd > /dev/null
-  rm -rf "${tmp_dir}"
 }
 
 entitas::pack() {
-  log_func
-  entitas::update
-  entitas::rebuild
+  entitas::build
+  local project_dir="${BUILD_SRC}/Unity/Assets"
+  local jenny_dir="${BUILD_SRC}/Unity/Jenny"
+  local entitas_dir="${project_dir}/Entitas"
+  local entitas_editor_dir="${entitas_dir}/Editor"
+  local entitas_jenny_dir="${jenny_dir}/Jenny/Plugins/Entitas"
+  local entitas_images_dir="${entitas_editor_dir}/Images"
+  _clean_dir "${project_dir}" "${jenny_dir}" "${entitas_dir}" "${entitas_editor_dir}" "${entitas_jenny_dir}" "${entitas_images_dir}" 
 
-  entitas::run_tests
+  _sync "${DESPERATEDEVS_DIR}/Unity/Assets/" "${project_dir}"
+  _sync "${DESPERATEDEVS_DIR}/Jenny/" "${jenny_dir}"
 
-  utils::clean_dir "${BUILD_SRC}" "${BUILD_DIST}"
+  local -a projects=(
+    Entitas
+#    Addons/Entitas.Blueprints
+#    Addons/Entitas.Blueprints.Unity
+    Addons/Entitas.CodeGeneration.Attributes
+    Addons/Entitas.Unity
+    Addons/Entitas.VisualDebugging.Unity
+    
+    # editor
+#    Addons/Entitas.Blueprints.Unity.Editor
+    Addons/Entitas.Migration
+    Addons/Entitas.Migration.Unity.Editor
+    Addons/Entitas.Unity.Editor
+    Addons/Entitas.VisualDebugging.Unity.Editor
+    
+    # plugins
+#    Addons/Entitas.Blueprints.CodeGeneration.Plugins
+#    Addons/Entitas.Blueprints.CodeGeneration.Unity.Plugins
+    Addons/Entitas.CodeGeneration.Plugins
+    Addons/Entitas.Roslyn.CodeGeneration.Plugins
+    Addons/Entitas.VisualDebugging.CodeGeneration.Plugins
+  )
 
-  doxygen::generate
-#  create docset tgz
-#  pushd "${DOCS_BUILD}/docset" > /dev/null
-#    tar --exclude='.DS_Store' -czf "${BUILD_DIST}/${PROJECT_NAME}.docset.tgz" "${PROJECT}.docset"
-#  popd > /dev/null
+  local -a to_editor=(
+#    Entitas.Blueprints.Unity.Editor
+    Entitas.Migration
+    Entitas.Migration.Unity.Editor
+    Entitas.Unity.Editor
+    Entitas.VisualDebugging.Unity.Editor
+  )
 
-  entitas::pack_entitas_unity
-  tree::create
+  local -a to_plugins=(
+#    Entitas.Blueprints.CodeGeneration.Plugins
+#    Entitas.Blueprints.CodeGeneration.Unity.Plugins
+    Entitas.CodeGeneration.Plugins
+    Entitas.Roslyn.CodeGeneration.Plugins
+    Entitas.VisualDebugging.CodeGeneration.Plugins
+  )
+
+  local -a images=(
+    Addons/Entitas.Unity.Editor/Entitas.Unity.Editor/Images/
+    Addons/Entitas.VisualDebugging.Unity.Editor/Entitas.VisualDebugging.Unity.Editor/Images/
+  )
+
+  local -a files=(
+    EntitasUpgradeGuide.md
+    LICENSE.txt
+    README.md
+    CHANGELOG.md
+  )
+    
+  for p in "${projects[@]}"; do _sync "${p}/bin/Release/" "${entitas_dir}"; done
+  for f in "${to_editor[@]}"; do mv "${entitas_dir}/${f}.dll" "${entitas_editor_dir}"; done
+  for f in "${to_plugins[@]}"; do mv "${entitas_dir}/${f}.dll" "${entitas_jenny_dir}"; done
+  for f in "${images[@]}"; do _sync "${f}" "${entitas_images_dir}"; done
+  for f in "${files[@]}"; do _sync "${f}" "${entitas_dir}"; done
 }
 
-entitas::dist() {
-  log_func
-  changelog::merge
+entitas::restore_unity_visualdebugging() {
   entitas::pack
-  git::commit_release_sync_master
-  git::push_all
-
-  log "bzzz... giving GitHub some time to process..."
-  sleep 10
-
-  github::create_release
-  open "https://github.com/${GITHUB_REPO}/releases"
+  local project_dir="Tests/Unity/VisualDebugging"
+  local asset_dir="${project_dir}/Assets/Entitas"
+  local jenny_dir="${project_dir}/Jenny"
+  _clean_dir "${asset_dir}" "${jenny_dir}"
+  _sync "${BUILD_SRC}/Unity/Assets/" "${asset_dir}"
+  _sync "${BUILD_SRC}/Unity/Jenny/" "${jenny_dir}"
 }
 
-entitas::dist_major() {
-  version::bump_major
-  entitas::dist
+entitas::zip() {
+  entitas::pack
+  local abs_build_dist
+  local project_dir="${BUILD_SRC}/Unity/Assets"
+  local jenny_dir="${BUILD_SRC}/Unity/Jenny"
+  mkdir -p "${BUILD_DIST}"
+  pushd "${BUILD_DIST}" > /dev/null || exit
+    abs_build_dist="$(pwd)"
+  popd > /dev/null || exit
+  pushd "${project_dir}" > /dev/null || exit
+    zip -rq "${abs_build_dist}/Entitas.zip" ./
+  popd > /dev/null || exit
+  pushd "${jenny_dir}" > /dev/null || exit
+    zip -rq "${abs_build_dist}/Jenny.zip" ./
+  popd > /dev/null || exit
 }
 
-entitas::dist_minor() {
-  version::bump_minor
-  entitas::dist
+#entitas::pack() {
+#  entitas::update
+#  entitas::rebuild
+#
+#  entitas::run_tests
+#
+#  _clean_dir "${BUILD_SRC}" "${BUILD_DIST}"
+#
+##  doxygen::generate
+##  create docset tgz
+##  pushd "${DOCS_BUILD}/docset" > /dev/null
+##    tar --exclude='.DS_Store' -czf "${BUILD_DIST}/${PROJECT_NAME}.docset.tgz" "${PROJECT}.docset"
+##  popd > /dev/null
+#
+#  entitas::pack_entitas
+#  tree::dirs_and_files
+#}
+
+entitas::release() {
+  entitas::pack
+  echo git::commit_release_sync_master
+  echo git::push_all
+  echo github::create_release
+  echo open "https://github.com/${GITHUB_REPO}/releases"
 }
 
-entitas::dist_patch() {
-  version::bump_patch
-  entitas::dist
+_clean_dir() {
+  rm -rf "$@"
+  mkdir -p "$@"
+}
+
+_sync() {
+  rsync \
+    --archive \
+    --recursive \
+    --prune-empty-dirs \
+    --include-from "${BEE_RESOURCES}/entitas/rsync_include.txt" \
+    --exclude-from "${BEE_RESOURCES}/entitas/rsync_exclude.txt" \
+    "$@"
+}
+
+_sync_unity() {
+  rsync \
+    --archive \
+    --recursive \
+    --prune-empty-dirs \
+    --exclude-from "${BEE_RESOURCES}/entitas/rsync_exclude_unity.txt" \
+    "$@"
 }

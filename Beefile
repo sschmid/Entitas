@@ -1,45 +1,18 @@
-#!/usr/bin/env bash
-PROJECT="Entitas"
-PLUGINS=(changelog doxygen git github tree utils version)
-RESOURCES=.bee
+BEE_PROJECT=Entitas
+BEE_VERSION=1.0.0
+BEE_PLUGINS_PATHS=("${BEE_RESOURCES}/plugins")
+BEE_PLUGINS=(entitas)
 
-source "${RESOURCES}"/entitas.sh
+[[ -f ~/.bee/entitas.bash ]] && source ~/.bee/entitas.bash
 
-# changelog => version
-CHANGELOG_PATH=CHANGELOG.md
-CHANGELOG_CHANGES=CHANGES.md
+DESPERATEDEVS_DIR=../DesperateDevs/build/src
 
-# doxygen => utils version
-DOXYGEN_EXPORT_PATH=docs
-DOXYGEN_DOXY_FILES=("${RESOURCES}"/docs/html.doxyfile)
-DOXYGEN_DOCSET_NAME="${PROJECT}.docset"
-DOXYGEN_DOCSET="com.desperatedevs.${PROJECT}.docset"
-DOXYGEN_DOCSET_KEY="$(echo "${PROJECT}" | tr "[:upper:]" "[:lower:]")"
-DOXYGEN_DOCSET_ICONS=("${RESOURCES}"/docs/icon.png "${RESOURCES}"/docs/icon@2x.png)
+# DOXYGEN_EXPORT_PATH=docs
+# DOXYGEN_DOXY_FILES=("${BEE_RESOURCES}"/doxygen/html.doxyfile)
+# DOXYGEN_DOCSET_NAME="${BEE_PROJECT}.docset"
+# DOXYGEN_DOCSET="com.desperatedevs.${BEE_PROJECT}.docset"
+# DOXYGEN_DOCSET_KEY="$(echo "${BEE_PROJECT}" | tr "[:upper:]" "[:lower:]")"
+# DOXYGEN_DOCSET_ICONS=("${BEE_RESOURCES}"/docs/icon.png "${BEE_RESOURCES}"/docs/icon@2x.png)
 
-# github => version
-GITHUB_CHANGES=CHANGES.md
-GITHUB_RELEASE_PREFIX="${PROJECT} "
-GITHUB_REPO="sschmid/Entitas-CSharp"
-GITHUB_ATTACHMENTS_ZIP=("Build/dist/${PROJECT}.zip")
-if [[ -f "${HOME}/.bee/github.sh" ]]; then
-  source "${HOME}/.bee/github.sh"
-fi
-
-# msbuild
-MSBUILD_SOLUTION="${PROJECT}.sln"
-
-# nspec => msbuild
-NSPEC_TESTS_PROJECT=Tests/Tests/Tests.csproj
-NSPEC_TESTS_RUNNER=Tests/Tests/bin/Release/Tests.exe
-
-# tree
 TREE_IGNORE="bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|docs|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties|tree.txt"
-TREE_PATH=tree.txt
-
-# utils
-UTILS_RSYNC_INCLUDE="${RESOURCES}"/utils/rsync_include.txt
-UTILS_RSYNC_EXCLUDE="${RESOURCES}"/utils/rsync_exclude.txt
-
-# version
-VERSION_PATH="${PROJECT}/${PROJECT}"/version.txt
+VERSION_PATH="${BEE_PROJECT}/${BEE_PROJECT}"/version.txt
