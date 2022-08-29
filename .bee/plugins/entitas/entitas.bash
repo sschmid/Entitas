@@ -16,7 +16,6 @@ usage:
   pack                            pack Entitas and Jenny
   zip                             create Entitas.zip and Jenny.zip
   restore_unity_visualdebugging   copy source code and samples to all unity projects
-  
   TODO release
 
 EOF
@@ -154,24 +153,6 @@ entitas::zip() {
     zip -rq "${abs_build_dist}/Jenny.zip" ./
   popd > /dev/null || exit
 }
-
-#entitas::pack() {
-#  entitas::update
-#  entitas::rebuild
-#
-#  entitas::run_tests
-#
-#  _clean_dir "${BUILD_SRC}" "${BUILD_DIST}"
-#
-##  doxygen::generate
-##  create docset tgz
-##  pushd "${DOCS_BUILD}/docset" > /dev/null
-##    tar --exclude='.DS_Store' -czf "${BUILD_DIST}/${PROJECT_NAME}.docset.tgz" "${PROJECT}.docset"
-##  popd > /dev/null
-#
-#  entitas::pack_entitas
-#  tree::dirs_and_files
-#}
 
 entitas::release() {
   entitas::pack

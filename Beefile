@@ -7,11 +7,4 @@ BEE_PLUGINS=(entitas)
 
 DESPERATEDEVS_DIR=../DesperateDevs/build/src
 
-# DOXYGEN_EXPORT_PATH=docs
-# DOXYGEN_DOXY_FILES=("${BEE_RESOURCES}"/doxygen/html.doxyfile)
-# DOXYGEN_DOCSET_NAME="${BEE_PROJECT}.docset"
-# DOXYGEN_DOCSET="com.desperatedevs.${BEE_PROJECT}.docset"
-# DOXYGEN_DOCSET_KEY="$(echo "${BEE_PROJECT}" | tr "[:upper:]" "[:lower:]")"
-# DOXYGEN_DOCSET_ICONS=("${BEE_RESOURCES}"/docs/icon.png "${BEE_RESOURCES}"/docs/icon@2x.png)
-
 VERSION_PATH="${BEE_PROJECT}/${BEE_PROJECT}"/version.txt
