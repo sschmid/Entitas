@@ -14,5 +14,4 @@ DESPERATEDEVS_DIR=../DesperateDevs/build/src
 # DOXYGEN_DOCSET_KEY="$(echo "${BEE_PROJECT}" | tr "[:upper:]" "[:lower:]")"
 # DOXYGEN_DOCSET_ICONS=("${BEE_RESOURCES}"/docs/icon.png "${BEE_RESOURCES}"/docs/icon@2x.png)
 
-TREE_IGNORE="bin|obj|Library|Libraries|*Tests|Readme|ProjectSettings|Build|docs|Temp|Examples|*.csproj|*.meta|*.sln|*.userprefs|*.properties|tree.txt"
 VERSION_PATH="${BEE_PROJECT}/${BEE_PROJECT}"/version.txt
