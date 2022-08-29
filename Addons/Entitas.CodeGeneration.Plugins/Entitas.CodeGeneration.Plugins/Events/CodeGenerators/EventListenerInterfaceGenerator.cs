@@ -4,7 +4,7 @@ using Jenny;
 
 namespace Entitas.CodeGeneration.Plugins {
 
-    public class EventListenertInterfaceGenerator : AbstractGenerator {
+    public class EventListenerInterfaceGenerator : AbstractGenerator {
 
         public override string Name { get { return "Event (Listener Interface)"; } }
 
