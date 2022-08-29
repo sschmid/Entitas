@@ -52,7 +52,7 @@ namespace Entitas.Unity.Editor {
 
         [MenuItem(EntitasMenuItems.feedback_join_the_entitas_chat, false, EntitasMenuItemPriorities.feedback_join_the_entitas_chat)]
         public static void EntitasChat() {
-            Application.OpenURL("https://gitter.im/sschmid/Entitas-CSharp");
+            Application.OpenURL("https://discord.gg/uHrVx5Z");
         }
 
         [MenuItem(EntitasMenuItems.feedback_entitas_wiki, false, EntitasMenuItemPriorities.feedback_entitas_wiki)]
