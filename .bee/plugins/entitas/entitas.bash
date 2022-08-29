@@ -16,7 +16,6 @@ usage:
   pack                            pack Entitas and Jenny
   zip                             create Entitas.zip and Jenny.zip
   restore_unity_visualdebugging   copy source code and samples to all unity projects
-  TODO release
 
 EOF
 }
@@ -152,14 +151,6 @@ entitas::zip() {
   pushd "${jenny_dir}" > /dev/null || exit
     zip -rq "${abs_build_dist}/Jenny.zip" ./
   popd > /dev/null || exit
-}
-
-entitas::release() {
-  entitas::pack
-  echo git::commit_release_sync_master
-  echo git::push_all
-  echo github::create_release
-  echo open "https://github.com/${GITHUB_REPO}/releases"
 }
 
 _clean_dir() {
