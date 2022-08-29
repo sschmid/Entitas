@@ -12,9 +12,7 @@ usage:
   build                           build solution
   rebuild                         clean and build solution
   test [args]                     run unit tests
-  
-  TODO generate
-
+  generate                        generate code for all projects
   pack                            pack Entitas and Jenny
   zip                             create Entitas.zip and Jenny.zip
   restore_unity_visualdebugging   copy source code and samples to all unity projects
@@ -44,17 +42,17 @@ entitas::test() {
 }
 
 entitas::generate() {
-  entitas::build
   local properties=(
     'Tests/TestFixtures/Preferences.properties'
     'Readme/Prefrences.properties'
   )
-  local dir
+  local dir current_dir
+  current_dir="$(pwd)"
   for p in "${properties[@]}"; do
     dir="$(dirname "${p}")"
     pushd "${dir}" > /dev/null || exit
       bee::log_info "Generating ${p}"
-      jenny gen "$(basename "${p}")"
+      "${current_dir}/${DESPERATEDEVS_DIR}/Jenny/Jenny/Jenny" gen "$(basename "${p}")"
     popd > /dev/null || exit
   done
 }
