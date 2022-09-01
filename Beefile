@@ -7,4 +7,4 @@ BEE_PLUGINS=(entitas)
 
 DESPERATEDEVS_DIR=../DesperateDevs/build/src
 
-VERSION_PATH="${BEE_PROJECT}/${BEE_PROJECT}"/version.txt
+SEMVER_PATH="${BEE_PROJECT}/${BEE_PROJECT}"/version.txt
