@@ -51,10 +51,6 @@ namespace Entitas.Unity.Editor
                 {
                     EntitasFeedback.EntitasChat();
                 }
-                if (GUILayout.Button("Docs", EditorStyles.toolbarButton))
-                {
-                    EntitasFeedback.EntitasDocs();
-                }
                 if (GUILayout.Button("Wiki", EditorStyles.toolbarButton))
                 {
                     EntitasFeedback.EntitasWiki();

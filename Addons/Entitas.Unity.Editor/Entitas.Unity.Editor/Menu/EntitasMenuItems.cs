@@ -9,8 +9,6 @@ namespace Entitas.Unity.Editor {
 
         public const string check_for_updates                = "Tools/Entitas/Check for Updates...";
 
-        public const string documentation                    = "Tools/Entitas/Documentation...";
-
         public const string feedback_report_a_bug            = "Tools/Entitas/Feedback/Report a bug...";
         public const string feedback_request_a_feature       = "Tools/Entitas/Feedback/Request a feature...";
         public const string feedback_join_the_entitas_chat   = "Tools/Entitas/Feedback/Join the Entitas chat...";
@@ -24,8 +22,6 @@ namespace Entitas.Unity.Editor {
 
         public const int check_for_updates                   = 10;
 
-        public const int documentation                       = 11;
-
         public const int feedback_report_a_bug               = 20;
         public const int feedback_request_a_feature          = 21;
         public const int feedback_join_the_entitas_chat      = 22;
@@ -34,11 +30,6 @@ namespace Entitas.Unity.Editor {
     }
 
     public static class EntitasFeedback {
-
-        [MenuItem(EntitasMenuItems.documentation, false, EntitasMenuItemPriorities.documentation)]
-        public static void EntitasDocs() {
-            Application.OpenURL("http://sschmid.github.io/Entitas-CSharp/");
-        }
 
         [MenuItem(EntitasMenuItems.feedback_report_a_bug, false, EntitasMenuItemPriorities.feedback_report_a_bug)]
         public static void ReportBug() {
