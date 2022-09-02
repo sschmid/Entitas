@@ -1,0 +1,17 @@
+<Project>
+
+  <PropertyGroup Label="NuGet">
+    <Authors>Simon Schmid</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/sschmid/Entitas</PackageProjectUrl>
+    <Company>Entitas</Company>
+    <Description>$(AssemblyName)</Description>
+    <Copyright>Simon Schmid</Copyright>
+    <PackageTags>Entitas, ECS, Entity, Component, System, DesperateDevs, Desperate, Devs</PackageTags>
+    <RepositoryUrl>https://github.com/sschmid/Entitas</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageVersion>1.14.0</PackageVersion>
+  </PropertyGroup>
+
+</Project>

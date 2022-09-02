@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
-    <PackageVersion>0.1.0</PackageVersion>
   </PropertyGroup>
 
 </Project>

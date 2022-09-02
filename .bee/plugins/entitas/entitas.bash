@@ -13,6 +13,8 @@ usage:
   rebuild                         clean and build solution
   test [args]                     run unit tests
   generate                        generate code for all projects
+  publish                         publish nupkg to nuget.org
+  publish_local                   publish nupkg locally to disk
   pack                            pack Entitas and Jenny
   zip                             create Entitas.zip and Jenny.zip
   restore_unity_visualdebugging   copy source code and samples to all unity projects
@@ -53,6 +55,22 @@ entitas::generate() {
       "${current_dir}/${DESPERATEDEVS_DIR}/Jenny/Jenny/Jenny" gen "$(basename "${p}")"
     popd > /dev/null || exit
   done
+}
+
+entitas::publish() {
+  entitas::clean
+  dotnet pack -c Release
+  dotnet nuget push "**/*.nupkg" \
+      --api-key "${NUGET_API_KEY}" \
+      --skip-duplicate \
+      --source https://api.nuget.org/v3/index.json
+}
+
+entitas::publish_local() {
+  entitas::clean
+  dotnet pack -c Release
+  _clean_dir "${ENTITAS_NUGET_LOCAL}"
+  find . -type f -name "*.nupkg" -exec nuget add {} -Source "${ENTITAS_NUGET_LOCAL}" \;
 }
 
 entitas::pack() {

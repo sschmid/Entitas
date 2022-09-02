@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="NuGet">
-    <None Include="../../../icon.png" Pack="true" PackagePath="\"/>
+    <None Include="../../../icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <PropertyGroup Label="Docker">

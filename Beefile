@@ -6,5 +6,6 @@ BEE_PLUGINS=(entitas)
 [[ -f ~/.bee/entitas.bash ]] && source ~/.bee/entitas.bash
 
 DESPERATEDEVS_DIR=../DesperateDevs/build/src
+ENTITAS_NUGET_LOCAL=~/.nuget/local
 
 SEMVER_PATH="${BEE_PROJECT}/${BEE_PROJECT}"/version.txt
