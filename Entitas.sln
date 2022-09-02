@@ -1,38 +1,38 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 #
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas", "src/Entitas/Entitas.csproj", "{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas", "src/Entitas/src/Entitas.csproj", "{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints", "src/Entitas.Blueprints/Entitas.Blueprints.csproj", "{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints", "src/Entitas.Blueprints/src/Entitas.Blueprints.csproj", "{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.CodeGeneration.Plugins", "src/Entitas.Blueprints.CodeGeneration.Plugins/Entitas.Blueprints.CodeGeneration.Plugins.csproj", "{09DBBDC0-EEA5-42C5-B9A9-E83C0C6FCD8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.CodeGeneration.Plugins", "src/Entitas.Blueprints.CodeGeneration.Plugins/src/Entitas.Blueprints.CodeGeneration.Plugins.csproj", "{09DBBDC0-EEA5-42C5-B9A9-E83C0C6FCD8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.CodeGeneration.Unity.Plugins", "src/Entitas.Blueprints.CodeGeneration.Unity.Plugins/Entitas.Blueprints.CodeGeneration.Unity.Plugins.csproj", "{205014A8-1E4A-40D2-A368-9D2497EA9AE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.CodeGeneration.Unity.Plugins", "src/Entitas.Blueprints.CodeGeneration.Unity.Plugins/src/Entitas.Blueprints.CodeGeneration.Unity.Plugins.csproj", "{205014A8-1E4A-40D2-A368-9D2497EA9AE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.Unity", "src/Entitas.Blueprints.Unity/Entitas.Blueprints.Unity.csproj", "{026FFA2B-1F8D-4E05-A54D-67AB5B611985}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.Unity", "src/Entitas.Blueprints.Unity/src/Entitas.Blueprints.Unity.csproj", "{026FFA2B-1F8D-4E05-A54D-67AB5B611985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.Unity.Editor", "src/Entitas.Blueprints.Unity.Editor/Entitas.Blueprints.Unity.Editor.csproj", "{79E05CCF-61CE-49AB-9E9A-D7672DD6A763}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.Unity.Editor", "src/Entitas.Blueprints.Unity.Editor/src/Entitas.Blueprints.Unity.Editor.csproj", "{79E05CCF-61CE-49AB-9E9A-D7672DD6A763}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Attributes", "src/Entitas.CodeGeneration.Attributes/Entitas.CodeGeneration.Attributes.csproj", "{76A16CFD-7488-41D3-989B-CA2F1840E638}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Attributes", "src/Entitas.CodeGeneration.Attributes/src/Entitas.CodeGeneration.Attributes.csproj", "{76A16CFD-7488-41D3-989B-CA2F1840E638}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Plugins", "src/Entitas.CodeGeneration.Plugins/Entitas.CodeGeneration.Plugins.csproj", "{84D279D3-76D8-4271-B895-83D46B08753C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Plugins", "src/Entitas.CodeGeneration.Plugins/src/Entitas.CodeGeneration.Plugins.csproj", "{84D279D3-76D8-4271-B895-83D46B08753C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Migration", "src/Entitas.Migration/Entitas.Migration.csproj", "{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Migration", "src/Entitas.Migration/src/Entitas.Migration.csproj", "{40AF9ACC-9C00-4EDB-8937-9EA9EC4E5F4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Migration.CLI", "src/Entitas.Migration.CLI/Entitas.Migration.CLI.csproj", "{6A0B40E1-360D-455E-853F-5CF6024B8E2A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Migration.CLI", "src/Entitas.Migration.CLI/src/Entitas.Migration.CLI.csproj", "{6A0B40E1-360D-455E-853F-5CF6024B8E2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Migration.Unity.Editor", "src/Entitas.Migration.Unity.Editor/Entitas.Migration.Unity.Editor.csproj", "{A4B431D0-D02D-4856-9FCD-FC55EFFF3028}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Migration.Unity.Editor", "src/Entitas.Migration.Unity.Editor/src/Entitas.Migration.Unity.Editor.csproj", "{A4B431D0-D02D-4856-9FCD-FC55EFFF3028}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Roslyn.CodeGeneration.Plugins", "src/Entitas.Roslyn.CodeGeneration.Plugins/Entitas.Roslyn.CodeGeneration.Plugins.csproj", "{E59A9835-AE58-4C7D-8FC3-4206BCB05DE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Roslyn.CodeGeneration.Plugins", "src/Entitas.Roslyn.CodeGeneration.Plugins/src/Entitas.Roslyn.CodeGeneration.Plugins.csproj", "{E59A9835-AE58-4C7D-8FC3-4206BCB05DE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity", "src/Entitas.Unity/Entitas.Unity.csproj", "{CB3ADCB3-E842-4A71-B32E-15ABDE7311F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity", "src/Entitas.Unity/src/Entitas.Unity.csproj", "{CB3ADCB3-E842-4A71-B32E-15ABDE7311F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Editor", "src/Entitas.Unity.Editor/Entitas.Unity.Editor.csproj", "{9AF72B25-85B0-4FDC-85C3-660926C82438}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Editor", "src/Entitas.Unity.Editor/src/Entitas.Unity.Editor.csproj", "{9AF72B25-85B0-4FDC-85C3-660926C82438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.CodeGeneration.Plugins", "src/Entitas.VisualDebugging.CodeGeneration.Plugins/Entitas.VisualDebugging.CodeGeneration.Plugins.csproj", "{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.CodeGeneration.Plugins", "src/Entitas.VisualDebugging.CodeGeneration.Plugins/src/Entitas.VisualDebugging.CodeGeneration.Plugins.csproj", "{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.Unity", "src/Entitas.VisualDebugging.Unity/Entitas.VisualDebugging.Unity.csproj", "{70222463-4E60-4862-8C18-1EBA6CA63353}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.Unity", "src/Entitas.VisualDebugging.Unity/src/Entitas.VisualDebugging.Unity.csproj", "{70222463-4E60-4862-8C18-1EBA6CA63353}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.Unity.Editor", "src/Entitas.VisualDebugging.Unity.Editor/Entitas.VisualDebugging.Unity.Editor.csproj", "{6DCBB57A-C3A3-4055-B99E-0C97A0D3C4CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.Unity.Editor", "src/Entitas.VisualDebugging.Unity.Editor/src/Entitas.VisualDebugging.Unity.Editor.csproj", "{6DCBB57A-C3A3-4055-B99E-0C97A0D3C4CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{663F8023-1E6F-49FE-83D0-F60871AD282D}"
 EndProject
