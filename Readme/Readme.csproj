@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Addons\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
-    <ProjectReference Include="..\Entitas\Entitas.csproj" />
+    <ProjectReference Include="..\src\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
+    <ProjectReference Include="..\src\Entitas\Entitas.csproj" />
   </ItemGroup>
 
   <ItemGroup>
