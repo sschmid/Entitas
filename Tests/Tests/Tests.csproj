@@ -18,12 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Entitas.Blueprints\Entitas.Blueprints.csproj" />
-    <ProjectReference Include="..\..\src\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj" />
-    <ProjectReference Include="..\..\src\Entitas.Migration\Entitas.Migration.csproj" />
-    <ProjectReference Include="..\..\src\Entitas.Roslyn.CodeGeneration.Plugins\Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
-    <ProjectReference Include="..\..\src\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj" />
-    <ProjectReference Include="..\..\src\Entitas\Entitas.csproj" />
+    <ProjectReference Include="..\..\src\Entitas\src\Entitas.csproj" />
+    <ProjectReference Include="..\..\src\Entitas.Blueprints\src\Entitas.Blueprints.csproj" />
+    <ProjectReference Include="..\..\src\Entitas.CodeGeneration.Attributes\src\Entitas.CodeGeneration.Attributes.csproj" />
+    <ProjectReference Include="..\..\src\Entitas.CodeGeneration.Plugins\src\Entitas.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="..\..\src\Entitas.Migration\src\Entitas.Migration.csproj" />
+    <ProjectReference Include="..\..\src\Entitas.Roslyn.CodeGeneration.Plugins\src\Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="..\..\src\Entitas.VisualDebugging.Unity\src\Entitas.VisualDebugging.Unity.csproj" />
     <ProjectReference Include="..\TestFixtures\TestFixtures.csproj" />
   </ItemGroup>
 

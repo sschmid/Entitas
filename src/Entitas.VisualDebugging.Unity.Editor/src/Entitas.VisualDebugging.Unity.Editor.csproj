@@ -11,9 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
-    <ProjectReference Include="..\Entitas.Unity\Entitas.Unity.csproj" />
-    <ProjectReference Include="..\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj" />
+    <ProjectReference Include="..\..\Entitas.CodeGeneration.Attributes\src\Entitas.CodeGeneration.Attributes.csproj" />
+    <ProjectReference Include="..\..\Entitas.Unity\src\Entitas.Unity.csproj" />
+    <ProjectReference Include="..\..\Entitas.VisualDebugging.Unity\src\Entitas.VisualDebugging.Unity.csproj" />
   </ItemGroup>
 
   <ItemGroup>

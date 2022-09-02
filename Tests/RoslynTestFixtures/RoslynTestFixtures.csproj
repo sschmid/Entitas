@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Entitas\Entitas.csproj" />
+    <ProjectReference Include="..\..\src\Entitas\src\Entitas.csproj" />
   </ItemGroup>
 
 </Project>
