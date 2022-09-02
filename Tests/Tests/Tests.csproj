@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="DesperateDevs.Roslyn" Version="1.0.0" />
-    <PackageReference Include="DesperateDevs.Serialization" Version="1.0.0" />
+    <PackageReference Include="DesperateDevs.Serialization" Version="2.0.0" />
     <PackageReference Include="NSpec" Version="1.0.7" />
     <PackageReference Include="NUnit" Version="2.6.4" />
   </ItemGroup>

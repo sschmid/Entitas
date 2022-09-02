@@ -15,6 +15,8 @@ namespace Entitas.Unity.Editor
             window.Initialize(
                 "Entitas.properties",
                 Environment.UserName + ".userproperties",
+                false,
+                false,
                 "Entitas.Unity.Editor.EntitasPreferencesDrawer",
                 "Entitas.VisualDebugging.Unity.Editor.VisualDebuggingPreferencesDrawer"
             );
