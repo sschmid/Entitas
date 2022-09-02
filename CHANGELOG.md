@@ -1,3 +1,62 @@
+## [1.14.0] - 2022-09-02
+
+### Notes
+- Rename the repository to Entitas: https://github.com/sschmid/Entitas
+- Desperate Devs 1.0 is now open-source. Please find changes and upgrade guides here: [CHANGELOG.md](https://github.com/sschmid/DesperateDevs/blob/main/CHANGELOG.md)
+- Started migration to a modern SDK-style project structure using [.NET project SDKs](https://docs.microsoft.com/en-us/dotnet/core/project-sdk/overview)
+- All projects have been updated to `.NET 6.0` and `.NET Standard 2.1`.
+- `Entitas.Roslyn.CodeGeneration.Plugins` is now open-source and part of this Entitas repository
+- `main` is new default branch and `master` is obsolete
+
+### Upgrade
+- Rename `CodeGeneratorExtentions` to `CodeGeneratorExtensions`
+- Update `Jenny.properties` and rename to `Entitas.CodeGeneration.Plugins.EventListenerInterfaceGenerator`
+- `Jenny/Jenny` replaces `mono Jenny/Jenny.exe` on all platforms (requires dotnet)
+- Run `Jenny/Jenny auto-import -s` and follow instructions
+- Consider using at least these search paths in `Jenny.properties`:
+```
+Jenny.SearchPaths = Jenny/Plugins/Entitas, \
+                    Jenny/Plugins/Jenny, \
+                    Assets/Entitas
+```
+- Some keys in `Jenny.properties` have changed due to renamed namespaces:
+```
+Jenny.SearchPaths
+Jenny.Plugins
+Jenny.PreProcessors
+Jenny.DataProviders
+Jenny.CodeGenerators
+Jenny.PostProcessors
+Jenny.Server.Port
+Jenny.Client.Host
+Jenny.Plugins.ProjectPath
+Jenny.Plugins.TargetDirectory
+```
+- For reference, see [Match-One Jenny.properties](https://github.com/sschmid/Match-One/blob/main/Jenny.properties)
+- Generate using `Jenny/Jenny gen`
+
+### Entitas
+- Add `systems.Remove()`
+
+### Entitas.CodeGeneration.Plugins
+- Fix typo in `CodeGeneratorExtensions`
+- Fix typo in `EventListenerInterfaceGenerator`
+- Remove CodeDom
+
+### Entitas.Unity.Editor
+- Link chat to [Entitas Discord](https://discord.gg/uHrVx5Z)
+
+### Other
+- Use Desperate Devs 1.0.0
+- Use nuget and delete dependencies
+- Remove docs
+- Remove doxygen
+- Remove tree
+
+### bee
+- Migrate to bee 1.1.0
+- Remove generated folder from VisualDebugging project
+
 ## [1.13.0] - 2019-02-20
 ### Added
 - Update roslyn
