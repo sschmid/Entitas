@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <None Remove="Entitas\version.txt" />
-    <EmbeddedResource Include="Entitas\version.txt">
+    <EmbeddedResource Include="version.txt">
       <LogicalName>version.txt</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
