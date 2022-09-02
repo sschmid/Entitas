@@ -13,7 +13,8 @@ class check_namespaces : nspec
     void when_checking_namespaces()
     {
         var projectRoot = TestExtensions.GetProjectRoot();
-        var sourceFiles = TestExtensions.GetSourceFiles(projectRoot);
+        var sourceFolder = Path.Combine(projectRoot, "src");
+        var sourceFiles = TestExtensions.GetSourceFiles(sourceFolder);
 
         it["processes roughly the correct number of files"] = () =>
         {
@@ -26,18 +27,14 @@ class check_namespaces : nspec
         const string namespacePattern = @"(?:^namespace)\s.*\b";
         var expectedNamespacePattern = string.Format(@"[^\{0}]*", Path.DirectorySeparatorChar);
 
-        var addonsDir = dir("Addons");
-
         var each = new Each<string, string, string>();
 
         foreach (var file in sourceFiles)
         {
             var fileName = file.Key
-                .Replace(dir(projectRoot), string.Empty)
-                .Replace(addonsDir, string.Empty);
+                .Replace(dir(sourceFolder), string.Empty);
 
-            string expectedNamespace;
-            expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
+            var expectedNamespace = Regex.Match(fileName, expectedNamespacePattern)
                 .ToString()
                 .Replace("namespace ", string.Empty)
                 .Trim();
@@ -47,7 +44,8 @@ class check_namespaces : nspec
                 .Replace("namespace ", string.Empty)
                 .Trim();
 
-            each.Add(new NSpecTuple<string, string, string>(Path.GetFileName(fileName), foundNamespace, expectedNamespace));
+            each.Add(new NSpecTuple<string, string, string>(Path.GetFileName(fileName), foundNamespace,
+                expectedNamespace));
         }
 
         each.Do((fileName, given, expected) =>
