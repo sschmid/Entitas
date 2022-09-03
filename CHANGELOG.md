@@ -11,8 +11,8 @@
 ### Upgrade
 - Rename `CodeGeneratorExtentions` to `CodeGeneratorExtensions`
 - Update `Jenny.properties` and rename to `Entitas.CodeGeneration.Plugins.EventListenerInterfaceGenerator`
-- `Jenny/Jenny` replaces `mono Jenny/Jenny.exe` on all platforms (requires dotnet)
-- Run `Jenny/Jenny auto-import -s` and follow instructions
+- `mono Jenny/Jenny.exe` is obsolete. Use `dotnet Jenny/Jenny.Generator.Cli.dll` (requires dotnet)
+- Run `dotnet Jenny/Jenny.Generator.Cli.dll auto-import -s` and follow instructions
 - Consider using at least these search paths in `Jenny.properties`:
 ```
 Jenny.SearchPaths = Jenny/Plugins/Entitas, \
@@ -33,7 +33,7 @@ Jenny.Plugins.ProjectPath
 Jenny.Plugins.TargetDirectory
 ```
 - For reference, see [Match-One Jenny.properties](https://github.com/sschmid/Match-One/blob/main/Jenny.properties)
-- Generate using `Jenny/Jenny gen`
+- Generate using `dotnet Jenny/Jenny.Generator.Cli.dll gen`
 
 ### Entitas
 - Add `systems.Remove()`
