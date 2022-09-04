@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
 using Jenny;
-using Entitas;
 using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.Plugins;
 

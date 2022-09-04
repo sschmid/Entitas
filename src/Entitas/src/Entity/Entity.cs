@@ -430,7 +430,7 @@ namespace Entitas {
                 var lastSeparator = components.Length - 1;
                 for (int i = 0; i < components.Length; i++) {
                     var component = components[i];
-                    var type = component.GetType();
+                    // var type = component.GetType();
 
                     // TODO VD PERFORMANCE
                     _toStringCache = null;

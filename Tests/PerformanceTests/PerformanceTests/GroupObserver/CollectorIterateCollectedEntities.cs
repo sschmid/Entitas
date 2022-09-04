@@ -20,7 +20,7 @@ public class CollectorIterateCollectedEntities : IPerformanceTest {
         var entities = _collector.collectedEntities;
         for (int i = 0; i < n; i++) {
             for (var j = entities.GetEnumerator(); j.MoveNext();) {
-                var e2 = j.Current;
+                var unused = j.Current;
             }
         }
     }

@@ -18,7 +18,7 @@ public class Casting : IPerformanceTest {
                 
             //}
 
-            var x = (UnsafeAERC)_aerc;
+            var unused = (UnsafeAERC)_aerc;
         }
     }
 }

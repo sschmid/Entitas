@@ -8,7 +8,7 @@ namespace Tests {
 
     class TestRunner {
 
-        public static void Main(string[] args) {
+        public static void MainX(string[] args) {
             var tagOrClassName = string.Join(",", args);
             var types = typeof(TestRunner).Assembly.GetTypes();
             var finder = new SpecFinder(types, string.Empty);

@@ -77,7 +77,7 @@ class describe_JobSystem : nspec {
             var didThrow = 0;
             try {
                 system.Execute();
-            } catch (Exception e) {
+            } catch (Exception) {
                 didThrow += 1;
             }
 

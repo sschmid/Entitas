@@ -11,7 +11,7 @@ public class ObjectGetProperty : IPerformanceTest {
 
     public void Run() {
         for (int i = 0; i < n; i++) {
-            var c = _context.totalComponents;
+            var unused = _context.totalComponents;
         }
     }
 }

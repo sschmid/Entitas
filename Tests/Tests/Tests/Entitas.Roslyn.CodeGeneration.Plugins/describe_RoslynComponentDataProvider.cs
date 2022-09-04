@@ -174,11 +174,9 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
 
         context["component contexts"] = () => {
 
-            Type type = null;
             ComponentData data = null;
 
             it["resolves generated context attribute"] = () => {
-                type = typeof(GeneratedContextComponent);
                 data = getData<GeneratedContextComponent>();
 
                 var contextNames = data.GetContextNames();
@@ -340,13 +338,11 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
 
         context["configure"] = () => {
 
-            Type type = null;
             ComponentData data = null;
 
             before = () => {
                 var preferences = new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n");
 
-                type = typeof(NoContextComponent);
                 data = getData<NoContextComponent>(preferences);
             };
 

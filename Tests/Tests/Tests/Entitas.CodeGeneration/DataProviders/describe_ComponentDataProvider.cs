@@ -291,7 +291,6 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
 
         context["configure"] = () => {
 
-            Type type = null;
             ComponentData data = null;
 
             before = () => {
@@ -299,7 +298,6 @@ Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
                     "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n"
                 );
 
-                type = typeof(NoContextComponent);
                 data = getData<NoContextComponent>(preferences);
             };
 
