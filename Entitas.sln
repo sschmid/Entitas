@@ -1,6 +1,10 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 #
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entitas", "Entitas", "{C6D52863-46B5-4E9E-86DF-B937688BAB4C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas", "src/Entitas/src/Entitas.csproj", "{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Tests", "src/Entitas/tests/Entitas.Tests.csproj", "{293F3CF5-5251-4963-8AB7-3CC88F53D13A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints", "src/Entitas.Blueprints/src/Entitas.Blueprints.csproj", "{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}"
 EndProject
@@ -44,6 +48,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests/Tests/Tests.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readme", "Readme/Readme.csproj", "{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entitas", "Entitas", "{C6D52863-46B5-4E9E-86DF-B937688BAB4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Tests", "src/Entitas/tests/Entitas.Tests.csproj", "{293F3CF5-5251-4963-8AB7-3CC88F53D13A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +62,10 @@ Global
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{293F3CF5-5251-4963-8AB7-3CC88F53D13A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{293F3CF5-5251-4963-8AB7-3CC88F53D13A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{293F3CF5-5251-4963-8AB7-3CC88F53D13A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{293F3CF5-5251-4963-8AB7-3CC88F53D13A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -136,6 +148,8 @@ Global
 		{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{A0A11CC3-8B1E-4345-A5FA-01FC60E581D8} = {C6D52863-46B5-4E9E-86DF-B937688BAB4C}
+		{293F3CF5-5251-4963-8AB7-3CC88F53D13A} = {C6D52863-46B5-4E9E-86DF-B937688BAB4C}
 		{3F97DA95-DF04-49BF-BB3C-961A516680F3} = {663F8023-1E6F-49FE-83D0-F60871AD282D}
 		{6F01CC45-F951-43A5-923E-D3778F9DD435} = {663F8023-1E6F-49FE-83D0-F60871AD282D}
 		{E2247925-03D6-40FC-AFA4-D7DA01FA6F4E} = {663F8023-1E6F-49FE-83D0-F60871AD282D}
