@@ -88,25 +88,25 @@ entitas::pack() {
 
   local -a projects=(
     Entitas
-#    Addons/Entitas.Blueprints
-#    Addons/Entitas.Blueprints.Unity
-    Addons/Entitas.CodeGeneration.Attributes
-    Addons/Entitas.Unity
-    Addons/Entitas.VisualDebugging.Unity
+#    Entitas.Blueprints
+#    Entitas.Blueprints.Unity
+    Entitas.CodeGeneration.Attributes
+    Entitas.Unity
+    Entitas.VisualDebugging.Unity
     
     # editor
-#    Addons/Entitas.Blueprints.Unity.Editor
-    Addons/Entitas.Migration
-    Addons/Entitas.Migration.Unity.Editor
-    Addons/Entitas.Unity.Editor
-    Addons/Entitas.VisualDebugging.Unity.Editor
+#    Entitas.Blueprints.Unity.Editor
+    Entitas.Migration
+    Entitas.Migration.Unity.Editor
+    Entitas.Unity.Editor
+    Entitas.VisualDebugging.Unity.Editor
     
     # plugins
-#    Addons/Entitas.Blueprints.CodeGeneration.Plugins
-#    Addons/Entitas.Blueprints.CodeGeneration.Unity.Plugins
-    Addons/Entitas.CodeGeneration.Plugins
-    Addons/Entitas.Roslyn.CodeGeneration.Plugins
-    Addons/Entitas.VisualDebugging.CodeGeneration.Plugins
+#    Entitas.Blueprints.CodeGeneration.Plugins
+#    Entitas.Blueprints.CodeGeneration.Unity.Plugins
+    Entitas.CodeGeneration.Plugins
+    Entitas.Roslyn.CodeGeneration.Plugins
+    Entitas.VisualDebugging.CodeGeneration.Plugins
   )
 
   local -a to_editor=(
@@ -126,8 +126,8 @@ entitas::pack() {
   )
 
   local -a images=(
-    Addons/Entitas.Unity.Editor/Entitas.Unity.Editor/Images/
-    Addons/Entitas.VisualDebugging.Unity.Editor/Entitas.VisualDebugging.Unity.Editor/Images/
+    src/Entitas.Unity.Editor/src/Images/
+    src/Entitas.VisualDebugging.Unity.Editor/src/Images/
   )
 
   local -a files=(
@@ -137,7 +137,7 @@ entitas::pack() {
     CHANGELOG.md
   )
     
-  for p in "${projects[@]}"; do _sync "${p}/bin/Release/" "${entitas_dir}"; done
+  for p in "${projects[@]}"; do _sync "src/${p}/src/bin/Release/" "${entitas_dir}"; done
   for f in "${to_editor[@]}"; do mv "${entitas_dir}/${f}.dll" "${entitas_editor_dir}"; done
   for f in "${to_plugins[@]}"; do mv "${entitas_dir}/${f}.dll" "${entitas_jenny_dir}"; done
   for f in "${images[@]}"; do _sync "${f}" "${entitas_images_dir}"; done
