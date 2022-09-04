@@ -15,4 +15,10 @@
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Tests\TestFixtures\TestFixtures.csproj" />
+    <ProjectReference Include="..\..\..\Tests\Tests\Tests.csproj" />
+    <ProjectReference Include="..\src\Entitas.csproj" />
+  </ItemGroup>
+
 </Project>
