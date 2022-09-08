@@ -1,8 +1,0 @@
-language: csharp
-sudo: required
-before_install:
-  - sudo apt-get update
-install:
-- sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/sschmid/bee/master/install)"
-script:
-- bee nspec::run
