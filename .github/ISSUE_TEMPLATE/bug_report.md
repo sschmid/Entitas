@@ -24,7 +24,7 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Entitas Version**
- - Version [e.g. 1.114.0]
+ - Version [e.g. Entitas 1.23.4]
 
 **Additional context**
 Add any other context about the problem here.
