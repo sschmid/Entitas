@@ -175,6 +175,26 @@ namespace Entitas.Tests
         }
 
         [Fact]
+        public void RemovesMixedSystem()
+        {
+            var system = CreateReactiveSystem();
+            _systems.Add(system);
+            _systems.Remove(system);
+
+            _systems.Initialize();
+            system.didInitialize.Should().Be(0);
+
+            _systems.Execute();
+            system.didExecute.Should().Be(0);
+
+            _systems.Cleanup();
+            system.didCleanup.Should().Be(0);
+
+            _systems.TearDown();
+            system.didTearDown.Should().Be(0);
+        }
+
+        [Fact]
         public void InitializesExecutesCleansUpAndTearsDownSystems()
         {
             var system = CreateReactiveSystem();
