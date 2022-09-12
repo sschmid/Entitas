@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Tests\TestFixtures\TestFixtures.csproj" />
-    <ProjectReference Include="..\..\..\Tests\Tests\Tests.csproj" />
     <ProjectReference Include="..\..\Entitas\src\Entitas.csproj" />
+    <ProjectReference Include="..\..\Entitas\tests\Entitas.Tests.csproj" />
   </ItemGroup>
 
 </Project>

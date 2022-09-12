@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Tests\Tests\Tests.csproj" />
+    <ProjectReference Include="..\..\Entitas\tests\Entitas.Tests.csproj" />
     <ProjectReference Include="..\src\Entitas.Migration.csproj" />
   </ItemGroup>
 

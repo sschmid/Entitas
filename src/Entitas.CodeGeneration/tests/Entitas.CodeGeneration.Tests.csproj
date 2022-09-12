@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DesperateDevs.Roslyn" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.4.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.5.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.1.0" />
@@ -17,8 +24,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Tests\TestFixtures\TestFixtures.csproj" />
-    <ProjectReference Include="..\..\..\Tests\Tests\Tests.csproj" />
     <ProjectReference Include="..\..\Entitas.CodeGeneration.Plugins\src\Entitas.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="..\..\Entitas.Roslyn.CodeGeneration.Plugins\src\Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="..\..\Entitas\tests\Entitas.Tests.csproj" />
   </ItemGroup>
 
 </Project>

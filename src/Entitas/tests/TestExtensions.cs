@@ -1,23 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Entitas;
-using NSpec;
 
 public static class TestExtensions
 {
-    public static void Fail(this nspec spec)
-    {
-        "but did".should_be("should not happen");
-    }
-
-    public static TestEntity CreateEntity(this nspec spec)
-    {
-        var entity = new TestEntity();
-        entity.Initialize(0, CID.TotalComponents, new Stack<IComponent>[CID.TotalComponents]);
-        return entity;
-    }
-
     public static string GetProjectRoot()
     {
         var current = new DirectoryInfo(Directory.GetCurrentDirectory());
