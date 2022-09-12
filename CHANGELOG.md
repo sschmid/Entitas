@@ -180,7 +180,7 @@ http://u3d.as/NuJ
 🆕 `jenny help` aka man page
 
 Jenny Wizard is wip. If you have feedback or feature request, please add a comment here
-https://github.com/sschmid/Entitas-CSharp/issues/778
+https://github.com/sschmid/Entitas/issues/778
 
 
 # 1.8.1
@@ -201,7 +201,7 @@ https://www.assetstore.unity3d.com/#!/content/87638
 🆕 `jenny help` aka man page
 
 Jenny Wizard is wip. If you have feedback or feature request, please add a comment here
-https://github.com/sschmid/Entitas-CSharp/issues/778
+https://github.com/sschmid/Entitas/issues/778
 
 
 # 1.8.0
@@ -364,7 +364,7 @@ public sealed class RotateSystem : JobSystem<GameEntity> {
 Limitations:
 - Don't use generated methods like Add() and Replace()
 - Modify component values directly
-See https://github.com/sschmid/Entitas-CSharp/issues/325#issuecomment-373961878
+See https://github.com/sschmid/Entitas/issues/325#issuecomment-373961878
 
 This is not a general purpose solution for all problems. It can be used to solve certain performance intense areas in your game. It can be very useful if there's a very large number of entities that have to be processed, or if the data transformation involves heavy calulations.
 
@@ -570,7 +570,7 @@ As always, the Unity Asset Store version might take a few days to be processed
 and accepted by Unity. Please check for updates in 2 - 4 days here:
 https://www.assetstore.unity3d.com/#!/content/87638
 
-See and discuss changes in [Milestone 0.47.3](https://github.com/sschmid/Entitas-CSharp/milestone/17?closed=1)
+See and discuss changes in [Milestone 0.47.3](https://github.com/sschmid/Entitas/milestone/17?closed=1)
 
 (Finally went back to Milestone development :) Transparency FTW!)
 
@@ -591,7 +591,7 @@ Here's another update to improve the code generator experience. Thanks again for
 And thanks for going through this with me :) We're almost there!
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas
 - Added migration 0.47.2
@@ -696,7 +696,7 @@ Please check for updates in 2 - 4 days.
 
 This release is a maintenance release as announced here:
 
-https://github.com/sschmid/Entitas-CSharp/issues/508
+https://github.com/sschmid/Entitas/issues/508
 
 As the project got more mature the Entitas repository not only contained the ECS core but also a few other
 modules like Logging, Serialization, Networking, Code Generator, Common Utils and more.
@@ -721,7 +721,7 @@ Additionally, it will be possible to use awesome tools like TCPezy (DesperateDev
 
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Obsolete notice
 - Removed methods marked obsolete in 0.42.0 from April 2017
@@ -760,7 +760,7 @@ Please check for updates in 2 - 4 days.
 
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 
 ### Entitas
@@ -953,7 +953,7 @@ Hotfix release for
 
 # 0.42.2
 
-See and discuss changes in [Milestone 0.42.2](https://github.com/sschmid/Entitas-CSharp/milestone/16)
+See and discuss changes in [Milestone 0.42.2](https://github.com/sschmid/Entitas/milestone/16)
 
 ### CodeGenerator
 - Fix Code Generation NullReferenceException in Unity 2017 #414
@@ -980,10 +980,10 @@ Added missing support for flag components in ComponentEntityInterfaceGenerator
 
 # 0.42.0
 
-See and discuss changes in [Milestone 0.42.0](https://github.com/sschmid/Entitas-CSharp/milestone/15)
+See and discuss changes in [Milestone 0.42.0](https://github.com/sschmid/Entitas/milestone/15)
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 - Removed Entitas.Blueprints.Unity.*
 - Changed ReactiveSystem.GetTrigger method signature
@@ -991,7 +991,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 - Marked obsolete: `context.CreateCollector(matcher, event)`, use new `context.CreateCollector(triggerOnEvent)` when you need `.Removed` or `.AddedOrRemoved` (e.g. GameMatcher.View.Removed())
 
 ## Top new features:
-- Use MultiReactiveSystem to process entities from different contexts in one system (see [Test Example](https://github.com/sschmid/Entitas-CSharp/blob/develop/Tests/Unity/VisualDebugging/Assets/Examples/VisualDebugging/Systems/SomeMultiReactiveSystem.cs))
+- Use MultiReactiveSystem to process entities from different contexts in one system (see [Test Example](https://github.com/sschmid/Entitas/blob/develop/Tests/Unity/VisualDebugging/Assets/Examples/VisualDebugging/Systems/SomeMultiReactiveSystem.cs))
 - Use `entity.Destroy()` instead of `context.DestroyEntity(entity)`
 - Unit Testing in external console works on Windows now
 
@@ -1020,7 +1020,7 @@ some keys in Entitas.properties changed. `entitas.exe doctor`, `entitas.exe stat
 fixing any issues. A new default Entitas.properties file will be created if none is found. The default Entitas.properties
 should work with Unity without modification. For reference take a look at [Match-One - Entitas.properties](https://github.com/sschmid/Match-One/blob/master/Entitas.properties)
 
-Exiting limitation mentioned in the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md) still apply (Entitas.Blueprints.CodeGeneration.Plugins is not supported in the code generator CLI)
+Exiting limitation mentioned in the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md) still apply (Entitas.Blueprints.CodeGeneration.Plugins is not supported in the code generator CLI)
 
 ## Top new features:
 - UpdateCSProjPostProcessor will update your project.csproj. Generated methods are available immediately without switching to Unity and waiting for the project to be updated. This feels even better when using the new code generator (roslyn coming soon) where you don't even have to compile your project anymore - super fast feedback loops!
@@ -1050,7 +1050,7 @@ Exiting limitation mentioned in the [Entitas upgrade guide](https://github.com/s
 
 # 0.41.1
 
-See and discuss changes in [Milestone 0.41.1](https://github.com/sschmid/Entitas-CSharp/milestone/14)
+See and discuss changes in [Milestone 0.41.1](https://github.com/sschmid/Entitas/milestone/14)
 
 ### CodeGenerator
 - Added ContextMatcherGenerator #358 #358 @marczaku
@@ -1080,13 +1080,13 @@ Missing key: Entitas.CodeGeneration.Plugins.IgnoreNamespaces
 
 # 0.41.0
 
-See and discuss changes in [Milestone 0.41.0](https://github.com/sschmid/Entitas-CSharp/milestone/13)
+See and discuss changes in [Milestone 0.41.0](https://github.com/sschmid/Entitas/milestone/13)
 
 This milestone paves the way for a more customizable version of Entitas. A streamlined and modular project structure enables
 deploying Entitas as Dlls which opens the door for 3rd party Addons and the extendable command line code generator.
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 - Renamed Entitas.properties config keys
 - Removed context.DeactivateAndRemoveEntityIndices()
@@ -1123,7 +1123,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 
 # 0.40.0
 
-See and discuss changes in [Milestone 0.40.0](https://github.com/sschmid/Entitas-CSharp/milestone/12)
+See and discuss changes in [Milestone 0.40.0](https://github.com/sschmid/Entitas/milestone/12)
 
 ### Note
 Please update Entitas.properties by opening Entitas Preferences. Added `assemblyPath` and `codeGeneratorAssemblyPath`
@@ -1144,7 +1144,7 @@ and select `Assembly-CSharp.dll` for the assembly and `Assembly-CSharp-Editor.dl
 
 # 0.39.2
 
-See and discuss changes in [Milestone 0.39.2](https://github.com/sschmid/Entitas-CSharp/milestone/11)
+See and discuss changes in [Milestone 0.39.2](https://github.com/sschmid/Entitas/milestone/11)
 
 ### Entitas
 - Optimize group update performance for component add/remove #321
@@ -1158,7 +1158,7 @@ See and discuss changes in [Milestone 0.39.2](https://github.com/sschmid/Entitas
 
 # 0.39.1
 
-See and discuss changes in [Milestone 0.39.1](https://github.com/sschmid/Entitas-CSharp/milestone/10)
+See and discuss changes in [Milestone 0.39.1](https://github.com/sschmid/Entitas/milestone/10)
 
 ### Entitas
 - Added `entityIndex.ToString()` with name #329
@@ -1176,7 +1176,7 @@ See and discuss changes in [Milestone 0.39.1](https://github.com/sschmid/Entitas
 
 # 0.39.0
 
-See and discuss changes in [Milestone 0.39.0](https://github.com/sschmid/Entitas-CSharp/milestone/9)
+See and discuss changes in [Milestone 0.39.0](https://github.com/sschmid/Entitas/milestone/9)
 
 ### Entitas
 - Added `entityIndex.ToString()` with name #329
@@ -1191,7 +1191,7 @@ See and discuss changes in [Milestone 0.39.0](https://github.com/sschmid/Entitas
 
 # 0.38.0
 
-See and discuss changes in [Milestone 0.38.0](https://github.com/sschmid/Entitas-CSharp/milestone/8)
+See and discuss changes in [Milestone 0.38.0](https://github.com/sschmid/Entitas/milestone/8)
 
 This seems to be the release of enhancements! Lots of useful improvments and features have been added to
 increase productivity and ease of use.
@@ -1250,10 +1250,10 @@ increase productivity and ease of use.
 
 # 0.37.0
 
-See and discuss changes in [Milestone 0.37.0](https://github.com/sschmid/Entitas-CSharp/milestone/7)
+See and discuss changes in [Milestone 0.37.0](https://github.com/sschmid/Entitas/milestone/7)
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 The deed is done. Entitas went type-safe! This was a huge task and I'm happy to finally share this with you guys!
 This feature makes Entitas safer and more managable in growing code bases and will eliminate certain kind of bugs. Thanks to @mstrchrstphr
@@ -1294,10 +1294,10 @@ for starting the conversation and proposing solutions.
 
 # 0.36.0
 
-See and discuss changes in [Milestone 0.36.0](https://github.com/sschmid/Entitas-CSharp/milestone/6)
+See and discuss changes in [Milestone 0.36.0](https://github.com/sschmid/Entitas/milestone/6)
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas
 - Removed pool.CreateSystem() (#233 #237)
@@ -1327,10 +1327,10 @@ to get a nice description, e.g. `Health(42)` (#203 #196)
 
 # 0.35.0
 
-See and discuss changes in [Milestone 0.35.0](https://github.com/sschmid/Entitas-CSharp/milestone/5)
+See and discuss changes in [Milestone 0.35.0](https://github.com/sschmid/Entitas/milestone/5)
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas
 - Fixed adding disabled entities to groups (#192, #193)
@@ -1343,10 +1343,10 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 
 # 0.34.0
 
-See and discuss changes in [Milestone 0.34.0](https://github.com/sschmid/Entitas-CSharp/milestone/4)
+See and discuss changes in [Milestone 0.34.0](https://github.com/sschmid/Entitas/milestone/4)
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas
 - Added api to clone entities (#178, #182)
@@ -1372,7 +1372,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 # 0.33.0
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas
 - Added pools.CreateSystem()
@@ -1396,7 +1396,7 @@ Thanks all of you guys for using and contributing to Entitas.
 This release is packed with improvements from all of you, thanks for that!
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### General
 - Lots of maintenance, refactoring, documentation and cleanup. Checked every class and every test ;)
@@ -1524,7 +1524,7 @@ public class SomeComponent : IComponent {
 
 ### Note
 This release introduces Blueprints for Entitas (Beta). Update if you want to
-use and play with Blueprints. [Read more...](https://github.com/sschmid/Entitas-CSharp/wiki/Blueprints-(Beta))
+use and play with Blueprints. [Read more...](https://github.com/sschmid/Entitas/wiki/Blueprints-(Beta))
 
 ### Entitas.CodeGenerator
 - Only creating PoolObserver when Application.isPlaying
@@ -1559,7 +1559,7 @@ use and play with Blueprints. [Read more...](https://github.com/sschmid/Entitas-
 # 0.30.0
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas
 - Added IGroupObserverSystem which allows ReactiveSystems to observe multiple pools
@@ -1697,7 +1697,7 @@ Marked old PoolMetaData constructor obsolete. If you encounter compile errors pl
 # 0.28.0
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas
 - Added documentation (#55)
@@ -1797,7 +1797,7 @@ entity.flagDestroy = true;
 # 0.26.1
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 
 # 0.26.0
@@ -1905,7 +1905,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 # 0.24.0
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas.Unity.CodeGenerator
 - Throwing exception when attempting to generate while Unity is still compiling or assembly won't compile
@@ -1921,7 +1921,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
 # 0.23.0
 
 ### Breaking changes
-Before updating, please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Before updating, please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 - Gerneral
   - Updated and applied policy
@@ -1982,7 +1982,7 @@ Matcher.AllOf(Matcher.A, Matcher.B)
 # 0.22.0
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 - Entitas
   - Restored previous pool.DestroyEntity() behaviour
@@ -2077,7 +2077,7 @@ public class SomeComponent : IComponent {}
 # 0.19.0
 
 ### Breaking changes
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 - Entitas
   - Added new e.OnComponentReplaced and removed all *WillBeRemoved events
@@ -2134,7 +2134,7 @@ Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSh
     - Changed IReactiveSystem.GetTriggeringMatcher to IReactiveSystem.trigger
     - Changed IReactiveSystem.GetEventType to IReactiveSystem.eventType
 
-Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas.Unity
 - Fixed code generation issues on Windows by converting and normalizing line endings
@@ -2260,7 +2260,7 @@ pool.CreateEntity()
 # 0.13.0
 
 ### Reminder
-- Entitas 0.12.0 generates prefixed matchers based on the PoolAttribute and introduces some API changes. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+- Entitas 0.12.0 generates prefixed matchers based on the PoolAttribute and introduces some API changes. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### General
 - Split into multiple modules and seperate projects. Entitas now consists of
@@ -2304,7 +2304,7 @@ pool.CreateEntity()
 # 0.12.0
 
 ### Important
-- Entitas 0.12.0 generates prefixed matchers based on the PoolAttribute and introduces some API changes. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+- Entitas 0.12.0 generates prefixed matchers based on the PoolAttribute and introduces some API changes. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas
 - Added IStartSystem and pool.CreateStartSystem() extension
@@ -2340,7 +2340,7 @@ pool.CreateEntity()
 # 0.11.0
 
 ### Reminder
-- Entitas 0.10.0 included lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md) if you are on < v0.10.0
+- Entitas 0.10.0 included lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md) if you are on < v0.10.0
 
 ### Entitas
 - Added AllOfCompoundMatcher
@@ -2375,7 +2375,7 @@ pool.CreateEntity()
 # 0.10.0
 
 ### Important
-- Entitas 0.10.0 includes lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas-CSharp/blob/master/EntitasUpgradeGuide.md)
+- Entitas 0.10.0 includes lots of renaming. Please follow the [Entitas upgrade guide](https://github.com/sschmid/Entitas/blob/master/EntitasUpgradeGuide.md)
 
 ### Entitas
 - Added empty ISystem and IExecuteSystem for more flexibility

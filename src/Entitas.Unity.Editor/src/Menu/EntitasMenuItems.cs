@@ -33,12 +33,12 @@ namespace Entitas.Unity.Editor {
 
         [MenuItem(EntitasMenuItems.feedback_report_a_bug, false, EntitasMenuItemPriorities.feedback_report_a_bug)]
         public static void ReportBug() {
-            Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/issues");
+            Application.OpenURL("https://github.com/sschmid/Entitas/issues");
         }
 
         [MenuItem(EntitasMenuItems.feedback_request_a_feature, false, EntitasMenuItemPriorities.feedback_request_a_feature)]
         public static void RequestFeature() {
-            Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/issues");
+            Application.OpenURL("https://github.com/sschmid/Entitas/issues");
         }
 
         [MenuItem(EntitasMenuItems.feedback_join_the_entitas_chat, false, EntitasMenuItemPriorities.feedback_join_the_entitas_chat)]
@@ -48,7 +48,7 @@ namespace Entitas.Unity.Editor {
 
         [MenuItem(EntitasMenuItems.feedback_entitas_wiki, false, EntitasMenuItemPriorities.feedback_entitas_wiki)]
         public static void EntitasWiki() {
-            Application.OpenURL("https://github.com/sschmid/Entitas-CSharp/wiki");
+            Application.OpenURL("https://github.com/sschmid/Entitas/wiki");
         }
 
         [MenuItem(EntitasMenuItems.feedback_donate, false, EntitasMenuItemPriorities.feedback_donate)]

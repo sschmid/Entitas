@@ -11,14 +11,14 @@ Setup Entitas on your machine
 Fork the repository on [GitHub][repo] and clone your forked repository to your machine
 
 ```
-$ git clone https://github.com/<username>/Entitas-CSharp.git
+$ git clone https://github.com/<username>/Entitas.git
 ````
 
 If you want to contribute please consider to set up [git-flow](https://github.com/nvie/gitflow).
 The default branch of this repository is `master`
 
 ````
-$ cd Entitas-CSharp
+$ cd Entitas
 $ git branch master origin/master
 $ git flow init -d
 ````
@@ -60,8 +60,8 @@ Thanks for your contributions and happy coding :)
 
 Simon
 
-[repo]: https://github.com/sschmid/Entitas-CSharp "sschmid/Entitas-CSharp"
-[issues]: https://github.com/sschmid/Entitas-CSharp/issues "Issues"
-[pulls]: https://github.com/sschmid/Entitas-CSharp/pulls "Pull Requests"
-[issues-new]: https://github.com/sschmid/Entitas-CSharp/issues/new "New issue"
-[license]: https://github.com/sschmid/Entitas-CSharp/blob/develop/LICENSE.txt "License"
+[repo]: https://github.com/sschmid/Entitas "sschmid/Entitas"
+[issues]: https://github.com/sschmid/Entitas/issues "Issues"
+[pulls]: https://github.com/sschmid/Entitas/pulls "Pull Requests"
+[issues-new]: https://github.com/sschmid/Entitas/issues/new "New issue"
+[license]: https://github.com/sschmid/Entitas/blob/develop/LICENSE.txt "License"

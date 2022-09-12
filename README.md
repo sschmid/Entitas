@@ -1,18 +1,18 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas-Header.png" alt="Entitas">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/Entitas-Header.png" alt="Entitas">
 </p>
 
 <p align="center">
     <a href="https://discord.gg/uHrVx5Z">
         <img src="https://img.shields.io/discord/599321316377624601.svg?logo=discord&logoColor=FFFFFF&label=Discord&labelColor=6A7EC2&color=7389D8" alt="Entitas on Discord"></a>
-    <a href="https://github.com/sschmid/Entitas-CSharp/releases">
-        <img src="https://img.shields.io/github/release/sschmid/Entitas-CSharp.svg" alt="Latest release"></a>
+    <a href="https://github.com/sschmid/Entitas/releases">
+        <img src="https://img.shields.io/github/release/sschmid/Entitas.svg" alt="Latest release"></a>
 </p>
 
 <p align="center">
-    <a href="https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Fsschmid%2FEntitas-CSharp&screen_name=s_schmid&tw_p=followbutton">
+    <a href="https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Fsschmid%2FEntitas&screen_name=s_schmid&tw_p=followbutton">
         <img src="https://img.shields.io/twitter/follow/s_schmid" alt="Twitter Follow Me"></a>
-    <a href="https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Fsschmid%2FEntitas-CSharp&screen_name=entitas_csharp&tw_p=followbutton">
+    <a href="https://twitter.com/intent/follow?original_referer=https%3A%2F%2Fgithub.com%2Fsschmid%2FEntitas&screen_name=entitas_csharp&tw_p=followbutton">
         <img src="https://img.shields.io/twitter/follow/entitas_csharp" alt="Twitter Follow Me"></a>
 </p>
 
@@ -35,17 +35,17 @@ Entitas is a super fast Entity Component System Framework (ECS) specifically mad
 
 <p align="center">
     <a href="https://dev.windows.com">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/csharp.png" alt="CSharp" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/csharp.png" alt="CSharp" height="64"></a>
     <a href="http://unity3d.com">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/MadeForUnity.png" alt="Unity3d" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/MadeForUnity.png" alt="Unity3d" height="64"></a>
     <a href="http://unity3d.com/unite/archive/2015">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2015.png" alt="Unite Europe 2015" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/UniteEurope2015.png" alt="Unite Europe 2015" height="64"></a>
     <a href="https://unite.unity.com/2016/europe">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2016.png" alt="Unite Europe 2016" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/UniteEurope2016.png" alt="Unite Europe 2016" height="64"></a>
     <a href="https://www.wooga.com">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/wooga-logo.png" alt="Wooga" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/wooga-logo.png" alt="Wooga" height="64"></a>
     <a href="http://gram.gs">
-        <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/GramGames.png" alt="Gram Games.png" height="64"></a>
+        <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/GramGames.png" alt="Gram Games.png" height="64"></a>
 </p>
 
 ---
@@ -123,9 +123,9 @@ The optional Unity module integrates Entitas nicely into Unity and provides powe
 [Read more...][wiki-unity-integration]
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity-MenuItems.png" alt="Entitas.Unity MenuItems" height="200"><br />
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity.VisualDebugging-Entity.png" alt="Entitas.Unity.VisualDebugging Entity" width="400">
-    <img src="https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png" alt="Entitas.Unity.VisualDebugging Systems" width="400">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/Entitas.Unity-MenuItems.png" alt="Entitas.Unity MenuItems" height="200"><br />
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/Entitas.Unity.VisualDebugging-Entity.png" alt="Entitas.Unity.VisualDebugging Entity" width="400">
+    <img src="https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/Entitas.Unity.VisualDebugging-DebugSystems.png" alt="Entitas.Unity.VisualDebugging Systems" width="400">
 </p>
 
 
@@ -159,7 +159,7 @@ Different language?
 ===================
 
 Entitas is available in
-- [C#](https://github.com/sschmid/Entitas-CSharp)
+- [C#](https://github.com/sschmid/Entitas)
 - [Swift](https://github.com/mzaks/Entitas-Swift)
 - [C++](https://github.com/JuDelCo/Entitas-Cpp)
 - [Objective-C](https://github.com/wooga/entitas)
@@ -177,27 +177,27 @@ Entitas is available in
 
 [clean-coders]: https://cleancoders.com "Clean Coders"
 
-[documentation]: http://sschmid.github.io/Entitas-CSharp/ "Entitas Documentation"
-[wiki]: https://github.com/sschmid/Entitas-CSharp/wiki "Entitas Wiki"
-[wiki-code-generator]: https://github.com/sschmid/Entitas-CSharp/wiki/Code-Generator "Wiki - Code Generator"
-[wiki-overview]: https://github.com/sschmid/Entitas-CSharp/wiki/Overview "Wiki - Overview"
-[wiki-unity-integration]: https://github.com/sschmid/Entitas-CSharp/wiki/Unity-integration "Wiki - Unity Integration"
-[wiki-example-projects]: https://github.com/sschmid/Entitas-CSharp/wiki/Example-projects "Wiki - Example Projects"
-[wiki-games-and-examples]: https://github.com/sschmid/Entitas-CSharp/wiki/Made-With-Entitas "Wiki - #madeWithEntitas"
+[documentation]: http://sschmid.github.io/Entitas/ "Entitas Documentation"
+[wiki]: https://github.com/sschmid/Entitas/wiki "Entitas Wiki"
+[wiki-code-generator]: https://github.com/sschmid/Entitas/wiki/Code-Generator "Wiki - Code Generator"
+[wiki-overview]: https://github.com/sschmid/Entitas/wiki/Overview "Wiki - Overview"
+[wiki-unity-integration]: https://github.com/sschmid/Entitas/wiki/Unity-integration "Wiki - Unity Integration"
+[wiki-example-projects]: https://github.com/sschmid/Entitas/wiki/Example-projects "Wiki - Example Projects"
+[wiki-games-and-examples]: https://github.com/sschmid/Entitas/wiki/Made-With-Entitas "Wiki - #madeWithEntitas"
 
-[shmup1-thumb]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas-Shmup-Part-1.jpg "Video: Entitas - Shmup - Part 1"
+[shmup1-thumb]: https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/Entitas-Shmup-Part-1.jpg "Video: Entitas - Shmup - Part 1"
 [shmup1]: https://www.youtube.com/watch?v=L-18XRTarOM "Video: Entitas - Shmup - Part 1"
-[shmup2-thumb]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/Entitas-Shmup-Part-2.jpg "Video: Entitas - Shmup - Part 2"
+[shmup2-thumb]: https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/Entitas-Shmup-Part-2.jpg "Video: Entitas - Shmup - Part 2"
 [shmup2]: https://www.youtube.com/watch?v=DZpvUnj2dGI "Video: Entitas - Shmup - Part 2"
-[unite15-thumb]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2015-Video.png "Video: Watch the Entitas Talk at Unite Europe 2015"
+[unite15-thumb]: https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/UniteEurope2015-Video.png "Video: Watch the Entitas Talk at Unite Europe 2015"
 [unite15]: https://www.youtube.com/watch?v=Re5kGtxTW6E "Video: Watch the Entitas Talk at Unite Europe 2015"
 [unite15-slides]: http://www.slideshare.net/sschmid/uniteeurope-2015 "SlideShare: Unite Europe 2015"
-[unite16-thumb]: https://raw.githubusercontent.com/sschmid/Entitas-CSharp/master/Readme/Images/UniteEurope2016-Video.png "Video: Watch the Entitas Talk at Unite Europe 2016"
+[unite16-thumb]: https://raw.githubusercontent.com/sschmid/Entitas/master/Readme/Images/UniteEurope2016-Video.png "Video: Watch the Entitas Talk at Unite Europe 2016"
 [unite16]: https://www.youtube.com/watch?v=Phx7IJ3XUzg "Video: Watch the Entitas Talk at Unite Europe 2016"
 [unite16-slides]: http://www.slideshare.net/sschmid/uniteeurope-2016 "SlideShare: Unite Europe 2016"
 
-[releases]: https://github.com/sschmid/Entitas-CSharp/releases "Releases"
-[issues-new]: https://github.com/sschmid/Entitas-CSharp/issues/new "New issue"
+[releases]: https://github.com/sschmid/Entitas/releases "Releases"
+[issues-new]: https://github.com/sschmid/Entitas/issues/new "New issue"
 
 [twitter-sschmid]: https://twitter.com/s_schmid "s_schmid on Twitter"
 [twitter-entitas_csharp]: https://twitter.com/entitas_csharp "entitas_csharp on Twitter"

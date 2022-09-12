@@ -21,7 +21,7 @@ public static class TestExtensions
     public static string GetProjectRoot()
     {
         var current = new DirectoryInfo(Directory.GetCurrentDirectory());
-        while (current.Name != "Entitas") current = current.Parent;
+        while (current.Name != "Entitas" && current.Name != "Entitas-CSharp") current = current.Parent;
         return current.FullName;
     }
 

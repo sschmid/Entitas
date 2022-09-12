@@ -119,7 +119,7 @@ Entitas 0.42.0 upgrade guide
 #### After you installed
 - Removed Entitas.Blueprints.Unity.*
   - Remove all Entitas.Blueprints.Unity.* related code
-  - Remove BinaryBlueprints from your project. Consider using extension methods as described here instead https://github.com/sschmid/Entitas-CSharp/issues/390
+  - Remove BinaryBlueprints from your project. Consider using extension methods as described here instead https://github.com/sschmid/Entitas/issues/390
   - Remove from Entitas.properties:
     - Entitas.Blueprints.CodeGeneration.Plugins
     - Entitas.Blueprints.CodeGeneration.Plugins.BlueprintDataProvider
