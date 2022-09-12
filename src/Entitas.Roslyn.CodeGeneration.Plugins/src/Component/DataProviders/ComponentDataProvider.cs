@@ -92,15 +92,15 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins {
             var dataFromNonComponents = types
                 .Where(type => !type.AllInterfaces.Any(i => i.ToCompilableString() == componentInterface))
                 .Where(type => !type.IsGenericType)
-                .Where(hasContexts)
-                .SelectMany(createDataForNonComponent)
+                .Where(symbol => hasContexts(symbol))
+                .SelectMany(symbol => createDataForNonComponent(symbol))
                 .ToArray();
 
             var mergedData = merge(dataFromNonComponents, dataFromComponents);
 
             var dataFromEvents = mergedData
                 .Where(data => data.IsEvent())
-                .SelectMany(createDataForEvents)
+                .SelectMany(data => createDataForEvents(data))
                 .ToArray();
 
             return merge(dataFromEvents, mergedData);

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using DesperateDevs.Extensions;
 using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
@@ -21,23 +20,19 @@ namespace Entitas.CodeGeneration.Tests
         INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
         INamedTypeSymbol[] _types;
 
-        readonly Type _componentType;
         readonly ComponentData _componentData;
-        readonly Type _classType;
         readonly ComponentData _classData;
 
         public RoslynComponentDataProviderTests()
         {
-            _componentType = typeof(MyNamespaceComponent);
             _componentData = GetData<MyNamespaceComponent>();
-            _classType = typeof(ClassToGenerate);
             _classData = GetData<ClassToGenerate>();
         }
 
         [Fact]
         public void GetsFullTypeName()
         {
-            _componentData.GetTypeName().Should().Be(_componentType.ToCompilableString());
+            _componentData.GetTypeName().Should().Be(typeof(MyNamespaceComponent).ToCompilableString());
         }
 
         [Fact]
@@ -273,7 +268,7 @@ namespace Entitas.CodeGeneration.Tests
         public void GetsMemberDataForClass()
         {
             _classData.GetMemberData().Length.Should().Be(1);
-            _classData.GetMemberData()[0].type.Should().Be(_classType.ToCompilableString());
+            _classData.GetMemberData()[0].type.Should().Be(typeof(ClassToGenerate).ToCompilableString());
         }
 
         [Fact]

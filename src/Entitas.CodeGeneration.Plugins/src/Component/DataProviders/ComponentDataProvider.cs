@@ -84,21 +84,21 @@ namespace Entitas.CodeGeneration.Plugins {
             var dataFromComponents = types
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsAbstract)
-                .Select(createDataForComponent)
+                .Select(type => createDataForComponent(type))
                 .ToArray();
 
             var dataFromNonComponents = types
                 .Where(type => !type.ImplementsInterface<IComponent>())
                 .Where(type => !type.IsGenericType)
-                .Where(hasContexts)
-                .SelectMany(createDataForNonComponent)
+                .Where(type => hasContexts(type))
+                .SelectMany(type => createDataForNonComponent(type))
                 .ToArray();
 
             var mergedData = merge(dataFromNonComponents, dataFromComponents);
 
             var dataFromEvents = mergedData
                 .Where(data => data.IsEvent())
-                .SelectMany(createDataForEvents)
+                .SelectMany(data => createDataForEvents(data))
                 .ToArray();
 
             return merge(dataFromEvents, mergedData);

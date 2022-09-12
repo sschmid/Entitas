@@ -1,4 +1,3 @@
-using System;
 using DesperateDevs.Extensions;
 using DesperateDevs.Serialization;
 using Entitas.CodeGeneration.Attributes;
@@ -11,16 +10,12 @@ namespace Entitas.CodeGeneration.Tests
 {
     public class ComponentDataProviderTests
     {
-        readonly Type _componentType;
         readonly ComponentData _componentData;
-        readonly Type _classType;
         readonly ComponentData _classData;
 
         public ComponentDataProviderTests()
         {
-            _componentType = typeof(MyNamespaceComponent);
             _componentData = GetData<MyNamespaceComponent>();
-            _classType = typeof(ClassToGenerate);
             _classData = GetData<ClassToGenerate>();
         }
 
@@ -34,7 +29,7 @@ namespace Entitas.CodeGeneration.Tests
         public void GetsFullTypeName()
         {
             _componentData.GetTypeName().GetType().Should().Be(typeof(string));
-            _componentData.GetTypeName().Should().Be(_componentType.ToCompilableString());
+            _componentData.GetTypeName().Should().Be(typeof(MyNamespaceComponent).ToCompilableString());
         }
 
         [Fact]
@@ -227,7 +222,7 @@ namespace Entitas.CodeGeneration.Tests
         public void GetsMemberDataForClass()
         {
             _classData.GetMemberData().Length.Should().Be(1);
-            _classData.GetMemberData()[0].type.Should().Be(_classType.ToCompilableString());
+            _classData.GetMemberData()[0].type.Should().Be(typeof(ClassToGenerate).ToCompilableString());
         }
 
         [Fact]
