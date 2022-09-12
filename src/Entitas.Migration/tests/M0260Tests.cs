@@ -1,31 +1,36 @@
 using System.IO;
 using System.Linq;
-using Entitas.Migration;
-using NSpec;
+using FluentAssertions;
+using Xunit;
 
-class describe_M0260 : nspec {
+namespace Entitas.Migration.Tests
+{
+    public class M0260Tests
+    {
+        static string FixturePath => TestExtensions.GetProjectRoot() + "/src/Entitas.Migration/fixtures/M0260";
 
-    void when_migrating() {
+        readonly M0260 _migration;
 
-        var dir = TestExtensions.GetProjectRoot() + "/Tests/Tests/Tests/Entitas.Migration/Fixtures/M0260";
+        public M0260Tests()
+        {
+            _migration = new M0260();
+        }
 
-        IMigration m = null;
+        [Fact]
+        public void FindsAllFiles()
+        {
+            var updatedFiles = _migration.Migrate(FixturePath);
+            updatedFiles.Length.Should().Be(2);
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Pools.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "ScoreComponentGeneratedExtension.cs")).Should().BeTrue();
+        }
 
-        before = () => {
-            m = new M0260();
-        };
-
-        it["finds all files"] = () => {
-            var updatedFiles = m.Migrate(dir);
-            updatedFiles.Length.should_be(2);
-            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "Pools.cs")).should_be_true();
-            updatedFiles.Any(file => file.fileName == Path.Combine(dir, "ScoreComponentGeneratedExtension.cs")).should_be_true();
-        };
-
-        it["deactivates code in Pools.cs"] = () => {
-            var updatedFiles = m.Migrate(dir);
-            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(dir, "Pools.cs"));
-            poolsFile.fileContent.should_be(@"using Entitas;
+        [Fact]
+        public void DeactivatesCodeInPoolsFile()
+        {
+            var updatedFiles = _migration.Migrate(FixturePath);
+            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "Pools.cs"));
+            poolsFile.fileContent.Should().Be(@"using Entitas;
 
 public static class Pools {
 
@@ -74,12 +79,14 @@ public static class Pools {
     }
 }
 ");
-        };
+        }
 
-        it["deactivates code in components"] = () => {
-            var updatedFiles = m.Migrate(dir);
-            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(dir, "ScoreComponentGeneratedExtension.cs"));
-            poolsFile.fileContent.should_be(@"using System.Collections.Generic;
+        [Fact]
+        public void DeactivatesCodeInComponents()
+        {
+            var updatedFiles = _migration.Migrate(FixturePath);
+            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "ScoreComponentGeneratedExtension.cs"));
+            poolsFile.fileContent.Should().Be(@"using System.Collections.Generic;
 
 namespace Entitas {
     public partial class Entity {
@@ -165,6 +172,6 @@ namespace Entitas {
     }
 }
 ");
-        };
+        }
     }
 }
