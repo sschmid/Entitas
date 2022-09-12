@@ -46,8 +46,4 @@
     <None Remove="Tests\Entitas.Migration\Fixtures\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Tests\Entitas.VisualDebugging.Unity" />
-  </ItemGroup>
-
 </Project>
