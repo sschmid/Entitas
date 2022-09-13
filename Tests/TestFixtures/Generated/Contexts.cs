@@ -191,7 +191,8 @@ public partial class Contexts {
             CreateContextObserver(game);
             CreateContextObserver(test);
             CreateContextObserver(test2);
-        } catch(System.Exception) {
+        } catch(System.Exception e) {
+            UnityEngine.Debug.LogError(e);
         }
     }
 

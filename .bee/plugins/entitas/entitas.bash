@@ -126,8 +126,8 @@ entitas::jenny() {
 
 entitas::generate() {
   local properties=(
-    'Tests/TestFixtures/Jenny.properties'
     'Readme/Jenny.properties'
+    'Tests/TestFixtures/Jenny.properties'
   )
   local dir jenny
   jenny="$(pwd)/src/Entitas.CodeGeneration/jenny/Entitas.CodeGeneration.Program.csproj"
