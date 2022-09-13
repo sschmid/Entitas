@@ -116,7 +116,7 @@ entitas::rebuild() {
 }
 
 entitas::test() {
-  dotnet run --project Tests/Tests/Tests.csproj
+  dotnet test -c Release "$@"
 }
 
 entitas::generate() {
