@@ -16,6 +16,7 @@ usage:
   build                           build solution
   rebuild                         clean and build solution
   test [args]                     run unit tests
+  jenny [args]                    build and run jenny
   generate                        generate code for all projects
   publish                         publish nupkg to nuget.org
   publish_local                   publish nupkg locally to disk
@@ -119,18 +120,22 @@ entitas::test() {
   dotnet test -c Release "$@"
 }
 
+entitas::jenny() {
+  dotnet run -c Release --project src/Entitas.CodeGeneration/jenny/Entitas.CodeGeneration.Program.csproj "$@"
+}
+
 entitas::generate() {
   local properties=(
-    'Tests/TestFixtures/Preferences.properties'
-    'Readme/Prefrences.properties'
+    'Tests/TestFixtures/Jenny.properties'
+    'Readme/Jenny.properties'
   )
-  local dir current_dir
-  current_dir="$(pwd)"
+  local dir jenny
+  jenny="$(pwd)/src/Entitas.CodeGeneration/jenny/Entitas.CodeGeneration.Program.csproj"
   for p in "${properties[@]}"; do
     dir="$(dirname "${p}")"
     pushd "${dir}" > /dev/null || exit
       bee::log_info "Generating ${p}"
-      "${current_dir}/${DESPERATEDEVS_DIR}/Jenny/Jenny/Jenny" gen "$(basename "${p}")"
+      dotnet run -c Release --project "${jenny}" gen "$(basename "${p}")"
     popd > /dev/null || exit
   done
 }

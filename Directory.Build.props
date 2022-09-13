@@ -1,12 +1,13 @@
 <Project>
 
   <PropertyGroup>
-    <DefaultTargetFramework>netstandard2.1</DefaultTargetFramework>
-    <DefaultNetTargetFramework>net6.0</DefaultNetTargetFramework>
-    <DefaultTestTargetFramework>net6.0</DefaultTestTargetFramework>
-    <LangVersion>default</LangVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <DefaultNetTargetFramework>net6.0</DefaultNetTargetFramework>
+    <DefaultTargetFramework>netstandard2.1</DefaultTargetFramework>
+    <DefaultTestTargetFramework>net6.0</DefaultTestTargetFramework>
     <Deterministic>true</Deterministic>
+    <LangVersion>default</LangVersion>
+    <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <ItemGroup Label="NuGet">
