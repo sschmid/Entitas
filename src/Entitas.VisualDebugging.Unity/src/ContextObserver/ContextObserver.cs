@@ -39,6 +39,7 @@ namespace Entitas.VisualDebugging.Unity {
 
             entityBehaviour.Init(context, entity, _entityBehaviourPool);
             entityBehaviour.transform.SetParent(_gameObject.transform, false);
+            entityBehaviour.transform.SetAsLastSibling();
         }
 
         void onGroupCreated(IContext context, IGroup group) {
