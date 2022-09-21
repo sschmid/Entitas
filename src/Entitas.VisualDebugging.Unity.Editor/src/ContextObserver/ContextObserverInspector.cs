@@ -3,12 +3,13 @@ using DesperateDevs.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
-
+namespace Entitas.VisualDebugging.Unity.Editor
+{
     [CustomEditor(typeof(ContextObserverBehaviour))]
-    public class ContextObserverInspector : UnityEditor.Editor {
-
-        public override void OnInspectorGUI() {
+    public class ContextObserverInspector : UnityEditor.Editor
+    {
+        public override void OnInspectorGUI()
+        {
             var contextObserver = ((ContextObserverBehaviour)target).contextObserver;
 
             EditorLayout.BeginVerticalBox();
@@ -18,7 +19,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 EditorGUILayout.LabelField("Reusable entities", contextObserver.context.reusableEntitiesCount.ToString());
 
                 var retainedEntitiesCount = contextObserver.context.retainedEntitiesCount;
-                if (retainedEntitiesCount != 0) {
+                if (retainedEntitiesCount != 0)
+                {
                     var c = GUI.color;
                     GUI.color = Color.red;
                     EditorGUILayout.LabelField("Retained entities", retainedEntitiesCount.ToString());
@@ -28,7 +30,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                 EditorGUILayout.BeginHorizontal();
                 {
-                    if (GUILayout.Button("Create Entity")) {
+                    if (GUILayout.Button("Create Entity"))
+                    {
                         var entity = contextObserver.context.CreateEntity();
                         var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
                             .Single(eb => eb.entity == entity);
@@ -38,9 +41,9 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
                     var bgColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.red;
-                    if (GUILayout.Button("Destroy All Entities")) {
+                    if (GUILayout.Button("Destroy All Entities")) 
                         contextObserver.context.DestroyAllEntities();
-                    }
+
                     GUI.backgroundColor = bgColor;
                 }
                 EditorGUILayout.EndHorizontal();
@@ -48,11 +51,13 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             EditorLayout.EndVerticalBox();
 
             var groups = contextObserver.groups;
-            if (groups.Length != 0) {
+            if (groups.Length != 0)
+            {
                 EditorLayout.BeginVerticalBox();
                 {
-                    EditorGUILayout.LabelField("Groups (" + groups.Length + ")", EditorStyles.boldLabel);
-                    foreach (var group in groups.OrderByDescending(g => g.count)) {
+                    EditorGUILayout.LabelField($"Groups ({groups.Length})", EditorStyles.boldLabel);
+                    foreach (var group in groups.OrderByDescending(g => g.count))
+                    {
                         EditorGUILayout.BeginHorizontal();
                         {
                             EditorGUILayout.LabelField(group.ToString());

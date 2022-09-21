@@ -1,68 +1,59 @@
 using System;
 using UnityEngine;
 
-namespace Entitas.Unity {
-
-    public class EntityLink : MonoBehaviour {
-
-        public IEntity entity { get { return _entity; } }
+namespace Entitas.Unity
+{
+    public class EntityLink : MonoBehaviour
+    {
+        public IEntity entity => _entity;
 
         IEntity _entity;
         bool _applicationIsQuitting;
 
-        public void Link(IEntity entity) {
-            if (_entity != null) {
-                throw new Exception("EntityLink is already linked to " + _entity + "!");
-            }
+        public void Link(IEntity entity)
+        {
+            if (_entity != null)
+                throw new Exception($"EntityLink is already linked to {_entity}!");
 
             _entity = entity;
             _entity.Retain(this);
         }
 
-        public void Unlink() {
-            if (_entity == null) {
+        public void Unlink()
+        {
+            if (_entity == null)
                 throw new Exception("EntityLink is already unlinked!");
-            }
 
             _entity.Release(this);
             _entity = null;
         }
 
-        void OnDestroy() {
-            if (!_applicationIsQuitting && _entity != null) {
-                Debug.LogWarning("EntityLink got destroyed but is still linked to " + _entity + "!\n" +
-                                 "Please call gameObject.Unlink() before it is destroyed."
-                );
-            }
+        void OnDestroy()
+        {
+            if (!_applicationIsQuitting && _entity != null)
+                Debug.LogWarning($"EntityLink got destroyed but is still linked to {_entity}!\nPlease call gameObject.Unlink() before it is destroyed.");
         }
 
-        void OnApplicationQuit() {
-            _applicationIsQuitting = true;
-        }
+        void OnApplicationQuit() => _applicationIsQuitting = true;
 
-        public override string ToString() {
-            return "EntityLink(" + gameObject.name + ")";
-        }
+        public override string ToString() => $"EntityLink({gameObject.name})";
     }
 
-    public static class EntityLinkExtension {
+    public static class EntityLinkExtension
+    {
+        public static EntityLink GetEntityLink(this GameObject gameObject) => gameObject.GetComponent<EntityLink>();
 
-        public static EntityLink GetEntityLink(this GameObject gameObject) {
-            return gameObject.GetComponent<EntityLink>();
-        }
-
-        public static EntityLink Link(this GameObject gameObject, IEntity entity) {
+        public static EntityLink Link(this GameObject gameObject, IEntity entity)
+        {
             var link = gameObject.GetEntityLink();
-            if (link == null) {
+            if (link == null)
                 link = gameObject.AddComponent<EntityLink>();
-            }
 
             link.Link(entity);
             return link;
         }
 
-        public static void Unlink(this GameObject gameObject) {
+        public static void Unlink(this GameObject gameObject) =>
             gameObject.GetEntityLink().Unlink();
-        }
     }
 }

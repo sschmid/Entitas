@@ -10,82 +10,90 @@ namespace Entitas.VisualDebugging.Unity.Editor
     [InitializeOnLoad]
     public static class EntitasHierarchyIcon
     {
-        static Texture2D contextHierarchyIcon {
-            get {
+        static Texture2D contextHierarchyIcon
+        {
+            get
+            {
                 if (_contextHierarchyIcon == null)
-                {
                     _contextHierarchyIcon = EditorLayout.LoadTexture("l:EntitasContextHierarchyIcon");
-                }
+
                 return _contextHierarchyIcon;
             }
         }
 
-        static Texture2D contextErrorHierarchyIcon {
-            get {
+        static Texture2D contextErrorHierarchyIcon
+        {
+            get
+            {
                 if (_contextErrorHierarchyIcon == null)
-                {
                     _contextErrorHierarchyIcon = EditorLayout.LoadTexture("l:EntitasContextErrorHierarchyIcon");
-                }
+
                 return _contextErrorHierarchyIcon;
             }
         }
 
-        static Texture2D entityHierarchyIcon {
-            get {
+        static Texture2D entityHierarchyIcon
+        {
+            get
+            {
                 if (_entityHierarchyIcon == null)
-                {
                     _entityHierarchyIcon = EditorLayout.LoadTexture("l:EntitasEntityHierarchyIcon");
-                }
+
                 return _entityHierarchyIcon;
             }
         }
 
-        static Texture2D entityErrorHierarchyIcon {
-            get {
+        static Texture2D entityErrorHierarchyIcon
+        {
+            get
+            {
                 if (_entityErrorHierarchyIcon == null)
-                {
                     _entityErrorHierarchyIcon = EditorLayout.LoadTexture("l:EntitasEntityErrorHierarchyIcon");
-                }
+
                 return _entityErrorHierarchyIcon;
             }
         }
 
-        static Texture2D entityLinkHierarchyIcon {
-            get {
+        static Texture2D entityLinkHierarchyIcon
+        {
+            get
+            {
                 if (_entityLinkHierarchyIcon == null)
-                {
                     _entityLinkHierarchyIcon = EditorLayout.LoadTexture("l:EntitasEntityLinkHierarchyIcon");
-                }
+
                 return _entityLinkHierarchyIcon;
             }
         }
 
-        static Texture2D entityLinkWarnHierarchyIcon {
-            get {
+        static Texture2D entityLinkWarnHierarchyIcon
+        {
+            get
+            {
                 if (_entityLinkWarnHierarchyIcon == null)
-                {
                     _entityLinkWarnHierarchyIcon = EditorLayout.LoadTexture("l:EntitasEntityLinkWarnHierarchyIcon");
-                }
+
                 return _entityLinkWarnHierarchyIcon;
             }
         }
 
-        static Texture2D systemsHierarchyIcon {
-            get {
+        static Texture2D systemsHierarchyIcon
+        {
+            get
+            {
                 if (_systemsHierarchyIcon == null)
-                {
                     _systemsHierarchyIcon = EditorLayout.LoadTexture("l:EntitasSystemsHierarchyIcon");
-                }
+
                 return _systemsHierarchyIcon;
             }
         }
 
-        static Texture2D systemsWarnHierarchyIcon {
-            get {
+        static Texture2D systemsWarnHierarchyIcon
+        {
+            get
+            {
                 if (_systemsWarnHierarchyIcon == null)
-                {
                     _systemsWarnHierarchyIcon = EditorLayout.LoadTexture("l:EntitasSystemsWarnHierarchyIcon");
-                }
+
                 return _systemsWarnHierarchyIcon;
             }
         }
@@ -99,7 +107,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
         static Texture2D _systemsHierarchyIcon;
         static Texture2D _systemsWarnHierarchyIcon;
 
-        static int _systemWarningThreshold;
+        static readonly int _systemWarningThreshold;
 
         static EntitasHierarchyIcon()
         {
@@ -130,13 +138,9 @@ namespace Entitas.VisualDebugging.Unity.Editor
                 if (contextObserver != null)
                 {
                     if (contextObserver.contextObserver.context.retainedEntitiesCount != 0)
-                    {
                         GUI.DrawTexture(rect, contextErrorHierarchyIcon);
-                    }
                     else
-                    {
                         GUI.DrawTexture(rect, contextHierarchyIcon);
-                    }
 
                     return;
                 }
@@ -145,13 +149,9 @@ namespace Entitas.VisualDebugging.Unity.Editor
                 if (entityBehaviour != null)
                 {
                     if (entityBehaviour.entity.isEnabled)
-                    {
                         GUI.DrawTexture(rect, entityHierarchyIcon);
-                    }
                     else
-                    {
                         GUI.DrawTexture(rect, entityErrorHierarchyIcon);
-                    }
 
                     return;
                 }
@@ -160,13 +160,9 @@ namespace Entitas.VisualDebugging.Unity.Editor
                 if (entityLink != null)
                 {
                     if (entityLink.entity != null)
-                    {
                         GUI.DrawTexture(rect, entityLinkHierarchyIcon);
-                    }
                     else
-                    {
                         GUI.DrawTexture(rect, entityLinkWarnHierarchyIcon);
-                    }
 
                     return;
                 }
@@ -175,13 +171,9 @@ namespace Entitas.VisualDebugging.Unity.Editor
                 if (debugSystemsBehaviour != null)
                 {
                     if (debugSystemsBehaviour.systems.executeDuration < _systemWarningThreshold)
-                    {
                         GUI.DrawTexture(rect, systemsHierarchyIcon);
-                    }
                     else
-                    {
                         GUI.DrawTexture(rect, systemsWarnHierarchyIcon);
-                    }
                 }
             }
         }

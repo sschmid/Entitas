@@ -1,16 +1,12 @@
 using System;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
+namespace Entitas.VisualDebugging.Unity.Editor
+{
+    public class DefaultArrayCreator : IDefaultInstanceCreator
+    {
+        public bool HandlesType(Type type) => type.IsArray;
 
-    public class DefaultArrayCreator : IDefaultInstanceCreator {
-
-        public bool HandlesType(Type type) {
-            return type.IsArray;
-        }
-
-        public object CreateDefault(Type type) {
-            var rank = type.GetArrayRank();
-            return Array.CreateInstance(type.GetElementType(), new int[rank]);
-        }
+        public object CreateDefault(Type type) =>
+            Array.CreateInstance(type.GetElementType(), new int[type.GetArrayRank()]);
     }
 }

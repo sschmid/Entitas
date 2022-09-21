@@ -4,11 +4,11 @@ using DesperateDevs.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
-
-    public class VisualDebuggingPreferencesDrawer : AbstractPreferencesDrawer {
-
-        public override string Title { get { return "Visual Debugging"; } }
+namespace Entitas.VisualDebugging.Unity.Editor
+{
+    public class VisualDebuggingPreferencesDrawer : AbstractPreferencesDrawer
+    {
+        public override string Title => "Visual Debugging";
 
         const string ENTITAS_DISABLE_VISUAL_DEBUGGING = "ENTITAS_DISABLE_VISUAL_DEBUGGING";
         const string ENTITAS_DISABLE_DEEP_PROFILING = "ENTITAS_DISABLE_DEEP_PROFILING";
@@ -19,7 +19,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
         bool _enableVisualDebugging;
         bool _enableDeviceDeepProfiling;
 
-        public override void Initialize(Preferences preferences) {
+        public override void Initialize(Preferences preferences)
+        {
             _visualDebuggingConfig = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             preferences.Properties.AddProperties(_visualDebuggingConfig.DefaultProperties, false);
 
@@ -30,16 +31,15 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 .All(buildTarget => PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTarget).Contains(ENTITAS_DISABLE_DEEP_PROFILING));
         }
 
-        public override void DrawHeader(Preferences preferences) {
-        }
+        public override void DrawHeader(Preferences preferences) { }
 
-        protected override void OnDrawContent(Preferences preferences) {
+        protected override void OnDrawContent(Preferences preferences)
+        {
             EditorGUILayout.BeginHorizontal();
             {
                 drawVisualDebugging();
-                if (GUILayout.Button("Show Stats", EditorStyles.miniButton)) {
+                if (GUILayout.Button("Show Stats", EditorStyles.miniButton))
                     EntitasStats.ShowStats();
-                }
             }
             EditorGUILayout.EndHorizontal();
 
@@ -53,7 +53,8 @@ namespace Entitas.VisualDebugging.Unity.Editor {
             drawTypeDrawerFolder();
         }
 
-        void drawVisualDebugging() {
+        void drawVisualDebugging()
+        {
             EditorGUILayout.BeginVertical();
             {
                 EditorGUI.BeginChangeCheck();
@@ -62,12 +63,12 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
                 var visualDebuggingChanged = EditorGUI.EndChangeCheck();
 
-                if (visualDebuggingChanged) {
-                    if (_enableVisualDebugging) {
+                if (visualDebuggingChanged)
+                {
+                    if (_enableVisualDebugging)
                         _scriptingDefineSymbols.RemoveForAll(ENTITAS_DISABLE_VISUAL_DEBUGGING);
-                    } else {
+                    else
                         _scriptingDefineSymbols.AddForAll(ENTITAS_DISABLE_VISUAL_DEBUGGING);
-                    }
                 }
 
                 EditorGUI.BeginChangeCheck();
@@ -76,18 +77,19 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                 }
                 var deviceDeepProfilingChanged = EditorGUI.EndChangeCheck();
 
-                if (deviceDeepProfilingChanged) {
-                    if (_enableDeviceDeepProfiling) {
+                if (deviceDeepProfilingChanged)
+                {
+                    if (_enableDeviceDeepProfiling)
                         _scriptingDefineSymbols.RemoveForAll(ENTITAS_DISABLE_DEEP_PROFILING);
-                    } else {
+                    else
                         _scriptingDefineSymbols.AddForAll(ENTITAS_DISABLE_DEEP_PROFILING);
-                    }
                 }
             }
             EditorGUILayout.EndVertical();
         }
 
-        void drawDefaultInstanceCreator() {
+        void drawDefaultInstanceCreator()
+        {
             EditorGUILayout.BeginHorizontal();
             {
                 var path = EditorLayout.ObjectFieldOpenFolderPanel(
@@ -95,18 +97,21 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     _visualDebuggingConfig.defaultInstanceCreatorFolderPath,
                     _visualDebuggingConfig.defaultInstanceCreatorFolderPath
                 );
-                if (!string.IsNullOrEmpty(path)) {
+                if (!string.IsNullOrEmpty(path))
+                {
                     _visualDebuggingConfig.defaultInstanceCreatorFolderPath = path;
                 }
 
-                if (EditorLayout.MiniButton("New")) {
+                if (EditorLayout.MiniButton("New"))
+                {
                     EntityDrawer.GenerateIDefaultInstanceCreator("MyType");
                 }
             }
             EditorGUILayout.EndHorizontal();
         }
 
-        void drawTypeDrawerFolder() {
+        void drawTypeDrawerFolder()
+        {
             EditorGUILayout.BeginHorizontal();
             {
                 var path = EditorLayout.ObjectFieldOpenFolderPanel(
@@ -114,16 +119,13 @@ namespace Entitas.VisualDebugging.Unity.Editor {
                     _visualDebuggingConfig.typeDrawerFolderPath,
                     _visualDebuggingConfig.typeDrawerFolderPath
                 );
-                if (!string.IsNullOrEmpty(path)) {
+                if (!string.IsNullOrEmpty(path))
                     _visualDebuggingConfig.typeDrawerFolderPath = path;
-                }
 
-                if (EditorLayout.MiniButton("New")) {
+                if (EditorLayout.MiniButton("New"))
                     EntityDrawer.GenerateITypeDrawer("MyType");
-                }
             }
             EditorGUILayout.EndHorizontal();
         }
-
     }
 }

@@ -1,16 +1,13 @@
 using System;
 using UnityEditor;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
+namespace Entitas.VisualDebugging.Unity.Editor
+{
+    public class StringTypeDrawer : ITypeDrawer
+    {
+        public bool HandlesType(Type type) => type == typeof(string);
 
-    public class StringTypeDrawer : ITypeDrawer {
-
-        public bool HandlesType(Type type) {
-            return type == typeof(string);
-        }
-
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
-            return EditorGUILayout.DelayedTextField(memberName, (string)value);
-        }
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) =>
+            EditorGUILayout.DelayedTextField(memberName, (string)value);
     }
 }

@@ -114,13 +114,10 @@ namespace Entitas.VisualDebugging.Unity.Editor
                         EditorGUILayout.EndVertical();
 
                         if (_stepButtonContent == null)
-                        {
                             _stepButtonContent = EditorGUIUtility.IconContent("StepButton On");
-                        }
+
                         if (_pauseButtonContent == null)
-                        {
                             _pauseButtonContent = EditorGUIUtility.IconContent("PauseButton On");
-                        }
 
                         systems.paused = GUILayout.Toggle(systems.paused, _pauseButtonContent, "CommandLeft");
 
@@ -135,9 +132,8 @@ namespace Entitas.VisualDebugging.Unity.Editor
                     EditorGUILayout.EndHorizontal();
 
                     if (!EditorApplication.isPaused && !systems.paused)
-                    {
                         addDuration((float)systems.executeDuration + (float)systems.cleanupDuration);
-                    }
+
                     _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
                 }
                 EditorLayout.EndSectionContent();
@@ -155,9 +151,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                     {
                         DebugSystems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", DebugSystems.avgResetInterval);
                         if (GUILayout.Button("Reset Ø now", EditorStyles.miniButton, GUILayout.Width(88)))
-                        {
                             systems.ResetDurations();
-                        }
                     }
                     EditorGUILayout.EndHorizontal();
 
@@ -182,9 +176,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                         {
                             var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.IInitializeSystem);
                             if (systemsDrawn == 0)
-                            {
                                 EditorGUILayout.LabelField(string.Empty);
-                            }
                         }
                         EditorLayout.EndSectionContent();
                     }
@@ -196,9 +188,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                         {
                             var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.IExecuteSystem);
                             if (systemsDrawn == 0)
-                            {
                                 EditorGUILayout.LabelField(string.Empty);
-                            }
                         }
                         EditorLayout.EndSectionContent();
                     }
@@ -210,9 +200,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                         {
                             var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.ICleanupSystem);
                             if (systemsDrawn == 0)
-                            {
                                 EditorGUILayout.LabelField(string.Empty);
-                            }
                         }
                         EditorLayout.EndSectionContent();
                     }
@@ -224,9 +212,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                         {
                             var systemsDrawn = drawSystemInfos(systems, SystemInterfaceFlags.ITearDownSystem);
                             if (systemsDrawn == 0)
-                            {
                                 EditorGUILayout.LabelField(string.Empty);
-                            }
                         }
                         EditorLayout.EndSectionContent();
                     }
@@ -237,29 +223,21 @@ namespace Entitas.VisualDebugging.Unity.Editor
 
         int drawSystemInfos(DebugSystems systems, SystemInterfaceFlags type)
         {
-            SystemInfo[] systemInfos = null;
+            IEnumerable<SystemInfo> systemInfos = null;
 
             switch (type)
             {
                 case SystemInterfaceFlags.IInitializeSystem:
-                    systemInfos = systems.initializeSystemInfos
-                        .Where(systemInfo => systemInfo.initializationDuration >= _threshold)
-                        .ToArray();
+                    systemInfos = systems.initializeSystemInfos.Where(systemInfo => systemInfo.initializationDuration >= _threshold);
                     break;
                 case SystemInterfaceFlags.IExecuteSystem:
-                    systemInfos = systems.executeSystemInfos
-                        .Where(systemInfo => systemInfo.averageExecutionDuration >= _threshold)
-                        .ToArray();
+                    systemInfos = systems.executeSystemInfos.Where(systemInfo => systemInfo.averageExecutionDuration >= _threshold);
                     break;
                 case SystemInterfaceFlags.ICleanupSystem:
-                    systemInfos = systems.cleanupSystemInfos
-                        .Where(systemInfo => systemInfo.cleanupDuration >= _threshold)
-                        .ToArray();
+                    systemInfos = systems.cleanupSystemInfos.Where(systemInfo => systemInfo.cleanupDuration >= _threshold);
                     break;
                 case SystemInterfaceFlags.ITearDownSystem:
-                    systemInfos = systems.tearDownSystemInfos
-                        .Where(systemInfo => systemInfo.teardownDuration >= _threshold)
-                        .ToArray();
+                    systemInfos = systems.tearDownSystemInfos.Where(systemInfo => systemInfo.teardownDuration >= _threshold);
                     break;
             }
 
@@ -268,14 +246,9 @@ namespace Entitas.VisualDebugging.Unity.Editor
             var systemsDrawn = 0;
             foreach (var systemInfo in systemInfos)
             {
-                var debugSystems = systemInfo.system as DebugSystems;
-                if (debugSystems != null)
-                {
+                if (systemInfo.system is DebugSystems debugSystems)
                     if (!shouldShowSystems(debugSystems, type))
-                    {
                         continue;
-                    }
-                }
 
                 if (EditorLayout.MatchesSearchString(systemInfo.systemName.ToLower(), _systemNameSearchString.ToLower()))
                 {
@@ -296,6 +269,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                                 EditorGUILayout.Toggle(false, GUILayout.Width(20));
                             }
                         }
+
                         EditorGUI.EndDisabledGroup();
 
                         EditorGUI.indentLevel = indent;
@@ -306,13 +280,9 @@ namespace Entitas.VisualDebugging.Unity.Editor
                             if (reactiveSystem != null)
                             {
                                 if (systemInfo.isActive)
-                                {
                                     reactiveSystem.Activate();
-                                }
                                 else
-                                {
                                     reactiveSystem.Deactivate();
-                                }
                             }
                         }
 
@@ -322,15 +292,15 @@ namespace Entitas.VisualDebugging.Unity.Editor
                                 EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.initializationDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.IInitializeSystem));
                                 break;
                             case SystemInterfaceFlags.IExecuteSystem:
-                                var avgE = string.Format("Ø {0:00.000}", systemInfo.averageExecutionDuration).PadRight(12);
-                                var minE = string.Format("▼ {0:00.000}", systemInfo.minExecutionDuration).PadRight(12);
-                                var maxE = string.Format("▲ {0:00.000}", systemInfo.maxExecutionDuration);
+                                var avgE = $"Ø {systemInfo.averageExecutionDuration:00.000}".PadRight(12);
+                                var minE = $"▼ {systemInfo.minExecutionDuration:00.000}".PadRight(12);
+                                var maxE = $"▲ {systemInfo.maxExecutionDuration:00.000}";
                                 EditorGUILayout.LabelField(systemInfo.systemName, avgE + minE + maxE, getSystemStyle(systemInfo, SystemInterfaceFlags.IExecuteSystem));
                                 break;
                             case SystemInterfaceFlags.ICleanupSystem:
-                                var avgC = string.Format("Ø {0:00.000}", systemInfo.averageCleanupDuration).PadRight(12);
-                                var minC = string.Format("▼ {0:00.000}", systemInfo.minCleanupDuration).PadRight(12);
-                                var maxC = string.Format("▲ {0:00.000}", systemInfo.maxCleanupDuration);
+                                var avgC = $"Ø {systemInfo.averageCleanupDuration:00.000}".PadRight(12);
+                                var minC = $"▼ {systemInfo.minCleanupDuration:00.000}".PadRight(12);
+                                var maxC = $"▲ {systemInfo.maxCleanupDuration:00.000}";
                                 EditorGUILayout.LabelField(systemInfo.systemName, avgC + minC + maxC, getSystemStyle(systemInfo, SystemInterfaceFlags.ICleanupSystem));
                                 break;
                             case SystemInterfaceFlags.ITearDownSystem:
@@ -343,8 +313,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                     systemsDrawn += 1;
                 }
 
-                var debugSystem = systemInfo.system as DebugSystems;
-                if (debugSystem != null)
+                if (systemInfo.system is DebugSystems debugSystem)
                 {
                     var indent = EditorGUI.indentLevel;
                     EditorGUI.indentLevel += 1;
@@ -356,57 +325,28 @@ namespace Entitas.VisualDebugging.Unity.Editor
             return systemsDrawn;
         }
 
-        static SystemInfo[] getSortedSystemInfos(SystemInfo[] systemInfos, SortMethod sortMethod)
+        static IEnumerable<SystemInfo> getSortedSystemInfos(IEnumerable<SystemInfo> systemInfos, SortMethod sortMethod) => sortMethod switch
         {
-            if (sortMethod == SortMethod.Name)
-            {
-                return systemInfos
-                    .OrderBy(systemInfo => systemInfo.systemName)
-                    .ToArray();
-            }
-            if (sortMethod == SortMethod.NameDescending)
-            {
-                return systemInfos
-                    .OrderByDescending(systemInfo => systemInfo.systemName)
-                    .ToArray();
-            }
-
-            if (sortMethod == SortMethod.ExecutionTime)
-            {
-                return systemInfos
-                    .OrderBy(systemInfo => systemInfo.averageExecutionDuration)
-                    .ToArray();
-            }
-            if (sortMethod == SortMethod.ExecutionTimeDescending)
-            {
-                return systemInfos
-                    .OrderByDescending(systemInfo => systemInfo.averageExecutionDuration)
-                    .ToArray();
-            }
-
-            return systemInfos;
-        }
+            SortMethod.Name => systemInfos.OrderBy(systemInfo => systemInfo.systemName),
+            SortMethod.NameDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.systemName),
+            SortMethod.ExecutionTime => systemInfos.OrderBy(systemInfo => systemInfo.averageExecutionDuration),
+            SortMethod.ExecutionTimeDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.averageExecutionDuration),
+            _ => systemInfos
+        };
 
         static bool shouldShowSystems(DebugSystems systems, SystemInterfaceFlags type)
         {
             if (!_hideEmptySystems)
-            {
                 return true;
-            }
 
-            switch (type)
+            return type switch
             {
-                case SystemInterfaceFlags.IInitializeSystem:
-                    return systems.totalInitializeSystemsCount > 0;
-                case SystemInterfaceFlags.IExecuteSystem:
-                    return systems.totalExecuteSystemsCount > 0;
-                case SystemInterfaceFlags.ICleanupSystem:
-                    return systems.totalCleanupSystemsCount > 0;
-                case SystemInterfaceFlags.ITearDownSystem:
-                    return systems.totalTearDownSystemsCount > 0;
-                default:
-                    return true;
-            }
+                SystemInterfaceFlags.IInitializeSystem => systems.totalInitializeSystemsCount > 0,
+                SystemInterfaceFlags.IExecuteSystem => systems.totalExecuteSystemsCount > 0,
+                SystemInterfaceFlags.ICleanupSystem => systems.totalCleanupSystemsCount > 0,
+                SystemInterfaceFlags.ITearDownSystem => systems.totalTearDownSystemsCount > 0,
+                _ => true
+            };
         }
 
         GUIStyle getSystemStyle(SystemInfo systemInfo, SystemInterfaceFlags systemFlag)
@@ -417,14 +357,10 @@ namespace Entitas.VisualDebugging.Unity.Editor
                 : style.normal.textColor;
 
             if (systemFlag == SystemInterfaceFlags.IExecuteSystem && systemInfo.averageExecutionDuration >= _systemWarningThreshold)
-            {
                 color = Color.red;
-            }
 
             if (systemFlag == SystemInterfaceFlags.ICleanupSystem && systemInfo.averageCleanupDuration >= _systemWarningThreshold)
-            {
                 color = Color.red;
-            }
 
             style.normal.textColor = color;
 
@@ -437,11 +373,8 @@ namespace Entitas.VisualDebugging.Unity.Editor
             if (Time.renderedFrameCount != _lastRenderedFrameCount)
             {
                 _lastRenderedFrameCount = Time.renderedFrameCount;
-
                 if (_systemMonitorData.Count >= SYSTEM_MONITOR_DATA_LENGTH)
-                {
                     _systemMonitorData.Dequeue();
-                }
 
                 _systemMonitorData.Enqueue(duration);
             }

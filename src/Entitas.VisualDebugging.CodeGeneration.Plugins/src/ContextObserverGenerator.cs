@@ -3,16 +3,16 @@ using Jenny;
 using DesperateDevs.Extensions;
 using Entitas.CodeGeneration.Plugins;
 
-namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
-
-    public class ContextObserverGenerator : ICodeGenerator {
-
-        public string Name { get { return "Context Observer"; } }
-        public int Order { get { return 0; } }
-        public bool RunInDryMode { get { return true; } }
+namespace Entitas.VisualDebugging.CodeGeneration.Plugins
+{
+    public class ContextObserverGenerator : ICodeGenerator
+    {
+        public string Name => "Context Observer";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string CONTEXTS_TEMPLATE =
-@"public partial class Contexts {
+            @"public partial class Contexts {
 
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
@@ -38,14 +38,16 @@ ${contextObservers}
 
         const string CONTEXT_OBSERVER_TEMPLATE = @"            CreateContextObserver(${contextName});";
 
-        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+        public CodeGenFile[] Generate(CodeGeneratorData[] data)
+        {
             var contextNames = data
                 .OfType<ContextData>()
                 .Select(d => d.GetContextName())
                 .OrderBy(contextName => contextName)
                 .ToArray();
 
-            return new[] {
+            return new[]
+            {
                 new CodeGenFile(
                     "Contexts.cs",
                     generateContextsClass(contextNames),
@@ -53,11 +55,11 @@ ${contextObservers}
             };
         }
 
-        string generateContextsClass(string[] contextNames) {
+        string generateContextsClass(string[] contextNames)
+        {
             var contextObservers = string.Join("\n", contextNames
                 .Select(contextName => CONTEXT_OBSERVER_TEMPLATE
-                    .Replace("${contextName}", contextName.ToLowerFirst())
-                ).ToArray());
+                    .Replace("${contextName}", contextName.ToLowerFirst())));
 
             return CONTEXTS_TEMPLATE
                 .Replace("${contextObservers}", contextObservers);

@@ -1,16 +1,13 @@
 using System;
 using UnityEditor;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
+namespace Entitas.VisualDebugging.Unity.Editor
+{
+    public class BoolTypeDrawer : ITypeDrawer
+    {
+        public bool HandlesType(Type type) => type == typeof(bool);
 
-    public class BoolTypeDrawer : ITypeDrawer {
-
-        public bool HandlesType(Type type) {
-            return type == typeof(bool);
-        }
-
-        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) {
-            return EditorGUILayout.Toggle(memberName, (bool)value);
-        }
+        public object DrawAndGetNewValue(Type memberType, string memberName, object value, object target) => 
+            EditorGUILayout.Toggle(memberName, (bool)value);
     }
 }

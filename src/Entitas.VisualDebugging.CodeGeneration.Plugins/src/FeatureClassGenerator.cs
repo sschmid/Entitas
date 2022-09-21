@@ -1,15 +1,15 @@
 using Jenny;
 
-namespace Entitas.VisualDebugging.CodeGeneration.Plugins {
-
-    public class FeatureClassGenerator : ICodeGenerator {
-
-        public string Name { get { return "Feature Class"; } }
-        public int Order { get { return 0; } }
-        public bool RunInDryMode { get { return true; } }
+namespace Entitas.VisualDebugging.CodeGeneration.Plugins
+{
+    public class FeatureClassGenerator : ICodeGenerator
+    {
+        public string Name => "Feature Class";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string FEATURE_TEMPLATE =
-@"#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
+            @"#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
 public class Feature : Entitas.VisualDebugging.Unity.DebugSystems {
 
@@ -112,13 +112,12 @@ public class Feature : Entitas.Systems {
 #endif
 ";
 
-        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return new[] {
-                new CodeGenFile(
-                    "Feature.cs",
-                    FEATURE_TEMPLATE,
-                    GetType().FullName)
-            };
-        }
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => new[]
+        {
+            new CodeGenFile(
+                "Feature.cs",
+                FEATURE_TEMPLATE,
+                GetType().FullName)
+        };
     }
 }

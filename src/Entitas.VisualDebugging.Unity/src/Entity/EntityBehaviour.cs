@@ -1,20 +1,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity {
-
+namespace Entitas.VisualDebugging.Unity
+{
     [ExecuteInEditMode]
-    public class EntityBehaviour : MonoBehaviour {
-
-        public IContext context { get { return _context; } }
-        public IEntity entity { get { return _entity; } }
+    public class EntityBehaviour : MonoBehaviour
+    {
+        public IContext context => _context;
+        public IEntity entity => _entity;
 
         IContext _context;
         IEntity _entity;
         Stack<EntityBehaviour> _entityBehaviourPool;
         string _cachedName;
 
-        public void Init(IContext context, IEntity entity, Stack<EntityBehaviour> entityBehaviourPool) {
+        public void Init(IContext context, IEntity entity, Stack<EntityBehaviour> entityBehaviourPool)
+        {
             _context = context;
             _entity = entity;
             _entityBehaviourPool = entityBehaviourPool;
@@ -24,7 +25,8 @@ namespace Entitas.VisualDebugging.Unity {
             Update();
         }
 
-        void onEntityReleased(IEntity e) {
+        void onEntityReleased(IEntity e)
+        {
             _entity.OnEntityReleased -= onEntityReleased;
             gameObject.SetActive(false);
             gameObject.hideFlags = HideFlags.HideInHierarchy;
@@ -33,16 +35,16 @@ namespace Entitas.VisualDebugging.Unity {
             name = string.Empty;
         }
 
-        void Update() {
-            if (_entity != null && _cachedName != _entity.ToString()) {
+        void Update()
+        {
+            if (_entity != null && _cachedName != _entity.ToString())
                 name = _cachedName = _entity.ToString();
-            }
         }
 
-        void OnDestroy() {
-            if (_entity != null) {
+        void OnDestroy()
+        {
+            if (_entity != null)
                 _entity.OnEntityReleased -= onEntityReleased;
-            }
         }
     }
 }

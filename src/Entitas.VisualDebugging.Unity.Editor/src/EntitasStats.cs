@@ -7,21 +7,20 @@ using Entitas.CodeGeneration.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor {
-
-    public static class EntitasStats {
-
+namespace Entitas.VisualDebugging.Unity.Editor
+{
+    public static class EntitasStats
+    {
         [MenuItem("Tools/Entitas/Show Stats", false, 200)]
-        public static void ShowStats() {
-            var stats = string.Join("\n", GetStats()
-                .Select(kv => kv.Key + ": " + kv.Value)
-                .ToArray());
-
+        public static void ShowStats()
+        {
+            var stats = string.Join("\n", GetStats().Select(kv => kv.Key + ": " + kv.Value));
             Debug.Log(stats);
             EditorUtility.DisplayDialog("Entitas Stats", stats, "Close");
         }
 
-        public static Dictionary<string, int> GetStats() {
+        public static Dictionary<string, int> GetStats()
+        {
             var types = AppDomain.CurrentDomain.GetAllTypes();
 
             var components = types
@@ -34,58 +33,55 @@ namespace Entitas.VisualDebugging.Unity.Editor {
 
             var contexts = getContexts(components);
 
-            var stats = new Dictionary<string, int> {
-                { "Total Components", components.Length },
-                { "Systems", systems.Length }
+            var stats = new Dictionary<string, int>
+            {
+                {"Total Components", components.Length},
+                {"Systems", systems.Length}
             };
 
-            foreach (var context in contexts) {
+            foreach (var context in contexts)
                 stats.Add("Components in " + context.Key, context.Value);
-            }
 
             return stats;
         }
 
-        static Dictionary<string, int> getContexts(Type[] components) {
-            return components.Aggregate(new Dictionary<string, int>(), (contexts, type) => {
+        static Dictionary<string, int> getContexts(Type[] components) => components
+            .Aggregate(new Dictionary<string, int>(), (contexts, type) =>
+            {
                 var contextNames = getContextNamesOrDefault(type);
-                foreach (var contextName in contextNames) {
-                    if (!contexts.ContainsKey(contextName)) {
+                foreach (var contextName in contextNames)
+                {
+                    if (!contexts.ContainsKey(contextName))
                         contexts.Add(contextName, 0);
-                    }
 
                     contexts[contextName] += 1;
                 }
+
                 return contexts;
             });
-        }
 
+        static string[] getContextNames(Type type) => Attribute
+            .GetCustomAttributes(type)
+            .OfType<ContextAttribute>()
+            .Select(attr => attr.contextName)
+            .ToArray();
 
-        static string[] getContextNames(Type type) {
-            return Attribute
-                .GetCustomAttributes(type)
-                .OfType<ContextAttribute>()
-                .Select(attr => attr.contextName)
-                .ToArray();
-        }
-
-        static string[] getContextNamesOrDefault(Type type) {
+        static string[] getContextNamesOrDefault(Type type)
+        {
             var contextNames = getContextNames(type);
-            if (contextNames.Length == 0) {
-                contextNames = new[] { "Default" };
-            }
+            if (contextNames.Length == 0)
+                contextNames = new[] {"Default"};
 
             return contextNames;
         }
 
-        static bool isSystem(Type type) {
-            return type.ImplementsInterface<ISystem>()
-                   && type != typeof(ReactiveSystem<>)
-                   && type != typeof(MultiReactiveSystem<,>)
-                   && type != typeof(Systems)
-                   && type != typeof(DebugSystems)
-                   && type != typeof(JobSystem<>)
-                   && type.FullName != "Feature";
-        }
+        static bool isSystem(Type type) =>
+            type.ImplementsInterface<ISystem>()
+            && type != typeof(ReactiveSystem<>)
+            && type != typeof(MultiReactiveSystem<,>)
+            && type != typeof(Systems)
+            && type != typeof(DebugSystems)
+            && type != typeof(JobSystem<>)
+            && type.FullName != "Feature";
     }
 }
