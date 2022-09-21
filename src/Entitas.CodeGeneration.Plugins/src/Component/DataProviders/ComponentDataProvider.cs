@@ -180,7 +180,7 @@ namespace Entitas.CodeGeneration.Plugins
         {
             var isStandalone = AppDomain.CurrentDomain
                 .GetAllTypes()
-                .Any(type => type.FullName == "DesperateDevs.CodeGeneration.CodeGenerator.CLI.Program");
+                .Any(type => type.FullName.StartsWith("Jenny.Generator.Cli"));
 
             if (isStandalone)
             {
