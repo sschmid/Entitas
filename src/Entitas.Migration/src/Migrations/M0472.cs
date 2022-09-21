@@ -1,17 +1,17 @@
-﻿namespace Entitas.Migration {
+﻿namespace Entitas.Migration
+{
+    public class M0472 : IMigration
+    {
+        public string version => "0.47.2";
+        public string workingDirectory => "project root";
+        public string description => "Updates properties to use renamed keys";
 
-    public class M0472 : IMigration {
-
-        public string version { get { return "0.47.2"; } }
-
-        public string workingDirectory { get { return "project root"; } }
-
-        public string description { get { return "Updates properties to use renamed keys"; } }
-
-        public MigrationFile[] Migrate(string path) {
+        public MigrationFile[] Migrate(string path)
+        {
             var properties = MigrationUtils.GetFiles(path, "*.properties");
 
-            for (int i = 0; i < properties.Length; i++) {
+            for (var i = 0; i < properties.Length; i++)
+            {
                 var file = properties[i];
 
                 file.fileContent = file.fileContent.Replace("CodeGenerator.SearchPaths", "Jenny.SearchPaths");

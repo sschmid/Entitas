@@ -1,16 +1,15 @@
 using System.IO;
 
-namespace Entitas.Migration {
+namespace Entitas.Migration
+{
+    public class M0410_2 : IMigration
+    {
+        public string version => "0.41.0-2";
+        public string workingDirectory => "where generated files are located";
+        public string description => "Adding temporary Feature class";
 
-    public class M0410_2 : IMigration {
-
-        public string version { get { return "0.41.0-2"; } }
-
-        public string workingDirectory { get { return "where generated files are located"; } }
-
-        public string description { get { return "Adding temporary Feature class"; } }
-
-        public MigrationFile[] Migrate(string path) {
+        public MigrationFile[] Migrate(string path)
+        {
             const string featureClass =
                 @"namespace Entitas {
 
@@ -56,7 +55,7 @@ namespace Entitas.Migration {
 
 }";
 
-            return new[] { new MigrationFile(path + Path.DirectorySeparatorChar + "Feature.cs", featureClass) };
+            return new[] {new MigrationFile(path + Path.DirectorySeparatorChar + "Feature.cs", featureClass)};
         }
     }
 }

@@ -31,13 +31,10 @@ namespace Entitas.Migration.Unity.Editor
             _showMigration[0] = true;
         }
 
-        static IMigration[] getMigrations()
-        {
-            return AppDomain.CurrentDomain
-                .GetInstancesOf<IMigration>()
-                .OrderByDescending(instance => instance.GetType().FullName)
-                .ToArray();
-        }
+        static IMigration[] getMigrations() => AppDomain.CurrentDomain
+            .GetInstancesOf<IMigration>()
+            .OrderByDescending(instance => instance.GetType().FullName)
+            .ToArray();
 
         void OnGUI()
         {
@@ -47,7 +44,7 @@ namespace Entitas.Migration.Unity.Editor
 
                 var descriptionStyle = new GUIStyle(GUI.skin.label);
                 descriptionStyle.wordWrap = true;
-                for (int i = 0; i < _migrations.Length; i++)
+                for (var i = 0; i < _migrations.Length; i++)
                 {
                     var migration = _migrations[i];
                     _showMigration[i] = EditorLayout.DrawSectionHeaderToggle(migration.version, _showMigration[i]);
@@ -56,10 +53,8 @@ namespace Entitas.Migration.Unity.Editor
                         EditorLayout.BeginSectionContent();
                         {
                             EditorGUILayout.LabelField(migration.description, descriptionStyle);
-                            if (GUILayout.Button("Apply migration " + migration.version))
-                            {
+                            if (GUILayout.Button($"Apply migration {migration.version}")) 
                                 migrate(migration, this);
-                            }
                         }
                         EditorLayout.EndSectionContent();
                     }
@@ -71,8 +66,7 @@ namespace Entitas.Migration.Unity.Editor
         static void migrate(IMigration migration, MigrationWindow window)
         {
             var shouldMigrate = EditorUtility.DisplayDialog("Migrate",
-                "You are about to migrate your source files. " +
-                "Make sure that you have committed your current project or that you have a backup of your project before you proceed.",
+                "You are about to migrate your source files. Make sure that you have committed your current project or that you have a backup of your project before you proceed.",
                 "I have a backup - Migrate",
                 "Cancel"
             );
@@ -81,7 +75,7 @@ namespace Entitas.Migration.Unity.Editor
             {
                 window.Close();
                 EditorUtility.DisplayDialog("Migrate",
-                    "Please select the folder, " + migration.workingDirectory + ".",
+                    $"Please select the folder, {migration.workingDirectory}.",
                     "I will select the requested folder"
                 );
 
@@ -90,11 +84,11 @@ namespace Entitas.Migration.Unity.Editor
                 if (!string.IsNullOrEmpty(path))
                 {
                     var changedFiles = migration.Migrate(path);
-                    Debug.Log("Applying " + migration.version);
+                    Debug.Log($"Applying {migration.version}");
                     foreach (var file in changedFiles)
                     {
                         MigrationUtils.WriteFiles(changedFiles);
-                        Debug.Log("Migrated " + file.fileName);
+                        Debug.Log($"Migrated {file.fileName}");
                     }
                 }
                 else
