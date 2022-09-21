@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DesperateDevs.Caching" Version="1.0.0" />
+    <PackageReference Include="DesperateDevs.Caching" Version="1.1.0" />
     <PackageReference Include="DesperateDevs.Reflection" Version="1.0.0" />
   </ItemGroup>
 

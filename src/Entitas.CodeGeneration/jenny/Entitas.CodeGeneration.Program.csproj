@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Jenny.Generator.Cli" Version="1.0.0" />
+    <PackageReference Include="Jenny.Generator.Cli" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
