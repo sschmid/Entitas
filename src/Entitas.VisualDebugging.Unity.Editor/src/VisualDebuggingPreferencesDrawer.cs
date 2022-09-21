@@ -23,6 +23,8 @@ namespace Entitas.VisualDebugging.Unity.Editor
         {
             _visualDebuggingConfig = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             preferences.Properties.AddProperties(_visualDebuggingConfig.DefaultProperties, false);
+            preferences.Save();
+            preferences.Reload();
 
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _enableVisualDebugging = !ScriptingDefineSymbols.BuildTargetGroups
