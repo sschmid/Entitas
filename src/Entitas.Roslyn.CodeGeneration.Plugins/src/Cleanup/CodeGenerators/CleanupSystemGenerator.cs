@@ -4,10 +4,10 @@ using Jenny;
 using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.Plugins;
 
-namespace Entitas.Roslyn.CodeGeneration.Plugins {
-
-    public class CleanupSystemGenerator : AbstractGenerator {
-
+namespace Entitas.Roslyn.CodeGeneration.Plugins
+{
+    public class CleanupSystemGenerator : AbstractGenerator
+    {
         public override string Name => "Cleanup (System)";
 
         const string DESTROY_ENTITY_TEMPLATE =
@@ -52,20 +52,18 @@ public sealed class Remove${ComponentName}${SystemType} : ICleanupSystem {
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return data
-                .OfType<CleanupData>()
-                .SelectMany(generate)
-                .ToArray();
-        }
+        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+            .OfType<CleanupData>()
+            .SelectMany(generate)
+            .ToArray();
 
-        CodeGenFile[] generate(CleanupData data) {
-            return data.componentData.GetContextNames()
-                .Select(contextName => generate(contextName, data))
-                .ToArray();
-        }
+        CodeGenFile[] generate(CleanupData data) => data
+            .componentData.GetContextNames()
+            .Select(contextName => generate(contextName, data))
+            .ToArray();
 
-        CodeGenFile generate(string contextName, CleanupData data) {
+        CodeGenFile generate(string contextName, CleanupData data)
+        {
             var template = data.cleanupMode == CleanupMode.DestroyEntity
                 ? DESTROY_ENTITY_TEMPLATE
                 : REMOVE_COMPONENT_TEMPLATE;
@@ -86,12 +84,12 @@ public sealed class Remove${ComponentName}${SystemType} : ICleanupSystem {
             );
         }
 
-        static string removeComponent(CleanupData data) {
-            if (data.componentData.GetMemberData().Length == 0) {
+        static string removeComponent(CleanupData data)
+        {
+            if (data.componentData.GetMemberData().Length == 0)
                 return data.componentData.PrefixedComponentName() + " = false";
-            }
 
-            return "Remove" + data.componentData.ComponentName() + "()";
+            return $"Remove{data.componentData.ComponentName()}()";
         }
     }
 }

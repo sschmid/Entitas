@@ -1,13 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Jenny;
 
-namespace Entitas.CodeGeneration.Plugins {
-
-    public class ComponentLookupGenerator : AbstractGenerator {
-
-        public override string Name { get { return "Component (Lookup)"; } }
+namespace Entitas.CodeGeneration.Plugins
+{
+    public class ComponentLookupGenerator : AbstractGenerator
+    {
+        public override string Name => "Component (Lookup)";
 
         const string TEMPLATE =
             @"public static class ${Lookup} {
@@ -31,7 +32,8 @@ ${componentTypesList}
         const string COMPONENT_NAME_TEMPLATE = @"        ""${ComponentName}""";
         const string COMPONENT_TYPE_TEMPLATE = @"        typeof(${ComponentType})";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
+        public override CodeGenFile[] Generate(CodeGeneratorData[] data)
+        {
             var lookups = generateLookups(data
                 .OfType<ComponentData>()
                 .Where(d => d.ShouldGenerateIndex())
@@ -48,21 +50,24 @@ ${componentTypesList}
             return lookups.Concat(emptyLookups).ToArray();
         }
 
-        CodeGenFile[] generateEmptyLookups(ContextData[] data) {
-            var emptyData = new ComponentData[0];
+        CodeGenFile[] generateEmptyLookups(ContextData[] data)
+        {
+            var emptyData = Array.Empty<ComponentData>();
             return data
                 .Select(d => generateComponentsLookupClass(d.GetContextName(), emptyData))
                 .ToArray();
         }
 
-        CodeGenFile[] generateLookups(ComponentData[] data) {
+        CodeGenFile[] generateLookups(ComponentData[] data)
+        {
             var contextNameToComponentData = data
-                .Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) => {
+                .Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) =>
+                {
                     var contextNames = d.GetContextNames();
-                    foreach (var contextName in contextNames) {
-                        if (!dict.ContainsKey(contextName)) {
+                    foreach (var contextName in contextNames)
+                    {
+                        if (!dict.ContainsKey(contextName))
                             dict.Add(contextName, new List<ComponentData>());
-                        }
 
                         dict[contextName].Add(d);
                     }
@@ -70,7 +75,8 @@ ${componentTypesList}
                     return dict;
                 });
 
-            foreach (var key in contextNameToComponentData.Keys.ToArray()) {
+            foreach (var key in contextNameToComponentData.Keys.ToArray())
+            {
                 contextNameToComponentData[key] = contextNameToComponentData[key]
                     .OrderBy(d => d.GetTypeName())
                     .ToList();
@@ -81,7 +87,8 @@ ${componentTypesList}
                 .ToArray();
         }
 
-        CodeGenFile generateComponentsLookupClass(string contextName, ComponentData[] data) {
+        CodeGenFile generateComponentsLookupClass(string contextName, ComponentData[] data)
+        {
             var componentConstantsList = string.Join("\n", data
                 .Select((d, index) => COMPONENT_CONSTANT_TEMPLATE
                     .Replace("${ComponentName}", d.ComponentName())
@@ -91,14 +98,10 @@ ${componentTypesList}
                 .Replace("${totalComponents}", data.Length.ToString());
 
             var componentNamesList = string.Join(",\n", data
-                .Select(d => COMPONENT_NAME_TEMPLATE
-                    .Replace("${ComponentName}", d.ComponentName())
-                ).ToArray());
+                .Select(d => COMPONENT_NAME_TEMPLATE.Replace("${ComponentName}", d.ComponentName())));
 
             var componentTypesList = string.Join(",\n", data
-                .Select(d => COMPONENT_TYPE_TEMPLATE
-                    .Replace("${ComponentType}", d.GetTypeName())
-                ).ToArray());
+                .Select(d => COMPONENT_TYPE_TEMPLATE.Replace("${ComponentType}", d.GetTypeName())));
 
             var fileContent = TEMPLATE
                 .Replace("${Lookup}", contextName + CodeGeneratorExtensions.LOOKUP)

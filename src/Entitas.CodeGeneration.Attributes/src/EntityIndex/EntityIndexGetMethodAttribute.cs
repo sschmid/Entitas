@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace Entitas.CodeGeneration.Attributes {
-
+namespace Entitas.CodeGeneration.Attributes
+{
     [AttributeUsage(AttributeTargets.Method)]
-    public class EntityIndexGetMethodAttribute : Attribute {
-    }
+    public class EntityIndexGetMethodAttribute : Attribute { }
 }

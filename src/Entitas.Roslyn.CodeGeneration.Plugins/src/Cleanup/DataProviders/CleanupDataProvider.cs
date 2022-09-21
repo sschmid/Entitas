@@ -9,10 +9,10 @@ using Entitas.CodeGeneration.Attributes;
 using Entitas.CodeGeneration.Plugins;
 using Microsoft.CodeAnalysis;
 
-namespace Entitas.Roslyn.CodeGeneration.Plugins {
-
-    public class CleanupDataProvider : IDataProvider, IConfigurable, ICachable {
-
+namespace Entitas.Roslyn.CodeGeneration.Plugins
+{
+    public class CleanupDataProvider : IDataProvider, IConfigurable, ICachable
+    {
         public string Name => "Cleanup";
         public int Order => 0;
         public bool RunInDryMode => true;
@@ -27,19 +27,21 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins {
         Preferences _preferences;
         ComponentDataProvider _componentDataProvider;
 
-        public CleanupDataProvider() : this(null) {
-        }
+        public CleanupDataProvider() : this(null) { }
 
-        public CleanupDataProvider(INamedTypeSymbol[] types) {
+        public CleanupDataProvider(INamedTypeSymbol[] types)
+        {
             _types = types;
         }
 
-        public void Configure(Preferences preferences) {
+        public void Configure(Preferences preferences)
+        {
             _preferences = preferences;
             _projectPathConfig.Configure(preferences);
         }
 
-        public CodeGeneratorData[] GetData() {
+        public CodeGeneratorData[] GetData()
+        {
             var types = _types ?? Jenny.Plugins.Roslyn.PluginUtil
                 .GetCachedProjectParser(ObjectCache, _projectPathConfig.ProjectPath)
                 .GetTypes();
@@ -62,7 +64,7 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins {
             return _componentDataProvider
                 .GetData()
                 .Where(data => !((ComponentData)data).GetTypeName().RemoveComponentSuffix().HasListenerSuffix())
-                .Select(data => new CleanupData(data) { cleanupMode = cleanupLookup[((ComponentData)data).GetTypeName()] })
+                .Select(data => new CleanupData(data) {cleanupMode = cleanupLookup[((ComponentData)data).GetTypeName()]})
                 .ToArray();
         }
     }

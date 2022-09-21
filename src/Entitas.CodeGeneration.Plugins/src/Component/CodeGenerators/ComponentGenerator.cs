@@ -3,13 +3,13 @@ using System.Linq;
 using Jenny;
 using DesperateDevs.Extensions;
 
-namespace Entitas.CodeGeneration.Plugins {
-
-    public class ComponentGenerator : ICodeGenerator {
-
-        public string Name { get { return "Component"; } }
-        public int Order { get { return 0; } }
-        public bool RunInDryMode { get { return true; } }
+namespace Entitas.CodeGeneration.Plugins
+{
+    public class ComponentGenerator : ICodeGenerator
+    {
+        public string Name => "Component";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string COMPONENT_TEMPLATE =
             @"[Entitas.CodeGeneration.Attributes.DontGenerate(false)]
@@ -18,15 +18,14 @@ public sealed class ${FullComponentName} : Entitas.IComponent {
 }
 ";
 
-        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return data
-                .OfType<ComponentData>()
-                .Where(d => d.ShouldGenerateComponent())
-                .Select(generate)
-                .ToArray();
-        }
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+            .OfType<ComponentData>()
+            .Where(d => d.ShouldGenerateComponent())
+            .Select(generate)
+            .ToArray();
 
-        CodeGenFile generate(ComponentData data) {
+        CodeGenFile generate(ComponentData data)
+        {
             var fullComponentName = data.GetTypeName().RemoveDots();
             return new CodeGenFile(
                 "Components" + Path.DirectorySeparatorChar +

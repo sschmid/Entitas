@@ -1,6 +1,7 @@
-namespace Entitas.CodeGeneration.Attributes {
-
-    public enum EntityIndexType {
+namespace Entitas.CodeGeneration.Attributes
+{
+    public enum EntityIndexType
+    {
         EntityIndex,
         PrimaryEntityIndex
     }

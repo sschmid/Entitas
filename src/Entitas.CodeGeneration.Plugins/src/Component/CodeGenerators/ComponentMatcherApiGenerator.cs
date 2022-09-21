@@ -2,11 +2,11 @@ using System.IO;
 using System.Linq;
 using Jenny;
 
-namespace Entitas.CodeGeneration.Plugins {
-
-    public class ComponentMatcherApiGenerator : AbstractGenerator {
-
-        public override string Name { get { return "Component (Matcher API)"; } }
+namespace Entitas.CodeGeneration.Plugins
+{
+    public class ComponentMatcherApiGenerator : AbstractGenerator
+    {
+        public override string Name => "Component (Matcher API)";
 
         const string TEMPLATE =
             @"public sealed partial class ${MatcherType} {
@@ -27,23 +27,21 @@ namespace Entitas.CodeGeneration.Plugins {
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return data
-                .OfType<ComponentData>()
-                .Where(d => d.ShouldGenerateIndex())
-                .SelectMany(generate)
-                .ToArray();
-        }
+        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+            .OfType<ComponentData>()
+            .Where(d => d.ShouldGenerateIndex())
+            .SelectMany(generate)
+            .ToArray();
 
-        CodeGenFile[] generate(ComponentData data) {
-            return data.GetContextNames()
-                .Select(context => generate(context, data))
-                .ToArray();
-        }
+        CodeGenFile[] generate(ComponentData data) => data
+            .GetContextNames()
+            .Select(context => generate(context, data))
+            .ToArray();
 
-        CodeGenFile generate(string contextName, ComponentData data) {
+        CodeGenFile generate(string contextName, ComponentData data)
+        {
             var fileContent = TEMPLATE
-                .Replace("${componentNames}", contextName + CodeGeneratorExtensions.LOOKUP + ".componentNames")
+                .Replace("${componentNames}", $"{contextName}{CodeGeneratorExtensions.LOOKUP}.componentNames")
                 .Replace(data, contextName);
 
             return new CodeGenFile(

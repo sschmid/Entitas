@@ -3,11 +3,11 @@ using System.Linq;
 using Jenny;
 using DesperateDevs.Extensions;
 
-namespace Entitas.CodeGeneration.Plugins {
-
-    public class ComponentEntityApiGenerator : AbstractGenerator {
-
-        public override string Name { get { return "Component (Entity API)"; } }
+namespace Entitas.CodeGeneration.Plugins
+{
+    public class ComponentEntityApiGenerator : AbstractGenerator
+    {
+        public override string Name => "Component (Entity API)";
 
         const string STANDARD_TEMPLATE =
             @"public partial class ${EntityType} {
@@ -61,21 +61,19 @@ ${memberAssignmentList}
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return data
-                .OfType<ComponentData>()
-                .Where(d => d.ShouldGenerateMethods())
-                .SelectMany(generate)
-                .ToArray();
-        }
+        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+            .OfType<ComponentData>()
+            .Where(d => d.ShouldGenerateMethods())
+            .SelectMany(generate)
+            .ToArray();
 
-        CodeGenFile[] generate(ComponentData data) {
-            return data.GetContextNames()
-                .Select(contextName => generate(contextName, data))
-                .ToArray();
-        }
+        CodeGenFile[] generate(ComponentData data) => data
+            .GetContextNames()
+            .Select(contextName => generate(contextName, data))
+            .ToArray();
 
-        CodeGenFile generate(string contextName, ComponentData data) {
+        CodeGenFile generate(string contextName, ComponentData data)
+        {
             var template = data.GetMemberData().Length == 0
                 ? FLAG_TEMPLATE
                 : STANDARD_TEMPLATE;
@@ -93,11 +91,7 @@ ${memberAssignmentList}
             );
         }
 
-        string getMemberAssignmentList(MemberData[] memberData) {
-            return string.Join("\n", memberData
-                .Select(info => "        component." + info.name + " = new" + info.name.ToUpperFirst() + ";")
-                .ToArray()
-            );
-        }
+        string getMemberAssignmentList(MemberData[] memberData) => string.Join("\n", memberData
+            .Select(info => $"        component.{info.name} = new{info.name.ToUpperFirst()};"));
     }
 }

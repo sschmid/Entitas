@@ -3,11 +3,11 @@ using System.Linq;
 using Jenny;
 using Entitas.CodeGeneration.Attributes;
 
-namespace Entitas.CodeGeneration.Plugins {
-
-    public class EventSystemGenerator : AbstractGenerator {
-
-        public override string Name { get { return "Event (System)"; } }
+namespace Entitas.CodeGeneration.Plugins
+{
+    public class EventSystemGenerator : AbstractGenerator
+    {
+        public override string Name => "Event (System)";
 
         const string ANY_TARGET_TEMPLATE =
             @"public sealed class ${Event}EventSystem : Entitas.ReactiveSystem<${EntityType}> {
@@ -79,61 +79,62 @@ namespace Entitas.CodeGeneration.Plugins {
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return data
-                .OfType<ComponentData>()
-                .Where(d => d.IsEvent())
-                .SelectMany(generate)
-                .ToArray();
-        }
+        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+            .OfType<ComponentData>()
+            .Where(d => d.IsEvent())
+            .SelectMany(generate)
+            .ToArray();
 
-        CodeGenFile[] generate(ComponentData data) {
-            return data.GetContextNames()
-                .SelectMany(contextName => generate(contextName, data))
-                .ToArray();
-        }
+        CodeGenFile[] generate(ComponentData data) => data
+            .GetContextNames()
+            .SelectMany(contextName => generate(contextName, data))
+            .ToArray();
 
-        CodeGenFile[] generate(string contextName, ComponentData data) {
-            return data.GetEventData()
-                .Select(eventData => {
-                    var methodArgs = data.GetEventMethodArgs(eventData, ", " + (data.GetMemberData().Length == 0
-                                                                            ? data.PrefixedComponentName()
-                                                                            : getMethodArgs(data.GetMemberData())));
+        CodeGenFile[] generate(string contextName, ComponentData data) => data
+            .GetEventData()
+            .Select(eventData =>
+            {
+                var methodArgs = data.GetEventMethodArgs(eventData, ", " + (data.GetMemberData().Length == 0
+                    ? data.PrefixedComponentName()
+                    : getMethodArgs(data.GetMemberData())));
 
-                    var cachedAccess = data.GetMemberData().Length == 0
-                        ? string.Empty
-                        : "var component = e." + data.ComponentNameValidLowerFirst() + ";";
+                var cachedAccess = data.GetMemberData().Length == 0
+                    ? string.Empty
+                    : "var component = e." + data.ComponentNameValidLowerFirst() + ";";
 
-                    if (eventData.eventType == EventType.Removed) {
-                        methodArgs = string.Empty;
-                        cachedAccess = string.Empty;
-                    }
+                if (eventData.eventType == EventType.Removed)
+                {
+                    methodArgs = string.Empty;
+                    cachedAccess = string.Empty;
+                }
 
-                    var template = eventData.eventTarget == EventTarget.Self
-                        ? SELF_TARGET_TEMPLATE
-                        : ANY_TARGET_TEMPLATE;
+                var template = eventData.eventTarget == EventTarget.Self
+                    ? SELF_TARGET_TEMPLATE
+                    : ANY_TARGET_TEMPLATE;
 
-                    var fileContent = template
-                        .Replace("${GroupEvent}", eventData.eventType.ToString())
-                        .Replace("${filter}", getFilter(data, contextName, eventData))
-                        .Replace("${cachedAccess}", cachedAccess)
-                        .Replace("${methodArgs}", methodArgs)
-                        .Replace(data, contextName, eventData);
+                var fileContent = template
+                    .Replace("${GroupEvent}", eventData.eventType.ToString())
+                    .Replace("${filter}", getFilter(data, contextName, eventData))
+                    .Replace("${cachedAccess}", cachedAccess)
+                    .Replace("${methodArgs}", methodArgs)
+                    .Replace(data, contextName, eventData);
 
-                    return new CodeGenFile(
-                        "Events" + Path.DirectorySeparatorChar +
-                        "Systems" + Path.DirectorySeparatorChar +
-                        data.Event(contextName, eventData) + "EventSystem.cs",
-                        fileContent,
-                        GetType().FullName
-                    );
-                }).ToArray();
-        }
+                return new CodeGenFile(
+                    "Events" + Path.DirectorySeparatorChar +
+                    "Systems" + Path.DirectorySeparatorChar +
+                    data.Event(contextName, eventData) + "EventSystem.cs",
+                    fileContent,
+                    GetType().FullName
+                );
+            }).ToArray();
 
-        string getFilter(ComponentData data, string contextName, EventData eventData) {
+        string getFilter(ComponentData data, string contextName, EventData eventData)
+        {
             var filter = string.Empty;
-            if (data.GetMemberData().Length == 0) {
-                switch (eventData.eventType) {
+            if (data.GetMemberData().Length == 0)
+            {
+                switch (eventData.eventType)
+                {
                     case EventType.Added:
                         filter = "entity." + data.PrefixedComponentName();
                         break;
@@ -141,8 +142,11 @@ namespace Entitas.CodeGeneration.Plugins {
                         filter = "!entity." + data.PrefixedComponentName();
                         break;
                 }
-            } else {
-                switch (eventData.eventType) {
+            }
+            else
+            {
+                switch (eventData.eventType)
+                {
                     case EventType.Added:
                         filter = "entity.has" + data.ComponentName();
                         break;
@@ -152,18 +156,13 @@ namespace Entitas.CodeGeneration.Plugins {
                 }
             }
 
-            if (eventData.eventTarget == EventTarget.Self) {
+            if (eventData.eventTarget == EventTarget.Self)
                 filter += " && entity.has" + data.EventListener(contextName, eventData);
-            }
 
             return filter;
         }
 
-        string getMethodArgs(MemberData[] memberData) {
-            return string.Join(", ", memberData
-                .Select(info => "component." + info.name)
-                .ToArray()
-            );
-        }
+        string getMethodArgs(MemberData[] memberData) =>
+            string.Join(", ", memberData.Select(info => "component." + info.name));
     }
 }

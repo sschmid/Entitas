@@ -2,19 +2,20 @@
 using Jenny;
 using DesperateDevs.Serialization;
 
-namespace Entitas.CodeGeneration.Plugins {
-
-    public abstract class AbstractGenerator : ICodeGenerator, IConfigurable {
-
+namespace Entitas.CodeGeneration.Plugins
+{
+    public abstract class AbstractGenerator : ICodeGenerator, IConfigurable
+    {
         public abstract string Name { get; }
-        public int Order { get { return 0; } }
-        public bool RunInDryMode { get { return true; } }
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
-        public Dictionary<string, string> DefaultProperties { get { return _ignoreNamespacesConfig.DefaultProperties; } }
+        public Dictionary<string, string> DefaultProperties => _ignoreNamespacesConfig.DefaultProperties;
 
         readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
 
-        public void Configure(Preferences preferences) {
+        public void Configure(Preferences preferences)
+        {
             _ignoreNamespacesConfig.Configure(preferences);
             CodeGeneratorExtensions.ignoreNamespaces = _ignoreNamespacesConfig.ignoreNamespaces;
         }

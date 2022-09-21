@@ -2,13 +2,13 @@ using System.IO;
 using System.Linq;
 using Jenny;
 
-namespace Entitas.CodeGeneration.Plugins {
-
-    public class ContextGenerator : ICodeGenerator {
-
-        public string Name { get { return "Context"; } }
-        public int Order { get { return 0; } }
-        public bool RunInDryMode { get { return true; } }
+namespace Entitas.CodeGeneration.Plugins
+{
+    public class ContextGenerator : ICodeGenerator
+    {
+        public string Name => "Context";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string TEMPLATE =
             @"public sealed partial class ${ContextType} : Entitas.Context<${EntityType}> {
@@ -35,14 +35,13 @@ namespace Entitas.CodeGeneration.Plugins {
 }
 ";
 
-        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return data
-                .OfType<ContextData>()
-                .Select(generate)
-                .ToArray();
-        }
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+            .OfType<ContextData>()
+            .Select(generate)
+            .ToArray();
 
-        CodeGenFile generate(ContextData data) {
+        CodeGenFile generate(ContextData data)
+        {
             var contextName = data.GetContextName();
             return new CodeGenFile(
                 contextName + Path.DirectorySeparatorChar +

@@ -2,11 +2,11 @@ using System.IO;
 using System.Linq;
 using Jenny;
 
-namespace Entitas.CodeGeneration.Plugins {
-
-    public class ComponentContextApiGenerator : AbstractGenerator {
-
-        public override string Name { get { return "Component (Context API)"; } }
+namespace Entitas.CodeGeneration.Plugins
+{
+    public class ComponentContextApiGenerator : AbstractGenerator
+    {
+        public override string Name => "Component (Context API)";
 
         const string STANDARD_TEMPLATE =
             @"public partial class ${ContextType} {
@@ -61,22 +61,20 @@ namespace Entitas.CodeGeneration.Plugins {
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) {
-            return data
-                .OfType<ComponentData>()
-                .Where(d => d.ShouldGenerateMethods())
-                .Where(d => d.IsUnique())
-                .SelectMany(generate)
-                .ToArray();
-        }
+        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+            .OfType<ComponentData>()
+            .Where(d => d.ShouldGenerateMethods())
+            .Where(d => d.IsUnique())
+            .SelectMany(generate)
+            .ToArray();
 
-        CodeGenFile[] generate(ComponentData data) {
-            return data.GetContextNames()
-                .Select(contextName => generate(contextName, data))
-                .ToArray();
-        }
+        CodeGenFile[] generate(ComponentData data) => data
+            .GetContextNames()
+            .Select(contextName => generate(contextName, data))
+            .ToArray();
 
-        CodeGenFile generate(string contextName, ComponentData data) {
+        CodeGenFile generate(string contextName, ComponentData data)
+        {
             var template = data.GetMemberData().Length == 0
                 ? FLAG_TEMPLATE
                 : STANDARD_TEMPLATE;

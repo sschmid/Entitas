@@ -1,13 +1,13 @@
 using System.Linq;
 using Jenny;
 
-namespace Entitas.CodeGeneration.Plugins {
-
-    public class ContextsGenerator : ICodeGenerator {
-
-        public string Name { get { return "Contexts"; } }
-        public int Order { get { return 0; } }
-        public bool RunInDryMode { get { return true; } }
+namespace Entitas.CodeGeneration.Plugins
+{
+    public class ContextsGenerator : ICodeGenerator
+    {
+        public string Name => "Contexts";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string TEMPLATE =
             @"public partial class Contexts : Entitas.IContexts {
@@ -55,14 +55,16 @@ ${contextAssignmentsList}
         const string CONTEXT_LIST_TEMPLATE = @"${contextName}";
         const string CONTEXT_ASSIGNMENT_TEMPLATE = @"        ${contextName} = new ${ContextType}();";
 
-        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+        public CodeGenFile[] Generate(CodeGeneratorData[] data)
+        {
             var contextNames = data
                 .OfType<ContextData>()
                 .Select(d => d.GetContextName())
                 .OrderBy(contextName => contextName)
                 .ToArray();
 
-            return new[] {
+            return new[]
+            {
                 new CodeGenFile(
                     "Contexts.cs",
                     generate(contextNames),
@@ -70,18 +72,16 @@ ${contextAssignmentsList}
             };
         }
 
-        string generate(string[] contextNames) {
+        string generate(string[] contextNames)
+        {
             var contextPropertiesList = string.Join("\n", contextNames
-                .Select(contextName => CONTEXT_PROPERTY_TEMPLATE.Replace(contextName))
-                .ToArray());
+                .Select(contextName => CONTEXT_PROPERTY_TEMPLATE.Replace(contextName)));
 
             var contextList = string.Join(", ", contextNames
-                .Select(contextName => CONTEXT_LIST_TEMPLATE.Replace(contextName))
-                .ToArray());
+                .Select(contextName => CONTEXT_LIST_TEMPLATE.Replace(contextName)));
 
             var contextAssignmentsList = string.Join("\n", contextNames
-                .Select(contextName => CONTEXT_ASSIGNMENT_TEMPLATE.Replace(contextName))
-                .ToArray());
+                .Select(contextName => CONTEXT_ASSIGNMENT_TEMPLATE.Replace(contextName)));
 
             return TEMPLATE
                 .Replace("${contextPropertiesList}", contextPropertiesList)
