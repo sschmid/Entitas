@@ -49,9 +49,16 @@ namespace Entitas.VisualDebugging.Unity.Editor
 
         void OnEnable()
         {
-            var preferences = new Preferences("Entitas.properties", Environment.UserName + ".userproperties");
-            var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
-            _systemWarningThreshold = config.systemWarningThreshold;
+            try
+            {
+                var preferences = new Preferences("Entitas.properties", Environment.UserName + ".userproperties");
+                var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
+                _systemWarningThreshold = config.systemWarningThreshold;
+            }
+            catch (Exception)
+            {
+                _systemWarningThreshold = int.MaxValue;
+            }
         }
 
         public override void OnInspectorGUI()
