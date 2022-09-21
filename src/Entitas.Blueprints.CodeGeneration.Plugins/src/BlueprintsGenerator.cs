@@ -1,13 +1,14 @@
+using System;
 using System.Linq;
 using Jenny;
 
-namespace Entitas.Blueprints.CodeGeneration.Plugins {
-
-    public class BlueprintsGenerator : ICodeGenerator {
-
-        public string Name { get { return "Blueprint"; } }
-        public int Order { get { return 0; } }
-        public bool RunInDryMode { get { return true; } }
+namespace Entitas.Blueprints.CodeGeneration.Plugins
+{
+    public class BlueprintsGenerator : ICodeGenerator
+    {
+        public string Name => "Blueprint";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string CLASS_TEMPLATE =
             @"using Entitas.Blueprints;
@@ -24,19 +25,20 @@ ${blueprints}
         return blueprints.GetBlueprint(""${Name}"");
     }";
 
-        public CodeGenFile[] Generate(CodeGeneratorData[] data) {
+        public CodeGenFile[] Generate(CodeGeneratorData[] data)
+        {
             var blueprintNames = data
                 .OfType<BlueprintData>()
                 .Select(d => d.GetBlueprintName())
                 .OrderBy(name => name)
                 .ToArray();
 
-            if (blueprintNames.Length == 0) {
-                return new CodeGenFile[0];
-            }
+            if (blueprintNames.Length == 0)
+                return Array.Empty<CodeGenFile>();
 
             var blueprints = CLASS_TEMPLATE.Replace("${blueprints}", generateBlueprintGetters(blueprintNames));
-            return new[] {
+            return new[]
+            {
                 new CodeGenFile(
                     "GeneratedBlueprints.cs",
                     blueprints,
@@ -44,20 +46,15 @@ ${blueprints}
             };
         }
 
-        string generateBlueprintGetters(string[] blueprintNames) {
-            return string.Join("\n", blueprintNames
-                .Select(name => GETTER_TEMPLATE
-                    .Replace("${ValidPropertyName}", validPropertyName(name))
-                    .Replace("${Name}", name))
-                .ToArray());
-        }
+        string generateBlueprintGetters(string[] blueprintNames) => string.Join("\n", blueprintNames
+            .Select(name => GETTER_TEMPLATE
+                .Replace("${ValidPropertyName}", validPropertyName(name))
+                .Replace("${Name}", name)));
 
-        static string validPropertyName(string name) {
-            return name
-                .Replace(" ", string.Empty)
-                .Replace("-", string.Empty)
-                .Replace("(", string.Empty)
-                .Replace(")", string.Empty);
-        }
+        static string validPropertyName(string name) => name
+            .Replace(" ", string.Empty)
+            .Replace("-", string.Empty)
+            .Replace("(", string.Empty)
+            .Replace(")", string.Empty);
     }
 }

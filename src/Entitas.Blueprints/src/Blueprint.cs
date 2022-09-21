@@ -1,32 +1,36 @@
 using System;
 
-namespace Entitas.Blueprints {
-
+namespace Entitas.Blueprints
+{
     [Serializable]
-    public class Blueprint {
-
+    public class Blueprint
+    {
         public string contextIdentifier;
         public string name;
         public ComponentBlueprint[] components;
 
-        public Blueprint() {
-        }
+        public Blueprint() { }
 
-        public Blueprint(string contextIdentifier, string name, IEntity entity) {
+        public Blueprint(string contextIdentifier, string name, IEntity entity)
+        {
             this.contextIdentifier = contextIdentifier;
             this.name = name;
 
-            if (entity != null) {
+            if (entity != null)
+            {
                 var allComponents = entity.GetComponents();
                 var componentIndices = entity.GetComponentIndices();
                 components = new ComponentBlueprint[allComponents.Length];
-                for (int i = 0; i < allComponents.Length; i++) {
+                for (var i = 0; i < allComponents.Length; i++)
+                {
                     components[i] = new ComponentBlueprint(
                         componentIndices[i], allComponents[i]
                     );
                 }
-            } else {
-                components = new ComponentBlueprint[0];
+            }
+            else
+            {
+                components = Array.Empty<ComponentBlueprint>();
             }
         }
     }
