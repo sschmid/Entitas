@@ -1,7 +1,7 @@
-﻿namespace Entitas {
-
-    public interface IEntityIndex {
-
+﻿namespace Entitas
+{
+    public interface IEntityIndex
+    {
         string name { get; }
 
         void Activate();

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Entitas {
-
+namespace Entitas
+{
     public delegate void EntityComponentChanged(
         IEntity entity, int index, IComponent component
     );
@@ -13,8 +13,8 @@ namespace Entitas {
 
     public delegate void EntityEvent(IEntity entity);
 
-    public interface IEntity : IAERC {
-
+    public interface IEntity : IAERC
+    {
         event EntityComponentChanged OnComponentAdded;
         event EntityComponentChanged OnComponentRemoved;
         event EntityComponentReplaced OnComponentReplaced;

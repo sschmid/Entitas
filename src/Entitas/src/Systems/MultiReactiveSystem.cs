@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Entitas {
-
+namespace Entitas
+{
     /// A ReactiveSystem calls Execute(entities) if there were changes based on
     /// the specified Collector and will only pass in changed entities.
     /// A common use-case is to react to changes, e.g. a change of the position
@@ -9,20 +9,22 @@ namespace Entitas {
     /// of the related gameObject.
     public abstract class MultiReactiveSystem<TEntity, TContexts> : IReactiveSystem
         where TEntity : class, IEntity
-        where TContexts : class, IContexts {
-
+        where TContexts : class, IContexts
+    {
         readonly ICollector[] _collectors;
         readonly HashSet<TEntity> _collectedEntities;
         readonly List<TEntity> _buffer;
         string _toStringCache;
 
-        protected MultiReactiveSystem(TContexts contexts) {
+        protected MultiReactiveSystem(TContexts contexts)
+        {
             _collectors = GetTrigger(contexts);
             _collectedEntities = new HashSet<TEntity>();
             _buffer = new List<TEntity>();
         }
 
-        protected MultiReactiveSystem(ICollector[] collectors) {
+        protected MultiReactiveSystem(ICollector[] collectors)
+        {
             _collectors = collectors;
             _collectedEntities = new HashSet<TEntity>();
             _buffer = new List<TEntity>();
@@ -39,70 +41,71 @@ namespace Entitas {
         /// Activates the ReactiveSystem and starts observing changes
         /// based on the specified Collector.
         /// ReactiveSystem are activated by default.
-        public void Activate() {
-            for (int i = 0; i < _collectors.Length; i++) {
+        public void Activate()
+        {
+            for (var i = 0; i < _collectors.Length; i++)
                 _collectors[i].Activate();
-            }
         }
 
         /// Deactivates the ReactiveSystem.
         /// No changes will be tracked while deactivated.
         /// This will also clear the ReactiveSystem.
         /// ReactiveSystem are activated by default.
-        public void Deactivate() {
-            for (int i = 0; i < _collectors.Length; i++) {
+        public void Deactivate()
+        {
+            for (var i = 0; i < _collectors.Length; i++)
                 _collectors[i].Deactivate();
-            }
         }
 
         /// Clears all accumulated changes.
-        public void Clear() {
-            for (int i = 0; i < _collectors.Length; i++) {
+        public void Clear()
+        {
+            for (var i = 0; i < _collectors.Length; i++)
                 _collectors[i].ClearCollectedEntities();
-            }
         }
 
         /// Will call Execute(entities) with changed entities
         /// if there are any. Otherwise it will not call Execute(entities).
-        public void Execute() {
-            for (int i = 0; i < _collectors.Length; i++) {
+        public void Execute()
+        {
+            for (var i = 0; i < _collectors.Length; i++)
+            {
                 var collector = _collectors[i];
-                if (collector.count != 0) {
+                if (collector.count != 0)
+                {
                     _collectedEntities.UnionWith(collector.GetCollectedEntities<TEntity>());
                     collector.ClearCollectedEntities();
                 }
             }
 
-            foreach (var e in _collectedEntities) {
-                if (Filter(e)) {
+            foreach (var e in _collectedEntities)
+            {
+                if (Filter(e))
+                {
                     e.Retain(this);
                     _buffer.Add(e);
                 }
             }
 
-            if (_buffer.Count != 0) {
-                try {
+            if (_buffer.Count != 0)
+            {
+                try
+                {
                     Execute(_buffer);
-                } finally {
-                    for (int i = 0; i < _buffer.Count; i++) {
+                }
+                finally
+                {
+                    for (var i = 0; i < _buffer.Count; i++)
                         _buffer[i].Release(this);
-                    }
+
                     _collectedEntities.Clear();
                     _buffer.Clear();
                 }
             }
         }
 
-        public override string ToString() {
-            if (_toStringCache == null) {
-                _toStringCache = "MultiReactiveSystem(" + GetType().Name + ")";
-            }
+        public override string ToString() => _toStringCache ?? (_toStringCache = $"MultiReactiveSystem({GetType().Name})");
 
-            return _toStringCache;
-        }
-
-        ~MultiReactiveSystem() {
-            Deactivate();
-        }
+        ~MultiReactiveSystem() => Deactivate();
     }
 }

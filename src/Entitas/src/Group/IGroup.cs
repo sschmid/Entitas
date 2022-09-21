@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace Entitas {
-
+namespace Entitas
+{
     public delegate void GroupChanged<TEntity>(
         IGroup<TEntity> group, TEntity entity, int index, IComponent component
     ) where TEntity : class, IEntity;
@@ -11,15 +11,15 @@ namespace Entitas {
         IComponent previousComponent, IComponent newComponent
     ) where TEntity : class, IEntity;
 
-    public interface IGroup {
-
+    public interface IGroup
+    {
         int count { get; }
 
         void RemoveAllEventHandlers();
     }
 
-    public interface IGroup<TEntity> : IGroup where TEntity : class, IEntity {
-
+    public interface IGroup<TEntity> : IGroup where TEntity : class, IEntity
+    {
         event GroupChanged<TEntity> OnEntityAdded;
         event GroupChanged<TEntity> OnEntityRemoved;
         event GroupUpdated<TEntity> OnEntityUpdated;

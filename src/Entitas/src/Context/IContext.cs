@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace Entitas {
-
+namespace Entitas
+{
     public delegate void ContextEntityChanged(IContext context, IEntity entity);
     public delegate void ContextGroupChanged(IContext context, IGroup group);
 
-    public interface IContext {
-
+    public interface IContext
+    {
         event ContextEntityChanged OnEntityCreated;
         event ContextEntityChanged OnEntityWillBeDestroyed;
         event ContextEntityChanged OnEntityDestroyed;
@@ -34,8 +34,8 @@ namespace Entitas {
         void Reset();
     }
 
-    public interface IContext<TEntity> : IContext where TEntity : class, IEntity {
-
+    public interface IContext<TEntity> : IContext where TEntity : class, IEntity
+    {
         TEntity CreateEntity();
 
         bool HasEntity(TEntity entity);

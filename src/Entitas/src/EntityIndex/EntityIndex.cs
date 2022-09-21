@@ -1,40 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Entitas {
-
-    public class EntityIndex<TEntity, TKey> : AbstractEntityIndex<TEntity, TKey> where TEntity : class, IEntity {
-
+namespace Entitas
+{
+    public class EntityIndex<TEntity, TKey> : AbstractEntityIndex<TEntity, TKey> where TEntity : class, IEntity
+    {
         readonly Dictionary<TKey, HashSet<TEntity>> _index;
 
-        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) : base(name, group, getKey) {
+        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey) : base(name, group, getKey)
+        {
             _index = new Dictionary<TKey, HashSet<TEntity>>();
             Activate();
         }
 
-        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys) : base(name, group, getKeys) {
+        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys) : base(name, group, getKeys)
+        {
             _index = new Dictionary<TKey, HashSet<TEntity>>();
             Activate();
         }
 
-        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey, IEqualityComparer<TKey> comparer) : base(name, group, getKey) {
+        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey> getKey, IEqualityComparer<TKey> comparer) : base(name, group, getKey)
+        {
             _index = new Dictionary<TKey, HashSet<TEntity>>(comparer);
             Activate();
         }
 
-        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys, IEqualityComparer<TKey> comparer) : base(name, group, getKeys) {
+        public EntityIndex(string name, IGroup<TEntity> group, Func<TEntity, IComponent, TKey[]> getKeys, IEqualityComparer<TKey> comparer) : base(name, group, getKeys)
+        {
             _index = new Dictionary<TKey, HashSet<TEntity>>(comparer);
             Activate();
         }
 
-        public override void Activate() {
+        public override void Activate()
+        {
             base.Activate();
             indexEntities(_group);
         }
 
-        public HashSet<TEntity> GetEntities(TKey key) {
-            HashSet<TEntity> entities;
-            if (!_index.TryGetValue(key, out entities)) {
+        public HashSet<TEntity> GetEntities(TKey key)
+        {
+            if (!_index.TryGetValue(key, out var entities))
+            {
                 entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
                 _index.Add(key, entities);
             }
@@ -42,19 +48,21 @@ namespace Entitas {
             return entities;
         }
 
-        public override string ToString() {
-            return "EntityIndex(" + name + ")";
-        }
+        public override string ToString() => $"EntityIndex({name})";
 
-        protected override void clear() {
-            foreach (var entities in _index.Values) {
-                foreach (var entity in entities) {
-                    var safeAerc = entity.aerc as SafeAERC;
-                    if (safeAerc != null) {
-                        if (safeAerc.owners.Contains(this)) {
+        protected override void clear()
+        {
+            foreach (var entities in _index.Values)
+            {
+                foreach (var entity in entities)
+                {
+                    if (entity.aerc is SafeAERC safeAerc)
+                    {
+                        if (safeAerc.owners.Contains(this))
                             entity.Release(this);
-                        }
-                    } else {
+                    }
+                    else
+                    {
                         entity.Release(this);
                     }
                 }
@@ -63,28 +71,32 @@ namespace Entitas {
             _index.Clear();
         }
 
-        protected override void addEntity(TKey key, TEntity entity) {
+        protected override void addEntity(TKey key, TEntity entity)
+        {
             GetEntities(key).Add(entity);
 
-            var safeAerc = entity.aerc as SafeAERC;
-            if (safeAerc != null) {
-                if (!safeAerc.owners.Contains(this)) {
+            if (entity.aerc is SafeAERC safeAerc)
+            {
+                if (!safeAerc.owners.Contains(this))
                     entity.Retain(this);
-                }
-            } else {
+            }
+            else
+            {
                 entity.Retain(this);
             }
         }
 
-        protected override void removeEntity(TKey key, TEntity entity) {
+        protected override void removeEntity(TKey key, TEntity entity)
+        {
             GetEntities(key).Remove(entity);
 
-            var safeAerc = entity.aerc as SafeAERC;
-            if (safeAerc != null) {
-                if (safeAerc.owners.Contains(this)) {
+            if (entity.aerc is SafeAERC safeAerc)
+            {
+                if (safeAerc.owners.Contains(this))
                     entity.Release(this);
-                }
-            } else {
+            }
+            else
+            {
                 entity.Release(this);
             }
         }
