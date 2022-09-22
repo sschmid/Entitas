@@ -1,8 +1,8 @@
 ﻿using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-public class MultiplePrimaryEntityIndicesComponent : IComponent {
-
+public class MultiplePrimaryEntityIndicesComponent : IComponent
+{
     [PrimaryEntityIndex]
     public string value;
 

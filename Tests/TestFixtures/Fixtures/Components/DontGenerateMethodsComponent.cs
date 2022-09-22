@@ -2,5 +2,4 @@
 using Entitas.CodeGeneration.Attributes;
 
 [Context("Test"), DontGenerate]
-public sealed class DontGenerateMethodsComponent : IComponent {
-}
+public sealed class DontGenerateMethodsComponent : IComponent { }

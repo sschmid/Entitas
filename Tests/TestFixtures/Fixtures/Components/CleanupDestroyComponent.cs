@@ -2,5 +2,4 @@
 using Entitas.CodeGeneration.Attributes;
 
 [Cleanup(CleanupMode.DestroyEntity)]
-public sealed class CleanupDestroyComponent : IComponent {
-}
+public sealed class CleanupDestroyComponent : IComponent { }

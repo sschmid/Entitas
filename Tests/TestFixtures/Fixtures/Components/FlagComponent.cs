@@ -2,5 +2,4 @@
 using Entitas.CodeGeneration.Attributes;
 
 [Context("Test")]
-public sealed class FlagComponent : IComponent {
-}
+public sealed class FlagComponent : IComponent { }

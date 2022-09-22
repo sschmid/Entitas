@@ -1,9 +1,10 @@
 ﻿using Entitas.CodeGeneration.Attributes;
 
-namespace My.Namespace {
-
+namespace My.Namespace
+{
     [Context("Test")]
-    public interface InterfaceToGenerate {
+    public interface InterfaceToGenerate
+    {
         string value { get; set; }
     }
 }

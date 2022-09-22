@@ -2,5 +2,4 @@
 using Entitas.CodeGeneration.Attributes;
 
 [Context("Test"), Unique, FlagPrefix("My")]
-public sealed class CustomPrefixFlagComponent : IComponent {
-}
+public sealed class CustomPrefixFlagComponent : IComponent { }

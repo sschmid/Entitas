@@ -1,4 +1,3 @@
 ﻿using Entitas;
 
-public class NoContextComponent : IComponent {
-}
+public class NoContextComponent : IComponent { }

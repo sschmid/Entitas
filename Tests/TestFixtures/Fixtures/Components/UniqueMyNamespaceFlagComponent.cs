@@ -1,9 +1,8 @@
 ﻿using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-namespace My.Namespace {
-
+namespace My.Namespace
+{
     [Context("Test"), Unique]
-    public sealed class UniqueMyNamespaceFlagComponent : IComponent {
-    }
+    public sealed class UniqueMyNamespaceFlagComponent : IComponent { }
 }

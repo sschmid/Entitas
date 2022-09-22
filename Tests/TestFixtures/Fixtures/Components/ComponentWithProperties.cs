@@ -2,8 +2,8 @@
 using Entitas.CodeGeneration.Attributes;
 
 [Context("Test")]
-public class ComponentWithProperties : IComponent {
-
+public class ComponentWithProperties : IComponent
+{
     // Has one public property
     [TestMember("myProperty")]
     public string publicProperty { get; set; }
@@ -13,6 +13,10 @@ public class ComponentWithProperties : IComponent {
     bool _privateProperty { get; set; }
     static bool _privateStaticProperty { get; set; }
 
-    public string publicPropertyGet { get { return null; } }
-    public string publicPropertySet { set { } }
+    public string publicPropertyGet => null;
+
+    public string publicPropertySet
+    {
+        set { }
+    }
 }

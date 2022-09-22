@@ -2,5 +2,4 @@
 using Entitas.CodeGeneration.Attributes;
 
 [Context("Test"), Event(EventTarget.Any, EventType.Removed)]
-public sealed class FlagEventComponent : IComponent {
-}
+public sealed class FlagEventComponent : IComponent { }

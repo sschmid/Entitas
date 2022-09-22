@@ -1,11 +1,11 @@
 ﻿using Entitas;
 using Entitas.CodeGeneration.Attributes;
 
-namespace My.Namespace {
-
+namespace My.Namespace
+{
     [Test, Test2]
-    public class MultipleEntityIndicesComponent : IComponent {
-
+    public class MultipleEntityIndicesComponent : IComponent
+    {
         [EntityIndex]
         public string value;
 

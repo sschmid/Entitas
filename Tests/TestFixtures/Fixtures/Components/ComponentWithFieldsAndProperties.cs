@@ -2,15 +2,15 @@
 using Entitas.CodeGeneration.Attributes;
 
 [Context("Test")]
-public class ComponentWithFieldsAndProperties : IComponent {
-
+public class ComponentWithFieldsAndProperties : IComponent
+{
     // Has one public field
     public string publicField;
 
     // Has one public property
     public string publicProperty { get; set; }
 
-    #pragma warning disable
+#pragma warning disable
 
     // Should be ignored
     public static bool publicStaticField;

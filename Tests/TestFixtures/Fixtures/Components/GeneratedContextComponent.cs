@@ -1,5 +1,4 @@
 ﻿using Entitas;
 
 [Game]
-public class GeneratedContextComponent : IComponent {
-}
+public class GeneratedContextComponent : IComponent { }
