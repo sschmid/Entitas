@@ -1,8 +1,8 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 #
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFRoslynTestFixturesixtures", "RoslynTestFixtures.csproj", "{59C18082-8F9E-48A9-B564-F8B187466427}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Roslyn.CodeGeneration.Plugins.Tests.Project", "Entitas.Roslyn.CodeGeneration.Plugins.Tests.Project.csproj", "{59C18082-8F9E-48A9-B564-F8B187466427}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas", "..\..\Entitas\src\Entitas.csproj", "{A832FC3D-C576-4863-8B19-35E38495B726}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas", "..\..\..\Entitas\src\Entitas.csproj", "{A832FC3D-C576-4863-8B19-35E38495B726}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
