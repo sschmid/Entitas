@@ -13,7 +13,7 @@ namespace Entitas.CodeGeneration.Tests
     public class RoslynEntityIndexDataProviderTests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
-        static readonly string ProjectPath = ProjectRoot + "/Tests/TestFixtures/TestFixtures.csproj";
+        static readonly string ProjectPath = $"{ProjectRoot}/Tests/TestFixtures/TestFixtures.csproj";
 
         INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
         INamedTypeSymbol[] _types;

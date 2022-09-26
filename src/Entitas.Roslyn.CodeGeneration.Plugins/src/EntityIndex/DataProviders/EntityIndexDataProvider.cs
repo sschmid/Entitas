@@ -143,7 +143,7 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
                 case "Entitas.CodeGeneration.Attributes.PrimaryEntityIndexAttribute":
                     return "Entitas.PrimaryEntityIndex";
                 default:
-                    throw new Exception("Unhandled EntityIndexType: " + entityIndexType);
+                    throw new Exception($"Unhandled EntityIndexType: {entityIndexType}");
             }
         }
     }

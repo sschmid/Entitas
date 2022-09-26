@@ -14,7 +14,7 @@ namespace Entitas.Unity.Editor
             window.minSize = new Vector2(415f, 348f);
             window.Initialize(
                 "Entitas.properties",
-                Environment.UserName + ".userproperties",
+                $"{Environment.UserName}.userproperties",
                 false,
                 false,
                 "Entitas.Unity.Editor.EntitasPreferencesDrawer",

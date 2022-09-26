@@ -131,7 +131,7 @@ namespace Entitas.CodeGeneration.Plugins
                 case EntityIndexType.PrimaryEntityIndex:
                     return "Entitas.PrimaryEntityIndex";
                 default:
-                    throw new Exception("Unhandled EntityIndexType: " + attribute.entityIndexType);
+                    throw new Exception($"Unhandled EntityIndexType: {attribute.entityIndexType}");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Entitas.CodeGeneration.Plugins
                 {
                     return new Diagnosis(
                         $"{typeName} loads and reflects {string.Join(", ", _assembliesConfig.assemblies)} and therefore doesn't support server mode!",
-                        "Don't use the code generator in server mode with " + typeName,
+                        $"Don't use the code generator in server mode with {typeName}",
                         DiagnosisSeverity.Hint
                     );
                 }

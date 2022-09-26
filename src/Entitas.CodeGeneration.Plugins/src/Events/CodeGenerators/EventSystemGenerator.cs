@@ -100,7 +100,7 @@ namespace Entitas.CodeGeneration.Plugins
 
                 var cachedAccess = data.GetMemberData().Length == 0
                     ? string.Empty
-                    : "var component = e." + data.ComponentNameValidLowerFirst() + ";";
+                    : $"var component = e.{data.ComponentNameValidLowerFirst()};";
 
                 if (eventData.eventType == EventType.Removed)
                 {
@@ -136,10 +136,10 @@ namespace Entitas.CodeGeneration.Plugins
                 switch (eventData.eventType)
                 {
                     case EventType.Added:
-                        filter = "entity." + data.PrefixedComponentName();
+                        filter = $"entity.{data.PrefixedComponentName()}";
                         break;
                     case EventType.Removed:
-                        filter = "!entity." + data.PrefixedComponentName();
+                        filter = $"!entity.{data.PrefixedComponentName()}";
                         break;
                 }
             }
@@ -148,21 +148,21 @@ namespace Entitas.CodeGeneration.Plugins
                 switch (eventData.eventType)
                 {
                     case EventType.Added:
-                        filter = "entity.has" + data.ComponentName();
+                        filter = $"entity.has{data.ComponentName()}";
                         break;
                     case EventType.Removed:
-                        filter = "!entity.has" + data.ComponentName();
+                        filter = $"!entity.has{data.ComponentName()}";
                         break;
                 }
             }
 
             if (eventData.eventTarget == EventTarget.Self)
-                filter += " && entity.has" + data.EventListener(contextName, eventData);
+                filter += $" && entity.has{data.EventListener(contextName, eventData)}";
 
             return filter;
         }
 
         string getMethodArgs(MemberData[] memberData) =>
-            string.Join(", ", memberData.Select(info => "component." + info.name));
+            string.Join(", ", memberData.Select(info => $"component.{info.name}"));
     }
 }

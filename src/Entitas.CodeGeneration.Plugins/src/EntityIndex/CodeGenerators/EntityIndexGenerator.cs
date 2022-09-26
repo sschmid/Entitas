@@ -174,7 +174,7 @@ ${getIndices}
                 .Replace("${ReturnType}", m.returnType)
                 .Replace("${MethodName}", m.methodName)
                 .Replace("${ContextName}", data.GetContextNames()[0])
-                .Replace("${methodArgs}", string.Join(", ", m.parameters.Select(p => p.type + " " + p.name)))
+                .Replace("${methodArgs}", string.Join(", ", m.parameters.Select(p => $"{p.type} {p.name}")))
                 .Replace("${IndexType}", data.GetEntityIndexType())
                 .Replace("${IndexName}", data.GetHasMultiple()
                     ? data.GetEntityIndexName() + data.GetMemberName().ToUpperFirst()

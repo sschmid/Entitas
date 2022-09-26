@@ -9,6 +9,6 @@ public sealed class NameAgeComponent : IComponent
 
     public override string ToString()
     {
-        return "NameAge(" + name + ", " + age + ")";
+        return $"NameAge({name}, {age})";
     }
 }

@@ -14,7 +14,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
         [MenuItem("Tools/Entitas/Show Stats", false, 200)]
         public static void ShowStats()
         {
-            var stats = string.Join("\n", GetStats().Select(kv => kv.Key + ": " + kv.Value));
+            var stats = string.Join("\n", GetStats().Select(kv => $"{kv.Key}: {kv.Value}"));
             Debug.Log(stats);
             EditorUtility.DisplayDialog("Entitas Stats", stats, "Close");
         }
@@ -40,7 +40,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
             };
 
             foreach (var context in contexts)
-                stats.Add("Components in " + context.Key, context.Value);
+                stats.Add($"Components in {context.Key}", context.Value);
 
             return stats;
         }

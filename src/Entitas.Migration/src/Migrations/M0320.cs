@@ -37,7 +37,7 @@ namespace Entitas.Migration
                 file.fileContent = Regex.Replace(
                     file.fileContent,
                     pattern,
-                    match => ".CreateSystem(new " + match.Groups["system"].Value + "())"
+                    match => $".CreateSystem(new {match.Groups["system"].Value}())"
                 );
             }
 

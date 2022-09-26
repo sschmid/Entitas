@@ -25,7 +25,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
 
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField("Retained by (" + entity.retainCount + ")", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"Retained by ({entity.retainCount})", EditorStyles.boldLabel);
 
             var safeAerc = entity.aerc as SafeAERC;
             if (safeAerc != null)
@@ -107,7 +107,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
             {
                 EditorGUILayout.BeginHorizontal();
                 {
-                    EditorGUILayout.LabelField("Components (" + entity.GetComponents().Length + ")", EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField($"Components ({entity.GetComponents().Length})", EditorStyles.boldLabel);
                     if (EditorLayout.MiniButtonLeft("▸"))
                         for (var i = 0; i < unfoldedComponents.Length; i++)
                             unfoldedComponents[i] = false;
@@ -234,7 +234,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                         else
                             EditorGUILayout.LabelField(memberName, "null");
 
-                        if (EditorLayout.MiniButton("new " + memberType.ToCompilableString().ShortTypeName()))
+                        if (EditorLayout.MiniButton($"new {memberType.ToCompilableString().ShortTypeName()}"))
                         {
                             if (CreateDefault(memberType, out var defaultValue))
                                 setValue(target, defaultValue);
@@ -381,7 +381,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
 
         public static void GenerateIDefaultInstanceCreator(string typeName)
         {
-            var preferences = new Preferences("Entitas.properties", Environment.UserName + ".userproperties");
+            var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.defaultInstanceCreatorFolderPath;
             var filePath = folder + Path.DirectorySeparatorChar + "Default" + typeName.ShortTypeName() + "InstanceCreator.cs";
@@ -393,7 +393,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
 
         public static void GenerateITypeDrawer(string typeName)
         {
-            var preferences = new Preferences("Entitas.properties", Environment.UserName + ".userproperties");
+            var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.typeDrawerFolderPath;
             var filePath = folder + Path.DirectorySeparatorChar + typeName.ShortTypeName() + "TypeDrawer.cs";

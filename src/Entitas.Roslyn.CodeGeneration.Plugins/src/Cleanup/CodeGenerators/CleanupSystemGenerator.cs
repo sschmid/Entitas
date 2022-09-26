@@ -87,7 +87,7 @@ public sealed class Remove${ComponentName}${SystemType} : ICleanupSystem {
         static string removeComponent(CleanupData data)
         {
             if (data.componentData.GetMemberData().Length == 0)
-                return data.componentData.PrefixedComponentName() + " = false";
+                return $"{data.componentData.PrefixedComponentName()} = false";
 
             return $"Remove{data.componentData.ComponentName()}()";
         }

@@ -38,7 +38,7 @@ namespace Entitas.CodeGeneration.Plugins
             .Replace("${methodParameters}", GetMethodParameters(data.GetMemberData(), false))
             .Replace("${newMethodArgs}", GetMethodArgs(data.GetMemberData(), true))
             .Replace("${methodArgs}", GetMethodArgs(data.GetMemberData(), false))
-            .Replace("${Index}", contextName + LOOKUP + "." + data.ComponentName());
+            .Replace("${Index}", $"{contextName}{LOOKUP}.{data.ComponentName()}");
 
         public static string Replace(this string template, ComponentData data, string contextName, EventData eventData)
         {
@@ -93,9 +93,9 @@ namespace Entitas.CodeGeneration.Plugins
             eventData.eventTarget == EventTarget.Any ? "Any" : string.Empty;
 
         public static string GetMethodParameters(this MemberData[] memberData, bool newPrefix) => string.Join(", ", memberData
-            .Select(info => info.type + (newPrefix ? " new" + info.name.ToUpperFirst() : " " + info.name.ToLowerFirst())));
+            .Select(info => info.type + (newPrefix ? $" new{info.name.ToUpperFirst()}" : $" {info.name.ToLowerFirst()}")));
 
         public static string GetMethodArgs(MemberData[] memberData, bool newPrefix) => string.Join(", ", memberData
-            .Select(info => newPrefix ? "new" + info.name.ToUpperFirst() : info.name));
+            .Select(info => newPrefix ? $"new{info.name.ToUpperFirst()}" : info.name));
     }
 }

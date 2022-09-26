@@ -156,7 +156,7 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
                     dataForEvent.SetTypeName(listenerComponentName.AddComponentSuffix());
                     dataForEvent.SetMemberData(new[]
                     {
-                        new MemberData("System.Collections.Generic.List<I" + listenerComponentName + ">", "value")
+                        new MemberData($"System.Collections.Generic.List<I{listenerComponentName}>", "value")
                     });
                     dataForEvent.SetContextNames(new[] {contextName});
                     return dataForEvent;

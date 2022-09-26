@@ -37,8 +37,8 @@ namespace Entitas.Tests
         public void MultiKeyGetsEntityForKey()
         {
             var entity = CreateNameAgeEntity(_multiKeyContext);
-            _multiKeyIndex.GetEntity(Name + "1").Should().BeSameAs(entity);
-            _multiKeyIndex.GetEntity(Name + "2").Should().BeSameAs(entity);
+            _multiKeyIndex.GetEntity($"{Name}1").Should().BeSameAs(entity);
+            _multiKeyIndex.GetEntity($"{Name}2").Should().BeSameAs(entity);
         }
 
         [Fact]
@@ -80,8 +80,8 @@ namespace Entitas.Tests
         {
             var entity = CreateNameAgeEntity(_multiKeyContext);
             entity.RemoveComponentA();
-            _multiKeyIndex.GetEntity(Name + "1").Should().BeNull();
-            _multiKeyIndex.GetEntity(Name + "2").Should().BeNull();
+            _multiKeyIndex.GetEntity($"{Name}1").Should().BeNull();
+            _multiKeyIndex.GetEntity($"{Name}2").Should().BeNull();
             entity.retainCount.Should().Be(1);
             (entity.aerc as SafeAERC)?.owners.Should().NotContain(_multiKeyIndex);
         }
@@ -133,8 +133,8 @@ namespace Entitas.Tests
             var entity = CreateNameAgeEntity(_multiKeyContext);
             _multiKeyIndex.Deactivate();
             _multiKeyIndex.Activate();
-            _multiKeyIndex.GetEntity(Name + "1").Should().BeSameAs(entity);
-            _multiKeyIndex.GetEntity(Name + "2").Should().BeSameAs(entity);
+            _multiKeyIndex.GetEntity($"{Name}1").Should().BeSameAs(entity);
+            _multiKeyIndex.GetEntity($"{Name}2").Should().BeSameAs(entity);
         }
 
         [Fact]
@@ -163,7 +163,7 @@ namespace Entitas.Tests
                 (e, c) =>
                 {
                     var name = (c as NameAgeComponent ?? (NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
-                    return new[] {name + "1", name + "2"};
+                    return new[] {$"{name}1", $"{name}2"};
                 });
         }
 

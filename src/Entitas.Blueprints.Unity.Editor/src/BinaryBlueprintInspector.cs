@@ -14,7 +14,7 @@ namespace Entitas.Blueprints.Unity.Editor
     public class BinaryBlueprintInspector : UnityEditor.Editor
     {
         public static BinaryBlueprint[] FindAllBlueprints() => AssetDatabase
-            .FindAssets("l:" + BinaryBlueprintPostprocessor.ASSET_LABEL)
+            .FindAssets($"l:{BinaryBlueprintPostprocessor.ASSET_LABEL}")
             .Select(AssetDatabase.GUIDToAssetPath)
             .Select(AssetDatabase.LoadAssetAtPath<BinaryBlueprint>)
             .ToArray();
@@ -39,7 +39,7 @@ namespace Entitas.Blueprints.Unity.Editor
                 }
 
                 if (updated > 0)
-                    Debug.Log("Validated " + binaryBlueprints.Length + " Blueprints, " + updated + " have been updated.");
+                    Debug.Log($"Validated {binaryBlueprints.Length} Blueprints, {updated} have been updated.");
             }
         }
 

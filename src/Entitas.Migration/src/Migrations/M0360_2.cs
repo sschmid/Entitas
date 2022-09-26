@@ -83,11 +83,11 @@ namespace Entitas.Migration
 
             var ensureFilter = getFilter(ensureMatcher);
             if (!string.IsNullOrEmpty(ensureFilter))
-                ensureFilter = "(" + ensureFilter + ")";
+                ensureFilter = $"({ensureFilter})";
 
             var excludeFilter = getFilter(excludeMatcher);
             if (!string.IsNullOrEmpty(excludeFilter))
-                excludeFilter = "!(" + excludeFilter + ")";
+                excludeFilter = $"!({excludeFilter})";
 
             var filter = "true";
             if (ensureFilter != null)
@@ -98,7 +98,7 @@ namespace Entitas.Migration
                 if (ensureFilter == null)
                     filter = excludeFilter;
                 else
-                    filter += " && " + excludeFilter;
+                    filter += $" && {excludeFilter}";
             }
 
             const string filterReplacement =
@@ -130,7 +130,7 @@ namespace Entitas.Migration
                     .Split(',')
                     .Select(m => m.Trim())
                     .Select(m => m.Split('.')[1])
-                    .Select(m => "entity.has" + m)
+                    .Select(m => $"entity.has{m}")
                     .ToArray());
             }
 
@@ -141,7 +141,7 @@ namespace Entitas.Migration
                     .Split(',')
                     .Select(m => m.Trim())
                     .Select(m => m.Split('.')[1])
-                    .Select(m => "entity.has" + m)
+                    .Select(m => $"entity.has{m}")
                     .ToArray());
             }
 
@@ -152,7 +152,7 @@ namespace Entitas.Migration
                     .Split(',')
                     .Select(m => m.Trim())
                     .Select(m => m.Split('.')[1])
-                    .Select(m => "entity.has" + m)
+                    .Select(m => $"entity.has{m}")
                     .ToArray());
             }
 
@@ -160,19 +160,19 @@ namespace Entitas.Migration
 
             if (!string.IsNullOrEmpty(ensureAllOf))
             {
-                ensureAllOf = "(" + ensureAllOf + ")";
+                ensureAllOf = $"({ensureAllOf})";
                 filters.Add(ensureAllOf);
             }
 
             if (!string.IsNullOrEmpty(ensureAnyOf))
             {
-                ensureAnyOf = "(" + ensureAnyOf + ")";
+                ensureAnyOf = $"({ensureAnyOf})";
                 filters.Add(ensureAnyOf);
             }
 
             if (!string.IsNullOrEmpty(ensureNoneOf))
             {
-                ensureNoneOf = "(!" + ensureNoneOf + ")";
+                ensureNoneOf = $"(!{ensureNoneOf})";
                 filters.Add(ensureNoneOf);
             }
 
@@ -209,10 +209,10 @@ namespace Entitas.Migration
 
             var ctorLogic = new List<string>();
             if (!string.IsNullOrEmpty(setPoolsLogic))
-                ctorLogic.Add("        " + setPoolsLogic);
+                ctorLogic.Add($"        {setPoolsLogic}");
 
             if (!string.IsNullOrEmpty(setPoolLogic))
-                ctorLogic.Add("        " + setPoolLogic);
+                ctorLogic.Add($"        {setPoolLogic}");
 
             if (fileContent.Contains("__ctor_placeholder__"))
             {

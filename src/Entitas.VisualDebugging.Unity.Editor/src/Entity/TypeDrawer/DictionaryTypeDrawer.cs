@@ -36,7 +36,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
 
                 var keyTypeName = keyType.ToCompilableString().ShortTypeName();
                 var valueTypeName = valueType.ToCompilableString().ShortTypeName();
-                if (EditorLayout.MiniButton("new <" + keyTypeName + ", " + valueTypeName + ">"))
+                if (EditorLayout.MiniButton($"new <{keyTypeName}, {valueTypeName}>"))
                     if (EntityDrawer.CreateDefault(keyType, out var defaultKey))
                         if (EntityDrawer.CreateDefault(valueType, out var defaultValue))
                             dictionary[defaultKey] = defaultValue;

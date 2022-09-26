@@ -62,7 +62,7 @@ namespace Entitas.Tests
             _context.contextInfo.name.Should().Be("Unnamed Context");
             _context.contextInfo.componentNames.Length.Should().Be(CID.TotalComponents);
             for (var i = 0; i < _context.contextInfo.componentNames.Length; i++)
-                _context.contextInfo.componentNames[i].Should().Be("Index " + i);
+                _context.contextInfo.componentNames[i].Should().Be($"Index {i}");
         }
 
         [Fact]

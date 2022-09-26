@@ -7,7 +7,7 @@ namespace Entitas.Migration.Tests
 {
     public class M0180Tests
     {
-        static string FixturePath => TestExtensions.GetProjectRoot() + "/src/Entitas.Migration/fixtures/M0180";
+        static string FixturePath => $"{TestExtensions.GetProjectRoot()}/src/Entitas.Migration/fixtures/M0180";
 
         readonly M0180 _migration;
 

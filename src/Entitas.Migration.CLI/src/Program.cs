@@ -59,7 +59,7 @@ namespace Entitas.Migration.CLI
             foreach (var m in migrations)
             {
                 Console.WriteLine("========================================");
-                Console.WriteLine(m.version + "\n  - " + m.description + "\n  - Use on folder, " + m.workingDirectory);
+                Console.WriteLine($"{m.version}\n  - {m.description}\n  - Use on folder, {m.workingDirectory}");
             }
 
             Console.WriteLine("========================================");
@@ -67,7 +67,7 @@ namespace Entitas.Migration.CLI
 
         static void printVersionNotFound(string version, IMigration[] migrations)
         {
-            Console.WriteLine("Could not find a migration for version '" + version + "'");
+            Console.WriteLine($"Could not find a migration for version '{version}'");
             printAllMigrations(migrations);
         }
     }

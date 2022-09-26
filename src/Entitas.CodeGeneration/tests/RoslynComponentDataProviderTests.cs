@@ -14,8 +14,8 @@ namespace Entitas.CodeGeneration.Tests
     public class RoslynComponentDataProviderTests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
-        static readonly string ProjectPath = ProjectRoot + "/Tests/TestFixtures/TestFixtures.csproj";
-        static readonly string RoslynProjectPath = ProjectRoot + "/src/Entitas.Roslyn.CodeGeneration.Plugins/fixtures/Entitas.Roslyn.CodeGeneration.Plugins.Tests.Project";
+        static readonly string ProjectPath = $"{ProjectRoot}/Tests/TestFixtures/TestFixtures.csproj";
+        static readonly string RoslynProjectPath = $"{ProjectRoot}/src/Entitas.Roslyn.CodeGeneration.Plugins/fixtures/Entitas.Roslyn.CodeGeneration.Plugins.Tests.Project";
 
         INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
         INamedTypeSymbol[] _types;

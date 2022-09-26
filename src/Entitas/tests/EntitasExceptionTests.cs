@@ -11,7 +11,7 @@ namespace Entitas.Tests
             const string msg = "Message";
             const string hint = "Hint";
             new EntitasException(msg, hint).Message
-                .Should().Be(msg + "\n" + hint);
+                .Should().Be($"{msg}\n{hint}");
         }
 
         [Fact]

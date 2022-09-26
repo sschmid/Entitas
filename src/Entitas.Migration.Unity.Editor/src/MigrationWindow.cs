@@ -13,7 +13,7 @@ namespace Entitas.Migration.Unity.Editor
         [MenuItem("Tools/Entitas/Migrate...", false, 1000)]
         public static void OpenMigrate()
         {
-            var window = GetWindow<MigrationWindow>(true, "Entitas Migration - " + CheckForUpdates.GetLocalVersion());
+            var window = GetWindow<MigrationWindow>(true, $"Entitas Migration - {CheckForUpdates.GetLocalVersion()}");
             window.minSize = new Vector2(415f, 564);
             window.Show();
         }
@@ -80,7 +80,7 @@ namespace Entitas.Migration.Unity.Editor
                 );
 
                 var path = "Assets/";
-                path = EditorUtility.OpenFolderPanel(migration.version + ": " + migration.workingDirectory, path, string.Empty);
+                path = EditorUtility.OpenFolderPanel($"{migration.version}: {migration.workingDirectory}", path, string.Empty);
                 if (!string.IsNullOrEmpty(path))
                 {
                     var changedFiles = migration.Migrate(path);
