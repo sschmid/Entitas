@@ -1,3 +1,45 @@
+## [1.14.1] - 2022-09-26
+
+### Entitas
+- Add `[ThreadStaticAtribute]` at static fields for multi-threaded game servers #919
+
+### Entitas.CodeGeneration.Plugins
+- Revert "Remove CodeDom" to support reserved C# keywords in component names #1032
+- Update jenny standalone checks to test for `Jenny.Generator.Cli` namespace
+
+### Entitas.VisualDebugging.Unity
+- Fix entities order in visual debugging #1027
+- Create `Entitas.properties` with all required keys #1031
+- Set default systemWarningThreshold if `Entitas.properties` doesn't exists #1031
+
+### Entitas.VisualDebugging.CodeGeneration.Plugins
+- Prevent #963: Extend generator with adding debug log of exception when registering observers
+
+### DesperateDevs
+- See [CHANGELOG.md](https://github.com/sschmid/DesperateDevs/blob/main/CHANGELOG.md#2022-09-26)
+
+### Other
+- Move projects from `Addons` to `src` folder
+- Remove top-level folder in projects
+- Convert concatenation to interpolation
+- Migrate unit tests from nspec to xunit
+- Remove travis.yml
+- Remove old Tests project
+- Remove PerformanceTests
+- Move Entitas.VisualDebugging.* to Entitas.Unity solution folder
+- Add `Entitas.CodeGeneration.Program` project
+- Apply formatting and syntax updates to Entitas
+- Update Desperate Devs packages
+- Update packages
+
+### bee
+- Upgrade to bee 1.2.0
+- Add `entitas::new`
+- Add `entitas::new_benchmark`
+- Add `entitas::nuget`
+- Add `entitas::nuget_local`
+- Add `entitas::publish`
+
 ## [1.14.0] - 2022-09-02
 
 ### Notes

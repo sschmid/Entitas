@@ -8,4 +8,4 @@ BEE_PLUGINS=(entitas)
 DESPERATEDEVS_DIR=../DesperateDevs/build/src
 ENTITAS_NUGET_LOCAL=~/.nuget/local
 
-SEMVER_PATH="${BEE_PROJECT}/${BEE_PROJECT}"/version.txt
+SEMVER_PATH="src/${BEE_PROJECT}/src/version.txt"
