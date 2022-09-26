@@ -14,12 +14,13 @@ usage:
                                   e.g. bee entitas new_benchmark Entitas.Xyz
   clean                           delete build directory and all bin and obj directories
   build                           build solution
+  publish                         publish solution
   rebuild                         clean and build solution
   test [args]                     run unit tests
   jenny [args]                    build and run jenny
   generate                        generate code for all projects
-  publish                         publish nupkg to nuget.org
-  publish_local                   publish nupkg locally to disk
+  nuget                           publish nupkg to nuget.org
+  nuget_local                     publish nupkg locally to disk
   pack                            pack Entitas and Jenny
   zip                             create Entitas.zip and Jenny.zip
   restore_unity_visualdebugging   copy source code and samples to all unity projects
@@ -107,6 +108,10 @@ entitas::clean() {
   rm -rf "${BUILD}"
 }
 
+entitas::publish() {
+  dotnet publish -c Release -p:UseAppHost=false
+}
+
 entitas::build() {
   dotnet build -c Release
 }
@@ -140,7 +145,7 @@ entitas::generate() {
   done
 }
 
-entitas::publish() {
+entitas::nuget() {
   entitas::clean
   dotnet pack -c Release
   dotnet nuget push "**/*.nupkg" \
@@ -149,7 +154,7 @@ entitas::publish() {
       --source https://api.nuget.org/v3/index.json
 }
 
-entitas::publish_local() {
+entitas::nuget_local() {
   entitas::clean
   dotnet pack -c Release
   _clean_dir "${ENTITAS_NUGET_LOCAL}"
