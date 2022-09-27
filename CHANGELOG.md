@@ -16,7 +16,7 @@
 - Prevent #963: Extend generator with adding debug log of exception when registering observers
 
 ### DesperateDevs
-- See [CHANGELOG.md](https://github.com/sschmid/DesperateDevs/blob/main/CHANGELOG.md#2022-09-26)
+- See [CHANGELOG.md](https://github.com/sschmid/DesperateDevs/blob/main/CHANGELOG.md#2022-09-27)
 
 ### Other
 - Move projects from `Addons` to `src` folder
