@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <Version>1.14.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
