@@ -11,7 +11,7 @@
     <PackageTags>Entitas, ECS, Entity, Component, System, DesperateDevs, Desperate, Devs</PackageTags>
     <RepositoryUrl>https://github.com/sschmid/Entitas</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageVersion>1.14.1</PackageVersion>
+    <Version>1.14.1</Version>
   </PropertyGroup>
 
 </Project>
