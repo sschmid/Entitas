@@ -1,0 +1,3 @@
+[submodule ".sln.dotsettings"]
+	path = .sln.dotsettings
+	url = https://github.com/sschmid/.sln.dotsettings.git
