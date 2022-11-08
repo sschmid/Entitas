@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <Version>1.14.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DesperateDevs.Reflection" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj" />
+  </ItemGroup>
+
+</Project>

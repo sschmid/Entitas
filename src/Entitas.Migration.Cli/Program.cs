@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using DesperateDevs.Reflection;
 
-namespace Entitas.Migration.CLI
+namespace Entitas.Migration.Cli
 {
     class Program
     {
@@ -36,7 +36,7 @@ namespace Entitas.Migration.CLI
                 }
                 else
                 {
-                    foreach (var m in migrations) 
+                    foreach (var m in migrations)
                         MigrationUtils.WriteFiles(m.Migrate(path));
                 }
             }
