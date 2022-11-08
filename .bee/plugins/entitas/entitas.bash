@@ -131,7 +131,7 @@ entitas::jenny() {
 
 entitas::generate() {
   local properties=(
-    'Readme/Jenny.properties'
+    'readme/Jenny.properties'
     'Tests/TestFixtures/Jenny.properties'
   )
   local dir jenny
