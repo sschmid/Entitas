@@ -25,10 +25,9 @@ UserSettings
 CHANGES.md
 *.userproperties
 build
-tests/Unity/**/*.sln
-tests/Unity/**/*.csproj
-tests/Unity/**/Jenny
-tests/Unity/**/Assets/Entitas
-tests/Unity/**/Assets/Entitas.meta
-tests/Unity/**/Assets/Generated
-tests/Unity/**/Assets/Generated.meta
+samples/Unity/**/*.sln
+samples/Unity/**/*.csproj
+samples/Unity/**/Assets/Entitas
+samples/Unity/**/Assets/Entitas.meta
+samples/Unity/**/Assets/Generated
+samples/Unity/**/Assets/Generated.meta
