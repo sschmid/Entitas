@@ -1,49 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Entitas;
 using UnityEngine;
 
-public class GroupAllocController : MonoBehaviour {
+public class GroupAllocController : MonoBehaviour
+{
+    public GroupAlloc Mode;
+    public int Count;
 
-    public GroupAlloc mode;
-    public int count;
-
+    readonly List<GameEntity> _buffer = new List<GameEntity>();
     GameContext _context;
     IGroup<GameEntity> _group;
-    List<GameEntity> _buffer = new List<GameEntity>();
 
-    void Start() {
+    void Start()
+    {
         _context = Contexts.sharedInstance.game;
         _group = _context.GetGroup(GameMatcher.MyInt);
     }
 
-    void Update() {
-
+    void Update()
+    {
         _context.DestroyAllEntities();
-        for (int i = 0; i < count; i++) {
+        for (var i = 0; i < Count; i++)
             _context.CreateEntity().AddMyInt(i);
-        }
 
-        iterate();
+        Iterate();
     }
 
-    void iterate() {
-        switch (mode) {
+    void Iterate()
+    {
+        switch (Mode)
+        {
             case GroupAlloc.Group:
-                foreach (var e in _group) {
-                    var i = e.myInt.myInt;
+                foreach (var e in _group)
+                {
+                    var unused = e.myInt.Value;
                 }
 
                 break;
             case GroupAlloc.GetEntities:
-                foreach (var e in _group.GetEntities()) {
-                    var i = e.myInt.myInt;
+                foreach (var e in _group.GetEntities())
+                {
+                    var unused = e.myInt.Value;
                 }
 
                 break;
             case GroupAlloc.GetEntitiesBuffer:
-                foreach (var e in _group.GetEntities(_buffer)) {
-                    var i = e.myInt.myInt;
+                foreach (var e in _group.GetEntities(_buffer))
+                {
+                    var unused = e.myInt.Value;
                 }
 
                 break;
@@ -51,7 +55,8 @@ public class GroupAllocController : MonoBehaviour {
     }
 }
 
-public enum GroupAlloc {
+public enum GroupAlloc
+{
     Group,
     GetEntities,
     GetEntitiesBuffer

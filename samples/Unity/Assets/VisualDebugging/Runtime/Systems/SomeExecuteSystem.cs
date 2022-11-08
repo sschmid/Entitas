@@ -1,7 +1,6 @@
 ﻿using Entitas;
 
-public class SomeExecuteSystem : IExecuteSystem {
-
-    public void Execute() {
-    }
+public class SomeExecuteSystem : IExecuteSystem
+{
+    public void Execute() { }
 }

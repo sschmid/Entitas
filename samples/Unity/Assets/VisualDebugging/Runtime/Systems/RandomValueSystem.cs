@@ -1,15 +1,17 @@
 ﻿using Entitas;
 using UnityEngine;
 
-public class RandomValueSystem : IExecuteSystem {
-
+public class RandomValueSystem : IExecuteSystem
+{
     readonly GameContext _context;
 
-    public RandomValueSystem(Contexts contexts) {
+    public RandomValueSystem(Contexts contexts)
+    {
         _context = contexts.game;
     }
 
-    public void Execute() {
+    public void Execute()
+    {
         _context.CreateEntity().AddMyFloat(Random.value);
     }
 }

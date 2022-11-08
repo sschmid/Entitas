@@ -3,29 +3,25 @@ using Entitas;
 using Entitas.VisualDebugging.Unity.Editor;
 using UnityEditor;
 
-public class PersonComponentDrawer : IComponentDrawer {
-    
-    public bool HandlesType(Type type) {
-        return type == typeof(PersonComponent);
-    }
+public class PersonComponentDrawer : IComponentDrawer
+{
+    public bool HandlesType(Type type) => type == typeof(MyPersonComponent);
 
-    public IComponent DrawComponent(IComponent component) {
-        var person = (PersonComponent)component;
+    public IComponent DrawComponent(IComponent component)
+    {
+        var person = (MyPersonComponent)component;
+        person.Name = EditorGUILayout.TextField("Name", person.Name);
+        person.Gender ??= PersonGender.Male.ToString();
 
-        person.name = EditorGUILayout.TextField("Name", person.name);
-
-        if (person.gender == null) {
-            person.gender = PersonGender.Male.ToString();
-        }
-
-        var gender = (PersonGender)Enum.Parse(typeof(PersonGender), person.gender);
+        var gender = (PersonGender)Enum.Parse(typeof(PersonGender), person.Gender);
         gender = (PersonGender)EditorGUILayout.EnumPopup("Gender", gender);
-        person.gender = gender.ToString();
+        person.Gender = gender.ToString();
 
         return person;
     }
 
-    enum PersonGender {
+    enum PersonGender
+    {
         Male,
         Female
     }

@@ -1,12 +1,13 @@
 using Entitas;
 using UnityEngine;
 
-public class VisualDebuggingExampleSystemsController : MonoBehaviour {
-
+public class SystemsController : MonoBehaviour
+{
     Contexts _contexts;
     Systems _systems;
 
-    void Start() {
+    void Start()
+    {
         _contexts = new Contexts();
 
         //_systems = createNestedSystems();
@@ -22,28 +23,27 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
         _contexts.game.CreateEntity().AddMyString("");
     }
 
-    void Update() {
+    void Update()
+    {
         _contexts.game.GetGroup(GameMatcher.MyString).GetSingleEntity()
-             .ReplaceMyString(Random.value.ToString());
+            .ReplaceMyString(Random.value.ToString());
 
         _systems.Execute();
         _systems.Cleanup();
     }
 
-    Systems createAllSystemCombinations() {
-        return new Feature("All System Combinations")
-            .Add(new SomeInitializeSystem())
-            .Add(new SomeExecuteSystem())
-            .Add(new SomeReactiveSystem(_contexts))
-            .Add(new SomeMultiReactiveSystem(_contexts))
-            .Add(new SomeInitializeExecuteSystem())
-            .Add(new SomeInitializeReactiveSystem(_contexts));
-    }
+    Systems CreateAllSystemCombinations() => new Feature("All System Combinations")
+        .Add(new SomeInitializeSystem())
+        .Add(new SomeExecuteSystem())
+        .Add(new SomeReactiveSystem(_contexts))
+        .Add(new SomeMultiReactiveSystem(_contexts))
+        .Add(new SomeInitializeExecuteSystem())
+        .Add(new SomeInitializeReactiveSystem(_contexts));
 
-    Systems createSubSystems() {
-        var allSystems = createAllSystemCombinations();
+    Systems CreateSubSystems()
+    {
+        var allSystems = CreateAllSystemCombinations();
         var subSystems = new Feature("Sub Systems").Add(allSystems);
-
         return new Feature("Systems with SubSystems")
             .Add(allSystems)
             .Add(allSystems)
@@ -51,7 +51,8 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
             .Add(subSystems);
     }
 
-    Systems createSameInstance() {
+    Systems CreateSameInstance()
+    {
         var system = new RandomDurationSystem();
         return new Feature("Same System Instances")
             .Add(system)
@@ -59,20 +60,22 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
             .Add(system);
     }
 
-    Systems createNestedSystems() {
+    Systems CreateNestedSystems()
+    {
         var systems1 = new Feature("Nested 1");
         var systems2 = new Feature("Nested 2");
         var systems3 = new Feature("Nested 3");
 
         systems1.Add(systems2);
         systems2.Add(systems3);
-        systems1.Add(createSomeSystems());
+        systems1.Add(CreateSomeSystems());
 
         return new Feature("Nested Systems")
             .Add(systems1);
     }
 
-    Systems createEmptySystems() {
+    Systems CreateEmptySystems()
+    {
         var systems1 = new Feature("Empty 1");
         var systems2 = new Feature("Empty 2");
         var systems3 = new Feature("Empty 3");
@@ -84,13 +87,15 @@ public class VisualDebuggingExampleSystemsController : MonoBehaviour {
             .Add(systems1);
     }
 
-    Systems createSomeSystems() {
+    Systems CreateSomeSystems()
+    {
         return new SomeSystems(_contexts);
     }
 
-    class SomeSystems : Feature {
-
-        public SomeSystems(Contexts contexts) {
+    sealed class SomeSystems : Feature
+    {
+        public SomeSystems(Contexts contexts)
+        {
             Add(new SlowInitializeSystem());
             Add(new SlowInitializeExecuteSystem());
             Add(new FastSystem());

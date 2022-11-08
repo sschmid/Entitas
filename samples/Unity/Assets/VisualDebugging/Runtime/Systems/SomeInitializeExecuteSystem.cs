@@ -1,10 +1,8 @@
 ﻿using Entitas;
 
-public class SomeInitializeExecuteSystem : IInitializeSystem, IExecuteSystem {
+public class SomeInitializeExecuteSystem : IInitializeSystem, IExecuteSystem
+{
+    public void Initialize() { }
 
-    public void Initialize() {
-    }
-
-    public void Execute() {
-    }
+    public void Execute() { }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Entitas;
+using Entitas.VisualDebugging.Unity;
 
 public class MultipleContextsController : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class MultipleContextsController : MonoBehaviour
             () => new GameEntity()
         );
 
-        new Entitas.VisualDebugging.Unity.ContextObserver(_contextA);
+        new ContextObserver(_contextA);
 
         _contextB = new Context<GameEntity>(
             GameComponentsLookup.TotalComponents,
@@ -26,7 +27,7 @@ public class MultipleContextsController : MonoBehaviour
             () => new GameEntity()
         );
 
-        new Entitas.VisualDebugging.Unity.ContextObserver(_contextB);
+        new ContextObserver(_contextB);
 
         _contextA.OnEntityCreated += (context, entity) => ((GameEntity)entity).AddMyInt(42);
     }

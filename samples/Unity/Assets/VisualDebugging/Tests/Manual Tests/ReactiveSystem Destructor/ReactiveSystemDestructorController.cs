@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEditor;
 
-public class ReactiveSystemDestructorController : MonoBehaviour {
-
+public class ReactiveSystemDestructorController : MonoBehaviour
+{
     GameEntity _initialEntity;
 
-    void Start() {
+    void Start()
+    {
         var context = Contexts.sharedInstance.game;
         new TestReactiveSystem(Contexts.sharedInstance);
         _initialEntity = context.CreateEntity();
@@ -13,11 +14,14 @@ public class ReactiveSystemDestructorController : MonoBehaviour {
         _initialEntity.Destroy();
     }
 
-    void Update() {
+    void Update()
+    {
         var context = Contexts.sharedInstance.game;
-        for (int i = 0; i < 5000; i++) {
+        for (var i = 0; i < 5000; i++)
+        {
             var e = context.CreateEntity();
-            if (e == _initialEntity) {
+            if (e == _initialEntity)
+            {
                 Debug.Log("Success: Reusing entity!");
                 EditorApplication.isPlaying = false;
             }

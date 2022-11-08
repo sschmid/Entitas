@@ -1,5 +1,4 @@
 ﻿using Entitas;
 
 [Game, Input]
-public class TestComponent : IComponent {
-}
+public class TestComponent : IComponent { }

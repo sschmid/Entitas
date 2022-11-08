@@ -1,11 +1,13 @@
 ﻿using Entitas;
 
 [Game]
-public class NameComponent : IComponent {
-    public string value;
+public class NameComponent : IComponent
+{
+    public string Value;
 }
 
 [Game]
-public class AgeComponent : IComponent {
-    public int value;
+public class AgeComponent : IComponent
+{
+    public int Value;
 }

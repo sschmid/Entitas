@@ -1,11 +1,13 @@
 # OS
-Thumbs.db
 .DS_Store
+Thumbs.db
 
 # Solution
 obj
 bin
+*.userprefs
 *.user
+TestResults
 
 # IDEs
 .vs
@@ -22,12 +24,10 @@ UserSettings
 *.unitypackage
 
 # Custom
-CHANGES.md
 *.userproperties
 build
-samples/Unity/**/*.sln
-samples/Unity/**/*.csproj
-samples/Unity/**/Assets/Entitas
-samples/Unity/**/Assets/Entitas.meta
-samples/Unity/**/Assets/Generated
-samples/Unity/**/Assets/Generated.meta
+samples/Unity/.sln.dotsettings
+samples/Unity/*.sln*
+samples/Unity/*.csproj
+samples/Unity/Assets/Plugins
+samples/Unity/Assets/Generated
