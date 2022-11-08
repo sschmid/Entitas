@@ -5,13 +5,13 @@ namespace Entitas.Tests
 {
     public class PublicMemberInfoEntityExtensionTests
     {
-        readonly TestEntity _entity;
-        readonly TestEntity _target;
+        readonly Test1Entity _entity;
+        readonly Test1Entity _target;
         readonly NameAgeComponent _nameAge;
 
         public PublicMemberInfoEntityExtensionTests()
         {
-            var context = new MyTestContext();
+            var context = new MyTest1Context();
             _entity = context.CreateEntity();
             _target = context.CreateEntity();
             _nameAge = new NameAgeComponent {name = "Max", age = 42};

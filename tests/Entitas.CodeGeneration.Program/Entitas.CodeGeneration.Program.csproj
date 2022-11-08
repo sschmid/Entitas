@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Jenny.Generator.Cli" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Entitas.Roslyn.CodeGeneration.Plugins\Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="..\..\src\Entitas.VisualDebugging.CodeGeneration.Plugins\Entitas.VisualDebugging.CodeGeneration.Plugins.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -16,7 +16,7 @@ namespace Entitas.Tests
                     e.nameAge.age += 10;
             };
 
-            var e1 = contexts.test.CreateEntity();
+            var e1 = contexts.test1.CreateEntity();
             e1.AddNameAge("Max", 42);
 
             var e2 = contexts.test2.CreateEntity();
@@ -41,7 +41,7 @@ namespace Entitas.Tests
         {
             var contexts = new Contexts();
             var system = new MultiTriggeredMultiReactiveSystemSpy(contexts);
-            var e = contexts.test.CreateEntity();
+            var e = contexts.test1.CreateEntity();
             e.AddNameAge("Max", 42);
             e.RemoveNameAge();
             system.Execute();

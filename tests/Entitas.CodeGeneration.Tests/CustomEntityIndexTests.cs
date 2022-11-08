@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Tests
         [Fact]
         public void SetsEntityToMultipleKeys()
         {
-            var context = new TestContext();
+            var context = new Test1Context();
             var index = new CustomEntityIndex(context);
             var e = context.CreateEntity();
             e.AddPosition(2, 3);

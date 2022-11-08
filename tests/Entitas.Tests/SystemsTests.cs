@@ -5,12 +5,12 @@ namespace Entitas.Tests
 {
     public class SystemsTests
     {
-        readonly MyTestContext _context;
+        readonly MyTest1Context _context;
         readonly Systems _systems;
 
         public SystemsTests()
         {
-            _context = new MyTestContext();
+            _context = new MyTest1Context();
             _systems = new Systems();
         }
 
@@ -349,7 +349,7 @@ namespace Entitas.Tests
 
         ReactiveSystemSpy CreateReactiveSystem()
         {
-            var system = new ReactiveSystemSpy(_context.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA)));
+            var system = new ReactiveSystemSpy(_context.CreateCollector(Matcher<Test1Entity>.AllOf(CID.ComponentA)));
             _context.CreateEntity().AddComponentA();
             return system;
         }

@@ -81,7 +81,7 @@ namespace Entitas.VisualDebugging.Tests
         [Fact]
         public void CreatesSystemInfoForReactiveSystem()
         {
-            var system = new TestReactiveSystem(new MyTestContext());
+            var system = new TestReactiveSystem(new MyTest1Context());
             var info = new SystemInfo(system);
 
             info.systemName.Should().Be("TestReactive");

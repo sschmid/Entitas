@@ -13,7 +13,7 @@ namespace Entitas.CodeGeneration.Tests
     public class RoslynEntityIndexDataProviderTests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
-        static readonly string ProjectPath = $"{ProjectRoot}/tests/TestFixtures/TestFixtures.csproj";
+        static readonly string ProjectPath = $"{ProjectRoot}/tests/Fixtures/Fixtures.csproj";
 
         INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
         INamedTypeSymbol[] _types;
@@ -28,7 +28,7 @@ namespace Entitas.CodeGeneration.Tests
             d.IsCustom().Should().BeFalse();
             d.GetEntityIndexName().Should().Be("MyNamespaceEntityIndex");
             d.GetContextNames().Length.Should().Be(2);
-            d.GetContextNames()[0].Should().Be("Test");
+            d.GetContextNames()[0].Should().Be("Test1");
             d.GetContextNames()[1].Should().Be("Test2");
             d.GetKeyType().Should().Be("string");
             d.GetComponentType().Should().Be("My.Namespace.EntityIndexComponent");
@@ -89,7 +89,7 @@ namespace Entitas.CodeGeneration.Tests
             d.IsCustom().Should().BeTrue();
             d.GetEntityIndexName().Should().Be("MyNamespaceCustomEntityIndex");
             d.GetContextNames().Length.Should().Be(1);
-            d.GetContextNames()[0].Should().Be("Test");
+            d.GetContextNames()[0].Should().Be("Test1");
 
             var methods = d.GetCustomMethods();
             methods.GetType().Should().Be(typeof(MethodData[]));

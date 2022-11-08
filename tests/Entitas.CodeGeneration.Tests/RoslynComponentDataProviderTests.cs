@@ -14,7 +14,7 @@ namespace Entitas.CodeGeneration.Tests
     public class RoslynComponentDataProviderTests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
-        static readonly string ProjectPath = $"{ProjectRoot}/tests/TestFixtures/TestFixtures.csproj";
+        static readonly string ProjectPath = $"{ProjectRoot}/tests/Fixtures/Fixtures.csproj";
         static readonly string RoslynProjectPath = $"{ProjectRoot}/tests/Entitas.Roslyn.CodeGeneration.Plugins.Tests/fixtures/exclude/Entitas.Roslyn.CodeGeneration.Plugins.Tests.Project";
 
         INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
@@ -40,7 +40,7 @@ namespace Entitas.CodeGeneration.Tests
         {
             var contextNames = _componentData.GetContextNames();
             contextNames.Length.Should().Be(2);
-            contextNames[0].Should().Be("Test");
+            contextNames[0].Should().Be("Test1");
             contextNames[1].Should().Be("Test2");
         }
 
@@ -181,10 +181,10 @@ namespace Entitas.CodeGeneration.Tests
             var d = GetMultipleData<MultipleContextStandardEventComponent>();
             d.Length.Should().Be(3);
             d[1].IsEvent().Should().BeFalse();
-            d[1].GetTypeName().Should().Be("TestAnyMultipleContextStandardEventListenerComponent");
+            d[1].GetTypeName().Should().Be("Test1AnyMultipleContextStandardEventListenerComponent");
             d[1].GetMemberData().Length.Should().Be(1);
             d[1].GetMemberData()[0].name.Should().Be("value");
-            d[1].GetMemberData()[0].type.Should().Be("System.Collections.Generic.List<ITestAnyMultipleContextStandardEventListener>");
+            d[1].GetMemberData()[0].type.Should().Be("System.Collections.Generic.List<ITest1AnyMultipleContextStandardEventListener>");
 
             d[2].IsEvent().Should().BeFalse();
             d[2].GetTypeName().Should().Be("Test2AnyMultipleContextStandardEventListenerComponent");
@@ -254,7 +254,7 @@ namespace Entitas.CodeGeneration.Tests
         {
             var contextNames = _classData.GetContextNames();
             contextNames.Length.Should().Be(2);
-            contextNames[0].Should().Be("Test");
+            contextNames[0].Should().Be("Test1");
             contextNames[1].Should().Be("Test2");
         }
 
@@ -320,10 +320,10 @@ namespace Entitas.CodeGeneration.Tests
             d.Length.Should().Be(3);
             d[1].IsEvent().Should().BeFalse();
             d[1].ShouldGenerateComponent().Should().BeFalse();
-            d[1].GetTypeName().Should().Be("TestAnyEventToGenerateListenerComponent");
+            d[1].GetTypeName().Should().Be("Test1AnyEventToGenerateListenerComponent");
             d[1].GetMemberData().Length.Should().Be(1);
             d[1].GetMemberData()[0].name.Should().Be("value");
-            d[1].GetMemberData()[0].type.Should().Be("System.Collections.Generic.List<ITestAnyEventToGenerateListener>");
+            d[1].GetMemberData()[0].type.Should().Be("System.Collections.Generic.List<ITest1AnyEventToGenerateListener>");
 
             d[2].IsEvent().Should().BeFalse();
             d[2].ShouldGenerateComponent().Should().BeFalse();

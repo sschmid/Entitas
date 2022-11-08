@@ -10,11 +10,11 @@ namespace Entitas.Tests
     {
         readonly int[] _indicesA = {CID.ComponentA};
         readonly int[] _indicesAB = {CID.ComponentA, CID.ComponentB};
-        readonly TestEntity _entity;
+        readonly Test1Entity _entity;
 
         public EntityTests()
         {
-            _entity = new TestEntity();
+            _entity = new Test1Entity();
             _entity.Initialize(0, CID.TotalComponents, new Stack<IComponent>[CID.TotalComponents]);
         }
 
@@ -33,7 +33,7 @@ namespace Entitas.Tests
         {
             var contextInfo = new ContextInfo(null, null, null);
             var componentPools = new Stack<IComponent>[42];
-            var entity = new TestEntity();
+            var entity = new Test1Entity();
             entity.Initialize(1, 2, componentPools, contextInfo);
 
             entity.isEnabled.Should().BeTrue();
@@ -48,7 +48,7 @@ namespace Entitas.Tests
         {
             var contextInfo = new ContextInfo(null, null, null);
             var componentPools = new Stack<IComponent>[42];
-            var entity = new TestEntity();
+            var entity = new Test1Entity();
             entity.Initialize(1, 2, componentPools, contextInfo);
 
             entity.InternalDestroy();
@@ -693,7 +693,7 @@ namespace Entitas.Tests
             _entity.ToString().Should().NotBeSameAs(cache);
         }
 
-        void AssertHasComponentA(TestEntity e, IComponent componentA = null)
+        void AssertHasComponentA(Test1Entity e, IComponent componentA = null)
         {
             componentA ??= Component.A;
 
@@ -712,7 +712,7 @@ namespace Entitas.Tests
             e.HasAnyComponent(_indicesA).Should().BeTrue();
         }
 
-        void AssertHasNotComponentA(TestEntity e)
+        void AssertHasNotComponentA(Test1Entity e)
         {
             var components = e.GetComponents();
             components.Length.Should().Be(0);

@@ -17,8 +17,8 @@ public class MultiTriggeredMultiReactiveSystemSpy : MultiReactiveSystem<IMyEntit
 
     protected override ICollector[] GetTrigger(Contexts contexts) {
         return new ICollector[] {
-            contexts.test.CreateCollector(TestMatcher.NameAge),
-            contexts.test.CreateCollector(TestMatcher.NameAge.Removed())
+            contexts.test1.CreateCollector(Test1Matcher.NameAge),
+            contexts.test1.CreateCollector(Test1Matcher.NameAge.Removed())
         };
     }
 

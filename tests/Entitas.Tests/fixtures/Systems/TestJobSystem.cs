@@ -2,15 +2,15 @@
 using System.Threading;
 using Entitas;
 
-public sealed class TestJobSystem : JobSystem<TestEntity> {
+public sealed class TestJobSystem : JobSystem<Test1Entity> {
 
     public Exception exception;
 
-    public TestJobSystem(TestContext context, int threads) :
-        base(context.GetGroup(TestMatcher.NameAge), threads) {
+    public TestJobSystem(Test1Context context, int threads) :
+        base(context.GetGroup(Test1Matcher.NameAge), threads) {
     }
 
-    protected override void Execute(TestEntity entity) {
+    protected override void Execute(Test1Entity entity) {
         if (exception != null) {
             throw exception;
         }

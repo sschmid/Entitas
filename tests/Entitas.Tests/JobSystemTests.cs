@@ -7,11 +7,11 @@ namespace Entitas.Tests
     [Collection(nameof(JobSystemTests))]
     public class JobSystemTests
     {
-        readonly TestContext _context;
+        readonly Test1Context _context;
 
         public JobSystemTests()
         {
-            _context = new TestContext();
+            _context = new Test1Context();
         }
 
         [Fact]

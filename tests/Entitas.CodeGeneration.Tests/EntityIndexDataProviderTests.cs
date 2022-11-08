@@ -28,7 +28,7 @@ namespace Entitas.CodeGeneration.Tests
 
             d.GetContextNames().GetType().Should().Be(typeof(string[]));
             d.GetContextNames().Length.Should().Be(2);
-            d.GetContextNames()[0].Should().Be("Test");
+            d.GetContextNames()[0].Should().Be("Test1");
             d.GetContextNames()[1].Should().Be("Test2");
 
             d.GetKeyType().GetType().Should().Be(typeof(string));
@@ -105,7 +105,7 @@ namespace Entitas.CodeGeneration.Tests
             d.IsCustom().Should().BeTrue();
             d.GetEntityIndexName().Should().Be("MyNamespaceCustomEntityIndex");
             d.GetContextNames().Length.Should().Be(1);
-            d.GetContextNames()[0].Should().Be("Test");
+            d.GetContextNames()[0].Should().Be("Test1");
 
             var methods = d.GetCustomMethods();
             methods.GetType().Should().Be(typeof(MethodData[]));

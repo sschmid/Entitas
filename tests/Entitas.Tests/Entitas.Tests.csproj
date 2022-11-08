@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestFixtures\TestFixtures.csproj" />
+    <ProjectReference Include="..\Fixtures\Fixtures.csproj" />
     <ProjectReference Include="..\..\src\Entitas\Entitas.csproj" />
     <ProjectReference Include="..\..\src\Entitas.Blueprints\Entitas.Blueprints.csproj" />
   </ItemGroup>

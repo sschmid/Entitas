@@ -8,13 +8,13 @@ namespace Entitas.Tests
 {
     public class GroupTests
     {
-        readonly IGroup<TestEntity> _groupA;
-        readonly TestEntity _entity1;
-        readonly TestEntity _entity2;
+        readonly IGroup<Test1Entity> _groupA;
+        readonly Test1Entity _entity1;
+        readonly Test1Entity _entity2;
 
         public GroupTests()
         {
-            _groupA = new Group<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentA));
+            _groupA = new Group<Test1Entity>(Matcher<Test1Entity>.AllOf(CID.ComponentA));
             _entity1 = CreateEntity().AddComponentA();
             _entity2 = CreateEntity().AddComponentA();
         }
@@ -28,7 +28,7 @@ namespace Entitas.Tests
         [Fact]
         public void DoesNotAddEntitiesToBuffer()
         {
-            var buffer = new List<TestEntity>();
+            var buffer = new List<Test1Entity>();
             buffer.Add(CreateEntity());
             var retBuffer = _groupA.GetEntities(buffer);
             buffer.Should().BeEmpty();
@@ -58,7 +58,7 @@ namespace Entitas.Tests
         public void FillsBufferWithEntities()
         {
             HandleSilently(_entity1);
-            var buffer = new List<TestEntity>();
+            var buffer = new List<Test1Entity>();
             _groupA.GetEntities(buffer);
             buffer.Count.Should().Be(1);
             buffer[0].Should().BeSameAs(_entity1);
@@ -68,7 +68,7 @@ namespace Entitas.Tests
         public void ClearsBufferBeforeFilling()
         {
             HandleSilently(_entity1);
-            var buffer = new List<TestEntity>();
+            var buffer = new List<Test1Entity>();
             buffer.Add(CreateEntity());
             buffer.Add(CreateEntity());
             _groupA.GetEntities(buffer);
@@ -151,7 +151,7 @@ namespace Entitas.Tests
             HandleSilently(_entity1);
             HandleSilently(_entity2);
             FluentActions.Invoking(() => _groupA.GetSingleEntity())
-                .Should().Throw<GroupSingleEntityException<TestEntity>>();
+                .Should().Throw<GroupSingleEntityException<Test1Entity>>();
         }
 
         [Fact]
@@ -489,19 +489,19 @@ namespace Entitas.Tests
         [Fact]
         public void CanToString()
         {
-            var matcher = Matcher<TestEntity>.AllOf(Matcher<TestEntity>.AllOf(0), Matcher<TestEntity>.AllOf(1));
-            var group = new Group<TestEntity>(matcher);
+            var matcher = Matcher<Test1Entity>.AllOf(Matcher<Test1Entity>.AllOf(0), Matcher<Test1Entity>.AllOf(1));
+            var group = new Group<Test1Entity>(matcher);
             group.ToString().Should().Be("Group(AllOf(0, 1))");
         }
 
-        public static TestEntity CreateEntity()
+        public static Test1Entity CreateEntity()
         {
-            var entity = new TestEntity();
+            var entity = new Test1Entity();
             entity.Initialize(0, CID.TotalComponents, new Stack<IComponent>[CID.TotalComponents]);
             return entity;
         }
 
-        void AssertContains(params TestEntity[] expectedEntities)
+        void AssertContains(params Test1Entity[] expectedEntities)
         {
             _groupA.count.Should().Be(expectedEntities.Length);
 
@@ -515,18 +515,18 @@ namespace Entitas.Tests
             }
         }
 
-        void AssertContainsNot(TestEntity entity)
+        void AssertContainsNot(Test1Entity entity)
         {
             _groupA.count.Should().Be(0);
             _groupA.GetEntities().Should().BeEmpty();
             _groupA.ContainsEntity(entity).Should().BeFalse();
         }
 
-        void HandleSilently(TestEntity entity) => _groupA.HandleEntitySilently(entity);
-        void Handle(TestEntity entity, int index, IComponent component) => _groupA.HandleEntity(entity, index, component);
-        void HandleAddA(TestEntity entity) => Handle(entity, CID.ComponentA, entity.GetComponentA());
-        void HandleAddB(TestEntity entity) => Handle(entity, CID.ComponentB, entity.GetComponentB());
-        void HandleRemoveA(TestEntity entity, IComponent component) => Handle(entity, CID.ComponentA, component);
-        void UpdateA(TestEntity entity, IComponent component) => _groupA.UpdateEntity(entity, CID.ComponentA, Component.A, component);
+        void HandleSilently(Test1Entity entity) => _groupA.HandleEntitySilently(entity);
+        void Handle(Test1Entity entity, int index, IComponent component) => _groupA.HandleEntity(entity, index, component);
+        void HandleAddA(Test1Entity entity) => Handle(entity, CID.ComponentA, entity.GetComponentA());
+        void HandleAddB(Test1Entity entity) => Handle(entity, CID.ComponentB, entity.GetComponentB());
+        void HandleRemoveA(Test1Entity entity, IComponent component) => Handle(entity, CID.ComponentA, component);
+        void UpdateA(Test1Entity entity, IComponent component) => _groupA.UpdateEntity(entity, CID.ComponentA, Component.A, component);
     }
 }

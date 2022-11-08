@@ -14,7 +14,7 @@ namespace Entitas.CodeGeneration.Tests
     public class CleanupDataProviderTests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
-        static readonly string ProjectPath = $"{ProjectRoot}/tests/TestFixtures/TestFixtures.csproj";
+        static readonly string ProjectPath = $"{ProjectRoot}/tests/Fixtures/Fixtures.csproj";
 
         INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
         INamedTypeSymbol[] _types;

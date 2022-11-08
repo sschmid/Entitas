@@ -5,11 +5,11 @@ namespace Entitas.Tests
 {
     public class ReactiveSystemTests
     {
-        readonly MyTestContext _context;
+        readonly MyTest1Context _context;
 
         public ReactiveSystemTests()
         {
-            _context = new MyTestContext();
+            _context = new MyTest1Context();
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Entitas.Tests
         {
             var system = CreateAddedSystem();
             var e1 = CreateEntityAB();
-            TestEntity e2 = null;
+            Test1Entity e2 = null;
             system.executeAction = delegate { e2 ??= CreateEntityAB(); };
             system.Execute();
             AssertEntities(system, e1);
@@ -196,11 +196,11 @@ namespace Entitas.Tests
         [Fact]
         public void ExecutesWhenTriggeredOnMultipleContexts()
         {
-            var context1 = new MyTestContext();
-            var context2 = new MyTestContext();
+            var context1 = new MyTest1Context();
+            var context2 = new MyTest1Context();
 
-            var groupA = context1.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA));
-            var groupB = context2.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentB));
+            var groupA = context1.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA));
+            var groupB = context2.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentB));
 
             var groups = new[] {groupA, groupB};
             var groupEvents = new[]
@@ -208,7 +208,7 @@ namespace Entitas.Tests
                 GroupEvent.Added,
                 GroupEvent.Removed
             };
-            var collector = new Collector<TestEntity>(groups, groupEvents);
+            var collector = new Collector<Test1Entity>(groups, groupEvents);
 
             var system = new ReactiveSystemSpy(collector);
 
@@ -231,7 +231,7 @@ namespace Entitas.Tests
         public void FiltersEntities()
         {
             var system = new ReactiveSystemSpy(
-                _context.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB)),
+                _context.CreateCollector(Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB)),
                 e => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).age > 42
             );
 
@@ -269,7 +269,7 @@ namespace Entitas.Tests
         [Fact]
         public void ClearsReactiveSystemAfterExecute()
         {
-            var system = new ReactiveSystemSpy(_context.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB)));
+            var system = new ReactiveSystemSpy(_context.CreateCollector(Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB)));
             system.executeAction = entities => { entities[0].ReplaceComponentA(Component.A); };
             var e = CreateEntityAB();
             system.Execute();
@@ -278,19 +278,19 @@ namespace Entitas.Tests
             AssertEntities(system, e);
         }
 
-        ReactiveSystemSpy CreateAddedSystem() => new ReactiveSystemSpy(_context.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB)));
-        ReactiveSystemSpy CreateRemovedSystem() => new ReactiveSystemSpy(_context.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB).Removed()));
-        ReactiveSystemSpy CreateAddedRemovedSystem() => new ReactiveSystemSpy(_context.CreateCollector(Matcher<TestEntity>.AllOf(CID.ComponentA, CID.ComponentB).AddedOrRemoved()));
+        ReactiveSystemSpy CreateAddedSystem() => new ReactiveSystemSpy(_context.CreateCollector(Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB)));
+        ReactiveSystemSpy CreateRemovedSystem() => new ReactiveSystemSpy(_context.CreateCollector(Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB).Removed()));
+        ReactiveSystemSpy CreateAddedRemovedSystem() => new ReactiveSystemSpy(_context.CreateCollector(Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB).AddedOrRemoved()));
 
-        TestEntity CreateEntityAB() => _context.CreateEntity()
+        Test1Entity CreateEntityAB() => _context.CreateEntity()
             .AddComponentA()
             .AddComponentB();
 
-        TestEntity CreateEntityAC() => _context.CreateEntity()
+        Test1Entity CreateEntityAC() => _context.CreateEntity()
             .AddComponentA()
             .AddComponentC();
 
-        TestEntity CreateEntityABC() => _context.CreateEntity()
+        Test1Entity CreateEntityABC() => _context.CreateEntity()
             .AddComponentA()
             .AddComponentB()
             .AddComponentC();

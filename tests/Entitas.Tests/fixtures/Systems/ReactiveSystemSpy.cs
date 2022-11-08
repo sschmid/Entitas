@@ -10,7 +10,7 @@ public interface IReactiveSystemSpy {
     IEntity[] entities { get; }
 }
 
-public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem {
+public class ReactiveSystemSpy : ReactiveSystem<Test1Entity>, IReactiveSystemSpy, IInitializeSystem, ICleanupSystem, ITearDownSystem {
 
     public int didInitialize { get { return _didInitialize; } }
     public int didExecute { get { return _didExecute; } }
@@ -18,7 +18,7 @@ public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy,
     public int didTearDown { get { return _didTearDown; } }
     public IEntity[] entities { get { return _entities; } }
 
-    public Action<List<TestEntity>> executeAction;
+    public Action<List<Test1Entity>> executeAction;
 
     protected int _didInitialize;
     protected int _didExecute;
@@ -26,20 +26,20 @@ public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy,
     protected int _didTearDown;
     protected IEntity[] _entities;
 
-    readonly Func<TestEntity, bool> _filter;
+    readonly Func<Test1Entity, bool> _filter;
 
-    public ReactiveSystemSpy(ICollector<TestEntity> collector) : base(collector) {
+    public ReactiveSystemSpy(ICollector<Test1Entity> collector) : base(collector) {
     }
 
-    public ReactiveSystemSpy(ICollector<TestEntity> collector, Func<IEntity, bool> filter) : this(collector) {
+    public ReactiveSystemSpy(ICollector<Test1Entity> collector, Func<IEntity, bool> filter) : this(collector) {
         _filter = filter;
     }
 
-    protected override ICollector<TestEntity> GetTrigger(IContext<TestEntity> context) {
+    protected override ICollector<Test1Entity> GetTrigger(IContext<Test1Entity> context) {
         return null;
     }
 
-    protected override bool Filter(TestEntity entity) {
+    protected override bool Filter(Test1Entity entity) {
         return _filter == null || _filter(entity);
     }
 
@@ -47,7 +47,7 @@ public class ReactiveSystemSpy : ReactiveSystem<TestEntity>, IReactiveSystemSpy,
         _didInitialize += 1;
     }
 
-    protected override void Execute(List<TestEntity> entities) {
+    protected override void Execute(List<Test1Entity> entities) {
         _didExecute += 1;
 
         if (entities != null) {

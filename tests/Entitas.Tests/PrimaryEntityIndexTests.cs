@@ -7,16 +7,16 @@ namespace Entitas.Tests
     {
         const string Name = "Max";
 
-        readonly IContext<TestEntity> _context;
-        readonly PrimaryEntityIndex<TestEntity, string> _index;
-        readonly IContext<TestEntity> _multiKeyContext;
-        readonly PrimaryEntityIndex<TestEntity, string> _multiKeyIndex;
+        readonly IContext<Test1Entity> _context;
+        readonly PrimaryEntityIndex<Test1Entity, string> _index;
+        readonly IContext<Test1Entity> _multiKeyContext;
+        readonly PrimaryEntityIndex<Test1Entity, string> _multiKeyIndex;
 
         public PrimaryEntityIndexTests()
         {
-            _context = new MyTestContext();
+            _context = new MyTest1Context();
             _index = CreatePrimaryEntityIndex();
-            _multiKeyContext = new MyTestContext();
+            _multiKeyContext = new MyTest1Context();
             _multiKeyIndex = CreateMultiKeyPrimaryEntityIndex();
         }
 
@@ -147,19 +147,19 @@ namespace Entitas.Tests
             _index.GetEntity("Jack").Should().BeSameAs(entity);
         }
 
-        PrimaryEntityIndex<TestEntity, string> CreatePrimaryEntityIndex()
+        PrimaryEntityIndex<Test1Entity, string> CreatePrimaryEntityIndex()
         {
-            return new PrimaryEntityIndex<TestEntity, string>(
+            return new PrimaryEntityIndex<Test1Entity, string>(
                 "TestIndex",
-                _context.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
+                _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA)),
                 (e, c) => (c as NameAgeComponent ?? (NameAgeComponent)e.GetComponent(CID.ComponentA)).name);
         }
 
-        PrimaryEntityIndex<TestEntity, string> CreateMultiKeyPrimaryEntityIndex()
+        PrimaryEntityIndex<Test1Entity, string> CreateMultiKeyPrimaryEntityIndex()
         {
-            return new PrimaryEntityIndex<TestEntity, string>(
+            return new PrimaryEntityIndex<Test1Entity, string>(
                 "TestIndex",
-                _multiKeyContext.GetGroup(Matcher<TestEntity>.AllOf(CID.ComponentA)),
+                _multiKeyContext.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA)),
                 (e, c) =>
                 {
                     var name = (c as NameAgeComponent ?? (NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
@@ -167,7 +167,7 @@ namespace Entitas.Tests
                 });
         }
 
-        static TestEntity CreateNameAgeEntity(IContext<TestEntity> context, string name = Name)
+        static Test1Entity CreateNameAgeEntity(IContext<Test1Entity> context, string name = Name)
         {
             var nameAgeComponent = new NameAgeComponent();
             nameAgeComponent.name = name;

@@ -20,9 +20,9 @@ namespace Entitas.Tests
         public void CanRemoveListenerInCallback()
         {
             var eventTest = new RemoveEventTest(_contexts, false);
-            _contexts.test.CreateEntity().AddStandardEvent("Test");
+            _contexts.test1.CreateEntity().AddStandardEvent("Test1");
             _eventSystem.Execute();
-            eventTest.Value.Should().Be("Test");
+            eventTest.Value.Should().Be("Test1");
         }
 
         [Fact]
@@ -32,21 +32,21 @@ namespace Entitas.Tests
             var eventTest2 = new RemoveEventTest(_contexts, false);
             var eventTest3 = new RemoveEventTest(_contexts, false);
 
-            _contexts.test.CreateEntity().AddStandardEvent("Test");
+            _contexts.test1.CreateEntity().AddStandardEvent("Test1");
             _eventSystem.Execute();
 
-            eventTest1.Value.Should().Be("Test");
-            eventTest2.Value.Should().Be("Test");
-            eventTest3.Value.Should().Be("Test");
+            eventTest1.Value.Should().Be("Test1");
+            eventTest2.Value.Should().Be("Test1");
+            eventTest3.Value.Should().Be("Test1");
         }
 
         [Fact]
         public void CanRemoveListenerInCallbackAndRemoveComponent()
         {
             var eventTest = new RemoveEventTest(_contexts, true);
-            _contexts.test.CreateEntity().AddStandardEvent("Test");
+            _contexts.test1.CreateEntity().AddStandardEvent("Test1");
             _eventSystem.Execute();
-            eventTest.Value.Should().Be("Test");
+            eventTest.Value.Should().Be("Test1");
         }
 
         [Fact]
@@ -69,29 +69,29 @@ namespace Entitas.Tests
 
         class RemoveEventTest : IAnyStandardEventListener, IFlagEntityEventListener
         {
-            public TestEntity Listener => _listener;
+            public Test1Entity Listener => _listener;
             public string Value => _value;
 
             readonly bool _removeComponentWhenEmpty;
-            readonly TestEntity _listener;
+            readonly Test1Entity _listener;
 
             string _value;
 
             public RemoveEventTest(Contexts contexts, bool removeComponentWhenEmpty)
             {
                 _removeComponentWhenEmpty = removeComponentWhenEmpty;
-                _listener = contexts.test.CreateEntity();
+                _listener = contexts.test1.CreateEntity();
                 _listener.AddAnyStandardEventListener(this);
                 _listener.AddFlagEntityEventListener(this);
             }
 
-            public void OnAnyStandardEvent(TestEntity entity, string value)
+            public void OnAnyStandardEvent(Test1Entity entity, string value)
             {
                 _listener.RemoveAnyStandardEventListener(this, _removeComponentWhenEmpty);
                 _value = value;
             }
 
-            public void OnFlagEntityEvent(TestEntity entity)
+            public void OnFlagEntityEvent(Test1Entity entity)
             {
                 _listener.RemoveFlagEntityEventListener(this, _removeComponentWhenEmpty);
                 _value = "true";

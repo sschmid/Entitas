@@ -5,11 +5,11 @@ namespace Entitas.Blueprints.Tests
 {
     public class BlueprintsTests
     {
-        readonly TestEntity _entity;
+        readonly Test1Entity _entity;
 
         public BlueprintsTests()
         {
-            var context = new MyTestContext();
+            var context = new MyTest1Context();
             _entity = context.CreateEntity();
         }
 

@@ -8,15 +8,15 @@ namespace Entitas.Tests
     public class EntitasErrorMessagesTests
     {
         readonly ITestOutputHelper _output;
-        readonly MyTestContext _context;
-        readonly TestEntity _entity;
+        readonly MyTest1Context _context;
+        readonly Test1Entity _entity;
 
         public EntitasErrorMessagesTests(ITestOutputHelper output)
         {
             _output = output;
             var componentNames = new[] {"Health", "Position", "View"};
             var contextInfo = new ContextInfo("My Context", componentNames, null);
-            _context = new MyTestContext(componentNames.Length, 42, contextInfo);
+            _context = new MyTest1Context(componentNames.Length, 42, contextInfo);
             _entity = _context.CreateEntity();
         }
 
@@ -79,7 +79,7 @@ namespace Entitas.Tests
         {
             _context.CreateEntity().AddComponentA();
             _context.CreateEntity().AddComponentA();
-            var matcher = (Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA);
+            var matcher = (Matcher<Test1Entity>)Matcher<Test1Entity>.AllOf(CID.ComponentA);
             matcher.componentNames = _context.contextInfo.componentNames;
             PrintErrorMessage(() => _context.GetGroup(matcher).GetSingleEntity());
         }
@@ -87,10 +87,10 @@ namespace Entitas.Tests
         [Fact]
         public void WhenCreatingUnbalancedGroup()
         {
-            PrintErrorMessage(() => new Collector<TestEntity>(new[]
+            PrintErrorMessage(() => new Collector<Test1Entity>(new[]
                 {
-                    new Group<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentA)),
-                    new Group<TestEntity>(Matcher<TestEntity>.AllOf(CID.ComponentB))
+                    new Group<Test1Entity>(Matcher<Test1Entity>.AllOf(CID.ComponentA)),
+                    new Group<Test1Entity>(Matcher<Test1Entity>.AllOf(CID.ComponentB))
                 },
                 new[] {GroupEvent.Added}));
         }
@@ -100,7 +100,7 @@ namespace Entitas.Tests
         {
             var componentNames = new[] {"Health", "Position", "View"};
             var contextInfo = new ContextInfo("My Context", componentNames, null);
-            PrintErrorMessage(() => new MyTestContext(1, 0, contextInfo));
+            PrintErrorMessage(() => new MyTest1Context(1, 0, contextInfo));
         }
 
         [Fact]
@@ -132,9 +132,9 @@ namespace Entitas.Tests
         [Fact]
         public void WhenDuplicateEntityIndex()
         {
-            var index = new PrimaryEntityIndex<TestEntity, string>(
+            var index = new PrimaryEntityIndex<Test1Entity, string>(
                 "TestIndex",
-                _context.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA)),
+                _context.GetGroup((Matcher<Test1Entity>)Matcher<Test1Entity>.AllOf(CID.ComponentA)),
                 (_, _) => string.Empty
             );
             _context.AddEntityIndex(index);
@@ -180,9 +180,9 @@ namespace Entitas.Tests
         [Fact]
         public void WhenPrimaryEntityIndexHasMultipleEntitiesForKey()
         {
-            new PrimaryEntityIndex<TestEntity, string>(
+            new PrimaryEntityIndex<Test1Entity, string>(
                 "TestIndex",
-                _context.GetGroup((Matcher<TestEntity>)Matcher<TestEntity>.AllOf(CID.ComponentA)),
+                _context.GetGroup((Matcher<Test1Entity>)Matcher<Test1Entity>.AllOf(CID.ComponentA)),
                 (_, c) => ((NameAgeComponent)c).name
             );
 
