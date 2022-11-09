@@ -11,6 +11,7 @@ using Xunit;
 
 namespace Entitas.CodeGeneration.Tests
 {
+    [Collection("Entitas.CodeGeneration.Tests")]
     public class RoslynEntityIndexDataProviderTests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
