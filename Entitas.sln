@@ -58,7 +58,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.Uni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.VisualDebugging.Tests", "tests\Entitas.VisualDebugging.Tests\Entitas.VisualDebugging.Tests.csproj", "{CEFDF4DE-6410-4ED0-B711-D43E198BA6C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readme", "Readme\Readme.csproj", "{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Readme", "readme\Readme.csproj", "{9604FF12-06E3-41FB-B510-3A52ECBF4D6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
