@@ -1,0 +1,58 @@
+name: Build
+
+on: [ workflow_call, workflow_dispatch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - name: "Setup dotnet"
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      - name: "Build"
+        run: dotnet build -c Release
+
+      - name: "Test"
+        run: echo 'SKIP dotnet test -c Release --no-build --collect:"XPlat Code Coverage"'
+
+      - name: "Publish"
+        run: dotnet publish -c Release --no-build -p:UseAppHost=false -o dist/Assemblies
+
+      - name: "Upload assemblies"
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }} Assemblies
+          path: dist/Assemblies
+
+      - name: "Pack"
+        run: dotnet pack -c Release --no-build -o dist/NuGet
+
+      - name: "Upload packages"
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }} NuGet Packages
+          path: dist/NuGet
+
+      - name: "Generate coverage report"
+        run: |
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+          reportgenerator "-reports:tests/**/TestResults/**/coverage.cobertura.xml" "-targetdir:coverage" "-reporttypes:Html;lcov"
+
+      - name: "Upload coverage report"
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }} Coverage Report
+          path: coverage
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: "coverage/lcov.info"

@@ -1,0 +1,11 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    uses: sschmid/Entitas/.github/workflows/build.yml@main

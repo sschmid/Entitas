@@ -1,0 +1,22 @@
+name: Release
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    uses: sschmid/Entitas/.github/workflows/build.yml@main
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Download packages"
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }} NuGet Packages
+
+      - name: "Push to NuGet"
+        run: |
+          dotnet nuget push "*.nupkg" \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --skip-duplicate \
+            --source https://api.nuget.org/v3/index.json
