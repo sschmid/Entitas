@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
+    <TargetFramework>$(DefaultNetTargetFramework)</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
