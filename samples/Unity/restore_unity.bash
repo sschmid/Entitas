@@ -58,6 +58,8 @@ for unity_project_path in "${UNITY_PROJECTS[@]}"; do
       --include-from <(echo "${RSYNC_INCLUDE[*]}") \
       --exclude-from <(echo "${RSYNC_EXCLUDE[*]}") \
       "src/${project}/bin/Release/publish/"*.dll "${project_path}"
+
+    [[ -d "src/${project}/Images" ]] && cp -R "src/${project}/Images" "${project_path}"
   done
 
   pushd "${unity_project_path}/Assets/Plugins/Editor" > /dev/null || exit 1
