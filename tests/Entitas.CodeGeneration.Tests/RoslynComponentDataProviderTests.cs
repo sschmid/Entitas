@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using DesperateDevs.Extensions;
 using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
@@ -14,8 +15,8 @@ namespace Entitas.CodeGeneration.Tests
     public class RoslynComponentDataProviderTests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
-        static readonly string ProjectPath = $"{ProjectRoot}/tests/Fixtures/Fixtures.csproj";
-        static readonly string RoslynProjectPath = $"{ProjectRoot}/tests/Entitas.Roslyn.CodeGeneration.Plugins.Tests/fixtures/exclude/Entitas.Roslyn.CodeGeneration.Plugins.Tests.Project";
+        static readonly string ProjectPath = Path.Combine(ProjectRoot, "tests", "Fixtures", "Fixtures.csproj");
+        static readonly string RoslynProjectPath = Path.Combine(ProjectRoot, "tests", "Entitas.Roslyn.CodeGeneration.Plugins.Tests", "fixtures", "exclude", "Entitas.Roslyn.CodeGeneration.Plugins.Tests.Project");
 
         INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
         INamedTypeSymbol[] _types;
