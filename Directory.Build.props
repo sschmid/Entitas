@@ -36,15 +36,4 @@
     <UnityEngine>$(MSBuildStartupDirectory)/build/Managed/UnityEngine.dll</UnityEngine>
   </PropertyGroup>
 
-  <ItemGroup Label="Tests">
-    <PackageReference Update="xunit.runner.visualstudio">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Update="coverlet.collector">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-
 </Project>
