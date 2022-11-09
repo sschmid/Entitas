@@ -1,3 +1,6 @@
 [submodule ".sln.dotsettings"]
 	path = .sln.dotsettings
 	url = https://github.com/sschmid/.sln.dotsettings.git
+[submodule "unity/Unity-2021.3.0f1"]
+	path = unity/Unity-2021.3.0f1
+	url = https://github.com/sschmid/Unity-2021.3.0f1.git
