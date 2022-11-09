@@ -31,3 +31,5 @@ samples/Unity/*.sln*
 samples/Unity/*.csproj
 samples/Unity/Assets/Plugins
 samples/Unity/Assets/Generated
+coverage
+dist
