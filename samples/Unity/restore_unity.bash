@@ -28,11 +28,9 @@ RSYNC_EXCLUDE=(
   *.xml
   Bee.BeeDriver.dll
   BeeBuildProgramCommon.Data.dll
-  DesperateDevs*
   ExCSS.Unity.dll
   PlayerBuildProgramLibrary.Data.dll
   ScriptCompilationBuildProgram.Data.dll
-  Sherlog*
   Unity.Cecil.dll
   Unity.CompilationPipeline.Common.dll
   Unity.IL2CPP.BeeSettings.dll
