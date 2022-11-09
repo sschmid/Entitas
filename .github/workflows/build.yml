@@ -17,7 +17,11 @@ jobs:
           dotnet-version: 6.0.x
 
       - name: "Build"
-        run: dotnet build -c Release
+        run: |
+          dotnet build \
+            -p:UnityEditor=/home/runner/work/Entitas/Entitas/unity/Unity-2021.3.0f1/UnityEditor.dll \
+            -p:UnityEngine=/home/runner/work/Entitas/Entitas/unity/Unity-2021.3.0f1/UnityEngine.dll \
+            -c Release
 
       - name: "Test"
         run: echo 'SKIP dotnet test -c Release --no-build --collect:"XPlat Code Coverage"'
@@ -43,7 +47,7 @@ jobs:
       - name: "Generate coverage report"
         run: |
           dotnet tool install -g dotnet-reportgenerator-globaltool
-          reportgenerator "-reports:tests/**/TestResults/**/coverage.cobertura.xml" "-targetdir:coverage" "-reporttypes:Html;lcov"
+          reportgenerator "-assemblyfilters:-Entitas*.Tests*" "-reports:tests/**/TestResults/**/coverage.cobertura.xml" "-targetdir:coverage" "-reporttypes:Html;lcov"
 
       - name: "Upload coverage report"
         uses: actions/upload-artifact@v3
