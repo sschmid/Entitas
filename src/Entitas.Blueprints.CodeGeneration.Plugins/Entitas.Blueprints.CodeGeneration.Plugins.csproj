@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
-    <Version>1.14.1</Version>
+    <Version>1.14.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Jenny" Version="1.0.0" />
+    <PackageReference Include="Jenny" Version="1.*" />
   </ItemGroup>
 
 </Project>

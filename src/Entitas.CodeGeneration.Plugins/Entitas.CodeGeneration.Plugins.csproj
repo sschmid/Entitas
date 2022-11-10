@@ -2,14 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
-    <Version>1.14.1</Version>
+    <Version>1.14.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DesperateDevs.Serialization" Version="2.0.0" />
-    <PackageReference Include="Jenny" Version="1.0.0" />
-    <PackageReference Include="Jenny.Generator" Version="1.0.0" />
     <PackageReference Include="System.CodeDom" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DesperateDevs.Serialization" Version="2.*" />
+    <PackageReference Include="Jenny" Version="1.*" />
+    <PackageReference Include="Jenny.Generator" Version="1.*" />
   </ItemGroup>
 
   <ItemGroup>

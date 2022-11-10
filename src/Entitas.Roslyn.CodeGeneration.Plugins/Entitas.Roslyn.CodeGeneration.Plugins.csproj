@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultNetTargetFramework)</TargetFramework>
-    <Version>1.14.1</Version>
+    <Version>1.14.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,11 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DesperateDevs.Roslyn" Version="1.0.0" />
-    <PackageReference Include="DesperateDevs.Serialization" Version="2.0.0" />
-    <PackageReference Include="Jenny" Version="1.0.0" />
-    <PackageReference Include="Jenny.Plugins" Version="1.1.0" />
-    <PackageReference Include="Jenny.Plugins.Roslyn" Version="1.0.0" />
+    <PackageReference Include="DesperateDevs.Roslyn" Version="1.*" />
+    <PackageReference Include="DesperateDevs.Serialization" Version="2.*" />
+    <PackageReference Include="Jenny" Version="1.*" />
+    <PackageReference Include="Jenny.Plugins" Version="1.*" />
+    <PackageReference Include="Jenny.Plugins.Roslyn" Version="1.*" />
   </ItemGroup>
 
   <ItemGroup>
