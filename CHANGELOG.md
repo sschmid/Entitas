@@ -1,3 +1,39 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### [Entitas/1.14.2] - 2022-11-11
+### Changed
+- Use version ranges for package references
+
+### [Entitas.Blueprints.CodeGeneration.Plugins/1.14.2] - 2022-11-11
+### Changed
+- Use version ranges for package references
+
+### [Entitas.CodeGeneration.Plugins/1.14.2] - 2022-11-11
+### Changed
+- Use version ranges for package references
+
+### [Entitas.Migration.Cli/1.14.2] - 2022-11-11
+### Changed
+- Use version ranges for package references
+
+### [Entitas.Roslyn.CodeGeneration.Plugins/1.14.2] - 2022-11-11
+### Changed
+- Use version ranges for package references
+
+### [Entitas.Unity.Editor/1.14.2] - 2022-11-11
+### Changed
+- Use version ranges for package references
+
+### [Entitas.VisualDebugging.Unity.Editor/1.14.2] - 2022-11-11
+### Changed
+- Use version ranges for package references
+
 ## [1.14.1] - 2022-09-26
 
 ### Entitas
@@ -2435,3 +2471,12 @@ pool.CreateEntity()
 ### Code Generator
 - Supports enums nested in components
 - Added option to [DontGenerate] to ignore generating index, too
+
+[Unreleased]: https://github.com/sschmid/Entitas/compare/Entitas/1.14.2...HEAD
+[Entitas/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas/1.14.2
+[Entitas.Blueprints.CodeGeneration.Plugins/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.Blueprints.CodeGeneration.Plugins/1.14.2
+[Entitas.CodeGeneration.Plugins/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.CodeGeneration.Plugins/1.14.2
+[Entitas.Migration.Cli/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.Migration.Cli/1.14.2
+[Entitas.Roslyn.CodeGeneration.Plugins/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.Roslyn.CodeGeneration.Plugins/1.14.2
+[Entitas.Unity.Editor/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.Unity.Editor/1.14.2
+[Entitas.VisualDebugging.Unity.Editor/1.14.2]: https://github.com/sschmid/Entitas/compare/1.41.1...Entitas.VisualDebugging.Unity.Editor/1.14.2
