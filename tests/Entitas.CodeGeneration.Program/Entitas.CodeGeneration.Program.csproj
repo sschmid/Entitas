@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Entitas.Roslyn.CodeGeneration.Plugins\Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
-    <ProjectReference Include="..\..\src\Entitas.VisualDebugging.CodeGeneration.Plugins\Entitas.VisualDebugging.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="../../src/Entitas.Roslyn.CodeGeneration.Plugins/Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="../../src/Entitas.VisualDebugging.CodeGeneration.Plugins/Entitas.VisualDebugging.CodeGeneration.Plugins.csproj" />
   </ItemGroup>
 
 </Project>

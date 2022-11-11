@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="../Entitas.CodeGeneration.Plugins/Entitas.CodeGeneration.Plugins.csproj" />
   </ItemGroup>
 
 </Project>

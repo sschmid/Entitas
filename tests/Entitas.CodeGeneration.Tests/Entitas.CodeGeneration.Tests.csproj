@@ -32,10 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.Tests\Entitas.Tests.csproj" />
-    <ProjectReference Include="..\Fixtures\Fixtures.csproj" />
-    <ProjectReference Include="..\..\src\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj" />
-    <ProjectReference Include="..\..\src\Entitas.Roslyn.CodeGeneration.Plugins\Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="../Entitas.Tests/Entitas.Tests.csproj" />
+    <ProjectReference Include="../Fixtures/Fixtures.csproj" />
+    <ProjectReference Include="../../src/Entitas.CodeGeneration.Plugins/Entitas.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="../../src/Entitas.Roslyn.CodeGeneration.Plugins/Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
   </ItemGroup>
 
 </Project>

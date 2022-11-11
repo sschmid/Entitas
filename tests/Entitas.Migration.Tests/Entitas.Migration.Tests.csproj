@@ -22,20 +22,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.Tests\Entitas.Tests.csproj" />
-    <ProjectReference Include="..\..\src\Entitas.Migration\Entitas.Migration.csproj" />
+    <ProjectReference Include="../Entitas.Tests/Entitas.Tests.csproj" />
+    <ProjectReference Include="../../src/Entitas.Migration/Entitas.Migration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="fixtures\exclude\**" />
+    <Compile Remove="fixtures/exclude/**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="fixtures\exclude\**" />
+    <EmbeddedResource Remove="fixtures/exclude/**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="fixtures\exclude\**" />
+    <None Remove="fixtures/exclude/**" />
   </ItemGroup>
 
 </Project>

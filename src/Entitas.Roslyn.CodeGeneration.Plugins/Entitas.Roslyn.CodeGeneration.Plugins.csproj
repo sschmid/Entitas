@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entitas\Entitas.csproj" />
-    <ProjectReference Include="..\Entitas.CodeGeneration.Attributes\Entitas.CodeGeneration.Attributes.csproj" />
-    <ProjectReference Include="..\Entitas.CodeGeneration.Plugins\Entitas.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="../Entitas/Entitas.csproj" />
+    <ProjectReference Include="../Entitas.CodeGeneration.Attributes/Entitas.CodeGeneration.Attributes.csproj" />
+    <ProjectReference Include="../Entitas.CodeGeneration.Plugins/Entitas.CodeGeneration.Plugins.csproj" />
   </ItemGroup>
 
 </Project>

@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.Tests\Entitas.Tests.csproj" />
-    <ProjectReference Include="..\..\src\Entitas.VisualDebugging.Unity\Entitas.VisualDebugging.Unity.csproj" />
+    <ProjectReference Include="../Entitas.Tests/Entitas.Tests.csproj" />
+    <ProjectReference Include="../../src/Entitas.VisualDebugging.Unity/Entitas.VisualDebugging.Unity.csproj" />
   </ItemGroup>
 
 </Project>

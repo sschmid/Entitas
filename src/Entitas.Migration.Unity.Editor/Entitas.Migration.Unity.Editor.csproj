@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.Migration\Entitas.Migration.csproj" />
-    <ProjectReference Include="..\Entitas.Unity.Editor\Entitas.Unity.Editor.csproj" />
+    <ProjectReference Include="../Entitas.Migration/Entitas.Migration.csproj" />
+    <ProjectReference Include="../Entitas.Unity.Editor/Entitas.Unity.Editor.csproj" />
   </ItemGroup>
 
   <ItemGroup>

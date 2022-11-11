@@ -22,9 +22,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Entitas.Tests\Entitas.Tests.csproj" />
-    <ProjectReference Include="..\Fixtures\Fixtures.csproj" />
-    <ProjectReference Include="..\..\src\Entitas\Entitas.csproj" />
+    <ProjectReference Include="../Entitas.Tests/Entitas.Tests.csproj" />
+    <ProjectReference Include="../Fixtures/Fixtures.csproj" />
+    <ProjectReference Include="../../src/Entitas/Entitas.csproj" />
   </ItemGroup>
 
 </Project>
