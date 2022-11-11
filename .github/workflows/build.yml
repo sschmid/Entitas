@@ -23,9 +23,6 @@ jobs:
             -p:UnityEngine=/home/runner/work/Entitas/Entitas/unity/Unity-2021.3.0f1/UnityEngine.dll \
             -c Release
 
-      - name: "Test"
-        run: echo 'SKIP dotnet test -c Release --no-build --collect:"XPlat Code Coverage"'
-
       - name: "Publish"
         run: dotnet publish -c Release --no-build -p:UseAppHost=false -o dist/Assemblies
 
@@ -43,20 +40,3 @@ jobs:
         with:
           name: ${{ github.event.repository.name }} NuGet Packages
           path: dist/NuGet
-
-      - name: "Generate coverage report"
-        run: |
-          dotnet tool install -g dotnet-reportgenerator-globaltool
-          reportgenerator "-assemblyfilters:-Entitas*.Tests*" "-reports:tests/**/TestResults/**/coverage.cobertura.xml" "-targetdir:coverage" "-reporttypes:Html;lcov"
-
-      - name: "Upload coverage report"
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ github.event.repository.name }} Coverage Report
-          path: coverage
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: "coverage/lcov.info"
