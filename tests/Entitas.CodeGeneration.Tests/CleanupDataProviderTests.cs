@@ -5,7 +5,6 @@ using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
 using Entitas.CodeGeneration.Attributes;
 using Microsoft.CodeAnalysis;
-using Entitas.CodeGeneration.Plugins;
 using Entitas.Roslyn.CodeGeneration.Plugins;
 using FluentAssertions;
 using Xunit;
@@ -33,15 +32,15 @@ namespace Entitas.CodeGeneration.Tests
         [Fact]
         public void GetsFullTypeName()
         {
-            _dataRemove.componentData.GetTypeName().Should().Be(typeof(CleanupRemoveComponent).ToCompilableString());
-            _dataDestroy.componentData.GetTypeName().Should().Be(typeof(CleanupDestroyComponent).ToCompilableString());
+            _dataRemove.ComponentData.Type.Should().Be(typeof(CleanupRemoveComponent).ToCompilableString());
+            _dataDestroy.ComponentData.Type.Should().Be(typeof(CleanupDestroyComponent).ToCompilableString());
         }
 
         [Fact]
         public void GetsMode()
         {
-            _dataRemove.cleanupMode.Should().Be(CleanupMode.RemoveComponent);
-            _dataDestroy.cleanupMode.Should().Be(CleanupMode.DestroyEntity);
+            _dataRemove.CleanupMode.Should().Be(CleanupMode.RemoveComponent);
+            _dataDestroy.CleanupMode.Should().Be(CleanupMode.DestroyEntity);
         }
 
         [Fact]

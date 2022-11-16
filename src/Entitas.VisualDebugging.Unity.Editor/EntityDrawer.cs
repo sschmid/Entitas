@@ -384,7 +384,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
             var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.defaultInstanceCreatorFolderPath;
-            var filePath = folder + Path.DirectorySeparatorChar + "Default" + typeName.ShortTypeName() + "InstanceCreator.cs";
+            var filePath = Path.Combine(folder, $"Default{typeName.ShortTypeName()}InstanceCreator.cs");
             var template = DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT
                 .Replace("${Type}", typeName)
                 .Replace("${ShortType}", typeName.ShortTypeName());
@@ -396,7 +396,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
             var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.typeDrawerFolderPath;
-            var filePath = folder + Path.DirectorySeparatorChar + typeName.ShortTypeName() + "TypeDrawer.cs";
+            var filePath = Path.Combine(folder, $"{typeName.ShortTypeName()}TypeDrawer.cs");
             var template = TYPE_DRAWER_TEMPLATE_FORMAT
                 .Replace("${Type}", typeName)
                 .Replace("${ShortType}", typeName.ShortTypeName());
@@ -405,7 +405,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
 
         static void generateTemplate(string folder, string filePath, string template)
         {
-            if (!Directory.Exists(folder)) 
+            if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
 
             File.WriteAllText(filePath, template);

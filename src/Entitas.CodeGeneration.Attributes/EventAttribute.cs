@@ -5,15 +5,15 @@ namespace Entitas.CodeGeneration.Attributes
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum, AllowMultiple = true)]
     public class EventAttribute : Attribute
     {
-        public readonly EventTarget eventTarget;
-        public readonly EventType eventType;
-        public readonly int priority;
+        public readonly EventTarget EventTarget;
+        public readonly EventType EventType;
+        public readonly int Order;
 
-        public EventAttribute(EventTarget eventTarget, EventType eventType = EventType.Added, int priority = 0)
+        public EventAttribute(EventTarget eventTarget, EventType eventType = EventType.Added, int order = 0)
         {
-            this.eventTarget = eventTarget;
-            this.eventType = eventType;
-            this.priority = priority;
+            EventTarget = eventTarget;
+            EventType = eventType;
+            Order = order;
         }
     }
 

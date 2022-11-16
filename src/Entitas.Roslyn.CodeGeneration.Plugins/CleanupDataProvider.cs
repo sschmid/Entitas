@@ -63,8 +63,8 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
 
             return _componentDataProvider
                 .GetData()
-                .Where(data => !((ComponentData)data).GetTypeName().RemoveComponentSuffix().HasListenerSuffix())
-                .Select(data => new CleanupData(data) {cleanupMode = cleanupLookup[((ComponentData)data).GetTypeName()]})
+                .Where(data => !((ComponentData)data).Type.RemoveComponentSuffix().HasListenerSuffix())
+                .Select(data => new CleanupData(data) {CleanupMode = cleanupLookup[((ComponentData)data).Type]})
                 .ToArray();
         }
     }

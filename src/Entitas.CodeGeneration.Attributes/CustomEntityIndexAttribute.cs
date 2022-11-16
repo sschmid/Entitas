@@ -5,11 +5,11 @@ namespace Entitas.CodeGeneration.Attributes
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class)]
     public class CustomEntityIndexAttribute : Attribute
     {
-        public readonly Type contextType;
+        public readonly Type Type;
 
-        public CustomEntityIndexAttribute(Type contextType)
+        public CustomEntityIndexAttribute(Type type)
         {
-            this.contextType = contextType;
+            Type = type;
         }
     }
 }

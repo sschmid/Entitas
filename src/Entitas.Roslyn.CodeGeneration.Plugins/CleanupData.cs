@@ -6,21 +6,19 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
 {
     public class CleanupData : CodeGeneratorData
     {
-        public const string CLEANUP_MODE = "Cleanup.Mode";
+        public const string CleanupModeKey = "Cleanup.Mode";
 
-        public CleanupMode cleanupMode
+        public CleanupMode CleanupMode
         {
-            get => (CleanupMode)this[CLEANUP_MODE];
-            set => this[CLEANUP_MODE] = value;
+            get => (CleanupMode)this[CleanupModeKey];
+            set => this[CleanupModeKey] = value;
         }
 
-        public ComponentData componentData => _componentData;
-
-        readonly ComponentData _componentData;
+        public readonly ComponentData ComponentData;
 
         public CleanupData(CodeGeneratorData data) : base(data)
         {
-            _componentData = (ComponentData)data;
+            ComponentData = (ComponentData)data;
         }
     }
 }

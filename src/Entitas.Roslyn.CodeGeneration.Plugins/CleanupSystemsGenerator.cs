@@ -11,10 +11,10 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
     {
         public override string Name => "Cleanup (Systems)";
 
-        const string TEMPLATE =
-            @"public sealed class ${ContextName}CleanupSystems : Feature {
+        const string Template =
+            @"public sealed class ${Context}CleanupSystems : Feature {
 
-    public ${ContextName}CleanupSystems(Contexts contexts) {
+    public ${Context}CleanupSystems(Contexts contexts) {
 ${systemsList}
     }
 }
@@ -22,47 +22,39 @@ ${systemsList}
 
         public override CodeGenFile[] Generate(CodeGeneratorData[] data)
         {
-            var cleanupData = data
-                .OfType<CleanupData>()
-                .ToArray();
-
-            var contextNameToCleanupData = cleanupData
+            var contextToCleanupData = data.OfType<CleanupData>()
                 .Aggregate(new Dictionary<string, List<CleanupData>>(), (dict, d) =>
                 {
-                    var contextNames = d.componentData.GetContextNames();
-                    foreach (var contextName in contextNames)
+                    var contexts = d.ComponentData.Contexts;
+                    foreach (var context in contexts)
                     {
-                        if (!dict.ContainsKey(contextName))
-                            dict.Add(contextName, new List<CleanupData>());
+                        if (!dict.ContainsKey(context))
+                            dict.Add(context, new List<CleanupData>());
 
-                        dict[contextName].Add(d);
+                        dict[context].Add(d);
                     }
 
                     return dict;
                 });
 
-            return generate(contextNameToCleanupData);
+            return Generate(contextToCleanupData);
         }
 
-        CodeGenFile[] generate(Dictionary<string, List<CleanupData>> contextNameToCleanupData) => contextNameToCleanupData
-            .Select(kv => generate(kv.Key, kv.Value.ToArray()))
-            .ToArray();
+        CodeGenFile[] Generate(Dictionary<string, List<CleanupData>> contextToCleanupData) => contextToCleanupData
+            .Select(kvp => Generate(kvp.Key, kvp.Value.ToArray())).ToArray();
 
-        CodeGenFile generate(string contextName, CleanupData[] data)
+        CodeGenFile Generate(string context, CleanupData[] data)
         {
-            var systemsList = string.Join("\n", data
-                .Select(d => "        Add(new " +
-                             (d.cleanupMode == CleanupMode.DestroyEntity ? "Destroy" : "Remove") +
-                             d.componentData.ComponentName() + contextName.AddSystemSuffix() + "(contexts));"));
-
-            var fileContent = TEMPLATE
-                .Replace("${systemsList}", systemsList)
-                .Replace(contextName);
+            var systemsList = string.Join("\n", data.Select(d =>
+                "        Add(new " +
+                (d.CleanupMode == CleanupMode.DestroyEntity ? "Destroy" : "Remove") +
+                d.ComponentData.Type.ToComponentName() + context.AddSystemSuffix() + "(contexts));"));
 
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar +
-                contextName + "CleanupSystems.cs",
-                fileContent,
+                Path.Combine(context, $"{context}CleanupSystems.cs"),
+                Template
+                    .Replace("${systemsList}", systemsList)
+                    .Replace(context),
                 GetType().FullName);
         }
     }

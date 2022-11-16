@@ -14,7 +14,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
         [MenuItem("Tools/Entitas/Show Stats", false, 200)]
         public static void ShowStats()
         {
-            var stats = string.Join("\n", GetStats().Select(kv => $"{kv.Key}: {kv.Value}"));
+            var stats = string.Join("\n", GetStats().Select(kvp => $"{kvp.Key}: {kvp.Value}"));
             Debug.Log(stats);
             EditorUtility.DisplayDialog("Entitas Stats", stats, "Close");
         }
@@ -31,7 +31,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                 .Where(isSystem)
                 .ToArray();
 
-            var contexts = getContexts(components);
+            var contexts = GetContexts(components);
 
             var stats = new Dictionary<string, int>
             {
@@ -45,34 +45,33 @@ namespace Entitas.VisualDebugging.Unity.Editor
             return stats;
         }
 
-        static Dictionary<string, int> getContexts(Type[] components) => components
+        static Dictionary<string, int> GetContexts(Type[] components) => components
             .Aggregate(new Dictionary<string, int>(), (contexts, type) =>
             {
-                var contextNames = getContextNamesOrDefault(type);
-                foreach (var contextName in contextNames)
+                foreach (var context in GetContextOrDefault(type))
                 {
-                    if (!contexts.ContainsKey(contextName))
-                        contexts.Add(contextName, 0);
+                    if (!contexts.ContainsKey(context))
+                        contexts.Add(context, 0);
 
-                    contexts[contextName] += 1;
+                    contexts[context] += 1;
                 }
 
                 return contexts;
             });
 
-        static string[] getContextNames(Type type) => Attribute
+        static string[] GetContexts(Type type) => Attribute
             .GetCustomAttributes(type)
             .OfType<ContextAttribute>()
-            .Select(attr => attr.contextName)
+            .Select(attr => attr.Name)
             .ToArray();
 
-        static string[] getContextNamesOrDefault(Type type)
+        static string[] GetContextOrDefault(Type type)
         {
-            var contextNames = getContextNames(type);
-            if (contextNames.Length == 0)
-                contextNames = new[] {"Default"};
+            var contexts = GetContexts(type);
+            if (contexts.Length == 0)
+                contexts = new[] {"Default"};
 
-            return contextNames;
+            return contexts;
         }
 
         static bool isSystem(Type type) =>

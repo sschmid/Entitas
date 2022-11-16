@@ -19,32 +19,27 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
         public bool RunInDryMode => true;
 
         public Dictionary<string, string> DefaultProperties =>
-            _ignoreNamespacesConfig.DefaultProperties.Merge(new[]
-            {
-                _projectPathConfig.DefaultProperties,
-                _contextsComponentDataProvider.DefaultProperties
-            });
+            _projectPathConfig.DefaultProperties
+                .Merge(_ignoreNamespacesConfig.DefaultProperties)
+                .Merge(_contextConfig.DefaultProperties);
 
         public Dictionary<string, object> ObjectCache { get; set; }
 
-        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
         readonly ProjectPathConfig _projectPathConfig = new ProjectPathConfig();
-        readonly ContextsComponentDataProvider _contextsComponentDataProvider = new ContextsComponentDataProvider();
+        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
+        readonly ContextConfig _contextConfig = new ContextConfig();
 
         readonly INamedTypeSymbol[] _types;
 
         public EntityIndexDataProvider() : this(null) { }
 
-        public EntityIndexDataProvider(INamedTypeSymbol[] types)
-        {
-            _types = types;
-        }
+        public EntityIndexDataProvider(INamedTypeSymbol[] types) => _types = types;
 
         public void Configure(Preferences preferences)
         {
-            _ignoreNamespacesConfig.Configure(preferences);
             _projectPathConfig.Configure(preferences);
-            _contextsComponentDataProvider.Configure(preferences);
+            _ignoreNamespacesConfig.Configure(preferences);
+            _contextConfig.Configure(preferences);
         }
 
         public CodeGeneratorData[] GetData()
@@ -61,20 +56,18 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
                 .ToDictionary(
                     type => type,
                     type => type.GetPublicMembers(true))
-                .Where(kv => kv.Value.Any(symbol => symbol.GetAttribute<AbstractEntityIndexAttribute>(true) != null))
-                .SelectMany(kv => createEntityIndexData(kv.Key, kv.Value));
+                .Where(kvp => kvp.Value.Any(symbol => symbol.GetAttribute<AbstractEntityIndexAttribute>(true) != null))
+                .SelectMany(kvp => CreateEntityIndexData(kvp.Key, kvp.Value));
 
             var customEntityIndexData = types
                 .Where(type => !type.IsAbstract)
                 .Where(type => type.GetAttribute<CustomEntityIndexAttribute>() != null)
-                .Select(createCustomEntityIndexData);
+                .Select(CreateCustomEntityIndexData);
 
-            return entityIndexData
-                .Concat(customEntityIndexData)
-                .ToArray();
+            return entityIndexData.Concat(customEntityIndexData).ToArray();
         }
 
-        EntityIndexData[] createEntityIndexData(INamedTypeSymbol type, ISymbol[] members)
+        EntityIndexData[] CreateEntityIndexData(INamedTypeSymbol type, ISymbol[] members)
         {
             var hasMultiple = members.Count(member => member.GetAttribute<AbstractEntityIndexAttribute>(true) != null) > 1;
             return members
@@ -83,37 +76,32 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
                 {
                     var data = new EntityIndexData();
                     var attribute = member.GetAttribute<AbstractEntityIndexAttribute>(true);
-
-                    data.SetEntityIndexType(getEntityIndexType(attribute));
-                    data.IsCustom(false);
-                    data.SetEntityIndexName(type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.ignoreNamespaces));
-                    data.SetHasMultiple(hasMultiple);
-                    data.SetKeyType(member.PublicMemberType().ToCompilableString());
-                    data.SetComponentType(type.ToCompilableString());
-                    data.SetMemberName(member.Name);
-                    data.SetContextNames(_contextsComponentDataProvider.GetContextNamesOrDefault(type));
-
+                    data.Type = GetEntityIndexType(attribute);
+                    data.IsCustom = false;
+                    data.Name = type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.IgnoreNamespaces);
+                    data.KeyType = member.PublicMemberType().ToCompilableString();
+                    data.ComponentType = type.ToCompilableString();
+                    data.MemberName = member.Name;
+                    data.HasMultiple = hasMultiple;
+                    var contexts = ComponentDataProvider.GetContexts(type, _contextConfig.Contexts);
+                    if (contexts.Length == 0)
+                        contexts = new[] {_contextConfig.Contexts[0]};
+                    data.Contexts = contexts;
                     return data;
                 }).ToArray();
         }
 
-        EntityIndexData createCustomEntityIndexData(INamedTypeSymbol type)
+        EntityIndexData CreateCustomEntityIndexData(INamedTypeSymbol type)
         {
             var data = new EntityIndexData();
             var attribute = type.GetAttribute<CustomEntityIndexAttribute>();
-            data.SetEntityIndexType(type.ToCompilableString());
-            data.IsCustom(true);
-            data.SetEntityIndexName(type.ToCompilableString().RemoveDots());
-            data.SetHasMultiple(false);
-            data.SetContextNames(new[]
-            {
-                ((INamedTypeSymbol)attribute.ConstructorArguments.First().Value)
-                .ToCompilableString()
-                .ShortTypeName()
-                .RemoveContextSuffix()
-            });
+            data.Type = type.ToCompilableString();
+            data.IsCustom = true;
+            data.Name = type.ToCompilableString().RemoveDots();
+            data.HasMultiple = false;
+            data.Contexts = new[] {((INamedTypeSymbol)attribute.ConstructorArguments.First().Value).ToCompilableString().ShortTypeName().RemoveContextSuffix()};
 
-            var getMethods = type
+            data.CustomMethods = type
                 .GetMembers()
                 .OfType<IMethodSymbol>()
                 .Where(method => method.DeclaredAccessibility == Accessibility.Public)
@@ -128,23 +116,18 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
                 ))
                 .ToArray();
 
-            data.SetCustomMethods(getMethods);
-
             return data;
         }
 
-        string getEntityIndexType(AttributeData attribute)
+        string GetEntityIndexType(AttributeData attribute)
         {
             var entityIndexType = attribute.ToString();
-            switch (entityIndexType)
+            return entityIndexType switch
             {
-                case "Entitas.CodeGeneration.Attributes.EntityIndexAttribute":
-                    return "Entitas.EntityIndex";
-                case "Entitas.CodeGeneration.Attributes.PrimaryEntityIndexAttribute":
-                    return "Entitas.PrimaryEntityIndex";
-                default:
-                    throw new Exception($"Unhandled EntityIndexType: {entityIndexType}");
-            }
+                "Entitas.CodeGeneration.Attributes.EntityIndexAttribute" => "Entitas.EntityIndex",
+                "Entitas.CodeGeneration.Attributes.PrimaryEntityIndexAttribute" => "Entitas.PrimaryEntityIndex",
+                _ => throw new Exception($"Unhandled EntityIndexType: {entityIndexType}")
+            };
         }
     }
 }

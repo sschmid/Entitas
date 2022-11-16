@@ -4,11 +4,11 @@ namespace Entitas.CodeGeneration.Attributes
 {
     public abstract class AbstractEntityIndexAttribute : Attribute
     {
-        public readonly EntityIndexType entityIndexType;
+        public readonly EntityIndexType Type;
 
-        protected AbstractEntityIndexAttribute(EntityIndexType entityIndexType)
+        protected AbstractEntityIndexAttribute(EntityIndexType type)
         {
-            this.entityIndexType = entityIndexType;
+            Type = type;
         }
     }
 }

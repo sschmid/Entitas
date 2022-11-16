@@ -34,126 +34,126 @@ namespace Entitas.CodeGeneration.Tests
         [Fact]
         public void GetsFullTypeName()
         {
-            _componentData.GetTypeName().Should().Be(typeof(MyNamespaceComponent).ToCompilableString());
+            _componentData.Type.Should().Be(typeof(MyNamespaceComponent).ToCompilableString());
         }
 
         [Fact]
         public void GetsContexts()
         {
-            var contextNames = _componentData.GetContextNames();
-            contextNames.Length.Should().Be(2);
-            contextNames[0].Should().Be("Test1");
-            contextNames[1].Should().Be("Test2");
+            var contexts = _componentData.Contexts;
+            contexts.Length.Should().Be(2);
+            contexts[0].Should().Be("Test1");
+            contexts[1].Should().Be("Test2");
         }
 
         [Fact]
         public void SetsFirstContextAsDefaultWhenComponentHasNoContext()
         {
-            var contextNames = GetData<NoContextComponent>().GetContextNames();
-            contextNames.Length.Should().Be(1);
-            contextNames[0].Should().Be("Game");
+            var contexts = GetData<NoContextComponent>().Contexts;
+            contexts.Length.Should().Be(1);
+            contexts[0].Should().Be("Game");
         }
 
         [Fact]
         public void GetsUnique()
         {
-            _componentData.IsUnique().Should().BeFalse();
-            GetData<UniqueStandardComponent>().IsUnique().Should().BeTrue();
+            _componentData.IsUnique.Should().BeFalse();
+            GetData<UniqueStandardComponent>().IsUnique.Should().BeTrue();
         }
 
         [Fact]
         public void GetsFieldAsMemberData()
         {
-            GetData<ComponentWithFields>().GetMemberData().Length.Should().Be(1);
+            GetData<ComponentWithFields>().MemberData.Length.Should().Be(1);
         }
 
         [Fact]
         public void GetsPropertyAsMemberData()
         {
-            GetData<ComponentWithProperties>().GetMemberData().Length.Should().Be(1);
+            GetData<ComponentWithProperties>().MemberData.Length.Should().Be(1);
         }
 
         [Fact]
         public void GetsMemberDataFromBaseClass()
         {
-            GetData<InheritedComponent>().GetMemberData().Length.Should().Be(1);
+            GetData<InheritedComponent>().MemberData.Length.Should().Be(1);
         }
 
         [Fact]
         public void GetsGenerateComponent()
         {
-            _componentData.ShouldGenerateComponent().Should().BeFalse();
-            _componentData.ContainsKey(ShouldGenerateComponentComponentDataExtension.COMPONENT_OBJECT_TYPE).Should().BeFalse();
+            _componentData.GeneratesObject.Should().BeFalse();
+            _componentData.ContainsKey(ComponentData.ObjectTypeKey).Should().BeFalse();
         }
 
         [Fact]
         public void GetsGenerateIndex()
         {
-            _componentData.ShouldGenerateIndex().Should().BeTrue();
-            GetData<DontGenerateIndexComponent>().ShouldGenerateIndex().Should().BeFalse();
+            _componentData.GeneratesIndex.Should().BeTrue();
+            GetData<DontGenerateIndexComponent>().GeneratesIndex.Should().BeFalse();
         }
 
         [Fact]
         public void GetsGenerateMethods()
         {
-            _componentData.ShouldGenerateMethods().Should().BeTrue();
-            GetData<DontGenerateMethodsComponent>().ShouldGenerateMethods().Should().BeFalse();
+            _componentData.Generates.Should().BeTrue();
+            GetData<DontGenerateMethodsComponent>().Generates.Should().BeFalse();
         }
 
         [Fact]
         public void GetsFlagPrefix()
         {
-            _componentData.GetFlagPrefix().Should().Be("is");
-            GetData<CustomPrefixFlagComponent>().GetFlagPrefix().Should().Be("My");
+            _componentData.FlagPrefix.Should().Be("is");
+            GetData<CustomPrefixFlagComponent>().FlagPrefix.Should().Be("My");
         }
 
         [Fact]
         public void GetsIsNoEvent()
         {
-            _componentData.IsEvent().Should().BeFalse();
+            _componentData.IsEvent.Should().BeFalse();
         }
 
         [Fact]
         public void GetsEvent()
         {
-            GetData<StandardEventComponent>().IsEvent().Should().BeTrue();
+            GetData<StandardEventComponent>().IsEvent.Should().BeTrue();
         }
 
         [Fact]
         public void GetsMultipleEvents()
         {
             var d = GetData<MultipleEventsStandardEventComponent>();
-            d.IsEvent().Should().BeTrue();
-            var eventData = d.GetEventData();
+            d.IsEvent.Should().BeTrue();
+            var eventData = d.EventData;
             eventData.Length.Should().Be(2);
 
-            eventData[0].eventTarget.Should().Be(EventTarget.Any);
-            eventData[0].eventType.Should().Be(EventType.Added);
-            eventData[0].priority.Should().Be(1);
+            eventData[0].EventTarget.Should().Be(EventTarget.Any);
+            eventData[0].EventType.Should().Be(EventType.Added);
+            eventData[0].Order.Should().Be(1);
 
-            eventData[1].eventTarget.Should().Be(EventTarget.Self);
-            eventData[1].eventType.Should().Be(EventType.Removed);
-            eventData[1].priority.Should().Be(2);
+            eventData[1].EventTarget.Should().Be(EventTarget.Self);
+            eventData[1].EventType.Should().Be(EventType.Removed);
+            eventData[1].Order.Should().Be(2);
         }
 
         [Fact]
         public void GetsEventTarget()
         {
-            GetData<StandardEventComponent>().GetEventData()[0].eventTarget.Should().Be(EventTarget.Any);
-            GetData<StandardEntityEventComponent>().GetEventData()[0].eventTarget.Should().Be(EventTarget.Self);
+            GetData<StandardEventComponent>().EventData[0].EventTarget.Should().Be(EventTarget.Any);
+            GetData<StandardEntityEventComponent>().EventData[0].EventTarget.Should().Be(EventTarget.Self);
         }
 
         [Fact]
         public void GetsEventType()
         {
-            GetData<StandardEventComponent>().GetEventData()[0].eventType.Should().Be(EventType.Added);
-            GetData<StandardEntityEventComponent>().GetEventData()[0].eventType.Should().Be(EventType.Removed);
+            GetData<StandardEventComponent>().EventData[0].EventType.Should().Be(EventType.Added);
+            GetData<StandardEntityEventComponent>().EventData[0].EventType.Should().Be(EventType.Removed);
         }
 
         [Fact]
-        public void GetsEventPriority()
+        public void GetsEventOrder()
         {
-            GetData<StandardEntityEventComponent>().GetEventData()[0].priority.Should().Be(1);
+            GetData<StandardEntityEventComponent>().EventData[0].Order.Should().Be(1);
         }
 
         [Fact]
@@ -161,11 +161,11 @@ namespace Entitas.CodeGeneration.Tests
         {
             var d = GetMultipleData<StandardEventComponent>();
             d.Length.Should().Be(2);
-            d[1].IsEvent().Should().BeFalse();
-            d[1].GetTypeName().Should().Be("AnyStandardEventListenerComponent");
-            d[1].GetMemberData().Length.Should().Be(1);
-            d[1].GetMemberData()[0].name.Should().Be("value");
-            d[1].GetMemberData()[0].type.Should().Be("System.Collections.Generic.List<IAnyStandardEventListener>");
+            d[1].IsEvent.Should().BeFalse();
+            d[1].Type.Should().Be("AnyStandardEventListenerComponent");
+            d[1].MemberData.Length.Should().Be(1);
+            d[1].MemberData[0].Name.Should().Be("value");
+            d[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<IAnyStandardEventListener>");
         }
 
         [Fact]
@@ -173,8 +173,8 @@ namespace Entitas.CodeGeneration.Tests
         {
             var d = GetMultipleData<UniqueEventComponent>();
             d.Length.Should().Be(2);
-            d[1].IsEvent().Should().BeFalse();
-            d[1].IsUnique().Should().BeFalse();
+            d[1].IsEvent.Should().BeFalse();
+            d[1].IsUnique.Should().BeFalse();
         }
 
         [Fact]
@@ -182,26 +182,26 @@ namespace Entitas.CodeGeneration.Tests
         {
             var d = GetMultipleData<MultipleContextStandardEventComponent>();
             d.Length.Should().Be(3);
-            d[1].IsEvent().Should().BeFalse();
-            d[1].GetTypeName().Should().Be("Test1AnyMultipleContextStandardEventListenerComponent");
-            d[1].GetMemberData().Length.Should().Be(1);
-            d[1].GetMemberData()[0].name.Should().Be("value");
-            d[1].GetMemberData()[0].type.Should().Be("System.Collections.Generic.List<ITest1AnyMultipleContextStandardEventListener>");
+            d[1].IsEvent.Should().BeFalse();
+            d[1].Type.Should().Be("Test1AnyMultipleContextStandardEventListenerComponent");
+            d[1].MemberData.Length.Should().Be(1);
+            d[1].MemberData[0].Name.Should().Be("value");
+            d[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest1AnyMultipleContextStandardEventListener>");
 
-            d[2].IsEvent().Should().BeFalse();
-            d[2].GetTypeName().Should().Be("Test2AnyMultipleContextStandardEventListenerComponent");
-            d[2].GetMemberData().Length.Should().Be(1);
-            d[2].GetMemberData()[0].name.Should().Be("value");
-            d[2].GetMemberData()[0].type.Should().Be("System.Collections.Generic.List<ITest2AnyMultipleContextStandardEventListener>");
+            d[2].IsEvent.Should().BeFalse();
+            d[2].Type.Should().Be("Test2AnyMultipleContextStandardEventListenerComponent");
+            d[2].MemberData.Length.Should().Be(1);
+            d[2].MemberData[0].Name.Should().Be("value");
+            d[2].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest2AnyMultipleContextStandardEventListener>");
         }
 
         [Fact]
         public void ResolvesGeneratedContextAttribute()
         {
             var data = GetData<GeneratedContextComponent>();
-            var contextNames = data.GetContextNames();
-            contextNames.Length.Should().Be(1);
-            contextNames[0].Should().Be("Game");
+            var contexts = data.Contexts;
+            contexts.Length.Should().Be(1);
+            contexts[0].Should().Be("Game");
         }
 
         [Fact]
@@ -212,9 +212,9 @@ namespace Entitas.CodeGeneration.Tests
             var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol});
             provider.Configure(new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"));
             var data = (ComponentData)provider.GetData()[0];
-            var contextNames = data.GetContextNames();
-            contextNames.Length.Should().Be(1);
-            contextNames[0].Should().Be("Game");
+            var contexts = data.Contexts;
+            contexts.Length.Should().Be(1);
+            contexts[0].Should().Be("Game");
         }
 
         [Fact]
@@ -225,17 +225,17 @@ namespace Entitas.CodeGeneration.Tests
             var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol});
             provider.Configure(new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = KnownContext"));
             var data = (ComponentData)provider.GetData()[0];
-            var contextNames = data.GetContextNames();
-            contextNames.Length.Should().Be(1);
-            contextNames[0].Should().Be("KnownContext");
+            var contexts = data.Contexts;
+            contexts.Length.Should().Be(1);
+            contexts[0].Should().Be("KnownContext");
         }
 
         [Fact]
         public void SupportsHigherRankArrays()
         {
-            var memberData = GetData<Array3dComponent>().GetMemberData();
+            var memberData = GetData<Array3dComponent>().MemberData;
             memberData.Length.Should().Be(1);
-            memberData[0].type.Should().Be("int[,,]");
+            memberData[0].Type.Should().Be("int[,,]");
         }
 
         [Fact]
@@ -248,71 +248,70 @@ namespace Entitas.CodeGeneration.Tests
         public void GetsFullTypeNameForClass()
         {
             // Not the type, but the component that should be generated
-            _classData.GetTypeName().Should().Be("ClassToGenerateComponent");
+            _classData.Type.Should().Be("ClassToGenerateComponent");
         }
 
         [Fact]
         public void GetsContextsForClass()
         {
-            var contextNames = _classData.GetContextNames();
-            contextNames.Length.Should().Be(2);
-            contextNames[0].Should().Be("Test1");
-            contextNames[1].Should().Be("Test2");
+            var contexts = _classData.Contexts;
+            contexts.Length.Should().Be(2);
+            contexts[0].Should().Be("Test1");
+            contexts[1].Should().Be("Test2");
         }
 
         [Fact]
         public void GetsUniqueForClass()
         {
-            _classData.IsUnique().Should().BeFalse();
+            _classData.IsUnique.Should().BeFalse();
         }
 
         [Fact]
         public void GetsMemberDataForClass()
         {
-            _classData.GetMemberData().Length.Should().Be(1);
-            _classData.GetMemberData()[0].type.Should().Be(typeof(ClassToGenerate).ToCompilableString());
+            _classData.MemberData.Length.Should().Be(1);
+            _classData.MemberData[0].Type.Should().Be(typeof(ClassToGenerate).ToCompilableString());
         }
 
         [Fact]
         public void GetsGenerateComponentForClass()
         {
-            _classData.ShouldGenerateComponent().GetType().Should().Be(typeof(bool));
-            _classData.ShouldGenerateComponent().Should().BeTrue();
-            _classData.GetObjectTypeName().Should().Be(typeof(ClassToGenerate).ToCompilableString());
+            _classData.GeneratesObject.Should().BeTrue();
+            _classData.ObjectType.Should().Be(typeof(ClassToGenerate).ToCompilableString());
         }
 
         [Fact]
         public void GetsGenerateIndexForClass()
         {
-            _classData.ShouldGenerateIndex().Should().BeTrue();
+            _classData.GeneratesIndex.Should().BeTrue();
         }
 
         [Fact]
         public void GetsGenerateMethodsForClass()
         {
-            _classData.ShouldGenerateMethods().Should().BeTrue();
+            _classData.Generates.Should().BeTrue();
         }
 
         [Fact]
         public void GetsFlagPrefixForClass()
         {
-            _classData.GetFlagPrefix().Should().Be("is");
+            _classData.FlagPrefix.Should().Be("is");
         }
 
         [Fact]
         public void GetsIsNoEventForClass()
         {
-            _classData.IsEvent().Should().BeFalse();
+            _classData.IsEvent.Should().BeFalse();
         }
 
         [Fact]
         public void GetsEventForClass()
         {
-            GetData<EventToGenerate>().GetEventData().Length.Should().Be(1);
-            var eventData = GetData<EventToGenerate>().GetEventData()[0];
-            eventData.eventTarget.Should().Be(EventTarget.Any);
-            eventData.eventType.Should().Be(EventType.Added);
-            eventData.priority.Should().Be(0);
+            GetData<EventToGenerate>().EventData.Length.Should().Be(1);
+            var eventData = GetData<EventToGenerate>().EventData[0];
+            eventData.EventTarget.Should().Be(EventTarget.Any);
+            eventData.EventType.Should().Be(EventType.Added);
+            eventData.Order.Should().Be(0);
         }
 
         [Fact]
@@ -320,19 +319,19 @@ namespace Entitas.CodeGeneration.Tests
         {
             var d = GetMultipleData<EventToGenerate>();
             d.Length.Should().Be(3);
-            d[1].IsEvent().Should().BeFalse();
-            d[1].ShouldGenerateComponent().Should().BeFalse();
-            d[1].GetTypeName().Should().Be("Test1AnyEventToGenerateListenerComponent");
-            d[1].GetMemberData().Length.Should().Be(1);
-            d[1].GetMemberData()[0].name.Should().Be("value");
-            d[1].GetMemberData()[0].type.Should().Be("System.Collections.Generic.List<ITest1AnyEventToGenerateListener>");
+            d[1].IsEvent.Should().BeFalse();
+            d[1].GeneratesObject.Should().BeFalse();
+            d[1].Type.Should().Be("Test1AnyEventToGenerateListenerComponent");
+            d[1].MemberData.Length.Should().Be(1);
+            d[1].MemberData[0].Name.Should().Be("value");
+            d[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest1AnyEventToGenerateListener>");
 
-            d[2].IsEvent().Should().BeFalse();
-            d[2].ShouldGenerateComponent().Should().BeFalse();
-            d[2].GetTypeName().Should().Be("Test2AnyEventToGenerateListenerComponent");
-            d[2].GetMemberData().Length.Should().Be(1);
-            d[2].GetMemberData()[0].name.Should().Be("value");
-            d[2].GetMemberData()[0].type.Should().Be("System.Collections.Generic.List<ITest2AnyEventToGenerateListener>");
+            d[2].IsEvent.Should().BeFalse();
+            d[2].GeneratesObject.Should().BeFalse();
+            d[2].Type.Should().Be("Test2AnyEventToGenerateListenerComponent");
+            d[2].MemberData.Length.Should().Be(1);
+            d[2].MemberData[0].Name.Should().Be("value");
+            d[2].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest2AnyEventToGenerateListener>");
         }
 
         [Fact]
@@ -356,11 +355,11 @@ namespace Entitas.CodeGeneration.Tests
             var data1 = data[0];
             var data2 = data[1];
 
-            data1.GetObjectTypeName().Should().Be(type.ToCompilableString());
-            data2.GetObjectTypeName().Should().Be(type.ToCompilableString());
+            data1.ObjectType.Should().Be(type.ToCompilableString());
+            data2.ObjectType.Should().Be(type.ToCompilableString());
 
-            data1.GetTypeName().Should().Be("NewCustomNameComponent1Component");
-            data2.GetTypeName().Should().Be("NewCustomNameComponent2Component");
+            data1.Type.Should().Be("NewCustomNameComponent1Component");
+            data2.Type.Should().Be("NewCustomNameComponent2Component");
         }
 
         [Fact]
@@ -380,9 +379,9 @@ namespace Entitas.CodeGeneration.Tests
         {
             var preferences = new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n");
             var data = GetData<NoContextComponent>(preferences);
-            var contextNames = data.GetContextNames();
-            contextNames.Length.Should().Be(1);
-            contextNames[0].Should().Be("ConfiguredContext");
+            var contexts = data.Contexts;
+            contexts.Length.Should().Be(1);
+            contexts[0].Should().Be("ConfiguredContext");
         }
 
         ComponentData GetData<T>(Preferences preferences = null) => GetMultipleData<T>(preferences)[0];

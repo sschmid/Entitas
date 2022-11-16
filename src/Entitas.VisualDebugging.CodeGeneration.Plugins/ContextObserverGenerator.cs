@@ -11,7 +11,7 @@ namespace Entitas.VisualDebugging.CodeGeneration.Plugins
         public int Order => 0;
         public bool RunInDryMode => true;
 
-        const string CONTEXTS_TEMPLATE =
+        const string ContextsTemplate =
             @"public partial class Contexts {
 
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
@@ -36,32 +36,32 @@ ${contextObservers}
 }
 ";
 
-        const string CONTEXT_OBSERVER_TEMPLATE = @"            CreateContextObserver(${contextName});";
+        const string ContextObserverTemplate = @"            CreateContextObserver(${context});";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data)
         {
-            var contextNames = data
+            var contexts = data
                 .OfType<ContextData>()
-                .Select(d => d.GetContextName())
-                .OrderBy(contextName => contextName)
+                .Select(d => d.Name)
+                .OrderBy(context => context)
                 .ToArray();
 
             return new[]
             {
                 new CodeGenFile(
                     "Contexts.cs",
-                    generateContextsClass(contextNames),
+                    GenerateContextsClass(contexts),
                     GetType().FullName)
             };
         }
 
-        string generateContextsClass(string[] contextNames)
+        string GenerateContextsClass(string[] contexts)
         {
-            var contextObservers = string.Join("\n", contextNames
-                .Select(contextName => CONTEXT_OBSERVER_TEMPLATE
-                    .Replace("${contextName}", contextName.ToLowerFirst())));
+            var contextObservers = string.Join("\n", contexts
+                .Select(context => ContextObserverTemplate
+                    .Replace("${context}", context.ToLowerFirst())));
 
-            return CONTEXTS_TEMPLATE
+            return ContextsTemplate
                 .Replace("${contextObservers}", contextObservers);
         }
     }

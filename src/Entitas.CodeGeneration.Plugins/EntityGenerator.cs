@@ -10,23 +10,22 @@ namespace Entitas.CodeGeneration.Plugins
         public int Order => 0;
         public bool RunInDryMode => true;
 
-        const string TEMPLATE =
+        const string Template =
             @"public sealed partial class ${EntityType} : Entitas.Entity {
 }
 ";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<ContextData>()
-            .Select(generate)
+            .Select(d => Generate(d))
             .ToArray();
 
-        CodeGenFile generate(ContextData data)
+        CodeGenFile Generate(ContextData data)
         {
-            var contextName = data.GetContextName();
+            var context = data.Name;
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar +
-                contextName.AddEntitySuffix() + ".cs",
-                TEMPLATE.Replace(contextName),
+                Path.Combine(context, $"{context.AddEntitySuffix()}.cs"),
+                Template.Replace(context),
                 GetType().FullName
             );
         }

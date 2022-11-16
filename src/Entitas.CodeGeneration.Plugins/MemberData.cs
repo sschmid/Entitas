@@ -2,13 +2,13 @@ namespace Entitas.CodeGeneration.Plugins
 {
     public class MemberData
     {
-        public readonly string type;
-        public readonly string name;
+        public readonly string Type;
+        public readonly string Name;
 
         public MemberData(string type, string name)
         {
-            this.type = type;
-            this.name = name;
+            Type = type;
+            Name = name;
         }
     }
 }

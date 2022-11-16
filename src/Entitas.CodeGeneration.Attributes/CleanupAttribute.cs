@@ -5,11 +5,11 @@ namespace Entitas.CodeGeneration.Attributes
     [AttributeUsage(AttributeTargets.Interface | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum)]
     public class CleanupAttribute : Attribute
     {
-        public readonly CleanupMode cleanupMode;
+        public readonly CleanupMode Mode;
 
-        public CleanupAttribute(CleanupMode cleanupMode)
+        public CleanupAttribute(CleanupMode mode)
         {
-            this.cleanupMode = cleanupMode;
+            Mode = mode;
         }
     }
 

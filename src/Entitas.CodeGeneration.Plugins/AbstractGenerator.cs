@@ -17,7 +17,7 @@ namespace Entitas.CodeGeneration.Plugins
         public void Configure(Preferences preferences)
         {
             _ignoreNamespacesConfig.Configure(preferences);
-            CodeGeneratorExtensions.ignoreNamespaces = _ignoreNamespacesConfig.ignoreNamespaces;
+            CodeGeneratorExtensions.IgnoreNamespaces = _ignoreNamespacesConfig.IgnoreNamespaces;
         }
 
         public abstract CodeGenFile[] Generate(CodeGeneratorData[] data);

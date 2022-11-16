@@ -5,17 +5,17 @@ namespace Entitas.CodeGeneration.Plugins
 {
     public class IgnoreNamespacesConfig : AbstractConfigurableConfig
     {
-        const string IGNORE_NAMESPACES_KEY = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+        public const string IgnoreNamespacesKey = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
 
         public override Dictionary<string, string> DefaultProperties => new Dictionary<string, string>
         {
-            {IGNORE_NAMESPACES_KEY, "false"}
+            {IgnoreNamespacesKey, "false"}
         };
 
-        public bool ignoreNamespaces
+        public bool IgnoreNamespaces
         {
-            get => _preferences[IGNORE_NAMESPACES_KEY] == "true";
-            set => _preferences[IGNORE_NAMESPACES_KEY] = value.ToString();
+            get => _preferences[IgnoreNamespacesKey] == "true";
+            set => _preferences[IgnoreNamespacesKey] = value.ToString();
         }
     }
 }

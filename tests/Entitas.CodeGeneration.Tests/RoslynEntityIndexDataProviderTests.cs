@@ -26,15 +26,15 @@ namespace Entitas.CodeGeneration.Tests
             var data = GetData<EntityIndexComponent, StandardComponent>();
             data.Length.Should().Be(1);
             var d = data[0];
-            d.GetEntityIndexType().Should().Be("Entitas.EntityIndex");
-            d.IsCustom().Should().BeFalse();
-            d.GetEntityIndexName().Should().Be("MyNamespaceEntityIndex");
-            d.GetContextNames().Length.Should().Be(2);
-            d.GetContextNames()[0].Should().Be("Test1");
-            d.GetContextNames()[1].Should().Be("Test2");
-            d.GetKeyType().Should().Be("string");
-            d.GetComponentType().Should().Be("My.Namespace.EntityIndexComponent");
-            d.GetMemberName().Should().Be("value");
+            d.Type.Should().Be("Entitas.EntityIndex");
+            d.IsCustom.Should().BeFalse();
+            d.Name.Should().Be("MyNamespaceEntityIndex");
+            d.Contexts.Length.Should().Be(2);
+            d.Contexts[0].Should().Be("Test1");
+            d.Contexts[1].Should().Be("Test2");
+            d.KeyType.Should().Be("string");
+            d.ComponentType.Should().Be("My.Namespace.EntityIndexComponent");
+            d.MemberName.Should().Be("value");
         }
 
         [Fact]
@@ -42,10 +42,10 @@ namespace Entitas.CodeGeneration.Tests
         {
             var data = GetData<MultipleEntityIndicesComponent, StandardComponent>();
             data.Length.Should().Be(2);
-            data[0].GetEntityIndexName().Should().Be("MyNamespaceMultipleEntityIndices");
-            data[0].GetHasMultiple().Should().BeTrue();
-            data[1].GetEntityIndexName().Should().Be("MyNamespaceMultipleEntityIndices");
-            data[1].GetHasMultiple().Should().BeTrue();
+            data[0].Name.Should().Be("MyNamespaceMultipleEntityIndices");
+            data[0].HasMultiple.Should().BeTrue();
+            data[1].Name.Should().Be("MyNamespaceMultipleEntityIndices");
+            data[1].HasMultiple.Should().BeTrue();
         }
 
         [Fact]
@@ -54,14 +54,14 @@ namespace Entitas.CodeGeneration.Tests
             var data = GetData<PrimaryEntityIndexComponent, StandardComponent>();
             data.Length.Should().Be(1);
             var d = data[0];
-            d.GetEntityIndexType().Should().Be("Entitas.PrimaryEntityIndex");
-            d.IsCustom().Should().BeFalse();
-            d.GetEntityIndexName().Should().Be("PrimaryEntityIndex");
-            d.GetContextNames().Length.Should().Be(1);
-            d.GetContextNames()[0].Should().Be("Game");
-            d.GetKeyType().Should().Be("string");
-            d.GetComponentType().Should().Be("PrimaryEntityIndexComponent");
-            d.GetMemberName().Should().Be("value");
+            d.Type.Should().Be("Entitas.PrimaryEntityIndex");
+            d.IsCustom.Should().BeFalse();
+            d.Name.Should().Be("PrimaryEntityIndex");
+            d.Contexts.Length.Should().Be(1);
+            d.Contexts[0].Should().Be("Game");
+            d.KeyType.Should().Be("string");
+            d.ComponentType.Should().Be("PrimaryEntityIndexComponent");
+            d.MemberName.Should().Be("value");
         }
 
         [Fact]
@@ -69,10 +69,10 @@ namespace Entitas.CodeGeneration.Tests
         {
             var data = GetData<MultiplePrimaryEntityIndicesComponent, StandardComponent>();
             data.Length.Should().Be(2);
-            data[0].GetEntityIndexName().Should().Be("MultiplePrimaryEntityIndices");
-            data[0].GetHasMultiple().Should().BeTrue();
-            data[1].GetEntityIndexName().Should().Be("MultiplePrimaryEntityIndices");
-            data[1].GetHasMultiple().Should().BeTrue();
+            data[0].Name.Should().Be("MultiplePrimaryEntityIndices");
+            data[0].HasMultiple.Should().BeTrue();
+            data[1].Name.Should().Be("MultiplePrimaryEntityIndices");
+            data[1].HasMultiple.Should().BeTrue();
         }
 
         [Fact]
@@ -87,15 +87,12 @@ namespace Entitas.CodeGeneration.Tests
             var data = GetData<CustomEntityIndex, StandardComponent>();
             data.Length.Should().Be(1);
             var d = data[0];
-            d.GetEntityIndexType().Should().Be("MyNamespace.CustomEntityIndex");
-            d.IsCustom().Should().BeTrue();
-            d.GetEntityIndexName().Should().Be("MyNamespaceCustomEntityIndex");
-            d.GetContextNames().Length.Should().Be(1);
-            d.GetContextNames()[0].Should().Be("Test1");
-
-            var methods = d.GetCustomMethods();
-            methods.GetType().Should().Be(typeof(MethodData[]));
-            methods.Length.Should().Be(2);
+            d.Type.Should().Be("MyNamespace.CustomEntityIndex");
+            d.IsCustom.Should().BeTrue();
+            d.Name.Should().Be("MyNamespaceCustomEntityIndex");
+            d.Contexts.Length.Should().Be(1);
+            d.Contexts[0].Should().Be("Test1");
+            d.CustomMethods.Length.Should().Be(2);
         }
 
         [Fact]
@@ -114,7 +111,7 @@ namespace Entitas.CodeGeneration.Tests
             var data = GetData<EntityIndexComponent, StandardComponent>(preferences);
             data.Length.Should().Be(1);
             var d = data[0];
-            d.GetEntityIndexName().Should().Be("EntityIndex");
+            d.Name.Should().Be("EntityIndex");
         }
 
         [Fact]
@@ -127,8 +124,8 @@ namespace Entitas.CodeGeneration.Tests
             var data = GetData<EntityIndexNoContextComponent, StandardComponent>(preferences);
             data.Length.Should().Be(1);
             var d = data[0];
-            d.GetContextNames().Length.Should().Be(1);
-            d.GetContextNames()[0].Should().Be("ConfiguredContext");
+            d.Contexts.Length.Should().Be(1);
+            d.Contexts[0].Should().Be("ConfiguredContext");
         }
 
         INamedTypeSymbol GetSymbol<T>() => Types.Single(c => c.ToCompilableString() == typeof(T).FullName);

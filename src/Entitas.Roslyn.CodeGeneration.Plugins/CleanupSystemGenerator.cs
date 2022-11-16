@@ -10,7 +10,7 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
     {
         public override string Name => "Cleanup (System)";
 
-        const string DESTROY_ENTITY_TEMPLATE =
+        const string DestroyEntityTemplate =
             @"using System.Collections.Generic;
 using Entitas;
 
@@ -20,7 +20,7 @@ public sealed class Destroy${ComponentName}${SystemType} : ICleanupSystem {
     readonly List<${EntityType}> _buffer = new List<${EntityType}>();
 
     public Destroy${ComponentName}${SystemType}(Contexts contexts) {
-        _group = contexts.${contextName}.GetGroup(${MatcherType}.${ComponentName});
+        _group = contexts.${context}.GetGroup(${MatcherType}.${ComponentName});
     }
 
     public void Cleanup() {
@@ -31,7 +31,7 @@ public sealed class Destroy${ComponentName}${SystemType} : ICleanupSystem {
 }
 ";
 
-        const string REMOVE_COMPONENT_TEMPLATE =
+        const string RemoveComponentTemplate =
             @"using System.Collections.Generic;
 using Entitas;
 
@@ -41,7 +41,7 @@ public sealed class Remove${ComponentName}${SystemType} : ICleanupSystem {
     readonly List<${EntityType}> _buffer = new List<${EntityType}>();
 
     public Remove${ComponentName}${SystemType}(Contexts contexts) {
-        _group = contexts.${contextName}.GetGroup(${MatcherType}.${ComponentName});
+        _group = contexts.${context}.GetGroup(${MatcherType}.${ComponentName});
     }
 
     public void Cleanup() {
@@ -54,42 +54,37 @@ public sealed class Remove${ComponentName}${SystemType} : ICleanupSystem {
 
         public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<CleanupData>()
-            .SelectMany(generate)
+            .SelectMany(d => Generate(d))
             .ToArray();
 
-        CodeGenFile[] generate(CleanupData data) => data
-            .componentData.GetContextNames()
-            .Select(contextName => generate(contextName, data))
+        CodeGenFile[] Generate(CleanupData data) => data
+            .ComponentData.Contexts
+            .Select(context => Generate(context, data))
             .ToArray();
 
-        CodeGenFile generate(string contextName, CleanupData data)
+        CodeGenFile Generate(string context, CleanupData data)
         {
-            var template = data.cleanupMode == CleanupMode.DestroyEntity
-                ? DESTROY_ENTITY_TEMPLATE
-                : REMOVE_COMPONENT_TEMPLATE;
+            var template = data.CleanupMode == CleanupMode.DestroyEntity
+                ? DestroyEntityTemplate
+                : RemoveComponentTemplate;
 
             var fileContent = template
-                .Replace("${SystemType}", contextName.AddSystemSuffix())
-                .Replace("${EntityType}", contextName.AddEntitySuffix())
-                .Replace("${MatcherType}", contextName.AddMatcherSuffix())
-                .Replace("${removeComponent}", removeComponent(data))
-                .Replace(data.componentData, contextName);
+                .Replace("${SystemType}", context.AddSystemSuffix())
+                .Replace("${EntityType}", context.AddEntitySuffix())
+                .Replace("${MatcherType}", context.AddMatcherSuffix())
+                .Replace("${removeComponent}", RemoveComponent(data))
+                .Replace(data.ComponentData, context);
 
+            var prefix = data.CleanupMode == CleanupMode.DestroyEntity ? "Destroy" : "Remove";
             return new CodeGenFile(
-                contextName + Path.DirectorySeparatorChar +
-                "Systems" + Path.DirectorySeparatorChar +
-                (data.cleanupMode == CleanupMode.DestroyEntity ? "Destroy" : "Remove") + data.componentData.ComponentName() + contextName.AddSystemSuffix() + ".cs",
+                Path.Combine(context, "Systems", $"{prefix}{data.ComponentData.Type.ToComponentName()}{context.AddSystemSuffix()}.cs"),
                 fileContent,
                 GetType().FullName
             );
         }
 
-        static string removeComponent(CleanupData data)
-        {
-            if (data.componentData.GetMemberData().Length == 0)
-                return $"{data.componentData.PrefixedComponentName()} = false";
-
-            return $"Remove{data.componentData.ComponentName()}()";
-        }
+        static string RemoveComponent(CleanupData data) => data.ComponentData.MemberData.Length == 0
+            ? $"{data.ComponentData.PrefixedComponentName()} = false"
+            : $"Remove{data.ComponentData.Type.ToComponentName()}()";
     }
 }
