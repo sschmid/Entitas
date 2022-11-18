@@ -1,6 +1,6 @@
 using System;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     public interface IDefaultInstanceCreator
     {

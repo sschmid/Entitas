@@ -1,4 +1,4 @@
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     public static class VisualDebuggingEntitasExtension
     {

@@ -6,7 +6,7 @@ using DesperateDevs.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     [CustomEditor(typeof(DebugSystemsBehaviour))]
     public class DebugSystemsInspector : UnityEditor.Editor

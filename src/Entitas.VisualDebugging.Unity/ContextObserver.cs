@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity
+namespace Entitas.Unity
 {
     public class ContextObserver
     {

@@ -1,7 +1,7 @@
 using System;
 using UnityEditor;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     public class IntTypeDrawer : ITypeDrawer
     {

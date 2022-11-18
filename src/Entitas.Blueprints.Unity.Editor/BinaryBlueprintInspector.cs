@@ -3,7 +3,7 @@ using System.Linq;
 using DesperateDevs.Extensions;
 using DesperateDevs.Reflection;
 using DesperateDevs.Unity.Editor;
-using Entitas.VisualDebugging.Unity.Editor;
+using Entitas.Unity.Editor;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -142,7 +142,7 @@ namespace Entitas.Blueprints.Unity.Editor
                     {
                         _contextIndex = EditorGUILayout.Popup(_contextIndex, _allContextNames);
 
-                        if (EditorLayout.MiniButton("Switch Context")) 
+                        if (EditorLayout.MiniButton("Switch Context"))
                             switchToContext();
                     }
                     EditorGUILayout.EndHorizontal();

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity
+namespace Entitas.Unity
 {
     [ExecuteInEditMode]
     public class ContextObserverBehaviour : MonoBehaviour
@@ -19,7 +19,7 @@ namespace Entitas.VisualDebugging.Unity
         {
             if (_contextObserver == null)
                 gameObject.DestroyGameObject();
-            else if (_contextObserver.gameObject != null) 
+            else if (_contextObserver.gameObject != null)
                 _contextObserver.gameObject.name = _contextObserver.ToString();
         }
 

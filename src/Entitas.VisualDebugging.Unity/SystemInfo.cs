@@ -1,6 +1,6 @@
 using System;
 
-namespace Entitas.VisualDebugging.Unity
+namespace Entitas.Unity
 {
     [Flags]
     public enum SystemInterfaceFlags

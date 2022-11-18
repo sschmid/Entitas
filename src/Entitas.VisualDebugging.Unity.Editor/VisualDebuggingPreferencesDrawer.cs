@@ -4,7 +4,7 @@ using DesperateDevs.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     public class VisualDebuggingPreferencesDrawer : AbstractPreferencesDrawer
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Entitas.VisualDebugging.Unity
+namespace Entitas.Unity
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class DontDrawComponentAttribute : Attribute { }

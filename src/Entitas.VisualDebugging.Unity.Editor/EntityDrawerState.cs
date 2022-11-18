@@ -5,7 +5,7 @@ using DesperateDevs.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     public static partial class EntityDrawer
     {
@@ -146,7 +146,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
         static Texture2D createTexture(int width, int height, Color color)
         {
             var pixels = new Color[width * height];
-            for (var i = 0; i < pixels.Length; ++i) 
+            for (var i = 0; i < pixels.Length; ++i)
                 pixels[i] = color;
 
             var result = new Texture2D(width, height);

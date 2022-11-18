@@ -3,7 +3,7 @@ using DesperateDevs.Unity.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     [CustomEditor(typeof(ContextObserverBehaviour))]
     public class ContextObserverInspector : UnityEditor.Editor
@@ -41,7 +41,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
 
                     var bgColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.red;
-                    if (GUILayout.Button("Destroy All Entities")) 
+                    if (GUILayout.Button("Destroy All Entities"))
                         contextObserver.context.DestroyAllEntities();
 
                     GUI.backgroundColor = bgColor;

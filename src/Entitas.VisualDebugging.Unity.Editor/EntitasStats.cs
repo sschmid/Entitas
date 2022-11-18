@@ -7,7 +7,7 @@ using Entitas.CodeGeneration.Attributes;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     public static class EntitasStats
     {

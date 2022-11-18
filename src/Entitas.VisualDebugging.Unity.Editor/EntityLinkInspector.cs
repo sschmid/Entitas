@@ -1,9 +1,8 @@
 using System.Linq;
-using Entitas.Unity;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     [CustomEditor(typeof(EntityLink))]
     public class EntityLinkInspector : UnityEditor.Editor

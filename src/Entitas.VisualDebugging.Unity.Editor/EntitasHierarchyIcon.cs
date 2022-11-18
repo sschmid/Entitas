@@ -1,11 +1,10 @@
 using System;
 using DesperateDevs.Serialization;
 using DesperateDevs.Unity.Editor;
-using Entitas.Unity;
 using UnityEditor;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     [InitializeOnLoad]
     public static class EntitasHierarchyIcon

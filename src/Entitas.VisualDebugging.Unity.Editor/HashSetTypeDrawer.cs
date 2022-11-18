@@ -5,7 +5,7 @@ using DesperateDevs.Extensions;
 using DesperateDevs.Unity.Editor;
 using UnityEditor;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     public class HashSetTypeDrawer : ITypeDrawer
     {

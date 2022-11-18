@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity
+namespace Entitas.Unity
 {
     [ExecuteInEditMode]
     public class EntityBehaviour : MonoBehaviour

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Entitas.VisualDebugging.Unity
+namespace Entitas.Unity
 {
     public class DebugSystemsBehaviour : MonoBehaviour
     {

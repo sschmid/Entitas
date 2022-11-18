@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using DesperateDevs.Serialization;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     public class VisualDebuggingConfig : AbstractConfigurableConfig
     {

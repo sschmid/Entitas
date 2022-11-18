@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEditor;
 
-namespace Entitas.VisualDebugging.Unity.Editor
+namespace Entitas.Unity.Editor
 {
     [CustomEditor(typeof(EntityBehaviour)), CanEditMultipleObjects]
     public class EntityInspector : UnityEditor.Editor
