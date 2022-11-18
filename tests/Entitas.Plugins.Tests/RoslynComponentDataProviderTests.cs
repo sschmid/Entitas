@@ -16,7 +16,7 @@ namespace Entitas.Plugins.Tests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
         static readonly string ProjectPath = Path.Combine(ProjectRoot, "tests", "Fixtures", "Fixtures.csproj");
-        static readonly string RoslynProjectPath = Path.Combine(ProjectRoot, "tests", "Entitas.Roslyn.CodeGeneration.Plugins.Tests", "fixtures", "exclude", "Entitas.Roslyn.CodeGeneration.Plugins.Tests.Project");
+        static readonly string RoslynProjectPath = Path.Combine(ProjectRoot, "tests", "Entitas.Plugins.Roslyn.Tests", "fixtures", "exclude", "Entitas.Plugins.Roslyn.Tests.Project");
 
         INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
         INamedTypeSymbol[] _types;

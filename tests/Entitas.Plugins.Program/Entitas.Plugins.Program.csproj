@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../src/Entitas.Roslyn.CodeGeneration.Plugins/Entitas.Roslyn.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="../../src/Entitas.Plugins.Roslyn/Entitas.Plugins.Roslyn.csproj" />
     <ProjectReference Include="../../src/Entitas.Plugins.Unity/Entitas.Plugins.Unity.csproj" />
   </ItemGroup>
 

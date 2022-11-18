@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixtures", "tests/Fixtures/
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins.Program", "tests/Entitas.Plugins.Program/Entitas.Plugins.Program.csproj", "{60A61441-C62A-48B6-9E39-00F0598F5512}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Roslyn.CodeGeneration.Plugins", "src/Entitas.Roslyn.CodeGeneration.Plugins/Entitas.Roslyn.CodeGeneration.Plugins.csproj", "{E59A9835-AE58-4C7D-8FC3-4206BCB05DE4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins.Roslyn", "src/Entitas.Plugins.Roslyn/Entitas.Plugins.Roslyn.csproj", "{E59A9835-AE58-4C7D-8FC3-4206BCB05DE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins.Tests", "tests/Entitas.Plugins.Tests/Entitas.Plugins.Tests.csproj", "{8C20DDC0-5FED-4C6A-8366-E4F7A895471D}"
 EndProject
