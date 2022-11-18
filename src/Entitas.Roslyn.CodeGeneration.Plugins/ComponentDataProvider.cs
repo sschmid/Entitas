@@ -165,7 +165,7 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
                 }
                 else if (attribute.AttributeClass.ToCompilableString().Contains(contextAttribute))
                 {
-                    // Entitas.CodeGeneration.Attributes.ContextAttribute
+                    // Entitas.Plugins.Attributes.ContextAttribute
                     var name = (string)attribute.ConstructorArguments.First().Value;
                     contexts.Add(name);
                 }

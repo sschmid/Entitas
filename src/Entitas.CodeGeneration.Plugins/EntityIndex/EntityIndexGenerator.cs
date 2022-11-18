@@ -17,7 +17,7 @@ namespace Entitas.CodeGeneration.Plugins
 
 ${indexConstants}
 
-    [Entitas.CodeGeneration.Attributes.PostConstructor]
+    [Entitas.Plugins.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
 ${addIndices}
     }

@@ -62,7 +62,7 @@ public partial class Contexts {
 
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
-    [Entitas.CodeGeneration.Attributes.PostConstructor]
+    [Entitas.Plugins.Attributes.PostConstructor]
     public void InitializeContextObservers() {
         try {
             CreateContextObserver(game);

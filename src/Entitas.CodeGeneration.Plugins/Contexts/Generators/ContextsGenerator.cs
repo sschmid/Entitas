@@ -34,7 +34,7 @@ ${contextAssignmentsList}
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
-            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGeneration.Attributes.PostConstructorAttribute))
+            method => System.Attribute.IsDefined(method, typeof(Entitas.Plugins.Attributes.PostConstructorAttribute))
         );
 
         foreach (var postConstructor in postConstructors) {

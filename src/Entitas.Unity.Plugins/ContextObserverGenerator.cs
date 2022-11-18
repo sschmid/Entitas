@@ -16,7 +16,7 @@ namespace Entitas.Unity.Plugins
 
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
-    [Entitas.CodeGeneration.Attributes.PostConstructor]
+    [Entitas.Plugins.AttributesEntitas.Plugins.Attributes.PostConstructor]
     public void InitializeContextObservers() {
         try {
 ${contextObservers}

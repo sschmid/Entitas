@@ -12,7 +12,7 @@ namespace Entitas.CodeGeneration.Plugins
         public bool RunInDryMode => true;
 
         const string ComponentTemplate =
-            @"[Entitas.CodeGeneration.Attributes.DontGenerate(false)]
+            @"[Entitas.Plugins.Attributes.DontGenerate(false)]
 public sealed class ${FullComponentName} : Entitas.IComponent {
     public ${Type} value;
 }

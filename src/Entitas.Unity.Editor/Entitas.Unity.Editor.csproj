@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Entitas.CodeGeneration.Attributes/Entitas.CodeGeneration.Attributes.csproj" />
+    <ProjectReference Include="../Entitas.Plugins.Attributes/Entitas.Plugins.Attributes.csproj" />
     <ProjectReference Include="../Entitas.Unity/Entitas.Unity.csproj" />
   </ItemGroup>
 

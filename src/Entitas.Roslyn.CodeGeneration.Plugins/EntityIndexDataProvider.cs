@@ -124,8 +124,8 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
             var entityIndexType = attribute.ToString();
             return entityIndexType switch
             {
-                "Entitas.CodeGeneration.Attributes.EntityIndexAttribute" => "Entitas.EntityIndex",
-                "Entitas.CodeGeneration.Attributes.PrimaryEntityIndexAttribute" => "Entitas.PrimaryEntityIndex",
+                "Entitas.Plugins.Attributes.EntityIndexAttribute" => "Entitas.EntityIndex",
+                "Entitas.Plugins.Attributes.PrimaryEntityIndexAttribute" => "Entitas.PrimaryEntityIndex",
                 _ => throw new Exception($"Unhandled EntityIndexType: {entityIndexType}")
             };
         }

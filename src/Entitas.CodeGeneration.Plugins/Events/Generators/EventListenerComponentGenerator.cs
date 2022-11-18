@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Plugins
         public override string Name => "Event (Listener Component)";
 
         const string Template =
-            @"[Entitas.CodeGeneration.Attributes.DontGenerate(false)]
+            @"[Entitas.Plugins.Attributes.DontGenerate(false)]
 public sealed class ${EventListenerComponent} : Entitas.IComponent {
     public System.Collections.Generic.List<I${EventListener}> value;
 }

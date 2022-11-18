@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../src/Entitas/Entitas.csproj" />
-    <ProjectReference Include="../../src/Entitas.CodeGeneration.Attributes/Entitas.CodeGeneration.Attributes.csproj" />
+    <ProjectReference Include="../../src/Entitas.Plugins.Attributes/Entitas.Plugins.Attributes.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,7 @@ namespace Entitas.CodeGeneration.Plugins
         public bool RunInDryMode => true;
 
         const string Template =
-            @"public sealed class ${Context}Attribute : Entitas.CodeGeneration.Attributes.ContextAttribute {
+            @"public sealed class ${Context}Attribute : Entitas.Plugins.Attributes.ContextAttribute {
 
     public ${Context}Attribute() : base(""${Context}"") {
     }
