@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../Entitas.Blueprints.Unity/Entitas.Blueprints.Unity.csproj" />
-    <ProjectReference Include="../Entitas.VisualDebugging.Unity.Editor/Entitas.VisualDebugging.Unity.Editor.csproj" />
   </ItemGroup>
 
   <ItemGroup>
