@@ -5,7 +5,7 @@ namespace Entitas.Plugins
 {
     public class IgnoreNamespacesConfig : AbstractConfigurableConfig
     {
-        public const string IgnoreNamespacesKey = "Entitas.CodeGeneration.Plugins.IgnoreNamespaces";
+        public const string IgnoreNamespacesKey = "Entitas.Plugins.IgnoreNamespaces";
 
         public override Dictionary<string, string> DefaultProperties => new Dictionary<string, string>
         {

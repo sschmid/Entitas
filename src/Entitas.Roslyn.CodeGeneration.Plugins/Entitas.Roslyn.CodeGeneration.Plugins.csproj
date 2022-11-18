@@ -22,7 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="../Entitas/Entitas.csproj" />
     <ProjectReference Include="../Entitas.Plugins.Attributes/Entitas.Plugins.Attributes.csproj" />
-    <ProjectReference Include="../Entitas.CodeGeneration.Plugins/Entitas.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="../Entitas.Plugins/Entitas.Plugins.csproj" />
   </ItemGroup>
 
 </Project>

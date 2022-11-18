@@ -283,7 +283,7 @@ namespace Entitas.CodeGeneration.Tests
             var types = new[] {typeof(NameAgeComponent), typeof(Test2ContextComponent)};
             var provider = new ComponentDataProvider(types);
             provider.Configure(new TestPreferences(
-                "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"
+                "Entitas.Plugins.Contexts = Game, GameState"
             ));
             var data = provider.GetData();
             data.Length.Should().Be(types.Length);
@@ -295,7 +295,7 @@ namespace Entitas.CodeGeneration.Tests
             var types = new[] {typeof(ClassToGenerate), typeof(ClassToGenerateComponent)};
             var provider = new ComponentDataProvider(types);
             provider.Configure(new TestPreferences(
-                "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"
+                "Entitas.Plugins.Contexts = Game, GameState"
             ));
             var data = provider.GetData();
             data.Length.Should().Be(1);
@@ -317,7 +317,7 @@ namespace Entitas.CodeGeneration.Tests
         public void GetsDefaultContext()
         {
             var preferences = new TestPreferences(
-                "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n"
+                "Entitas.Plugins.Contexts = ConfiguredContext" + "\n"
             );
 
             var data = GetData<NoContextComponent>(preferences);
@@ -332,8 +332,8 @@ namespace Entitas.CodeGeneration.Tests
         {
             var provider = new ComponentDataProvider(new[] {typeof(T)});
             preferences ??= new TestPreferences(
-                @"Entitas.CodeGeneration.Plugins.Contexts = Game, GameState
-Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
+                @"Entitas.Plugins.Contexts = Game, GameState
+Entitas.Plugins.IgnoreNamespaces = false");
 
             provider.Configure(preferences);
 

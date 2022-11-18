@@ -210,7 +210,7 @@ namespace Entitas.CodeGeneration.Tests
             var parser = new ProjectParser(RoslynProjectPath);
             var symbol = parser.GetTypes().Single(c => c.ToCompilableString() == "UnknownContextComponent");
             var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol});
-            provider.Configure(new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"));
+            provider.Configure(new TestPreferences("Entitas.Plugins.Contexts = Game, GameState"));
             var data = (ComponentData)provider.GetData()[0];
             var contexts = data.Contexts;
             contexts.Length.Should().Be(1);
@@ -223,7 +223,7 @@ namespace Entitas.CodeGeneration.Tests
             var parser = new ProjectParser(RoslynProjectPath);
             var symbol = parser.GetTypes().Single(c => c.ToCompilableString() == "UnknownContextComponent");
             var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol});
-            provider.Configure(new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = KnownContext"));
+            provider.Configure(new TestPreferences("Entitas.Plugins.Contexts = KnownContext"));
             var data = (ComponentData)provider.GetData()[0];
             var contexts = data.Contexts;
             contexts.Length.Should().Be(1);
@@ -341,7 +341,7 @@ namespace Entitas.CodeGeneration.Tests
             var symbol2 = Types.Single(c => c.ToCompilableString() == typeof(Test2ContextComponent).FullName);
             var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol1, symbol2});
             provider.Configure(
-                new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState")
+                new TestPreferences("Entitas.Plugins.Contexts = Game, GameState")
             );
             var data = provider.GetData();
             data.Length.Should().Be(2);
@@ -368,7 +368,7 @@ namespace Entitas.CodeGeneration.Tests
             var types = new[] {typeof(ClassToGenerate), typeof(ClassToGenerateComponent)};
             var provider = new ComponentDataProvider(types);
             provider.Configure(new TestPreferences(
-                "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState"
+                "Entitas.Plugins.Contexts = Game, GameState"
             ));
             var data = provider.GetData();
             data.Length.Should().Be(1);
@@ -377,7 +377,7 @@ namespace Entitas.CodeGeneration.Tests
         [Fact]
         public void GetsDefaultContext()
         {
-            var preferences = new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n");
+            var preferences = new TestPreferences("Entitas.Plugins.Contexts = ConfiguredContext" + "\n");
             var data = GetData<NoContextComponent>(preferences);
             var contexts = data.Contexts;
             contexts.Length.Should().Be(1);
@@ -392,8 +392,8 @@ namespace Entitas.CodeGeneration.Tests
             var symbol = Types.Single(c => c.ToCompilableString() == type.FullName);
             var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol});
             preferences ??= new TestPreferences(
-                @"Entitas.CodeGeneration.Plugins.Contexts = Game, GameState
-Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
+                @"Entitas.Plugins.Contexts = Game, GameState
+Entitas.Plugins.IgnoreNamespaces = false");
 
             provider.Configure(preferences);
             return (ComponentData[])provider.GetData();

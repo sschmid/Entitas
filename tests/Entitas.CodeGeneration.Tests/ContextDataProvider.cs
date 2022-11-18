@@ -9,7 +9,7 @@ namespace Entitas.CodeGeneration.Tests
         [Fact]
         public void CreatesDataForEachContext()
         {
-            var contexts = "Entitas.CodeGeneration.Plugins.Contexts = Input, GameState";
+            var contexts = "Entitas.Plugins.Contexts = Input, GameState";
             var provider = new Plugins.ContextDataProvider();
             provider.Configure(new TestPreferences(contexts));
 

@@ -50,7 +50,7 @@ namespace Entitas.CodeGeneration.Tests
             var symbol2 = Types.Single(c => c.ToCompilableString() == typeof(CleanupDestroyComponent).FullName);
             var provider = new CleanupDataProvider(new[] {symbol1, symbol2});
             provider.Configure(
-                new TestPreferences("Entitas.CodeGeneration.Plugins.Contexts = Game, GameState")
+                new TestPreferences("Entitas.Plugins.Contexts = Game, GameState")
             );
             provider.GetData().Length.Should().Be(2);
         }
@@ -63,8 +63,8 @@ namespace Entitas.CodeGeneration.Tests
             var symbol = Types.Single(c => c.ToCompilableString() == type.FullName);
             var provider = new CleanupDataProvider(new[] {symbol});
             preferences ??= new TestPreferences(
-                @"Entitas.CodeGeneration.Plugins.Contexts = Game, GameState
-Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false");
+                @"Entitas.Plugins.Contexts = Game, GameState
+Entitas.Plugins.IgnoreNamespaces = false");
 
             provider.Configure(preferences);
             return (CleanupData[])provider.GetData();

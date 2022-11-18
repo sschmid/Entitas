@@ -5,7 +5,7 @@ namespace Entitas.Plugins
 {
     public static class PluginUtil
     {
-        public const string AssemblyResolverKey = "Entitas.CodeGeneration.Plugins.AssemblyResolver";
+        public const string AssemblyResolverKey = "Entitas.Plugins.AssemblyResolver";
 
         public static AssemblyResolver GetCachedAssemblyResolver(Dictionary<string, object> objectCache, string[] assemblies, string[] basePaths)
         {

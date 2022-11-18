@@ -106,8 +106,8 @@ namespace Entitas.CodeGeneration.Tests
         public void IgnoresNamespaces()
         {
             var preferences = new TestPreferences(
-                "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n" +
-                "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true"
+                "Entitas.Plugins.Contexts = ConfiguredContext" + "\n" +
+                "Entitas.Plugins.IgnoreNamespaces = true"
             );
 
             var data = GetData<EntityIndexComponent, StandardComponent>(preferences);
@@ -120,8 +120,8 @@ namespace Entitas.CodeGeneration.Tests
         public void GetsDefaultContext()
         {
             var preferences = new TestPreferences(
-                "Entitas.CodeGeneration.Plugins.Contexts = ConfiguredContext" + "\n" +
-                "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = true"
+                "Entitas.Plugins.Contexts = ConfiguredContext" + "\n" +
+                "Entitas.Plugins.IgnoreNamespaces = true"
             );
 
             var data = GetData<EntityIndexNoContextComponent, StandardComponent>(preferences);
@@ -135,8 +135,8 @@ namespace Entitas.CodeGeneration.Tests
         {
             var provider = new EntityIndexDataProvider(new[] {typeof(T1), typeof(T2)});
             preferences ??= new TestPreferences(
-                "Entitas.CodeGeneration.Plugins.Contexts = Game, GameState" + "\n" +
-                "Entitas.CodeGeneration.Plugins.IgnoreNamespaces = false"
+                "Entitas.Plugins.Contexts = Game, GameState" + "\n" +
+                "Entitas.Plugins.IgnoreNamespaces = false"
             );
 
             provider.Configure(preferences);

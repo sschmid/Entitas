@@ -7,7 +7,7 @@ namespace Entitas.Plugins
 {
     public class ContextConfig : AbstractConfigurableConfig
     {
-        const string ContextsKey = "Entitas.CodeGeneration.Plugins.Contexts";
+        const string ContextsKey = "Entitas.Plugins.Contexts";
 
         public override Dictionary<string, string> DefaultProperties => new Dictionary<string, string>
         {

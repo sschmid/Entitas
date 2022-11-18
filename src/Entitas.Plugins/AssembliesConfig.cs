@@ -7,7 +7,7 @@ namespace Entitas.Plugins
 {
     public class AssembliesConfig : AbstractConfigurableConfig
     {
-        const string AssembliesKey = "Entitas.CodeGeneration.Plugins.Assemblies";
+        const string AssembliesKey = "Entitas.Plugins.Assemblies";
 
         public override Dictionary<string, string> DefaultProperties => new Dictionary<string, string>
         {

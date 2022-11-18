@@ -7,7 +7,7 @@ namespace Entitas.Plugins
 {
     public class TemplatesConfig : AbstractConfigurableConfig
     {
-        const string TemplatesKey = "Entitas.CodeGeneration.Plugins.Templates";
+        const string TemplatesKey = "Entitas.Plugins.Templates";
 
         public override Dictionary<string, string> DefaultProperties => new Dictionary<string, string>
         {
