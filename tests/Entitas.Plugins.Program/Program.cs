@@ -1,4 +1,4 @@
-namespace Entitas.CodeGeneration.Program;
+namespace Entitas.Plugins.Program;
 
 public static class Program
 {

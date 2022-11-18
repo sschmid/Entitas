@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.Unity.Ed
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.Tests", "tests/Entitas.Blueprints.Tests/Entitas.Blueprints.Tests.csproj", "{C97671AB-F749-477F-AD12-E384DA06CDFA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entitas.CodeGeneration", "Entitas.CodeGeneration", "{7331AED0-297D-404E-82CB-770CD38ED863}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entitas.Plugins", "Entitas.Plugins", "{7331AED0-297D-404E-82CB-770CD38ED863}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins.Attributes", "src/Entitas.Plugins.Attributes/Entitas.Plugins.Attributes.csproj", "{76A16CFD-7488-41D3-989B-CA2F1840E638}"
 EndProject
@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins", "src/Enti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixtures", "tests/Fixtures/Fixtures.csproj", "{6F01CC45-F951-43A5-923E-D3778F9DD435}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Program", "tests/Entitas.CodeGeneration.Program/Entitas.CodeGeneration.Program.csproj", "{60A61441-C62A-48B6-9E39-00F0598F5512}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins.Program", "tests/Entitas.Plugins.Program/Entitas.Plugins.Program.csproj", "{60A61441-C62A-48B6-9E39-00F0598F5512}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Roslyn.CodeGeneration.Plugins", "src/Entitas.Roslyn.CodeGeneration.Plugins/Entitas.Roslyn.CodeGeneration.Plugins.csproj", "{E59A9835-AE58-4C7D-8FC3-4206BCB05DE4}"
 EndProject
