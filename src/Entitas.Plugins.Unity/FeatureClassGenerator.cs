@@ -1,6 +1,6 @@
 using Jenny;
 
-namespace Entitas.Unity.Plugins
+namespace Entitas.Plugins.Unity
 {
     public class FeatureClassGenerator : ICodeGenerator
     {

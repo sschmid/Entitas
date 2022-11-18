@@ -1,9 +1,8 @@
 using System.Linq;
 using Jenny;
 using DesperateDevs.Extensions;
-using Entitas.Plugins;
 
-namespace Entitas.Unity.Plugins
+namespace Entitas.Plugins.Unity
 {
     public class ContextObserverGenerator : ICodeGenerator
     {

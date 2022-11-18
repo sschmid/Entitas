@@ -50,7 +50,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity", "src/Entita
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Editor", "src/Entitas.Unity.Editor/Entitas.Unity.Editor.csproj", "{9AF72B25-85B0-4FDC-85C3-660926C82438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Plugins", "src/Entitas.Unity.Plugins/Entitas.Unity.Plugins.csproj", "{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins.Unity", "src/Entitas.Plugins.Unity/Entitas.Plugins.Unity.csproj", "{8EC3A728-37B1-480F-BE1E-2C1EFD1E1626}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Unity.Tests", "tests/Entitas.Unity.Tests/Entitas.Unity.Tests.csproj", "{CEFDF4DE-6410-4ED0-B711-D43E198BA6C4}"
 EndProject
