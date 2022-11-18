@@ -1,10 +1,9 @@
 ﻿using System;
 using Jenny;
-using Entitas.Plugins;
 using FluentAssertions;
 using Xunit;
 
-namespace Entitas.CodeGeneration.Tests
+namespace Entitas.Plugins.Tests
 {
     public class EntityIndexGeneratorTests
     {

@@ -3,7 +3,7 @@ using FluentAssertions;
 using MyNamespace;
 using Xunit;
 
-namespace Entitas.CodeGeneration.Tests
+namespace Entitas.Plugins.Tests
 {
     public class CustomEntityIndexTests
     {

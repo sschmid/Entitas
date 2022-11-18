@@ -1,8 +1,7 @@
-﻿using Entitas.Plugins;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Xunit;
 
-namespace Entitas.CodeGeneration.Tests
+namespace Entitas.Plugins.Tests
 {
     public class ContextDataProvider
     {

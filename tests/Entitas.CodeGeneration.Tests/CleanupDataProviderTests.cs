@@ -9,7 +9,7 @@ using Entitas.Roslyn.CodeGeneration.Plugins;
 using FluentAssertions;
 using Xunit;
 
-namespace Entitas.CodeGeneration.Tests
+namespace Entitas.Plugins.Tests
 {
     [Collection("Entitas.CodeGeneration.Tests")]
     public class CleanupDataProviderTests

@@ -6,11 +6,10 @@ using DesperateDevs.Serialization;
 using Entitas.Plugins.Attributes;
 using Microsoft.CodeAnalysis;
 using My.Namespace;
-using Entitas.Plugins;
 using FluentAssertions;
 using Xunit;
 
-namespace Entitas.CodeGeneration.Tests
+namespace Entitas.Plugins.Tests
 {
     [Collection("Entitas.CodeGeneration.Tests")]
     public class RoslynComponentDataProviderTests

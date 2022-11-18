@@ -1,11 +1,10 @@
 using DesperateDevs.Serialization;
-using Entitas.Plugins;
 using FluentAssertions;
 using My.Namespace;
 using MyNamespace;
 using Xunit;
 
-namespace Entitas.CodeGeneration.Tests
+namespace Entitas.Plugins.Tests
 {
     public class EntityIndexDataProviderTests
     {
