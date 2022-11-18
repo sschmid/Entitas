@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Entitas.CodeGeneration.Attributes
+namespace Entitas.Plugins.Attributes
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Class)]
     public class EntityIndexAttribute : AbstractEntityIndexAttribute

@@ -1,7 +1,7 @@
 ﻿using System.CodeDom.Compiler;
 using System.Linq;
 using DesperateDevs.Extensions;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins
 {

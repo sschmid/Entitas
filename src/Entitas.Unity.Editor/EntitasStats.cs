@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DesperateDevs.Extensions;
 using DesperateDevs.Reflection;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 using UnityEditor;
 using UnityEngine;
 

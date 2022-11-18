@@ -1,5 +1,5 @@
 ﻿using Entitas;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 
 [Context("Test1"), Context("Test2")]
 public sealed class Test2ContextComponent : IComponent

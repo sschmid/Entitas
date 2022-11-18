@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-[Entitas.CodeGeneration.Attributes.DontGenerate(false)]
+[Entitas.Plugins.Attributes.DontGenerate(false)]
 public sealed class Test1AnyEventToGenerateListenerComponent : Entitas.IComponent {
     public System.Collections.Generic.List<ITest1AnyEventToGenerateListener> value;
 }

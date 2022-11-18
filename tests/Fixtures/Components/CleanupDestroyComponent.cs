@@ -1,5 +1,5 @@
 ﻿using Entitas;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 
 [Cleanup(CleanupMode.DestroyEntity)]
 public sealed class CleanupDestroyComponent : IComponent { }

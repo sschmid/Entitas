@@ -34,7 +34,7 @@ public partial class Contexts : Entitas.IContexts {
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
-            method => System.Attribute.IsDefined(method, typeof(Entitas.CodeGeneration.Attributes.PostConstructorAttribute))
+            method => System.Attribute.IsDefined(method, typeof(Entitas.Plugins.Attributes.PostConstructorAttribute))
         );
 
         foreach (var postConstructor in postConstructors) {
@@ -69,7 +69,7 @@ public partial class Contexts {
     public const string MyNamespaceMultipleEntityIndicesValue2 = "MyNamespaceMultipleEntityIndicesValue2";
     public const string PrimaryEntityIndex = "PrimaryEntityIndex";
 
-    [Entitas.CodeGeneration.Attributes.PostConstructor]
+    [Entitas.Plugins.Attributes.PostConstructor]
     public void InitializeEntityIndices() {
         game.AddEntityIndex(new Entitas.PrimaryEntityIndex<GameEntity, string>(
             MultiplePrimaryEntityIndicesValue,

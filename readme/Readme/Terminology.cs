@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entitas;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 using UnityEngine;
 
 // ReSharper disable UnusedVariable

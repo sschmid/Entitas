@@ -1,6 +1,6 @@
 using DesperateDevs.Extensions;
 using DesperateDevs.Serialization;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 using Entitas.CodeGeneration.Plugins;
 using FluentAssertions;
 using My.Namespace;

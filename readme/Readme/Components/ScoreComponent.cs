@@ -1,5 +1,5 @@
 ﻿using Entitas;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 
 [GameState, Unique]
 public sealed class ScoreComponent : IComponent {

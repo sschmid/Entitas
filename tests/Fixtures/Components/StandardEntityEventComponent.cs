@@ -1,5 +1,5 @@
 ﻿using Entitas;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 
 [Context("Test1"), Event(EventTarget.Self, EventType.Removed, 1)]
 public sealed class StandardEntityEventComponent : IComponent

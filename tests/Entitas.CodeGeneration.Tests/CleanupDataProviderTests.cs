@@ -3,7 +3,7 @@ using System.Linq;
 using DesperateDevs.Extensions;
 using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 using Microsoft.CodeAnalysis;
 using Entitas.Roslyn.CodeGeneration.Plugins;
 using FluentAssertions;

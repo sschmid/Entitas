@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using Jenny;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins
 {

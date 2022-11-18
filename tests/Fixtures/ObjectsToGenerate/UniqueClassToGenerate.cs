@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGeneration.Attributes;
+﻿using Entitas.Plugins.Attributes;
 
 namespace My.Namespace
 {

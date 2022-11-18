@@ -6,7 +6,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public sealed class Test2Attribute : Entitas.CodeGeneration.Attributes.ContextAttribute {
+public sealed class Test2Attribute : Entitas.Plugins.Attributes.ContextAttribute {
 
     public Test2Attribute() : base("Test2") {
     }

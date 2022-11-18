@@ -6,7 +6,7 @@ using Jenny.Generator;
 using DesperateDevs.Extensions;
 using DesperateDevs.Reflection;
 using DesperateDevs.Serialization;
-using Entitas.CodeGeneration.Attributes;
+using Entitas.Plugins.Attributes;
 
 namespace Entitas.CodeGeneration.Plugins
 {
