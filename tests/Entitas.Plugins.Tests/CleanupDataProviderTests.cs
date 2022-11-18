@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Entitas.Plugins.Tests
 {
-    [Collection("Entitas.CodeGeneration.Tests")]
+    [Collection("Entitas.Plugins.Tests")]
     public class CleanupDataProviderTests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();

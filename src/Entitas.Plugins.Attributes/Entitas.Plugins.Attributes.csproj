@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
     <Version>1.14.1</Version>
-    <RootNamespace>Entitas.CodeGeneration.Attributes</RootNamespace>
   </PropertyGroup>
 
 </Project>

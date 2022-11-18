@@ -32,7 +32,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Prog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Roslyn.CodeGeneration.Plugins", "src/Entitas.Roslyn.CodeGeneration.Plugins/Entitas.Roslyn.CodeGeneration.Plugins.csproj", "{E59A9835-AE58-4C7D-8FC3-4206BCB05DE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Tests", "tests/Entitas.CodeGeneration.Tests/Entitas.CodeGeneration.Tests.csproj", "{8C20DDC0-5FED-4C6A-8366-E4F7A895471D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins.Tests", "tests/Entitas.Plugins.Tests/Entitas.Plugins.Tests.csproj", "{8C20DDC0-5FED-4C6A-8366-E4F7A895471D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entitas.Migration", "Entitas.Migration", "{F0ECDAD4-D069-4E52-98DB-1D63EC28A67C}"
 EndProject
