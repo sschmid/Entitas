@@ -10,6 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../Entitas.Unity.Editor/Entitas.Unity.Editor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="$(UnityEditor)" />
     <Reference Include="$(UnityEngine)" />
   </ItemGroup>
