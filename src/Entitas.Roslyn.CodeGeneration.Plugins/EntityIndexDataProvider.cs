@@ -7,10 +7,9 @@ using DesperateDevs.Extensions;
 using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
 using Entitas.Plugins.Attributes;
-using Entitas.Plugins;
 using Microsoft.CodeAnalysis;
 
-namespace Entitas.Roslyn.CodeGeneration.Plugins
+namespace Entitas.Plugins.Roslyn
 {
     public class EntityIndexDataProvider : IDataProvider, IConfigurable, ICachable
     {

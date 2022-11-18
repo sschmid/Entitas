@@ -132,7 +132,7 @@ namespace Entitas.Plugins.Tests
         EntityIndexData[] GetData<T1, T2>(Preferences preferences = null)
         {
             var symbols = new[] {GetSymbol<T1>(), GetSymbol<T2>()};
-            var provider = new Entitas.Roslyn.CodeGeneration.Plugins.EntityIndexDataProvider(symbols);
+            var provider = new Roslyn.EntityIndexDataProvider(symbols);
             preferences ??= new TestPreferences(
                 "Entitas.Plugins.Contexts = Game, GameState" + "\n" +
                 "Entitas.Plugins.IgnoreNamespaces = false"

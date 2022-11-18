@@ -208,7 +208,7 @@ namespace Entitas.Plugins.Tests
         {
             var parser = new ProjectParser(RoslynProjectPath);
             var symbol = parser.GetTypes().Single(c => c.ToCompilableString() == "UnknownContextComponent");
-            var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol});
+            var provider = new Roslyn.ComponentDataProvider(new[] {symbol});
             provider.Configure(new TestPreferences("Entitas.Plugins.Contexts = Game, GameState"));
             var data = (ComponentData)provider.GetData()[0];
             var contexts = data.Contexts;
@@ -221,7 +221,7 @@ namespace Entitas.Plugins.Tests
         {
             var parser = new ProjectParser(RoslynProjectPath);
             var symbol = parser.GetTypes().Single(c => c.ToCompilableString() == "UnknownContextComponent");
-            var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol});
+            var provider = new Roslyn.ComponentDataProvider(new[] {symbol});
             provider.Configure(new TestPreferences("Entitas.Plugins.Contexts = KnownContext"));
             var data = (ComponentData)provider.GetData()[0];
             var contexts = data.Contexts;
@@ -338,7 +338,7 @@ namespace Entitas.Plugins.Tests
         {
             var symbol1 = Types.Single(c => c.ToCompilableString() == typeof(NameAgeComponent).FullName);
             var symbol2 = Types.Single(c => c.ToCompilableString() == typeof(Test2ContextComponent).FullName);
-            var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol1, symbol2});
+            var provider = new Roslyn.ComponentDataProvider(new[] {symbol1, symbol2});
             provider.Configure(
                 new TestPreferences("Entitas.Plugins.Contexts = Game, GameState")
             );
@@ -389,7 +389,7 @@ namespace Entitas.Plugins.Tests
         {
             var type = typeof(T);
             var symbol = Types.Single(c => c.ToCompilableString() == type.FullName);
-            var provider = new Entitas.Roslyn.CodeGeneration.Plugins.ComponentDataProvider(new[] {symbol});
+            var provider = new Roslyn.ComponentDataProvider(new[] {symbol});
             preferences ??= new TestPreferences(
                 @"Entitas.Plugins.Contexts = Game, GameState
 Entitas.Plugins.IgnoreNamespaces = false");

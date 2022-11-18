@@ -5,7 +5,7 @@ using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
 using Entitas.Plugins.Attributes;
 using Microsoft.CodeAnalysis;
-using Entitas.Roslyn.CodeGeneration.Plugins;
+using Entitas.Plugins.Roslyn;
 using FluentAssertions;
 using Xunit;
 

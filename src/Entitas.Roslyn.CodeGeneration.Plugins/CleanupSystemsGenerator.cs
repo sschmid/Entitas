@@ -3,9 +3,8 @@ using System.IO;
 using System.Linq;
 using Jenny;
 using Entitas.Plugins.Attributes;
-using Entitas.Plugins;
 
-namespace Entitas.Roslyn.CodeGeneration.Plugins
+namespace Entitas.Plugins.Roslyn
 {
     public class CleanupSystemsGenerator : AbstractGenerator
     {
