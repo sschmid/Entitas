@@ -3,7 +3,7 @@ using Jenny;
 using DesperateDevs.Extensions;
 using Entitas.CodeGeneration.Plugins;
 
-namespace Entitas.VisualDebugging.CodeGeneration.Plugins
+namespace Entitas.Unity.Plugins
 {
     public class ContextObserverGenerator : ICodeGenerator
     {
