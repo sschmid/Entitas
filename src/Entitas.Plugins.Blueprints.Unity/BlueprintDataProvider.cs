@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using Jenny;
-using Entitas.Blueprints.CodeGeneration.Plugins;
 using Entitas.Blueprints.Unity.Editor;
 
-namespace Entitas.Blueprints.CodeGeneration.Unity.Plugins
+namespace Entitas.Plugins.Blueprints
 {
     public class BlueprintDataProvider : IDataProvider
     {

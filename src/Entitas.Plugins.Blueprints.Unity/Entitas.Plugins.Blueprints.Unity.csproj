@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../Entitas.Blueprints.CodeGeneration.Plugins/Entitas.Blueprints.CodeGeneration.Plugins.csproj" />
+    <ProjectReference Include="../Entitas.Plugins.Blueprints/Entitas.Plugins.Blueprints.csproj" />
     <ProjectReference Include="../Entitas.Blueprints.Unity.Editor/Entitas.Blueprints.Unity.Editor.csproj" />
   </ItemGroup>
 

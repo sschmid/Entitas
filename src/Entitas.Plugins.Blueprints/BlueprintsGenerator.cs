@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using Jenny;
 
-namespace Entitas.Blueprints.CodeGeneration.Plugins
+namespace Entitas.Plugins.Blueprints
 {
     public class BlueprintsGenerator : ICodeGenerator
     {

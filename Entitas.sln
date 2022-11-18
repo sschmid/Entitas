@@ -10,9 +10,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Entitas.Blueprints", "Entit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints", "src/Entitas.Blueprints/Entitas.Blueprints.csproj", "{60EE6FAB-C575-4539-A8B8-23A2A64C00E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.CodeGeneration.Plugins", "src/Entitas.Blueprints.CodeGeneration.Plugins/Entitas.Blueprints.CodeGeneration.Plugins.csproj", "{09DBBDC0-EEA5-42C5-B9A9-E83C0C6FCD8E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins.Blueprints", "src/Entitas.Plugins.Blueprints/Entitas.Plugins.Blueprints.csproj", "{09DBBDC0-EEA5-42C5-B9A9-E83C0C6FCD8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.CodeGeneration.Unity.Plugins", "src/Entitas.Blueprints.CodeGeneration.Unity.Plugins/Entitas.Blueprints.CodeGeneration.Unity.Plugins.csproj", "{205014A8-1E4A-40D2-A368-9D2497EA9AE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Plugins.Blueprints.Unity", "src/Entitas.Plugins.Blueprints.Unity/Entitas.Plugins.Blueprints.Unity.csproj", "{205014A8-1E4A-40D2-A368-9D2497EA9AE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Blueprints.Unity", "src/Entitas.Blueprints.Unity/Entitas.Blueprints.Unity.csproj", "{026FFA2B-1F8D-4E05-A54D-67AB5B611985}"
 EndProject
