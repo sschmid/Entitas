@@ -1,4 +1,4 @@
-﻿using Entitas.CodeGeneration.Plugins;
+﻿using Entitas.Plugins;
 using FluentAssertions;
 using Xunit;
 
@@ -10,7 +10,7 @@ namespace Entitas.CodeGeneration.Tests
         public void CreatesDataForEachContext()
         {
             var contexts = "Entitas.CodeGeneration.Plugins.Contexts = Input, GameState";
-            var provider = new Entitas.CodeGeneration.Plugins.ContextDataProvider();
+            var provider = new Plugins.ContextDataProvider();
             provider.Configure(new TestPreferences(contexts));
 
             var data = (ContextData[])provider.GetData();

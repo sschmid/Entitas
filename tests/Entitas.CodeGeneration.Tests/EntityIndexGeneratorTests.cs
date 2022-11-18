@@ -1,6 +1,6 @@
 ﻿using System;
 using Jenny;
-using Entitas.CodeGeneration.Plugins;
+using Entitas.Plugins;
 using FluentAssertions;
 using Xunit;
 

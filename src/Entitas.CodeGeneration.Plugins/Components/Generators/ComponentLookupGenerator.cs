@@ -4,7 +4,7 @@ using System.Linq;
 using System.IO;
 using Jenny;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public class ComponentLookupGenerator : AbstractGenerator
     {

@@ -1,6 +1,6 @@
 ﻿using Jenny;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public class ComponentData : CodeGeneratorData
     {

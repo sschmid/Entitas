@@ -4,7 +4,7 @@ using System.Linq;
 using Jenny;
 using Entitas.Plugins.Attributes;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public class EventSystemGenerator : AbstractGenerator
     {

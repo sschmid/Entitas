@@ -2,7 +2,7 @@
 using Jenny;
 using DesperateDevs.Serialization;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public abstract class AbstractGenerator : ICodeGenerator, IConfigurable
     {

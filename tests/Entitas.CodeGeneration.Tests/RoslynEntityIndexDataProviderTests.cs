@@ -2,7 +2,7 @@
 using System.Linq;
 using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
-using Entitas.CodeGeneration.Plugins;
+using Entitas.Plugins;
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using My.Namespace;

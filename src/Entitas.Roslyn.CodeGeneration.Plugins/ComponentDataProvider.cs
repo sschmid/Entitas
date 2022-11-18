@@ -6,7 +6,7 @@ using DesperateDevs.Extensions;
 using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
 using Entitas.Plugins.Attributes;
-using Entitas.CodeGeneration.Plugins;
+using Entitas.Plugins;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

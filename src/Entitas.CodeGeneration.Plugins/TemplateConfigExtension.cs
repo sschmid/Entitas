@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public static class TemplateConfigExtension
     {

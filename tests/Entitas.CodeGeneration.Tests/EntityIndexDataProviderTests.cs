@@ -1,5 +1,5 @@
 using DesperateDevs.Serialization;
-using Entitas.CodeGeneration.Plugins;
+using Entitas.Plugins;
 using FluentAssertions;
 using My.Namespace;
 using MyNamespace;

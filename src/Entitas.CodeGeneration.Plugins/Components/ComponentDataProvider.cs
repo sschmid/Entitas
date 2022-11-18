@@ -8,7 +8,7 @@ using DesperateDevs.Reflection;
 using DesperateDevs.Serialization;
 using Entitas.Plugins.Attributes;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public class ComponentDataProvider : IDataProvider, IConfigurable, ICachable, IDoctor
     {

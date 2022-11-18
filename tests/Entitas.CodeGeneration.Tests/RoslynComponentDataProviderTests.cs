@@ -6,7 +6,7 @@ using DesperateDevs.Serialization;
 using Entitas.Plugins.Attributes;
 using Microsoft.CodeAnalysis;
 using My.Namespace;
-using Entitas.CodeGeneration.Plugins;
+using Entitas.Plugins;
 using FluentAssertions;
 using Xunit;
 

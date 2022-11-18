@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using DesperateDevs.Reflection;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public static class PluginUtil
     {

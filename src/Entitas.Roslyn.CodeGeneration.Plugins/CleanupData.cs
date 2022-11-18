@@ -1,6 +1,6 @@
 ﻿using Jenny;
 using Entitas.Plugins.Attributes;
-using Entitas.CodeGeneration.Plugins;
+using Entitas.Plugins;
 
 namespace Entitas.Roslyn.CodeGeneration.Plugins
 {

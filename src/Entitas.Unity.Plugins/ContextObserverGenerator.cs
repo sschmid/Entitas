@@ -1,7 +1,7 @@
 using System.Linq;
 using Jenny;
 using DesperateDevs.Extensions;
-using Entitas.CodeGeneration.Plugins;
+using Entitas.Plugins;
 
 namespace Entitas.Unity.Plugins
 {

@@ -4,7 +4,7 @@ using System.Linq;
 using Jenny;
 using DesperateDevs.Extensions;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public class ComponentEntityApiGenerator : AbstractGenerator
     {

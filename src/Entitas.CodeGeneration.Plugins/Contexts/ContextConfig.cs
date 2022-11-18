@@ -3,7 +3,7 @@ using System.Linq;
 using DesperateDevs.Extensions;
 using DesperateDevs.Serialization;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public class ContextConfig : AbstractConfigurableConfig
     {

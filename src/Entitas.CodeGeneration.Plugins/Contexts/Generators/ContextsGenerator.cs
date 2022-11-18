@@ -1,7 +1,7 @@
 using System.Linq;
 using Jenny;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public class ContextsGenerator : ICodeGenerator
     {

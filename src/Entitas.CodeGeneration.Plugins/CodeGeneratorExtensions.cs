@@ -3,7 +3,7 @@ using System.Linq;
 using DesperateDevs.Extensions;
 using Entitas.Plugins.Attributes;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public static class CodeGeneratorExtensions
     {

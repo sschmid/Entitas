@@ -3,7 +3,7 @@ using System.Linq;
 using Jenny;
 using DesperateDevs.Serialization;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public class ContextDataProvider : IDataProvider, IConfigurable
     {

@@ -9,7 +9,7 @@ using DesperateDevs.Reflection;
 using DesperateDevs.Serialization;
 using Entitas.Plugins.Attributes;
 
-namespace Entitas.CodeGeneration.Plugins
+namespace Entitas.Plugins
 {
     public class EntityIndexDataProvider : IDataProvider, IConfigurable, ICachable, IDoctor
     {
