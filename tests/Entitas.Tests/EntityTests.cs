@@ -21,11 +21,11 @@ namespace Entitas.Tests
         [Fact]
         public void HasDefaultContextInfo()
         {
-            _entity.contextInfo.name.Should().Be("No Context");
-            _entity.contextInfo.componentNames.Length.Should().Be(CID.TotalComponents);
-            _entity.contextInfo.componentTypes.Should().BeNull();
-            for (var i = 0; i < _entity.contextInfo.componentNames.Length; i++)
-                _entity.contextInfo.componentNames[i].Should().Be(i.ToString());
+            _entity.contextInfo.Name.Should().Be("No Context");
+            _entity.contextInfo.ComponentNames.Length.Should().Be(CID.TotalComponents);
+            _entity.contextInfo.ComponentTypes.Should().BeNull();
+            for (var i = 0; i < _entity.contextInfo.ComponentNames.Length; i++)
+                _entity.contextInfo.ComponentNames[i].Should().Be(i.ToString());
         }
 
         [Fact]

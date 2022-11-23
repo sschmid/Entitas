@@ -57,7 +57,7 @@ namespace Entitas.Unity.Editor
                 var index = drawAddComponentMenu(entity);
                 if (index >= 0)
                 {
-                    var componentType = entity.contextInfo.componentTypes[index];
+                    var componentType = entity.contextInfo.ComponentTypes[index];
                     foreach (var e in entities)
                     {
                         var component = e.CreateComponent(index, componentType);
@@ -123,7 +123,7 @@ namespace Entitas.Unity.Editor
                 var index = drawAddComponentMenu(entity);
                 if (index >= 0)
                 {
-                    var componentType = entity.contextInfo.componentTypes[index];
+                    var componentType = entity.contextInfo.ComponentTypes[index];
                     var component = entity.CreateComponent(index, componentType);
                     entity.AddComponent(index, component);
                 }

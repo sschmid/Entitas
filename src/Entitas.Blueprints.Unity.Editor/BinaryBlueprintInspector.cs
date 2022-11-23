@@ -29,7 +29,7 @@ namespace Entitas.Blueprints.Unity.Editor
                     return;
 
                 var binaryBlueprints = FindAllBlueprints();
-                var allContextNames = allContexts.Select(context => context.ContextInfo.name).ToArray();
+                var allContextNames = allContexts.Select(context => context.ContextInfo.Name).ToArray();
                 var updated = 0;
                 foreach (var binaryBlueprint in binaryBlueprints)
                 {
@@ -56,12 +56,12 @@ namespace Entitas.Blueprints.Unity.Editor
             }
 
             var context = allContexts[contextIndex];
-            blueprint.contextIdentifier = context.ContextInfo.name;
+            blueprint.contextIdentifier = context.ContextInfo.Name;
 
             foreach (var component in blueprint.components)
             {
                 var type = component.fullTypeName.ToType();
-                var index = Array.IndexOf(context.ContextInfo.componentTypes, type);
+                var index = Array.IndexOf(context.ContextInfo.ComponentTypes, type);
 
                 if (index != component.index)
                 {
@@ -108,7 +108,7 @@ namespace Entitas.Blueprints.Unity.Editor
 
             var binaryBlueprint = ((BinaryBlueprint)target);
 
-            _allContextNames = _allContexts.Select(context => context.ContextInfo.name).ToArray();
+            _allContextNames = _allContexts.Select(context => context.ContextInfo.Name).ToArray();
 
             UpdateBinaryBlueprint(binaryBlueprint, _allContexts, _allContextNames);
 

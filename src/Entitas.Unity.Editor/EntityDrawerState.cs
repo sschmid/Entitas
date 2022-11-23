@@ -73,13 +73,13 @@ namespace Entitas.Unity.Editor
 
         static bool[] getUnfoldedComponents(IEntity entity)
         {
-            if (!contextToUnfoldedComponents.TryGetValue(entity.contextInfo.name, out var unfoldedComponents))
+            if (!contextToUnfoldedComponents.TryGetValue(entity.contextInfo.Name, out var unfoldedComponents))
             {
                 unfoldedComponents = new bool[entity.totalComponents];
                 for (var i = 0; i < unfoldedComponents.Length; i++)
                     unfoldedComponents[i] = true;
 
-                contextToUnfoldedComponents.Add(entity.contextInfo.name, unfoldedComponents);
+                contextToUnfoldedComponents.Add(entity.contextInfo.Name, unfoldedComponents);
             }
 
             return unfoldedComponents;
@@ -87,13 +87,13 @@ namespace Entitas.Unity.Editor
 
         static string[] getComponentMemberSearch(IEntity entity)
         {
-            if (!contextToComponentMemberSearch.TryGetValue(entity.contextInfo.name, out var componentMemberSearch))
+            if (!contextToComponentMemberSearch.TryGetValue(entity.contextInfo.Name, out var componentMemberSearch))
             {
                 componentMemberSearch = new string[entity.totalComponents];
                 for (var i = 0; i < componentMemberSearch.Length; i++)
                     componentMemberSearch[i] = string.Empty;
 
-                contextToComponentMemberSearch.Add(entity.contextInfo.name, componentMemberSearch);
+                contextToComponentMemberSearch.Add(entity.contextInfo.Name, componentMemberSearch);
             }
 
             return componentMemberSearch;
@@ -101,22 +101,22 @@ namespace Entitas.Unity.Editor
 
         static ComponentInfo[] getComponentInfos(IEntity entity)
         {
-            if (!contextToComponentInfos.TryGetValue(entity.contextInfo.name, out var infos))
+            if (!contextToComponentInfos.TryGetValue(entity.contextInfo.Name, out var infos))
             {
                 var contextInfo = entity.contextInfo;
-                var infosList = new List<ComponentInfo>(contextInfo.componentTypes.Length);
-                for (var i = 0; i < contextInfo.componentTypes.Length; i++)
+                var infosList = new List<ComponentInfo>(contextInfo.ComponentTypes.Length);
+                for (var i = 0; i < contextInfo.ComponentTypes.Length; i++)
                 {
                     infosList.Add(new ComponentInfo
                     {
                         index = i,
-                        name = contextInfo.componentNames[i],
-                        type = contextInfo.componentTypes[i]
+                        name = contextInfo.ComponentNames[i],
+                        type = contextInfo.ComponentTypes[i]
                     });
                 }
 
                 infos = infosList.ToArray();
-                contextToComponentInfos.Add(entity.contextInfo.name, infos);
+                contextToComponentInfos.Add(entity.contextInfo.Name, infos);
             }
 
             return infos;
@@ -124,7 +124,7 @@ namespace Entitas.Unity.Editor
 
         static GUIStyle getColoredBoxStyle(IEntity entity, int index)
         {
-            if (!contextToColoredBoxStyles.TryGetValue(entity.contextInfo.name, out var styles))
+            if (!contextToColoredBoxStyles.TryGetValue(entity.contextInfo.Name, out var styles))
             {
                 styles = new GUIStyle[entity.totalComponents];
                 for (var i = 0; i < styles.Length; i++)
@@ -137,7 +137,7 @@ namespace Entitas.Unity.Editor
                     styles[i] = style;
                 }
 
-                contextToColoredBoxStyles.Add(entity.contextInfo.name, styles);
+                contextToColoredBoxStyles.Add(entity.contextInfo.Name, styles);
             }
 
             return styles[index];

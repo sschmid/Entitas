@@ -4,15 +4,15 @@ namespace Entitas
 {
     public class ContextInfo
     {
-        public readonly string name;
-        public readonly string[] componentNames;
-        public readonly Type[] componentTypes;
+        public readonly string Name;
+        public readonly string[] ComponentNames;
+        public readonly Type[] ComponentTypes;
 
         public ContextInfo(string name, string[] componentNames, Type[] componentTypes)
         {
-            this.name = name;
-            this.componentNames = componentNames;
-            this.componentTypes = componentTypes;
+            Name = name;
+            ComponentNames = componentNames;
+            ComponentTypes = componentTypes;
         }
     }
 }

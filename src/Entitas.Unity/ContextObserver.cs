@@ -50,7 +50,7 @@ namespace Entitas.Unity
         {
             _toStringBuilder.Length = 0;
             _toStringBuilder
-                .Append(_context.ContextInfo.name).Append(" (")
+                .Append(_context.ContextInfo.Name).Append(" (")
                 .Append(_context.Count).Append(" entities, ")
                 .Append(_context.ReusableEntitiesCount).Append(" reusable, ");
 

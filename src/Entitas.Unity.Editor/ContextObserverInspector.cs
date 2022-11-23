@@ -14,7 +14,7 @@ namespace Entitas.Unity.Editor
 
             EditorLayout.BeginVerticalBox();
             {
-                EditorGUILayout.LabelField(contextObserver.context.ContextInfo.name, EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(contextObserver.context.ContextInfo.Name, EditorStyles.boldLabel);
                 EditorGUILayout.LabelField("Entities", contextObserver.context.Count.ToString());
                 EditorGUILayout.LabelField("Reusable entities", contextObserver.context.ReusableEntitiesCount.ToString());
 

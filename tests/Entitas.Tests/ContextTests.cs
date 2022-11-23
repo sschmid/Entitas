@@ -59,10 +59,10 @@ namespace Entitas.Tests
         [Fact]
         public void HasDefaultContextInfo()
         {
-            _context.ContextInfo.name.Should().Be("Unnamed Context");
-            _context.ContextInfo.componentNames.Length.Should().Be(CID.TotalComponents);
-            for (var i = 0; i < _context.ContextInfo.componentNames.Length; i++)
-                _context.ContextInfo.componentNames[i].Should().Be($"Index {i}");
+            _context.ContextInfo.Name.Should().Be("Unnamed Context");
+            _context.ContextInfo.ComponentNames.Length.Should().Be(CID.TotalComponents);
+            for (var i = 0; i < _context.ContextInfo.ComponentNames.Length; i++)
+                _context.ContextInfo.ComponentNames[i].Should().Be($"Index {i}");
         }
 
         [Fact]
@@ -101,7 +101,7 @@ namespace Entitas.Tests
         public void ThrowsWhenComponentNamesLengthIsNotEqualToTotalComponents()
         {
             FluentActions.Invoking(() =>
-                new MyTest1Context(_contextInfo.componentNames.Length + 1, 0, _contextInfo)
+                new MyTest1Context(_contextInfo.ComponentNames.Length + 1, 0, _contextInfo)
             ).Should().Throw<ContextInfoException>();
         }
 

@@ -90,7 +90,7 @@ namespace Entitas
             if (contextInfo != null)
             {
                 _contextInfo = contextInfo;
-                if (contextInfo.componentNames.Length != totalComponents)
+                if (contextInfo.ComponentNames.Length != totalComponents)
                     throw new ContextInfoException(this, contextInfo);
             }
             else
@@ -263,7 +263,7 @@ namespace Entitas
             OnGroupCreated = null;
         }
 
-        public override string ToString() => _contextInfo.name;
+        public override string ToString() => _contextInfo.Name;
 
         void UpdateGroupsComponentAddedOrRemoved(IEntity entity, int index, IComponent component)
         {

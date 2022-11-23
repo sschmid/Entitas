@@ -123,11 +123,11 @@ namespace Entitas
         public void AddComponent(int index, IComponent component)
         {
             if (!_isEnabled)
-                throw new EntityIsNotEnabledException($"Cannot add component '{_contextInfo.componentNames[index]}' to {this}!");
+                throw new EntityIsNotEnabledException($"Cannot add component '{_contextInfo.ComponentNames[index]}' to {this}!");
 
             if (HasComponent(index))
                 throw new EntityAlreadyHasComponentException(index,
-                    $"Cannot add component '{_contextInfo.componentNames[index]}' to {this}!",
+                    $"Cannot add component '{_contextInfo.ComponentNames[index]}' to {this}!",
                     "You should check if an entity already has the component before adding it or use entity.ReplaceComponent()."
                 );
 
@@ -145,11 +145,11 @@ namespace Entitas
         public void RemoveComponent(int index)
         {
             if (!_isEnabled)
-                throw new EntityIsNotEnabledException($"Cannot remove component '{_contextInfo.componentNames[index]}' from {this}!");
+                throw new EntityIsNotEnabledException($"Cannot remove component '{_contextInfo.ComponentNames[index]}' from {this}!");
 
             if (!HasComponent(index))
                 throw new EntityDoesNotHaveComponentException(index,
-                    $"Cannot remove component '{_contextInfo.componentNames[index]}' from {this}!",
+                    $"Cannot remove component '{_contextInfo.ComponentNames[index]}' from {this}!",
                     "You should check if an entity has the component before removing it.");
 
             replaceComponent(index, null);
@@ -162,7 +162,7 @@ namespace Entitas
         public void ReplaceComponent(int index, IComponent component)
         {
             if (!_isEnabled)
-                throw new EntityIsNotEnabledException($"Cannot replace component '{_contextInfo.componentNames[index]}' on {this}!");
+                throw new EntityIsNotEnabledException($"Cannot replace component '{_contextInfo.ComponentNames[index]}' on {this}!");
 
             if (HasComponent(index))
                 replaceComponent(index, component);
@@ -210,7 +210,7 @@ namespace Entitas
         {
             if (!HasComponent(index))
                 throw new EntityDoesNotHaveComponentException(index,
-                    $"Cannot get component '{_contextInfo.componentNames[index]}' from {this}!",
+                    $"Cannot get component '{_contextInfo.ComponentNames[index]}' from {this}!",
                     "You should check if an entity has the component before getting it.");
 
             return _components[index];
