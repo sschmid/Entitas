@@ -29,9 +29,9 @@ namespace Entitas
 
         /// Returns all ComponentPools. ComponentPools is used to reuse
         /// removed components.
-        /// Removed components will be pushed to the componentPool.
+        /// Removed components will be pushed to the ComponentPool.
         /// Use entity.CreateComponent(index, type) to get a new or reusable
-        /// component from the componentPool.
+        /// component from the ComponentPool.
         public Stack<IComponent>[] ComponentPools => _componentPools;
 
         /// The contextInfo contains information about the context.
@@ -234,7 +234,7 @@ namespace Entitas
         /// Resets the creationIndex back to 0.
         public void ResetCreationIndex() => _creationIndex = 0;
 
-        /// Clears the componentPool at the specified index.
+        /// Clears the ComponentPool at the specified index.
         public void ClearComponentPool(int index) => _componentPools[index]?.Clear();
 
         /// Clears all componentPools.
@@ -318,7 +318,7 @@ namespace Entitas
             tEntity.InternalDestroy();
             OnEntityDestroyed?.Invoke(this, tEntity);
 
-            if (tEntity.retainCount == 1)
+            if (tEntity.RetainCount == 1)
             {
                 // Can be released immediately without
                 // adding to _retainedEntities

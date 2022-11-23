@@ -45,12 +45,12 @@ namespace Entitas
         /// Active entities are enabled, destroyed entities are not.
         public bool IsEnabled => _isEnabled;
 
-        /// componentPools is set by the context which created the entity and
+        /// ComponentPools is set by the context which created the entity and
         /// is used to reuse removed components.
-        /// Removed components will be pushed to the componentPool.
+        /// Removed components will be pushed to the ComponentPool.
         /// Use entity.CreateComponent(index, type) to get a new or
-        /// reusable component from the componentPool.
-        /// Use entity.GetComponentPool(index) to get a componentPool for
+        /// reusable component from the ComponentPool.
+        /// Use entity.GetComponentPool(index) to get a ComponentPool for
         /// a specific component index.
         public Stack<IComponent>[] ComponentPools => _componentPools;
 
@@ -65,8 +65,8 @@ namespace Entitas
         /// release it manually at some point.
         public IAERC Aerc => _aerc;
 
-        readonly List<IComponent> _componentBuffer;
-        readonly List<int> _indexBuffer;
+        readonly List<IComponent> _componentBuffer = new List<IComponent>();
+        readonly List<int> _indexBuffer = new List<int>();
 
         int _creationIndex;
         bool _isEnabled;
@@ -82,25 +82,19 @@ namespace Entitas
         string _toStringCache;
         StringBuilder _toStringBuilder;
 
-        public Entity()
-        {
-            _componentBuffer = new List<IComponent>();
-            _indexBuffer = new List<int>();
-        }
-
         public void Initialize(int creationIndex, int totalComponents, Stack<IComponent>[] componentPools, ContextInfo contextInfo = null, IAERC aerc = null)
         {
-            Reactivate(creationIndex);
-
             _totalComponents = totalComponents;
             _components = new IComponent[totalComponents];
             _componentPools = componentPools;
 
-            _contextInfo = contextInfo ?? createDefaultContextInfo();
+            _contextInfo = contextInfo ?? CreateDefaultContextInfo();
             _aerc = aerc ?? new SafeAERC(this);
+
+            Reactivate(creationIndex);
         }
 
-        ContextInfo createDefaultContextInfo()
+        ContextInfo CreateDefaultContextInfo()
         {
             var componentNames = new string[TotalComponents];
             for (var i = 0; i < componentNames.Length; i++)
@@ -152,7 +146,7 @@ namespace Entitas
                     $"Cannot remove component '{_contextInfo.ComponentNames[index]}' from {this}!",
                     "You should check if an entity has the component before removing it.");
 
-            replaceComponent(index, null);
+            ReplaceComponentInternal(index, null);
         }
 
         /// Replaces an existing component at the specified index
@@ -165,12 +159,12 @@ namespace Entitas
                 throw new EntityIsNotEnabledException($"Cannot replace component '{_contextInfo.ComponentNames[index]}' on {this}!");
 
             if (HasComponent(index))
-                replaceComponent(index, component);
+                ReplaceComponentInternal(index, component);
             else if (component != null)
                 AddComponent(index, component);
         }
 
-        void replaceComponent(int index, IComponent replacement)
+        void ReplaceComponentInternal(int index, IComponent replacement)
         {
             // TODO VD PERFORMANCE
             // _toStringCache = null;
@@ -221,9 +215,8 @@ namespace Entitas
         {
             if (_componentsCache == null)
             {
-                for (var i = 0; i < _components.Length; i++)
+                foreach (var component in _components)
                 {
-                    var component = _components[i];
                     if (component != null)
                         _componentBuffer.Add(component);
                 }
@@ -259,8 +252,8 @@ namespace Entitas
         /// at all the specified indices.
         public bool HasComponents(int[] indices)
         {
-            for (var i = 0; i < indices.Length; i++)
-                if (_components[indices[i]] == null)
+            foreach (var index in indices)
+                if (_components[index] == null)
                     return false;
 
             return true;
@@ -270,8 +263,8 @@ namespace Entitas
         /// at any of the specified indices.
         public bool HasAnyComponent(int[] indices)
         {
-            for (var i = 0; i < indices.Length; i++)
-                if (_components[indices[i]] != null)
+            foreach (var index in indices)
+                if (_components[index] != null)
                     return true;
 
             return false;
@@ -283,15 +276,15 @@ namespace Entitas
             _toStringCache = null;
             for (var i = 0; i < _components.Length; i++)
                 if (_components[i] != null)
-                    replaceComponent(i, null);
+                    ReplaceComponentInternal(i, null);
         }
 
-        /// Returns the componentPool for the specified component index.
-        /// componentPools is set by the context which created the entity and
+        /// Returns the ComponentPool for the specified component index.
+        /// ComponentPools is set by the context which created the entity and
         /// is used to reuse removed components.
-        /// Removed components will be pushed to the componentPool.
+        /// Removed components will be pushed to the ComponentPool.
         /// Use entity.CreateComponent(index, type) to get a new or
-        /// reusable component from the componentPool.
+        /// reusable component from the ComponentPool.
         public Stack<IComponent> GetComponentPool(int index)
         {
             var componentPool = _componentPools[index];
@@ -304,7 +297,7 @@ namespace Entitas
             return componentPool;
         }
 
-        /// Returns a new or reusable component from the componentPool
+        /// Returns a new or reusable component from the ComponentPool
         /// for the specified component index.
         public IComponent CreateComponent(int index, Type type)
         {
@@ -314,7 +307,7 @@ namespace Entitas
                 : (IComponent)Activator.CreateInstance(type);
         }
 
-        /// Returns a new or reusable component from the componentPool
+        /// Returns a new or reusable component from the ComponentPool
         /// for the specified component index.
         public T CreateComponent<T>(int index) where T : new()
         {
@@ -323,7 +316,7 @@ namespace Entitas
         }
 
         /// Returns the number of objects that retain this entity.
-        public int retainCount => _aerc.retainCount;
+        public int RetainCount => _aerc.RetainCount;
 
         /// Retains the entity. An owner can only retain the same entity once.
         /// Retain/Release is part of AERC (Automatic Entity Reference Counting)
@@ -351,7 +344,7 @@ namespace Entitas
             // TODO VD PERFORMANCE
             // _toStringCache = null;
 
-            if (_aerc.retainCount == 0)
+            if (_aerc.RetainCount == 0)
                 OnEntityReleased?.Invoke(this);
         }
 

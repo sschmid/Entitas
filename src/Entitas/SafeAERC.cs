@@ -11,7 +11,7 @@ namespace Entitas
     /// about the owners.
     public sealed class SafeAERC : IAERC
     {
-        public int retainCount => _owners.Count;
+        public int RetainCount => _owners.Count;
         public HashSet<object> owners => _owners;
 
         readonly IEntity _entity;

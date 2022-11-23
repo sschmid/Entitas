@@ -25,7 +25,7 @@ namespace Entitas.Unity.Editor
 
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField($"Retained by ({entity.retainCount})", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"Retained by ({entity.RetainCount})", EditorStyles.boldLabel);
 
             var safeAerc = entity.Aerc as SafeAERC;
             if (safeAerc != null)

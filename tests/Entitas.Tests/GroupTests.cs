@@ -391,9 +391,9 @@ namespace Entitas.Tests
         [Fact]
         public void RetainsMatchedEntity()
         {
-            _entity1.retainCount.Should().Be(0);
+            _entity1.RetainCount.Should().Be(0);
             HandleSilently(_entity1);
-            _entity1.retainCount.Should().Be(1);
+            _entity1.RetainCount.Should().Be(1);
         }
 
         [Fact]
@@ -402,7 +402,7 @@ namespace Entitas.Tests
             HandleSilently(_entity1);
             _entity1.RemoveComponentA();
             HandleSilently(_entity1);
-            _entity1.retainCount.Should().Be(0);
+            _entity1.RetainCount.Should().Be(0);
         }
 
         [Fact]
@@ -477,13 +477,13 @@ namespace Entitas.Tests
             _groupA.OnEntityRemoved += (_, entity, _, _) =>
             {
                 didDispatch += 1;
-                entity.retainCount.Should().Be(1);
+                entity.RetainCount.Should().Be(1);
             };
             _entity1.RemoveComponentA();
             HandleRemoveA(_entity1, Component.A);
 
             didDispatch.Should().Be(1);
-            _entity1.retainCount.Should().Be(0);
+            _entity1.RetainCount.Should().Be(0);
         }
 
         [Fact]

@@ -298,7 +298,7 @@ namespace Entitas.Tests
             _context.OnEntityDestroyed += (_, entity) =>
             {
                 didDispatch += 1;
-                entity.retainCount.Should().Be(1);
+                entity.RetainCount.Should().Be(1);
                 var newEntity = _context.CreateEntity();
                 newEntity.Should().NotBeNull();
                 newEntity.Should().NotBeSameAs(entity);

@@ -467,9 +467,9 @@ namespace Entitas.Tests
         [Fact]
         public void RetainsEntity()
         {
-            _entity.retainCount.Should().Be(0);
+            _entity.RetainCount.Should().Be(0);
             _entity.Retain(this);
-            _entity.retainCount.Should().Be(1);
+            _entity.RetainCount.Should().Be(1);
             (_entity.Aerc as SafeAERC)?.owners.Should().Contain(this);
         }
 
@@ -478,7 +478,7 @@ namespace Entitas.Tests
         {
             _entity.Retain(this);
             _entity.Release(this);
-            _entity.retainCount.Should().Be(0);
+            _entity.RetainCount.Should().Be(0);
             (_entity.Aerc as SafeAERC)?.owners.Should().NotContain(this);
         }
 

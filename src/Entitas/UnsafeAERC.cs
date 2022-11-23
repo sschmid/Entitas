@@ -9,7 +9,7 @@
     /// about the owners.
     public sealed class UnsafeAERC : IAERC
     {
-        public int retainCount => _retainCount;
+        public int RetainCount => _retainCount;
 
         int _retainCount;
 
