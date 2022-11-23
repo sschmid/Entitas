@@ -32,7 +32,7 @@ namespace Entitas.Blueprints.Unity
 
         public void Serialize(IEntity entity)
         {
-            Serialize(new Blueprint(entity.contextInfo.Name, name, entity));
+            Serialize(new Blueprint(entity.ContextInfo.Name, name, entity));
         }
 
         public void Serialize(Blueprint blueprint)

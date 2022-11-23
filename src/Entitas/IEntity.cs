@@ -21,13 +21,13 @@ namespace Entitas
         event EntityEvent OnEntityReleased;
         event EntityEvent OnDestroyEntity;
 
-        int totalComponents { get; }
-        int creationIndex { get; }
-        bool isEnabled { get; }
+        int TotalComponents { get; }
+        int CreationIndex { get; }
+        bool IsEnabled { get; }
 
-        Stack<IComponent>[] componentPools { get; }
-        ContextInfo contextInfo { get; }
-        IAERC aerc { get; }
+        Stack<IComponent>[] ComponentPools { get; }
+        ContextInfo ContextInfo { get; }
+        IAERC Aerc { get; }
 
         void Initialize(int creationIndex,
             int totalComponents,

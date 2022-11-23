@@ -8,6 +8,6 @@ namespace Entitas
 
         public bool Equals(TEntity x, TEntity y) => x == y;
 
-        public int GetHashCode(TEntity obj) => obj.creationIndex;
+        public int GetHashCode(TEntity obj) => obj.CreationIndex;
     }
 }

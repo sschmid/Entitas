@@ -56,7 +56,7 @@ namespace Entitas
             {
                 foreach (var entity in entities)
                 {
-                    if (entity.aerc is SafeAERC safeAerc)
+                    if (entity.Aerc is SafeAERC safeAerc)
                     {
                         if (safeAerc.owners.Contains(this))
                             entity.Release(this);
@@ -75,7 +75,7 @@ namespace Entitas
         {
             GetEntities(key).Add(entity);
 
-            if (entity.aerc is SafeAERC safeAerc)
+            if (entity.Aerc is SafeAERC safeAerc)
             {
                 if (!safeAerc.owners.Contains(this))
                     entity.Retain(this);
@@ -90,7 +90,7 @@ namespace Entitas
         {
             GetEntities(key).Remove(entity);
 
-            if (entity.aerc is SafeAERC safeAerc)
+            if (entity.Aerc is SafeAERC safeAerc)
             {
                 if (safeAerc.owners.Contains(this))
                     entity.Release(this);

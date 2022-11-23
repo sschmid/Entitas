@@ -10,7 +10,7 @@ namespace Entitas
             $"Did you release all entities? Try calling systems.DeactivateReactiveSystems() before calling context.DestroyAllEntities() to avoid memory leaks. Do not forget to activate them back when needed.\n{EntitiesToString(entities)}") { }
 
         static string EntitiesToString(IEnumerable<IEntity> entities) => string.Join("\n",
-            entities.Select(e => e.aerc is SafeAERC safeAerc
+            entities.Select(e => e.Aerc is SafeAERC safeAerc
                 ? $"{e} - {string.Join(", ", safeAerc.owners.Select(o => o.ToString()))}"
                 : e.ToString())
         );

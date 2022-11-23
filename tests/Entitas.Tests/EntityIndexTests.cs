@@ -66,8 +66,8 @@ namespace Entitas.Tests
             var e2 = CreateNameAgeEntity(_multiKeyContext, 2);
             e1.retainCount.Should().Be(3);
             e2.retainCount.Should().Be(3);
-            (e1.aerc as SafeAERC)?.owners.Should().Contain(_multiKeyIndex);
-            (e1.aerc as SafeAERC)?.owners.Should().Contain(_multiKeyIndex);
+            (e1.Aerc as SafeAERC)?.owners.Should().Contain(_multiKeyIndex);
+            (e1.Aerc as SafeAERC)?.owners.Should().Contain(_multiKeyIndex);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace Entitas.Tests
             e1.RemoveComponentA();
             _index.GetEntities(Name).Count.Should().Be(1);
             e1.retainCount.Should().Be(1); // Context
-            (e1.aerc as SafeAERC)?.owners.Should().NotContain(_multiKeyIndex);
+            (e1.Aerc as SafeAERC)?.owners.Should().NotContain(_multiKeyIndex);
         }
 
         [Fact]
@@ -110,8 +110,8 @@ namespace Entitas.Tests
             _multiKeyIndex.GetEntities("3").Count.Should().Be(1);
             e1.retainCount.Should().Be(1);
             e2.retainCount.Should().Be(3);
-            (e1.aerc as SafeAERC)?.owners.Should().NotContain(_multiKeyIndex);
-            (e2.aerc as SafeAERC)?.owners.Should().Contain(_multiKeyIndex);
+            (e1.Aerc as SafeAERC)?.owners.Should().NotContain(_multiKeyIndex);
+            (e2.Aerc as SafeAERC)?.owners.Should().Contain(_multiKeyIndex);
         }
 
         [Fact]

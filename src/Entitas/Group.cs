@@ -88,7 +88,7 @@ namespace Entitas
 
         bool addEntitySilently(TEntity entity)
         {
-            if (entity.isEnabled)
+            if (entity.IsEnabled)
             {
                 var added = _entities.Add(entity);
                 if (added)

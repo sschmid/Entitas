@@ -113,7 +113,7 @@ namespace Entitas.Tests
             var e = CreateEntityA();
             e.Destroy();
             e.retainCount.Should().Be(1);
-            (e.aerc as SafeAERC)?.owners.Should().Contain(collector);
+            (e.Aerc as SafeAERC)?.owners.Should().Contain(collector);
         }
 
         [Fact]

@@ -27,7 +27,7 @@ namespace Entitas.Unity.Editor
 
             EditorGUILayout.LabelField($"Retained by ({entity.retainCount})", EditorStyles.boldLabel);
 
-            var safeAerc = entity.aerc as SafeAERC;
+            var safeAerc = entity.Aerc as SafeAERC;
             if (safeAerc != null)
             {
                 EditorLayout.BeginVerticalBox();
@@ -57,7 +57,7 @@ namespace Entitas.Unity.Editor
                 var index = drawAddComponentMenu(entity);
                 if (index >= 0)
                 {
-                    var componentType = entity.contextInfo.ComponentTypes[index];
+                    var componentType = entity.ContextInfo.ComponentTypes[index];
                     foreach (var e in entities)
                     {
                         var component = e.CreateComponent(index, componentType);
@@ -123,7 +123,7 @@ namespace Entitas.Unity.Editor
                 var index = drawAddComponentMenu(entity);
                 if (index >= 0)
                 {
-                    var componentType = entity.contextInfo.ComponentTypes[index];
+                    var componentType = entity.ContextInfo.ComponentTypes[index];
                     var component = entity.CreateComponent(index, componentType);
                     entity.AddComponent(index, component);
                 }

@@ -73,13 +73,13 @@ namespace Entitas.Unity.Editor
 
         static bool[] getUnfoldedComponents(IEntity entity)
         {
-            if (!contextToUnfoldedComponents.TryGetValue(entity.contextInfo.Name, out var unfoldedComponents))
+            if (!contextToUnfoldedComponents.TryGetValue(entity.ContextInfo.Name, out var unfoldedComponents))
             {
-                unfoldedComponents = new bool[entity.totalComponents];
+                unfoldedComponents = new bool[entity.TotalComponents];
                 for (var i = 0; i < unfoldedComponents.Length; i++)
                     unfoldedComponents[i] = true;
 
-                contextToUnfoldedComponents.Add(entity.contextInfo.Name, unfoldedComponents);
+                contextToUnfoldedComponents.Add(entity.ContextInfo.Name, unfoldedComponents);
             }
 
             return unfoldedComponents;
@@ -87,13 +87,13 @@ namespace Entitas.Unity.Editor
 
         static string[] getComponentMemberSearch(IEntity entity)
         {
-            if (!contextToComponentMemberSearch.TryGetValue(entity.contextInfo.Name, out var componentMemberSearch))
+            if (!contextToComponentMemberSearch.TryGetValue(entity.ContextInfo.Name, out var componentMemberSearch))
             {
-                componentMemberSearch = new string[entity.totalComponents];
+                componentMemberSearch = new string[entity.TotalComponents];
                 for (var i = 0; i < componentMemberSearch.Length; i++)
                     componentMemberSearch[i] = string.Empty;
 
-                contextToComponentMemberSearch.Add(entity.contextInfo.Name, componentMemberSearch);
+                contextToComponentMemberSearch.Add(entity.ContextInfo.Name, componentMemberSearch);
             }
 
             return componentMemberSearch;
@@ -101,9 +101,9 @@ namespace Entitas.Unity.Editor
 
         static ComponentInfo[] getComponentInfos(IEntity entity)
         {
-            if (!contextToComponentInfos.TryGetValue(entity.contextInfo.Name, out var infos))
+            if (!contextToComponentInfos.TryGetValue(entity.ContextInfo.Name, out var infos))
             {
-                var contextInfo = entity.contextInfo;
+                var contextInfo = entity.ContextInfo;
                 var infosList = new List<ComponentInfo>(contextInfo.ComponentTypes.Length);
                 for (var i = 0; i < contextInfo.ComponentTypes.Length; i++)
                 {
@@ -116,7 +116,7 @@ namespace Entitas.Unity.Editor
                 }
 
                 infos = infosList.ToArray();
-                contextToComponentInfos.Add(entity.contextInfo.Name, infos);
+                contextToComponentInfos.Add(entity.ContextInfo.Name, infos);
             }
 
             return infos;
@@ -124,12 +124,12 @@ namespace Entitas.Unity.Editor
 
         static GUIStyle getColoredBoxStyle(IEntity entity, int index)
         {
-            if (!contextToColoredBoxStyles.TryGetValue(entity.contextInfo.Name, out var styles))
+            if (!contextToColoredBoxStyles.TryGetValue(entity.ContextInfo.Name, out var styles))
             {
-                styles = new GUIStyle[entity.totalComponents];
+                styles = new GUIStyle[entity.TotalComponents];
                 for (var i = 0; i < styles.Length; i++)
                 {
-                    var hue = (float)i / (float)entity.totalComponents;
+                    var hue = (float)i / (float)entity.TotalComponents;
                     var componentColor = Color.HSVToRGB(hue, 0.7f, 1f);
                     componentColor.a = 0.15f;
                     var style = new GUIStyle(GUI.skin.box);
@@ -137,7 +137,7 @@ namespace Entitas.Unity.Editor
                     styles[i] = style;
                 }
 
-                contextToColoredBoxStyles.Add(entity.contextInfo.Name, styles);
+                contextToColoredBoxStyles.Add(entity.ContextInfo.Name, styles);
             }
 
             return styles[index];

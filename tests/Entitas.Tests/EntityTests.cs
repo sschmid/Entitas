@@ -21,11 +21,11 @@ namespace Entitas.Tests
         [Fact]
         public void HasDefaultContextInfo()
         {
-            _entity.contextInfo.Name.Should().Be("No Context");
-            _entity.contextInfo.ComponentNames.Length.Should().Be(CID.TotalComponents);
-            _entity.contextInfo.ComponentTypes.Should().BeNull();
-            for (var i = 0; i < _entity.contextInfo.ComponentNames.Length; i++)
-                _entity.contextInfo.ComponentNames[i].Should().Be(i.ToString());
+            _entity.ContextInfo.Name.Should().Be("No Context");
+            _entity.ContextInfo.ComponentNames.Length.Should().Be(CID.TotalComponents);
+            _entity.ContextInfo.ComponentTypes.Should().BeNull();
+            for (var i = 0; i < _entity.ContextInfo.ComponentNames.Length; i++)
+                _entity.ContextInfo.ComponentNames[i].Should().Be(i.ToString());
         }
 
         [Fact]
@@ -36,11 +36,11 @@ namespace Entitas.Tests
             var entity = new Test1Entity();
             entity.Initialize(1, 2, componentPools, contextInfo);
 
-            entity.isEnabled.Should().BeTrue();
-            entity.creationIndex.Should().Be(1);
-            entity.totalComponents.Should().Be(2);
-            entity.componentPools.Should().BeSameAs(componentPools);
-            entity.contextInfo.Should().BeSameAs(contextInfo);
+            entity.IsEnabled.Should().BeTrue();
+            entity.CreationIndex.Should().Be(1);
+            entity.TotalComponents.Should().Be(2);
+            entity.ComponentPools.Should().BeSameAs(componentPools);
+            entity.ContextInfo.Should().BeSameAs(contextInfo);
         }
 
         [Fact]
@@ -55,11 +55,11 @@ namespace Entitas.Tests
 
             entity.Reactivate(42);
 
-            entity.isEnabled.Should().BeTrue();
-            entity.creationIndex.Should().Be(42);
-            entity.totalComponents.Should().Be(2);
-            entity.componentPools.Should().BeSameAs(componentPools);
-            entity.contextInfo.Should().BeSameAs(contextInfo);
+            entity.IsEnabled.Should().BeTrue();
+            entity.CreationIndex.Should().Be(42);
+            entity.TotalComponents.Should().Be(2);
+            entity.ComponentPools.Should().BeSameAs(componentPools);
+            entity.ContextInfo.Should().BeSameAs(contextInfo);
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Entitas.Tests
         [Fact]
         public void GetsTotalComponentsCountWhenEmpty()
         {
-            _entity.totalComponents.Should().Be(CID.TotalComponents);
+            _entity.TotalComponents.Should().Be(CID.TotalComponents);
         }
 
         [Fact]
@@ -470,7 +470,7 @@ namespace Entitas.Tests
             _entity.retainCount.Should().Be(0);
             _entity.Retain(this);
             _entity.retainCount.Should().Be(1);
-            (_entity.aerc as SafeAERC)?.owners.Should().Contain(this);
+            (_entity.Aerc as SafeAERC)?.owners.Should().Contain(this);
         }
 
         [Fact]
@@ -479,7 +479,7 @@ namespace Entitas.Tests
             _entity.Retain(this);
             _entity.Release(this);
             _entity.retainCount.Should().Be(0);
-            (_entity.aerc as SafeAERC)?.owners.Should().NotContain(this);
+            (_entity.Aerc as SafeAERC)?.owners.Should().NotContain(this);
         }
 
         [Fact]

@@ -35,15 +35,15 @@ namespace Entitas
         public event EntityEvent OnDestroyEntity;
 
         /// The total amount of components an entity can possibly have.
-        public int totalComponents => _totalComponents;
+        public int TotalComponents => _totalComponents;
 
         /// Each entity has its own unique creationIndex which will be set by
         /// the context when you create the entity.
-        public int creationIndex => _creationIndex;
+        public int CreationIndex => _creationIndex;
 
         /// The context manages the state of an entity.
         /// Active entities are enabled, destroyed entities are not.
-        public bool isEnabled => _isEnabled;
+        public bool IsEnabled => _isEnabled;
 
         /// componentPools is set by the context which created the entity and
         /// is used to reuse removed components.
@@ -52,18 +52,18 @@ namespace Entitas
         /// reusable component from the componentPool.
         /// Use entity.GetComponentPool(index) to get a componentPool for
         /// a specific component index.
-        public Stack<IComponent>[] componentPools => _componentPools;
+        public Stack<IComponent>[] ComponentPools => _componentPools;
 
         /// The contextInfo is set by the context which created the entity and
         /// contains information about the context.
         /// It's used to provide better error messages.
-        public ContextInfo contextInfo => _contextInfo;
+        public ContextInfo ContextInfo => _contextInfo;
 
         /// Automatic Entity Reference Counting (AERC)
         /// is used internally to prevent pooling retained entities.
         /// If you use retain manually you also have to
         /// release it manually at some point.
-        public IAERC aerc => _aerc;
+        public IAERC Aerc => _aerc;
 
         readonly List<IComponent> _componentBuffer;
         readonly List<int> _indexBuffer;
@@ -102,7 +102,7 @@ namespace Entitas
 
         ContextInfo createDefaultContextInfo()
         {
-            var componentNames = new string[totalComponents];
+            var componentNames = new string[TotalComponents];
             for (var i = 0; i < componentNames.Length; i++)
                 componentNames[i] = i.ToString();
 
@@ -419,7 +419,7 @@ namespace Entitas
 
                     _toStringBuilder.Append(component.ToString());
 
-                    if (i < lastSeparator) 
+                    if (i < lastSeparator)
                         _toStringBuilder.Append(separator);
                 }
 
