@@ -11,10 +11,10 @@ namespace Entitas
         /// Returns all collected entities.
         /// Call collector.ClearCollectedEntities()
         /// once you processed all entities.
-        public HashSet<TEntity> collectedEntities => _collectedEntities;
+        public HashSet<TEntity> CollectedEntities => _collectedEntities;
 
         /// Returns the number of all collected entities.
-        public int count => _collectedEntities.Count;
+        public int Count => _collectedEntities.Count;
 
         readonly HashSet<TEntity> _collectedEntities;
         readonly IGroup<TEntity>[] _groups;

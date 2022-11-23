@@ -71,7 +71,7 @@ namespace Entitas
             for (var i = 0; i < _collectors.Length; i++)
             {
                 var collector = _collectors[i];
-                if (collector.count != 0)
+                if (collector.Count != 0)
                 {
                     _collectedEntities.UnionWith(collector.GetCollectedEntities<TEntity>());
                     collector.ClearCollectedEntities();

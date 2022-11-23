@@ -92,7 +92,7 @@ namespace Readme
             var collector = group.CreateCollector(GroupEvent.Added);
 
             // ----------------------------
-            foreach (var e in collector.collectedEntities)
+            foreach (var e in collector.CollectedEntities)
             {
                 // do something
             }
