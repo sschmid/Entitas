@@ -12,9 +12,8 @@ namespace Entitas
                 ? entity.GetComponentIndices()
                 : indices;
 
-            for (var i = 0; i < componentIndices.Length; i++)
+            foreach (var index in componentIndices)
             {
-                var index = componentIndices[i];
                 var component = entity.GetComponent(index);
                 var clonedComponent = target.CreateComponent(index, component.GetType());
                 component.CopyPublicMemberValues(clonedComponent);
