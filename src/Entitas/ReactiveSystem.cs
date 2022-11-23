@@ -10,19 +10,17 @@ namespace Entitas
     public abstract class ReactiveSystem<TEntity> : IReactiveSystem where TEntity : class, IEntity
     {
         readonly ICollector<TEntity> _collector;
-        readonly List<TEntity> _buffer;
+        readonly List<TEntity> _buffer = new List<TEntity>();
         string _toStringCache;
 
         protected ReactiveSystem(IContext<TEntity> context)
         {
             _collector = GetTrigger(context);
-            _buffer = new List<TEntity>();
         }
 
         protected ReactiveSystem(ICollector<TEntity> collector)
         {
             _collector = collector;
-            _buffer = new List<TEntity>();
         }
 
         /// Specify the collector that will trigger the ReactiveSystem.
@@ -72,8 +70,8 @@ namespace Entitas
                     }
                     finally
                     {
-                        for (var i = 0; i < _buffer.Count; i++) 
-                            _buffer[i].Release(this);
+                        foreach (var entity in _buffer)
+                            entity.Release(this);
 
                         _buffer.Clear();
                     }
