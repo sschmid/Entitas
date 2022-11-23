@@ -193,7 +193,7 @@ namespace Entitas
 
         public override string ToString()
         {
-            if (_toStringCache == null) 
+            if (_toStringCache == null)
                 _toStringCache = $"Group({_matcher})";
 
             return _toStringCache;

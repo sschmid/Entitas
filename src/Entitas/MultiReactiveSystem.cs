@@ -12,22 +12,18 @@ namespace Entitas
         where TContexts : class, IContexts
     {
         readonly ICollector[] _collectors;
-        readonly HashSet<TEntity> _collectedEntities;
-        readonly List<TEntity> _buffer;
+        readonly HashSet<TEntity> _collectedEntities = new HashSet<TEntity>();
+        readonly List<TEntity> _buffer = new List<TEntity>();
         string _toStringCache;
 
         protected MultiReactiveSystem(TContexts contexts)
         {
             _collectors = GetTrigger(contexts);
-            _collectedEntities = new HashSet<TEntity>();
-            _buffer = new List<TEntity>();
         }
 
         protected MultiReactiveSystem(ICollector[] collectors)
         {
             _collectors = collectors;
-            _collectedEntities = new HashSet<TEntity>();
-            _buffer = new List<TEntity>();
         }
 
         /// Specify the collector that will trigger the ReactiveSystem.
@@ -43,8 +39,8 @@ namespace Entitas
         /// ReactiveSystem are activated by default.
         public void Activate()
         {
-            for (var i = 0; i < _collectors.Length; i++)
-                _collectors[i].Activate();
+            foreach (var collector in _collectors)
+                collector.Activate();
         }
 
         /// Deactivates the ReactiveSystem.
@@ -53,24 +49,23 @@ namespace Entitas
         /// ReactiveSystem are activated by default.
         public void Deactivate()
         {
-            for (var i = 0; i < _collectors.Length; i++)
-                _collectors[i].Deactivate();
+            foreach (var collector in _collectors)
+                collector.Deactivate();
         }
 
         /// Clears all accumulated changes.
         public void Clear()
         {
-            for (var i = 0; i < _collectors.Length; i++)
-                _collectors[i].ClearCollectedEntities();
+            foreach (var collector in _collectors)
+                collector.ClearCollectedEntities();
         }
 
         /// Will call Execute(entities) with changed entities
         /// if there are any. Otherwise it will not call Execute(entities).
         public void Execute()
         {
-            for (var i = 0; i < _collectors.Length; i++)
+            foreach (var collector in _collectors)
             {
-                var collector = _collectors[i];
                 if (collector.Count != 0)
                 {
                     _collectedEntities.UnionWith(collector.GetCollectedEntities<TEntity>());
@@ -95,8 +90,8 @@ namespace Entitas
                 }
                 finally
                 {
-                    for (var i = 0; i < _buffer.Count; i++)
-                        _buffer[i].Release(this);
+                    foreach (var entity in _buffer)
+                        entity.Release(this);
 
                     _collectedEntities.Clear();
                     _buffer.Clear();
