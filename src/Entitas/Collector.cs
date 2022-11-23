@@ -42,7 +42,7 @@ namespace Entitas
                     "Group and group events count must be equal."
                 );
 
-            _addEntityCache = addEntity;
+            _addEntityCache = AddEntity;
             Activate();
         }
 
@@ -79,9 +79,8 @@ namespace Entitas
         /// Collectors are activated by default.
         public void Deactivate()
         {
-            for (var i = 0; i < _groups.Length; i++)
+            foreach (var group in _groups)
             {
-                var group = _groups[i];
                 group.OnEntityAdded -= _addEntityCache;
                 group.OnEntityRemoved -= _addEntityCache;
             }
@@ -104,7 +103,7 @@ namespace Entitas
             _collectedEntities.Clear();
         }
 
-        void addEntity(IGroup<TEntity> group, TEntity entity, int index, IComponent component)
+        void AddEntity(IGroup<TEntity> group, TEntity entity, int index, IComponent component)
         {
             if (_collectedEntities.Add(entity))
                 entity.Retain(this);
