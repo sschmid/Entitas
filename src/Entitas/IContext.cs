@@ -13,14 +13,14 @@ namespace Entitas
 
         event ContextGroupChanged OnGroupCreated;
 
-        int totalComponents { get; }
+        int TotalComponents { get; }
 
-        Stack<IComponent>[] componentPools { get; }
-        ContextInfo contextInfo { get; }
+        Stack<IComponent>[] ComponentPools { get; }
+        ContextInfo ContextInfo { get; }
 
-        int count { get; }
-        int reusableEntitiesCount { get; }
-        int retainedEntitiesCount { get; }
+        int Count { get; }
+        int ReusableEntitiesCount { get; }
+        int RetainedEntitiesCount { get; }
 
         void DestroyAllEntities();
 
@@ -37,10 +37,8 @@ namespace Entitas
     public interface IContext<TEntity> : IContext where TEntity : class, IEntity
     {
         TEntity CreateEntity();
-
         bool HasEntity(TEntity entity);
         TEntity[] GetEntities();
-
         IGroup<TEntity> GetGroup(IMatcher<TEntity> matcher);
     }
 }

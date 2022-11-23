@@ -136,7 +136,7 @@ namespace Entitas.Unity.Editor
                 var contextObserver = gameObject.GetComponent<ContextObserverBehaviour>();
                 if (contextObserver != null)
                 {
-                    if (contextObserver.contextObserver.context.retainedEntitiesCount != 0)
+                    if (contextObserver.contextObserver.context.RetainedEntitiesCount != 0)
                         GUI.DrawTexture(rect, contextErrorHierarchyIcon);
                     else
                         GUI.DrawTexture(rect, contextHierarchyIcon);
