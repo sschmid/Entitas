@@ -56,9 +56,9 @@ namespace Entitas
         readonly Func<IEntity, IAERC> _aercFactory;
         readonly Func<TEntity> _entityFactory;
 
-        readonly HashSet<TEntity> _entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
+        readonly HashSet<TEntity> _entities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.Comparer);
         readonly Stack<TEntity> _reusableEntities = new Stack<TEntity>();
-        readonly HashSet<TEntity> _retainedEntities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
+        readonly HashSet<TEntity> _retainedEntities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.Comparer);
 
         readonly Dictionary<IMatcher<TEntity>, IGroup<TEntity>> _groups = new Dictionary<IMatcher<TEntity>, IGroup<TEntity>>();
         readonly List<IGroup<TEntity>>[] _groupsForIndex;

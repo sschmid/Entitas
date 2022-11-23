@@ -28,7 +28,7 @@ namespace Entitas
         readonly IMatcher<TEntity> _matcher;
 
         readonly HashSet<TEntity> _entities = new HashSet<TEntity>(
-            EntityEqualityComparer<TEntity>.comparer
+            EntityEqualityComparer<TEntity>.Comparer
         );
 
         TEntity[] _entitiesCache;

@@ -33,7 +33,7 @@ namespace Entitas
         public Collector(IGroup<TEntity>[] groups, GroupEvent[] groupEvents)
         {
             _groups = groups;
-            _collectedEntities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.comparer);
+            _collectedEntities = new HashSet<TEntity>(EntityEqualityComparer<TEntity>.Comparer);
             _groupEvents = groupEvents;
 
             if (groups.Length != groupEvents.Length)
