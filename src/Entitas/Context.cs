@@ -27,7 +27,7 @@ namespace Entitas
         /// e.g ComponentLookup.TotalComponents.
         public int TotalComponents => _totalComponents;
 
-        /// Returns all componentPools. componentPools is used to reuse
+        /// Returns all ComponentPools. ComponentPools is used to reuse
         /// removed components.
         /// Removed components will be pushed to the componentPool.
         /// Use entity.CreateComponent(index, type) to get a new or reusable
@@ -95,7 +95,7 @@ namespace Entitas
             }
             else
             {
-                _contextInfo = createDefaultContextInfo();
+                _contextInfo = CreateDefaultContextInfo();
             }
 
             _aercFactory = aercFactory ?? (entity => new SafeAERC(entity));
@@ -110,13 +110,13 @@ namespace Entitas
             );
 
             // Cache delegates to avoid gc allocations
-            _cachedEntityChanged = updateGroupsComponentAddedOrRemoved;
-            _cachedComponentReplaced = updateGroupsComponentReplaced;
-            _cachedEntityReleased = onEntityReleased;
-            _cachedDestroyEntity = onDestroyEntity;
+            _cachedEntityChanged = UpdateGroupsComponentAddedOrRemoved;
+            _cachedComponentReplaced = UpdateGroupsComponentReplaced;
+            _cachedEntityReleased = OnEntityReleased;
+            _cachedDestroyEntity = OnDestroyEntity;
         }
 
-        ContextInfo createDefaultContextInfo()
+        ContextInfo CreateDefaultContextInfo()
         {
             var componentNames = new string[_totalComponents];
             const string prefix = "Index ";
@@ -163,8 +163,8 @@ namespace Entitas
         public void DestroyAllEntities()
         {
             var entities = GetEntities();
-            for (var i = 0; i < entities.Length; i++)
-                entities[i].Destroy();
+            foreach (var entity in entities)
+                entity.Destroy();
 
             _entities.Clear();
 
@@ -195,18 +195,14 @@ namespace Entitas
             if (!_groups.TryGetValue(matcher, out var group))
             {
                 group = new Group<TEntity>(matcher);
-                var entities = GetEntities();
-                for (var i = 0; i < entities.Length; i++)
-                    group.HandleEntitySilently(entities[i]);
+                foreach (var entity in GetEntities())
+                    group.HandleEntitySilently(entity);
 
                 _groups.Add(matcher, group);
 
-                for (var i = 0; i < matcher.indices.Length; i++)
+                foreach (var index in matcher.indices)
                 {
-                    var index = matcher.indices[i];
-                    if (_groupsForIndex[index] == null)
-                        _groupsForIndex[index] = new List<IGroup<TEntity>>();
-
+                    _groupsForIndex[index] ??= new List<IGroup<TEntity>>();
                     _groupsForIndex[index].Add(group);
                 }
 
@@ -267,12 +263,9 @@ namespace Entitas
             OnGroupCreated = null;
         }
 
-        public override string ToString()
-        {
-            return _contextInfo.name;
-        }
+        public override string ToString() => _contextInfo.name;
 
-        void updateGroupsComponentAddedOrRemoved(IEntity entity, int index, IComponent component)
+        void UpdateGroupsComponentAddedOrRemoved(IEntity entity, int index, IComponent component)
         {
             var groups = _groupsForIndex[index];
             if (groups != null)
@@ -280,8 +273,8 @@ namespace Entitas
                 var events = _groupChangedListPool.Get();
                 var tEntity = (TEntity)entity;
 
-                for (var i = 0; i < groups.Count; i++)
-                    events.Add(groups[i].HandleEntity(tEntity));
+                foreach (var group in groups)
+                    events.Add(group.HandleEntity(tEntity));
 
                 for (var i = 0; i < events.Count; i++)
                     events[i]?.Invoke(groups[i], tEntity, index, component);
@@ -290,15 +283,15 @@ namespace Entitas
             }
         }
 
-        void updateGroupsComponentReplaced(IEntity entity, int index, IComponent previousComponent, IComponent newComponent)
+        void UpdateGroupsComponentReplaced(IEntity entity, int index, IComponent previousComponent, IComponent newComponent)
         {
             var groups = _groupsForIndex[index];
             if (groups != null)
-                for (var i = 0; i < groups.Count; i++)
-                    groups[i].UpdateEntity((TEntity)entity, index, previousComponent, newComponent);
+                foreach (var group in groups)
+                    group.UpdateEntity((TEntity)entity, index, previousComponent, newComponent);
         }
 
-        void onEntityReleased(IEntity entity)
+        void OnEntityReleased(IEntity entity)
         {
             if (entity.isEnabled)
                 throw new EntityIsNotDestroyedException($"Cannot release {entity}!");
@@ -309,7 +302,7 @@ namespace Entitas
             _reusableEntities.Push(tEntity);
         }
 
-        void onDestroyEntity(IEntity entity)
+        void OnDestroyEntity(IEntity entity)
         {
             var tEntity = (TEntity)entity;
             var removed = _entities.Remove(tEntity);
