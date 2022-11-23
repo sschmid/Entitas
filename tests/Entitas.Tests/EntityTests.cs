@@ -470,7 +470,7 @@ namespace Entitas.Tests
             _entity.RetainCount.Should().Be(0);
             _entity.Retain(this);
             _entity.RetainCount.Should().Be(1);
-            (_entity.Aerc as SafeAERC)?.owners.Should().Contain(this);
+            (_entity.Aerc as SafeAERC)?.Owners.Should().Contain(this);
         }
 
         [Fact]
@@ -479,7 +479,7 @@ namespace Entitas.Tests
             _entity.Retain(this);
             _entity.Release(this);
             _entity.RetainCount.Should().Be(0);
-            (_entity.Aerc as SafeAERC)?.owners.Should().NotContain(this);
+            (_entity.Aerc as SafeAERC)?.Owners.Should().NotContain(this);
         }
 
         [Fact]

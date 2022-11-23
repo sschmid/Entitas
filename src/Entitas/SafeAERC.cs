@@ -12,7 +12,7 @@ namespace Entitas
     public sealed class SafeAERC : IAERC
     {
         public int RetainCount => _owners.Count;
-        public HashSet<object> owners => _owners;
+        public HashSet<object> Owners => _owners;
 
         readonly IEntity _entity;
         readonly HashSet<object> _owners = new HashSet<object>();
@@ -24,13 +24,13 @@ namespace Entitas
 
         public void Retain(object owner)
         {
-            if (!owners.Add(owner))
+            if (!Owners.Add(owner))
                 throw new EntityIsAlreadyRetainedByOwnerException(_entity, owner);
         }
 
         public void Release(object owner)
         {
-            if (!owners.Remove(owner))
+            if (!Owners.Remove(owner))
                 throw new EntityIsNotRetainedByOwnerException(_entity, owner);
         }
     }

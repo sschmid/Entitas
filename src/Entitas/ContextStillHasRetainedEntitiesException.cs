@@ -11,7 +11,7 @@ namespace Entitas
 
         static string EntitiesToString(IEnumerable<IEntity> entities) => string.Join("\n",
             entities.Select(e => e.Aerc is SafeAERC safeAerc
-                ? $"{e} - {string.Join(", ", safeAerc.owners.Select(o => o.ToString()))}"
+                ? $"{e} - {string.Join(", ", safeAerc.Owners.Select(o => o.ToString()))}"
                 : e.ToString())
         );
     }

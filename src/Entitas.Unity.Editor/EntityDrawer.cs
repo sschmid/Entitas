@@ -32,7 +32,7 @@ namespace Entitas.Unity.Editor
             {
                 EditorLayout.BeginVerticalBox();
                 {
-                    foreach (var owner in safeAerc.owners.OrderBy(o => o.GetType().Name))
+                    foreach (var owner in safeAerc.Owners.OrderBy(o => o.GetType().Name))
                     {
                         EditorGUILayout.BeginHorizontal();
                         {

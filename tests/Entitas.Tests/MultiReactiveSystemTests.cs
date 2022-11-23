@@ -32,8 +32,8 @@ namespace Entitas.Tests
             e2.nameAge.age.Should().Be(34);
             system.didExecute.Should().Be(1);
 
-            (e1.Aerc as SafeAERC)?.owners.Should().HaveCount(2);
-            (e2.Aerc as SafeAERC)?.owners.Should().HaveCount(2);
+            (e1.Aerc as SafeAERC)?.Owners.Should().HaveCount(2);
+            (e2.Aerc as SafeAERC)?.Owners.Should().HaveCount(2);
         }
 
         [Fact]

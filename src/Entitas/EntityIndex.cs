@@ -58,7 +58,7 @@ namespace Entitas
                 {
                     if (entity.Aerc is SafeAERC safeAerc)
                     {
-                        if (safeAerc.owners.Contains(this))
+                        if (safeAerc.Owners.Contains(this))
                             entity.Release(this);
                     }
                     else
@@ -77,7 +77,7 @@ namespace Entitas
 
             if (entity.Aerc is SafeAERC safeAerc)
             {
-                if (!safeAerc.owners.Contains(this))
+                if (!safeAerc.Owners.Contains(this))
                     entity.Retain(this);
             }
             else
@@ -92,7 +92,7 @@ namespace Entitas
 
             if (entity.Aerc is SafeAERC safeAerc)
             {
-                if (safeAerc.owners.Contains(this))
+                if (safeAerc.Owners.Contains(this))
                     entity.Release(this);
             }
             else

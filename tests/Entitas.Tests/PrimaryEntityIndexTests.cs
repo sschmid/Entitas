@@ -46,7 +46,7 @@ namespace Entitas.Tests
         {
             var entity = CreateNameAgeEntity(_context);
             entity.RetainCount.Should().Be(3); // Context, Group, EntityIndex
-            (entity.Aerc as SafeAERC)?.owners.Should().Contain(_index);
+            (entity.Aerc as SafeAERC)?.Owners.Should().Contain(_index);
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace Entitas.Tests
         {
             var entity = CreateNameAgeEntity(_multiKeyContext);
             entity.RetainCount.Should().Be(3); // Context, Group, EntityIndex
-            (entity.Aerc as SafeAERC)?.owners.Should().Contain(_multiKeyIndex);
+            (entity.Aerc as SafeAERC)?.Owners.Should().Contain(_multiKeyIndex);
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace Entitas.Tests
             entity.RemoveComponentA();
             _index.GetEntity(Name).Should().BeNull();
             entity.RetainCount.Should().Be(1); // Context
-            (entity.Aerc as SafeAERC)?.owners.Should().NotContain(_index);
+            (entity.Aerc as SafeAERC)?.Owners.Should().NotContain(_index);
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace Entitas.Tests
             _multiKeyIndex.GetEntity($"{Name}1").Should().BeNull();
             _multiKeyIndex.GetEntity($"{Name}2").Should().BeNull();
             entity.RetainCount.Should().Be(1);
-            (entity.Aerc as SafeAERC)?.owners.Should().NotContain(_multiKeyIndex);
+            (entity.Aerc as SafeAERC)?.Owners.Should().NotContain(_multiKeyIndex);
         }
 
         [Fact]
