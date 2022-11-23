@@ -13,7 +13,7 @@ namespace Entitas
 
     public interface IGroup
     {
-        int count { get; }
+        int Count { get; }
 
         void RemoveAllEventHandlers();
     }
@@ -24,7 +24,7 @@ namespace Entitas
         event GroupChanged<TEntity> OnEntityRemoved;
         event GroupUpdated<TEntity> OnEntityUpdated;
 
-        IMatcher<TEntity> matcher { get; }
+        IMatcher<TEntity> Matcher { get; }
 
         void HandleEntitySilently(TEntity entity);
         void HandleEntity(TEntity entity, int index, IComponent component);

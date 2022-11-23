@@ -56,12 +56,12 @@ namespace Entitas.Unity.Editor
                 EditorLayout.BeginVerticalBox();
                 {
                     EditorGUILayout.LabelField($"Groups ({groups.Length})", EditorStyles.boldLabel);
-                    foreach (var group in groups.OrderByDescending(g => g.count))
+                    foreach (var group in groups.OrderByDescending(g => g.Count))
                     {
                         EditorGUILayout.BeginHorizontal();
                         {
                             EditorGUILayout.LabelField(group.ToString());
-                            EditorGUILayout.LabelField(group.count.ToString(), GUILayout.Width(48));
+                            EditorGUILayout.LabelField(group.Count.ToString(), GUILayout.Width(48));
                         }
                         EditorGUILayout.EndHorizontal();
                     }

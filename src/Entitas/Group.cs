@@ -20,10 +20,10 @@ namespace Entitas
         public event GroupUpdated<TEntity> OnEntityUpdated;
 
         /// Returns the number of entities in the group.
-        public int count => _entities.Count;
+        public int Count => _entities.Count;
 
         /// Returns the matcher which was used to create this group.
-        public IMatcher<TEntity> matcher => _matcher;
+        public IMatcher<TEntity> Matcher => _matcher;
 
         readonly IMatcher<TEntity> _matcher;
 
