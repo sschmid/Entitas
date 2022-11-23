@@ -34,7 +34,7 @@ namespace Entitas
         public override void Activate()
         {
             base.Activate();
-            indexEntities(_group);
+            IndexEntities(_group);
         }
 
         public TEntity GetEntity(TKey key)
@@ -43,9 +43,9 @@ namespace Entitas
             return entity;
         }
 
-        public override string ToString() => $"PrimaryEntityIndex({name})";
+        public override string ToString() => $"PrimaryEntityIndex({Name})";
 
-        protected override void clear()
+        protected override void Clear()
         {
             foreach (var entity in _index.Values)
             {
@@ -63,7 +63,7 @@ namespace Entitas
             _index.Clear();
         }
 
-        protected override void addEntity(TKey key, TEntity entity)
+        protected override void AddEntity(TKey key, TEntity entity)
         {
             if (_index.ContainsKey(key))
                 throw new EntityIndexException(
@@ -83,7 +83,7 @@ namespace Entitas
             }
         }
 
-        protected override void removeEntity(TKey key, TEntity entity)
+        protected override void RemoveEntity(TKey key, TEntity entity)
         {
             _index.Remove(key);
 

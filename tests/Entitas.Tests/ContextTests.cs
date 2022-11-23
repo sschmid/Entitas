@@ -683,7 +683,7 @@ namespace Entitas.Tests
                 (_, _) => string.Empty
             );
             _context.AddEntityIndex(entityIndex);
-            _context.GetEntityIndex(entityIndex.name).Should().BeSameAs(entityIndex);
+            _context.GetEntityIndex(entityIndex.Name).Should().BeSameAs(entityIndex);
         }
 
         [Fact]
