@@ -62,7 +62,7 @@ public class Terminology
 
     void GroupIterate1(IGroup<GameEntity> group)
     {
-        foreach (var e in group)
+        foreach (var entity in group)
         {
             // do sth
         }
@@ -70,7 +70,7 @@ public class Terminology
 
     void GroupIterate2(IGroup<GameEntity> group)
     {
-        foreach (var e in group.GetEntities())
+        foreach (var entity in group.GetEntities())
         {
             // do sth
         }
@@ -79,7 +79,7 @@ public class Terminology
     void GroupIterate3(IGroup<GameEntity> group)
     {
         var buffer = new List<GameEntity>();
-        foreach (var e in group.GetEntities(buffer))
+        foreach (var entity in group.GetEntities(buffer))
         {
             // do sth
         }

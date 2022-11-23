@@ -73,12 +73,12 @@ namespace Entitas
                 }
             }
 
-            foreach (var e in _collectedEntities)
+            foreach (var entity in _collectedEntities)
             {
-                if (Filter(e))
+                if (Filter(entity))
                 {
-                    e.Retain(this);
-                    _buffer.Add(e);
+                    entity.Retain(this);
+                    _buffer.Add(entity);
                 }
             }
 

@@ -51,12 +51,12 @@ namespace Entitas
         {
             if (_collector.Count != 0)
             {
-                foreach (var e in _collector.CollectedEntities)
+                foreach (var entity in _collector.CollectedEntities)
                 {
-                    if (Filter(e))
+                    if (Filter(entity))
                     {
-                        e.Retain(this);
-                        _buffer.Add(e);
+                        entity.Retain(this);
+                        _buffer.Add(entity);
                     }
                 }
 

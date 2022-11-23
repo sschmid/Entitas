@@ -24,19 +24,19 @@ namespace Readme
                 GameMatcher.Position,
                 GameMatcher.Velocity)
             );
-            foreach (var e in entities)
+            foreach (var entity in entities)
             {
-                var pos = e.position;
-                var vel = e.velocity;
-                e.ReplacePosition(pos.value + vel.value);
+                var pos = entity.position;
+                var vel = entity.velocity;
+                entity.ReplacePosition(pos.value + vel.value);
             }
         }
 
         /*
-         * 
+         *
          * Wiki
-         * 
-         * 
+         *
+         *
          */
 
         static void EntityExample(GameEntity entity)
@@ -92,7 +92,7 @@ namespace Readme
             var collector = group.CreateCollector(GroupEvent.Added);
 
             // ----------------------------
-            foreach (var e in collector.CollectedEntities)
+            foreach (var entity in collector.CollectedEntities)
             {
                 // do something
             }

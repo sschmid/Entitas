@@ -12,8 +12,8 @@ namespace Entitas.Tests
             var system = new MultiReactiveSystemSpy(contexts);
             system.executeAction = entities =>
             {
-                foreach (var e in entities)
-                    e.nameAge.age += 10;
+                foreach (var entity in entities)
+                    entity.nameAge.age += 10;
             };
 
             var e1 = contexts.test1.CreateEntity();

@@ -508,10 +508,10 @@ namespace Entitas.Tests
             var entities = _groupA.GetEntities();
             entities.Length.Should().Be(expectedEntities.Length);
 
-            foreach (var e in expectedEntities)
+            foreach (var entity in expectedEntities)
             {
-                entities.Should().Contain(e);
-                _groupA.ContainsEntity(e).Should().BeTrue();
+                entities.Should().Contain(entity);
+                _groupA.ContainsEntity(entity).Should().BeTrue();
             }
         }
 
