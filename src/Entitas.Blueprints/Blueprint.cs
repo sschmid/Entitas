@@ -19,12 +19,12 @@ namespace Entitas.Blueprints
             if (entity != null)
             {
                 var allComponents = entity.GetComponents();
-                var componentIndices = entity.GetComponentIndices();
+                var componentIndexes = entity.GetComponentIndexes();
                 components = new ComponentBlueprint[allComponents.Length];
                 for (var i = 0; i < allComponents.Length; i++)
                 {
                     components[i] = new ComponentBlueprint(
-                        componentIndices[i], allComponents[i]
+                        componentIndexes[i], allComponents[i]
                     );
                 }
             }

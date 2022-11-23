@@ -39,11 +39,11 @@ namespace Entitas.Plugins.Tests
         [Fact]
         public void CreatesDataForMultipleEntityIndexes()
         {
-            var data = GetData<MultipleEntityIndicesComponent, StandardComponent>();
+            var data = GetData<MultipleEntityIndexesComponent, StandardComponent>();
             data.Length.Should().Be(2);
-            data[0].Name.Should().Be("MyNamespaceMultipleEntityIndices");
+            data[0].Name.Should().Be("MyNamespaceMultipleEntityIndexes");
             data[0].HasMultiple.Should().BeTrue();
-            data[1].Name.Should().Be("MyNamespaceMultipleEntityIndices");
+            data[1].Name.Should().Be("MyNamespaceMultipleEntityIndexes");
             data[1].HasMultiple.Should().BeTrue();
         }
 
@@ -66,11 +66,11 @@ namespace Entitas.Plugins.Tests
         [Fact]
         public void CreatesDataForMultiplePrimaryEntityIndexes()
         {
-            var data = GetData<MultiplePrimaryEntityIndicesComponent, StandardComponent>();
+            var data = GetData<MultiplePrimaryEntityIndexesComponent, StandardComponent>();
             data.Length.Should().Be(2);
-            data[0].Name.Should().Be("MultiplePrimaryEntityIndices");
+            data[0].Name.Should().Be("MultiplePrimaryEntityIndexes");
             data[0].HasMultiple.Should().BeTrue();
-            data[1].Name.Should().Be("MultiplePrimaryEntityIndices");
+            data[1].Name.Should().Be("MultiplePrimaryEntityIndexes");
             data[1].HasMultiple.Should().BeTrue();
         }
 

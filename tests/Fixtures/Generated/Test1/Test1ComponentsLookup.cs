@@ -30,7 +30,7 @@ public static class Test1ComponentsLookup {
     public const int MultipleContextStandardEvent = 19;
     public const int MultipleEventsStandardEvent = 20;
     public const int MyNamespaceEntityIndex = 21;
-    public const int MyNamespaceMultipleEntityIndices = 22;
+    public const int MyNamespaceMultipleEntityIndexes = 22;
     public const int MyNamespaceMyNamespace = 23;
     public const int MyNamespaceMyNamespaceFlag = 24;
     public const int MyNamespaceUniqueMyNamespace = 25;
@@ -80,7 +80,7 @@ public static class Test1ComponentsLookup {
         "MultipleContextStandardEvent",
         "MultipleEventsStandardEvent",
         "MyNamespaceEntityIndex",
-        "MyNamespaceMultipleEntityIndices",
+        "MyNamespaceMultipleEntityIndexes",
         "MyNamespaceMyNamespace",
         "MyNamespaceMyNamespaceFlag",
         "MyNamespaceUniqueMyNamespace",
@@ -129,7 +129,7 @@ public static class Test1ComponentsLookup {
         typeof(MultipleContextStandardEventComponent),
         typeof(MultipleEventsStandardEventComponent),
         typeof(My.Namespace.EntityIndexComponent),
-        typeof(My.Namespace.MultipleEntityIndicesComponent),
+        typeof(My.Namespace.MultipleEntityIndexesComponent),
         typeof(My.Namespace.MyNamespaceComponent),
         typeof(My.Namespace.MyNamespaceFlagComponent),
         typeof(My.Namespace.UniqueMyNamespaceComponent),

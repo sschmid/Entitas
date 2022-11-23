@@ -43,11 +43,11 @@ namespace Entitas
 
         IComponent GetComponent(int index);
         IComponent[] GetComponents();
-        int[] GetComponentIndices();
+        int[] GetComponentIndexes();
 
         bool HasComponent(int index);
-        bool HasComponents(int[] indices);
-        bool HasAnyComponent(int[] indices);
+        bool HasComponents(int[] indexes);
+        bool HasAnyComponent(int[] indexes);
 
         void RemoveAllComponents();
 

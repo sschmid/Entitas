@@ -14,22 +14,22 @@ namespace Entitas
                 _toStringBuilder ??= new StringBuilder();
                 _toStringBuilder.Length = 0;
 
-                if (_allOfIndices != null)
+                if (_allOfIndexes != null)
                 {
-                    appendIndices(_toStringBuilder, "AllOf", _allOfIndices, componentNames);
+                    appendIndexes(_toStringBuilder, "AllOf", _allOfIndexes, componentNames);
                 }
 
-                if (_anyOfIndices != null)
+                if (_anyOfIndexes != null)
                 {
-                    if (_allOfIndices != null)
+                    if (_allOfIndexes != null)
                         _toStringBuilder.Append(".");
 
-                    appendIndices(_toStringBuilder, "AnyOf", _anyOfIndices, componentNames);
+                    appendIndexes(_toStringBuilder, "AnyOf", _anyOfIndexes, componentNames);
                 }
 
-                if (_noneOfIndices != null)
+                if (_noneOfIndexes != null)
                 {
-                    appendIndices(_toStringBuilder, ".NoneOf", _noneOfIndices, componentNames);
+                    appendIndexes(_toStringBuilder, ".NoneOf", _noneOfIndexes, componentNames);
                 }
 
                 _toStringCache = _toStringBuilder.ToString();
@@ -38,7 +38,7 @@ namespace Entitas
             return _toStringCache;
         }
 
-        static void appendIndices(StringBuilder sb, string prefix, int[] indexArray, string[] componentNames)
+        static void appendIndexes(StringBuilder sb, string prefix, int[] indexArray, string[] componentNames)
         {
             const string separator = ", ";
             sb.Append(prefix);

@@ -37,59 +37,59 @@ namespace Entitas.Tests
         public void AllOfHasAllIndexes()
         {
             var matcher = CreateAllOfAB();
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.allOfIndices, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.allOfIndexes, CID.ComponentA, CID.ComponentB);
         }
 
         [Fact]
         public void AnyOfHasAllIndexes()
         {
             var matcher = CreateAnyOfAB();
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.anyOfIndices, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.anyOfIndexes, CID.ComponentA, CID.ComponentB);
         }
 
         [Fact]
         public void AllOfNoneOfHasAllIndexes()
         {
             var matcher = CreateAllOfABNoneOfCD();
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB, CID.ComponentC, CID.ComponentD);
-            AssertIndexesEqual(matcher.allOfIndices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.noneOfIndices, CID.ComponentC, CID.ComponentD);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB, CID.ComponentC, CID.ComponentD);
+            AssertIndexesEqual(matcher.allOfIndexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.noneOfIndexes, CID.ComponentC, CID.ComponentD);
         }
 
         [Fact]
         public void AnyOfNoneOfHasAllIndexes()
         {
             var matcher = CreateAnyOfABNoneOfCD();
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB, CID.ComponentC, CID.ComponentD);
-            AssertIndexesEqual(matcher.anyOfIndices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.noneOfIndices, CID.ComponentC, CID.ComponentD);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB, CID.ComponentC, CID.ComponentD);
+            AssertIndexesEqual(matcher.anyOfIndexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.noneOfIndexes, CID.ComponentC, CID.ComponentD);
         }
 
         [Fact]
         public void AllOfAnyOfHasAllIndexes()
         {
             var matcher = CreateAllOfABAnyOfCD();
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB, CID.ComponentC, CID.ComponentD);
-            AssertIndexesEqual(matcher.allOfIndices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.anyOfIndices, CID.ComponentC, CID.ComponentD);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB, CID.ComponentC, CID.ComponentD);
+            AssertIndexesEqual(matcher.allOfIndexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.anyOfIndexes, CID.ComponentC, CID.ComponentD);
         }
 
         [Fact]
         public void AllOfHasAllIndexesWithoutDuplicates()
         {
             var matcher = Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentA, CID.ComponentB, CID.ComponentB);
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.allOfIndices, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.allOfIndexes, CID.ComponentA, CID.ComponentB);
         }
 
         [Fact]
         public void AnyOfHasAllIndexesWithoutDuplicates()
         {
             var matcher = Matcher<Test1Entity>.AnyOf(CID.ComponentA, CID.ComponentA, CID.ComponentB, CID.ComponentB);
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.anyOfIndices, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.anyOfIndexes, CID.ComponentA, CID.ComponentB);
         }
 
         [Fact]
@@ -98,9 +98,9 @@ namespace Entitas.Tests
             var matcher = Matcher<Test1Entity>
                 .AllOf(CID.ComponentA, CID.ComponentA, CID.ComponentB)
                 .NoneOf(CID.ComponentB, CID.ComponentC, CID.ComponentC);
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB, CID.ComponentC);
-            AssertIndexesEqual(matcher.allOfIndices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.noneOfIndices, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(matcher.allOfIndexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.noneOfIndexes, CID.ComponentB, CID.ComponentC);
         }
 
         [Fact]
@@ -109,9 +109,9 @@ namespace Entitas.Tests
             var matcher = Matcher<Test1Entity>
                 .AnyOf(CID.ComponentA, CID.ComponentA, CID.ComponentB)
                 .NoneOf(CID.ComponentB, CID.ComponentC, CID.ComponentC);
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB, CID.ComponentC);
-            AssertIndexesEqual(matcher.anyOfIndices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.noneOfIndices, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(matcher.anyOfIndexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.noneOfIndexes, CID.ComponentB, CID.ComponentC);
         }
 
         [Fact]
@@ -120,44 +120,44 @@ namespace Entitas.Tests
             var matcher = Matcher<Test1Entity>
                 .AllOf(CID.ComponentA, CID.ComponentA, CID.ComponentB)
                 .AnyOf(CID.ComponentB, CID.ComponentC, CID.ComponentC);
-            AssertIndexesEqual(matcher.indices, CID.ComponentA, CID.ComponentB, CID.ComponentC);
-            AssertIndexesEqual(matcher.allOfIndices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(matcher.anyOfIndices, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(matcher.indexes, CID.ComponentA, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(matcher.allOfIndexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(matcher.anyOfIndexes, CID.ComponentB, CID.ComponentC);
         }
 
         [Fact]
         public void AllOfCachesIndexes()
         {
             var matcher = CreateAllOfAB();
-            matcher.indices.Should().BeSameAs(matcher.indices);
+            matcher.indexes.Should().BeSameAs(matcher.indexes);
         }
 
         [Fact]
         public void AnyOfCachesIndexes()
         {
             var matcher = CreateAnyOfAB();
-            matcher.indices.Should().BeSameAs(matcher.indices);
+            matcher.indexes.Should().BeSameAs(matcher.indexes);
         }
 
         [Fact]
         public void AllOfNoneOfCachesIndexes()
         {
             var matcher = CreateAllOfABNoneOfCD();
-            matcher.indices.Should().BeSameAs(matcher.indices);
+            matcher.indexes.Should().BeSameAs(matcher.indexes);
         }
 
         [Fact]
         public void AnyOfNoneOfCachesIndexes()
         {
             var matcher = CreateAnyOfABNoneOfCD();
-            matcher.indices.Should().BeSameAs(matcher.indices);
+            matcher.indexes.Should().BeSameAs(matcher.indexes);
         }
 
         [Fact]
         public void AllOfAnyOfCachesIndexes()
         {
             var matcher = CreateAllOfABAnyOfCD();
-            matcher.indices.Should().BeSameAs(matcher.indices);
+            matcher.indexes.Should().BeSameAs(matcher.indexes);
         }
 
         [Fact]
@@ -234,8 +234,8 @@ namespace Entitas.Tests
             var m2 = Matcher<Test1Entity>.AllOf(CID.ComponentB);
             var m3 = Matcher<Test1Entity>.AllOf(CID.ComponentC);
             var mergedMatcher = Matcher<Test1Entity>.AllOf(m1, m2, m3);
-            AssertIndexesEqual(mergedMatcher.indices, CID.ComponentA, CID.ComponentB, CID.ComponentC);
-            AssertIndexesEqual(mergedMatcher.allOfIndices, CID.ComponentA, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(mergedMatcher.indexes, CID.ComponentA, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(mergedMatcher.allOfIndexes, CID.ComponentA, CID.ComponentB, CID.ComponentC);
         }
 
         [Fact]
@@ -245,8 +245,8 @@ namespace Entitas.Tests
             var m2 = Matcher<Test1Entity>.AnyOf(CID.ComponentB);
             var m3 = Matcher<Test1Entity>.AnyOf(CID.ComponentC);
             var mergedMatcher = Matcher<Test1Entity>.AnyOf(m1, m2, m3);
-            AssertIndexesEqual(mergedMatcher.indices, CID.ComponentA, CID.ComponentB, CID.ComponentC);
-            AssertIndexesEqual(mergedMatcher.anyOfIndices, CID.ComponentA, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(mergedMatcher.indexes, CID.ComponentA, CID.ComponentB, CID.ComponentC);
+            AssertIndexesEqual(mergedMatcher.anyOfIndexes, CID.ComponentA, CID.ComponentB, CID.ComponentC);
         }
 
         [Fact]
@@ -256,8 +256,8 @@ namespace Entitas.Tests
             var m2 = Matcher<Test1Entity>.AllOf(CID.ComponentA);
             var m3 = Matcher<Test1Entity>.AllOf(CID.ComponentB);
             var mergedMatcher = Matcher<Test1Entity>.AllOf(m1, m2, m3);
-            AssertIndexesEqual(mergedMatcher.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(mergedMatcher.allOfIndices, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(mergedMatcher.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(mergedMatcher.allOfIndexes, CID.ComponentA, CID.ComponentB);
         }
 
         [Fact]
@@ -267,8 +267,8 @@ namespace Entitas.Tests
             var m2 = Matcher<Test1Entity>.AnyOf(CID.ComponentB);
             var m3 = Matcher<Test1Entity>.AnyOf(CID.ComponentB);
             var mergedMatcher = Matcher<Test1Entity>.AnyOf(m1, m2, m3);
-            AssertIndexesEqual(mergedMatcher.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(mergedMatcher.anyOfIndices, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(mergedMatcher.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(mergedMatcher.anyOfIndexes, CID.ComponentA, CID.ComponentB);
         }
 
         [Fact]
@@ -350,9 +350,9 @@ namespace Entitas.Tests
             var m1 = Matcher<Test1Entity>.AllOf(CID.ComponentA);
             var m2 = m1.NoneOf(CID.ComponentB);
             m1.Should().BeSameAs(m2);
-            AssertIndexesEqual(m1.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(m1.allOfIndices, CID.ComponentA);
-            AssertIndexesEqual(m1.noneOfIndices, CID.ComponentB);
+            AssertIndexesEqual(m1.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(m1.allOfIndexes, CID.ComponentA);
+            AssertIndexesEqual(m1.noneOfIndexes, CID.ComponentB);
         }
 
         [Fact]
@@ -363,9 +363,9 @@ namespace Entitas.Tests
             var m3 = Matcher<Test1Entity>.AllOf(m1);
             var m4 = m3.NoneOf(m2);
             m3.Should().BeSameAs(m4);
-            AssertIndexesEqual(m3.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(m3.allOfIndices, CID.ComponentA);
-            AssertIndexesEqual(m3.noneOfIndices, CID.ComponentB);
+            AssertIndexesEqual(m3.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(m3.allOfIndexes, CID.ComponentA);
+            AssertIndexesEqual(m3.noneOfIndexes, CID.ComponentB);
         }
 
         [Fact]
@@ -374,9 +374,9 @@ namespace Entitas.Tests
             var m1 = Matcher<Test1Entity>.AnyOf(CID.ComponentA);
             var m2 = m1.NoneOf(CID.ComponentB);
             m1.Should().BeSameAs(m2);
-            AssertIndexesEqual(m1.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(m1.anyOfIndices, CID.ComponentA);
-            AssertIndexesEqual(m1.noneOfIndices, CID.ComponentB);
+            AssertIndexesEqual(m1.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(m1.anyOfIndexes, CID.ComponentA);
+            AssertIndexesEqual(m1.noneOfIndexes, CID.ComponentB);
         }
 
         [Fact]
@@ -387,9 +387,9 @@ namespace Entitas.Tests
             var m3 = Matcher<Test1Entity>.AnyOf(m1);
             var m4 = m3.NoneOf(m2);
             m3.Should().BeSameAs(m4);
-            AssertIndexesEqual(m3.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(m3.anyOfIndices, CID.ComponentA);
-            AssertIndexesEqual(m3.noneOfIndices, CID.ComponentB);
+            AssertIndexesEqual(m3.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(m3.anyOfIndexes, CID.ComponentA);
+            AssertIndexesEqual(m3.noneOfIndexes, CID.ComponentB);
         }
 
         [Fact]
@@ -398,9 +398,9 @@ namespace Entitas.Tests
             var m1 = Matcher<Test1Entity>.AllOf(CID.ComponentA);
             var m2 = m1.AnyOf(CID.ComponentB);
             m1.Should().BeSameAs(m2);
-            AssertIndexesEqual(m1.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(m1.allOfIndices, CID.ComponentA);
-            AssertIndexesEqual(m1.anyOfIndices, CID.ComponentB);
+            AssertIndexesEqual(m1.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(m1.allOfIndexes, CID.ComponentA);
+            AssertIndexesEqual(m1.anyOfIndexes, CID.ComponentB);
         }
 
         [Fact]
@@ -411,27 +411,27 @@ namespace Entitas.Tests
             var m3 = Matcher<Test1Entity>.AllOf(m1);
             var m4 = m3.AnyOf(m2);
             m3.Should().BeSameAs(m4);
-            AssertIndexesEqual(m3.indices, CID.ComponentA, CID.ComponentB);
-            AssertIndexesEqual(m3.allOfIndices, CID.ComponentA);
-            AssertIndexesEqual(m3.anyOfIndices, CID.ComponentB);
+            AssertIndexesEqual(m3.indexes, CID.ComponentA, CID.ComponentB);
+            AssertIndexesEqual(m3.allOfIndexes, CID.ComponentA);
+            AssertIndexesEqual(m3.anyOfIndexes, CID.ComponentB);
         }
 
         [Fact]
         public void UpdatesCacheWhenCallingAnyOf()
         {
             var matcher = Matcher<Test1Entity>.AllOf(CID.ComponentA);
-            var cache = matcher.indices;
+            var cache = matcher.indexes;
             matcher.AnyOf(CID.ComponentB);
-            matcher.indices.Should().NotBeSameAs(cache);
+            matcher.indexes.Should().NotBeSameAs(cache);
         }
 
         [Fact]
         public void UpdatesCacheWhenCallingNoneOf()
         {
             var matcher = Matcher<Test1Entity>.AllOf(CID.ComponentA);
-            var cache = matcher.indices;
+            var cache = matcher.indexes;
             matcher.NoneOf(CID.ComponentB);
-            matcher.indices.Should().NotBeSameAs(cache);
+            matcher.indexes.Should().NotBeSameAs(cache);
         }
 
         [Fact]
@@ -461,7 +461,7 @@ namespace Entitas.Tests
         }
 
         [Fact]
-        public void EqualsEqualAllOfMatcherIndependentOfTheOrderOfIndices()
+        public void EqualsEqualAllOfMatcherIndependentOfTheOrderOfIndexes()
         {
             var m1 = AllOfAB();
             var m2 = AllOfBA();
@@ -547,11 +547,11 @@ namespace Entitas.Tests
             .AllOf(CID.ComponentA, CID.ComponentB)
             .AnyOf(CID.ComponentC, CID.ComponentD);
 
-        static void AssertIndexesEqual(int[] indices, params int[] expectedIndices)
+        static void AssertIndexesEqual(int[] indexes, params int[] expectedIndexes)
         {
-            indices.Length.Should().Be(expectedIndices.Length);
-            for (var i = 0; i < expectedIndices.Length; i++)
-                indices[i].Should().Be(expectedIndices[i]);
+            indexes.Length.Should().Be(expectedIndexes.Length);
+            for (var i = 0; i < expectedIndexes.Length; i++)
+                indexes[i].Should().Be(expectedIndexes[i]);
         }
 
         static IAllOfMatcher<Test1Entity> AllOfAB() => Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB);

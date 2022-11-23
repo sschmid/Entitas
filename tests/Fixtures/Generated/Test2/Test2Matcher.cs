@@ -8,16 +8,16 @@
 //------------------------------------------------------------------------------
 public sealed partial class Test2Matcher {
 
-    public static Entitas.IAllOfMatcher<Test2Entity> AllOf(params int[] indices) {
-        return Entitas.Matcher<Test2Entity>.AllOf(indices);
+    public static Entitas.IAllOfMatcher<Test2Entity> AllOf(params int[] indexes) {
+        return Entitas.Matcher<Test2Entity>.AllOf(indexes);
     }
 
     public static Entitas.IAllOfMatcher<Test2Entity> AllOf(params Entitas.IMatcher<Test2Entity>[] matchers) {
           return Entitas.Matcher<Test2Entity>.AllOf(matchers);
     }
 
-    public static Entitas.IAnyOfMatcher<Test2Entity> AnyOf(params int[] indices) {
-          return Entitas.Matcher<Test2Entity>.AnyOf(indices);
+    public static Entitas.IAnyOfMatcher<Test2Entity> AnyOf(params int[] indexes) {
+          return Entitas.Matcher<Test2Entity>.AnyOf(indexes);
     }
 
     public static Entitas.IAnyOfMatcher<Test2Entity> AnyOf(params Entitas.IMatcher<Test2Entity>[] matchers) {

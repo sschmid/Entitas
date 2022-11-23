@@ -8,8 +8,8 @@ namespace Entitas.Tests
 {
     public class EntityTests
     {
-        readonly int[] _indicesA = {CID.ComponentA};
-        readonly int[] _indicesAB = {CID.ComponentA, CID.ComponentB};
+        readonly int[] _indexesA = {CID.ComponentA};
+        readonly int[] _indexesAB = {CID.ComponentA, CID.ComponentB};
         readonly Test1Entity _entity;
 
         public EntityTests()
@@ -84,7 +84,7 @@ namespace Entitas.Tests
         [Fact]
         public void GetsEmptyArrayOfComponentIndexesWhenEmpty()
         {
-            _entity.GetComponentIndices().Should().BeEmpty();
+            _entity.GetComponentIndexes().Should().BeEmpty();
         }
 
         [Fact]
@@ -96,13 +96,13 @@ namespace Entitas.Tests
         [Fact]
         public void DoesNotHaveComponentsWhenEmpty()
         {
-            _entity.HasComponents(_indicesA).Should().BeFalse();
+            _entity.HasComponents(_indexesA).Should().BeFalse();
         }
 
         [Fact]
         public void DoesNotHaveAnyComponentsWhenEmpty()
         {
-            _entity.HasAnyComponent(_indicesA).Should().BeFalse();
+            _entity.HasAnyComponent(_indexesA).Should().BeFalse();
         }
 
         [Fact]
@@ -156,14 +156,14 @@ namespace Entitas.Tests
         public void DoesNotHaveAllComponentsWhenNotAllComponentsWereAdded()
         {
             _entity.AddComponentA();
-            _entity.HasComponents(_indicesAB).Should().BeFalse();
+            _entity.HasComponents(_indexesAB).Should().BeFalse();
         }
 
         [Fact]
         public void HasAnyComponentsWhenAnyComponentWasAdded()
         {
             _entity.AddComponentA();
-            _entity.HasAnyComponent(_indicesAB).Should().BeTrue();
+            _entity.HasAnyComponent(_indexesAB).Should().BeTrue();
         }
 
         [Fact]
@@ -182,10 +182,10 @@ namespace Entitas.Tests
         {
             _entity.AddComponentA();
             _entity.AddComponentB();
-            var componentIndices = _entity.GetComponentIndices();
-            componentIndices.Length.Should().Be(2);
-            componentIndices.Should().Contain(CID.ComponentA);
-            componentIndices.Should().Contain(CID.ComponentB);
+            var componentIndexes = _entity.GetComponentIndexes();
+            componentIndexes.Length.Should().Be(2);
+            componentIndexes.Should().Contain(CID.ComponentA);
+            componentIndexes.Should().Contain(CID.ComponentB);
         }
 
         [Fact]
@@ -201,7 +201,7 @@ namespace Entitas.Tests
         {
             _entity.AddComponentA();
             _entity.AddComponentB();
-            _entity.HasComponents(_indicesAB).Should().BeTrue();
+            _entity.HasComponents(_indexesAB).Should().BeTrue();
         }
 
         [Fact]
@@ -213,7 +213,7 @@ namespace Entitas.Tests
             _entity.HasComponentA().Should().BeFalse();
             _entity.HasComponentB().Should().BeFalse();
             _entity.GetComponents().Should().BeEmpty();
-            _entity.GetComponentIndices().Should().BeEmpty();
+            _entity.GetComponentIndexes().Should().BeEmpty();
         }
 
         [Fact]
@@ -547,7 +547,7 @@ namespace Entitas.Tests
         {
             _entity.AddComponentA();
             _entity.GetComponents().Should().BeSameAs(_entity.GetComponents());
-            _entity.GetComponentIndices().Should().BeSameAs(_entity.GetComponentIndices());
+            _entity.GetComponentIndexes().Should().BeSameAs(_entity.GetComponentIndexes());
         }
 
         [Fact]
@@ -555,10 +555,10 @@ namespace Entitas.Tests
         {
             _entity.AddComponentA();
             var components = _entity.GetComponents();
-            var indexes = _entity.GetComponentIndices();
+            var indexes = _entity.GetComponentIndexes();
             _entity.AddComponentB();
             _entity.GetComponents().Should().NotBeSameAs(components);
-            _entity.GetComponentIndices().Should().NotBeSameAs(indexes);
+            _entity.GetComponentIndexes().Should().NotBeSameAs(indexes);
         }
 
         [Fact]
@@ -566,10 +566,10 @@ namespace Entitas.Tests
         {
             _entity.AddComponentA();
             var components = _entity.GetComponents();
-            var indexes = _entity.GetComponentIndices();
+            var indexes = _entity.GetComponentIndexes();
             _entity.RemoveComponentA();
             _entity.GetComponents().Should().NotBeSameAs(components);
-            _entity.GetComponentIndices().Should().NotBeSameAs(indexes);
+            _entity.GetComponentIndexes().Should().NotBeSameAs(indexes);
         }
 
         [Fact]
@@ -577,19 +577,19 @@ namespace Entitas.Tests
         {
             _entity.AddComponentA();
             var components = _entity.GetComponents();
-            var indexes = _entity.GetComponentIndices();
+            var indexes = _entity.GetComponentIndexes();
             _entity.ReplaceComponentA(new ComponentA());
             _entity.GetComponents().Should().NotBeSameAs(components);
-            _entity.GetComponentIndices().Should().BeSameAs(indexes);
+            _entity.GetComponentIndexes().Should().BeSameAs(indexes);
         }
 
         [Fact]
         public void UpdatesIndexesCacheWhenAddingNewComponentWithReplaceComponent()
         {
             _entity.AddComponentA();
-            var indexes = _entity.GetComponentIndices();
+            var indexes = _entity.GetComponentIndexes();
             _entity.ReplaceComponentC(Component.C);
-            _entity.GetComponentIndices().Should().NotBeSameAs(indexes);
+            _entity.GetComponentIndexes().Should().NotBeSameAs(indexes);
         }
 
         [Fact]
@@ -597,10 +597,10 @@ namespace Entitas.Tests
         {
             _entity.AddComponentA();
             var components = _entity.GetComponents();
-            var indexes = _entity.GetComponentIndices();
+            var indexes = _entity.GetComponentIndexes();
             _entity.ReplaceComponentA(Component.A);
             _entity.GetComponents().Should().BeSameAs(components);
-            _entity.GetComponentIndices().Should().BeSameAs(indexes);
+            _entity.GetComponentIndexes().Should().BeSameAs(indexes);
         }
 
         [Fact]
@@ -608,10 +608,10 @@ namespace Entitas.Tests
         {
             _entity.AddComponentA();
             var components = _entity.GetComponents();
-            var indexes = _entity.GetComponentIndices();
+            var indexes = _entity.GetComponentIndexes();
             _entity.RemoveAllComponents();
             _entity.GetComponents().Should().NotBeSameAs(components);
-            _entity.GetComponentIndices().Should().NotBeSameAs(indexes);
+            _entity.GetComponentIndexes().Should().NotBeSameAs(indexes);
         }
 
         [Fact]
@@ -703,13 +703,13 @@ namespace Entitas.Tests
             components.Length.Should().Be(1);
             components.Should().Contain(componentA);
 
-            var indices = e.GetComponentIndices();
-            indices.Length.Should().Be(1);
-            indices.Should().Contain(CID.ComponentA);
+            var indexes = e.GetComponentIndexes();
+            indexes.Length.Should().Be(1);
+            indexes.Should().Contain(CID.ComponentA);
 
             e.HasComponentA().Should().BeTrue();
-            e.HasComponents(_indicesA).Should().BeTrue();
-            e.HasAnyComponent(_indicesA).Should().BeTrue();
+            e.HasComponents(_indexesA).Should().BeTrue();
+            e.HasAnyComponent(_indexesA).Should().BeTrue();
         }
 
         void AssertHasNotComponentA(Test1Entity e)
@@ -717,12 +717,12 @@ namespace Entitas.Tests
             var components = e.GetComponents();
             components.Length.Should().Be(0);
 
-            var indices = e.GetComponentIndices();
-            indices.Length.Should().Be(0);
+            var indexes = e.GetComponentIndexes();
+            indexes.Length.Should().Be(0);
 
             e.HasComponentA().Should().BeFalse();
-            e.HasComponents(_indicesA).Should().BeFalse();
-            e.HasAnyComponent(_indicesA).Should().BeFalse();
+            e.HasComponents(_indexesA).Should().BeFalse();
+            e.HasAnyComponent(_indexesA).Should().BeFalse();
         }
     }
 }

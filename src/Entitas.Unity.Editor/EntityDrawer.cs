@@ -134,10 +134,10 @@ namespace Entitas.Unity.Editor
 
                 EditorGUILayout.Space();
 
-                var indices = entity.GetComponentIndices();
+                var indexes = entity.GetComponentIndexes();
                 var components = entity.GetComponents();
                 for (var i = 0; i < components.Length; i++)
-                    DrawComponent(unfoldedComponents, componentMemberSearch, entity, indices[i], components[i]);
+                    DrawComponent(unfoldedComponents, componentMemberSearch, entity, indexes[i], components[i]);
             }
             EditorLayout.EndVerticalBox();
         }

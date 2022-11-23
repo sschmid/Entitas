@@ -4,7 +4,7 @@ namespace Entitas
 {
     public class MatcherException : Exception
     {
-        public MatcherException(int indices) : base(
-            $"matcher.indices.Length must be 1 but was {indices}") { }
+        public MatcherException(int indexes) : base(
+            $"matcher.indexes.Length must be 1 but was {indexes}") { }
     }
 }

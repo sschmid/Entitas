@@ -13,16 +13,16 @@ namespace Entitas.Plugins
         const string Template =
             @"public sealed partial class ${MatcherType} {
 
-    public static Entitas.IAllOfMatcher<${EntityType}> AllOf(params int[] indices) {
-        return Entitas.Matcher<${EntityType}>.AllOf(indices);
+    public static Entitas.IAllOfMatcher<${EntityType}> AllOf(params int[] indexes) {
+        return Entitas.Matcher<${EntityType}>.AllOf(indexes);
     }
 
     public static Entitas.IAllOfMatcher<${EntityType}> AllOf(params Entitas.IMatcher<${EntityType}>[] matchers) {
           return Entitas.Matcher<${EntityType}>.AllOf(matchers);
     }
 
-    public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params int[] indices) {
-          return Entitas.Matcher<${EntityType}>.AnyOf(indices);
+    public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params int[] indexes) {
+          return Entitas.Matcher<${EntityType}>.AnyOf(indexes);
     }
 
     public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params Entitas.IMatcher<${EntityType}>[] matchers) {

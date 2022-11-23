@@ -1,7 +1,7 @@
 ﻿using Entitas;
 using Entitas.Plugins.Attributes;
 
-public class MultiplePrimaryEntityIndicesComponent : IComponent
+public class MultiplePrimaryEntityIndexesComponent : IComponent
 {
     [PrimaryEntityIndex]
     public string value;

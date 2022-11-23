@@ -13,7 +13,7 @@ public static class Test2ComponentsLookup {
     public const int MultipleContextStandardEvent = 2;
     public const int MultipleEventsStandardEvent = 3;
     public const int MyNamespaceEntityIndex = 4;
-    public const int MyNamespaceMultipleEntityIndices = 5;
+    public const int MyNamespaceMultipleEntityIndexes = 5;
     public const int MyNamespaceMyNamespace = 6;
     public const int NameAge = 7;
     public const int Test2AnyEventToGenerateListener = 8;
@@ -31,7 +31,7 @@ public static class Test2ComponentsLookup {
         "MultipleContextStandardEvent",
         "MultipleEventsStandardEvent",
         "MyNamespaceEntityIndex",
-        "MyNamespaceMultipleEntityIndices",
+        "MyNamespaceMultipleEntityIndexes",
         "MyNamespaceMyNamespace",
         "NameAge",
         "Test2AnyEventToGenerateListener",
@@ -48,7 +48,7 @@ public static class Test2ComponentsLookup {
         typeof(MultipleContextStandardEventComponent),
         typeof(MultipleEventsStandardEventComponent),
         typeof(My.Namespace.EntityIndexComponent),
-        typeof(My.Namespace.MultipleEntityIndicesComponent),
+        typeof(My.Namespace.MultipleEntityIndexesComponent),
         typeof(My.Namespace.MyNamespaceComponent),
         typeof(NameAgeComponent),
         typeof(Test2AnyEventToGenerateListenerComponent),

@@ -18,14 +18,14 @@ namespace Entitas.Plugins
 ${indexConstants}
 
     [Entitas.Plugins.Attributes.PostConstructor]
-    public void InitializeEntityIndices() {
-${addIndices}
+    public void InitializeEntityIndexes() {
+${addIndexes}
     }
 }
 
 public static class ContextsExtensions {
 
-${getIndices}
+${getIndexes}
 }";
 
         const string IndexConstantsTemplate = @"    public const string ${IndexName} = ""${IndexName}"";";
@@ -64,10 +64,10 @@ ${getIndices}
 
             return entityIndexData.Length == 0
                 ? Array.Empty<CodeGenFile>()
-                : GenerateEntityIndices(entityIndexData);
+                : GenerateEntityIndexes(entityIndexData);
         }
 
-        CodeGenFile[] GenerateEntityIndices(EntityIndexData[] data)
+        CodeGenFile[] GenerateEntityIndexes(EntityIndexData[] data)
         {
             var indexConstants = string.Join("\n", data
                 .Select(d => IndexConstantsTemplate
@@ -75,16 +75,16 @@ ${getIndices}
                         ? d.Name + d.MemberName.ToUpperFirst()
                         : d.Name)));
 
-            var addIndices = string.Join("\n\n", data
+            var addIndexes = string.Join("\n\n", data
                 .Select(GenerateAddMethods));
 
-            var getIndices = string.Join("\n\n", data
+            var getIndexes = string.Join("\n\n", data
                 .Select(GenerateGetMethods));
 
             var fileContent = ClassTemplate
                 .Replace("${indexConstants}", indexConstants)
-                .Replace("${addIndices}", addIndices)
-                .Replace("${getIndices}", getIndices);
+                .Replace("${addIndexes}", addIndexes)
+                .Replace("${getIndexes}", getIndexes);
 
             return new[]
             {

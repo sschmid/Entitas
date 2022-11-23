@@ -60,26 +60,26 @@ public partial class Contexts : Entitas.IContexts {
 //------------------------------------------------------------------------------
 public partial class Contexts {
 
-    public const string MultiplePrimaryEntityIndicesValue = "MultiplePrimaryEntityIndicesValue";
-    public const string MultiplePrimaryEntityIndicesValue2 = "MultiplePrimaryEntityIndicesValue2";
+    public const string MultiplePrimaryEntityIndexesValue = "MultiplePrimaryEntityIndexesValue";
+    public const string MultiplePrimaryEntityIndexesValue2 = "MultiplePrimaryEntityIndexesValue2";
     public const string MyNamespaceCustomEntityIndex = "MyNamespaceCustomEntityIndex";
     public const string MyNamespaceEntityIndex = "MyNamespaceEntityIndex";
     public const string MyNamespaceEntityIndexNoContext = "MyNamespaceEntityIndexNoContext";
-    public const string MyNamespaceMultipleEntityIndicesValue = "MyNamespaceMultipleEntityIndicesValue";
-    public const string MyNamespaceMultipleEntityIndicesValue2 = "MyNamespaceMultipleEntityIndicesValue2";
+    public const string MyNamespaceMultipleEntityIndexesValue = "MyNamespaceMultipleEntityIndexesValue";
+    public const string MyNamespaceMultipleEntityIndexesValue2 = "MyNamespaceMultipleEntityIndexesValue2";
     public const string PrimaryEntityIndex = "PrimaryEntityIndex";
 
     [Entitas.Plugins.Attributes.PostConstructor]
-    public void InitializeEntityIndices() {
+    public void InitializeEntityIndexes() {
         game.AddEntityIndex(new Entitas.PrimaryEntityIndex<GameEntity, string>(
-            MultiplePrimaryEntityIndicesValue,
-            game.GetGroup(GameMatcher.MultiplePrimaryEntityIndices),
-            (e, c) => ((MultiplePrimaryEntityIndicesComponent)c).value));
+            MultiplePrimaryEntityIndexesValue,
+            game.GetGroup(GameMatcher.MultiplePrimaryEntityIndexes),
+            (e, c) => ((MultiplePrimaryEntityIndexesComponent)c).value));
 
         game.AddEntityIndex(new Entitas.PrimaryEntityIndex<GameEntity, string>(
-            MultiplePrimaryEntityIndicesValue2,
-            game.GetGroup(GameMatcher.MultiplePrimaryEntityIndices),
-            (e, c) => ((MultiplePrimaryEntityIndicesComponent)c).value2));
+            MultiplePrimaryEntityIndexesValue2,
+            game.GetGroup(GameMatcher.MultiplePrimaryEntityIndexes),
+            (e, c) => ((MultiplePrimaryEntityIndexesComponent)c).value2));
 
         test1.AddEntityIndex(new MyNamespace.CustomEntityIndex(test1));
 
@@ -98,22 +98,22 @@ public partial class Contexts {
             (e, c) => ((My.Namespace.EntityIndexNoContextComponent)c).value));
 
         test1.AddEntityIndex(new Entitas.EntityIndex<Test1Entity, string>(
-            MyNamespaceMultipleEntityIndicesValue,
-            test1.GetGroup(Test1Matcher.MyNamespaceMultipleEntityIndices),
-            (e, c) => ((My.Namespace.MultipleEntityIndicesComponent)c).value));
+            MyNamespaceMultipleEntityIndexesValue,
+            test1.GetGroup(Test1Matcher.MyNamespaceMultipleEntityIndexes),
+            (e, c) => ((My.Namespace.MultipleEntityIndexesComponent)c).value));
         test2.AddEntityIndex(new Entitas.EntityIndex<Test2Entity, string>(
-            MyNamespaceMultipleEntityIndicesValue,
-            test2.GetGroup(Test2Matcher.MyNamespaceMultipleEntityIndices),
-            (e, c) => ((My.Namespace.MultipleEntityIndicesComponent)c).value));
+            MyNamespaceMultipleEntityIndexesValue,
+            test2.GetGroup(Test2Matcher.MyNamespaceMultipleEntityIndexes),
+            (e, c) => ((My.Namespace.MultipleEntityIndexesComponent)c).value));
 
         test1.AddEntityIndex(new Entitas.EntityIndex<Test1Entity, string>(
-            MyNamespaceMultipleEntityIndicesValue2,
-            test1.GetGroup(Test1Matcher.MyNamespaceMultipleEntityIndices),
-            (e, c) => ((My.Namespace.MultipleEntityIndicesComponent)c).value2));
+            MyNamespaceMultipleEntityIndexesValue2,
+            test1.GetGroup(Test1Matcher.MyNamespaceMultipleEntityIndexes),
+            (e, c) => ((My.Namespace.MultipleEntityIndexesComponent)c).value2));
         test2.AddEntityIndex(new Entitas.EntityIndex<Test2Entity, string>(
-            MyNamespaceMultipleEntityIndicesValue2,
-            test2.GetGroup(Test2Matcher.MyNamespaceMultipleEntityIndices),
-            (e, c) => ((My.Namespace.MultipleEntityIndicesComponent)c).value2));
+            MyNamespaceMultipleEntityIndexesValue2,
+            test2.GetGroup(Test2Matcher.MyNamespaceMultipleEntityIndexes),
+            (e, c) => ((My.Namespace.MultipleEntityIndexesComponent)c).value2));
 
         game.AddEntityIndex(new Entitas.PrimaryEntityIndex<GameEntity, string>(
             PrimaryEntityIndex,
@@ -124,12 +124,12 @@ public partial class Contexts {
 
 public static class ContextsExtensions {
 
-    public static GameEntity GetEntityWithMultiplePrimaryEntityIndicesValue(this GameContext context, string value) {
-        return ((Entitas.PrimaryEntityIndex<GameEntity, string>)context.GetEntityIndex(Contexts.MultiplePrimaryEntityIndicesValue)).GetEntity(value);
+    public static GameEntity GetEntityWithMultiplePrimaryEntityIndexesValue(this GameContext context, string value) {
+        return ((Entitas.PrimaryEntityIndex<GameEntity, string>)context.GetEntityIndex(Contexts.MultiplePrimaryEntityIndexesValue)).GetEntity(value);
     }
 
-    public static GameEntity GetEntityWithMultiplePrimaryEntityIndicesValue2(this GameContext context, string value2) {
-        return ((Entitas.PrimaryEntityIndex<GameEntity, string>)context.GetEntityIndex(Contexts.MultiplePrimaryEntityIndicesValue2)).GetEntity(value2);
+    public static GameEntity GetEntityWithMultiplePrimaryEntityIndexesValue2(this GameContext context, string value2) {
+        return ((Entitas.PrimaryEntityIndex<GameEntity, string>)context.GetEntityIndex(Contexts.MultiplePrimaryEntityIndexesValue2)).GetEntity(value2);
     }
 
     public static System.Collections.Generic.HashSet<Test1Entity> GetEntitiesWithPosition(this Test1Context context, IntVector2 position) {
@@ -153,20 +153,20 @@ public static class ContextsExtensions {
         return ((Entitas.EntityIndex<GameEntity, string>)context.GetEntityIndex(Contexts.MyNamespaceEntityIndexNoContext)).GetEntities(value);
     }
 
-    public static System.Collections.Generic.HashSet<Test1Entity> GetEntitiesWithMyNamespaceMultipleEntityIndicesValue(this Test1Context context, string value) {
-        return ((Entitas.EntityIndex<Test1Entity, string>)context.GetEntityIndex(Contexts.MyNamespaceMultipleEntityIndicesValue)).GetEntities(value);
+    public static System.Collections.Generic.HashSet<Test1Entity> GetEntitiesWithMyNamespaceMultipleEntityIndexesValue(this Test1Context context, string value) {
+        return ((Entitas.EntityIndex<Test1Entity, string>)context.GetEntityIndex(Contexts.MyNamespaceMultipleEntityIndexesValue)).GetEntities(value);
     }
 
-    public static System.Collections.Generic.HashSet<Test2Entity> GetEntitiesWithMyNamespaceMultipleEntityIndicesValue(this Test2Context context, string value) {
-        return ((Entitas.EntityIndex<Test2Entity, string>)context.GetEntityIndex(Contexts.MyNamespaceMultipleEntityIndicesValue)).GetEntities(value);
+    public static System.Collections.Generic.HashSet<Test2Entity> GetEntitiesWithMyNamespaceMultipleEntityIndexesValue(this Test2Context context, string value) {
+        return ((Entitas.EntityIndex<Test2Entity, string>)context.GetEntityIndex(Contexts.MyNamespaceMultipleEntityIndexesValue)).GetEntities(value);
     }
 
-    public static System.Collections.Generic.HashSet<Test1Entity> GetEntitiesWithMyNamespaceMultipleEntityIndicesValue2(this Test1Context context, string value2) {
-        return ((Entitas.EntityIndex<Test1Entity, string>)context.GetEntityIndex(Contexts.MyNamespaceMultipleEntityIndicesValue2)).GetEntities(value2);
+    public static System.Collections.Generic.HashSet<Test1Entity> GetEntitiesWithMyNamespaceMultipleEntityIndexesValue2(this Test1Context context, string value2) {
+        return ((Entitas.EntityIndex<Test1Entity, string>)context.GetEntityIndex(Contexts.MyNamespaceMultipleEntityIndexesValue2)).GetEntities(value2);
     }
 
-    public static System.Collections.Generic.HashSet<Test2Entity> GetEntitiesWithMyNamespaceMultipleEntityIndicesValue2(this Test2Context context, string value2) {
-        return ((Entitas.EntityIndex<Test2Entity, string>)context.GetEntityIndex(Contexts.MyNamespaceMultipleEntityIndicesValue2)).GetEntities(value2);
+    public static System.Collections.Generic.HashSet<Test2Entity> GetEntitiesWithMyNamespaceMultipleEntityIndexesValue2(this Test2Context context, string value2) {
+        return ((Entitas.EntityIndex<Test2Entity, string>)context.GetEntityIndex(Contexts.MyNamespaceMultipleEntityIndexesValue2)).GetEntities(value2);
     }
 
     public static GameEntity GetEntityWithPrimaryEntityIndex(this GameContext context, string value) {

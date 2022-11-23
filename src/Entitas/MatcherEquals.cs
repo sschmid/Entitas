@@ -8,19 +8,19 @@ namespace Entitas
                 return false;
 
             var matcher = (Matcher<TEntity>)obj;
-            if (!equalIndices(matcher.allOfIndices, _allOfIndices))
+            if (!equalIndexes(matcher.allOfIndexes, _allOfIndexes))
                 return false;
 
-            if (!equalIndices(matcher.anyOfIndices, _anyOfIndices))
+            if (!equalIndexes(matcher.anyOfIndexes, _anyOfIndexes))
                 return false;
 
-            if (!equalIndices(matcher.noneOfIndices, _noneOfIndices))
+            if (!equalIndexes(matcher.noneOfIndexes, _noneOfIndexes))
                 return false;
 
             return true;
         }
 
-        static bool equalIndices(int[] i1, int[] i2)
+        static bool equalIndexes(int[] i1, int[] i2)
         {
             if ((i1 == null) != (i2 == null))
                 return false;
@@ -46,9 +46,9 @@ namespace Entitas
             if (!_isHashCached)
             {
                 var hash = GetType().GetHashCode();
-                hash = applyHash(hash, _allOfIndices, 3, 53);
-                hash = applyHash(hash, _anyOfIndices, 307, 367);
-                hash = applyHash(hash, _noneOfIndices, 647, 683);
+                hash = applyHash(hash, _allOfIndexes, 3, 53);
+                hash = applyHash(hash, _anyOfIndexes, 307, 367);
+                hash = applyHash(hash, _noneOfIndexes, 647, 683);
                 _hash = hash;
                 _isHashCached = true;
             }
@@ -56,14 +56,14 @@ namespace Entitas
             return _hash;
         }
 
-        static int applyHash(int hash, int[] indices, int i1, int i2)
+        static int applyHash(int hash, int[] indexes, int i1, int i2)
         {
-            if (indices != null)
+            if (indexes != null)
             {
-                for (var i = 0; i < indices.Length; i++)
-                    hash ^= indices[i] * i1;
+                for (var i = 0; i < indexes.Length; i++)
+                    hash ^= indexes[i] * i1;
 
-                hash ^= indices.Length * i2;
+                hash ^= indexes.Length * i2;
             }
 
             return hash;

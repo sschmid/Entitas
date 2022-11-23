@@ -2,45 +2,45 @@
 {
     public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : class, IEntity
     {
-        public int[] indices => _indices ?? (_indices = mergeIndices(_allOfIndices, _anyOfIndices, _noneOfIndices));
-        public int[] allOfIndices => _allOfIndices;
-        public int[] anyOfIndices => _anyOfIndices;
-        public int[] noneOfIndices => _noneOfIndices;
+        public int[] indexes => _indexes ?? (_indexes = mergeIndexes(_allOfIndexes, _anyOfIndexes, _noneOfIndexes));
+        public int[] allOfIndexes => _allOfIndexes;
+        public int[] anyOfIndexes => _anyOfIndexes;
+        public int[] noneOfIndexes => _noneOfIndexes;
 
         public string[] componentNames { get; set; }
 
-        int[] _indices;
-        int[] _allOfIndices;
-        int[] _anyOfIndices;
-        int[] _noneOfIndices;
+        int[] _indexes;
+        int[] _allOfIndexes;
+        int[] _anyOfIndexes;
+        int[] _noneOfIndexes;
 
         Matcher() { }
 
-        IAnyOfMatcher<TEntity> IAllOfMatcher<TEntity>.AnyOf(params int[] indices)
+        IAnyOfMatcher<TEntity> IAllOfMatcher<TEntity>.AnyOf(params int[] indexes)
         {
-            _anyOfIndices = distinctIndices(indices);
-            _indices = null;
+            _anyOfIndexes = distinctIndexes(indexes);
+            _indexes = null;
             _isHashCached = false;
             return this;
         }
 
         IAnyOfMatcher<TEntity> IAllOfMatcher<TEntity>.AnyOf(params IMatcher<TEntity>[] matchers) =>
-            ((IAllOfMatcher<TEntity>)this).AnyOf(mergeIndices(matchers));
+            ((IAllOfMatcher<TEntity>)this).AnyOf(mergeIndexes(matchers));
 
-        public INoneOfMatcher<TEntity> NoneOf(params int[] indices)
+        public INoneOfMatcher<TEntity> NoneOf(params int[] indexes)
         {
-            _noneOfIndices = distinctIndices(indices);
-            _indices = null;
+            _noneOfIndexes = distinctIndexes(indexes);
+            _indexes = null;
             _isHashCached = false;
             return this;
         }
 
         public INoneOfMatcher<TEntity> NoneOf(params IMatcher<TEntity>[] matchers) =>
-            NoneOf(mergeIndices(matchers));
+            NoneOf(mergeIndexes(matchers));
 
         public bool Matches(TEntity entity) =>
-            (_allOfIndices == null || entity.HasComponents(_allOfIndices))
-            && (_anyOfIndices == null || entity.HasAnyComponent(_anyOfIndices))
-            && (_noneOfIndices == null || !entity.HasAnyComponent(_noneOfIndices));
+            (_allOfIndexes == null || entity.HasComponents(_allOfIndexes))
+            && (_anyOfIndexes == null || entity.HasAnyComponent(_anyOfIndexes))
+            && (_noneOfIndexes == null || !entity.HasAnyComponent(_noneOfIndexes));
     }
 }

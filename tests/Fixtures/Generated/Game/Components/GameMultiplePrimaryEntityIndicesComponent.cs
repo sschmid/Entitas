@@ -8,27 +8,27 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public MultiplePrimaryEntityIndicesComponent multiplePrimaryEntityIndices { get { return (MultiplePrimaryEntityIndicesComponent)GetComponent(GameComponentsLookup.MultiplePrimaryEntityIndices); } }
-    public bool hasMultiplePrimaryEntityIndices { get { return HasComponent(GameComponentsLookup.MultiplePrimaryEntityIndices); } }
+    public MultiplePrimaryEntityIndexesComponent multiplePrimaryEntityIndexes { get { return (MultiplePrimaryEntityIndexesComponent)GetComponent(GameComponentsLookup.MultiplePrimaryEntityIndexes); } }
+    public bool hasMultiplePrimaryEntityIndexes { get { return HasComponent(GameComponentsLookup.MultiplePrimaryEntityIndexes); } }
 
-    public void AddMultiplePrimaryEntityIndices(string newValue, string newValue2) {
-        var index = GameComponentsLookup.MultiplePrimaryEntityIndices;
-        var component = (MultiplePrimaryEntityIndicesComponent)CreateComponent(index, typeof(MultiplePrimaryEntityIndicesComponent));
+    public void AddMultiplePrimaryEntityIndexes(string newValue, string newValue2) {
+        var index = GameComponentsLookup.MultiplePrimaryEntityIndexes;
+        var component = (MultiplePrimaryEntityIndexesComponent)CreateComponent(index, typeof(MultiplePrimaryEntityIndexesComponent));
         component.value = newValue;
         component.value2 = newValue2;
         AddComponent(index, component);
     }
 
-    public void ReplaceMultiplePrimaryEntityIndices(string newValue, string newValue2) {
-        var index = GameComponentsLookup.MultiplePrimaryEntityIndices;
-        var component = (MultiplePrimaryEntityIndicesComponent)CreateComponent(index, typeof(MultiplePrimaryEntityIndicesComponent));
+    public void ReplaceMultiplePrimaryEntityIndexes(string newValue, string newValue2) {
+        var index = GameComponentsLookup.MultiplePrimaryEntityIndexes;
+        var component = (MultiplePrimaryEntityIndexesComponent)CreateComponent(index, typeof(MultiplePrimaryEntityIndexesComponent));
         component.value = newValue;
         component.value2 = newValue2;
         ReplaceComponent(index, component);
     }
 
-    public void RemoveMultiplePrimaryEntityIndices() {
-        RemoveComponent(GameComponentsLookup.MultiplePrimaryEntityIndices);
+    public void RemoveMultiplePrimaryEntityIndexes() {
+        RemoveComponent(GameComponentsLookup.MultiplePrimaryEntityIndexes);
     }
 }
 
@@ -42,17 +42,17 @@ public partial class GameEntity {
 //------------------------------------------------------------------------------
 public sealed partial class GameMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherMultiplePrimaryEntityIndices;
+    static Entitas.IMatcher<GameEntity> _matcherMultiplePrimaryEntityIndexes;
 
-    public static Entitas.IMatcher<GameEntity> MultiplePrimaryEntityIndices {
+    public static Entitas.IMatcher<GameEntity> MultiplePrimaryEntityIndexes {
         get {
-            if (_matcherMultiplePrimaryEntityIndices == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.MultiplePrimaryEntityIndices);
+            if (_matcherMultiplePrimaryEntityIndexes == null) {
+                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.MultiplePrimaryEntityIndexes);
                 matcher.componentNames = GameComponentsLookup.componentNames;
-                _matcherMultiplePrimaryEntityIndices = matcher;
+                _matcherMultiplePrimaryEntityIndexes = matcher;
             }
 
-            return _matcherMultiplePrimaryEntityIndices;
+            return _matcherMultiplePrimaryEntityIndexes;
         }
     }
 }

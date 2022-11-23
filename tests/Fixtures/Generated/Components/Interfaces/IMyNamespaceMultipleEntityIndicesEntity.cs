@@ -6,12 +6,12 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-public partial interface IMyNamespaceMultipleEntityIndicesEntity {
+public partial interface IMyNamespaceMultipleEntityIndexesEntity {
 
-    My.Namespace.MultipleEntityIndicesComponent myNamespaceMultipleEntityIndices { get; }
-    bool hasMyNamespaceMultipleEntityIndices { get; }
+    My.Namespace.MultipleEntityIndexesComponent myNamespaceMultipleEntityIndexes { get; }
+    bool hasMyNamespaceMultipleEntityIndexes { get; }
 
-    void AddMyNamespaceMultipleEntityIndices(string newValue, string newValue2);
-    void ReplaceMyNamespaceMultipleEntityIndices(string newValue, string newValue2);
-    void RemoveMyNamespaceMultipleEntityIndices();
+    void AddMyNamespaceMultipleEntityIndexes(string newValue, string newValue2);
+    void ReplaceMyNamespaceMultipleEntityIndexes(string newValue, string newValue2);
+    void RemoveMyNamespaceMultipleEntityIndexes();
 }

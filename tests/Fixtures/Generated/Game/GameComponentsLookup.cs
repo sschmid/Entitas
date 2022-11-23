@@ -13,7 +13,7 @@ public static class GameComponentsLookup {
     public const int CleanupRemove = 2;
     public const int GeneratedContext = 3;
     public const int Inherited = 4;
-    public const int MultiplePrimaryEntityIndices = 5;
+    public const int MultiplePrimaryEntityIndexes = 5;
     public const int MyNamespaceEntityIndexNoContext = 6;
     public const int NoContext = 7;
     public const int Parent = 8;
@@ -27,7 +27,7 @@ public static class GameComponentsLookup {
         "CleanupRemove",
         "GeneratedContext",
         "Inherited",
-        "MultiplePrimaryEntityIndices",
+        "MultiplePrimaryEntityIndexes",
         "MyNamespaceEntityIndexNoContext",
         "NoContext",
         "Parent",
@@ -40,7 +40,7 @@ public static class GameComponentsLookup {
         typeof(CleanupRemoveComponent),
         typeof(GeneratedContextComponent),
         typeof(InheritedComponent),
-        typeof(MultiplePrimaryEntityIndicesComponent),
+        typeof(MultiplePrimaryEntityIndexesComponent),
         typeof(My.Namespace.EntityIndexNoContextComponent),
         typeof(NoContextComponent),
         typeof(ParentComponent),
