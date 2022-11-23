@@ -8,13 +8,13 @@ namespace Entitas
                 return false;
 
             var matcher = (Matcher<TEntity>)obj;
-            if (!equalIndexes(matcher.allOfIndexes, _allOfIndexes))
+            if (!equalIndexes(matcher.AllOfIndexes, _allOfIndexes))
                 return false;
 
-            if (!equalIndexes(matcher.anyOfIndexes, _anyOfIndexes))
+            if (!equalIndexes(matcher.AnyOfIndexes, _anyOfIndexes))
                 return false;
 
-            if (!equalIndexes(matcher.noneOfIndexes, _noneOfIndexes))
+            if (!equalIndexes(matcher.NoneOfIndexes, _noneOfIndexes))
                 return false;
 
             return true;

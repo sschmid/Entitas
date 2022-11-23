@@ -2,8 +2,8 @@
 {
     public interface ICompoundMatcher<TEntity> : IMatcher<TEntity> where TEntity : class, IEntity
     {
-        int[] allOfIndexes { get; }
-        int[] anyOfIndexes { get; }
-        int[] noneOfIndexes { get; }
+        int[] AllOfIndexes { get; }
+        int[] AnyOfIndexes { get; }
+        int[] NoneOfIndexes { get; }
     }
 }

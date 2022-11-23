@@ -3,9 +3,9 @@
     public partial class Matcher<TEntity> : IAllOfMatcher<TEntity> where TEntity : class, IEntity
     {
         public int[] indexes => _indexes ?? (_indexes = mergeIndexes(_allOfIndexes, _anyOfIndexes, _noneOfIndexes));
-        public int[] allOfIndexes => _allOfIndexes;
-        public int[] anyOfIndexes => _anyOfIndexes;
-        public int[] noneOfIndexes => _noneOfIndexes;
+        public int[] AllOfIndexes => _allOfIndexes;
+        public int[] AnyOfIndexes => _anyOfIndexes;
+        public int[] NoneOfIndexes => _noneOfIndexes;
 
         public string[] componentNames { get; set; }
 
