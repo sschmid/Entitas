@@ -11,8 +11,8 @@ namespace Entitas
         {
             if (collection.Count != 1)
                 throw new SingleEntityException(collection.Count);
-
-            return System.Linq.Enumerable.First(collection);
+            else
+                return System.Linq.Enumerable.First(collection);
         }
 
         /// Returns the only entity in the collection.
@@ -22,8 +22,8 @@ namespace Entitas
         {
             if (collection.Count != 1)
                 throw new SingleEntityException(collection.Count);
-
-            return System.Linq.Enumerable.First(collection);
+            else
+                return System.Linq.Enumerable.First(collection);
         }
     }
 
