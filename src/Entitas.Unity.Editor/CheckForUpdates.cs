@@ -15,35 +15,27 @@ namespace Entitas.Unity.Editor
 
     public class UpdateInfo
     {
-        public UpdateState updateState => _updateState;
+        public UpdateState UpdateState => _updateState;
 
-        public readonly string localVersionString;
-        public readonly string remoteVersionString;
+        public readonly string LocalVersionString;
+        public readonly string RemoteVersionString;
 
         readonly UpdateState _updateState;
 
         public UpdateInfo(string localVersionString, string remoteVersionString)
         {
-            this.localVersionString = localVersionString.Trim();
-            this.remoteVersionString = remoteVersionString.Trim();
+            LocalVersionString = localVersionString.Trim();
+            RemoteVersionString = remoteVersionString.Trim();
 
             if (remoteVersionString != string.Empty)
             {
-                var localVersion = new Version(localVersionString);
-                var remoteVersion = new Version(remoteVersionString);
-
-                switch (remoteVersion.CompareTo(localVersion))
+                _updateState = new Version(remoteVersionString).CompareTo(new Version(localVersionString)) switch
                 {
-                    case 1:
-                        _updateState = UpdateState.UpdateAvailable;
-                        break;
-                    case 0:
-                        _updateState = UpdateState.UpToDate;
-                        break;
-                    case -1:
-                        _updateState = UpdateState.AheadOfLatestRelease;
-                        break;
-                }
+                    1 => UpdateState.UpdateAvailable,
+                    0 => UpdateState.UpToDate,
+                    -1 => UpdateState.AheadOfLatestRelease,
+                    _ => _updateState
+                };
             }
             else
             {
@@ -54,12 +46,12 @@ namespace Entitas.Unity.Editor
 
     public static class CheckForUpdates
     {
-        const string URL_GITHUB_API_LATEST_RELEASE = "https://api.github.com/repos/sschmid/Entitas/releases/latest";
-        const string URL_GITHUB_RELEASES = "https://github.com/sschmid/Entitas/releases";
-        const string URL_ASSET_STORE = "http://u3d.as/NuJ";
+        const string URLGitHubAPILatestRelease = "https://api.github.com/repos/sschmid/Entitas/releases/latest";
+        const string URLGitHubReleases = "https://github.com/sschmid/Entitas/releases";
+        const string URLAssetStore = "http://u3d.as/NuJ";
 
         [MenuItem(EntitasMenuItems.check_for_updates, false, EntitasMenuItemPriorities.check_for_updates)]
-        public static void DisplayUpdates() => displayUpdateInfo(GetUpdateInfo());
+        public static void DisplayUpdates() => DisplayUpdateInfo(GetUpdateInfo());
 
         public static UpdateInfo GetUpdateInfo() => new UpdateInfo(GetLocalVersion(), GetRemoteVersion());
 
@@ -69,7 +61,7 @@ namespace Entitas.Unity.Editor
         {
             try
             {
-                return JsonUtility.FromJson<ResponseData>(requestLatestRelease()).tag_name;
+                return JsonUtility.FromJson<ResponseData>(RequestLatestRelease()).tag_name;
             }
             catch (Exception)
             {
@@ -79,10 +71,10 @@ namespace Entitas.Unity.Editor
             return string.Empty;
         }
 
-        static string requestLatestRelease()
+        static string RequestLatestRelease()
         {
             var response = string.Empty;
-            using (var www = UnityWebRequest.Get(URL_GITHUB_API_LATEST_RELEASE))
+            using (var www = UnityWebRequest.Get(URLGitHubAPILatestRelease))
             {
                 var asyncOperation = www.SendWebRequest();
                 while (!asyncOperation.isDone) { }
@@ -97,32 +89,32 @@ namespace Entitas.Unity.Editor
             return response;
         }
 
-        static void displayUpdateInfo(UpdateInfo info)
+        static void DisplayUpdateInfo(UpdateInfo info)
         {
-            switch (info.updateState)
+            switch (info.UpdateState)
             {
                 case UpdateState.UpdateAvailable:
                     if (EditorUtility.DisplayDialog("Entitas Update",
-                            $"A newer version of Entitas is available!\n\nCurrently installed version: {info.localVersionString}\nNew version: {info.remoteVersionString}",
+                            $"A newer version of Entitas is available!\n\nCurrently installed version: {info.LocalVersionString}\nNew version: {info.RemoteVersionString}",
                             "Show in Unity Asset Store",
                             "Cancel"))
                     {
-                        Application.OpenURL(URL_ASSET_STORE);
+                        Application.OpenURL(URLAssetStore);
                     }
 
                     break;
                 case UpdateState.UpToDate:
                     EditorUtility.DisplayDialog("Entitas Update",
-                        $"Entitas is up to date ({info.localVersionString})",
+                        $"Entitas is up to date ({info.LocalVersionString})",
                         "Ok");
                     break;
                 case UpdateState.AheadOfLatestRelease:
                     if (EditorUtility.DisplayDialog("Entitas Update",
-                            $"Your Entitas version seems to be newer than the latest release?!?\n\nCurrently installed version: {info.localVersionString}\nLatest release: {info.remoteVersionString}",
+                            $"Your Entitas version seems to be newer than the latest release?!?\n\nCurrently installed version: {info.LocalVersionString}\nLatest release: {info.RemoteVersionString}",
                             "Show in Unity Asset Store",
                             "Cancel"))
                     {
-                        Application.OpenURL(URL_ASSET_STORE);
+                        Application.OpenURL(URLAssetStore);
                     }
 
                     break;
