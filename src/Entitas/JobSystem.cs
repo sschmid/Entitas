@@ -36,7 +36,7 @@ namespace Entitas
             {
                 var from = t * slice;
                 var to = from + slice;
-                if (to > entities.Length) 
+                if (to > entities.Length)
                     to = entities.Length;
 
                 var job = _jobs[t];
@@ -50,8 +50,8 @@ namespace Entitas
             while (_threadsRunning != 0) { }
 
             foreach (var job in _jobs)
-                if (job.exception != null)
-                    throw job.exception;
+                if (job.Exception != null)
+                    throw job.Exception;
         }
 
         void queueOnThread(object state)
@@ -59,12 +59,12 @@ namespace Entitas
             var job = (Job<TEntity>)state;
             try
             {
-                for (var i = job.from; i < job.to; i++) 
-                    Execute(job.entities[i]);
+                for (var i = job.From; i < job.To; i++)
+                    Execute(job.Entities[i]);
             }
             catch (Exception ex)
             {
-                job.exception = ex;
+                job.Exception = ex;
             }
             finally
             {
@@ -77,17 +77,17 @@ namespace Entitas
 
     class Job<TEntity> where TEntity : class, IEntity
     {
-        public TEntity[] entities;
-        public int from;
-        public int to;
-        public Exception exception;
+        public TEntity[] Entities;
+        public int From;
+        public int To;
+        public Exception Exception;
 
         public void Set(TEntity[] entities, int from, int to)
         {
-            this.entities = entities;
-            this.from = from;
-            this.to = to;
-            exception = null;
+            Entities = entities;
+            From = from;
+            To = to;
+            Exception = null;
         }
     }
 }
