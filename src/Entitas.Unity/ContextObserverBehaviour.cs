@@ -5,7 +5,7 @@ namespace Entitas.Unity
     [ExecuteInEditMode]
     public class ContextObserverBehaviour : MonoBehaviour
     {
-        public ContextObserver contextObserver => _contextObserver;
+        public ContextObserver ContextObserver => _contextObserver;
 
         ContextObserver _contextObserver;
 

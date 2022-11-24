@@ -10,7 +10,7 @@ namespace Entitas.Unity
             for (var i = 0; i < observers.Length; i++)
             {
                 var observer = observers[i];
-                if (observer.contextObserver.Context == context)
+                if (observer.ContextObserver.Context == context)
                     return observer;
             }
 

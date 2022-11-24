@@ -10,7 +10,7 @@ namespace Entitas.Unity.Editor
     {
         public override void OnInspectorGUI()
         {
-            var contextObserver = ((ContextObserverBehaviour)target).contextObserver;
+            var contextObserver = ((ContextObserverBehaviour)target).ContextObserver;
 
             EditorLayout.BeginVerticalBox();
             {
