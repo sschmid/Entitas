@@ -235,16 +235,16 @@ namespace Entitas.Unity.Editor
             switch (type)
             {
                 case SystemInterfaceFlags.IInitializeSystem:
-                    systemInfos = systems.InitializeSystemInfos.Where(systemInfo => systemInfo.initializationDuration >= _threshold);
+                    systemInfos = systems.InitializeSystemInfos.Where(systemInfo => systemInfo.InitializationDuration >= _threshold);
                     break;
                 case SystemInterfaceFlags.IExecuteSystem:
-                    systemInfos = systems.ExecuteSystemInfos.Where(systemInfo => systemInfo.averageExecutionDuration >= _threshold);
+                    systemInfos = systems.ExecuteSystemInfos.Where(systemInfo => systemInfo.AverageExecutionDuration >= _threshold);
                     break;
                 case SystemInterfaceFlags.ICleanupSystem:
-                    systemInfos = systems.CleanupSystemInfos.Where(systemInfo => systemInfo.cleanupDuration >= _threshold);
+                    systemInfos = systems.CleanupSystemInfos.Where(systemInfo => systemInfo.CleanupDuration >= _threshold);
                     break;
                 case SystemInterfaceFlags.ITearDownSystem:
-                    systemInfos = systems.TearDownSystemInfos.Where(systemInfo => systemInfo.teardownDuration >= _threshold);
+                    systemInfos = systems.TearDownSystemInfos.Where(systemInfo => systemInfo.TeardownDuration >= _threshold);
                     break;
             }
 
@@ -253,21 +253,21 @@ namespace Entitas.Unity.Editor
             var systemsDrawn = 0;
             foreach (var systemInfo in systemInfos)
             {
-                if (systemInfo.system is DebugSystems debugSystems)
+                if (systemInfo.System is DebugSystems debugSystems)
                     if (!shouldShowSystems(debugSystems, type))
                         continue;
 
-                if (EditorLayout.MatchesSearchString(systemInfo.systemName.ToLower(), _systemNameSearchString.ToLower()))
+                if (EditorLayout.MatchesSearchString(systemInfo.SystemName.ToLower(), _systemNameSearchString.ToLower()))
                 {
                     EditorGUILayout.BeginHorizontal();
                     {
                         var indent = EditorGUI.indentLevel;
                         EditorGUI.indentLevel = 0;
 
-                        var wasActive = systemInfo.isActive;
-                        if (systemInfo.areAllParentsActive)
+                        var wasActive = systemInfo.IsActive;
+                        if (systemInfo.AreAllParentsActive)
                         {
-                            systemInfo.isActive = EditorGUILayout.Toggle(systemInfo.isActive, GUILayout.Width(20));
+                            systemInfo.IsActive = EditorGUILayout.Toggle(systemInfo.IsActive, GUILayout.Width(20));
                         }
                         else
                         {
@@ -281,12 +281,12 @@ namespace Entitas.Unity.Editor
 
                         EditorGUI.indentLevel = indent;
 
-                        if (systemInfo.isActive != wasActive)
+                        if (systemInfo.IsActive != wasActive)
                         {
-                            var reactiveSystem = systemInfo.system as IReactiveSystem;
+                            var reactiveSystem = systemInfo.System as IReactiveSystem;
                             if (reactiveSystem != null)
                             {
-                                if (systemInfo.isActive)
+                                if (systemInfo.IsActive)
                                     reactiveSystem.Activate();
                                 else
                                     reactiveSystem.Deactivate();
@@ -296,22 +296,22 @@ namespace Entitas.Unity.Editor
                         switch (type)
                         {
                             case SystemInterfaceFlags.IInitializeSystem:
-                                EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.initializationDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.IInitializeSystem));
+                                EditorGUILayout.LabelField(systemInfo.SystemName, systemInfo.InitializationDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.IInitializeSystem));
                                 break;
                             case SystemInterfaceFlags.IExecuteSystem:
-                                var avgE = $"Ø {systemInfo.averageExecutionDuration:00.000}".PadRight(12);
-                                var minE = $"▼ {systemInfo.minExecutionDuration:00.000}".PadRight(12);
-                                var maxE = $"▲ {systemInfo.maxExecutionDuration:00.000}";
-                                EditorGUILayout.LabelField(systemInfo.systemName, avgE + minE + maxE, getSystemStyle(systemInfo, SystemInterfaceFlags.IExecuteSystem));
+                                var avgE = $"Ø {systemInfo.AverageExecutionDuration:00.000}".PadRight(12);
+                                var minE = $"▼ {systemInfo.MinExecutionDuration:00.000}".PadRight(12);
+                                var maxE = $"▲ {systemInfo.MaxExecutionDuration:00.000}";
+                                EditorGUILayout.LabelField(systemInfo.SystemName, avgE + minE + maxE, getSystemStyle(systemInfo, SystemInterfaceFlags.IExecuteSystem));
                                 break;
                             case SystemInterfaceFlags.ICleanupSystem:
-                                var avgC = $"Ø {systemInfo.averageCleanupDuration:00.000}".PadRight(12);
-                                var minC = $"▼ {systemInfo.minCleanupDuration:00.000}".PadRight(12);
-                                var maxC = $"▲ {systemInfo.maxCleanupDuration:00.000}";
-                                EditorGUILayout.LabelField(systemInfo.systemName, avgC + minC + maxC, getSystemStyle(systemInfo, SystemInterfaceFlags.ICleanupSystem));
+                                var avgC = $"Ø {systemInfo.AverageCleanupDuration:00.000}".PadRight(12);
+                                var minC = $"▼ {systemInfo.MinCleanupDuration:00.000}".PadRight(12);
+                                var maxC = $"▲ {systemInfo.MaxCleanupDuration:00.000}";
+                                EditorGUILayout.LabelField(systemInfo.SystemName, avgC + minC + maxC, getSystemStyle(systemInfo, SystemInterfaceFlags.ICleanupSystem));
                                 break;
                             case SystemInterfaceFlags.ITearDownSystem:
-                                EditorGUILayout.LabelField(systemInfo.systemName, systemInfo.teardownDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.ITearDownSystem));
+                                EditorGUILayout.LabelField(systemInfo.SystemName, systemInfo.TeardownDuration.ToString(), getSystemStyle(systemInfo, SystemInterfaceFlags.ITearDownSystem));
                                 break;
                         }
                     }
@@ -320,7 +320,7 @@ namespace Entitas.Unity.Editor
                     systemsDrawn += 1;
                 }
 
-                if (systemInfo.system is DebugSystems debugSystem)
+                if (systemInfo.System is DebugSystems debugSystem)
                 {
                     var indent = EditorGUI.indentLevel;
                     EditorGUI.indentLevel += 1;
@@ -334,10 +334,10 @@ namespace Entitas.Unity.Editor
 
         static IEnumerable<SystemInfo> getSortedSystemInfos(IEnumerable<SystemInfo> systemInfos, SortMethod sortMethod) => sortMethod switch
         {
-            SortMethod.Name => systemInfos.OrderBy(systemInfo => systemInfo.systemName),
-            SortMethod.NameDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.systemName),
-            SortMethod.ExecutionTime => systemInfos.OrderBy(systemInfo => systemInfo.averageExecutionDuration),
-            SortMethod.ExecutionTimeDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.averageExecutionDuration),
+            SortMethod.Name => systemInfos.OrderBy(systemInfo => systemInfo.SystemName),
+            SortMethod.NameDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.SystemName),
+            SortMethod.ExecutionTime => systemInfos.OrderBy(systemInfo => systemInfo.AverageExecutionDuration),
+            SortMethod.ExecutionTimeDescending => systemInfos.OrderByDescending(systemInfo => systemInfo.AverageExecutionDuration),
             _ => systemInfos
         };
 
@@ -359,14 +359,14 @@ namespace Entitas.Unity.Editor
         GUIStyle getSystemStyle(SystemInfo systemInfo, SystemInterfaceFlags systemFlag)
         {
             var style = new GUIStyle(GUI.skin.label);
-            var color = systemInfo.isReactiveSystems && EditorGUIUtility.isProSkin
+            var color = systemInfo.IsReactiveSystems && EditorGUIUtility.isProSkin
                 ? Color.white
                 : style.normal.textColor;
 
-            if (systemFlag == SystemInterfaceFlags.IExecuteSystem && systemInfo.averageExecutionDuration >= _systemWarningThreshold)
+            if (systemFlag == SystemInterfaceFlags.IExecuteSystem && systemInfo.AverageExecutionDuration >= _systemWarningThreshold)
                 color = Color.red;
 
-            if (systemFlag == SystemInterfaceFlags.ICleanupSystem && systemInfo.averageCleanupDuration >= _systemWarningThreshold)
+            if (systemFlag == SystemInterfaceFlags.ICleanupSystem && systemInfo.AverageCleanupDuration >= _systemWarningThreshold)
                 color = Color.red;
 
             style.normal.textColor = color;

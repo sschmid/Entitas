@@ -152,12 +152,12 @@ namespace Entitas.Unity
                 childSystemInfo = new SystemInfo(system);
             }
 
-            childSystemInfo.parentSystemInfo = _systemInfo;
+            childSystemInfo.ParentSystemInfo = _systemInfo;
 
-            if (childSystemInfo.isInitializeSystems) _initializeSystemInfos.Add(childSystemInfo);
-            if (childSystemInfo.isExecuteSystems || childSystemInfo.isReactiveSystems) _executeSystemInfos.Add(childSystemInfo);
-            if (childSystemInfo.isCleanupSystems) _cleanupSystemInfos.Add(childSystemInfo);
-            if (childSystemInfo.isTearDownSystems) _tearDownSystemInfos.Add(childSystemInfo);
+            if (childSystemInfo.IsInitializeSystems) _initializeSystemInfos.Add(childSystemInfo);
+            if (childSystemInfo.IsExecuteSystems || childSystemInfo.IsReactiveSystems) _executeSystemInfos.Add(childSystemInfo);
+            if (childSystemInfo.IsCleanupSystems) _cleanupSystemInfos.Add(childSystemInfo);
+            if (childSystemInfo.IsTearDownSystems) _tearDownSystemInfos.Add(childSystemInfo);
 
             return base.Add(system);
         }
@@ -177,13 +177,13 @@ namespace Entitas.Unity
             for (var i = 0; i < _initializeSystems.Count; i++)
             {
                 var systemInfo = _initializeSystemInfos[i];
-                if (systemInfo.isActive)
+                if (systemInfo.IsActive)
                 {
                     _stopwatch.Reset();
                     _stopwatch.Start();
                     _initializeSystems[i].Initialize();
                     _stopwatch.Stop();
-                    systemInfo.initializationDuration = _stopwatch.Elapsed.TotalMilliseconds;
+                    systemInfo.InitializationDuration = _stopwatch.Elapsed.TotalMilliseconds;
                 }
             }
         }
@@ -209,7 +209,7 @@ namespace Entitas.Unity
             for (var i = 0; i < _executeSystems.Count; i++)
             {
                 var systemInfo = _executeSystemInfos[i];
-                if (systemInfo.isActive)
+                if (systemInfo.IsActive)
                 {
                     _stopwatch.Reset();
                     _stopwatch.Start();
@@ -228,7 +228,7 @@ namespace Entitas.Unity
             for (var i = 0; i < _cleanupSystems.Count; i++)
             {
                 var systemInfo = _cleanupSystemInfos[i];
-                if (systemInfo.isActive)
+                if (systemInfo.IsActive)
                 {
                     _stopwatch.Reset();
                     _stopwatch.Start();
@@ -246,13 +246,13 @@ namespace Entitas.Unity
             for (var i = 0; i < _tearDownSystems.Count; i++)
             {
                 var systemInfo = _tearDownSystemInfos[i];
-                if (systemInfo.isActive)
+                if (systemInfo.IsActive)
                 {
                     _stopwatch.Reset();
                     _stopwatch.Start();
                     _tearDownSystems[i].TearDown();
                     _stopwatch.Stop();
-                    systemInfo.teardownDuration = _stopwatch.Elapsed.TotalMilliseconds;
+                    systemInfo.TeardownDuration = _stopwatch.Elapsed.TotalMilliseconds;
                 }
             }
         }

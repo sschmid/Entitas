@@ -5,7 +5,7 @@ namespace Entitas.Unity
 {
     public class EntityLink : MonoBehaviour
     {
-        public IEntity entity => _entity;
+        public IEntity Entity => _entity;
 
         IEntity _entity;
         bool _applicationIsQuitting;

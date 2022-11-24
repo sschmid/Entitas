@@ -15,31 +15,31 @@ namespace Entitas.Unity
 
     public class SystemInfo
     {
-        public ISystem system => _system;
-        public string systemName => _systemName;
+        public ISystem System => _system;
+        public string SystemName => _systemName;
 
-        public bool isInitializeSystems => (_interfaceFlags & SystemInterfaceFlags.IInitializeSystem) == SystemInterfaceFlags.IInitializeSystem;
-        public bool isExecuteSystems => (_interfaceFlags & SystemInterfaceFlags.IExecuteSystem) == SystemInterfaceFlags.IExecuteSystem;
-        public bool isCleanupSystems => (_interfaceFlags & SystemInterfaceFlags.ICleanupSystem) == SystemInterfaceFlags.ICleanupSystem;
-        public bool isTearDownSystems => (_interfaceFlags & SystemInterfaceFlags.ITearDownSystem) == SystemInterfaceFlags.ITearDownSystem;
-        public bool isReactiveSystems => (_interfaceFlags & SystemInterfaceFlags.IReactiveSystem) == SystemInterfaceFlags.IReactiveSystem;
+        public bool IsInitializeSystems => (_interfaceFlags & SystemInterfaceFlags.IInitializeSystem) == SystemInterfaceFlags.IInitializeSystem;
+        public bool IsExecuteSystems => (_interfaceFlags & SystemInterfaceFlags.IExecuteSystem) == SystemInterfaceFlags.IExecuteSystem;
+        public bool IsCleanupSystems => (_interfaceFlags & SystemInterfaceFlags.ICleanupSystem) == SystemInterfaceFlags.ICleanupSystem;
+        public bool IsTearDownSystems => (_interfaceFlags & SystemInterfaceFlags.ITearDownSystem) == SystemInterfaceFlags.ITearDownSystem;
+        public bool IsReactiveSystems => (_interfaceFlags & SystemInterfaceFlags.IReactiveSystem) == SystemInterfaceFlags.IReactiveSystem;
 
-        public double initializationDuration { get; set; }
-        public double accumulatedExecutionDuration => _accumulatedExecutionDuration;
-        public double minExecutionDuration => _minExecutionDuration;
-        public double maxExecutionDuration => _maxExecutionDuration;
-        public double averageExecutionDuration => _executionDurationsCount == 0 ? 0 : _accumulatedExecutionDuration / _executionDurationsCount;
-        public double accumulatedCleanupDuration => _accumulatedCleanupDuration;
-        public double minCleanupDuration => _minCleanupDuration;
-        public double maxCleanupDuration => _maxCleanupDuration;
-        public double averageCleanupDuration => _cleanupDurationsCount == 0 ? 0 : _accumulatedCleanupDuration / _cleanupDurationsCount;
-        public double cleanupDuration { get; set; }
-        public double teardownDuration { get; set; }
+        public double InitializationDuration { get; set; }
+        public double AccumulatedExecutionDuration => _accumulatedExecutionDuration;
+        public double MinExecutionDuration => _minExecutionDuration;
+        public double MaxExecutionDuration => _maxExecutionDuration;
+        public double AverageExecutionDuration => _executionDurationsCount == 0 ? 0 : _accumulatedExecutionDuration / _executionDurationsCount;
+        public double AccumulatedCleanupDuration => _accumulatedCleanupDuration;
+        public double MinCleanupDuration => _minCleanupDuration;
+        public double MaxCleanupDuration => _maxCleanupDuration;
+        public double AverageCleanupDuration => _cleanupDurationsCount == 0 ? 0 : _accumulatedCleanupDuration / _cleanupDurationsCount;
+        public double CleanupDuration { get; set; }
+        public double TeardownDuration { get; set; }
 
-        public bool areAllParentsActive => parentSystemInfo == null || (parentSystemInfo.isActive && parentSystemInfo.areAllParentsActive);
+        public bool AreAllParentsActive => ParentSystemInfo == null || (ParentSystemInfo.IsActive && ParentSystemInfo.AreAllParentsActive);
 
-        public SystemInfo parentSystemInfo;
-        public bool isActive;
+        public SystemInfo ParentSystemInfo;
+        public bool IsActive;
 
         readonly ISystem _system;
         readonly SystemInterfaceFlags _interfaceFlags;
@@ -58,14 +58,13 @@ namespace Entitas.Unity
         public SystemInfo(ISystem system)
         {
             _system = system;
-            _interfaceFlags = getInterfaceFlags(system);
+            _interfaceFlags = GetInterfaceFlags(system);
 
-            var debugSystem = system as DebugSystems;
-            _systemName = debugSystem != null
+            _systemName = system is DebugSystems debugSystem
                 ? debugSystem.Name
                 : system.GetType().Name.RemoveSystemSuffix();
 
-            isActive = true;
+            IsActive = true;
         }
 
         public void AddExecutionDuration(double executionDuration)
@@ -101,23 +100,14 @@ namespace Entitas.Unity
             _cleanupDurationsCount = 0;
         }
 
-        static SystemInterfaceFlags getInterfaceFlags(ISystem system)
+        static SystemInterfaceFlags GetInterfaceFlags(ISystem system)
         {
             var flags = SystemInterfaceFlags.None;
-            if (system is IInitializeSystem)
-                flags |= SystemInterfaceFlags.IInitializeSystem;
-
-            if (system is IReactiveSystem)
-                flags |= SystemInterfaceFlags.IReactiveSystem;
-            else if (system is IExecuteSystem)
-                flags |= SystemInterfaceFlags.IExecuteSystem;
-
-            if (system is ICleanupSystem)
-                flags |= SystemInterfaceFlags.ICleanupSystem;
-
-            if (system is ITearDownSystem)
-                flags |= SystemInterfaceFlags.ITearDownSystem;
-
+            if (system is IInitializeSystem) flags |= SystemInterfaceFlags.IInitializeSystem;
+            if (system is IReactiveSystem) flags |= SystemInterfaceFlags.IReactiveSystem;
+            else if (system is IExecuteSystem) flags |= SystemInterfaceFlags.IExecuteSystem;
+            if (system is ICleanupSystem) flags |= SystemInterfaceFlags.ICleanupSystem;
+            if (system is ITearDownSystem) flags |= SystemInterfaceFlags.ITearDownSystem;
             return flags;
         }
     }
