@@ -8,7 +8,7 @@ namespace Entitas.Plugins.Unity
         public int Order => 0;
         public bool RunInDryMode => true;
 
-        const string FEATURE_TEMPLATE =
+        const string FeatureTemplate =
             @"#if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
 
 public class Feature : Entitas.VisualDebugging.Unity.DebugSystems {
@@ -116,7 +116,7 @@ public class Feature : Entitas.Systems {
         {
             new CodeGenFile(
                 "Feature.cs",
-                FEATURE_TEMPLATE,
+                FeatureTemplate,
                 GetType().FullName)
         };
     }
