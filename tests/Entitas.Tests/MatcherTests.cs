@@ -321,7 +321,7 @@ namespace Entitas.Tests
         public void ToStringUsesComponentNamesWhenSet()
         {
             var matcher = (Matcher<Test1Entity>)CreateAllOfAB();
-            matcher.componentNames = new[] {"one", "two", "three"};
+            matcher.ComponentNames = new[] {"one", "two", "three"};
             matcher.ToString().Should().Be("AllOf(two, three)");
         }
 
@@ -331,7 +331,7 @@ namespace Entitas.Tests
             var m1 = (Matcher<Test1Entity>)Matcher<Test1Entity>.AllOf(CID.ComponentA);
             var m2 = (Matcher<Test1Entity>)Matcher<Test1Entity>.AllOf(CID.ComponentB);
             var m3 = (Matcher<Test1Entity>)Matcher<Test1Entity>.AllOf(CID.ComponentC);
-            m2.componentNames = new[] {"m_0", "m_1", "m_2", "m_3"};
+            m2.ComponentNames = new[] {"m_0", "m_1", "m_2", "m_3"};
             var mergedMatcher = Matcher<Test1Entity>.AllOf(m1, m2, m3);
             mergedMatcher.ToString().Should().Be("AllOf(m_1, m_2, m_3)");
         }
@@ -340,7 +340,7 @@ namespace Entitas.Tests
         public void AllOfNoneOfToStringUsesComponentNamesWhenComponentNamesSet()
         {
             var matcher = (Matcher<Test1Entity>)CreateAllOfABNoneOfCD();
-            matcher.componentNames = new[] {"one", "two", "three", "four", "five"};
+            matcher.ComponentNames = new[] {"one", "two", "three", "four", "five"};
             matcher.ToString().Should().Be("AllOf(two, three).NoneOf(four, five)");
         }
 

@@ -48,7 +48,7 @@ public sealed partial class Test1Matcher {
         get {
             if (_matcherPosition == null) {
                 var matcher = (Entitas.Matcher<Test1Entity>)Entitas.Matcher<Test1Entity>.AllOf(Test1ComponentsLookup.Position);
-                matcher.componentNames = Test1ComponentsLookup.componentNames;
+                matcher.ComponentNames = Test1ComponentsLookup.componentNames;
                 _matcherPosition = matcher;
             }
 

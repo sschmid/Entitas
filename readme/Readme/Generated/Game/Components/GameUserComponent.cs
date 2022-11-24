@@ -86,7 +86,7 @@ public sealed partial class GameMatcher {
         get {
             if (_matcherUser == null) {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.User);
-                matcher.componentNames = GameComponentsLookup.componentNames;
+                matcher.ComponentNames = GameComponentsLookup.componentNames;
                 _matcherUser = matcher;
             }
 

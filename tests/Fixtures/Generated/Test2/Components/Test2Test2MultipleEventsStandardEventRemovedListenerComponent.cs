@@ -46,7 +46,7 @@ public sealed partial class Test2Matcher {
         get {
             if (_matcherTest2MultipleEventsStandardEventRemovedListener == null) {
                 var matcher = (Entitas.Matcher<Test2Entity>)Entitas.Matcher<Test2Entity>.AllOf(Test2ComponentsLookup.Test2MultipleEventsStandardEventRemovedListener);
-                matcher.componentNames = Test2ComponentsLookup.componentNames;
+                matcher.ComponentNames = Test2ComponentsLookup.componentNames;
                 _matcherTest2MultipleEventsStandardEventRemovedListener = matcher;
             }
 

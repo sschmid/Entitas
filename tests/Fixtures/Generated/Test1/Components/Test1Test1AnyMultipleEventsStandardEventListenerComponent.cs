@@ -46,7 +46,7 @@ public sealed partial class Test1Matcher {
         get {
             if (_matcherTest1AnyMultipleEventsStandardEventListener == null) {
                 var matcher = (Entitas.Matcher<Test1Entity>)Entitas.Matcher<Test1Entity>.AllOf(Test1ComponentsLookup.Test1AnyMultipleEventsStandardEventListener);
-                matcher.componentNames = Test1ComponentsLookup.componentNames;
+                matcher.ComponentNames = Test1ComponentsLookup.componentNames;
                 _matcherTest1AnyMultipleEventsStandardEventListener = matcher;
             }
 

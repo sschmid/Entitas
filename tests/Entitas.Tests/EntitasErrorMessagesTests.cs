@@ -80,7 +80,7 @@ namespace Entitas.Tests
             _context.CreateEntity().AddComponentA();
             _context.CreateEntity().AddComponentA();
             var matcher = (Matcher<Test1Entity>)Matcher<Test1Entity>.AllOf(CID.ComponentA);
-            matcher.componentNames = _context.ContextInfo.ComponentNames;
+            matcher.ComponentNames = _context.ContextInfo.ComponentNames;
             PrintErrorMessage(() => _context.GetGroup(matcher).GetSingleEntity());
         }
 

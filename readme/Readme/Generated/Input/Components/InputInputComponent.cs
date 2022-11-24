@@ -46,7 +46,7 @@ public sealed partial class InputMatcher {
         get {
             if (_matcherInput == null) {
                 var matcher = (Entitas.Matcher<InputEntity>)Entitas.Matcher<InputEntity>.AllOf(InputComponentsLookup.Input);
-                matcher.componentNames = InputComponentsLookup.componentNames;
+                matcher.ComponentNames = InputComponentsLookup.componentNames;
                 _matcherInput = matcher;
             }
 

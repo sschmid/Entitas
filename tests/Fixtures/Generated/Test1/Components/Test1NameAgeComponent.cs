@@ -58,7 +58,7 @@ public sealed partial class Test1Matcher {
         get {
             if (_matcherNameAge == null) {
                 var matcher = (Entitas.Matcher<Test1Entity>)Entitas.Matcher<Test1Entity>.AllOf(Test1ComponentsLookup.NameAge);
-                matcher.componentNames = Test1ComponentsLookup.componentNames;
+                matcher.ComponentNames = Test1ComponentsLookup.componentNames;
                 _matcherNameAge = matcher;
             }
 

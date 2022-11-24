@@ -16,7 +16,7 @@ namespace Entitas
 
                 if (_allOfIndexes != null)
                 {
-                    appendIndexes(_toStringBuilder, "AllOf", _allOfIndexes, componentNames);
+                    AppendIndexes(_toStringBuilder, "AllOf", _allOfIndexes, ComponentNames);
                 }
 
                 if (_anyOfIndexes != null)
@@ -24,12 +24,12 @@ namespace Entitas
                     if (_allOfIndexes != null)
                         _toStringBuilder.Append(".");
 
-                    appendIndexes(_toStringBuilder, "AnyOf", _anyOfIndexes, componentNames);
+                    AppendIndexes(_toStringBuilder, "AnyOf", _anyOfIndexes, ComponentNames);
                 }
 
                 if (_noneOfIndexes != null)
                 {
-                    appendIndexes(_toStringBuilder, ".NoneOf", _noneOfIndexes, componentNames);
+                    AppendIndexes(_toStringBuilder, ".NoneOf", _noneOfIndexes, ComponentNames);
                 }
 
                 _toStringCache = _toStringBuilder.ToString();
@@ -38,7 +38,7 @@ namespace Entitas
             return _toStringCache;
         }
 
-        static void appendIndexes(StringBuilder sb, string prefix, int[] indexArray, string[] componentNames)
+        static void AppendIndexes(StringBuilder sb, string prefix, int[] indexArray, string[] componentNames)
         {
             const string separator = ", ";
             sb.Append(prefix);
