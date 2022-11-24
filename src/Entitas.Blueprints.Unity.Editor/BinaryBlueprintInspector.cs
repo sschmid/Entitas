@@ -87,7 +87,7 @@ namespace Entitas.Blueprints.Unity.Editor
                 .SingleOrDefault();
 
             return contextsType != null
-                ? ((IContexts)Activator.CreateInstance(contextsType)).allContexts
+                ? ((IContexts)Activator.CreateInstance(contextsType)).AllContexts
                 : null;
         }
 

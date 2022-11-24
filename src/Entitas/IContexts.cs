@@ -2,6 +2,6 @@
 {
     public interface IContexts
     {
-        IContext[] allContexts { get; }
+        IContext[] AllContexts { get; }
     }
 }

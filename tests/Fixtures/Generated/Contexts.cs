@@ -25,7 +25,7 @@ public partial class Contexts : Entitas.IContexts {
     public Test1Context test1 { get; set; }
     public Test2Context test2 { get; set; }
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { game, test1, test2 }; } }
+    public Entitas.IContext[] AllContexts { get { return new Entitas.IContext [] { game, test1, test2 }; } }
 
     public Contexts() {
         game = new GameContext();
@@ -43,7 +43,7 @@ public partial class Contexts : Entitas.IContexts {
     }
 
     public void Reset() {
-        var contexts = allContexts;
+        var contexts = AllContexts;
         for (int i = 0; i < contexts.Length; i++) {
             contexts[i].Reset();
         }
