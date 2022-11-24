@@ -11,34 +11,34 @@ namespace Entitas.Unity.Editor
     {
         static Dictionary<string, bool[]> _contextToUnfoldedComponents;
 
-        public static Dictionary<string, bool[]> contextToUnfoldedComponents =>
+        public static Dictionary<string, bool[]> ContextToUnfoldedComponents =>
             _contextToUnfoldedComponents ?? (_contextToUnfoldedComponents = new Dictionary<string, bool[]>());
 
         static Dictionary<string, string[]> _contextToComponentMemberSearch;
 
-        public static Dictionary<string, string[]> contextToComponentMemberSearch =>
+        public static Dictionary<string, string[]> ContextToComponentMemberSearch =>
             _contextToComponentMemberSearch ?? (_contextToComponentMemberSearch = new Dictionary<string, string[]>());
 
         static Dictionary<string, GUIStyle[]> _contextToColoredBoxStyles;
 
-        public static Dictionary<string, GUIStyle[]> contextToColoredBoxStyles =>
+        public static Dictionary<string, GUIStyle[]> ContextToColoredBoxStyles =>
             _contextToColoredBoxStyles ?? (_contextToColoredBoxStyles = new Dictionary<string, GUIStyle[]>());
 
         public struct ComponentInfo
         {
-            public int index;
-            public string name;
-            public Type type;
+            public int Index;
+            public string Name;
+            public Type Type;
         }
 
         static Dictionary<string, ComponentInfo[]> _contextToComponentInfos;
 
-        public static Dictionary<string, ComponentInfo[]> contextToComponentInfos =>
+        public static Dictionary<string, ComponentInfo[]> ContextToComponentInfos =>
             _contextToComponentInfos ?? (_contextToComponentInfos = new Dictionary<string, ComponentInfo[]>());
 
         static GUIStyle _foldoutStyle;
 
-        public static GUIStyle foldoutStyle
+        public static GUIStyle FoldoutStyle
         {
             get
             {
@@ -54,7 +54,7 @@ namespace Entitas.Unity.Editor
 
         static string _componentNameSearchString;
 
-        public static string componentNameSearchString
+        public static string ComponentNameSearchString
         {
             get => _componentNameSearchString ?? (_componentNameSearchString = string.Empty);
             set => _componentNameSearchString = value;
@@ -71,37 +71,37 @@ namespace Entitas.Unity.Editor
             _componentDrawers = AppDomain.CurrentDomain.GetInstancesOf<IComponentDrawer>().ToArray();
         }
 
-        static bool[] getUnfoldedComponents(IEntity entity)
+        static bool[] GetUnfoldedComponents(IEntity entity)
         {
-            if (!contextToUnfoldedComponents.TryGetValue(entity.ContextInfo.Name, out var unfoldedComponents))
+            if (!ContextToUnfoldedComponents.TryGetValue(entity.ContextInfo.Name, out var unfoldedComponents))
             {
                 unfoldedComponents = new bool[entity.TotalComponents];
                 for (var i = 0; i < unfoldedComponents.Length; i++)
                     unfoldedComponents[i] = true;
 
-                contextToUnfoldedComponents.Add(entity.ContextInfo.Name, unfoldedComponents);
+                ContextToUnfoldedComponents.Add(entity.ContextInfo.Name, unfoldedComponents);
             }
 
             return unfoldedComponents;
         }
 
-        static string[] getComponentMemberSearch(IEntity entity)
+        static string[] GetComponentMemberSearch(IEntity entity)
         {
-            if (!contextToComponentMemberSearch.TryGetValue(entity.ContextInfo.Name, out var componentMemberSearch))
+            if (!ContextToComponentMemberSearch.TryGetValue(entity.ContextInfo.Name, out var componentMemberSearch))
             {
                 componentMemberSearch = new string[entity.TotalComponents];
                 for (var i = 0; i < componentMemberSearch.Length; i++)
                     componentMemberSearch[i] = string.Empty;
 
-                contextToComponentMemberSearch.Add(entity.ContextInfo.Name, componentMemberSearch);
+                ContextToComponentMemberSearch.Add(entity.ContextInfo.Name, componentMemberSearch);
             }
 
             return componentMemberSearch;
         }
 
-        static ComponentInfo[] getComponentInfos(IEntity entity)
+        static ComponentInfo[] GetComponentInfos(IEntity entity)
         {
-            if (!contextToComponentInfos.TryGetValue(entity.ContextInfo.Name, out var infos))
+            if (!ContextToComponentInfos.TryGetValue(entity.ContextInfo.Name, out var infos))
             {
                 var contextInfo = entity.ContextInfo;
                 var infosList = new List<ComponentInfo>(contextInfo.ComponentTypes.Length);
@@ -109,53 +109,20 @@ namespace Entitas.Unity.Editor
                 {
                     infosList.Add(new ComponentInfo
                     {
-                        index = i,
-                        name = contextInfo.ComponentNames[i],
-                        type = contextInfo.ComponentTypes[i]
+                        Index = i,
+                        Name = contextInfo.ComponentNames[i],
+                        Type = contextInfo.ComponentTypes[i]
                     });
                 }
 
                 infos = infosList.ToArray();
-                contextToComponentInfos.Add(entity.ContextInfo.Name, infos);
+                ContextToComponentInfos.Add(entity.ContextInfo.Name, infos);
             }
 
             return infos;
         }
 
-        static GUIStyle getColoredBoxStyle(IEntity entity, int index)
-        {
-            if (!contextToColoredBoxStyles.TryGetValue(entity.ContextInfo.Name, out var styles))
-            {
-                styles = new GUIStyle[entity.TotalComponents];
-                for (var i = 0; i < styles.Length; i++)
-                {
-                    var hue = (float)i / (float)entity.TotalComponents;
-                    var componentColor = Color.HSVToRGB(hue, 0.7f, 1f);
-                    componentColor.a = 0.15f;
-                    var style = new GUIStyle(GUI.skin.box);
-                    style.normal.background = createTexture(2, 2, componentColor);
-                    styles[i] = style;
-                }
-
-                contextToColoredBoxStyles.Add(entity.ContextInfo.Name, styles);
-            }
-
-            return styles[index];
-        }
-
-        static Texture2D createTexture(int width, int height, Color color)
-        {
-            var pixels = new Color[width * height];
-            for (var i = 0; i < pixels.Length; ++i)
-                pixels[i] = color;
-
-            var result = new Texture2D(width, height);
-            result.SetPixels(pixels);
-            result.Apply();
-            return result;
-        }
-
-        static IComponentDrawer getComponentDrawer(Type type)
+        static IComponentDrawer GetComponentDrawer(Type type)
         {
             foreach (var drawer in _componentDrawers)
                 if (drawer.HandlesType(type))
@@ -164,7 +131,7 @@ namespace Entitas.Unity.Editor
             return null;
         }
 
-        static ITypeDrawer getTypeDrawer(Type type)
+        static ITypeDrawer GetTypeDrawer(Type type)
         {
             foreach (var drawer in _typeDrawers)
                 if (drawer.HandlesType(type))
