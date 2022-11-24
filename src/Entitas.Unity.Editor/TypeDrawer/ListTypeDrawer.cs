@@ -16,7 +16,7 @@ namespace Entitas.Unity.Editor
             var list = (IList)value;
             var elementType = memberType.GetGenericArguments()[0];
             if (list.Count == 0)
-                list = drawAddElement(list, memberName, elementType);
+                list = DrawAddElement(list, memberName, elementType);
             else
                 EditorGUILayout.LabelField(memberName);
 
@@ -31,7 +31,7 @@ namespace Entitas.Unity.Editor
                     EntityDrawer.DrawObjectMember(elementType, $"{memberName}[{localIndex}]", list[localIndex],
                         target, (newComponent, newValue) => list[localIndex] = newValue);
 
-                    var action = drawEditActions(list, elementType, localIndex);
+                    var action = DrawEditActions(list, elementType, localIndex);
                     if (action != null)
                     {
                         editAction = action;
@@ -48,7 +48,7 @@ namespace Entitas.Unity.Editor
             return list;
         }
 
-        static Func<IList> drawEditActions(IList list, Type elementType, int index)
+        static Func<IList> DrawEditActions(IList list, Type elementType, int index)
         {
             if (EditorLayout.MiniButtonLeft("↑"))
                 if (index > 0)
@@ -98,7 +98,7 @@ namespace Entitas.Unity.Editor
             return null;
         }
 
-        IList drawAddElement(IList list, string memberName, Type elementType)
+        IList DrawAddElement(IList list, string memberName, Type elementType)
         {
             EditorGUILayout.BeginHorizontal();
             {
