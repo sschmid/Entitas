@@ -6,8 +6,8 @@ namespace Entitas.Unity
     [ExecuteInEditMode]
     public class EntityBehaviour : MonoBehaviour
     {
-        public IContext context => _context;
-        public IEntity entity => _entity;
+        public IContext Context => _context;
+        public IEntity Entity => _entity;
 
         IContext _context;
         IEntity _entity;
@@ -19,15 +19,15 @@ namespace Entitas.Unity
             _context = context;
             _entity = entity;
             _entityBehaviourPool = entityBehaviourPool;
-            _entity.OnEntityReleased += onEntityReleased;
+            _entity.OnEntityReleased += OnEntityReleased;
             gameObject.hideFlags = HideFlags.None;
             gameObject.SetActive(true);
             Update();
         }
 
-        void onEntityReleased(IEntity e)
+        void OnEntityReleased(IEntity e)
         {
-            _entity.OnEntityReleased -= onEntityReleased;
+            _entity.OnEntityReleased -= OnEntityReleased;
             gameObject.SetActive(false);
             gameObject.hideFlags = HideFlags.HideInHierarchy;
             _entityBehaviourPool.Push(this);
@@ -37,14 +37,18 @@ namespace Entitas.Unity
 
         void Update()
         {
-            if (_entity != null && _cachedName != _entity.ToString())
-                name = _cachedName = _entity.ToString();
+            if (_entity != null)
+            {
+                var entityString = _entity.ToString();
+                if (_cachedName != entityString)
+                    name = _cachedName = entityString;
+            }
         }
 
         void OnDestroy()
         {
             if (_entity != null)
-                _entity.OnEntityReleased -= onEntityReleased;
+                _entity.OnEntityReleased -= OnEntityReleased;
         }
     }
 }
