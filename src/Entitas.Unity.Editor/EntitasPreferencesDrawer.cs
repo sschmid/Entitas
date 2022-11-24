@@ -10,7 +10,7 @@ namespace Entitas.Unity.Editor
     {
         public override string Title => "Entitas";
 
-        const string ENTITAS_FAST_AND_UNSAFE = "ENTITAS_FAST_AND_UNSAFE";
+        const string EntitasFastAndUnsafe = "ENTITAS_FAST_AND_UNSAFE";
 
         enum AERCMode
         {
@@ -28,18 +28,12 @@ namespace Entitas.Unity.Editor
 
             _scriptingDefineSymbols = new ScriptingDefineSymbols();
             _aercMode = ScriptingDefineSymbols.BuildTargetGroups
-                .All(buildTarget => PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTarget).Contains(ENTITAS_FAST_AND_UNSAFE))
+                .All(buildTarget => PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTarget).Contains(EntitasFastAndUnsafe))
                 ? AERCMode.FastAndUnsafe
                 : AERCMode.Safe;
         }
 
         public override void DrawHeader(Preferences preferences)
-        {
-            drawToolbar();
-            drawHeader(preferences);
-        }
-
-        void drawToolbar()
         {
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar, GUILayout.ExpandWidth(true));
             {
@@ -56,9 +50,9 @@ namespace Entitas.Unity.Editor
                     EntitasFeedback.Donate();
             }
             EditorGUILayout.EndHorizontal();
-        }
 
-        void drawHeader(Preferences preferences) => EditorLayout.DrawTexture(_headerTexture);
+            EditorLayout.DrawTexture(_headerTexture);
+        }
 
         protected override void OnDrawContent(Preferences preferences)
         {
@@ -72,7 +66,7 @@ namespace Entitas.Unity.Editor
                 if (GUILayout.Button("Safe", buttonStyle))
                 {
                     _aercMode = AERCMode.Safe;
-                    _scriptingDefineSymbols.RemoveForAll(ENTITAS_FAST_AND_UNSAFE);
+                    _scriptingDefineSymbols.RemoveForAll(EntitasFastAndUnsafe);
                 }
 
                 buttonStyle = new GUIStyle(EditorStyles.miniButtonRight);
@@ -82,7 +76,7 @@ namespace Entitas.Unity.Editor
                 if (GUILayout.Button("Fast And Unsafe", buttonStyle))
                 {
                     _aercMode = AERCMode.FastAndUnsafe;
-                    _scriptingDefineSymbols.AddForAll(ENTITAS_FAST_AND_UNSAFE);
+                    _scriptingDefineSymbols.AddForAll(EntitasFastAndUnsafe);
                 }
             }
             EditorGUILayout.EndHorizontal();
