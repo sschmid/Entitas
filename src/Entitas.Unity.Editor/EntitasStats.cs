@@ -21,14 +21,14 @@ namespace Entitas.Unity.Editor
 
         public static Dictionary<string, int> GetStats()
         {
-            var types = AppDomain.CurrentDomain.GetAllTypes();
+            var types = AppDomain.CurrentDomain.GetAllTypes().ToArray();
 
             var components = types
                 .Where(type => type.ImplementsInterface<IComponent>())
                 .ToArray();
 
             var systems = types
-                .Where(isSystem)
+                .Where(type => IsSystem(type))
                 .ToArray();
 
             var contexts = GetContexts(components);
@@ -74,7 +74,7 @@ namespace Entitas.Unity.Editor
             return contexts;
         }
 
-        static bool isSystem(Type type) =>
+        static bool IsSystem(Type type) =>
             type.ImplementsInterface<ISystem>()
             && type != typeof(ReactiveSystem<>)
             && type != typeof(MultiReactiveSystem<,>)
