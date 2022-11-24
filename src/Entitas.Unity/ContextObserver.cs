@@ -6,9 +6,9 @@ namespace Entitas.Unity
 {
     public class ContextObserver
     {
-        public IContext context => _context;
-        public IGroup[] groups => _groups.ToArray();
-        public GameObject gameObject => _gameObject;
+        public IContext Context => _context;
+        public IGroup[] Groups => _groups.ToArray();
+        public GameObject GameObject => _gameObject;
 
         readonly IContext _context;
         readonly List<IGroup> _groups;
@@ -23,17 +23,17 @@ namespace Entitas.Unity
             _gameObject = new GameObject();
             _gameObject.AddComponent<ContextObserverBehaviour>().Init(this);
 
-            _context.OnEntityCreated += onEntityCreated;
-            _context.OnGroupCreated += onGroupCreated;
+            _context.OnEntityCreated += OnEntityCreated;
+            _context.OnGroupCreated += OnGroupCreated;
         }
 
         public void Deactivate()
         {
-            _context.OnEntityCreated -= onEntityCreated;
-            _context.OnGroupCreated -= onGroupCreated;
+            _context.OnEntityCreated -= OnEntityCreated;
+            _context.OnGroupCreated -= OnGroupCreated;
         }
 
-        void onEntityCreated(IContext context, IEntity entity)
+        void OnEntityCreated(IContext context, IEntity entity)
         {
             var entityBehaviour = _entityBehaviourPool.Count > 0
                 ? _entityBehaviourPool.Pop()
@@ -44,7 +44,7 @@ namespace Entitas.Unity
             entityBehaviour.transform.SetAsLastSibling();
         }
 
-        void onGroupCreated(IContext context, IGroup group) => _groups.Add(group);
+        void OnGroupCreated(IContext context, IGroup group) => _groups.Add(group);
 
         public override string ToString()
         {
@@ -55,10 +55,7 @@ namespace Entitas.Unity
                 .Append(_context.ReusableEntitiesCount).Append(" reusable, ");
 
             if (_context.RetainedEntitiesCount != 0)
-            {
-                _toStringBuilder
-                    .Append(_context.RetainedEntitiesCount).Append(" retained, ");
-            }
+                _toStringBuilder.Append(_context.RetainedEntitiesCount).Append(" retained, ");
 
             _toStringBuilder
                 .Append(_groups.Count)

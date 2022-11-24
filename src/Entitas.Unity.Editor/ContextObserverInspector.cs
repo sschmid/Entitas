@@ -14,11 +14,11 @@ namespace Entitas.Unity.Editor
 
             EditorLayout.BeginVerticalBox();
             {
-                EditorGUILayout.LabelField(contextObserver.context.ContextInfo.Name, EditorStyles.boldLabel);
-                EditorGUILayout.LabelField("Entities", contextObserver.context.Count.ToString());
-                EditorGUILayout.LabelField("Reusable entities", contextObserver.context.ReusableEntitiesCount.ToString());
+                EditorGUILayout.LabelField(contextObserver.Context.ContextInfo.Name, EditorStyles.boldLabel);
+                EditorGUILayout.LabelField("Entities", contextObserver.Context.Count.ToString());
+                EditorGUILayout.LabelField("Reusable entities", contextObserver.Context.ReusableEntitiesCount.ToString());
 
-                var retainedEntitiesCount = contextObserver.context.RetainedEntitiesCount;
+                var retainedEntitiesCount = contextObserver.Context.RetainedEntitiesCount;
                 if (retainedEntitiesCount != 0)
                 {
                     var c = GUI.color;
@@ -32,7 +32,7 @@ namespace Entitas.Unity.Editor
                 {
                     if (GUILayout.Button("Create Entity"))
                     {
-                        var entity = contextObserver.context.CreateEntity();
+                        var entity = contextObserver.Context.CreateEntity();
                         var entityBehaviour = Object.FindObjectsOfType<EntityBehaviour>()
                             .Single(eb => eb.entity == entity);
 
@@ -42,7 +42,7 @@ namespace Entitas.Unity.Editor
                     var bgColor = GUI.backgroundColor;
                     GUI.backgroundColor = Color.red;
                     if (GUILayout.Button("Destroy All Entities"))
-                        contextObserver.context.DestroyAllEntities();
+                        contextObserver.Context.DestroyAllEntities();
 
                     GUI.backgroundColor = bgColor;
                 }
@@ -50,7 +50,7 @@ namespace Entitas.Unity.Editor
             }
             EditorLayout.EndVerticalBox();
 
-            var groups = contextObserver.groups;
+            var groups = contextObserver.Groups;
             if (groups.Length != 0)
             {
                 EditorLayout.BeginVerticalBox();
