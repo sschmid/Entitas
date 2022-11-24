@@ -57,12 +57,11 @@ namespace Entitas.Unity.Editor
                 EditorGUILayout.Space();
 
                 var keys = new ArrayList(dictionary.Keys);
-                for (var i = 0; i < keys.Count; i++)
+                foreach (var key in keys)
                 {
-                    var key = keys[i];
                     if (EditorLayout.MatchesSearchString(key.ToString().ToLower(), _keySearchTexts[targetType].ToLower()))
                     {
-                        EntityDrawer.DrawObjectMember(keyType, "key", key,
+                        EntityDrawer.DrawObjectMember(keyType, "Key", key,
                             target, (newComponent, newValue) =>
                             {
                                 var tmpValue = dictionary[key];
@@ -73,7 +72,7 @@ namespace Entitas.Unity.Editor
                                 }
                             });
 
-                        EntityDrawer.DrawObjectMember(valueType, "value", dictionary[key],
+                        EntityDrawer.DrawObjectMember(valueType, "Value", dictionary[key],
                             target, (newComponent, newValue) => dictionary[key] = newValue);
 
                         EditorGUILayout.Space();
