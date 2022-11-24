@@ -114,7 +114,7 @@ namespace Entitas.Unity.Editor
             {
                 var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
                 var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
-                _systemWarningThreshold = config.systemWarningThreshold;
+                _systemWarningThreshold = config.SystemWarningThreshold;
             }
             catch (Exception)
             {

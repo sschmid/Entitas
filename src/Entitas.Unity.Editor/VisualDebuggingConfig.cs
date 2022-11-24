@@ -5,33 +5,33 @@ namespace Entitas.Unity.Editor
 {
     public class VisualDebuggingConfig : AbstractConfigurableConfig
     {
-        const string SYSTEM_WARNING_THRESHOLD_KEY = "Entitas.VisualDebugging.Unity.Editor.SystemWarningThreshold";
-        const string DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath";
-        const string TYPE_DRAWER_FOLDER_PATH_KEY = "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath";
+        const string SystemWarningThresholdKey = "Entitas.VisualDebugging.Unity.Editor.SystemWarningThreshold";
+        const string DefaultInstanceCreatorFolderPathKey = "Entitas.VisualDebugging.Unity.Editor.DefaultInstanceCreatorFolderPath";
+        const string TypeDrawerFolderPathKey = "Entitas.VisualDebugging.Unity.Editor.TypeDrawerFolderPath";
 
         public override Dictionary<string, string> DefaultProperties => new Dictionary<string, string>
         {
-            {SYSTEM_WARNING_THRESHOLD_KEY, "5"},
-            {DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY, "Assets/Editor/DefaultInstanceCreator"},
-            {TYPE_DRAWER_FOLDER_PATH_KEY, "Assets/Editor/TypeDrawer"}
+            {SystemWarningThresholdKey, "5"},
+            {DefaultInstanceCreatorFolderPathKey, "Assets/Editor/DefaultInstanceCreator"},
+            {TypeDrawerFolderPathKey, "Assets/Editor/TypeDrawer"}
         };
 
-        public int systemWarningThreshold
+        public int SystemWarningThreshold
         {
-            get => int.Parse(_preferences[SYSTEM_WARNING_THRESHOLD_KEY]);
-            set => _preferences[SYSTEM_WARNING_THRESHOLD_KEY] = value.ToString();
+            get => int.Parse(_preferences[SystemWarningThresholdKey]);
+            set => _preferences[SystemWarningThresholdKey] = value.ToString();
         }
 
-        public string defaultInstanceCreatorFolderPath
+        public string DefaultInstanceCreatorFolderPath
         {
-            get => _preferences[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY];
-            set => _preferences[DEFAULT_INSTANCE_CREATOR_FOLDER_PATH_KEY] = value;
+            get => _preferences[DefaultInstanceCreatorFolderPathKey];
+            set => _preferences[DefaultInstanceCreatorFolderPathKey] = value;
         }
 
-        public string typeDrawerFolderPath
+        public string TypeDrawerFolderPath
         {
-            get => _preferences[TYPE_DRAWER_FOLDER_PATH_KEY];
-            set => _preferences[TYPE_DRAWER_FOLDER_PATH_KEY] = value;
+            get => _preferences[TypeDrawerFolderPathKey];
+            set => _preferences[TypeDrawerFolderPathKey] = value;
         }
     }
 }

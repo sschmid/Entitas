@@ -47,7 +47,7 @@ namespace Entitas.Unity.Editor
 
             EditorGUILayout.Space();
 
-            _visualDebuggingConfig.systemWarningThreshold = EditorGUILayout.IntField("System Warning Threshold", _visualDebuggingConfig.systemWarningThreshold);
+            _visualDebuggingConfig.SystemWarningThreshold = EditorGUILayout.IntField("System Warning Threshold", _visualDebuggingConfig.SystemWarningThreshold);
 
             EditorGUILayout.Space();
 
@@ -96,12 +96,12 @@ namespace Entitas.Unity.Editor
             {
                 var path = EditorLayout.ObjectFieldOpenFolderPanel(
                     "Default Instance Creators",
-                    _visualDebuggingConfig.defaultInstanceCreatorFolderPath,
-                    _visualDebuggingConfig.defaultInstanceCreatorFolderPath
+                    _visualDebuggingConfig.DefaultInstanceCreatorFolderPath,
+                    _visualDebuggingConfig.DefaultInstanceCreatorFolderPath
                 );
                 if (!string.IsNullOrEmpty(path))
                 {
-                    _visualDebuggingConfig.defaultInstanceCreatorFolderPath = path;
+                    _visualDebuggingConfig.DefaultInstanceCreatorFolderPath = path;
                 }
 
                 if (EditorLayout.MiniButton("New"))
@@ -118,11 +118,11 @@ namespace Entitas.Unity.Editor
             {
                 var path = EditorLayout.ObjectFieldOpenFolderPanel(
                     "Type Drawers",
-                    _visualDebuggingConfig.typeDrawerFolderPath,
-                    _visualDebuggingConfig.typeDrawerFolderPath
+                    _visualDebuggingConfig.TypeDrawerFolderPath,
+                    _visualDebuggingConfig.TypeDrawerFolderPath
                 );
                 if (!string.IsNullOrEmpty(path))
-                    _visualDebuggingConfig.typeDrawerFolderPath = path;
+                    _visualDebuggingConfig.TypeDrawerFolderPath = path;
 
                 if (EditorLayout.MiniButton("New"))
                     EntityDrawer.GenerateITypeDrawer("MyType");

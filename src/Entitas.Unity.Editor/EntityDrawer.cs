@@ -381,7 +381,7 @@ namespace Entitas.Unity.Editor
         {
             var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
-            var folder = config.defaultInstanceCreatorFolderPath;
+            var folder = config.DefaultInstanceCreatorFolderPath;
             var filePath = Path.Combine(folder, $"Default{typeName.ShortTypeName()}InstanceCreator.cs");
             var template = DefaultInstanceCreatorTemplateFormat
                 .Replace("${Type}", typeName)
@@ -393,7 +393,7 @@ namespace Entitas.Unity.Editor
         {
             var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
-            var folder = config.typeDrawerFolderPath;
+            var folder = config.TypeDrawerFolderPath;
             var filePath = Path.Combine(folder, $"{typeName.ShortTypeName()}TypeDrawer.cs");
             var template = TypeDrawerTemplateFormat
                 .Replace("${Type}", typeName)
