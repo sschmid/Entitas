@@ -16,85 +16,85 @@ namespace Entitas.Unity
 
     public class DebugSystems : Systems
     {
-        public static AvgResetInterval avgResetInterval = AvgResetInterval.Never;
+        public static AvgResetInterval AvgResetInterval = AvgResetInterval.Never;
 
-        public int totalInitializeSystemsCount
+        public int TotalInitializeSystemsCount
         {
             get
             {
                 var total = 0;
                 foreach (var system in _initializeSystems)
-                    total += system is DebugSystems debugSystems ? debugSystems.totalInitializeSystemsCount : 1;
+                    total += system is DebugSystems debugSystems ? debugSystems.TotalInitializeSystemsCount : 1;
 
                 return total;
             }
         }
 
-        public int totalExecuteSystemsCount
+        public int TotalExecuteSystemsCount
         {
             get
             {
                 var total = 0;
                 foreach (var system in _executeSystems)
-                    total += system is DebugSystems debugSystems ? debugSystems.totalExecuteSystemsCount : 1;
+                    total += system is DebugSystems debugSystems ? debugSystems.TotalExecuteSystemsCount : 1;
 
                 return total;
             }
         }
 
-        public int totalCleanupSystemsCount
+        public int TotalCleanupSystemsCount
         {
             get
             {
                 var total = 0;
                 foreach (var system in _cleanupSystems)
-                    total += system is DebugSystems debugSystems ? debugSystems.totalCleanupSystemsCount : 1;
+                    total += system is DebugSystems debugSystems ? debugSystems.TotalCleanupSystemsCount : 1;
 
                 return total;
             }
         }
 
-        public int totalTearDownSystemsCount
+        public int TotalTearDownSystemsCount
         {
             get
             {
                 var total = 0;
                 foreach (var system in _tearDownSystems)
-                    total += system is DebugSystems debugSystems ? debugSystems.totalTearDownSystemsCount : 1;
+                    total += system is DebugSystems debugSystems ? debugSystems.TotalTearDownSystemsCount : 1;
 
                 return total;
             }
         }
 
-        public int totalSystemsCount
+        public int TotalSystemsCount
         {
             get
             {
                 var total = 0;
                 foreach (var system in _systems)
-                    total += system is DebugSystems debugSystems ? debugSystems.totalSystemsCount : 1;
+                    total += system is DebugSystems debugSystems ? debugSystems.TotalSystemsCount : 1;
 
                 return total;
             }
         }
 
-        public int initializeSystemsCount => _initializeSystems.Count;
-        public int executeSystemsCount => _executeSystems.Count;
-        public int cleanupSystemsCount => _cleanupSystems.Count;
-        public int tearDownSystemsCount => _tearDownSystems.Count;
+        public int InitializeSystemsCount => _initializeSystems.Count;
+        public int ExecuteSystemsCount => _executeSystems.Count;
+        public int CleanupSystemsCount => _cleanupSystems.Count;
+        public int TearDownSystemsCount => _tearDownSystems.Count;
 
-        public string name => _name;
-        public GameObject gameObject => _gameObject;
-        public SystemInfo systemInfo => _systemInfo;
-        public double executeDuration => _executeDuration;
-        public double cleanupDuration => _cleanupDuration;
+        public string Name => _name;
+        public GameObject GameObject => _gameObject;
+        public SystemInfo SystemInfo => _systemInfo;
+        public double ExecuteDuration => _executeDuration;
+        public double CleanupDuration => _cleanupDuration;
 
-        public SystemInfo[] initializeSystemInfos => _initializeSystemInfos.ToArray();
-        public SystemInfo[] executeSystemInfos => _executeSystemInfos.ToArray();
-        public SystemInfo[] cleanupSystemInfos => _cleanupSystemInfos.ToArray();
-        public SystemInfo[] tearDownSystemInfos => _tearDownSystemInfos.ToArray();
+        public SystemInfo[] InitializeSystemInfos => _initializeSystemInfos.ToArray();
+        public SystemInfo[] ExecuteSystemInfos => _executeSystemInfos.ToArray();
+        public SystemInfo[] CleanupSystemInfos => _cleanupSystemInfos.ToArray();
+        public SystemInfo[] TearDownSystemInfos => _tearDownSystemInfos.ToArray();
 
-        public bool paused;
+        public bool Paused;
 
         string _name;
 
@@ -114,12 +114,12 @@ namespace Entitas.Unity
 
         public DebugSystems(string name)
         {
-            initialize(name);
+            Initialize(name);
         }
 
         protected DebugSystems(bool noInit) { }
 
-        protected void initialize(string name)
+        protected void Initialize(string name)
         {
             _name = name;
             _gameObject = new GameObject(name);
@@ -144,8 +144,8 @@ namespace Entitas.Unity
 
             if (system is DebugSystems debugSystems)
             {
-                childSystemInfo = debugSystems.systemInfo;
-                debugSystems.gameObject.transform.SetParent(_gameObject.transform, false);
+                childSystemInfo = debugSystems.SystemInfo;
+                debugSystems.GameObject.transform.SetParent(_gameObject.transform, false);
             }
             else
             {
@@ -190,20 +190,20 @@ namespace Entitas.Unity
 
         public override void Execute()
         {
-            if (!paused)
+            if (!Paused)
                 StepExecute();
         }
 
         public override void Cleanup()
         {
-            if (!paused)
+            if (!Paused)
                 StepCleanup();
         }
 
         public void StepExecute()
         {
             _executeDuration = 0;
-            if (Time.frameCount % (int)avgResetInterval == 0)
+            if (Time.frameCount % (int)AvgResetInterval == 0)
                 ResetDurations();
 
             for (var i = 0; i < _executeSystems.Count; i++)

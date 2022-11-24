@@ -87,12 +87,12 @@ namespace Entitas.Unity.Editor
             {
                 EditorLayout.BeginSectionContent();
                 {
-                    EditorGUILayout.LabelField(systems.name, EditorStyles.boldLabel);
-                    EditorGUILayout.LabelField("Initialize Systems", systems.totalInitializeSystemsCount.ToString());
-                    EditorGUILayout.LabelField("Execute Systems", systems.totalExecuteSystemsCount.ToString());
-                    EditorGUILayout.LabelField("Cleanup Systems", systems.totalCleanupSystemsCount.ToString());
-                    EditorGUILayout.LabelField("TearDown Systems", systems.totalTearDownSystemsCount.ToString());
-                    EditorGUILayout.LabelField("Total Systems", systems.totalSystemsCount.ToString());
+                    EditorGUILayout.LabelField(systems.Name, EditorStyles.boldLabel);
+                    EditorGUILayout.LabelField("Initialize Systems", systems.TotalInitializeSystemsCount.ToString());
+                    EditorGUILayout.LabelField("Execute Systems", systems.TotalExecuteSystemsCount.ToString());
+                    EditorGUILayout.LabelField("Cleanup Systems", systems.TotalCleanupSystemsCount.ToString());
+                    EditorGUILayout.LabelField("TearDown Systems", systems.TotalTearDownSystemsCount.ToString());
+                    EditorGUILayout.LabelField("Total Systems", systems.TotalSystemsCount.ToString());
                 }
                 EditorLayout.EndSectionContent();
             }
@@ -115,8 +115,8 @@ namespace Entitas.Unity.Editor
                     {
                         EditorGUILayout.BeginVertical();
                         {
-                            EditorGUILayout.LabelField("Execution duration", systems.executeDuration.ToString());
-                            EditorGUILayout.LabelField("Cleanup duration", systems.cleanupDuration.ToString());
+                            EditorGUILayout.LabelField("Execution duration", systems.ExecuteDuration.ToString());
+                            EditorGUILayout.LabelField("Cleanup duration", systems.CleanupDuration.ToString());
                         }
                         EditorGUILayout.EndVertical();
 
@@ -126,20 +126,20 @@ namespace Entitas.Unity.Editor
                         if (_pauseButtonContent == null)
                             _pauseButtonContent = EditorGUIUtility.IconContent("PauseButton On");
 
-                        systems.paused = GUILayout.Toggle(systems.paused, _pauseButtonContent, "CommandLeft");
+                        systems.Paused = GUILayout.Toggle(systems.Paused, _pauseButtonContent, "CommandLeft");
 
                         if (GUILayout.Button(_stepButtonContent, "CommandRight"))
                         {
-                            systems.paused = true;
+                            systems.Paused = true;
                             systems.StepExecute();
                             systems.StepCleanup();
-                            addDuration((float)systems.executeDuration + (float)systems.cleanupDuration);
+                            addDuration((float)systems.ExecuteDuration + (float)systems.CleanupDuration);
                         }
                     }
                     EditorGUILayout.EndHorizontal();
 
-                    if (!EditorApplication.isPaused && !systems.paused)
-                        addDuration((float)systems.executeDuration + (float)systems.cleanupDuration);
+                    if (!EditorApplication.isPaused && !systems.Paused)
+                        addDuration((float)systems.ExecuteDuration + (float)systems.CleanupDuration);
 
                     _systemsMonitor.Draw(_systemMonitorData.ToArray(), 80f);
                 }
@@ -156,7 +156,7 @@ namespace Entitas.Unity.Editor
                 {
                     EditorGUILayout.BeginHorizontal();
                     {
-                        DebugSystems.avgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", DebugSystems.avgResetInterval);
+                        DebugSystems.AvgResetInterval = (AvgResetInterval)EditorGUILayout.EnumPopup("Reset average duration Ø", DebugSystems.AvgResetInterval);
                         if (GUILayout.Button("Reset Ø now", EditorStyles.miniButton, GUILayout.Width(88)))
                             systems.ResetDurations();
                     }
@@ -235,16 +235,16 @@ namespace Entitas.Unity.Editor
             switch (type)
             {
                 case SystemInterfaceFlags.IInitializeSystem:
-                    systemInfos = systems.initializeSystemInfos.Where(systemInfo => systemInfo.initializationDuration >= _threshold);
+                    systemInfos = systems.InitializeSystemInfos.Where(systemInfo => systemInfo.initializationDuration >= _threshold);
                     break;
                 case SystemInterfaceFlags.IExecuteSystem:
-                    systemInfos = systems.executeSystemInfos.Where(systemInfo => systemInfo.averageExecutionDuration >= _threshold);
+                    systemInfos = systems.ExecuteSystemInfos.Where(systemInfo => systemInfo.averageExecutionDuration >= _threshold);
                     break;
                 case SystemInterfaceFlags.ICleanupSystem:
-                    systemInfos = systems.cleanupSystemInfos.Where(systemInfo => systemInfo.cleanupDuration >= _threshold);
+                    systemInfos = systems.CleanupSystemInfos.Where(systemInfo => systemInfo.cleanupDuration >= _threshold);
                     break;
                 case SystemInterfaceFlags.ITearDownSystem:
-                    systemInfos = systems.tearDownSystemInfos.Where(systemInfo => systemInfo.teardownDuration >= _threshold);
+                    systemInfos = systems.TearDownSystemInfos.Where(systemInfo => systemInfo.teardownDuration >= _threshold);
                     break;
             }
 
@@ -348,10 +348,10 @@ namespace Entitas.Unity.Editor
 
             return type switch
             {
-                SystemInterfaceFlags.IInitializeSystem => systems.totalInitializeSystemsCount > 0,
-                SystemInterfaceFlags.IExecuteSystem => systems.totalExecuteSystemsCount > 0,
-                SystemInterfaceFlags.ICleanupSystem => systems.totalCleanupSystemsCount > 0,
-                SystemInterfaceFlags.ITearDownSystem => systems.totalTearDownSystemsCount > 0,
+                SystemInterfaceFlags.IInitializeSystem => systems.TotalInitializeSystemsCount > 0,
+                SystemInterfaceFlags.IExecuteSystem => systems.TotalExecuteSystemsCount > 0,
+                SystemInterfaceFlags.ICleanupSystem => systems.TotalCleanupSystemsCount > 0,
+                SystemInterfaceFlags.ITearDownSystem => systems.TotalTearDownSystemsCount > 0,
                 _ => true
             };
         }
