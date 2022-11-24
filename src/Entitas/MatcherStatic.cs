@@ -56,10 +56,10 @@ namespace Entitas
             for (var i = 0; i < matchers.Length; i++)
             {
                 var matcher = matchers[i];
-                if (matcher.indexes.Length != 1)
-                    throw new MatcherException(matcher.indexes.Length);
+                if (matcher.Indexes.Length != 1)
+                    throw new MatcherException(matcher.Indexes.Length);
 
-                indexes[i] = matcher.indexes[0];
+                indexes[i] = matcher.Indexes[0];
             }
 
             return indexes;

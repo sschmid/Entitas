@@ -200,7 +200,7 @@ namespace Entitas
 
                 _groups.Add(matcher, group);
 
-                foreach (var index in matcher.indexes)
+                foreach (var index in matcher.Indexes)
                 {
                     _groupsForIndex[index] ??= new List<IGroup<TEntity>>();
                     _groupsForIndex[index].Add(group);
