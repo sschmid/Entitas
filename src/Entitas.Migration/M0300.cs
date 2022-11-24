@@ -12,8 +12,8 @@ namespace Entitas.Migration
             for (var i = 0; i < files.Length; i++)
             {
                 var file = files[i];
-                file.fileContent = file.fileContent.Replace("ComponentsGenerator", "ComponentExtensionsGenerator");
-                file.fileContent = file.fileContent.Replace("PoolAttributeGenerator", "PoolAttributesGenerator");
+                file.FileContent = file.FileContent.Replace("ComponentsGenerator", "ComponentExtensionsGenerator");
+                file.FileContent = file.FileContent.Replace("PoolAttributeGenerator", "PoolAttributesGenerator");
             }
 
             return files;

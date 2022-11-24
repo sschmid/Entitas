@@ -21,7 +21,7 @@ namespace Entitas.Migration.Tests
         {
             var updatedFiles = _migration.Migrate(FixturePath);
             updatedFiles.Length.Should().Be(1);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Entitas.properties")).Should().BeTrue();
+            updatedFiles.Any(file => file.FileName == Path.Combine(FixturePath, "Entitas.properties")).Should().BeTrue();
         }
 
         [Fact]
@@ -29,8 +29,8 @@ namespace Entitas.Migration.Tests
         {
             var updatedFiles = _migration.Migrate(FixturePath);
             var file = updatedFiles[0];
-            file.fileContent.Contains("Entitas.CodeGenerator.Pools").Should().BeFalse();
-            file.fileContent.Contains("Entitas.CodeGenerator.Contexts").Should().BeTrue();
+            file.FileContent.Contains("Entitas.CodeGenerator.Pools").Should().BeFalse();
+            file.FileContent.Contains("Entitas.CodeGenerator.Contexts").Should().BeTrue();
         }
     }
 }

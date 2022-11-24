@@ -24,19 +24,19 @@ namespace Entitas.Migration.Tests
         {
             var updatedFiles = _migration.Migrate(FixturePath);
             updatedFiles.Length.Should().Be(1);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "AddViewFromObjectPoolSystem.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.FileName == Path.Combine(FixturePath, "AddViewFromObjectPoolSystem.cs")).Should().BeTrue();
         }
 
         [Fact(Skip = "not finished")]
         public void MigratesToNewApi()
         {
             var updatedFiles = _migration.Migrate(FixturePath);
-            var systemFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "AddViewFromObjectPoolSystem.cs"));
+            var systemFile = updatedFiles.Single(file => file.FileName == Path.Combine(FixturePath, "AddViewFromObjectPoolSystem.cs"));
 
-            if (systemFile.fileContent != Expected)
-                _output.WriteLine(systemFile.fileContent);
+            if (systemFile.FileContent != Expected)
+                _output.WriteLine(systemFile.FileContent);
 
-            systemFile.fileContent.Should().Be(Expected);
+            systemFile.FileContent.Should().Be(Expected);
         }
 
         const string Expected =

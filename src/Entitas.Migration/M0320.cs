@@ -20,22 +20,22 @@ namespace Entitas.Migration
                 //Entitas.Unity.VisualDebugging.DefaultInstanceCreatorFolderPath = Assets/Editor/DefaultInstanceCreator/
                 //Entitas.Unity.VisualDebugging.TypeDrawerFolderPath = Assets/Editor/TypeDrawer/
 
-                file.fileContent = file.fileContent.Replace("Entitas.Unity.CodeGenerator.GeneratedFolderPath", "Entitas.CodeGenerator.GeneratedFolderPath");
-                file.fileContent = file.fileContent.Replace("Entitas.Unity.CodeGenerator.Pools", "Entitas.CodeGenerator.Pools");
-                file.fileContent = file.fileContent.Replace("Entitas.Unity.CodeGenerator.EnabledCodeGenerators", "Entitas.CodeGenerator.EnabledCodeGenerators");
+                file.FileContent = file.FileContent.Replace("Entitas.Unity.CodeGenerator.GeneratedFolderPath", "Entitas.CodeGenerator.GeneratedFolderPath");
+                file.FileContent = file.FileContent.Replace("Entitas.Unity.CodeGenerator.Pools", "Entitas.CodeGenerator.Pools");
+                file.FileContent = file.FileContent.Replace("Entitas.Unity.CodeGenerator.EnabledCodeGenerators", "Entitas.CodeGenerator.EnabledCodeGenerators");
             }
 
             const string pattern = @".CreateSystem<(?<system>\w*)>\(\s*\)";
 
             var sources = MigrationUtils.GetFiles(path)
-                .Where(file => Regex.IsMatch(file.fileContent, pattern))
+                .Where(file => Regex.IsMatch(file.FileContent, pattern))
                 .ToArray();
 
             for (var i = 0; i < sources.Length; i++)
             {
                 var file = sources[i];
-                file.fileContent = Regex.Replace(
-                    file.fileContent,
+                file.FileContent = Regex.Replace(
+                    file.FileContent,
                     pattern,
                     match => $".CreateSystem(new {match.Groups["system"].Value}())"
                 );

@@ -15,8 +15,8 @@ namespace Entitas.Migration
         {
             foreach (var file in files)
             {
-                Console.WriteLine($"Migrating: {file.fileName}");
-                File.WriteAllText(file.fileName, file.fileContent);
+                Console.WriteLine($"Migrating: {file.FileName}");
+                File.WriteAllText(file.FileName, file.FileContent);
             }
         }
     }

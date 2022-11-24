@@ -21,16 +21,16 @@ namespace Entitas.Migration.Tests
         {
             var updatedFiles = _migration.Migrate(FixturePath);
             updatedFiles.Length.Should().Be(2);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Pools.cs")).Should().BeTrue();
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "ScoreComponentGeneratedExtension.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.FileName == Path.Combine(FixturePath, "Pools.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.FileName == Path.Combine(FixturePath, "ScoreComponentGeneratedExtension.cs")).Should().BeTrue();
         }
 
         [Fact]
         public void DeactivatesCodeInPoolsFile()
         {
             var updatedFiles = _migration.Migrate(FixturePath);
-            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "Pools.cs"));
-            poolsFile.fileContent.Should().Be(@"using Entitas;
+            var poolsFile = updatedFiles.Single(file => file.FileName == Path.Combine(FixturePath, "Pools.cs"));
+            poolsFile.FileContent.Should().Be(@"using Entitas;
 
 public static class Pools {
 
@@ -85,8 +85,8 @@ public static class Pools {
         public void DeactivatesCodeInComponents()
         {
             var updatedFiles = _migration.Migrate(FixturePath);
-            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "ScoreComponentGeneratedExtension.cs"));
-            poolsFile.fileContent.Should().Be(@"using System.Collections.Generic;
+            var poolsFile = updatedFiles.Single(file => file.FileName == Path.Combine(FixturePath, "ScoreComponentGeneratedExtension.cs"));
+            poolsFile.FileContent.Should().Be(@"using System.Collections.Generic;
 
 namespace Entitas {
     public partial class Entity {

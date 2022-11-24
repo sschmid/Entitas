@@ -21,16 +21,16 @@ namespace Entitas.Migration
         public MigrationFile[] Migrate(string path)
         {
             var files = MigrationUtils.GetFiles(path)
-                .Where(file => Regex.IsMatch(file.fileContent, TRIGGER_PATTERN) || Regex.IsMatch(file.fileContent, EVENT_TYPE_PATTERN))
+                .Where(file => Regex.IsMatch(file.FileContent, TRIGGER_PATTERN) || Regex.IsMatch(file.FileContent, EVENT_TYPE_PATTERN))
                 .ToArray();
 
             for (var i = 0; i < files.Length; i++)
             {
                 var file = files[i];
-                file.fileContent = Regex.Replace(file.fileContent, TRIGGER_END_PATTERN, match => match.Value + " }", RegexOptions.Multiline);
-                file.fileContent = Regex.Replace(file.fileContent, EVENT_TYPE_PATTERN_END, match => match.Value + " }", RegexOptions.Multiline);
-                file.fileContent = Regex.Replace(file.fileContent, TRIGGER_PATTERN, TRIGGER_REPLACEMENT, RegexOptions.Multiline);
-                file.fileContent = Regex.Replace(file.fileContent, EVENT_TYPE_PATTERN, EVENT_TYPE_REPLACEMENT, RegexOptions.Multiline);
+                file.FileContent = Regex.Replace(file.FileContent, TRIGGER_END_PATTERN, match => match.Value + " }", RegexOptions.Multiline);
+                file.FileContent = Regex.Replace(file.FileContent, EVENT_TYPE_PATTERN_END, match => match.Value + " }", RegexOptions.Multiline);
+                file.FileContent = Regex.Replace(file.FileContent, TRIGGER_PATTERN, TRIGGER_REPLACEMENT, RegexOptions.Multiline);
+                file.FileContent = Regex.Replace(file.FileContent, EVENT_TYPE_PATTERN, EVENT_TYPE_REPLACEMENT, RegexOptions.Multiline);
             }
 
             return files;

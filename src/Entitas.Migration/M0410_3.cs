@@ -19,9 +19,9 @@ namespace Entitas.Migration
 
         MigrationFile[] updateNamespace(MigrationFile[] files, string oldNamespace, string newNamespace)
         {
-            var filesToMigrate = files.Where(f => f.fileContent.Contains(oldNamespace)).ToArray();
+            var filesToMigrate = files.Where(f => f.FileContent.Contains(oldNamespace)).ToArray();
             foreach (var file in filesToMigrate)
-                file.fileContent = file.fileContent.Replace(oldNamespace, newNamespace);
+                file.FileContent = file.FileContent.Replace(oldNamespace, newNamespace);
 
             return filesToMigrate;
         }

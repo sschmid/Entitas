@@ -21,8 +21,8 @@ namespace Entitas.Migration.Tests
         {
             var updatedFiles = _migration.Migrate(FixturePath);
             updatedFiles.Length.Should().Be(2);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Entitas.properties")).Should().BeTrue();
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Systems.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.FileName == Path.Combine(FixturePath, "Entitas.properties")).Should().BeTrue();
+            updatedFiles.Any(file => file.FileName == Path.Combine(FixturePath, "Systems.cs")).Should().BeTrue();
         }
 
         [Fact]
@@ -31,18 +31,18 @@ namespace Entitas.Migration.Tests
             var updatedFiles = _migration.Migrate(FixturePath);
             var file = updatedFiles[0];
 
-            file.fileContent.Contains("Entitas.Unity.CodeGenerator.GeneratedFolderPath").Should().BeFalse();
-            file.fileContent.Contains("Entitas.CodeGenerator.GeneratedFolderPath").Should().BeTrue();
+            file.FileContent.Contains("Entitas.Unity.CodeGenerator.GeneratedFolderPath").Should().BeFalse();
+            file.FileContent.Contains("Entitas.CodeGenerator.GeneratedFolderPath").Should().BeTrue();
 
-            file.fileContent.Contains("Entitas.Unity.CodeGenerator.Pools").Should().BeFalse();
-            file.fileContent.Contains("Entitas.CodeGenerator.Pools").Should().BeTrue();
+            file.FileContent.Contains("Entitas.Unity.CodeGenerator.Pools").Should().BeFalse();
+            file.FileContent.Contains("Entitas.CodeGenerator.Pools").Should().BeTrue();
 
-            file.fileContent.Contains("Entitas.Unity.CodeGenerator.EnabledCodeGenerators").Should().BeFalse();
-            file.fileContent.Contains("Entitas.CodeGenerator.EnabledCodeGenerators").Should().BeTrue();
+            file.FileContent.Contains("Entitas.Unity.CodeGenerator.EnabledCodeGenerators").Should().BeFalse();
+            file.FileContent.Contains("Entitas.CodeGenerator.EnabledCodeGenerators").Should().BeTrue();
 
             // Ignores Entitas.Unity.VisualDebugging
-            file.fileContent.Contains("Entitas.Unity.VisualDebugging.DefaultInstanceCreatorFolderPath").Should().BeTrue();
-            file.fileContent.Contains("Entitas.Unity.VisualDebugging.TypeDrawerFolderPath").Should().BeTrue();
+            file.FileContent.Contains("Entitas.Unity.VisualDebugging.DefaultInstanceCreatorFolderPath").Should().BeTrue();
+            file.FileContent.Contains("Entitas.Unity.VisualDebugging.TypeDrawerFolderPath").Should().BeTrue();
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace Entitas.Migration.Tests
         {
             var updatedFiles = _migration.Migrate(FixturePath);
             var file = updatedFiles[1];
-            file.fileContent.Should().Be("pool.CreateSystem(new MySystem1());\npool.CreateSystem(new MySystem2());\n");
+            file.FileContent.Should().Be("pool.CreateSystem(new MySystem1());\npool.CreateSystem(new MySystem2());\n");
         }
     }
 }

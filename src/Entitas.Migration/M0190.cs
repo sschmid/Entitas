@@ -15,11 +15,11 @@ namespace Entitas.Migration
         public MigrationFile[] Migrate(string path)
         {
             var files = MigrationUtils.GetFiles(path)
-                .Where(file => Regex.IsMatch(file.fileContent, EXECUTE_PATTERN))
+                .Where(file => Regex.IsMatch(file.FileContent, EXECUTE_PATTERN))
                 .ToArray();
 
             for (var i = 0; i < files.Length; i++) 
-                files[i].fileContent = Regex.Replace(files[i].fileContent, EXECUTE_PATTERN, EXECUTE_REPLACEMENT, RegexOptions.Multiline);
+                files[i].FileContent = Regex.Replace(files[i].FileContent, EXECUTE_PATTERN, EXECUTE_REPLACEMENT, RegexOptions.Multiline);
 
             return files;
         }

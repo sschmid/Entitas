@@ -17,16 +17,16 @@ namespace Entitas.Migration
         public MigrationFile[] Migrate(string path)
         {
             var files = MigrationUtils.GetFiles(path)
-                .Where(file => Regex.IsMatch(file.fileContent, TRIGGER_PATTERN))
+                .Where(file => Regex.IsMatch(file.FileContent, TRIGGER_PATTERN))
                 .ToArray();
 
             for (var i = 0; i < files.Length; i++)
             {
                 var file = files[i];
-                var eventTypeMatch = Regex.Match(file.fileContent, EVENT_TYPE_PATTERN, RegexOptions.Multiline);
+                var eventTypeMatch = Regex.Match(file.FileContent, EVENT_TYPE_PATTERN, RegexOptions.Multiline);
                 var eventType = eventTypeMatch.Groups["eventType"].Value;
-                file.fileContent = Regex.Replace(file.fileContent, EVENT_TYPE_PATTERN, string.Empty, RegexOptions.Multiline);
-                file.fileContent = Regex.Replace(file.fileContent, TRIGGER_PATTERN,
+                file.FileContent = Regex.Replace(file.FileContent, EVENT_TYPE_PATTERN, string.Empty, RegexOptions.Multiline);
+                file.FileContent = Regex.Replace(file.FileContent, TRIGGER_PATTERN,
                     match => string.Format(TRIGGER_REPLACEMENT_FORMAT, match.Groups["matcher"].Value, eventType),
                     RegexOptions.Multiline);
             }

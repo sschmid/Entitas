@@ -17,11 +17,11 @@ namespace Entitas.Migration
             {
                 var file = files[i];
 
-                file.fileContent = migrateBase(file.fileContent);
-                file.fileContent = migrateTrigger(file.fileContent);
-                file.fileContent = migrateToFilter(file.fileContent);
-                file.fileContent = migrateSetPoolsSetPool(file.fileContent);
-                file.fileContent = migrateExecute(file.fileContent);
+                file.FileContent = migrateBase(file.FileContent);
+                file.FileContent = migrateTrigger(file.FileContent);
+                file.FileContent = migrateToFilter(file.FileContent);
+                file.FileContent = migrateSetPoolsSetPool(file.FileContent);
+                file.FileContent = migrateExecute(file.FileContent);
             }
 
             return files;

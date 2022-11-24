@@ -13,7 +13,7 @@ namespace Entitas.Migration
             {
                 var file = properties[i];
                 // Entitas.CodeGenerator.Pools = Input,Core,Score
-                file.fileContent = file.fileContent.Replace("Entitas.CodeGenerator.Pools", "Entitas.CodeGenerator.Contexts");
+                file.FileContent = file.FileContent.Replace("Entitas.CodeGenerator.Pools", "Entitas.CodeGenerator.Contexts");
             }
 
             return properties;

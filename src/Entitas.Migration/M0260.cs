@@ -18,15 +18,15 @@ namespace Entitas.Migration
         public MigrationFile[] Migrate(string path)
         {
             var files = MigrationUtils.GetFiles(path)
-                .Where(file => file.fileContent.Contains(POOL_PATTERN_1) || file.fileContent.Contains(COMPONENT_PATTERN))
+                .Where(file => file.FileContent.Contains(POOL_PATTERN_1) || file.FileContent.Contains(COMPONENT_PATTERN))
                 .ToArray();
 
             for (var i = 0; i < files.Length; i++)
             {
                 var file = files[i];
-                file.fileContent = file.fileContent.Replace(POOL_PATTERN_1, REPLACEMENT + POOL_PATTERN_1);
-                file.fileContent = file.fileContent.Replace(POOL_PATTERN_2, REPLACEMENT + POOL_PATTERN_2);
-                file.fileContent = file.fileContent.Replace(COMPONENT_PATTERN, REPLACEMENT + COMPONENT_PATTERN);
+                file.FileContent = file.FileContent.Replace(POOL_PATTERN_1, REPLACEMENT + POOL_PATTERN_1);
+                file.FileContent = file.FileContent.Replace(POOL_PATTERN_2, REPLACEMENT + POOL_PATTERN_2);
+                file.FileContent = file.FileContent.Replace(COMPONENT_PATTERN, REPLACEMENT + COMPONENT_PATTERN);
             }
 
             return files;

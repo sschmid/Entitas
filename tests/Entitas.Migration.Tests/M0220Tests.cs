@@ -21,15 +21,15 @@ namespace Entitas.Migration.Tests
         {
             var updatedFiles = _migration.Migrate(FixturePath);
             updatedFiles.Length.Should().Be(1);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "RenderPositionSystem.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.FileName == Path.Combine(FixturePath, "RenderPositionSystem.cs")).Should().BeTrue();
         }
 
         [Fact]
         public void MigratesToNewApi()
         {
             var updatedFiles = _migration.Migrate(FixturePath);
-            var reactiveSystemFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "RenderPositionSystem.cs"));
-            reactiveSystemFile.fileContent.Should().Be(@"using System.Collections.Generic;
+            var reactiveSystemFile = updatedFiles.Single(file => file.FileName == Path.Combine(FixturePath, "RenderPositionSystem.cs"));
+            reactiveSystemFile.FileContent.Should().Be(@"using System.Collections.Generic;
 using Entitas;
 
 public class RenderPositionSystem : IReactiveSystem {

@@ -2,13 +2,13 @@ namespace Entitas.Migration
 {
     public class MigrationFile
     {
-        public string fileName;
-        public string fileContent;
+        public string FileName;
+        public string FileContent;
 
         public MigrationFile(string fileName, string fileContent)
         {
-            this.fileName = fileName;
-            this.fileContent = fileContent;
+            FileName = fileName;
+            FileContent = fileContent;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Entitas.Migration.Tests
         {
             var updatedFiles = _migration.Migrate(FixturePath);
             updatedFiles.Length.Should().Be(1);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Entitas.properties")).Should().BeTrue();
+            updatedFiles.Any(file => file.FileName == Path.Combine(FixturePath, "Entitas.properties")).Should().BeTrue();
         }
 
         [Fact]
@@ -29,10 +29,10 @@ namespace Entitas.Migration.Tests
         {
             var updatedFiles = _migration.Migrate(FixturePath);
             var file = updatedFiles[0];
-            file.fileContent.Contains("ComponentsGenerator").Should().BeFalse();
-            file.fileContent.Contains("ComponentExtensionsGenerator").Should().BeTrue();
-            file.fileContent.Contains("PoolAttributeGenerator").Should().BeFalse();
-            file.fileContent.Contains("PoolAttributesGenerator").Should().BeTrue();
+            file.FileContent.Contains("ComponentsGenerator").Should().BeFalse();
+            file.FileContent.Contains("ComponentExtensionsGenerator").Should().BeTrue();
+            file.FileContent.Contains("PoolAttributeGenerator").Should().BeFalse();
+            file.FileContent.Contains("PoolAttributesGenerator").Should().BeTrue();
         }
     }
 }

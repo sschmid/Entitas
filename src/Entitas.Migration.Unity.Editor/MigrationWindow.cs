@@ -88,7 +88,7 @@ namespace Entitas.Migration.Unity.Editor
                     foreach (var file in changedFiles)
                     {
                         MigrationUtils.WriteFiles(changedFiles);
-                        Debug.Log($"Migrated {file.fileName}");
+                        Debug.Log($"Migrated {file.FileName}");
                     }
                 }
                 else
