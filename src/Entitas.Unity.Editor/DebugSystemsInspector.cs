@@ -64,7 +64,7 @@ namespace Entitas.Unity.Editor
         public override void OnInspectorGUI()
         {
             var debugSystemsBehaviour = (DebugSystemsBehaviour)target;
-            var systems = debugSystemsBehaviour.systems;
+            var systems = debugSystemsBehaviour.Systems;
 
             EditorGUILayout.Space();
             drawSystemsOverview(systems);

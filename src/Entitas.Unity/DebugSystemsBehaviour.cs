@@ -4,7 +4,7 @@ namespace Entitas.Unity
 {
     public class DebugSystemsBehaviour : MonoBehaviour
     {
-        public DebugSystems systems => _systems;
+        public DebugSystems Systems => _systems;
 
         DebugSystems _systems;
 
