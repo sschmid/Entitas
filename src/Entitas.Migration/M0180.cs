@@ -5,35 +5,29 @@ namespace Entitas.Migration
 {
     public class M0180 : IMigration
     {
-        public string version => "0.18.0";
-        public string workingDirectory => "where all systems are located";
-        public string description => "Migrates IReactiveSystem GetXyz methods to getters";
+        public string Version => "0.18.0";
+        public string WorkingDirectory => "where all systems are located";
+        public string Description => "Migrates IReactiveSystem GetXyz methods to getters";
 
-        const string METHOD_END_PATTERN = @"(\s|.)*?\}";
-        const string TRIGGER_PATTERN = @"public\s*IMatcher\s*GetTriggeringMatcher\s*\(\s*\)\s*\{\s*";
-        const string TRIGGER_END_PATTERN = TRIGGER_PATTERN + METHOD_END_PATTERN;
-        const string TRIGGER_REPLACEMENT = "public IMatcher trigger { get { ";
+        const string MethodEndPattern = @"(\s|.)*?\}";
+        const string TriggerPattern = @"public\s*IMatcher\s*GetTriggeringMatcher\s*\(\s*\)\s*\{\s*";
+        const string TriggerEndPattern = TriggerPattern + MethodEndPattern;
+        const string TriggerReplacement = "public IMatcher trigger { get { ";
 
-        const string EVENT_TYPE_PATTERN = @"public\s*GroupEventType\s*GetEventType\s*\(\s*\)\s*\{\s*";
-        const string EVENT_TYPE_PATTERN_END = EVENT_TYPE_PATTERN + METHOD_END_PATTERN;
-        const string EVENT_TYPE_REPLACEMENT = "public GroupEventType eventType { get { ";
+        const string EventTypePattern = @"public\s*GroupEventType\s*GetEventType\s*\(\s*\)\s*\{\s*";
+        const string EventTypePatternEnd = EventTypePattern + MethodEndPattern;
+        const string EventTypeReplacement = "public GroupEventType eventType { get { ";
 
-        public MigrationFile[] Migrate(string path)
-        {
-            var files = MigrationUtils.GetFiles(path)
-                .Where(file => Regex.IsMatch(file.FileContent, TRIGGER_PATTERN) || Regex.IsMatch(file.FileContent, EVENT_TYPE_PATTERN))
-                .ToArray();
-
-            for (var i = 0; i < files.Length; i++)
-            {
-                var file = files[i];
-                file.FileContent = Regex.Replace(file.FileContent, TRIGGER_END_PATTERN, match => match.Value + " }", RegexOptions.Multiline);
-                file.FileContent = Regex.Replace(file.FileContent, EVENT_TYPE_PATTERN_END, match => match.Value + " }", RegexOptions.Multiline);
-                file.FileContent = Regex.Replace(file.FileContent, TRIGGER_PATTERN, TRIGGER_REPLACEMENT, RegexOptions.Multiline);
-                file.FileContent = Regex.Replace(file.FileContent, EVENT_TYPE_PATTERN, EVENT_TYPE_REPLACEMENT, RegexOptions.Multiline);
-            }
-
-            return files;
-        }
+        public MigrationFile[] Migrate(string path) => MigrationUtils.GetFiles(path)
+            .Where(file => Regex.IsMatch(file.FileContent, TriggerPattern) || Regex.IsMatch(file.FileContent, EventTypePattern))
+            .Select(file =>
+                {
+                    file.FileContent = Regex.Replace(file.FileContent, TriggerEndPattern, match => match.Value + " }", RegexOptions.Multiline);
+                    file.FileContent = Regex.Replace(file.FileContent, EventTypePatternEnd, match => match.Value + " }", RegexOptions.Multiline);
+                    file.FileContent = Regex.Replace(file.FileContent, TriggerPattern, TriggerReplacement, RegexOptions.Multiline);
+                    file.FileContent = Regex.Replace(file.FileContent, EventTypePattern, EventTypeReplacement, RegexOptions.Multiline);
+                    return file;
+                }
+            ).ToArray();
     }
 }

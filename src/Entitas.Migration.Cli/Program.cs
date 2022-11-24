@@ -29,7 +29,7 @@ namespace Entitas.Migration.Cli
             {
                 var version = args[0];
                 var path = args[1];
-                var migrations = allMigrations.Where(m => m.version == version).ToArray();
+                var migrations = allMigrations.Where(m => m.Version == version).ToArray();
                 if (migrations.Length == 0)
                 {
                     printVersionNotFound(version, allMigrations);
@@ -59,7 +59,7 @@ namespace Entitas.Migration.Cli
             foreach (var m in migrations)
             {
                 Console.WriteLine("========================================");
-                Console.WriteLine($"{m.version}\n  - {m.description}\n  - Use on folder, {m.workingDirectory}");
+                Console.WriteLine($"{m.Version}\n  - {m.Description}\n  - Use on folder, {m.WorkingDirectory}");
             }
 
             Console.WriteLine("========================================");

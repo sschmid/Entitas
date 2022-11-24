@@ -6,40 +6,33 @@ namespace Entitas.Migration
 {
     public class M0360_2 : IMigration
     {
-        public string version => "0.36.0-2";
-        public string workingDirectory => "where systems are located";
-        public string description => "Migrates systems";
+        public string Version => "0.36.0-2";
+        public string WorkingDirectory => "where systems are located";
+        public string Description => "Migrates systems";
 
-        public MigrationFile[] Migrate(string path)
-        {
-            var files = MigrationUtils.GetFiles(path);
-            for (var i = 0; i < files.Length; i++)
+        public MigrationFile[] Migrate(string path) => MigrationUtils.GetFiles(path)
+            .Select(file =>
             {
-                var file = files[i];
+                file.FileContent = MigrateBase(file.FileContent);
+                file.FileContent = MigrateTrigger(file.FileContent);
+                file.FileContent = MigrateToFilter(file.FileContent);
+                file.FileContent = MigrateSetPoolsSetPool(file.FileContent);
+                file.FileContent = MigrateExecute(file.FileContent);
+                return file;
+            })
+            .ToArray();
 
-                file.FileContent = migrateBase(file.FileContent);
-                file.FileContent = migrateTrigger(file.FileContent);
-                file.FileContent = migrateToFilter(file.FileContent);
-                file.FileContent = migrateSetPoolsSetPool(file.FileContent);
-                file.FileContent = migrateExecute(file.FileContent);
-            }
-
-            return files;
-        }
-
-        string migrateBase(string fileContent)
+        string MigrateBase(string fileContent)
         {
-            fileContent = removeBase(fileContent, "ISetPools");
-            fileContent = removeBase(fileContent, "ISetPool");
-            fileContent = removeBase(fileContent, "IEnsureComponents");
-            fileContent = removeBase(fileContent, "IExcludeComponents");
-
-            fileContent = renameBase(fileContent, "IReactiveSystem", "ReactiveSystem");
-
+            fileContent = RemoveBase(fileContent, "ISetPools");
+            fileContent = RemoveBase(fileContent, "ISetPool");
+            fileContent = RemoveBase(fileContent, "IEnsureComponents");
+            fileContent = RemoveBase(fileContent, "IExcludeComponents");
+            fileContent = RenameBase(fileContent, "IReactiveSystem", "ReactiveSystem");
             return fileContent;
         }
 
-        string removeBase(string fileContent, string name)
+        string RemoveBase(string fileContent, string name)
         {
             fileContent = Regex.Replace(fileContent, @"(,\s*)" + name, string.Empty);
             fileContent = Regex.Replace(fileContent, @"(:\s*)" + name + @"(,\s*)", ": ");
@@ -47,7 +40,7 @@ namespace Entitas.Migration
             return fileContent;
         }
 
-        string renameBase(string fileContent, string name, string replacement)
+        string RenameBase(string fileContent, string name, string replacement)
         {
             fileContent = Regex.Replace(fileContent, @"(,\s*)" + name, ", " + replacement);
             fileContent = Regex.Replace(fileContent, @"(:\s*)" + name + @"(,\s*)", ": " + replacement);
@@ -55,7 +48,7 @@ namespace Entitas.Migration
             return fileContent;
         }
 
-        string migrateTrigger(string fileContent)
+        string MigrateTrigger(string fileContent)
         {
             const string triggerPattern = @"public(\s|\n)*TriggerOnEvent(\s|\n)*trigger(\s|\n)*{(\s|\n)*get(\s|\n)*{(\s|\n)*return(\s|\n)*(?<trigger>(.|\s|\n)*?})(\s|\n)*}";
             const string triggerEventReplacement = "__ctor_placeholder__\n\n    protected override Collector GetTrigger(Context context) {{\n        return context.CreateCollector({0}, GroupEvent.{1});\n    }}\n\n__filter_placeholder__";
@@ -73,7 +66,7 @@ namespace Entitas.Migration
             return fileContent;
         }
 
-        string migrateToFilter(string fileContent)
+        string MigrateToFilter(string fileContent)
         {
             const string ensurePattern = @"public(\s|\n)*IMatcher(\s|\n)*ensureComponents(\s|\n)*{(\s|\n)*get(\s|\n)*{(\s|\n)*return(\s|\n)*(?<matcher>(.|\s|\n)*?);(\s|\n)*}(\s|\n)*}";
             var ensureMatcher = Regex.Match(fileContent, ensurePattern).Groups["matcher"].Value;
@@ -81,11 +74,11 @@ namespace Entitas.Migration
             const string excludePattern = @"public(\s|\n)*IMatcher(\s|\n)*excludeComponents(\s|\n)*{(\s|\n)*get(\s|\n)*{(\s|\n)*return(\s|\n)*(?<matcher>(.|\s|\n)*?);(\s|\n)*}(\s|\n)*}";
             var excludeMatcher = Regex.Match(fileContent, excludePattern).Groups["matcher"].Value;
 
-            var ensureFilter = getFilter(ensureMatcher);
+            var ensureFilter = GetFilter(ensureMatcher);
             if (!string.IsNullOrEmpty(ensureFilter))
                 ensureFilter = $"({ensureFilter})";
 
-            var excludeFilter = getFilter(excludeMatcher);
+            var excludeFilter = GetFilter(excludeMatcher);
             if (!string.IsNullOrEmpty(excludeFilter))
                 excludeFilter = $"!({excludeFilter})";
 
@@ -117,7 +110,7 @@ namespace Entitas.Migration
             return fileContent;
         }
 
-        string getFilter(string matcher)
+        string GetFilter(string matcher)
         {
             const string allOfPattern = @"AllOf(\s|\n)*\((\s|\n)*(?<matchers>(.|\s|\n)*?)\)";
             const string anyOfPattern = @"AnyOf(\s|\n)*\((\s|\n)*(?<matchers>(.|\s|\n)*?)\)";
@@ -189,7 +182,7 @@ namespace Entitas.Migration
                 : string.Join(" && ", filters.ToArray());
         }
 
-        string migrateSetPoolsSetPool(string fileContent)
+        string MigrateSetPoolsSetPool(string fileContent)
         {
             const string setPoolsPattern = @"public(\s|\n)*void(\s|\n)*SetPools(\s|\n)*\((\s|\n)*Contexts(\s|\n)*pools(\s|\n)*\)(\s|\n)*{(\s|\n)*(?<logic>(.|\s|\n)*?)(\s|\n)*}";
             var setPoolsLogic = Regex.Match(fileContent, setPoolsPattern).Groups["logic"].Value;
@@ -232,7 +225,7 @@ namespace Entitas.Migration
             return fileContent;
         }
 
-        string migrateExecute(string fileContent)
+        string MigrateExecute(string fileContent)
         {
             const string reactiveSystemExecute = @"public(\s|\n)*void(\s|\n)*Execute(\s|\n)*\((\s|\n)*List";
             const string reactiveSystemExecuteUsing = @"public(\s|\n)*void(\s|\n)*Execute(\s|\n)*\((\s|\n)*System.Collections.Generic.List";

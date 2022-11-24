@@ -1,22 +1,20 @@
+using System.Linq;
+
 namespace Entitas.Migration
 {
     public class M0300 : IMigration
     {
-        public string version => "0.30.0";
-        public string workingDirectory => "project root";
-        public string description => "Updates Entitas.properties to use renamed code generators";
+        public string Version => "0.30.0";
+        public string WorkingDirectory => "project root";
+        public string Description => "Updates Entitas.properties to use renamed code generators";
 
-        public MigrationFile[] Migrate(string path)
-        {
-            var files = MigrationUtils.GetFiles(path, "Entitas.properties");
-            for (var i = 0; i < files.Length; i++)
+        public MigrationFile[] Migrate(string path) => MigrationUtils.GetFiles(path, "Entitas.properties")
+            .Select(file =>
             {
-                var file = files[i];
                 file.FileContent = file.FileContent.Replace("ComponentsGenerator", "ComponentExtensionsGenerator");
                 file.FileContent = file.FileContent.Replace("PoolAttributeGenerator", "PoolAttributesGenerator");
-            }
-
-            return files;
-        }
+                return file;
+            })
+            .ToArray();
     }
 }

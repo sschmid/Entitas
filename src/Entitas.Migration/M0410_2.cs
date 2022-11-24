@@ -4,9 +4,9 @@ namespace Entitas.Migration
 {
     public class M0410_2 : IMigration
     {
-        public string version => "0.41.0-2";
-        public string workingDirectory => "where generated files are located";
-        public string description => "Adding temporary Feature class";
+        public string Version => "0.41.0-2";
+        public string WorkingDirectory => "where generated files are located";
+        public string Description => "Adding temporary Feature class";
 
         public MigrationFile[] Migrate(string path)
         {

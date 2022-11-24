@@ -12,7 +12,7 @@ namespace Entitas.Migration.Tests
         [Fact]
         public void GetsSourceFilesOnly()
         {
-            var files = MigrationUtils.GetFiles(FixturePath);
+            var files = MigrationUtils.GetFiles(FixturePath).ToArray();
             files.Length.Should().Be(6);
             files.Any(file => file.FileName == Path.Combine(FixturePath, "SourceFile.cs")).Should().BeTrue();
             files.Any(file => file.FileName == Path.Combine(FixturePath, Path.Combine("SubFolder", "SourceFile2.cs"))).Should().BeTrue();

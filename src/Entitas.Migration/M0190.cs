@@ -5,23 +5,20 @@ namespace Entitas.Migration
 {
     public class M0190 : IMigration
     {
-        public string version => "0.19.0";
-        public string workingDirectory => "where all systems are located";
-        public string description => "Migrates IReactiveSystem.Execute to accept List<Entity>";
+        public string Version => "0.19.0";
+        public string WorkingDirectory => "where all systems are located";
+        public string Description => "Migrates IReactiveSystem.Execute to accept List<Entity>";
 
-        const string EXECUTE_PATTERN = @"public\s*void\s*Execute\s*\(\s*Entity\s*\[\s*\]\s*entities\s*\)";
-        const string EXECUTE_REPLACEMENT = "public void Execute(System.Collections.Generic.List<Entity> entities)";
+        const string ExecutePattern = @"public\s*void\s*Execute\s*\(\s*Entity\s*\[\s*\]\s*entities\s*\)";
+        const string ExecuteReplacement = "public void Execute(System.Collections.Generic.List<Entity> entities)";
 
-        public MigrationFile[] Migrate(string path)
-        {
-            var files = MigrationUtils.GetFiles(path)
-                .Where(file => Regex.IsMatch(file.FileContent, EXECUTE_PATTERN))
-                .ToArray();
-
-            for (var i = 0; i < files.Length; i++) 
-                files[i].FileContent = Regex.Replace(files[i].FileContent, EXECUTE_PATTERN, EXECUTE_REPLACEMENT, RegexOptions.Multiline);
-
-            return files;
-        }
+        public MigrationFile[] Migrate(string path) => MigrationUtils.GetFiles(path)
+            .Where(file => Regex.IsMatch(file.FileContent, ExecutePattern))
+            .Select(file =>
+            {
+                file.FileContent = Regex.Replace(file.FileContent, ExecutePattern, ExecuteReplacement, RegexOptions.Multiline);
+                return file;
+            })
+            .ToArray();
     }
 }

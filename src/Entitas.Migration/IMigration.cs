@@ -2,9 +2,9 @@ namespace Entitas.Migration
 {
     public interface IMigration
     {
-        string version { get; }
-        string workingDirectory { get; }
-        string description { get; }
+        string Version { get; }
+        string WorkingDirectory { get; }
+        string Description { get; }
 
         MigrationFile[] Migrate(string path);
     }

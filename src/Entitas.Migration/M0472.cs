@@ -1,19 +1,16 @@
-﻿namespace Entitas.Migration
+﻿using System.Linq;
+
+namespace Entitas.Migration
 {
     public class M0472 : IMigration
     {
-        public string version => "0.47.2";
-        public string workingDirectory => "project root";
-        public string description => "Updates properties to use renamed keys";
+        public string Version => "0.47.2";
+        public string WorkingDirectory => "project root";
+        public string Description => "Updates properties to use renamed keys";
 
-        public MigrationFile[] Migrate(string path)
-        {
-            var properties = MigrationUtils.GetFiles(path, "*.properties");
-
-            for (var i = 0; i < properties.Length; i++)
+        public MigrationFile[] Migrate(string path) => MigrationUtils.GetFiles(path, "*.properties")
+            .Select(file =>
             {
-                var file = properties[i];
-
                 file.FileContent = file.FileContent.Replace("CodeGenerator.SearchPaths", "Jenny.SearchPaths");
 
                 file.FileContent = file.FileContent.Replace("CodeGenerator.Plugins", "Jenny.Plugins");
@@ -28,9 +25,8 @@
 
                 file.FileContent = file.FileContent.Replace("CodeGenerator.Server.Port", "Jenny.Server.Port");
                 file.FileContent = file.FileContent.Replace("CodeGenerator.Client.Host", "Jenny.Client.Host");
-            }
-
-            return properties;
-        }
+                return file;
+            })
+            .ToArray();
     }
 }

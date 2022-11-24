@@ -47,13 +47,13 @@ namespace Entitas.Migration.Unity.Editor
                 for (var i = 0; i < _migrations.Length; i++)
                 {
                     var migration = _migrations[i];
-                    _showMigration[i] = EditorLayout.DrawSectionHeaderToggle(migration.version, _showMigration[i]);
+                    _showMigration[i] = EditorLayout.DrawSectionHeaderToggle(migration.Version, _showMigration[i]);
                     if (_showMigration[i])
                     {
                         EditorLayout.BeginSectionContent();
                         {
-                            EditorGUILayout.LabelField(migration.description, descriptionStyle);
-                            if (GUILayout.Button($"Apply migration {migration.version}")) 
+                            EditorGUILayout.LabelField(migration.Description, descriptionStyle);
+                            if (GUILayout.Button($"Apply migration {migration.Version}")) 
                                 migrate(migration, this);
                         }
                         EditorLayout.EndSectionContent();
@@ -75,16 +75,16 @@ namespace Entitas.Migration.Unity.Editor
             {
                 window.Close();
                 EditorUtility.DisplayDialog("Migrate",
-                    $"Please select the folder, {migration.workingDirectory}.",
+                    $"Please select the folder, {migration.WorkingDirectory}.",
                     "I will select the requested folder"
                 );
 
                 var path = "Assets/";
-                path = EditorUtility.OpenFolderPanel($"{migration.version}: {migration.workingDirectory}", path, string.Empty);
+                path = EditorUtility.OpenFolderPanel($"{migration.Version}: {migration.WorkingDirectory}", path, string.Empty);
                 if (!string.IsNullOrEmpty(path))
                 {
                     var changedFiles = migration.Migrate(path);
-                    Debug.Log($"Applying {migration.version}");
+                    Debug.Log($"Applying {migration.Version}");
                     foreach (var file in changedFiles)
                     {
                         MigrationUtils.WriteFiles(changedFiles);
