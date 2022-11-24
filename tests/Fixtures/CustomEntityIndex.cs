@@ -18,8 +18,8 @@ namespace MyNamespace
                 var position = c as PositionComponent ?? e.position;
                 var size = c as SizeComponent ?? e.size;
                 _cachedList.Clear();
-                for (var x = position.x; x < position.x + size.width; x++)
-                for (var y = position.y; y < position.y + size.height; y++)
+                for (var x = position.X; x < position.X + size.Width; x++)
+                for (var y = position.Y; y < position.Y + size.Height; y++)
                     _cachedList.Add(new IntVector2(x, y));
 
                 return _cachedList.ToArray();
@@ -43,27 +43,27 @@ namespace MyNamespace
 [Test1]
 public class PositionComponent : IComponent
 {
-    public int x;
-    public int y;
+    public int X;
+    public int Y;
 }
 
 [Test1]
 public class SizeComponent : IComponent
 {
-    public int width;
-    public int height;
+    public int Width;
+    public int Height;
 }
 
 public struct IntVector2 : IEquatable<IntVector2>
 {
-    public int x;
-    public int y;
+    public int X;
+    public int Y;
 
     public IntVector2(int x, int y)
     {
-        this.x = x;
-        this.y = y;
+        X = x;
+        Y = y;
     }
 
-    public bool Equals(IntVector2 other) => other.x == x && other.y == y;
+    public bool Equals(IntVector2 other) => other.X == X && other.Y == Y;
 }

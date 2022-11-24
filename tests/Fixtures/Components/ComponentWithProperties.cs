@@ -5,17 +5,17 @@ using Entitas.Plugins.Attributes;
 public class ComponentWithProperties : IComponent
 {
     // Has one public property
-    [TestMember("myProperty")]
-    public string publicProperty { get; set; }
+    [TestMember("MyProperty")]
+    public string PublicProperty { get; set; }
 
     // Should be ignored
-    public static bool publicStaticProperty { get; set; }
+    public static bool PublicStaticProperty { get; set; }
     bool _privateProperty { get; set; }
     static bool _privateStaticProperty { get; set; }
 
-    public string publicPropertyGet => null;
+    public string PublicPropertyGet => null;
 
-    public string publicPropertySet
+    public string PublicPropertySet
     {
         set { }
     }

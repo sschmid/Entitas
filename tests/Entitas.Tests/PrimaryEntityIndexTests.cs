@@ -152,7 +152,7 @@ namespace Entitas.Tests
             return new PrimaryEntityIndex<Test1Entity, string>(
                 "TestIndex",
                 _context.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA)),
-                (e, c) => (c as NameAgeComponent ?? (NameAgeComponent)e.GetComponent(CID.ComponentA)).name);
+                (e, c) => (c as NameAgeComponent ?? (NameAgeComponent)e.GetComponent(CID.ComponentA)).Name);
         }
 
         PrimaryEntityIndex<Test1Entity, string> CreateMultiKeyPrimaryEntityIndex()
@@ -162,7 +162,7 @@ namespace Entitas.Tests
                 _multiKeyContext.GetGroup(Matcher<Test1Entity>.AllOf(CID.ComponentA)),
                 (e, c) =>
                 {
-                    var name = (c as NameAgeComponent ?? (NameAgeComponent)e.GetComponent(CID.ComponentA)).name;
+                    var name = (c as NameAgeComponent ?? (NameAgeComponent)e.GetComponent(CID.ComponentA)).Name;
                     return new[] {$"{name}1", $"{name}2"};
                 });
         }
@@ -170,7 +170,7 @@ namespace Entitas.Tests
         static Test1Entity CreateNameAgeEntity(IContext<Test1Entity> context, string name = Name)
         {
             var nameAgeComponent = new NameAgeComponent();
-            nameAgeComponent.name = name;
+            nameAgeComponent.Name = name;
             var entity = context.CreateEntity();
             entity.AddComponent(CID.ComponentA, nameAgeComponent);
             return entity;

@@ -132,10 +132,10 @@ entitas::jenny() {
 entitas::generate() {
   local properties=(
     'readme/Jenny.properties'
-    'Tests/TestFixtures/Jenny.properties'
+    'Tests/Fixtures/Jenny.properties'
   )
   local dir jenny
-  jenny="$(pwd)/src/Entitas.CodeGeneration/jenny/Entitas.CodeGeneration.Program.csproj"
+  jenny="$(pwd)/tests/Entitas.Plugins.Program/Entitas.Plugins.Program.csproj"
   for p in "${properties[@]}"; do
     dir="$(dirname "${p}")"
     pushd "${dir}" > /dev/null || exit
@@ -169,7 +169,7 @@ entitas::pack() {
   local entitas_editor_dir="${entitas_dir}/Editor"
   local entitas_jenny_dir="${jenny_dir}/Jenny/Plugins/Entitas"
   local entitas_images_dir="${entitas_editor_dir}/Images"
-  _clean_dir "${project_dir}" "${jenny_dir}" "${entitas_dir}" "${entitas_editor_dir}" "${entitas_jenny_dir}" "${entitas_images_dir}" 
+  _clean_dir "${project_dir}" "${jenny_dir}" "${entitas_dir}" "${entitas_editor_dir}" "${entitas_jenny_dir}" "${entitas_images_dir}"
 
   _sync "${DESPERATEDEVS_DIR}/Unity/Assets/" "${project_dir}"
   _sync "${DESPERATEDEVS_DIR}/Jenny/" "${jenny_dir}"
@@ -181,14 +181,14 @@ entitas::pack() {
     Entitas.CodeGeneration.Attributes
     Entitas.Unity
     Entitas.VisualDebugging.Unity
-    
+
     # editor
 #    Entitas.Blueprints.Unity.Editor
     Entitas.Migration
     Entitas.Migration.Unity.Editor
     Entitas.Unity.Editor
     Entitas.VisualDebugging.Unity.Editor
-    
+
     # plugins
 #    Entitas.Blueprints.CodeGeneration.Plugins
 #    Entitas.Blueprints.CodeGeneration.Unity.Plugins
@@ -224,7 +224,7 @@ entitas::pack() {
     README.md
     CHANGELOG.md
   )
-    
+
   for p in "${projects[@]}"; do _sync "src/${p}/src/bin/Release/" "${entitas_dir}"; done
   for f in "${to_editor[@]}"; do mv "${entitas_dir}/${f}.dll" "${entitas_editor_dir}"; done
   for f in "${to_plugins[@]}"; do mv "${entitas_dir}/${f}.dll" "${entitas_jenny_dir}"; done

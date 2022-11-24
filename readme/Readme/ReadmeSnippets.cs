@@ -28,7 +28,7 @@ namespace Readme
             {
                 var pos = entity.position;
                 var vel = entity.velocity;
-                entity.ReplacePosition(pos.value + vel.value);
+                entity.ReplacePosition(pos.Value + vel.Value);
             }
         }
 
@@ -46,7 +46,7 @@ namespace Readme
             entity.isMovable = true;
 
             entity.ReplacePosition(new Vector3(10, 20, 30));
-            entity.ReplaceHealth(entity.health.value - 1);
+            entity.ReplaceHealth(entity.health.Value - 1);
             entity.isMovable = false;
 
             entity.RemovePosition();
@@ -117,7 +117,7 @@ namespace Readme
         static void UserComponent(GameContext context, UserComponent component)
         {
             var entity = context.userEntity;
-            var name = context.user.name;
+            var name = context.user.Name;
             var has = context.hasUser;
 
             context.SetUser("John", 42);

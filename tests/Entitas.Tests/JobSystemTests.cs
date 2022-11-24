@@ -21,7 +21,7 @@ namespace Entitas.Tests
             var e = _context.CreateEntity();
             e.AddNameAge("e", -1);
             system.Execute();
-            e.nameAge.name.Should().Be("e-Processed");
+            e.nameAge.Name.Should().Be("e-Processed");
         }
 
         [Fact(Skip = "Please run test individually")]
@@ -36,11 +36,11 @@ namespace Entitas.Tests
             var entities = _context.GetEntities();
             entities.Length.Should().Be(4);
             for (var i = 0; i < entities.Length; i++)
-                entities[i].nameAge.name.Should().Be($"e{i}-Processed");
+                entities[i].nameAge.Name.Should().Be($"e{i}-Processed");
 
-            entities[0].nameAge.age.Should().Be(entities[1].nameAge.age);
-            entities[2].nameAge.age.Should().Be(entities[3].nameAge.age);
-            entities[0].nameAge.age.Should().NotBe(entities[2].nameAge.age);
+            entities[0].nameAge.Age.Should().Be(entities[1].nameAge.Age);
+            entities[2].nameAge.Age.Should().Be(entities[3].nameAge.Age);
+            entities[0].nameAge.Age.Should().NotBe(entities[2].nameAge.Age);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace Entitas.Tests
             var entities = _context.GetEntities();
             entities.Length.Should().Be(103);
             for (var i = 0; i < entities.Length; i++)
-                entities[i].nameAge.name.Should().Be($"e{i}-Processed");
+                entities[i].nameAge.Name.Should().Be($"e{i}-Processed");
         }
 
         [Fact]

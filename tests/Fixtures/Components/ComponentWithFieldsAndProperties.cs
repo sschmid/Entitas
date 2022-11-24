@@ -5,20 +5,20 @@ using Entitas.Plugins.Attributes;
 public class ComponentWithFieldsAndProperties : IComponent
 {
     // Has one public field
-    public string publicField;
+    public string PublicField;
 
     // Has one public property
-    public string publicProperty { get; set; }
+    public string PublicProperty { get; set; }
 
 #pragma warning disable
 
     // Should be ignored
-    public static bool publicStaticField;
+    public static bool PublicStaticField;
     bool _privateField;
     static bool _privateStaticField;
 
     // Should be ignored
-    public static bool publicStaticProperty { get; set; }
+    public static bool PublicStaticProperty { get; set; }
     bool _privateProperty { get; set; }
     static bool _privateStaticProperty { get; set; }
 }

@@ -14,7 +14,7 @@ namespace Entitas.Tests
             var context = new MyTest1Context();
             _entity = context.CreateEntity();
             _target = context.CreateEntity();
-            _nameAge = new NameAgeComponent {name = "Max", age = 42};
+            _nameAge = new NameAgeComponent {Name = "Max", Age = 42};
         }
 
         [Fact]
@@ -40,8 +40,8 @@ namespace Entitas.Tests
             _target.GetComponent(CID.ComponentB).Should().NotBeSameAs(_nameAge);
 
             var clonedComponent = (NameAgeComponent)_target.GetComponent(CID.ComponentB);
-            clonedComponent.name.Should().Be(_nameAge.name);
-            clonedComponent.age.Should().Be(_nameAge.age);
+            clonedComponent.Name.Should().Be(_nameAge.Name);
+            clonedComponent.Age.Should().Be(_nameAge.Age);
         }
 
         [Fact]
@@ -67,8 +67,8 @@ namespace Entitas.Tests
             var copy = _target.GetComponent(CID.ComponentB);
             copy.Should().NotBeSameAs(_nameAge);
             copy.Should().NotBeSameAs(component);
-            ((NameAgeComponent)copy).name.Should().Be(_nameAge.name);
-            ((NameAgeComponent)copy).age.Should().Be(_nameAge.age);
+            ((NameAgeComponent)copy).Name.Should().Be(_nameAge.Name);
+            ((NameAgeComponent)copy).Age.Should().Be(_nameAge.Age);
         }
 
         [Fact]

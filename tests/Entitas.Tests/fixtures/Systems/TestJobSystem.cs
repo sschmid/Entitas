@@ -15,7 +15,7 @@ public sealed class TestJobSystem : JobSystem<Test1Entity> {
             throw exception;
         }
 
-        entity.nameAge.name += "-Processed";
-        entity.nameAge.age = Thread.CurrentThread.ManagedThreadId;
+        entity.nameAge.Name += "-Processed";
+        entity.nameAge.Age = Thread.CurrentThread.ManagedThreadId;
     }
 }

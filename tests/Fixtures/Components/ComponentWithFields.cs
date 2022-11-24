@@ -5,12 +5,12 @@ using Entitas.Plugins.Attributes;
 public class ComponentWithFields : IComponent
 {
     // Has one public field
-    [TestMember("myField")]
-    public string publicField;
+    [TestMember("MyField")]
+    public string PublicField;
 
     // Should be ignored
 #pragma warning disable
-    public static bool publicStaticField;
+    public static bool PublicStaticField;
     bool _privateField;
     static bool _privateStaticField;
 }

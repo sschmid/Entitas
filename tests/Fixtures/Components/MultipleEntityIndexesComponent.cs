@@ -7,9 +7,9 @@ namespace My.Namespace
     public class MultipleEntityIndexesComponent : IComponent
     {
         [EntityIndex]
-        public string value;
+        public string Value;
 
         [EntityIndex]
-        public string value2;
+        public string Value2;
     }
 }

@@ -14,14 +14,14 @@ namespace Entitas.Plugins
 
     public void Add${EventListener}(I${EventListener} value) {
         var listeners = has${EventListener}
-            ? ${eventListener}.value
+            ? ${eventListener}.Value
             : new System.Collections.Generic.List<I${EventListener}>();
         listeners.Add(value);
         Replace${EventListener}(listeners);
     }
 
     public void Remove${EventListener}(I${EventListener} value, bool removeComponentWhenEmpty = true) {
-        var listeners = ${eventListener}.value;
+        var listeners = ${eventListener}.Value;
         listeners.Remove(value);
         if (removeComponentWhenEmpty && listeners.Count == 0) {
             Remove${EventListener}();

@@ -183,12 +183,12 @@ namespace Entitas.Tests
             new PrimaryEntityIndex<Test1Entity, string>(
                 "TestIndex",
                 _context.GetGroup((Matcher<Test1Entity>)Matcher<Test1Entity>.AllOf(CID.ComponentA)),
-                (_, c) => ((NameAgeComponent)c).name
+                (_, c) => ((NameAgeComponent)c).Name
             );
 
             var nameAge = new NameAgeComponent();
-            nameAge.name = "Max";
-            nameAge.age = 42;
+            nameAge.Name = "Max";
+            nameAge.Age = 42;
 
             _context.CreateEntity().AddComponent(CID.ComponentA, nameAge);
             PrintErrorMessage(() => _context.CreateEntity().AddComponent(CID.ComponentA, nameAge));

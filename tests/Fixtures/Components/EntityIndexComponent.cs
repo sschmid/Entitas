@@ -7,6 +7,6 @@ namespace My.Namespace
     public class EntityIndexComponent : IComponent
     {
         [EntityIndex]
-        public string value;
+        public string Value;
     }
 }

@@ -120,7 +120,7 @@ namespace Entitas.Plugins.Roslyn
             {
                 var data = CreateDataForComponent(type);
                 data.Type = componentName.AddComponentSuffix();
-                data.MemberData = new[] {new MemberData(type.ToCompilableString(), "value")};
+                data.MemberData = new[] {new MemberData(type.ToCompilableString(), "Value")};
                 return data;
             }).ToArray();
         }
@@ -132,7 +132,7 @@ namespace Entitas.Plugins.Roslyn
                 var optionalContext = dataForEvent.Contexts.Length > 1 ? context : string.Empty;
                 var listener = optionalContext + data.EventComponentName(eventData) + eventData.GetEventTypeSuffix().AddListenerSuffix();
                 dataForEvent.Type = listener.AddComponentSuffix();
-                dataForEvent.MemberData = new[] {new MemberData($"System.Collections.Generic.List<I{listener}>", "value")};
+                dataForEvent.MemberData = new[] {new MemberData($"System.Collections.Generic.List<I{listener}>", "Value")};
                 dataForEvent.Contexts = new[] {context};
                 dataForEvent.IsUnique = false;
                 dataForEvent.GeneratesObject = false;

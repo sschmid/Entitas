@@ -232,7 +232,7 @@ namespace Entitas.Tests
         {
             var system = new ReactiveSystemSpy(
                 _context.CreateCollector(Matcher<Test1Entity>.AllOf(CID.ComponentA, CID.ComponentB)),
-                e => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).age > 42
+                e => ((NameAgeComponent)e.GetComponent(CID.ComponentA)).Age > 42
             );
 
             _context.CreateEntity()
@@ -241,11 +241,11 @@ namespace Entitas.Tests
 
             var e1 = _context.CreateEntity();
             e1.AddComponentB();
-            e1.AddComponent(CID.ComponentA, new NameAgeComponent {age = 10});
+            e1.AddComponent(CID.ComponentA, new NameAgeComponent {Age = 10});
 
             var e2 = _context.CreateEntity();
             e2.AddComponentB();
-            e2.AddComponent(CID.ComponentA, new NameAgeComponent {age = 50});
+            e2.AddComponent(CID.ComponentA, new NameAgeComponent {Age = 50});
 
             var didExecute = 0;
             system.executeAction = delegate

@@ -38,7 +38,7 @@ namespace Entitas.Plugins
             ${cachedAccess}
             foreach (var listenerEntity in _listeners.GetEntities(_entityBuffer)) {
                 _listenerBuffer.Clear();
-                _listenerBuffer.AddRange(listenerEntity.${eventListener}.value);
+                _listenerBuffer.AddRange(listenerEntity.${eventListener}.Value);
                 foreach (var listener in _listenerBuffer) {
                     listener.On${EventComponentName}${EventType}(e${methodArgs});
                 }
@@ -71,7 +71,7 @@ namespace Entitas.Plugins
         foreach (var e in entities) {
             ${cachedAccess}
             _listenerBuffer.Clear();
-            _listenerBuffer.AddRange(e.${eventListener}.value);
+            _listenerBuffer.AddRange(e.${eventListener}.Value);
             foreach (var listener in _listenerBuffer) {
                 listener.On${ComponentName}${EventType}(e${methodArgs});
             }

@@ -45,19 +45,19 @@ namespace Entitas.Blueprints.Tests
         public void CreatesComponentBlueprintFromComponentWithMembers()
         {
             var component = new NameAgeComponent();
-            component.name = "Max";
-            component.age = 42;
+            component.Name = "Max";
+            component.Age = 42;
 
             var componentBlueprint = new ComponentBlueprint(24, component);
             componentBlueprint.index.Should().Be(24);
             componentBlueprint.fullTypeName.Should().Be(component.GetType().FullName);
             componentBlueprint.members.Length.Should().Be(2);
 
-            componentBlueprint.members[0].name.Should().Be("name");
-            componentBlueprint.members[0].value.Should().Be(component.name);
+            componentBlueprint.members[0].name.Should().Be("Name");
+            componentBlueprint.members[0].value.Should().Be(component.Name);
 
-            componentBlueprint.members[1].name.Should().Be("age");
-            componentBlueprint.members[1].value.Should().Be(component.age);
+            componentBlueprint.members[1].name.Should().Be("Age");
+            componentBlueprint.members[1].value.Should().Be(component.Age);
         }
 
         [Fact]
@@ -68,13 +68,13 @@ namespace Entitas.Blueprints.Tests
             componentBlueprint.index = CID.ComponentB;
             componentBlueprint.members = new[]
             {
-                new SerializableMember("publicField", "publicFieldValue"),
-                new SerializableMember("publicProperty", "publicPropertyValue")
+                new SerializableMember("PublicField", "PublicFieldValue"),
+                new SerializableMember("PublicProperty", "PublicPropertyValue")
             };
 
             var component = (ComponentWithFieldsAndProperties)componentBlueprint.CreateComponent(_entity);
-            component.publicField.Should().Be("publicFieldValue");
-            component.publicProperty.Should().Be("publicPropertyValue");
+            component.PublicField.Should().Be("PublicFieldValue");
+            component.PublicProperty.Should().Be("PublicPropertyValue");
         }
 
         [Fact]
@@ -106,8 +106,8 @@ namespace Entitas.Blueprints.Tests
             _entity.AddComponentA();
 
             var component = new NameAgeComponent();
-            component.name = "Max";
-            component.age = 42;
+            component.Name = "Max";
+            component.Age = 42;
 
             _entity.AddComponent(CID.ComponentB, component);
 
@@ -132,8 +132,8 @@ namespace Entitas.Blueprints.Tests
             _entity.GetComponent(CID.ComponentA).GetType().Should().Be(typeof(ComponentA));
             var nameAgeComponent = (NameAgeComponent)_entity.GetComponent(CID.ComponentB);
             nameAgeComponent.GetType().Should().Be(typeof(NameAgeComponent));
-            nameAgeComponent.name.Should().Be("Max");
-            nameAgeComponent.age.Should().Be(42);
+            nameAgeComponent.Name.Should().Be("Max");
+            nameAgeComponent.Age.Should().Be(42);
         }
 
         [Fact]
@@ -150,8 +150,8 @@ namespace Entitas.Blueprints.Tests
         {
             var blueprint = CreateBlueprint();
             var nameAgeComponent = new NameAgeComponent();
-            nameAgeComponent.name = "Jack";
-            nameAgeComponent.age = 24;
+            nameAgeComponent.Name = "Jack";
+            nameAgeComponent.Age = 24;
             _entity.AddComponent(CID.ComponentB, nameAgeComponent);
             _entity.ApplyBlueprint(blueprint, true);
         }
@@ -187,8 +187,8 @@ namespace Entitas.Blueprints.Tests
             component2.fullTypeName = typeof(NameAgeComponent).FullName;
             component2.members = new[]
             {
-                new SerializableMember("name", "Max"),
-                new SerializableMember("age", 42)
+                new SerializableMember("Name", "Max"),
+                new SerializableMember("Age", 42)
             };
 
             var blueprint = new Blueprint();

@@ -12,7 +12,7 @@ namespace Entitas.Plugins
         const string Template =
             @"[Entitas.Plugins.Attributes.DontGenerate(false)]
 public sealed class ${EventListenerComponent} : Entitas.IComponent {
-    public System.Collections.Generic.List<I${EventListener}> value;
+    public System.Collections.Generic.List<I${EventListener}> Value;
 }
 ";
 

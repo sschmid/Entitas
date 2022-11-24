@@ -4,8 +4,8 @@ using Entitas.Plugins.Attributes;
 public class MultiplePrimaryEntityIndexesComponent : IComponent
 {
     [PrimaryEntityIndex]
-    public string value;
+    public string Value;
 
     [PrimaryEntityIndex]
-    public string value2;
+    public string Value2;
 }

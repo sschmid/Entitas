@@ -17,8 +17,8 @@ public class Terminology
     void EntitasAPI(GameEntity entity)
     {
         var isPlayer = entity.isPlayer;
-        var position = entity.position.value;
-        var health = entity.health.value;
+        var position = entity.position.Value;
+        var health = entity.health.Value;
 
         entity.ReplaceHealth(50);
         entity.RemovePosition();
@@ -91,12 +91,12 @@ public class Terminology
  */
 public sealed class PositionComponent : IComponent
 {
-    public Vector3 value;
+    public Vector3 Value;
 }
 
 public sealed class HealthComponent : IComponent
 {
-    public int value;
+    public int Value;
 }
 
 public sealed class PlayerComponent : IComponent { }
@@ -106,11 +106,11 @@ public sealed class GameOverComponent : IComponent { }
 [Unique]
 public sealed class HighscoreComponent : IComponent
 {
-    public int value;
+    public int Value;
 }
 
 [Input]
 public sealed class InputComponent : IComponent
 {
-    public Vector2 position;
+    public Vector2 Position;
 }

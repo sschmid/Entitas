@@ -4,5 +4,5 @@
 public class ClassWithEntitIndexAttribute
 {
     [EntityIndex]
-    public string value;
+    public string Value;
 }

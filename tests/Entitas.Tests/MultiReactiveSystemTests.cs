@@ -13,7 +13,7 @@ namespace Entitas.Tests
             system.executeAction = entities =>
             {
                 foreach (var entity in entities)
-                    entity.nameAge.age += 10;
+                    entity.nameAge.Age += 10;
             };
 
             var e1 = contexts.test1.CreateEntity();
@@ -28,8 +28,8 @@ namespace Entitas.Tests
             system.entities.Should().Contain(e1);
             system.entities.Should().Contain(e2);
 
-            e1.nameAge.age.Should().Be(52);
-            e2.nameAge.age.Should().Be(34);
+            e1.nameAge.Age.Should().Be(52);
+            e2.nameAge.Age.Should().Be(34);
             system.didExecute.Should().Be(1);
 
             (e1.Aerc as SafeAERC)?.Owners.Should().HaveCount(2);

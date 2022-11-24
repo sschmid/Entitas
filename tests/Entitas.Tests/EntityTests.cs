@@ -227,7 +227,7 @@ namespace Entitas.Tests
         [Fact]
         public void UsesComponentToString()
         {
-            _entity.AddComponent(0, new NameAgeComponent {name = "Max", age = 42});
+            _entity.AddComponent(0, new NameAgeComponent {Name = "Max", Age = 42});
             _entity.ToString().Should().Be("Entity_0(NameAge(Max, 42))");
         }
 
@@ -272,8 +272,8 @@ namespace Entitas.Tests
             component.GetType().Should().Be(type);
 
             var nameAgeComponent = ((NameAgeComponent)component);
-            nameAgeComponent.name.Should().BeNull();
-            nameAgeComponent.age.Should().Be(0);
+            nameAgeComponent.Name.Should().BeNull();
+            nameAgeComponent.Age.Should().Be(0);
         }
 
         [Fact]

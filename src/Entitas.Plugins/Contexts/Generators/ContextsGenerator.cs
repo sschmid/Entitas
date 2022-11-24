@@ -27,7 +27,7 @@ namespace Entitas.Plugins
 
 ${contextPropertiesList}
 
-    public Entitas.IContext[] allContexts { get { return new Entitas.IContext [] { ${contextList} }; } }
+    public Entitas.IContext[] AllContexts { get { return new Entitas.IContext [] { ${contextList} }; } }
 
     public Contexts() {
 ${contextAssignmentsList}
@@ -43,7 +43,7 @@ ${contextAssignmentsList}
     }
 
     public void Reset() {
-        var contexts = allContexts;
+        var contexts = AllContexts;
         for (int i = 0; i < contexts.Length; i++) {
             contexts[i].Reset();
         }

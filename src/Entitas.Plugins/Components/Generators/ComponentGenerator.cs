@@ -14,7 +14,7 @@ namespace Entitas.Plugins
         const string ComponentTemplate =
             @"[Entitas.Plugins.Attributes.DontGenerate(false)]
 public sealed class ${FullComponentName} : Entitas.IComponent {
-    public ${Type} value;
+    public ${Type} Value;
 }
 ";
 

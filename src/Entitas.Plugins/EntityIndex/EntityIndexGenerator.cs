@@ -40,13 +40,13 @@ ${getIndexes}
             @"        ${context}.AddEntityIndex(new ${IndexType}(${context}));";
 
         const string GetIndexTemplate =
-            @"    public static System.Collections.Generic.HashSet<${Context}Entity> GetEntitiesWith${IndexName}(this ${Context}Context context, ${KeyType} ${MemberName}) {
-        return ((${IndexType}<${Context}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${IndexName})).GetEntities(${MemberName});
+            @"    public static System.Collections.Generic.HashSet<${Context}Entity> GetEntitiesWith${IndexName}(this ${Context}Context context, ${KeyType} ${memberName}) {
+        return ((${IndexType}<${Context}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${IndexName})).GetEntities(${memberName});
     }";
 
         const string GetPrimaryIndexTemplate =
-            @"    public static ${Context}Entity GetEntityWith${IndexName}(this ${Context}Context context, ${KeyType} ${MemberName}) {
-        return ((${IndexType}<${Context}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${IndexName})).GetEntity(${MemberName});
+            @"    public static ${Context}Entity GetEntityWith${IndexName}(this ${Context}Context context, ${KeyType} ${memberName}) {
+        return ((${IndexType}<${Context}Entity, ${KeyType}>)context.GetEntityIndex(Contexts.${IndexName})).GetEntity(${memberName});
     }";
 
         const string CustomMethodTemplate =
@@ -160,7 +160,7 @@ ${getIndexes}
                     : data.Name)
                 .Replace("${IndexType}", data.Type)
                 .Replace("${KeyType}", data.KeyType)
-                .Replace("${MemberName}", memberName);
+                .Replace("${memberName}", memberName.ToLowerFirst());
         }
 
         string GetCustomMethods(EntityIndexData data) => string.Join("\n", data.CustomMethods
