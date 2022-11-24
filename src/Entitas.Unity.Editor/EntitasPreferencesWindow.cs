@@ -7,7 +7,7 @@ namespace Entitas.Unity.Editor
 {
     public class EntitasPreferencesWindow : PreferencesWindow
     {
-        [MenuItem(EntitasMenuItems.preferences, false, EntitasMenuItemPriorities.preferences)]
+        [MenuItem(EntitasMenuItems.Preferences, false, EntitasMenuItemPriorities.Preferences)]
         public static void OpenPreferences()
         {
             var window = GetWindow<EntitasPreferencesWindow>(true, $"Entitas {CheckForUpdates.GetLocalVersion()}");

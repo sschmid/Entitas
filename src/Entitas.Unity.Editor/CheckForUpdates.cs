@@ -50,7 +50,7 @@ namespace Entitas.Unity.Editor
         const string URLGitHubReleases = "https://github.com/sschmid/Entitas/releases";
         const string URLAssetStore = "http://u3d.as/NuJ";
 
-        [MenuItem(EntitasMenuItems.check_for_updates, false, EntitasMenuItemPriorities.check_for_updates)]
+        [MenuItem(EntitasMenuItems.CheckForUpdates, false, EntitasMenuItemPriorities.CheckForUpdates)]
         public static void DisplayUpdates() => DisplayUpdateInfo(GetUpdateInfo());
 
         public static UpdateInfo GetUpdateInfo() => new UpdateInfo(GetLocalVersion(), GetRemoteVersion());
