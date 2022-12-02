@@ -16,7 +16,8 @@ namespace Entitas.Plugins.Tests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
         static readonly string ProjectPath = Path.Combine(ProjectRoot, "tests", "Fixtures", "Fixtures.csproj");
-        static readonly string RoslynProjectPath = Path.Combine(ProjectRoot, "tests", "Entitas.Plugins.Roslyn.Tests", "fixtures", "exclude", "Entitas.Plugins.Roslyn.Tests.Project");
+        static readonly string RoslynProjectPath = Path.Combine(ProjectRoot, "tests", "Entitas.Plugins.Roslyn.Tests", "fixtures", "exclude",
+            "Entitas.Plugins.Roslyn.Tests.Project", "Entitas.Plugins.Roslyn.Tests.Project.csproj");
 
         INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
         INamedTypeSymbol[] _types;
@@ -364,8 +365,9 @@ namespace Entitas.Plugins.Tests
         [Fact]
         public void IgnoresDuplicatesFromNonComponents()
         {
-            var types = new[] {typeof(ClassToGenerate), typeof(ClassToGenerateComponent)};
-            var provider = new ComponentDataProvider(types);
+            var symbol1 = Types.Single(c => c.ToCompilableString() == typeof(ClassToGenerate).FullName);
+            var symbol2 = Types.Single(c => c.ToCompilableString() == typeof(ClassToGenerateComponent).FullName);
+            var provider = new Roslyn.ComponentDataProvider(new[] {symbol1, symbol2});
             provider.Configure(new TestPreferences(
                 "Entitas.Plugins.Contexts = Game, GameState"
             ));
