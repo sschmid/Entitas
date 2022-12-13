@@ -11,10 +11,9 @@ namespace Entitas.Plugins
         public bool RunInDryMode => true;
 
         const string Template =
-            @"public sealed class ${Context}Attribute : Entitas.Plugins.Attributes.ContextAttribute {
-
-    public ${Context}Attribute() : base(""${Context}"") {
-    }
+            @"public sealed class ${Context.Name}Attribute : Entitas.Plugins.Attributes.ContextAttribute
+{
+    public ${Context.Name}Attribute() : base(""${Context.Name}"") { }
 }
 ";
 
@@ -23,14 +22,10 @@ namespace Entitas.Plugins
             .Select(d => Generate(d))
             .ToArray();
 
-        CodeGenFile Generate(ContextData data)
-        {
-            var context = data.Name;
-            return new CodeGenFile(
-                Path.Combine(context, $"{context}Attribute.cs"),
-                Template.Replace(context),
-                GetType().FullName
-            );
-        }
+        CodeGenFile Generate(ContextData data) => new CodeGenFile(
+            Path.Combine(data.Name, $"{data.Name}Attribute.cs"),
+            data.ReplacePlaceholders(Template),
+            GetType().FullName
+        );
     }
 }
