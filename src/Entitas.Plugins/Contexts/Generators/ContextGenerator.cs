@@ -11,27 +11,24 @@ namespace Entitas.Plugins
         public bool RunInDryMode => true;
 
         const string Template =
-            @"public sealed partial class ${ContextType} : Entitas.Context<${EntityType}> {
-
-    public ${ContextType}()
-        : base(
-            ${Lookup}.TotalComponents,
-            0,
-            new Entitas.ContextInfo(
-                ""${Context}"",
-                ${Lookup}.componentNames,
-                ${Lookup}.componentTypes
-            ),
-            (entity) =>
-
+            @"public sealed partial class ${Context.Type} : Entitas.Context<${Entity.Type}>
+{
+    public ${Context.Type}() : base(
+        ${Lookup}.TotalComponents,
+        0,
+        new Entitas.ContextInfo(
+            ""${Context.Name}"",
+            ${Lookup}.ComponentNames,
+            ${Lookup}.ComponentTypes
+        ),
+        entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)
-                new Entitas.UnsafeAERC(),
+            new Entitas.UnsafeAERC(),
 #else
-                new Entitas.SafeAERC(entity),
+            new Entitas.SafeAERC(entity),
 #endif
-            () => new ${EntityType}()
-        ) {
-    }
+        () => new ${Entity.Type}()
+    ) { }
 }
 ";
 
@@ -40,14 +37,12 @@ namespace Entitas.Plugins
             .Select(d => Generate(d))
             .ToArray();
 
-        CodeGenFile Generate(ContextData data)
-        {
-            var context = data.Name;
-            return new CodeGenFile(
-                Path.Combine(context, $"{context.AddContextSuffix()}.cs"),
-                Template.Replace(context),
-                GetType().FullName
-            );
-        }
+        CodeGenFile Generate(ContextData data) => new CodeGenFile(
+            Path.Combine(data.Name, $"{data.Type}.cs"),
+            data.ReplacePlaceholders(Template)
+                // TODO remove Lookup
+                .Replace(data.Name),
+            GetType().FullName
+        );
     }
 }
