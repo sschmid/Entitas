@@ -5,7 +5,6 @@ using DesperateDevs.Roslyn;
 using DesperateDevs.Serialization;
 using Entitas.Plugins.Attributes;
 using Microsoft.CodeAnalysis;
-using Entitas.Plugins.Roslyn;
 using FluentAssertions;
 using Xunit;
 
@@ -17,8 +16,8 @@ namespace Entitas.Plugins.Tests
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
         static readonly string ProjectPath = Path.Combine(ProjectRoot, "tests", "Fixtures", "Fixtures.csproj");
 
-        INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
-        INamedTypeSymbol[] _types;
+        static INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
+        static INamedTypeSymbol[] _types;
 
         readonly CleanupData _dataRemove;
         readonly CleanupData _dataDestroy;

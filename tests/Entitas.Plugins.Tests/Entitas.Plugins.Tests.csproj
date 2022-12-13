@@ -30,7 +30,6 @@
     <ProjectReference Include="../Entitas.Tests/Entitas.Tests.csproj" />
     <ProjectReference Include="../Fixtures/Fixtures.csproj" />
     <ProjectReference Include="../../src/Entitas.Plugins/Entitas.Plugins.csproj" />
-    <ProjectReference Include="../../src/Entitas.Plugins.Roslyn/Entitas.Plugins.Roslyn.csproj" />
   </ItemGroup>
 
 </Project>

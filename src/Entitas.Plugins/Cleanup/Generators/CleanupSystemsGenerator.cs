@@ -4,7 +4,7 @@ using System.Linq;
 using Jenny;
 using Entitas.Plugins.Attributes;
 
-namespace Entitas.Plugins.Roslyn
+namespace Entitas.Plugins
 {
     public class CleanupSystemsGenerator : AbstractGenerator
     {

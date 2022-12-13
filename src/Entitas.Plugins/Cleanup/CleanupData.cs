@@ -1,7 +1,7 @@
 ﻿using Jenny;
 using Entitas.Plugins.Attributes;
 
-namespace Entitas.Plugins.Roslyn
+namespace Entitas.Plugins
 {
     public class CleanupData : CodeGeneratorData
     {

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>$(DefaultTargetFramework)</TargetFramework>
+    <TargetFramework>$(DefaultNetTargetFramework)</TargetFramework>
     <Version>1.14.1</Version>
   </PropertyGroup>
 

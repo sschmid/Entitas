@@ -8,7 +8,7 @@ using DesperateDevs.Serialization;
 using Entitas.Plugins.Attributes;
 using Microsoft.CodeAnalysis;
 
-namespace Entitas.Plugins.Roslyn
+namespace Entitas.Plugins
 {
     public class CleanupDataProvider : IDataProvider, IConfigurable, ICachable
     {

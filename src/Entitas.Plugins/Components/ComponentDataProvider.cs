@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Entitas.Plugins.Roslyn
+namespace Entitas.Plugins
 {
     public class ComponentDataProvider : IDataProvider, IConfigurable, ICachable
     {
