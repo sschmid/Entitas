@@ -83,7 +83,6 @@ namespace Entitas.Plugins.Tests
         public void GetsGenerateComponent()
         {
             _componentData.GeneratesObject.Should().BeFalse();
-            _componentData.ContainsKey(ComponentData.ObjectTypeKey).Should().BeFalse();
         }
 
         [Fact]
@@ -164,7 +163,7 @@ namespace Entitas.Plugins.Tests
             d[1].IsEvent.Should().BeFalse();
             d[1].Type.Should().Be("AnyStandardEventListenerComponent");
             d[1].MemberData.Length.Should().Be(1);
-            d[1].MemberData[0].Name.Should().Be("value");
+            d[1].MemberData[0].Name.Should().Be("Value");
             d[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<IAnyStandardEventListener>");
         }
 
@@ -185,13 +184,13 @@ namespace Entitas.Plugins.Tests
             d[1].IsEvent.Should().BeFalse();
             d[1].Type.Should().Be("Test1AnyMultipleContextStandardEventListenerComponent");
             d[1].MemberData.Length.Should().Be(1);
-            d[1].MemberData[0].Name.Should().Be("value");
+            d[1].MemberData[0].Name.Should().Be("Value");
             d[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest1AnyMultipleContextStandardEventListener>");
 
             d[2].IsEvent.Should().BeFalse();
             d[2].Type.Should().Be("Test2AnyMultipleContextStandardEventListenerComponent");
             d[2].MemberData.Length.Should().Be(1);
-            d[2].MemberData[0].Name.Should().Be("value");
+            d[2].MemberData[0].Name.Should().Be("Value");
             d[2].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest2AnyMultipleContextStandardEventListener>");
         }
 
@@ -323,14 +322,14 @@ namespace Entitas.Plugins.Tests
             d[1].GeneratesObject.Should().BeFalse();
             d[1].Type.Should().Be("Test1AnyEventToGenerateListenerComponent");
             d[1].MemberData.Length.Should().Be(1);
-            d[1].MemberData[0].Name.Should().Be("value");
+            d[1].MemberData[0].Name.Should().Be("Value");
             d[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest1AnyEventToGenerateListener>");
 
             d[2].IsEvent.Should().BeFalse();
             d[2].GeneratesObject.Should().BeFalse();
             d[2].Type.Should().Be("Test2AnyEventToGenerateListenerComponent");
             d[2].MemberData.Length.Should().Be(1);
-            d[2].MemberData[0].Name.Should().Be("value");
+            d[2].MemberData[0].Name.Should().Be("Value");
             d[2].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest2AnyEventToGenerateListener>");
         }
 

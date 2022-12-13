@@ -33,7 +33,7 @@ namespace Entitas.Plugins.Tests
             d.Contexts[1].Should().Be("Test2");
             d.KeyType.Should().Be("string");
             d.ComponentType.Should().Be("My.Namespace.EntityIndexComponent");
-            d.MemberName.Should().Be("value");
+            d.MemberName.Should().Be("Value");
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Entitas.Plugins.Tests
             d.Contexts[0].Should().Be("Game");
             d.KeyType.Should().Be("string");
             d.ComponentType.Should().Be("PrimaryEntityIndexComponent");
-            d.MemberName.Should().Be("value");
+            d.MemberName.Should().Be("Value");
         }
 
         [Fact]
