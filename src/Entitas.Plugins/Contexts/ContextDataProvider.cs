@@ -20,11 +20,17 @@ namespace Entitas.Plugins
             _contextConfig.Configure(preferences);
         }
 
+        // ReSharper disable once CoVariantArrayConversion
         public CodeGeneratorData[] GetData() => _contextConfig.Contexts
-            .Select(context => new ContextData
+            .Select(context =>
             {
-                Name = context.RemoveContextSuffix(),
-                Type = context.AddContextSuffix()
+                var name = context.RemoveContextSuffix();
+                return new ContextData
+                {
+                    Name = name,
+                    Type = context.AddContextSuffix(),
+                    EntityType = name.AddEntitySuffix()
+                };
             }).ToArray();
     }
 }

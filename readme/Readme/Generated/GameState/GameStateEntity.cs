@@ -1,2 +1,1 @@
-public sealed partial class GameStateEntity : Entitas.Entity {
-}
+public sealed partial class GameStateEntity : Entitas.Entity { }

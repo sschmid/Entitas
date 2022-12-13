@@ -11,8 +11,7 @@ namespace Entitas.Plugins
         public bool RunInDryMode => true;
 
         const string Template =
-            @"public sealed partial class ${EntityType} : Entitas.Entity {
-}
+            @"public sealed partial class ${Entity.Type} : Entitas.Entity { }
 ";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
@@ -20,14 +19,10 @@ namespace Entitas.Plugins
             .Select(d => Generate(d))
             .ToArray();
 
-        CodeGenFile Generate(ContextData data)
-        {
-            var context = data.Name;
-            return new CodeGenFile(
-                Path.Combine(context, $"{context.AddEntitySuffix()}.cs"),
-                Template.Replace(context),
-                GetType().FullName
-            );
-        }
+        CodeGenFile Generate(ContextData data) => new CodeGenFile(
+            Path.Combine(data.Name, $"{data.EntityType}.cs"),
+            data.ReplacePlaceholders(Template),
+            GetType().FullName
+        );
     }
 }

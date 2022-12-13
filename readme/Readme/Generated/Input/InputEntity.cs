@@ -1,2 +1,1 @@
-public sealed partial class InputEntity : Entitas.Entity {
-}
+public sealed partial class InputEntity : Entitas.Entity { }
