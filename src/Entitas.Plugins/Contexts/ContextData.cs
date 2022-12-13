@@ -7,6 +7,7 @@ namespace Entitas.Plugins
         public const string NameKey = "Context.Name";
         public const string TypeKey = "Context.Type";
         public const string EntityTypeKey = "Entity.Type";
+        public const string MatcherTypeKey = "Matcher.Type";
 
         public string Name
         {
@@ -24,6 +25,12 @@ namespace Entitas.Plugins
         {
             get => (string)this[EntityTypeKey];
             set => this[EntityTypeKey] = value;
+        }
+
+        public string MatcherType
+        {
+            get => (string)this[MatcherTypeKey];
+            set => this[MatcherTypeKey] = value;
         }
     }
 }

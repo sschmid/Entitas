@@ -29,7 +29,8 @@ namespace Entitas.Plugins
                 {
                     Name = name,
                     Type = context.AddContextSuffix(),
-                    EntityType = name.AddEntitySuffix()
+                    EntityType = name.AddEntitySuffix(),
+                    MatcherType = name.AddMatcherSuffix()
                 };
             }).ToArray();
     }

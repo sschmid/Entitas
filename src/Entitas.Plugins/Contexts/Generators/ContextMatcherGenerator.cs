@@ -11,23 +11,19 @@ namespace Entitas.Plugins
         public bool RunInDryMode => true;
 
         const string Template =
-            @"public sealed partial class ${MatcherType} {
+            @"public sealed partial class ${Matcher.Type}
+{
+    public static Entitas.IAllOfMatcher<${Entity.Type}> AllOf(params int[] indexes) =>
+        Entitas.Matcher<${Entity.Type}>.AllOf(indexes);
 
-    public static Entitas.IAllOfMatcher<${EntityType}> AllOf(params int[] indexes) {
-        return Entitas.Matcher<${EntityType}>.AllOf(indexes);
-    }
+    public static Entitas.IAllOfMatcher<${Entity.Type}> AllOf(params Entitas.IMatcher<${Entity.Type}>[] matchers) =>
+        Entitas.Matcher<${Entity.Type}>.AllOf(matchers);
 
-    public static Entitas.IAllOfMatcher<${EntityType}> AllOf(params Entitas.IMatcher<${EntityType}>[] matchers) {
-          return Entitas.Matcher<${EntityType}>.AllOf(matchers);
-    }
+    public static Entitas.IAnyOfMatcher<${Entity.Type}> AnyOf(params int[] indexes) =>
+        Entitas.Matcher<${Entity.Type}>.AnyOf(indexes);
 
-    public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params int[] indexes) {
-          return Entitas.Matcher<${EntityType}>.AnyOf(indexes);
-    }
-
-    public static Entitas.IAnyOfMatcher<${EntityType}> AnyOf(params Entitas.IMatcher<${EntityType}>[] matchers) {
-          return Entitas.Matcher<${EntityType}>.AnyOf(matchers);
-    }
+    public static Entitas.IAnyOfMatcher<${Entity.Type}> AnyOf(params Entitas.IMatcher<${Entity.Type}>[] matchers) =>
+        Entitas.Matcher<${Entity.Type}>.AnyOf(matchers);
 }
 ";
 
@@ -36,14 +32,10 @@ namespace Entitas.Plugins
             .Select(d => Generate(d))
             .ToArray();
 
-        CodeGenFile Generate(ContextData data)
-        {
-            var context = data.Name;
-            return new CodeGenFile(
-                Path.Combine(context, $"{context.AddMatcherSuffix()}.cs"),
-                Template.Replace(context),
-                GetType().FullName
-            );
-        }
+        CodeGenFile Generate(ContextData data) => new CodeGenFile(
+            Path.Combine(data.Name, $"{data.MatcherType}.cs"),
+            data.ReplacePlaceholders(Template),
+            GetType().FullName
+        );
     }
 }
