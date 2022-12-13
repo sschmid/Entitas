@@ -11,13 +11,13 @@ using Xunit;
 namespace Entitas.Plugins.Tests
 {
     [Collection("Entitas.Plugins.Tests")]
-    public class RoslynEntityIndexDataProviderTests
+    public class EntityIndexDataProviderTests
     {
         static readonly string ProjectRoot = TestExtensions.GetProjectRoot();
         static readonly string ProjectPath = Path.Combine(ProjectRoot, "tests", "Fixtures", "Fixtures.csproj");
 
-        INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
-        INamedTypeSymbol[] _types;
+        static INamedTypeSymbol[] Types => _types ??= new ProjectParser(ProjectPath).GetTypes();
+        static INamedTypeSymbol[] _types;
 
         [Fact]
         public void CreatesDataForSingleEntityIndex()
