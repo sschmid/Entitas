@@ -21,6 +21,10 @@ namespace Entitas.Plugins
         }
 
         public CodeGeneratorData[] GetData() => _contextConfig.Contexts
-            .Select(context => new ContextData {Name = context}).ToArray();
+            .Select(context => new ContextData
+            {
+                Name = context.RemoveContextSuffix(),
+                Type = context.AddContextSuffix()
+            }).ToArray();
     }
 }

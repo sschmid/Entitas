@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="../src/Entitas/Entitas.csproj" />
     <ProjectReference Include="../src/Entitas.Plugins.Attributes/Entitas.Plugins.Attributes.csproj" />
+    <ProjectReference Include="../src/Entitas.Unity/Entitas.Unity.csproj" />
   </ItemGroup>
 
   <ItemGroup>

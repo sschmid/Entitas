@@ -10,57 +10,53 @@ namespace Entitas.Plugins
         public bool RunInDryMode => true;
 
         const string Template =
-            @"public partial class Contexts : Entitas.IContexts {
-
-    public static Contexts sharedInstance {
-        get {
-            if (_sharedInstance == null) {
-                _sharedInstance = new Contexts();
-            }
-
-            return _sharedInstance;
-        }
-        set { _sharedInstance = value; }
+            @"public partial class Contexts : Entitas.IContexts
+{
+    public static Contexts Instance
+    {
+        get { return _instance ?? (_instance = new Contexts()); }
+        set { _instance = value; }
     }
 
-    static Contexts _sharedInstance;
+    static Contexts _instance;
 
-${contextPropertiesList}
+${ContextPropertiesList}
 
-    public Entitas.IContext[] AllContexts { get { return new Entitas.IContext [] { ${contextList} }; } }
+    public Entitas.IContext[] AllContexts
+    {
+        get { return new Entitas.IContext[] {${ContextList}}; }
+    }
 
-    public Contexts() {
-${contextAssignmentsList}
+    public Contexts()
+    {
+${ContextAssignmentsList}
 
         var postConstructors = System.Linq.Enumerable.Where(
             GetType().GetMethods(),
-            method => System.Attribute.IsDefined(method, typeof(Entitas.Plugins.Attributes.PostConstructorAttribute))
+            method => System.Attribute.IsDefined(method, typeof(Entitas.Plugins.Attributes.ContextsPostConstructorAttribute))
         );
 
-        foreach (var postConstructor in postConstructors) {
+        foreach (var postConstructor in postConstructors)
             postConstructor.Invoke(this, null);
-        }
     }
 
-    public void Reset() {
-        var contexts = AllContexts;
-        for (int i = 0; i < contexts.Length; i++) {
-            contexts[i].Reset();
-        }
+    public void Reset()
+    {
+        foreach (var context in AllContexts)
+            context.Reset();
     }
 }
 ";
 
-        const string ContextPropertyTemplate = @"    public ${ContextType} ${context} { get; set; }";
-        const string ContextListTemplate = @"${context}";
-        const string ContextAssignmentTemplate = @"        ${context} = new ${ContextType}();";
+        const string ContextPropertyTemplate = @"    public ${Context.Type} ${Context.Name} { get; set; }";
+        const string ContextListTemplate = @"${Context.Name}";
+        const string ContextAssignmentTemplate = @"        ${Context.Name} = new ${Context.Type}();";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data)
         {
             var contexts = data
                 .OfType<ContextData>()
-                .Select(d => d.Name)
-                .OrderBy(context => context)
+                .OrderBy(d => d.Name)
                 .ToArray();
 
             return new[]
@@ -72,21 +68,21 @@ ${contextAssignmentsList}
             };
         }
 
-        string Generate(string[] contexts)
+        string Generate(ContextData[] data)
         {
-            var contextPropertiesList = string.Join("\n", contexts
-                .Select(context => ContextPropertyTemplate.Replace(context)));
+            var contextPropertiesList = string.Join("\n", data.Select(d => d
+                .ReplacePlaceholders(ContextPropertyTemplate)));
 
-            var contextList = string.Join(", ", contexts
-                .Select(context => ContextListTemplate.Replace(context)));
+            var contextList = string.Join(", ", data.Select(d => d
+                .ReplacePlaceholders(ContextListTemplate)));
 
-            var contextAssignmentsList = string.Join("\n", contexts
-                .Select(context => ContextAssignmentTemplate.Replace(context)));
+            var contextAssignmentsList = string.Join("\n", data.Select(d => d
+                .ReplacePlaceholders(ContextAssignmentTemplate)));
 
             return Template
-                .Replace("${contextPropertiesList}", contextPropertiesList)
-                .Replace("${contextList}", contextList)
-                .Replace("${contextAssignmentsList}", contextAssignmentsList);
+                .Replace("${ContextPropertiesList}", contextPropertiesList)
+                .Replace("${ContextList}", contextList)
+                .Replace("${ContextAssignmentsList}", contextAssignmentsList);
         }
     }
 }

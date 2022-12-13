@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
 using Jenny;
-using DesperateDevs.Extensions;
 
 namespace Entitas.Plugins.Unity
 {
@@ -11,57 +11,58 @@ namespace Entitas.Plugins.Unity
         public bool RunInDryMode => true;
 
         const string ContextsTemplate =
-            @"public partial class Contexts {
-
+            @"public partial class Contexts
+{
 #if (!ENTITAS_DISABLE_VISUAL_DEBUGGING && UNITY_EDITOR)
-
-    [Entitas.Plugins.AttributesEntitas.Plugins.Attributes.PostConstructor]
-    public void InitializeContextObservers() {
-        try {
-${contextObservers}
-        } catch(System.Exception e) {
+    [Entitas.Plugins.Attributes.ContextsPostConstructor]
+    public void InitializeContextObservers()
+    {
+        try
+        {
+${ContextObservers}
+        }
+        catch (System.Exception e)
+        {
             UnityEngine.Debug.LogError(e);
         }
     }
 
-    public void CreateContextObserver(Entitas.IContext context) {
-        if (UnityEngine.Application.isPlaying) {
-            var observer = new Entitas.VisualDebugging.Unity.ContextObserver(context);
-            UnityEngine.Object.DontDestroyOnLoad(observer.gameObject);
+    public void CreateContextObserver(Entitas.IContext context)
+    {
+        if (UnityEngine.Application.isPlaying)
+        {
+            var observer = new Entitas.Unity.ContextObserver(context);
+            UnityEngine.Object.DontDestroyOnLoad(observer.GameObject);
         }
     }
-
 #endif
 }
 ";
 
-        const string ContextObserverTemplate = @"            CreateContextObserver(${context});";
+        const string ContextObserverTemplate = @"            CreateContextObserver(${Context.Name});";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data)
         {
-            var contexts = data
+            var contextData = data
                 .OfType<ContextData>()
-                .Select(d => d.Name)
-                .OrderBy(context => context)
-                .ToArray();
+                .OrderBy(d => d.Name);
 
             return new[]
             {
                 new CodeGenFile(
                     "Contexts.cs",
-                    GenerateContextsClass(contexts),
+                    GenerateContextsClass(contextData),
                     GetType().FullName)
             };
         }
 
-        string GenerateContextsClass(string[] contexts)
+        string GenerateContextsClass(IEnumerable<ContextData> data)
         {
-            var contextObservers = string.Join("\n", contexts
-                .Select(context => ContextObserverTemplate
-                    .Replace("${context}", context.ToLowerFirst())));
+            var contextObservers = string.Join("\n", data.Select(d => d
+                .ReplacePlaceholders(ContextObserverTemplate)));
 
             return ContextsTemplate
-                .Replace("${contextObservers}", contextObservers);
+                .Replace("${ContextObservers}", contextObservers);
         }
     }
 }
