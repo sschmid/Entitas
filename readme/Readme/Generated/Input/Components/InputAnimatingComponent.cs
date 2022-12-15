@@ -51,15 +51,18 @@ public partial class InputEntity
 
 public partial class InputEntity : IAnimatingEntity { }
 
-public sealed partial class InputMatcher {
-
+public sealed partial class InputMatcher
+{
     static Entitas.IMatcher<InputEntity> _matcherAnimating;
 
-    public static Entitas.IMatcher<InputEntity> Animating {
-        get {
-            if (_matcherAnimating == null) {
+    public static Entitas.IMatcher<InputEntity> Animating
+    {
+        get
+        {
+            if (_matcherAnimating == null)
+            {
                 var matcher = (Entitas.Matcher<InputEntity>)Entitas.Matcher<InputEntity>.AllOf(InputComponentsLookup.Animating);
-                matcher.ComponentNames = InputComponentsLookup.componentNames;
+                matcher.ComponentNames = InputComponentsLookup.ComponentNames;
                 _matcherAnimating = matcher;
             }
 

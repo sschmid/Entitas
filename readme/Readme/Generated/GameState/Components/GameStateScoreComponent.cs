@@ -57,15 +57,18 @@ public partial class GameStateEntity
     }
 }
 
-public sealed partial class GameStateMatcher {
-
+public sealed partial class GameStateMatcher
+{
     static Entitas.IMatcher<GameStateEntity> _matcherScore;
 
-    public static Entitas.IMatcher<GameStateEntity> Score {
-        get {
-            if (_matcherScore == null) {
+    public static Entitas.IMatcher<GameStateEntity> Score
+    {
+        get
+        {
+            if (_matcherScore == null)
+            {
                 var matcher = (Entitas.Matcher<GameStateEntity>)Entitas.Matcher<GameStateEntity>.AllOf(GameStateComponentsLookup.Score);
-                matcher.ComponentNames = GameStateComponentsLookup.componentNames;
+                matcher.ComponentNames = GameStateComponentsLookup.ComponentNames;
                 _matcherScore = matcher;
             }
 

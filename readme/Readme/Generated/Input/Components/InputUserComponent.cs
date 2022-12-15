@@ -61,15 +61,18 @@ public partial class InputEntity
 
 public partial class InputEntity : IUserEntity { }
 
-public sealed partial class InputMatcher {
-
+public sealed partial class InputMatcher
+{
     static Entitas.IMatcher<InputEntity> _matcherUser;
 
-    public static Entitas.IMatcher<InputEntity> User {
-        get {
-            if (_matcherUser == null) {
+    public static Entitas.IMatcher<InputEntity> User
+    {
+        get
+        {
+            if (_matcherUser == null)
+            {
                 var matcher = (Entitas.Matcher<InputEntity>)Entitas.Matcher<InputEntity>.AllOf(InputComponentsLookup.User);
-                matcher.ComponentNames = InputComponentsLookup.componentNames;
+                matcher.ComponentNames = InputComponentsLookup.ComponentNames;
                 _matcherUser = matcher;
             }
 

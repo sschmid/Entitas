@@ -28,15 +28,18 @@ public partial class GameEntity
     }
 }
 
-public sealed partial class GameMatcher {
-
+public sealed partial class GameMatcher
+{
     static Entitas.IMatcher<GameEntity> _matcherGameBoardElement;
 
-    public static Entitas.IMatcher<GameEntity> GameBoardElement {
-        get {
-            if (_matcherGameBoardElement == null) {
+    public static Entitas.IMatcher<GameEntity> GameBoardElement
+    {
+        get
+        {
+            if (_matcherGameBoardElement == null)
+            {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.GameBoardElement);
-                matcher.ComponentNames = GameComponentsLookup.componentNames;
+                matcher.ComponentNames = GameComponentsLookup.ComponentNames;
                 _matcherGameBoardElement = matcher;
             }
 

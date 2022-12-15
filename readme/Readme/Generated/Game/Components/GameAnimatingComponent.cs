@@ -51,15 +51,18 @@ public partial class GameEntity
 
 public partial class GameEntity : IAnimatingEntity { }
 
-public sealed partial class GameMatcher {
-
+public sealed partial class GameMatcher
+{
     static Entitas.IMatcher<GameEntity> _matcherAnimating;
 
-    public static Entitas.IMatcher<GameEntity> Animating {
-        get {
-            if (_matcherAnimating == null) {
+    public static Entitas.IMatcher<GameEntity> Animating
+    {
+        get
+        {
+            if (_matcherAnimating == null)
+            {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Animating);
-                matcher.ComponentNames = GameComponentsLookup.componentNames;
+                matcher.ComponentNames = GameComponentsLookup.ComponentNames;
                 _matcherAnimating = matcher;
             }
 

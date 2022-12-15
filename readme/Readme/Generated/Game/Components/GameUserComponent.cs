@@ -61,15 +61,18 @@ public partial class GameEntity
 
 public partial class GameEntity : IUserEntity { }
 
-public sealed partial class GameMatcher {
-
+public sealed partial class GameMatcher
+{
     static Entitas.IMatcher<GameEntity> _matcherUser;
 
-    public static Entitas.IMatcher<GameEntity> User {
-        get {
-            if (_matcherUser == null) {
+    public static Entitas.IMatcher<GameEntity> User
+    {
+        get
+        {
+            if (_matcherUser == null)
+            {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.User);
-                matcher.ComponentNames = GameComponentsLookup.componentNames;
+                matcher.ComponentNames = GameComponentsLookup.ComponentNames;
                 _matcherUser = matcher;
             }
 

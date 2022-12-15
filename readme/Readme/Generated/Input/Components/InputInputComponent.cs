@@ -28,15 +28,18 @@ public partial class InputEntity
     }
 }
 
-public sealed partial class InputMatcher {
-
+public sealed partial class InputMatcher
+{
     static Entitas.IMatcher<InputEntity> _matcherInput;
 
-    public static Entitas.IMatcher<InputEntity> Input {
-        get {
-            if (_matcherInput == null) {
+    public static Entitas.IMatcher<InputEntity> Input
+    {
+        get
+        {
+            if (_matcherInput == null)
+            {
                 var matcher = (Entitas.Matcher<InputEntity>)Entitas.Matcher<InputEntity>.AllOf(InputComponentsLookup.Input);
-                matcher.ComponentNames = InputComponentsLookup.componentNames;
+                matcher.ComponentNames = InputComponentsLookup.ComponentNames;
                 _matcherInput = matcher;
             }
 

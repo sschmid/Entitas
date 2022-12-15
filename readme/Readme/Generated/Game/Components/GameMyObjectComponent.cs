@@ -28,15 +28,18 @@ public partial class GameEntity
     }
 }
 
-public sealed partial class GameMatcher {
-
+public sealed partial class GameMatcher
+{
     static Entitas.IMatcher<GameEntity> _matcherMyObject;
 
-    public static Entitas.IMatcher<GameEntity> MyObject {
-        get {
-            if (_matcherMyObject == null) {
+    public static Entitas.IMatcher<GameEntity> MyObject
+    {
+        get
+        {
+            if (_matcherMyObject == null)
+            {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.MyObject);
-                matcher.ComponentNames = GameComponentsLookup.componentNames;
+                matcher.ComponentNames = GameComponentsLookup.ComponentNames;
                 _matcherMyObject = matcher;
             }
 

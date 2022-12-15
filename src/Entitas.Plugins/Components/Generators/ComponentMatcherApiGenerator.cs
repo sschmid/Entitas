@@ -10,19 +10,22 @@ namespace Entitas.Plugins
         public override string Name => "Component (Matcher API)";
 
         const string Template =
-            @"public sealed partial class ${MatcherType} {
+            @"public sealed partial class ${Matcher.Type}
+{
+    static Entitas.IMatcher<${EntityType}> _matcher${Component.Name};
 
-    static Entitas.IMatcher<${EntityType}> _matcher${ComponentName};
-
-    public static Entitas.IMatcher<${EntityType}> ${ComponentName} {
-        get {
-            if (_matcher${ComponentName} == null) {
-                var matcher = (Entitas.Matcher<${EntityType}>)Entitas.Matcher<${EntityType}>.AllOf(${Index});
-                matcher.ComponentNames = ${componentNames};
-                _matcher${ComponentName} = matcher;
+    public static Entitas.IMatcher<${EntityType}> ${ComponentName}
+    {
+        get
+        {
+            if (_matcher${Component.Name} == null)
+            {
+                var matcher = (Entitas.Matcher<${Entity.Type}>)Entitas.Matcher<${Entity.Type}>.AllOf(${Index});
+                matcher.ComponentNames = ${ComponentNames};
+                _matcher${Component.Name} = matcher;
             }
 
-            return _matcher${ComponentName};
+            return _matcher${Component.Name};
         }
     }
 }
@@ -39,8 +42,8 @@ namespace Entitas.Plugins
 
         CodeGenFile Generate(string context, ComponentData data) => new CodeGenFile(
             Path.Combine(context, "Components", $"{context + data.Name.AddComponentSuffix()}.cs"),
-            Template
-                .Replace("${componentNames}", $"{context}{CodeGeneratorExtensions.ComponentLookup}.componentNames")
+            data.ReplacePlaceholders(Template)
+                .Replace("${ComponentNames}", $"{context}{CodeGeneratorExtensions.ComponentLookup}.ComponentNames")
                 .Replace(data, context),
             GetType().FullName
         );

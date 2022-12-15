@@ -22,8 +22,10 @@ namespace Entitas.Plugins
             .Replace("${ContextType}", context.AddContextSuffix())
             .Replace("${Context.Type}", context.AddContextSuffix())
             .Replace("${EntityType}", context.AddEntitySuffix())
+            .Replace("${Entity.Type}", context.AddEntitySuffix())
             .Replace("${Context.Entity.Type}", context.AddEntitySuffix())
             .Replace("${MatcherType}", context.AddMatcherSuffix())
+            .Replace("${Matcher.Type}", context.AddMatcherSuffix())
             .Replace("${Context.Matcher.Type}", context.AddMatcherSuffix())
             .Replace("${Lookup}", context + ComponentLookup);
 

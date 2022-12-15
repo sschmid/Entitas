@@ -57,15 +57,18 @@ public partial class GameEntity
     }
 }
 
-public sealed partial class GameMatcher {
-
+public sealed partial class GameMatcher
+{
     static Entitas.IMatcher<GameEntity> _matcherHighscore;
 
-    public static Entitas.IMatcher<GameEntity> Highscore {
-        get {
-            if (_matcherHighscore == null) {
+    public static Entitas.IMatcher<GameEntity> Highscore
+    {
+        get
+        {
+            if (_matcherHighscore == null)
+            {
                 var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Highscore);
-                matcher.ComponentNames = GameComponentsLookup.componentNames;
+                matcher.ComponentNames = GameComponentsLookup.ComponentNames;
                 _matcherHighscore = matcher;
             }
 
