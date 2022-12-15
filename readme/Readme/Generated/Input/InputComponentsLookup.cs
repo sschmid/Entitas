@@ -1,14 +1,20 @@
 public static class InputComponentsLookup {
 
-    public const int Input = 0;
+    public const int Animating = 0;
+    public const int Input = 1;
+    public const int User = 2;
 
-    public const int TotalComponents = 1;
+    public const int TotalComponents = 3;
 
     public static readonly string[] componentNames = {
-        "Input"
+        "Animating",
+        "Input",
+        "User"
     };
 
     public static readonly System.Type[] componentTypes = {
-        typeof(InputComponent)
+        typeof(AnimatingComponent),
+        typeof(InputComponent),
+        typeof(UserComponent)
     };
 }

@@ -10,24 +10,25 @@ namespace Entitas.Plugins
         public override string Name => "Component (Entity API Interface)";
 
         const string StandardTemplate =
-            @"public partial interface I${ComponentName}Entity {
+            @"public partial interface I${Component.Name}Entity
+{
+    ${Component.Type} ${Component.Name.Valid} { get; }
+    bool Has${Component.Name} { get; }
 
-    ${ComponentType} ${validComponentName} { get; }
-    bool has${ComponentName} { get; }
-
-    void Add${ComponentName}(${newMethodParameters});
-    void Replace${ComponentName}(${newMethodParameters});
-    void Remove${ComponentName}();
+    I${Component.Name}Entity Add${Component.Name}(${newMethodParameters});
+    I${Component.Name}Entity Replace${Component.Name}(${newMethodParameters});
+    I${Component.Name}Entity Remove${Component.Name}();
 }
 ";
 
         const string FlagTemplate =
-            @"public partial interface I${ComponentName}Entity {
-    bool ${prefixedComponentName} { get; set; }
+            @"public partial interface I${Component.Name}Entity
+{
+    bool ${PrefixedComponentName} { get; set; }
 }
 ";
 
-        const string EntityInterfaceTemplate = "public partial class ${EntityType} : I${ComponentName}Entity { }\n";
+        const string EntityInterfaceTemplate = "public partial class ${Context.Entity.Type} : I${Component.Name}Entity { }\n";
 
         public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<ComponentData>()
@@ -47,14 +48,14 @@ namespace Entitas.Plugins
 
             return new CodeGenFile(
                 Path.Combine("Components", "Interfaces", $"I{data.Type.ToComponentName()}Entity.cs"),
-                template.Replace(data, string.Empty),
+                data.ReplacePlaceholders(template.Replace(data, string.Empty)),
                 GetType().FullName
             );
         }
 
         CodeGenFile GenerateEntityInterface(string context, ComponentData data) => new CodeGenFile(
             Path.Combine(context, "Components", $"{data.ComponentNameWithContext(context).AddComponentSuffix()}.cs"),
-            EntityInterfaceTemplate.Replace(data, context),
+            data.ReplacePlaceholders(EntityInterfaceTemplate.Replace(data, context)),
             GetType().FullName
         );
     }

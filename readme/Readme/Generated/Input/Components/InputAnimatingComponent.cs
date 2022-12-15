@@ -1,6 +1,6 @@
-public partial class GameContext
+public partial class InputContext
 {
-    public GameEntity AnimatingEntity => GetGroup(GameMatcher.Animating).GetSingleEntity();
+    public InputEntity AnimatingEntity => GetGroup(InputMatcher.Animating).GetSingleEntity();
 
     public bool IsAnimating
     {
@@ -19,18 +19,18 @@ public partial class GameContext
     }
 }
 
-public partial class GameEntity
+public partial class InputEntity
 {
     static readonly AnimatingComponent AnimatingComponent = new AnimatingComponent();
 
     public bool IsAnimating
     {
-        get => HasComponent(GameComponentsLookup.Animating);
+        get => HasComponent(InputComponentsLookup.Animating);
         set
         {
             if (value != IsAnimating)
             {
-                const int index = GameComponentsLookup.Animating;
+                const int index = InputComponentsLookup.Animating;
                 if (value)
                 {
                     var componentPool = GetComponentPool(index);
@@ -49,17 +49,17 @@ public partial class GameEntity
     }
 }
 
-public partial class GameEntity : IAnimatingEntity { }
+public partial class InputEntity : IAnimatingEntity { }
 
-public sealed partial class GameMatcher {
+public sealed partial class InputMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherAnimating;
+    static Entitas.IMatcher<InputEntity> _matcherAnimating;
 
-    public static Entitas.IMatcher<GameEntity> Animating {
+    public static Entitas.IMatcher<InputEntity> Animating {
         get {
             if (_matcherAnimating == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.Animating);
-                matcher.ComponentNames = GameComponentsLookup.componentNames;
+                var matcher = (Entitas.Matcher<InputEntity>)Entitas.Matcher<InputEntity>.AllOf(InputComponentsLookup.Animating);
+                matcher.ComponentNames = InputComponentsLookup.componentNames;
                 _matcherAnimating = matcher;
             }
 

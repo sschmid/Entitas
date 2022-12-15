@@ -1,10 +1,10 @@
-public partial class GameContext
+public partial class InputContext
 {
-    public GameEntity UserEntity => GetGroup(GameMatcher.User).GetSingleEntity();
+    public InputEntity UserEntity => GetGroup(InputMatcher.User).GetSingleEntity();
     public UserComponent User => UserEntity.User;
     public bool HasUser => UserEntity != null;
 
-    public GameEntity SetUser(string newName, int newAge)
+    public InputEntity SetUser(string newName, int newAge)
     {
         if (HasUser)
             throw new Entitas.EntitasException($"Could not set User!\n{this} already has an entity with UserComponent!",
@@ -14,7 +14,7 @@ public partial class GameContext
         return entity;
     }
 
-    public GameEntity ReplaceUser(string newName, int newAge)
+    public InputEntity ReplaceUser(string newName, int newAge)
     {
         var entity = UserEntity;
         if (entity == null)
@@ -27,14 +27,14 @@ public partial class GameContext
     public void RemoveUser() => UserEntity.Destroy();
 }
 
-public partial class GameEntity
+public partial class InputEntity
 {
-    public UserComponent User => (UserComponent)GetComponent(GameComponentsLookup.User);
-    public bool HasUser => HasComponent(GameComponentsLookup.User);
+    public UserComponent User => (UserComponent)GetComponent(InputComponentsLookup.User);
+    public bool HasUser => HasComponent(InputComponentsLookup.User);
 
-    public GameEntity AddUser(string newName, int newAge)
+    public InputEntity AddUser(string newName, int newAge)
     {
-        var index = GameComponentsLookup.User;
+        var index = InputComponentsLookup.User;
         var component = (UserComponent)CreateComponent(index, typeof(UserComponent));
         component.Name = newName;
         component.Age = newAge;
@@ -42,9 +42,9 @@ public partial class GameEntity
         return this;
     }
 
-    public GameEntity ReplaceUser(string newName, int newAge)
+    public InputEntity ReplaceUser(string newName, int newAge)
     {
-        var index = GameComponentsLookup.User;
+        var index = InputComponentsLookup.User;
         var component = (UserComponent)CreateComponent(index, typeof(UserComponent));
         component.Name = newName;
         component.Age = newAge;
@@ -52,24 +52,24 @@ public partial class GameEntity
         return this;
     }
 
-    public GameEntity RemoveUser()
+    public InputEntity RemoveUser()
     {
-        RemoveComponent(GameComponentsLookup.User);
+        RemoveComponent(InputComponentsLookup.User);
         return this;
     }
 }
 
-public partial class GameEntity : IUserEntity { }
+public partial class InputEntity : IUserEntity { }
 
-public sealed partial class GameMatcher {
+public sealed partial class InputMatcher {
 
-    static Entitas.IMatcher<GameEntity> _matcherUser;
+    static Entitas.IMatcher<InputEntity> _matcherUser;
 
-    public static Entitas.IMatcher<GameEntity> User {
+    public static Entitas.IMatcher<InputEntity> User {
         get {
             if (_matcherUser == null) {
-                var matcher = (Entitas.Matcher<GameEntity>)Entitas.Matcher<GameEntity>.AllOf(GameComponentsLookup.User);
-                matcher.ComponentNames = GameComponentsLookup.componentNames;
+                var matcher = (Entitas.Matcher<InputEntity>)Entitas.Matcher<InputEntity>.AllOf(InputComponentsLookup.User);
+                matcher.ComponentNames = InputComponentsLookup.componentNames;
                 _matcherUser = matcher;
             }
 
