@@ -1,0 +1,2 @@
+[Game]
+public class MyObject { }

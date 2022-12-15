@@ -8,13 +8,14 @@ public static class GameComponentsLookup {
     public const int Highscore = 5;
     public const int Interactive = 6;
     public const int Movable = 7;
-    public const int Player = 8;
-    public const int Position = 9;
-    public const int User = 10;
-    public const int Velocity = 11;
-    public const int View = 12;
+    public const int MyObject = 8;
+    public const int Player = 9;
+    public const int Position = 10;
+    public const int User = 11;
+    public const int Velocity = 12;
+    public const int View = 13;
 
-    public const int TotalComponents = 13;
+    public const int TotalComponents = 14;
 
     public static readonly string[] componentNames = {
         "Animating",
@@ -25,6 +26,7 @@ public static class GameComponentsLookup {
         "Highscore",
         "Interactive",
         "Movable",
+        "MyObject",
         "Player",
         "Position",
         "User",
@@ -41,6 +43,7 @@ public static class GameComponentsLookup {
         typeof(HighscoreComponent),
         typeof(InteractiveComponent),
         typeof(MovableComponent),
+        typeof(MyObjectComponent),
         typeof(PlayerComponent),
         typeof(PositionComponent),
         typeof(UserComponent),

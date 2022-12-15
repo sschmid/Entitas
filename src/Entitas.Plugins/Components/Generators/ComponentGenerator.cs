@@ -13,8 +13,9 @@ namespace Entitas.Plugins
 
         const string ComponentTemplate =
             @"[Entitas.Plugins.Attributes.DontGenerate(false)]
-public sealed class ${FullComponentName} : Entitas.IComponent {
-    public ${Type} Value;
+public sealed class ${FullComponentName} : Entitas.IComponent
+{
+    public ${Component.ObjectType} Value;
 }
 ";
 
@@ -29,9 +30,8 @@ public sealed class ${FullComponentName} : Entitas.IComponent {
             var fullComponentName = data.Type.RemoveDots();
             return new CodeGenFile(
                 Path.Combine("Components", $"{fullComponentName}.cs"),
-                ComponentTemplate
-                    .Replace("${FullComponentName}", fullComponentName)
-                    .Replace("${Type}", data.ObjectType),
+                data.ReplacePlaceholders(ComponentTemplate)
+                    .Replace("${FullComponentName}", fullComponentName),
                 GetType().FullName
             );
         }
