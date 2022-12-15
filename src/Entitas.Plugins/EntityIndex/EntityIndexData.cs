@@ -1,14 +1,15 @@
-﻿using Jenny;
+﻿using DesperateDevs.Extensions;
+using Jenny;
 
 namespace Entitas.Plugins
 {
     public class EntityIndexData : CodeGeneratorData
     {
         public const string TypeKey = "EntityIndex.Type";
+        public const string NameKey = "EntityIndex.Name";
         public const string IsCustomKey = "EntityIndex.IsCustom";
         public const string CustomMethodsKey = "EntityIndex.CustomMethods";
 
-        public const string NameKey = "EntityIndex.Name";
         public const string KeyTypeKey = "EntityIndex.KeyType";
         public const string ComponentTypeKey = "EntityIndex.ComponentType";
         public const string MemberNameKey = "EntityIndex.MemberName";
@@ -18,8 +19,16 @@ namespace Entitas.Plugins
         public string Type
         {
             get => (string)this[TypeKey];
-            set => this[TypeKey] = value;
+            set
+            {
+                this[TypeKey] = value;
+                this[NameKey] = CodeGeneratorExtensions.IgnoreNamespaces
+                    ? value.ShortTypeName().RemoveComponentSuffix()
+                    : value.RemoveDots().RemoveComponentSuffix();
+            }
         }
+
+        public string Name => (string)this[NameKey];
 
         public bool IsCustom
         {
@@ -31,12 +40,6 @@ namespace Entitas.Plugins
         {
             get => (MethodData[])this[CustomMethodsKey];
             set => this[CustomMethodsKey] = value;
-        }
-
-        public string Name
-        {
-            get => (string)this[NameKey];
-            set => this[NameKey] = value;
         }
 
         public string KeyType

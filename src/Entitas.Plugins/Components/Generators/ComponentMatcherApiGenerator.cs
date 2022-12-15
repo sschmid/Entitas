@@ -38,7 +38,7 @@ namespace Entitas.Plugins
             .Contexts.Select(context => Generate(context, data));
 
         CodeGenFile Generate(string context, ComponentData data) => new CodeGenFile(
-            Path.Combine(context, "Components", $"{data.ComponentNameWithContext(context).AddComponentSuffix()}.cs"),
+            Path.Combine(context, "Components", $"{context + data.Name.AddComponentSuffix()}.cs"),
             Template
                 .Replace("${componentNames}", $"{context}{CodeGeneratorExtensions.ComponentLookup}.componentNames")
                 .Replace(data, context),

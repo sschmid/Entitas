@@ -13,7 +13,7 @@ namespace Entitas.Plugins
             @"public partial class ${Context.Type}
 {
     public ${Context.Entity.Type} ${Component.Name}Entity => GetGroup(${Context.Matcher.Type}.${Component.Name}).GetSingleEntity();
-    public ${Component.Type} ${Component.Name.Valid} => ${Component.Name}Entity.${Component.Name};
+    public ${Component.Type} ${Component.Name} => ${Component.Name}Entity.${Component.Name};
     public bool Has${Component.Name} => ${Component.Name}Entity != null;
 
     public ${Context.Entity.Type} Set${Component.Name}(${newMethodParameters})
@@ -80,7 +80,7 @@ namespace Entitas.Plugins
                 : StandardTemplate;
 
             return new CodeGenFile(
-                Path.Combine(context, "Components", $"{data.ComponentNameWithContext(context).AddComponentSuffix()}.cs"),
+                Path.Combine(context, "Components", $"{context + data.Name.AddComponentSuffix()}.cs"),
                 data.ReplacePlaceholders(template.Replace(data, context)),
                 GetType().FullName
             );

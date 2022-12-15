@@ -28,6 +28,7 @@ namespace Entitas.Plugins.Tests
 
         public ComponentDataProviderTests()
         {
+            CodeGeneratorExtensions.IgnoreNamespaces = true;
             _componentData = GetData<MyNamespaceComponent>();
             _classData = GetData<ClassToGenerate>();
         }
@@ -36,6 +37,32 @@ namespace Entitas.Plugins.Tests
         public void GetsType()
         {
             _componentData.Type.Should().Be(typeof(MyNamespaceComponent).ToCompilableString());
+        }
+
+        [Fact]
+        public void GetsName()
+        {
+            _componentData.Name.Should().Be("MyNamespace");
+        }
+
+        [Fact]
+        public void UpdatesName()
+        {
+            _componentData.Type = "TestComponent";
+            _componentData.Name.Should().Be("Test");
+        }
+
+        [Fact]
+        public void GetsValidLowerFirstName()
+        {
+            _componentData.ValidLowerFirstName.Should().Be("myNamespace");
+        }
+
+        [Fact]
+        public void UpdatesValidLowerFirstName()
+        {
+            _componentData.Type = "ClassComponent";
+            _componentData.ValidLowerFirstName.Should().Be("@class");
         }
 
         [Fact]

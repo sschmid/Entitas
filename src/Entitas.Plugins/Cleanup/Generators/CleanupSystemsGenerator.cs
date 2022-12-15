@@ -47,7 +47,7 @@ ${systemsList}
             var systemsList = string.Join("\n", data.Select(d =>
                 "        Add(new " +
                 (d.CleanupMode == CleanupMode.DestroyEntity ? "Destroy" : "Remove") +
-                d.ComponentData.Type.ToComponentName() + context.AddSystemSuffix() + "(contexts));"));
+                d.ComponentData.Name + context.AddSystemSuffix() + "(contexts));"));
 
             return new CodeGenFile(
                 Path.Combine(context, $"{context}CleanupSystems.cs"),

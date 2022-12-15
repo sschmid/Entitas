@@ -8,26 +8,13 @@ namespace Entitas.Plugins
     public static class CodeGeneratorExtensions
     {
         public const string ComponentLookup = "ComponentsLookup";
-        public const string KeywordPrefix = "@";
 
+        // TODO remove and add full namespace support
         public static bool IgnoreNamespaces;
 
+        public const string KeywordPrefix = "@";
+
         static readonly CodeDomProvider CodeDomProvider = CodeDomProvider.CreateProvider("C#");
-
-        public static string ToComponentName(this string fullTypeName) => ToComponentName(fullTypeName, IgnoreNamespaces);
-
-        public static string ToComponentName(this string fullTypeName, bool ignoreNamespaces) => ignoreNamespaces
-            ? fullTypeName.ShortTypeName().RemoveComponentSuffix()
-            : fullTypeName.RemoveDots().RemoveComponentSuffix();
-
-        public static string ToValidLowerFirst(this string type) =>
-            type.ToComponentName().ToLowerFirst().AddPrefixIfIsKeyword();
-
-        public static string ToValid(this string type) =>
-            type.ToComponentName().AddPrefixIfIsKeyword();
-
-        public static string ComponentNameWithContext(this ComponentData data, string context) =>
-            context + data.Type.ToComponentName();
 
         public static string Replace(this string template, string context) => template
             .Replace("${Context}", context)
@@ -42,7 +29,7 @@ namespace Entitas.Plugins
 
         public static string Replace(this string template, ComponentData data, string context)
         {
-            var componentName = data.Type.ToComponentName();
+            var componentName = data.Name;
             var memberData = data.MemberData;
             return template
                 .Replace(context)
@@ -51,8 +38,8 @@ namespace Entitas.Plugins
                 .Replace("${ComponentName}", componentName)
                 .Replace("${Component.Name}", componentName)
                 .Replace("${componentName}", componentName.ToLowerFirst())
-                .Replace("${validComponentName}", data.Type.ToValidLowerFirst())
-                .Replace("${Component.Name.Valid}", data.Type.ToValid())
+                .Replace("${validComponentName}", data.ValidLowerFirstName)
+                .Replace("${Component.ValidLowerFirstName}", data.ValidLowerFirstName)
                 .Replace("${prefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${PrefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${newMethodParameters}", GetMethodParameters(memberData, true))
@@ -76,7 +63,7 @@ namespace Entitas.Plugins
         }
 
         public static string PrefixedComponentName(this ComponentData data) =>
-            data.FlagPrefix + data.Type.ToComponentName();
+            data.FlagPrefix + data.Name;
 
         public static string Event(this ComponentData data, string context, EventData eventData)
         {
@@ -89,8 +76,8 @@ namespace Entitas.Plugins
 
         public static string EventComponentName(this ComponentData data, EventData eventData)
         {
-            var componentName = data.Type.ToComponentName();
-            var shortComponentName = data.Type.ToComponentName(true);
+            var componentName = data.Name;
+            var shortComponentName = data.Name;
             var eventComponentName = componentName.Replace(
                 shortComponentName,
                 eventData.GetEventPrefix() + shortComponentName

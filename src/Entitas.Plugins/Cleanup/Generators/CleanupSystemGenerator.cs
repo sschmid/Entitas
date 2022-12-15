@@ -76,7 +76,7 @@ public sealed class Remove${ComponentName}${SystemType} : ICleanupSystem {
 
             var prefix = data.CleanupMode == CleanupMode.DestroyEntity ? "Destroy" : "Remove";
             return new CodeGenFile(
-                Path.Combine(context, "Systems", $"{prefix}{data.ComponentData.Type.ToComponentName()}{context.AddSystemSuffix()}.cs"),
+                Path.Combine(context, "Systems", $"{prefix}{data.ComponentData.Name}{context.AddSystemSuffix()}.cs"),
                 fileContent,
                 GetType().FullName
             );
@@ -84,6 +84,6 @@ public sealed class Remove${ComponentName}${SystemType} : ICleanupSystem {
 
         static string RemoveComponent(CleanupData data) => data.ComponentData.MemberData.Length == 0
             ? $"{data.ComponentData.PrefixedComponentName()} = false"
-            : $"Remove{data.ComponentData.Type.ToComponentName()}()";
+            : $"Remove{data.ComponentData.Name}()";
     }
 }

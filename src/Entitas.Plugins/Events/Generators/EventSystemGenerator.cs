@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DesperateDevs.Extensions;
 using Jenny;
 using Entitas.Plugins.Attributes;
 
@@ -99,7 +100,7 @@ namespace Entitas.Plugins
 
                 var cachedAccess = data.MemberData.Length == 0
                     ? string.Empty
-                    : $"var component = e.{data.Type.ToValidLowerFirst()};";
+                    : $"var component = e.{data.Type.AddPrefixIfIsKeyword().ToLowerFirst()};";
 
                 if (eventData.EventType == EventType.Removed)
                 {
@@ -141,8 +142,8 @@ namespace Entitas.Plugins
             {
                 filter = eventData.EventType switch
                 {
-                    EventType.Added => $"entity.has{data.Type.ToComponentName()}",
-                    EventType.Removed => $"!entity.has{data.Type.ToComponentName()}",
+                    EventType.Added => $"entity.has{data.Name}",
+                    EventType.Removed => $"!entity.has{data.Name}",
                     _ => filter
                 };
             }

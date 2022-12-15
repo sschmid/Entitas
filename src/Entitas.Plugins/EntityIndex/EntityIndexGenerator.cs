@@ -127,7 +127,7 @@ ${getIndexes}
                 .Replace("${KeyType}", data.KeyType)
                 .Replace("${ComponentType}", componentType)
                 .Replace("${MemberName}", memberName)
-                .Replace("${componentName}", componentType.ToValidLowerFirst());
+                .Replace("${componentName}", componentType.AddPrefixIfIsKeyword().ToLowerFirst());
         }
 
         string GenerateGetMethods(EntityIndexData data) => string.Join("\n\n", data.Contexts

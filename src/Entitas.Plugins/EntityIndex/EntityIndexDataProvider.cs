@@ -77,7 +77,6 @@ namespace Entitas.Plugins
                     var attribute = member.GetAttribute<AbstractEntityIndexAttribute>(true);
                     data.Type = GetEntityIndexType(attribute);
                     data.IsCustom = false;
-                    data.Name = type.ToCompilableString().ToComponentName(_ignoreNamespacesConfig.IgnoreNamespaces);
                     data.KeyType = member.PublicMemberType().ToCompilableString();
                     data.ComponentType = type.ToCompilableString();
                     data.MemberName = member.Name;
@@ -96,7 +95,6 @@ namespace Entitas.Plugins
             var attribute = type.GetAttribute<CustomEntityIndexAttribute>();
             data.Type = type.ToCompilableString();
             data.IsCustom = true;
-            data.Name = type.ToCompilableString().RemoveDots();
             data.HasMultiple = false;
             data.Contexts = new[] {((INamedTypeSymbol)attribute.ConstructorArguments.First().Value).ToCompilableString().ShortTypeName().RemoveContextSuffix()};
 

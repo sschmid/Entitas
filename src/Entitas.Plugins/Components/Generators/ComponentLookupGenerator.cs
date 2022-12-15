@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -11,54 +10,49 @@ namespace Entitas.Plugins
         public override string Name => "Component (Lookup)";
 
         const string Template =
-            @"public static class ${Lookup} {
+            @"public static class ${Lookup}
+{
+${ComponentConstantsList}
 
-${componentConstantsList}
+${TotalComponentsConstant}
 
-${totalComponentsConstant}
-
-    public static readonly string[] componentNames = {
-${componentNamesList}
+    public static readonly string[] ComponentNames =
+    {
+${ComponentNamesList}
     };
 
-    public static readonly System.Type[] componentTypes = {
-${componentTypesList}
+    public static readonly System.Type[] ComponentTypes =
+    {
+${ComponentTypesList}
     };
 }
 ";
 
-        const string ComponentConstantTemplate = @"    public const int ${ComponentName} = ${Index};";
-        const string TotalComponentsConstantTemplate = @"    public const int TotalComponents = ${totalComponents};";
-        const string ComponentNameTemplate = @"        ""${ComponentName}""";
-        const string ComponentTypeTemplate = @"        typeof(${ComponentType})";
+        const string ComponentConstantTemplate = @"    public const int ${Component.Name} = ${Index};";
+        const string TotalComponentsConstantTemplate = @"    public const int TotalComponents = ${TotalComponents};";
+        const string ComponentNameTemplate = @"        ""${Component.Name}""";
+        const string ComponentTypeTemplate = @"        typeof(${Component.Type})";
 
         public override CodeGenFile[] Generate(CodeGeneratorData[] data)
         {
             var lookups = GenerateLookups(data
                 .OfType<ComponentData>()
-                .Where(d => d.GeneratesIndex)
-                .ToArray());
+                .Where(d => d.GeneratesIndex));
 
             var existingFileNames = new HashSet<string>(lookups.Select(file => file.FileName));
-
-            var emptyLookups = GenerateEmptyLookups(data
-                    .OfType<ContextData>()
-                    .ToArray())
-                .Where(file => !existingFileNames.Contains(file.FileName))
-                .ToArray();
+            var emptyLookups = GenerateEmptyLookups(data.OfType<ContextData>())
+                .Where(file => !existingFileNames.Contains(file.FileName));
 
             return lookups.Concat(emptyLookups).ToArray();
         }
 
-        CodeGenFile[] GenerateEmptyLookups(ContextData[] data)
+        IEnumerable<CodeGenFile> GenerateEmptyLookups(IEnumerable<ContextData> data)
         {
-            var emptyData = Array.Empty<ComponentData>();
-            return data
-                .Select(d => GenerateComponentsLookupClass(d.Name, emptyData))
-                .ToArray();
+            var emptyData = new List<ComponentData>(0);
+            return data.Select(d => GenerateComponentsLookupClass(d.Name, emptyData));
         }
 
-        CodeGenFile[] GenerateLookups(ComponentData[] data)
+        CodeGenFile[] GenerateLookups(IEnumerable<ComponentData> data)
         {
             var contextToComponentData = data
                 .Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) =>
@@ -83,32 +77,31 @@ ${componentTypesList}
             }
 
             return contextToComponentData
-                .Select(kvp => GenerateComponentsLookupClass(kvp.Key, kvp.Value.ToArray()))
+                .Select(kvp => GenerateComponentsLookupClass(kvp.Key, kvp.Value))
                 .ToArray();
         }
 
-        CodeGenFile GenerateComponentsLookupClass(string context, ComponentData[] data)
+        CodeGenFile GenerateComponentsLookupClass(string context, List<ComponentData> data)
         {
-            var componentConstantsList = string.Join("\n", data
-                .Select((d, index) => ComponentConstantTemplate
-                    .Replace("${ComponentName}", d.Type.ToComponentName())
-                    .Replace("${Index}", index.ToString())).ToArray());
+            var componentConstantsList = string.Join("\n", data.Select((d, index) => d
+                .ReplacePlaceholders(ComponentConstantTemplate)
+                .Replace("${Index}", index.ToString())));
 
             var totalComponentsConstant = TotalComponentsConstantTemplate
-                .Replace("${totalComponents}", data.Length.ToString());
+                .Replace("${TotalComponents}", data.Count.ToString());
 
-            var componentNamesList = string.Join(",\n", data
-                .Select(d => ComponentNameTemplate.Replace("${ComponentName}", d.Type.ToComponentName())));
+            var componentNamesList = string.Join(",\n", data.Select(d =>
+                d.ReplacePlaceholders(ComponentNameTemplate)));
 
-            var componentTypesList = string.Join(",\n", data
-                .Select(d => ComponentTypeTemplate.Replace("${ComponentType}", d.Type)));
+            var componentTypesList = string.Join(",\n", data.Select(d =>
+                d.ReplacePlaceholders(ComponentTypeTemplate)));
 
             var fileContent = Template
                 .Replace("${Lookup}", context + CodeGeneratorExtensions.ComponentLookup)
-                .Replace("${componentConstantsList}", componentConstantsList)
-                .Replace("${totalComponentsConstant}", totalComponentsConstant)
-                .Replace("${componentNamesList}", componentNamesList)
-                .Replace("${componentTypesList}", componentTypesList);
+                .Replace("${ComponentConstantsList}", componentConstantsList)
+                .Replace("${TotalComponentsConstant}", totalComponentsConstant)
+                .Replace("${ComponentNamesList}", componentNamesList)
+                .Replace("${ComponentTypesList}", componentTypesList);
 
             return new CodeGenFile(
                 Path.Combine(context, $"{context}ComponentsLookup.cs"),

@@ -1,5 +1,5 @@
-public static class GameComponentsLookup {
-
+public static class GameComponentsLookup
+{
     public const int Animating = 0;
     public const int Asset = 1;
     public const int GameBoardElement = 2;
@@ -17,7 +17,8 @@ public static class GameComponentsLookup {
 
     public const int TotalComponents = 14;
 
-    public static readonly string[] componentNames = {
+    public static readonly string[] ComponentNames =
+    {
         "Animating",
         "Asset",
         "GameBoardElement",
@@ -34,7 +35,8 @@ public static class GameComponentsLookup {
         "View"
     };
 
-    public static readonly System.Type[] componentTypes = {
+    public static readonly System.Type[] ComponentTypes =
+    {
         typeof(AnimatingComponent),
         typeof(AssetComponent),
         typeof(GameBoardElementComponent),

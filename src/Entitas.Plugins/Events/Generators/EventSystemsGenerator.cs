@@ -48,7 +48,7 @@ ${systemsList}
                 var orderedEventData = contextToComponentData[key]
                     .SelectMany(d => d.EventData.Select(eventData => new DataTuple {ComponentData = d, EventData = eventData}).ToArray())
                     .OrderBy(tuple => tuple.EventData.Order)
-                    .ThenBy(tuple => tuple.ComponentData.Type.ToComponentName())
+                    .ThenBy(tuple => tuple.ComponentData.Name)
                     .ToList();
 
                 contextToDataTuple.Add(key, orderedEventData);

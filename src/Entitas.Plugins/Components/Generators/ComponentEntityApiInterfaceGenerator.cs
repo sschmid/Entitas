@@ -12,7 +12,7 @@ namespace Entitas.Plugins
         const string StandardTemplate =
             @"public partial interface I${Component.Name}Entity
 {
-    ${Component.Type} ${Component.Name.Valid} { get; }
+    ${Component.Type} ${Component.Name} { get; }
     bool Has${Component.Name} { get; }
 
     I${Component.Name}Entity Add${Component.Name}(${newMethodParameters});
@@ -47,14 +47,14 @@ namespace Entitas.Plugins
                 : StandardTemplate;
 
             return new CodeGenFile(
-                Path.Combine("Components", "Interfaces", $"I{data.Type.ToComponentName()}Entity.cs"),
+                Path.Combine("Components", "Interfaces", $"I{data.Name}Entity.cs"),
                 data.ReplacePlaceholders(template.Replace(data, string.Empty)),
                 GetType().FullName
             );
         }
 
         CodeGenFile GenerateEntityInterface(string context, ComponentData data) => new CodeGenFile(
-            Path.Combine(context, "Components", $"{data.ComponentNameWithContext(context).AddComponentSuffix()}.cs"),
+            Path.Combine(context, "Components", $"{context + data.Name.AddComponentSuffix()}.cs"),
             data.ReplacePlaceholders(EntityInterfaceTemplate.Replace(data, context)),
             GetType().FullName
         );

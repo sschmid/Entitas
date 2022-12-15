@@ -1,10 +1,13 @@
-﻿using Jenny;
+﻿using DesperateDevs.Extensions;
+using Jenny;
 
 namespace Entitas.Plugins
 {
     public class ComponentData : CodeGeneratorData
     {
         public const string TypeKey = "Component.Type";
+        public const string NameKey = "Component.Name";
+        public const string ValidLowerFirstNameKey = "Component.ValidName";
         public const string MemberDataKey = "Component.MemberData";
         public const string ContextsKey = "Component.Contexts";
         public const string IsUniqueKey = "Component.IsUnique";
@@ -23,8 +26,21 @@ namespace Entitas.Plugins
         public string Type
         {
             get => (string)this[TypeKey];
-            set => this[TypeKey] = value;
+            set
+            {
+                this[TypeKey] = value;
+
+                var name = CodeGeneratorExtensions.IgnoreNamespaces
+                    ? value.ShortTypeName().RemoveComponentSuffix()
+                    : value.RemoveDots().RemoveComponentSuffix();
+
+                this[NameKey] = name;
+                this[ValidLowerFirstNameKey] = name.ToLowerFirst().AddPrefixIfIsKeyword();
+            }
         }
+
+        public string Name => (string)this[NameKey];
+        public string ValidLowerFirstName => (string)this[ValidLowerFirstNameKey];
 
         public MemberData[] MemberData
         {

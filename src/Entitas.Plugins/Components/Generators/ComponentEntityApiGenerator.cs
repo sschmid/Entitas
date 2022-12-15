@@ -13,7 +13,7 @@ namespace Entitas.Plugins
         const string StandardTemplate =
             @"public partial class ${Context.Entity.Type}
 {
-    public ${Component.Type} ${Component.Name.Valid} => (${ComponentType})GetComponent(${Index});
+    public ${Component.Type} ${Component.Name} => (${ComponentType})GetComponent(${Index});
     public bool Has${ComponentName} => HasComponent(${Index});
 
     public ${Context.Entity.Type} Add${Component.Name}(${newMethodParameters})
@@ -91,7 +91,7 @@ ${memberAssignmentList}
                 : StandardTemplate;
 
             return new CodeGenFile(
-                Path.Combine(context, "Components", $"{data.ComponentNameWithContext(context).AddComponentSuffix()}.cs"),
+                Path.Combine(context, "Components", $"{context + data.Name.AddComponentSuffix()}.cs"),
                 data.ReplacePlaceholders(template)
                     .Replace("${memberAssignmentList}", GetMemberAssignmentList(memberData))
                     .Replace(data, context),
