@@ -1,31 +1,30 @@
-public partial class GameContext {
+public partial class GameContext
+{
+    public GameEntity UserEntity => GetGroup(GameMatcher.User).GetSingleEntity();
+    public UserComponent User => UserEntity.User;
+    public bool HasUser => UserEntity != null;
 
-    public GameEntity userEntity { get { return GetGroup(GameMatcher.User).GetSingleEntity(); } }
-    public UserComponent user { get { return userEntity.user; } }
-    public bool hasUser { get { return userEntity != null; } }
-
-    public GameEntity SetUser(string newName, int newAge) {
-        if (hasUser) {
-            throw new Entitas.EntitasException("Could not set User!\n" + this + " already has an entity with UserComponent!",
-                "You should check if the context already has a userEntity before setting it or use context.ReplaceUser().");
-        }
+    public GameEntity SetUser(string newName, int newAge)
+    {
+        if (HasUser)
+            throw new Entitas.EntitasException($"Could not set User!\n{this} already has an entity with UserComponent!",
+                "You should check if the context already has a UserEntity before setting it or use context.ReplaceUser().");
         var entity = CreateEntity();
         entity.AddUser(newName, newAge);
         return entity;
     }
 
-    public void ReplaceUser(string newName, int newAge) {
-        var entity = userEntity;
-        if (entity == null) {
+    public GameEntity ReplaceUser(string newName, int newAge)
+    {
+        var entity = UserEntity;
+        if (entity == null)
             entity = SetUser(newName, newAge);
-        } else {
+        else
             entity.ReplaceUser(newName, newAge);
-        }
+        return entity;
     }
 
-    public void RemoveUser() {
-        userEntity.Destroy();
-    }
+    public void RemoveUser() => UserEntity.Destroy();
 }
 
 public partial class GameEntity {

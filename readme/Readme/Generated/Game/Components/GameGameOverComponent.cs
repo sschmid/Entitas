@@ -2,10 +2,10 @@ public partial class GameEntity {
 
     static readonly GameOverComponent gameOverComponent = new GameOverComponent();
 
-    public bool isGameOver {
+    public bool IsGameOver {
         get { return HasComponent(GameComponentsLookup.GameOver); }
         set {
-            if (value != isGameOver) {
+            if (value != IsGameOver) {
                 var index = GameComponentsLookup.GameOver;
                 if (value) {
                     var componentPool = GetComponentPool(index);

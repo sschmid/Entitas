@@ -11,7 +11,7 @@ namespace Entitas.Plugins
         public bool RunInDryMode => true;
 
         const string Template =
-            @"public sealed partial class ${Context.Type} : Entitas.Context<${Entity.Type}>
+            @"public sealed partial class ${Context.Type} : Entitas.Context<${Context.Entity.Type}>
 {
     public ${Context.Type}() : base(
         ${Lookup}.TotalComponents,
@@ -27,7 +27,7 @@ namespace Entitas.Plugins
 #else
             new Entitas.SafeAERC(entity),
 #endif
-        () => new ${Entity.Type}()
+        () => new ${Context.Entity.Type}()
     ) { }
 }
 ";

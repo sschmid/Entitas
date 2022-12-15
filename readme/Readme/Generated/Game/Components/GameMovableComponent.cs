@@ -2,10 +2,10 @@ public partial class GameEntity {
 
     static readonly MovableComponent movableComponent = new MovableComponent();
 
-    public bool isMovable {
+    public bool IsMovable {
         get { return HasComponent(GameComponentsLookup.Movable); }
         set {
-            if (value != isMovable) {
+            if (value != IsMovable) {
                 var index = GameComponentsLookup.Movable;
                 if (value) {
                     var componentPool = GetComponentPool(index);

@@ -1,17 +1,19 @@
-public partial class GameContext {
+public partial class GameContext
+{
+    public GameEntity AnimatingEntity => GetGroup(GameMatcher.Animating).GetSingleEntity();
 
-    public GameEntity animatingEntity { get { return GetGroup(GameMatcher.Animating).GetSingleEntity(); } }
-
-    public bool isAnimating {
-        get { return animatingEntity != null; }
-        set {
-            var entity = animatingEntity;
-            if (value != (entity != null)) {
-                if (value) {
-                    CreateEntity().isAnimating = true;
-                } else {
+    public bool IsAnimating
+    {
+        get => AnimatingEntity != null;
+        set
+        {
+            var entity = AnimatingEntity;
+            if (value != (entity != null))
+            {
+                if (value)
+                    CreateEntity().IsAnimating = true;
+                else
                     entity.Destroy();
-                }
             }
         }
     }
@@ -21,10 +23,10 @@ public partial class GameEntity {
 
     static readonly AnimatingComponent animatingComponent = new AnimatingComponent();
 
-    public bool isAnimating {
+    public bool IsAnimating {
         get { return HasComponent(GameComponentsLookup.Animating); }
         set {
-            if (value != isAnimating) {
+            if (value != IsAnimating) {
                 var index = GameComponentsLookup.Animating;
                 if (value) {
                     var componentPool = GetComponentPool(index);

@@ -6,8 +6,8 @@ namespace Entitas.Plugins
     {
         public const string NameKey = "Context.Name";
         public const string TypeKey = "Context.Type";
-        public const string EntityTypeKey = "Entity.Type";
-        public const string MatcherTypeKey = "Matcher.Type";
+        public const string EntityTypeKey = "Context.Entity.Type";
+        public const string MatcherTypeKey = "Context.Matcher.Type";
 
         public string Name
         {

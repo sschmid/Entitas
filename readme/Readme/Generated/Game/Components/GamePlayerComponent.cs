@@ -2,10 +2,10 @@ public partial class GameEntity {
 
     static readonly PlayerComponent playerComponent = new PlayerComponent();
 
-    public bool isPlayer {
+    public bool IsPlayer {
         get { return HasComponent(GameComponentsLookup.Player); }
         set {
-            if (value != isPlayer) {
+            if (value != IsPlayer) {
                 var index = GameComponentsLookup.Player;
                 if (value) {
                     var componentPool = GetComponentPool(index);

@@ -10,52 +10,53 @@ namespace Entitas.Plugins
         public override string Name => "Component (Context API)";
 
         const string StandardTemplate =
-            @"public partial class ${ContextType} {
+            @"public partial class ${Context.Type}
+{
+    public ${Context.Entity.Type} ${Component.Name}Entity => GetGroup(${Context.Matcher.Type}.${Component.Name}).GetSingleEntity();
+    public ${Component.Type} ${Component.Name.Valid} => ${Component.Name}Entity.${Component.Name};
+    public bool Has${Component.Name} => ${Component.Name}Entity != null;
 
-    public ${EntityType} ${componentName}Entity { get { return GetGroup(${MatcherType}.${ComponentName}).GetSingleEntity(); } }
-    public ${ComponentType} ${validComponentName} { get { return ${componentName}Entity.${componentName}; } }
-    public bool has${ComponentName} { get { return ${componentName}Entity != null; } }
-
-    public ${EntityType} Set${ComponentName}(${newMethodParameters}) {
-        if (has${ComponentName}) {
-            throw new Entitas.EntitasException(""Could not set ${ComponentName}!\n"" + this + "" already has an entity with ${ComponentType}!"",
-                ""You should check if the context already has a ${componentName}Entity before setting it or use context.Replace${ComponentName}()."");
-        }
+    public ${Context.Entity.Type} Set${Component.Name}(${newMethodParameters})
+    {
+        if (Has${Component.Name})
+            throw new Entitas.EntitasException($""Could not set ${Component.Name}!\n{this} already has an entity with ${Component.Type}!"",
+                ""You should check if the context already has a ${Component.Name}Entity before setting it or use context.Replace${Component.Name}()."");
         var entity = CreateEntity();
-        entity.Add${ComponentName}(${newMethodArgs});
+        entity.Add${Component.Name}(${newMethodArgs});
         return entity;
     }
 
-    public void Replace${ComponentName}(${newMethodParameters}) {
-        var entity = ${componentName}Entity;
-        if (entity == null) {
-            entity = Set${ComponentName}(${newMethodArgs});
-        } else {
-            entity.Replace${ComponentName}(${newMethodArgs});
-        }
+    public ${Context.Entity.Type} Replace${Component.Name}(${newMethodParameters})
+    {
+        var entity = ${Component.Name}Entity;
+        if (entity == null)
+            entity = Set${Component.Name}(${newMethodArgs});
+        else
+            entity.Replace${Component.Name}(${newMethodArgs});
+        return entity;
     }
 
-    public void Remove${ComponentName}() {
-        ${componentName}Entity.Destroy();
-    }
+    public void Remove${Component.Name}() => ${Component.Name}Entity.Destroy();
 }
 ";
 
         const string FlagTemplate =
-            @"public partial class ${ContextType} {
+            @"public partial class ${Context.Type}
+{
+    public ${Context.Entity.Type} ${Component.Name}Entity => GetGroup(${Context.Matcher.Type}.${Component.Name}).GetSingleEntity();
 
-    public ${EntityType} ${componentName}Entity { get { return GetGroup(${MatcherType}.${ComponentName}).GetSingleEntity(); } }
-
-    public bool ${prefixedComponentName} {
-        get { return ${componentName}Entity != null; }
-        set {
-            var entity = ${componentName}Entity;
-            if (value != (entity != null)) {
-                if (value) {
-                    CreateEntity().${prefixedComponentName} = true;
-                } else {
+    public bool ${PrefixedComponentName}
+    {
+        get => ${Component.Name}Entity != null;
+        set
+        {
+            var entity = ${Component.Name}Entity;
+            if (value != (entity != null))
+            {
+                if (value)
+                    CreateEntity().${PrefixedComponentName} = true;
+                else
                     entity.Destroy();
-                }
             }
         }
     }
@@ -80,7 +81,7 @@ namespace Entitas.Plugins
 
             return new CodeGenFile(
                 Path.Combine(context, "Components", $"{data.ComponentNameWithContext(context).AddComponentSuffix()}.cs"),
-                template.Replace(data, context),
+                data.ReplacePlaceholders(template.Replace(data, context)),
                 GetType().FullName
             );
         }

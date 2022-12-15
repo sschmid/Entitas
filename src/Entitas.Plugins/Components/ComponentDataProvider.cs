@@ -97,12 +97,12 @@ namespace Entitas.Plugins
                 contexts = new[] {_contextConfig.Contexts[0]};
             data.Contexts = contexts;
             data.IsUnique = type.GetAttribute<UniqueAttribute>() != null;
-            data.FlagPrefix = (string)(type.GetAttribute<FlagPrefixAttribute>()?.ConstructorArguments.First().Value ?? "is");
+            data.FlagPrefix = (string)(type.GetAttribute<FlagPrefixAttribute>()?.ConstructorArguments.First().Value ?? "Is");
             data.Generates = type.GetAttribute<DontGenerateAttribute>() == null;
+            data.GeneratesIndex = (bool)(type.GetAttribute<DontGenerateAttribute>()?.ConstructorArguments.First().Value ?? true);
             var generatesObject = !type.AllInterfaces.Any(i => i.ToCompilableString() == typeof(IComponent).ToCompilableString());
             data.GeneratesObject = generatesObject;
             data.ObjectType = generatesObject ? type.ToCompilableString() : null;
-            data.GeneratesIndex = (bool)(type.GetAttribute<DontGenerateAttribute>()?.ConstructorArguments.First().Value ?? true);
             var eventAttributes = type.GetAttributes<EventAttribute>();
             data.IsEvent = eventAttributes.Length > 0;
             data.EventData = eventAttributes.Length > 0

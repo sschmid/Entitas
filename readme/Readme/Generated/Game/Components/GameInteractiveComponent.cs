@@ -2,10 +2,10 @@ public partial class GameEntity {
 
     static readonly InteractiveComponent interactiveComponent = new InteractiveComponent();
 
-    public bool isInteractive {
+    public bool IsInteractive {
         get { return HasComponent(GameComponentsLookup.Interactive); }
         set {
-            if (value != isInteractive) {
+            if (value != IsInteractive) {
                 var index = GameComponentsLookup.Interactive;
                 if (value) {
                     var componentPool = GetComponentPool(index);

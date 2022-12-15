@@ -23,6 +23,9 @@ namespace Entitas.Plugins
         public static string ToValidLowerFirst(this string type) =>
             type.ToComponentName().ToLowerFirst().AddPrefixIfIsKeyword();
 
+        public static string ToValid(this string type) =>
+            type.ToComponentName().AddPrefixIfIsKeyword();
+
         public static string ComponentNameWithContext(this ComponentData data, string context) =>
             context + data.Type.ToComponentName();
 
@@ -30,8 +33,11 @@ namespace Entitas.Plugins
             .Replace("${Context}", context)
             .Replace("${context}", context.ToLowerFirst())
             .Replace("${ContextType}", context.AddContextSuffix())
+            .Replace("${Context.Type}", context.AddContextSuffix())
             .Replace("${EntityType}", context.AddEntitySuffix())
+            .Replace("${Context.Entity.Type}", context.AddEntitySuffix())
             .Replace("${MatcherType}", context.AddMatcherSuffix())
+            .Replace("${Context.Matcher.Type}", context.AddMatcherSuffix())
             .Replace("${Lookup}", context + ComponentLookup);
 
         public static string Replace(this string template, ComponentData data, string context)
@@ -41,10 +47,14 @@ namespace Entitas.Plugins
             return template
                 .Replace(context)
                 .Replace("${ComponentType}", data.Type)
+                .Replace("${Component.Type}", data.Type)
                 .Replace("${ComponentName}", componentName)
+                .Replace("${Component.Name}", componentName)
                 .Replace("${componentName}", componentName.ToLowerFirst())
                 .Replace("${validComponentName}", data.Type.ToValidLowerFirst())
+                .Replace("${Component.Name.Valid}", data.Type.ToValid())
                 .Replace("${prefixedComponentName}", data.PrefixedComponentName())
+                .Replace("${PrefixedComponentName}", data.PrefixedComponentName())
                 .Replace("${newMethodParameters}", GetMethodParameters(memberData, true))
                 .Replace("${methodParameters}", GetMethodParameters(memberData, false))
                 .Replace("${newMethodArgs}", GetMethodArgs(memberData, true))
@@ -66,7 +76,7 @@ namespace Entitas.Plugins
         }
 
         public static string PrefixedComponentName(this ComponentData data) =>
-            data.FlagPrefix.ToLowerFirst() + data.Type.ToComponentName();
+            data.FlagPrefix + data.Type.ToComponentName();
 
         public static string Event(this ComponentData data, string context, EventData eventData)
         {

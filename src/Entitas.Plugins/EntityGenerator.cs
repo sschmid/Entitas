@@ -11,7 +11,7 @@ namespace Entitas.Plugins
         public bool RunInDryMode => true;
 
         const string Template =
-            @"public sealed partial class ${Entity.Type} : Entitas.Entity { }
+            @"public sealed partial class ${Context.Entity.Type} : Entitas.Entity { }
 ";
 
         public CodeGenFile[] Generate(CodeGeneratorData[] data) => data

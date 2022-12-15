@@ -1,31 +1,30 @@
-public partial class GameStateContext {
+public partial class GameStateContext
+{
+    public GameStateEntity ScoreEntity => GetGroup(GameStateMatcher.Score).GetSingleEntity();
+    public ScoreComponent Score => ScoreEntity.Score;
+    public bool HasScore => ScoreEntity != null;
 
-    public GameStateEntity scoreEntity { get { return GetGroup(GameStateMatcher.Score).GetSingleEntity(); } }
-    public ScoreComponent score { get { return scoreEntity.score; } }
-    public bool hasScore { get { return scoreEntity != null; } }
-
-    public GameStateEntity SetScore(int newValue) {
-        if (hasScore) {
-            throw new Entitas.EntitasException("Could not set Score!\n" + this + " already has an entity with ScoreComponent!",
-                "You should check if the context already has a scoreEntity before setting it or use context.ReplaceScore().");
-        }
+    public GameStateEntity SetScore(int newValue)
+    {
+        if (HasScore)
+            throw new Entitas.EntitasException($"Could not set Score!\n{this} already has an entity with ScoreComponent!",
+                "You should check if the context already has a ScoreEntity before setting it or use context.ReplaceScore().");
         var entity = CreateEntity();
         entity.AddScore(newValue);
         return entity;
     }
 
-    public void ReplaceScore(int newValue) {
-        var entity = scoreEntity;
-        if (entity == null) {
+    public GameStateEntity ReplaceScore(int newValue)
+    {
+        var entity = ScoreEntity;
+        if (entity == null)
             entity = SetScore(newValue);
-        } else {
+        else
             entity.ReplaceScore(newValue);
-        }
+        return entity;
     }
 
-    public void RemoveScore() {
-        scoreEntity.Destroy();
-    }
+    public void RemoveScore() => ScoreEntity.Destroy();
 }
 
 public partial class GameStateEntity {

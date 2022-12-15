@@ -104,7 +104,7 @@ namespace Entitas.Plugins.Tests
         [Fact]
         public void GetsFlagPrefix()
         {
-            _componentData.FlagPrefix.Should().Be("is");
+            _componentData.FlagPrefix.Should().Be("Is");
             GetData<CustomPrefixFlagComponent>().FlagPrefix.Should().Be("My");
         }
 
@@ -291,7 +291,7 @@ namespace Entitas.Plugins.Tests
         [Fact]
         public void GetsFlagPrefixForClass()
         {
-            _classData.FlagPrefix.Should().Be("is");
+            _classData.FlagPrefix.Should().Be("Is");
         }
 
         [Fact]
