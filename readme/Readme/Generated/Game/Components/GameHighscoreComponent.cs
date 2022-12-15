@@ -27,27 +27,33 @@ public partial class GameContext
     public void RemoveHighscore() => HighscoreEntity.Destroy();
 }
 
-public partial class GameEntity {
+public partial class GameEntity
+{
+    public HighscoreComponent Highscore => (HighscoreComponent)GetComponent(GameComponentsLookup.Highscore);
+    public bool HasHighscore => HasComponent(GameComponentsLookup.Highscore);
 
-    public HighscoreComponent highscore { get { return (HighscoreComponent)GetComponent(GameComponentsLookup.Highscore); } }
-    public bool hasHighscore { get { return HasComponent(GameComponentsLookup.Highscore); } }
-
-    public void AddHighscore(int newValue) {
+    public GameEntity AddHighscore(int newValue)
+    {
         var index = GameComponentsLookup.Highscore;
         var component = (HighscoreComponent)CreateComponent(index, typeof(HighscoreComponent));
         component.Value = newValue;
         AddComponent(index, component);
+        return this;
     }
 
-    public void ReplaceHighscore(int newValue) {
+    public GameEntity ReplaceHighscore(int newValue)
+    {
         var index = GameComponentsLookup.Highscore;
         var component = (HighscoreComponent)CreateComponent(index, typeof(HighscoreComponent));
         component.Value = newValue;
         ReplaceComponent(index, component);
+        return this;
     }
 
-    public void RemoveHighscore() {
+    public GameEntity RemoveHighscore()
+    {
         RemoveComponent(GameComponentsLookup.Highscore);
+        return this;
     }
 }
 

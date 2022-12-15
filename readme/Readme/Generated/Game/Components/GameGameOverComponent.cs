@@ -1,20 +1,26 @@
-public partial class GameEntity {
+public partial class GameEntity
+{
+    static readonly GameOverComponent GameOverComponent = new GameOverComponent();
 
-    static readonly GameOverComponent gameOverComponent = new GameOverComponent();
-
-    public bool IsGameOver {
-        get { return HasComponent(GameComponentsLookup.GameOver); }
-        set {
-            if (value != IsGameOver) {
-                var index = GameComponentsLookup.GameOver;
-                if (value) {
+    public bool IsGameOver
+    {
+        get => HasComponent(GameComponentsLookup.GameOver);
+        set
+        {
+            if (value != IsGameOver)
+            {
+                const int index = GameComponentsLookup.GameOver;
+                if (value)
+                {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : gameOverComponent;
+                        ? componentPool.Pop()
+                        : GameOverComponent;
 
                     AddComponent(index, component);
-                } else {
+                }
+                else
+                {
                     RemoveComponent(index);
                 }
             }

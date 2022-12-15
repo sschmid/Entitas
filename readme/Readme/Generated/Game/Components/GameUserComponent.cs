@@ -27,29 +27,35 @@ public partial class GameContext
     public void RemoveUser() => UserEntity.Destroy();
 }
 
-public partial class GameEntity {
+public partial class GameEntity
+{
+    public UserComponent User => (UserComponent)GetComponent(GameComponentsLookup.User);
+    public bool HasUser => HasComponent(GameComponentsLookup.User);
 
-    public UserComponent user { get { return (UserComponent)GetComponent(GameComponentsLookup.User); } }
-    public bool hasUser { get { return HasComponent(GameComponentsLookup.User); } }
-
-    public void AddUser(string newName, int newAge) {
+    public GameEntity AddUser(string newName, int newAge)
+    {
         var index = GameComponentsLookup.User;
         var component = (UserComponent)CreateComponent(index, typeof(UserComponent));
         component.Name = newName;
         component.Age = newAge;
         AddComponent(index, component);
+        return this;
     }
 
-    public void ReplaceUser(string newName, int newAge) {
+    public GameEntity ReplaceUser(string newName, int newAge)
+    {
         var index = GameComponentsLookup.User;
         var component = (UserComponent)CreateComponent(index, typeof(UserComponent));
         component.Name = newName;
         component.Age = newAge;
         ReplaceComponent(index, component);
+        return this;
     }
 
-    public void RemoveUser() {
+    public GameEntity RemoveUser()
+    {
         RemoveComponent(GameComponentsLookup.User);
+        return this;
     }
 }
 

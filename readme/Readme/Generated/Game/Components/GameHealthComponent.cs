@@ -1,24 +1,30 @@
-public partial class GameEntity {
+public partial class GameEntity
+{
+    public HealthComponent Health => (HealthComponent)GetComponent(GameComponentsLookup.Health);
+    public bool HasHealth => HasComponent(GameComponentsLookup.Health);
 
-    public HealthComponent health { get { return (HealthComponent)GetComponent(GameComponentsLookup.Health); } }
-    public bool hasHealth { get { return HasComponent(GameComponentsLookup.Health); } }
-
-    public void AddHealth(int newValue) {
+    public GameEntity AddHealth(int newValue)
+    {
         var index = GameComponentsLookup.Health;
         var component = (HealthComponent)CreateComponent(index, typeof(HealthComponent));
         component.Value = newValue;
         AddComponent(index, component);
+        return this;
     }
 
-    public void ReplaceHealth(int newValue) {
+    public GameEntity ReplaceHealth(int newValue)
+    {
         var index = GameComponentsLookup.Health;
         var component = (HealthComponent)CreateComponent(index, typeof(HealthComponent));
         component.Value = newValue;
         ReplaceComponent(index, component);
+        return this;
     }
 
-    public void RemoveHealth() {
+    public GameEntity RemoveHealth()
+    {
         RemoveComponent(GameComponentsLookup.Health);
+        return this;
     }
 }
 

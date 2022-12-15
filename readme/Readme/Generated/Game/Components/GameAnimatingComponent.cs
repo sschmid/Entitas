@@ -19,23 +19,29 @@ public partial class GameContext
     }
 }
 
-public partial class GameEntity {
+public partial class GameEntity
+{
+    static readonly AnimatingComponent AnimatingComponent = new AnimatingComponent();
 
-    static readonly AnimatingComponent animatingComponent = new AnimatingComponent();
-
-    public bool IsAnimating {
-        get { return HasComponent(GameComponentsLookup.Animating); }
-        set {
-            if (value != IsAnimating) {
-                var index = GameComponentsLookup.Animating;
-                if (value) {
+    public bool IsAnimating
+    {
+        get => HasComponent(GameComponentsLookup.Animating);
+        set
+        {
+            if (value != IsAnimating)
+            {
+                const int index = GameComponentsLookup.Animating;
+                if (value)
+                {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : animatingComponent;
+                        ? componentPool.Pop()
+                        : AnimatingComponent;
 
                     AddComponent(index, component);
-                } else {
+                }
+                else
+                {
                     RemoveComponent(index);
                 }
             }

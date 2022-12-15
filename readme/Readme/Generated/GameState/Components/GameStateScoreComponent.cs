@@ -27,27 +27,33 @@ public partial class GameStateContext
     public void RemoveScore() => ScoreEntity.Destroy();
 }
 
-public partial class GameStateEntity {
+public partial class GameStateEntity
+{
+    public ScoreComponent Score => (ScoreComponent)GetComponent(GameStateComponentsLookup.Score);
+    public bool HasScore => HasComponent(GameStateComponentsLookup.Score);
 
-    public ScoreComponent score { get { return (ScoreComponent)GetComponent(GameStateComponentsLookup.Score); } }
-    public bool hasScore { get { return HasComponent(GameStateComponentsLookup.Score); } }
-
-    public void AddScore(int newValue) {
+    public GameStateEntity AddScore(int newValue)
+    {
         var index = GameStateComponentsLookup.Score;
         var component = (ScoreComponent)CreateComponent(index, typeof(ScoreComponent));
         component.Value = newValue;
         AddComponent(index, component);
+        return this;
     }
 
-    public void ReplaceScore(int newValue) {
+    public GameStateEntity ReplaceScore(int newValue)
+    {
         var index = GameStateComponentsLookup.Score;
         var component = (ScoreComponent)CreateComponent(index, typeof(ScoreComponent));
         component.Value = newValue;
         ReplaceComponent(index, component);
+        return this;
     }
 
-    public void RemoveScore() {
+    public GameStateEntity RemoveScore()
+    {
         RemoveComponent(GameStateComponentsLookup.Score);
+        return this;
     }
 }
 

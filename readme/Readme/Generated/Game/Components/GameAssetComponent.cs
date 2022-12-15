@@ -1,24 +1,30 @@
-public partial class GameEntity {
+public partial class GameEntity
+{
+    public AssetComponent Asset => (AssetComponent)GetComponent(GameComponentsLookup.Asset);
+    public bool HasAsset => HasComponent(GameComponentsLookup.Asset);
 
-    public AssetComponent asset { get { return (AssetComponent)GetComponent(GameComponentsLookup.Asset); } }
-    public bool hasAsset { get { return HasComponent(GameComponentsLookup.Asset); } }
-
-    public void AddAsset(string newName) {
+    public GameEntity AddAsset(string newName)
+    {
         var index = GameComponentsLookup.Asset;
         var component = (AssetComponent)CreateComponent(index, typeof(AssetComponent));
         component.Name = newName;
         AddComponent(index, component);
+        return this;
     }
 
-    public void ReplaceAsset(string newName) {
+    public GameEntity ReplaceAsset(string newName)
+    {
         var index = GameComponentsLookup.Asset;
         var component = (AssetComponent)CreateComponent(index, typeof(AssetComponent));
         component.Name = newName;
         ReplaceComponent(index, component);
+        return this;
     }
 
-    public void RemoveAsset() {
+    public GameEntity RemoveAsset()
+    {
         RemoveComponent(GameComponentsLookup.Asset);
+        return this;
     }
 }
 

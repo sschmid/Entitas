@@ -11,49 +11,61 @@ namespace Entitas.Plugins
         public override string Name => "Component (Entity API)";
 
         const string StandardTemplate =
-            @"public partial class ${EntityType} {
+            @"public partial class ${Context.Entity.Type}
+{
+    public ${Component.Type} ${Component.Name.Valid} => (${ComponentType})GetComponent(${Index});
+    public bool Has${ComponentName} => HasComponent(${Index});
 
-    public ${ComponentType} ${validComponentName} { get { return (${ComponentType})GetComponent(${Index}); } }
-    public bool has${ComponentName} { get { return HasComponent(${Index}); } }
-
-    public void Add${ComponentName}(${newMethodParameters}) {
+    public ${Context.Entity.Type} Add${Component.Name}(${newMethodParameters})
+    {
         var index = ${Index};
-        var component = (${ComponentType})CreateComponent(index, typeof(${ComponentType}));
+        var component = (${Component.Type})CreateComponent(index, typeof(${Component.Type}));
 ${memberAssignmentList}
         AddComponent(index, component);
+        return this;
     }
 
-    public void Replace${ComponentName}(${newMethodParameters}) {
+    public ${Context.Entity.Type} Replace${ComponentName}(${newMethodParameters})
+    {
         var index = ${Index};
-        var component = (${ComponentType})CreateComponent(index, typeof(${ComponentType}));
+        var component = (${Component.Type})CreateComponent(index, typeof(${Component.Type}));
 ${memberAssignmentList}
         ReplaceComponent(index, component);
+        return this;
     }
 
-    public void Remove${ComponentName}() {
+    public ${Context.Entity.Type} Remove${ComponentName}()
+    {
         RemoveComponent(${Index});
+        return this;
     }
 }
 ";
 
         const string FlagTemplate =
-            @"public partial class ${EntityType} {
+            @"public partial class ${Context.Entity.Type}
+{
+    static readonly ${Component.Type} ${Component.Name}Component = new ${Component.Type}();
 
-    static readonly ${ComponentType} ${componentName}Component = new ${ComponentType}();
-
-    public bool ${prefixedComponentName} {
-        get { return HasComponent(${Index}); }
-        set {
-            if (value != ${prefixedComponentName}) {
-                var index = ${Index};
-                if (value) {
+    public bool ${prefixedComponentName}
+    {
+        get => HasComponent(${Index});
+        set
+        {
+            if (value != ${PrefixedComponentName})
+            {
+                const int index = ${Index};
+                if (value)
+                {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : ${componentName}Component;
+                        ? componentPool.Pop()
+                        : ${Component.Name}Component;
 
                     AddComponent(index, component);
-                } else {
+                }
+                else
+                {
                     RemoveComponent(index);
                 }
             }
@@ -80,7 +92,7 @@ ${memberAssignmentList}
 
             return new CodeGenFile(
                 Path.Combine(context, "Components", $"{data.ComponentNameWithContext(context).AddComponentSuffix()}.cs"),
-                template
+                data.ReplacePlaceholders(template)
                     .Replace("${memberAssignmentList}", GetMemberAssignmentList(memberData))
                     .Replace(data, context),
                 GetType().FullName

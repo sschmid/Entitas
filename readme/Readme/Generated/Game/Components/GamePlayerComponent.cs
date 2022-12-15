@@ -1,20 +1,26 @@
-public partial class GameEntity {
+public partial class GameEntity
+{
+    static readonly PlayerComponent PlayerComponent = new PlayerComponent();
 
-    static readonly PlayerComponent playerComponent = new PlayerComponent();
-
-    public bool IsPlayer {
-        get { return HasComponent(GameComponentsLookup.Player); }
-        set {
-            if (value != IsPlayer) {
-                var index = GameComponentsLookup.Player;
-                if (value) {
+    public bool IsPlayer
+    {
+        get => HasComponent(GameComponentsLookup.Player);
+        set
+        {
+            if (value != IsPlayer)
+            {
+                const int index = GameComponentsLookup.Player;
+                if (value)
+                {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : playerComponent;
+                        ? componentPool.Pop()
+                        : PlayerComponent;
 
                     AddComponent(index, component);
-                } else {
+                }
+                else
+                {
                     RemoveComponent(index);
                 }
             }

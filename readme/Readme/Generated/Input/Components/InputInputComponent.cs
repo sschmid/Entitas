@@ -1,24 +1,30 @@
-public partial class InputEntity {
+public partial class InputEntity
+{
+    public InputComponent Input => (InputComponent)GetComponent(InputComponentsLookup.Input);
+    public bool HasInput => HasComponent(InputComponentsLookup.Input);
 
-    public InputComponent input { get { return (InputComponent)GetComponent(InputComponentsLookup.Input); } }
-    public bool hasInput { get { return HasComponent(InputComponentsLookup.Input); } }
-
-    public void AddInput(UnityEngine.Vector2 newPosition) {
+    public InputEntity AddInput(UnityEngine.Vector2 newPosition)
+    {
         var index = InputComponentsLookup.Input;
         var component = (InputComponent)CreateComponent(index, typeof(InputComponent));
         component.Position = newPosition;
         AddComponent(index, component);
+        return this;
     }
 
-    public void ReplaceInput(UnityEngine.Vector2 newPosition) {
+    public InputEntity ReplaceInput(UnityEngine.Vector2 newPosition)
+    {
         var index = InputComponentsLookup.Input;
         var component = (InputComponent)CreateComponent(index, typeof(InputComponent));
         component.Position = newPosition;
         ReplaceComponent(index, component);
+        return this;
     }
 
-    public void RemoveInput() {
+    public InputEntity RemoveInput()
+    {
         RemoveComponent(InputComponentsLookup.Input);
+        return this;
     }
 }
 

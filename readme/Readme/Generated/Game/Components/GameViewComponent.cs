@@ -1,24 +1,30 @@
-public partial class GameEntity {
+public partial class GameEntity
+{
+    public ViewComponent View => (ViewComponent)GetComponent(GameComponentsLookup.View);
+    public bool HasView => HasComponent(GameComponentsLookup.View);
 
-    public ViewComponent view { get { return (ViewComponent)GetComponent(GameComponentsLookup.View); } }
-    public bool hasView { get { return HasComponent(GameComponentsLookup.View); } }
-
-    public void AddView(UnityEngine.GameObject newGameObject) {
+    public GameEntity AddView(UnityEngine.GameObject newGameObject)
+    {
         var index = GameComponentsLookup.View;
         var component = (ViewComponent)CreateComponent(index, typeof(ViewComponent));
         component.GameObject = newGameObject;
         AddComponent(index, component);
+        return this;
     }
 
-    public void ReplaceView(UnityEngine.GameObject newGameObject) {
+    public GameEntity ReplaceView(UnityEngine.GameObject newGameObject)
+    {
         var index = GameComponentsLookup.View;
         var component = (ViewComponent)CreateComponent(index, typeof(ViewComponent));
         component.GameObject = newGameObject;
         ReplaceComponent(index, component);
+        return this;
     }
 
-    public void RemoveView() {
+    public GameEntity RemoveView()
+    {
         RemoveComponent(GameComponentsLookup.View);
+        return this;
     }
 }
 

@@ -1,20 +1,26 @@
-public partial class GameEntity {
+public partial class GameEntity
+{
+    static readonly MovableComponent MovableComponent = new MovableComponent();
 
-    static readonly MovableComponent movableComponent = new MovableComponent();
-
-    public bool IsMovable {
-        get { return HasComponent(GameComponentsLookup.Movable); }
-        set {
-            if (value != IsMovable) {
-                var index = GameComponentsLookup.Movable;
-                if (value) {
+    public bool IsMovable
+    {
+        get => HasComponent(GameComponentsLookup.Movable);
+        set
+        {
+            if (value != IsMovable)
+            {
+                const int index = GameComponentsLookup.Movable;
+                if (value)
+                {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : movableComponent;
+                        ? componentPool.Pop()
+                        : MovableComponent;
 
                     AddComponent(index, component);
-                } else {
+                }
+                else
+                {
                     RemoveComponent(index);
                 }
             }

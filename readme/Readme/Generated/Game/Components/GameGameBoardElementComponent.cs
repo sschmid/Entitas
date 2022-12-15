@@ -1,20 +1,26 @@
-public partial class GameEntity {
+public partial class GameEntity
+{
+    static readonly GameBoardElementComponent GameBoardElementComponent = new GameBoardElementComponent();
 
-    static readonly GameBoardElementComponent gameBoardElementComponent = new GameBoardElementComponent();
-
-    public bool IsGameBoardElement {
-        get { return HasComponent(GameComponentsLookup.GameBoardElement); }
-        set {
-            if (value != IsGameBoardElement) {
-                var index = GameComponentsLookup.GameBoardElement;
-                if (value) {
+    public bool IsGameBoardElement
+    {
+        get => HasComponent(GameComponentsLookup.GameBoardElement);
+        set
+        {
+            if (value != IsGameBoardElement)
+            {
+                const int index = GameComponentsLookup.GameBoardElement;
+                if (value)
+                {
                     var componentPool = GetComponentPool(index);
                     var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : gameBoardElementComponent;
+                        ? componentPool.Pop()
+                        : GameBoardElementComponent;
 
                     AddComponent(index, component);
-                } else {
+                }
+                else
+                {
                     RemoveComponent(index);
                 }
             }

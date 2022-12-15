@@ -1,24 +1,30 @@
-public partial class GameEntity {
+public partial class GameEntity
+{
+    public VelocityComponent Velocity => (VelocityComponent)GetComponent(GameComponentsLookup.Velocity);
+    public bool HasVelocity => HasComponent(GameComponentsLookup.Velocity);
 
-    public VelocityComponent velocity { get { return (VelocityComponent)GetComponent(GameComponentsLookup.Velocity); } }
-    public bool hasVelocity { get { return HasComponent(GameComponentsLookup.Velocity); } }
-
-    public void AddVelocity(UnityEngine.Vector3 newValue) {
+    public GameEntity AddVelocity(UnityEngine.Vector3 newValue)
+    {
         var index = GameComponentsLookup.Velocity;
         var component = (VelocityComponent)CreateComponent(index, typeof(VelocityComponent));
         component.Value = newValue;
         AddComponent(index, component);
+        return this;
     }
 
-    public void ReplaceVelocity(UnityEngine.Vector3 newValue) {
+    public GameEntity ReplaceVelocity(UnityEngine.Vector3 newValue)
+    {
         var index = GameComponentsLookup.Velocity;
         var component = (VelocityComponent)CreateComponent(index, typeof(VelocityComponent));
         component.Value = newValue;
         ReplaceComponent(index, component);
+        return this;
     }
 
-    public void RemoveVelocity() {
+    public GameEntity RemoveVelocity()
+    {
         RemoveComponent(GameComponentsLookup.Velocity);
+        return this;
     }
 }
 
