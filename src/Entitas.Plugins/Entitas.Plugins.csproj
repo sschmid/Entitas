@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DesperateDevs.Roslyn" Version="1.*" />
     <PackageReference Include="Jenny.Plugins" Version="1.*" />
-    <PackageReference Include="Jenny.Plugins.Roslyn" Version="1.*" />
   </ItemGroup>
 
   <ItemGroup>

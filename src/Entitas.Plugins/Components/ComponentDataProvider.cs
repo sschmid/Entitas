@@ -26,11 +26,13 @@ namespace Entitas.Plugins
         readonly ProjectPathConfig _projectPathConfig = new ProjectPathConfig();
         readonly ContextConfig _contextConfig = new ContextConfig();
 
-        readonly INamedTypeSymbol[] _types;
+        readonly INamedTypeSymbol[] _symbols;
+
+        readonly string _componentInterface = typeof(IComponent).ToCompilableString();
 
         public ComponentDataProvider() : this(null) { }
 
-        public ComponentDataProvider(INamedTypeSymbol[] types) => _types = types;
+        public ComponentDataProvider(INamedTypeSymbol[] symbols) => _symbols = symbols;
 
         public void Configure(Preferences preferences)
         {
@@ -38,71 +40,74 @@ namespace Entitas.Plugins
             _contextConfig.Configure(preferences);
         }
 
+        ProjectParser GetProjectParser()
+        {
+            var key = typeof(ProjectParser).FullName;
+            if (!ObjectCache.TryGetValue(key, out var projectParser))
+            {
+                projectParser = new ProjectParser(_projectPathConfig.ProjectPath);
+                ObjectCache.Add(key, projectParser);
+            }
+
+            return (ProjectParser)projectParser;
+        }
+
         public CodeGeneratorData[] GetData()
         {
-            var types = _types ?? Jenny.Plugins.Roslyn.PluginUtil
-                .GetCachedProjectParser(ObjectCache, _projectPathConfig.ProjectPath)
-                .GetTypes();
+            var symbols = _symbols ?? GetProjectParser().GetTypes();
+            var lookup = symbols.ToLookup(symbol => symbol.AllInterfaces.Any(i => i.ToCompilableString() == _componentInterface));
+            var components = lookup[true];
+            var nonComponents = lookup[false];
 
-            var componentInterface = typeof(IComponent).ToCompilableString();
-
-            var dataFromComponents = types
-                .Where(type => type.AllInterfaces.Any(i => i.ToCompilableString() == componentInterface))
-                .Where(type => !type.IsAbstract)
-                .SelectMany(type => CreateDataForComponent(type))
+            var dataFromComponents = components
+                .Where(symbol => !symbol.IsAbstract)
+                .SelectMany(symbol => CreateData(symbol, true))
                 .ToArray();
 
-            var dataFromNonComponents = types
-                .Where(type => !type.AllInterfaces.Any(i => i.ToCompilableString() == componentInterface))
-                .Where(type => !type.IsGenericType)
-                .Where(type => GetContexts(type, _contextConfig.Contexts).Length != 0)
-                .SelectMany(type => CreateDataForNonComponent(type))
+            var dataFromNonComponents = nonComponents
+                .Where(symbol => !symbol.IsGenericType)
+                .Where(symbol => GetContexts(symbol, _contextConfig.Contexts).Length != 0)
+                .SelectMany(symbol => CreateDataForNonComponent(symbol))
                 .ToArray();
 
-            var mergedData = Merge(dataFromNonComponents, dataFromComponents);
+            var mergedData = dataFromNonComponents
+                .UnionBy(dataFromComponents, data => data.Type)
+                .ToArray();
 
             var dataFromEvents = mergedData
                 .Where(data => data.EventData != null)
                 .SelectMany(data => CreateDataForEvents(data))
                 .ToArray();
 
-            return Merge(dataFromEvents, mergedData);
-        }
-
-        ComponentData[] Merge(ComponentData[] prioData, ComponentData[] redundantData)
-        {
-            var lookup = prioData.ToLookup(data => data.Type);
-            return redundantData
-                .Where(data => !lookup.Contains(data.Type))
-                .Concat(prioData)
+            // ReSharper disable once CoVariantArrayConversion
+            return dataFromEvents
+                .UnionBy(mergedData, data => data.Type)
                 .ToArray();
         }
 
-        ComponentData[] CreateDataForComponent(INamedTypeSymbol type)
+        IEnumerable<ComponentData> CreateData(INamedTypeSymbol symbol, bool isComponent)
         {
-            var contexts = GetContexts(type, _contextConfig.Contexts);
+            var contexts = GetContexts(symbol, _contextConfig.Contexts);
             return contexts.Length == 0
-                ? new[] {CreateDataForComponent(type, _contextConfig.Contexts[0])}
-                : contexts.Select(context => CreateDataForComponent(type, context)).ToArray();
+                ? new[] {CreateData(symbol, _contextConfig.Contexts[0], isComponent)}
+                : contexts.Select(context => CreateData(symbol, context, isComponent));
         }
 
-        ComponentData CreateDataForComponent(INamedTypeSymbol type, string context)
+        ComponentData CreateData(INamedTypeSymbol symbol, string context, bool isComponent)
         {
-            var componentInterface = typeof(IComponent).ToCompilableString();
-            var generatesObject = !type.AllInterfaces.Any(i => i.ToCompilableString() == typeof(IComponent).ToCompilableString());
-            var eventAttributes = type.GetAttributes<EventAttribute>();
+            var eventAttributes = symbol.GetAttributes<EventAttribute>();
             return new ComponentData(
-                type: type.ToCompilableString(),
-                memberData: type.GetPublicMembers(type.AllInterfaces.Any(i => i.ToCompilableString() == componentInterface))
+                type: symbol.ToCompilableString(),
+                memberData: symbol.GetPublicMembers(isComponent)
                     .Select(member => new MemberData(member.PublicMemberType().ToCompilableString(), member.Name))
                     .ToArray(),
                 context: context,
-                isUnique: type.GetAttribute<UniqueAttribute>() != null,
-                flagPrefix: (string)(type.GetAttribute<FlagPrefixAttribute>()?.ConstructorArguments.First().Value ?? "Is"),
-                generates: type.GetAttribute<DontGenerateAttribute>() == null,
-                generatesIndex: (bool)(type.GetAttribute<DontGenerateAttribute>()?.ConstructorArguments.First().Value ?? true),
-                generatesObject: generatesObject,
-                objectType: generatesObject ? type.ToCompilableString() : null,
+                isUnique: symbol.GetAttribute<UniqueAttribute>() != null,
+                flagPrefix: (string)(symbol.GetAttribute<FlagPrefixAttribute>()?.ConstructorArguments.First().Value ?? "Is"),
+                generates: symbol.GetAttribute<DontGenerateAttribute>() == null,
+                generatesIndex: (bool)(symbol.GetAttribute<DontGenerateAttribute>()?.ConstructorArguments.First().Value ?? true),
+                generatesObject: !isComponent,
+                objectType: isComponent ? null : symbol.ToCompilableString(),
                 eventData: eventAttributes.Length > 0
                     ? eventAttributes
                         .Select(attr =>
@@ -118,17 +123,17 @@ namespace Entitas.Plugins
             );
         }
 
-        IEnumerable<ComponentData> CreateDataForNonComponent(INamedTypeSymbol type)
+        IEnumerable<ComponentData> CreateDataForNonComponent(INamedTypeSymbol symbol)
         {
-            var componentNames = type.GetAttribute<ComponentNamesAttribute>()?.ConstructorArguments.First().Values.Select(arg => (string)arg.Value).ToArray()
-                                 ?? new[] {type.ToCompilableString().ShortTypeName().AddComponentSuffix()};
+            var componentNames = symbol.GetAttribute<ComponentNamesAttribute>()?.ConstructorArguments.First().Values.Select(arg => (string)arg.Value)
+                                 ?? new[] {symbol.ToCompilableString().ShortTypeName()};
             return componentNames.SelectMany(componentName =>
             {
-                return CreateDataForComponent(type)
+                return CreateData(symbol, false)
                     .Select(data =>
                     {
                         data.Type = componentName.AddComponentSuffix();
-                        data.MemberData = new[] {new MemberData(type.ToCompilableString(), "Value")};
+                        data.MemberData = new[] {new MemberData(symbol.ToCompilableString(), "Value")};
                         return data;
                     });
             });
@@ -143,15 +148,16 @@ namespace Entitas.Plugins
                 MemberData = new[] {new MemberData($"System.Collections.Generic.List<I{listener}>", "Value")},
                 IsUnique = false,
                 GeneratesObject = false,
+                ObjectType = null,
                 EventData = null
             };
         });
 
-        public static string[] GetContexts(INamedTypeSymbol type, string[] predefinedContexts)
+        public static string[] GetContexts(INamedTypeSymbol symbol, string[] predefinedContexts)
         {
             var contexts = new List<string>();
             var contextAttribute = typeof(ContextAttribute).ToCompilableString();
-            foreach (var attribute in type.GetAttributes())
+            foreach (var attribute in symbol.GetAttributes())
             {
                 var contextCandidate = attribute.AttributeClass.ToString().Replace("Attribute", string.Empty);
                 if (attribute.AttributeClass.BaseType == null && predefinedContexts.Contains(contextCandidate))
@@ -171,8 +177,7 @@ namespace Entitas.Plugins
                 else if (attribute.AttributeClass.ToCompilableString().Contains(contextAttribute))
                 {
                     // Entitas.Plugins.Attributes.ContextAttribute
-                    var name = (string)attribute.ConstructorArguments.First().Value;
-                    contexts.Add(name);
+                    contexts.Add((string)attribute.ConstructorArguments.First().Value);
                 }
             }
 
