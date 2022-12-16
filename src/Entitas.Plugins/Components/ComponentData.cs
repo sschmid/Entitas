@@ -7,9 +7,9 @@ namespace Entitas.Plugins
     {
         public const string TypeKey = "Component.Type";
         public const string NameKey = "Component.Name";
-        public const string ValidLowerFirstNameKey = "Component.ValidName";
+        public const string ValidLowerFirstNameKey = "Component.ValidLowerFirstName";
         public const string MemberDataKey = "Component.MemberData";
-        public const string ContextKey = "Component.Contexts";
+        public const string ContextKey = "Component.Context";
         public const string IsUniqueKey = "Component.IsUnique";
         public const string FlagPrefixKey = "Component.FlagPrefix";
         public const string GeneratesKey = "Component.Generates";
