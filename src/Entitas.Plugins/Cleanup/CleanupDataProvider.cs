@@ -12,7 +12,7 @@ namespace Entitas.Plugins
 {
     public class CleanupDataProvider : IDataProvider, IConfigurable, ICachable
     {
-        public string Name => "Cleanup";
+        public string Name => "Cleanup (Roslyn)";
         public int Order => 0;
         public bool RunInDryMode => true;
 
@@ -21,17 +21,17 @@ namespace Entitas.Plugins
         public Dictionary<string, object> ObjectCache { get; set; }
 
         readonly ProjectPathConfig _projectPathConfig = new ProjectPathConfig();
-        readonly INamedTypeSymbol[] _types;
+
+        readonly INamedTypeSymbol[] _symbols;
+
+        readonly string _componentInterface = typeof(IComponent).ToCompilableString();
 
         Preferences _preferences;
         ComponentDataProvider _componentDataProvider;
 
         public CleanupDataProvider() : this(null) { }
 
-        public CleanupDataProvider(INamedTypeSymbol[] types)
-        {
-            _types = types;
-        }
+        public CleanupDataProvider(INamedTypeSymbol[] symbols) => _symbols = symbols;
 
         public void Configure(Preferences preferences)
         {
@@ -39,31 +39,39 @@ namespace Entitas.Plugins
             _projectPathConfig.Configure(preferences);
         }
 
+        ProjectParser GetProjectParser()
+        {
+            var key = typeof(ProjectParser).FullName;
+            if (!ObjectCache.TryGetValue(key, out var projectParser))
+            {
+                projectParser = new ProjectParser(_projectPathConfig.ProjectPath);
+                ObjectCache.Add(key, projectParser);
+            }
+
+            return (ProjectParser)projectParser;
+        }
+
         public CodeGeneratorData[] GetData()
         {
-            var types = _types ?? Jenny.Plugins.Roslyn.PluginUtil
-                .GetCachedProjectParser(ObjectCache, _projectPathConfig.ProjectPath)
-                .GetTypes();
+            var symbols = _symbols ?? GetProjectParser().GetTypes();
 
-            var componentInterface = typeof(IComponent).ToCompilableString();
-
-            var cleanupTypes = types
-                .Where(type => type.AllInterfaces.Any(i => i.ToCompilableString() == componentInterface))
-                .Where(type => !type.IsAbstract)
-                .Where(type => type.GetAttribute<CleanupAttribute>() != null)
+            var cleanupTypes = symbols
+                .Where(symbol => !symbol.IsAbstract)
+                .Where(symbol => symbol.AllInterfaces.Any(i => i.ToCompilableString() == _componentInterface))
+                .Where(symbol => symbol.GetAttribute<CleanupAttribute>() != null)
                 .ToArray();
 
             var cleanupLookup = cleanupTypes.ToDictionary(
-                type => type.ToCompilableString(),
-                type => (CleanupMode)type.GetAttribute<CleanupAttribute>().ConstructorArguments[0].Value);
+                symbol => symbol.ToCompilableString(),
+                symbol => (CleanupMode)symbol.GetAttribute<CleanupAttribute>().ConstructorArguments[0].Value);
 
             _componentDataProvider = new ComponentDataProvider(cleanupTypes);
             _componentDataProvider.Configure(_preferences);
 
-            return _componentDataProvider
-                .GetData()
+            // ReSharper disable once CoVariantArrayConversion
+            return _componentDataProvider.GetData()
                 .Where(data => !((ComponentData)data).Type.RemoveComponentSuffix().HasListenerSuffix())
-                .Select(data => new CleanupData(data) {CleanupMode = cleanupLookup[((ComponentData)data).Type]})
+                .Select(data => new CleanupData(data, cleanupLookup[((ComponentData)data).Type]))
                 .ToArray();
         }
     }
