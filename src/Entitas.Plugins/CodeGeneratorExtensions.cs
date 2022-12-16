@@ -9,15 +9,13 @@ namespace Entitas.Plugins
     {
         public const string ComponentLookup = "ComponentsLookup";
 
-        // TODO remove and add full namespace support
-        public static bool IgnoreNamespaces;
-
         public const string KeywordPrefix = "@";
 
         static readonly CodeDomProvider CodeDomProvider = CodeDomProvider.CreateProvider("C#");
 
         public static string Replace(this string template, string context) => template
             .Replace("${Context}", context)
+            .Replace("${Context.Name}", context)
             .Replace("${context}", context.ToLowerFirst())
             .Replace("${ContextType}", context.AddContextSuffix())
             .Replace("${Context.Type}", context.AddContextSuffix())
@@ -67,11 +65,8 @@ namespace Entitas.Plugins
         public static string PrefixedComponentName(this ComponentData data) =>
             data.FlagPrefix + data.Name;
 
-        public static string Event(this ComponentData data, string context, EventData eventData)
-        {
-            var optionalContext = data.Contexts.Length > 1 ? context : string.Empty;
-            return optionalContext + EventComponentName(data, eventData) + GetEventTypeSuffix(eventData);
-        }
+        public static string Event(this ComponentData data, string context, EventData eventData) =>
+            context + EventComponentName(data, eventData) + GetEventTypeSuffix(eventData);
 
         public static string EventListener(this ComponentData data, string context, EventData eventData) =>
             data.Event(context, eventData).AddListenerSuffix();

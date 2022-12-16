@@ -5,87 +5,57 @@ using Jenny;
 
 namespace Entitas.Plugins
 {
-    public class EventSystemsGenerator : AbstractGenerator
+    public class EventSystemsGenerator : ICodeGenerator
     {
-        public override string Name => "Event (Systems)";
+        public string Name => "Event (Systems)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string Template =
-            @"public sealed class ${Context}EventSystems : Feature {
-
-    public ${Context}EventSystems(Contexts contexts) {
-${systemsList}
+            @"public sealed class ${Context.Name}EventSystems : Feature
+{
+    public ${Context.Name}EventSystems(Contexts contexts) {
+${SystemsList}
     }
 }
 ";
 
-        const string SystemAddTemplate = @"        Add(new ${Event}EventSystem(contexts)); // Event.Order: ${order}";
+        const string SystemAddTemplate = @"        Add(new ${Event}EventSystem(contexts)); // Event.Order: ${Order}";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => Generate(data
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<ComponentData>()
-            .Where(d => d.IsEvent)
-            .ToArray());
-
-        CodeGenFile[] Generate(ComponentData[] data)
-        {
-            var contextToComponentData = data
-                .Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) =>
-                {
-                    var contexts = d.Contexts;
-                    foreach (var context in contexts)
-                    {
-                        if (!dict.ContainsKey(context))
-                            dict.Add(context, new List<ComponentData>());
-
-                        dict[context].Add(d);
-                    }
-
-                    return dict;
-                });
-
-            var contextToDataTuple = new Dictionary<string, List<DataTuple>>();
-            foreach (var key in contextToComponentData.Keys.ToArray())
-            {
-                var orderedEventData = contextToComponentData[key]
-                    .SelectMany(d => d.EventData.Select(eventData => new DataTuple {ComponentData = d, EventData = eventData}).ToArray())
+            .Where(d => d.EventData != null)
+            .GroupBy(d => d.Context)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .SelectMany(c => c.EventData.Select(e => new DataTuple {ComponentData = c, EventData = e}))
                     .OrderBy(tuple => tuple.EventData.Order)
-                    .ThenBy(tuple => tuple.ComponentData.Name)
-                    .ToList();
+                    .ThenBy(tuple => tuple.ComponentData.Name))
+            .Select(kvp => GenerateSystem(kvp.Key, kvp.Value))
+            .ToArray();
 
-                contextToDataTuple.Add(key, orderedEventData);
-            }
-
-            return Generate(contextToDataTuple);
-        }
-
-        CodeGenFile[] Generate(Dictionary<string, List<DataTuple>> contextToDataTuple) => contextToDataTuple
-            .Select(kvp => GenerateSystem(kvp.Key, kvp.Value.ToArray())).ToArray();
-
-        CodeGenFile GenerateSystem(string context, DataTuple[] data) => new CodeGenFile(
+        CodeGenFile GenerateSystem(string context, IEnumerable<DataTuple> data) => new CodeGenFile(
             Path.Combine("Events", $"{context}EventSystems.cs"),
             Template
-                .Replace("${systemsList}", GenerateSystemList(context, data))
+                .Replace("${SystemsList}", GenerateSystemList(data))
                 .Replace(context),
             GetType().FullName
         );
 
-        string GenerateSystemList(string context, DataTuple[] data) =>
-            string.Join("\n", data.SelectMany(tuple => GenerateSystemListForData(context, tuple)));
+        string GenerateSystemList(IEnumerable<DataTuple> data) =>
+            string.Join("\n", data.Select(tuple => GenerateSystemList(tuple)));
 
-        string[] GenerateSystemListForData(string context, DataTuple data) => data.ComponentData
-            .Contexts
-            .Where(ctx => ctx == context)
-            .Select(ctx => GenerateAddSystem(ctx, data))
-            .ToArray();
+        string GenerateSystemList(DataTuple data) => data.ComponentData
+            .ReplacePlaceholders(SystemAddTemplate)
+            .Replace(data.ComponentData, data.ComponentData.Context, data.EventData)
+            .Replace("${Order}", data.EventData.Order.ToString())
+            .Replace("${Event}", data.ComponentData.Event(data.ComponentData.Context, data.EventData));
+    }
 
-        string GenerateAddSystem(string context, DataTuple data) => SystemAddTemplate
-            .Replace(data.ComponentData, context, data.EventData)
-            .Replace("${order}", data.EventData.Order.ToString())
-            .Replace("${Event}", data.ComponentData.Event(context, data.EventData));
-
-        struct DataTuple
-        {
-            public ComponentData ComponentData;
-            public EventData EventData;
-        }
+    struct DataTuple
+    {
+        public ComponentData ComponentData;
+        public EventData EventData;
     }
 }

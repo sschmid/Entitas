@@ -18,14 +18,11 @@ namespace Entitas.Plugins
         public bool RunInDryMode => true;
 
         public Dictionary<string, string> DefaultProperties =>
-            _projectPathConfig.DefaultProperties
-                .Merge(_ignoreNamespacesConfig.DefaultProperties)
-                .Merge(_contextConfig.DefaultProperties);
+            _projectPathConfig.DefaultProperties.Merge(_contextConfig.DefaultProperties);
 
         public Dictionary<string, object> ObjectCache { get; set; }
 
         readonly ProjectPathConfig _projectPathConfig = new ProjectPathConfig();
-        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
         readonly ContextConfig _contextConfig = new ContextConfig();
 
         readonly INamedTypeSymbol[] _types;
@@ -37,7 +34,6 @@ namespace Entitas.Plugins
         public void Configure(Preferences preferences)
         {
             _projectPathConfig.Configure(preferences);
-            _ignoreNamespacesConfig.Configure(preferences);
             _contextConfig.Configure(preferences);
         }
 
@@ -63,68 +59,80 @@ namespace Entitas.Plugins
                 .Where(type => type.GetAttribute<CustomEntityIndexAttribute>() != null)
                 .Select(CreateCustomEntityIndexData);
 
+            // ReSharper disable once CoVariantArrayConversion
             return entityIndexData.Concat(customEntityIndexData).ToArray();
         }
 
-        EntityIndexData[] CreateEntityIndexData(INamedTypeSymbol type, ISymbol[] members)
+        IEnumerable<EntityIndexData> CreateEntityIndexData(INamedTypeSymbol type, ISymbol[] members)
         {
-            var hasMultiple = members.Count(member => member.GetAttribute<AbstractEntityIndexAttribute>(true) != null) > 1;
-            return members
+            var indexes = members
                 .Where(member => member.GetAttribute<AbstractEntityIndexAttribute>(true) != null)
+                .ToArray();
+
+            return indexes
                 .Select(member =>
                 {
-                    var data = new EntityIndexData();
-                    var attribute = member.GetAttribute<AbstractEntityIndexAttribute>(true);
-                    data.Type = GetEntityIndexType(attribute);
-                    data.IsCustom = false;
-                    data.KeyType = member.PublicMemberType().ToCompilableString();
-                    data.ComponentType = type.ToCompilableString();
-                    data.MemberName = member.Name;
-                    data.HasMultiple = hasMultiple;
+                    var componentType = type.ToCompilableString();
                     var contexts = ComponentDataProvider.GetContexts(type, _contextConfig.Contexts);
                     if (contexts.Length == 0)
                         contexts = new[] {_contextConfig.Contexts[0]};
-                    data.Contexts = contexts;
-                    return data;
-                }).ToArray();
+
+                    return new EntityIndexData(
+                        type: GetEntityIndexType(member.GetAttribute<AbstractEntityIndexAttribute>(true)),
+                        name: componentType.ShortTypeName().RemoveComponentSuffix(),
+                        isCustom: false,
+                        customMethods: null,
+                        keyType: member.PublicMemberType().ToCompilableString(),
+                        componentType: componentType,
+                        memberName: member.Name,
+                        hasMultiple: indexes.Length > 1,
+                        contexts: contexts
+                    );
+                });
         }
 
         EntityIndexData CreateCustomEntityIndexData(INamedTypeSymbol type)
         {
-            var data = new EntityIndexData();
-            var attribute = type.GetAttribute<CustomEntityIndexAttribute>();
-            data.Type = type.ToCompilableString();
-            data.IsCustom = true;
-            data.HasMultiple = false;
-            data.Contexts = new[] {((INamedTypeSymbol)attribute.ConstructorArguments.First().Value).ToCompilableString().ShortTypeName().RemoveContextSuffix()};
-
-            data.CustomMethods = type
-                .GetMembers()
-                .OfType<IMethodSymbol>()
-                .Where(method => method.DeclaredAccessibility == Accessibility.Public)
-                .Where(method => !method.IsStatic)
-                .Where(method => method.GetAttribute<EntityIndexGetMethodAttribute>() != null)
-                .Select(method => new MethodData(
-                    method.ReturnType.ToCompilableString(),
-                    method.Name,
-                    method.Parameters
-                        .Select(p => new MemberData(p.ToCompilableString(), p.Name))
-                        .ToArray()
-                ))
-                .ToArray();
-
-            return data;
+            var indexType = type.ToCompilableString();
+            return new EntityIndexData(
+                indexType,
+                indexType.ShortTypeName(),
+                true,
+                type
+                    .GetMembers()
+                    .OfType<IMethodSymbol>()
+                    .Where(method => method.DeclaredAccessibility == Accessibility.Public)
+                    .Where(method => !method.IsStatic)
+                    .Where(method => method.GetAttribute<EntityIndexGetMethodAttribute>() != null)
+                    .Select(method => new MethodData(
+                        method.ReturnType.ToCompilableString(),
+                        method.Name,
+                        method.Parameters
+                            .Select(p => new MemberData(p.ToCompilableString(), p.Name))
+                            .ToArray()
+                    ))
+                    .ToArray(),
+                null,
+                null,
+                null,
+                false,
+                new[]
+                {
+                    ((INamedTypeSymbol)type.GetAttribute<CustomEntityIndexAttribute>().ConstructorArguments.First().Value)
+                    .ToCompilableString().ShortTypeName().RemoveContextSuffix()
+                }
+            );
         }
 
         string GetEntityIndexType(AttributeData attribute)
         {
             var entityIndexType = attribute.ToString();
-            return entityIndexType switch
-            {
-                "Entitas.Plugins.Attributes.EntityIndexAttribute" => "Entitas.EntityIndex",
-                "Entitas.Plugins.Attributes.PrimaryEntityIndexAttribute" => "Entitas.PrimaryEntityIndex",
-                _ => throw new Exception($"Unhandled EntityIndexType: {entityIndexType}")
-            };
+            if (entityIndexType == typeof(EntityIndexAttribute).FullName)
+                return "Entitas.EntityIndex";
+            if (entityIndexType == typeof(PrimaryEntityIndexAttribute).FullName)
+                return "Entitas.PrimaryEntityIndex";
+
+            throw new Exception($"Unhandled EntityIndexType: {entityIndexType}");
         }
     }
 }

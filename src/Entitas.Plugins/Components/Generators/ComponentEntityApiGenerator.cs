@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Jenny;
@@ -6,9 +5,11 @@ using DesperateDevs.Extensions;
 
 namespace Entitas.Plugins
 {
-    public class ComponentEntityApiGenerator : AbstractGenerator
+    public class ComponentEntityApiGenerator : ICodeGenerator
     {
-        public override string Name => "Component (Entity API)";
+        public string Name => "Component (Entity API)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string StandardTemplate =
             @"public partial class ${Context.Entity.Type}
@@ -74,16 +75,13 @@ ${memberAssignmentList}
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<ComponentData>()
             .Where(d => d.Generates)
-            .SelectMany(d => Generate(d))
+            .Select(d => Generate(d))
             .ToArray();
 
-        IEnumerable<CodeGenFile> Generate(ComponentData data) => data
-            .Contexts.Select(context => Generate(context, data));
-
-        CodeGenFile Generate(string context, ComponentData data)
+        CodeGenFile Generate(ComponentData data)
         {
             var memberData = data.MemberData;
             var template = memberData.Length == 0
@@ -91,10 +89,10 @@ ${memberAssignmentList}
                 : StandardTemplate;
 
             return new CodeGenFile(
-                Path.Combine(context, "Components", $"{context + data.Name.AddComponentSuffix()}.cs"),
+                Path.Combine(data.Context, "Components", $"{data.Context + data.Name.AddComponentSuffix()}.cs"),
                 data.ReplacePlaceholders(template)
                     .Replace("${memberAssignmentList}", GetMemberAssignmentList(memberData))
-                    .Replace(data, context),
+                    .Replace(data, data.Context),
                 GetType().FullName
             );
         }

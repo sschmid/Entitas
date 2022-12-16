@@ -7,9 +7,11 @@ using Entitas.Plugins.Attributes;
 
 namespace Entitas.Plugins
 {
-    public class EventSystemGenerator : AbstractGenerator
+    public class EventSystemGenerator : ICodeGenerator
     {
-        public override string Name => "Event (System)";
+        public string Name => "Event (System)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string AnyTargetTemplate =
             @"public sealed class ${Event}EventSystem : Entitas.ReactiveSystem<${EntityType}> {
@@ -81,17 +83,13 @@ namespace Entitas.Plugins
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<ComponentData>()
-            .Where(d => d.IsEvent)
+            .Where(d => d.EventData != null)
             .SelectMany(d => Generate(d))
             .ToArray();
 
-        IEnumerable<CodeGenFile> Generate(ComponentData data) => data
-            .Contexts.SelectMany(context => Generate(context, data));
-
-        CodeGenFile[] Generate(string context, ComponentData data) => data
-            .EventData
+        IEnumerable<CodeGenFile> Generate(ComponentData data) => data.EventData
             .Select(eventData =>
             {
                 var methodArgs = data.GetEventMethodArgs(eventData, ", " + (data.MemberData.Length == 0
@@ -114,17 +112,17 @@ namespace Entitas.Plugins
 
                 var fileContent = template
                     .Replace("${GroupEvent}", eventData.EventType.ToString())
-                    .Replace("${filter}", GetFilter(data, context, eventData))
+                    .Replace("${filter}", GetFilter(data, data.Context, eventData))
                     .Replace("${cachedAccess}", cachedAccess)
                     .Replace("${methodArgs}", methodArgs)
-                    .Replace(data, context, eventData);
+                    .Replace(data, data.Context, eventData);
 
                 return new CodeGenFile(
-                    Path.Combine("Events", "Systems", $"{data.Event(context, eventData)}EventSystem.cs"),
+                    Path.Combine("Events", "Systems", $"{data.Event(data.Context, eventData)}EventSystem.cs"),
                     fileContent,
                     GetType().FullName
                 );
-            }).ToArray();
+            });
 
         string GetFilter(ComponentData data, string context, EventData eventData)
         {

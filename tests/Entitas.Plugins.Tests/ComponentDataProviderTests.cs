@@ -28,7 +28,6 @@ namespace Entitas.Plugins.Tests
 
         public ComponentDataProviderTests()
         {
-            CodeGeneratorExtensions.IgnoreNamespaces = true;
             _componentData = GetData<MyNamespaceComponent>();
             _classData = GetData<ClassToGenerate>();
         }
@@ -66,20 +65,25 @@ namespace Entitas.Plugins.Tests
         }
 
         [Fact]
-        public void GetsContexts()
+        public void GetsContext()
         {
-            var contexts = _componentData.Contexts;
-            contexts.Length.Should().Be(2);
-            contexts[0].Should().Be("Test1");
-            contexts[1].Should().Be("Test2");
+            _componentData.Context.Should().Be("Test1");
         }
 
         [Fact]
         public void SetsFirstContextAsDefaultWhenComponentHasNoContext()
         {
-            var contexts = GetData<NoContextComponent>().Contexts;
-            contexts.Length.Should().Be(1);
-            contexts[0].Should().Be("Game");
+            var data = GetData<NoContextComponent>();
+            data.Context.Should().Be("Game");
+        }
+
+        [Fact]
+        public void CreatesDataForEachContext()
+        {
+            var data = GetMultipleData<MultipleContextsComponent>();
+            data.Length.Should().Be(2);
+            data[0].Context.Should().Be("Test1");
+            data[1].Context.Should().Be("Test2");
         }
 
         [Fact]
@@ -136,17 +140,17 @@ namespace Entitas.Plugins.Tests
         }
 
         [Fact]
-        public void GetsIsEvent()
+        public void GetsEventData()
         {
-            _componentData.IsEvent.Should().BeFalse();
-            GetData<StandardEventComponent>().IsEvent.Should().BeTrue();
+            _componentData.EventData.Should().BeNull();
+            GetData<StandardEventComponent>().EventData.Should().NotBeNull();
         }
 
         [Fact]
         public void GetsMultipleEvents()
         {
             var data = GetData<MultipleEventsStandardEventComponent>();
-            data.IsEvent.Should().BeTrue();
+            data.EventData.Should().NotBeNull();
             var eventData = data.EventData;
             eventData.Length.Should().Be(2);
 
@@ -184,11 +188,11 @@ namespace Entitas.Plugins.Tests
         {
             var data = GetMultipleData<StandardEventComponent>();
             data.Length.Should().Be(2);
-            data[1].IsEvent.Should().BeFalse();
-            data[1].Type.Should().Be("AnyStandardEventListenerComponent");
+            data[1].EventData.Should().BeNull();
+            data[1].Type.Should().Be("Test1AnyStandardEventListenerComponent");
             data[1].MemberData.Length.Should().Be(1);
             data[1].MemberData[0].Name.Should().Be("Value");
-            data[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<IAnyStandardEventListener>");
+            data[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest1AnyStandardEventListener>");
         }
 
         [Fact]
@@ -196,7 +200,7 @@ namespace Entitas.Plugins.Tests
         {
             var data = GetMultipleData<UniqueEventComponent>();
             data.Length.Should().Be(2);
-            data[1].IsEvent.Should().BeFalse();
+            data[1].EventData.Should().BeNull();
             data[1].IsUnique.Should().BeFalse();
         }
 
@@ -204,27 +208,25 @@ namespace Entitas.Plugins.Tests
         public void CreatesDataForEventListenersWithMultipleContexts()
         {
             var data = GetMultipleData<MultipleContextStandardEventComponent>();
-            data.Length.Should().Be(3);
-            data[1].IsEvent.Should().BeFalse();
-            data[1].Type.Should().Be("Test1AnyMultipleContextStandardEventListenerComponent");
-            data[1].MemberData.Length.Should().Be(1);
-            data[1].MemberData[0].Name.Should().Be("Value");
-            data[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest1AnyMultipleContextStandardEventListener>");
-
-            data[2].IsEvent.Should().BeFalse();
-            data[2].Type.Should().Be("Test2AnyMultipleContextStandardEventListenerComponent");
+            data.Length.Should().Be(4);
+            data[2].EventData.Should().BeNull();
+            data[2].Type.Should().Be("Test1AnyMultipleContextStandardEventListenerComponent");
             data[2].MemberData.Length.Should().Be(1);
             data[2].MemberData[0].Name.Should().Be("Value");
-            data[2].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest2AnyMultipleContextStandardEventListener>");
+            data[2].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest1AnyMultipleContextStandardEventListener>");
+
+            data[3].EventData.Should().BeNull();
+            data[3].Type.Should().Be("Test2AnyMultipleContextStandardEventListenerComponent");
+            data[3].MemberData.Length.Should().Be(1);
+            data[3].MemberData[0].Name.Should().Be("Value");
+            data[3].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest2AnyMultipleContextStandardEventListener>");
         }
 
         [Fact]
         public void ResolvesGeneratedContextAttribute()
         {
             var data = GetData<GeneratedContextComponent>();
-            var contexts = data.Contexts;
-            contexts.Length.Should().Be(1);
-            contexts[0].Should().Be("Game");
+            data.Context.Should().Be("Game");
         }
 
         [Fact]
@@ -235,9 +237,7 @@ namespace Entitas.Plugins.Tests
             var provider = new ComponentDataProvider(new[] {symbol});
             provider.Configure(new TestPreferences("Entitas.Plugins.Contexts = Game, GameState"));
             var data = (ComponentData)provider.GetData()[0];
-            var contexts = data.Contexts;
-            contexts.Length.Should().Be(1);
-            contexts[0].Should().Be("Game");
+            data.Context.Should().Be("Game");
         }
 
         [Fact]
@@ -248,9 +248,7 @@ namespace Entitas.Plugins.Tests
             var provider = new ComponentDataProvider(new[] {symbol});
             provider.Configure(new TestPreferences("Entitas.Plugins.Contexts = KnownContext"));
             var data = (ComponentData)provider.GetData()[0];
-            var contexts = data.Contexts;
-            contexts.Length.Should().Be(1);
-            contexts[0].Should().Be("KnownContext");
+            data.Context.Should().Be("KnownContext");
         }
 
         [Fact]
@@ -275,12 +273,9 @@ namespace Entitas.Plugins.Tests
         }
 
         [Fact]
-        public void GetsContextsForClass()
+        public void GetsContextForClass()
         {
-            var contexts = _classData.Contexts;
-            contexts.Length.Should().Be(2);
-            contexts[0].Should().Be("Test1");
-            contexts[1].Should().Be("Test2");
+            _classData.Context.Should().Be("Test1");
         }
 
         [Fact]
@@ -324,8 +319,7 @@ namespace Entitas.Plugins.Tests
         [Fact]
         public void GetsIsEventForClass()
         {
-            _classData.IsEvent.Should().BeFalse();
-
+            _classData.EventData.Should().BeNull();
             GetData<EventToGenerate>().EventData.Length.Should().Be(1);
             var eventData = GetData<EventToGenerate>().EventData[0];
             eventData.EventTarget.Should().Be(EventTarget.Any);
@@ -337,27 +331,27 @@ namespace Entitas.Plugins.Tests
         public void CreatesDataForEventListenersForClass()
         {
             var data = GetMultipleData<EventToGenerate>();
-            data.Length.Should().Be(3);
-            data[1].IsEvent.Should().BeFalse();
-            data[1].GeneratesObject.Should().BeFalse();
-            data[1].Type.Should().Be("Test1AnyEventToGenerateListenerComponent");
-            data[1].MemberData.Length.Should().Be(1);
-            data[1].MemberData[0].Name.Should().Be("Value");
-            data[1].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest1AnyEventToGenerateListener>");
-
-            data[2].IsEvent.Should().BeFalse();
+            data.Length.Should().Be(4);
+            data[2].EventData.Should().BeNull();
             data[2].GeneratesObject.Should().BeFalse();
-            data[2].Type.Should().Be("Test2AnyEventToGenerateListenerComponent");
+            data[2].Type.Should().Be("Test1AnyEventToGenerateListenerComponent");
             data[2].MemberData.Length.Should().Be(1);
             data[2].MemberData[0].Name.Should().Be("Value");
-            data[2].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest2AnyEventToGenerateListener>");
+            data[2].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest1AnyEventToGenerateListener>");
+
+            data[3].EventData.Should().BeNull();
+            data[3].GeneratesObject.Should().BeFalse();
+            data[3].Type.Should().Be("Test2AnyEventToGenerateListenerComponent");
+            data[3].MemberData.Length.Should().Be(1);
+            data[3].MemberData[0].Name.Should().Be("Value");
+            data[3].MemberData[0].Type.Should().Be("System.Collections.Generic.List<ITest2AnyEventToGenerateListener>");
         }
 
         [Fact]
         public void CreatesDataForEachType()
         {
-            var symbol1 = Types.Single(c => c.ToCompilableString() == typeof(NameAgeComponent).FullName);
-            var symbol2 = Types.Single(c => c.ToCompilableString() == typeof(Test2ContextComponent).FullName);
+            var symbol1 = Types.Single(c => c.ToCompilableString() == typeof(StandardComponent).FullName);
+            var symbol2 = Types.Single(c => c.ToCompilableString() == typeof(MyNamespaceComponent).FullName);
             var provider = new ComponentDataProvider(new[] {symbol1, symbol2});
             provider.Configure(
                 new TestPreferences("Entitas.Plugins.Contexts = Game, GameState")
@@ -390,8 +384,15 @@ namespace Entitas.Plugins.Tests
             provider.Configure(new TestPreferences(
                 "Entitas.Plugins.Contexts = Game, GameState"
             ));
-            var data = provider.GetData();
-            data.Length.Should().Be(1);
+            var data = (ComponentData[])provider.GetData();
+            data.Length.Should().Be(2);
+            data[0].Type.Should().Be("ClassToGenerateComponent");
+            data[0].Context.Should().Be("Test1");
+            data[0].ObjectType.Should().Be("My.Namespace.ClassToGenerate");
+
+            data[1].Type.Should().Be("ClassToGenerateComponent");
+            data[1].Context.Should().Be("Test2");
+            data[1].ObjectType.Should().Be("My.Namespace.ClassToGenerate");
         }
 
         [Fact]
@@ -399,9 +400,7 @@ namespace Entitas.Plugins.Tests
         {
             var preferences = new TestPreferences("Entitas.Plugins.Contexts = ConfiguredContext" + "\n");
             var data = GetData<NoContextComponent>(preferences);
-            var contexts = data.Contexts;
-            contexts.Length.Should().Be(1);
-            contexts[0].Should().Be("ConfiguredContext");
+            data.Context.Should().Be("ConfiguredContext");
         }
 
         ComponentData GetData<T>(Preferences preferences = null) => GetMultipleData<T>(preferences)[0];

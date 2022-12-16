@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -5,9 +6,11 @@ using Jenny;
 
 namespace Entitas.Plugins
 {
-    public class ComponentLookupGenerator : AbstractGenerator
+    public class ComponentLookupGenerator : ICodeGenerator
     {
-        public override string Name => "Component (Lookup)";
+        public string Name => "Component (Lookup)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string Template =
             @"public static class ${Lookup}
@@ -33,7 +36,7 @@ ${ComponentTypesList}
         const string ComponentNameTemplate = @"        ""${Component.Name}""";
         const string ComponentTypeTemplate = @"        typeof(${Component.Type})";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data)
+        public CodeGenFile[] Generate(CodeGeneratorData[] data)
         {
             var lookups = GenerateLookups(data
                 .OfType<ComponentData>()
@@ -46,49 +49,25 @@ ${ComponentTypesList}
             return lookups.Concat(emptyLookups).ToArray();
         }
 
-        IEnumerable<CodeGenFile> GenerateEmptyLookups(IEnumerable<ContextData> data)
-        {
-            var emptyData = new List<ComponentData>(0);
-            return data.Select(d => GenerateComponentsLookupClass(d.Name, emptyData));
-        }
+        IEnumerable<CodeGenFile> GenerateEmptyLookups(IEnumerable<ContextData> data) =>
+            data.Select(d => GenerateComponentsLookupClass(d.Name, Array.Empty<ComponentData>()));
 
-        CodeGenFile[] GenerateLookups(IEnumerable<ComponentData> data)
-        {
-            var contextToComponentData = data
-                .Aggregate(new Dictionary<string, List<ComponentData>>(), (dict, d) =>
-                {
-                    var contexts = d.Contexts;
-                    foreach (var context in contexts)
-                    {
-                        if (!dict.ContainsKey(context))
-                            dict.Add(context, new List<ComponentData>());
+        CodeGenFile[] GenerateLookups(IEnumerable<ComponentData> data) => data
+            .GroupBy(d => d.Context)
+            .ToDictionary(
+                group => group.Key,
+                group => group.OrderBy(d => d.Type).ToArray())
+            .Select(kvp => GenerateComponentsLookupClass(kvp.Key, kvp.Value))
+            .ToArray();
 
-                        dict[context].Add(d);
-                    }
-
-                    return dict;
-                });
-
-            foreach (var key in contextToComponentData.Keys.ToArray())
-            {
-                contextToComponentData[key] = contextToComponentData[key]
-                    .OrderBy(d => d.Type)
-                    .ToList();
-            }
-
-            return contextToComponentData
-                .Select(kvp => GenerateComponentsLookupClass(kvp.Key, kvp.Value))
-                .ToArray();
-        }
-
-        CodeGenFile GenerateComponentsLookupClass(string context, List<ComponentData> data)
+        CodeGenFile GenerateComponentsLookupClass(string context, ComponentData[] data)
         {
             var componentConstantsList = string.Join("\n", data.Select((d, index) => d
                 .ReplacePlaceholders(ComponentConstantTemplate)
                 .Replace("${Index}", index.ToString())));
 
             var totalComponentsConstant = TotalComponentsConstantTemplate
-                .Replace("${TotalComponents}", data.Count.ToString());
+                .Replace("${TotalComponents}", data.Length.ToString());
 
             var componentNamesList = string.Join(",\n", data.Select(d =>
                 d.ReplacePlaceholders(ComponentNameTemplate)));

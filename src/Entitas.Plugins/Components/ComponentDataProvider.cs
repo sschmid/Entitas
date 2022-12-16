@@ -19,14 +19,11 @@ namespace Entitas.Plugins
         public bool RunInDryMode => true;
 
         public Dictionary<string, string> DefaultProperties =>
-            _projectPathConfig.DefaultProperties
-                .Merge(_ignoreNamespacesConfig.DefaultProperties)
-                .Merge(_contextConfig.DefaultProperties);
+            _projectPathConfig.DefaultProperties.Merge(_contextConfig.DefaultProperties);
 
         public Dictionary<string, object> ObjectCache { get; set; }
 
         readonly ProjectPathConfig _projectPathConfig = new ProjectPathConfig();
-        readonly IgnoreNamespacesConfig _ignoreNamespacesConfig = new IgnoreNamespacesConfig();
         readonly ContextConfig _contextConfig = new ContextConfig();
 
         readonly INamedTypeSymbol[] _types;
@@ -38,7 +35,6 @@ namespace Entitas.Plugins
         public void Configure(Preferences preferences)
         {
             _projectPathConfig.Configure(preferences);
-            _ignoreNamespacesConfig.Configure(preferences);
             _contextConfig.Configure(preferences);
         }
 
@@ -53,7 +49,7 @@ namespace Entitas.Plugins
             var dataFromComponents = types
                 .Where(type => type.AllInterfaces.Any(i => i.ToCompilableString() == componentInterface))
                 .Where(type => !type.IsAbstract)
-                .Select(type => CreateDataForComponent(type))
+                .SelectMany(type => CreateDataForComponent(type))
                 .ToArray();
 
             var dataFromNonComponents = types
@@ -66,7 +62,7 @@ namespace Entitas.Plugins
             var mergedData = Merge(dataFromNonComponents, dataFromComponents);
 
             var dataFromEvents = mergedData
-                .Where(data => data.IsEvent)
+                .Where(data => data.EventData != null)
                 .SelectMany(data => CreateDataForEvents(data))
                 .ToArray();
 
@@ -82,64 +78,74 @@ namespace Entitas.Plugins
                 .ToArray();
         }
 
-        ComponentData CreateDataForComponent(INamedTypeSymbol type)
+        ComponentData[] CreateDataForComponent(INamedTypeSymbol type)
         {
-            var componentInterface = typeof(IComponent).ToCompilableString();
-            var isComponent = type.AllInterfaces.Any(i => i.ToCompilableString() == componentInterface);
-
-            var data = new ComponentData();
-            data.Type = type.ToCompilableString();
-            data.MemberData = type.GetPublicMembers(isComponent)
-                .Select(member => new MemberData(member.PublicMemberType().ToCompilableString(), member.Name))
-                .ToArray();
             var contexts = GetContexts(type, _contextConfig.Contexts);
-            if (contexts.Length == 0)
-                contexts = new[] {_contextConfig.Contexts[0]};
-            data.Contexts = contexts;
-            data.IsUnique = type.GetAttribute<UniqueAttribute>() != null;
-            data.FlagPrefix = (string)(type.GetAttribute<FlagPrefixAttribute>()?.ConstructorArguments.First().Value ?? "Is");
-            data.Generates = type.GetAttribute<DontGenerateAttribute>() == null;
-            data.GeneratesIndex = (bool)(type.GetAttribute<DontGenerateAttribute>()?.ConstructorArguments.First().Value ?? true);
-            var generatesObject = !type.AllInterfaces.Any(i => i.ToCompilableString() == typeof(IComponent).ToCompilableString());
-            data.GeneratesObject = generatesObject;
-            data.ObjectType = generatesObject ? type.ToCompilableString() : null;
-            var eventAttributes = type.GetAttributes<EventAttribute>();
-            data.IsEvent = eventAttributes.Length > 0;
-            data.EventData = eventAttributes.Length > 0
-                ? eventAttributes.Select(attr => new EventData((EventTarget)attr.ConstructorArguments[0].Value, (EventType)attr.ConstructorArguments[1].Value, (int)attr.ConstructorArguments[2].Value)).ToArray()
-                : null;
-
-            return data;
+            return contexts.Length == 0
+                ? new[] {CreateDataForComponent(type, _contextConfig.Contexts[0])}
+                : contexts.Select(context => CreateDataForComponent(type, context)).ToArray();
         }
 
-        ComponentData[] CreateDataForNonComponent(INamedTypeSymbol type)
+        ComponentData CreateDataForComponent(INamedTypeSymbol type, string context)
+        {
+            var componentInterface = typeof(IComponent).ToCompilableString();
+            var generatesObject = !type.AllInterfaces.Any(i => i.ToCompilableString() == typeof(IComponent).ToCompilableString());
+            var eventAttributes = type.GetAttributes<EventAttribute>();
+            return new ComponentData(
+                type: type.ToCompilableString(),
+                memberData: type.GetPublicMembers(type.AllInterfaces.Any(i => i.ToCompilableString() == componentInterface))
+                    .Select(member => new MemberData(member.PublicMemberType().ToCompilableString(), member.Name))
+                    .ToArray(),
+                context: context,
+                isUnique: type.GetAttribute<UniqueAttribute>() != null,
+                flagPrefix: (string)(type.GetAttribute<FlagPrefixAttribute>()?.ConstructorArguments.First().Value ?? "Is"),
+                generates: type.GetAttribute<DontGenerateAttribute>() == null,
+                generatesIndex: (bool)(type.GetAttribute<DontGenerateAttribute>()?.ConstructorArguments.First().Value ?? true),
+                generatesObject: generatesObject,
+                objectType: generatesObject ? type.ToCompilableString() : null,
+                eventData: eventAttributes.Length > 0
+                    ? eventAttributes
+                        .Select(attr =>
+                        {
+                            var args = attr.ConstructorArguments;
+                            return new EventData(
+                                (EventTarget)args[0].Value,
+                                (EventType)args[1].Value,
+                                (int)args[2].Value);
+                        })
+                        .ToArray()
+                    : null
+            );
+        }
+
+        IEnumerable<ComponentData> CreateDataForNonComponent(INamedTypeSymbol type)
         {
             var componentNames = type.GetAttribute<ComponentNamesAttribute>()?.ConstructorArguments.First().Values.Select(arg => (string)arg.Value).ToArray()
                                  ?? new[] {type.ToCompilableString().ShortTypeName().AddComponentSuffix()};
-            return componentNames.Select(componentName =>
+            return componentNames.SelectMany(componentName =>
             {
-                var data = CreateDataForComponent(type);
-                data.Type = componentName.AddComponentSuffix();
-                data.MemberData = new[] {new MemberData(type.ToCompilableString(), "Value")};
-                return data;
-            }).ToArray();
+                return CreateDataForComponent(type)
+                    .Select(data =>
+                    {
+                        data.Type = componentName.AddComponentSuffix();
+                        data.MemberData = new[] {new MemberData(type.ToCompilableString(), "Value")};
+                        return data;
+                    });
+            });
         }
 
-        ComponentData[] CreateDataForEvents(ComponentData data) => data.Contexts.SelectMany(context =>
-            data.EventData.Select(eventData =>
+        IEnumerable<ComponentData> CreateDataForEvents(ComponentData data) => data.EventData.Select(eventData =>
+        {
+            var listener = data.Context + data.EventComponentName(eventData) + eventData.GetEventTypeSuffix().AddListenerSuffix();
+            return new ComponentData(data)
             {
-                var dataForEvent = new ComponentData(data);
-                var optionalContext = dataForEvent.Contexts.Length > 1 ? context : string.Empty;
-                var listener = optionalContext + data.EventComponentName(eventData) + eventData.GetEventTypeSuffix().AddListenerSuffix();
-                dataForEvent.Type = listener.AddComponentSuffix();
-                dataForEvent.MemberData = new[] {new MemberData($"System.Collections.Generic.List<I{listener}>", "Value")};
-                dataForEvent.Contexts = new[] {context};
-                dataForEvent.IsUnique = false;
-                dataForEvent.GeneratesObject = false;
-                dataForEvent.IsEvent = false;
-                dataForEvent.EventData = null;
-                return dataForEvent;
-            })).ToArray();
+                Type = listener.AddComponentSuffix(),
+                MemberData = new[] {new MemberData($"System.Collections.Generic.List<I{listener}>", "Value")},
+                IsUnique = false,
+                GeneratesObject = false,
+                EventData = null
+            };
+        });
 
         public static string[] GetContexts(INamedTypeSymbol type, string[] predefinedContexts)
         {

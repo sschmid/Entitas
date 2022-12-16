@@ -27,7 +27,7 @@ namespace Entitas.Plugins.Tests
             var d = data[0];
             d.Type.Should().Be("Entitas.EntityIndex");
             d.IsCustom.Should().BeFalse();
-            d.Name.Should().Be("MyNamespaceEntityIndex");
+            d.Name.Should().Be("EntityIndex");
             d.Contexts.Length.Should().Be(2);
             d.Contexts[0].Should().Be("Test1");
             d.Contexts[1].Should().Be("Test2");
@@ -41,9 +41,9 @@ namespace Entitas.Plugins.Tests
         {
             var data = GetData<MultipleEntityIndexesComponent, StandardComponent>();
             data.Length.Should().Be(2);
-            data[0].Name.Should().Be("MyNamespaceMultipleEntityIndexes");
+            data[0].Name.Should().Be("MultipleEntityIndexes");
             data[0].HasMultiple.Should().BeTrue();
-            data[1].Name.Should().Be("MyNamespaceMultipleEntityIndexes");
+            data[1].Name.Should().Be("MultipleEntityIndexes");
             data[1].HasMultiple.Should().BeTrue();
         }
 
@@ -88,7 +88,7 @@ namespace Entitas.Plugins.Tests
             var d = data[0];
             d.Type.Should().Be("MyNamespace.CustomEntityIndex");
             d.IsCustom.Should().BeTrue();
-            d.Name.Should().Be("MyNamespaceCustomEntityIndex");
+            d.Name.Should().Be("CustomEntityIndex");
             d.Contexts.Length.Should().Be(1);
             d.Contexts[0].Should().Be("Test1");
             d.CustomMethods.Length.Should().Be(2);

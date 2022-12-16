@@ -5,9 +5,11 @@ using Entitas.Plugins.Attributes;
 
 namespace Entitas.Plugins
 {
-    public class CleanupSystemGenerator : AbstractGenerator
+    public class CleanupSystemGenerator : ICodeGenerator
     {
-        public override string Name => "Cleanup (System)";
+        public string Name => "Cleanup (System)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string DestroyEntityTemplate =
             @"using System.Collections.Generic;
@@ -51,22 +53,18 @@ public sealed class Remove${ComponentName}${SystemType} : ICleanupSystem {
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<CleanupData>()
-            .SelectMany(d => Generate(d))
+            .Select(d => Generate(d))
             .ToArray();
 
-        CodeGenFile[] Generate(CleanupData data) => data
-            .ComponentData.Contexts
-            .Select(context => Generate(context, data))
-            .ToArray();
-
-        CodeGenFile Generate(string context, CleanupData data)
+        CodeGenFile Generate(CleanupData data)
         {
             var template = data.CleanupMode == CleanupMode.DestroyEntity
                 ? DestroyEntityTemplate
                 : RemoveComponentTemplate;
 
+            var context = data.ComponentData.Context;
             var fileContent = template
                 .Replace("${SystemType}", context.AddSystemSuffix())
                 .Replace("${EntityType}", context.AddEntitySuffix())

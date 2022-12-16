@@ -5,9 +5,11 @@ using Jenny;
 
 namespace Entitas.Plugins
 {
-    public class EventListenerInterfaceGenerator : AbstractGenerator
+    public class EventListenerInterfaceGenerator : ICodeGenerator
     {
-        public override string Name => "Event (Listener Interface)";
+        public string Name => "Event (Listener Interface)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string Template =
             @"public interface I${EventListener} {
@@ -15,29 +17,26 @@ namespace Entitas.Plugins
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<ComponentData>()
-            .Where(d => d.IsEvent)
+            .Where(d => d.EventData != null)
             .SelectMany(d => Generate(d))
             .ToArray();
 
-        IEnumerable<CodeGenFile> Generate(ComponentData data) =>
-            data.Contexts.SelectMany(context => Generate(context, data));
-
-        CodeGenFile[] Generate(string context, ComponentData data) => data
-            .EventData
+        IEnumerable<CodeGenFile> Generate(ComponentData data) => data.EventData
             .Select(eventData =>
             {
                 var memberData = data.MemberData;
                 if (memberData.Length == 0)
                     memberData = new[] {new MemberData("bool", data.PrefixedComponentName())};
+
                 return new CodeGenFile(
-                    Path.Combine("Events", "Interfaces", $"I{data.EventListener(context, eventData)}.cs"),
+                    Path.Combine("Events", "Interfaces", $"I{data.EventListener(data.Context, eventData)}.cs"),
                     Template
                         .Replace("${methodParameters}", data.GetEventMethodArgs(eventData, $", {memberData.GetMethodParameters(false)}"))
-                        .Replace(data, context, eventData),
+                        .Replace(data, data.Context, eventData),
                     GetType().FullName
                 );
-            }).ToArray();
+            });
     }
 }

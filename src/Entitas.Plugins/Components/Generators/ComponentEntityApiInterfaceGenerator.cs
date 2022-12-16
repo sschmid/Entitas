@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Jenny;
 
 namespace Entitas.Plugins
 {
-    public class ComponentEntityApiInterfaceGenerator : AbstractGenerator
+    public class ComponentEntityApiInterfaceGenerator : ICodeGenerator
     {
-        public override string Name => "Component (Entity API Interface)";
+        public string Name => "Component (Entity API Interface)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string StandardTemplate =
             @"public partial interface I${Component.Name}Entity
@@ -30,15 +31,20 @@ namespace Entitas.Plugins
 
         const string EntityInterfaceTemplate = "public partial class ${Context.Entity.Type} : I${Component.Name}Entity { }\n";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<ComponentData>()
             .Where(d => d.Generates)
-            .Where(d => d.Contexts.Length > 1)
-            .SelectMany(d => Generate(d))
+            .GroupBy(d => d.Type)
+            .Select(group => group.ToArray())
+            .Where(datas => datas.Length > 1)
+            .SelectMany(datas => datas.SelectMany(d => Generate(d)))
             .ToArray();
 
-        IEnumerable<CodeGenFile> Generate(ComponentData data) => new[] {GenerateInterface(data)}
-            .Concat(data.Contexts.Select(context => GenerateEntityInterface(context, data)));
+        CodeGenFile[] Generate(ComponentData data) => new[]
+        {
+            GenerateInterface(data),
+            GenerateEntityInterface(data),
+        };
 
         CodeGenFile GenerateInterface(ComponentData data)
         {
@@ -53,9 +59,9 @@ namespace Entitas.Plugins
             );
         }
 
-        CodeGenFile GenerateEntityInterface(string context, ComponentData data) => new CodeGenFile(
-            Path.Combine(context, "Components", $"{context + data.Name.AddComponentSuffix()}.cs"),
-            data.ReplacePlaceholders(EntityInterfaceTemplate.Replace(data, context)),
+        CodeGenFile GenerateEntityInterface(ComponentData data) => new CodeGenFile(
+            Path.Combine(data.Context, "Components", $"{data.Context + data.Name.AddComponentSuffix()}.cs"),
+            data.ReplacePlaceholders(EntityInterfaceTemplate.Replace(data, data.Context)),
             GetType().FullName
         );
     }

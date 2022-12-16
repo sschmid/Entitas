@@ -5,9 +5,11 @@ using Jenny;
 
 namespace Entitas.Plugins
 {
-    public class EventEntityApiGenerator : AbstractGenerator
+    public class EventEntityApiGenerator : ICodeGenerator
     {
-        public override string Name => "Event (Entity API)";
+        public string Name => "Event (Entity API)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string Template =
             @"public partial class ${EntityType} {
@@ -32,21 +34,16 @@ namespace Entitas.Plugins
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<ComponentData>()
-            .Where(d => d.IsEvent)
+            .Where(d => d.EventData != null)
             .SelectMany(d => Generate(d))
             .ToArray();
 
-        IEnumerable<CodeGenFile> Generate(ComponentData data) => data
-            .Contexts.SelectMany(context => Generate(context, data));
-
-        CodeGenFile[] Generate(string context, ComponentData data) => data
-            .EventData
+        IEnumerable<CodeGenFile> Generate(ComponentData data) => data.EventData
             .Select(eventData => new CodeGenFile(
-                Path.Combine(context, "Components", $"{context}{data.EventListener(context, eventData).AddComponentSuffix()}.cs"),
-                Template.Replace(data, context, eventData),
-                GetType().FullName
-            )).ToArray();
+                Path.Combine(data.Context, "Components", $"{data.Context}{data.EventListener(data.Context, eventData).AddComponentSuffix()}.cs"),
+                Template.Replace(data, data.Context, eventData),
+                GetType().FullName));
     }
 }

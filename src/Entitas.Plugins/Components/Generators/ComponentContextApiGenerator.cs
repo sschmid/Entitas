@@ -1,13 +1,14 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Jenny;
 
 namespace Entitas.Plugins
 {
-    public class ComponentContextApiGenerator : AbstractGenerator
+    public class ComponentContextApiGenerator : ICodeGenerator
     {
-        public override string Name => "Component (Context API)";
+        public string Name => "Component (Context API)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string StandardTemplate =
             @"public partial class ${Context.Type}
@@ -63,25 +64,22 @@ namespace Entitas.Plugins
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
             .OfType<ComponentData>()
             .Where(d => d.Generates)
             .Where(d => d.IsUnique)
-            .SelectMany(d => Generate(d))
+            .Select(d => Generate(d))
             .ToArray();
 
-        IEnumerable<CodeGenFile> Generate(ComponentData data) => data
-            .Contexts.Select(context => Generate(context, data));
-
-        CodeGenFile Generate(string context, ComponentData data)
+        CodeGenFile Generate(ComponentData data)
         {
             var template = data.MemberData.Length == 0
                 ? FlagTemplate
                 : StandardTemplate;
 
             return new CodeGenFile(
-                Path.Combine(context, "Components", $"{context + data.Name.AddComponentSuffix()}.cs"),
-                data.ReplacePlaceholders(template.Replace(data, context)),
+                Path.Combine(data.Context, "Components", $"{data.Context + data.Name.AddComponentSuffix()}.cs"),
+                data.ReplacePlaceholders(template.Replace(data, data.Context)),
                 GetType().FullName
             );
         }

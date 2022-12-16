@@ -9,19 +9,32 @@ namespace Entitas.Plugins
         public const string NameKey = "Component.Name";
         public const string ValidLowerFirstNameKey = "Component.ValidName";
         public const string MemberDataKey = "Component.MemberData";
-        public const string ContextsKey = "Component.Contexts";
+        public const string ContextKey = "Component.Contexts";
         public const string IsUniqueKey = "Component.IsUnique";
         public const string FlagPrefixKey = "Component.FlagPrefix";
         public const string GeneratesKey = "Component.Generates";
         public const string GeneratesIndexKey = "Component.GeneratesIndex";
         public const string GeneratesObjectKey = "Component.GeneratesObject";
         public const string ObjectTypeKey = "Component.ObjectType";
-        public const string IsEventKey = "Component.IsEvent";
         public const string EventDataKey = "Component.EventData";
 
-        public ComponentData() { }
-
         public ComponentData(CodeGeneratorData data) : base(data) { }
+
+        public ComponentData(
+            string type, MemberData[] memberData, string context, bool isUnique, string flagPrefix,
+            bool generates, bool generatesIndex, bool generatesObject, string objectType, EventData[] eventData)
+        {
+            Type = type;
+            MemberData = memberData;
+            Context = context;
+            IsUnique = isUnique;
+            FlagPrefix = flagPrefix;
+            Generates = generates;
+            GeneratesIndex = generatesIndex;
+            GeneratesObject = generatesObject;
+            ObjectType = objectType;
+            EventData = eventData;
+        }
 
         public string Type
         {
@@ -29,11 +42,7 @@ namespace Entitas.Plugins
             set
             {
                 this[TypeKey] = value;
-
-                var name = CodeGeneratorExtensions.IgnoreNamespaces
-                    ? value.ShortTypeName().RemoveComponentSuffix()
-                    : value.RemoveDots().RemoveComponentSuffix();
-
+                var name = value.ShortTypeName().RemoveComponentSuffix();
                 this[NameKey] = name;
                 this[ValidLowerFirstNameKey] = name.ToLowerFirst().AddPrefixIfIsKeyword();
             }
@@ -48,10 +57,10 @@ namespace Entitas.Plugins
             set => this[MemberDataKey] = value;
         }
 
-        public string[] Contexts
+        public string Context
         {
-            get => (string[])this[ContextsKey];
-            set => this[ContextsKey] = value;
+            get => (string)this[ContextKey];
+            set => this[ContextKey] = value;
         }
 
         public bool IsUnique
@@ -88,12 +97,6 @@ namespace Entitas.Plugins
         {
             get => (string)this[ObjectTypeKey];
             set => this[ObjectTypeKey] = value;
-        }
-
-        public bool IsEvent
-        {
-            get => (bool)this[IsEventKey];
-            set => this[IsEventKey] = value;
         }
 
         public EventData[] EventData

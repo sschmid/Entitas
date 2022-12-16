@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Jenny;
 using Entitas.Plugins.Attributes;
 
 namespace Entitas.Plugins
 {
-    public class CleanupSystemsGenerator : AbstractGenerator
+    public class CleanupSystemsGenerator : ICodeGenerator
     {
-        public override string Name => "Cleanup (Systems)";
+        public string Name => "Cleanup (Systems)";
+        public int Order => 0;
+        public bool RunInDryMode => true;
 
         const string Template =
             @"public sealed class ${Context}CleanupSystems : Feature {
@@ -19,28 +20,11 @@ ${systemsList}
 }
 ";
 
-        public override CodeGenFile[] Generate(CodeGeneratorData[] data)
-        {
-            var contextToCleanupData = data.OfType<CleanupData>()
-                .Aggregate(new Dictionary<string, List<CleanupData>>(), (dict, d) =>
-                {
-                    var contexts = d.ComponentData.Contexts;
-                    foreach (var context in contexts)
-                    {
-                        if (!dict.ContainsKey(context))
-                            dict.Add(context, new List<CleanupData>());
-
-                        dict[context].Add(d);
-                    }
-
-                    return dict;
-                });
-
-            return Generate(contextToCleanupData);
-        }
-
-        CodeGenFile[] Generate(Dictionary<string, List<CleanupData>> contextToCleanupData) => contextToCleanupData
-            .Select(kvp => Generate(kvp.Key, kvp.Value.ToArray())).ToArray();
+        public CodeGenFile[] Generate(CodeGeneratorData[] data) => data
+            .OfType<CleanupData>()
+            .GroupBy(d => d.ComponentData.Context)
+            .Select(group => Generate(group.Key, group.ToArray()))
+            .ToArray();
 
         CodeGenFile Generate(string context, CleanupData[] data)
         {

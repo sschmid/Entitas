@@ -1,5 +1,4 @@
-﻿using DesperateDevs.Extensions;
-using Jenny;
+﻿using Jenny;
 
 namespace Entitas.Plugins
 {
@@ -9,26 +8,37 @@ namespace Entitas.Plugins
         public const string NameKey = "EntityIndex.Name";
         public const string IsCustomKey = "EntityIndex.IsCustom";
         public const string CustomMethodsKey = "EntityIndex.CustomMethods";
-
         public const string KeyTypeKey = "EntityIndex.KeyType";
         public const string ComponentTypeKey = "EntityIndex.ComponentType";
         public const string MemberNameKey = "EntityIndex.MemberName";
         public const string HasMultipleKey = "EntityIndex.HasMultiple";
         public const string ContextsKey = "EntityIndex.Contexts";
 
+        public EntityIndexData(string type, string name, bool isCustom, MethodData[] customMethods,
+            string keyType, string componentType, string memberName, bool hasMultiple, string[] contexts)
+        {
+            Type = type;
+            Name = name;
+            IsCustom = isCustom;
+            CustomMethods = customMethods;
+            KeyType = keyType;
+            ComponentType = componentType;
+            MemberName = memberName;
+            HasMultiple = hasMultiple;
+            Contexts = contexts;
+        }
+
         public string Type
         {
             get => (string)this[TypeKey];
-            set
-            {
-                this[TypeKey] = value;
-                this[NameKey] = CodeGeneratorExtensions.IgnoreNamespaces
-                    ? value.ShortTypeName().RemoveComponentSuffix()
-                    : value.RemoveDots().RemoveComponentSuffix();
-            }
+            set => this[TypeKey] = value;
         }
 
-        public string Name => (string)this[NameKey];
+        public string Name
+        {
+            get => (string)this[NameKey];
+            set => this[NameKey] = value;
+        }
 
         public bool IsCustom
         {
