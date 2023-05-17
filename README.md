@@ -125,7 +125,7 @@ Entitas ECS
                  +------------+
  ```
 
-[Read more...](https://github.com/sschmid/Entitas/wiki/Introduction-to-Entitas)
+[Read more...](https://github.com/sschmid/Entitas/wiki/Home)
 
 # Code Generator
 
