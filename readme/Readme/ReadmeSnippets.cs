@@ -1,42 +1,42 @@
 using Entitas;
 using UnityEngine;
+using static GameMatcher;
 
 // ReSharper disable UnusedVariable
 
 namespace Readme
 {
-    public static class ReadmeSnippets
+    public sealed class MoveSystem : IExecuteSystem
     {
-        public static GameEntity CreateRedGem(this GameContext context, Vector3 position)
+        readonly IGroup<GameEntity> _group;
+
+        public MoveSystem(GameContext context)
         {
-            var entity = context.CreateEntity();
-            entity.isGameBoardElement = true;
-            entity.isMovable = true;
-            entity.AddPosition(position);
-            entity.AddAsset("RedGem");
-            entity.isInteractive = true;
-            return entity;
+            _group = context.GetGroup(AllOf(Position, Velocity));
         }
 
-        static void MoveSystem(GameContext context)
+        public void Execute()
         {
-            var entities = context.GetEntities(GameMatcher.AllOf(
-                GameMatcher.Position,
-                GameMatcher.Velocity)
-            );
-            foreach (var e in entities)
-            {
-                var pos = e.position;
-                var vel = e.velocity;
-                e.ReplacePosition(pos.value + vel.value);
-            }
+            foreach (var e in _group.GetEntities())
+                e.ReplacePosition(e.position.value + e.velocity.value);
+        }
+    }
+
+    public static class ReadmeSnippets
+    {
+        public static void CreateEntity(this GameContext context, Vector3 position)
+        {
+            var entity = context.CreateEntity();
+            entity.AddPosition(Vector3.zero);
+            entity.AddVelocity(Vector3.forward);
+            entity.AddAsset("Player");
         }
 
         /*
-         * 
+         *
          * Wiki
-         * 
-         * 
+         *
+         *
          */
 
         static void EntityExample(GameEntity entity)
@@ -64,9 +64,9 @@ namespace Readme
 
             // Returns all entities having MovableComponent and PositionComponent.
             // Matchers are also generated for you.
-            var entities = context.GetEntities(GameMatcher.AllOf(
-                GameMatcher.Movable,
-                GameMatcher.Position)
+            var entities = context.GetEntities(AllOf(
+                Movable,
+                Position)
             );
             foreach (var e in entities)
             {
@@ -76,11 +76,11 @@ namespace Readme
 
         static void GroupExample(GameContext context)
         {
-            context.GetGroup(GameMatcher.Position).GetEntities();
+            context.GetGroup(Position).GetEntities();
 
             // ----------------------------
 
-            context.GetGroup(GameMatcher.Position).OnEntityAdded += (group, entity, index, component) =>
+            context.GetGroup(Position).OnEntityAdded += (group, entity, index, component) =>
             {
                 // Do something
             };
@@ -88,7 +88,7 @@ namespace Readme
 
         static void CollectorExample(GameContext context)
         {
-            var group = context.GetGroup(GameMatcher.Position);
+            var group = context.GetGroup(Position);
             var collector = group.CreateCollector(GroupEvent.Added);
 
             // ----------------------------

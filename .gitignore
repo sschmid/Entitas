@@ -10,9 +10,9 @@ bin
 TestResults
 
 # IDEs
+.idea
 .vs
 .vscode
-.idea
 **/Assets/Plugins/Editor/JetBrains
 **/Assets/Plugins/Editor/JetBrains.meta
 
