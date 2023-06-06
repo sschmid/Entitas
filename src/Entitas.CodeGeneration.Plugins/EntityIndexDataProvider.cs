@@ -104,7 +104,7 @@ namespace Entitas.CodeGeneration.Plugins
             data.IsCustom(true);
             data.SetEntityIndexName(type.ToCompilableString().RemoveDots());
             data.SetHasMultiple(false);
-            data.SetContextNames(new[] {attribute.contextType.ToCompilableString().ShortTypeName().RemoveContextSuffix()});
+            data.SetContextNames(new[] {attribute.contextType.ToCompilableString().TypeName().RemoveContextSuffix()});
 
             var getMethods = type
                 .GetMethods(BindingFlags.Public | BindingFlags.Instance)

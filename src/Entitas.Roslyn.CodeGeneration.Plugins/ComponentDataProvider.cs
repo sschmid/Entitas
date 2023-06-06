@@ -169,7 +169,7 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
         {
             var attr = type.GetAttribute<ComponentNameAttribute>();
             if (attr == null)
-                return new[] {type.ToCompilableString().ShortTypeName().AddComponentSuffix()};
+                return new[] {type.ToCompilableString().TypeName().AddComponentSuffix()};
 
             return attr.ConstructorArguments.First().Values.Select(arg => (string)arg.Value).ToArray();
         }

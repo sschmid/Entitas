@@ -109,7 +109,7 @@ namespace Entitas.Roslyn.CodeGeneration.Plugins
             {
                 ((INamedTypeSymbol)attribute.ConstructorArguments.First().Value)
                 .ToCompilableString()
-                .ShortTypeName()
+                .TypeName()
                 .RemoveContextSuffix()
             });
 

@@ -171,7 +171,7 @@ namespace Entitas.CodeGeneration.Plugins
                 .SingleOrDefault();
 
             if (attr == null)
-                return new[] {type.ToCompilableString().ShortTypeName().AddComponentSuffix()};
+                return new[] {type.ToCompilableString().TypeName().AddComponentSuffix()};
 
             return attr.componentNames;
         }
