@@ -234,7 +234,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                         else
                             EditorGUILayout.LabelField(memberName, "null");
 
-                        if (EditorLayout.MiniButton($"new {memberType.ToCompilableString().ShortTypeName()}"))
+                        if (EditorLayout.MiniButton($"new {memberType.ToCompilableString().TypeName()}"))
                         {
                             if (CreateDefault(memberType, out var defaultValue))
                                 setValue(target, defaultValue);
@@ -384,10 +384,10 @@ namespace Entitas.VisualDebugging.Unity.Editor
             var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.defaultInstanceCreatorFolderPath;
-            var filePath = folder + Path.DirectorySeparatorChar + "Default" + typeName.ShortTypeName() + "InstanceCreator.cs";
+            var filePath = folder + Path.DirectorySeparatorChar + "Default" + typeName.TypeName() + "InstanceCreator.cs";
             var template = DEFAULT_INSTANCE_CREATOR_TEMPLATE_FORMAT
                 .Replace("${Type}", typeName)
-                .Replace("${ShortType}", typeName.ShortTypeName());
+                .Replace("${ShortType}", typeName.TypeName());
             generateTemplate(folder, filePath, template);
         }
 
@@ -396,16 +396,16 @@ namespace Entitas.VisualDebugging.Unity.Editor
             var preferences = new Preferences("Entitas.properties", $"{Environment.UserName}.userproperties");
             var config = preferences.CreateAndConfigure<VisualDebuggingConfig>();
             var folder = config.typeDrawerFolderPath;
-            var filePath = folder + Path.DirectorySeparatorChar + typeName.ShortTypeName() + "TypeDrawer.cs";
+            var filePath = folder + Path.DirectorySeparatorChar + typeName.TypeName() + "TypeDrawer.cs";
             var template = TYPE_DRAWER_TEMPLATE_FORMAT
                 .Replace("${Type}", typeName)
-                .Replace("${ShortType}", typeName.ShortTypeName());
+                .Replace("${ShortType}", typeName.TypeName());
             generateTemplate(folder, filePath, template);
         }
 
         static void generateTemplate(string folder, string filePath, string template)
         {
-            if (!Directory.Exists(folder)) 
+            if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
 
             File.WriteAllText(filePath, template);

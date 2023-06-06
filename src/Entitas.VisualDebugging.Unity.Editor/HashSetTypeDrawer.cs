@@ -25,7 +25,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
                 else
                     EditorGUILayout.LabelField(memberName);
 
-                if (EditorLayout.MiniButton($"new {elementType.ToCompilableString().ShortTypeName()}"))
+                if (EditorLayout.MiniButton($"new {elementType.ToCompilableString().TypeName()}"))
                     if (EntityDrawer.CreateDefault(elementType, out var defaultValue))
                         itemsToAdd.Add(defaultValue);
             }

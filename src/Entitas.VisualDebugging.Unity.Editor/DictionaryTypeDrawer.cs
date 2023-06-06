@@ -34,8 +34,8 @@ namespace Entitas.VisualDebugging.Unity.Editor
                     EditorGUILayout.LabelField(memberName);
                 }
 
-                var keyTypeName = keyType.ToCompilableString().ShortTypeName();
-                var valueTypeName = valueType.ToCompilableString().ShortTypeName();
+                var keyTypeName = keyType.ToCompilableString().TypeName();
+                var valueTypeName = valueType.ToCompilableString().TypeName();
                 if (EditorLayout.MiniButton($"new <{keyTypeName}, {valueTypeName}>"))
                     if (EntityDrawer.CreateDefault(keyType, out var defaultKey))
                         if (EntityDrawer.CreateDefault(valueType, out var defaultValue))

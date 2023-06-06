@@ -103,7 +103,7 @@ namespace Entitas.VisualDebugging.Unity.Editor
             EditorGUILayout.BeginHorizontal();
             {
                 EditorGUILayout.LabelField(memberName, "empty");
-                if (EditorLayout.MiniButton($"add {elementType.ToCompilableString().ShortTypeName()}"))
+                if (EditorLayout.MiniButton($"add {elementType.ToCompilableString().TypeName()}"))
                     if (EntityDrawer.CreateDefault(elementType, out var defaultValue))
                         list.Add(defaultValue);
             }

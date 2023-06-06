@@ -13,7 +13,7 @@ namespace Entitas.CodeGeneration.Plugins
     public static class ComponentDataExtension
     {
         public static string ToComponentName(this string fullTypeName, bool ignoreNamespaces) => ignoreNamespaces
-            ? fullTypeName.ShortTypeName().RemoveComponentSuffix()
+            ? fullTypeName.TypeName().RemoveComponentSuffix()
             : fullTypeName.RemoveDots().RemoveComponentSuffix();
     }
 }
