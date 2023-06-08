@@ -7,7 +7,7 @@ namespace Entitas.Migration.Tests
 {
     public class M0320Tests
     {
-        static string FixturePath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0320");
+        static string FixturesPath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0320");
 
         readonly M0320 _migration;
 
@@ -19,16 +19,16 @@ namespace Entitas.Migration.Tests
         [Fact]
         public void FindsAllFiles()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
+            var updatedFiles = _migration.Migrate(FixturesPath);
             updatedFiles.Length.Should().Be(2);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Entitas.properties")).Should().BeTrue();
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Systems.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, "Entitas.properties")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, "Systems.cs")).Should().BeTrue();
         }
 
         [Fact]
         public void UpdatesEntitasProperties()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
+            var updatedFiles = _migration.Migrate(FixturesPath);
             var file = updatedFiles[0];
 
             file.fileContent.Contains("Entitas.Unity.CodeGenerator.GeneratedFolderPath").Should().BeFalse();
@@ -48,7 +48,7 @@ namespace Entitas.Migration.Tests
         [Fact]
         public void UpdatesPoolCreateSystem()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
+            var updatedFiles = _migration.Migrate(FixturesPath);
             var file = updatedFiles[1];
             file.fileContent.Should().Be("pool.CreateSystem(new MySystem1());\npool.CreateSystem(new MySystem2());\n");
         }
