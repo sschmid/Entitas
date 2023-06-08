@@ -7,7 +7,7 @@ namespace Entitas.Migration.Tests
 {
     public class M0260Tests
     {
-        static string FixturePath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0260");
+        static string FixturesPath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0260");
 
         readonly M0260 _migration;
 
@@ -19,17 +19,17 @@ namespace Entitas.Migration.Tests
         [Fact]
         public void FindsAllFiles()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
+            var updatedFiles = _migration.Migrate(FixturesPath);
             updatedFiles.Length.Should().Be(2);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Pools.cs")).Should().BeTrue();
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "ScoreComponentGeneratedExtension.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, "Pools.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, "ScoreComponentGeneratedExtension.cs")).Should().BeTrue();
         }
 
         [Fact]
         public void DeactivatesCodeInPoolsFile()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
-            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "Pools.cs"));
+            var updatedFiles = _migration.Migrate(FixturesPath);
+            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturesPath, "Pools.cs"));
             poolsFile.fileContent.Should().Be(@"using Entitas;
 
 public static class Pools {
@@ -84,8 +84,8 @@ public static class Pools {
         [Fact]
         public void DeactivatesCodeInComponents()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
-            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "ScoreComponentGeneratedExtension.cs"));
+            var updatedFiles = _migration.Migrate(FixturesPath);
+            var poolsFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturesPath, "ScoreComponentGeneratedExtension.cs"));
             poolsFile.fileContent.Should().Be(@"using System.Collections.Generic;
 
 namespace Entitas {

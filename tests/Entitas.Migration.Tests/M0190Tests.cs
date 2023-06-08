@@ -7,7 +7,7 @@ namespace Entitas.Migration.Tests
 {
     public class M0190Tests
     {
-        static string FixturePath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0190");
+        static string FixturesPath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0190");
 
         readonly M0190 _migration;
 
@@ -19,18 +19,18 @@ namespace Entitas.Migration.Tests
         [Fact]
         public void FindsAllReactiveSystems()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
+            var updatedFiles = _migration.Migrate(FixturesPath);
             updatedFiles.Length.Should().Be(3);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "RenderPositionSystem.cs")).Should().BeTrue();
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "RenderRotationSystem.cs")).Should().BeTrue();
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, Path.Combine("SubFolder", "RenderSelectedSystem.cs"))).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, "RenderPositionSystem.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, "RenderRotationSystem.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, Path.Combine("SubFolder", "RenderSelectedSystem.cs"))).Should().BeTrue();
         }
 
         [Fact]
         public void MigratesToNewApi()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
-            var reactiveSystemFile = updatedFiles.First(file => file.fileName == Path.Combine(FixturePath, "RenderRotationSystem.cs"));
+            var updatedFiles = _migration.Migrate(FixturesPath);
+            var reactiveSystemFile = updatedFiles.First(file => file.fileName == Path.Combine(FixturesPath, "RenderRotationSystem.cs"));
             reactiveSystemFile.fileContent.Should().Be(@"using Entitas;
 
 public class RenderRotationSystem : IReactiveSystem {

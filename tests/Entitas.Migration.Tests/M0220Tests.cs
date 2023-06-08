@@ -7,7 +7,7 @@ namespace Entitas.Migration.Tests
 {
     public class M0220Tests
     {
-        static string FixturePath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0220");
+        static string FixturesPath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0220");
 
         readonly M0220 _migration;
 
@@ -19,16 +19,16 @@ namespace Entitas.Migration.Tests
         [Fact]
         public void FindsAllReactiveSystems()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
+            var updatedFiles = _migration.Migrate(FixturesPath);
             updatedFiles.Length.Should().Be(1);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "RenderPositionSystem.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, "RenderPositionSystem.cs")).Should().BeTrue();
         }
 
         [Fact]
         public void MigratesToNewApi()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
-            var reactiveSystemFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "RenderPositionSystem.cs"));
+            var updatedFiles = _migration.Migrate(FixturesPath);
+            var reactiveSystemFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturesPath, "RenderPositionSystem.cs"));
             reactiveSystemFile.fileContent.Should().Be(@"using System.Collections.Generic;
 using Entitas;
 

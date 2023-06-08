@@ -8,7 +8,7 @@ namespace Entitas.Migration.Tests
 {
     public class M0360AfterTests
     {
-        static string FixturePath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0360");
+        static string FixturesPath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0360");
 
         readonly ITestOutputHelper _output;
         readonly M0360_2 _migration;
@@ -22,16 +22,16 @@ namespace Entitas.Migration.Tests
         [Fact]
         public void FindsAllReactiveSystems()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
+            var updatedFiles = _migration.Migrate(FixturesPath);
             updatedFiles.Length.Should().Be(1);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "AddViewFromObjectPoolSystem.cs")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, "AddViewFromObjectPoolSystem.cs")).Should().BeTrue();
         }
 
         [Fact(Skip = "not finished")]
         public void MigratesToNewApi()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
-            var systemFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturePath, "AddViewFromObjectPoolSystem.cs"));
+            var updatedFiles = _migration.Migrate(FixturesPath);
+            var systemFile = updatedFiles.Single(file => file.fileName == Path.Combine(FixturesPath, "AddViewFromObjectPoolSystem.cs"));
 
             if (systemFile.fileContent != Expected)
                 _output.WriteLine(systemFile.fileContent);

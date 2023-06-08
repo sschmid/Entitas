@@ -7,7 +7,7 @@ namespace Entitas.Migration.Tests
 {
     public class M0360BeforeTests
     {
-        static string FixturePath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0360");
+        static string FixturesPath => Path.Combine(TestExtensions.GetProjectRoot(), "tests", "Entitas.Migration.Tests", "fixtures", "exclude", "M0360");
 
         readonly M0360_1 _migration;
 
@@ -19,15 +19,15 @@ namespace Entitas.Migration.Tests
         [Fact]
         public void FindsAllFiles()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
+            var updatedFiles = _migration.Migrate(FixturesPath);
             updatedFiles.Length.Should().Be(1);
-            updatedFiles.Any(file => file.fileName == Path.Combine(FixturePath, "Entitas.properties")).Should().BeTrue();
+            updatedFiles.Any(file => file.fileName == Path.Combine(FixturesPath, "Entitas.properties")).Should().BeTrue();
         }
 
         [Fact]
         public void UpdatesEntitasProperties()
         {
-            var updatedFiles = _migration.Migrate(FixturePath);
+            var updatedFiles = _migration.Migrate(FixturesPath);
             var file = updatedFiles[0];
             file.fileContent.Contains("Entitas.CodeGenerator.Pools").Should().BeFalse();
             file.fileContent.Contains("Entitas.CodeGenerator.Contexts").Should().BeTrue();
