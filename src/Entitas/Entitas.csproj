@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Entitas\version.txt" />
+    <None Remove="Entitas/version.txt" />
     <EmbeddedResource Include="version.txt">
       <LogicalName>version.txt</LogicalName>
     </EmbeddedResource>
