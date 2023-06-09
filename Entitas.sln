@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fixtures", "tests/Fixtures/
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.CodeGeneration.Program", "tests/Entitas.CodeGeneration.Program/Entitas.CodeGeneration.Program.csproj", "{60A61441-C62A-48B6-9E39-00F0598F5512}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Generators", "src/Entitas.Generators/Entitas.Generators.csproj", "{85A3226F-6C66-40F9-B132-E89F59F46F67}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Generators", "gen/Entitas.Generators/Entitas.Generators.csproj", "{85A3226F-6C66-40F9-B132-E89F59F46F67}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entitas.Generators.Tests", "tests/Entitas.Generators.Tests/Entitas.Generators.Tests.csproj", "{93F1F79E-416A-4DAB-9B75-F1FC0FE46458}"
 EndProject
