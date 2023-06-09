@@ -17,6 +17,13 @@ public static class Templates
                 """;
     }
 
+    public static string CombineWithNamespace(string name, string? @namespace)
+    {
+        return @namespace is not null
+            ? $"{@namespace}.{name}"
+            : name;
+    }
+
     public static string NamespaceDeclaration(string? @namespace)
     {
         return @namespace is not null
