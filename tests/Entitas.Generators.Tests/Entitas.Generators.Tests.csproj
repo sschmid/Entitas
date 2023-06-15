@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>$(DefaultTestTargetFramework)</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <IsPublishable>false</IsPublishable>
@@ -13,7 +12,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.6.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.1.0" />
     <PackageReference Include="Verify.SourceGenerators" Version="2.1.0" />
     <PackageReference Include="Verify.Xunit" Version="20.3.2" />
   </ItemGroup>
@@ -35,6 +34,10 @@
   <ItemGroup>
     <ProjectReference Include="../Entitas.Tests/Entitas.Tests.csproj" />
     <ProjectReference Include="../../gen/Entitas.Generators/Entitas.Generators.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Snapshots\" />
   </ItemGroup>
 
 </Project>

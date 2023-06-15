@@ -1,3 +1,4 @@
-namespace Entitas.Generators.Tests.Fixtures;
-
-public class NamespacedClass { }
+namespace Entitas.Generators.Tests.Fixtures
+{
+    public class NamespacedClass { }
+}
