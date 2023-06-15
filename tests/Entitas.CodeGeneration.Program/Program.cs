@@ -1,9 +1,10 @@
-namespace Entitas.CodeGeneration.Program;
-
-public static class Program
+namespace Entitas.CodeGeneration.Program
 {
-    public static void Main(string[] args)
+    public static class Program
     {
-        Jenny.Generator.Cli.Program.Main(args);
+        public static void Main(string[] args)
+        {
+            Jenny.Generator.Cli.Program.Main(args);
+        }
     }
 }

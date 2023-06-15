@@ -1,3 +1,4 @@
-namespace Entitas.Generators.Tests.Fixtures.Contexts;
-
-partial class NamespacedContext : IContext { }
+namespace Entitas.Generators.Tests.Fixtures.Contexts
+{
+    partial class NamespacedContext : IContext { }
+}

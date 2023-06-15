@@ -1,12 +1,14 @@
 using System.Runtime.CompilerServices;
+using VerifyTests;
 
-namespace Entitas.Generators.Tests;
-
-public static class ModuleInitializer
+namespace Entitas.Generators.Tests
 {
-    [ModuleInitializer]
-    public static void Init()
+    public static class ModuleInitializer
     {
-        VerifySourceGenerators.Initialize();
+        [ModuleInitializer]
+        public static void Init()
+        {
+            VerifySourceGenerators.Initialize();
+        }
     }
 }
