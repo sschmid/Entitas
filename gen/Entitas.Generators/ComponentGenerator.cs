@@ -14,9 +14,19 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            initContext.RegisterSourceOutput(initContext.SyntaxProvider
-                .CreateSyntaxProvider(SyntacticComponentPredicate, SemanticComponentTransform)
-                .Where(component => component is not null), (spc, component) => Execute(spc, component!.Value));
+            var componentDeclarationOrDiagnostic = initContext.SyntaxProvider
+                .CreateSyntaxProvider(SyntacticComponentPredicate, SemanticComponentTransform);
+
+            var diagnostics = componentDeclarationOrDiagnostic
+                .Where(x=>x.Diagnostic is not null)
+                .Select((s,_)=> s.Diagnostic!);
+
+            var componentDeclarations = componentDeclarationOrDiagnostic
+                .Where(x=>x.Result is not null)
+                .Select((s,_)=> s.Result!.Value);
+
+            initContext.RegisterSourceOutput(diagnostics, EntitasDiagnostics.ReportDiagnostics);
+            initContext.RegisterSourceOutput(componentDeclarations, Execute);
         }
 
         static bool SyntacticComponentPredicate(SyntaxNode node, CancellationToken cancellationToken)
@@ -28,21 +38,21 @@ namespace Entitas.Generators
                    && candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
         }
 
-        static ComponentDeclaration? SemanticComponentTransform(GeneratorSyntaxContext context, CancellationToken cancellationToken)
+        static INamedTypeSymbol? _componentInterfaceTypeSymbol;
+        static ResultOrDiagnostics<ComponentDeclaration?> SemanticComponentTransform(GeneratorSyntaxContext context, CancellationToken cancellationToken)
         {
             var candidate = (ClassDeclarationSyntax)context.Node;
             var symbol = context.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
             if (symbol is null)
-                return null;
+                return Diagnostic.Create(EntitasDiagnostics.NamedTypeSymbolNotFound, Location.None, candidate.Identifier.Text);
 
-            // Todo: Emit diagnostics when interface is not found
-            var interfaceType = context.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IComponent");
-            if (interfaceType is null)
-                return null;
+            _componentInterfaceTypeSymbol ??= context.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IComponent");
+            if (_componentInterfaceTypeSymbol is null)
+                return Diagnostic.Create(EntitasDiagnostics.CouldNotFindIComponentInterface, Location.None);
 
-            var isComponent = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
+            var isComponent = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(_componentInterfaceTypeSymbol, SymbolEqualityComparer.Default));
             if (!isComponent)
-                return null;
+                return new ResultOrDiagnostics<ComponentDeclaration?>(result: null);
 
             return new ComponentDeclaration(symbol, context, cancellationToken);
         }
