@@ -7,9 +7,9 @@ public class EntitasDiagnostics
     public static void ReportDiagnostics(SourceProductionContext sourceProductionContext, Diagnostic diagnostic)
         => sourceProductionContext.ReportDiagnostic(diagnostic);
 
-    public static readonly DiagnosticDescriptor CouldNotFindIComponentInterface = new(id: "ENTITASGEN001",
-        title: "Couldn't find Interface 'Entitas.IComponent'",
-        messageFormat: "Please make sure the compilation includes the 'Entitas.IComponent' Interface.",
+    public static readonly DiagnosticDescriptor CouldNotFindInterface = new(id: "ENTITASGEN001",
+        title: "Couldn't find necessary Interface",
+        messageFormat: "Please make sure the compilation includes the '{0}' Interface.",
         category: "Prerequisites",
         DiagnosticSeverity.Error,
         isEnabledByDefault: true);

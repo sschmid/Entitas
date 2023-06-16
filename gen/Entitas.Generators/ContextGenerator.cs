@@ -13,9 +13,20 @@ namespace Entitas.Generators
     {
         public void Initialize(IncrementalGeneratorInitializationContext initContext)
         {
-            initContext.RegisterSourceOutput(initContext.SyntaxProvider
+            var contextDeclarationOrDiagnostic = initContext.SyntaxProvider
                 .CreateSyntaxProvider(SyntacticContextPredicate, SemanticContextTransform)
-                .Where(context => context is not null), (spc, context) => Execute(spc, context!.Value));
+                .Where(context => context is not null);
+
+            var diagnostics = contextDeclarationOrDiagnostic
+                .Where(x => x.Diagnostic is not null)
+                .Select((s, _) => s.Diagnostic!);
+
+            var contextDeclarations = contextDeclarationOrDiagnostic
+                .Where(x => x.Result is not null)
+                .Select((s, _) => s.Result!.Value);
+
+            initContext.RegisterSourceOutput(diagnostics, EntitasDiagnostics.ReportDiagnostics);
+            initContext.RegisterSourceOutput(contextDeclarations, Execute);
         }
 
         static bool SyntacticContextPredicate(SyntaxNode node, CancellationToken cancellationToken)
@@ -27,21 +38,22 @@ namespace Entitas.Generators
                    && candidate.Modifiers.Any(SyntaxKind.PartialKeyword);
         }
 
-        static ContextDeclaration? SemanticContextTransform(GeneratorSyntaxContext context, CancellationToken cancellationToken)
+        static INamedTypeSymbol? _contextInterfaceTypeSymbol;
+        static ResultOrDiagnostics<ContextDeclaration?> SemanticContextTransform(GeneratorSyntaxContext context, CancellationToken cancellationToken)
         {
             var candidate = (ClassDeclarationSyntax)context.Node;
             var symbol = context.SemanticModel.GetDeclaredSymbol(candidate, cancellationToken);
             if (symbol is null)
-                return null;
+                return Diagnostic.Create(EntitasDiagnostics.NamedTypeSymbolNotFound, Location.None, candidate.Identifier.Text);
 
-            // TODO: Emit diagnostics when interface is not found
-            var interfaceType = context.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IContext");
-            if (interfaceType is null)
-                return null;
+            const string interfaceName = "Entitas.IContext";
+            _contextInterfaceTypeSymbol ??= context.SemanticModel.Compilation.GetTypeByMetadataName(interfaceName);
+            if (_contextInterfaceTypeSymbol is null)
+                return Diagnostic.Create(EntitasDiagnostics.CouldNotFindInterface, Location.None, interfaceName);
 
-            var isContext = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(interfaceType, SymbolEqualityComparer.Default));
+            var isContext = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(_contextInterfaceTypeSymbol, SymbolEqualityComparer.Default));
             if (!isContext)
-                return null;
+                return new ResultOrDiagnostics<ContextDeclaration?>(result: null);
 
             return new ContextDeclaration(symbol);
         }

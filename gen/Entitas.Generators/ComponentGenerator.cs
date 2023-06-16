@@ -47,9 +47,10 @@ namespace Entitas.Generators
             if (symbol is null)
                 return Diagnostic.Create(EntitasDiagnostics.NamedTypeSymbolNotFound, Location.None, candidate.Identifier.Text);
 
-            _componentInterfaceTypeSymbol ??= context.SemanticModel.Compilation.GetTypeByMetadataName("Entitas.IComponent");
+            const string interfaceName = "Entitas.IComponent";
+            _componentInterfaceTypeSymbol ??= context.SemanticModel.Compilation.GetTypeByMetadataName(interfaceName);
             if (_componentInterfaceTypeSymbol is null)
-                return Diagnostic.Create(EntitasDiagnostics.CouldNotFindIComponentInterface, Location.None);
+                return Diagnostic.Create(EntitasDiagnostics.CouldNotFindInterface, Location.None, interfaceName);
 
             var isComponent = symbol.Interfaces.Any(i => i.OriginalDefinition.Equals(_componentInterfaceTypeSymbol, SymbolEqualityComparer.Default));
             if (!isComponent)
