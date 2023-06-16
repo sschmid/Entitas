@@ -18,12 +18,12 @@ namespace Entitas.Generators
                 .CreateSyntaxProvider(SyntacticComponentPredicate, SemanticComponentTransform);
 
             var diagnostics = componentDeclarationOrDiagnostic
-                .Where(x=>x.Diagnostic is not null)
-                .Select((s,_)=> s.Diagnostic!);
+                .Where(x => x.Diagnostic is not null)
+                .Select((s, _) => s.Diagnostic!);
 
             var componentDeclarations = componentDeclarationOrDiagnostic
-                .Where(x=>x.Result is not null)
-                .Select((s,_)=> s.Result!.Value);
+                .Where(x => x.Result is not null)
+                .Select((s, _) => s.Result!.Value);
 
             initContext.RegisterSourceOutput(diagnostics, EntitasDiagnostics.ReportDiagnostics);
             initContext.RegisterSourceOutput(componentDeclarations, Execute);
@@ -39,6 +39,7 @@ namespace Entitas.Generators
         }
 
         static INamedTypeSymbol? _componentInterfaceTypeSymbol;
+
         static ResultOrDiagnostics<ComponentDeclaration?> SemanticComponentTransform(GeneratorSyntaxContext context, CancellationToken cancellationToken)
         {
             var candidate = (ClassDeclarationSyntax)context.Node;
@@ -171,29 +172,25 @@ namespace Entitas.Generators
             {
                 Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
                 FullName = symbol.ToDisplayString();
-                Name = symbol.ToDisplayString(GeneratorUtils.NameOnlyFormat);
+                Name = symbol.Name;
 
                 Members = symbol.GetMembers()
-                    // TODO: also filter static members
-                    .Where(member => member.DeclaredAccessibility == Accessibility.Public)
-                    .Select<ISymbol, MemberDeclaration?>(member =>
+                    .Where(member => member is IFieldSymbol or IPropertySymbol
+                    {
+                        DeclaredAccessibility: Accessibility.Public,
+                        IsStatic: false,
+                    })
+                    .Select(member =>
                     {
                         var memberType = member switch
                         {
                             IFieldSymbol field => field.Type,
                             IPropertySymbol property => property.Type,
-                            _ => null
+                            _ => throw new ArgumentOutOfRangeException(nameof(member), member, null)
                         };
 
-                        if (memberType is null)
-                            return null;
-
-                        return new MemberDeclaration(
-                            memberType.ToDisplayString(),
-                            member.ToDisplayString(GeneratorUtils.NameOnlyFormat));
+                        return new MemberDeclaration(memberType.ToDisplayString(), member.Name);
                     })
-                    .Where(member => member is not null)
-                    .Select(member => member!.Value)
                     .ToImmutableArray();
 
                 Contexts = symbol.GetAttributes()
