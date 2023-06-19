@@ -214,7 +214,7 @@ namespace Entitas.Generators
             {
                 Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
                 FullName = symbol.ToDisplayString();
-                Name = symbol.ToDisplayString(GeneratorUtils.NameOnlyFormat);
+                Name = symbol.Name;
 
                 Location = symbol.Locations.FirstOrDefault() ?? Location.None;
 
