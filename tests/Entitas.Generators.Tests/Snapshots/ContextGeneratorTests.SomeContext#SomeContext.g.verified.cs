@@ -16,8 +16,8 @@ public sealed partial class SomeContext : Entitas.Context<Some.Entity>
             0,
             new Entitas.ContextInfo(
                 "SomeContext",
-                null,
-                null
+                System.Array.Empty<string>(),
+                System.Array.Empty<System.Type>()
             ),
             entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)

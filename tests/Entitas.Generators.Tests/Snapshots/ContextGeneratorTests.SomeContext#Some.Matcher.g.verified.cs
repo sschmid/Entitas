@@ -12,14 +12,33 @@ namespace Some
 {
 public static class Matcher
 {
-    public static Entitas.IAllOfMatcher<Some.Entity> AllOf(params int[] indices)
+    public static Entitas.IAllOfMatcher<Some.Entity> AllOf(System.Span<ComponentIndex> indices)
     {
-        return Entitas.Matcher<Some.Entity>.AllOf(indices);
+        return Entitas.Matcher<Some.Entity>.AllOf(ToIntArray(indices));
     }
 
-    public static Entitas.IAnyOfMatcher<Some.Entity> AnyOf(params int[] indices)
+    public static Entitas.IAnyOfMatcher<Some.Entity> AnyOf(System.Span<ComponentIndex> indices)
     {
-        return Entitas.Matcher<Some.Entity>.AnyOf(indices);
+        return Entitas.Matcher<Some.Entity>.AnyOf(ToIntArray(indices));
+    }
+
+    public static Entitas.IAnyOfMatcher<Some.Entity> AnyOf(this Entitas.IAllOfMatcher<Some.Entity> matcher, System.Span<ComponentIndex> indices)
+    {
+        return matcher.AnyOf(ToIntArray(indices));
+    }
+
+    public static Entitas.INoneOfMatcher<Some.Entity> NoneOf(this Entitas.IAnyOfMatcher<Some.Entity> matcher, System.Span<ComponentIndex> indices)
+    {
+        return matcher.NoneOf(ToIntArray(indices));
+    }
+
+    static int[] ToIntArray(System.Span<ComponentIndex> indices)
+    {
+        var ints = new int[indices.Length];
+        for (var i = 0; i < indices.Length; i++)
+            ints[i] = indices[i];
+
+        return ints;
     }
 }
 }
