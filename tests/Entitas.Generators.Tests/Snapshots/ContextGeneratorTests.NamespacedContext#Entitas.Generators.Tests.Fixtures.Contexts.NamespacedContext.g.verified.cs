@@ -18,8 +18,8 @@ public sealed partial class NamespacedContext : Entitas.Context<Namespaced.Entit
             0,
             new Entitas.ContextInfo(
                 "Entitas.Generators.Tests.Fixtures.Contexts.NamespacedContext",
-                null,
-                null
+                System.Array.Empty<string>(),
+                System.Array.Empty<System.Type>()
             ),
             entity =>
 #if (ENTITAS_FAST_AND_UNSAFE)

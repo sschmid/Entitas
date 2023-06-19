@@ -12,14 +12,33 @@ namespace Entitas.Generators.Tests.Fixtures.Contexts.Namespaced
 {
 public static class Matcher
 {
-    public static Entitas.IAllOfMatcher<Namespaced.Entity> AllOf(params int[] indices)
+    public static Entitas.IAllOfMatcher<Namespaced.Entity> AllOf(System.Span<ComponentIndex> indices)
     {
-        return Entitas.Matcher<Namespaced.Entity>.AllOf(indices);
+        return Entitas.Matcher<Namespaced.Entity>.AllOf(ToIntArray(indices));
     }
 
-    public static Entitas.IAnyOfMatcher<Namespaced.Entity> AnyOf(params int[] indices)
+    public static Entitas.IAnyOfMatcher<Namespaced.Entity> AnyOf(System.Span<ComponentIndex> indices)
     {
-        return Entitas.Matcher<Namespaced.Entity>.AnyOf(indices);
+        return Entitas.Matcher<Namespaced.Entity>.AnyOf(ToIntArray(indices));
+    }
+
+    public static Entitas.IAnyOfMatcher<Namespaced.Entity> AnyOf(this Entitas.IAllOfMatcher<Namespaced.Entity> matcher, System.Span<ComponentIndex> indices)
+    {
+        return matcher.AnyOf(ToIntArray(indices));
+    }
+
+    public static Entitas.INoneOfMatcher<Namespaced.Entity> NoneOf(this Entitas.IAnyOfMatcher<Namespaced.Entity> matcher, System.Span<ComponentIndex> indices)
+    {
+        return matcher.NoneOf(ToIntArray(indices));
+    }
+
+    static int[] ToIntArray(System.Span<ComponentIndex> indices)
+    {
+        var ints = new int[indices.Length];
+        for (var i = 0; i < indices.Length; i++)
+            ints[i] = indices[i];
+
+        return ints;
     }
 }
 }
