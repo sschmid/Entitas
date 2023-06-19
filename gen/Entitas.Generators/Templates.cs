@@ -1,3 +1,5 @@
+using System;
+
 namespace Entitas.Generators
 {
     public static class Templates
@@ -43,5 +45,11 @@ namespace Entitas.Generators
                 ? $"{@namespace}.{suffix}"
                 : suffix;
         }
+
+        public static string AddSuffix(this string str, string suffix) =>
+            str.EndsWith(suffix, StringComparison.Ordinal) ? str : str + suffix;
+
+        public static string RemoveSuffix(this string str, string suffix) =>
+            str.EndsWith(suffix, StringComparison.Ordinal) ? str[..^suffix.Length] : str;
     }
 }

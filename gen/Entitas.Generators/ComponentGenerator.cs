@@ -161,7 +161,7 @@ namespace Entitas.Generators
             {
                 Namespace = !symbol.ContainingNamespace.IsGlobalNamespace ? symbol.ContainingNamespace.ToDisplayString() : null;
                 FullName = symbol.ToDisplayString();
-                Name = symbol.ToDisplayString(GeneratorUtils.NameOnlyFormat);
+                Name = symbol.Name;
 
                 Members = symbol.GetMembers()
                     // TODO: also filter static members
@@ -180,7 +180,7 @@ namespace Entitas.Generators
 
                         return new MemberDeclaration(
                             memberType.ToDisplayString(),
-                            member.ToDisplayString(GeneratorUtils.NameOnlyFormat));
+                            member.Name);
                     })
                     .Where(member => member is not null)
                     .Select(member => member!.Value)
