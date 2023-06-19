@@ -113,14 +113,33 @@ namespace Entitas.Generators
                     $$"""
                     public static class Matcher
                     {
-                        public static Entitas.IAllOfMatcher<{{context.EntityName}}> AllOf(params int[] indices)
+                        public static Entitas.IAllOfMatcher<{{context.EntityName}}> AllOf(System.Span<ComponentIndex> indices)
                         {
-                            return Entitas.Matcher<{{context.EntityName}}>.AllOf(indices);
+                            return Entitas.Matcher<{{context.EntityName}}>.AllOf(ToIntArray(indices));
                         }
 
-                        public static Entitas.IAnyOfMatcher<{{context.EntityName}}> AnyOf(params int[] indices)
+                        public static Entitas.IAnyOfMatcher<{{context.EntityName}}> AnyOf(System.Span<ComponentIndex> indices)
                         {
-                            return Entitas.Matcher<{{context.EntityName}}>.AnyOf(indices);
+                            return Entitas.Matcher<{{context.EntityName}}>.AnyOf(ToIntArray(indices));
+                        }
+
+                        public static Entitas.IAnyOfMatcher<{{context.EntityName}}> AnyOf(this Entitas.IAllOfMatcher<{{context.EntityName}}> matcher, System.Span<ComponentIndex> indices)
+                        {
+                            return matcher.AnyOf(ToIntArray(indices));
+                        }
+
+                        public static Entitas.INoneOfMatcher<{{context.EntityName}}> NoneOf(this Entitas.IAnyOfMatcher<{{context.EntityName}}> matcher, System.Span<ComponentIndex> indices)
+                        {
+                            return matcher.NoneOf(ToIntArray(indices));
+                        }
+
+                        static int[] ToIntArray(System.Span<ComponentIndex> indices)
+                        {
+                            var ints = new int[indices.Length];
+                            for (var i = 0; i < indices.Length; i++)
+                                ints[i] = indices[i];
+
+                            return ints;
                         }
                     }
 
@@ -141,8 +160,8 @@ namespace Entitas.Generators
                                 0,
                                 new Entitas.ContextInfo(
                                     "{{context.FullName}}",
-                                    null,
-                                    null
+                                    System.Array.Empty<string>(),
+                                    System.Array.Empty<System.Type>()
                                 ),
                                 entity =>
                     #if (ENTITAS_FAST_AND_UNSAFE)
