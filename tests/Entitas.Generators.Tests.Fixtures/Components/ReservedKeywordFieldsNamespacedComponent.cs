@@ -2,6 +2,7 @@ using Entitas;
 
 namespace MyFeature
 {
+    [MyApp.Main.Context]
     partial class ReservedKeywordFieldsNamespacedComponent : IComponent
     {
         public string Namespace;
