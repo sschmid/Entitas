@@ -1,7 +1,7 @@
-using Entitas.Generators.Attributes;
+using Entitas;
 
-namespace Entitas.Generators.Tests.Fixtures.Components
+namespace MyApp
 {
-    [Context("Entitas.Generators.Tests.Fixtures.FakeGeneratedContext")]
+    [Main.Context]
     partial class OneContextNamespacedComponent : IComponent { }
 }

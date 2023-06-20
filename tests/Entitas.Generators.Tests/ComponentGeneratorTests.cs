@@ -18,7 +18,7 @@ public class ComponentGeneratorTests
         Path.Combine(FixturesPath, "Components", $"{fixture}.cs")), new ComponentGenerator());
 
     [Fact]
-    public Task NamespacedClass() => Verify("NamespacedClass");
+    public Task SomeNamespacedClass() => Verify("SomeNamespacedClass");
 
     [Fact]
     public Task Class() => Verify("SomeClass");
@@ -27,7 +27,7 @@ public class ComponentGeneratorTests
     public Task NonPartialComponent() => VerifyComponent("NonPartialComponent");
 
     [Fact]
-    public Task NamespacedComponent() => VerifyComponent("NamespacedComponent");
+    public Task NamespacedComponent() => VerifyComponent("SomeNamespacedComponent");
 
     [Fact]
     public Task Component() => VerifyComponent("SomeComponent");

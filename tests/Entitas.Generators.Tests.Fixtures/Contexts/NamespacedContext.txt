@@ -1,4 +1,4 @@
-namespace Entitas.Generators.Tests.Fixtures.Contexts
+namespace MyApp
 {
-    partial class NamespacedContext : IContext { }
+    partial class MainContext : IContext { }
 }
