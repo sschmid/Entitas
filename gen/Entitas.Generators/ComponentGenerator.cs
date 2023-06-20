@@ -209,7 +209,10 @@ namespace Entitas.Generators
                 Name = symbol.Name;
 
                 Members = symbol.GetMembers()
-                    .Where(member => member.DeclaredAccessibility == Accessibility.Public && !member.IsStatic)
+                    .Where(member => member.DeclaredAccessibility == Accessibility.Public
+                                     && !member.IsStatic
+                                     && member.CanBeReferencedByName
+                                     && (member is IFieldSymbol || IsAutoProperty(member)))
                     .Select<ISymbol, MemberDeclaration?>(member =>
                     {
                         var memberType = member switch
@@ -240,6 +243,19 @@ namespace Entitas.Generators
 
                 FullComponentPrefix = FullName.Replace(".", string.Empty).RemoveSuffix("Component");
                 ComponentPrefix = Name.RemoveSuffix("Component");
+
+                static bool IsAutoProperty(ISymbol symbol)
+                {
+                    return symbol is IPropertySymbol { SetMethod: not null, GetMethod: not null } property
+                           && !property.GetMethod.DeclaringSyntaxReferences.First()
+                               .GetSyntax()
+                               .DescendantNodes()
+                               .Any(node => node is MethodDeclarationSyntax)
+                           && !property.SetMethod.DeclaringSyntaxReferences.First()
+                               .GetSyntax()
+                               .DescendantNodes()
+                               .Any(node => node is MethodDeclarationSyntax);
+                }
             }
 
             public bool Equals(ComponentDeclaration other) =>
