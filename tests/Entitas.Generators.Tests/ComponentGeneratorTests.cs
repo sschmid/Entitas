@@ -52,4 +52,7 @@ public class ComponentGeneratorTests
 
     [Fact]
     public Task ReservedKeywordFieldsNamespacedComponent() => VerifyComponent("ReservedKeywordFieldsNamespacedComponent");
+
+    [Fact]
+    public Task NoValidFieldsNamespacedComponent() => VerifyComponent("NoValidFieldsNamespacedComponent");
 }

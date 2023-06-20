@@ -209,8 +209,7 @@ namespace Entitas.Generators
                 Name = symbol.Name;
 
                 Members = symbol.GetMembers()
-                    // TODO: also filter static members
-                    .Where(member => member.DeclaredAccessibility == Accessibility.Public)
+                    .Where(member => member.DeclaredAccessibility == Accessibility.Public && !member.IsStatic)
                     .Select<ISymbol, MemberDeclaration?>(member =>
                     {
                         var memberType = member switch
