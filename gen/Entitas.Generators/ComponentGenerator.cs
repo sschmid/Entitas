@@ -50,7 +50,7 @@ namespace Entitas.Generators
         static void Execute(SourceProductionContext spc, ComponentDeclaration component)
         {
             ComponentIndex(spc, component);
-            EntityExtensions(spc, component);
+            EntityExtension(spc, component);
         }
 
         static void ComponentIndex(SourceProductionContext spc, ComponentDeclaration component)
@@ -72,14 +72,14 @@ namespace Entitas.Generators
             }
         }
 
-        static void EntityExtensions(SourceProductionContext spc, ComponentDeclaration component)
+        static void EntityExtension(SourceProductionContext spc, ComponentDeclaration component)
         {
             foreach (var context in component.Contexts)
             {
-                var className = $"{component.FullComponentPrefix}EntityExtensions";
+                var className = $"{component.FullComponentPrefix}EntityExtension";
                 var index = $"{component.FullComponentPrefix}ComponentIndex.Value";
                 spc.AddSource(GeneratedPath($"{context}.{className}"),
-                    GeneratedFileHeader(GeneratorSource(nameof(EntityExtensions))) +
+                    GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
                     NamespaceDeclaration(context,
                         $$"""
                         public static class {{className}}
@@ -114,7 +114,7 @@ namespace Entitas.Generators
             }
         }
 
-        static string MemberExtensions(ImmutableArray<MemberDeclaration> members)
+        static string MemberExtension(ImmutableArray<MemberDeclaration> members)
         {
             return string.Join("\n\n", members.Select(member =>
                 $$"""
