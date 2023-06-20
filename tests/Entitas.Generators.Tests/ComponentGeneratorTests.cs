@@ -55,4 +55,7 @@ public class ComponentGeneratorTests
 
     [Fact]
     public Task NoValidFieldsNamespacedComponent() => VerifyComponent("NoValidFieldsNamespacedComponent");
+
+    [Fact]
+    public Task MultiplePropertiesNamespacedComponent() => VerifyComponent("MultiplePropertiesNamespacedComponent");
 }
