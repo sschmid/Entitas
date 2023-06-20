@@ -78,10 +78,65 @@ namespace Entitas.Generators
             {
                 var className = $"{component.FullComponentPrefix}EntityExtension";
                 var index = $"{component.FullComponentPrefix}ComponentIndex.Value";
-                spc.AddSource(GeneratedPath($"{context}.{className}"),
-                    GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
-                    NamespaceDeclaration(context,
-                        $$"""
+                if (component.Members.Length > 0)
+                {
+                    spc.AddSource(GeneratedPath($"{context}.{className}"),
+                        GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
+                        NamespaceDeclaration(context,
+                            $$"""
+                        public static class {{className}}
+                        {
+                            public static bool Has{{component.ComponentPrefix}}(this {{context}}.Entity entity)
+                            {
+                                return entity.HasComponent({{index}});
+                            }
+
+                            public static {{context}}.Entity Add{{component.ComponentPrefix}}(this {{context}}.Entity entity, {{ComponentMethodArgs(component)}})
+                            {
+                                var index = {{index}};
+                                var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
+                        {{ComponentValueAssignments(component)}}
+                                entity.AddComponent(index, component);
+                                return entity;
+                            }
+
+                            public static {{context}}.Entity Replace{{component.ComponentPrefix}}(this {{context}}.Entity entity, {{ComponentMethodArgs(component)}})
+                            {
+                                var index = {{index}};
+                                var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
+                        {{ComponentValueAssignments(component)}}
+                                entity.ReplaceComponent(index, component);
+                                return entity;
+                            }
+
+                            public static {{context}}.Entity Remove{{component.ComponentPrefix}}(this {{context}}.Entity entity)
+                            {
+                                entity.RemoveComponent({{index}});
+                                return entity;
+                            }
+                        }
+
+                        """));
+
+                    static string ComponentMethodArgs(ComponentDeclaration component)
+                    {
+                        return string.Join(", ", component.Members.Select(member => $"{member.Type} {member.Name.ToValidLowerFirst()}"));
+                    }
+
+                    static string ComponentValueAssignments(ComponentDeclaration component)
+                    {
+                        return string.Join("\n", component.Members.Select(member =>
+                            $$"""
+                                    component.{{member.Name}} = {{member.Name.ToValidLowerFirst()}};
+                            """));
+                    }
+                }
+                else
+                {
+                    spc.AddSource(GeneratedPath($"{context}.{className}"),
+                        GeneratedFileHeader(GeneratorSource(nameof(EntityExtension))) +
+                        NamespaceDeclaration(context,
+                            $$"""
                         public static class {{className}}
                         {
                             static readonly {{component.FullName}} Single{{component.Name}} = new {{component.FullName}}();
@@ -111,18 +166,8 @@ namespace Entitas.Generators
                         }
 
                         """));
+                }
             }
-        }
-
-        static string MemberExtension(ImmutableArray<MemberDeclaration> members)
-        {
-            return string.Join("\n\n", members.Select(member =>
-                $$"""
-                    public static {{member.Type}} Get{{member.Name}}(this object entity)
-                    {
-                        return default;
-                    }
-                """));
         }
 
         static string GeneratorSource(string source)
@@ -186,11 +231,8 @@ namespace Entitas.Generators
                     .Select(member => member!.Value)
                     .ToImmutableArray();
 
-                Contexts = symbol.GetAttributes()
-                    .Select(attribute => attribute.AttributeClass?.ToDisplayString())
-                    .Where(attribute => attribute?.EndsWith(".Context") ?? false)
-                    .Select(attribute => attribute!.RemoveSuffix(".Context"))
-                    .ToImmutableArray();
+                // TODO: remove, just for testing
+                Contexts = ImmutableArray.Create<string>("MyApp.Main");
 
                 Location = symbol.Locations.FirstOrDefault() ?? Location.None;
 

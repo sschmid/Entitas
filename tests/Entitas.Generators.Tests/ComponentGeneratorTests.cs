@@ -34,4 +34,22 @@ public class ComponentGeneratorTests
 
     [Fact]
     public Task OneContextNamespacedComponent() => VerifyComponent("OneContextNamespacedComponent");
+
+    [Fact]
+    public Task OneContextComponent() => VerifyComponent("OneContextComponent");
+
+    [Fact]
+    public Task OneFieldNamespacedComponent() => VerifyComponent("OneFieldNamespacedComponent");
+
+    [Fact]
+    public Task OneFieldComponent() => VerifyComponent("OneFieldComponent");
+
+    [Fact]
+    public Task MultipleFieldsNamespacedComponent() => VerifyComponent("MultipleFieldsNamespacedComponent");
+
+    [Fact]
+    public Task MultipleFieldsComponent() => VerifyComponent("MultipleFieldsComponent");
+
+    [Fact]
+    public Task ReservedKeywordFieldsNamespacedComponent() => VerifyComponent("ReservedKeywordFieldsNamespacedComponent");
 }

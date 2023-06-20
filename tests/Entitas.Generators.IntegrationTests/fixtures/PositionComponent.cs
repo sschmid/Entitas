@@ -5,5 +5,9 @@ using Entitas.Generators.Attributes;
 namespace MyApp
 {
     [Context("MyApp.MainContext")]
-    partial class MovableComponent : IComponent { }
+    partial class PositionComponent : IComponent
+    {
+        public int X;
+        public int Y;
+    }
 }
