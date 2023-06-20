@@ -1,4 +1,6 @@
-namespace Entitas.Generators.Tests.Fixtures.Components
+using Entitas;
+
+namespace MyApp
 {
     partial class ReservedKeywordFieldsNamespacedComponent : IComponent
     {

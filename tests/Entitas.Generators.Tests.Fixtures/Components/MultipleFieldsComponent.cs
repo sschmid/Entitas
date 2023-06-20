@@ -1,7 +1,6 @@
 using Entitas;
 
-// ReSharper disable once CheckNamespace
-public sealed class MultipleFieldsComponent : IComponent
+partial class MultipleFieldsComponent : IComponent
 {
     public string Value1;
     public string Value2;

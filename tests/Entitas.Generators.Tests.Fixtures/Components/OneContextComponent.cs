@@ -1,6 +1,4 @@
 using Entitas;
-using Entitas.Generators.Attributes;
 
-// ReSharper disable once CheckNamespace
-[Context("Entitas.Generators.Tests.Fixtures.FakeGeneratedContext")]
+[MyApp.Main.Context]
 partial class OneContextComponent : IComponent { }

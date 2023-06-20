@@ -232,7 +232,10 @@ namespace Entitas.Generators
                     .ToImmutableArray();
 
                 // TODO: remove, just for testing
-                Contexts = ImmutableArray.Create<string>("MyApp.Main");
+                Contexts = ImmutableArray.Create<string>(
+                    "MyApp.Main",
+                    "Other"
+                );
 
                 Location = symbol.Locations.FirstOrDefault() ?? Location.None;
 

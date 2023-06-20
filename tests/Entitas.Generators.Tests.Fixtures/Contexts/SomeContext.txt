@@ -1,1 +1,1 @@
-partial class SomeContext : Entitas.IContext { }
+partial class OtherContext : Entitas.IContext { }
