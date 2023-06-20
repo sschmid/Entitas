@@ -33,10 +33,10 @@ public class ComponentGeneratorTests
     public Task Component() => VerifyComponent("SomeComponent");
 
     [Fact]
-    public Task OneContextNamespacedComponent() => VerifyComponent("OneContextNamespacedComponent");
+    public Task NoContextNamespacedComponent() => VerifyComponent("NoContextNamespacedComponent");
 
     [Fact]
-    public Task OneContextComponent() => VerifyComponent("OneContextComponent");
+    public Task NoContextComponent() => VerifyComponent("NoContextComponent");
 
     [Fact]
     public Task OneFieldNamespacedComponent() => VerifyComponent("OneFieldNamespacedComponent");

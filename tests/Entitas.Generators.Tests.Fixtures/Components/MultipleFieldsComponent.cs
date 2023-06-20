@@ -1,5 +1,6 @@
 using Entitas;
 
+[MyApp.Main.Context]
 partial class MultipleFieldsComponent : IComponent
 {
     public string Value1;
