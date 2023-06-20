@@ -1,8 +1,7 @@
 using Entitas;
-using Entitas.Generators.Attributes;
 
 namespace MyFeature
 {
-    [Context("MyApp.MainContext")]
+    [MyApp.Main.Context, Other.Context]
     partial class MovableComponent : IComponent { }
 }

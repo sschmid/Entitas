@@ -1,9 +1,8 @@
 using Entitas;
-using Entitas.Generators.Attributes;
 
 namespace MyFeature
 {
-    [Context("MyApp.MainContext")]
+    [MyApp.Main.Context, Other.Context]
     partial class PositionComponent : IComponent
     {
         public int X;

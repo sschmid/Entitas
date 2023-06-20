@@ -1,6 +1,6 @@
 using Entitas;
 
-namespace MyApp
+namespace MyFeature
 {
     public sealed class NonPartialComponent : IComponent
     {

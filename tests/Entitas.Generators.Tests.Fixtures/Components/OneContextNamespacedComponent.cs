@@ -1,7 +1,7 @@
 using Entitas;
 
-namespace MyApp
+namespace MyFeature
 {
-    [Main.Context]
+    [MyApp.Main.Context]
     partial class OneContextNamespacedComponent : IComponent { }
 }
