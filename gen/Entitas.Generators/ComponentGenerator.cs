@@ -231,11 +231,11 @@ namespace Entitas.Generators
                     .Select(member => member!.Value)
                     .ToImmutableArray();
 
-                // TODO: remove, just for testing
-                Contexts = ImmutableArray.Create<string>(
-                    "MyApp.Main",
-                    "Other"
-                );
+                Contexts = symbol.GetAttributes()
+                    .Select(attribute => attribute.AttributeClass?.ToDisplayString())
+                    .Where(attribute => attribute?.EndsWith(".Context") ?? false)
+                    .Select(attribute => attribute!.RemoveSuffix(".Context"))
+                    .ToImmutableArray();
 
                 Location = symbol.Locations.FirstOrDefault() ?? Location.None;
 
