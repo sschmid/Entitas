@@ -1,6 +1,6 @@
 using Entitas;
 
-namespace MyApp
+namespace MyFeature
 {
     partial class ReservedKeywordFieldsNamespacedComponent : IComponent
     {
