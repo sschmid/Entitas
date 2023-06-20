@@ -86,12 +86,12 @@ namespace Entitas.Generators
                             $$"""
                         public static class {{className}}
                         {
-                            public static bool Has{{component.ComponentPrefix}}(this {{context}}.Entity entity)
+                            public static bool Has{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 return entity.HasComponent({{index}});
                             }
 
-                            public static {{context}}.Entity Add{{component.ComponentPrefix}}(this {{context}}.Entity entity, {{ComponentMethodArgs(component)}})
+                            public static Entity Add{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
                             {
                                 var index = {{index}};
                                 var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
@@ -100,7 +100,7 @@ namespace Entitas.Generators
                                 return entity;
                             }
 
-                            public static {{context}}.Entity Replace{{component.ComponentPrefix}}(this {{context}}.Entity entity, {{ComponentMethodArgs(component)}})
+                            public static Entity Replace{{component.ComponentPrefix}}(this Entity entity, {{ComponentMethodArgs(component)}})
                             {
                                 var index = {{index}};
                                 var component = ({{component.FullName}})entity.CreateComponent(index, typeof({{component.FullName}}));
@@ -109,7 +109,7 @@ namespace Entitas.Generators
                                 return entity;
                             }
 
-                            public static {{context}}.Entity Remove{{component.ComponentPrefix}}(this {{context}}.Entity entity)
+                            public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 entity.RemoveComponent({{index}});
                                 return entity;
@@ -141,24 +141,24 @@ namespace Entitas.Generators
                         {
                             static readonly {{component.FullName}} Single{{component.Name}} = new {{component.FullName}}();
 
-                            public static bool Has{{component.ComponentPrefix}}(this {{context}}.Entity entity)
+                            public static bool Has{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 return entity.HasComponent({{index}});
                             }
 
-                            public static {{context}}.Entity Add{{component.ComponentPrefix}}(this {{context}}.Entity entity)
+                            public static Entity Add{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 entity.AddComponent({{index}}, Single{{component.Name}});
                                 return entity;
                             }
 
-                            public static {{context}}.Entity Replace{{component.ComponentPrefix}}(this {{context}}.Entity entity)
+                            public static Entity Replace{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 entity.ReplaceComponent({{index}}, Single{{component.Name}});
                                 return entity;
                             }
 
-                            public static {{context}}.Entity Remove{{component.ComponentPrefix}}(this {{context}}.Entity entity)
+                            public static Entity Remove{{component.ComponentPrefix}}(this Entity entity)
                             {
                                 entity.RemoveComponent({{index}});
                                 return entity;

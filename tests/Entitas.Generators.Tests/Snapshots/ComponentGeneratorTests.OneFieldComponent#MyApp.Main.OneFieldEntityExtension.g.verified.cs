@@ -12,12 +12,12 @@ namespace MyApp.Main
 {
 public static class OneFieldEntityExtension
 {
-    public static bool HasOneField(this MyApp.Main.Entity entity)
+    public static bool HasOneField(this Entity entity)
     {
         return entity.HasComponent(OneFieldComponentIndex.Value);
     }
 
-    public static MyApp.Main.Entity AddOneField(this MyApp.Main.Entity entity, string value)
+    public static Entity AddOneField(this Entity entity, string value)
     {
         var index = OneFieldComponentIndex.Value;
         var component = (OneFieldComponent)entity.CreateComponent(index, typeof(OneFieldComponent));
@@ -26,7 +26,7 @@ public static class OneFieldEntityExtension
         return entity;
     }
 
-    public static MyApp.Main.Entity ReplaceOneField(this MyApp.Main.Entity entity, string value)
+    public static Entity ReplaceOneField(this Entity entity, string value)
     {
         var index = OneFieldComponentIndex.Value;
         var component = (OneFieldComponent)entity.CreateComponent(index, typeof(OneFieldComponent));
@@ -35,7 +35,7 @@ public static class OneFieldEntityExtension
         return entity;
     }
 
-    public static MyApp.Main.Entity RemoveOneField(this MyApp.Main.Entity entity)
+    public static Entity RemoveOneField(this Entity entity)
     {
         entity.RemoveComponent(OneFieldComponentIndex.Value);
         return entity;

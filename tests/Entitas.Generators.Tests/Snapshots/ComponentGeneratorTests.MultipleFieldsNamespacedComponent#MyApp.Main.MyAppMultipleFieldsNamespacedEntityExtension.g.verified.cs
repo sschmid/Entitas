@@ -12,12 +12,12 @@ namespace MyApp.Main
 {
 public static class MyAppMultipleFieldsNamespacedEntityExtension
 {
-    public static bool HasMultipleFieldsNamespaced(this MyApp.Main.Entity entity)
+    public static bool HasMultipleFieldsNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyAppMultipleFieldsNamespacedComponentIndex.Value);
     }
 
-    public static MyApp.Main.Entity AddMultipleFieldsNamespaced(this MyApp.Main.Entity entity, string value1, string value2, string value3)
+    public static Entity AddMultipleFieldsNamespaced(this Entity entity, string value1, string value2, string value3)
     {
         var index = MyAppMultipleFieldsNamespacedComponentIndex.Value;
         var component = (MyApp.MultipleFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MyApp.MultipleFieldsNamespacedComponent));
@@ -28,7 +28,7 @@ public static class MyAppMultipleFieldsNamespacedEntityExtension
         return entity;
     }
 
-    public static MyApp.Main.Entity ReplaceMultipleFieldsNamespaced(this MyApp.Main.Entity entity, string value1, string value2, string value3)
+    public static Entity ReplaceMultipleFieldsNamespaced(this Entity entity, string value1, string value2, string value3)
     {
         var index = MyAppMultipleFieldsNamespacedComponentIndex.Value;
         var component = (MyApp.MultipleFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MyApp.MultipleFieldsNamespacedComponent));
@@ -39,7 +39,7 @@ public static class MyAppMultipleFieldsNamespacedEntityExtension
         return entity;
     }
 
-    public static MyApp.Main.Entity RemoveMultipleFieldsNamespaced(this MyApp.Main.Entity entity)
+    public static Entity RemoveMultipleFieldsNamespaced(this Entity entity)
     {
         entity.RemoveComponent(MyAppMultipleFieldsNamespacedComponentIndex.Value);
         return entity;

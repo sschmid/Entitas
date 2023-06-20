@@ -12,12 +12,12 @@ namespace Other
 {
 public static class MyAppReservedKeywordFieldsNamespacedEntityExtension
 {
-    public static bool HasReservedKeywordFieldsNamespaced(this Other.Entity entity)
+    public static bool HasReservedKeywordFieldsNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyAppReservedKeywordFieldsNamespacedComponentIndex.Value);
     }
 
-    public static Other.Entity AddReservedKeywordFieldsNamespaced(this Other.Entity entity, string @namespace, string @class, string @public)
+    public static Entity AddReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
     {
         var index = MyAppReservedKeywordFieldsNamespacedComponentIndex.Value;
         var component = (MyApp.ReservedKeywordFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MyApp.ReservedKeywordFieldsNamespacedComponent));
@@ -28,7 +28,7 @@ public static class MyAppReservedKeywordFieldsNamespacedEntityExtension
         return entity;
     }
 
-    public static Other.Entity ReplaceReservedKeywordFieldsNamespaced(this Other.Entity entity, string @namespace, string @class, string @public)
+    public static Entity ReplaceReservedKeywordFieldsNamespaced(this Entity entity, string @namespace, string @class, string @public)
     {
         var index = MyAppReservedKeywordFieldsNamespacedComponentIndex.Value;
         var component = (MyApp.ReservedKeywordFieldsNamespacedComponent)entity.CreateComponent(index, typeof(MyApp.ReservedKeywordFieldsNamespacedComponent));
@@ -39,7 +39,7 @@ public static class MyAppReservedKeywordFieldsNamespacedEntityExtension
         return entity;
     }
 
-    public static Other.Entity RemoveReservedKeywordFieldsNamespaced(this Other.Entity entity)
+    public static Entity RemoveReservedKeywordFieldsNamespaced(this Entity entity)
     {
         entity.RemoveComponent(MyAppReservedKeywordFieldsNamespacedComponentIndex.Value);
         return entity;

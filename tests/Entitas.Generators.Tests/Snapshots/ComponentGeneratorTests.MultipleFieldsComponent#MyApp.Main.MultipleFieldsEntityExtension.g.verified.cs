@@ -12,12 +12,12 @@ namespace MyApp.Main
 {
 public static class MultipleFieldsEntityExtension
 {
-    public static bool HasMultipleFields(this MyApp.Main.Entity entity)
+    public static bool HasMultipleFields(this Entity entity)
     {
         return entity.HasComponent(MultipleFieldsComponentIndex.Value);
     }
 
-    public static MyApp.Main.Entity AddMultipleFields(this MyApp.Main.Entity entity, string value1, string value2, string value3)
+    public static Entity AddMultipleFields(this Entity entity, string value1, string value2, string value3)
     {
         var index = MultipleFieldsComponentIndex.Value;
         var component = (MultipleFieldsComponent)entity.CreateComponent(index, typeof(MultipleFieldsComponent));
@@ -28,7 +28,7 @@ public static class MultipleFieldsEntityExtension
         return entity;
     }
 
-    public static MyApp.Main.Entity ReplaceMultipleFields(this MyApp.Main.Entity entity, string value1, string value2, string value3)
+    public static Entity ReplaceMultipleFields(this Entity entity, string value1, string value2, string value3)
     {
         var index = MultipleFieldsComponentIndex.Value;
         var component = (MultipleFieldsComponent)entity.CreateComponent(index, typeof(MultipleFieldsComponent));
@@ -39,7 +39,7 @@ public static class MultipleFieldsEntityExtension
         return entity;
     }
 
-    public static MyApp.Main.Entity RemoveMultipleFields(this MyApp.Main.Entity entity)
+    public static Entity RemoveMultipleFields(this Entity entity)
     {
         entity.RemoveComponent(MultipleFieldsComponentIndex.Value);
         return entity;

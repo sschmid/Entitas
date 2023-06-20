@@ -60,7 +60,7 @@ namespace Entitas.Generators
             spc.AddSource(ContextAwarePath(context, "ComponentIndex"),
                 GeneratedFileHeader(GeneratorSource(nameof(ComponentIndex))) +
                 NamespaceDeclaration(context.Namespace, context.ContextPrefix,
-                    $$"""
+                    """
                     public readonly struct ComponentIndex : System.IEquatable<ComponentIndex>
                     {
                         public static implicit operator int(ComponentIndex index) => index.Value;
@@ -102,7 +102,7 @@ namespace Entitas.Generators
             spc.AddSource(ContextAwarePath(context, "Entity"),
                 GeneratedFileHeader(GeneratorSource(nameof(Entity))) +
                 NamespaceDeclaration(context.Namespace, context.ContextPrefix,
-                    $$"""
+                    """
                     public sealed class Entity : Entitas.Entity { }
 
                     """));
@@ -113,25 +113,25 @@ namespace Entitas.Generators
             spc.AddSource(ContextAwarePath(context, "Matcher"),
                 GeneratedFileHeader(GeneratorSource(nameof(Matcher))) +
                 NamespaceDeclaration(context.Namespace, context.ContextPrefix,
-                    $$"""
+                    """
                     public static class Matcher
                     {
-                        public static Entitas.IAllOfMatcher<{{context.EntityName}}> AllOf(System.Span<ComponentIndex> indices)
+                        public static Entitas.IAllOfMatcher<Entity> AllOf(System.Span<ComponentIndex> indices)
                         {
-                            return Entitas.Matcher<{{context.EntityName}}>.AllOf(ToIntArray(indices));
+                            return Entitas.Matcher<Entity>.AllOf(ToIntArray(indices));
                         }
 
-                        public static Entitas.IAnyOfMatcher<{{context.EntityName}}> AnyOf(System.Span<ComponentIndex> indices)
+                        public static Entitas.IAnyOfMatcher<Entity> AnyOf(System.Span<ComponentIndex> indices)
                         {
-                            return Entitas.Matcher<{{context.EntityName}}>.AnyOf(ToIntArray(indices));
+                            return Entitas.Matcher<Entity>.AnyOf(ToIntArray(indices));
                         }
 
-                        public static Entitas.IAnyOfMatcher<{{context.EntityName}}> AnyOf(this Entitas.IAllOfMatcher<{{context.EntityName}}> matcher, System.Span<ComponentIndex> indices)
+                        public static Entitas.IAnyOfMatcher<Entity> AnyOf(this Entitas.IAllOfMatcher<Entity> matcher, System.Span<ComponentIndex> indices)
                         {
                             return matcher.AnyOf(ToIntArray(indices));
                         }
 
-                        public static Entitas.INoneOfMatcher<{{context.EntityName}}> NoneOf(this Entitas.IAnyOfMatcher<{{context.EntityName}}> matcher, System.Span<ComponentIndex> indices)
+                        public static Entitas.INoneOfMatcher<Entity> NoneOf(this Entitas.IAnyOfMatcher<Entity> matcher, System.Span<ComponentIndex> indices)
                         {
                             return matcher.NoneOf(ToIntArray(indices));
                         }

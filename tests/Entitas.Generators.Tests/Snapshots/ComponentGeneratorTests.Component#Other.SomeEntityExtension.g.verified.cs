@@ -14,24 +14,24 @@ public static class SomeEntityExtension
 {
     static readonly SomeComponent SingleSomeComponent = new SomeComponent();
 
-    public static bool HasSome(this Other.Entity entity)
+    public static bool HasSome(this Entity entity)
     {
         return entity.HasComponent(SomeComponentIndex.Value);
     }
 
-    public static Other.Entity AddSome(this Other.Entity entity)
+    public static Entity AddSome(this Entity entity)
     {
         entity.AddComponent(SomeComponentIndex.Value, SingleSomeComponent);
         return entity;
     }
 
-    public static Other.Entity ReplaceSome(this Other.Entity entity)
+    public static Entity ReplaceSome(this Entity entity)
     {
         entity.ReplaceComponent(SomeComponentIndex.Value, SingleSomeComponent);
         return entity;
     }
 
-    public static Other.Entity RemoveSome(this Other.Entity entity)
+    public static Entity RemoveSome(this Entity entity)
     {
         entity.RemoveComponent(SomeComponentIndex.Value);
         return entity;

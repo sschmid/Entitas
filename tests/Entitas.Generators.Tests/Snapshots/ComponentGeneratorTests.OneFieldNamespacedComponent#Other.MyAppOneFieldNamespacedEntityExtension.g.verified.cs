@@ -12,12 +12,12 @@ namespace Other
 {
 public static class MyAppOneFieldNamespacedEntityExtension
 {
-    public static bool HasOneFieldNamespaced(this Other.Entity entity)
+    public static bool HasOneFieldNamespaced(this Entity entity)
     {
         return entity.HasComponent(MyAppOneFieldNamespacedComponentIndex.Value);
     }
 
-    public static Other.Entity AddOneFieldNamespaced(this Other.Entity entity, string value)
+    public static Entity AddOneFieldNamespaced(this Entity entity, string value)
     {
         var index = MyAppOneFieldNamespacedComponentIndex.Value;
         var component = (MyApp.OneFieldNamespacedComponent)entity.CreateComponent(index, typeof(MyApp.OneFieldNamespacedComponent));
@@ -26,7 +26,7 @@ public static class MyAppOneFieldNamespacedEntityExtension
         return entity;
     }
 
-    public static Other.Entity ReplaceOneFieldNamespaced(this Other.Entity entity, string value)
+    public static Entity ReplaceOneFieldNamespaced(this Entity entity, string value)
     {
         var index = MyAppOneFieldNamespacedComponentIndex.Value;
         var component = (MyApp.OneFieldNamespacedComponent)entity.CreateComponent(index, typeof(MyApp.OneFieldNamespacedComponent));
@@ -35,7 +35,7 @@ public static class MyAppOneFieldNamespacedEntityExtension
         return entity;
     }
 
-    public static Other.Entity RemoveOneFieldNamespaced(this Other.Entity entity)
+    public static Entity RemoveOneFieldNamespaced(this Entity entity)
     {
         entity.RemoveComponent(MyAppOneFieldNamespacedComponentIndex.Value);
         return entity;
