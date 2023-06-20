@@ -1,4 +1,4 @@
 namespace MyApp
 {
-    partial class MainContext : IContext { }
+    partial class NamespacedContext : Entitas.IContext { }
 }
