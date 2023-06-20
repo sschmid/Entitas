@@ -10,5 +10,8 @@
 //------------------------------------------------------------------------------
 namespace Entitas.Generators.Tests.Fixtures.Contexts.Namespaced
 {
-public sealed class ContextAttribute : Entitas.Generators.Attributes.ContextAttribute { }
+public sealed class ContextAttribute : Entitas.Generators.Attributes.ContextAttribute
+{
+    public ContextAttribute() : base("Entitas.Generators.Tests.Fixtures.Contexts.NamespacedContext") { }
+}
 }

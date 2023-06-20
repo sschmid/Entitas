@@ -4,6 +4,9 @@ namespace Entitas.Generators
 {
     public static class Templates
     {
+        static readonly System.CodeDom.Compiler.CodeDomProvider CodeDomProvider =
+            System.CodeDom.Compiler.CodeDomProvider.CreateProvider(Microsoft.CodeAnalysis.LanguageNames.CSharp);
+
         public static string GeneratedPath(string hintName)
         {
             return $"{hintName}.g.cs";
@@ -51,5 +54,16 @@ namespace Entitas.Generators
 
         public static string RemoveSuffix(this string str, string suffix) =>
             str.EndsWith(suffix, StringComparison.Ordinal) ? str[..^suffix.Length] : str;
+
+        public static string ToValidLowerFirst(this string value)
+        {
+            var lowerFirst = !string.IsNullOrEmpty(value)
+                ? char.ToLower(value[0]) + value[1..]
+                : value;
+
+            return !CodeDomProvider.IsValidIdentifier(lowerFirst)
+                ? $"@{lowerFirst}"
+                : lowerFirst;
+        }
     }
 }
